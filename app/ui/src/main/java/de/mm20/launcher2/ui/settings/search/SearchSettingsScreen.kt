@@ -22,8 +22,6 @@ import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material.icons.rounded.Work
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -50,7 +48,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.icons.Wikipedia
+import de.mm20.launcher2.icons.Wikipedia
 import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
 import de.mm20.launcher2.ui.locals.LocalNavController
 
@@ -227,15 +225,10 @@ fun SearchSettingsScreen() {
                     }
                 )
 
-                val locations by viewModel.locations.collectAsStateWithLifecycle(null)
-                PreferenceWithSwitch(
+                Preference(
                     title = stringResource(R.string.preference_search_locations),
                     summary = stringResource(R.string.preference_search_locations_summary),
                     icon = Icons.Rounded.Place,
-                    switchValue = locations == true,
-                    onSwitchChanged = {
-                        viewModel.setLocations(it)
-                    },
                     onClick = {
                         navController?.navigate("settings/search/locations")
                     }

@@ -117,3 +117,4 @@ a `condition`, an `icon`, a `location` name, and a `provider` name.
 ## Examples
 
 - [OpenWeatherMap plugin](https://github.com/Kvaesitso/Plugin-OpenWeatherMap)
+- [Breezy Weather plugin](https://github.com/Kvaesitso/Plugin-BreezyWeather)

@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    compileSdk libs.versions.compileSdk.get().toInteger()
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    defaultConfig {
+        minSdk libs.versions.minSdk.get().toInteger()
+        versionCode 10
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    namespace "de.mm20.launcher2.lib.addressformatter"
+}
+
+dependencies {
+    implementation libs.jackson.core
+    implementation libs.jackson.dataformat.yaml
+    implementation libs.guava
+    implementation libs.compiler
+}

@@ -71,6 +71,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
             text: 'File Search Provider',
             link: '/docs/developer-guide/plugins/plugin-types/file-search',
           },
+          {
+            text: 'Places Search Provider',
+            link: '/docs/developer-guide/plugins/plugin-types/places-search',
+          },
         ],
       },
       {
@@ -89,6 +93,16 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
         text: 'Reference',
         link: '/reference/index.html',
         target: '_blank',
+      },
+      {
+        text: 'Migrations',
+        items: [
+          {
+            text: 'Migrate to plugin SDK v2.x',
+            link: '/docs/developer-guide/plugins/migrations/v2',
+          },
+          ,
+        ],
       },
     ],
   },

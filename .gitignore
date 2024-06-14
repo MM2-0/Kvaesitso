@@ -306,3 +306,5 @@ fabric.properties
 .idea/deploymentTargetSelector.xml
 .idea/copilot
 .idea/other.xml
+
+.kotlin

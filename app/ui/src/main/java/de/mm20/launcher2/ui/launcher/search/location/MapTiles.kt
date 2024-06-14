@@ -8,6 +8,7 @@ import androidx.compose.animation.core.EaseInOutCirc
 import androidx.compose.animation.core.EaseInOutSine
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateOffsetAsState
 import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -47,7 +48,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
@@ -62,23 +62,26 @@ import coil.request.ImageRequest
 import de.mm20.launcher2.ktx.PI
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.LocationCategory
-import de.mm20.launcher2.search.OpeningHours
-import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.location.Address
+import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.LineType
+import de.mm20.launcher2.search.location.LocationIcon
+import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.ui.ktx.DegreesConverter
 import de.mm20.launcher2.ui.ktx.contrast
 import de.mm20.launcher2.ui.ktx.hue
 import de.mm20.launcher2.ui.ktx.hueRotate
 import de.mm20.launcher2.ui.ktx.invert
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
-import kotlinx.collections.immutable.toImmutableList
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
+import java.time.Duration
+import java.time.ZonedDateTime
 import kotlin.math.PI
 import kotlin.math.ceil
 import kotlin.math.cos
@@ -216,7 +219,15 @@ fun MapTiles(
                 )
         )
         if (userLocation != null) {
-            val userTileCoordinates = getTileCoordinates(userLocation.lat, userLocation.lon, zoom)
+            val userIndicatorOffset by animateOffsetAsState(
+                targetValue = getTileCoordinates(userLocation.lat, userLocation.lon, zoom).let {
+                    Offset(
+                        (it.x - start.x) * tileSize.value - 8f,
+                        (it.y - start.y) * tileSize.value - 8f
+                    )
+                },
+                animationSpec = tween()
+            )
 
             if (userLocation.heading != null) {
                 val headingAnim by animateValueAsState(
@@ -232,8 +243,8 @@ fun MapTiles(
                         .align(Alignment.TopStart)
                         .size(16.dp)
                         .absoluteOffset(
-                            x = (userTileCoordinates.x - start.x) * tileSize - 8.dp,
-                            y = (userTileCoordinates.y - start.y) * tileSize - 8.dp,
+                            userIndicatorOffset.x.dp,
+                            userIndicatorOffset.y.dp
                         )
                         .rotate(headingAnim)
                         .absoluteOffset(y = -8.dp)
@@ -245,8 +256,8 @@ fun MapTiles(
                     .align(Alignment.TopStart)
                     .size(16.dp)
                     .absoluteOffset(
-                        x = (userTileCoordinates.x - start.x) * tileSize - 8.dp,
-                        y = (userTileCoordinates.y - start.y) * tileSize - 8.dp,
+                        userIndicatorOffset.x.dp,
+                        userIndicatorOffset.y.dp
                     )
                     .background(MaterialTheme.colorScheme.tertiary, CircleShape)
                     .border(2.dp, MaterialTheme.colorScheme.onTertiary, CircleShape)
@@ -438,7 +449,7 @@ private fun MapTilesPreview() {
     )
 }
 
-internal object MockLocation : Location {
+private object MockLocation : Location {
 
     override val domain: String = "MOCKLOCATION"
     override val key: String = "MOCKLOCATION"
@@ -448,18 +459,24 @@ internal object MockLocation : Location {
     override val latitude = 52.5162700
     override val longitude = 13.3777021
 
-    override var category: LocationCategory? = LocationCategory.OTHER
+    override val icon: LocationIcon? = null
+    override var category: String? = "Landmark"
 
-    override val street: String = "Pariser Platz"
-
-    override val houseNumber: String = "1"
+    override val address: Address = Address(
+        address = "Pariser Platz 1",
+        city = "Berlin",
+        postalCode = "10117",
+        country = "Germany"
+    )
 
     override val openingSchedule: OpeningSchedule =
-        OpeningSchedule(true, emptyList<OpeningHours>().toImmutableList())
+        OpeningSchedule.TwentyFourSeven
 
     override val websiteUrl: String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
 
     override val phoneNumber: String = "+49 1234567"
+
+    override val emailAddress: String = "abc@de.fg"
 
     override fun overrideLabel(label: String): SavableSearchable = TODO()
 
@@ -472,4 +489,20 @@ internal object MockLocation : Location {
         )
 
     override fun getSerializer(): SearchableSerializer = TODO()
+
+    override val departures: List<Departure> = listOf(
+        Departure(
+            ZonedDateTime.now() + Duration.ofMinutes(3),
+            Duration.ofMinutes(1),
+            "B2",
+            "heaven",
+            LineType.Bus,
+            android.graphics.Color.valueOf(0xFAFAFAFA)
+        )
+    )
+
+    override val userRating: Float
+        get() = 0.9f
+
+    override val userRatingCount: Int  = 553
 }

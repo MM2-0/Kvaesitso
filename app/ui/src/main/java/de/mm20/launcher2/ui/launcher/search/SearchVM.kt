@@ -225,10 +225,11 @@ class SearchVM : ViewModel(), KoinComponent {
                         }
 
                     resultsList = resultsList.sortedWith { a, b ->
+                        val lastLocation = devicePoseProvider.lastLocation
                         when {
-                            a is Location && b is Location && devicePoseProvider.lastLocation != null -> {
-                                a.distanceTo(devicePoseProvider.lastLocation!!)
-                                    .compareTo(b.distanceTo(devicePoseProvider.lastLocation!!))
+                            a is Location && b is Location && lastLocation != null -> {
+                                a.distanceTo(lastLocation)
+                                    .compareTo(b.distanceTo(lastLocation))
                             }
 
                             a is SavableSearchable && b !is SavableSearchable -> -1
@@ -249,7 +250,6 @@ class SearchVM : ViewModel(), KoinComponent {
                             else -> 0
                         }
                     }
-
 
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val hidden = mutableListOf<SavableSearchable>()
@@ -349,7 +349,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val missingLocationPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Location),
-        locationSearchSettings.enabled.distinctUntilChanged()
+        locationSearchSettings.osmLocations.distinctUntilChanged()
     ) { perm, enabled -> !perm && enabled }
 
     fun requestLocationPermission(context: AppCompatActivity) {
@@ -357,7 +357,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun disableLocationSearch() {
-        locationSearchSettings.setEnabled(false)
+        locationSearchSettings.setOsmLocations(false)
     }
 
     val missingFilesPermission = combine(

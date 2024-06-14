@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
+import androidx.customview.view.AbsSavedState
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.devicepose.DevicePoseProvider
@@ -19,6 +20,7 @@ import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
@@ -40,6 +42,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SearchableItemVM : ListItemViewModel(), KoinComponent {
@@ -184,21 +187,24 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         val searchable = searchable.value ?: return
         if (searchable is UpdatableSearchable<*>) {
             val updatedSelf = searchable.updatedSelf ?: return
-            if (!shouldRetryUpdate && System.currentTimeMillis() < searchable.timestamp + 1.hours.inWholeMilliseconds) return
+            val sinceTimestamp = System.currentTimeMillis() - searchable.timestamp
+
+            val isOutOfDate = 1.minutes.inWholeMilliseconds < sinceTimestamp
+
+            if (!shouldRetryUpdate && !isOutOfDate) return
+
             viewModelScope.launch {
-                this@SearchableItemVM.searchable.value = with(updatedSelf()) {
+                with(updatedSelf(searchable)) {
                     when (this) {
                         is UpdateResult.Success -> {
                             isUpToDate.value = true
                             shouldRetryUpdate = false
                             favoritesService.upsert(this.result)
-                            this.result
                         }
 
                         is UpdateResult.TemporarilyUnavailable -> {
                             isUpToDate.value = false
                             shouldRetryUpdate = true
-                            return@launch
                         }
 
                         is UpdateResult.PermanentlyUnavailable -> {
@@ -211,7 +217,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                                 Toast.LENGTH_LONG
                             ).show()
                             Log.d("requestUpdatedSearchable", "PermanentlyUnavailable", this.cause)
-                            null
                         }
                     }
                 }
@@ -230,9 +235,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     val applyMapTheming = locationSearchSettings.themeMap
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
-
-    val showPositionOnMap = locationSearchSettings.showPositionOnMap
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     val mapTileServerUrl = locationSearchSettings.tileServer

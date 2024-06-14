@@ -2,6 +2,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.plugin.PluginType
@@ -34,6 +35,7 @@ class PluginScanner(
                         try {
                             PluginType.valueOf(it)
                         } catch (e: IllegalArgumentException) {
+                            Log.e("MM20", "Invalid plugin type: $it")
                             null
                         }
                     } ?: continue

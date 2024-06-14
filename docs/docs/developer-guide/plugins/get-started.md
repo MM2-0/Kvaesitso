@@ -49,3 +49,4 @@ Your next steps depend on the type of plugin that you want to develop:
 
 - Weather provider plugin: [Weather Provider](/docs/developer-guide/plugins/plugin-types/weather.html)
 - File search plugin: [File Search Provider](/docs/developer-guide/plugins/plugin-types/file-search.html)
+- Places search plugin: [Places Search Provider](/docs/developer-guide/plugins/plugin-types/places-search.html)

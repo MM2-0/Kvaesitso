@@ -14,29 +14,49 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
+import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.NavigateNext
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.AirplanemodeActive
 import androidx.compose.material.icons.rounded.BugReport
+import androidx.compose.material.icons.rounded.Commute
+import androidx.compose.material.icons.rounded.DirectionsBoat
+import androidx.compose.material.icons.rounded.DirectionsBus
+import androidx.compose.material.icons.rounded.DirectionsRailway
+import androidx.compose.material.icons.rounded.DirectionsTransit
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.Navigation
 import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Subway
+import androidx.compose.material.icons.rounded.Train
+import androidx.compose.material.icons.rounded.Tram
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.AssistChip
@@ -58,31 +78,48 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import blend.Blend.harmonize
+import coil.compose.AsyncImage
 import de.mm20.launcher2.i18n.R
+import de.mm20.launcher2.icons.CableCar
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.LocationCategory
-import de.mm20.launcher2.search.OpeningHours
-import de.mm20.launcher2.search.OpeningSchedule
+import de.mm20.launcher2.search.isOpen
+import de.mm20.launcher2.search.location.Attribution
+import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.LineType
+import de.mm20.launcher2.search.location.OpeningHours
+import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
+import de.mm20.launcher2.ui.component.MarqueeText
 import de.mm20.launcher2.ui.component.RatingBar
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
+import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
-import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
@@ -92,7 +129,9 @@ import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import java.time.Duration
 import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
@@ -108,7 +147,6 @@ fun LocationItem(
 ) {
     val context = LocalContext.current
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
-    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
     val userLocation by remember {
         viewModel.devicePoseProvider.getLocation()
@@ -181,7 +219,8 @@ fun LocationItem(
                         if (category != null || formattedDistance != null) {
                             Text(
                                 when {
-                                    category != null && formattedDistance != null -> "${stringResource(category.labelRes)} • ${formattedDistance}"
+                                    category != null && formattedDistance != null -> "$category • $formattedDistance"
+
                                     category != null -> category.toString()
                                     formattedDistance != null -> formattedDistance
                                     else -> ""
@@ -258,7 +297,7 @@ fun LocationItem(
                             end = 12.dp,
                             bottom = 4.dp
                         ),
-                        verticalAlignment = Alignment.CenterVertically,
+                        verticalAlignment = Alignment.Top,
                     ) {
                         Column(
                             modifier = Modifier.weight(1f),
@@ -279,7 +318,8 @@ fun LocationItem(
                             if (category != null || formattedDistance != null) {
                                 Text(
                                     when {
-                                        category != null && formattedDistance != null -> "${stringResource(category.labelRes)} • ${formattedDistance}"
+                                        category != null && formattedDistance != null -> "$category • $formattedDistance"
+
                                         category != null -> category.toString()
                                         formattedDistance != null -> formattedDistance
                                         else -> ""
@@ -294,31 +334,176 @@ fun LocationItem(
                                         )
                                 )
                             }
-                            // TODO: add rating to location
-                            if (!showMap && false) {
-                                RatingBar(0.66f, modifier = Modifier.padding(top = 4.dp))
+                            if (location.userRating != null) {
+                                RatingBar(
+                                    location.userRating!!,
+                                    modifier = Modifier
+                                        .padding(top = 6.dp)
+                                        .offset(-2.dp)
+                                )
+                            }
+
+                            if (!showMap) {
+                                val attribution = location.attribution
+                                if (attribution != null) {
+                                    Attribution(
+                                        attribution,
+                                        reverse = true,
+                                        modifier = Modifier
+                                            .padding(
+                                                top = 16.dp,
+                                                bottom = 0.dp,
+                                            )
+                                            .clickable(
+                                                enabled = attribution.url != null
+                                            ) {
+                                                context.tryStartActivity(
+                                                    Intent(
+                                                        Intent.ACTION_VIEW,
+                                                        Uri.parse(attribution.url)
+                                                    )
+                                                )
+                                            }
+                                    )
+                                }
                             }
                         }
-                        //TODO: add rating to location
-                        if (showMap && false) {
-                            RatingBar(0.66f)
-                        }
+
                         if (!showMap) {
                             Compass(
                                 targetHeading = targetHeading,
                                 modifier = Modifier
-                                    .align(Alignment.Top)
                                     .sharedBounds(
                                         rememberSharedContentState("compass"),
                                         this@AnimatedContent
                                     ),
                                 size = 56.dp,
                             )
+                        } else {
+                            val attribution = location.attribution
+                            if (attribution != null) {
+                                Attribution(
+                                    attribution,
+                                    modifier = Modifier
+                                        .padding(
+                                            top = 4.dp,
+                                            bottom = 4.dp,
+                                            start = 12.dp)
+                                        .clickable(
+                                            enabled = attribution.url != null
+                                        ) {
+                                            context.tryStartActivity(
+                                                Intent(
+                                                    Intent.ACTION_VIEW,
+                                                    Uri.parse(attribution.url)
+                                                )
+                                            )
+                                        }
+                                )
+                            }
                         }
                     }
 
                     val openingSchedule = location.openingSchedule
-                    if (openingSchedule != null && (openingSchedule.isTwentyFourSeven || openingSchedule.openingHours.isNotEmpty())) {
+                    val departures = remember(location.departures) {
+                        location.departures
+                            ?.sortedBy { it.time }
+                    }
+                    if (departures != null) {
+                        val time = LocalTime.current
+                        val nextDeparture = remember(time) {
+                            departures.firstOrNull {
+                                it.time.plus(it.delay ?: Duration.ZERO).isAfter(ZonedDateTime.now())
+                            }
+                        }
+                        if (nextDeparture != null) {
+                            var showDepartureList by remember(departures) {
+                                mutableStateOf(false)
+                            }
+                            OutlinedCard(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 12.dp, end = 12.dp, top = 12.dp),
+                                shape = MaterialTheme.shapes.small,
+                                onClick = { showDepartureList = !showDepartureList }
+                            ) {
+                                val listState = rememberLazyListState()
+
+                                AnimatedContent(showDepartureList) { showList ->
+                                    if (!showList) {
+                                        Row(
+                                            Modifier
+                                                .padding(12.dp)
+                                                .fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            nextDeparture.LineIcon(Modifier.padding(end = 8.dp))
+                                            val lastStop = nextDeparture.lastStop
+                                            if (lastStop != null) {
+                                                MarqueeText(
+                                                    modifier = Modifier.weight(1f),
+                                                    text = lastStop,
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                    iterations = Int.MAX_VALUE,
+                                                    repeatDelayMillis = 0,
+                                                    velocity = 20.dp,
+                                                    fadeLeft = 5.dp,
+                                                    fadeRight = 5.dp,
+                                                )
+                                            }
+
+                                            val formattedTime = remember(time) {
+                                                val timeLeft = Duration.between(
+                                                    java.time.LocalTime.now(),
+                                                    nextDeparture.time + (nextDeparture.delay
+                                                        ?: Duration.ZERO)
+                                                ).toMinutes()
+                                                if (timeLeft < 1) "now" else "in $timeLeft min"
+                                            }
+
+                                            Text(
+                                                text = formattedTime,
+                                                style = MaterialTheme.typography.labelSmall,
+                                                modifier = Modifier.padding(end = 12.dp)
+                                            )
+                                            Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                                        }
+                                    } else {
+                                        val longestLine = remember(departures) {
+                                            departures.maxOfOrNull { it.line.length }
+                                        }
+                                        LazyColumn(
+                                            state = listState,
+                                            modifier = modifier
+                                                .heightIn(max = 192.dp)
+                                                .padding(12.dp)
+                                                .fillMaxWidth()
+                                                .pointerInput(Unit) { detectDragGestures { _, _ -> } },
+                                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                                        ) {
+                                            itemsIndexed(
+                                                departures,
+                                                key = { idx, _ -> idx }) { idx, it ->
+                                                it.LazyColumnPart(
+                                                    lineWidth = longestLine,
+                                                    Modifier
+                                                        .fillMaxWidth()
+                                                        .graphicsLayer {
+                                                            alpha =
+                                                                listState.layoutInfo.blendIntoViewScale(
+                                                                    idx
+                                                                )
+                                                        }
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (openingSchedule is OpeningSchedule.TwentyFourSeven || (openingSchedule is OpeningSchedule.Hours && openingSchedule.openingHours.isNotEmpty())) {
                         var showOpeningSchedule by remember(openingSchedule) {
                             mutableStateOf(false)
                         }
@@ -328,8 +513,8 @@ fun LocationItem(
                                 .padding(start = 12.dp, end = 12.dp, top = 12.dp),
                             shape = MaterialTheme.shapes.small,
                             onClick = {
-                                if (!openingSchedule.isTwentyFourSeven) {
-                                    showOpeningSchedule = true
+                                if (openingSchedule !is OpeningSchedule.TwentyFourSeven) {
+                                    showOpeningSchedule = !showOpeningSchedule
                                 }
                             }
                         ) {
@@ -341,78 +526,84 @@ fun LocationItem(
                                             .padding(12.dp),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
-                                        if (openingSchedule.isTwentyFourSeven) {
-                                            Text(
-                                                text = stringResource(R.string.location_open_24_7),
-                                                style = MaterialTheme.typography.labelMedium,
-                                            )
-                                        } else {
-                                            val text = remember(openingSchedule) {
-                                                val currentOpeningTime =
-                                                    openingSchedule.getCurrentOpeningHours()
-                                                val timeFormat =
-                                                    DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
-                                                return@remember if (currentOpeningTime != null) {
-                                                    val isSameDay =
-                                                        currentOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
-                                                    val formattedTime =
-                                                        timeFormat.format(currentOpeningTime.startTime + currentOpeningTime.duration)
-                                                    val closingTime = if (isSameDay) {
-                                                        context.getString(
-                                                            R.string.location_closes,
-                                                            formattedTime
-                                                        )
-                                                    } else {
-                                                        val dow =
-                                                            currentOpeningTime.dayOfWeek.getDisplayName(
-                                                                TextStyle.SHORT,
-                                                                Locale.getDefault()
-                                                            )
-                                                        context.getString(
-                                                            R.string.location_closes_other_day,
-                                                            dow,
-                                                            formattedTime
-                                                        )
-                                                    }
-                                                    "${context.getString(R.string.location_open)} • $closingTime"
-                                                } else {
-                                                    val nextOpeningTime =
-                                                        openingSchedule.getNextOpeningHours()
-                                                    val isSameDay =
-                                                        nextOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
-                                                    val formattedTime =
-                                                        timeFormat.format(nextOpeningTime.startTime)
-                                                    val openingTime = if (isSameDay) {
-                                                        context.getString(
-                                                            R.string.location_opens,
-                                                            formattedTime
-                                                        )
-                                                    } else {
-                                                        val dow =
-                                                            nextOpeningTime.dayOfWeek.getDisplayName(
-                                                                TextStyle.SHORT,
-                                                                Locale.getDefault()
-                                                            )
-                                                        context.getString(
-                                                            R.string.location_opens_other_day,
-                                                            dow,
-                                                            formattedTime
-                                                        )
-                                                    }
-                                                    "${context.getString(R.string.location_closed)} • $openingTime"
-                                                }
+                                        when (openingSchedule) {
+                                            is OpeningSchedule.TwentyFourSeven -> {
+                                                Text(
+                                                    text = stringResource(R.string.location_open_24_7),
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                )
                                             }
 
-                                            Text(
-                                                text = text,
-                                                style = MaterialTheme.typography.labelMedium,
-                                                modifier = Modifier.weight(1f)
-                                            )
+                                            is OpeningSchedule.Hours -> {
+                                                val text = remember(openingSchedule) {
+                                                    val currentOpeningTime =
+                                                        openingSchedule.getCurrentOpeningHours()
+                                                    val timeFormat =
+                                                        DateTimeFormatter.ofLocalizedTime(
+                                                            FormatStyle.SHORT
+                                                        )
+                                                    return@remember if (currentOpeningTime != null) {
+                                                        val isSameDay =
+                                                            currentOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
+                                                        val formattedTime =
+                                                            timeFormat.format(currentOpeningTime.startTime + currentOpeningTime.duration)
+                                                        val closingTime = if (isSameDay) {
+                                                            context.getString(
+                                                                R.string.location_closes,
+                                                                formattedTime
+                                                            )
+                                                        } else {
+                                                            val dow =
+                                                                currentOpeningTime.dayOfWeek.getDisplayName(
+                                                                    TextStyle.SHORT,
+                                                                    Locale.getDefault()
+                                                                )
+                                                            context.getString(
+                                                                R.string.location_closes_other_day,
+                                                                dow,
+                                                                formattedTime
+                                                            )
+                                                        }
+                                                        "${context.getString(R.string.location_open)} • $closingTime"
+                                                    } else {
+                                                        val nextOpeningTime =
+                                                            openingSchedule.getNextOpeningHours()
+                                                        val isSameDay =
+                                                            nextOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
+                                                        val formattedTime =
+                                                            timeFormat.format(nextOpeningTime.startTime)
+                                                        val openingTime = if (isSameDay) {
+                                                            context.getString(
+                                                                R.string.location_opens,
+                                                                formattedTime
+                                                            )
+                                                        } else {
+                                                            val dow =
+                                                                nextOpeningTime.dayOfWeek.getDisplayName(
+                                                                    TextStyle.SHORT,
+                                                                    Locale.getDefault()
+                                                                )
+                                                            context.getString(
+                                                                R.string.location_opens_other_day,
+                                                                dow,
+                                                                formattedTime
+                                                            )
+                                                        }
+                                                        "${context.getString(R.string.location_closed)} • $openingTime"
+                                                    }
+                                                }
 
-                                            Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                                                Text(
+                                                    text = text,
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                    modifier = Modifier.weight(1f)
+                                                )
+
+                                                Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                                            }
                                         }
                                     }
-                                } else {
+                                } else if (openingSchedule is OpeningSchedule.Hours) {
                                     Column(
                                         modifier = Modifier.padding(vertical = 6.dp)
                                     ) {
@@ -469,24 +660,26 @@ fun LocationItem(
                             .horizontalScroll(rememberScrollState())
                             .padding(start = 12.dp, top = 8.dp)
                     ) {
-                        AssistChip(
-                            modifier = Modifier.padding(end = 12.dp),
-                            onClick = {
-                                context.tryStartActivity(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse("google.navigation:q=${location.latitude},${location.longitude}")
-                                    ),
-                                )
-                            },
-                            label = { Text(stringResource(R.string.menu_navigation)) },
-                            leadingIcon = {
-                                Icon(
-                                    Icons.Rounded.Navigation, null,
-                                    modifier = Modifier.size(AssistChipDefaults.IconSize)
-                                )
-                            }
+                        val navigationIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("google.navigation:q=${location.latitude},${location.longitude}")
                         )
+                        val canResolveNavigationIntent = remember {
+                            null != context.packageManager.resolveActivity(navigationIntent, 0)
+                        }
+                        if (canResolveNavigationIntent) {
+                            AssistChip(
+                                modifier = Modifier.padding(end = 12.dp),
+                                onClick = { context.tryStartActivity(navigationIntent) },
+                                label = { Text(stringResource(R.string.menu_navigation)) },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Rounded.Navigation, null,
+                                        modifier = Modifier.size(AssistChipDefaults.IconSize)
+                                    )
+                                }
+                            )
+                        }
                         location.phoneNumber?.let {
                             AssistChip(
                                 modifier = Modifier.padding(end = 12.dp),
@@ -568,8 +761,6 @@ fun LocationItem(
                         icon = Icons.Rounded.Edit,
                         action = { sheetManager.showCustomizeSearchableModal(location) }
                     ))
-
-
 
                     location.fixMeUrl?.let {
                         toolbarActions += DefaultToolbarAction(
@@ -715,11 +906,11 @@ private fun buildAddress(
     return if (summary.isEmpty()) null else summary.toString()
 }
 
-private fun OpeningSchedule.getCurrentOpeningHours(): OpeningHours? {
+private fun OpeningSchedule.Hours.getCurrentOpeningHours(): OpeningHours? {
     return openingHours.find { it.isOpen() }
 }
 
-private fun OpeningSchedule.getNextOpeningHours(): OpeningHours {
+private fun OpeningSchedule.Hours.getNextOpeningHours(): OpeningHours {
     val now = LocalDateTime.now()
     val sortedSchedule = this
         .openingHours
@@ -737,80 +928,178 @@ private fun OpeningSchedule.getNextOpeningHours(): OpeningHours {
         } ?: sortedSchedule.first()
 }
 
-private val LocationCategory.labelRes
-    get() = when(this) {
-        LocationCategory.ART -> R.string.poi_category_art
-        LocationCategory.BANK -> R.string.poi_category_bank
-        LocationCategory.BAR -> R.string.poi_category_bar
-        LocationCategory.BEAUTY -> R.string.poi_category_beauty
-        LocationCategory.BICYCLE -> R.string.poi_category_bicycle
-        LocationCategory.RESTAURANT -> R.string.poi_category_restaurant
-        LocationCategory.FAST_FOOD -> R.string.poi_category_fast_food
-        LocationCategory.CAFE -> R.string.poi_category_coffee_shop
-        LocationCategory.HOTEL -> R.string.poi_category_hotel
-        LocationCategory.SUPERMARKET -> R.string.poi_category_supermarket
-        LocationCategory.OTHER -> R.string.poi_category_other
-        LocationCategory.SCHOOL -> R.string.poi_category_school
-        LocationCategory.PARKING -> R.string.poi_category_parking
-        LocationCategory.FUEL -> R.string.poi_category_fuel
-        LocationCategory.TOILETS -> R.string.poi_category_toilets
-        LocationCategory.PHARMACY -> R.string.poi_category_pharmacy
-        LocationCategory.HOSPITAL -> R.string.poi_category_hospital
-        LocationCategory.POST_OFFICE -> R.string.poi_category_post_office
-        LocationCategory.PUB -> R.string.poi_category_pub
-        LocationCategory.GRAVE_YARD -> R.string.poi_category_grave_yard
-        LocationCategory.DOCTORS -> R.string.poi_category_doctors
-        LocationCategory.POLICE -> R.string.poi_category_police
-        LocationCategory.DENTIST -> R.string.poi_category_dentist
-        LocationCategory.LIBRARY -> R.string.poi_category_library
-        LocationCategory.COLLEGE -> R.string.poi_category_college
-        LocationCategory.ICE_CREAM -> R.string.poi_category_ice_cream
-        LocationCategory.THEATRE -> R.string.poi_category_theater
-        LocationCategory.PUBLIC_BUILDING -> R.string.poi_category_public_building
-        LocationCategory.CINEMA -> R.string.poi_category_cinema
-        LocationCategory.NIGHTCLUB -> R.string.poi_category_nightclub
-        LocationCategory.BIERGARTEN -> R.string.poi_category_biergarten
-        LocationCategory.CLINIC -> R.string.poi_category_clinic
-        LocationCategory.UNIVERSITY -> R.string.poi_category_university
-        LocationCategory.DEPARTMENT_STORE -> R.string.poi_category_department_store
-        LocationCategory.CLOTHES -> R.string.poi_category_clothes
-        LocationCategory.CONVENIENCE -> R.string.poi_category_convenience
-        LocationCategory.HAIRDRESSER -> R.string.poi_category_hairdresser
-        LocationCategory.CAR_REPAIR -> R.string.poi_category_car_repair
-        LocationCategory.BOOKS -> R.string.poi_category_books
-        LocationCategory.BAKERY -> R.string.poi_category_bakery
-        LocationCategory.CAR -> R.string.poi_category_car
-        LocationCategory.MOBILE_PHONE -> R.string.poi_category_mobile_phone
-        LocationCategory.FURNITURE -> R.string.poi_category_furniture
-        LocationCategory.ALCOHOL -> R.string.poi_category_alcohol
-        LocationCategory.FLORIST -> R.string.poi_category_florist
-        LocationCategory.HARDWARE -> R.string.poi_category_hardware
-        LocationCategory.ELECTRONICS -> R.string.poi_category_electronics
-        LocationCategory.SHOES -> R.string.poi_category_shoes
-        LocationCategory.MALL -> R.string.poi_category_mall
-        LocationCategory.OPTICIAN -> R.string.poi_category_optician
-        LocationCategory.JEWELRY -> R.string.poi_category_jewelry
-        LocationCategory.GIFT -> R.string.poi_category_gift
-        LocationCategory.LAUNDRY -> R.string.poi_category_laundry
-        LocationCategory.COMPUTER -> R.string.poi_category_computer
-        LocationCategory.TOBACCO -> R.string.poi_category_tobacco
-        LocationCategory.WINE -> R.string.poi_category_wine
-        LocationCategory.PHOTO -> R.string.poi_category_photo
-        LocationCategory.COFFEE_SHOP -> R.string.poi_category_coffee_shop
-        LocationCategory.SOCCER -> R.string.poi_category_soccer
-        LocationCategory.BASKETBALL -> R.string.poi_category_basketball
-        LocationCategory.TENNIS -> R.string.poi_category_tennis
-        LocationCategory.FITNESS -> R.string.poi_category_fitness
-        LocationCategory.TRAM_STOP -> R.string.poi_category_tram_stop
-        LocationCategory.RAILWAY_STATION -> R.string.poi_category_railway_station
-        LocationCategory.RAILWAY_STOP -> R.string.poi_category_railway_stop
-        LocationCategory.BUS_STATION -> R.string.poi_category_bus_station
-        LocationCategory.ATM -> R.string.poi_category_atm
-        LocationCategory.KIOSK -> R.string.poi_category_kiosk
-        LocationCategory.BUS_STOP -> R.string.poi_category_bus_stop
-        LocationCategory.MUSEUM -> R.string.poi_category_museum
-        LocationCategory.PARCEL_LOCKER -> R.string.poi_category_parcel_locker
-        LocationCategory.CHEMIST -> R.string.poi_category_chemist
-        LocationCategory.TRAVEL_AGENCY -> R.string.poi_category_travel_agency
-        LocationCategory.FITNESS_CENTRE -> R.string.poi_category_fitness_center
+@Composable
+fun Departure.LineIcon(
+    modifier: Modifier
+) {
+    val harmonizeArgb = MaterialTheme.colorScheme.primary.toArgb()
+    var (lineBg, lineFg) = if (lineColor != null) {
+        val bg = Color(
+            harmonize(lineColor!!.toArgb(), harmonizeArgb)
+        )
+        val fg = Color(
+            harmonize(
+                if (0.5f < bg.luminance()) Color.Black.toArgb() else Color.White.toArgb(),
+                harmonizeArgb
+            )
+        )
+        bg to fg
+    } else {
+        MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
     }
+
+    val hasDeparted = ZonedDateTime.now().isAfter(time + (delay ?: Duration.ZERO))
+
+    if (hasDeparted) {
+        val hsv = FloatArray(3)
+        android.graphics.Color.colorToHSV(lineBg.toArgb(), hsv)
+        val (h, s, v) = hsv
+        lineBg = Color.hsv(h, s / 2f, v, lineBg.alpha)
+    }
+
+    Row(
+        modifier = modifier
+            .wrapContentWidth(Alignment.Start)
+            .background(
+                lineBg,
+                MaterialTheme.shapes.small
+            )
+            .padding(top = 4.dp, bottom = 4.dp, start = 4.dp, end = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = when (type) {
+                LineType.Bus -> Icons.Rounded.DirectionsBus
+                LineType.Tram -> Icons.Rounded.Tram
+                LineType.Subway -> Icons.Rounded.Subway
+                LineType.Monorail -> Icons.Rounded.DirectionsTransit
+                LineType.CommuterTrain -> Icons.Rounded.DirectionsRailway
+                LineType.Train, LineType.RegionalTrain, LineType.HighSpeedTrain -> Icons.Rounded.Train
+                LineType.Boat -> Icons.Rounded.DirectionsBoat
+                LineType.CableCar -> Icons.Rounded.CableCar
+                LineType.Airplane -> Icons.Rounded.AirplanemodeActive
+                null -> Icons.Rounded.Commute
+            },
+            contentDescription = type?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
+            tint = lineFg,
+            modifier = Modifier
+                .padding(end = 2.dp)
+                .size(16.dp),
+        )
+        MarqueeText(
+            text = line,
+            style = MaterialTheme.typography.labelSmall,
+            color = lineFg,
+            textAlign = TextAlign.Center,
+            fadeLeft = 2.5.dp,
+            fadeRight = 2.5.dp,
+            iterations = Int.MAX_VALUE,
+            repeatDelayMillis = 0,
+            spacing = MarqueeSpacing(10.dp),
+            velocity = 20.dp,
+            modifier = Modifier
+                .wrapContentSize()
+                .widthIn(max = 34.dp)
+        )
+    }
+}
+
+@Composable
+fun Departure.LazyColumnPart(
+    lineWidth: Int?,
+    modifier: Modifier
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth(0.8f)
+        ) {
+            LineIcon(
+                Modifier
+                    .padding(end = 8.dp)
+                    .widthIn(
+                        min = if (lineWidth == null) 0.dp
+                        else max(64.dp, lineWidth * 8.dp)
+                    )
+            )
+            if (lastStop != null) {
+                MarqueeText(
+                    text = lastStop!!,
+                    style = MaterialTheme.typography.labelMedium,
+                    iterations = Int.MAX_VALUE,
+                    repeatDelayMillis = 0,
+                    velocity = 20.dp,
+                    fadeLeft = 5.dp,
+                    fadeRight = 5.dp,
+                )
+            }
+        }
+        Row(
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = time.format(
+                    DateTimeFormatter.ofPattern(
+                        "HH:mm",
+                        Locale.getDefault()
+                    )
+                ),
+                style = MaterialTheme.typography.labelSmall,
+                modifier = Modifier.padding(end = 2.dp)
+            )
+            val delayMinutes = delay?.toMinutes()
+            if (null != delayMinutes && 0L < delayMinutes) {
+                Text(
+                    text = "+$delayMinutes",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.error,
+                    fontSize = TextUnit(2f, TextUnitType.Em),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun Attribution(
+    attribution: Attribution,
+    modifier: Modifier = Modifier,
+    reverse: Boolean = false,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (attribution.text != null && !reverse) {
+            Text(
+                text = attribution.text!!,
+                style = MaterialTheme.typography.labelSmall,
+            )
+        }
+
+        if (attribution.iconUrl != null) {
+            AsyncImage(
+                modifier = Modifier
+                    .padding(
+                        start = if (reverse) 0.dp else 8.dp,
+                        end = if (reverse) 8.dp else 0.dp
+                    )
+                    .requiredHeight(16.dp),
+                model = attribution.iconUrl!!,
+                contentDescription = null,
+            )
+        }
+        if (attribution.text != null && reverse) {
+            Text(
+                text = attribution.text!!,
+                style = MaterialTheme.typography.labelSmall,
+            )
+        }
+    }
+}

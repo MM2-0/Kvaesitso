@@ -135,7 +135,9 @@ data class LauncherSettingsData internal constructor(
     val weatherProviderSettings: Map<String, ProviderSettings> = emptyMap(),
     val weatherImperialUnits: Boolean = false,
 
+    @Deprecated("Use locationSearchProviders instead")
     val locationSearchEnabled: Boolean = false,
+    val locationSearchProviders: Set<String> = setOf("openstreetmaps"),
     val locationSearchImperialUnits: Boolean = false,
     val locationSearchRadius: Int = 1500,
     val locationSearchHideUncategorized: Boolean = true,
