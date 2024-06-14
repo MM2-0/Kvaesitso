@@ -632,7 +632,6 @@
     <string name="location_opens">Gaat open om %1$s</string>
     <string name="preference_search_bar_separate_work_profile">Apps in het werkprofiel scheiden</string>
     <string name="preference_search_locations">Plaatsen</string>
-    <string name="poi_category_other">Interessante plaats</string>
     <string name="preference_mdy_color_source">Kleuren om vanaf Android 12 te gebruiken voor Material You kleurenschema\'s: wat het systeem voorstelt of de eigen kleurextractie uit de achtergrond van Kvaesitso</string>
     <string name="preference_mdy_color_source_system">Material You kleuren van het OS gebruiken</string>
     <string name="preference_mdy_color_source_wallpaper">Material You kleuren uit de achtergrond halen. Dit is de standaardinstelling op Android 11 en lager, maar kan ook aangezet worden op Android 12 en hoger voor compatibiliteit</string>

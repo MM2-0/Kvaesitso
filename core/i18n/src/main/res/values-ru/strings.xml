@@ -644,7 +644,6 @@
     <string name="clock_style_empty">Нет часов</string>
     <string name="clock_style_custom">Свой виджет</string>
     <string name="clock_variant_outlined">Без заливки</string>
-    <string name="poi_category_other">Интересное место</string>
     <string name="poi_category_school">Школа</string>
     <string name="poi_category_parking">Парковка</string>
     <string name="poi_category_fuel">Заправка</string>
