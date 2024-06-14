@@ -890,9 +890,9 @@
     <string name="poi_category_jewelry">Jewelry store</string>
     <string name="poi_category_laundry">Laundry</string>
     <string name="poi_category_bank">Bank</string>
-    <string name="poi_category_soccer">Soccer</string>
-    <string name="poi_category_basketball">Basketball</string>
-    <string name="poi_category_tennis">Tennis</string>
+    <string name="poi_category_soccer">Soccer field</string>
+    <string name="poi_category_basketball">Basketball court</string>
+    <string name="poi_category_tennis">Tennis court</string>
     <string name="poi_category_atm">ATM</string>
     <string name="poi_category_kiosk">Kiosk</string>
     <string name="poi_category_museum">Museum</string>
