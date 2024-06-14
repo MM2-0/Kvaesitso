@@ -30,7 +30,6 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerDefaults
@@ -75,7 +74,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
@@ -98,6 +96,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
@@ -196,7 +195,13 @@ fun PagerScaffold(
 
     val colorSurface = MaterialTheme.colorScheme.surface
     val isDarkTheme = LocalDarkTheme.current
-    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface, showStatusBarScrim, isSearchOpen) {
+    LaunchedEffect(
+        isWidgetEditMode,
+        darkStatusBarIcons,
+        colorSurface,
+        showStatusBarScrim,
+        isSearchOpen
+    ) {
         if (isWidgetEditMode) {
             systemUiController.setStatusBarColor(
                 colorSurface
@@ -403,13 +408,18 @@ fun PagerScaffold(
 
                 val minFlingVelocity = 1000.dp.toPixels()
                 val colorSurfaceContainer = MaterialTheme.colorScheme.surfaceContainer
+                val cardStyle = LocalCardStyle.current
 
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxSize()
                         .drawBehind {
                             drawRect(
-                                color = colorSurfaceContainer.copy(alpha = -pagerState.getOffsetDistanceInPages(0) * 0.85f),
+                                color = colorSurfaceContainer.copy(
+                                    alpha = -pagerState.getOffsetDistanceInPages(
+                                        0
+                                    ) * 0.85f * cardStyle.opacity
+                                ),
                             )
                         }
                         .nestedScroll(pagerNestedScrollConnection),
