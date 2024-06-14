@@ -97,7 +97,7 @@ sealed class CustomIcon : CustomAttribute {
                 "custom_icon_pack_icon2" -> {
                     CustomIconPackIcon(
                         iconPackPackage = payload.getString("icon_pack"),
-                        type = payload.getString("type"),
+                        type = payload.getString("icon_type"),
                         drawable = payload.optString("drawable"),
                         extras = payload.optString("extras").takeIf { it.isNotEmpty() },
                         allowThemed = payload.optBoolean("allow_themed", true),
@@ -157,7 +157,7 @@ data class CustomIconPackIcon(
         return jsonObjectOf(
             "type" to "custom_icon_pack_icon2",
             "icon_pack" to iconPackPackage,
-            "type" to type,
+            "icon_type" to type,
             "drawable" to drawable,
             "extras" to extras,
             "allow_themed" to allowThemed,
