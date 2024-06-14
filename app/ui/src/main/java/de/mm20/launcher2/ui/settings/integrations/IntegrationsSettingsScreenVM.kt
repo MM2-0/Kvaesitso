@@ -17,7 +17,6 @@ class IntegrationsSettingsScreenVM : ViewModel(), KoinComponent {
     val isGoogleAvailable = accountsRepository.isSupported(AccountType.Google)
 
     val googleUser = mutableStateOf<Account?>(null)
-    val msUser= mutableStateOf<Account?>(null)
     val nextcloudUser = mutableStateOf<Account?>(null)
     val owncloudUser = mutableStateOf<Account?>(null)
 

@@ -34,6 +34,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.accounts.AccountType
+import de.mm20.launcher2.icons.Google
+import de.mm20.launcher2.icons.Nextcloud
+import de.mm20.launcher2.icons.Owncloud
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -55,7 +58,6 @@ fun IntegrationsSettingsScreen() {
 
     val owncloudUser by viewModel.owncloudUser
     val nextcloudUser by viewModel.nextcloudUser
-    val msUser by viewModel.msUser
     val googleUser by viewModel.googleUser
 
     val loading by viewModel.loading
@@ -83,73 +85,28 @@ fun IntegrationsSettingsScreen() {
                     navController?.navigate("settings/integrations/media")
                 }
             )
-        }
-        item {
-            PreferenceCategory(
-                title = stringResource(id = R.string.preference_category_accounts)
-            ) {
-
-                Preference(
-                    title = if (nextcloudUser != null) {
-                        stringResource(R.string.preference_nextcloud)
-                    } else {
-                        stringResource(R.string.preference_nextcloud_signin)
-                    },
-                    summary = nextcloudUser?.let {
-                        stringResource(R.string.preference_signin_user, it.userName)
-                    } ?: stringResource(R.string.preference_nextcloud_signin_summary),
-                    onClick = {
-                        if (nextcloudUser != null) {
-                            viewModel.signOut(AccountType.Nextcloud)
-                        } else {
-                            viewModel.signIn(context as AppCompatActivity, AccountType.Nextcloud)
-                        }
-                    },
-                    enabled = !loading,
-                )
-
-                Preference(
-                    title = if (owncloudUser != null) {
-                        stringResource(R.string.preference_owncloud)
-                    } else {
-                        stringResource(R.string.preference_owncloud_signin)
-                    },
-                    summary = owncloudUser?.let {
-                        stringResource(R.string.preference_signin_user, it.userName)
-                    } ?: stringResource(R.string.preference_owncloud_signin_summary),
-                    onClick = {
-                        if (owncloudUser != null) {
-                            viewModel.signOut(AccountType.Owncloud)
-                        } else {
-                            viewModel.signIn(context as AppCompatActivity, AccountType.Owncloud)
-                        }
-                    },
-                    enabled = !loading,
-                )
-
-                if (viewModel.isGoogleAvailable) {
-                    Preference(
-                        title = if (googleUser != null) {
-                            stringResource(R.string.preference_google)
-                        } else {
-                            stringResource(R.string.preference_google_signin)
-                        },
-                        summary = googleUser?.let {
-                            stringResource(R.string.preference_signin_user, it.userName)
-                        } ?: stringResource(R.string.preference_google_signin_summary),
-                        onClick = {
-                            if (googleUser != null) {
-                                viewModel.signOut(AccountType.Google)
-                            } else {
-                                viewModel.signIn(
-                                    context as AppCompatActivity,
-                                    AccountType.Google
-                                )
-                            }
-                        },
-                        enabled = !loading,
-                    )
+            Preference(
+                title = stringResource(R.string.preference_nextcloud),
+                icon = Icons.Rounded.Nextcloud,
+                onClick = {
+                    navController?.navigate("settings/integrations/nextcloud")
                 }
+            )
+            Preference(
+                title = stringResource(R.string.preference_owncloud),
+                icon = Icons.Rounded.Owncloud,
+                onClick = {
+                    navController?.navigate("settings/integrations/owncloud")
+                }
+            )
+            if (viewModel.isGoogleAvailable) {
+                Preference(
+                    title = stringResource(R.string.preference_google),
+                    icon = Icons.Rounded.Google,
+                    onClick = {
+                        navController?.navigate("settings/integrations/google")
+                    }
+                )
             }
         }
     }

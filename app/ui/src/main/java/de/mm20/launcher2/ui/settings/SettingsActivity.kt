@@ -44,6 +44,7 @@ import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.filterbar.FilterBarSettingsScreen
 import de.mm20.launcher2.ui.settings.gestures.GestureSettingsScreen
+import de.mm20.launcher2.ui.settings.google.GoogleSettingsScreen
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
 import de.mm20.launcher2.ui.settings.homescreen.HomescreenSettingsScreen
 import de.mm20.launcher2.ui.settings.icons.IconsSettingsScreen
@@ -53,6 +54,8 @@ import de.mm20.launcher2.ui.settings.locations.LocationsSettingsScreen
 import de.mm20.launcher2.ui.settings.log.LogScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.media.MediaIntegrationSettingsScreen
+import de.mm20.launcher2.ui.settings.nextcloud.NextcloudSettingsScreen
+import de.mm20.launcher2.ui.settings.owncloud.OwncloudSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
@@ -185,6 +188,15 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/integrations") {
                                     IntegrationsSettingsScreen()
+                                }
+                                composable("settings/integrations/nextcloud") {
+                                    NextcloudSettingsScreen()
+                                }
+                                composable("settings/integrations/owncloud") {
+                                    OwncloudSettingsScreen()
+                                }
+                                composable("settings/integrations/google") {
+                                    GoogleSettingsScreen()
                                 }
                                 composable("settings/plugins") {
                                     PluginsSettingsScreen()

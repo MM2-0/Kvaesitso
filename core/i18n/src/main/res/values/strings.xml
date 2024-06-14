@@ -510,6 +510,7 @@
     <string name="preference_screen_integrations_summary">Manage connected accounts and services</string>
     <string name="preference_google">Google</string>
     <string name="preference_signin_user">Signed in as %1$s</string>
+    <string name="preference_signout">Sign out</string>
     <string name="preference_summary_not_logged_in">You are currently not logged in</string>
     <string name="preference_icon_shape_pentagon">Pentagon</string>
     <string name="preference_category_wallpaper">Wallpaper</string>
