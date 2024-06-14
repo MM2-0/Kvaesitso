@@ -277,7 +277,7 @@
     <string name="preference_category_debug">Debug</string>
     <string name="preference_category_debug_tools">Hulpmiddelen</string>
     <string name="preference_debug_cleanup_database">Database opschonen</string>
-    <string name="preference_debug_cleanup_database_summary">Verwijder kapotte en ongebruikte velden uit de database</string>
+    <string name="preference_debug_cleanup_database_summary">Corrupte en ongebruikte velden uit de database verwijderen</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">%1$d entry verwijderd.</item>
         <item quantity="other">%1$d entries verwijderd.</item>
@@ -347,9 +347,9 @@
     <string name="preference_clockwidget_favorites_part_summary">Eerste rij van de vastgezette items tonen</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_alarm_part_summary">Alarmen die afgaan in de komende 15 minuten tonen</string>
-    <string name="preference_screen_backup_summary">Launcherdata exporteren en importeren</string>
+    <string name="preference_screen_backup_summary">Launchergegevens exporteren en importeren</string>
     <string name="preference_backup">Backup</string>
-    <string name="preference_backup_summary">Voorkeuren en launcherdata exporteren</string>
+    <string name="preference_backup_summary">Voorkeuren en launchergegevens exporteren</string>
     <string name="preference_screen_search_summary">Zoeken, tags, verborgen items</string>
     <string name="preference_restore">Herstellen</string>
     <string name="preference_restore_summary">Vroeger gemaakte backup herstellen</string>
@@ -815,7 +815,7 @@
     <string name="imperial">Brits-Amerikaans</string>
     <string name="metric">Metrisch</string>
     <string name="preference_search_osm_locations_summary">OpenStreetMap doorzoeken voor winkels en andere plaatsen in de omgeving</string>
-    <string name="plugin_type_locationsearch">Locatie zoeken</string>
+    <string name="plugin_type_locationsearch">Plaatsen zoeken</string>
     <string name="poi_category_mosque">Moskee</string>
     <string name="poi_category_buddhist_temple">Boeddhistische tempel</string>
     <string name="poi_category_hindu_temple">Hindoetempel</string>
