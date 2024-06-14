@@ -218,7 +218,8 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                     } ?: (R.string.poi_category_restaurant to LocationIcon.Restaurant)
 
                     "fuel" -> R.string.poi_category_fuel to LocationIcon.GasStation
-                    "car_rental", "car_sharing" -> R.string.poi_category_car to LocationIcon.CarRental
+                    "car_rental" -> R.string.poi_category_car to LocationIcon.CarRental
+                    "car_sharing" -> R.string.poi_category_car to LocationIcon.CarRental
                     "car_wash" -> R.string.poi_category_car_wash to LocationIcon.CarWash
                     "charging_station" -> R.string.poi_category_charging_station to LocationIcon.ChargingStation
                     "parking", "parking_space", "motorcycle_parking" -> R.string.poi_category_parking to LocationIcon.Parking
