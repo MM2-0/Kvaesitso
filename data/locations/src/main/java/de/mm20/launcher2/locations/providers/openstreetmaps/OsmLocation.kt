@@ -217,8 +217,8 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                     } ?: (R.string.poi_category_restaurant to LocationIcon.Restaurant)
 
                     "fuel" -> R.string.poi_category_fuel to LocationIcon.GasStation
-                    "car_rental" -> R.string.poi_category_car to LocationIcon.CarRental
-                    "car_sharing" -> R.string.poi_category_car to LocationIcon.CarRental
+                    "car_rental" -> R.string.poi_category_car_rental to LocationIcon.CarRental
+                    "car_sharing" -> R.string.poi_category_car_sharing to LocationIcon.CarRental
                     "car_wash" -> R.string.poi_category_car_wash to LocationIcon.CarWash
                     "charging_station" -> R.string.poi_category_charging_station to LocationIcon.ChargingStation
                     "parking", "parking_space", "motorcycle_parking" -> R.string.poi_category_parking to LocationIcon.Parking
@@ -273,7 +273,6 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                         "basketball" with (R.string.poi_category_basketball to LocationIcon.Basketball)
                         "gymnastics" with (R.string.poi_category_gymnastics to LocationIcon.Gymnastics)
                         "martial_arts" with (R.string.poi_category_martial_arts to LocationIcon.MartialArts)
-                        "golf" with (R.string.poi_category_golf to LocationIcon.Golf)
                         "ice_hockey" with (R.string.poi_category_ice_hockey to LocationIcon.Hockey)
                         "baseball" with (R.string.poi_category_baseball to LocationIcon.Baseball)
                         "american_football" with (R.string.poi_category_american_football to LocationIcon.AmericanFootball)
@@ -282,7 +281,7 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                         "skiing" with (R.string.poi_category_skiing to LocationIcon.Skiing)
                         "cricket" with (R.string.poi_category_cricket to LocationIcon.Cricket)
                     }
-
+                    "golf_course" -> R.string.poi_category_golf to LocationIcon.Golf
                     "park" -> R.string.poi_category_park to LocationIcon.Park
                     else -> null
                 }
