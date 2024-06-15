@@ -143,7 +143,7 @@ data class LauncherSettingsData internal constructor(
     val locationSearchHideUncategorized: Boolean = true,
     val locationSearchOverpassUrl: String = LocationSearchSettings.DefaultOverpassUrl,
     val locationSearchTileServer: String = LocationSearchSettings.DefaultTileServerUrl,
-    val locationSearchShowMap: Boolean = false,
+    val locationSearchShowMap: Boolean = true,
     val locationSearchShowPositionOnMap: Boolean = false,
     val locationSearchThemeMap: Boolean = true,
 
