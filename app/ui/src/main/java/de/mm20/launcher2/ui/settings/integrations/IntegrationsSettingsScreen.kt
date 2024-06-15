@@ -46,30 +46,9 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 @Composable
 fun IntegrationsSettingsScreen() {
     val viewModel: IntegrationsSettingsScreenVM = viewModel()
-    val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
     val navController = LocalNavController.current
 
-    LaunchedEffect(null) {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            viewModel.onResume()
-        }
-    }
-
-    val owncloudUser by viewModel.owncloudUser
-    val nextcloudUser by viewModel.nextcloudUser
-    val googleUser by viewModel.googleUser
-
-    val loading by viewModel.loading
-
     PreferenceScreen(title = stringResource(R.string.preference_screen_integrations)) {
-        if (loading) {
-            item {
-                LinearProgressIndicator(
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
         item {
             Preference(
                 title = stringResource(R.string.preference_weather_integration),
