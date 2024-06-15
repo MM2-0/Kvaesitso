@@ -4,9 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateOffsetAsState
 import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -102,11 +110,10 @@ fun MapTiles(
 
     val userLocation = userLocation()
 
-    val (start, stop, zoom) = remember(location, userLocation) {
+    val tileRange = remember(location, userLocation) {
         getTileRange(location, userLocation, tiles, maxZoomLevel)
     }
 
-    val sideLength = stop.x - start.x + 1
 
     val colorMatrix = remember(applyTheming, darkMode, tintColor) {
         // darkreader css for openstreetmap tiles
@@ -128,78 +135,123 @@ fun MapTiles(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            for (y in start.y..stop.y) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    for (x in start.x..stop.x) {
-                        AsyncImage(
-                            modifier = Modifier
-                                .weight(1f / sideLength)
-                                .aspectRatio(1f)
-                                .background(MaterialTheme.colorScheme.secondaryContainer),
-                            imageLoader = MapTileLoader.loader,
-                            model = MapTileLoader.getTileRequest(tileServerUrl, x, y, zoom),
-                            contentDescription = null,
-                            colorFilter = colorMatrix?.let { ColorFilter.colorMatrix(it) },
-                            filterQuality = FilterQuality.High,
+        AnimatedContent(
+            tileRange,
+            transitionSpec = {
+                if (targetState.zoomLevel == initialState.zoomLevel) {
+                    val initialCenterX = (initialState.stop.x + initialState.start.x) / 2f
+                    val targetCenterX = (targetState.stop.x + targetState.start.x) / 2f
+                    val initialCenterY = (initialState.stop.y + initialState.start.y) / 2f
+                    val targetCenterY = (targetState.stop.y + targetState.start.y) / 2f
+                    val initialDeltaX = targetCenterX - initialCenterX
+                    val targetDeltaX = targetCenterX - initialCenterX
+                    val initialDeltaY = targetCenterY - initialCenterY
+                    val targetDeltaY = targetCenterY - initialCenterY
+
+                    return@AnimatedContent slideIn {
+                        IntOffset(
+                            (targetDeltaX * (it.width / tiles.width)).toInt(),
+                            (targetDeltaY * (it.height / tiles.height)).toInt()
+                        )
+                    } togetherWith slideOut {
+                        IntOffset(
+                            -(initialDeltaX * (it.width / tiles.width)).toInt(),
+                            -(initialDeltaY * (it.height / tiles.height)).toInt()
                         )
                     }
                 }
+                val scale = 2f.pow(targetState.zoomLevel - initialState.zoomLevel)
+
+                fadeIn() + scaleIn(initialScale = 1f / scale) togetherWith
+                        fadeOut() + scaleOut(targetScale = scale)
             }
-        }
+        ) { (start, stop, zoom) ->
+            val sideLength = stop.x - start.x + 1
+            Column(modifier = Modifier.fillMaxWidth()) {
+                for (y in start.y..stop.y) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        for (x in start.x..stop.x) {
+                            AsyncImage(
+                                modifier = Modifier
+                                    .weight(1f / sideLength)
+                                    .aspectRatio(1f)
+                                    .background(MaterialTheme.colorScheme.secondaryContainer),
+                                imageLoader = MapTileLoader.loader,
+                                model = MapTileLoader.getTileRequest(tileServerUrl, x, y, zoom),
+                                contentDescription = null,
+                                colorFilter = colorMatrix?.let { ColorFilter.colorMatrix(it) },
+                                filterQuality = FilterQuality.High,
+                            )
+                        }
+                    }
+                }
+            }
 
-        val tileSize = minWidth / tiles.width.toFloat()
-        val locationTileCoordinates =
-            getTileCoordinates(location.latitude, location.longitude, zoom)
+            val tileSize = minWidth / tiles.width.toFloat()
+            val locationTileCoordinates =
+                getTileCoordinates(location.latitude, location.longitude, zoom)
 
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .width(12.dp)
-                .height(4.dp)
-                .absoluteOffset(
-                    x = (locationTileCoordinates.x - start.x) * tileSize - 6.dp,
-                    y = (locationTileCoordinates.y - start.y) * tileSize - 2.dp,
-                )
-                .shadow(1.dp, CircleShape)
-        )
-
-        Icon(
-            imageVector = Icons.Rounded.Place,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.tertiary,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .size(24.dp)
-                .absoluteOffset(
-                    x = (locationTileCoordinates.x - start.x) * tileSize - 12.dp,
-                    y = (locationTileCoordinates.y - start.y) * tileSize - 22.dp,
-                )
-        )
-        if (userLocation != null) {
-            val userIndicatorOffset by animateOffsetAsState(
-                targetValue = getTileCoordinates(userLocation.lat, userLocation.lon, zoom).let {
-                    Offset(
-                        (it.x - start.x) * tileSize.value - 8f,
-                        (it.y - start.y) * tileSize.value - 8f
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .width(12.dp)
+                    .height(4.dp)
+                    .absoluteOffset(
+                        x = (locationTileCoordinates.x - start.x) * tileSize - 6.dp,
+                        y = (locationTileCoordinates.y - start.y) * tileSize - 2.dp,
                     )
-                },
-                animationSpec = tween()
+                    .shadow(1.dp, CircleShape)
             )
 
-            if (userLocation.heading != null) {
-                val headingAnim by animateValueAsState(
-                    targetValue = userLocation.heading,
-                    typeConverter = Float.DegreesConverter
+            Icon(
+                imageVector = Icons.Rounded.Place,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.tertiary,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .size(24.dp)
+                    .absoluteOffset(
+                        x = (locationTileCoordinates.x - start.x) * tileSize - 12.dp,
+                        y = (locationTileCoordinates.y - start.y) * tileSize - 22.dp,
+                    )
+            )
+            if (userLocation != null) {
+                val userIndicatorOffset by animateOffsetAsState(
+                    targetValue = getTileCoordinates(userLocation.lat, userLocation.lon, zoom).let {
+                        Offset(
+                            (it.x - start.x) * tileSize.value - 8f,
+                            (it.y - start.y) * tileSize.value - 8f
+                        )
+                    },
+                    animationSpec = tween()
                 )
 
-                Icon(
-                    imageVector = Icons.Rounded.Navigation,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.tertiary,
+                if (userLocation.heading != null) {
+                    val headingAnim by animateValueAsState(
+                        targetValue = userLocation.heading,
+                        typeConverter = Float.DegreesConverter
+                    )
+
+                    Icon(
+                        imageVector = Icons.Rounded.Navigation,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .size(16.dp)
+                            .absoluteOffset(
+                                userIndicatorOffset.x.dp,
+                                userIndicatorOffset.y.dp
+                            )
+                            .rotate(headingAnim)
+                            .absoluteOffset(y = -8.dp)
+                    )
+                }
+
+                Box(
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .size(16.dp)
@@ -207,34 +259,22 @@ fun MapTiles(
                             userIndicatorOffset.x.dp,
                             userIndicatorOffset.y.dp
                         )
-                        .rotate(headingAnim)
-                        .absoluteOffset(y = -8.dp)
+                        .background(MaterialTheme.colorScheme.tertiary, CircleShape)
+                        .border(2.dp, MaterialTheme.colorScheme.onTertiary, CircleShape)
+                        .shadow(1.dp, CircleShape)
                 )
-            }
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .size(16.dp)
-                    .absoluteOffset(
-                        userIndicatorOffset.x.dp,
-                        userIndicatorOffset.y.dp
+                if (osmAttribution != null) {
+                    Text(
+                        text = osmAttribution,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .background(MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = .5f))
+                            .padding(top = 2.dp, bottom = 2.dp, start = 4.dp, end = 4.dp)
                     )
-                    .background(MaterialTheme.colorScheme.tertiary, CircleShape)
-                    .border(2.dp, MaterialTheme.colorScheme.onTertiary, CircleShape)
-                    .shadow(1.dp, CircleShape)
-            )
-
-            if (osmAttribution != null) {
-                Text(
-                    text = osmAttribution,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .background(MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = .5f))
-                        .padding(top = 2.dp, bottom = 2.dp, start = 4.dp, end = 4.dp)
-                )
+                }
             }
         }
     }
