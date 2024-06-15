@@ -4,14 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.compose.animation.core.EaseInOutCirc
-import androidx.compose.animation.core.EaseInOutSine
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateOffsetAsState
 import androidx.compose.animation.core.animateValueAsState
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -43,7 +37,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.FilterQuality
@@ -158,38 +151,6 @@ fun MapTiles(
             }
         }
 
-        val locationBorderColor =
-            if (applyTheming) MaterialTheme.colorScheme.error else Color(0xFFEFA521) // orange-ish
-        val userLocationColor =
-            if (applyTheming) MaterialTheme.colorScheme.onErrorContainer else Color(0xFF35A82C) // darkish green
-        val userLocationBorderColor =
-            if (applyTheming) {
-                MaterialTheme.colorScheme.errorContainer
-            } else if (darkMode) {
-                Color(0xFF777777)
-            } else {
-                Color(0xFFE5E5E5)
-            }
-
-        val infiniteTransition = rememberInfiniteTransition("infiniteTransition")
-        val userLocAnimation by infiniteTransition.animateFloat(
-            initialValue = 0.8f,
-            targetValue = 1f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(2000, easing = EaseInOutSine),
-                repeatMode = RepeatMode.Reverse
-            ),
-            label = "userLocAnimation"
-        )
-        val poiLocAnimation by infiniteTransition.animateFloat(
-            initialValue = 30f,
-            targetValue = 20f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(750, easing = EaseInOutCirc),
-                repeatMode = RepeatMode.Reverse
-            ),
-            label = "poiLocAnimation"
-        )
         val tileSize = minWidth / tiles.width.toFloat()
         val locationTileCoordinates =
             getTileCoordinates(location.latitude, location.longitude, zoom)
@@ -390,8 +351,20 @@ private object MapTileLoader : KoinComponent {
     }"
 
     fun getTileRequest(tileServerUrl: String, x: Int, y: Int, zoom: Int): ImageRequest {
+        val url = if (
+            tileServerUrl.contains("\${x}") &&
+            tileServerUrl.contains("\${y}") &&
+            tileServerUrl.contains("\${z}")
+        ) {
+            tileServerUrl
+                .replace("\${x}", x.toString())
+                .replace("\${y}", y.toString())
+                .replace("\${z}", zoom.toString())
+        } else {
+            "$tileServerUrl/$zoom/$x/$y.png"
+        }
         return ImageRequest.Builder(context)
-            .data("$tileServerUrl/$zoom/$x/$y.png")
+            .data(url)
             .addHeader(
                 "User-Agent",
                 userAgent
@@ -504,5 +477,5 @@ private object MockLocation : Location {
     override val userRating: Float
         get() = 0.9f
 
-    override val userRatingCount: Int  = 553
+    override val userRatingCount: Int = 553
 }
