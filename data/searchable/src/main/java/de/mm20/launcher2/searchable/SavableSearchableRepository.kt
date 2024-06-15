@@ -16,9 +16,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -105,7 +107,7 @@ interface SavableSearchableRepository: Backupable {
      * Get items with the given keys from the favorites database.
      * Items that don't exist in the database will not be returned.
      */
-    suspend fun getByKeys(keys: List<String>): List<SavableSearchable>
+    fun getByKeys(keys: List<String>): Flow<List<SavableSearchable>>
 
     /**
      * Remove database entries that are invalid. This includes
@@ -376,16 +378,20 @@ internal class SavableSearchableRepositoryImpl(
         }
     }
 
-    override suspend fun getByKeys(keys: List<String>): List<SavableSearchable> {
+    override fun getByKeys(keys: List<String>): Flow<List<SavableSearchable>> {
         val dao = database.searchableDao()
         if (keys.size > 999) {
-            return keys.chunked(999).flatMap {
+            return combine(keys.chunked(999).map {
                 dao.getByKeys(it)
-                    .mapNotNull { fromDatabaseEntity(it).searchable }
+                    .map {
+                        it.mapNotNull { fromDatabaseEntity(it).searchable }
+                    }
+            }) { results ->
+                results.flatMap { it }
             }
         }
         return dao.getByKeys(keys)
-            .mapNotNull { fromDatabaseEntity(it).searchable }
+            .map { it.mapNotNull { fromDatabaseEntity(it).searchable } }
     }
 
     override suspend fun backup(toDir: File) = withContext(Dispatchers.IO) {

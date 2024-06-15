@@ -168,7 +168,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 longPressAppKey,
                 doubleTapAppKey,
                 homeButtonAppKey,
-            ).let { searchableRepository.getByKeys(it) }
+            ).let { searchableRepository.getByKeys(it).first() }
 
             GestureState(
                 swipeLeftAction = swipeLeftAction,

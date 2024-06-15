@@ -141,7 +141,7 @@ interface SearchableDao {
     ): Flow<List<String>>
 
     @Query("SELECT * FROM Searchable WHERE `key` IN (:keys)")
-    suspend fun getByKeys(keys: List<String>): List<SavedSearchableEntity>
+    fun getByKeys(keys: List<String>): Flow<List<SavedSearchableEntity>>
 
     @Query("SELECT * FROM Searchable WHERE `key` = :key")
     fun getByKey(key: String): Flow<SavedSearchableEntity?>

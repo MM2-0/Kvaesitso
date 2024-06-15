@@ -13,6 +13,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import org.json.JSONArray
@@ -137,7 +138,7 @@ internal class CustomAttributesRepositoryImpl(
 
     override fun getItemsForTag(tag: String): Flow<List<SavableSearchable>> {
         val dao = appDatabase.customAttrsDao()
-        return dao.getItemsWithTag(tag).map {
+        return dao.getItemsWithTag(tag).flatMapLatest {
             searchableRepository.getByKeys(it)
         }
     }
@@ -181,8 +182,10 @@ internal class CustomAttributesRepositoryImpl(
             }
         }
         val dao = appDatabase.customAttrsDao()
-        return dao.search("%$query%").map {
-            searchableRepository.getByKeys(it).toImmutableList()
+        return dao.search("%$query%").flatMapLatest {
+            searchableRepository.getByKeys(it).map {
+                it.toImmutableList()
+            }
         }
     }
 

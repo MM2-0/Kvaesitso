@@ -16,6 +16,8 @@ import de.mm20.launcher2.searchable.SavableSearchableRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -78,9 +80,11 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val swipeLeftApp: Flow<SavableSearchable?> = swipeLeft
-        .map {
-            if (it !is GestureAction.Launch || it.key == null) null
-            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
+        .flatMapLatest {
+            if (it !is GestureAction.Launch || it.key == null) flowOf(null)
+            else searchableRepository.getByKeys(listOf(it.key!!)).map {
+                it.firstOrNull()
+            }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
@@ -90,9 +94,11 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val swipeRightApp: Flow<SavableSearchable?> = swipeRight
-        .map {
-            if (it !is GestureAction.Launch || it.key == null) null
-            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
+        .flatMapLatest {
+            if (it !is GestureAction.Launch || it.key == null) flowOf(null)
+            else searchableRepository.getByKeys(listOf(it.key!!)).map {
+                it.firstOrNull()
+            }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
@@ -102,9 +108,11 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val swipeDownApp: Flow<SavableSearchable?> = swipeDown
-        .map {
-            if (it !is GestureAction.Launch || it.key == null) null
-            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
+        .flatMapLatest {
+            if (it !is GestureAction.Launch || it.key == null) flowOf(null)
+            else searchableRepository.getByKeys(listOf(it.key!!)).map {
+                it.firstOrNull()
+            }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
@@ -114,9 +122,11 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val longPressApp: Flow<SavableSearchable?> = longPress
-        .map {
-            if (it !is GestureAction.Launch || it.key == null) null
-            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
+        .flatMapLatest {
+            if (it !is GestureAction.Launch || it.key == null) flowOf(null)
+            else searchableRepository.getByKeys(listOf(it.key!!)).map {
+                it.firstOrNull()
+            }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
@@ -126,9 +136,11 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val doubleTapApp: Flow<SavableSearchable?> = doubleTap
-        .map {
-            if (it !is GestureAction.Launch || it.key == null) null
-            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
+        .flatMapLatest {
+            if (it !is GestureAction.Launch || it.key == null) flowOf(null)
+            else searchableRepository.getByKeys(listOf(it.key!!)).map {
+                it.firstOrNull()
+            }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
@@ -138,9 +150,11 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val homeButtonApp: Flow<SavableSearchable?> = homeButton
-        .map {
-            if (it !is GestureAction.Launch || it.key == null) null
-            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
+        .flatMapLatest {
+            if (it !is GestureAction.Launch || it.key == null) flowOf(null)
+            else searchableRepository.getByKeys(listOf(it.key!!)).map {
+                it.firstOrNull()
+            }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
