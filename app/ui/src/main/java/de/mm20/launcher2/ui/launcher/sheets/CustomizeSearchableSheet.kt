@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Button
@@ -51,6 +52,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.badges.BadgeIcon
 import de.mm20.launcher2.icons.CustomIconWithPreview
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.search.SavableSearchable
@@ -106,22 +108,13 @@ fun CustomizeSearchableSheet(
                 val iconSize = 64.dp
                 val iconSizePx = iconSize.toPixels()
                 val icon by remember { viewModel.getIcon(iconSizePx.toInt()) }.collectAsState(null)
-                val primaryColor = MaterialTheme.colorScheme.onSecondary
-                val badgeDrawable = remember {
-                    InsetDrawable(
-                        AppCompatResources.getDrawable(context, R.drawable.ic_edit),
-                        8
-                    ).also {
-                        it.setTint(primaryColor.toArgb())
-                    }
-                }
 
                 ShapedLauncherIcon(
                     size = iconSize,
                     icon = { icon },
                     badge = {
                         Badge(
-                            icon = badgeDrawable
+                            icon = BadgeIcon(Icons.Rounded.Edit)
                         )
                     },
                     modifier = Modifier.clickable {

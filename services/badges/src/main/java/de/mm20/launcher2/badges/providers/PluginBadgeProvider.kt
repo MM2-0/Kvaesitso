@@ -2,6 +2,7 @@ package de.mm20.launcher2.badges.providers
 
 import android.content.Context
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.badges.BadgeIcon
 import de.mm20.launcher2.badges.MutableBadge
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
@@ -16,7 +17,7 @@ class PluginBadgeProvider(private val context: Context): BadgeProvider {
             emit(null)
             val icon = searchable.getProviderIcon(context)
             if (icon != null) {
-                emit(MutableBadge(icon = icon))
+                emit(MutableBadge(icon = BadgeIcon(icon)))
             }
         }
     }

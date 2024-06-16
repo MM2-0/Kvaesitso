@@ -47,7 +47,7 @@ internal class BadgeServiceImpl(
                     providers += NotificationBadgeProvider()
                 }
                 if (it.cloudFiles) {
-                    providers += CloudBadgeProvider()
+                    providers += CloudBadgeProvider(context)
                 }
                 if (it.shortcuts) {
                     providers += AppShortcutBadgeProvider(context)

@@ -60,6 +60,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.badges.BadgeIcon
 import de.mm20.launcher2.icons.ClockLayer
 import de.mm20.launcher2.icons.ClockSublayer
 import de.mm20.launcher2.icons.ClockSublayerRole
@@ -239,12 +240,11 @@ fun ShapedLauncherIcon(
         val _badge = badge()
         if (_badge != null) {
             Surface(
-                shadowElevation = 1.dp,
                 tonalElevation = 1.dp,
                 modifier = Modifier
                     .size(size * 0.33f)
                     .align(Alignment.BottomEnd),
-                color = MaterialTheme.colorScheme.secondary,
+                color = MaterialTheme.colorScheme.tertiary,
                 shape = CircleShape
             ) {
                 Box(
@@ -255,37 +255,37 @@ fun ShapedLauncherIcon(
                         val progress by animateFloatAsState(it)
                         CircularProgressIndicator(
                             modifier = Modifier.fillMaxSize(0.8f),
-                            progress = progress,
+                            progress = { progress },
                             strokeWidth = size / 48,
-                            color = MaterialTheme.colorScheme.secondaryContainer
+                            color = MaterialTheme.colorScheme.onTertiary
                         )
                     }
-                    val badgeIconRes = _badge.iconRes
                     val badgeIcon = _badge.icon
 
                     val number = _badge.number
-                    if (badgeIconRes != null) {
-                        Image(
+                    if (badgeIcon is BadgeIcon.Vector) {
+                        Icon(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(size / 48),
-                            painter = painterResource(badgeIconRes),
-                            contentDescription = null
+                                .padding(size / 24),
+                            imageVector = badgeIcon.imageVector,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onTertiary,
                         )
-                    } else if (badgeIcon != null) {
+                    } else if (badgeIcon is BadgeIcon.Drawable) {
                         Canvas(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(size / 48)
                         ) {
-                            badgeIcon.setBounds(
+                            badgeIcon.drawable.setBounds(
                                 0,
                                 0,
                                 this.size.width.roundToInt(),
                                 this.size.height.roundToInt()
                             )
                             drawIntoCanvas {
-                                badgeIcon.draw(it.nativeCanvas)
+                                badgeIcon.drawable.draw(it.nativeCanvas)
                             }
                         }
                     } else if (number != null && number > 0 && number < 100) {

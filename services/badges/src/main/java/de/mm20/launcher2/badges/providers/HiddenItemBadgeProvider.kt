@@ -1,6 +1,10 @@
 package de.mm20.launcher2.badges.providers
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.HourglassBottom
+import androidx.compose.material.icons.rounded.VisibilityOff
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.badges.BadgeIcon
 import de.mm20.launcher2.badges.R
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
@@ -33,7 +37,7 @@ class HiddenItemBadgeProvider(
         return hiddenItemKeys.map { keys ->
             if (searchable.key in keys) {
                 Badge(
-                    iconRes = R.drawable.ic_badge_hidden
+                    icon = BadgeIcon(Icons.Rounded.VisibilityOff)
                 )
             } else {
                 null
