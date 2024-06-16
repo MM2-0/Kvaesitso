@@ -58,7 +58,10 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                 .wrapContentHeight()
         ) {
             SearchResultGrid(
-                items = favorites, showLabels = false, columns = columns.coerceAtMost(favorites.size),
+                items = favorites,
+                showLabels = false,
+                columns = columns.coerceAtMost(favorites.size),
+                transitionKey = null,
             )
         }
     }
