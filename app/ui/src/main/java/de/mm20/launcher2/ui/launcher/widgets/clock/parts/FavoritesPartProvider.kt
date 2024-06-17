@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import de.mm20.launcher2.preferences.ui.UiSettings
+import de.mm20.launcher2.searchable.PinnedLevel
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 import de.mm20.launcher2.widgets.CalendarWidget
@@ -44,9 +45,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
         val favorites by remember(columns, excludeCalendar) {
             favoritesService.getFavorites(
                 excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
-                manuallySorted = true,
-                automaticallySorted = true,
-                frequentlyUsed = true,
+                minPinnedLevel = PinnedLevel.FrequentlyUsed,
                 limit = columns
             )
         }.collectAsState(emptyList())

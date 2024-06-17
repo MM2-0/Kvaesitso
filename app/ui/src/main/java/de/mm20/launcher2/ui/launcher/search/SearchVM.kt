@@ -32,6 +32,7 @@ import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.searchable.SavableSearchableRepository
+import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.CancellationException
@@ -101,13 +102,6 @@ class SearchVM : ViewModel(), KoinComponent {
     val filterBarItems = searchFilterSettings.filterBarItems
 
     val separateWorkProfile = searchUiSettings.separateWorkProfile
-
-    private val hiddenItemKeys = searchableRepository
-        .getKeys(
-            hidden = true,
-            limit = 9999,
-        )
-        .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
     val bestMatch = mutableStateOf<Searchable?>(null)
 
@@ -250,6 +244,10 @@ class SearchVM : ViewModel(), KoinComponent {
                             else -> 0
                         }
                     }
+
+                    val hiddenItemKeys = searchableRepository.getKeys(
+                        maxVisibility = if (query.isEmpty()) VisibilityLevel.SearchOnly else VisibilityLevel.Hidden,
+                    )
 
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val hidden = mutableListOf<SavableSearchable>()

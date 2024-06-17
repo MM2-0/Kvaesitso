@@ -78,18 +78,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         searchable.value?.let { favoritesService.unpinItem(it) }
     }
 
-    val isHidden = searchable.flatMapLatest {
-        if (it == null) emptyFlow() else favoritesService.isHidden(it)
-    }
-
-    fun hide() {
-        searchable.value?.let { favoritesService.hideItem(it) }
-    }
-
-    fun unhide() {
-        searchable.value?.let { favoritesService.unhideItem(it) }
-    }
-
     val badge = searchable.flatMapLatest {
         if (it == null) emptyFlow() else badgeService.getBadge(it)
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)

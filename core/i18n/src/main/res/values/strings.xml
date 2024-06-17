@@ -688,7 +688,7 @@
     <string name="create_app_shortcut">Create shortcut</string>
     <string name="frequently_used_show_in_favorites">Show in favorites</string>
     <string name="frequently_used_rows">Number of rows</string>
-    <string name="customize_tags_placeholder">Tags…</string>
+    <string name="customize_tags_placeholder">Tags</string>
     <string name="preference_screen_search_actions">Quick actions</string>
     <string name="preference_search_search_actions_summary">Configure quick actions and search shortcuts</string>
     <string name="search_action_call">Call</string>
@@ -942,4 +942,11 @@
     <string name="poi_category_courthouse">Courthouse</string>
     <string name="poi_category_townhall">Townhall</string>
     <string name="preference_search_locations_radius_large_radius_warning">Large search radii can significantly slow down the search.</string>
+    <string name="customize_item_label">Label</string>
+    <string name="customize_item_tags">Tags</string>
+    <string name="customize_item_visibility">Show in</string>
+    <string name="item_visibility_app_default">App grid &amp; search results</string>
+    <string name="item_visibility_calendar_default">Calendar widget &amp; search results</string>
+    <string name="item_visibility_search_only">Search results</string>
+    <string name="item_visibility_hidden">Never</string>
 </resources>

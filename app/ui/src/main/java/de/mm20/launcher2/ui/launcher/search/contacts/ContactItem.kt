@@ -205,39 +205,6 @@ fun ContactItem(
                     toolbarActions.add(favAction)
                 }
 
-                val isHidden by viewModel.isHidden.collectAsState(false)
-                val hideAction = if (isHidden) {
-                    DefaultToolbarAction(
-                        label = stringResource(R.string.menu_unhide),
-                        icon = Icons.Rounded.Visibility,
-                        action = {
-                            viewModel.unhide()
-                            onBack()
-                        }
-                    )
-                } else {
-                    DefaultToolbarAction(
-                        label = stringResource(R.string.menu_hide),
-                        icon = Icons.Rounded.VisibilityOff,
-                        action = {
-                            viewModel.hide()
-                            onBack()
-                            lifecycleOwner.lifecycleScope.launch {
-                                val result = snackbarHostState.showSnackbar(
-                                    message = context.getString(
-                                        R.string.msg_item_hidden,
-                                        contact.label
-                                    ),
-                                    actionLabel = context.getString(R.string.action_undo),
-                                    duration = SnackbarDuration.Short,
-                                )
-                                if (result == SnackbarResult.ActionPerformed) {
-                                    viewModel.unhide()
-                                }
-                            }
-                        })
-                }
-
                 toolbarActions.add(
                     DefaultToolbarAction(
                         label = stringResource(R.string.menu_contacts_open_externally),
@@ -255,7 +222,6 @@ fun ContactItem(
                     action = { sheetManager.showCustomizeSearchableModal(contact) }
                 ))
 
-                toolbarActions.add(hideAction)
 
                 Toolbar(
                     leftActions = listOf(
