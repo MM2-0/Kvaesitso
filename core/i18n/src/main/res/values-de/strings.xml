@@ -399,7 +399,7 @@
     <string name="frequently_used_rows">Anzahl Zeilen</string>
     <string name="frequently_used_show_in_favorites">In Favoriten anzeigen</string>
     <string name="menu_remove">Entfernen</string>
-    <string name="customize_tags_placeholder">Tags…</string>
+    <string name="customize_tags_placeholder">Tags</string>
     <string name="edit_favorites_dialog_tags">Tags</string>
     <string name="favorites_empty_tag">Es gibt keine Elemente mit diesem Tag</string>
     <string name="edit_favorites_dialog_tag_section_empty">Angeheftete Tags werden hier angezeigt</string>
@@ -750,4 +750,11 @@
     <string name="poi_category_courthouse">Gerichtsgebäude</string>
     <string name="poi_category_townhall">Rathaus</string>
     <string name="preference_signout">Abmelden</string>
+    <string name="customize_item_label">Beschriftung</string>
+    <string name="customize_item_visibility">Anzeigen in</string>
+    <string name="item_visibility_hidden">Nie</string>
+    <string name="customize_item_tags">Tags</string>
+    <string name="item_visibility_app_default">App-Raster &amp; Suchergebnissen</string>
+    <string name="item_visibility_calendar_default">Kalenderwidget &amp; Suchergebnissen</string>
+    <string name="item_visibility_search_only">Suchergebnissen</string>
 </resources>
