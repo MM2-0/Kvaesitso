@@ -5,13 +5,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,7 +62,7 @@ fun ListItem(
     }
 
     val background by animateColorAsState(
-        if (highlight) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surface.copy(
+        if (highlight && !showDetails) MaterialTheme.colorScheme.outlineVariant else MaterialTheme.colorScheme.surface.copy(
             alpha = 0f
         )
     )
