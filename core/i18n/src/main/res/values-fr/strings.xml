@@ -423,7 +423,7 @@
     <string name="favorites_empty_tag">Il n\'y a pas d\'élément avec cette étiquette</string>
     <string name="create_app_shortcut">Créer un raccourci</string>
     <string name="frequently_used_rows">Nombre de colonnes</string>
-    <string name="customize_tags_placeholder">Étiquettes…</string>
+    <string name="customize_tags_placeholder">Étiquettes</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">%1$d entrée a été supprimée.</item>
         <item quantity="many">%1$d entrées ont été supprimées.</item>
@@ -737,7 +737,7 @@
     <string name="poi_category_government_building">Bâtiment du gouvernement</string>
     <string name="poi_category_discount_store">Hard-discount</string>
     <string name="poi_category_monument">Monument</string>
-    <string name="poi_category_synagogue">Synagogue</string>
+    <string name="poi_category_synagogue"></string>
     <string name="poi_category_chinese_restaurant">Restaurant chinois</string>
     <string name="poi_category_japanese_restaurant">Restaurant japonais</string>
     <string name="poi_category_kebab_restaurant">Kebab</string>
@@ -781,6 +781,6 @@
     <string name="poi_category_buddhist_temple">Temple boudiste</string>
     <string name="poi_category_courthouse">Palais de justice</string>
     <string name="poi_category_townhall">Mairie</string>
-    <string name="preference_search_locations_radius_large_radius_warning">Les recherches lointaines peuvent ralentir la recherche</string>
+    <string name="preference_search_locations_radius_large_radius_warning">De grands rayons de recherche peuvent ralentir considérablement la recherche.</string>
     <string name="poi_category_hindu_temple">Temple hindou</string>
 </resources>
