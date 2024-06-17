@@ -45,6 +45,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -97,7 +98,9 @@ fun CalendarItem(
     SharedTransitionLayout {
         AnimatedContent(showDetails) { showDetails ->
             if (showDetails) {
-                Column {
+                Column(
+                    modifier = Modifier.padding(end = 16.dp)
+                ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.padding(vertical = 16.dp)
@@ -126,7 +129,7 @@ fun CalendarItem(
                     }
                     Row(
                         Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth().padding(bottom = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -147,7 +150,7 @@ fun CalendarItem(
                     if (!calendar.description.isNullOrBlank()) {
                         Row(
                             Modifier
-                                .fillMaxWidth(),
+                                .fillMaxWidth().padding(bottom = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
@@ -157,14 +160,16 @@ fun CalendarItem(
                             )
                             Text(
                                 text = calendar.description!!,
-                                style = MaterialTheme.typography.bodySmall
+                                style = MaterialTheme.typography.bodySmall,
+                                maxLines = 8,
+                                overflow = TextOverflow.Ellipsis,
                             )
                         }
                     }
                     if (calendar.attendees.isNotEmpty()) {
                         Row(
                             Modifier
-                                .fillMaxWidth(),
+                                .fillMaxWidth().padding(bottom = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
@@ -174,7 +179,9 @@ fun CalendarItem(
                             )
                             Text(
                                 text = calendar.attendees.joinToString(),
-                                style = MaterialTheme.typography.bodySmall
+                                style = MaterialTheme.typography.bodySmall,
+                                maxLines = 6,
+                                overflow = TextOverflow.Ellipsis,
                             )
                         }
                     }
@@ -183,6 +190,7 @@ fun CalendarItem(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .padding(bottom = 8.dp)
                                 .clickable {
                                     calendar.openLocation(context)
                                 }
