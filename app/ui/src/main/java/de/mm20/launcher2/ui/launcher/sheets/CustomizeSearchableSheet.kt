@@ -251,7 +251,7 @@ fun CustomizeSearchableSheet(
                                     showDropdown = false
                                 },
                                 text = {
-                                    Text(stringResource(R.string.item_visibility_app_default))
+                                    Text(stringResource(R.string.item_visibility_calendar_default))
                                 },
                                 leadingIcon = {
                                     Icon(Icons.Rounded.Visibility, null)
