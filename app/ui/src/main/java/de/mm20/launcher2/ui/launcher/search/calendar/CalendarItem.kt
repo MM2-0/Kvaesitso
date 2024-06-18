@@ -98,9 +98,7 @@ fun CalendarItem(
     SharedTransitionLayout {
         AnimatedContent(showDetails) { showDetails ->
             if (showDetails) {
-                Column(
-                    modifier = Modifier.padding(end = 16.dp)
-                ) {
+                Column {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.padding(vertical = 16.dp)
@@ -118,7 +116,7 @@ fun CalendarItem(
 
                         Text(
                             modifier = Modifier
-                                .padding(start = 4.dp)
+                                .padding(start = 4.dp, end = 16.dp)
                                 .sharedBounds(
                                     rememberSharedContentState("label"),
                                     this@AnimatedContent
@@ -129,7 +127,7 @@ fun CalendarItem(
                     }
                     Row(
                         Modifier
-                            .fillMaxWidth().padding(bottom = 8.dp),
+                            .fillMaxWidth().padding(bottom = 8.dp, end = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -150,7 +148,7 @@ fun CalendarItem(
                     if (!calendar.description.isNullOrBlank()) {
                         Row(
                             Modifier
-                                .fillMaxWidth().padding(bottom = 8.dp),
+                                .fillMaxWidth().padding(bottom = 8.dp, end = 16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
@@ -169,7 +167,7 @@ fun CalendarItem(
                     if (calendar.attendees.isNotEmpty()) {
                         Row(
                             Modifier
-                                .fillMaxWidth().padding(bottom = 8.dp),
+                                .fillMaxWidth().padding(bottom = 8.dp, end = 16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
@@ -190,7 +188,7 @@ fun CalendarItem(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 8.dp)
+                                .padding(bottom = 8.dp, end = 16.dp)
                                 .clickable {
                                     calendar.openLocation(context)
                                 }
