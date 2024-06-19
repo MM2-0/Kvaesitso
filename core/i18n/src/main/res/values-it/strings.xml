@@ -397,7 +397,7 @@
     <string name="edit_favorites_dialog_empty_section">Trascina gli elementi qui</string>
     <string name="frequently_used_rows">Numero di righe</string>
     <string name="frequently_used_show_in_favorites">Mostra nei preferiti</string>
-    <string name="customize_tags_placeholder">Tag…</string>
+    <string name="customize_tags_placeholder">Tag</string>
     <string name="edit_favorites_dialog_tags">Tag</string>
     <string name="edit_favorites_dialog_tag_section_empty">I tag aggiunti verranno visualizzati qui</string>
     <string name="favorites_empty">Gli elementi appuntati e usati di frequente appariranno qui</string>
@@ -754,4 +754,11 @@
     <string name="poi_category_cricket">Campo da cricket</string>
     <string name="poi_category_park">Parco</string>
     <string name="preference_search_osm_locations_summary">Trova su OpenStreetMap negozi e altri luoghi nelle vicinanze</string>
+    <string name="item_visibility_calendar_default">Widget calendario e risultati ricerca</string>
+    <string name="customize_item_tags">Tag</string>
+    <string name="customize_item_visibility">Mostra in</string>
+    <string name="item_visibility_app_default">Griglia app e risultati ricerca</string>
+    <string name="item_visibility_search_only">Risultati ricerca</string>
+    <string name="item_visibility_hidden">Nessuno</string>
+    <string name="customize_item_label">Etichetta</string>
 </resources>
