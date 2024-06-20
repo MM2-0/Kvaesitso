@@ -1,7 +1,7 @@
 package de.mm20.launcher2.ui.settings.hiddenitems
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.DropdownMenu
@@ -25,13 +27,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -42,7 +46,6 @@ import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 fun HiddenItemsSettingsScreen() {
     val viewModel: HiddenItemsSettingsScreenVM = viewModel()
 
-    val context = LocalContext.current
     val density = LocalDensity.current
 
     val apps by viewModel.allApps.collectAsState()
@@ -66,63 +69,41 @@ fun HiddenItemsSettingsScreen() {
                 viewModel.getIcon(searchable, with(density) { 32.dp.roundToPx() })
             }.collectAsState(null)
 
-            val isHidden by remember(searchable.key) {
-                viewModel.isHidden(searchable)
-            }.collectAsState(false)
+            val visibility by remember(searchable.key) {
+                viewModel.getVisibility(searchable)
+            }.collectAsState(null)
 
-            var showPopup by remember(searchable.key) {
-                mutableStateOf(false)
-            }
+            var showDropdown by remember { mutableStateOf(false) }
 
             Box {
                 HiddenItem(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .combinedClickable(
-                            onClick = {
-                                viewModel.setHidden(searchable, !isHidden)
-                            },
-                            onLongClick = {
-                                showPopup = true
+                        .clickable {
+                            if (searchable is Application || searchable is CalendarEvent) {
+                                showDropdown = true
+                            } else {
+                                if (visibility == null) return@clickable
+                                viewModel.setVisibility(
+                                    searchable,
+                                    if (visibility == VisibilityLevel.Default) VisibilityLevel.Hidden else VisibilityLevel.Default
+                                )
                             }
-                        ),
+                        },
                     icon = icon,
                     label = searchable.label,
-                    isHidden = isHidden,
+                    visibility = visibility,
                 )
-
-                DropdownMenu(
-                    expanded = showPopup,
-                    onDismissRequest = { showPopup = false },
-                    offset = DpOffset(16.dp, 0.dp)
-                ) {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.menu_launch)) },
-                        onClick = {
-                            viewModel.launch(context, searchable)
-                            showPopup = false
-                        })
-
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.menu_app_info)) },
-                        onClick = {
-                            viewModel.openAppInfo(context, searchable)
-                            showPopup = false
-                        })
-
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                stringResource(
-                                    if (isHidden) R.string.menu_unhide else R.string.menu_hide
-                                )
-                            )
-                        },
-                        onClick = {
-                            viewModel.setHidden(searchable, !isHidden)
-                            showPopup = false
-                        })
-                }
+                VisibilityDropdown(
+                    expanded = showDropdown,
+                    onDismissRequest = { showDropdown = false },
+                    item = searchable,
+                    value = visibility,
+                    onValueChanged = {
+                        viewModel.setVisibility(searchable, it)
+                        showDropdown = false
+                    }
+                )
             }
         }
 
@@ -142,67 +123,141 @@ fun HiddenItemsSettingsScreen() {
                 viewModel.getIcon(searchable, with(density) { 32.dp.roundToPx() })
             }.collectAsState(null)
 
-            val isHidden by remember(searchable.key) {
-                viewModel.isHidden(searchable)
-            }.collectAsState(false)
+            val visibility by remember(searchable.key) {
+                viewModel.getVisibility(searchable)
+            }.collectAsState(null)
 
-            var showPopup by remember(searchable.key) {
-                mutableStateOf(false)
-            }
+            var showDropdown by remember { mutableStateOf(false) }
 
             Box {
                 HiddenItem(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .combinedClickable(
-                            onClick = {
-                                viewModel.setHidden(searchable, !isHidden)
-                            },
-                            onLongClick = {
-                                showPopup = true
+                        .clickable {
+                            if (searchable is Application || searchable is CalendarEvent) {
+                                showDropdown = true
+                            } else {
+                                if (visibility == null) return@clickable
+                                viewModel.setVisibility(
+                                    searchable,
+                                    if (visibility == VisibilityLevel.Default) VisibilityLevel.Hidden else VisibilityLevel.Default
+                                )
                             }
-                        ),
+                        },
                     icon = icon,
                     label = searchable.label,
-                    isHidden = isHidden,
+                    visibility = visibility,
                 )
-
-                DropdownMenu(
-                    expanded = showPopup,
-                    onDismissRequest = { showPopup = false },
-                    offset = DpOffset(16.dp, 0.dp)
-                ) {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.menu_open_file)) },
-                        onClick = {
-                            viewModel.launch(context, searchable)
-                            showPopup = false
-                        })
-
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                stringResource(
-                                    if (isHidden) R.string.menu_unhide else R.string.menu_hide
-                                )
-                            )
-                        },
-                        onClick = {
-                            viewModel.setHidden(searchable, !isHidden)
-                            showPopup = false
-                        })
-                }
+                VisibilityDropdown(
+                    expanded = showDropdown,
+                    onDismissRequest = { showDropdown = false },
+                    item = searchable,
+                    value = visibility,
+                    onValueChanged = {
+                        viewModel.setVisibility(searchable, it)
+                        showDropdown = false
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-fun HiddenItem(
+private fun VisibilityDropdown(
+    expanded: Boolean,
+    onDismissRequest: () -> Unit,
+    item: SavableSearchable,
+    value: VisibilityLevel?,
+    onValueChanged: (VisibilityLevel) -> Unit,
+) {
+    DropdownMenu(expanded = expanded, onDismissRequest = onDismissRequest) {
+        DropdownMenuItem(
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Rounded.Visibility,
+                    contentDescription = null
+                )
+            },
+            text = {
+                Text(
+                    when (item) {
+                        is Application -> stringResource(R.string.item_visibility_app_default)
+                        is CalendarEvent -> stringResource(R.string.item_visibility_calendar_default)
+                        else -> stringResource(R.string.item_visibility_search_only)
+                    }
+                )
+            },
+            onClick = {
+                onValueChanged(VisibilityLevel.Default)
+            },
+            trailingIcon = {
+                if (value == VisibilityLevel.Default) {
+                    Icon(
+                        imageVector = Icons.Rounded.Check,
+                        tint = MaterialTheme.colorScheme.primary,
+                        contentDescription = null
+                    )
+                }
+            }
+        )
+        if (item is Application || item is CalendarEvent) {
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Visibility,
+                        contentDescription = null
+                    )
+                },
+                text = {
+                    Text(stringResource(R.string.item_visibility_search_only))
+                },
+                onClick = {
+                    onValueChanged(VisibilityLevel.SearchOnly)
+                },
+                trailingIcon = {
+                    if (value == VisibilityLevel.SearchOnly) {
+                        Icon(
+                            imageVector = Icons.Rounded.Check,
+                            tint = MaterialTheme.colorScheme.primary,
+                            contentDescription = null
+                        )
+                    }
+                }
+            )
+        }
+        DropdownMenuItem(
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Rounded.VisibilityOff,
+                    contentDescription = null
+                )
+            },
+            text = {
+                Text(stringResource(R.string.item_visibility_hidden))
+            },
+            onClick = {
+                onValueChanged(VisibilityLevel.Hidden)
+            },
+            trailingIcon = {
+                if (value == VisibilityLevel.Hidden) {
+                    Icon(
+                        imageVector = Icons.Rounded.Check,
+                        tint = MaterialTheme.colorScheme.primary,
+                        contentDescription = null
+                    )
+                }
+            }
+        )
+    }
+}
+
+@Composable
+private fun HiddenItem(
     modifier: Modifier,
     icon: LauncherIcon?,
     label: String,
-    isHidden: Boolean,
+    visibility: VisibilityLevel?,
 ) {
     Row(
         modifier = modifier
@@ -219,11 +274,18 @@ fun HiddenItem(
             modifier = Modifier.weight(1f, fill = true),
             style = MaterialTheme.typography.titleMedium
         )
-        Icon(
-            modifier = Modifier.alpha(if (isHidden) 0.3f else 1f),
-            imageVector = if (isHidden) Icons.Rounded.VisibilityOff else Icons.Rounded.Visibility,
-            tint = if (isHidden) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.primary,
-            contentDescription = null
-        )
+        if (visibility != null) {
+            Icon(
+                modifier = Modifier.alpha(if (visibility == VisibilityLevel.Hidden) 0.3f else 1f),
+                imageVector = when (visibility) {
+                    VisibilityLevel.Hidden -> Icons.Rounded.VisibilityOff
+                    VisibilityLevel.Default -> Icons.Rounded.Visibility
+                    VisibilityLevel.SearchOnly -> Icons.Outlined.Visibility
+                },
+                tint = if (visibility == VisibilityLevel.Default) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.onSurfaceVariant,
+                contentDescription = null
+            )
+        }
     }
 }

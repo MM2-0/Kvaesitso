@@ -12,6 +12,7 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.searchable.VisibilityLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -36,20 +36,18 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
     val hiddenItems: StateFlow<List<SavableSearchable>> = flow {
         val hidden =
-            searchableRepository.get(hidden = true).first().filter { it !is Application }.sorted()
+            searchableRepository.get(
+                maxVisibility = VisibilityLevel.SearchOnly,
+            ).first().filter { it !is Application }.sorted()
         emit(hidden)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-    fun isHidden(searchable: SavableSearchable): Flow<Boolean> {
-        return searchableRepository.isHidden(searchable)
+    fun getVisibility(searchable: SavableSearchable): Flow<VisibilityLevel> {
+        return searchableRepository.getVisibility(searchable)
     }
 
-    fun setHidden(searchable: SavableSearchable, hidden: Boolean) {
-        if (hidden) {
-            searchableRepository.upsert(searchable, hidden = true, pinned = false)
-        } else {
-            searchableRepository.update(searchable, hidden = false)
-        }
+    fun setVisibility(searchable: SavableSearchable, visibilityLevel: VisibilityLevel) {
+        searchableRepository.upsert(searchable, visibilityLevel)
     }
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {

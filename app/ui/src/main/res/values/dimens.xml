@@ -1,8 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="elevation_shadow_1dp_radius">0.5dp</dimen>
-    <dimen name="elevation_shadow_2dp_radius">1dp</dimen>
-    <dimen name="elevation_shadow_1dp_y">0.5dp</dimen>
-    <dimen name="elevation_shadow_2dp_y">1dp</dimen>
-    <dimen name="card_elevation">@dimen/mtrl_card_elevation</dimen>
-</resources>
+<resources></resources>

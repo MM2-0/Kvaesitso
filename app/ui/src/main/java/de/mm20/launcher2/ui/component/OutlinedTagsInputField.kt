@@ -4,11 +4,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -28,7 +31,6 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -58,9 +60,11 @@ fun OutlinedTagsInputField(
     modifier: Modifier = Modifier,
     tags: List<String>,
     onTagsChange: (tags: List<String>) -> Unit,
+    label: @Composable (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
+    textStyle: TextStyle = LocalTextStyle.current,
     textColor: Color = LocalContentColor.current,
     onAutocomplete: (suspend (query: String) -> List<String>)? = null
 ) {
@@ -127,14 +131,23 @@ fun OutlinedTagsInputField(
         }),
         decorationBox = { innerTextField ->
             OutlinedTextFieldDefaults.DecorationBox(
-                contentPadding = PaddingValues(0.dp),
-                value = value,
+                contentPadding = PaddingValues(
+                    start = 16.dp,
+                    end = 0.dp,
+                    top = 12.dp,
+                    bottom = 12.dp
+                ),
+                value = tags.joinToString() + value,
+                label = label,
+                leadingIcon = leadingIcon,
                 innerTextField = {
-                    Box {
+                    Box(
+                        contentAlignment = Alignment.CenterStart,
+                    ) {
                         Row(
                             modifier = Modifier
-                                .horizontalScroll(rememberScrollState())
-                                .padding(horizontal = 16.dp),
+                                .requiredHeight(32.dp)
+                                .horizontalScroll(rememberScrollState()),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             for ((i, tag) in tags.withIndex()) {

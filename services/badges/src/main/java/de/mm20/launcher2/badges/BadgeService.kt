@@ -43,11 +43,12 @@ internal class BadgeServiceImpl(
             settings.distinctUntilChanged().collectLatest {
                 val providers = mutableListOf<BadgeProvider>()
                 providers += WorkProfileBadgeProvider()
+                providers += HiddenItemBadgeProvider()
                 if (it.notifications) {
                     providers += NotificationBadgeProvider()
                 }
                 if (it.cloudFiles) {
-                    providers += CloudBadgeProvider()
+                    providers += CloudBadgeProvider(context)
                 }
                 if (it.shortcuts) {
                     providers += AppShortcutBadgeProvider(context)

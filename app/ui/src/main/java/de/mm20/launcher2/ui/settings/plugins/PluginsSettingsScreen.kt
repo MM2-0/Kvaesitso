@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Extension
-import androidx.compose.material.icons.rounded.ExtensionOff
 import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +18,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -98,13 +96,6 @@ private fun PluginPreference(viewModel: PluginsSettingsScreenVM, plugin: PluginP
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(plugin.label)
-                if (plugin.isOfficial) {
-                    Icon(
-                        Icons.Rounded.Verified, null,
-                        modifier = Modifier.padding(start = 4.dp).size(16.dp),
-                        tint = MaterialTheme.colorScheme.secondary,
-                    )
-                }
             }
         },
         summary = plugin.description?.let { { Text(it) } },

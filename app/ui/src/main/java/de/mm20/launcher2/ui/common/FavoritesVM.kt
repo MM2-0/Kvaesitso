@@ -8,6 +8,7 @@ import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.preferences.search.FavoritesSettingsData
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.Tag
+import de.mm20.launcher2.searchable.PinnedLevel
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.WidgetRepository
@@ -29,8 +30,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
 
     val pinnedTags = favoritesService.getFavorites(
         includeTypes = listOf("tag"),
-        manuallySorted = true,
-        automaticallySorted = true,
+        minPinnedLevel = PinnedLevel.AutomaticallySorted,
     ).map {
         it.filterIsInstance<Tag>()
     }
@@ -52,15 +52,15 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
 
                 val pinned = favoritesService.getFavorites(
                     excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
-                    manuallySorted = true,
-                    automaticallySorted = true,
+                    minPinnedLevel = PinnedLevel.AutomaticallySorted,
                     limit = 10 * columns,
                 )
                 if (includeFrequentlyUsed) {
                     emitAll(pinned.flatMapLatest { pinned ->
                         favoritesService.getFavorites(
                             excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
-                            frequentlyUsed = true,
+                            maxPinnedLevel = PinnedLevel.FrequentlyUsed,
+                            minPinnedLevel = PinnedLevel.FrequentlyUsed,
                             limit = frequentlyUsedRows * columns - pinned.size % columns,
                         ).map {
                             pinned + it

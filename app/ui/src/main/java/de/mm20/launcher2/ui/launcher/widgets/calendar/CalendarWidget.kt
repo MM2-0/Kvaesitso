@@ -230,21 +230,27 @@ fun CalendarWidget(
 
             val pinnedEvents by viewModel.pinnedCalendarEvents.collectAsState()
             if (pinnedEvents.isNotEmpty()) {
-                Text(
-                    stringResource(R.string.calendar_widget_pinned_events),
-                    modifier = Modifier.padding(
-                        start = 4.dp,
-                        end = 4.dp,
-                        top = 8.dp,
-                        bottom = 4.dp
-                    ),
-                    style = MaterialTheme.typography.titleMedium
-                )
-                SearchResultList(
-                    pinnedEvents,
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                )
+                        .padding(horizontal = 12.dp)
+                        .padding(bottom = 12.dp)
+                ) {
+                    Text(
+                        stringResource(R.string.calendar_widget_pinned_events),
+                        modifier = Modifier.padding(
+                            start = 4.dp,
+                            end = 4.dp,
+                            top = 8.dp,
+                            bottom = 4.dp
+                        ),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    SearchResultList(
+                        pinnedEvents,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
             }
         }
     }

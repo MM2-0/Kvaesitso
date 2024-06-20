@@ -57,7 +57,7 @@ android {
         }
         debug {
             applicationIdSuffix = ".debug"
-            isDebuggable = false
+            isDebuggable = true
         }
         create("nightly") {
             initWith(getByName("release"))
@@ -166,7 +166,7 @@ dependencies {
     implementation(project(":services:global-actions"))
     implementation(project(":services:widgets"))
     implementation(project(":services:favorites"))
-    implementation(project(":data:openstreetmaps"))
+    implementation(project(":data:locations"))
     implementation(project(":services:plugins"))
     implementation(project(":core:devicepose"))
 

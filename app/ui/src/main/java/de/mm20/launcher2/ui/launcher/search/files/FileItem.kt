@@ -1,10 +1,10 @@
 package de.mm20.launcher2.ui.launcher.search.files
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.layout.Column
@@ -40,17 +40,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
@@ -85,237 +84,237 @@ fun FileItem(
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
 
-    val transition = updateTransition(showDetails, label = "ContactItem")
+    val icon by viewModel.icon.collectAsStateWithLifecycle()
+    val badge by viewModel.badge.collectAsState(null)
 
-    Column(
-        modifier = modifier
+    SharedTransitionLayout(
+        modifier = modifier,
     ) {
-        Row(
-            verticalAlignment = Alignment.Top
-        ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp)
-            ) {
-                val textStyle by animateTextStyleAsState(
-                    if (showDetails) MaterialTheme.typography.titleMedium
-                    else MaterialTheme.typography.titleSmall
-                )
-                Text(
-                    text = file.labelOverride ?: file.label,
-                    style = textStyle,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                AnimatedVisibility(!showDetails) {
-                    Text(
-                        file.getFileType(context),
-                        style = MaterialTheme.typography.bodySmall,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(top = 2.dp)
-                    )
-                }
-                AnimatedVisibility(showDetails) {
-                    Column {
-                        val tags by viewModel.tags.collectAsState(emptyList())
-                        if (tags.isNotEmpty()) {
-                            Text(
-                                modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
-                                text = tags.joinToString(separator = " #", prefix = "#"),
-                                color = MaterialTheme.colorScheme.secondary,
-                                style = MaterialTheme.typography.labelSmall
+        AnimatedContent(showDetails) { showDetails ->
+            if (showDetails) {
+                Column(
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .padding(
+                                top = 16.dp,
+                                start = 16.dp,
+                                end = 16.dp,
+                                bottom = 8.dp
                             )
-                        }
-                        Text(
-                            text = stringResource(
-                                R.string.file_meta_type,
-                                file.mimeType
-                            ),
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                        for ((k, v) in file.metaData) {
+                    ) {
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
                             Text(
-                                text = stringResource(k.labelRes, v),
-                                style = MaterialTheme.typography.bodySmall
+                                modifier = Modifier.sharedBounds(
+                                    rememberSharedContentState("label"),
+                                    this@AnimatedContent,
+                                ),
+                                text = file.labelOverride ?: file.label,
+                                style = MaterialTheme.typography.titleMedium,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
-                        }
-                        Text(
-                            text = stringResource(
-                                R.string.file_meta_path,
-                                file.path
-                            ),
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                        if (!file.isDirectory) {
+                            val tags by viewModel.tags.collectAsState(emptyList())
+                            if (tags.isNotEmpty()) {
+                                Text(
+                                    modifier = Modifier.padding(top = 1.dp),
+                                    text = tags.joinToString(separator = " #", prefix = "#"),
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                            }
                             Text(
+                                modifier = Modifier.padding(top = 8.dp),
                                 text = stringResource(
-                                    R.string.file_meta_size,
-                                    formatFileSize(file.size)
+                                    R.string.file_meta_type,
+                                    file.mimeType
                                 ),
                                 style = MaterialTheme.typography.bodySmall,
                             )
-                        }
-                    }
-
-                }
-            }
-
-            val icon by viewModel.icon.collectAsStateWithLifecycle()
-            val badge by viewModel.badge.collectAsState(null)
-            val padding by transition.animateDp(label = "iconPadding") {
-                if (it) 16.dp else 8.dp
-            }
-            ShapedLauncherIcon(
-                size = 48.dp,
-                modifier = Modifier
-                    .padding(end = padding, top = padding, bottom = padding),
-                icon = { icon },
-                badge = { badge }
-            )
-
-        }
-
-        AnimatedVisibility(showDetails) {
-            Column {
-
-                val toolbarActions = mutableListOf<ToolbarAction>()
-
-                if (LocalFavoritesEnabled.current) {
-                    val isPinned by viewModel.isPinned.collectAsState(false)
-                    val favAction = if (isPinned) {
-                        DefaultToolbarAction(
-                            label = stringResource(R.string.menu_favorites_unpin),
-                            icon = Icons.Rounded.Star,
-                            action = {
-                                viewModel.unpin()
-                            }
-                        )
-                    } else {
-                        DefaultToolbarAction(
-                            label = stringResource(R.string.menu_favorites_pin),
-                            icon = Icons.Rounded.StarOutline,
-                            action = {
-                                viewModel.pin()
-                            })
-                    }
-                    toolbarActions.add(favAction)
-                }
-
-                toolbarActions.add(
-                    DefaultToolbarAction(
-                        label = stringResource(R.string.menu_open_file),
-                        icon = Icons.Rounded.OpenInNew,
-                        action = {
-                            viewModel.launch(context)
-                        }
-                    )
-                )
-
-                if (file.canShare) {
-                    toolbarActions.add(DefaultToolbarAction(
-                        label = stringResource(R.string.menu_share),
-                        icon = Icons.Rounded.Share,
-                        action = {
-                            file.share(context)
-                        }
-                    ))
-                }
-
-                if (file.isDeletable) {
-                    var showConfirmDialog by remember { mutableStateOf(false) }
-                    toolbarActions.add(DefaultToolbarAction(
-                        label = stringResource(R.string.menu_delete),
-                        icon = Icons.Rounded.Delete,
-                        action = {
-                            showConfirmDialog = true
-                        }
-                    ))
-                    if (showConfirmDialog) {
-                        AlertDialog(
-                            onDismissRequest = { showConfirmDialog = false },
-                            confirmButton = {
-                                TextButton(onClick = {
-                                    viewModel.delete(context)
-                                    showConfirmDialog = false
-                                }) {
-                                    Text(stringResource(android.R.string.ok))
-                                }
-                            },
-                            dismissButton = {
-                                TextButton(onClick = {
-                                    showConfirmDialog = false
-                                }) {
-                                    Text(stringResource(android.R.string.cancel))
-                                }
-                            },
-                            text = {
+                            for ((k, v) in file.metaData) {
                                 Text(
-                                    if (file.isDirectory) stringResource(
-                                        R.string.alert_delete_directory,
-                                        file.label
-                                    )
-                                    else stringResource(R.string.alert_delete_file, file.label)
+                                    text = stringResource(k.labelRes, v),
+                                    style = MaterialTheme.typography.bodySmall
                                 )
                             }
+                            Text(
+                                text = stringResource(
+                                    R.string.file_meta_path,
+                                    file.path
+                                ),
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                            if (!file.isDirectory) {
+                                Text(
+                                    text = stringResource(
+                                        R.string.file_meta_size,
+                                        formatFileSize(file.size)
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            }
+                        }
+                        ShapedLauncherIcon(
+                            modifier = Modifier
+                                .sharedElement(
+                                    rememberSharedContentState("icon"),
+                                    this@AnimatedContent,
+                                ),
+                            size = 48.dp,
+                            icon = { icon },
+                            badge = { badge }
                         )
                     }
-                }
+                    val toolbarActions = mutableListOf<ToolbarAction>()
 
-                val sheetManager = LocalBottomSheetManager.current
-                toolbarActions.add(DefaultToolbarAction(
-                    label = stringResource(R.string.menu_customize),
-                    icon = Icons.Rounded.Edit,
-                    action = { sheetManager.showCustomizeSearchableModal(file) }
-                ))
-
-                val isHidden by viewModel.isHidden.collectAsState(false)
-                val hideAction = if (isHidden) {
-                    DefaultToolbarAction(
-                        label = stringResource(R.string.menu_unhide),
-                        icon = Icons.Rounded.Visibility,
-                        action = {
-                            viewModel.unhide()
-                            onBack()
-                        }
-                    )
-                } else {
-                    DefaultToolbarAction(
-                        label = stringResource(R.string.menu_hide),
-                        icon = Icons.Rounded.VisibilityOff,
-                        action = {
-                            viewModel.hide()
-                            onBack()
-                            lifecycleOwner.lifecycleScope.launch {
-                                val result = snackbarHostState.showSnackbar(
-                                    message = context.getString(
-                                        R.string.msg_item_hidden,
-                                        file.label
-                                    ),
-                                    actionLabel = context.getString(R.string.action_undo),
-                                    duration = SnackbarDuration.Short,
-                                )
-                                if (result == SnackbarResult.ActionPerformed) {
-                                    viewModel.unhide()
+                    if (LocalFavoritesEnabled.current) {
+                        val isPinned by viewModel.isPinned.collectAsState(false)
+                        val favAction = if (isPinned) {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_favorites_unpin),
+                                icon = Icons.Rounded.Star,
+                                action = {
+                                    viewModel.unpin()
                                 }
-                            }
-
-                        })
-                }
-                toolbarActions.add(hideAction)
-
-                Toolbar(
-                    leftActions = listOf(
-                        DefaultToolbarAction(
-                            label = stringResource(id = R.string.menu_back),
-                            icon = Icons.Rounded.ArrowBack
-                        ) {
-                            onBack()
+                            )
+                        } else {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_favorites_pin),
+                                icon = Icons.Rounded.StarOutline,
+                                action = {
+                                    viewModel.pin()
+                                })
                         }
-                    ),
-                    rightActions = toolbarActions
-                )
+                        toolbarActions.add(favAction)
+                    }
+
+                    toolbarActions.add(
+                        DefaultToolbarAction(
+                            label = stringResource(R.string.menu_open_file),
+                            icon = Icons.Rounded.OpenInNew,
+                            action = {
+                                viewModel.launch(context)
+                            }
+                        )
+                    )
+
+                    if (file.canShare) {
+                        toolbarActions.add(DefaultToolbarAction(
+                            label = stringResource(R.string.menu_share),
+                            icon = Icons.Rounded.Share,
+                            action = {
+                                file.share(context)
+                            }
+                        ))
+                    }
+
+                    if (file.isDeletable) {
+                        var showConfirmDialog by remember { mutableStateOf(false) }
+                        toolbarActions.add(DefaultToolbarAction(
+                            label = stringResource(R.string.menu_delete),
+                            icon = Icons.Rounded.Delete,
+                            action = {
+                                showConfirmDialog = true
+                            }
+                        ))
+                        if (showConfirmDialog) {
+                            AlertDialog(
+                                onDismissRequest = { showConfirmDialog = false },
+                                confirmButton = {
+                                    TextButton(onClick = {
+                                        viewModel.delete(context)
+                                        showConfirmDialog = false
+                                    }) {
+                                        Text(stringResource(android.R.string.ok))
+                                    }
+                                },
+                                dismissButton = {
+                                    TextButton(onClick = {
+                                        showConfirmDialog = false
+                                    }) {
+                                        Text(stringResource(android.R.string.cancel))
+                                    }
+                                },
+                                text = {
+                                    Text(
+                                        if (file.isDirectory) stringResource(
+                                            R.string.alert_delete_directory,
+                                            file.label
+                                        )
+                                        else stringResource(R.string.alert_delete_file, file.label)
+                                    )
+                                }
+                            )
+                        }
+                    }
+
+                    val sheetManager = LocalBottomSheetManager.current
+                    toolbarActions.add(DefaultToolbarAction(
+                        label = stringResource(R.string.menu_customize),
+                        icon = Icons.Rounded.Edit,
+                        action = { sheetManager.showCustomizeSearchableModal(file) }
+                    ))
+
+                    Toolbar(
+                        leftActions = listOf(
+                            DefaultToolbarAction(
+                                label = stringResource(id = R.string.menu_back),
+                                icon = Icons.Rounded.ArrowBack
+                            ) {
+                                onBack()
+                            }
+                        ),
+                        rightActions = toolbarActions
+                    )
+                }
+            } else {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 16.dp,
+                            top = 8.dp,
+                            bottom = 8.dp,
+                            end = 8.dp
+                        ),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(
+                            modifier = Modifier.sharedBounds(
+                                rememberSharedContentState("label"),
+                                this@AnimatedContent,
+                            ),
+                            text = file.labelOverride ?: file.label,
+                            style = MaterialTheme.typography.titleSmall,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Text(
+                            file.getFileType(context),
+                            style = MaterialTheme.typography.bodySmall,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(top = 2.dp)
+                        )
+                    }
+
+                    ShapedLauncherIcon(
+                        size = 48.dp,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .sharedElement(
+                                rememberSharedContentState("icon"),
+                                this@AnimatedContent,
+                            ),
+                        icon = { icon },
+                        badge = { badge }
+                    )
+                }
             }
         }
     }

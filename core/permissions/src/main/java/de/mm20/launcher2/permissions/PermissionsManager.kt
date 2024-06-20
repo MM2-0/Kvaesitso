@@ -1,6 +1,7 @@
 package de.mm20.launcher2.permissions
 
 import android.Manifest
+import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -142,7 +143,15 @@ internal class PermissionsManagerImpl(
             }
 
             PermissionGroup.AppShortcuts -> {
-                context.tryStartActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
+                if (isAtLeastApiLevel(29)) {
+                    val roleManager = context.getSystemService<RoleManager>()
+                    context.startActivityForResult(
+                        roleManager!!.createRequestRoleIntent(RoleManager.ROLE_HOME),
+                        permissionGroup.ordinal
+                    )
+                } else {
+                    context.tryStartActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
+                }
                 pendingPermissionRequests.add(PermissionGroup.AppShortcuts)
             }
 

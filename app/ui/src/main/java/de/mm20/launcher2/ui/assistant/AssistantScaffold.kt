@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.assistant
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -26,6 +27,7 @@ import de.mm20.launcher2.ui.launcher.gestures.LauncherGestureHandler
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.delay
@@ -162,9 +164,13 @@ fun AssistantScaffold(
         if (actions.isEmpty()) 0.dp else 48.dp
     )
     val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
+    val cardStyle = LocalCardStyle.current
     Box(
         modifier = modifier
             .fillMaxSize()
+            .background(
+                MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f * cardStyle.opacity)
+            )
             .nestedScroll(nestedScrollConnection)
     ) {
         SearchColumn(

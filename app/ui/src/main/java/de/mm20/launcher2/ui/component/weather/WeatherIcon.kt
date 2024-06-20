@@ -18,13 +18,13 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.ui.icons.WeatherCloud
-import de.mm20.launcher2.ui.icons.WeatherFog
-import de.mm20.launcher2.ui.icons.WeatherHail
-import de.mm20.launcher2.ui.icons.WeatherLightRain
-import de.mm20.launcher2.ui.icons.WeatherRain
-import de.mm20.launcher2.ui.icons.WeatherSleetRain
-import de.mm20.launcher2.ui.icons.WeatherSleetSnow
+import de.mm20.launcher2.icons.WeatherCloud
+import de.mm20.launcher2.icons.WeatherFog
+import de.mm20.launcher2.icons.WeatherHail
+import de.mm20.launcher2.icons.WeatherLightRain
+import de.mm20.launcher2.icons.WeatherRain
+import de.mm20.launcher2.icons.WeatherSleetRain
+import de.mm20.launcher2.icons.WeatherSleetSnow
 
 @Composable
 fun WeatherIcon(

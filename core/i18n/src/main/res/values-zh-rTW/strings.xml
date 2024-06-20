@@ -69,7 +69,6 @@
     <string name="wind_west_north_west">西北偏西</string>
     <string name="wind_north_west">西北</string>
     <string name="wind_north_north_west">西北偏北</string>
-    <string name="precipitation_none">無降水</string>
     <string name="wikipedia_url">https://en.wikipedia.org</string>
     <string name="wikipedia_source">來自維基百科</string>
     <string name="file_meta_title">標題: %1$s</string>
@@ -106,24 +105,14 @@
     <string name="alert_delete_directory">目錄 %1$s 及其所有內容將被永久刪除. 繼續？</string>
     <string name="alert_delete_file">檔案 %1$s 將被永久刪除. 繼續\?</string>
     <string name="alert_delete_shortcut">快捷方式%1$s將被永久移除. 繼續\?</string>
-    <string name="error_activity_not_found">無法開啟 %1$s</string>
-    <string name="default_websearch_1_name">Google</string>
-    <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="default_websearch_3_name">Google Play商店</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="websearch_dialog_create_title">新增web搜尋</string>
-    <string name="websearch_dialog_edit_title">編輯web搜尋</string>
-    <string name="websearch_dialog_name">名稱</string>
-    <string name="websearch_dialog_url">URL</string>
-    <string name="websearch_dialog_url_description">’${1}‘將被取代為實際搜尋詞.</string>
     <string name="websearch_dialog_url_error">此 URL 中缺少預留位置’${1}‘</string>
     <string name="websearch_dialog_replace_icon">替換圖示</string>
     <string name="websearch_dialog_delete_icon">刪除圖示</string>
     <string name="websearch_dialog_custom_icon">自訂圖示</string>
-    <string name="websearch_dialog_import_url">從URL匯入</string>
-    <string name="websearch_dialog_import_error">給定的 URL 無法自動匯入。您可以嘗試其他網址或手動輸入所需的資料。</string>
     <string name="websearch_dialog_advanced">高級</string>
     <string name="websearch_dialog_query_encoding">查詢的編碼方式</string>
     <string name="websearch_dialog_query_encoding_url">百分比編碼</string>
@@ -135,9 +124,7 @@
     <string name="widget_name_music">音樂</string>
     <string name="widget_name_favorites">我的最愛</string>
     <string name="widget_add_widget">新增元件</string>
-    <string name="widget_add_external">更多</string>
     <string name="shortcut_summary">由 %1$s</string>
-    <string name="installation_in_progress">安裝正在進行中... (%1$s)</string>
     <string name="easter_egg_1">這裡沒有彩蛋，除非你自己新增。</string>
     <string name="easter_egg_2">拜託，停下來，你在浪費你的時間</string>
     <string name="easter_egg_3">我不會再說一次了: 這裡絕對沒有彩蛋隱藏在這裡</string>
@@ -146,12 +133,9 @@
     <string name="save">儲存</string>
     <string name="duplicate">複製</string>
     <string name="skip">跳過</string>
-    <string name="action_continue">繼續</string>
     <string name="action_next">下一步</string>
     <string name="turn_off">關閉</string>
-    <string name="widget_action_adjust_height">調整高度</string>
     <string name="widget_action_remove">移除</string>
-    <string name="widget_action_settings">設定</string>
     <string name="menu_item_edit_favs">編輯我的最愛</string>
     <string name="edit_favorites_dialog_unpinned">未固定 – 常用</string>
     <string name="edit_favorites_dialog_pinned_unsorted">固定 – 自動排序</string>
@@ -181,8 +165,6 @@
     <string name="calendar_widget_pinned_events">即將來臨</string>
     <string name="calendar_widget_next_events">下一個事件</string>
     <string name="calendar_widget_no_events">今日無事件</string>
-    <string name="calendar_widget_open_app">開啟日曆應用</string>
-    <string name="calendar_widget_new_event">新事件</string>
     <string name="calendar_event_allday">全天</string>
     <string name="music_widget_default_title">%1$s正在播放媒體</string>
     <string name="music_widget_no_data">尚未播放任何媒體</string>
@@ -203,7 +185,6 @@
     <string name="weather_condition_lightrainandthunder">輕度雷陣雨</string>
     <string name="weather_condition_snow">雪</string>
     <string name="weather_condition_hail">冰雹</string>
-    <string name="weather_condition_thunder">雷暴</string>
     <string name="weather_condition_heavysnowshowers">重度陣雪</string>
     <string name="weather_condition_heavyrainshowers">大雨</string>
     <string name="weather_condition_rainshowersandthunder">雷陣雨</string>
@@ -230,11 +211,6 @@
     <string name="weather_condition_heavyrainandthunder">重度雷雨</string>
     <string name="weather_condition_wind">颳風</string>
     <string name="weather_condition_unknown">未知</string>
-    <string name="weather_widget_show_details">展示詳細資訊</string>
-    <string name="weather_widget_hide_details">隱藏詳細資訊</string>
-    <string name="weather_details_humidity">濕度: %1$s</string>
-    <string name="weather_details_wind">風力: %1$s</string>
-    <string name="weather_details_precipitation">降水: %1$s</string>
     <string name="weather_no_data">無可用的天氣資料.</string>
     <string name="weather_widget_set_location">設定位置</string>
     <string name="weather_location_search_no_result">位置未找到.</string>
@@ -254,26 +230,12 @@
     <string name="missing_permission_appshortcuts_create">設定%1$s為預設桌面應用以建立快捷方式.</string>
     <string name="grant_permission">授予</string>
     <string name="preference_screen_appearance">外觀</string>
-    <string name="preference_layout">佈局</string>
-    <string name="preference_layout_summary">搜尋欄、元件和搜尋結果的常規佈局</string>
     <string name="preference_theme">主題</string>
     <string name="preference_theme_light">淺色</string>
     <string name="preference_theme_dark">深色</string>
     <string name="preference_screen_colors">配色方案</string>
     <string name="preference_colors_default">預設</string>
     <string name="preference_colors_bw">黑白</string>
-    <string name="preference_colors_custom">自訂</string>
-    <string name="preference_custom_colors_a1">主色</string>
-    <string name="preference_custom_colors_a2">輔色</string>
-    <string name="preference_custom_colors_a3">點綴色</string>
-    <string name="preference_custom_colors_n1">中性色</string>
-    <string name="preference_custom_colors_n2">中性變體色</string>
-    <string name="preference_custom_colors_error">錯誤色</string>
-    <string name="preference_custom_colors_advanced_mode">高級模式</string>
-    <string name="preference_custom_colors_simple_mode">簡易模式</string>
-    <string name="preference_colors_auto_generate">從主色中生成色彩方案</string>
-    <string name="preference_category_custom_colors_light">淺色方案</string>
-    <string name="preference_category_custom_colors_dark">深色方案</string>
     <string name="preference_font">字型</string>
     <string name="preference_font_system">系統預設</string>
     <string name="preference_screen_about">關於</string>
@@ -295,7 +257,6 @@
     <string name="preference_imperial_units_summary">使用華氏度和英里/小時</string>
     <string name="preference_imperial_units">英制單位</string>
     <string name="widget_config_weather_compact">緊湊模式</string>
-    <string name="preference_compact_mode_summary">隱藏每小時和每日預測</string>
     <string name="preference_category_debug">除錯</string>
     <string name="preference_category_debug_tools">工具</string>
     <string name="preference_debug_cleanup_database">清理資料庫</string>
@@ -327,7 +288,6 @@
     <string name="preference_force_themed_icons_summary">將應用程式的配色方案應用於所有的圖示，包括不支援的圖示(不建議)</string>
     <string name="preference_icon_pack">圖示包</string>
     <string name="preference_icon_pack_summary_empty">沒有已安裝的圖示包</string>
-    <string name="icon_pack_dynamic_colors">動態顏色</string>
     <string name="preference_category_system_bars">系統欄</string>
     <string name="preference_status_bar_icons">狀態列圖示</string>
     <string name="preference_nav_bar_icons">導覽列圖示</string>
@@ -339,7 +299,6 @@
     <string name="preference_screen_integrations_summary">管理已連線的帳戶和服務</string>
     <string name="preference_google">Google</string>
     <string name="preference_signin_user">以 %1$s 身份登陸</string>
-    <string name="preference_signin_logout">登出</string>
     <string name="preference_summary_not_logged_in">您當前未登入</string>
     <string name="preference_icon_shape_pentagon">五角形</string>
     <string name="preference_dim_wallpaper">調暗桌布</string>
@@ -349,7 +308,6 @@
     <string name="preference_blur_wallpaper_unsupported">在此裝置上不受支援</string>
     <string name="preference_wallpaper_summary">選擇一張桌布</string>
     <string name="preference_category_badges">徽章</string>
-    <string name="preference_screen_badges_summary">組態圖示角標</string>
     <string name="preference_notification_badges">通知角標</string>
     <string name="preference_notification_badges_summary">為帶有未讀通知的應用程式顯示角標</string>
     <string name="preference_nextcloud_signin">登陸到Nextcloud</string>
@@ -373,18 +331,11 @@
     <string name="preference_screen_debug">除錯</string>
     <string name="preference_screen_debug_summary">故障排除工具</string>
     <string name="preference_category_widgets">元件</string>
-    <string name="preference_screen_widgets_summary">組態元件</string>
     <string name="preference_screen_weatherwidget">天氣</string>
-    <string name="preference_screen_musicwidget">音樂</string>
     <string name="preference_screen_clockwidget">時鐘</string>
-    <string name="preference_clockwidget_layout">佈局</string>
     <string name="preference_clockwidget_layout_vertical">預設</string>
     <string name="preference_clockwidget_layout_horizontal">簡潔</string>
     <string name="preference_clock_widget_fill_height">全螢幕高度</string>
-    <string name="preference_clock_widget_fill_height_summary">在時鐘上方插入額外的空間以填補整個螢幕的高度</string>
-    <string name="preference_clock_widget_color">顏色</string>
-    <string name="preference_clock_widget_style">風格</string>
-    <string name="preference_clock_widget_style_summary">選擇一個時鐘</string>
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">顯示當前日期</string>
     <string name="preference_clockwidget_favorites_part">我的最愛</string>
@@ -405,7 +356,6 @@
     <string name="preference_crash_reporter_summary">錯誤和崩潰報告</string>
     <string name="preference_logs">日誌</string>
     <string name="preference_logs_summary">檢視和匯出應用日誌</string>
-    <string name="preference_export_log">匯出記錄檔</string>
     <string name="preference_search_favorites_summary">在應用抽屜上方顯示固定和常用專案</string>
     <string name="preference_search_files">檔案</string>
     <string name="preference_search_files_summary">搜尋本地檔案和雲伺服器檔案</string>
@@ -425,27 +375,18 @@
     <string name="preference_search_wikipedia_summary">搜尋免費的百科全書</string>
     <string name="preference_search_websites">網站</string>
     <string name="preference_search_websites_summary">如果搜尋查詢是 URL，則顯示網站的預覽</string>
-    <string name="preference_search_websearch">Web搜尋</string>
-    <string name="preference_search_websearch_summary">顯示不同搜尋引擎的快捷方式</string>
     <string name="preference_search_localfiles">本地檔案</string>
     <string name="preference_search_localfiles_summary">搜尋儲存在此裝置上的文件、照片和其它檔案</string>
     <string name="preference_search_gdrive">Google Drive</string>
     <string name="preference_search_gdrive_summary">在Google Drive上搜尋 %1$s</string>
-    <string name="preference_search_onedrive">OneDrive</string>
-    <string name="preference_search_onedrive_summary">在OneDrive上搜尋 %1$s</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">搜尋%1$s的檔案</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_screen_calendarwidget">日曆</string>
-    <string name="preference_search_wikipedia_pictures">顯示圖片</string>
-    <string name="preference_search_wikipedia_pictures_summary">大幅提高資料使用量</string>
     <string name="preference_google_signin">使用Google登陸</string>
     <string name="preference_google_signin_summary">登陸以查詢Google Drive</string>
     <string name="preference_calendar_calendars">日曆</string>
     <string name="preference_calendar_hide_allday">隱藏全天事件</string>
     <string name="preference_screen_buildinfo_summary">有關此版本應用的更多資訊</string>
-    <string name="preference_music_filter_sources">限製為音樂應用</string>
-    <string name="preference_music_filter_sources_summary">忽略那些非音樂應用的媒體會話</string>
     <string name="preference_search_bar_style">風格</string>
     <string name="preference_search_bar_style_summary">自訂搜尋欄外觀</string>
     <string name="preference_search_bar_color">顏色</string>
@@ -467,20 +408,11 @@
     <string name="no_account_google">您尚未連線Google帳戶</string>
     <string name="connect_account">連線帳戶</string>
     <string name="battery_part_charging">充電中</string>
-    <string name="backup_select_components">選擇要備份的專案:</string>
-    <string name="backup_not_included">已連線的帳戶資訊和第三方應用的元件將不會被備份。</string>
-    <string name="backup_component_favorites">我的最愛&amp;隱藏應用</string>
-    <string name="backup_component_settings">設定</string>
-    <string name="backup_component_websearches">Web搜尋快捷方式</string>
-    <string name="backup_component_searchactions">快捷操作</string>
-    <string name="backup_component_widgets">內建元件</string>
-    <string name="backup_component_customizations">定製化</string>
     <string name="backup_complete">備份已完成.</string>
     <string name="restore_invalid_file">所選擇的檔案不是備份檔案.你是否確定選擇了正確的檔案？</string>
     <string name="restore_incompatible_file">此備份在不一致的版本%1$s下建立且不能在當前版本恢復.</string>
     <string name="restore_different_minor_version">此備份在不一致的版本%1$s下建立.一些資料可能不會被正確恢復。</string>
     <string name="restore_meta">由%3$s於%1$s在%2$s中建立.</string>
-    <string name="restore_select_components">選擇要恢復的專案. 現有的資料將被覆蓋!</string>
     <string name="restore_complete">備份已恢復.</string>
     <string name="icon_picker_title">選擇器圖示</string>
     <string name="icon_picker_default_icon">預設</string>
@@ -525,7 +457,6 @@
     <string name="tag_exists_error">以此命名的標籤已經存在.</string>
     <string name="tag_exists_message">以此命名的標籤已經存在.如果你執意而為，兩個標籤將會被合併.</string>
     <string name="tag_no_items_message">沒有專案被分配給此標籤.如果你執意而為,此標籤將會被刪除.</string>
-    <string name="tag_empty_message">標籤名字禁止為空白.</string>
     <string name="tag_select_items">選擇專案:</string>
     <string name="tag_name">標籤名字</string>
     <string name="preference_layout_open_search">搜尋 / 應用抽屜</string>
@@ -554,9 +485,6 @@
     <plurals name="debug_cleanup_database_result">
         <item quantity="other">已刪除%1$d條目。</item>
     </plurals>
-    <plurals name="preference_calendar_calendars_summary">
-        <item quantity="other">已選擇 %1$d 個日曆</item>
-    </plurals>
     <string name="preference_search_bar_launch_on_enter">輸入時啟動</string>
     <string name="preference_search_bar_launch_on_enter_summary">在點擊「前往」後啟動突顯顯示的匹配項或快速操作</string>
     <plurals name="battery_part_remaining_charge_time">
@@ -569,7 +497,6 @@
     <string name="icon_picker_filter_all_packs">所有圖示包</string>
     <string name="preference_search_result_ordering">搜尋結果排序</string>
     <string name="preference_search_result_ordering_alphabetic">字母順序</string>
-    <string name="preference_search_result_ordering_launch_count">啟動次數</string>
     <string name="preference_search_result_ordering_weighted">依使用率排序</string>
     <string name="preference_search_result_ordering_weight_factor">排名靈活性</string>
     <string name="preference_search_result_ordering_weight_factor_low">穩定</string>
@@ -598,7 +525,6 @@
     <string name="preference_weather_integration">天氣</string>
     <string name="preference_media_integration">媒體控制</string>
     <string name="preference_screen_icons">網格與圖示</string>
-    <string name="widget_config_appwidget_height">高度</string>
     <string name="widget_config_calendar_missing_calendars_hint">找不到你的行事曆了嗎？</string>
     <string name="preference_debug_reinstall_iconpacks">重新安裝圖示套件</string>
     <string name="preference_gesture_home_button">首頁按鈕 / 手勢</string>
@@ -607,7 +533,6 @@
     <string name="widget_config_appwidget_configure">配置小工具</string>
     <string name="preference_debug_reinstall_iconpacks_summary">清除並重新建立圖示包快取</string>
     <string name="widget_config_appwidget_borderless">無邊框</string>
-    <string name="widget_config_appwidget_resize_hint">拖曳以調整大小</string>
     <string name="note_widget_conflict">衝突</string>
     <string name="note_widget_conflict_action_resolve">解決</string>
     <string name="note_widget_conflict_keep_selected">保留所選</string>

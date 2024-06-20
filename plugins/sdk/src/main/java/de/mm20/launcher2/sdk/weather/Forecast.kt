@@ -99,31 +99,8 @@ val Double.mm
 val Double.inch
     get() = Precipitation(this * 25.4)
 
-
-enum class WeatherIcon {
-    Unknown,
-    Clear,
-    Cloudy,
-    Cold,
-    Drizzle,
-    Haze,
-    Fog,
-    Hail,
-    HeavyThunderstorm,
-    HeavyThunderstormWithRain,
-    Hot,
-    MostlyCloudy,
-    PartlyCloudy,
-    Showers,
-    Sleet,
-    Snow,
-    Storm,
-    Thunderstorm,
-    ThunderstormWithRain,
-    Wind,
-    BrokenClouds,
-}
-
+@Deprecated("Use de.mm20.launcher2.weather.WeatherIcon")
+typealias WeatherIcon = de.mm20.launcher2.weather.WeatherIcon
 
 data class Forecast(
     /**

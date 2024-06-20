@@ -18,6 +18,8 @@ import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.UpdatableSearchable
+import de.mm20.launcher2.search.UpdateResult
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -35,7 +37,9 @@ data class PluginFile(
     val authority: String,
     internal val storageStrategy: StorageStrategy,
     override val labelOverride: String? = null,
-) : File {
+    override val timestamp: Long,
+    override val updatedSelf: (suspend (SavableSearchable) -> UpdateResult<File>)?,
+) : File, UpdatableSearchable<File> {
     override val domain: String = Domain
 
     override val key: String

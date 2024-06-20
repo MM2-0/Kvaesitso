@@ -10,7 +10,7 @@ data class PluginPackage(
     val author: String? = null,
     val settings: Intent? = null,
     val plugins: List<Plugin>,
-    val isOfficial: Boolean = false,
+    val isVerified: Boolean = false,
 ) {
     val enabled: Boolean = plugins.all { it.enabled }
 }

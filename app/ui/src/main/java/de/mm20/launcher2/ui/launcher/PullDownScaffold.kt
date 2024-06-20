@@ -83,6 +83,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
@@ -387,11 +388,12 @@ fun PullDownScaffold(
 
     val insets = WindowInsets.safeDrawing.asPaddingValues()
     val colorSurfaceContainer = MaterialTheme.colorScheme.surfaceContainer
+    val cardStyle = LocalCardStyle.current
     Box(
         modifier = modifier
             .drawBehind {
                 drawRect(
-                    color = colorSurfaceContainer.copy(alpha = -pagerState.getOffsetDistanceInPages(0) * 0.85f),
+                    color = colorSurfaceContainer.copy(alpha = -pagerState.getOffsetDistanceInPages(0) * 0.85f * cardStyle.opacity),
                 )
             }
             .pointerInput(Unit) {

@@ -54,7 +54,7 @@ fun LazyListScope.SearchFavorites(
                     )
             ) {
                 if (favorites.isNotEmpty()) {
-                    SearchResultGrid(favorites)
+                    SearchResultGrid(favorites, transitionKey = selectedTag)
                 } else {
                     Banner(
                         modifier = Modifier.padding(16.dp),

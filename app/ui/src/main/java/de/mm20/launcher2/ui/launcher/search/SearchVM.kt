@@ -32,6 +32,7 @@ import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.searchable.SavableSearchableRepository
+import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.CancellationException
@@ -101,13 +102,6 @@ class SearchVM : ViewModel(), KoinComponent {
     val filterBarItems = searchFilterSettings.filterBarItems
 
     val separateWorkProfile = searchUiSettings.separateWorkProfile
-
-    private val hiddenItemKeys = searchableRepository
-        .getKeys(
-            hidden = true,
-            limit = 9999,
-        )
-        .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
     val bestMatch = mutableStateOf<Searchable?>(null)
 
@@ -225,10 +219,11 @@ class SearchVM : ViewModel(), KoinComponent {
                         }
 
                     resultsList = resultsList.sortedWith { a, b ->
+                        val lastLocation = devicePoseProvider.lastLocation
                         when {
-                            a is Location && b is Location && devicePoseProvider.lastLocation != null -> {
-                                a.distanceTo(devicePoseProvider.lastLocation!!)
-                                    .compareTo(b.distanceTo(devicePoseProvider.lastLocation!!))
+                            a is Location && b is Location && lastLocation != null -> {
+                                a.distanceTo(lastLocation)
+                                    .compareTo(b.distanceTo(lastLocation))
                             }
 
                             a is SavableSearchable && b !is SavableSearchable -> -1
@@ -250,6 +245,9 @@ class SearchVM : ViewModel(), KoinComponent {
                         }
                     }
 
+                    val hiddenItemKeys = searchableRepository.getKeys(
+                        maxVisibility = if (query.isEmpty()) VisibilityLevel.SearchOnly else VisibilityLevel.Hidden,
+                    )
 
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val hidden = mutableListOf<SavableSearchable>()
@@ -349,7 +347,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val missingLocationPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Location),
-        locationSearchSettings.enabled.distinctUntilChanged()
+        locationSearchSettings.osmLocations.distinctUntilChanged()
     ) { perm, enabled -> !perm && enabled }
 
     fun requestLocationPermission(context: AppCompatActivity) {
@@ -357,7 +355,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun disableLocationSearch() {
-        locationSearchSettings.setEnabled(false)
+        locationSearchSettings.setOsmLocations(false)
     }
 
     val missingFilesPermission = combine(

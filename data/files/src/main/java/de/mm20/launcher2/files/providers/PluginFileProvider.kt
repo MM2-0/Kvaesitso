@@ -3,100 +3,35 @@ package de.mm20.launcher2.files.providers
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.os.CancellationSignal
+import android.os.Bundle
 import android.text.format.DateUtils
 import android.util.Log
-import androidx.core.database.getIntOrNull
-import androidx.core.database.getLongOrNull
-import androidx.core.database.getStringOrNull
-import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.plugin.PluginApi
-import de.mm20.launcher2.plugin.config.SearchPluginConfig
-import de.mm20.launcher2.plugin.contracts.FilePluginContract
-import de.mm20.launcher2.plugin.contracts.PluginContract
+import de.mm20.launcher2.plugin.QueryPluginApi
+import de.mm20.launcher2.plugin.config.QueryPluginConfig
+import de.mm20.launcher2.plugin.contracts.FilePluginContract.FileColumns
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
-import de.mm20.launcher2.search.File
+import de.mm20.launcher2.plugin.data.set
+import de.mm20.launcher2.plugin.data.withColumns
 import de.mm20.launcher2.search.FileMetaType
+import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.asUpdateResult
 import kotlinx.collections.immutable.toPersistentMap
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.resume
 
 class PluginFileProvider(
     private val context: Context,
     private val pluginAuthority: String,
-) : FileProvider {
-    override suspend fun search(query: String, allowNetwork: Boolean): List<File> = withContext(Dispatchers.IO) {
-        val uri = Uri.Builder()
-            .scheme("content")
-            .authority(pluginAuthority)
-            .path(SearchPluginContract.Paths.Search)
-            .appendQueryParameter(SearchPluginContract.Paths.QueryParam, query)
-            .appendQueryParameter(SearchPluginContract.Paths.AllowNetworkParam, allowNetwork.toString())
-            .build()
-        val cancellationSignal = CancellationSignal()
+) : QueryPluginApi<String, PluginFile>(
+    context, pluginAuthority
+), FileProvider {
 
-        return@withContext suspendCancellableCoroutine {
-            it.invokeOnCancellation {
-                cancellationSignal.cancel()
-            }
-            val cursor = try {
-                context.contentResolver.query(
-                    uri,
-                    null,
-                    null,
-                    cancellationSignal
-                )
-            } catch (e: Exception) {
-                Log.e("MM20", "Plugin ${pluginAuthority} threw exception")
-                CrashReporter.logException(e)
-                it.resume(emptyList())
-                return@suspendCancellableCoroutine
-            }
-
-            if (cursor == null) {
-                Log.e("MM20", "Plugin ${pluginAuthority} returned null cursor")
-                it.resume(emptyList())
-                return@suspendCancellableCoroutine
-            }
-
-            val results = fromCursor(cursor) ?: emptyList()
-            it.resume(results)
-        }
-    }
-
-    private fun getPluginConfig(): SearchPluginConfig? {
+    private fun getPluginConfig(): QueryPluginConfig? {
         return PluginApi(pluginAuthority, context.contentResolver).getSearchPluginConfig()
     }
 
-    suspend fun getFile(id: String): File? {
-        val uri = Uri.Builder()
-            .scheme("content")
-            .authority(pluginAuthority)
-            .path(SearchPluginContract.Paths.Root)
-            .appendPath(id)
-            .build()
-        val cancellationSignal = CancellationSignal()
-
-        return suspendCancellableCoroutine {
-            it.invokeOnCancellation {
-                cancellationSignal.cancel()
-            }
-            val cursor = context.contentResolver.query(
-                uri,
-                null,
-                null,
-                cancellationSignal
-            ) ?: return@suspendCancellableCoroutine it.resume(null)
-
-            val results = fromCursor(cursor)
-            it.resume(results?.firstOrNull())
-        }
-    }
-
-    private fun fromCursor(cursor: Cursor): List<File>? {
+    override fun Cursor.getData(): List<PluginFile>? {
         val config = getPluginConfig()
+        val cursor = this
 
         if (config == null) {
             Log.e("MM20", "Plugin ${pluginAuthority} returned null config")
@@ -104,119 +39,99 @@ class PluginFileProvider(
             return null
         }
 
-        val idIndex = cursor
-            .getColumnIndex(FilePluginContract.FileColumns.Id)
-            .takeIf { it >= 0 }
-            ?: return null
-        val pathIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.Path).takeIf { it >= 0 }
-        val typeIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MimeType).takeIf { it >= 0 }
-        val sizeIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.Size).takeIf { it >= 0 }
-        val nameIndex = cursor.getColumnIndex(FilePluginContract.FileColumns.DisplayName)
-            .takeIf { it >= 0 }
-            ?: return null
-        val contentUriIndex = cursor.getColumnIndex(FilePluginContract.FileColumns.ContentUri)
-            .takeIf { it >= 0 }
-            ?: return null
-        val thumbnailUriIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.ThumbnailUri)
-                .takeIf { it >= 0 }
-        val directoryIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.IsDirectory).takeIf { it >= 0 }
-
-        val ownerIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.Owner).takeIf { it >= 0 }
-
-        val metaTitleIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaTitle).takeIf { it >= 0 }
-
-        val metaArtistIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaArtist).takeIf { it >= 0 }
-
-        val metaAlbumIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaAlbum).takeIf { it >= 0 }
-
-        val metaDurationIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaDuration).takeIf { it >= 0 }
-
-        val metaYearIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaYear).takeIf { it >= 0 }
-
-        val metaWidthIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaWidth).takeIf { it >= 0 }
-
-        val metaHeightIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaHeight).takeIf { it >= 0 }
-
-        val metaLocationIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaLocation).takeIf { it >= 0 }
-
-        val metaAppNameIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaAppName).takeIf { it >= 0 }
-
-        val metaAppPackageNameIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaAppPackageName)
-                .takeIf { it >= 0 }
-
-        val results = mutableListOf<File>()
-        while (cursor.moveToNext()) {
-            results.add(
-                PluginFile(
-                    id = cursor.getString(idIndex),
-                    path = pathIndex?.let { cursor.getString(it) } ?: "",
-                    mimeType = typeIndex?.let { cursor.getString(it) }
-                        ?: "application/octet-stream",
-                    size = sizeIndex?.let { cursor.getLong(it) } ?: 0,
-                    metaData = buildMap {
-                        metaTitleIndex?.let { cursor.getStringOrNull(it) }?.let {
-                            put(FileMetaType.Title, it)
-                        }
-                        metaArtistIndex?.let { cursor.getStringOrNull(it) }?.let {
-                            put(FileMetaType.Artist, it)
-                        }
-                        metaAlbumIndex?.let { cursor.getStringOrNull(it) }?.let {
-                            put(FileMetaType.Album, it)
-                        }
-                        metaDurationIndex?.let { cursor.getLongOrNull(it) }?.let {
-                            put(FileMetaType.Duration, DateUtils.formatElapsedTime(it / 1000L))
-                        }
-                        metaYearIndex?.let { cursor.getIntOrNull(it) }?.let {
-                            put(FileMetaType.Year, it.toString())
-                        }
-                        if (metaWidthIndex != null && metaHeightIndex != null) {
-                            val width = cursor.getIntOrNull(metaWidthIndex)
-                            val height = cursor.getIntOrNull(metaHeightIndex)
+        val results = mutableListOf<PluginFile>()
+        val timestamp = System.currentTimeMillis()
+        cursor.withColumns(FileColumns) {
+            while (cursor.moveToNext()) {
+                results.add(
+                    PluginFile(
+                        id = cursor[FileColumns.Id] ?: continue,
+                        path = cursor[FileColumns.Path] ?: "",
+                        mimeType = cursor[FileColumns.MimeType] ?: "application/octet-stream",
+                        size = cursor[FileColumns.Size] ?: 0L,
+                        metaData = buildMap {
+                            cursor[FileColumns.MetaTitle]?.let {
+                                put(FileMetaType.Title, it)
+                            }
+                            cursor[FileColumns.MetaArtist]?.let {
+                                put(FileMetaType.Artist, it)
+                            }
+                            cursor[FileColumns.MetaAlbum]?.let {
+                                put(FileMetaType.Album, it)
+                            }
+                            cursor[FileColumns.MetaDuration]?.let {
+                                put(FileMetaType.Duration, DateUtils.formatElapsedTime(it / 1000L))
+                            }
+                            cursor[FileColumns.MetaYear]?.let {
+                                put(FileMetaType.Year, it.toString())
+                            }
+                            val width = cursor[FileColumns.MetaWidth]
+                            val height = cursor[FileColumns.MetaHeight]
                             if (width != null && height != null) {
                                 put(FileMetaType.Dimensions, "${width}x${height}")
                             }
+                            cursor[FileColumns.MetaLocation]?.let {
+                                put(FileMetaType.Location, it)
+                            }
+                            cursor[FileColumns.MetaAppName]?.let {
+                                put(FileMetaType.AppName, it)
+                            }
+                            cursor[FileColumns.MetaAppPackageName]?.let {
+                                put(FileMetaType.AppPackageName, it)
+                            }
+                            cursor[FileColumns.Owner]?.let {
+                                put(FileMetaType.Owner, it)
+                            }
+                        }.toPersistentMap(),
+                        label = cursor[FileColumns.DisplayName] ?: continue,
+                        uri = cursor[FileColumns.DisplayName]?.let { Uri.parse(it) } ?: continue,
+                        thumbnailUri = cursor[FileColumns.ThumbnailUri]?.let { Uri.parse(it) },
+                        storageStrategy = config.storageStrategy,
+                        isDirectory = cursor[FileColumns.IsDirectory] ?: false,
+                        authority = pluginAuthority,
+                        timestamp = timestamp,
+                        updatedSelf = {
+                            if (it !is PluginFile) UpdateResult.TemporarilyUnavailable()
+                            else refresh(it, timestamp).asUpdateResult()
                         }
-                        metaLocationIndex?.let { cursor.getStringOrNull(it) }?.let {
-                            put(FileMetaType.Location, it)
-                        }
-                        metaAppNameIndex?.let { cursor.getStringOrNull(it) }?.let {
-                            put(FileMetaType.AppName, it)
-                        }
-                        metaAppPackageNameIndex?.let { cursor.getStringOrNull(it) }?.let {
-                            put(FileMetaType.AppPackageName, it)
-                        }
-                        ownerIndex?.let { cursor.getStringOrNull(it) }?.let {
-                            put(FileMetaType.Owner, it)
-                        }
-                    }.toPersistentMap(),
-                    label = cursor.getString(nameIndex),
-                    uri = Uri.parse(cursor.getString(contentUriIndex)),
-                    thumbnailUri = thumbnailUriIndex?.let {
-                        cursor.getStringOrNull(it)
-                    }?.let { Uri.parse(it) },
-                    storageStrategy = config.storageStrategy,
-                    isDirectory = directoryIndex?.let { cursor.getInt(it) } == 1,
-                    authority = pluginAuthority,
+                    )
                 )
-            )
+            }
         }
         cursor.close()
         return results
+    }
+
+    override fun PluginFile.toBundle(): Bundle {
+        return Bundle().apply {
+            set(FileColumns.Id, id)
+            set(FileColumns.Path, path)
+            set(FileColumns.MimeType, mimeType)
+            set(FileColumns.Size, size)
+            set(FileColumns.MetaTitle, metaData[FileMetaType.Title])
+            set(FileColumns.MetaArtist, metaData[FileMetaType.Artist])
+            set(FileColumns.MetaAlbum, metaData[FileMetaType.Album])
+            set(FileColumns.MetaDuration, metaData[FileMetaType.Duration]?.toLong())
+            set(FileColumns.MetaYear, metaData[FileMetaType.Year]?.toInt())
+            set(
+                FileColumns.MetaWidth,
+                metaData[FileMetaType.Dimensions]?.split("x")?.getOrNull(0)?.toInt()
+            )
+            set(
+                FileColumns.MetaHeight,
+                metaData[FileMetaType.Dimensions]?.split("x")?.getOrNull(1)?.toInt()
+            )
+            set(FileColumns.MetaLocation, metaData[FileMetaType.Location])
+            set(FileColumns.MetaAppName, metaData[FileMetaType.AppName])
+            set(FileColumns.MetaAppPackageName, metaData[FileMetaType.AppPackageName])
+            set(FileColumns.Owner, metaData[FileMetaType.Owner])
+            set(FileColumns.DisplayName, label)
+            set(FileColumns.ThumbnailUri, thumbnailUri?.toString())
+            set(FileColumns.IsDirectory, isDirectory)
+        }
+    }
+
+    override fun Uri.Builder.appendQueryParameters(query: String): Uri.Builder = apply {
+        appendQueryParameter(SearchPluginContract.Params.Query, query)
     }
 }

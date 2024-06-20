@@ -8,9 +8,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
@@ -23,7 +25,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -90,8 +91,6 @@ fun GridItem(
         viewModel.init(item, iconSize.toInt())
     }
 
-    val item = viewModel.searchable.collectAsState().value ?: item
-
     val context = LocalContext.current
 
     var showPopup by remember(item.key) { mutableStateOf(false) }
@@ -118,8 +117,9 @@ fun GridItem(
                 },
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally
+            ) then if (!showLabels) Modifier.aspectRatio(1f) else Modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         val badge by viewModel.badge.collectAsStateWithLifecycle()
         val icon by viewModel.icon.collectAsStateWithLifecycle()

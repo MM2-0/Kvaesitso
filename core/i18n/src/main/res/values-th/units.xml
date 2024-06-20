@@ -212,4 +212,8 @@
     <plurals name="unit_millisecond">
         <item quantity="other">มิลลิวินาที</item>
     </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="other">เดซิเมตร</item>
+    </plurals>
+    <string name="unit_decimeter_symbol">ดม.</string>
 </resources>

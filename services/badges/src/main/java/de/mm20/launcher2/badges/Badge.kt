@@ -2,26 +2,36 @@ package de.mm20.launcher2.badges
 
 import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.compose.ui.graphics.vector.ImageVector
+
+sealed interface BadgeIcon {
+    @JvmInline
+    value class Drawable(val drawable: android.graphics.drawable.Drawable): BadgeIcon
+
+    @JvmInline
+    value class Vector(val imageVector: ImageVector): BadgeIcon
+}
+
+fun BadgeIcon(drawable: Drawable): BadgeIcon = BadgeIcon.Drawable(drawable)
+
+fun BadgeIcon(imageVector: ImageVector): BadgeIcon = BadgeIcon.Vector(imageVector)
 
 interface Badge {
     val number: Int?
     val progress: Float?
-    val iconRes: Int?
-    val icon: Drawable?
+    val icon: BadgeIcon?
 }
 
 fun Badge(
     number: Int? = null,
     progress: Float? = null,
-    iconRes: Int? = null,
-    icon: Drawable? = null
-): Badge = MutableBadge(number, progress, iconRes, icon)
+    icon: BadgeIcon? = null
+): Badge = MutableBadge(number, progress, icon)
 
 internal data class MutableBadge(
     override var number: Int? = null,
     override var progress: Float? = null,
-    override var iconRes: Int? = null,
-    override var icon: Drawable? = null
+    override var icon: BadgeIcon? = null
 ): Badge
 
 fun Collection<Badge>.combine(): Badge? {
@@ -30,7 +40,6 @@ fun Collection<Badge>.combine(): Badge? {
     var progresses = 0
     forEach {
         if (it.icon != null && badge.icon == null) badge.icon = it.icon
-        if (it.iconRes != null && badge.iconRes == null) badge.iconRes = it.iconRes
         it.number?.let { a ->
             badge.number?.let { b -> badge.number = a + b } ?: run {
                 badge.number = a

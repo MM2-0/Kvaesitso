@@ -5,11 +5,6 @@
     </style>
 
 
-    <style name="SettingsTheme" parent="BaseTheme">
-        <item name="android:statusBarColor">?colorSurface</item>
-        <item name="android:windowLightStatusBar">true</item>
-    </style>
-
     <style name="SettingsTheme.NoActionBar" parent="BaseTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

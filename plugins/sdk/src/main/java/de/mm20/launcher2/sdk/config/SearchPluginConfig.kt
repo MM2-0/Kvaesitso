@@ -1,9 +1,9 @@
 package de.mm20.launcher2.sdk.config
 
 import android.os.Bundle
-import de.mm20.launcher2.plugin.config.SearchPluginConfig
+import de.mm20.launcher2.plugin.config.QueryPluginConfig
 
-internal fun SearchPluginConfig.toBundle(): Bundle {
+internal fun QueryPluginConfig.toBundle(): Bundle {
     return Bundle().apply {
         putString("storageStrategy", storageStrategy.name)
     }

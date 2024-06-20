@@ -41,7 +41,6 @@
     <string name="wind_west_north_west">Barat-barat laut</string>
     <string name="wind_north_west">Barat laut</string>
     <string name="wind_north_north_west">Utara barat laut</string>
-    <string name="precipitation_none">Tiada hujan</string>
     <string name="wikipedia_source">Daripada Wikipedia</string>
     <string name="file_meta_title">Tajuk: %1$s</string>
     <string name="file_meta_artist">Artis: %1$s</string>
@@ -71,26 +70,18 @@
     <string name="file_type_launchertheme">%1$s tema</string>
     <string name="file_type_generic">%1$s fail</string>
     <string name="alert_delete_file">Fail %1$s akan dipadamkan secara kekal. Teruskan?</string>
-    <string name="default_websearch_1_name">Google</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
     <string name="default_websearch_3_name">Google Play</string>
-    <string name="websearch_dialog_create_title">Tambah carian web</string>
-    <string name="websearch_dialog_edit_title">Sunting carian sesawang</string>
-    <string name="websearch_dialog_name">Nama</string>
-    <string name="websearch_dialog_url">URL</string>
     <string name="alert_delete_directory">Direktori %1$s dan semua kandungannya akan dipadamkan secara kekal. Teruskan?</string>
     <string name="alert_delete_shortcut">Pintasan %1$s akan dibuang secara kekal. Teruskan?</string>
     <string name="file_meta_path">Laluan: %1$s</string>
-    <string name="default_websearch_1_url">https://google.com/search?q=${1}</string>
     <string name="wikipedia_url">https://ms.wikipedia.org</string>
     <string name="file_type_video">Video</string>
     <string name="file_type_text">Fail teks</string>
     <string name="file_type_archive">Fail arkib</string>
     <string name="file_type_none">Fail</string>
-    <string name="websearch_dialog_url_description">\'${1}\' akan digantikan dengan istilah carian sebenar.</string>
     <string name="file_meta_dimensions">Dimensi: %1$s</string>
     <string name="file_type_launcherbackup">%1$s salinan sandar</string>
-    <string name="error_activity_not_found">Tidak dapat membuka %1$s</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
 </resources>
