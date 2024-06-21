@@ -413,7 +413,7 @@
     <string name="favorites_empty">Zde se zobrazí připnuté a často používané položky</string>
     <string name="frequently_used_show_in_favorites">Zobrazit v oblíbených</string>
     <string name="frequently_used_rows">Počet řádků</string>
-    <string name="customize_tags_placeholder">Štítky…</string>
+    <string name="customize_tags_placeholder">Štítky</string>
     <string name="create_app_shortcut">Vytvořit zkratku</string>
     <string name="search_action_email">E-mail</string>
     <string name="search_action_contact">Přidat do kontaktů</string>
@@ -754,4 +754,11 @@
     <string name="poi_category_baseball">Baseballové hřiště</string>
     <string name="poi_category_amusement_park">Zábavní park</string>
     <string name="preference_signout">Odhlásit se</string>
+    <string name="customize_item_tags">Štítky</string>
+    <string name="customize_item_visibility">Zobrazit v</string>
+    <string name="item_visibility_app_default">Mřížka aplikací a výsledky hledání</string>
+    <string name="item_visibility_search_only">Výsledky hledání</string>
+    <string name="item_visibility_hidden">Nikdy</string>
+    <string name="item_visibility_calendar_default">Widget kalendáře a výsledky hledání</string>
+    <string name="customize_item_label">Značka</string>
 </resources>
