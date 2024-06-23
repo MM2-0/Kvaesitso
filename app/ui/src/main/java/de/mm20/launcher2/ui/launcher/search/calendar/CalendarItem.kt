@@ -81,9 +81,6 @@ fun CalendarItem(
         viewModel.init(calendar, iconSize.toInt())
     }
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val snackbarHostState = LocalSnackbarHostState.current
-
     val darkMode = LocalDarkTheme.current
     val secondaryColor = MaterialTheme.colorScheme.secondary
 

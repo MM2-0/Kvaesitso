@@ -81,9 +81,6 @@ fun FileItem(
         viewModel.init(file, iconSize.toInt())
     }
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val snackbarHostState = LocalSnackbarHostState.current
-
     val icon by viewModel.icon.collectAsStateWithLifecycle()
     val badge by viewModel.badge.collectAsState(null)
 
@@ -92,8 +89,7 @@ fun FileItem(
     ) {
         AnimatedContent(showDetails) { showDetails ->
             if (showDetails) {
-                Column(
-                ) {
+                Column {
                     Row(
                         modifier = Modifier
                             .padding(
