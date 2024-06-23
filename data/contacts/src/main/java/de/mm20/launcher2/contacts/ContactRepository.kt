@@ -1,13 +1,19 @@
 package de.mm20.launcher2.contacts
 
+import android.content.ContentUris
 import android.content.Context
 import android.provider.ContactsContract
+import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.search.Contact
-import de.mm20.launcher2.search.ContactInfo
+import de.mm20.launcher2.search.ContactApp
+import de.mm20.launcher2.search.ContactInfoType
+import de.mm20.launcher2.search.EmailAddress
+import de.mm20.launcher2.search.PhoneNumber
+import de.mm20.launcher2.search.PostalAddress
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -51,25 +57,22 @@ internal class ContactRepository(
 
     private suspend fun getWithRawIds(id: Long, rawIds: Set<Long>): Contact? =
         withContext(Dispatchers.IO) {
-            val s = "(" + rawIds.joinToString(separator = " OR ",
-                transform = { "${ContactsContract.Data.RAW_CONTACT_ID} = $it" }) + ")" +
-                    " AND (${ContactsContract.Data.MIMETYPE} = \"${ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE}\"" +
-                    " OR ${ContactsContract.Data.MIMETYPE} = \"${ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE}\"" +
-                    " OR ${ContactsContract.Data.MIMETYPE} = \"${ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE}\"" +
-                    " OR ${ContactsContract.Data.MIMETYPE} = \"${ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE}\"" +
-                    " OR ${ContactsContract.Data.MIMETYPE} = \"${TelegramContactInfo.ItemType}\"" +
-                    " OR ${ContactsContract.Data.MIMETYPE} = \"${WhatsAppContactInfo.ItemType}\"" +
-                    " OR ${ContactsContract.Data.MIMETYPE} = \"${SignalContactInfo.ItemType}\"" +
-                    ")"
+            val s = "${ContactsContract.Data.RAW_CONTACT_ID} IN (${rawIds.joinToString(", ")})"
             val dataCursor = context.contentResolver.query(
                 ContactsContract.Data.CONTENT_URI,
                 null, s, null, null
             ) ?: return@withContext null
-            val contactInfos = mutableSetOf<ContactInfo>()
             var firstName = ""
             var lastName = ""
             var displayName = ""
+            val phoneNumbers = mutableListOf<PhoneNumber>()
+            val emailAddresses = mutableListOf<EmailAddress>()
+            val postalAddresses = mutableListOf<PostalAddress>()
+            val contactApps = mutableListOf<ContactApp>()
+
             val mimeTypeColumn = dataCursor.getColumnIndex(ContactsContract.Data.MIMETYPE)
+            val typeColumn =
+                dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Contactables.TYPE)
             val emailAddressColumn =
                 dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS)
             val numberColumn =
@@ -82,25 +85,49 @@ internal class ContactRepository(
                 dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME)
             val familyNameColumn =
                 dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME)
-            val data1Column = dataCursor.getColumnIndex(ContactsContract.Data.DATA1)
+            val accountTypeColumn = dataCursor.getColumnIndex(ContactsContract.Data.ACCOUNT_TYPE_AND_DATA_SET)
+
             val data3Column = dataCursor.getColumnIndex(ContactsContract.Data.DATA3)
             val idColumn = dataCursor.getColumnIndex(ContactsContract.Data._ID)
             loop@ while (dataCursor.moveToNext()) {
                 when (dataCursor.getStringOrNull(mimeTypeColumn)) {
                     ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE ->
                         dataCursor.getStringOrNull(emailAddressColumn)?.let {
-                            contactInfos.add(MailContactInfo(it))
+                            emailAddresses += EmailAddress(
+                                it,
+                                when (dataCursor.getInt(typeColumn)) {
+                                    ContactsContract.CommonDataKinds.Email.TYPE_HOME -> ContactInfoType.Home
+                                    ContactsContract.CommonDataKinds.Email.TYPE_WORK -> ContactInfoType.Work
+                                    ContactsContract.CommonDataKinds.Email.TYPE_MOBILE -> ContactInfoType.Mobile
+                                    else -> ContactInfoType.Other
+                                }
+                            )
                         }
 
                     ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE ->
                         dataCursor.getStringOrNull(numberColumn)?.let {
                             val phone = it.replace(Regex("[^+0-9]"), "")
-                            contactInfos.add(PhoneContactInfo(phone))
+                            phoneNumbers += PhoneNumber(
+                                phone,
+                                when (dataCursor.getInt(typeColumn)) {
+                                    ContactsContract.CommonDataKinds.Phone.TYPE_HOME -> ContactInfoType.Home
+                                    ContactsContract.CommonDataKinds.Phone.TYPE_WORK -> ContactInfoType.Work
+                                    ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE -> ContactInfoType.Mobile
+                                    else -> ContactInfoType.Other
+                                }
+                            )
                         }
 
                     ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE ->
                         dataCursor.getStringOrNull(addressColumn)?.let {
-                            contactInfos.add(PostalContactInfo(it))
+                            postalAddresses += PostalAddress(
+                                it,
+                                when (dataCursor.getInt(typeColumn)) {
+                                    ContactsContract.CommonDataKinds.StructuredPostal.TYPE_HOME -> ContactInfoType.Home
+                                    ContactsContract.CommonDataKinds.StructuredPostal.TYPE_WORK -> ContactInfoType.Work
+                                    else -> ContactInfoType.Other
+                                }
+                            )
                         }
 
                     ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE -> {
@@ -109,33 +136,17 @@ internal class ContactRepository(
                         displayName = dataCursor.getStringOrNull(displayNameColumn) ?: ""
                     }
 
-                    TelegramContactInfo.ItemType -> {
-                        val data1 = dataCursor.getStringOrNull(data1Column)
-                            ?: continue@loop
-                        val data3 = dataCursor.getStringOrNull(data3Column)
-                            ?: continue@loop
-                        contactInfos.add(
-                            TelegramContactInfo(data3.substringAfterLast(" "), data1)
+                    else -> {
+                        val mimeType = dataCursor.getStringOrNull(mimeTypeColumn) ?: continue
+                        contactApps += ContactApp(
+                            label = dataCursor.getStringOrNull(data3Column) ?: continue,
+                            packageName = dataCursor.getStringOrNull(accountTypeColumn) ?: continue,
+                            mimeType = mimeType,
+                            uri = ContentUris.withAppendedId(
+                                ContactsContract.Data.CONTENT_URI,
+                                dataCursor.getLongOrNull(idColumn) ?: continue
+                            ),
                         )
-                    }
-
-                    WhatsAppContactInfo.ItemType -> {
-                        val data1 = dataCursor.getStringOrNull(data1Column)
-                            ?: continue@loop
-                        val dataId = dataCursor.getLong(idColumn)
-                        contactInfos.add(
-                            WhatsAppContactInfo(
-                                "+${data1.substringBefore('@')}",
-                                dataId
-                            )
-                        )
-                    }
-
-                    SignalContactInfo.ItemType -> {
-                        val data1 = dataCursor.getStringOrNull(data1Column)
-                            ?: continue@loop
-                        val dataId = dataCursor.getLong(idColumn)
-                        contactInfos.add(SignalContactInfo(data1, dataId))
                     }
                 }
             }
@@ -159,7 +170,10 @@ internal class ContactRepository(
                 firstName = firstName,
                 lastName = lastName,
                 displayName = displayName,
-                contactInfos = contactInfos,
+                phoneNumbers = phoneNumbers.distinct(),
+                emailAddresses = emailAddresses.distinct(),
+                postalAddresses = postalAddresses.distinct(),
+                contactApps = contactApps.distinct(),
                 lookupKey = lookUpKey
             )
         }
