@@ -322,7 +322,7 @@
     <string name="preference_search_bar_launch_on_enter_summary">A kiemelt egyezés megnyitása, vagy gyors műveletet, ha megérinti az Ugrás gombot</string>
     <string name="preference_hidden_items">Rejtett keresési eredmények</string>
     <string name="icon_picker_filter_all_packs">Minden ikoncsomag</string>
-    <string name="customize_tags_placeholder">Címkék…</string>
+    <string name="customize_tags_placeholder">Címkék</string>
     <string name="search_action_websearch">Internetes keresés</string>
     <string name="plugin_state_setup_required">Először be kell állítani ezt a bővítményt</string>
     <string name="plugin_action_setup">Beállítás</string>
@@ -750,4 +750,11 @@
     <string name="poi_category_townhall">Városháza</string>
     <string name="preference_search_locations_radius_large_radius_warning">A nagy keresési sugarak jelentősen lelassíthatják a keresést.</string>
     <string name="plugin_type_locationsearch">Helyek keresése</string>
+    <string name="customize_item_label">Címke</string>
+    <string name="customize_item_tags">Címkék</string>
+    <string name="item_visibility_search_only">Keresési találatok</string>
+    <string name="item_visibility_hidden">Soha</string>
+    <string name="item_visibility_app_default">Alkalmazásrács és keresési találatok</string>
+    <string name="customize_item_visibility">Megjelenítés itt:</string>
+    <string name="item_visibility_calendar_default">Naptár modul és keresési találatok</string>
 </resources>

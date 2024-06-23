@@ -347,7 +347,7 @@
     <string name="preference_search_calendar">Kalender</string>
     <string name="websearch_dialog_advanced">Geavanceerd</string>
     <string name="frequently_used_show_in_favorites">In favorieten tonen</string>
-    <string name="customize_tags_placeholder">Labels…</string>
+    <string name="customize_tags_placeholder">Labels</string>
     <string name="preference_edit_favorites_summary">Volgorde van de vastgezette items aanpassen</string>
     <string name="preference_category_favorites_frequently_used">Vaak gebruikt</string>
     <string name="preference_favorites_frequently_used_summary">Vaak gebruikte items tonen in de favorieten</string>
@@ -438,7 +438,7 @@
     <string name="edit_search_action_title">Snelle actie bewerken</string>
     <string name="create_search_action_pick_app">Kies een zoekapplicatie:</string>
     <string name="create_search_action_website_url">Adres van de website:</string>
-    <string name="create_search_action_website_invalid_url">De opgegeven website kan niet automatisch worden geïmporteerd als een websearch. U kunt een andere website proberen of de vereiste gegevens handmatig invoeren in de volgende stap.</string>
+    <string name="create_search_action_website_invalid_url">De opgegeven website kan niet automatisch worden geïmporteerd als een websearch. Je kunt een andere website proberen of de vereiste gegevens handmatig invoeren in de volgende stap.</string>
     <string name="search_action_label">Naam</string>
     <string name="search_action_app">Applicatie</string>
     <string name="search_action_websearch_url">URL-sjabloon</string>
@@ -678,7 +678,7 @@
     <string name="preference_default_filter_summary">Standaardfilter voor zoeken aanpassen</string>
     <string name="preference_filter_bar">Filterbalk tonen</string>
     <string name="preference_filter_bar_summary">Snelle filters tonen boven het toetsenbord</string>
-    <string name="filter_settings_network_warning">De huidige filters staan onlineresultaten toe. Jouw zoekwoorden kunnen per ongeluk naar externe webdiensten gestuurd worden. Dit is niet aanbevolen voor jouw privacy.</string>
+    <string name="filter_settings_network_warning">De huidige filters staan onlineresultaten toe. Je zoektermen kunnen per ongeluk naar externe webdiensten gestuurd worden. Dit is niet aanbevolen voor jouw privacy.</string>
     <string name="preference_location_managed">Door plug-in beheerd</string>
     <string name="preference_location_managed_summary">De locatie voor deze provider wordt beheerd door de app van de plug-in</string>
     <string name="preference_customize_filter_bar">Filterbalk aanpassen</string>
@@ -750,4 +750,11 @@
     <string name="preference_signout">Afmelden</string>
     <string name="poi_category_car_rental">Autoverhuur</string>
     <string name="poi_category_car_sharing">Autodelen</string>
+    <string name="customize_item_label">Label</string>
+    <string name="customize_item_tags">Labels</string>
+    <string name="customize_item_visibility">Weergeven in</string>
+    <string name="item_visibility_app_default">App-raster &amp; Zoekresultaten</string>
+    <string name="item_visibility_calendar_default">Kalender widget &amp; Zoekresultaten</string>
+    <string name="item_visibility_search_only">Zoekresultaten</string>
+    <string name="item_visibility_hidden">Nooit</string>
 </resources>
