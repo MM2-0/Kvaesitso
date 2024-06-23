@@ -950,8 +950,8 @@
     <string name="item_visibility_search_only">Search results</string>
     <string name="item_visibility_hidden">Never</string>
     <string name="contact_info_home">Home</string>
-    <string name="contact_info_mobile">Home</string>
-    <string name="contact_info_work">Home</string>
+    <string name="contact_info_mobile">Mobile</string>
+    <string name="contact_info_work">Work</string>
     <plurals name="contact_phone_numbers">
         <item quantity="one">%1$s phone number</item>
         <item quantity="other">%1$s phone numbers</item>
