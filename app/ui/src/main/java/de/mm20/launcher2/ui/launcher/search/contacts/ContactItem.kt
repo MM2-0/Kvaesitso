@@ -14,6 +14,7 @@ import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,9 +53,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
@@ -180,7 +185,8 @@ fun ContactItem(
                                             data = Uri.parse("tel:${it.number}")
                                         }
                                     )
-                                }
+                                },
+                                copyText = { it.number },
                             )
                         }
                         if (contact.emailAddresses.isNotEmpty()) {
@@ -207,7 +213,8 @@ fun ContactItem(
                                             data = Uri.parse("mailto:${it.address}")
                                         }
                                     )
-                                }
+                                },
+                                copyText = { it.address },
                             )
                         }
                         if (contact.postalAddresses.isNotEmpty()) {
@@ -226,7 +233,8 @@ fun ContactItem(
                                         IconButton(onClick = {
                                             context.tryStartActivity(
                                                 Intent(Intent.ACTION_VIEW).apply {
-                                                    data = Uri.parse("google.navigation:q=${it.address}")
+                                                    data =
+                                                        Uri.parse("google.navigation:q=${it.address}")
                                                 }
                                             )
                                         }) {
@@ -251,7 +259,8 @@ fun ContactItem(
                                             data = Uri.parse("geo:0,0?q=${it.address}")
                                         }
                                     )
-                                }
+                                },
+                                copyText = { it.address },
                             )
                         }
                         val apps = remember(contact) {
@@ -429,10 +438,13 @@ private fun <T> ContactInfo(
     secondaryAction: (@Composable (T) -> Unit)? = null,
     icon: ImageVector,
     customIcon: Drawable? = null,
+    copyText: ((T) -> String)? = null,
     expanded: Boolean,
     onExpand: (Boolean) -> Unit,
     onContact: (T) -> Unit,
 ) {
+    val clipboardManager = LocalClipboardManager.current
+    val hapticFeedback = LocalHapticFeedback.current
     Row(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
@@ -466,9 +478,24 @@ private fun <T> ContactInfo(
                                 modifier =
                                 Modifier
                                     .weight(1f)
-                                    .clickable {
-                                        onContact(item)
-                                    }
+                                    .combinedClickable(
+                                        onLongClick = if (copyText != null) {
+                                            {
+                                                clipboardManager.setText(
+                                                    AnnotatedString(
+                                                        copyText(
+                                                            item
+                                                        )
+                                                    )
+                                                )
+                                                hapticFeedback.performHapticFeedback(
+                                                    HapticFeedbackType.LongPress
+                                                )
+                                            }
+                                        } else null,
+                                        onClick = {
+                                            onContact(item)
+                                        })
                                     .padding(16.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
