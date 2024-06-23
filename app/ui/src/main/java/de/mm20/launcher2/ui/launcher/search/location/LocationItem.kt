@@ -44,6 +44,7 @@ import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.AirplanemodeActive
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Commute
+import androidx.compose.material.icons.rounded.Directions
 import androidx.compose.material.icons.rounded.DirectionsBoat
 import androidx.compose.material.icons.rounded.DirectionsBus
 import androidx.compose.material.icons.rounded.DirectionsRailway
@@ -674,7 +675,7 @@ fun LocationItem(
                                 label = { Text(stringResource(R.string.menu_navigation)) },
                                 leadingIcon = {
                                     Icon(
-                                        Icons.Rounded.Navigation, null,
+                                        Icons.Rounded.Directions, null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
