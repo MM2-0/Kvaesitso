@@ -761,4 +761,22 @@
     <string name="item_visibility_hidden">Nikdy</string>
     <string name="item_visibility_calendar_default">Widget kalendáře a výsledky hledání</string>
     <string name="customize_item_label">Značka</string>
+    <string name="contact_info_work">Práce</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s telefonní číslo</item>
+        <item quantity="few">%1$s telefonní čísla</item>
+        <item quantity="other">%1$s telefonních čísel</item>
+    </plurals>
+    <string name="contact_info_mobile">Mobil</string>
+    <string name="contact_info_home">Domů</string>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s e-mailová adresa</item>
+        <item quantity="few">%1$s e-mailové adresy</item>
+        <item quantity="other">%1$s e-mailové adresy</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s poštovní adresa</item>
+        <item quantity="few">%1$s poštovní adresy</item>
+        <item quantity="other">%1$s poštovních adres</item>
+    </plurals>
 </resources>
