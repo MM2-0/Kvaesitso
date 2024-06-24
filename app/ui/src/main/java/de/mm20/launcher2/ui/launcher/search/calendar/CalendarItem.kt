@@ -27,6 +27,7 @@ import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Icon
@@ -238,7 +239,7 @@ fun CalendarItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(DefaultToolbarAction(
                         label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Edit,
+                        icon = Icons.Rounded.Tune,
                         action = { sheetManager.showCustomizeSearchableModal(calendar) }
                     ))
 

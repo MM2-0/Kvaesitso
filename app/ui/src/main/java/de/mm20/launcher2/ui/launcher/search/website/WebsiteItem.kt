@@ -17,6 +17,7 @@ import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -135,7 +136,7 @@ fun WebsiteItem(
         val sheetManager = LocalBottomSheetManager.current
         toolbarActions.add(DefaultToolbarAction(
             label = stringResource(R.string.menu_customize),
-            icon = Icons.Rounded.Edit,
+            icon = Icons.Rounded.Tune,
             action = { sheetManager.showCustomizeSearchableModal(website) }
         ))
 

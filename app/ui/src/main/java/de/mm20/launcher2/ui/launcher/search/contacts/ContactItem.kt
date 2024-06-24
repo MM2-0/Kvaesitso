@@ -35,6 +35,7 @@ import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -358,7 +359,7 @@ fun ContactItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(DefaultToolbarAction(
                         label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Edit,
+                        icon = Icons.Rounded.Tune,
                         action = { sheetManager.showCustomizeSearchableModal(contact) }
                     ))
 
