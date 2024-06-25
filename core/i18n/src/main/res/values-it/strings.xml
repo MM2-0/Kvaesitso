@@ -761,4 +761,22 @@
     <string name="item_visibility_search_only">Risultati ricerca</string>
     <string name="item_visibility_hidden">Nessuno</string>
     <string name="customize_item_label">Etichetta</string>
+    <string name="contact_info_home">Casa</string>
+    <string name="contact_info_work">Lavoro</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s numero di telefono</item>
+        <item quantity="many">%1$s numeri di telefono</item>
+        <item quantity="other">%1$s numeri di telefono</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s indirizzo postale</item>
+        <item quantity="many">%1$s indirizzi postali</item>
+        <item quantity="other">%1$s indirizzi postali</item>
+    </plurals>
+    <string name="contact_info_mobile">Cellulare</string>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s indirizzo e-mail</item>
+        <item quantity="many">%1$s indirizzi e-mail</item>
+        <item quantity="other">%1$s indirizzi e-mail</item>
+    </plurals>
 </resources>
