@@ -115,7 +115,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.exifinterface)
     implementation(libs.materialcomponents.core)
-    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.constraintlayout.views)
 
     implementation(libs.bundles.androidx.lifecycle)
 

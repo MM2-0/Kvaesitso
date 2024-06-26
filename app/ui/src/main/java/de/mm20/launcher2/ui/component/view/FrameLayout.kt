@@ -36,7 +36,7 @@ private fun Modifier.frameLayoutChild(scope: BoxScope, params: ViewGroup.LayoutP
         Modifier.layoutParams(params) then
         with(scope) {
             if (params !is FrameLayout.LayoutParams) return@with Modifier
-            val alignment = when (params.gravity) {
+            val alignment = when (params.gravity and (Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK or Gravity.VERTICAL_GRAVITY_MASK)) {
                 Gravity.START or Gravity.TOP -> Alignment.TopStart
                 Gravity.START or Gravity.BOTTOM -> Alignment.BottomStart
                 Gravity.END or Gravity.TOP -> Alignment.TopEnd

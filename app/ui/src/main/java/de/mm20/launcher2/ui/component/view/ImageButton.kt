@@ -1,16 +1,23 @@
 package de.mm20.launcher2.ui.component.view
 
+import android.graphics.BlendModeColorFilter
+import android.graphics.ColorMatrixColorFilter
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
 
 @Composable
-internal fun ComposeImageView(
-    view: ImageView,
+internal fun ComposeImageButton(
+    view: ImageButton,
     modifier: Modifier,
 ) {
     AsyncImage(

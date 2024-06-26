@@ -5,21 +5,24 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
@@ -32,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.nativeCanvas
@@ -81,6 +85,8 @@ fun ComposeAndroidView(
     when (view) {
         is FrameLayout -> ComposeFrameLayout(view, mod)
         is LinearLayout -> ComposeLinearLayout(view, mod)
+        is RelativeLayout -> ComposeRelativeLayout(view, mod)
+        is ImageButton -> ComposeImageButton(view, mod)
         is ListView -> ComposeListView(view, mod)
         is TextView -> ComposeTextView(view, mod)
         is ImageView -> ComposeImageView(view, mod)
@@ -114,6 +120,17 @@ internal fun Modifier.view(view: View): Modifier = this then Modifier.composed {
 
         else -> Modifier
     }
+
+    val foregroundDrawable = view.foreground
+    val foreground = if (foregroundDrawable != null) {
+        Modifier.drawWithContent {
+            drawContent()
+            foregroundDrawable.setBounds(
+                0, 0, size.width.roundToInt(), size.height.roundToInt()
+            )
+            foregroundDrawable.draw(this.drawContext.canvas.nativeCanvas)
+        }
+    } else Modifier
 
     val padding = with(density) {
         Modifier.padding(
@@ -153,7 +170,22 @@ internal fun Modifier.view(view: View): Modifier = this then Modifier.composed {
         cameraDistance = view.cameraDistance
     }
 
-    background then clickable then padding then graphicsLayer
+    val minWidth = if (view.minimumWidth > 0)
+        Modifier.widthIn(
+            min = with(density) { view.minimumWidth.toDp() }
+        )
+    else Modifier
+
+    val minHeight = if (view.minimumHeight > 0)
+        Modifier.heightIn(
+            min = with(density) { view.minimumHeight.toDp() }
+        )
+    else Modifier
+
+
+    minWidth then minHeight then
+            background then foreground then
+            clickable then padding then graphicsLayer
 }
 
 

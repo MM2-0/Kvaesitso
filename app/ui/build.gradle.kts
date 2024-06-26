@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.androidx.compose.materialicons)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.animationgraphics)
+    implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.androidx.navigation.compose)
 

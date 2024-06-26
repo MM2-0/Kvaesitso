@@ -43,7 +43,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.materialcomponents.core)
     implementation(libs.androidx.browser)
-    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.constraintlayout.views)
     implementation(libs.androidx.securitycrypto)
 
     implementation(libs.bundles.androidx.lifecycle)

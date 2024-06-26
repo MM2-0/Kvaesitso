@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,7 +24,7 @@ internal fun ComposeLinearLayout(
             Gravity.START -> Alignment.Start
             Gravity.CENTER_HORIZONTAL -> Alignment.CenterHorizontally
             Gravity.END -> Alignment.End
-            else -> Alignment.Start
+            else -> Alignment.CenterHorizontally
         }
         val verticalArrangement = when (view.gravity and Gravity.VERTICAL_GRAVITY_MASK) {
             Gravity.TOP -> Arrangement.Top
@@ -60,7 +59,7 @@ internal fun ComposeLinearLayout(
             Gravity.TOP -> Alignment.Top
             Gravity.CENTER_VERTICAL -> Alignment.CenterVertically
             Gravity.BOTTOM -> Alignment.Bottom
-            else -> Alignment.Top
+            else -> Alignment.CenterVertically
         }
         Row(
             modifier = modifier,
