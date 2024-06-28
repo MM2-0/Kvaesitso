@@ -757,4 +757,19 @@
     <string name="item_visibility_calendar_default">Kalender widget &amp; Zoekresultaten</string>
     <string name="item_visibility_search_only">Zoekresultaten</string>
     <string name="item_visibility_hidden">Nooit</string>
+    <string name="contact_info_home">Thuis</string>
+    <string name="contact_info_work">Werk</string>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s postadres</item>
+        <item quantity="other">%1$s postadressen</item>
+    </plurals>
+    <string name="contact_info_mobile">Mobiel</string>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s emailadres</item>
+        <item quantity="other">%1$s emailadressen</item>
+    </plurals>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s telefoonnumer</item>
+        <item quantity="other">%1$s telefoonnummers</item>
+    </plurals>
 </resources>
