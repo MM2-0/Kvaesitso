@@ -193,6 +193,8 @@ fun ListItem(
                                 },
                                 onLongClick = { onShowDetails(true) }),
                         website = item,
+                        onBack = { onShowDetails(false) },
+                        showDetails = showDetails,
                     )
                 }
             }

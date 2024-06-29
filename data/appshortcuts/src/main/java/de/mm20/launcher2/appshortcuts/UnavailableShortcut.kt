@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Process
+import android.os.UserHandle
 import android.os.UserManager
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
@@ -24,15 +25,15 @@ internal class UnavailableShortcut(
     override val packageName: String,
     val shortcutId: String,
     val isMainProfile: Boolean,
+    override val user: UserHandle,
     val userSerial: Long,
 ): AppShortcut {
-
 
     override val key: String
         get() = if (isMainProfile) {
             "$domain://${packageName}/${shortcutId}"
         } else {
-            "$domain://${packageName}/${shortcutId}:userSerial"
+            "$domain://${packageName}/${shortcutId}:$userSerial"
         }
 
     override val labelOverride: String?
@@ -70,19 +71,19 @@ internal class UnavailableShortcut(
         get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
 
     companion object {
-        internal operator fun invoke(context: Context, id: String, packageName: String, userSerial: Long): UnavailableShortcut? {
+        internal operator fun invoke(context: Context, id: String, packageName: String, user: UserHandle, userSerial: Long): UnavailableShortcut? {
             val appInfo = try {
                 context.packageManager.getApplicationInfo(packageName, 0)
             } catch (e: PackageManager.NameNotFoundException) {
                 return null
             }
-            val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
             return UnavailableShortcut(
                 label = context.getString(R.string.shortcut_label_unavailable),
                 appName = appInfo.loadLabel(context.packageManager).toString(),
                 packageName = packageName,
                 shortcutId = id,
-                isMainProfile = userManager.getUserForSerialNumber(userSerial) == Process.myUserHandle(),
+                isMainProfile = user == Process.myUserHandle(),
+                user = user,
                 userSerial = userSerial,
             )
         }

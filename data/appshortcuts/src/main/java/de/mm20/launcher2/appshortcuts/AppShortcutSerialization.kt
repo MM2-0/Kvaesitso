@@ -42,8 +42,11 @@ class LauncherShortcutDeserializer(
         val id = json.getString("id")
         val userSerial = json.optLong("user")
 
+        val userManager = context.getSystemService<UserManager>()!!
+        val user = userManager.getUserForSerialNumber(userSerial) ?: return null
+
         if (!launcherApps.hasShortcutHostPermission()) {
-            return UnavailableShortcut(context, id, packageName, userSerial)
+            return UnavailableShortcut(context, id, packageName, user, userSerial)
         }
         else {
             val query = LauncherApps.ShortcutQuery()
@@ -55,8 +58,6 @@ class LauncherShortcutDeserializer(
                     LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
             )
             query.setShortcutIds(mutableListOf(id))
-            val userManager = context.getSystemService<UserManager>()!!
-            val user = userManager.getUserForSerialNumber(userSerial) ?: return null
             val shortcuts = try {
                 launcherApps.getShortcuts(query, user)
             } catch (e: IllegalStateException) {

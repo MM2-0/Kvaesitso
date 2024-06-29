@@ -10,6 +10,7 @@ import android.content.pm.ShortcutInfo
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.Bundle
 import android.os.Process
+import android.os.UserHandle
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
@@ -40,6 +41,9 @@ internal data class LauncherShortcut(
 
     override val packageName: String
         get() = launcherShortcut.`package`
+
+    override val user: UserHandle
+        get() = launcherShortcut.userHandle
 
     constructor(
         context: Context,

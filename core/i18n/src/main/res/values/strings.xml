@@ -964,4 +964,8 @@
         <item quantity="one">%1$s postal address</item>
         <item quantity="other">%1$s postal addresses</item>
     </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s notification</item>
+        <item quantity="other">%1$s notifications</item>
+    </plurals>
 </resources>

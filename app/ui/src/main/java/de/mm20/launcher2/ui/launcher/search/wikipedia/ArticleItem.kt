@@ -84,7 +84,7 @@ fun ArticleItem(
                                 .padding(16.dp)
                         ) {
                             Text(
-                                text = article.label,
+                                text = article.labelOverride ?: article.label,
                                 style = MaterialTheme.typography.titleLarge,
                                 modifier = Modifier.sharedBounds(
                                     rememberSharedContentState("title"),
@@ -165,7 +165,7 @@ fun ArticleItem(
                         )
                     ) {
                         Text(
-                            text = article.label,
+                            text = article.labelOverride ?: article.label,
                             style = MaterialTheme.typography.titleLarge,
                             modifier = Modifier.sharedBounds(
                                 rememberSharedContentState("title"),

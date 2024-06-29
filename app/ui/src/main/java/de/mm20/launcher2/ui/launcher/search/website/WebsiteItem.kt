@@ -1,19 +1,21 @@
 package de.mm20.launcher2.ui.launcher.search.website
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
@@ -26,13 +28,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -49,6 +54,7 @@ import de.mm20.launcher2.ui.locals.LocalGridSettings
 fun WebsiteItem(
     modifier: Modifier = Modifier,
     website: Website,
+    showDetails: Boolean = false,
     onBack: (() -> Unit)? = null
 ) {
     val context = LocalContext.current
@@ -60,96 +66,212 @@ fun WebsiteItem(
         viewModel.init(website, iconSize.toInt())
     }
 
-    Column(
-        modifier = modifier.clickable {
-            viewModel.launch(context)
-        }
-    ) {
-        if (website.imageUrl != null) {
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16f / 9f)
-                    .background(MaterialTheme.colorScheme.secondaryContainer),
-                model = website.imageUrl,
-                contentScale = ContentScale.Crop,
-                contentDescription = null
-            )
-        }
-        Column(
-            modifier = Modifier.padding(16.dp),
-        ) {
-            Text(
-                text = website.labelOverride ?: website.label,
-                style = MaterialTheme.typography.titleLarge
-            )
-            val tags by viewModel.tags.collectAsState(emptyList())
-            if (tags.isNotEmpty()) {
-                Text(
-                    modifier = Modifier.padding(top = 2.dp, bottom = 2.dp),
-                    text = tags.joinToString(separator = " #", prefix = "#"),
-                    color = MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.labelSmall
-                )
-            }
-            Text(
-                modifier = Modifier.padding(vertical = 8.dp),
-                text = website.description ?: "",
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-        val toolbarActions = mutableListOf<ToolbarAction>()
+    SharedTransitionScope {
+        AnimatedContent(
+            showDetails,
+            modifier = it then modifier,
+        ) { showDetails ->
+            Column {
+                if (!showDetails) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = if (website.imageUrl == null && website.description == null) Alignment.CenterVertically
+                        else Alignment.Top,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                text = website.labelOverride ?: website.label,
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier
+                                    .sharedBounds(
+                                        rememberSharedContentState("title"),
+                                        this@AnimatedContent,
+                                    ),
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                            )
 
-        if (LocalFavoritesEnabled.current) {
-            val isPinned by viewModel.isPinned.collectAsState(false)
-            val favAction = if (isPinned) {
-                DefaultToolbarAction(
-                    label = stringResource(R.string.menu_favorites_unpin),
-                    icon = Icons.Rounded.Star,
-                    action = {
-                        viewModel.unpin()
-                        onBack?.invoke()
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 4.dp, bottom = 4.dp)
+                                    .sharedBounds(
+                                        rememberSharedContentState("summary"),
+                                        this@AnimatedContent,
+                                    ),
+                                text = website.description ?: website.url,
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                        }
+                        if (!website.imageUrl.isNullOrEmpty()) {
+                            AsyncImage(
+                                modifier = Modifier
+                                    .padding(end = 12.dp, top = 12.dp, bottom = 12.dp)
+                                    .size(72.dp)
+                                    .sharedBounds(
+                                        rememberSharedContentState("image"),
+                                        this@AnimatedContent,
+                                        resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds
+                                    )
+                                    .background(
+                                        MaterialTheme.colorScheme.secondaryContainer,
+                                        MaterialTheme.shapes.small
+                                    )
+                                    .clip(MaterialTheme.shapes.small),
+                                model = website.imageUrl,
+                                contentScale = ContentScale.Crop,
+                                contentDescription = null
+                            )
+                        } else if (website.faviconUrl != null) {
+                            AsyncImage(
+                                modifier = Modifier
+                                    .padding(end = 16.dp, top = 12.dp, bottom = 12.dp)
+                                    .sharedElement(
+                                        rememberSharedContentState("favicon"),
+                                        this@AnimatedContent,
+                                    )
+                                    .background(
+                                        MaterialTheme.colorScheme.secondaryContainer,
+                                        MaterialTheme.shapes.small
+                                    )
+                                    .size(48.dp)
+                                    .padding(8.dp)
+                                    .clip(MaterialTheme.shapes.small),
+                                model = website.faviconUrl,
+                                contentScale = ContentScale.Crop,
+                                contentDescription = null
+                            )
+                        }
                     }
-                )
-            } else {
-                DefaultToolbarAction(
-                    label = stringResource(R.string.menu_favorites_pin),
-                    icon = Icons.Rounded.StarOutline,
-                    action = {
-                        viewModel.pin()
-                        onBack?.invoke()
-                    })
-            }
-            toolbarActions.add(favAction)
-        }
+                } else {
+                    if (!website.imageUrl.isNullOrEmpty()) {
+                        AsyncImage(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 9f)
+                                .sharedBounds(
+                                    rememberSharedContentState("image"),
+                                    this@AnimatedContent,
+                                    resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds
+                                )
+                                .background(MaterialTheme.colorScheme.secondaryContainer),
+                            model = ImageRequest.Builder(context).data(website.imageUrl)
+                                .crossfade(false).build(),
+                            contentScale = ContentScale.Crop,
+                            contentDescription = null
+                        )
+                    }
 
-        toolbarActions.add(
-            DefaultToolbarAction(
-                label = stringResource(R.string.menu_share),
-                icon = Icons.Rounded.Share,
-                action = {
-                    website.share(context)
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(
+                            modifier = Modifier.weight(1f).padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                top = 16.dp,
+                            )
+                        ) {
+                            Text(
+                                text = website.labelOverride ?: website.label,
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier = Modifier.sharedBounds(
+                                    rememberSharedContentState("title"),
+                                    this@AnimatedContent,
+                                ),
+                            )
+                        }
+                        if (website.imageUrl == null && website.faviconUrl != null) {
+                            AsyncImage(
+                                modifier = Modifier
+                                    .padding(end = 12.dp, top = 12.dp, bottom = 12.dp)
+                                    .sharedElement(
+                                        rememberSharedContentState("favicon"),
+                                        this@AnimatedContent,
+                                    )
+                                    .background(
+                                        MaterialTheme.colorScheme.secondaryContainer,
+                                        MaterialTheme.shapes.small
+                                    )
+                                    .size(48.dp)
+                                    .padding(8.dp)
+                                    .clip(MaterialTheme.shapes.small),
+                                model = website.faviconUrl,
+                                contentScale = ContentScale.Crop,
+                                contentDescription = null
+                            )
+                        }
+                    }
+
+                    Text(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .sharedBounds(
+                                rememberSharedContentState("summary"),
+                                this@AnimatedContent,
+                            ),
+                        text = website.description ?: website.url,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+
+                    val toolbarActions = mutableListOf<ToolbarAction>()
+
+                    if (LocalFavoritesEnabled.current) {
+                        val isPinned by viewModel.isPinned.collectAsState(false)
+                        val favAction = if (isPinned) {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_favorites_unpin),
+                                icon = Icons.Rounded.Star,
+                                action = {
+                                    viewModel.unpin()
+                                    onBack?.invoke()
+                                }
+                            )
+                        } else {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_favorites_pin),
+                                icon = Icons.Rounded.StarOutline,
+                                action = {
+                                    viewModel.pin()
+                                    onBack?.invoke()
+                                })
+                        }
+                        toolbarActions.add(favAction)
+                    }
+
+                    toolbarActions.add(
+                        DefaultToolbarAction(
+                            label = stringResource(R.string.menu_share),
+                            icon = Icons.Rounded.Share,
+                            action = {
+                                website.share(context)
+                            }
+                        )
+                    )
+
+                    val sheetManager = LocalBottomSheetManager.current
+                    toolbarActions.add(DefaultToolbarAction(
+                        label = stringResource(R.string.menu_customize),
+                        icon = Icons.Rounded.Tune,
+                        action = { sheetManager.showCustomizeSearchableModal(website) }
+                    ))
+
+                    Toolbar(
+                        leftActions = if (onBack != null) listOf(
+                            DefaultToolbarAction(
+                                stringResource(id = R.string.menu_back),
+                                icon = Icons.AutoMirrored.Rounded.ArrowBack,
+                                action = onBack
+                            )
+                        ) else emptyList(),
+                        rightActions = toolbarActions
+                    )
                 }
-            )
-        )
-
-        val sheetManager = LocalBottomSheetManager.current
-        toolbarActions.add(DefaultToolbarAction(
-            label = stringResource(R.string.menu_customize),
-            icon = Icons.Rounded.Tune,
-            action = { sheetManager.showCustomizeSearchableModal(website) }
-        ))
-
-        Toolbar(
-            leftActions = if (onBack != null) listOf(
-                DefaultToolbarAction(
-                    stringResource(id = R.string.menu_back),
-                    icon = Icons.Rounded.ArrowBack,
-                    action = onBack
-                )
-            ) else emptyList(),
-            rightActions = toolbarActions
-        )
+            }
+        }
     }
 }
 
@@ -176,7 +298,8 @@ fun WebsiteItemGridPopup(
             modifier = Modifier
                 .fillMaxWidth(),
             website = website,
-            onBack = onDismiss
+            onBack = onDismiss,
+            showDetails = true,
         )
     }
 }
