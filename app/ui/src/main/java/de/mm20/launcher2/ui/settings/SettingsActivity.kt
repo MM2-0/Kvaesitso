@@ -106,16 +106,16 @@ class SettingsActivity : BaseActivity() {
                                 navController = navController,
                                 startDestination = "settings",
                                 exitTransition = {
-                                    slideOutHorizontally { it / 2 } + fadeOut()
+                                    slideOutHorizontally { it / 4 }
                                 },
                                 enterTransition = {
-                                    slideInHorizontally { it / 2 } + scaleIn(initialScale = 0.95f)
+                                    slideInHorizontally { it / 2 } + scaleIn(initialScale = 0.9f) + fadeIn()
                                 },
                                 popEnterTransition = {
-                                    slideInHorizontally { -it / 2 } + fadeIn()
+                                    slideInHorizontally { -it / 4 }
                                 },
                                 popExitTransition = {
-                                    slideOutHorizontally { it / 2 } + scaleOut(targetScale = 0.95f)
+                                    slideOutHorizontally { it / 2 } + scaleOut(targetScale = 0.9f) + fadeOut()
                                 },
                             ) {
                                 composable("settings") {
