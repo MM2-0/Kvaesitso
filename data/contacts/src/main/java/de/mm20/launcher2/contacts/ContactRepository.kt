@@ -106,7 +106,7 @@ internal class ContactRepository(
 
                     ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE ->
                         dataCursor.getStringOrNull(numberColumn)?.let {
-                            val phone = it.replace(Regex("[^+0-9]"), "")
+                            val phone = it.replace(Regex("[^+0-9],"), "")
                             phoneNumbers += PhoneNumber(
                                 phone,
                                 when (dataCursor.getInt(typeColumn)) {
