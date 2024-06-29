@@ -772,4 +772,8 @@
     </plurals>
     <string name="contact_info_home">Privat</string>
     <string name="contact_info_mobile">Mobil</string>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s Benachrichtigung</item>
+        <item quantity="other">%1$s Benachrichtigungen</item>
+    </plurals>
 </resources>
