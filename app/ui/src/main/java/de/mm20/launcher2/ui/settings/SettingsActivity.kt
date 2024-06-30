@@ -89,7 +89,9 @@ class SettingsActivity : BaseActivity() {
 
             LaunchedEffect(route) {
                 navController.navigate(route ?: "settings") {
-                    popUpTo("settings")
+                    popUpTo("settings") {
+                        inclusive = true
+                    }
                 }
             }
             val wallpaperColors by wallpaperColorsAsState()
