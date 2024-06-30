@@ -779,4 +779,9 @@
         <item quantity="few">%1$s poštovní adresy</item>
         <item quantity="other">%1$s poštovních adres</item>
     </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s oznámení</item>
+        <item quantity="few">%1$s oznámení</item>
+        <item quantity="other">%1$s oznámení</item>
+    </plurals>
 </resources>
