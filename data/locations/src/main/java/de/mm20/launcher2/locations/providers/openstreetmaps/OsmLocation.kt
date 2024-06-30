@@ -1,7 +1,8 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import android.content.Context
-import android.util.Log
+import de.mm20.launcher2.ktx.into
+import de.mm20.launcher2.ktx.map
 import de.mm20.launcher2.locations.OsmLocationSerializer
 import de.mm20.launcher2.openstreetmaps.R
 import de.mm20.launcher2.search.Location
@@ -14,16 +15,29 @@ import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
-import kotlinx.collections.immutable.toImmutableList
+import de.westnordost.osm_opening_hours.model.ClockTime
+import de.westnordost.osm_opening_hours.model.ExtendedClockTime
+import de.westnordost.osm_opening_hours.model.MonthRange
+import de.westnordost.osm_opening_hours.model.Range
+import de.westnordost.osm_opening_hours.model.SingleMonth
+import de.westnordost.osm_opening_hours.model.SpecificWeekdays
+import de.westnordost.osm_opening_hours.model.StartingAtYear
+import de.westnordost.osm_opening_hours.model.TimeSpan
+import de.westnordost.osm_opening_hours.model.TimesSelector
+import de.westnordost.osm_opening_hours.model.TwentyFourSeven
+import de.westnordost.osm_opening_hours.model.Weekday
+import de.westnordost.osm_opening_hours.model.WeekdayRange
+import de.westnordost.osm_opening_hours.model.WeekdaysSelector
+import de.westnordost.osm_opening_hours.model.Year
+import de.westnordost.osm_opening_hours.model.YearRange
+import de.westnordost.osm_opening_hours.parser.toOpeningHoursOrNull
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.woheller69.AndroidAddressFormatter.OsmAddressFormatter
 import java.time.DayOfWeek
 import java.time.Duration
+import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
-import java.time.format.ResolverStyle
 import java.util.Locale
 import kotlin.math.min
 
@@ -281,6 +295,7 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                         "skiing" with (R.string.poi_category_skiing to LocationIcon.Skiing)
                         "cricket" with (R.string.poi_category_cricket to LocationIcon.Cricket)
                     }
+
                     "golf_course" -> R.string.poi_category_golf to LocationIcon.Golf
                     "park" -> R.string.poi_category_park to LocationIcon.Park
                     else -> null
@@ -308,187 +323,115 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
     return context.resources.getString(rid) to icon
 }
 
-// allow for 24:00 to be part of the same day
-// https://stackoverflow.com/a/31113244
-private val DATE_TIME_FORMATTER =
-    DateTimeFormatter.ISO_LOCAL_TIME.withResolverStyle(ResolverStyle.SMART)
+internal fun parseOpeningSchedule(
+    it: String?,
+    localTime: LocalDateTime = LocalDateTime.now()
+): OpeningSchedule? {
+    val parsed = it?.toOpeningHoursOrNull(lenient = true) ?: return null
 
-private val timeRegex by lazy {
-    Regex(
-        """^(?:\d{2}:\d{2}-?){2}$""",
-        RegexOption.IGNORE_CASE
-    )
-}
-private val singleDayRegex by lazy {
-    Regex(
-        """^[mtwfsp][ouehra]$""",
-        RegexOption.IGNORE_CASE
-    )
-}
-private val dayRangeRegex by lazy {
-    Regex(
-        """^[mtwfsp][ouehra]-[mtwfsp][ouehra]$""",
-        RegexOption.IGNORE_CASE
-    )
-}
-
-private val daysOfWeek = enumValues<DayOfWeek>().toList().toImmutableList()
-
-private val twentyFourSeven = daysOfWeek.map {
-    OpeningHours(
-        dayOfWeek = it,
-        startTime = LocalTime.MIDNIGHT,
-        duration = Duration.ofDays(1)
-    )
-}.toImmutableList()
-
-// If this is not sufficient, resort to implementing https://wiki.openstreetmap.org/wiki/Key:opening_hours/specification
-// or port https://github.com/opening-hours/opening_hours.js
-internal fun parseOpeningSchedule(it: String?): OpeningSchedule? {
-    if (it.isNullOrBlank()) return null
-
-    val openingHours = mutableListOf<OpeningHours>()
-
-    // e.g.
-    // "Mo-Sa 11:00-14:00, 17:00-23:00; Su 11:00-23:00"
-    // "Mo-Sa 11:00-21:00; PH,Su off"
-    // "Mo-Th 10:00-24:00, Fr,Sa 10:00-05:00, PH,Su 12:00-22:00"
-    var blocks =
-        it.split(',', ';', ' ').mapNotNull { if (it.isBlank()) null else it.trim() }
-
-    if (blocks.first() == "24/7")
+    if (parsed.rules.singleOrNull()?.selector is TwentyFourSeven)
         return OpeningSchedule.TwentyFourSeven
 
-    fun dayOfWeekFromString(it: String): DayOfWeek? = when (it.lowercase()) {
-        "mo" -> DayOfWeek.MONDAY
-        "tu" -> DayOfWeek.TUESDAY
-        "we" -> DayOfWeek.WEDNESDAY
-        "th" -> DayOfWeek.THURSDAY
-        "fr" -> DayOfWeek.FRIDAY
-        "sa" -> DayOfWeek.SATURDAY
-        "su" -> DayOfWeek.SUNDAY
-        else -> null
+    val rangeRules = parsed.rules.mapNotNull { it.selector as? Range }
+
+    val applicableYearRanges = rangeRules.filter {
+        it.years?.any {
+            when (it) {
+                is Year -> it.year == localTime.year
+                is StartingAtYear -> it.start <= localTime.year
+                is YearRange -> localTime.year in it.start..it.end step (it.step ?: 1)
+            }
+        } ?: false
+    }.ifEmpty {
+        // default to rules without any years specified
+        rangeRules.filter {
+            it.years.isNullOrEmpty()
+        }
     }
 
-    var allDay = false
-    var everyDay = false
+    val applicableRanges = applicableYearRanges.filter {
+        it.months?.any {
+            when (it) {
+                is MonthRange -> (it.year?.let { it == localTime.year }
+                    ?: true) && localTime.month.ordinal in it.start.ordinal..it.end.ordinal
 
-    fun parseGroup(group: List<String>) {
-        if (group.isEmpty())
-            return
+                is SingleMonth -> (it.year?.let { it == localTime.year }
+                    ?: true) && localTime.month.ordinal == it.month.ordinal
 
-        var times = group
-            .filter { timeRegex.matches(it) }
-            .mapNotNull {
-                try {
-                    val startTime =
-                        LocalTime.parse(it.substringBefore('-'), DATE_TIME_FORMATTER)
-                    val endTime =
-                        LocalTime.parse(it.substringAfter('-'), DATE_TIME_FORMATTER)
-
-                    var duration = Duration.between(startTime, endTime)
-
-                    if (duration.isNegative || duration.isZero)
-                        duration += Duration.ofDays(1)
-
-                    startTime to duration
-                } catch (dtpe: DateTimeParseException) {
-                    Log.e(
-                        "OpeningTimeFromOverpassElement",
-                        "Failed to parse opening time $it",
-                        dtpe
-                    )
-                    null
-                }
+                else -> false
             }
-
-        var days = group
-            .filter { dayRangeRegex.matches(it) }
-            .flatMap {
-                val dowStart = dayOfWeekFromString(it.substringBefore('-'))
-                    ?: return@flatMap emptyList()
-                val dowEnd = dayOfWeekFromString(it.substringAfter('-'))
-                    ?: return@flatMap emptyList()
-
-                if (dowStart.ordinal <= dowEnd.ordinal)
-                    daysOfWeek.subList(dowStart.ordinal, dowEnd.ordinal + 1)
-                else // "We-Mo"
-                    daysOfWeek.subList(dowStart.ordinal, daysOfWeek.size)
-                        .union(daysOfWeek.subList(0, dowEnd.ordinal + 1))
-            }.union(
-                group.filter { singleDayRegex.matches(it) }
-                    .mapNotNull { dayOfWeekFromString(it) }
-            )
-
-        // if no time specified, treat as "all day"
-        if (times.isEmpty()) {
-            allDay = true
-            times = listOf(LocalTime.MIDNIGHT to Duration.ofDays(1))
+        } ?: false
+    }.ifEmpty {
+        applicableYearRanges.filter {
+            it.months.isNullOrEmpty()
         }
-
-        // if no day specified, treat as "every day"
-        if (days.isEmpty()) {
-            if (group.any { it.equals("PH", ignoreCase = true) }) {
-                times = emptyList()
-            } else {
-                everyDay = true
-                days = daysOfWeek.toSet()
-            }
-        }
-
-        openingHours.addAll(days.flatMap { day ->
-            times.map { (start, duration) ->
-                OpeningHours(
-                    dayOfWeek = day,
-                    startTime = start,
-                    duration = duration
-                )
-            }
-        })
     }
 
-    while (true) {
-        if (blocks.isEmpty())
-            break
+    val hours = mutableListOf<OpeningHours>()
 
-        // assuming that there are blocks that only contain time
-        // treating them as "every day of the week"
-        if (blocks.size < 2) {
-            parseGroup(blocks)
-            break
+    for (range in applicableRanges) {
+
+        var daysOfWeek = range.weekdays?.flatMap { it.toDaysOfWeek() }
+        var localTimesWithDuration = range.times?.flatMap { it.toLocalTimeWithDuration() }
+
+        when {
+            daysOfWeek.isNullOrEmpty() && !localTimesWithDuration.isNullOrEmpty() -> daysOfWeek =
+                DayOfWeek.values().toList()
+
+            !daysOfWeek.isNullOrEmpty() && localTimesWithDuration.isNullOrEmpty() -> localTimesWithDuration =
+                listOf(LocalTime.MIDNIGHT to Duration.ofHours(24))
         }
 
-        val nextTimeIndex =
-            blocks.indexOfFirst { timeRegex.matches(it) }
+        daysOfWeek ?: continue
+        localTimesWithDuration ?: continue
 
-        // no time left, so probably no sensible information
-        // willingly skips "off" and "closed" as they are not useful
-        if (nextTimeIndex == -1)
-            break
-
-        // assuming next block to start with the first date coming after a time block
-        var nextGroupIndex =
-            blocks.subList(nextTimeIndex, blocks.size)
-                .indexOfFirst { !timeRegex.matches(it) }
-
-        // no day left, so we are done
-        if (nextGroupIndex == -1) {
-            parseGroup(blocks)
-            break
+        hours += daysOfWeek.flatMap { dow ->
+            localTimesWithDuration.map {
+                val (start, dur) = it
+                OpeningHours(dow, start, dur)
+            }
         }
-
-        // convert index from sublist context
-        nextGroupIndex += nextTimeIndex
-
-        parseGroup(blocks.subList(0, nextGroupIndex))
-        blocks = blocks.subList(nextGroupIndex, blocks.size)
     }
 
-    return if (allDay && everyDay) {
-        OpeningSchedule.TwentyFourSeven
-    } else {
-        OpeningSchedule.Hours(openingHours)
+    return OpeningSchedule.Hours(hours)
+}
+
+private fun WeekdaysSelector.toDaysOfWeek(): List<DayOfWeek> = when (this) {
+    is Weekday -> listOf(
+        when (this) {
+            Weekday.Monday -> DayOfWeek.MONDAY
+            Weekday.Tuesday -> DayOfWeek.TUESDAY
+            Weekday.Wednesday -> DayOfWeek.WEDNESDAY
+            Weekday.Thursday -> DayOfWeek.THURSDAY
+            Weekday.Friday -> DayOfWeek.FRIDAY
+            Weekday.Saturday -> DayOfWeek.SATURDAY
+            Weekday.Sunday -> DayOfWeek.SUNDAY
+        }
+    )
+
+    is WeekdayRange -> (start to end).map { it.toDaysOfWeek().first().value }
+        .into { start, end -> (start..end).map { DayOfWeek.of(it) } }
+
+    is SpecificWeekdays -> {
+        // TODO
+        emptyList()
     }
 }
 
+private fun TimesSelector.toLocalTimeWithDuration(): List<Pair<LocalTime, Duration>> {
+    return when (this) {
+        is TimeSpan -> {
+            val start = start as? ClockTime ?: return emptyList()
+            val end = end as? ExtendedClockTime ?: return emptyList()
 
+            listOf(
+                LocalTime.of(
+                    start.hour,
+                    start.minutes
+                ) to Duration.ofMinutes(((end.hour - start.hour) * 60 + end.minutes - start.minutes).toLong())
+            )
+        }
+
+        else -> emptyList() // TODO
+    }
+}
