@@ -29,6 +29,10 @@ import org.apache.commons.text.similarity.FuzzyScore
 import java.util.Locale
 
 interface AppRepository : SearchableRepository<Application> {
+    fun findOne(
+        packageName: String,
+        user: UserHandle,
+    ): Flow<Application?>
     fun findMany(): Flow<ImmutableList<Application>>
 }
 
@@ -193,6 +197,17 @@ internal class AppRepositoryImpl(
             )
         ) return null
         return LauncherApp(context, launcherActivityInfo)
+    }
+
+    override fun findOne(
+        packageName: String,
+        user: UserHandle,
+    ): Flow<Application?> {
+        return installedApps.map {
+            it.firstOrNull {
+                it.componentName.packageName == packageName && it.user == user
+            }
+        }
     }
 
     override fun findMany(): Flow<ImmutableList<Application>> {

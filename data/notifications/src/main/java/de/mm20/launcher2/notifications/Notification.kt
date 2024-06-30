@@ -70,10 +70,10 @@ data class Notification(
         get() = extras.getInt(NotificationCompat.EXTRA_PROGRESS_MAX).takeIf { it > 0 }
 
     val title: String?
-        get() = extras.getString(NotificationCompat.EXTRA_TITLE)
+        get() = extras.getString(NotificationCompat.EXTRA_TITLE)?.takeIf { it.isNotBlank() }
 
     val text: String?
-        get() = extras.getString(NotificationCompat.EXTRA_TEXT)
+        get() = extras.getString(NotificationCompat.EXTRA_TEXT)?.takeIf { it.isNotBlank() }
 
     val isGroupSummary: Boolean
         get() = flags and NotificationCompat.FLAG_GROUP_SUMMARY != 0

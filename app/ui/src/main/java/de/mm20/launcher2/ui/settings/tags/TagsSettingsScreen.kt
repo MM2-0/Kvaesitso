@@ -33,7 +33,7 @@ fun TagsSettingsScreen() {
     val tags by remember { viewModel.tags }.collectAsState(emptyList())
 
     PreferenceScreen(
-        title = "Tags",
+        title = stringResource(R.string.preference_screen_tags),
         floatingActionButton = {
             FloatingActionButton(onClick = { viewModel.createTag.value = true }) {
                 Icon(Icons.Rounded.Add, null)

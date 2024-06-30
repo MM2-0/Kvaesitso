@@ -233,23 +233,8 @@ internal class PermissionsManagerImpl(
     }
 
     override fun onResume() {
-        val iterator = pendingPermissionRequests.iterator()
-        while (iterator.hasNext()) {
-            when (iterator.next()) {
-                PermissionGroup.ExternalStorage -> {
-                    externalStoragePermissionState.value =
-                        checkPermissionOnce(PermissionGroup.ExternalStorage)
-                }
-
-                PermissionGroup.AppShortcuts -> {
-                    appShortcutsPermissionState.value =
-                        checkPermissionOnce(PermissionGroup.AppShortcuts)
-                }
-
-                else -> {}
-            }
-            iterator.remove()
-        }
+        externalStoragePermissionState.value = checkPermissionOnce(PermissionGroup.ExternalStorage)
+        appShortcutsPermissionState.value = checkPermissionOnce(PermissionGroup.AppShortcuts)
     }
 
     override fun reportNotificationListenerState(running: Boolean) {

@@ -757,4 +757,23 @@
     <string name="item_visibility_app_default">App-Raster &amp; Suchergebnissen</string>
     <string name="item_visibility_calendar_default">Kalenderwidget &amp; Suchergebnissen</string>
     <string name="item_visibility_search_only">Suchergebnissen</string>
+    <string name="contact_info_work">Geschäftlich</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s Telefonnummer</item>
+        <item quantity="other">%1$s Telefonnummern</item>
+    </plurals>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s E-Mail-Adresse</item>
+        <item quantity="other">%1$s E-Mail-Adressen</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s Adresse</item>
+        <item quantity="other">%1$s Adressen</item>
+    </plurals>
+    <string name="contact_info_home">Privat</string>
+    <string name="contact_info_mobile">Mobil</string>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s Benachrichtigung</item>
+        <item quantity="other">%1$s Benachrichtigungen</item>
+    </plurals>
 </resources>

@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -192,6 +193,8 @@ fun ListItem(
                                 },
                                 onLongClick = { onShowDetails(true) }),
                         website = item,
+                        onBack = { onShowDetails(false) },
+                        showDetails = showDetails,
                     )
                 }
             }

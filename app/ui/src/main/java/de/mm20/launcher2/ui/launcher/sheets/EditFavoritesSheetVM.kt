@@ -61,7 +61,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         loading.value = showLoadingIndicator
         manuallySorted = mutableListOf()
         manuallySorted = favoritesService.getFavorites(
-            minPinnedLevel = PinnedLevel.AutomaticallySorted,
+            minPinnedLevel = PinnedLevel.ManuallySorted,
             excludeTypes = listOf("tag"),
         ).first().toMutableList()
         automaticallySorted = favoritesService.getFavorites(
