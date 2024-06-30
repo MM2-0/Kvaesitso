@@ -16,6 +16,7 @@ data class WebsearchAction(
     override fun start(context: Context) {
         val intent = Intent(Intent.ACTION_WEB_SEARCH).apply {
             putExtra(SearchManager.QUERY, query)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         context.tryStartActivity(intent)
     }
