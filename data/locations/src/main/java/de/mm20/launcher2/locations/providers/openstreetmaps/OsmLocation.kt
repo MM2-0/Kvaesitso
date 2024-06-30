@@ -335,13 +335,13 @@ internal fun parseOpeningSchedule(
     val rangeRules = parsed.rules.mapNotNull { it.selector as? Range }
 
     val applicableYearRanges = rangeRules.filter {
-        it.years?.any {
+        (it.years ?: return@filter false).any {
             when (it) {
                 is Year -> it.year == localTime.year
                 is StartingAtYear -> it.start <= localTime.year
                 is YearRange -> localTime.year in it.start..it.end step (it.step ?: 1)
             }
-        } ?: false
+        }
     }.ifEmpty {
         // default to rules without any years specified
         rangeRules.filter {
@@ -350,7 +350,7 @@ internal fun parseOpeningSchedule(
     }
 
     val applicableRanges = applicableYearRanges.filter {
-        it.months?.any {
+        (it.months ?: return@filter false).any {
             when (it) {
                 is MonthRange -> (it.year?.let { it == localTime.year }
                     ?: true) && localTime.month.ordinal in it.start.ordinal..it.end.ordinal
@@ -360,7 +360,7 @@ internal fun parseOpeningSchedule(
 
                 else -> false
             }
-        } ?: false
+        }
     }.ifEmpty {
         applicableYearRanges.filter {
             it.months.isNullOrEmpty()
