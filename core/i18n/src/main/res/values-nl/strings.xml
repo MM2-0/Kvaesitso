@@ -772,4 +772,8 @@
         <item quantity="one">%1$s telefoonnumer</item>
         <item quantity="other">%1$s telefoonnummers</item>
     </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s melding</item>
+        <item quantity="other">%1$s meldingen</item>
+    </plurals>
 </resources>
