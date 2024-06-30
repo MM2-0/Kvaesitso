@@ -11,3 +11,7 @@ fun <T> List<T>.randomElementOrNull(): T? {
     if (isEmpty()) return null
     return get(Random().nextInt(size))
 }
+
+fun <T> List<T>?.ifNullOrEmpty(block: () -> List<T>): List<T> {
+    return if (this.isNullOrEmpty()) block() else this
+}

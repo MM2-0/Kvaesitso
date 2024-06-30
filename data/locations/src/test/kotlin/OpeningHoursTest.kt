@@ -161,4 +161,18 @@ class OpeningHoursTest {
             )
         }
     }
+
+    @Test
+    fun testSundayOff() = OpeningSchedule.Hours(
+        listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(11, 0), Duration.ofHours(10)),
+            OpeningHours(DayOfWeek.TUESDAY, LocalTime.of(11, 0), Duration.ofHours(10)),
+            OpeningHours(DayOfWeek.WEDNESDAY, LocalTime.of(11, 0), Duration.ofHours(10)),
+            OpeningHours(DayOfWeek.THURSDAY, LocalTime.of(11, 0), Duration.ofHours(10)),
+            OpeningHours(DayOfWeek.FRIDAY, LocalTime.of(11, 0), Duration.ofHours(10)),
+            OpeningHours(DayOfWeek.SATURDAY, LocalTime.of(11, 0), Duration.ofHours(10)),
+        )
+    ) assertEqualTo scheduleAt(
+        "Mo-Sa 11:00-21:00; PH,Su off"
+    )
 }

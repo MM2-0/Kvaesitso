@@ -1,6 +1,7 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import android.content.Context
+import de.mm20.launcher2.ktx.ifNullOrEmpty
 import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
 import de.mm20.launcher2.locations.OsmLocationSerializer
@@ -371,19 +372,8 @@ internal fun parseOpeningSchedule(
 
     for (range in applicableRanges) {
 
-        var daysOfWeek = range.weekdays?.flatMap { it.toDaysOfWeek() }
-        var localTimesWithDuration = range.times?.flatMap { it.toLocalTimeWithDuration() }
-
-        when {
-            daysOfWeek.isNullOrEmpty() && !localTimesWithDuration.isNullOrEmpty() -> daysOfWeek =
-                DayOfWeek.values().toList()
-
-            !daysOfWeek.isNullOrEmpty() && localTimesWithDuration.isNullOrEmpty() -> localTimesWithDuration =
-                listOf(LocalTime.MIDNIGHT to Duration.ofHours(24))
-        }
-
-        daysOfWeek ?: continue
-        localTimesWithDuration ?: continue
+        val localTimesWithDuration = range.times?.flatMap { it.toLocalTimeWithDuration() } ?: continue
+        val daysOfWeek = range.weekdays?.flatMap { it.toDaysOfWeek() }.ifNullOrEmpty { DayOfWeek.values().toList() }
 
         hours += daysOfWeek.flatMap { dow ->
             localTimesWithDuration.map {
