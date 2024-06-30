@@ -44,6 +44,8 @@ As of now, the following plugins are available:
 - **OpenWeatherMap plugin**: adds OpenWeatherMap weather
   provider [[Github]](https://github.com/Kvaesitso/Plugin-OpenWeatherMap) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.openweathermap)
 - **Breezy Weather plugin**: forwards weather data from Breezy Weather to Kvaesitso [[Github]](https://github.com/Kvaesitso/Plugin-BreezyWeather) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.breezyweather)
+- **HERE plugin**: weather data, places, and departure times from HERE [[Github]](https://github.com/Kvaesitso/Plugin-HERE) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.here)
+- **Foursquare plugin**: weather data, places, and departure times from Foursquare [[Github]](https://github.com/Kvaesitso/Plugin-Foursquare) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.foursquare)
 
 ## Plugin development
 
