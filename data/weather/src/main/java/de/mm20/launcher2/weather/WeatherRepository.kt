@@ -27,6 +27,7 @@ import java.util.*
 import kotlin.time.Duration.Companion.minutes
 
 interface WeatherRepository {
+    fun getActiveProvider(): Flow<WeatherProviderInfo?>
     fun getProviders(): Flow<List<WeatherProviderInfo>>
     fun searchLocations(query: String): Flow<List<WeatherLocation>>
 
@@ -143,6 +144,14 @@ internal class WeatherRepositoryImpl(
             withContext(Dispatchers.IO) {
                 database.weatherDao().deleteAll()
                 settings.setLastUpdate(0L)
+            }
+        }
+    }
+
+    override fun getActiveProvider(): Flow<WeatherProviderInfo?> {
+        return settings.providerId.flatMapLatest { id ->
+            getProviders().map {
+                it.find { it.id == id }
             }
         }
     }

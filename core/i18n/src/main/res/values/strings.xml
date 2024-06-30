@@ -968,4 +968,5 @@
         <item quantity="one">%1$s notification</item>
         <item quantity="other">%1$s notifications</item>
     </plurals>
+    <string name="weather_widget_no_provider">No weather provider selected or the selected provider is not available</string>
 </resources>

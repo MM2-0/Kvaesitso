@@ -1,14 +1,18 @@
 package de.mm20.launcher2.ui.launcher.widgets.weather
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.weather.WeatherSettings
+import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.WeatherRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -131,5 +135,17 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
         val forecastIndex = max(0, day.hourlyForecasts.indexOfLast { it.timestamp < now })
         selectDay(dayIndex)
         selectForecast(forecastIndex)
+    }
+
+    fun openSettings(context: Context) {
+        context.startActivity(
+            Intent(context, SettingsActivity::class.java).apply {
+                putExtra(SettingsActivity.EXTRA_ROUTE, SettingsActivity.ROUTE_WEATHER_INTEGRATION)
+            }
+        )
+    }
+
+    val isProviderAvailable: Flow<Boolean> = weatherRepository.getActiveProvider().map {
+        it != null
     }
 }
