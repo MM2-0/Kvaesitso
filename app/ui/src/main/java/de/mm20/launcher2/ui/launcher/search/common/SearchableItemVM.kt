@@ -243,5 +243,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     val mapTileServerUrl = locationSearchSettings.tileServer
+        .map { it ?: LocationSearchSettings.DefaultTileServerUrl }
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
 }

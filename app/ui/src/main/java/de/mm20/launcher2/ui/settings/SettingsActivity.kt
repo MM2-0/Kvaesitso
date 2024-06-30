@@ -55,6 +55,7 @@ import de.mm20.launcher2.ui.settings.log.LogScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.media.MediaIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.nextcloud.NextcloudSettingsScreen
+import de.mm20.launcher2.ui.settings.osm.OsmSettingsScreen
 import de.mm20.launcher2.ui.settings.owncloud.OwncloudSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
@@ -106,7 +107,7 @@ class SettingsActivity : BaseActivity() {
                                 navController = navController,
                                 startDestination = "settings",
                                 exitTransition = {
-                                    slideOutHorizontally { it / 4 }
+                                    slideOutHorizontally {-it / 4 }
                                 },
                                 enterTransition = {
                                     slideInHorizontally { it / 2 } + scaleIn(initialScale = 0.9f) + fadeIn()
@@ -161,6 +162,9 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/search/locations") {
                                     LocationsSettingsScreen()
+                                }
+                                composable("settings/search/locations/osm") {
+                                    OsmSettingsScreen()
                                 }
                                 composable("settings/search/files") {
                                     FileSearchSettingsScreen()
