@@ -226,10 +226,10 @@
     <string name="missing_permission_appshortcuts_create">Stel %1$s in als standaard startschermapplicatie om applicatiesnelkoppelingen te maken.</string>
     <string name="preference_screen_about_summary">Applicatie- en licentie-informatie</string>
     <string name="preference_screen_appearance_summary">Pas het uitzicht aan</string>
-    <string name="preference_weather_provider">Provider</string>
+    <string name="preference_weather_provider">Aanbieder</string>
     <string name="provider_metno">MET Norway</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
-    <string name="provider_brightsky">Deutscher Wetterdienst (Enkel Duitsland)</string>
+    <string name="provider_brightsky">Deutscher Wetterdienst (Alleen Duitsland)</string>
     <string name="provider_here">HERE</string>
     <string name="preference_category_location">Locatie</string>
     <string name="preference_automatic_location">Automatische locatie</string>
@@ -663,9 +663,9 @@
     <string name="plugin_state_setup_required">Je moet deze plug-in eerst instellen</string>
     <string name="plugin_action_setup">Instellen</string>
     <string name="plugin_type_filesearch">Bestanden zoeken</string>
-    <string name="plugin_type_weather">Weerprovider</string>
-    <string name="plugin_weather_provider_enable">Instellen als weerprovider</string>
-    <string name="plugin_weather_provider_enabled">Momenteel ingesteld als weerprovider</string>
+    <string name="plugin_type_weather">Aanbieder van weergegevens</string>
+    <string name="plugin_weather_provider_enable">Instellen als aanbieder van weer</string>
+    <string name="plugin_weather_provider_enabled">Momenteel ingesteld als aanbieder van weer</string>
     <string name="clock_style_digital2">Eenvoudig</string>
     <string name="clock_style_binary">Binair</string>
     <string name="clock_style_analog">Wijzers</string>
@@ -680,7 +680,7 @@
     <string name="preference_filter_bar_summary">Snelle filters tonen boven het toetsenbord</string>
     <string name="filter_settings_network_warning">De huidige filters staan onlineresultaten toe. Je zoektermen kunnen per ongeluk naar externe webdiensten gestuurd worden. Dit is niet aanbevolen voor jouw privacy.</string>
     <string name="preference_location_managed">Door plug-in beheerd</string>
-    <string name="preference_location_managed_summary">De locatie voor deze provider wordt beheerd door de app van de plug-in</string>
+    <string name="preference_location_managed_summary">De locatie voor deze aanbieder wordt beheerd door de app van de plug-in</string>
     <string name="preference_customize_filter_bar">Filterbalk aanpassen</string>
     <string name="preference_customize_filter_bar_summary">Aanpassen welke items getoond worden in de filterbalk</string>
     <string name="preference_plugin_enable">Plug-in activeren</string>
@@ -776,4 +776,5 @@
         <item quantity="one">%1$s melding</item>
         <item quantity="other">%1$s meldingen</item>
     </plurals>
+    <string name="weather_widget_no_provider">Geen aanbieder van weergegevens geselecteerd of de geselecteerde aanbieder is niet beschikbaar</string>
 </resources>
