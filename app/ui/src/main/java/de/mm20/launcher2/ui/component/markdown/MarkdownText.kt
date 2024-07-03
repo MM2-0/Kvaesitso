@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -91,7 +90,7 @@ fun MarkdownNode(
         MarkdownElementTypes.ATX_4 -> AtxNode(node, text, 4, onTextChange)
         MarkdownElementTypes.ATX_5 -> AtxNode(node, text, 5, onTextChange)
         MarkdownElementTypes.ATX_6 -> AtxNode(node, text, 6, onTextChange)
-        MarkdownTokenTypes.HORIZONTAL_RULE -> Divider(modifier = Modifier.padding(vertical = 4.dp))
+        MarkdownTokenTypes.HORIZONTAL_RULE -> HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
         MarkdownElementTypes.UNORDERED_LIST -> UnorderedListNode(node, text, onTextChange)
         MarkdownElementTypes.ORDERED_LIST -> OrderedListNode(node, text, onTextChange)
         MarkdownElementTypes.BLOCK_QUOTE -> BlockQuoteNode(node, text, onTextChange)
@@ -149,7 +148,14 @@ fun ParagraphNode(node: ASTNode, text: String) {
 
     val text = buildAnnotatedString {
         append(substring)
-        applyStyles(node, colorScheme, typography, SpanStyle(fontSize = 0.sp), text, node.startOffset)
+        applyStyles(
+            node,
+            colorScheme,
+            typography,
+            SpanStyle(fontSize = 0.sp),
+            text,
+            node.startOffset
+        )
     }
 
     val context = LocalContext.current
@@ -163,11 +169,14 @@ fun ParagraphNode(node: ASTNode, text: String) {
             awaitEachGesture {
                 val down = awaitFirstDown(true)
                 val offset = down.position
-                val position = layoutResult.value?.getOffsetForPosition(offset) ?: return@awaitEachGesture
+                val position =
+                    layoutResult.value?.getOffsetForPosition(offset) ?: return@awaitEachGesture
                 val downUrlAnnotation = text.getUrlAnnotations(position, position).firstOrNull()
                 val downUrl = downUrlAnnotation?.item?.url ?: return@awaitEachGesture
-                val up = waitForUpOrCancellation()?.takeIf { !it.isConsumed } ?: return@awaitEachGesture
-                val upPosition = layoutResult.value?.getOffsetForPosition(offset) ?: return@awaitEachGesture
+                val up =
+                    waitForUpOrCancellation()?.takeIf { !it.isConsumed } ?: return@awaitEachGesture
+                val upPosition =
+                    layoutResult.value?.getOffsetForPosition(offset) ?: return@awaitEachGesture
                 val upAnnotation = text.getUrlAnnotations(upPosition, upPosition).firstOrNull()
                 val url = upAnnotation?.item?.url ?: return@awaitEachGesture
                 if (url == downUrl) {
@@ -223,7 +232,7 @@ fun ListItemNode(
                 Text(
                     text = "${index}.",
                     modifier = Modifier
-                        .width(24.dp)
+                        .width(32.dp)
                         .padding(end = 4.dp),
                     textAlign = TextAlign.End,
                 )
@@ -231,7 +240,7 @@ fun ListItemNode(
                 Text(
                     text = "•",
                     modifier = Modifier
-                        .width(24.dp)
+                        .width(32.dp)
                         .padding(end = 4.dp),
                     textAlign = TextAlign.End,
                 )
@@ -318,7 +327,7 @@ fun CheckboxNode(node: ASTNode, text: String, onTextChange: (String) -> Unit = {
             val newText = text.replaceRange(node.startOffset, node.endOffset, newCheckbox)
             onTextChange(newText)
         }, modifier = Modifier
-            .padding(top = 4.dp, bottom = 4.dp, end = 8.dp)
+            .padding(top = 4.dp, bottom = 4.dp, end = 8.dp, start = 6.dp)
             .requiredSize(18.dp)
     )
 }
