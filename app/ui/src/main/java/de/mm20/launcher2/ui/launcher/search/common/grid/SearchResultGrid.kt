@@ -1,8 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.common.grid
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
@@ -31,44 +29,36 @@ fun SearchResultGrid(
     highlightedItem: SavableSearchable? = null,
     transitionKey: Any? = items
 ) {
-    SharedTransitionLayout(
-        modifier = modifier,
-    ) {
-        AnimatedContent(
-            items to transitionKey,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
-            transitionSpec = {
-                fadeIn() togetherWith fadeOut()
-            },
-            contentKey = { it.second }
-        ) { (items, _) ->
-            Column(
-                verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
-            ) {
-                for (i in 0 until ceil(items.size / columns.toFloat()).toInt()) {
-                    Row {
-                        for (j in 0 until columns) {
-                            val item = items.getOrNull(i * columns + j)
-                            if (item != null) {
-                                key(item.key) {
-                                    GridItem(
-                                        modifier = Modifier
-                                            .sharedElement(
-                                                rememberSharedContentState(item.key),
-                                                this@AnimatedContent,
-                                            )
-                                            .weight(1f)
-                                            .padding(4.dp),
-                                        item = item,
-                                        showLabels = showLabels,
-                                        highlight = item.key == highlightedItem?.key
-                                    )
-                                }
-                            } else {
-                                Spacer(modifier = Modifier.weight(1f))
+    AnimatedContent(
+        items to transitionKey,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(4.dp),
+        transitionSpec = {
+            fadeIn() togetherWith fadeOut()
+        },
+        contentKey = { it.second }
+    ) { (items, _) ->
+        Column(
+            verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
+        ) {
+            for (i in 0 until ceil(items.size / columns.toFloat()).toInt()) {
+                Row {
+                    for (j in 0 until columns) {
+                        val item = items.getOrNull(i * columns + j)
+                        if (item != null) {
+                            key(item.key) {
+                                GridItem(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .padding(4.dp),
+                                    item = item,
+                                    showLabels = showLabels,
+                                    highlight = item.key == highlightedItem?.key
+                                )
                             }
+                        } else {
+                            Spacer(modifier = Modifier.weight(1f))
                         }
                     }
                 }
