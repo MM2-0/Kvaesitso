@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="websearch_dialog_replace_icon">Thay thế biểu tượng</string>
+    <string name="preference_custom_colors_corepalette">Bảng màu</string>
+    <string name="location_closed">Đã đóng</string>
+    <string name="websearch_dialog_custom_icon">Tùy chỉnh biểu tượng</string>
+    <string name="websearch_dialog_advanced">Nâng cao</string>
+    <string name="websearch_dialog_query_encoding">Mã hóa truy vấn</string>
+    <string name="websearch_dialog_query_encoding_url">Mã hóa phần trăm</string>
+    <string name="weather_location_search_no_result">Không tìm thấy vị trí.</string>
+    <string name="preference_screen_appearance">Diện mạo</string>
+    <string name="preference_theme">Chủ đề</string>
+    <string name="preference_theme_light">Sáng</string>
+    <string name="preference_theme_dark">Tối</string>
+    <string name="preference_screen_colors">Bảng màu</string>
+    <string name="preference_colors_default">Mặc định</string>
+    <string name="preference_colors_bw">Đen và trắng</string>
+    <string name="preference_mdy_color_source_system">Hệ thống</string>
+    <string name="preference_mdy_color_source_wallpaper">Hình nền</string>
+    <string name="location_open">Mở</string>
+    <string name="search_bar_placeholder">Tìm kiếm</string>
+    <string name="websearch_dialog_query_encoding_none">Không có</string>
+    <string name="preference_mdy_color_source">Nguồn cho màu sắc sống động</string>
+    <string name="websearch_dialog_delete_icon">Xóa biểu tượng</string>
+    <string name="grant_permission">Cấp</string>
+</resources>
