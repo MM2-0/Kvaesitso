@@ -323,7 +323,7 @@
     <string name="preference_clockwidget_music_part_summary">Mediensteuerung anzeigen, wenn Medien wiedergegeben werden</string>
     <string name="preference_clockwidget_battery_part">Akku</string>
     <string name="preference_clockwidget_alarm_part">Wecker</string>
-    <string name="preference_clockwidget_alarm_part_summary">Wecker anzeigen, wenn diese in den nächsten 15 Minuten klingeln werden</string>
+    <string name="preference_clockwidget_alarm_part_summary">Wecker anzeigen, wenn diese in den nächsten 8 Stunden klingeln werden</string>
     <string name="preference_clockwidget_music_part">Medien</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Voll in %1$s Minute</item>

@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
@@ -24,6 +25,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.FavoritesTagSelector
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
+import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 
 fun LazyListScope.SearchFavorites(
@@ -51,10 +53,11 @@ fun LazyListScope.SearchFavorites(
                             LocalCardStyle.current.opacity
                         ),
                         MaterialTheme.shapes.medium
-                    )
+                    ),
+                verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
             ) {
                 if (favorites.isNotEmpty()) {
-                    SearchResultGrid(favorites, transitionKey = selectedTag)
+                    SearchResultGrid(favorites, transitionKey = selectedTag, reverse = reverse)
                 } else {
                     Banner(
                         modifier = Modifier.padding(16.dp),
