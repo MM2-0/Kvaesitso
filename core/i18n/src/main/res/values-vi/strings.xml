@@ -23,4 +23,8 @@
     <string name="preference_mdy_color_source">Nguồn cho màu sắc sống động</string>
     <string name="websearch_dialog_delete_icon">Xóa biểu tượng</string>
     <string name="grant_permission">Cấp</string>
+    <string name="file_type_text">Tệp văn bản</string>
+    <plurals name="calendar_widget_running_events">
+        <item quantity="other">+%1$d sự kiện đang chạy từ ngày trước</item>
+    </plurals>
 </resources>
