@@ -224,6 +224,7 @@
     <string name="widget_name_music">Music</string>
     <string name="widget_name_favorites">Favorites</string>
     <string name="widget_name_notes">Note</string>
+    <string name="widget_name_smartspacer">Smartspacer</string>
     <string name="widget_name_unknown">Unknown app widget</string>
     <string name="widget_add_widget">Add widget</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
@@ -791,6 +792,8 @@
     <string name="note_widget_file_read_error_description">The linked file could not be read. Possibly, it has been moved or deleted. A copy has been restored from the launcher\'s internal storage. If you edit the note, the linked file will possibly be overwritten.</string>
     <string name="note_widget_file_write_error">Error saving note</string>
     <string name="note_widget_file_write_error_description">The note could not be written to the linked file. Possibly, it has been moved or deleted. A copy has been saved to the launcher\'s internal storage.</string>
+    <string name="widget_config_smartspacer_settings">Open Smartspacer app</string>
+    <string name="smartspacer_widget_cant_open_app_error">Smartspacer couldn\'t be launched</string>
     <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s\?</string>
     <string name="new_color_scheme_name">New color scheme</string>
     <string name="theme_color_scheme_system_default">Use system default</string>

@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keep Smartspacer's client SDK
+-keep class com.kieronquinn.app.smartspacer.sdk.**  { *; }

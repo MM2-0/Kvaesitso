@@ -4,9 +4,11 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -63,6 +65,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
 import androidx.core.net.toUri
+import com.kieronquinn.app.smartspacer.sdk.SmartspacerConstants
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.calendar.UserCalendar
 import de.mm20.launcher2.crashreporter.CrashReporter
@@ -75,7 +78,6 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
-import de.mm20.launcher2.ui.component.ResizeAxis
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -89,6 +91,7 @@ import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.SmartspacerWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import org.koin.androidx.compose.get
@@ -127,6 +130,7 @@ fun ConfigureWidgetSheet(
                 is FavoritesWidget -> ConfigureFavoritesWidget(widget, onWidgetUpdated)
                 is MusicWidget -> ConfigureMusicWidget()
                 is NotesWidget -> ConfigureNotesWidget(widget, onWidgetUpdated)
+                is SmartspacerWidget -> ConfigureSmartspacerWidget()
             }
         }
 
@@ -321,6 +325,7 @@ fun ColumnScope.ConfigureAppWidget(
                         is CalendarWidget -> it.copy(id = widget.id)
                         is FavoritesWidget -> it.copy(id = widget.id)
                         is NotesWidget -> it.copy(id = widget.id)
+                        is SmartspacerWidget -> it.copy(id = widget.id)
                     }
                     onWidgetUpdated(updatedWidget)
                     replaceWidget = false
@@ -690,6 +695,40 @@ fun ConfigureNotesWidget(
                 }
             )
         }
+    }
+}
+
+@Composable
+fun ColumnScope.ConfigureSmartspacerWidget() {
+    val context = LocalContext.current
+
+    TextButton(
+        modifier = Modifier
+            .align(Alignment.CenterHorizontally),
+        contentPadding = PaddingValues(
+            end = 16.dp,
+            top = 8.dp,
+            start = 24.dp,
+            bottom = 8.dp,
+        ),
+        onClick = { openSmartspacerSettings(context) }
+    ) {
+        Text(stringResource(R.string.widget_config_smartspacer_settings))
+        Icon(
+            modifier = Modifier
+                .padding(start = ButtonDefaults.IconSpacing)
+                .requiredSize(ButtonDefaults.IconSize),
+            imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+        )
+    }
+}
+
+private fun openSmartspacerSettings(context: Context) {
+    val launchIntent = context.packageManager.getLaunchIntentForPackage(SmartspacerConstants.SMARTSPACER_PACKAGE_NAME)
+    if (launchIntent != null) {
+        context.startActivity(launchIntent)
+    } else {
+        Toast.makeText(context, R.string.smartspacer_widget_cant_open_app_error, Toast.LENGTH_SHORT).show()
     }
 }
 

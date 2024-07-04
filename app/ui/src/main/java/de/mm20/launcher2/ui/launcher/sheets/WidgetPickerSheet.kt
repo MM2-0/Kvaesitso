@@ -62,6 +62,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.kieronquinn.app.smartspacer.sdk.SmartspacerConstants
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.widgets.CalendarWidget
@@ -70,6 +71,7 @@ import de.mm20.launcher2.widgets.AppWidgetConfig
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.SmartspacerWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import java.util.UUID
@@ -334,6 +336,7 @@ fun WidgetPickerSheet(
                                 MusicWidget.Type -> MusicWidget(id)
                                 FavoritesWidget.Type -> FavoritesWidget(id)
                                 NotesWidget.Type -> NotesWidget(id)
+                                SmartspacerWidget.Type -> SmartspacerWidget(id)
                                 else -> return@OutlinedCard
                             }
                             onWidgetSelected(widget)
@@ -350,6 +353,7 @@ fun WidgetPickerSheet(
                                     MusicWidget.Type -> Icons.Rounded.MusicNote
                                     FavoritesWidget.Type -> Icons.Rounded.Star
                                     NotesWidget.Type -> Icons.Rounded.StickyNote2
+                                    SmartspacerWidget.Type -> Icons.Rounded.Widgets     // TODO: change for a proper icon
                                     else -> Icons.Rounded.Widgets
                                 },
                                 contentDescription = null,

@@ -4,11 +4,13 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
 import android.content.pm.LauncherApps
+import android.os.Build
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.SmartspacerWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
@@ -40,7 +42,7 @@ class WidgetsService(
     }
 
     fun getBuiltInWidgets(): List<BuiltInWidgetInfo> {
-        return listOf(
+        val widgets = mutableListOf(
             BuiltInWidgetInfo(
                 type = WeatherWidget.Type,
                 label = context.getString(R.string.widget_name_weather),
@@ -62,6 +64,18 @@ class WidgetsService(
                 label = context.getString(R.string.widget_name_notes),
             ),
         )
+
+        // Smartspacer SDK requires Android API 29+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+            widgets.add(
+                BuiltInWidgetInfo(
+                    type = SmartspacerWidget.Type,
+                    label = context.getString(R.string.widget_name_smartspacer),
+                )
+            )
+        }
+
+        return widgets
     }
 
     fun addWidget(widget: Widget, position: Int, parentId: UUID? = null) {

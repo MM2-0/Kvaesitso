@@ -42,6 +42,7 @@ retrofit = "2.9.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
+sdkClient = "1.0.11"
 
 [libraries]
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
@@ -140,6 +141,7 @@ emoji4j = { group = "com.sigpwned", name = "emoji4j-core", version = "15.0.1" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+sdk-client = { group = "com.kieronquinn.smartspacer", name = "sdk-client", version.ref = "sdkClient" }
 
 [bundles]
 kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]

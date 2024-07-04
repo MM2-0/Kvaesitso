@@ -1,12 +1,10 @@
 package de.mm20.launcher2.ui.launcher.widgets.external
 
-import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Warning
@@ -24,10 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.isUnspecified
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
-import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
@@ -36,9 +32,9 @@ import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.SmartspacerWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
-import kotlin.math.roundToInt
 
 @Composable
 fun AppWidget(
@@ -89,6 +85,7 @@ fun AppWidget(
                         is CalendarWidget -> it.copy(id = widget.id)
                         is FavoritesWidget -> it.copy(id = widget.id)
                         is NotesWidget -> it.copy(id = widget.id)
+                        is SmartspacerWidget -> it.copy(id = widget.id)
                     }
                     onWidgetUpdate(updatedWidget)
                     replaceWidget = false
