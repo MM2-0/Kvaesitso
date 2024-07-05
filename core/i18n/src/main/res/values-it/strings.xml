@@ -272,7 +272,7 @@
     <string name="preference_clockwidget_battery_part">Batteria</string>
     <string name="preference_clockwidget_battery_part_summary">Mostra il livello della batteria quando la batteria è scarica o in ricarica</string>
     <string name="preference_clockwidget_alarm_part">Sveglie</string>
-    <string name="preference_clockwidget_alarm_part_summary">Mostra le sveglie che suoneranno nei prossimi 15 minuti</string>
+    <string name="preference_clockwidget_alarm_part_summary">Mostra le sveglie che suoneranno nelle prossime 8 ore</string>
     <string name="preference_screen_search">Ricerca</string>
     <string name="preference_screen_search_summary">Cerca, tag, oggetti nascosti</string>
     <string name="preference_search_favorites">Preferiti</string>
@@ -779,4 +779,10 @@
         <item quantity="many">%1$s indirizzi e-mail</item>
         <item quantity="other">%1$s indirizzi e-mail</item>
     </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s notifica</item>
+        <item quantity="many">%1$s notifiche</item>
+        <item quantity="other">%1$s notifiche</item>
+    </plurals>
+    <string name="weather_widget_no_provider">Nessun fornitore meteo selezionato oppure il fornitore selezionato non è disponibile</string>
 </resources>
