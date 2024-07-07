@@ -11,7 +11,6 @@ import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getDrawableOrNull
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.AppProfile
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.SearchableSerializer
 
@@ -25,9 +24,6 @@ internal data class LegacyShortcut(
 
     override val domain = Domain
     override val key: String = "$domain://${intent.toUri(0)}"
-
-    override val profile: AppProfile
-        get() = AppProfile.Personal
 
     override fun overrideLabel(label: String): LegacyShortcut {
         return this.copy(labelOverride = label)

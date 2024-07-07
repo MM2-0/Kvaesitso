@@ -10,11 +10,7 @@ import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
-
-enum class AppProfile {
-    Personal,
-    Work,
-}
+import de.mm20.launcher2.profiles.Profile
 
 interface Application: SavableSearchable {
     override val preferDetailsOverLaunch: Boolean
@@ -23,7 +19,6 @@ interface Application: SavableSearchable {
     val componentName: ComponentName
     val isSystemApp: Boolean
     val isSuspended: Boolean
-    val profile: AppProfile
     val user: UserHandle
     val versionName: String?
 

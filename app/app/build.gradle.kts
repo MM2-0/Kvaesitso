@@ -152,6 +152,7 @@ dependencies {
     implementation(project(":data:notifications"))
     implementation(project(":libs:owncloud"))
     implementation(project(":core:permissions"))
+    implementation(project(":core:profiles"))
     implementation(project(":core:preferences"))
     implementation(project(":services:search"))
     implementation(project(":services:tags"))

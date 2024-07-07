@@ -32,6 +32,7 @@ import de.mm20.launcher2.data.plugins.dataPluginsModule
 import de.mm20.launcher2.devicepose.devicePoseModule
 import de.mm20.launcher2.plugins.servicesPluginsModule
 import de.mm20.launcher2.preferences.preferencesModule
+import de.mm20.launcher2.profiles.profilesModule
 import de.mm20.launcher2.searchactions.searchActionsModule
 import de.mm20.launcher2.services.favorites.favoritesModule
 import de.mm20.launcher2.services.tags.servicesTagsModule
@@ -94,6 +95,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     servicesPluginsModule,
                     backupModule,
                     devicePoseModule,
+                    profilesModule,
                 )
             )
         }

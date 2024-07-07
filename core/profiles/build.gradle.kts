@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -17,9 +17,13 @@ android {
     buildTypes {
         release {
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
+        }
+        create("nightly") {
+            initWith(getByName("release"))
+            matchingFallbacks += "release"
         }
     }
 
@@ -31,25 +35,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    namespace = "de.mm20.launcher2.badges"
+    namespace = "de.mm20.launcher2.profiles"
 }
 
 dependencies {
     implementation(libs.bundles.kotlin)
-    implementation(libs.androidx.core)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.compose.materialicons)
-    implementation(libs.bundles.androidx.lifecycle)
 
+    implementation(libs.androidx.core)
     implementation(libs.koin.android)
 
-    implementation(project(":core:ktx"))
-    implementation(project(":data:applications"))
-    implementation(project(":data:appshortcuts"))
-    implementation(project(":data:notifications"))
-    implementation(project(":core:preferences"))
-    implementation(project(":core:profiles"))
     implementation(project(":core:base"))
-    implementation(project(":data:files"))
-    implementation(project(":data:searchable"))
+    implementation(project(":core:ktx"))
+    implementation(project(":core:permissions"))
 }

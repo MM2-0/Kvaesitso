@@ -9,6 +9,7 @@ import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
+import de.mm20.launcher2.profiles.Profile
 
 interface AppShortcut : SavableSearchable {
 
@@ -39,6 +40,4 @@ interface AppShortcut : SavableSearchable {
 
     val isUnavailable: Boolean
         get() = false
-
-    val profile: AppProfile
 }

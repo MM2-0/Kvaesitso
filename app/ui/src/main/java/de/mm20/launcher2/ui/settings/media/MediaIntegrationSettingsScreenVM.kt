@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.media
 
+import android.os.Process
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,6 @@ import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.media.MediaSettings
-import de.mm20.launcher2.search.AppProfile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -51,7 +51,7 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
         loading.value = true
         viewModelScope.launch(Dispatchers.Default) {
             val musicApps = musicService.getInstalledPlayerPackages()
-            val allApps = appRepository.findMany().first { it.isNotEmpty() }.filter { it.profile == AppProfile.Personal }
+            val allApps = appRepository.findMany().first { it.isNotEmpty() }.filter { it.user == Process.myUserHandle() }
                 .distinctBy { it.componentName.packageName }
             val settings = mediaSettings.first()
             val allowList = settings.allowList

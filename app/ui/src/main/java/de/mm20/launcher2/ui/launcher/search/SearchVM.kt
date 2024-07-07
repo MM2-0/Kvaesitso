@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search
 
 import android.content.Context
+import android.os.Process
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -16,7 +17,6 @@ import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
-import de.mm20.launcher2.search.AppProfile
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Article
@@ -268,7 +268,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 r is SavableSearchable && hiddenKeys.contains(r.key) && !filters.hiddenItems -> {
                                     hidden.add(r)
                                 }
-                                r is Application && r.profile == AppProfile.Work -> workApps.add(r)
+                                r is Application && r.user != Process.myUserHandle() -> workApps.add(r)
                                 r is Application -> apps.add(r)
                                 r is AppShortcut -> shortcuts.add(r)
                                 r is File -> files.add(r)

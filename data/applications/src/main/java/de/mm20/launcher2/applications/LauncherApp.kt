@@ -27,7 +27,6 @@ import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.search.AppProfile
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.StoreLink
@@ -60,9 +59,6 @@ internal data class LauncherApp(
         get() = launcherActivityInfo.user
 
     private val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
-
-    override val profile: AppProfile
-        get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
 
     override val isSystemApp: Boolean = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
 

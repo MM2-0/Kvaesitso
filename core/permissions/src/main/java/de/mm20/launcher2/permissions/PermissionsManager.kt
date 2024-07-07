@@ -65,6 +65,7 @@ enum class PermissionGroup {
     Notifications,
     AppShortcuts,
     Accessibility,
+    HiddenProfiles,
 }
 
 internal class PermissionsManagerImpl(
@@ -89,6 +90,9 @@ internal class PermissionsManagerImpl(
     private val accessibilityPermissionState = MutableStateFlow(false)
     private val appShortcutsPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.AppShortcuts)
+    )
+    private val hiddenProfilesPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.HiddenProfiles)
     )
 
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
@@ -142,6 +146,7 @@ internal class PermissionsManagerImpl(
                 }
             }
 
+            PermissionGroup.HiddenProfiles,
             PermissionGroup.AppShortcuts -> {
                 if (isAtLeastApiLevel(29)) {
                     val roleManager = context.getSystemService<RoleManager>()
@@ -196,6 +201,12 @@ internal class PermissionsManagerImpl(
                 context.getSystemService<LauncherApps>()?.hasShortcutHostPermission() == true
             }
 
+            PermissionGroup.HiddenProfiles -> {
+                if (isAtLeastApiLevel(29)) {
+                    context.getSystemService<RoleManager>()?.isRoleHeld(RoleManager.ROLE_HOME) == true
+                } else false
+            }
+
             PermissionGroup.Accessibility -> {
                 accessibilityPermissionState.value
             }
@@ -211,6 +222,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> notificationsPermissionState
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState
             PermissionGroup.Accessibility -> accessibilityPermissionState
+            PermissionGroup.HiddenProfiles -> hiddenProfilesPermissionState
         }
     }
 
@@ -229,12 +241,14 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> notificationsPermissionState.value = granted
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState.value = granted
             PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
+            PermissionGroup.HiddenProfiles -> hiddenProfilesPermissionState.value = granted
         }
     }
 
     override fun onResume() {
         externalStoragePermissionState.value = checkPermissionOnce(PermissionGroup.ExternalStorage)
         appShortcutsPermissionState.value = checkPermissionOnce(PermissionGroup.AppShortcuts)
+        hiddenProfilesPermissionState.value = checkPermissionOnce(PermissionGroup.HiddenProfiles)
     }
 
     override fun reportNotificationListenerState(running: Boolean) {
