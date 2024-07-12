@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="location_opens_other_day">адкрываецца ў %1$s, у %2$s</string>
+    <string name="location_open">Адкрыта</string>
+    <string name="location_closed">Закрыта</string>
+    <string name="location_closes">закрываецца ў %1$s</string>
+    <string name="location_closes_other_day">закрываецца ў %1$s, у %2$s</string>
+    <string name="location_opens">адкрываецца ў %1$s</string>
+    <string name="menu_share">Абагуліць</string>
+    <string name="menu_share_store_link">Спасылка на старонку ў %1$s</string>
+    <string name="menu_share_apk_file">Файл пакета</string>
+    <string name="menu_favorites_pin">Замацаваць</string>
+    <string name="menu_uninstall">Дэінсталяваць</string>
+    <string name="menu_app_info">Інфармацыя аб праграме</string>
+    <string name="action_import">Імпартаваць</string>
+    <string name="menu_back">Назад</string>
+    <string name="menu_launch">Запусціць</string>
+    <string name="menu_customize">Дапасаваць</string>
+    <string name="menu_open_file">Адкрыць</string>
+    <string name="menu_hide">Схаваць</string>
+    <string name="menu_map">Праглядзець на мапе</string>
+    <string name="menu_website">Адкрыць вэбсайт</string>
+    <string name="menu_unhide">Паказаць</string>
+    <string name="action_undo">Скасаваць</string>
+    <string name="menu_delete">Выдаліць</string>
+    <string name="menu_favorites_unpin">Адмацаваць</string>
+    <string name="msg_item_hidden">%1$s было схавана.</string>
+</resources>
