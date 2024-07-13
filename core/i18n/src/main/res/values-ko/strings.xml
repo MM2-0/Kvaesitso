@@ -453,4 +453,14 @@
     <string name="preference_debug_dump_heap_in_progress">스냅샷 찍는 중…</string>
     <string name="preference_icon_shape_pentagon">오각형</string>
     <string name="edit">편집</string>
+    <string name="file_type_launchertheme">%1$s 테마</string>
+    <string name="location_closes">%1$s에 영업 종료</string>
+    <string name="location_closes_other_day">%1$s %2$s에 영업 종료</string>
+    <string name="location_opens">%1$s에 영업 시작</string>
+    <string name="location_opens_other_day">%1$s %2$s에 영업 시작</string>
+    <string name="action_import">가져오기</string>
+    <string name="location_open">영업 중</string>
+    <string name="location_closed">영업 종료</string>
+    <string name="menu_map">지도에서 보기</string>
+    <string name="menu_website">웹사이트 열기</string>
 </resources>
