@@ -307,7 +307,7 @@
     <string name="edit_favorites_dialog_new_tag">Label aanmaken…</string>
     <string name="preference_clockwidget_favorites_part_summary">Eerste rij van de vastgezette items tonen</string>
     <string name="preference_clockwidget_music_part">Media</string>
-    <string name="preference_clockwidget_alarm_part_summary">Alarmen die afgaan in de komende 15 minuten tonen</string>
+    <string name="preference_clockwidget_alarm_part_summary">Alarmen tonen die binnen 8 uur zullen afgaan</string>
     <string name="preference_screen_backup_summary">Launchergegevens exporteren en importeren</string>
     <string name="preference_backup">Backup</string>
     <string name="preference_backup_summary">Voorkeuren en launchergegevens exporteren</string>

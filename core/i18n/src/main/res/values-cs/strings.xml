@@ -314,7 +314,7 @@
     <string name="preference_clockwidget_music_part_summary">Zobrazit ovládání médií, když je aktivní jejich přehrávání</string>
     <string name="preference_clockwidget_battery_part">Baterie</string>
     <string name="preference_clockwidget_alarm_part">Budíky</string>
-    <string name="preference_clockwidget_alarm_part_summary">Zobrazit budíky, které zazvoní v následujících 15 minutách</string>
+    <string name="preference_clockwidget_alarm_part_summary">Zobrazit budíky, které zazvoní v následujících 8 hodinách</string>
     <string name="preference_screen_backup">Záloha a obnovení</string>
     <string name="preference_screen_backup_summary">Exportovat a importovat data spouštěče</string>
     <string name="preference_backup">Záloha</string>
