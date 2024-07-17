@@ -17,6 +17,7 @@ class CustomIconPackIconProvider(
             drawable = customIcon.drawable,
             extras = customIcon.extras,
             iconPack = customIcon.iconPackPackage,
+            themed = customIcon.allowThemed,
         )
         val icon = IconPackAppIcon(ent) ?: return null
         return iconPackManager.getIcon(
