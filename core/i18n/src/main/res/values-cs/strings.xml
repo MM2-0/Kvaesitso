@@ -314,7 +314,7 @@
     <string name="preference_clockwidget_music_part_summary">Zobrazit ovládání médií, když je aktivní jejich přehrávání</string>
     <string name="preference_clockwidget_battery_part">Baterie</string>
     <string name="preference_clockwidget_alarm_part">Budíky</string>
-    <string name="preference_clockwidget_alarm_part_summary">Zobrazit budíky, které zazvoní v následujících 15 minutách</string>
+    <string name="preference_clockwidget_alarm_part_summary">Zobrazit budíky, které zazvoní v následujících 8 hodinách</string>
     <string name="preference_screen_backup">Záloha a obnovení</string>
     <string name="preference_screen_backup_summary">Exportovat a importovat data spouštěče</string>
     <string name="preference_backup">Záloha</string>
@@ -779,4 +779,10 @@
         <item quantity="few">%1$s poštovní adresy</item>
         <item quantity="other">%1$s poštovních adres</item>
     </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s oznámení</item>
+        <item quantity="few">%1$s oznámení</item>
+        <item quantity="other">%1$s oznámení</item>
+    </plurals>
+    <string name="weather_widget_no_provider">Nebyl vybrán poskytovatel počasí nebo vybraný poskytovatel není dostupný</string>
 </resources>

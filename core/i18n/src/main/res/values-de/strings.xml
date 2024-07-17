@@ -323,7 +323,7 @@
     <string name="preference_clockwidget_music_part_summary">Mediensteuerung anzeigen, wenn Medien wiedergegeben werden</string>
     <string name="preference_clockwidget_battery_part">Akku</string>
     <string name="preference_clockwidget_alarm_part">Wecker</string>
-    <string name="preference_clockwidget_alarm_part_summary">Wecker anzeigen, wenn diese in den nächsten 15 Minuten klingeln werden</string>
+    <string name="preference_clockwidget_alarm_part_summary">Wecker anzeigen, wenn diese in den nächsten 8 Stunden klingeln werden</string>
     <string name="preference_clockwidget_music_part">Medien</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Voll in %1$s Minute</item>
@@ -616,7 +616,7 @@
     <string name="preference_search_location_custom_tile_server_url">Tileserver-URL</string>
     <string name="menu_dial">Anrufen</string>
     <string name="menu_bugreport">Fehler melden</string>
-    <string name="preference_search_locations_hide_uncategorized_summary">Nur Ergebnisse mit klar definierten, wie „Café“ oder „Restaurant“ anzeigen</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">Nur Ergebnisse mit klar definierten Kategorien wie „Café“ oder „Restaurant“ anzeigen</string>
     <string name="preference_search_locations_show_map">Karte</string>
     <string name="preference_search_locations_hide_uncategorized">Unkategorisierte Orte ausblenden</string>
     <string name="location_open_24_7">24/7 geöffnet</string>
@@ -776,4 +776,5 @@
         <item quantity="one">%1$s Benachrichtigung</item>
         <item quantity="other">%1$s Benachrichtigungen</item>
     </plurals>
+    <string name="weather_widget_no_provider">Es ist kein Wetterdienst ausgewählt oder der gewählte Dienst ist nicht verfügbar</string>
 </resources>

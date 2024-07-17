@@ -305,46 +305,47 @@ fun AppItem(
                     }.collectAsState(null)
                     if (i > 0) {
                         HorizontalDivider()
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .clickable {
-                                    viewModel.launchChild(context, shortcut)
-                                }
-                                .padding(vertical = 4.dp)
-                        ) {
-                            ShapedLauncherIcon(
-                                size = 32.dp,
-                                icon = { icon },
-                                shape = CircleShape,
-                                modifier = Modifier
-                                    .padding(horizontal = 12.dp)
-                                    .size(32.dp),
-                            )
-
-                            Text(
-                                shortcut.labelOverride ?: shortcut.label,
-                                modifier = Modifier.weight(1f),
-                                style = MaterialTheme.typography.titleSmall,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                            IconButton(
-                                onClick = {
-                                    if (isPinned) {
-                                        viewModel.unpinChild(shortcut)
-                                    } else {
-                                        viewModel.pinChild(shortcut)
-                                    }
-                                }
-                            ) {
-                                Icon(
-                                    if (isPinned) Icons.Rounded.Star else Icons.Rounded.StarOutline,
-                                    null
-                                )
+                    }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clickable {
+                                viewModel.launchChild(context, shortcut)
                             }
+                            .padding(vertical = 4.dp)
+                    ) {
+                        ShapedLauncherIcon(
+                            size = 32.dp,
+                            icon = { icon },
+                            shape = CircleShape,
+                            modifier = Modifier
+                                .padding(horizontal = 12.dp)
+                                .size(32.dp),
+                        )
+
+                        Text(
+                            shortcut.labelOverride ?: shortcut.label,
+                            modifier = Modifier.weight(1f),
+                            style = MaterialTheme.typography.titleSmall,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        IconButton(
+                            onClick = {
+                                if (isPinned) {
+                                    viewModel.unpinChild(shortcut)
+                                } else {
+                                    viewModel.pinChild(shortcut)
+                                }
+                            }
+                        ) {
+                            Icon(
+                                if (isPinned) Icons.Rounded.Star else Icons.Rounded.StarOutline,
+                                null
+                            )
                         }
                     }
+
                 }
             }
         }

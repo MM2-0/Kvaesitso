@@ -3,6 +3,9 @@ package de.mm20.launcher2.ui.launcher.search.common.grid
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.SpringSpec
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -202,16 +205,20 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
         }
     }
     val animationProgress = remember {
-        Animatable(0f).apply {
-            updateBounds(0f, 1f)
-        }
+        Animatable(0f)
     }
     LaunchedEffect(show.targetState) {
         if (!show.targetState) {
-            animationProgress.animateTo(0f, tween(300))
+            animationProgress.animateTo(0f, spring(
+                Spring.DampingRatioNoBouncy,
+                Spring.StiffnessMediumLow,
+            ))
             onDismissRequest()
         } else {
-            animationProgress.animateTo(1f, tween(300))
+            animationProgress.animateTo(1f, spring(
+                Spring.DampingRatioLowBouncy,
+                Spring.StiffnessMediumLow,
+            ))
         }
     }
     BackHandler {
@@ -221,7 +228,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
     Overlay {
         Box(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.32f * animationProgress.value))
+                .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.32f * animationProgress.value.coerceIn(0f, 1f)))
                 .fillMaxSize()
                 .systemBarsPadding()
                 .imePadding()

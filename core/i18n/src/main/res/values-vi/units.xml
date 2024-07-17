@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="unit_meter">
+        <item quantity="other">mét</item>
+    </plurals>
+</resources>

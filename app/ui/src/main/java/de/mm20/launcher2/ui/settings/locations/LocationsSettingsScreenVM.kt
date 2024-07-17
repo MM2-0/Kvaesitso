@@ -42,21 +42,6 @@ class LocationsSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setSearchRadius(radius)
     }
 
-    val customOverpassUrl = settings.overpassUrl
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
-
-    fun setCustomOverpassUrl(customUrl: String) {
-        var url = customUrl
-        if (url.endsWith('/')) {
-            url = url.substringBeforeLast('/')
-        }
-        if (url.endsWith("/api/interpreter")) {
-            url = url.substringBeforeLast("/api/interpreter")
-        }
-
-        settings.setOverpassUrl(url)
-    }
-
     val showMap = settings.showMap
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
@@ -68,14 +53,7 @@ class LocationsSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setCustomTileServerUrl(customTileServerUrl: String) {
-        settings.setTileServer(customTileServerUrl)
-    }
-
-    val hideUncategorized = settings.hideUncategorized
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setHideUncategorized(hideUncategorized: Boolean) {
-        settings.setHideUncategorized(hideUncategorized)
+        settings.setTileServer(customTileServerUrl.takeIf { it.isNotBlank() })
     }
 
     val themeMap = settings.themeMap

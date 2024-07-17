@@ -164,6 +164,8 @@ internal class PluginServiceImpl(
                 } ?: return PluginState.Error
             } catch (e: SecurityException) {
                 return PluginState.NoPermission
+            } catch (e: IllegalArgumentException) {
+                return PluginState.Error
             }
         return PluginState.fromBundle(bundle) ?: PluginState.Error
     }

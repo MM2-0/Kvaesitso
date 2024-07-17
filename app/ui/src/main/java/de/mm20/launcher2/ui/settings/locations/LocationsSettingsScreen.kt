@@ -29,20 +29,22 @@ import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.TextPreference
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
+import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
 fun LocationsSettingsScreen() {
     val viewModel: LocationsSettingsScreenVM = viewModel()
 
+    val navController = LocalNavController.current
+
     val osmLocations by viewModel.osmLocations.collectAsState()
     val imperialUnits by viewModel.imperialUnits.collectAsState()
-    val hideUncategorized by viewModel.hideUncategorized.collectAsState()
     val radius by viewModel.radius.collectAsState()
-    val customOverpassUrl by viewModel.customOverpassUrl.collectAsState()
     val showMap by viewModel.showMap.collectAsState()
     val themeMap by viewModel.themeMap.collectAsState()
     val customTileServerUrl by viewModel.customTileServerUrl.collectAsState()
@@ -59,12 +61,15 @@ fun LocationsSettingsScreen() {
     PreferenceScreen(title = stringResource(R.string.preference_search_locations)) {
         item {
             PreferenceCategory {
-                SwitchPreference(
+                PreferenceWithSwitch(
                     title = stringResource(R.string.preference_search_osm_locations),
                     summary = stringResource(R.string.preference_search_osm_locations_summary),
-                    value = osmLocations == true,
-                    onValueChanged = {
+                    switchValue = osmLocations == true,
+                    onSwitchChanged = {
                         viewModel.setOsmLocations(it)
+                    },
+                    onClick = {
+                        navController?.navigate("settings/search/locations/osm")
                     }
                 )
                 AnimatedVisibility(plugins.isNotEmpty()) {
@@ -150,15 +155,6 @@ fun LocationsSettingsScreen() {
                             .metersToLocalizedString(LocalContext.current, imperialUnits)
                     }
                 )
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_locations_hide_uncategorized),
-                    summary = stringResource(R.string.preference_search_locations_hide_uncategorized_summary),
-                    value = hideUncategorized == true,
-                    enabled = anyLocationProviderEnabled,
-                    onValueChanged = {
-                        viewModel.setHideUncategorized(it)
-                    }
-                )
             }
         }
         item {
@@ -187,21 +183,10 @@ fun LocationsSettingsScreen() {
         item {
             PreferenceCategory(stringResource(R.string.preference_category_advanced)) {
                 TextPreference(
-                    title = stringResource(R.string.preference_search_location_custom_overpass_url),
-                    value = customOverpassUrl,
-                    placeholder = LocationSearchSettings.DefaultOverpassUrl,
-                    summary = customOverpassUrl.takeIf { it.isNotBlank() }
-                        ?: LocationSearchSettings.DefaultOverpassUrl,
-                    onValueChanged = {
-                        viewModel.setCustomOverpassUrl(it)
-                    },
-                    enabled = osmLocations == true,
-                )
-                TextPreference(
                     title = stringResource(R.string.preference_search_location_custom_tile_server_url),
                     value = customTileServerUrl ?: "",
                     placeholder = LocationSearchSettings.DefaultTileServerUrl,
-                    summary = customTileServerUrl.takeIf { !it.isNullOrBlank() }
+                    summary = customTileServerUrl?.takeIf { it.isNotBlank() }
                         ?: LocationSearchSettings.DefaultTileServerUrl,
                     onValueChanged = {
                         viewModel.setCustomTileServerUrl(it)

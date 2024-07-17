@@ -72,18 +72,39 @@ class LocationSearchSettings internal constructor(
     val overpassUrl
         get() = launcherDataStore.data.map { it.locationSearchOverpassUrl }
 
-    fun setOverpassUrl(overpassUrl: String) {
+    fun setOverpassUrl(overpassUrl: String?) {
+        var url = overpassUrl
+        if (url != null) {
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://$url"
+            }
+            if (url.endsWith('/')) {
+                url = url.substringBeforeLast('/')
+            }
+            if (url.endsWith("/api/interpreter")) {
+                url = url.substringBeforeLast("/api/interpreter")
+            }
+        }
         launcherDataStore.update {
-            it.copy(locationSearchOverpassUrl = overpassUrl)
+            it.copy(locationSearchOverpassUrl = url)
         }
     }
 
     val tileServer
         get() = launcherDataStore.data.map { it.locationSearchTileServer }
 
-    fun setTileServer(tileServer: String) {
+    fun setTileServer(tileServer: String?) {
+        var url = tileServer
+        if (url != null) {
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://$url"
+            }
+            if (!url.contains("\${z}") || !url.contains("\${x}") || !url.contains("\${y}")) {
+                url = "$url/\${z}/\${x}/\${y}.png"
+            }
+        }
         launcherDataStore.update {
-            it.copy(locationSearchTileServer = tileServer)
+            it.copy(locationSearchTileServer = url)
         }
     }
 
@@ -125,8 +146,8 @@ data class LocationSearchSettingsData(
     val providers: Set<String> = setOf("openstreetmaps"),
     val searchRadius: Int = 1500,
     val hideUncategorized: Boolean = true,
-    val overpassUrl: String = LocationSearchSettings.DefaultOverpassUrl,
-    val tileServer: String = LocationSearchSettings.DefaultTileServerUrl,
+    val overpassUrl: String? = null,
+    val tileServer: String? = null,
     val imperialUnits: Boolean = false,
     val showMap: Boolean = false,
     val showPositionOnMap: Boolean = false,

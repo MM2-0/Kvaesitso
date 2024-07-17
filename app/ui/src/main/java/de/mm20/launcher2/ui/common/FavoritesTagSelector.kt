@@ -54,16 +54,15 @@ fun FavoritesTagSelector(
 ) {
     val sheetManager = LocalBottomSheetManager.current
 
-    SharedTransitionLayout(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                top = if (reverse) 8.dp else 4.dp,
-                bottom = if (reverse) 4.dp else 8.dp,
-                end = if (editButton) 8.dp else 0.dp
-            ),
-    ) {
+
         AnimatedContent(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = if (reverse) 8.dp else 4.dp,
+                    bottom = if (reverse) 4.dp else 8.dp,
+                    end = if (editButton) 8.dp else 0.dp
+                ),
             targetState = expanded,
         ) {
             if (!it) {
@@ -80,11 +79,7 @@ fun FavoritesTagSelector(
                     ) {
                         FilterChip(
                             modifier = Modifier
-                                .padding(start = 16.dp)
-                                .sharedBounds(
-                                    rememberSharedContentState("favorites"),
-                                    this@AnimatedContent
-                                ),
+                                .padding(start = 16.dp),
                             selected = selectedTag == null,
                             onClick = { onSelectTag(null) },
                             leadingIcon = {
@@ -99,11 +94,7 @@ fun FavoritesTagSelector(
                         for (tag in tags) {
                             TagChip(
                                 modifier = Modifier
-                                    .padding(start = 8.dp)
-                                    .sharedBounds(
-                                        rememberSharedContentState("tag-${tag.tag}"),
-                                        this@AnimatedContent
-                                    ),
+                                    .padding(start = 8.dp),
                                 tag = tag,
                                 selected = selectedTag == tag.tag,
                                 onClick = {
@@ -121,10 +112,6 @@ fun FavoritesTagSelector(
                             }
                             IconButton(
                                 modifier = Modifier
-                                    .sharedElement(
-                                        rememberSharedContentState("expandButton"),
-                                        this@AnimatedContent
-                                    )
                                     .rotate(rot),
                                 onClick = { onExpand(true) }) {
                                 Icon(Icons.Rounded.ExpandMore, null)
@@ -135,10 +122,6 @@ fun FavoritesTagSelector(
 
                     if (editButton) {
                         SmallFloatingActionButton(
-                            modifier = Modifier.sharedBounds(
-                                rememberSharedContentState("editButton"),
-                                this@AnimatedContent
-                            ),
                             elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
                             onClick = { sheetManager.showEditFavoritesSheet() }
                         ) {
@@ -160,11 +143,7 @@ fun FavoritesTagSelector(
                     ) {
                         FilterChip(
                             modifier = Modifier
-                                .padding(end = 8.dp)
-                                .sharedBounds(
-                                    rememberSharedContentState("favorites"),
-                                    this@AnimatedContent
-                                ),
+                                .padding(end = 8.dp),
                             selected = selectedTag == null,
                             onClick = { onSelectTag(null) },
                             leadingIcon = {
@@ -179,11 +158,7 @@ fun FavoritesTagSelector(
                         for (tag in tags) {
                             TagChip(
                                 modifier = Modifier
-                                    .padding(end = 8.dp)
-                                    .sharedBounds(
-                                        rememberSharedContentState("tag-${tag.tag}"),
-                                        this@AnimatedContent
-                                    ),
+                                    .padding(end = 8.dp),
                                 tag = tag,
                                 selected = selectedTag == tag.tag,
                                 onClick = {
@@ -206,10 +181,6 @@ fun FavoritesTagSelector(
                         }
                         IconButton(
                             modifier = Modifier
-                                .sharedElement(
-                                    rememberSharedContentState("expandButton"),
-                                    this@AnimatedContent
-                                )
                                 .rotate(rot),
                             onClick = { onExpand(false) }
                         ) {
@@ -218,10 +189,6 @@ fun FavoritesTagSelector(
 
                         if (editButton) {
                             SmallFloatingActionButton(
-                                modifier = Modifier.sharedBounds(
-                                    rememberSharedContentState("editButton"),
-                                    this@AnimatedContent
-                                ),
                                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
                                 onClick = { sheetManager.showEditFavoritesSheet() }
                             ) {
@@ -236,4 +203,4 @@ fun FavoritesTagSelector(
             }
         }
     }
-}
+

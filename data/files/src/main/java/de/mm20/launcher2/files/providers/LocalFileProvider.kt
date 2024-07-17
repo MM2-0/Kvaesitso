@@ -3,6 +3,7 @@ package de.mm20.launcher2.files.providers
 import android.content.Context
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.File
@@ -33,8 +34,12 @@ internal class LocalFileProvider(
         val sort = "${MediaStore.Files.FileColumns.DISPLAY_NAME} COLLATE NOCASE ASC"
 
 
-        val cursor = context.contentResolver.query(uri, projection, selection, selArgs, sort)
-            ?: return@withContext results
+        val cursor = try {
+            context.contentResolver.query(uri, projection, selection, selArgs, sort)
+        } catch (e: IllegalArgumentException) {
+            CrashReporter.logException(e)
+            null
+        } ?: return@withContext results
         while (cursor.moveToNext()) {
             if (results.size >= 10) {
                 break

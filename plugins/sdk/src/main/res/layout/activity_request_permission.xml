@@ -17,12 +17,14 @@
         android:gravity="end">
 
         <Button
+            android:id="@+id/denyButton"
             style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/request_permission_deny_button" />
 
         <Button
+            android:id="@+id/grantButton"
             style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

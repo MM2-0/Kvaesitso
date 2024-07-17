@@ -185,4 +185,5 @@
 \nSon güncelleme: %1$s</string>
     <string name="weather_condition_heavysleet">Yoğun karla karışık yağmur</string>
     <string name="weather_condition_heavysleetshowers">Şiddetli karla karışık yağmur</string>
+    <string name="location_closes">%1$s de kapanıyor</string>
 </resources>

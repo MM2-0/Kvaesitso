@@ -330,7 +330,7 @@
     <string name="plugin_weather_provider_enable">Beállítás időjárás-előrejelzés szolgáltatónak</string>
     <string name="preference_clock_widget_alignment_bottom">Alulra</string>
     <string name="preference_clockwidget_battery_part_summary">Az akkumulátor aktuális töltöttségi szintjének megjelenítése, amikor az akkumulátor lemerült vagy töltődik</string>
-    <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 15 percen belül megszólalnak</string>
+    <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 8 órán belül megszólalnak</string>
     <string name="preference_logs">Naplók</string>
     <string name="preference_logs_summary">Alkalmazásnaplók megtekintése és exportálása</string>
     <string name="preference_search_gdrive">Google Drive</string>
@@ -772,4 +772,9 @@
         <item quantity="other">%1$s irányítószám</item>
     </plurals>
     <string name="contact_info_mobile">Mobil</string>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s értesítés</item>
+        <item quantity="other">%1$s értesítés</item>
+    </plurals>
+    <string name="weather_widget_no_provider">Nincs időjárás-szolgáltató kiválasztva vagy a kiválasztott szolgáltató nem érhető el</string>
 </resources>
