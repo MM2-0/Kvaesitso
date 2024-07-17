@@ -14,6 +14,7 @@ import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.plugin.data.get
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -107,6 +108,7 @@ class ProfileManager(
                     )
                 )
             }
+            Log.d("MM20", "Profiles: $profiles")
             profileStates.value = profiles
         }
     }
@@ -127,8 +129,9 @@ class ProfileManager(
      * This only works when the launcher is installed in the primary profile.
      */
     private fun getProfileType(userHandle: UserHandle): Profile.Type {
+        val restrictions = userManager.getUserRestrictions(userHandle)
         return when {
-            userManager.isManagedProfile(userHandle) -> Profile.Type.Work
+            restrictions.getBoolean(UserManager.ALLOW_PARENT_PROFILE_APP_LINKING) -> Profile.Type.Work
             userHandle == Process.myUserHandle() -> Profile.Type.Personal
             else -> Profile.Type.Private
         }
@@ -137,7 +140,7 @@ class ProfileManager(
     private fun getProfileState(userHandle: UserHandle): Profile.State {
         return Profile.State(
             locked = !userManager.isUserUnlocked(userHandle),
-            hidden = !userManager.isUserUnlocked(userHandle),
+            hidden = !userManager.isUserRunning(userHandle),
         )
     }
 
@@ -151,18 +154,4 @@ class ProfileManager(
         userManager.requestQuietModeEnabled(true, profile.userHandle)
     }
 
-}
-
-internal fun UserManager.isManagedProfile(userHandle: UserHandle): Boolean {
-    try {
-        val isManagedProfile = UserManager::class.java.getDeclaredMethod(
-            "isManagedProfile",
-            Int::class.javaPrimitiveType
-        )
-        val serial = getSerialNumberForUser(userHandle).toInt()
-        return isManagedProfile.invoke(this, serial) as Boolean
-    } catch (e: Exception) {
-        Log.e("MM20", "isManagedProfile could not be invoked", e)
-        return false
-    }
 }
