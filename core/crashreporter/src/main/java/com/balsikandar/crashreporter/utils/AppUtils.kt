@@ -12,13 +12,13 @@ internal fun getAppSignature(context: Context): String {
             context.packageName,
             PackageManager.GET_SIGNING_CERTIFICATES
         )
-        pi.signingInfo.apkContentsSigners.firstOrNull()
+        pi.signingInfo?.apkContentsSigners?.firstOrNull()
     } else {
         val pi = context.packageManager.getPackageInfo(
             context.packageName,
             PackageManager.GET_SIGNATURES
         )
-        pi.signatures.firstOrNull()
+        pi.signatures?.firstOrNull()
     }
     return if (signature != null) {
         val digest = MessageDigest.getInstance("SHA")

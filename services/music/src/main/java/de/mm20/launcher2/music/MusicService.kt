@@ -432,7 +432,7 @@ internal class MusicServiceImpl(
         return try {
             context
                 .packageManager
-                .getPackageInfo(packageName, 0).applicationInfo
+                .getPackageInfo(packageName, 0).applicationInfo!!
                 .loadLabel(context.packageManager).toString()
         } catch (e: PackageManager.NameNotFoundException) {
             null

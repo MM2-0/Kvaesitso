@@ -39,7 +39,7 @@ data class IconPack(
         packageInfo: PackageInfo,
         themed: Boolean = false
     ) : this(
-        name = packageInfo.applicationInfo.loadLabel(context.packageManager).toString(),
+        name = packageInfo.applicationInfo!!.loadLabel(context.packageManager).toString(),
         packageName = packageInfo.packageName,
         version = context.packageManager.getPackageInfo(packageInfo.packageName, 0).let {
             "${it.versionName} (${it.versionCode})"
