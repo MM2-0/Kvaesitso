@@ -129,12 +129,16 @@ class ProfileManager(
      * This only works when the launcher is installed in the primary profile.
      */
     private fun getProfileType(userHandle: UserHandle): Profile.Type {
-        val restrictions = userManager.getUserRestrictions(userHandle)
-        return when {
-            restrictions.getBoolean(UserManager.ALLOW_PARENT_PROFILE_APP_LINKING) -> Profile.Type.Work
-            userHandle == Process.myUserHandle() -> Profile.Type.Personal
-            else -> Profile.Type.Private
+        if (isAtLeastApiLevel(35)) {
+            val launcherUserInfo = launcherApps.getLauncherUserInfo(userHandle)
+            return when(launcherUserInfo?.userType) {
+                UserManager.USER_TYPE_PROFILE_PRIVATE -> Profile.Type.Private
+                UserManager.USER_TYPE_PROFILE_MANAGED -> Profile.Type.Work
+                else -> Profile.Type.Personal
+
+            }
         }
+        return if (userHandle == Process.myUserHandle()) Profile.Type.Personal else Profile.Type.Work
     }
 
     private fun getProfileState(userHandle: UserHandle): Profile.State {
