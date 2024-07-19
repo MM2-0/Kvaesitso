@@ -17,9 +17,11 @@ data class SearchFilters(
     val events: Boolean = true,
     val tools: Boolean = true,
 ) {
+    private val categories = listOf(apps, websites, articles, places, files, shortcuts, contacts, events, tools)
+
     val allCategoriesEnabled
-        get() = apps && websites && articles && places && files && shortcuts && contacts && events && tools
+        get() = categories.all { it }
 
     val enabledCategories: Int
-        get() = apps.toInt() + websites.toInt() + articles.toInt() + places.toInt() + files.toInt() + shortcuts.toInt() + contacts.toInt() + events.toInt() + tools.toInt()
+        get() = categories.count { it }
 }
