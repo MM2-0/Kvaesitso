@@ -777,4 +777,5 @@
         <item quantity="other">%1$s Benachrichtigungen</item>
     </plurals>
     <string name="weather_widget_no_provider">Es ist kein Wetterdienst ausgewählt oder der gewählte Dienst ist nicht verfügbar</string>
+    <string name="apps_profile_private">Privater Bereich</string>
 </resources>
