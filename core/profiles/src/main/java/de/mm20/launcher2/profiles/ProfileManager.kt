@@ -48,7 +48,7 @@ class ProfileManager(
      */
     val activeProfiles: Flow<List<Profile>> = profileStates.map {
         it.mapNotNull {
-            if (it.state.hidden) null else it.profile
+            if (it.state.locked) null else it.profile
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
 
@@ -142,7 +142,6 @@ class ProfileManager(
     private fun getProfileState(userHandle: UserHandle): Profile.State {
         return Profile.State(
             locked = !userManager.isUserUnlocked(userHandle),
-            hidden = !userManager.isUserRunning(userHandle),
         )
     }
 

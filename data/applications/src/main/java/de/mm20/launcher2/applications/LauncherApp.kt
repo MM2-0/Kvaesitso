@@ -141,8 +141,10 @@ internal data class LauncherApp(
                 options
             )
         } catch (e: SecurityException) {
+            Log.e("MM20", "Could not launch app", e)
             return false
         } catch (e: ActivityNotFoundException) {
+            Log.e("MM20", "Could not launch app", e)
             return false
         }
         return true
