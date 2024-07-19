@@ -61,12 +61,6 @@ fun SearchSettingsScreen() {
 
     val navController = LocalNavController.current
 
-    LaunchedEffect(Unit) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            viewModel.onResume(context)
-        }
-    }
-
     var showFilterEditor by remember {
         mutableStateOf(false)
     }

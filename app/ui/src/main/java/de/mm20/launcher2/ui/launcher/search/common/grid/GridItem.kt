@@ -156,7 +156,7 @@ fun GridItem(
             modifier = if (highlight) {
                 Modifier
                     .background(
-                        MaterialTheme.colorScheme.outlineVariant,
+                        MaterialTheme.colorScheme.surfaceVariant,
                         iconShape
                     )
             } else Modifier,
