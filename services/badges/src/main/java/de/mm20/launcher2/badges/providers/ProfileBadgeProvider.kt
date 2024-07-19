@@ -5,6 +5,7 @@ import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Work
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeIcon
+import de.mm20.launcher2.icons.PrivateSpace
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.AppShortcut
@@ -47,7 +48,7 @@ class ProfileBadgeProvider : BadgeProvider, KoinComponent {
         )
 
         private val PrivateProfile = Badge(
-            icon = BadgeIcon(Icons.Rounded.Lock)
+            icon = BadgeIcon(Icons.Rounded.PrivateSpace)
         )
     }
 }

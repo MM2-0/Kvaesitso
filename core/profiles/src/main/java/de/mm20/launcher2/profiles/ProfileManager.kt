@@ -8,13 +8,11 @@ import android.content.pm.LauncherApps
 import android.os.Process
 import android.os.UserHandle
 import android.os.UserManager
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.plugin.data.get
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -54,6 +52,10 @@ class ProfileManager(
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
 
+    val profiles: Flow<List<Profile>> = profileStates.map {
+        it.map { it.profile }
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
+
     init {
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -82,7 +84,7 @@ class ProfileManager(
         )
         scope.launch {
             if (isAtLeastApiLevel(35)) {
-                permissionsManager.hasPermission(PermissionGroup.HiddenProfiles).collectLatest {
+                permissionsManager.hasPermission(PermissionGroup.ManageProfiles).collectLatest {
                     refreshProfiles()
                 }
             } else {
@@ -108,7 +110,6 @@ class ProfileManager(
                     )
                 )
             }
-            Log.d("MM20", "Profiles: $profiles")
             profileStates.value = profiles
         }
     }
@@ -119,19 +120,16 @@ class ProfileManager(
         }
     }
 
-    fun getProfileState(profile: Profile): Flow<Profile.State?> {
+    fun getProfileState(profile: Profile?): Flow<Profile.State?> {
         return profileStates.map { profiles ->
             profiles.find { it.profile == profile }?.state
         }
     }
 
-    /**
-     * This only works when the launcher is installed in the primary profile.
-     */
     private fun getProfileType(userHandle: UserHandle): Profile.Type {
         if (isAtLeastApiLevel(35)) {
             val launcherUserInfo = launcherApps.getLauncherUserInfo(userHandle)
-            return when(launcherUserInfo?.userType) {
+            return when (launcherUserInfo?.userType) {
                 UserManager.USER_TYPE_PROFILE_PRIVATE -> Profile.Type.Private
                 UserManager.USER_TYPE_PROFILE_MANAGED -> Profile.Type.Work
                 else -> Profile.Type.Personal

@@ -18,7 +18,6 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.plugin.contracts.PluginContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -65,7 +64,7 @@ enum class PermissionGroup {
     Notifications,
     AppShortcuts,
     Accessibility,
-    HiddenProfiles,
+    ManageProfiles,
 }
 
 internal class PermissionsManagerImpl(
@@ -91,8 +90,8 @@ internal class PermissionsManagerImpl(
     private val appShortcutsPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.AppShortcuts)
     )
-    private val hiddenProfilesPermissionState = MutableStateFlow(
-        checkPermissionOnce(PermissionGroup.HiddenProfiles)
+    private val mManageProfilesPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.ManageProfiles)
     )
 
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
@@ -146,7 +145,7 @@ internal class PermissionsManagerImpl(
                 }
             }
 
-            PermissionGroup.HiddenProfiles,
+            PermissionGroup.ManageProfiles,
             PermissionGroup.AppShortcuts -> {
                 if (isAtLeastApiLevel(29)) {
                     val roleManager = context.getSystemService<RoleManager>()
@@ -201,7 +200,7 @@ internal class PermissionsManagerImpl(
                 context.getSystemService<LauncherApps>()?.hasShortcutHostPermission() == true
             }
 
-            PermissionGroup.HiddenProfiles -> {
+            PermissionGroup.ManageProfiles -> {
                 if (isAtLeastApiLevel(29)) {
                     context.getSystemService<RoleManager>()?.isRoleHeld(RoleManager.ROLE_HOME) == true
                 } else false
@@ -222,7 +221,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> notificationsPermissionState
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState
             PermissionGroup.Accessibility -> accessibilityPermissionState
-            PermissionGroup.HiddenProfiles -> hiddenProfilesPermissionState
+            PermissionGroup.ManageProfiles -> mManageProfilesPermissionState
         }
     }
 
@@ -241,14 +240,14 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> notificationsPermissionState.value = granted
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState.value = granted
             PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
-            PermissionGroup.HiddenProfiles -> hiddenProfilesPermissionState.value = granted
+            PermissionGroup.ManageProfiles -> mManageProfilesPermissionState.value = granted
         }
     }
 
     override fun onResume() {
         externalStoragePermissionState.value = checkPermissionOnce(PermissionGroup.ExternalStorage)
         appShortcutsPermissionState.value = checkPermissionOnce(PermissionGroup.AppShortcuts)
-        hiddenProfilesPermissionState.value = checkPermissionOnce(PermissionGroup.HiddenProfiles)
+        mManageProfilesPermissionState.value = checkPermissionOnce(PermissionGroup.ManageProfiles)
     }
 
     override fun reportNotificationListenerState(running: Boolean) {

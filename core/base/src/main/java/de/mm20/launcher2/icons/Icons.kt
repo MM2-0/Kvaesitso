@@ -1648,3 +1648,37 @@ private val _Google = materialIcon("Icons.Rounded.Google") {
 
 val Icons.Rounded.Google
     get() = _Google
+
+private val _PrivateSpace = materialIcon("Icons.Rounded.PrivateSpace") {
+    materialPath {
+        moveTo(11.999784f, 1.9998779f)
+        lineTo(3.9997559f, 5.0002116f)
+        verticalLineToRelative(6.0895504f)
+        curveToRelative(0f, 5.049995f, 3.410033f, 9.760447f, 8.0000281f, 10.910446f)
+        curveToRelative(4.589996f, -1.149999f, 8.000029f, -5.860451f, 8.000029f, -10.910446f)
+        verticalLineTo(5.0002116f)
+        close()
+        moveToRelative(0f, 4.0002727f)
+        curveToRelative(1.929998f, 0f, 3.500045f, 1.5700466f, 3.500045f, 3.5000447f)
+        curveToRelative(0f, 1.5799987f, -1.05959f, 2.9098487f, -2.499589f, 3.3398477f)
+        verticalLineToRelative(2.160075f)
+        horizontalLineToRelative(1.999878f)
+        verticalLineToRelative(1.999878f)
+        horizontalLineTo(13.00024f)
+        verticalLineToRelative(0.999939f)
+        horizontalLineTo(10.999845f)
+        verticalLineTo(12.840043f)
+        curveTo(9.5598468f, 12.410044f, 8.5002563f, 11.090194f, 8.5002563f, 9.5001953f)
+        curveToRelative(0f, -1.9299981f, 1.5695297f, -3.5000447f, 3.4995277f, -3.5000447f)
+        close()
+        moveToRelative(0f, 1.9998779f)
+        curveToRelative(-0.827999f, 0f, -1.49965f, 0.6721676f, -1.49965f, 1.5001668f)
+        curveToRelative(0f, 0.8279987f, 0.671651f, 1.4996497f, 1.49965f, 1.4996497f)
+        curveToRelative(0.828f, 0f, 1.500167f, -0.671651f, 1.500167f, -1.4996497f)
+        curveToRelative(0f, -0.8279992f, -0.672167f, -1.5001668f, -1.500167f, -1.5001668f)
+        close()
+    }
+}
+
+val Icons.Rounded.PrivateSpace
+    get() = _PrivateSpace

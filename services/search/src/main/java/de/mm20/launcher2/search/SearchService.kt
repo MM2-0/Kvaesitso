@@ -259,13 +259,18 @@ internal class SearchServiceImpl(
             val privateSpace = profiles.find { it.type == Profile.Type.Private }
             appRepository.search("", false)
                 .withCustomLabels(customAttributesRepository)
-                .map {
-                    val grouped = it.groupBy { it.user }
-                    val standardProfileApps =
-                        standardProfile?.let { grouped[it.userHandle] } ?: emptyList()
-                    val workProfileApps = workProfile?.let { grouped[it.userHandle] } ?: emptyList()
-                    val privateSpaceApps =
-                        privateSpace?.let { grouped[it.userHandle] } ?: emptyList()
+                .map { apps ->
+                    val standardProfileApps = mutableListOf<Application>()
+                    val workProfileApps = mutableListOf<Application>()
+                    val privateSpaceApps = mutableListOf<Application>()
+                    for (app in apps)  {
+                        when {
+                            standardProfile != null && app.user == standardProfile.userHandle -> standardProfileApps.add(app)
+                            workProfile != null && app.user == workProfile.userHandle -> workProfileApps.add(app)
+                            privateSpace != null && app.user == privateSpace.userHandle -> privateSpaceApps.add(app)
+                            else -> standardProfileApps.add(app)
+                        }
+                    }
 
                     AllAppsResults(
                         standardProfileApps = standardProfileApps.sorted(),

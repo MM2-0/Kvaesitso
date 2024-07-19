@@ -1,42 +1,86 @@
 package de.mm20.launcher2.ui.launcher.search.apps
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.LockOpen
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.Work
+import androidx.compose.material3.FilledIconToggleButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PrimaryTabRow
-import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.icons.PrivateSpace
+import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.ktx.animateCorners
-import de.mm20.launcher2.ui.ktx.withCorners
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridResults
-import de.mm20.launcher2.ui.layout.BottomReversed
-import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 
 fun LazyListScope.AppResults(
+    key: String,
+    profile: Profile? = null,
+    isProfileLocked: Boolean = false,
+    onProfileLockChange: ((Boolean) -> Unit)? = null,
     apps: List<Application>,
-    showTabs: Boolean,
-    selectedTab: Int,
-    onSelectedTabChange: (Int) -> Unit,
     highlightedItem: Application? = null,
     columns: Int,
     reverse: Boolean,
 ) {
 
     GridResults(
-        key = "app",
+        key = key,
         items = apps,
+        before = if (profile != null) {
+            {
+                Row(
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 16.dp, end = 4.dp, bottom = 4.dp)
+                        .heightIn(min = 40.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        when (profile.type) {
+                            Profile.Type.Work -> Icons.Rounded.Work
+                            Profile.Type.Private -> Icons.Rounded.PrivateSpace
+                            else -> Icons.Rounded.Person
+                        },
+                        null,
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                    Text(
+                        text = when (profile.type) {
+                            Profile.Type.Personal -> stringResource(R.string.apps_profile_main)
+                            Profile.Type.Work -> stringResource(R.string.apps_profile_work)
+                            Profile.Type.Private -> stringResource(R.string.apps_profile_private)
+                        },
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 12.dp)
+                    )
+                    if (onProfileLockChange != null) {
+                        FilledIconToggleButton(checked = isProfileLocked, onCheckedChange = {
+                            onProfileLockChange(it)
+                        }) {
+                            Icon(
+                                if (isProfileLocked) Icons.Rounded.Lock else Icons.Rounded.LockOpen,
+                                null
+                            )
+                        }
+                    }
+                }
+            }
+        } else null,
         itemContent = {
             GridItem(
                 item = it,
@@ -44,43 +88,6 @@ fun LazyListScope.AppResults(
                 highlight = it.key == highlightedItem?.key
             )
         },
-        before = if (showTabs) {
-            {
-                Column(
-                    verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top,
-                ) {
-                    PrimaryTabRow(
-                        selectedTabIndex = selectedTab,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(
-                                MaterialTheme.shapes.medium.withCorners(
-                                    topStart = !reverse,
-                                    topEnd = !reverse,
-                                    bottomEnd = reverse,
-                                    bottomStart = reverse,
-                                )
-                            ),
-                        divider = {},
-                        containerColor = Color.Transparent
-                    ) {
-                        Tab(
-                            selected = selectedTab == 0,
-                            onClick = { onSelectedTabChange(0) },
-                            text = { Text(stringResource(R.string.apps_profile_main)) },
-                            unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        Tab(
-                            selected = selectedTab == 1,
-                            onClick = { onSelectedTabChange(1) },
-                            text = { Text(stringResource(R.string.apps_profile_work)) },
-                            unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    HorizontalDivider()
-                }
-            }
-        } else null,
         reverse = reverse,
         columns = columns,
     )

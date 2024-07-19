@@ -682,6 +682,7 @@
     <string name="icon_picker_filter_all_packs">All icon packs</string>
     <string name="apps_profile_main">Personal</string>
     <string name="apps_profile_work">Work</string>
+    <string name="apps_profile_private">Private space</string>
     <string name="favorites">Favorites</string>
     <string name="favorites_empty">Pinned and frequently used items will appear here</string>
     <string name="favorites_empty_tag">There are no items with this tag</string>

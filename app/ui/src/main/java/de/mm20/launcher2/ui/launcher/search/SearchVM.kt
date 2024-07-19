@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.devicepose.DevicePoseProvider
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.SearchResultOrder
@@ -16,6 +17,8 @@ import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
+import de.mm20.launcher2.profiles.Profile
+import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Article
@@ -41,6 +44,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -51,6 +57,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val favoritesService: FavoritesService by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val profileManager: ProfileManager by inject()
 
     private val fileSearchSettings: FileSearchSettings by inject()
     private val contactSearchSettings: ContactSearchSettings by inject()
@@ -72,9 +79,37 @@ class SearchVM : ViewModel(), KoinComponent {
     val expandedCategory = mutableStateOf<SearchCategory?>(null)
 
     val locationResults = mutableStateOf<List<Location>>(emptyList())
+
+    val profiles = profileManager.profiles.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+    val workProfile = profiles.map {
+        it.find { it.type == Profile.Type.Work }
+    }
+    val privateProfile = profiles.map {
+        it.find { it.type == Profile.Type.Private }
+    }
+    val workProfileState = workProfile.flatMapLatest {
+        profileManager.getProfileState(it)
+    }
+    val privateProfileState = privateProfile.flatMapLatest {
+        profileManager.getProfileState(it)
+    }
+
+    val hasProfilesPermission = permissionsManager.hasPermission(PermissionGroup.ManageProfiles)
+
+    fun setProfileLock(profile: Profile?, locked: Boolean) {
+        if (isAtLeastApiLevel(28) && profile != null) {
+            if (locked) {
+                profileManager.lockProfile(profile)
+            } else {
+                profileManager.unlockProfile(profile)
+            }
+        }
+    }
+
     val appResults = mutableStateOf<List<Application>>(emptyList())
     val workAppResults = mutableStateOf<List<Application>>(emptyList())
     val privateSpaceAppResults = mutableStateOf<List<Application>>(emptyList())
+
     val appShortcutResults = mutableStateOf<List<AppShortcut>>(emptyList())
     val fileResults = mutableStateOf<List<File>>(emptyList())
     val contactResults = mutableStateOf<List<Contact>>(emptyList())
