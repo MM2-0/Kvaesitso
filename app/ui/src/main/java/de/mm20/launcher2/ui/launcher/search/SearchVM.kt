@@ -137,8 +137,6 @@ class SearchVM : ViewModel(), KoinComponent {
     val filterBar = searchFilterSettings.filterBar
     val filterBarItems = searchFilterSettings.filterBarItems
 
-    val separateWorkProfile = searchUiSettings.separateWorkProfile
-
     val bestMatch = mutableStateOf<Searchable?>(null)
 
     init {

@@ -61,8 +61,6 @@ fun SearchSettingsScreen() {
 
     val navController = LocalNavController.current
 
-    val hasWorkProfile by viewModel.hasWorkProfile
-
     LaunchedEffect(Unit) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             viewModel.onResume(context)
@@ -289,24 +287,6 @@ fun SearchSettingsScreen() {
                         summary = stringResource(R.string.preference_customize_filter_bar_summary),
                         onClick =  {
                             navController?.navigate("settings/search/filterbar")
-                        }
-                    )
-                }
-            }
-        }
-        if (hasWorkProfile) {
-            item {
-                PreferenceCategory {
-                    val separateWorkProfile by viewModel.separateWorkProfile.collectAsStateWithLifecycle(
-                        null
-                    )
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_search_bar_separate_work_profile),
-                        summary = stringResource(R.string.preference_search_bar_separate_work_profile_summary),
-                        icon = Icons.Rounded.Work,
-                        value = separateWorkProfile == true,
-                        onValueChanged = {
-                            viewModel.setSeparateWorkProfile(it)
                         }
                     )
                 }
