@@ -21,7 +21,7 @@ kotlinx-serialization = "1.6.3"
 
 jetbrains-markdown = "0.5.2"
 
-androidx-compose = "1.7.0-beta04"
+androidx-compose = "1.7.0-beta05"
 androidx-compose-material3 = "1.3.0-beta04"
 androidx-lifecycle = "2.8.2"
 androidx-core = "1.14.0-alpha01"
