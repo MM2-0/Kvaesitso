@@ -1,0 +1,2 @@
+- Added support for private spaces (Android 15+)
+- Bug fixes
