@@ -793,4 +793,5 @@
     </plurals>
     <string name="preference_search_bar_separate_work_profile">Отделить рабочие приложения</string>
     <string name="poi_category_car_wash">Мойка</string>
+    <string name="apps_profile_private">Private space</string>
 </resources>
