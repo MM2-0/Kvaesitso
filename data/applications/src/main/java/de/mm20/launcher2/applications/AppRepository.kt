@@ -222,7 +222,7 @@ internal class AppRepositoryImpl(
                     appResults.addAll(apps)
                 } else {
                     appResults.addAll(apps.filter {
-                        matches(it.label, query)
+                        matches(it.label, query) || matches(it.componentName.packageName.split('.').last(), query)
                     })
 
                     val componentName = ComponentName.unflattenFromString(query)
