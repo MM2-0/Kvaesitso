@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="menu_favorites_pin">Fixeaza la favorite</string>
-    <string name="menu_app_info">Info Aplicatie</string>
-    <string name="menu_launch">Lanseaza</string>
+    <string name="menu_favorites_pin">Adaugă la favorite</string>
+    <string name="menu_app_info">Info Aplicație</string>
+    <string name="menu_launch">Lansează</string>
     <string name="menu_hide">Ascunde</string>
     <string name="menu_unhide">Nu ascunde</string>
-    <string name="menu_favorites_unpin">Defixeaza</string>
-    <string name="action_undo">Anuleaza</string>
-    <string name="menu_delete">Elimina</string>
+    <string name="menu_favorites_unpin">Înlătură</string>
+    <string name="action_undo">Anulează</string>
+    <string name="menu_delete">Șterge</string>
     <string name="menu_contacts_open_externally">Deschide în aplicația Contacte</string>
     <string name="menu_calendar_open_externally">Deschide in aplicatia Calendar</string>
     <string name="search_bar_placeholder">Cauta</string>
@@ -48,7 +48,7 @@
     <string name="file_type_spreadsheet">Tabel</string>
     <string name="file_type_music">Fișier audio</string>
     <string name="file_type_video">Video</string>
-    <string name="file_type_image">Fotografie</string>
+    <string name="file_type_image">Imagine</string>
     <string name="file_type_none">Fișier</string>
     <string name="file_type_compressed">Fișier arhivat</string>
     <string name="file_type_text">Fișier text</string>
@@ -68,13 +68,13 @@
     <string name="date_today">Astăzi</string>
     <string name="date_tomorrow">Mâine</string>
     <string name="menu_share">Distribuie</string>
-    <string name="menu_share_apk_file">Fișier pachet</string>
+    <string name="menu_share_apk_file">Fișier de aplicație</string>
     <string name="menu_uninstall">Dezinstalare</string>
-    <string name="menu_back">Inapoi</string>
+    <string name="menu_back">Înapoi</string>
     <string name="menu_share_store_link">link %1$s</string>
     <string name="menu_open_file">Deschide</string>
     <string name="default_websearch_3_name">Google Play</string>
-    <string name="msg_item_hidden">"%1$s  au fost ascunse"</string>
+    <string name="msg_item_hidden">%1$s a fost ascuns</string>
     <string name="widget_name_weather">Vreme</string>
     <string name="wind_north">Nord</string>
     <string name="close">Închide</string>
@@ -176,9 +176,9 @@
     <string name="preference_theme">Temă</string>
     <string name="preference_theme_light">Luminat</string>
     <string name="preference_theme_dark">Întunecat</string>
-    <string name="preference_screen_colors">Schema de culori</string>
+    <string name="preference_screen_colors">Paleta de culori</string>
     <string name="preference_colors_default">Implicit</string>
-    <string name="preference_colors_bw">Alb-negru</string>
+    <string name="preference_colors_bw">Alb-Negru</string>
     <string name="preference_screen_about">Despre</string>
     <string name="preference_version">Versiune</string>
     <string name="preference_category_links">Link-uri</string>
@@ -343,4 +343,20 @@
     <string name="preference_search_wikipedia_summary">Caută în enciclopedia liberă</string>
     <string name="preference_search_favorites_summary">Afișarea elementelor fixate și utilizate frecvent deasupra grilei de aplicații</string>
     <string name="preference_search_localfiles">Fișiere locale</string>
+    <string name="preference_mdy_color_source_wallpaper">Imagine fundal</string>
+    <string name="preference_font">Font</string>
+    <string name="menu_remove">Înlătură</string>
+    <string name="menu_customize">Personalizează</string>
+    <string name="help">Ajutor</string>
+    <string name="location_open">Deschis</string>
+    <string name="location_closed">Închis</string>
+    <string name="menu_map">Vezi pe hartă</string>
+    <string name="menu_website">Deschide site web</string>
+    <string name="preference_category_advanced">Avansat</string>
+    <string name="preference_font_system">Font implicit</string>
+    <string name="location_closes_other_day">se închide la %1$s, %2$s</string>
+    <string name="location_closes">se închide la %1$s</string>
+    <string name="location_opens">se deschide la %1$s</string>
+    <string name="location_opens_other_day">se deschide la %1$s, %2$s</string>
+    <string name="action_import">Importă</string>
 </resources>
