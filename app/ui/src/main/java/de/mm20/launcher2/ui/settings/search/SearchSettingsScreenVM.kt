@@ -40,12 +40,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
 
-    val hasWorkProfile = mutableStateOf(false)
-
-    fun onResume(context: Context) {
-        hasWorkProfile.value = context.getSystemService<LauncherApps>()!!.profiles.size > 1
-    }
-
     val favorites = searchUiSettings.favorites
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
@@ -143,13 +137,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setReverseSearchResults(reverseSearchResults: Boolean) {
         searchUiSettings.setReversedResults(reverseSearchResults)
-    }
-
-    val separateWorkProfile = searchUiSettings.separateWorkProfile
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setSeparateWorkProfile(separateWorkProfile: Boolean) {
-        searchUiSettings.setSeparateWorkProfile(separateWorkProfile)
     }
 
     fun requestAppShortcutsPermission(activity: AppCompatActivity) {

@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Process
 import android.os.UserHandle
-import de.mm20.launcher2.search.AppProfile
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.NullSerializer
 import de.mm20.launcher2.search.SavableSearchable
@@ -15,7 +14,6 @@ class FakeApp: Application {
     override val componentName: ComponentName = ComponentName(randomString(), randomString())
     override val isSystemApp: Boolean = false
     override val isSuspended: Boolean = false
-    override val profile: AppProfile = AppProfile.Personal
     override val user: UserHandle = Process.myUserHandle()
     override val versionName: String = "1.0"
     override val canUninstall: Boolean = false

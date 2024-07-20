@@ -3,19 +3,24 @@ package de.mm20.launcher2.search
 import de.mm20.launcher2.calculator.CalculatorRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
+import de.mm20.launcher2.profiles.Profile
+import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.searchactions.SearchActionService
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -25,6 +30,8 @@ interface SearchService {
         query: String,
         filters: SearchFilters,
     ): Flow<SearchResults>
+
+    fun getAllApps(): Flow<AllAppsResults>
 }
 
 internal class SearchServiceImpl(
@@ -40,14 +47,56 @@ internal class SearchServiceImpl(
     private val websiteRepository: SearchableRepository<Website>,
     private val searchActionService: SearchActionService,
     private val customAttributesRepository: CustomAttributesRepository,
+    private val profileManager: ProfileManager,
 ) : SearchService {
 
     override fun search(
         query: String,
         filters: SearchFilters,
-    ): Flow<SearchResults> = channelFlow {
-        val results = MutableStateFlow(SearchResults())
+    ): Flow<SearchResults> = flow {
         supervisorScope {
+            val results = MutableStateFlow(SearchResults())
+
+            val customAttrResults = customAttributesRepository.search(query)
+                .map { items ->
+                    val apps = mutableListOf<Application>()
+                    val shortcuts = mutableListOf<AppShortcut>()
+                    val contacts = mutableListOf<Contact>()
+                    val events = mutableListOf<CalendarEvent>()
+                    val files = mutableListOf<File>()
+                    val unitConverters = mutableListOf<UnitConverter>()
+                    val websites = mutableListOf<Website>()
+                    val wikipedia = mutableListOf<Article>()
+                    val locations = mutableListOf<Location>()
+                    val searchActions = mutableListOf<SearchAction>()
+                    for (it in items) {
+                        when (it) {
+                            is Application -> if (filters.apps) apps.add(it)
+                            is AppShortcut -> if (filters.shortcuts) shortcuts.add(it)
+                            is Contact -> if (filters.contacts) contacts.add(it)
+                            is CalendarEvent -> if (filters.events) events.add(it)
+                            is File -> if (filters.files) files.add(it)
+                            is UnitConverter -> if (filters.tools) unitConverters.add(it)
+                            is Website -> if (filters.websites) websites.add(it)
+                            is Article -> if (filters.articles) wikipedia.add(it)
+                            is Location -> if (filters.places) locations.add(it)
+                            is SearchAction -> searchActions.add(it)
+                        }
+                    }
+                    SearchResults(
+                        apps = apps,
+                        shortcuts = shortcuts,
+                        contacts = contacts,
+                        calendars = events,
+                        files = files,
+                        unitConverters = unitConverters,
+                        websites = websites,
+                        wikipedia = wikipedia,
+                        locations = locations,
+                        searchActions = searchActions,
+                    )
+                }.shareIn(this, SharingStarted.WhileSubscribed(), 1)
+
             launch {
                 searchActionService.search(query)
                     .collectLatest { r ->
@@ -59,10 +108,14 @@ internal class SearchServiceImpl(
             if (filters.apps) {
                 launch {
                     appRepository.search(query, filters.allowNetwork)
+                        .combine(customAttrResults) { apps, customAttrs ->
+                            if (customAttrs.apps != null) apps + customAttrs.apps
+                            else apps
+                        }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(apps = r.toImmutableList())
+                                it.copy(apps = r)
                             }
                         }
                 }
@@ -70,10 +123,14 @@ internal class SearchServiceImpl(
             if (filters.shortcuts) {
                 launch {
                     appShortcutRepository.search(query, filters.allowNetwork)
+                        .combine(customAttrResults) { shortcuts, customAttrs ->
+                            if (customAttrs.shortcuts != null) shortcuts + customAttrs.shortcuts
+                            else shortcuts
+                        }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(shortcuts = r.toImmutableList())
+                                it.copy(shortcuts = r)
                             }
                         }
                 }
@@ -81,10 +138,14 @@ internal class SearchServiceImpl(
             if (filters.contacts) {
                 launch {
                     contactRepository.search(query, filters.allowNetwork)
+                        .combine(customAttrResults) { contacts, customAttrs ->
+                            if (customAttrs.contacts != null) contacts + customAttrs.contacts
+                            else contacts
+                        }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(contacts = r.toImmutableList())
+                                it.copy(contacts = r)
                             }
                         }
                 }
@@ -92,10 +153,14 @@ internal class SearchServiceImpl(
             if (filters.events) {
                 launch {
                     calendarRepository.search(query, filters.allowNetwork)
+                        .combine(customAttrResults) { calendars, customAttrs ->
+                            if (customAttrs.calendars != null) calendars + customAttrs.calendars
+                            else calendars
+                        }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(calendars = r.toImmutableList())
+                                it.copy(calendars = r)
                             }
                         }
                 }
@@ -104,8 +169,8 @@ internal class SearchServiceImpl(
                 launch {
                     calculatorRepository.search(query).collectLatest { r ->
                         results.update {
-                            it.copy(calculators = r?.let { persistentListOf(it) }
-                                ?: persistentListOf())
+                            it.copy(calculators = r?.let { listOf(it) }
+                                ?: listOf())
                         }
                     }
                 }
@@ -113,8 +178,8 @@ internal class SearchServiceImpl(
                     unitConverterRepository.search(query)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(unitConverters = r?.let { persistentListOf(it) }
-                                    ?: persistentListOf())
+                                it.copy(unitConverters = r?.let { listOf(it) }
+                                    ?: listOf())
                             }
                         }
                 }
@@ -122,10 +187,14 @@ internal class SearchServiceImpl(
             if (filters.websites) {
                 launch {
                     websiteRepository.search(query, filters.allowNetwork)
+                        .combine(customAttrResults) { websites, customAttrs ->
+                            if (customAttrs.websites != null) websites + customAttrs.websites
+                            else websites
+                        }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(websites = r.toImmutableList())
+                                it.copy(websites = r)
                             }
                         }
                 }
@@ -134,10 +203,14 @@ internal class SearchServiceImpl(
                 launch {
                     delay(750)
                     articleRepository.search(query, filters.allowNetwork)
+                        .combine(customAttrResults) { articles, customAttrs ->
+                            if (customAttrs.wikipedia != null) articles + customAttrs.wikipedia
+                            else articles
+                        }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(wikipedia = r.toImmutableList())
+                                it.copy(wikipedia = r)
                             }
                         }
                 }
@@ -145,10 +218,14 @@ internal class SearchServiceImpl(
             if (filters.places) {
                 launch {
                     locationRepository.search(query, filters.allowNetwork)
+                        .combine(customAttrResults) { locations, customAttrs ->
+                            if (customAttrs.locations != null) locations + customAttrs.locations
+                            else locations
+                        }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(locations = r.toImmutableList())
+                                it.copy(locations = r)
                             }
                         }
                 }
@@ -159,56 +236,70 @@ internal class SearchServiceImpl(
                         query,
                         filters.allowNetwork
                     )
+                        .combine(customAttrResults) { files, customAttrs ->
+                            if (customAttrs.files != null) files + customAttrs.files
+                            else files
+                        }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(files = r.toImmutableList())
+                                it.copy(files = r)
                             }
                         }
                 }
             }
-            launch {
-                customAttributesRepository.search(query)
-                    .withCustomLabels(customAttributesRepository)
-                    .collectLatest { r ->
-                        results.update {
-                            it.copy(other = r
-                                .filter {
-                                    filters.apps && it is Application ||
-                                    filters.shortcuts && it is AppShortcut ||
-                                    filters.contacts && it is Contact ||
-                                    filters.events && it is CalendarEvent ||
-                                    filters.files && it is File ||
-                                    filters.websites && it is Website ||
-                                    filters.articles && it is Article ||
-                                    filters.places && it is Location
-                                }
-                                .toImmutableList()
-                            )
+            emitAll(results)
+        }
+    }
+
+    override fun getAllApps(): Flow<AllAppsResults> {
+        return profileManager.activeProfiles.flatMapLatest { profiles ->
+            val standardProfile = profiles.find { it.type == Profile.Type.Personal }
+            val workProfile = profiles.find { it.type == Profile.Type.Work }
+            val privateSpace = profiles.find { it.type == Profile.Type.Private }
+            appRepository.search("", false)
+                .withCustomLabels(customAttributesRepository)
+                .map { apps ->
+                    val standardProfileApps = mutableListOf<Application>()
+                    val workProfileApps = mutableListOf<Application>()
+                    val privateSpaceApps = mutableListOf<Application>()
+                    for (app in apps)  {
+                        when {
+                            standardProfile != null && app.user == standardProfile.userHandle -> standardProfileApps.add(app)
+                            workProfile != null && app.user == workProfile.userHandle -> workProfileApps.add(app)
+                            privateSpace != null && app.user == privateSpace.userHandle -> privateSpaceApps.add(app)
+                            else -> standardProfileApps.add(app)
                         }
                     }
-            }
-            launch {
-                results.collectLatest { send(it) }
-            }
 
+                    AllAppsResults(
+                        standardProfileApps = standardProfileApps.sorted(),
+                        workProfileApps = workProfileApps.sorted(),
+                        privateSpaceApps = privateSpaceApps.sorted(),
+                    )
+                }
         }
     }
 }
 
 data class SearchResults(
-    val apps: ImmutableList<Application>? = null,
-    val shortcuts: ImmutableList<AppShortcut>? = null,
-    val contacts: ImmutableList<Contact>? = null,
-    val calendars: ImmutableList<CalendarEvent>? = null,
-    val files: ImmutableList<File>? = null,
-    val calculators: ImmutableList<Calculator>? = null,
-    val unitConverters: ImmutableList<UnitConverter>? = null,
-    val websites: ImmutableList<Website>? = null,
-    val wikipedia: ImmutableList<Article>? = null,
-    val locations: ImmutableList<Location>? = null,
-    val searchActions: ImmutableList<SearchAction>? = null,
-    val other: ImmutableList<SavableSearchable>? = null,
+    val apps: List<Application>? = null,
+    val shortcuts: List<AppShortcut>? = null,
+    val contacts: List<Contact>? = null,
+    val calendars: List<CalendarEvent>? = null,
+    val files: List<File>? = null,
+    val calculators: List<Calculator>? = null,
+    val unitConverters: List<UnitConverter>? = null,
+    val websites: List<Website>? = null,
+    val wikipedia: List<Article>? = null,
+    val locations: List<Location>? = null,
+    val searchActions: List<SearchAction>? = null,
+)
+
+data class AllAppsResults(
+    val standardProfileApps: List<Application>,
+    val workProfileApps: List<Application>,
+    val privateSpaceApps: List<Application>,
 )
 
 fun SearchResults.toList(): List<Searchable> {
@@ -223,6 +314,5 @@ fun SearchResults.toList(): List<Searchable> {
         websites,
         wikipedia,
         searchActions,
-        other,
     ).flatten()
 }

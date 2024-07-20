@@ -63,7 +63,7 @@ fun ListItem(
     }
 
     val background by animateColorAsState(
-        if (highlight && !showDetails) MaterialTheme.colorScheme.outlineVariant else MaterialTheme.colorScheme.surface.copy(
+        if (highlight && !showDetails) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.surface.copy(
             alpha = 0f
         )
     )

@@ -6,11 +6,9 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Process
 import android.os.UserHandle
-import android.os.UserManager
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
-import de.mm20.launcher2.search.AppProfile
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
@@ -67,8 +65,6 @@ internal class UnavailableShortcut(
     }
 
     override val isUnavailable: Boolean = true
-    override val profile: AppProfile
-        get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
 
     companion object {
         internal operator fun invoke(context: Context, id: String, packageName: String, user: UserHandle, userSerial: Long): UnavailableShortcut? {

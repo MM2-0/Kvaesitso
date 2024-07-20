@@ -18,7 +18,6 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.search.AppProfile
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.coroutines.Dispatchers
@@ -69,9 +68,6 @@ internal data class LauncherShortcut(
     override val preferDetailsOverLaunch: Boolean = false
 
     private val isMainProfile = launcherShortcut.userHandle == Process.myUserHandle()
-    override val profile: AppProfile
-        get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
-
 
     override val key: String
         get() = if (isMainProfile) {

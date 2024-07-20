@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.devicepose.DevicePoseProvider
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.SearchResultOrder
@@ -16,18 +17,19 @@ import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
-import de.mm20.launcher2.search.AppProfile
+import de.mm20.launcher2.profiles.Profile
+import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
-import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
@@ -36,17 +38,17 @@ import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -55,6 +57,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val favoritesService: FavoritesService by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val profileManager: ProfileManager by inject()
 
     private val fileSearchSettings: FileSearchSettings by inject()
     private val contactSearchSettings: ContactSearchSettings by inject()
@@ -76,8 +79,37 @@ class SearchVM : ViewModel(), KoinComponent {
     val expandedCategory = mutableStateOf<SearchCategory?>(null)
 
     val locationResults = mutableStateOf<List<Location>>(emptyList())
+
+    val profiles = profileManager.profiles.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+    val workProfile = profiles.map {
+        it.find { it.type == Profile.Type.Work }
+    }
+    val privateProfile = profiles.map {
+        it.find { it.type == Profile.Type.Private }
+    }
+    val workProfileState = workProfile.flatMapLatest {
+        profileManager.getProfileState(it)
+    }
+    val privateProfileState = privateProfile.flatMapLatest {
+        profileManager.getProfileState(it)
+    }
+
+    val hasProfilesPermission = permissionsManager.hasPermission(PermissionGroup.ManageProfiles)
+
+    fun setProfileLock(profile: Profile?, locked: Boolean) {
+        if (isAtLeastApiLevel(28) && profile != null) {
+            if (locked) {
+                profileManager.lockProfile(profile)
+            } else {
+                profileManager.unlockProfile(profile)
+            }
+        }
+    }
+
     val appResults = mutableStateOf<List<Application>>(emptyList())
     val workAppResults = mutableStateOf<List<Application>>(emptyList())
+    val privateSpaceAppResults = mutableStateOf<List<Application>>(emptyList())
+
     val appShortcutResults = mutableStateOf<List<AppShortcut>>(emptyList())
     val fileResults = mutableStateOf<List<File>>(emptyList())
     val contactResults = mutableStateOf<List<Contact>>(emptyList())
@@ -96,12 +128,14 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val showFilters = mutableStateOf(false)
 
-    private val defaultFilters = searchFilterSettings.defaultFilter.stateIn(viewModelScope, SharingStarted.Eagerly, SearchFilters())
+    private val defaultFilters = searchFilterSettings.defaultFilter.stateIn(
+        viewModelScope,
+        SharingStarted.Eagerly,
+        SearchFilters()
+    )
     val filters = mutableStateOf(defaultFilters.value)
     val filterBar = searchFilterSettings.filterBar
     val filterBarItems = searchFilterSettings.filterBarItems
-
-    val separateWorkProfile = searchUiSettings.separateWorkProfile
 
     val bestMatch = mutableStateOf<Searchable?>(null)
 
@@ -174,146 +208,191 @@ class SearchVM : ViewModel(), KoinComponent {
         } catch (_: CancellationException) {
         }
         hideFavorites.value = query.isNotEmpty()
+
         searchJob = viewModelScope.launch {
-            searchUiSettings.resultOrder.collectLatest { resultOrder ->
-                searchService.search(
-                    query,
-                    filters = if (query.isEmpty()) filters.copy(apps = true) else filters,
-                ).collectLatest { results ->
-                    var resultsList = withContext(Dispatchers.Default) {
-                        listOfNotNull(
-                            results.apps,
-                            results.other,
-                            results.shortcuts,
-                            results.files,
-                            results.contacts,
-                            results.calendars,
-                            results.locations,
-                            results.wikipedia,
-                            results.websites,
-                            results.calculators,
-                            results.unitConverters,
-                            results.searchActions,
-                        ).flatten()
-                            .distinctBy { if (it is SavableSearchable) it.key else it }
-                            .sortedBy { (it as? SavableSearchable) }
-                    }
+            if (query.isEmpty()) {
+                val hiddenItemKeys = searchableRepository.getKeys(
+                    maxVisibility = VisibilityLevel.SearchOnly,
+                    includeTypes = listOf("app"),
+                )
+                val allApps = searchService.getAllApps()
+                fileResults.value = emptyList()
+                contactResults.value = emptyList()
+                calendarResults.value = emptyList()
+                locationResults.value = emptyList()
+                articleResults.value = emptyList()
+                websiteResults.value = emptyList()
+                calculatorResults.value = emptyList()
+                unitConverterResults.value = emptyList()
+                searchActionResults.value = emptyList()
 
-                    val relevance =
-                        if (query.isEmpty()) {
-                            emptyList()
-                        } else {
-                            val keys = resultsList.mapNotNull { (it as? SavableSearchable)?.key }
-                            when (resultOrder) {
+                allApps
+                    .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
+                    .collectLatest { (results, hiddenKeys) ->
+                        val hiddenItems = mutableListOf<SavableSearchable>()
 
-                                SearchResultOrder.LaunchCount -> searchableRepository.sortByRelevance(
-                                    keys
-                                ).first()
-
-                                SearchResultOrder.Weighted -> searchableRepository.sortByWeight(
-                                    keys
-                                ).first()
-
-                                else -> emptyList()
-                            }
+                        val (hiddenApps, apps) = results.standardProfileApps.partition {
+                            hiddenKeys.contains(
+                                it.key
+                            )
                         }
+                        hiddenItems += hiddenApps
 
-                    resultsList = resultsList.sortedWith { a, b ->
-                        val lastLocation = devicePoseProvider.lastLocation
-                        when {
-                            a is Location && b is Location && lastLocation != null -> {
-                                a.distanceTo(lastLocation)
-                                    .compareTo(b.distanceTo(lastLocation))
-                            }
-
-                            a is SavableSearchable && b !is SavableSearchable -> -1
-                            a !is SavableSearchable && b is SavableSearchable -> 1
-                            a is SavableSearchable && b is SavableSearchable -> {
-                                val aKey = a.key
-                                val bKey = b.key
-                                val aRank = relevance.indexOf(aKey)
-                                val bRank = relevance.indexOf(bKey)
-                                when {
-                                    aRank != -1 && bRank != -1 -> aRank.compareTo(bRank)
-                                    aRank == -1 && bRank != -1 -> 1
-                                    aRank != -1 && bRank == -1 -> -1
-                                    else -> a.compareTo(b)
-                                }
-                            }
-
-                            else -> 0
+                        val (hiddenWorkApps, workApps) = results.workProfileApps.partition {
+                            hiddenKeys.contains(
+                                it.key
+                            )
                         }
-                    }
+                        hiddenItems += hiddenWorkApps
 
-                    val hiddenItemKeys = searchableRepository.getKeys(
-                        maxVisibility = if (query.isEmpty()) VisibilityLevel.SearchOnly else VisibilityLevel.Hidden,
-                    )
-
-                    hiddenItemKeys.collectLatest { hiddenKeys ->
-                        val hidden = mutableListOf<SavableSearchable>()
-                        val apps = mutableListOf<Application>()
-                        val workApps = mutableListOf<Application>()
-                        val shortcuts = mutableListOf<AppShortcut>()
-                        val files = mutableListOf<File>()
-                        val contacts = mutableListOf<Contact>()
-                        val events = mutableListOf<CalendarEvent>()
-                        val unitConv = mutableListOf<UnitConverter>()
-                        val calc = mutableListOf<Calculator>()
-                        val articles = mutableListOf<Article>()
-                        val locations = mutableListOf<Location>()
-                        val website = mutableListOf<Website>()
-                        val actions = mutableListOf<SearchAction>()
-                        for (r in resultsList) {
-                            when {
-                                r is SavableSearchable && hiddenKeys.contains(r.key) && !filters.hiddenItems -> {
-                                    hidden.add(r)
-                                }
-                                r is Application && r.profile == AppProfile.Work -> workApps.add(r)
-                                r is Application -> apps.add(r)
-                                r is AppShortcut -> shortcuts.add(r)
-                                r is File -> files.add(r)
-                                r is Contact -> contacts.add(r)
-                                r is CalendarEvent -> events.add(r)
-                                r is UnitConverter -> unitConv.add(r)
-                                r is Calculator -> calc.add(r)
-                                r is Website -> website.add(r)
-                                r is Article -> articles.add(r)
-                                r is Location -> locations.add(r)
-                                r is SearchAction -> actions.add(r)
-                            }
+                        val (hiddenPrivateApps, privateApps) = results.privateSpaceApps.partition {
+                            hiddenKeys.contains(
+                                it.key
+                            )
                         }
-
-                        if (query.isNotEmpty() && launchOnEnter.value) {
-                            bestMatch.value = listOf(
-                                apps,
-                                workApps,
-                                shortcuts,
-                                unitConv,
-                                calc,
-                                events,
-                                locations,
-                                contacts,
-                                articles,
-                                website,
-                                files,
-                                actions
-                            ).firstNotNullOfOrNull { it.firstOrNull() }
-                        }
+                        hiddenItems += hiddenPrivateApps
 
                         appResults.value = apps
                         workAppResults.value = workApps
-                        appShortcutResults.value = shortcuts
-                        fileResults.value = files
-                        contactResults.value = contacts
-                        calendarResults.value = events
-                        articleResults.value = articles
-                        locationResults.value = locations
-                        websiteResults.value = website
-                        calculatorResults.value = calc
-                        unitConverterResults.value = unitConv
-                        hiddenResults.value = hidden
-                        if (results.searchActions != null) searchActionResults.value = actions
+                        privateSpaceAppResults.value = privateApps
+                        hiddenResults.value = hiddenItems
                     }
+
+            } else {
+                val hiddenItemKeys = searchableRepository.getKeys(
+                    maxVisibility = VisibilityLevel.Hidden,
+                )
+                searchUiSettings.resultOrder.collectLatest { resultOrder ->
+                    searchService.search(
+                        query,
+                        filters = if (query.isEmpty()) filters.copy(apps = true) else filters,
+                    )
+                        .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
+                        .collectLatest { (results, hiddenKeys) ->
+                            val hiddenItems = mutableListOf<SavableSearchable>()
+
+                            if (results.apps != null) {
+                                val (hiddenApps, apps) = results.apps!!.partition {
+                                    hiddenKeys.contains(
+                                        it.key
+                                    )
+                                }
+                                hiddenItems += hiddenApps
+                                appResults.value = apps.applyRanking(resultOrder)
+                            } else {
+                                appResults.value = emptyList()
+                            }
+                            workAppResults.value = emptyList()
+                            privateSpaceAppResults.value = emptyList()
+
+                            if (results.shortcuts != null) {
+                                val (hiddenShortcuts, shortcuts) = results.shortcuts!!.partition {
+                                    hiddenKeys.contains(
+                                        it.key
+                                    )
+                                }
+                                hiddenItems += hiddenShortcuts
+                                appShortcutResults.value = shortcuts.applyRanking(resultOrder)
+                            } else {
+                                appShortcutResults.value = emptyList()
+                            }
+
+                            if (results.files != null) {
+                                val (hiddenFiles, files) = results.files!!.partition {
+                                    hiddenKeys.contains(
+                                        it.key
+                                    )
+                                }
+                                hiddenItems += hiddenFiles
+                                fileResults.value = files.applyRanking(resultOrder)
+                            } else {
+                                fileResults.value = emptyList()
+                            }
+
+                            if (results.contacts != null) {
+                                val (hiddenContacts, contacts) = results.contacts!!.partition {
+                                    hiddenKeys.contains(
+                                        it.key
+                                    )
+                                }
+                                hiddenItems += hiddenContacts
+                                contactResults.value = contacts.applyRanking(resultOrder)
+                            } else {
+                                contactResults.value = emptyList()
+                            }
+
+                            if (results.calendars != null) {
+                                val (hiddenEvents, events) = results.calendars!!.partition {
+                                    hiddenKeys.contains(
+                                        it.key
+                                    )
+                                }
+                                hiddenItems += hiddenEvents
+                                calendarResults.value = events.applyRanking(resultOrder)
+                            } else {
+                                calendarResults.value = emptyList()
+                            }
+
+                            if (results.locations != null && results.locations!!.isNotEmpty()) {
+                                val (hiddenLocations, locations) = results.locations!!.partition {
+                                    hiddenKeys.contains(
+                                        it.key
+                                    )
+                                }
+                                hiddenItems += hiddenLocations
+                                val lastLocation = devicePoseProvider.lastLocation
+                                if (lastLocation != null) {
+                                    locationResults.value = locations.asSequence()
+                                        .sortedWith { a, b ->
+                                            a.distanceTo(lastLocation)
+                                                .compareTo(b.distanceTo(lastLocation))
+                                        }
+                                        .distinct()
+                                        .toList()
+                                } else {
+                                    locationResults.value = locations.applyRanking(resultOrder)
+                                }
+                            } else {
+                                locationResults.value = emptyList()
+                            }
+
+                            if (results.wikipedia != null) {
+                                articleResults.value = results.wikipedia!!.applyRanking(resultOrder)
+                            } else {
+                                articleResults.value = emptyList()
+                            }
+
+                            if (results.websites != null) {
+                                websiteResults.value = results.websites!!.applyRanking(resultOrder)
+                            } else {
+                                websiteResults.value = emptyList()
+                            }
+
+
+                            calculatorResults.value = results.calculators ?: emptyList()
+                            unitConverterResults.value = results.unitConverters ?: emptyList()
+
+                            if (results.searchActions != null) {
+                                searchActionResults.value = results.searchActions!!
+                            }
+
+                            if (launchOnEnter.value) {
+                                bestMatch.value = when {
+                                    appResults.value.isNotEmpty() -> appResults.value.first()
+                                    appShortcutResults.value.isNotEmpty() -> appShortcutResults.value.first()
+                                    calendarResults.value.isNotEmpty() -> calendarResults.value.first()
+                                    locationResults.value.isNotEmpty() -> locationResults.value.first()
+                                    contactResults.value.isNotEmpty() -> contactResults.value.first()
+                                    articleResults.value.isNotEmpty() -> articleResults.value.first()
+                                    websiteResults.value.isNotEmpty() -> websiteResults.value.first()
+                                    fileResults.value.isNotEmpty() -> fileResults.value.first()
+                                    searchActionResults.value.isNotEmpty() -> searchActionResults.value.first()
+                                    else -> null
+                                }
+                            } else {
+                                bestMatch.value = null
+                            }
+                        }
                 }
             }
         }
@@ -387,7 +466,29 @@ class SearchVM : ViewModel(), KoinComponent {
     fun expandCategory(category: SearchCategory) {
         expandedCategory.value = category
     }
+
+    private suspend fun <T : SavableSearchable> List<T>.applyRanking(order: SearchResultOrder): List<T> {
+        if (size <= 1) return this
+        val sequence = asSequence()
+        val sorted = if (order == SearchResultOrder.Weighted) {
+            val sortedKeys = searchableRepository.sortByWeight(map { it.key }).first()
+            sequence.sortedWith { a, b ->
+                val aRank = sortedKeys.indexOf(a.key)
+                val bRank = sortedKeys.indexOf(b.key)
+                when {
+                    aRank != -1 && bRank != -1 -> aRank.compareTo(bRank)
+                    aRank == -1 && bRank != -1 -> 1
+                    aRank != -1 && bRank == -1 -> -1
+                    else -> a.compareTo(b)
+                }
+            }
+        } else {
+            sequence.sorted()
+        }
+        return sorted.distinct().toList()
+    }
 }
+
 
 enum class SearchCategory {
     Apps,
