@@ -59,5 +59,5 @@ dependencies {
     implementation(project(":core:crashreporter"))
     implementation(project(":core:devicepose"))
     implementation(project(":libs:address-formatter"))
-    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit)
 }

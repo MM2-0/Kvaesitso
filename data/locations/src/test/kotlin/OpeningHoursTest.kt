@@ -15,6 +15,7 @@ class OpeningHoursTest {
         is OpeningSchedule.TwentyFourSeven -> Assert.assertTrue(actual is OpeningSchedule.TwentyFourSeven)
         is OpeningSchedule.Hours -> {
             actual as OpeningSchedule.Hours
+            Assert.assertEquals(openingHours.size, actual.openingHours.size)
             Assert.assertEquals(openingHours.toSet(), actual.openingHours.toSet())
         }
 
@@ -175,4 +176,49 @@ class OpeningHoursTest {
     ) assertEqualTo scheduleAt(
         "Mo-Sa 11:00-21:00; PH,Su off"
     )
+
+    @Test
+    fun testNthWeekday() {
+        val usualWeek = listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8))
+        )
+        val specialMondayWeek = listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(4))
+        )
+
+        for (week in 1..4) {
+            OpeningSchedule.Hours(
+                if (week == 2)
+                    specialMondayWeek
+                else
+                    usualWeek
+            ) assertEqualTo scheduleAt(
+                "Mo 08:00-16:00; Mo[2] 08:00-12:00",
+                dayOfMonth = 1 + (week - 1) * 7
+            )
+        }
+    }
+
+    @Test
+    fun testMondayOnDecember() {
+        val december = listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(4)),
+            OpeningHours(DayOfWeek.FRIDAY, LocalTime.of(8,0), Duration.ofHours(2))
+        )
+        val notDecember = listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8)),
+            OpeningHours(DayOfWeek.FRIDAY, LocalTime.of(8,0), Duration.ofHours(2))
+        )
+        for (month in Month.values()) {
+            OpeningSchedule.Hours(
+                if (month == Month.DECEMBER)
+                    december
+                else
+                    notDecember
+            ) assertEqualTo scheduleAt(
+                "Mo 08:00-16:00; Dec Mo 08:00-12:00; Fr 08:00-10:00",
+                month = month
+            )
+        }
+    }
 }

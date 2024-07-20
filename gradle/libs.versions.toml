@@ -45,7 +45,6 @@ espressoCore = "3.5.1"
 
 osmOpeningHours = "0.1.0"
 testng = "6.9.6"
-junitJunit = "4.12"
 
 [libraries]
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
@@ -147,7 +146,6 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 osmopeninghours = { group = "de.westnordost", name = "osm-opening-hours", version.ref = "osmOpeningHours" }
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }
-junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
 
 [bundles]
 kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]
