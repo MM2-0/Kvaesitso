@@ -438,19 +438,18 @@ private fun List<Range>.filterNthDays(localTime: LocalDateTime): List<Range> = w
         }
         val unspecific = single { it.weekdays?.singleOrNull() !is SpecificWeekdays }
 
-        // I'm sorry. But it works :b
-        return specific.firstNotNullOfOrNull { (rule, specific) ->
-            if (currentWeek.any { (dow, nthFwd, nthBwd) ->
-                    specific.weekday.ordinal == dow.ordinal && specific.nths.any {
-                        when (it) {
-                            is Nth -> it.nth == nthFwd
-                            is NthRange -> nthFwd in it.start..it.end
-                            is LastNth -> it.nth == nthBwd
-                        }
+        specific.firstOrNull { (_, specific) ->
+            currentWeek.any { (dow, nthFwd, nthBwd) ->
+                specific.weekday.ordinal == dow.ordinal && specific.nths.any {
+                    when (it) {
+                        is Nth -> it.nth == nthFwd
+                        is NthRange -> nthFwd in it.start..it.end
+                        is LastNth -> it.nth == nthBwd
                     }
-                }) {
-                listOf(rule)
-            } else null
+                }
+            }
+        }?.let {
+            (rule, _) -> listOf(rule)
         } ?: listOf(unspecific)
     }
 }
@@ -498,16 +497,16 @@ private fun LocalDateTime.getNthWeekdaysOfCurrentWeek(): List<Triple<DayOfWeek, 
     return (0 until 7).map { i ->
         val (nth, nthLast) = monday.plusDays(i.toLong()).let { weekday ->
             (
-                    ChronoUnit.WEEKS.between(
-                        with(TemporalAdjusters.firstInMonth(weekday.dayOfWeek)),
-                        weekday
-                    ).toInt() + 1
-                    ) to (
-                    ChronoUnit.WEEKS.between(
-                        weekday,
-                        with(TemporalAdjusters.lastInMonth(weekday.dayOfWeek))
-                    ).toInt() + 1
-                    )
+                ChronoUnit.WEEKS.between(
+                    with(TemporalAdjusters.firstInMonth(weekday.dayOfWeek)),
+                    weekday
+                ).toInt() + 1
+            ) to (
+                ChronoUnit.WEEKS.between(
+                    weekday,
+                    with(TemporalAdjusters.lastInMonth(weekday.dayOfWeek))
+                ).toInt() + 1
+            )
         }
         Triple(DayOfWeek.values()[i], nth, nthLast)
     }
