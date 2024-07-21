@@ -777,4 +777,5 @@
         <item quantity="other">%1$s értesítés</item>
     </plurals>
     <string name="weather_widget_no_provider">Nincs időjárás-szolgáltató kiválasztva vagy a kiválasztott szolgáltató nem érhető el</string>
+    <string name="apps_profile_private">Magánszféra</string>
 </resources>

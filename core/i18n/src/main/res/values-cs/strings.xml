@@ -785,4 +785,5 @@
         <item quantity="other">%1$s oznámení</item>
     </plurals>
     <string name="weather_widget_no_provider">Nebyl vybrán poskytovatel počasí nebo vybraný poskytovatel není dostupný</string>
+    <string name="apps_profile_private">Soukromý prostor</string>
 </resources>
