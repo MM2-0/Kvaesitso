@@ -347,7 +347,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                             a.distanceTo(lastLocation)
                                                 .compareTo(b.distanceTo(lastLocation))
                                         }
-                                        .distinct()
+                                        .distinctBy { it.key }
                                         .toList()
                                 } else {
                                     locationResults.value = locations.applyRanking(resultOrder)
@@ -485,7 +485,7 @@ class SearchVM : ViewModel(), KoinComponent {
         } else {
             sequence.sorted()
         }
-        return sorted.distinct().toList()
+        return sorted.distinctBy { it.key }.toList()
     }
 }
 
