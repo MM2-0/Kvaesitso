@@ -45,6 +45,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
@@ -211,10 +212,14 @@ class SearchVM : ViewModel(), KoinComponent {
 
         searchJob = viewModelScope.launch {
             if (query.isEmpty()) {
-                val hiddenItemKeys = searchableRepository.getKeys(
-                    maxVisibility = VisibilityLevel.SearchOnly,
-                    includeTypes = listOf("app"),
-                )
+                val hiddenItemKeys = if (!filters.hiddenItems) {
+                    searchableRepository.getKeys(
+                        maxVisibility = VisibilityLevel.SearchOnly,
+                        includeTypes = listOf("app"),
+                    )
+                } else {
+                    flowOf(emptyList())
+                }
                 val allApps = searchService.getAllApps()
                 fileResults.value = emptyList()
                 contactResults.value = emptyList()
