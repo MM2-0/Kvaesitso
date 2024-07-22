@@ -104,7 +104,7 @@ androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterfa
 androidx-securitycrypto = { group = "androidx.security", name = "security-crypto", version = "1.1.0-alpha03" }
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.0.0" }
 
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.8.0-beta04" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.8.0-beta05" }
 materialcomponents-core = { group = "com.google.android.material", name = "material", version = "1.11.0" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version = "4.12.0" }
 
