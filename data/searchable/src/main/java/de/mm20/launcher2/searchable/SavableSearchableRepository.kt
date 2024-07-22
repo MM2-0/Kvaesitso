@@ -73,7 +73,7 @@ interface SavableSearchableRepository : Backupable {
         maxPinnedLevel: PinnedLevel = PinnedLevel.ManuallySorted,
         minVisibility: VisibilityLevel = VisibilityLevel.Hidden,
         maxVisibility: VisibilityLevel = VisibilityLevel.Default,
-        limit: Int = 100,
+        limit: Int = 9999,
     ): Flow<List<SavableSearchable>>
 
     fun getKeys(
@@ -83,7 +83,7 @@ interface SavableSearchableRepository : Backupable {
         maxPinnedLevel: PinnedLevel = PinnedLevel.ManuallySorted,
         minVisibility: VisibilityLevel = VisibilityLevel.Hidden,
         maxVisibility: VisibilityLevel = VisibilityLevel.Default,
-        limit: Int = 100,
+        limit: Int = 9999,
     ): Flow<List<String>>
 
 
