@@ -35,6 +35,8 @@ class ProfileManager(
     private val context: Context,
     private val permissionsManager: PermissionsManager,
 ) {
+    private val mutex = Mutex()
+
     private val userManager = context.getSystemService<UserManager>()!!
     private val launcherApps = context.getSystemService<LauncherApps>()!!
 
@@ -92,8 +94,6 @@ class ProfileManager(
             }
         }
     }
-
-    private val mutex = Mutex()
     private suspend fun refreshProfiles() {
         mutex.withLock {
             val profiles = mutableListOf<ProfileWithState>()
