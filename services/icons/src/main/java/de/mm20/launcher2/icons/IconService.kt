@@ -367,27 +367,15 @@ class IconService(
     suspend fun searchCustomIcons(query: String, iconPack: IconPack?): List<CustomIconWithPreview> {
         val transformations = this.transformations.first()
         val iconPackIcons = iconPackManager.searchIconPackIcon(query, iconPack).flatMap {
-            val unthemedIcon = if (it.themed) {
-                iconPackManager.getIcon(it.iconPack, it, false)
+            val themedIcon = if (it.themed) {
+                iconPackManager.getIcon(it.iconPack, it, true)
                     ?.transform(transformations)
             } else null
-            val icon = iconPackManager.getIcon(it.iconPack, it, true)
+            val unthemedIcon = iconPackManager.getIcon(it.iconPack, it, false)
                 ?.transform(transformations)
 
             buildList {
                 val ent = it.toDatabaseEntity()
-                if (icon != null) {
-                    add(CustomIconWithPreview(
-                        customIcon = CustomIconPackIcon(
-                            iconPackPackage = it.iconPack,
-                            type = ent.type,
-                            drawable = ent.drawable,
-                            extras = ent.extras,
-                            allowThemed = true,
-                        ),
-                        preview = icon
-                    ))
-                }
                 if (unthemedIcon != null) {
                     add(CustomIconWithPreview(
                         customIcon = CustomIconPackIcon(
@@ -398,6 +386,18 @@ class IconService(
                             allowThemed = false,
                         ),
                         preview = unthemedIcon
+                    ))
+                }
+                if (themedIcon != null) {
+                    add(CustomIconWithPreview(
+                        customIcon = CustomIconPackIcon(
+                            iconPackPackage = it.iconPack,
+                            type = ent.type,
+                            drawable = ent.drawable,
+                            extras = ent.extras,
+                            allowThemed = true,
+                        ),
+                        preview = themedIcon
                     ))
                 }
             }
