@@ -341,7 +341,7 @@ fun AppItem(
                         ) {
                             Icon(
                                 if (isPinned) Icons.Rounded.Star else Icons.Rounded.StarOutline,
-                                null
+                                stringResource(if (isPinned) R.string.menu_favorites_unpin else R.string.menu_favorites_pin),
                             )
                         }
                     }

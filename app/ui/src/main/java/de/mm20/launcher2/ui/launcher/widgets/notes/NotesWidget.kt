@@ -217,7 +217,10 @@ fun NotesWidget(
                             Icon(
                                 if (widget.config.linkedFile == null) Icons.Rounded.Link
                                 else Icons.Rounded.LinkOff,
-                                null
+                                stringResource(
+                                    if (widget.config.linkedFile == null) R.string.note_widget_link_file
+                                    else R.string.note_widget_action_unlink_file
+                                )
                             )
                         }
                     }
@@ -295,7 +298,7 @@ fun NotesWidget(
                 Spacer(modifier = Modifier.weight(1f))
                 Box {
                     IconButton(onClick = { showMenu = true }) {
-                        Icon(Icons.Rounded.MoreVert, null)
+                        Icon(Icons.Rounded.MoreVert, stringResource(R.string.action_more_actions))
                     }
                     DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                         DropdownMenuItem(

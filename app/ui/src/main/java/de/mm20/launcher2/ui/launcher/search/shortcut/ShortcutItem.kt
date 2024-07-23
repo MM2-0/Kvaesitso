@@ -50,6 +50,9 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
@@ -140,7 +143,10 @@ fun AppShortcutItem(
                                 }.collectAsState(null)
 
                                 InputChip(
-                                    modifier = Modifier.width(IntrinsicSize.Max).padding(top = 8.dp),
+                                    modifier = Modifier
+                                        .width(IntrinsicSize.Max)
+                                        .padding(top = 8.dp)
+                                        .semantics { role = Role.Button },
                                     selected = false,
                                     onClick = {
                                         viewModel.launchChild(context, app)
@@ -164,7 +170,7 @@ fun AppShortcutItem(
                                         {
                                             Icon(
                                                 if (isPinned) Icons.Rounded.Star else Icons.Rounded.StarOutline,
-                                                null,
+                                                stringResource(if (isPinned) R.string.menu_favorites_unpin else R.string.menu_favorites_pin),
                                                 modifier = Modifier
                                                     .clip(CircleShape)
                                                     .requiredSize(InputChipDefaults.IconSize)

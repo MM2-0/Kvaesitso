@@ -37,6 +37,9 @@
     <string name="msg_item_hidden">%1$s has been hidden.</string>
     <string name="action_undo">Undo</string>
     <string name="action_import">Import</string>
+    <string name="action_done">Done</string>
+    <string name="action_more_actions">More actions</string>
+    <string name="action_clear">Clear</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
     <string name="menu_remove">Remove</string>
@@ -839,6 +842,8 @@
     <string name="clock_style_empty">No clock</string>
     <string name="clock_style_custom">Custom widget</string>
     <string name="clock_variant_outlined">Outlined</string>
+    <string name="menu_show_filters">Show filters</string>
+    <string name="menu_hide_filters">Hide filters</string>
     <string name="search_filter_tools">Tools</string>
     <string name="search_filter_online">Online results</string>
     <string name="search_filter_apps">Apps</string>
@@ -970,4 +975,13 @@
         <item quantity="other">%1$s notifications</item>
     </plurals>
     <string name="weather_widget_no_provider">No weather provider selected or the selected provider is not available</string>
+    <string name="music_widget_previous_track">Previous title</string>
+    <string name="music_widget_next_track">Next title</string>
+    <string name="music_widget_play">Play</string>
+    <string name="music_widget_pause">Pause</string>
+    <string name="music_widget_open_player">Open player</string>
+    <string name="calendar_widget_previous_day">Previous day</string>
+    <string name="calendar_widget_next_day">Next day</string>
+    <string name="calendar_widget_create_event">Create new event</string>
+    <string name="calendar_widget_open_calendar">Open calendar app</string>
 </resources>
