@@ -81,7 +81,11 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val locationResults = mutableStateOf<List<Location>>(emptyList())
 
-    val profiles = profileManager.profiles.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+    val profiles = profileManager.profiles.shareIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        replay = 1
+    )
     val workProfile = profiles.map {
         it.find { it.type == Profile.Type.Work }
     }
@@ -264,9 +268,9 @@ class SearchVM : ViewModel(), KoinComponent {
                     }
 
             } else {
-                val hiddenItemKeys = searchableRepository.getKeys(
+                val hiddenItemKeys = if (!filters.hiddenItems) searchableRepository.getKeys(
                     maxVisibility = VisibilityLevel.Hidden,
-                )
+                ) else flowOf(emptyList())
                 searchUiSettings.resultOrder.collectLatest { resultOrder ->
                     searchService.search(
                         query,
