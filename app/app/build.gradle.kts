@@ -31,8 +31,8 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2024072200
-        versionName = "1.32.1"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2024072400
+        versionName = "1.32.2"
         signingConfig = signingConfigs.getByName("debug")
     }
 
