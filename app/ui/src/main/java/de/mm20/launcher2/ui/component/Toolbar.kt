@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.integerResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
@@ -62,7 +63,7 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
             var showMenu by remember { mutableStateOf(false) }
             Box {
                 IconButton(onClick = { showMenu = true }) {
-                    Icon(Icons.Rounded.MoreVert, contentDescription = "")
+                    Icon(Icons.Rounded.MoreVert, contentDescription = stringResource(R.string.action_more_actions))
                 }
                 Box(
                     modifier = Modifier

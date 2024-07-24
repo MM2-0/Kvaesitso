@@ -1,5 +1,6 @@
 package de.mm20.launcher2.applications
 
+import android.app.admin.DevicePolicyManager
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
@@ -14,6 +15,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Process
 import android.os.UserHandle
+import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.compat.PackageManagerCompat
@@ -25,12 +27,12 @@ import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.search.AppProfile
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.StoreLink
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.math.roundToInt
 
 internal data class LauncherApp(
     private val launcherActivityInfo: LauncherActivityInfo,
@@ -49,6 +51,7 @@ internal data class LauncherApp(
     constructor(context: Context, launcherActivityInfo: LauncherActivityInfo) : this(
         launcherActivityInfo,
         versionName = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
+        isSuspended = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED != 0,
         userSerialNumber = launcherActivityInfo.user.getSerialNumber(context)
     )
 
@@ -56,9 +59,6 @@ internal data class LauncherApp(
         get() = launcherActivityInfo.user
 
     private val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
-
-    override val profile: AppProfile
-        get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
 
     override val isSystemApp: Boolean = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
 
@@ -86,7 +86,8 @@ internal data class LauncherApp(
         try {
             val icon =
                 withContext(Dispatchers.IO) {
-                    launcherActivityInfo.getIcon(context.resources.displayMetrics.densityDpi)
+                    val density = size / (108/1.5)
+                    launcherActivityInfo.getIcon(0)
 
                 } ?: return null
             if (icon is AdaptiveIconDrawable) {
@@ -140,8 +141,10 @@ internal data class LauncherApp(
                 options
             )
         } catch (e: SecurityException) {
+            Log.e("MM20", "Could not launch app", e)
             return false
         } catch (e: ActivityNotFoundException) {
+            Log.e("MM20", "Could not launch app", e)
             return false
         }
         return true
@@ -258,6 +261,14 @@ internal data class LauncherApp(
                 context.packageManager.getPackageInfo(packageName, 0).versionName
             } catch (e: PackageManager.NameNotFoundException) {
                 null
+            }
+        }
+
+        fun isSuspended(context: Context, packageName: String): Boolean {
+            return try {
+                context.packageManager.getApplicationInfo(packageName, 0).flags and ApplicationInfo.FLAG_SUSPENDED != 0
+            } catch (e: PackageManager.NameNotFoundException) {
+                false
             }
         }
 

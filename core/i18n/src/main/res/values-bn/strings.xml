@@ -27,7 +27,6 @@
     </plurals>
     <string name="wind_north_north_west">উত্তর উত্তর-পশ্চিম</string>
     <string name="edit_favorites_dialog_unpinned">পিন করা নয় কিন্তু প্রায়শই ব্যবহৃত</string>
-    <string name="weather_condition_thunder">বজ্রপাত</string>
     <string name="weather_condition_sleet">তুষার ও বৃষ্টি</string>
     <string name="weather_condition_lightssnowshowersandthunder">হালকা তুষার এবং বজ্রপাত</string>
     <string name="action_import">ইমপোর্ট করুন</string>
@@ -51,7 +50,6 @@
     <string name="wind_west">পশ্চিম</string>
     <string name="wind_west_north_west">পশ্চিম উত্তর-পশ্চিম</string>
     <string name="wind_north_west">উত্তর পশ্চিম</string>
-    <string name="precipitation_none">কোনো বৃষ্টিপাত হয়নি</string>
     <string name="wikipedia_source">উইকিপিডিয়া থেকে</string>
     <string name="file_meta_title">নাম: %1$s</string>
     <string name="file_meta_artist">শিল্পী: %1$s</string>
@@ -84,22 +82,14 @@
     <string name="file_type_generic">%1$s ফাইল</string>
     <string name="file_type_music">সঙ্গীত ফাইল</string>
     <string name="alert_delete_file">%1$s ফাইলটি স্থায়ীভাবে মুছে ফেলা হবে৷ আপনি নিশ্চিত?</string>
-    <string name="error_activity_not_found">%1$s খোলা যায়নি</string>
-    <string name="default_websearch_1_url">https://google.com/search?q=${1}</string>
     <string name="default_websearch_2_name">ইউটিউব</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
     <string name="default_websearch_3_name">প্লে স্টোর</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
-    <string name="websearch_dialog_create_title">ওয়েবে খোঁজ যোগ করুন</string>
-    <string name="websearch_dialog_edit_title">ওয়েবে খোঁজ সম্পাদনা করুন</string>
-    <string name="websearch_dialog_name">নাম</string>
-    <string name="websearch_dialog_url">লিংক</string>
-    <string name="websearch_dialog_url_description">\'${1}\' অনুসন্ধান শব্দ দ্বারা প্রতিস্থাপিত হবে।</string>
     <string name="websearch_dialog_url_error">এই লিংকে স্থানধারক \'${1}\' অনুপস্থিত</string>
     <string name="websearch_dialog_replace_icon">আইকন পরিবর্তন</string>
     <string name="websearch_dialog_delete_icon">আইকন সরানো</string>
     <string name="websearch_dialog_custom_icon">নিজস্ব আইকন</string>
-    <string name="websearch_dialog_import_url">লিংক থেকে যোগ করুন</string>
     <string name="websearch_dialog_advanced">আরো অপশন</string>
     <string name="websearch_dialog_query_encoding">প্রশ্ন এনকোডিং</string>
     <string name="websearch_dialog_query_encoding_url">পার্সেন্ট এনকোডিং</string>
@@ -111,7 +101,6 @@
     <string name="widget_name_music">সঙ্গীত</string>
     <string name="widget_name_favorites">প্রিয়গুলি</string>
     <string name="widget_name_unknown">অজানা অ্যাপের উইজেট</string>
-    <string name="widget_add_external">আরো</string>
     <string name="notes_widget_placeholder">একটি নোট লিখুন…</string>
     <string name="notes_widget_action_new">নতুন নোট</string>
     <string name="notes_widget_export_filename">নোট_%1$s</string>
@@ -125,12 +114,9 @@
     <string name="duplicate">অনুলিপি তৈরি</string>
     <string name="edit">সম্পাদনা</string>
     <string name="skip">এড়িয়ে যান</string>
-    <string name="action_continue">চালিয়ে যান</string>
     <string name="action_next">পরবর্তী</string>
     <string name="close">বন্ধ</string>
-    <string name="widget_action_adjust_height">উচ্চতা সমন্বয় করুন</string>
     <string name="widget_action_remove">সরান</string>
-    <string name="widget_action_settings">সেটিংস</string>
     <string name="widget_action_replace">প্রতিস্থাপন করুন</string>
     <string name="menu_item_edit_favs">প্রিয়গুলো সম্পাদন</string>
     <string name="edit_favorites_dialog_pinned_unsorted">পিন করা - সয়ংক্রিয়ভাবে সাজানো</string>
@@ -148,14 +134,12 @@
     <string name="login_flow_continue">চালিয়ে যান</string>
     <string name="login_flow_login">লগইন</string>
     <string name="disclaimer">ডিসক্লেইমার</string>
-    <string name="unit_converter_show_all">সব দেখুন</string>
+    <string name="show_all">সব দেখুন</string>
     <string name="date_today">আজ</string>
     <string name="date_tomorrow">আগামীকাল</string>
     <string name="calendar_widget_pinned_events">আসন্ন</string>
     <string name="calendar_widget_next_events">পরবর্তী ঘটনা</string>
     <string name="calendar_widget_no_events">আজ কোনো ঘটনা নেই</string>
-    <string name="calendar_widget_open_app">ক্যালেন্ডার খুলুন</string>
-    <string name="calendar_widget_new_event">নতুন ঘটনা যোগ করুন</string>
     <string name="calendar_event_allday">সারাদিন</string>
     <string name="music_widget_default_title">%1$s মিডিয়া চালাচ্ছে</string>
     <string name="music_widget_no_data">কোনো মিডিয়া চলছে না</string>
@@ -202,7 +186,6 @@
     <string name="turn_off">বন্ধ করুন</string>
     <string name="menu_delete">মুছুন</string>
     <string name="file_meta_app_min_sdk">ন্যূনতম SDK ভার্সন: %1$s</string>
-    <string name="websearch_dialog_import_error">প্রদত্ত লিংক স্বয়ংক্রিয়ভাবে যোগ করা যাবে না. আপনি একটি ভিন্ন লিংক চেষ্টা করতে পারেন বা ম্যানুয়ালি প্রয়োজনীয় ডেটা লিখতে পারেন।</string>
     <string name="widget_add_widget">উইজেট যোগ করুন</string>
     <string name="edit_favorites_dialog_tag_section_empty">পিন করা ট্যাগ এখানে দেখা যাবে</string>
     <string name="owncloud_server_invalid_url">এই লিংকটি একটি Owncloud সার্ভারকে নির্দেশ করে না</string>
@@ -211,9 +194,6 @@
     <string name="weather_condition_heavysnowandthunder">প্রচণ্ড তুষার এবং বজ্রপাত</string>
     <string name="menu_calendar_open_externally">ক্যালেন্ডার অ্যাপে খুলুন</string>
     <string name="alert_delete_directory">ডিরেক্টরি %1$s এবং এর সমস্ত সামগ্রী স্থায়ীভাবে মুছে ফেলা হবে৷ আগাবেন?</string>
-    <string name="default_websearch_1_name">গুগল</string>
-    <string name="preference_screen_musicwidget">সঙ্গীত</string>
-    <string name="installation_in_progress">ইনস্টল হচ্ছে... (%1$s)</string>
     <string name="nextcloud_server_url_empty">সার্ভারের লিংক খালি থাকতে পারবে না</string>
     <string name="weather_condition_lightsleet">হালকা তুষার বৃষ্টি</string>
 </resources>

@@ -11,6 +11,8 @@ import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
 import de.mm20.launcher2.ktx.normalize
+import de.mm20.launcher2.profiles.Profile
+import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
@@ -20,7 +22,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -29,11 +33,16 @@ import org.apache.commons.text.similarity.FuzzyScore
 import java.util.Locale
 
 interface AppRepository : SearchableRepository<Application> {
+    fun findOne(
+        packageName: String,
+        user: UserHandle,
+    ): Flow<Application?>
     fun findMany(): Flow<ImmutableList<Application>>
 }
 
 internal class AppRepositoryImpl(
     private val context: Context,
+    private val profileManager: ProfileManager,
 ) : AppRepository {
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
@@ -41,11 +50,8 @@ internal class AppRepositoryImpl(
         context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
 
     private val installedApps = MutableStateFlow<List<LauncherApp>>(emptyList())
-    private val suspendedPackages = MutableStateFlow<List<String>>(emptyList())
 
-
-    private val profiles: List<UserHandle>
-        get() = launcherApps.profiles.takeIf { it.isNotEmpty() } ?: listOf(Process.myUserHandle())
+    private val profiles = profileManager.activeProfiles
 
     private val mutex = Mutex()
 
@@ -58,8 +64,9 @@ internal class AppRepositoryImpl(
             ) {
                 scope.launch {
                     mutex.withLock {
-                        installedApps.value =
-                            installedApps.value.filter { !packageNames.contains(it.componentName.packageName) }
+                        val apps = installedApps.value.toMutableList()
+                        apps.removeAll { packageNames.contains(it.componentName.packageName) && it.user == user }
+                        installedApps.value = apps
                     }
                 }
             }
@@ -68,8 +75,8 @@ internal class AppRepositoryImpl(
                 scope.launch {
                     mutex.withLock {
                         val apps = installedApps.value.toMutableList()
-                        apps.removeAll { packageName == it.componentName.packageName }
-                        apps.addAll(getApplications(packageName))
+                        apps.removeAll { packageName == it.componentName.packageName && it.user == user }
+                        apps.addAll(getApplications(packageName, user))
                         installedApps.value = apps
                     }
                 }
@@ -84,7 +91,7 @@ internal class AppRepositoryImpl(
                     mutex.withLock {
                         val apps = installedApps.value.toMutableList()
                         for (packageName in packageNames) {
-                            apps.addAll(getApplications(packageName))
+                            apps.addAll(getApplications(packageName, user))
                         }
                         installedApps.value = apps
                     }
@@ -95,7 +102,7 @@ internal class AppRepositoryImpl(
                 scope.launch {
                     mutex.withLock {
                         val apps = installedApps.value.toMutableList()
-                        apps.addAll(getApplications(packageName))
+                        apps.addAll(getApplications(packageName, user))
                         installedApps.value = apps
                     }
                 }
@@ -104,8 +111,9 @@ internal class AppRepositoryImpl(
             override fun onPackageRemoved(packageName: String, user: UserHandle) {
                 scope.launch {
                     mutex.withLock {
-                        installedApps.value =
-                            installedApps.value.filter { packageName != (it.componentName.packageName) || it.user != user }
+                        val apps = installedApps.value.toMutableList()
+                        apps.removeAll { packageName == it.componentName.packageName && it.user == user }
+                        installedApps.value = apps
 
                     }
                 }
@@ -123,13 +131,15 @@ internal class AppRepositoryImpl(
                 packageNames ?: return
                 scope.launch {
                     mutex.withLock {
-                        installedApps.value = installedApps.value.map {
-                            if (packageNames.contains(it.componentName.packageName)) {
+                        val apps = installedApps.value.toMutableList()
+                        apps.replaceAll {
+                            if (packageNames.contains(it.componentName.packageName) && it.user == user) {
                                 it.copy(isSuspended = true)
                             } else {
                                 it
                             }
                         }
+                        installedApps.value = apps
                     }
                 }
             }
@@ -141,54 +151,86 @@ internal class AppRepositoryImpl(
                 packageNames ?: return
                 scope.launch {
                     mutex.withLock {
-                        installedApps.value = installedApps.value.map {
-                            if (packageNames.contains(it.componentName.packageName)) {
+                        val apps = installedApps.value.toMutableList()
+                        apps.replaceAll {
+                            if (packageNames.contains(it.componentName.packageName) && it.user == user) {
                                 it.copy(isSuspended = false)
                             } else {
                                 it
                             }
                         }
+                        installedApps.value = apps
                     }
                 }
             }
 
         }, Handler(Looper.getMainLooper()))
         scope.launch {
+            profiles.runningFold<List<Profile>, Pair<List<Profile>?, List<Profile>?>>(null to null) { acc, value ->
+                acc.second to value
+            }.collectLatest { (prev, curr) ->
+                if (curr == null) return@collectLatest
+                if (prev == null) {
+                    curr.forEach { addProfile(it) }
+                } else {
+                    val added = curr - prev
+                    val removed = prev - curr
+                    added.forEach { addProfile(it) }
+                    removed.forEach { removeProfile(it) }
+                }
+            }
+        }
+    }
+
+    private suspend fun addProfile(profile: Profile) {
+        mutex.withLock {
+            val apps = installedApps.value.toMutableList()
+            apps.addAll(getApplications(null, profile.userHandle))
+            installedApps.value = apps
+        }
+    }
+
+    private fun removeProfile(profile: Profile) {
+        scope.launch {
             mutex.withLock {
-                val apps = profiles.map { p ->
-                    try {
-                        launcherApps.getActivityList(null, p).mapNotNull { getApplication(it, p) }
-                    } catch (e: SecurityException) {
-                        emptyList()
-                    }
-                }.flatten()
+                val apps = installedApps.value.toMutableList()
+                apps.removeAll { it.user == profile.userHandle }
                 installedApps.value = apps
             }
         }
     }
 
-    private fun getApplications(packageName: String): List<LauncherApp> {
+    private fun getApplications(packageName: String?, userHandle: UserHandle): List<LauncherApp> {
         if (packageName == context.packageName) return emptyList()
 
-        return profiles.map { p ->
-            try {
-                launcherApps.getActivityList(packageName, p).mapNotNull { getApplication(it, p) }
-            } catch (e: SecurityException) {
-                emptyList()
-            }
-        }.flatten()
+        return try {
+            launcherApps.getActivityList(packageName, userHandle)
+                .mapNotNull { getApplication(it) }
+        } catch (e: SecurityException) {
+            emptyList()
+        }
     }
 
 
     private fun getApplication(
-        launcherActivityInfo: LauncherActivityInfo,
-        profile: UserHandle
+        launcherActivityInfo: LauncherActivityInfo
     ): LauncherApp? {
         if (launcherActivityInfo.applicationInfo.packageName == context.packageName && !context.packageName.endsWith(
                 ".debug"
             )
         ) return null
         return LauncherApp(context, launcherActivityInfo)
+    }
+
+    override fun findOne(
+        packageName: String,
+        user: UserHandle,
+    ): Flow<Application?> {
+        return installedApps.map {
+            it.firstOrNull {
+                it.componentName.packageName == packageName && it.user == user
+            }
+        }
     }
 
     override fun findMany(): Flow<ImmutableList<Application>> {

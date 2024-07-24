@@ -8,11 +8,24 @@ package de.mm20.launcher2.search
  */
 interface UpdatableSearchable<T : SavableSearchable> {
     val timestamp: Long
-    val updatedSelf: (suspend () -> UpdateResult<T>)?
+    val updatedSelf: (suspend (SavableSearchable) -> UpdateResult<T>)?
 }
 
 sealed class UpdateResult<out T> {
     data class Success<out T>(val result: T) : UpdateResult<T>()
     data class TemporarilyUnavailable<T>(val cause: Throwable? = null) : UpdateResult<T>()
     data class PermanentlyUnavailable<T>(val cause: Throwable? = null) : UpdateResult<T>()
+}
+
+fun <T>Result<T?>.asUpdateResult(): UpdateResult<T> {
+    return if (isSuccess) {
+        val refreshed = getOrNull()
+        if (refreshed == null) {
+            UpdateResult.PermanentlyUnavailable()
+        } else {
+            UpdateResult.Success(refreshed)
+        }
+    } else {
+        UpdateResult.TemporarilyUnavailable(exceptionOrNull())
+    }
 }

@@ -3,70 +3,55 @@ package de.mm20.launcher2.ui.launcher.search
 import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material.icons.rounded.Work
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.common.FavoritesTagSelector
-import de.mm20.launcher2.ui.component.Banner
+import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.Article
+import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.Contact
+import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.component.LauncherCard
-import de.mm20.launcher2.ui.component.MissingPermissionBanner
-import de.mm20.launcher2.ui.component.PartialLauncherCard
-import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorItem
-import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
-import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
+import de.mm20.launcher2.ui.launcher.search.apps.AppResults
+import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorResults
+import de.mm20.launcher2.ui.launcher.search.calendar.CalendarResults
+import de.mm20.launcher2.ui.launcher.search.contacts.ContactResults
+import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavorites
 import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavoritesVM
+import de.mm20.launcher2.ui.launcher.search.files.FileResults
 import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
-import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterItem
-import de.mm20.launcher2.ui.launcher.search.website.WebsiteItem
-import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleItem
+import de.mm20.launcher2.ui.launcher.search.location.LocationResults
+import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutResults
+import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterResults
+import de.mm20.launcher2.ui.launcher.search.website.WebsiteResults
+import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleResults
 import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
-import kotlin.math.ceil
-
-private const val PRIORITY_MIN = Int.MAX_VALUE
-private const val PRIORITY_MAX = Int.MIN_VALUE
 
 @Composable
 fun SearchColumn(
@@ -85,12 +70,17 @@ fun SearchColumn(
     val favoritesVM: SearchFavoritesVM = viewModel()
     val favorites by favoritesVM.favorites.collectAsState(emptyList())
 
-    var showWorkProfileApps by remember { mutableStateOf(false) }
-
     val hideFavs by viewModel.hideFavorites
     val favoritesEnabled by viewModel.favoritesEnabled.collectAsState(false)
+
     val apps by viewModel.appResults
     val workApps by viewModel.workAppResults
+    val privateApps by viewModel.privateSpaceAppResults
+    val workProfile by viewModel.workProfile.collectAsState(null)
+    val workProfileState by viewModel.workProfileState.collectAsState(null)
+    val privateProfile by viewModel.privateProfile.collectAsState(null)
+    val privateProfileState by viewModel.privateProfileState.collectAsState(null)
+
     val appShortcuts by viewModel.appShortcutResults
     val contacts by viewModel.contactResults
     val files by viewModel.fileResults
@@ -101,7 +91,6 @@ fun SearchColumn(
     val locations by viewModel.locationResults
     val website by viewModel.websiteResults
     val hiddenResults by viewModel.hiddenResults
-    val separateWorkProfile by viewModel.separateWorkProfile.collectAsState(true)
 
     val bestMatch by viewModel.bestMatch
 
@@ -112,291 +101,240 @@ fun SearchColumn(
     val missingContactsPermission by viewModel.missingContactsPermission.collectAsState(false)
     val missingLocationPermission by viewModel.missingLocationPermission.collectAsState(false)
     val missingFilesPermission by viewModel.missingFilesPermission.collectAsState(false)
+    val hasProfilesPermission by viewModel.hasProfilesPermission.collectAsState(false)
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
     val selectedTag by favoritesVM.selectedTag.collectAsState(null)
-    val tagsScrollState = rememberScrollState()
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
+    val expandedCategory: SearchCategory? by viewModel.expandedCategory
+
+    var selectedContactIndex: Int by remember(contacts) { mutableIntStateOf(-1) }
+    var selectedFileIndex: Int by remember(files) { mutableIntStateOf(-1) }
+    var selectedCalendarIndex: Int by remember(events) { mutableIntStateOf(-1) }
+    var selectedLocationIndex: Int by remember(locations) { mutableIntStateOf(-1) }
+    var selectedShortcutIndex: Int by remember(appShortcuts) { mutableIntStateOf(-1) }
+    var selectedArticleIndex: Int by remember(wikipedia) { mutableIntStateOf(-1) }
+    var selectedWebsiteIndex: Int by remember(website) { mutableIntStateOf(-1) }
+
     val showFilters by viewModel.showFilters
 
-    AnimatedContent(showFilters) {
+    AnimatedContent(
+        showFilters,
+        modifier = modifier.padding(horizontal = 8.dp),
+    ) {
         if (it) {
             BackHandler {
                 viewModel.showFilters.value = false
             }
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
                 contentAlignment = if (reverse) Alignment.BottomCenter else Alignment.TopCenter,
             ) {
-                LauncherCard(
+                SearchFilters(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                ) {
-                    SearchFilters(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp),
-                        filters = viewModel.filters.value,
-                        onFiltersChange = {
-                            viewModel.setFilters(it)
-                        }
-                    )
-                }
+                        .padding(top = 4.dp)
+                        .background(
+                            MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp),
+                            MaterialTheme.shapes.medium
+                        )
+                        .padding(12.dp),
+                    filters = viewModel.filters.value,
+                    onFiltersChange = {
+                        viewModel.setFilters(it)
+                    }
+                )
             }
         } else {
             LazyColumn(
                 state = state,
-                modifier = modifier,
                 userScrollEnabled = userScrollEnabled,
                 contentPadding = paddingValues,
                 reverseLayout = reverse,
             ) {
                 if (!hideFavs && favoritesEnabled) {
-                    GridResults(
-                        items = favorites.toImmutableList(),
-                        columns = columns,
-                        key = "favorites",
+                    SearchFavorites(
+                        favorites = favorites,
+                        selectedTag = selectedTag,
+                        pinnedTags = pinnedTags,
+                        tagsExpanded = favoritesTagsExpanded,
+                        onSelectTag = { favoritesVM.selectTag(it) },
                         reverse = reverse,
-                        before = if (favorites.isEmpty()) {
-                            {
-                                Banner(
-                                    modifier = Modifier.padding(16.dp),
-                                    text = stringResource(
-                                        if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
-                                    ),
-                                    icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
-                                )
-                            }
-                        } else null,
-                        after = if (pinnedTags.isEmpty() && !favoritesEditButton) {
-                            null
-                        } else {
-                            {
-                                FavoritesTagSelector(
-                                    tags = pinnedTags,
-                                    selectedTag = selectedTag,
-                                    editButton = favoritesEditButton,
-                                    reverse = reverse,
-                                    onSelectTag = { favoritesVM.selectTag(it) },
-                                    scrollState = tagsScrollState,
-                                    expanded = favoritesTagsExpanded,
-                                    onExpand = { favoritesVM.setTagsExpanded(it) }
-                                )
-                            }
+                        onExpandTags = {
+                            favoritesVM.setTagsExpanded(it)
                         },
-                        highlightedItem = bestMatch as? SavableSearchable
+                        editButton = favoritesEditButton
                     )
                 }
 
-                GridResults(
-                    items = if (separateWorkProfile) if ((showWorkProfileApps || apps.isEmpty()) && workApps.isNotEmpty()) workApps.toImmutableList() else apps.toImmutableList() else listOf(
-                        apps,
-                        workApps
-                    ).flatten().sorted().toImmutableList(),
-                    columns = columns,
-                    reverse = reverse,
+                AppResults(
                     key = "apps",
-                    before = if (separateWorkProfile && workApps.isNotEmpty() && apps.isNotEmpty()) {
-                        {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 8.dp)
-                                    .padding(
-                                        top = if (reverse) 4.dp else 8.dp,
-                                        bottom = if (reverse) 8.dp else 4.dp
-                                    ),
-                            ) {
-                                FilterChip(
-                                    modifier = Modifier.padding(horizontal = 8.dp),
-                                    selected = !showWorkProfileApps,
-                                    onClick = { showWorkProfileApps = false },
-                                    leadingIcon = {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Person,
-                                            contentDescription = null,
-                                            modifier = Modifier.size(FilterChipDefaults.IconSize)
-                                        )
-                                    },
-                                    label = {
-                                        Text(
-                                            stringResource(R.string.apps_profile_main),
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
-                                    }
-                                )
-                                FilterChip(
-                                    selected = showWorkProfileApps,
-                                    onClick = { showWorkProfileApps = true },
-                                    leadingIcon = {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Work,
-                                            contentDescription = null,
-                                            modifier = Modifier.size(FilterChipDefaults.IconSize)
-                                        )
-                                    },
-                                    label = {
-                                        Text(
-                                            stringResource(R.string.apps_profile_work),
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
-                                    }
-                                )
-                            }
-                        }
-                    } else null,
-                    highlightedItem = bestMatch as? SavableSearchable
+                    apps = apps,
+                    highlightedItem = bestMatch as? Application,
+                    columns = columns,
+                    reverse = reverse
                 )
-                ListResults(
-                    before = if (missingShortcutsPermission && !isSearchEmpty) {
-                        {
-                            MissingPermissionBanner(
-                                modifier = Modifier.padding(8.dp),
-                                text = stringResource(
-                                    R.string.missing_permission_appshortcuts_search,
-                                    stringResource(R.string.app_name)
-                                ),
-                                onClick = { viewModel.requestAppShortcutPermission(context as AppCompatActivity) },
-                                secondaryAction = {
-                                    OutlinedButton(onClick = {
-                                        viewModel.disableAppShortcutSearch()
-                                    }) {
-                                        Text(
-                                            stringResource(R.string.turn_off),
-                                        )
-                                    }
-                                }
-                            )
-                        }
-                    } else null,
-                    items = appShortcuts.toImmutableList(),
-                    reverse = reverse,
-                    key = "shortcuts",
-                    highlightedItem = bestMatch as? SavableSearchable
-                )
-                for (conv in unitConverter) {
-                    SingleResult {
-                        UnitConverterItem(unitConverter = conv)
-                    }
+
+                if (privateProfile != null && isSearchEmpty) {
+                    AppResults(
+                        key = "apps-priv",
+                        apps = privateApps,
+                        profile = privateProfile,
+                        isProfileLocked = privateProfileState?.locked == true,
+                        onProfileLockChange = if (hasProfilesPermission) {
+                            { viewModel.setProfileLock(privateProfile, it) }
+                        } else null,
+                        highlightedItem = bestMatch as? Application,
+                        columns = columns,
+                        reverse = reverse
+                    )
                 }
-                for (calc in calculator) {
-                    SingleResult {
-                        CalculatorItem(calculator = calc)
-                    }
+
+                if (workProfile != null && isSearchEmpty) {
+                    AppResults(
+                        key = "apps-work",
+                        apps = workApps,
+                        profile = workProfile,
+                        isProfileLocked = workProfileState?.locked == true,
+                        onProfileLockChange = if (hasProfilesPermission) {
+                            { viewModel.setProfileLock(workProfile, it) }
+                        } else null,
+                        highlightedItem = bestMatch as? Application,
+                        columns = columns,
+                        reverse = reverse
+                    )
                 }
-                ListResults(
-                    before = if (missingCalendarPermission && !isSearchEmpty) {
-                        {
-                            MissingPermissionBanner(
-                                modifier = Modifier.padding(8.dp),
-                                text = stringResource(R.string.missing_permission_calendar_search),
-                                onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) },
-                                secondaryAction = {
-                                    OutlinedButton(onClick = {
-                                        viewModel.disableCalendarSearch()
-                                    }) {
-                                        Text(
-                                            stringResource(R.string.turn_off),
-                                        )
-                                    }
-                                }
-                            )
+
+                if (!isSearchEmpty) {
+
+                    ShortcutResults(
+                        shortcuts = appShortcuts,
+                        missingPermission = missingShortcutsPermission,
+                        onPermissionRequest = {
+                            viewModel.requestAppShortcutPermission(context as AppCompatActivity)
+                        },
+                        onPermissionRequestRejected = {
+                            viewModel.disableAppShortcutSearch()
+                        },
+                        reverse = reverse,
+                        selectedIndex = selectedShortcutIndex,
+                        onSelect = { selectedShortcutIndex = it },
+                        highlightedItem = bestMatch as? AppShortcut,
+                        truncate = expandedCategory != SearchCategory.Shortcuts,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Shortcuts)
+                        },
+                    )
+
+                    UnitConverterResults(
+                        converters = unitConverter,
+                        reverse = reverse,
+                        truncate = expandedCategory != SearchCategory.UnitConverter,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.UnitConverter)
                         }
-                    } else null,
-                    items = events.toImmutableList(),
-                    reverse = reverse,
-                    key = "events",
-                    highlightedItem = bestMatch as? SavableSearchable
-                )
-                ListResults(
-                    before = if (missingContactsPermission && !isSearchEmpty) {
-                        {
-                            MissingPermissionBanner(
-                                modifier = Modifier.padding(8.dp),
-                                text = stringResource(R.string.missing_permission_contact_search),
-                                onClick = { viewModel.requestContactsPermission(context as AppCompatActivity) },
-                                secondaryAction = {
-                                    OutlinedButton(onClick = {
-                                        viewModel.disableContactsSearch()
-                                    }) {
-                                        Text(
-                                            stringResource(R.string.turn_off),
-                                        )
-                                    }
-                                }
-                            )
+                    )
+
+                    CalculatorResults(
+                        calculator,
+                        reverse = reverse
+                    )
+
+                    CalendarResults(
+                        events = events,
+                        missingPermission = missingCalendarPermission,
+                        onPermissionRequest = {
+                            viewModel.requestCalendarPermission(context as AppCompatActivity)
+                        },
+                        onPermissionRequestRejected = {
+                            viewModel.disableCalendarSearch()
+                        },
+                        reverse = reverse,
+                        selectedIndex = selectedCalendarIndex,
+                        onSelect = { selectedCalendarIndex = it },
+                        highlightedItem = bestMatch as? CalendarEvent,
+                        truncate = expandedCategory != SearchCategory.Calendar,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Calendar)
                         }
-                    } else null,
-                    items = contacts.toImmutableList(),
-                    reverse = reverse,
-                    key = "contacts",
-                    highlightedItem = bestMatch as? SavableSearchable
-                )
-                ListResults(
-                    before = if (missingLocationPermission && !isSearchEmpty) {
-                        {
-                            MissingPermissionBanner(
-                                modifier = Modifier.padding(8.dp),
-                                text = stringResource(R.string.missing_permission_location_search),
-                                onClick = { viewModel.requestLocationPermission(context as AppCompatActivity) },
-                                secondaryAction = {
-                                    OutlinedButton(onClick = {
-                                        viewModel.disableLocationSearch()
-                                    }) {
-                                        Text(
-                                            stringResource(R.string.turn_off),
-                                        )
-                                    }
-                                }
-                            )
+                    )
+
+                    ContactResults(
+                        contacts = contacts,
+                        missingPermission = missingContactsPermission,
+                        onPermissionRequest = {
+                            viewModel.requestContactsPermission(context as AppCompatActivity)
+                        },
+                        onPermissionRequestRejected = {
+                            viewModel.disableContactsSearch()
+                        },
+                        reverse = reverse,
+                        selectedIndex = selectedContactIndex,
+                        onSelect = { selectedContactIndex = it },
+                        highlightedItem = bestMatch as? Contact,
+                        truncate = expandedCategory != SearchCategory.Contacts,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Contacts)
+                        },
+                    )
+
+                    LocationResults(
+                        locations = locations,
+                        missingPermission = missingLocationPermission,
+                        onPermissionRequest = {
+                            viewModel.requestLocationPermission(context as AppCompatActivity)
+                        },
+                        onPermissionRequestRejected = {
+                            viewModel.disableLocationSearch()
+                        },
+                        reverse = reverse,
+                        selectedIndex = selectedLocationIndex,
+                        onSelect = { selectedLocationIndex = it },
+                        highlightedItem = bestMatch as? Location,
+                        truncate = expandedCategory != SearchCategory.Location,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Location)
                         }
-                    } else null,
-                    items = locations.toImmutableList(),
-                    reverse = reverse,
-                    key = "locations",
-                    highlightedItem = bestMatch as? SavableSearchable
-                )
-                for (wiki in wikipedia) {
-                    SingleResult(highlight = bestMatch == wiki) {
-                        ArticleItem(article = wiki)
-                    }
+                    )
+                    ArticleResults(
+                        articles = wikipedia,
+                        selectedIndex = selectedArticleIndex,
+                        onSelect = { selectedArticleIndex = it },
+                        highlightedItem = bestMatch as? Article,
+                        reverse = reverse,
+                    )
+                    WebsiteResults(
+                        websites = website,
+                        selectedIndex = selectedWebsiteIndex,
+                        onSelect = { selectedWebsiteIndex = it },
+                        highlightedItem = bestMatch as? Website,
+                        reverse = reverse,
+                    )
+                    FileResults(
+                        files = files,
+                        onPermissionRequest = {
+                            viewModel.requestFilesPermission(context as AppCompatActivity)
+                        },
+                        onPermissionRequestRejected = {
+                            viewModel.disableFilesSearch()
+                        },
+                        reverse = reverse,
+                        highlightedItem = bestMatch as? File,
+                        missingPermission = missingFilesPermission,
+                        selectedIndex = selectedFileIndex,
+                        onSelect = {
+                            selectedFileIndex = it
+                        },
+                        truncate = expandedCategory != SearchCategory.Files,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Files)
+                        }
+                    )
                 }
-                for (ws in website) {
-                    SingleResult(highlight = bestMatch == ws) {
-                        WebsiteItem(website = ws)
-                    }
-                }
-                ListResults(
-                    before = if (missingFilesPermission && !isSearchEmpty) {
-                        {
-                            MissingPermissionBanner(
-                                modifier = Modifier.padding(8.dp),
-                                text = stringResource(R.string.missing_permission_files_search),
-                                onClick = { viewModel.requestFilesPermission(context as AppCompatActivity) },
-                                secondaryAction = {
-                                    OutlinedButton(onClick = {
-                                        viewModel.disableFilesSearch()
-                                    }) {
-                                        Text(
-                                            stringResource(R.string.turn_off),
-                                        )
-                                    }
-                                }
-                            )
-                        }
-                    } else null,
-                    items = files.toImmutableList(),
-                    reverse = reverse,
-                    key = "files",
-                    highlightedItem = bestMatch as? SavableSearchable
-                )
             }
         }
 
@@ -411,170 +349,6 @@ fun SearchColumn(
     }
 }
 
-fun LazyListScope.GridResults(
-    items: ImmutableList<SavableSearchable>,
-    columns: Int,
-    reverse: Boolean,
-    key: String,
-    before: (@Composable () -> Unit)? = null,
-    after: (@Composable () -> Unit)? = null,
-    highlightedItem: SavableSearchable?
-) {
-    if (items.isEmpty() && before == null && after == null) return
-
-    if (before != null) {
-        item(key = "$key-before") {
-            PartialCardRow(
-                isFirst = true,
-                isLast = items.isEmpty() && after == null,
-                reverse = reverse
-            ) {
-                before()
-            }
-        }
-    }
-
-    val rows = ceil(items.size / columns.toFloat()).toInt()
-    items(
-        rows,
-        key = {
-            "$key-${items[it * columns].key}"
-        }
-    ) {
-        PartialCardRow(
-            isFirst = it == 0 && before == null,
-            isLast = it == rows - 1 && after == null,
-            reverse = reverse
-        ) {
-            GridRow(
-                modifier = Modifier.padding(
-                    top = if (if (reverse) it == rows - 1 else it == 0) 4.dp else 0.dp,
-                    bottom = if (if (reverse) it == 0 else it == rows - 1) 2.dp else 0.dp,
-                ),
-                items = items.subList(
-                    it * columns,
-                    (it * columns + columns).coerceAtMost(items.size)
-                ),
-                columns = columns,
-                highlightedItem = highlightedItem
-            )
-        }
-    }
-
-    if (after != null) {
-        item(key = "$key-after") {
-            PartialCardRow(
-                isFirst = items.isEmpty() && before == null,
-                isLast = true,
-                reverse = reverse
-            ) {
-                after()
-            }
-        }
-    }
-}
-
-@Composable
-fun GridRow(
-    modifier: Modifier = Modifier,
-    items: ImmutableList<SavableSearchable>,
-    columns: Int,
-    showLabels: Boolean = LocalGridSettings.current.showLabels,
-    highlightedItem: SavableSearchable?
-) {
-
-    Row(
-        modifier = modifier
-    ) {
-        for (item in items) {
-            GridItem(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(4.dp),
-                item = item,
-                showLabels = showLabels,
-                highlight = item.key == highlightedItem?.key
-            )
-        }
-        for (i in 0 until columns - items.size) {
-            Spacer(modifier = Modifier.weight(1f))
-        }
-    }
-}
-
-fun LazyListScope.ListResults(
-    items: ImmutableList<SavableSearchable>,
-    reverse: Boolean,
-    key: String,
-    before: (@Composable () -> Unit)? = null,
-    after: (@Composable () -> Unit)? = null,
-    highlightedItem: SavableSearchable?,
-) {
-    if (before != null) {
-        item(key = "$key-before") {
-            PartialCardRow(
-                isFirst = true,
-                isLast = items.isEmpty() && after == null,
-                reverse = reverse
-            ) {
-                before()
-            }
-        }
-    }
-    items(
-        items.size,
-        key = {
-            "$key-${items[it].key}"
-        }
-    ) {
-        PartialCardRow(
-            isFirst = it == 0 && before == null,
-            isLast = it == items.lastIndex && after == null,
-            reverse = reverse
-        ) {
-            ListRow(
-                modifier = Modifier.padding(
-                    top = if (if (reverse) it == items.size - 1 else it == 0) 8.dp else 4.dp,
-                    bottom = if (if (reverse) it == 0 else it == items.size - 1) 8.dp else 4.dp,
-                ),
-                item = items[it],
-                highlight = items[it].key == highlightedItem?.key
-            )
-        }
-    }
-    if (after != null) {
-        item(key = "$key-after") {
-            PartialCardRow(
-                isFirst = items.isEmpty() && before == null,
-                isLast = true,
-                reverse = reverse
-            ) {
-                after()
-            }
-        }
-    }
-}
-
-@Composable
-fun ListRow(
-    modifier: Modifier = Modifier,
-    item: SavableSearchable,
-    highlight: Boolean
-) {
-    Box(
-        modifier = modifier.padding(
-            start = 8.dp,
-            end = 8.dp,
-        )
-    ) {
-        ListItem(
-            modifier = Modifier
-                .fillMaxWidth(),
-            item = item,
-            highlight = highlight
-        )
-    }
-}
 
 fun LazyListScope.SingleResult(
     highlight: Boolean = false,
@@ -596,31 +370,3 @@ fun LazyListScope.SingleResult(
     }
 }
 
-@Composable
-fun LazyItemScope.PartialCardRow(
-    modifier: Modifier = Modifier,
-    isFirst: Boolean,
-    isLast: Boolean,
-    reverse: Boolean,
-    content: @Composable () -> Unit
-) {
-    val isTop = isFirst && !reverse || isLast && reverse
-    val isBottom = isLast && !reverse || isFirst && reverse
-    Box(
-        modifier = modifier
-            .clipToBounds()
-    ) {
-        PartialLauncherCard(
-            modifier = Modifier.padding(
-                start = 8.dp,
-                end = 8.dp,
-                top = if (isTop) 4.dp else 0.dp,
-                bottom = if (isBottom) 4.dp else 0.dp,
-            ),
-            isTop = isTop,
-            isBottom = isBottom,
-        ) {
-            content()
-        }
-    }
-}

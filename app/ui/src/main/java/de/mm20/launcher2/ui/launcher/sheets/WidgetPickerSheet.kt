@@ -148,9 +148,6 @@ class BindAndConfigureAppWidgetActivity : Activity() {
             .setPendingIntentBackgroundActivityStartMode(
                 ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
             )
-            .setPendingIntentCreatorBackgroundActivityStartMode(
-                ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
-            )
             .toBundle()
     }
 

@@ -8,7 +8,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val applicationsModule = module {
-    factory<SearchableRepository<Application>>(named<Application>()) { AppRepositoryImpl(androidContext()) }
-    factory<AppRepository> { AppRepositoryImpl(androidContext()) }
+    factory<SearchableRepository<Application>>(named<Application>()) { get<AppRepository>() }
+    single<AppRepository> { AppRepositoryImpl(androidContext(), get()) }
     factory<SearchableDeserializer>(named(LauncherApp.Domain)) { LauncherAppDeserializer(androidContext()) }
 }

@@ -10,6 +10,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -50,6 +52,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
@@ -80,6 +83,8 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
+import de.mm20.launcher2.ui.locals.LocalCardStyle
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -194,7 +199,8 @@ fun PullDownScaffold(
     }
 
     val colorSurface = MaterialTheme.colorScheme.surface
-    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface, showStatusBarScrim) {
+    val isDarkTheme = LocalDarkTheme.current
+    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface, showStatusBarScrim, isSearchOpen) {
         if (isWidgetEditMode) {
             systemUiController.setStatusBarColor(
                 colorSurface
@@ -202,6 +208,11 @@ fun PullDownScaffold(
         } else if (showStatusBarScrim) {
             systemUiController.setStatusBarColor(
                 colorSurface.copy(0.7f),
+            )
+        } else if (isSearchOpen) {
+            systemUiController.setStatusBarColor(
+                Color.Transparent,
+                darkIcons = !isDarkTheme,
             )
         } else {
             systemUiController.setStatusBarColor(
@@ -376,8 +387,15 @@ fun PullDownScaffold(
     }
 
     val insets = WindowInsets.safeDrawing.asPaddingValues()
+    val colorSurfaceContainer = MaterialTheme.colorScheme.surfaceContainer
+    val cardStyle = LocalCardStyle.current
     Box(
         modifier = modifier
+            .drawBehind {
+                drawRect(
+                    color = colorSurfaceContainer.copy(alpha = -pagerState.getOffsetDistanceInPages(0) * 0.85f * cardStyle.opacity),
+                )
+            }
             .pointerInput(Unit) {
                 detectHorizontalDragGestures(
                     onDragEnd = {
@@ -402,7 +420,8 @@ fun PullDownScaffold(
                 LocalOverscrollConfiguration provides null
             ) {
                 VerticalPager(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     beyondViewportPageCount = 1,
                     state = pagerState,
                     reverseLayout = true,
@@ -518,10 +537,10 @@ fun PullDownScaffold(
                                         ),
                                     ),
                                 paddingValues = PaddingValues(
-                                    top = windowInsets.calculateTopPadding() + if (!bottomSearchBar) 60.dp + webSearchPadding else 4.dp,
+                                    top = windowInsets.calculateTopPadding() + if (!bottomSearchBar) 64.dp + webSearchPadding else 8.dp,
                                     bottom = windowInsets.calculateBottomPadding() +
                                             keyboardFilterBarPadding +
-                                            if (bottomSearchBar) 60.dp + webSearchPadding else 4.dp
+                                            if (bottomSearchBar) 64.dp + webSearchPadding else 8.dp
                                 ),
                                 state = searchState,
                                 reverse = reverseSearchResults,
@@ -548,7 +567,7 @@ fun PullDownScaffold(
                 },
                 navigationIcon = {
                     IconButton(onClick = { viewModel.setWidgetEditMode(false) }) {
-                        Icon(imageVector = Icons.Rounded.Done, contentDescription = null)
+                        Icon(imageVector = Icons.Rounded.Done, contentDescription = stringResource(R.string.action_done))
                     }
                 }
             )
@@ -596,7 +615,7 @@ fun PullDownScaffold(
             searchBarOffset = {
                 (if (searchBarFocused || fixedSearchBar) 0 else searchBarOffset.value.toInt() * (if (bottomSearchBar) 1 else -1)) +
                         with(density) {
-                            (editModeSearchBarOffset - if(bottomSearchBar) keyboardFilterBarPadding else 0.dp)
+                            (editModeSearchBarOffset - if (bottomSearchBar) keyboardFilterBarPadding else 0.dp)
                                 .toPx()
                                 .roundToInt()
                         }

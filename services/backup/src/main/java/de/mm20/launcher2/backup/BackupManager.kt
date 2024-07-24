@@ -28,7 +28,7 @@ class BackupManager(
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
 
         val meta = BackupMetadata(
-            appVersionName = packageInfo.versionName,
+            appVersionName = packageInfo.versionName ?: "",
             timestamp = System.currentTimeMillis(),
             deviceName = Build.MODEL,
             format = BackupFormat,

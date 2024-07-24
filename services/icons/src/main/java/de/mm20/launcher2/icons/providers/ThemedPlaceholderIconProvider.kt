@@ -33,6 +33,7 @@ internal class ThemedPlaceholderIconProvider(
                 color = 0,
                 scale = layer.scale,
             )
+            is VectorLayer -> layer.copy(color = 0)
             is TextLayer -> layer.copy(color = 0)
             is TintedIconLayer -> layer.copy(color = 0)
             is TintedClockLayer -> return layer.copy(color = 0)

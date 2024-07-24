@@ -16,10 +16,10 @@ import java.util.concurrent.ExecutionException
 internal data class WebsiteImpl(
     override val label: String,
     override val url: String,
-    override val description: String,
-    override val imageUrl: String,
-    override val faviconUrl: String,
-    override val color: Int,
+    override val description: String?,
+    override val imageUrl: String?,
+    override val faviconUrl: String?,
+    override val color: Int?,
     override val labelOverride: String? = null,
 ) : Website {
 
@@ -38,7 +38,7 @@ internal data class WebsiteImpl(
         size: Int,
         themed: Boolean,
     ): LauncherIcon? {
-        if (faviconUrl.isEmpty()) return null
+        if (faviconUrl == null) return null
         try {
             val request = ImageRequest.Builder(context)
                 .data(faviconUrl)
@@ -61,7 +61,7 @@ internal data class WebsiteImpl(
     }
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
-        val color = if (color != 0) color else 0xFFF76F8E.toInt()
+        val color = color ?: 0xFFF76F8E.toInt()
         if (label.isNotBlank()) {
             return StaticLauncherIcon(
                 foregroundLayer = TextLayer(text = label[0].toString(), color = color),

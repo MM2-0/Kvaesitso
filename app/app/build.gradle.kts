@@ -31,8 +31,8 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2024050900
-        versionName = "1.30.3"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2024072200
+        versionName = "1.32.1"
         signingConfig = signingConfigs.getByName("debug")
     }
 
@@ -57,7 +57,7 @@ android {
         }
         debug {
             applicationIdSuffix = ".debug"
-            isDebuggable = false
+            isDebuggable = true
         }
         create("nightly") {
             initWith(getByName("release"))
@@ -115,7 +115,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.exifinterface)
     implementation(libs.materialcomponents.core)
-    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.constraintlayout.views)
 
     implementation(libs.bundles.androidx.lifecycle)
 
@@ -152,6 +152,7 @@ dependencies {
     implementation(project(":data:notifications"))
     implementation(project(":libs:owncloud"))
     implementation(project(":core:permissions"))
+    implementation(project(":core:profiles"))
     implementation(project(":core:preferences"))
     implementation(project(":services:search"))
     implementation(project(":services:tags"))
@@ -166,7 +167,7 @@ dependencies {
     implementation(project(":services:global-actions"))
     implementation(project(":services:widgets"))
     implementation(project(":services:favorites"))
-    implementation(project(":data:openstreetmaps"))
+    implementation(project(":data:locations"))
     implementation(project(":services:plugins"))
     implementation(project(":core:devicepose"))
 

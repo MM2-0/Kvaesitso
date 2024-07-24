@@ -16,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -30,7 +31,7 @@ import org.koin.core.error.NoBeanDefFoundException
 import org.koin.core.qualifier.named
 import java.io.File
 
-interface SavableSearchableRepository: Backupable {
+interface SavableSearchableRepository : Backupable {
 
     fun insert(
         searchable: SavableSearchable,
@@ -38,7 +39,7 @@ interface SavableSearchableRepository: Backupable {
 
     fun upsert(
         searchable: SavableSearchable,
-        hidden: Boolean? = null,
+        visibility: VisibilityLevel? = null,
         pinned: Boolean? = null,
         launchCount: Int? = null,
         weight: Double? = null,
@@ -46,7 +47,7 @@ interface SavableSearchableRepository: Backupable {
 
     fun update(
         searchable: SavableSearchable,
-        hidden: Boolean? = null,
+        visibility: VisibilityLevel? = null,
         pinned: Boolean? = null,
         launchCount: Int? = null,
         weight: Double? = null,
@@ -59,29 +60,35 @@ interface SavableSearchableRepository: Backupable {
         searchable: SavableSearchable,
     )
 
+    /**
+     * @param minVisibility the minimum visibility of the searchables to return. A visible is
+     * considered to be "lower" when it makes an item less visible.
+     * @param maxVisibility the maximum visibility of the searchables to return. A visible is
+     * considered to be "higher" when it makes an item more visible.
+     */
     fun get(
         includeTypes: List<String>? = null,
         excludeTypes: List<String>? = null,
-        manuallySorted: Boolean = false,
-        automaticallySorted: Boolean = false,
-        frequentlyUsed: Boolean = false,
-        hidden: Boolean = false,
-        limit: Int = 100,
+        minPinnedLevel: PinnedLevel = PinnedLevel.NotPinned,
+        maxPinnedLevel: PinnedLevel = PinnedLevel.ManuallySorted,
+        minVisibility: VisibilityLevel = VisibilityLevel.Hidden,
+        maxVisibility: VisibilityLevel = VisibilityLevel.Default,
+        limit: Int = 9999,
     ): Flow<List<SavableSearchable>>
 
     fun getKeys(
         includeTypes: List<String>? = null,
         excludeTypes: List<String>? = null,
-        manuallySorted: Boolean = false,
-        automaticallySorted: Boolean = false,
-        frequentlyUsed: Boolean = false,
-        hidden: Boolean = false,
-        limit: Int = 100,
+        minPinnedLevel: PinnedLevel = PinnedLevel.NotPinned,
+        maxPinnedLevel: PinnedLevel = PinnedLevel.ManuallySorted,
+        minVisibility: VisibilityLevel = VisibilityLevel.Hidden,
+        maxVisibility: VisibilityLevel = VisibilityLevel.Default,
+        limit: Int = 9999,
     ): Flow<List<String>>
 
 
     fun isPinned(searchable: SavableSearchable): Flow<Boolean>
-    fun isHidden(searchable: SavableSearchable): Flow<Boolean>
+    fun getVisibility(searchable: SavableSearchable): Flow<VisibilityLevel>
     fun updateFavorites(
         manuallySorted: List<SavableSearchable>,
         automaticallySorted: List<SavableSearchable>,
@@ -105,7 +112,7 @@ interface SavableSearchableRepository: Backupable {
      * Get items with the given keys from the favorites database.
      * Items that don't exist in the database will not be returned.
      */
-    suspend fun getByKeys(keys: List<String>): List<SavableSearchable>
+    fun getByKeys(keys: List<String>): Flow<List<SavableSearchable>>
 
     /**
      * Remove database entries that are invalid. This includes
@@ -130,7 +137,7 @@ internal class SavableSearchableRepositoryImpl(
                     key = searchable.key,
                     type = searchable.domain,
                     serializedSearchable = searchable.serialize() ?: return@launch,
-                    hidden = false,
+                    visibility = VisibilityLevel.Default.value,
                     launchCount = 0,
                     weight = 0.0,
                     pinPosition = 0,
@@ -142,7 +149,7 @@ internal class SavableSearchableRepositoryImpl(
 
     override fun upsert(
         searchable: SavableSearchable,
-        hidden: Boolean?,
+        visibility: VisibilityLevel?,
         pinned: Boolean?,
         launchCount: Int?,
         weight: Double?
@@ -154,7 +161,7 @@ internal class SavableSearchableRepositoryImpl(
                 SavedSearchableEntity(
                     key = searchable.key,
                     type = searchable.domain,
-                    hidden = hidden ?: entity?.hidden ?: false,
+                    visibility = visibility?.value ?: entity?.visibility ?: 0,
                     pinPosition = pinned?.let { if (it) 1 else 0 } ?: entity?.pinPosition ?: 0,
                     launchCount = launchCount ?: entity?.launchCount ?: 0,
                     weight = weight ?: entity?.weight ?: 0.0,
@@ -166,7 +173,7 @@ internal class SavableSearchableRepositoryImpl(
 
     override fun update(
         searchable: SavableSearchable,
-        hidden: Boolean?,
+        visibility: VisibilityLevel?,
         pinned: Boolean?,
         launchCount: Int?,
         weight: Double?
@@ -178,7 +185,7 @@ internal class SavableSearchableRepositoryImpl(
                 SavedSearchableEntity(
                     key = searchable.key,
                     type = searchable.domain,
-                    hidden = hidden ?: entity?.hidden ?: false,
+                    visibility = visibility?.value ?: entity?.visibility ?: 0,
                     pinPosition = pinned?.let { if (it) 1 else 0 } ?: entity?.pinPosition ?: 0,
                     launchCount = launchCount ?: entity?.launchCount ?: 0,
                     weight = weight ?: entity?.weight ?: 0.0,
@@ -196,7 +203,8 @@ internal class SavableSearchableRepositoryImpl(
                     WeightFactor.High -> WEIGHT_FACTOR_HIGH
                     else -> WEIGHT_FACTOR_MEDIUM
                 }
-            val item = SavedSearchable(searchable.key, searchable, 0, 0, false, 0.0)
+            val item =
+                SavedSearchable(searchable.key, searchable, 0, 0, VisibilityLevel.Default, 0.0)
             item.toDatabaseEntity()?.let {
                 database.searchableDao()
                     .touch(it, weightFactor)
@@ -207,37 +215,43 @@ internal class SavableSearchableRepositoryImpl(
     override fun get(
         includeTypes: List<String>?,
         excludeTypes: List<String>?,
-        manuallySorted: Boolean,
-        automaticallySorted: Boolean,
-        frequentlyUsed: Boolean,
-        hidden: Boolean,
+        minPinnedLevel: PinnedLevel,
+        maxPinnedLevel: PinnedLevel,
+        minVisibility: VisibilityLevel,
+        maxVisibility: VisibilityLevel,
         limit: Int
     ): Flow<List<SavableSearchable>> {
         val dao = database.searchableDao()
         val entities = when {
             includeTypes == null && excludeTypes == null -> dao.get(
-                manuallySorted = manuallySorted,
-                automaticallySorted = automaticallySorted,
-                frequentlyUsed = frequentlyUsed,
-                hidden = hidden,
+                manuallySorted = PinnedLevel.ManuallySorted in minPinnedLevel..maxPinnedLevel,
+                automaticallySorted = PinnedLevel.AutomaticallySorted in minPinnedLevel..maxPinnedLevel,
+                frequentlyUsed = PinnedLevel.FrequentlyUsed in minPinnedLevel..maxPinnedLevel,
+                unused = PinnedLevel.NotPinned in minPinnedLevel..maxPinnedLevel,
+                minVisibility = minVisibility.value,
+                maxVisibility = maxVisibility.value,
                 limit = limit
             )
 
             includeTypes == null -> dao.getExcludeTypes(
                 excludeTypes = excludeTypes,
-                manuallySorted = manuallySorted,
-                automaticallySorted = automaticallySorted,
-                frequentlyUsed = frequentlyUsed,
-                hidden = hidden,
+                manuallySorted = PinnedLevel.ManuallySorted in minPinnedLevel..maxPinnedLevel,
+                automaticallySorted = PinnedLevel.AutomaticallySorted in minPinnedLevel..maxPinnedLevel,
+                frequentlyUsed = PinnedLevel.FrequentlyUsed in minPinnedLevel..maxPinnedLevel,
+                unused = PinnedLevel.NotPinned in minPinnedLevel..maxPinnedLevel,
+                minVisibility = minVisibility.value,
+                maxVisibility = maxVisibility.value,
                 limit = limit
             )
 
             excludeTypes == null -> dao.getIncludeTypes(
                 includeTypes = includeTypes,
-                manuallySorted = manuallySorted,
-                automaticallySorted = automaticallySorted,
-                frequentlyUsed = frequentlyUsed,
-                hidden = hidden,
+                manuallySorted = PinnedLevel.ManuallySorted in minPinnedLevel..maxPinnedLevel,
+                automaticallySorted = PinnedLevel.AutomaticallySorted in minPinnedLevel..maxPinnedLevel,
+                frequentlyUsed = PinnedLevel.FrequentlyUsed in minPinnedLevel..maxPinnedLevel,
+                unused = PinnedLevel.NotPinned in minPinnedLevel..maxPinnedLevel,
+                minVisibility = minVisibility.value,
+                maxVisibility = maxVisibility.value,
                 limit = limit
             )
 
@@ -252,37 +266,43 @@ internal class SavableSearchableRepositoryImpl(
     override fun getKeys(
         includeTypes: List<String>?,
         excludeTypes: List<String>?,
-        manuallySorted: Boolean,
-        automaticallySorted: Boolean,
-        frequentlyUsed: Boolean,
-        hidden: Boolean,
+        minPinnedLevel: PinnedLevel,
+        maxPinnedLevel: PinnedLevel,
+        minVisibility: VisibilityLevel,
+        maxVisibility: VisibilityLevel,
         limit: Int
     ): Flow<List<String>> {
         val dao = database.searchableDao()
         return when {
             includeTypes == null && excludeTypes == null -> dao.getKeys(
-                manuallySorted = manuallySorted,
-                automaticallySorted = automaticallySorted,
-                frequentlyUsed = frequentlyUsed,
-                hidden = hidden,
+                manuallySorted = PinnedLevel.ManuallySorted in minPinnedLevel..maxPinnedLevel,
+                automaticallySorted = PinnedLevel.AutomaticallySorted in minPinnedLevel..maxPinnedLevel,
+                frequentlyUsed = PinnedLevel.FrequentlyUsed in minPinnedLevel..maxPinnedLevel,
+                unused = PinnedLevel.NotPinned in minPinnedLevel..maxPinnedLevel,
+                minVisibility = minVisibility.value,
+                maxVisibility = maxVisibility.value,
                 limit = limit
             )
 
             includeTypes == null -> dao.getKeysExcludeTypes(
                 excludeTypes = excludeTypes,
-                manuallySorted = manuallySorted,
-                automaticallySorted = automaticallySorted,
-                frequentlyUsed = frequentlyUsed,
-                hidden = hidden,
+                manuallySorted = PinnedLevel.ManuallySorted in minPinnedLevel..maxPinnedLevel,
+                automaticallySorted = PinnedLevel.AutomaticallySorted in minPinnedLevel..maxPinnedLevel,
+                frequentlyUsed = PinnedLevel.FrequentlyUsed in minPinnedLevel..maxPinnedLevel,
+                unused = PinnedLevel.NotPinned in minPinnedLevel..maxPinnedLevel,
+                minVisibility = minVisibility.value,
+                maxVisibility = maxVisibility.value,
                 limit = limit
             )
 
             excludeTypes == null -> dao.getKeysIncludeTypes(
                 includeTypes = includeTypes,
-                manuallySorted = manuallySorted,
-                automaticallySorted = automaticallySorted,
-                frequentlyUsed = frequentlyUsed,
-                hidden = hidden,
+                manuallySorted = PinnedLevel.ManuallySorted in minPinnedLevel..maxPinnedLevel,
+                automaticallySorted = PinnedLevel.AutomaticallySorted in minPinnedLevel..maxPinnedLevel,
+                frequentlyUsed = PinnedLevel.FrequentlyUsed in minPinnedLevel..maxPinnedLevel,
+                unused = PinnedLevel.NotPinned in minPinnedLevel..maxPinnedLevel,
+                minVisibility = minVisibility.value,
+                maxVisibility = maxVisibility.value,
                 limit = limit
             )
 
@@ -294,8 +314,10 @@ internal class SavableSearchableRepositoryImpl(
         return database.searchableDao().isPinned(searchable.key)
     }
 
-    override fun isHidden(searchable: SavableSearchable): Flow<Boolean> {
-        return database.searchableDao().isHidden(searchable.key)
+    override fun getVisibility(searchable: SavableSearchable): Flow<VisibilityLevel> {
+        return database.searchableDao().getVisibility(searchable.key).map {
+            VisibilityLevel.fromInt(it)
+        }
     }
 
     override fun delete(searchable: SavableSearchable) {
@@ -365,7 +387,7 @@ internal class SavableSearchableRepositoryImpl(
             searchable = searchable,
             launchCount = entity.launchCount,
             pinPosition = entity.pinPosition,
-            hidden = entity.hidden,
+            visibility = VisibilityLevel.fromInt(entity.visibility),
             weight = entity.weight
         )
     }
@@ -376,16 +398,20 @@ internal class SavableSearchableRepositoryImpl(
         }
     }
 
-    override suspend fun getByKeys(keys: List<String>): List<SavableSearchable> {
+    override fun getByKeys(keys: List<String>): Flow<List<SavableSearchable>> {
         val dao = database.searchableDao()
         if (keys.size > 999) {
-            return keys.chunked(999).flatMap {
+            return combine(keys.chunked(999).map {
                 dao.getByKeys(it)
-                    .mapNotNull { fromDatabaseEntity(it).searchable }
+                    .map {
+                        it.mapNotNull { fromDatabaseEntity(it).searchable }
+                    }
+            }) { results ->
+                results.flatMap { it }
             }
         }
         return dao.getByKeys(keys)
-            .mapNotNull { fromDatabaseEntity(it).searchable }
+            .map { it.mapNotNull { fromDatabaseEntity(it).searchable } }
     }
 
     override suspend fun backup(toDir: File) = withContext(Dispatchers.IO) {
@@ -399,7 +425,7 @@ internal class SavableSearchableRepositoryImpl(
                     jsonObjectOf(
                         "key" to fav.key,
                         "type" to fav.type,
-                        "hidden" to fav.hidden,
+                        "visibility" to fav.visibility,
                         "launchCount" to fav.launchCount,
                         "pinPosition" to fav.pinPosition,
                         "searchable" to fav.serializedSearchable,
@@ -435,7 +461,7 @@ internal class SavableSearchableRepositoryImpl(
                         type = json.optString("type").takeIf { it.isNotEmpty() } ?: continue,
                         serializedSearchable = json.getString("searchable"),
                         launchCount = json.getInt("launchCount"),
-                        hidden = json.getBoolean("hidden"),
+                        visibility = json.optInt("visibility", 0),
                         pinPosition = json.getInt("pinPosition"),
                         weight = json.optDouble("weight").takeIf { !it.isNaN() } ?: 0.0
                     )

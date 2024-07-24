@@ -2,23 +2,23 @@
 <resources>
     <plurals name="unit_meter">
         <item quantity="one">meter</item>
-        <item quantity="other">meters</item>
+        <item quantity="other">meter</item>
     </plurals>
     <string name="unit_kilometer_symbol">km</string>
     <plurals name="unit_kilometer">
         <item quantity="one">kilometer</item>
-        <item quantity="other">kilometers</item>
+        <item quantity="other">kilometer</item>
     </plurals>
     <string name="unit_centimeter_symbol">cm</string>
     <string name="unit_meter_symbol">m</string>
     <plurals name="unit_centimeter">
         <item quantity="one">centimeter</item>
-        <item quantity="other">centimeters</item>
+        <item quantity="other">centimeter</item>
     </plurals>
     <string name="unit_millimeter_symbol">mm</string>
     <plurals name="unit_millimeter">
         <item quantity="one">millimeter</item>
-        <item quantity="other">millimeters</item>
+        <item quantity="other">millimeter</item>
     </plurals>
     <string name="unit_inch_symbol">in</string>
     <plurals name="unit_inch">
@@ -48,22 +48,22 @@
     <string name="unit_sqmeter_symbol">m²</string>
     <plurals name="unit_sqmeter">
         <item quantity="one">vierkante meter</item>
-        <item quantity="other">vierkante meters</item>
+        <item quantity="other">vierkante meter</item>
     </plurals>
     <string name="unit_sqkilometer_symbol">km²</string>
     <plurals name="unit_sqkilometer">
         <item quantity="one">vierkante kilometer</item>
-        <item quantity="other">vierkante kilometers</item>
+        <item quantity="other">vierkante kilometer</item>
     </plurals>
     <string name="unit_sqcentimeter_symbol">cm²</string>
     <plurals name="unit_sqcentimeter">
         <item quantity="one">vierkante centimeter</item>
-        <item quantity="other">vierkante centimeters</item>
+        <item quantity="other">vierkante centimeter</item>
     </plurals>
     <string name="unit_sqmillimeter_symbol">mm²</string>
     <plurals name="unit_sqmillimeter">
         <item quantity="one">vierkante millimeter</item>
-        <item quantity="other">vierkante millimeters</item>
+        <item quantity="other">vierkante millimeter</item>
     </plurals>
     <string name="unit_sqinch_symbol">sqin</string>
     <plurals name="unit_sqinch">
@@ -83,7 +83,7 @@
     <string name="unit_hectare_symbol">ha</string>
     <plurals name="unit_hectare">
         <item quantity="one">hectare</item>
-        <item quantity="other">hectares</item>
+        <item quantity="other">hectare</item>
     </plurals>
     <string name="unit_acre_symbol">ac</string>
     <plurals name="unit_acre">
@@ -93,7 +93,7 @@
     <string name="unit_second_symbol">s</string>
     <plurals name="unit_second">
         <item quantity="one">seconde</item>
-        <item quantity="other">secondes</item>
+        <item quantity="other">seconden</item>
     </plurals>
     <string name="unit_millisecond_symbol">ms</string>
     <string name="unit_minute_symbol">min</string>
@@ -104,7 +104,7 @@
     <string name="unit_hour_symbol">h</string>
     <plurals name="unit_millisecond">
         <item quantity="one">milliseconde</item>
-        <item quantity="other">millisecondes</item>
+        <item quantity="other">milliseconden</item>
     </plurals>
     <plurals name="unit_hour">
         <item quantity="one">uur</item>
@@ -133,7 +133,7 @@
     <string name="unit_megabyte_symbol">MB</string>
     <plurals name="unit_megabyte">
         <item quantity="one">megabyte</item>
-        <item quantity="other">megabytes</item>
+        <item quantity="other">megabyte</item>
     </plurals>
     <string name="unit_gigabyte_symbol">GB</string>
     <plurals name="unit_gigabyte">
@@ -213,32 +213,32 @@
     <string name="unit_kilogram_symbol">kg</string>
     <plurals name="unit_kilogram">
         <item quantity="one">kilogram</item>
-        <item quantity="other">kilogrammen</item>
+        <item quantity="other">kilogram</item>
     </plurals>
     <string name="unit_gram_symbol">g</string>
     <plurals name="unit_gram">
         <item quantity="one">gram</item>
-        <item quantity="other">grammen</item>
+        <item quantity="other">gram</item>
     </plurals>
     <string name="unit_metric_ton_symbol">t</string>
     <plurals name="unit_metric_ton">
         <item quantity="one">ton</item>
-        <item quantity="other">tonnen</item>
+        <item quantity="other">ton</item>
     </plurals>
     <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
         <item quantity="one">Engelse ton</item>
-        <item quantity="other">Engelse tonnen</item>
+        <item quantity="other">Engelse ton</item>
     </plurals>
     <string name="unit_stone_symbol">st.</string>
     <plurals name="unit_stone">
         <item quantity="one">stone</item>
-        <item quantity="other">stones</item>
+        <item quantity="other">stone</item>
     </plurals>
     <string name="unit_pound_symbol">lb.</string>
     <plurals name="unit_pound">
-        <item quantity="one">pond</item>
-        <item quantity="other">ponden</item>
+        <item quantity="one">pound</item>
+        <item quantity="other">pounds</item>
     </plurals>
     <string name="unit_ounce_symbol">oz.</string>
     <plurals name="unit_ounce">
@@ -263,6 +263,11 @@
     <string name="unit_kelvin_symbol">K</string>
     <plurals name="unit_kelvin">
         <item quantity="one">kelvin</item>
-        <item quantity="other">kelvins</item>
+        <item quantity="other">kelvin</item>
+    </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">decimeter</item>
+        <item quantity="other">decimeter</item>
     </plurals>
 </resources>

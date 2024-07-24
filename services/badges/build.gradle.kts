@@ -38,7 +38,7 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
-
+    implementation(libs.androidx.compose.materialicons)
     implementation(libs.bundles.androidx.lifecycle)
 
     implementation(libs.koin.android)
@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":data:appshortcuts"))
     implementation(project(":data:notifications"))
     implementation(project(":core:preferences"))
+    implementation(project(":core:profiles"))
     implementation(project(":core:base"))
     implementation(project(":data:files"))
     implementation(project(":data:searchable"))

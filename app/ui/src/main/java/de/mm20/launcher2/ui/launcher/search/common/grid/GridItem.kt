@@ -3,14 +3,17 @@ package de.mm20.launcher2.ui.launcher.search.common.grid
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
@@ -23,7 +26,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +41,8 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -80,6 +84,7 @@ fun GridItem(
     modifier: Modifier = Modifier,
     item: SavableSearchable,
     showLabels: Boolean = true,
+    labelMaxLines: Int = 1,
     highlight: Boolean = false
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${item.key}")
@@ -88,8 +93,6 @@ fun GridItem(
     LaunchedEffect(item, iconSize) {
         viewModel.init(item, iconSize.toInt())
     }
-
-    val item = viewModel.searchable.collectAsState().value ?: item
 
     val context = LocalContext.current
 
@@ -117,8 +120,9 @@ fun GridItem(
                 },
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally
+            ) then if (!showLabels) Modifier.aspectRatio(1f) else Modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         val badge by viewModel.badge.collectAsStateWithLifecycle()
         val icon by viewModel.icon.collectAsStateWithLifecycle()
@@ -152,10 +156,13 @@ fun GridItem(
             modifier = if (highlight) {
                 Modifier
                     .background(
-                        MaterialTheme.colorScheme.outlineVariant,
+                        MaterialTheme.colorScheme.surfaceVariant,
                         iconShape
                     )
-            } else Modifier,
+            } else Modifier then if (showLabels) Modifier else Modifier
+                .semantics {
+                    contentDescription = item.label
+                },
         ) {
             ShapedLauncherIcon(
                 modifier = Modifier
@@ -181,8 +188,9 @@ fun GridItem(
                 text = item.labelOverride ?: item.label,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                maxLines = labelMaxLines,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onBackground,
             )
         }
 
@@ -200,16 +208,24 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
         }
     }
     val animationProgress = remember {
-        Animatable(0f).apply {
-            updateBounds(0f, 1f)
-        }
+        Animatable(0f)
     }
     LaunchedEffect(show.targetState) {
         if (!show.targetState) {
-            animationProgress.animateTo(0f, tween(300))
+            animationProgress.animateTo(
+                0f, spring(
+                    Spring.DampingRatioNoBouncy,
+                    Spring.StiffnessMediumLow,
+                )
+            )
             onDismissRequest()
         } else {
-            animationProgress.animateTo(1f, tween(300))
+            animationProgress.animateTo(
+                1f, spring(
+                    Spring.DampingRatioLowBouncy,
+                    Spring.StiffnessMediumLow,
+                )
+            )
         }
     }
     BackHandler {
@@ -219,11 +235,18 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
     Overlay {
         Box(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.32f * animationProgress.value))
+                .background(
+                    MaterialTheme.colorScheme.scrim.copy(
+                        alpha = 0.32f * animationProgress.value.coerceIn(
+                            0f,
+                            1f
+                        )
+                    )
+                )
                 .fillMaxSize()
                 .systemBarsPadding()
                 .imePadding()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 8.dp)
                 .then(
                     if (show.targetState) {
                         Modifier.pointerInput(Unit) {
@@ -242,7 +265,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                 modifier = Modifier
                     .placeOverlay(
                         origin.translate(
-                            -16.dp.toPixels(),
+                            -8.dp.toPixels(),
                             -WindowInsets.systemBars.union(WindowInsets.ime)
                                 .getTop(LocalDensity.current).toFloat()
                         ),

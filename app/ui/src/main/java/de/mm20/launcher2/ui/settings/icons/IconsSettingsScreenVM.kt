@@ -121,9 +121,6 @@ class IconsSettingsScreenVM(
         favoritesService.getFavorites(
             includeTypes = listOf("app"),
             limit = grid.columnCount,
-            manuallySorted = true,
-            automaticallySorted = true,
-            frequentlyUsed = true,
         )
     }.shareIn(viewModelScope, started = SharingStarted.WhileSubscribed(), 1)
 

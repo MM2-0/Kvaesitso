@@ -191,7 +191,7 @@ fun FileSearchSettingsScreen() {
                     if (state is PluginState.SetupRequired) {
                         Banner(
                             modifier = Modifier.padding(16.dp),
-                            text = state.message ?: "You need to setup this plugin first",
+                            text = state.message ?: stringResource(id = R.string.plugin_state_setup_required),
                             icon = Icons.Rounded.ErrorOutline,
                             primaryAction = {
                                 TextButton(onClick = {
@@ -201,7 +201,7 @@ fun FileSearchSettingsScreen() {
                                         CrashReporter.logException(e)
                                     }
                                 }) {
-                                    Text("Set up")
+                                    Text(stringResource(id = R.string.plugin_action_setup))
                                 }
                             }
                         )

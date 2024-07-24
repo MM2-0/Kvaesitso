@@ -14,9 +14,9 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.icons.Fdroid
-import de.mm20.launcher2.ui.icons.GitHub
-import de.mm20.launcher2.ui.icons.Telegram
+import de.mm20.launcher2.icons.Fdroid
+import de.mm20.launcher2.icons.GitHub
+import de.mm20.launcher2.icons.Telegram
 import de.mm20.launcher2.ui.locals.LocalNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

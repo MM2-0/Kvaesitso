@@ -27,10 +27,6 @@
     <string name="file_type_text">Metin dosyası</string>
     <string name="file_type_ebook">E-kitap</string>
     <string name="file_type_drawing">Çizim dosyası</string>
-    <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
-    <string name="websearch_dialog_create_title">Web arama ekle</string>
-    <string name="websearch_dialog_name">İsim</string>
-    <string name="websearch_dialog_url">Url</string>
     <string name="file_type_music">Müzik dosyası</string>
     <string name="file_type_launcherbackup">%1$s yedekleme</string>
     <string name="file_type_generic">%1$s dosya</string>
@@ -51,11 +47,9 @@
     <string name="file_type_source_code">Kaynak kod dosyası</string>
     <string name="file_type_document">Doküman</string>
     <string name="file_type_spreadsheet">Excel dosyası</string>
-    <string name="error_activity_not_found">Açılmıyor %1$s</string>
     <string name="menu_uninstall">Kaldır</string>
     <string name="menu_launch">Çalıştır</string>
     <string name="alert_delete_shortcut">Kısayol %1$s kalıcı olarak silinecektir. İlerlemek ister misiniz\?</string>
-    <string name="default_websearch_1_name">Google</string>
     <string name="default_websearch_2_name">You Tube</string>
     <string name="alert_delete_file">Dosya %1$s kalıcı olarak silinecektir. İlerlemek istiyor musunuz\?</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
@@ -67,7 +61,6 @@
     <string name="app_info_version">Sürüm %1$s</string>
     <string name="settings">Ayarlar</string>
     <string name="wind_north_north_west">Kuzey-Kuzeybatı</string>
-    <string name="precipitation_none">Yağış yok</string>
     <string name="wikipedia_url">https://tr.wikipedia.org</string>
     <string name="wind_south_south_east">Güney-Güneydoğu</string>
     <string name="file_meta_app_name">Uygulama adı: %1$s</string>
@@ -89,10 +82,8 @@
     <string name="menu_unhide">Gizleme</string>
     <string name="wind_north_east">Kuzeydoğu</string>
     <string name="wind_north_north_east">Kuzey-Kuzeydoğu</string>
-    <string name="websearch_dialog_edit_title">Web arama düzenle</string>
     <string name="websearch_dialog_query_encoding">Sorgu kodlama</string>
     <string name="websearch_dialog_query_encoding_url">Yüzde-kodlama</string>
-    <string name="websearch_dialog_url_description">\'${1}\' ifadesi gerçek arama terimiyle değiştirilecektir.</string>
     <string name="websearch_dialog_url_error">Bu URL\'de \'${1}\' yer tutucusu eksik</string>
     <string name="websearch_dialog_replace_icon">Simgeyi değiştir</string>
     <string name="menu_edit_widgets">Widget\'ları düzenle</string>
@@ -101,7 +92,6 @@
     <string name="widget_name_music">Müzik</string>
     <string name="widget_name_favorites">Favoriler</string>
     <string name="widget_add_widget">Widget ekle</string>
-    <string name="widget_add_external">Daha fazla</string>
     <string name="edit_favorites_dialog_tags">Etiketler</string>
     <string name="edit_favorites_dialog_tag_section_empty">Sabitlenmiş etiketler burada görünecektir</string>
     <string name="nextcloud_server_url">Nextcloud sunucu URL\'si</string>
@@ -114,24 +104,18 @@
     <string name="edit_favorites_dialog_new_tag">Etiket oluştur…</string>
     <string name="close">Kapat</string>
     <string name="skip">Atla</string>
-    <string name="action_continue">Devam et</string>
     <string name="turn_off">Kapat</string>
-    <string name="widget_action_adjust_height">Yüksekliği ayarla</string>
     <string name="widget_action_remove">Kaldır</string>
-    <string name="widget_action_settings">Ayarlar</string>
     <string name="widget_action_replace">Değiştir</string>
     <string name="menu_item_edit_favs">Favorileri düzenle</string>
     <string name="edit_favorites_dialog_empty_section">Öğeleri buraya sürükleyin</string>
     <string name="save">Kaydet</string>
     <string name="websearch_dialog_delete_icon">Simgeyi sil</string>
     <string name="websearch_dialog_custom_icon">Özel simge</string>
-    <string name="websearch_dialog_import_url">URL\'den içe aktar</string>
-    <string name="websearch_dialog_import_error">Verilen URL otomatik olarak içe aktarılamıyor. Farklı bir URL deneyebilir veya gerekli verileri manuel olarak girebilirsiniz.</string>
     <string name="websearch_dialog_advanced">Gelişmiş</string>
     <string name="websearch_dialog_query_encoding_none">Hiçbiri</string>
     <string name="widget_name_unknown">Bilinmeyen uygulama widget\'ı</string>
     <string name="shortcut_summary">%1$s tarafından</string>
-    <string name="installation_in_progress">Kurulum devam ediyor... (%1$s)</string>
     <string name="easter_egg_1">Yanınızda getirmediğiniz sürece burada paskalya yumurtası yok.</string>
     <string name="easter_egg_2">Lütfen, kesin şunu, zamanınızı boşa harcıyorsunuz</string>
     <string name="easter_egg_3">Tekrar söylemeyeceğim: burada kesinlikle hiçbir paskalya yumurtası saklı değil</string>
@@ -159,7 +143,7 @@
     <string name="notes_widget_dismissed">Not iptal edildi.</string>
     <string name="notes_widget_action_save">Kaydet</string>
     <string name="action_import">İçe aktar</string>
-    <string name="unit_converter_show_all">Hepsini göster</string>
+    <string name="show_all">Hepsini göster</string>
     <string name="calendar_event_allday">Tüm Gün</string>
     <string name="weather_condition_cloudy">Bulutlu</string>
     <string name="weather_condition_lightrainandthunder">Hafif yağmur ve gök gürültüsü</string>
@@ -189,8 +173,6 @@
     <string name="weather_condition_lightsnow">Hafif kar</string>
     <string name="weather_condition_heavysleetshowersandthunder">Şiddetli karla karışık yağmur ve yıldırım</string>
     <string name="calendar_widget_no_events">Bugün bir etkinlik yok</string>
-    <string name="calendar_widget_open_app">Takvim uygulamasını aç</string>
-    <string name="calendar_widget_new_event">Yeni etkinlik</string>
     <string name="location_open">Açık</string>
     <string name="location_closed">Kapalı</string>
     <string name="menu_map">Haritada göster</string>
@@ -198,10 +180,10 @@
     <string name="calendar_widget_pinned_events">Yakında</string>
     <string name="calendar_widget_next_events">Sonraki etkinlik</string>
     <string name="weather_condition_sleetshowers">Karla karışık yağmur</string>
-    <string name="weather_condition_thunder">Gökgürültülü fırtına</string>
     <string name="disclaimer_currency_converter">Doviz kuru her gün Avrupa Merkez Bankasından alınır. Tüm bilgiler garantisiz olarak \"Olduğu Gibi\" sağlanmıştır. Bu bilgiler için hiçbir yükümlülük kabul edilmez.
 \n
 \nSon güncelleme: %1$s</string>
     <string name="weather_condition_heavysleet">Yoğun karla karışık yağmur</string>
     <string name="weather_condition_heavysleetshowers">Şiddetli karla karışık yağmur</string>
+    <string name="location_closes">%1$s de kapanıyor</string>
 </resources>

@@ -14,6 +14,8 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.searchable.PinnedLevel
+import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.CalendarWidgetConfig
@@ -42,8 +44,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     val pinnedCalendarEvents =
         favoritesService.getFavorites(
             includeTypes = listOf("calendar"),
-            automaticallySorted = true,
-            manuallySorted = true,
+            minPinnedLevel = PinnedLevel.AutomaticallySorted,
         ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
     val nextEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
     var availableDates = listOf(LocalDate.now())
@@ -172,7 +173,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
             ).collectLatest { events ->
                 searchableRepository.getKeys(
                     includeTypes = listOf("calendar"),
-                    hidden = true,
+                    maxVisibility = VisibilityLevel.SearchOnly,
                     limit = 9999,
                 ).collectLatest { hidden ->
                     upcomingEvents = events.filter { !hidden.contains(it.key) }

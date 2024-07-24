@@ -11,7 +11,7 @@ data class SavedSearchable(
     val searchable: SavableSearchable?,
     var launchCount: Int,
     var pinPosition: Int,
-    var hidden: Boolean,
+    var visibility: VisibilityLevel,
     var weight: Double
 ) {
     fun toDatabaseEntity(): SavedSearchableEntity? {
@@ -21,7 +21,7 @@ data class SavedSearchable(
             key = key,
             type = searchable.domain,
             serializedSearchable = data,
-            hidden = hidden,
+            visibility = visibility.value,
             pinPosition = pinPosition,
             launchCount = launchCount,
             weight = weight

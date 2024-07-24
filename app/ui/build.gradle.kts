@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
 android {
@@ -58,10 +59,6 @@ android {
         viewBinding = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
-    }
-
     lint {
         abortOnError = false
     }
@@ -81,6 +78,7 @@ dependencies {
     implementation(libs.androidx.compose.materialicons)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.animationgraphics)
+    implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.androidx.navigation.compose)
 
@@ -122,6 +120,7 @@ dependencies {
     implementation(project(":core:i18n"))
     implementation(project(":core:compat"))
     implementation(project(":core:ktx"))
+    implementation(project(":core:profiles"))
     implementation(project(":services:icons"))
     implementation(project(":services:music"))
     implementation(project(":services:tags"))
@@ -141,7 +140,7 @@ dependencies {
     implementation(project(":core:crashreporter"))
     implementation(project(":data:notifications"))
     implementation(project(":data:contacts"))
-    implementation(project(":data:openstreetmaps"))
+    implementation(project(":data:locations"))
     implementation(project(":core:permissions"))
     implementation(project(":data:websites"))
     implementation(project(":data:unitconverter"))

@@ -1,7 +1,9 @@
 package de.mm20.launcher2.services.favorites
 
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.searchable.PinnedLevel
 import de.mm20.launcher2.searchable.SavableSearchableRepository
+import de.mm20.launcher2.searchable.VisibilityLevel
 import kotlinx.coroutines.flow.Flow
 
 class FavoritesService(
@@ -10,18 +12,17 @@ class FavoritesService(
     fun getFavorites(
         includeTypes: List<String>? = null,
         excludeTypes: List<String>? = null,
-        manuallySorted: Boolean = false,
-        automaticallySorted: Boolean = false,
-        frequentlyUsed: Boolean = false,
+        minPinnedLevel: PinnedLevel = PinnedLevel.FrequentlyUsed,
+        maxPinnedLevel: PinnedLevel = PinnedLevel.ManuallySorted,
         limit: Int = 100,
     ): Flow<List<SavableSearchable>> {
         return searchableRepository.get(
             includeTypes = includeTypes,
             excludeTypes = excludeTypes,
-            manuallySorted = manuallySorted,
-            automaticallySorted = automaticallySorted,
-            frequentlyUsed = frequentlyUsed,
+            minPinnedLevel = minPinnedLevel,
+            maxPinnedLevel = maxPinnedLevel,
             limit = limit,
+            minVisibility = VisibilityLevel.SearchOnly,
         )
     }
 
@@ -29,8 +30,8 @@ class FavoritesService(
         return searchableRepository.isPinned(searchable)
     }
 
-    fun isHidden(searchable: SavableSearchable): Flow<Boolean> {
-        return searchableRepository.isHidden(searchable)
+    fun getVisibility(searchable: SavableSearchable): Flow<VisibilityLevel> {
+        return searchableRepository.getVisibility(searchable)
     }
 
     fun pinItem(searchable: SavableSearchable) {
@@ -44,7 +45,7 @@ class FavoritesService(
         searchableRepository.update(
             searchable,
             pinned = false,
-            hidden = false,
+            visibility = VisibilityLevel.Default,
             weight = 0.0,
             launchCount = 0,
         )
@@ -57,17 +58,10 @@ class FavoritesService(
         )
     }
 
-    fun hideItem(searchable: SavableSearchable) {
+    fun setVisibility(searchable: SavableSearchable, visibility: VisibilityLevel) {
         searchableRepository.upsert(
             searchable,
-            hidden = true,
-        )
-    }
-
-    fun unhideItem(searchable: SavableSearchable) {
-        searchableRepository.upsert(
-            searchable,
-            hidden = false,
+            visibility = visibility,
         )
     }
 

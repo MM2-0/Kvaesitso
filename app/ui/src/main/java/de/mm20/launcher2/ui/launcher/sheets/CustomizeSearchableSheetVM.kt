@@ -8,6 +8,8 @@ import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.searchable.VisibilityLevel
+import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
@@ -25,6 +27,7 @@ class CustomizeSearchableSheetVM(
 ) : KoinComponent {
     private val iconService: IconService by inject()
     private val customAttributesRepository: CustomAttributesRepository by inject()
+    private val favoritesService: FavoritesService by inject()
 
     val isIconPickerOpen = mutableStateOf(false)
 
@@ -89,8 +92,16 @@ class CustomizeSearchableSheetVM(
         customAttributesRepository.setTags(searchable, tags)
     }
 
+    fun setVisibility(visibility: VisibilityLevel) {
+        favoritesService.setVisibility(searchable, visibility)
+    }
+
     fun getTags(): Flow<List<String>> {
         return customAttributesRepository.getTags(searchable)
+    }
+
+    fun getVisibility(): Flow<VisibilityLevel> {
+        return favoritesService.getVisibility(searchable)
     }
 
     suspend fun autocompleteTags(query: String): List<String> {

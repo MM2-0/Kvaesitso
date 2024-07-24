@@ -158,7 +158,7 @@
     </plurals>
     <string name="unit_megabyte_symbol">MB</string>
     <plurals name="unit_megabyte">
-        <item quantity="one">megabytes</item>
+        <item quantity="one">megabyte</item>
         <item quantity="other">megabytes</item>
     </plurals>
     <string name="unit_gigabyte_symbol">GB</string>

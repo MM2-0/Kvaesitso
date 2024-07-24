@@ -79,20 +79,29 @@ sealed class CustomIcon : CustomAttribute {
                 "custom_icon_pack_icon" -> {
                     val legacyComponentName = payload.optString("icon").let { ComponentName.unflattenFromString(it) }
                     if (legacyComponentName != null) {
-                        CustomIconPackIcon(
+                        LegacyCustomIconPackIcon(
                             iconPackageName = legacyComponentName.packageName,
                             iconActivityName = legacyComponentName.className,
                             iconPackPackage = payload.getString("icon_pack"),
                             allowThemed = payload.optBoolean("allow_themed", true),
                         )
                     } else {
-                        CustomIconPackIcon(
+                        LegacyCustomIconPackIcon(
                             iconPackageName = payload.optString("package").takeIf { it.isNotEmpty() } ?: return null,
                             iconActivityName = payload.optString("activity").takeIf { it.isNotEmpty() },
                             iconPackPackage = payload.getString("icon_pack"),
                             allowThemed = payload.optBoolean("allow_themed", true),
                         )
                     }
+                }
+                "custom_icon_pack_icon2" -> {
+                    CustomIconPackIcon(
+                        iconPackPackage = payload.getString("icon_pack"),
+                        type = payload.getString("icon_type"),
+                        drawable = payload.optString("drawable"),
+                        extras = payload.optString("extras").takeIf { it.isNotEmpty() },
+                        allowThemed = payload.optBoolean("allow_themed", true),
+                    )
                 }
                 "custom_themed_icon" -> {
                     CustomThemedIcon(
@@ -116,7 +125,8 @@ sealed class CustomIcon : CustomAttribute {
     }
 }
 
-data class CustomIconPackIcon(
+@Deprecated("Use CustomIconPackIcon instead")
+data class LegacyCustomIconPackIcon(
     val iconPackPackage: String,
     val iconPackageName: String,
     val iconActivityName: String?,
@@ -128,6 +138,28 @@ data class CustomIconPackIcon(
             "package" to iconPackageName,
             "activity" to iconActivityName,
             "icon_pack" to iconPackPackage,
+            "allow_themed" to allowThemed,
+        ).toString()
+    }
+}
+
+/**
+ * [type], [drawable], and [extras] correspond to the fields in [IconEntity]
+ */
+data class CustomIconPackIcon(
+    val iconPackPackage: String,
+    val type: String,
+    val drawable: String?,
+    val extras: String?,
+    val allowThemed: Boolean,
+): CustomIcon() {
+    override fun toDatabaseValue(): String {
+        return jsonObjectOf(
+            "type" to "custom_icon_pack_icon2",
+            "icon_pack" to iconPackPackage,
+            "icon_type" to type,
+            "drawable" to drawable,
+            "extras" to extras,
             "allow_themed" to allowThemed,
         ).toString()
     }
@@ -173,7 +205,7 @@ data class CustomThemedIcon(
     }
 }
 
-object ForceThemedIcon : CustomIcon() {
+data object ForceThemedIcon : CustomIcon() {
     override fun toDatabaseValue(): String {
         return jsonObjectOf(
             "type" to "force_themed_icon"
@@ -184,19 +216,18 @@ object ForceThemedIcon : CustomIcon() {
 /**
  * Use default icon, ignore any icon pack, themed icon or force adaptive settings.
  */
-object UnmodifiedSystemDefaultIcon: CustomIcon() {
+data object UnmodifiedSystemDefaultIcon: CustomIcon() {
     override fun toDatabaseValue(): String {
         return jsonObjectOf(
             "type" to "default_icon"
         ).toString()
     }
-
 }
 
 /**
  * Use the default placeholder icon
  */
-object DefaultPlaceholderIcon: CustomIcon() {
+data object DefaultPlaceholderIcon: CustomIcon() {
     override fun toDatabaseValue(): String {
         return jsonObjectOf(
             "type" to "default_placeholder_icon"

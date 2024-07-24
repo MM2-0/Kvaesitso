@@ -56,6 +56,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -73,7 +74,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
@@ -96,6 +96,8 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
+import de.mm20.launcher2.ui.locals.LocalCardStyle
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -192,7 +194,14 @@ fun PagerScaffold(
     val systemUiController = rememberSystemUiController()
 
     val colorSurface = MaterialTheme.colorScheme.surface
-    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface, showStatusBarScrim) {
+    val isDarkTheme = LocalDarkTheme.current
+    LaunchedEffect(
+        isWidgetEditMode,
+        darkStatusBarIcons,
+        colorSurface,
+        showStatusBarScrim,
+        isSearchOpen
+    ) {
         if (isWidgetEditMode) {
             systemUiController.setStatusBarColor(
                 colorSurface
@@ -200,6 +209,11 @@ fun PagerScaffold(
         } else if (showStatusBarScrim) {
             systemUiController.setStatusBarColor(
                 colorSurface.copy(0.7f),
+            )
+        } else if (isSearchOpen) {
+            systemUiController.setStatusBarColor(
+                Color.Transparent,
+                darkIcons = !isDarkTheme,
             )
         } else {
             systemUiController.setStatusBarColor(
@@ -293,8 +307,6 @@ fun PagerScaffold(
         handleBackOrHomeEvent()
     }
 
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     val gestureManager = LocalGestureDetector.current
 
     val density = LocalDensity.current
@@ -324,7 +336,7 @@ fun PagerScaffold(
                 available: Offset,
                 source: NestedScrollSource
             ): Offset {
-                if (source == NestedScrollSource.Drag && !isWidgetEditMode && available != Offset.Zero) {
+                if (source == NestedScrollSource.UserInput && !isWidgetEditMode && available != Offset.Zero) {
                     gestureManager.dispatchDrag(available)
                 }
                 val deltaSearchBarOffset =
@@ -365,7 +377,7 @@ fun PagerScaffold(
     val searchNestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (source == NestedScrollSource.Drag && available.y.absoluteValue > available.x.absoluteValue * 2) {
+                if (source == NestedScrollSource.UserInput && available.y.absoluteValue > available.x.absoluteValue * 2) {
                     viewModel.setSearchbarFocus(false)
                     searchVM.bestMatch.value = null
                 }
@@ -395,10 +407,21 @@ fun PagerScaffold(
             ) {
 
                 val minFlingVelocity = 1000.dp.toPixels()
+                val colorSurfaceContainer = MaterialTheme.colorScheme.surfaceContainer
+                val cardStyle = LocalCardStyle.current
 
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxSize()
+                        .drawBehind {
+                            drawRect(
+                                color = colorSurfaceContainer.copy(
+                                    alpha = -pagerState.getOffsetDistanceInPages(
+                                        0
+                                    ) * 0.85f * cardStyle.opacity
+                                ),
+                            )
+                        }
                         .nestedScroll(pagerNestedScrollConnection),
                     beyondViewportPageCount = 1,
                     reverseLayout = reverse == (LocalLayoutDirection.current == LayoutDirection.Ltr),
@@ -514,13 +537,13 @@ fun PagerScaffold(
                             val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
                             val paddingValues = if (bottomSearchBar) {
                                 PaddingValues(
-                                    top = 4.dp + windowInsets.calculateTopPadding(),
-                                    bottom = 60.dp + webSearchPadding + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding
+                                    top = 8.dp + windowInsets.calculateTopPadding(),
+                                    bottom = 64.dp + webSearchPadding + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding
                                 )
                             } else {
                                 PaddingValues(
-                                    bottom = 4.dp + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding,
-                                    top = 60.dp + webSearchPadding + windowInsets.calculateTopPadding()
+                                    bottom = 8.dp + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding,
+                                    top = 64.dp + webSearchPadding + windowInsets.calculateTopPadding()
                                 )
                             }
                             SearchColumn(
@@ -568,7 +591,7 @@ fun PagerScaffold(
                 },
                 navigationIcon = {
                     IconButton(onClick = { viewModel.setWidgetEditMode(false) }) {
-                        Icon(imageVector = Icons.Rounded.Done, contentDescription = null)
+                        Icon(imageVector = Icons.Rounded.Done, contentDescription = stringResource(R.string.action_done))
                     }
                 },
             )
@@ -689,19 +712,20 @@ fun Modifier.pagerScaffoldScrollHandler(
                     scope.launch {
                         val preConsumed = nestedScrollDispatcher.dispatchPreScroll(
                             dragAmount,
-                            NestedScrollSource.Drag
+                            NestedScrollSource.UserInput
                         )
                         val available = dragAmount - preConsumed
                         val consumedY =
                             scrollableState.scrollBy(available.y * scrollMultiplier) * scrollMultiplier
                         val consumedX =
-                            pagerState.scrollBy(available.x * pagerMultiplier) * pagerMultiplier
+                            if (disablePager) 0f
+                            else pagerState.scrollBy(available.x * pagerMultiplier) * pagerMultiplier
                         val totalConsumed =
                             Offset(preConsumed.x + consumedX, preConsumed.y + consumedY)
                         nestedScrollDispatcher.dispatchPostScroll(
                             totalConsumed,
                             dragAmount - totalConsumed,
-                            NestedScrollSource.Drag
+                            NestedScrollSource.UserInput
                         )
                     }
                 }
@@ -713,14 +737,16 @@ fun Modifier.pagerScaffoldScrollHandler(
                         val preConsumed = nestedScrollDispatcher.dispatchPreFling(velocity)
                         val flingVelocity = (velocity - preConsumed).x
 
-                        if (flingVelocity.absoluteValue > 400.dp.toPx()) {
-                            if (flingVelocity * pagerMultiplier < 0) {
-                                pagerState.animateScrollToPage(pagerState.settledPage - 1)
+                        if (!disablePager) {
+                            if (flingVelocity.absoluteValue > 400.dp.toPx()) {
+                                if (flingVelocity * pagerMultiplier < 0) {
+                                    pagerState.animateScrollToPage(pagerState.settledPage - 1)
+                                } else {
+                                    pagerState.animateScrollToPage(pagerState.settledPage + 1)
+                                }
                             } else {
-                                pagerState.animateScrollToPage(pagerState.settledPage + 1)
+                                pagerState.animateScrollToPage(pagerState.settledPage)
                             }
-                        } else {
-                            pagerState.animateScrollToPage(pagerState.settledPage)
                         }
 
                         nestedScrollDispatcher.dispatchPostFling(

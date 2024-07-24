@@ -1,9 +1,7 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
 import android.content.pm.PackageManager
-import android.graphics.drawable.InsetDrawable
 import androidx.activity.compose.BackHandler
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -19,16 +17,25 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Label
+import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.rounded.ArrowDropDown
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Tag
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -43,7 +50,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -51,9 +57,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.badges.BadgeIcon
 import de.mm20.launcher2.icons.CustomIconWithPreview
 import de.mm20.launcher2.icons.IconPack
+import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.OutlinedTagsInputField
@@ -82,9 +92,11 @@ fun CustomizeSearchableSheet(
 
     BottomSheetDialog(
         onDismissRequest = onDismiss,
-        title = {
-            Text(stringResource(if (pickIcon) R.string.icon_picker_title else R.string.menu_customize))
-        },
+        title = if (pickIcon) {
+            {
+                Text(stringResource(R.string.icon_picker_title))
+            }
+        } else null,
         dismissible = { !pickIcon },
         confirmButton = if (pickIcon) {
             {
@@ -106,22 +118,13 @@ fun CustomizeSearchableSheet(
                 val iconSize = 64.dp
                 val iconSizePx = iconSize.toPixels()
                 val icon by remember { viewModel.getIcon(iconSizePx.toInt()) }.collectAsState(null)
-                val primaryColor = MaterialTheme.colorScheme.onSecondary
-                val badgeDrawable = remember {
-                    InsetDrawable(
-                        AppCompatResources.getDrawable(context, R.drawable.ic_edit),
-                        8
-                    ).also {
-                        it.setTint(primaryColor.toArgb())
-                    }
-                }
 
                 ShapedLauncherIcon(
                     size = iconSize,
                     icon = { icon },
                     badge = {
                         Badge(
-                            icon = badgeDrawable
+                            icon = BadgeIcon(Icons.Rounded.Edit)
                         )
                     },
                     modifier = Modifier.clickable {
@@ -133,44 +136,178 @@ fun CustomizeSearchableSheet(
                     mutableStateOf(searchable.labelOverride ?: "")
                 }
                 OutlinedTextField(
-                    modifier =
-                    Modifier
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp),
+                        .padding(top = 24.dp, bottom = 16.dp),
                     value = customLabelValue,
                     onValueChange = {
                         customLabelValue = it
                     },
                     singleLine = true,
+                    label = {
+                        Text(stringResource(R.string.customize_item_label))
+                    },
                     placeholder = {
                         Text(searchable.label)
                     },
+                    leadingIcon = {
+                        Icon(Icons.AutoMirrored.Rounded.Label, null)
+                    }
                 )
 
                 var tags by remember { mutableStateOf(emptyList<String>()) }
+                var visibility by remember { mutableStateOf(VisibilityLevel.Default) }
 
                 LaunchedEffect(searchable.key) {
+                    visibility = viewModel.getVisibility().first()
                     tags = viewModel.getTags().first()
                 }
 
                 OutlinedTagsInputField(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
+                        .padding(top = 8.dp)
+                        .fillMaxWidth(),
                     tags = tags, onTagsChange = { tags = it.distinct() },
-                    placeholder = {
-                        Text(stringResource(R.string.customize_tags_placeholder))
+                    label = {
+                        Text(stringResource(R.string.customize_item_tags))
                     },
-                    textStyle = MaterialTheme.typography.bodyMedium,
                     onAutocomplete = {
                         viewModel.autocompleteTags(it).minus(tags.toSet())
+                    },
+                    leadingIcon = {
+                        Icon(Icons.Rounded.Tag, null)
                     }
                 )
+
+                var showDropdown by remember {
+                    mutableStateOf(false)
+                }
+
+                ExposedDropdownMenuBox(
+                    expanded = showDropdown,
+                    onExpandedChange = { showDropdown = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                ) {
+                    OutlinedTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor(MenuAnchorType.PrimaryNotEditable),
+                        value = when (visibility) {
+                            VisibilityLevel.Default -> {
+                                when (searchable) {
+                                    is Application -> stringResource(R.string.item_visibility_app_default)
+                                    is CalendarEvent -> stringResource(R.string.item_visibility_calendar_default)
+                                    else -> stringResource(R.string.item_visibility_search_only)
+                                }
+                            }
+
+                            VisibilityLevel.SearchOnly -> stringResource(R.string.item_visibility_search_only)
+                            VisibilityLevel.Hidden -> stringResource(R.string.item_visibility_hidden)
+                        },
+                        label = {
+                            Text(stringResource(R.string.customize_item_visibility))
+                        },
+                        onValueChange = {},
+                        readOnly = true,
+                        singleLine = true,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showDropdown) },
+                        leadingIcon = {
+                            Icon(
+                                when (visibility) {
+                                    VisibilityLevel.Default -> Icons.Rounded.Visibility
+                                    VisibilityLevel.SearchOnly -> Icons.Outlined.Visibility
+                                    VisibilityLevel.Hidden -> Icons.Rounded.VisibilityOff
+                                },
+                                null
+                            )
+                        },
+                        colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
+                    )
+                    ExposedDropdownMenu(
+                        expanded = showDropdown,
+                        onDismissRequest = {
+                            showDropdown = false
+                        }
+                    ) {
+                        if (searchable is Application) {
+                            DropdownMenuItem(
+                                onClick = {
+                                    visibility = VisibilityLevel.Default
+                                    showDropdown = false
+                                },
+                                text = {
+                                    Text(stringResource(R.string.item_visibility_app_default))
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Rounded.Visibility, null)
+                                }
+                            )
+                        } else if (searchable is CalendarEvent) {
+                            DropdownMenuItem(
+                                onClick = {
+                                    visibility = VisibilityLevel.Default
+                                    showDropdown = false
+                                },
+                                text = {
+                                    Text(stringResource(R.string.item_visibility_calendar_default))
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Rounded.Visibility, null)
+                                }
+                            )
+                        } else {
+                            DropdownMenuItem(
+                                onClick = {
+                                    visibility = VisibilityLevel.Default
+                                    showDropdown = false
+                                },
+                                text = {
+                                    Text(stringResource(R.string.item_visibility_search_only))
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Rounded.Visibility, null)
+                                }
+                            )
+                        }
+                        if (searchable is Application || searchable is CalendarEvent) {
+                            DropdownMenuItem(
+                                onClick = {
+                                    visibility = VisibilityLevel.SearchOnly
+                                    showDropdown = false
+                                },
+                                text = {
+                                    Text(stringResource(R.string.item_visibility_search_only))
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Outlined.Visibility,
+                                        null
+                                    )
+                                }
+                            )
+                        }
+                        DropdownMenuItem(
+                            onClick = {
+                                visibility = VisibilityLevel.Hidden
+                                showDropdown = false
+                            },
+                            text = {
+                                Text(stringResource(R.string.item_visibility_hidden))
+                            },
+                            leadingIcon = {
+                                Icon(Icons.Rounded.VisibilityOff, null)
+                            }
+                        )
+                    }
+                }
 
                 DisposableEffect(searchable.key) {
                     onDispose {
                         viewModel.setCustomLabel(customLabelValue)
                         viewModel.setTags(tags)
+                        viewModel.setVisibility(visibility)
                     }
                 }
             }

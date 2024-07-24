@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.icons.Wikipedia
+import de.mm20.launcher2.icons.Wikipedia
 
 @Composable
 fun SearchFilters(

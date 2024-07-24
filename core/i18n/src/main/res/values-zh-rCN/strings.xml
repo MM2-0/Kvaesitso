@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="preference_dim_wallpaper_summary">在深色主题中，使壁纸变暗</string>
-    <string name="preference_screen_badges_summary">配置图标角标</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_owncloud_signin">登陆到Owncloud</string>
     <string name="preference_about_license">此应用是自由软件。</string>
-    <string name="preference_clock_widget_style_summary">选择一个时钟</string>
     <string name="preference_clockwidget_battery_part_summary">在电池电量不足或正在充电时显示当前电池电量</string>
     <string name="preference_crash_reporter">崩溃报告程序</string>
     <string name="preference_crash_reporter_summary">错误和崩溃报告</string>
@@ -13,10 +11,7 @@
     <string name="preference_search_unitconverter_summary">用法: 1.5 kg 或者 4 cm &gt;&gt; in</string>
     <string name="preference_search_localfiles_summary">搜索储存在此设备上的文档、照片和其它文件</string>
     <string name="preference_google_signin_summary">登陆以查找Google Drive</string>
-    <string name="preference_music_filter_sources">限制为音乐应用</string>
-    <string name="weather_widget_hide_details">隐藏详细信息</string>
     <string name="wikipedia_url">https://en.wikipedia.org</string>
-    <string name="default_websearch_1_name">Google</string>
     <string name="owncloud_login_2fa_hint">如果你开启了两步验证，你必须在此使用一个应用密码。</string>
     <string name="weather_widget_set_location">设置位置</string>
     <string name="preference_search_bar_style_summary">自定义搜索栏外观</string>
@@ -29,7 +24,6 @@
     <string name="missing_permission_auto_location">需要位置访问权限以便自动确定位置</string>
     <string name="preference_automatic_location_summary">使用 GPS 和定位服务自动确定位置</string>
     <string name="wind_north_north_east">东北偏北</string>
-    <string name="installation_in_progress">安装正在进行中... (%1$s)</string>
     <string name="missing_permission_file_search_settings_android10">需要\"管理所有文件\"权限以便搜索本地文件</string>
     <string name="preference_cards">卡片</string>
     <string name="weather_condition_clearsky">晴朗无云</string>
@@ -71,7 +65,6 @@
     <string name="wind_west_north_west">西北偏西</string>
     <string name="wind_north_west">西北</string>
     <string name="wind_north_north_west">西北偏北</string>
-    <string name="precipitation_none">无降水</string>
     <string name="wikipedia_source">来自维基百科</string>
     <string name="file_meta_title">标题: %1$s</string>
     <string name="file_meta_artist">艺术家: %1$s</string>
@@ -103,28 +96,18 @@
     <string name="file_type_drawing">绘图</string>
     <string name="file_type_form">表格</string>
     <string name="alert_delete_file">文件 %1$s 将被永久删除. 继续\?</string>
-    <string name="error_activity_not_found">无法打开 %1$s</string>
-    <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="websearch_dialog_create_title">添加web搜索</string>
-    <string name="websearch_dialog_edit_title">编辑web搜索</string>
-    <string name="websearch_dialog_name">名称</string>
-    <string name="websearch_dialog_url">URL</string>
-    <string name="websearch_dialog_url_description">’${1}‘将被替换为实际搜索词.</string>
     <string name="websearch_dialog_url_error">此 URL 中缺少占位符’${1}‘</string>
     <string name="websearch_dialog_replace_icon">替换图标</string>
     <string name="websearch_dialog_delete_icon">删除图标</string>
     <string name="websearch_dialog_custom_icon">自定义图标</string>
-    <string name="websearch_dialog_import_url">从URL导入</string>
-    <string name="websearch_dialog_import_error">给定的 URL 无法自动导入。您可以尝试其他网址或手动输入所需的数据。</string>
     <string name="menu_edit_widgets">编辑组件</string>
     <string name="widget_name_weather">天气</string>
     <string name="widget_name_calendar">日历</string>
     <string name="widget_name_music">音乐</string>
     <string name="widget_add_widget">添加组件</string>
-    <string name="widget_add_external">更多</string>
     <string name="shortcut_summary">由 %1$s</string>
     <string name="easter_egg_1">这里没有彩蛋，除非你自己添加。</string>
     <string name="easter_egg_2">拜托，停下来，你在浪费你的时间</string>
@@ -132,9 +115,7 @@
     <string name="easter_egg_text">好吧, 你找到我了. 祝贺. 值得不？</string>
     <string name="close">关闭</string>
     <string name="turn_off">关闭</string>
-    <string name="widget_action_adjust_height">调整高度</string>
     <string name="widget_action_remove">移除</string>
-    <string name="widget_action_settings">设置</string>
     <string name="menu_item_edit_favs">编辑收藏夹</string>
     <string name="edit_favorites_dialog_pinned_unsorted">固定 – 自动排序</string>
     <string name="edit_favorites_dialog_pinned_sorted">固定 – 手动排序</string>
@@ -150,13 +131,11 @@
     <string name="login_flow_continue">继续</string>
     <string name="login_flow_login">登陆</string>
     <string name="disclaimer">声明</string>
-    <string name="unit_converter_show_all">展示所有</string>
+    <string name="show_all">展示所有</string>
     <string name="date_today">今日</string>
     <string name="date_tomorrow">明日</string>
     <string name="calendar_widget_pinned_events">即将来临</string>
     <string name="calendar_widget_no_events">今日无事件</string>
-    <string name="calendar_widget_open_app">打开日历应用</string>
-    <string name="calendar_widget_new_event">新事件</string>
     <string name="calendar_event_allday">全天</string>
     <string name="music_widget_default_title">%1$s正在播放媒体</string>
     <string name="music_widget_no_data">尚未播放任何媒体</string>
@@ -178,7 +157,6 @@
     <string name="weather_condition_lightrainandthunder">轻度雷阵雨</string>
     <string name="weather_condition_snow">雪</string>
     <string name="weather_condition_hail">冰雹</string>
-    <string name="weather_condition_thunder">雷暴</string>
     <string name="weather_condition_heavysnowshowers">重度阵雪</string>
     <string name="weather_condition_heavyrainshowers">大雨</string>
     <string name="weather_condition_rainshowersandthunder">雷阵雨</string>
@@ -203,9 +181,6 @@
     <string name="weather_condition_heavyrainandthunder">重度雷雨</string>
     <string name="weather_condition_wind">刮风</string>
     <string name="weather_condition_unknown">未知</string>
-    <string name="weather_details_humidity">湿度: %1$s</string>
-    <string name="weather_details_wind">风力: %1$s</string>
-    <string name="weather_details_precipitation">降水: %1$s</string>
     <string name="weather_no_data">无可用的天气数据.</string>
     <string name="missing_permission_music_widget">需要通知访问权限以便控制媒体播放</string>
     <string name="missing_permission_contact_search_settings">需要联系人权限以便搜索联系人</string>
@@ -254,7 +229,6 @@
     <string name="preference_screen_integrations_summary">管理已连接的账户和服务</string>
     <string name="preference_google">Google</string>
     <string name="preference_signin_user">以 %1$s 身份登陆</string>
-    <string name="preference_signin_logout">登出</string>
     <string name="preference_summary_not_logged_in">您当前未登录</string>
     <string name="preference_icon_shape_pentagon">五角形</string>
     <string name="preference_category_wallpaper">壁纸</string>
@@ -294,14 +268,10 @@
     <string name="preference_screen_debug">调试</string>
     <string name="preference_screen_debug_summary">故障排除工具</string>
     <string name="preference_category_widgets">组件</string>
-    <string name="preference_screen_widgets_summary">配置组件</string>
     <string name="preference_screen_weatherwidget">天气</string>
-    <string name="preference_screen_musicwidget">音乐</string>
     <string name="preference_screen_clockwidget">时钟</string>
-    <string name="preference_clockwidget_layout">布局</string>
     <string name="preference_clockwidget_layout_vertical">默认</string>
     <string name="preference_clockwidget_layout_horizontal">简洁</string>
-    <string name="preference_clock_widget_style">风格</string>
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">显示当前日期</string>
     <string name="preference_clockwidget_music_part">媒体</string>
@@ -309,7 +279,6 @@
     <string name="preference_clockwidget_battery_part">电池</string>
     <string name="preference_clockwidget_alarm_part">闹钟</string>
     <string name="preference_clockwidget_alarm_part_summary">显示将在接下来的 15 分钟内响起的闹钟</string>
-    <string name="preference_export_log">导出日志文件</string>
     <string name="preference_screen_search">搜索</string>
     <string name="preference_screen_search_summary">搜索, 标签, 隐藏项目</string>
     <string name="preference_search_favorites">收藏夹</string>
@@ -326,29 +295,18 @@
     <string name="preference_search_wikipedia_summary">搜索免费的百科全书</string>
     <string name="preference_search_websites">网站</string>
     <string name="preference_search_websites_summary">如果搜索查询是 URL，则显示网站的预览</string>
-    <string name="preference_search_websearch">Web搜索</string>
-    <string name="preference_search_websearch_summary">显示不同搜索引擎的快捷方式</string>
     <string name="preference_search_localfiles">本地文件</string>
     <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_onedrive">OneDrive</string>
-    <string name="preference_search_onedrive_summary">在OneDrive上搜索 %1$s</string>
     <string name="preference_search_gdrive_summary">在Google Drive上搜索 %1$s</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">搜索%1$s的文件</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_screen_calendarwidget">日历</string>
-    <string name="preference_search_wikipedia_pictures">显示图片</string>
-    <string name="preference_search_wikipedia_pictures_summary">大幅提高数据使用量</string>
     <string name="preference_google_signin">使用Google登陆</string>
     <string name="preference_calendar_calendars">日历</string>
     <string name="preference_calendar_hide_allday">隐藏全天事件</string>
-    <plurals name="preference_calendar_calendars_summary">
-        <item quantity="other">%1$d 日历已选中</item>
-    </plurals>
     <string name="preference_screen_buildinfo">构建信息</string>
     <string name="preference_screen_buildinfo_summary">有关此版本应用的更多信息</string>
     <string name="file_meta_app_pkgname">安装包名称: %1$s</string>
-    <string name="preference_music_filter_sources_summary">忽略那些非音乐应用的媒体会话</string>
     <string name="preference_search_bar_style">风格</string>
     <string name="preference_search_bar_auto_focus">打开键盘</string>
     <string name="preference_search_bar_auto_focus_summary">打开搜索时自动显示键盘</string>
@@ -365,7 +323,6 @@
     </plurals>
     <string name="file_type_none">文件</string>
     <string name="owncloud_password">密码</string>
-    <string name="weather_widget_show_details">展示详细信息</string>
     <string name="preference_theme_system">跟随系统</string>
     <string name="missing_permission_appshortcuts_search_settings">%1$s必须设置成默认桌面以搜索应用快捷方式</string>
     <string name="missing_permission_appshortcuts_search">设置 %1$s 成为默认桌面以搜索应用快捷方式.</string>
@@ -375,22 +332,8 @@
     <string name="preference_clockwidget_favorites_part_summary">显示已固定项目的第一行</string>
     <string name="widget_name_favorites">收藏夹</string>
     <string name="preference_grid_icon_size">图标大小</string>
-    <string name="preference_custom_colors_advanced_mode">高级模式</string>
-    <string name="preference_colors_custom">自定义</string>
-    <string name="preference_custom_colors_a1">主色</string>
-    <string name="preference_custom_colors_a2">辅色</string>
-    <string name="preference_custom_colors_a3">点缀色</string>
-    <string name="preference_custom_colors_simple_mode">简易模式</string>
-    <string name="preference_custom_colors_n1">中性色</string>
-    <string name="preference_custom_colors_n2">中性变体色</string>
-    <string name="preference_colors_auto_generate">从主色中生成色彩方案</string>
-    <string name="preference_custom_colors_error">错误色</string>
-    <string name="preference_category_custom_colors_light">浅色方案</string>
-    <string name="preference_category_custom_colors_dark">深色方案</string>
     <string name="preference_search_currencyconverter">货币转换器</string>
     <string name="preference_search_currencyconverter_summary">定期下载汇率来转换货币</string>
-    <string name="preference_layout">布局</string>
-    <string name="preference_layout_summary">搜索栏、组件和搜索结果的常规布局</string>
     <string name="msg_item_hidden">%1$s已被隐藏.</string>
     <string name="action_undo">撤销</string>
     <string name="calendar_widget_next_events">下一个事件</string>
@@ -402,18 +345,11 @@
     <string name="preference_backup_summary">导出设置和启动器数据</string>
     <string name="preference_restore">恢复</string>
     <string name="preference_restore_summary">导入以前创建的备份</string>
-    <string name="backup_select_components">选择要备份的项目:</string>
-    <string name="backup_not_included">已连接的账户信息和第三方应用的组件将不会被备份。</string>
-    <string name="backup_component_favorites">收藏夹&amp;隐藏应用</string>
-    <string name="backup_component_settings">设置</string>
-    <string name="backup_component_websearches">Web搜索快捷方式</string>
-    <string name="backup_component_widgets">内置组件</string>
     <string name="backup_complete">备份已完成.</string>
     <string name="restore_invalid_file">所选择的文件不是备份文件.你是否确定选择了正确的文件？</string>
     <string name="restore_incompatible_file">此备份在不一致的版本%1$s下创建且不能在当前版本恢复.</string>
     <string name="restore_different_minor_version">此备份在不一致的版本%1$s下创建.一些数据可能不会被正确恢复。</string>
     <string name="restore_meta">由%3$s于%1$s在%2$s中创建.</string>
-    <string name="restore_select_components">选择要恢复的项目. 现有的数据将被覆盖!</string>
     <string name="restore_complete">备份已恢复.</string>
     <string name="weather_location_search_no_result">位置未找到.</string>
     <string name="save">保存</string>
@@ -430,7 +366,6 @@
     <string name="preference_font_system">系统默认</string>
     <string name="alert_delete_shortcut">快捷方式%1$s将被永久移除. 继续\?</string>
     <string name="preference_force_themed_icons_summary">将应用程序的配色方案应用于所有的图标，包括不支持的图标(不建议)</string>
-    <string name="backup_component_customizations">定制化</string>
     <string name="icon_picker_title">选择图标</string>
     <string name="icon_picker_default_icon">默认</string>
     <string name="icon_picker_suggestions">建议</string>
@@ -440,7 +375,6 @@
     <string name="preference_grid_labels">显示应用名</string>
     <string name="preference_grid_labels_summary">在图标底下显示应用名称</string>
     <string name="preference_clock_widget_fill_height">全屏高度</string>
-    <string name="preference_clock_widget_fill_height_summary">在时钟上方插入额外的空间以填补整个屏幕的高度</string>
     <string name="websearch_dialog_query_encoding">查询的编码方式</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="websearch_dialog_query_encoding_none">无</string>
@@ -481,7 +415,6 @@
     <string name="preference_system_bar_icons_light">浅色</string>
     <string name="preference_system_bar_icons_dark">深色</string>
     <string name="preference_search_bar_color">颜色</string>
-    <string name="preference_clock_widget_color">颜色</string>
     <string name="preference_screen_search_actions">快捷操作</string>
     <string name="preference_search_search_actions_summary">配置快捷操作和搜索栏快捷方式</string>
     <string name="search_action_call">拨号</string>
@@ -490,10 +423,8 @@
     <string name="search_action_alarm">设置闹钟</string>
     <string name="search_action_timer">启动定时器</string>
     <string name="search_action_contact">新建联系人</string>
-    <string name="action_continue">继续</string>
     <string name="preference_logs">日志</string>
     <string name="preference_logs_summary">查看和导出应用日志</string>
-    <string name="backup_component_searchactions">快捷操作</string>
     <string name="search_action_open_url">浏览网站</string>
     <string name="help">帮助</string>
     <string name="search_action_event">日程事件</string>
@@ -520,7 +451,6 @@
     <string name="tag_exists_error">以此命名的标签已经存在.</string>
     <string name="tag_no_items_message">没有项目被分配给此标签.如果你执意而为,此标签将会被删除.</string>
     <string name="tag_exists_message">以此命名的标签已经存在.如果你执意而为，两个标签将会被合并.</string>
-    <string name="tag_empty_message">标签名字禁止为空白.</string>
     <string name="tag_select_items">选择项目:</string>
     <string name="tag_name">标签名字</string>
     <plurals name="tag_selected_items">
@@ -560,22 +490,18 @@
     <string name="preference_layout_fixed_rotation">固定屏幕方向</string>
     <string name="preference_layout_fixed_rotation_summary">锁定屏幕方向为竖屏模式</string>
     <string name="widget_config_weather_compact">紧凑模式</string>
-    <string name="preference_compact_mode_summary">隐藏每小时和每日预测</string>
-    <string name="icon_pack_dynamic_colors">动态颜色</string>
     <string name="icon_picker_no_packs_installed">没有已安装的图标包</string>
     <string name="preference_search_bar_launch_on_enter">按下回车键以启动</string>
     <string name="preference_search_bar_launch_on_enter_summary">点击go时启动高亮的匹配或快捷操作</string>
     <string name="gesture_action_launch_app">打开应用</string>
     <string name="icon_picker_filter_all_packs">全部图标包</string>
     <string name="preference_search_result_ordering_alphabetic">按字母顺序排列</string>
-    <string name="preference_search_result_ordering_launch_count">按启动次数排列</string>
     <string name="preference_search_result_ordering_weighted">按使用情况排列</string>
     <string name="preference_search_result_ordering">搜索结果的顺序</string>
     <string name="widget_action_replace">替换</string>
     <string name="preference_debug_reinstall_iconpacks">重新安装图标包</string>
     <string name="preference_debug_reinstall_iconpacks_summary">清除与重建图标缓存</string>
     <string name="preference_screen_icons_summary">网格, 图标尺寸, 图标包, 角标</string>
-    <string name="widget_config_appwidget_height">高度</string>
     <string name="app_widget_loading_failed">应用组件加载失败.</string>
     <string name="widget_config_calendar_no_calendars">未发现日程</string>
     <string name="widget_config_music_integration_settings">媒体控制综合设置</string>
@@ -592,7 +518,6 @@
     <string name="widget_config_appwidget_borderless">无边框</string>
     <string name="widget_config_appwidget_configure">配置组件</string>
     <string name="widget_name_unknown">未知的应用组件</string>
-    <string name="widget_config_appwidget_resize_hint">拖动以调整大小</string>
     <string name="notes_widget_dismissed">笔记已删除.</string>
     <string name="preference_hidden_items_reveal_button_summary">显示一个按钮展示隐藏搜索结果</string>
     <string name="widget_config_appwidget_background">背景卡片</string>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="request_permission_deny_button">انکار</string>
+    <string name="request_permission_allow_button">مجاز کردن</string>
+    <string name="request_permission_message"><b>%1$s</b> میخواهد به داده های <b>%2$s</b> دسترسی داشته باشد.</string>
+</resources>

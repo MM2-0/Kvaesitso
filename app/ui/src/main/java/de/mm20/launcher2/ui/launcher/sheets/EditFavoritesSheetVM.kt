@@ -22,6 +22,7 @@ import de.mm20.launcher2.appshortcuts.AppShortcut
 import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.Tag
+import de.mm20.launcher2.searchable.PinnedLevel
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -60,21 +61,22 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         loading.value = showLoadingIndicator
         manuallySorted = mutableListOf()
         manuallySorted = favoritesService.getFavorites(
-            manuallySorted = true,
+            minPinnedLevel = PinnedLevel.ManuallySorted,
             excludeTypes = listOf("tag"),
         ).first().toMutableList()
         automaticallySorted = favoritesService.getFavorites(
-            automaticallySorted = true,
+            minPinnedLevel = PinnedLevel.AutomaticallySorted,
+            maxPinnedLevel = PinnedLevel.AutomaticallySorted,
             excludeTypes = listOf("tag"),
         ).first().toMutableList()
         frequentlyUsed = favoritesService.getFavorites(
-            frequentlyUsed = true,
+            minPinnedLevel = PinnedLevel.FrequentlyUsed,
+            maxPinnedLevel = PinnedLevel.FrequentlyUsed,
             excludeTypes = listOf("tag"),
         ).first().toMutableList()
         val pinnedTags = favoritesService.getFavorites(
             includeTypes = listOf("tag"),
-            manuallySorted = true,
-            automaticallySorted = true,
+            minPinnedLevel = PinnedLevel.AutomaticallySorted,
         ).first().filterIsInstance<Tag>().toMutableList()
         availableTags.value =
             customAttributesRepository
@@ -296,7 +298,8 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
             favoritesService.unpinItem(item.item)
             viewModelScope.launch {
                 frequentlyUsed = favoritesService.getFavorites(
-                    frequentlyUsed = true,
+                    minPinnedLevel = PinnedLevel.FrequentlyUsed,
+                    maxPinnedLevel = PinnedLevel.FrequentlyUsed,
                     excludeTypes = listOf("tag"),
                 ).first().toMutableList()
                 buildItemList()

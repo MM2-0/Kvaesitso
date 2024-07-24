@@ -32,11 +32,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.searchactions.actions.SearchAction
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchVM
@@ -115,7 +117,9 @@ fun LauncherSearchBar(
                         else IconButtonDefaults.iconButtonColors()
                     ) {
                         Box {
-                            Icon(imageVector = Icons.Rounded.FilterAlt, contentDescription = null)
+                            Icon(imageVector = Icons.Rounded.FilterAlt, contentDescription = stringResource(
+                                if (searchVM.showFilters.value) R.string.menu_hide_filters else R.string.menu_show_filters
+                            ))
                             androidx.compose.animation.AnimatedVisibility(
                                 !searchVM.filters.value.allCategoriesEnabled,
                                 enter = scaleIn(tween(100)),

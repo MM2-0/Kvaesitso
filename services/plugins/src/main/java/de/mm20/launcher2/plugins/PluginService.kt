@@ -164,6 +164,8 @@ internal class PluginServiceImpl(
                 } ?: return PluginState.Error
             } catch (e: SecurityException) {
                 return PluginState.NoPermission
+            } catch (e: IllegalArgumentException) {
+                return PluginState.Error
             }
         return PluginState.fromBundle(bundle) ?: PluginState.Error
     }
@@ -225,12 +227,13 @@ internal class PluginServiceImpl(
                     0
                 ).firstOrNull()
                 val signature = getSignature(packageName)
+                val author = appInfo.metaData?.getString("de.mm20.launcher2.plugin.author")
                 PluginPackage(
                     packageName = packageName,
                     label = appInfo.metaData?.getString("de.mm20.launcher2.plugin.label")
                         ?: appInfo.loadLabel(context.packageManager).toString(),
                     description = appInfo.metaData?.getString("de.mm20.launcher2.plugin.description"),
-                    author = appInfo.metaData?.getString("de.mm20.launcher2.plugin.author"),
+                    author = author,
                     plugins = plugins,
                     settings = settingsActivity?.let {
                         Intent().apply {
@@ -238,7 +241,7 @@ internal class PluginServiceImpl(
                                 ComponentName(it.activityInfo.packageName, it.activityInfo.name)
                         }
                     },
-                    isOfficial = OFFICIAL_PLUGIN_SIGNATURES.contains(signature),
+                    isVerified = VERIFIED_PLUGIN_SIGNATURES[author]?.contains(signature) == true,
                 )
             }
         }.flowOn(Dispatchers.Default)
@@ -258,6 +261,7 @@ internal class PluginServiceImpl(
             0
         ).firstOrNull()
         val signature = getSignature(packageName)
+        val author = appInfo.metaData?.getString("de.mm20.launcher2.plugin.author")
         return repository.findMany(packageName = packageName)
             .map {
                 PluginPackage(
@@ -265,7 +269,7 @@ internal class PluginServiceImpl(
                     label = appInfo.metaData?.getString("de.mm20.launcher2.plugin.label")
                         ?: appInfo.loadLabel(context.packageManager).toString(),
                     description = appInfo.metaData?.getString("de.mm20.launcher2.plugin.description"),
-                    author = appInfo.metaData?.getString("de.mm20.launcher2.plugin.author"),
+                    author = author,
                     plugins = it,
                     settings = settingsActivityInfo?.let {
                         Intent().apply {
@@ -273,7 +277,7 @@ internal class PluginServiceImpl(
                                 ComponentName(it.activityInfo.packageName, it.activityInfo.name)
                         }
                     },
-                    isOfficial = OFFICIAL_PLUGIN_SIGNATURES.contains(signature),
+                    isVerified = VERIFIED_PLUGIN_SIGNATURES[author]?.contains(signature) == true,
                 )
             }
             .flowOn(Dispatchers.Default)
@@ -285,13 +289,13 @@ internal class PluginServiceImpl(
                 packageName,
                 PackageManager.GET_SIGNING_CERTIFICATES
             )
-            pi.signingInfo.apkContentsSigners.firstOrNull()
+            pi.signingInfo?.apkContentsSigners?.firstOrNull()
         } else {
             val pi = context.packageManager.getPackageInfo(
                 packageName,
                 PackageManager.GET_SIGNATURES
             )
-            pi.signatures.firstOrNull()
+            pi.signatures?.firstOrNull()
         }
         return if (signature != null) {
             val digest = MessageDigest.getInstance("SHA")
@@ -313,6 +317,8 @@ internal class PluginServiceImpl(
     }
 
     companion object {
-        private val OFFICIAL_PLUGIN_SIGNATURES = listOf("rx1fSnL7r5/OMoFC0e1KPqTndXQ=")
+        private val VERIFIED_PLUGIN_SIGNATURES = mapOf(
+            "MM2-0" to setOf("rx1fSnL7r5/OMoFC0e1KPqTndXQ=")
+        )
     }
 }

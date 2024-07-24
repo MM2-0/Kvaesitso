@@ -95,10 +95,10 @@ internal class WebsiteRepository(
                 return@withContext WebsiteImpl(
                     label = title,
                     url = url,
-                    description = description,
-                    imageUrl = image,
-                    faviconUrl = favicon,
-                    color = color
+                    description = description.takeIf { it.isNotBlank() },
+                    imageUrl = image.takeIf { it.isNotBlank() },
+                    faviconUrl = favicon.takeIf { it.isNotBlank() },
+                    color = color.takeIf { it != 0 }
                 )
             } catch (e: IOException) {
                 //Ignore. Not a HTML page or no connection. No result for this query

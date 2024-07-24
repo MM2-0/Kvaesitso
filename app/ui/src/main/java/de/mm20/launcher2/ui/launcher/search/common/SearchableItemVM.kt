@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
+import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.devicepose.DevicePoseProvider
@@ -34,12 +35,13 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SearchableItemVM : ListItemViewModel(), KoinComponent {
@@ -48,6 +50,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val iconService: IconService by inject()
     private val tagsService: TagsService by inject()
     private val notificationRepository: NotificationRepository by inject()
+    private val appRepository: AppRepository by inject()
     private val appShortcutRepository: AppShortcutRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
@@ -75,18 +78,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         searchable.value?.let { favoritesService.unpinItem(it) }
     }
 
-    val isHidden = searchable.flatMapLatest {
-        if (it == null) emptyFlow() else favoritesService.isHidden(it)
-    }
-
-    fun hide() {
-        searchable.value?.let { favoritesService.hideItem(it) }
-    }
-
-    fun unhide() {
-        searchable.value?.let { favoritesService.unhideItem(it) }
-    }
-
     val badge = searchable.flatMapLatest {
         if (it == null) emptyFlow() else badgeService.getBadge(it)
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
@@ -104,15 +95,30 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         else notificationRepository.notifications.map { it.filter { it.packageName == searchable.componentName.packageName && !it.isGroupSummary } }
     }
 
-    val shortcuts = searchable.map {
-        if (it !is Application) emptyList()
-        else appShortcutRepository
-            .findMany(
-                componentName = it.componentName,
-                user = it.user,
-                manifest = true,
-                dynamic = true,
-            ).first()
+    val children = searchable.flatMapLatest {
+        when(it) {
+            is Application -> appShortcutRepository
+                .findMany(
+                    componentName = it.componentName,
+                    user = it.user,
+                    manifest = true,
+                    dynamic = true,
+                )
+            is AppShortcut -> {
+                val packageName = it.componentName?.packageName ?: return@flatMapLatest flowOf(
+                    emptyList()
+                )
+                appRepository
+                    .findOne(
+                        packageName = packageName,
+                        user = it.user,
+                    )
+                    .map { listOfNotNull(it) }
+            }
+            else -> flowOf(
+                emptyList()
+            )
+        }
     }
 
     fun launch(context: Context, bounds: Rect? = null): Boolean {
@@ -143,24 +149,26 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         notificationRepository.cancelNotification(notification)
     }
 
-    fun getShortcutIcon(context: Context, shortcut: AppShortcut, size: Int): Flow<LauncherIcon?> {
-        return iconService.getIcon(shortcut, size)
+    fun getChildIcon(child: SavableSearchable, size: Int): Flow<LauncherIcon?> {
+        return iconService.getIcon(child, size)
     }
 
-    fun isShortcutPinned(shortcut: AppShortcut): Flow<Boolean> {
-        return favoritesService.isPinned(shortcut)
+    fun isChildPinned(child: SavableSearchable): Flow<Boolean> {
+        return favoritesService.isPinned(child)
     }
 
-    fun pinShortcut(shortcut: AppShortcut) {
-        favoritesService.pinItem(shortcut)
+    fun pinChild(child: SavableSearchable) {
+        favoritesService.pinItem(child)
     }
 
-    fun unpinShortcut(shortcut: AppShortcut) {
-        favoritesService.unpinItem(shortcut)
+    fun unpinChild(child: SavableSearchable) {
+        favoritesService.unpinItem(child)
     }
 
-    fun launchShortcut(context: Context, shortcut: AppShortcut) {
-        shortcut.launch(context, null)
+    fun launchChild(context: Context, child: SavableSearchable) {
+        if(child.launch(context, null)) {
+            favoritesService.reportLaunch(child)
+        }
     }
 
     fun delete(context: Context) {
@@ -184,21 +192,24 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         val searchable = searchable.value ?: return
         if (searchable is UpdatableSearchable<*>) {
             val updatedSelf = searchable.updatedSelf ?: return
-            if (!shouldRetryUpdate && System.currentTimeMillis() < searchable.timestamp + 1.hours.inWholeMilliseconds) return
+            val sinceTimestamp = System.currentTimeMillis() - searchable.timestamp
+
+            val isOutOfDate = 1.minutes.inWholeMilliseconds < sinceTimestamp
+
+            if (!shouldRetryUpdate && !isOutOfDate) return
+
             viewModelScope.launch {
-                this@SearchableItemVM.searchable.value = with(updatedSelf()) {
+                with(updatedSelf(searchable)) {
                     when (this) {
                         is UpdateResult.Success -> {
                             isUpToDate.value = true
                             shouldRetryUpdate = false
                             favoritesService.upsert(this.result)
-                            this.result
                         }
 
                         is UpdateResult.TemporarilyUnavailable -> {
                             isUpToDate.value = false
                             shouldRetryUpdate = true
-                            return@launch
                         }
 
                         is UpdateResult.PermanentlyUnavailable -> {
@@ -211,7 +222,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                                 Toast.LENGTH_LONG
                             ).show()
                             Log.d("requestUpdatedSearchable", "PermanentlyUnavailable", this.cause)
-                            null
                         }
                     }
                 }
@@ -232,9 +242,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     val applyMapTheming = locationSearchSettings.themeMap
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
-    val showPositionOnMap = locationSearchSettings.showPositionOnMap
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
-
     val mapTileServerUrl = locationSearchSettings.tileServer
+        .map { it ?: LocationSearchSettings.DefaultTileServerUrl }
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
 }

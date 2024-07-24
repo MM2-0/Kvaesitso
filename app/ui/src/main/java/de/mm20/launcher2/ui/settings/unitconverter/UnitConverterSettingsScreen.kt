@@ -17,9 +17,7 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.launcher.search.unitconverter.getIcon
-import de.mm20.launcher2.ui.locals.LocalNavController
-import de.mm20.launcher2.unitconverter.converters.Converter
+import de.mm20.launcher2.ui.launcher.search.unitconverter.getDimensionIcon
 import de.mm20.launcher2.unitconverter.converters.CurrencyConverter
 import de.mm20.launcher2.unitconverter.converters.SimpleFactorConverter
 import de.mm20.launcher2.unitconverter.converters.TemperatureConverter
@@ -102,7 +100,7 @@ fun UnitConverterSettingsScreen() {
 
                     Preference(
                         title = stringResource(converter.dimension.resource),
-                        icon = converter.dimension.getIcon(),
+                        icon = getDimensionIcon(converter.dimension),
                         summary = units
                     )
                 }

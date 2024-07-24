@@ -32,10 +32,7 @@
     <string name="wind_west_north_west">VNV</string>
     <string name="wind_north_west">NV</string>
     <string name="wind_north_north_west">NNV</string>
-    <string name="websearch_dialog_create_title">Lägg till webbsökning</string>
     <string name="preference_icon_shape_circle">Cirkel</string>
-    <string name="precipitation_none">Ingen nederbörd</string>
-    <string name="websearch_dialog_edit_title">Redigera webbsökning</string>
     <string name="wikipedia_source">Från Wikipedia</string>
     <string name="file_meta_title">Titel: %1$s</string>
     <string name="file_meta_artist">Artist: %1$s</string>
@@ -66,8 +63,6 @@
     <string name="file_type_form">Form</string>
     <string name="file_type_generic">%1$s-fil</string>
     <string name="alert_delete_file">Filen %1$s kommer raderas permanent. Vill du fortsätta\?</string>
-    <string name="error_activity_not_found">Kunde inte öppna %1$s</string>
-    <string name="websearch_dialog_url">URL</string>
     <string name="edit_favorites_dialog_unpinned">Ej fästa – ofta använda</string>
     <string name="weather_condition_lightssnowshowersandthunder">Lätt snöfall och åska</string>
     <string name="preference_themed_icons_summary">Färglägg ikoner med appens färgschema</string>
@@ -78,22 +73,16 @@
     <string name="edit_favorites_dialog_pinned_unsorted">Fästa – automatiskt sorterade</string>
     <string name="weather_condition_heavysnowshowersandthunder">Kraftigt snöfall och åska</string>
     <string name="file_meta_size">Storlek: %1$s</string>
-    <string name="websearch_dialog_import_error">Den angivna adressen kan inte importeras automatiskt. Du kan försöka med en annan URL eller manuellt ange den nödvändiga datan.</string>
     <string name="edit_favorites_dialog_pinned_sorted">Fästa – manuellt sorterade</string>
     <string name="preference_google">Google</string>
     <string name="file_meta_dimensions">Dimensioner: %1$s</string>
     <string name="widget_name_music">Musik</string>
-    <string name="websearch_dialog_name">Namn</string>
-    <string name="websearch_dialog_url_description">\'${1}\' kommer att ersättas med aktuell sökterm.</string>
     <string name="websearch_dialog_replace_icon">Ersätt ikon</string>
     <string name="websearch_dialog_delete_icon">Radera ikon</string>
-    <string name="websearch_dialog_import_url">Importera från URL</string>
     <string name="menu_edit_widgets">Redigera widgets</string>
     <string name="widget_name_weather">Väder</string>
     <string name="widget_name_calendar">Kalender</string>
     <string name="widget_add_widget">Lägg till widget</string>
-    <string name="widget_add_external">Fler</string>
-    <string name="installation_in_progress">Installerar... (%1$s)</string>
     <string name="easter_egg_1">Här finns inga påskägg, såvida du inte själv tog med dig dem.</string>
     <string name="close">Stäng</string>
     <string name="turn_off">Stäng av</string>
@@ -108,13 +97,11 @@
     <string name="login_flow_continue">Fortsätt</string>
     <string name="login_flow_login">Logga in</string>
     <string name="disclaimer">Disclaimer</string>
-    <string name="unit_converter_show_all">Visa alla</string>
+    <string name="show_all">Visa alla</string>
     <string name="date_today">Idag</string>
     <string name="date_tomorrow">Imorgon</string>
     <string name="calendar_widget_pinned_events">Kommande</string>
     <string name="calendar_widget_no_events">Inga aktiviteter idag</string>
-    <string name="calendar_widget_open_app">Öppna kalenderapp</string>
-    <string name="calendar_widget_new_event">Ny aktivitet</string>
     <plurals name="calendar_widget_running_events">
         <item quantity="one">+%1$d pågående aktivitet</item>
         <item quantity="other">+%1$d pågående aktiviteter</item>
@@ -141,7 +128,6 @@
     <string name="alert_delete_directory">Katalogen %1$s och dess innehåll kommer raderas permanent. Vill du fortsätta\?</string>
     <string name="shortcut_summary">Från %1$s</string>
     <string name="nextcloud_server_url_empty">Server-URL kan inte vara tom</string>
-    <string name="weather_details_humidity">Luftfuktighet: %1$s</string>
     <string name="preference_summary_not_logged_in">Du är för närvarande inte inloggad</string>
     <string name="preference_search_unitconverter_summary">Användning: 1.5 kg eller 4 cm &gt;&gt; in</string>
     <string name="weather_condition_hail">Hagel</string>
@@ -169,9 +155,6 @@
     <string name="weather_condition_heavyrainandthunder">Kraftigt åskregn</string>
     <string name="weather_condition_wind">Vind</string>
     <string name="weather_condition_unknown">Okänt</string>
-    <string name="weather_widget_show_details">Visa detaljer</string>
-    <string name="weather_widget_hide_details">Göm detaljer</string>
-    <string name="weather_details_wind">Vind: %1$s</string>
     <string name="weather_no_data">Ingen väderdata tillgänglig.</string>
     <string name="weather_widget_set_location">Ställ in plats</string>
     <string name="missing_permission_auto_location">Platsåtkomst krävs för att bestämma platsen automatiskt</string>
@@ -179,7 +162,6 @@
     <string name="missing_permission_calendar_search_settings">Kalenderåtkomst krävs för att söka i kalender</string>
     <string name="missing_permission_calendar_widget_settings">Denna widget kräver kalenderåtkomst</string>
     <string name="missing_permission_file_search_settings">Lagringsåtkomst krävs för att söka bland lokala filer</string>
-    <string name="preference_screen_badges_summary">Konfigurera aviseringsprickar</string>
     <string name="missing_permission_notification_badges">Notifikationsåtkomst krävs för att visa aviseringsprickar</string>
     <string name="missing_permission_calendar_widget">Tillåt kalenderåtkomst för att visa kommande aktiviteter här.</string>
     <string name="missing_permission_calendar_search">Tillåt kalenderåtkomst för att söka i din kalender.</string>
@@ -232,7 +214,6 @@
     <string name="preference_hide_nav_bar">Göm navigationsfält</string>
     <string name="preference_screen_integrations_summary">Hantera anslutna konton och tjänster</string>
     <string name="preference_signin_user">Inloggad som %1$s</string>
-    <string name="preference_signin_logout">Logga ut</string>
     <string name="preference_icon_shape_pentagon">Pentagon</string>
     <string name="preference_category_wallpaper">Bakgrund</string>
     <string name="preference_dim_wallpaper">Dämpa bakgrund</string>
@@ -260,14 +241,10 @@
     <string name="preference_grid_column_count">Antal kolumner</string>
     <string name="preference_screen_debug">Felsök</string>
     <string name="preference_category_widgets">Widgets</string>
-    <string name="preference_screen_widgets_summary">Konfigurera widgets</string>
     <string name="preference_screen_weatherwidget">Väder</string>
-    <string name="preference_screen_musicwidget">Musik</string>
     <string name="preference_screen_clockwidget">Klocka</string>
-    <string name="preference_clockwidget_layout">Layout</string>
     <string name="preference_clockwidget_layout_vertical">Vertikal</string>
     <string name="preference_clockwidget_layout_horizontal">Horisontell</string>
-    <string name="preference_clock_widget_style">Stil</string>
     <string name="preference_clockwidget_date_part">Datum</string>
     <string name="preference_clockwidget_date_part_summary">Visa aktuellt datum</string>
     <string name="preference_clockwidget_music_part">Media</string>
@@ -277,7 +254,6 @@
     <string name="preference_clockwidget_alarm_part_summary">Visa alarm som ringer inom de närmsta 15 minuterna</string>
     <string name="preference_crash_reporter">Kraschrapportering</string>
     <string name="preference_crash_reporter_summary">Error- och kraschrapporter</string>
-    <string name="preference_export_log">Exportera loggfil</string>
     <string name="preference_screen_search">Sök</string>
     <string name="preference_screen_search_summary">Konfigurera sökningen</string>
     <string name="preference_search_favorites">Favoriter</string>
@@ -294,37 +270,22 @@
     <string name="preference_search_wikipedia_summary">Sök i den fria encyklopedin</string>
     <string name="preference_search_websites">Hemsidor</string>
     <string name="preference_search_websites_summary">Förhandsvisa hemsida om söktermen är en URL</string>
-    <string name="preference_search_websearch">Webbsökning</string>
-    <string name="preference_search_websearch_summary">Visa genvägar till olika sökmotorer</string>
     <string name="preference_search_localfiles">Lokala filer</string>
     <string name="preference_search_gdrive">Google Drive</string>
     <string name="preference_search_gdrive_summary">Sök bland %1$ss filer på Google Drive</string>
-    <string name="preference_search_onedrive">OneDrive</string>
-    <string name="preference_search_onedrive_summary">Sök bland %1$ss filer på OneDrive</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Sök bland %1$ss filer</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_screen_calendarwidget">Kalender</string>
-    <string name="preference_search_wikipedia_pictures">Visa bilder</string>
-    <string name="default_websearch_1_name">Google</string>
     <string name="easter_egg_2">Snälla, sluta, du slösar bort din tid</string>
     <string name="nextcloud_server_invalid_url">Denna URL hänvisar inte till en giltig Nextcloud-installation</string>
-    <string name="weather_details_precipitation">Nederbörd: %1$s</string>
     <string name="preference_cloud_badges_summary">Visa en prick på filer som lagras i molnet</string>
     <string name="preference_search_localfiles_summary">Sök dokument, foton och andra filer lagrade på denna enhet</string>
-    <string name="preference_search_wikipedia_pictures_summary">Ökar dataanvändningen betydligt</string>
     <string name="preference_google_signin">Logga in med Google</string>
     <string name="preference_google_signin_summary">Logga in för att söka i Google Drive</string>
     <string name="preference_calendar_calendars">Kalendrar</string>
     <string name="preference_calendar_hide_allday">Göm heldagsaktiviteter</string>
-    <plurals name="preference_calendar_calendars_summary">
-        <item quantity="one">%1$d kalender vald</item>
-        <item quantity="other">%1$d kalendrar valda</item>
-    </plurals>
     <string name="preference_screen_buildinfo">Build-information</string>
     <string name="preference_screen_buildinfo_summary">Mer information om denna build av appen</string>
-    <string name="preference_music_filter_sources">Begränsa till musikappar</string>
-    <string name="preference_music_filter_sources_summary">Ignorera uppspelningar från appar som inte är musikappar</string>
     <string name="preference_search_bar_style">Stil</string>
     <string name="preference_search_bar_style_summary">Anpassa sökfältets utseende</string>
     <string name="preference_search_bar_auto_focus">Visa tangentbord</string>
@@ -339,7 +300,6 @@
         <item quantity="one">%1$s minut till fullt</item>
         <item quantity="other">%1$s minuter till fullt</item>
     </plurals>
-    <string name="default_websearch_1_url">https://google.se/search\?q=${1}</string>
     <string name="easter_egg_3">Jag säger det inte igen: här finns absolut inga påskägg gömda</string>
     <string name="owncloud_server_invalid_url">Denna URL hänvisar inte till en giltig Owncloud-installation</string>
     <string name="missing_permission_music_widget">Notifikationsåtkomst krävs för att styra uppspelning av media</string>
@@ -352,12 +312,10 @@
     <string name="preference_screen_debug_summary">Felsökningsverktyg</string>
     <string name="menu_share_store_link">%1$s-länk</string>
     <string name="default_websearch_2_url">https://www.youtube.se/results\?search_query=${1}</string>
-    <string name="widget_action_adjust_height">Justera höjd</string>
     <string name="disclaimer_currency_converter">Valutakursen publiceras en gång per dag av den Europeiska centralbanken. All information anges därefter utan någon form av garanti. Vi frånsäger oss ansvaret för nämnd information.
 \n
 \nSenaste uppdateringen: %1$s</string>
     <string name="missing_permission_files_search">Tillåt lagringsåtkomst för att söka bland foton, media och dokument på den här enheten.</string>
-    <string name="preference_clock_widget_style_summary">Välj en klocka</string>
     <string name="menu_uninstall">Avinstallera</string>
     <string name="default_websearch_3_name">Google Play</string>
     <string name="widget_action_remove">Radera</string>
@@ -366,8 +324,6 @@
     <string name="preference_clockwidget_music_part_summary">Visa mediareglage vid aktiv uppspelning</string>
     <string name="menu_open_file">Öppna</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="widget_action_settings">Inställningar</string>
-    <string name="weather_condition_thunder">Åskväder</string>
     <string name="preference_automatic_location_summary">Använd GPS- och platstjänster för att automatiskt ange plats</string>
     <string name="preference_search_favorites_summary">Visa fastnålade och ofta använda objekt ovanför apprutan</string>
 </resources>

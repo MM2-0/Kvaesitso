@@ -305,8 +305,8 @@
     <string name="unit_stone_symbol">st.</string>
     <plurals name="unit_megabyte">
         <item quantity="one">megabyte</item>
-        <item quantity="many">megabyte</item>
-        <item quantity="other">megabyte</item>
+        <item quantity="many">megabytes</item>
+        <item quantity="other">megabytes</item>
     </plurals>
     <plurals name="unit_mebibyte">
         <item quantity="one">mebibyte</item>

@@ -48,10 +48,14 @@ dependencies {
 
     implementation(libs.koin.android)
     implementation(libs.androidx.palette)
+    runtimeOnly(libs.androidx.compose.ui)
+    runtimeOnly(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.materialicons)
 
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))
     implementation(project(":libs:material-color-utilities"))
     api(project(":core:shared"))
 
+    testImplementation(libs.bundles.tests)
 }

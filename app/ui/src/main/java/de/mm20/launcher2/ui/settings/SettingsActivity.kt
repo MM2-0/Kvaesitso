@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -14,7 +15,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
@@ -44,6 +47,7 @@ import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.filterbar.FilterBarSettingsScreen
 import de.mm20.launcher2.ui.settings.gestures.GestureSettingsScreen
+import de.mm20.launcher2.ui.settings.google.GoogleSettingsScreen
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
 import de.mm20.launcher2.ui.settings.homescreen.HomescreenSettingsScreen
 import de.mm20.launcher2.ui.settings.icons.IconsSettingsScreen
@@ -53,6 +57,9 @@ import de.mm20.launcher2.ui.settings.locations.LocationsSettingsScreen
 import de.mm20.launcher2.ui.settings.log.LogScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.media.MediaIntegrationSettingsScreen
+import de.mm20.launcher2.ui.settings.nextcloud.NextcloudSettingsScreen
+import de.mm20.launcher2.ui.settings.osm.OsmSettingsScreen
+import de.mm20.launcher2.ui.settings.owncloud.OwncloudSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
@@ -68,16 +75,24 @@ import java.util.UUID
 
 class SettingsActivity : BaseActivity() {
 
+    private var route by mutableStateOf<String?>(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        val newRoute = intent?.getStringExtra(EXTRA_ROUTE)
+        route = newRoute
+
         setContent {
             val navController = rememberNavController()
 
-            LaunchedEffect(intent) {
-                intent.getStringExtra(EXTRA_ROUTE)
-                    ?.let { navController.navigate(it) }
+            LaunchedEffect(route) {
+                navController.navigate(route ?: "settings") {
+                    popUpTo("settings") {
+                        inclusive = true
+                    }
+                }
             }
             val wallpaperColors by wallpaperColorsAsState()
             CompositionLocalProvider(
@@ -103,16 +118,16 @@ class SettingsActivity : BaseActivity() {
                                 navController = navController,
                                 startDestination = "settings",
                                 exitTransition = {
-                                    slideOutHorizontally { it / 2 } + fadeOut()
+                                    slideOutHorizontally { -it / 4 }
                                 },
                                 enterTransition = {
-                                    slideInHorizontally { it / 2 } + scaleIn(initialScale = 0.95f)
+                                    slideInHorizontally { it / 2 } + scaleIn(initialScale = 0.9f) + fadeIn()
                                 },
                                 popEnterTransition = {
-                                    slideInHorizontally { -it / 2 } + fadeIn()
+                                    slideInHorizontally { -it / 4 }
                                 },
                                 popExitTransition = {
-                                    slideOutHorizontally { it / 2 } + scaleOut(targetScale = 0.95f)
+                                    slideOutHorizontally { it / 2 } + scaleOut(targetScale = 0.9f) + fadeOut()
                                 },
                             ) {
                                 composable("settings") {
@@ -159,6 +174,9 @@ class SettingsActivity : BaseActivity() {
                                 composable("settings/search/locations") {
                                     LocationsSettingsScreen()
                                 }
+                                composable("settings/search/locations/osm") {
+                                    OsmSettingsScreen()
+                                }
                                 composable("settings/search/files") {
                                     FileSearchSettingsScreen()
                                 }
@@ -185,6 +203,15 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/integrations") {
                                     IntegrationsSettingsScreen()
+                                }
+                                composable("settings/integrations/nextcloud") {
+                                    NextcloudSettingsScreen()
+                                }
+                                composable("settings/integrations/owncloud") {
+                                    OwncloudSettingsScreen()
+                                }
+                                composable("settings/integrations/google") {
+                                    GoogleSettingsScreen()
                                 }
                                 composable("settings/plugins") {
                                     PluginsSettingsScreen()
@@ -249,6 +276,12 @@ class SettingsActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        val newRoute = intent.getStringExtra(EXTRA_ROUTE)
+        route = newRoute
     }
 
     companion object {

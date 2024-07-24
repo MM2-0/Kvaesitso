@@ -1,0 +1,6 @@
+- Add support for places search plugins
+- Apps can now be hidden from the app drawer without being removed from search results
+- Redesigned search results
+- Bug fixes
+
+Full changelog at https://github.com/MM2-0/Kvaesitso/releases/tag/v1.31.0

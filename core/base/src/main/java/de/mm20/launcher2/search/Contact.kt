@@ -1,35 +1,46 @@
 package de.mm20.launcher2.search
 
-import android.content.Intent
+import android.net.Uri
 
-interface Contact: SavableSearchable {
+interface Contact : SavableSearchable {
     val firstName: String
     val lastName: String
     val displayName: String
     val summary: String
-    val contactInfos: Iterable<ContactInfo>
+    val phoneNumbers: List<PhoneNumber>
+    val emailAddresses: List<EmailAddress>
+    val postalAddresses: List<PostalAddress>
+    val contactApps: List<ContactApp>
 
     override val preferDetailsOverLaunch: Boolean
         get() = true
 }
 
-/**
- * Type of the contact info
- * Acts as a hint for the UI, so that it can display the correct icon and group them accordingly
- */
-enum class ContactInfoType {
-    Phone,
-    Message,
-    Email,
-    Postal,
-    Telegram,
-    Whatsapp,
-    Signal,
-    Other
-}
+data class PhoneNumber(
+    val number: String,
+    val type: ContactInfoType,
+)
 
-interface ContactInfo {
-    val type: ContactInfoType
-    val label: String
-    val intent: Intent
+data class EmailAddress(
+    val address: String,
+    val type: ContactInfoType,
+)
+
+data class PostalAddress(
+    val address: String,
+    val type: ContactInfoType,
+)
+
+data class ContactApp(
+    val label: String,
+    val uri: Uri,
+    val mimeType: String,
+    val packageName: String,
+)
+
+enum class ContactInfoType {
+    Home,
+    Mobile,
+    Work,
+    Other,
 }

@@ -9,6 +9,7 @@ fun TextPreference(
     title: String,
     value: String,
     summary: String? = value,
+    enabled: Boolean = true,
     onValueChanged: (String) -> Unit,
     placeholder: String? = null
 ) {
@@ -16,6 +17,7 @@ fun TextPreference(
     Preference(
         title = title,
         summary = summary,
+        enabled = enabled,
         onClick = { showDialog = true }
     )
 

@@ -14,7 +14,10 @@ import de.mm20.launcher2.icons.TextLayer
 import de.mm20.launcher2.ktx.asBitmap
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Contact
-import de.mm20.launcher2.search.ContactInfo
+import de.mm20.launcher2.search.ContactApp
+import de.mm20.launcher2.search.EmailAddress
+import de.mm20.launcher2.search.PhoneNumber
+import de.mm20.launcher2.search.PostalAddress
 import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,7 +27,10 @@ internal data class AndroidContact(
     override val firstName: String,
     override val lastName: String,
     override val displayName: String,
-    override val contactInfos: Iterable<ContactInfo>,
+    override val phoneNumbers: List<PhoneNumber>,
+    override val emailAddresses: List<EmailAddress>,
+    override val postalAddresses: List<PostalAddress>,
+    override val contactApps: List<ContactApp>,
     internal val lookupKey: String,
     override val labelOverride: String? = null,
 ) : Contact {
@@ -38,7 +44,7 @@ internal data class AndroidContact(
 
     override val summary: String
         get() {
-            return contactInfos.distinctBy { it.label }.take(5).joinToString(separator = ", ") { it.label }
+            return (phoneNumbers.map { it.number } + emailAddresses.map { it.address }).joinToString(", ")
         }
 
     override fun overrideLabel(label: String): Contact {

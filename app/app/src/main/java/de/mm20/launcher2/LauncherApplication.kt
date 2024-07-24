@@ -26,12 +26,13 @@ import de.mm20.launcher2.database.databaseModule
 import de.mm20.launcher2.debug.initDebugMode
 import de.mm20.launcher2.globalactions.globalActionsModule
 import de.mm20.launcher2.notifications.notificationsModule
-import de.mm20.launcher2.openstreetmaps.openStreetMapsModule
+import de.mm20.launcher2.locations.locationsModule
 import de.mm20.launcher2.permissions.permissionsModule
 import de.mm20.launcher2.data.plugins.dataPluginsModule
 import de.mm20.launcher2.devicepose.devicePoseModule
 import de.mm20.launcher2.plugins.servicesPluginsModule
 import de.mm20.launcher2.preferences.preferencesModule
+import de.mm20.launcher2.profiles.profilesModule
 import de.mm20.launcher2.searchactions.searchActionsModule
 import de.mm20.launcher2.services.favorites.favoritesModule
 import de.mm20.launcher2.services.tags.servicesTagsModule
@@ -43,7 +44,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
-import java.text.Collator
 import kotlin.coroutines.CoroutineContext
 
 class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
@@ -88,13 +88,14 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     websitesModule,
                     widgetsModule,
                     wikipediaModule,
-                    openStreetMapsModule,
+                    locationsModule,
                     servicesTagsModule,
                     widgetsServiceModule,
                     dataPluginsModule,
                     servicesPluginsModule,
                     backupModule,
                     devicePoseModule,
+                    profilesModule,
                 )
             )
         }
@@ -109,12 +110,4 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
             .crossfade(200)
             .build()
     }
-
-    companion object {
-
-        val collator: Collator by lazy {
-            Collator.getInstance().apply { strength = Collator.SECONDARY }
-        }
-    }
-
 }

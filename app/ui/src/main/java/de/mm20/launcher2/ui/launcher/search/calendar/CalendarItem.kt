@@ -2,20 +2,23 @@ package de.mm20.launcher2.ui.launcher.search.calendar
 
 import android.content.Context
 import android.text.format.DateUtils
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Notes
 import androidx.compose.material.icons.rounded.OpenInNew
@@ -24,6 +27,7 @@ import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Icon
@@ -37,20 +41,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
@@ -80,67 +82,50 @@ fun CalendarItem(
         viewModel.init(calendar, iconSize.toInt())
     }
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val snackbarHostState = LocalSnackbarHostState.current
-
     val darkMode = LocalDarkTheme.current
     val secondaryColor = MaterialTheme.colorScheme.secondary
 
-    Row(
-        modifier = modifier
-            .drawBehind {
-                val color = TonalPalette
-                    .fromInt(calendar.color ?: secondaryColor.toArgb())
-                    .tone(
-                        if (darkMode) 80 else 40
-                    )
-                drawRect(Color(color), Offset.Zero, this.size.copy(width = 8.dp.toPx()))
-            }
-            .padding(start = 8.dp),
-    ) {
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Row {
-                val padding by animateDpAsState(if (showDetails) 16.dp else 12.dp)
-                Column(
-                    modifier = Modifier.padding(
-                        top = padding,
-                        start = padding,
-                        bottom = 12.dp,
-                        end = padding
-                    )
-                ) {
-                    val textStyle by animateTextStyleAsState(
-                        if (showDetails) MaterialTheme.typography.titleMedium
-                        else MaterialTheme.typography.titleSmall
-                    )
-                    Text(text = calendar.labelOverride ?: calendar.label, style = textStyle)
-                    AnimatedVisibility(!showDetails) {
-                        Text(
-                            modifier = Modifier.padding(top = 2.dp),
-                            text = calendar.getSummary(context),
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
-                    AnimatedVisibility(showDetails) {
-                        val tags by viewModel.tags.collectAsState(emptyList())
-                        if (tags.isNotEmpty()) {
-                            Text(
-                                modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
-                                text = tags.joinToString(separator = " #", prefix = "#"),
-                                color = MaterialTheme.colorScheme.secondary,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                        }
-                    }
-                }
-            }
-            AnimatedVisibility(showDetails) {
+    val eventColor = Color(
+        TonalPalette
+            .fromInt(calendar.color ?: secondaryColor.toArgb())
+            .tone(
+                if (darkMode) 80 else 40
+            )
+    )
+
+    SharedTransitionLayout {
+        AnimatedContent(showDetails) { showDetails ->
+            if (showDetails) {
                 Column {
                     Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(vertical = 16.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(horizontal = 14.dp)
+                                .size(24.dp)
+                                .sharedBounds(
+                                    rememberSharedContentState("color"),
+                                    this@AnimatedContent
+                                )
+                                .background(eventColor, MaterialTheme.shapes.extraSmall)
+                        )
+
+                        Text(
+                            modifier = Modifier
+                                .padding(start = 4.dp, end = 16.dp)
+                                .sharedBounds(
+                                    rememberSharedContentState("label"),
+                                    this@AnimatedContent
+                                ),
+                            text = calendar.labelOverride ?: calendar.label,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                    Row(
                         Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth().padding(bottom = 8.dp, end = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -149,6 +134,11 @@ fun CalendarItem(
                             contentDescription = null
                         )
                         Text(
+                            modifier = Modifier
+                                .sharedBounds(
+                                    rememberSharedContentState("date"),
+                                    this@AnimatedContent
+                                ),
                             text = calendar.formatTime(context),
                             style = MaterialTheme.typography.bodySmall
                         )
@@ -156,7 +146,7 @@ fun CalendarItem(
                     if (!calendar.description.isNullOrBlank()) {
                         Row(
                             Modifier
-                                .fillMaxWidth(),
+                                .fillMaxWidth().padding(bottom = 8.dp, end = 16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
@@ -166,14 +156,16 @@ fun CalendarItem(
                             )
                             Text(
                                 text = calendar.description!!,
-                                style = MaterialTheme.typography.bodySmall
+                                style = MaterialTheme.typography.bodySmall,
+                                maxLines = 8,
+                                overflow = TextOverflow.Ellipsis,
                             )
                         }
                     }
                     if (calendar.attendees.isNotEmpty()) {
                         Row(
                             Modifier
-                                .fillMaxWidth(),
+                                .fillMaxWidth().padding(bottom = 8.dp, end = 16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
@@ -183,7 +175,9 @@ fun CalendarItem(
                             )
                             Text(
                                 text = calendar.attendees.joinToString(),
-                                style = MaterialTheme.typography.bodySmall
+                                style = MaterialTheme.typography.bodySmall,
+                                maxLines = 6,
+                                overflow = TextOverflow.Ellipsis,
                             )
                         }
                     }
@@ -192,6 +186,7 @@ fun CalendarItem(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .padding(bottom = 8.dp, end = 16.dp)
                                 .clickable {
                                     calendar.openLocation(context)
                                 }
@@ -207,7 +202,6 @@ fun CalendarItem(
                             )
                         }
                     }
-
                     val toolbarActions = mutableListOf<ToolbarAction>()
 
                     if (LocalFavoritesEnabled.current) {
@@ -231,39 +225,6 @@ fun CalendarItem(
                         toolbarActions.add(favAction)
                     }
 
-                    val isHidden by viewModel.isHidden.collectAsState(false)
-                    val hideAction = if (isHidden) {
-                        DefaultToolbarAction(
-                            label = stringResource(R.string.menu_unhide),
-                            icon = Icons.Rounded.Visibility,
-                            action = {
-                                viewModel.unhide()
-                                onBack()
-                            }
-                        )
-                    } else {
-                        DefaultToolbarAction(
-                            label = stringResource(R.string.menu_hide),
-                            icon = Icons.Rounded.VisibilityOff,
-                            action = {
-                                viewModel.hide()
-                                onBack()
-                                lifecycleOwner.lifecycleScope.launch {
-                                    val result = snackbarHostState.showSnackbar(
-                                        message = context.getString(
-                                            R.string.msg_item_hidden,
-                                            calendar.label
-                                        ),
-                                        actionLabel = context.getString(R.string.action_undo),
-                                        duration = SnackbarDuration.Short,
-                                    )
-                                    if (result == SnackbarResult.ActionPerformed) {
-                                        viewModel.unhide()
-                                    }
-                                }
-                            })
-                    }
-
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(R.string.menu_calendar_open_externally),
@@ -278,23 +239,58 @@ fun CalendarItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(DefaultToolbarAction(
                         label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Edit,
+                        icon = Icons.Rounded.Tune,
                         action = { sheetManager.showCustomizeSearchableModal(calendar) }
                     ))
-
-                    toolbarActions.add(hideAction)
 
                     Toolbar(
                         leftActions = listOf(
                             DefaultToolbarAction(
                                 label = stringResource(id = R.string.menu_back),
-                                icon = Icons.Rounded.ArrowBack
+                                icon = Icons.AutoMirrored.Rounded.ArrowBack
                             ) {
                                 onBack()
                             }
                         ),
                         rightActions = toolbarActions
                     )
+                }
+            } else {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier
+                        .padding(16.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .size(20.dp)
+                            .sharedBounds(
+                                rememberSharedContentState("color"),
+                                this@AnimatedContent
+                            )
+                            .background(eventColor, MaterialTheme.shapes.extraSmall)
+                    )
+                    Column {
+                        Text(
+                            modifier = Modifier.sharedBounds(
+                                rememberSharedContentState("label"),
+                                this@AnimatedContent
+                            ),
+                            text = calendar.labelOverride ?: calendar.label,
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                        Text(
+                            modifier = Modifier.padding(top = 2.dp)
+                                .sharedBounds(
+                                    rememberSharedContentState("date"),
+                                    this@AnimatedContent
+                                ),
+                            text = calendar.getSummary(context),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+
                 }
             }
         }

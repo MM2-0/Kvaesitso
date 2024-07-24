@@ -1,7 +1,9 @@
 package de.mm20.launcher2.ui.assistant
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
@@ -25,6 +27,8 @@ import de.mm20.launcher2.ui.launcher.gestures.LauncherGestureHandler
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
+import de.mm20.launcher2.ui.locals.LocalCardStyle
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -112,6 +116,7 @@ fun AssistantScaffold(
 
 
     val colorSurface = MaterialTheme.colorScheme.surface
+    val isDarkTheme = LocalDarkTheme.current
     LaunchedEffect(darkStatusBarIcons, colorSurface, showStatusBarScrim) {
         if (showStatusBarScrim) {
             systemUiController.setStatusBarColor(
@@ -120,7 +125,7 @@ fun AssistantScaffold(
         } else {
             systemUiController.setStatusBarColor(
                 Color.Transparent,
-                darkIcons = darkStatusBarIcons
+                darkIcons = !isDarkTheme,
             )
         }
     }
@@ -159,16 +164,20 @@ fun AssistantScaffold(
         if (actions.isEmpty()) 0.dp else 48.dp
     )
     val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
+    val cardStyle = LocalCardStyle.current
     Box(
         modifier = modifier
             .fillMaxSize()
+            .background(
+                MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f * cardStyle.opacity)
+            )
             .nestedScroll(nestedScrollConnection)
     ) {
         SearchColumn(
             modifier = Modifier.fillMaxSize(),
             paddingValues = PaddingValues(
-                top = (if (bottomSearchBar) 0.dp else 56.dp + webSearchPadding) + 4.dp + windowInsets.calculateTopPadding(),
-                bottom = (if (bottomSearchBar) 56.dp + webSearchPadding else 0.dp) + 4.dp + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding
+                top = (if (bottomSearchBar) 0.dp else 64.dp + webSearchPadding) + 8.dp + windowInsets.calculateTopPadding(),
+                bottom = (if (bottomSearchBar) 64.dp + webSearchPadding else 0.dp) + 8.dp + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding
             ),
             reverse = reverseSearchResults,
             state = searchState

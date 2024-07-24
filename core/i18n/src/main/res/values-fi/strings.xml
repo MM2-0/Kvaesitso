@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="websearch_dialog_url_error">Korvattava termi \'${1}\' puuttuu osoitteesta</string>
-    <string name="widget_add_external">Lisää</string>
     <string name="easter_egg_3">Viimeinen varoitus: tänne ei todella ole piilotettu yhtään mitään</string>
     <string name="widget_action_replace">Korvaa</string>
     <string name="edit_favorites_dialog_empty_section">Vedä kohteita tähän</string>
@@ -45,17 +44,9 @@
     <string name="alert_delete_shortcut">Oikotie %1$s poistetaan lopullisesti. Jatka\?</string>
     <string name="alert_delete_directory">Hakemisto %1$s ja kaikki sen sisältö poistetaan lopullisesti. Jatka\?</string>
     <string name="alert_delete_file">Tiedosto %1$s poistetaan lopullisesti. Jatka\?</string>
-    <string name="default_websearch_1_name">Google</string>
-    <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="websearch_dialog_name">Nimi</string>
-    <string name="websearch_dialog_url">URL</string>
-    <string name="websearch_dialog_create_title">Lisää verkkohaku</string>
-    <string name="websearch_dialog_edit_title">Muokkaa verkkohakua</string>
     <string name="websearch_dialog_delete_icon">Poista kuvake</string>
     <string name="websearch_dialog_custom_icon">Mukautettu kuvake</string>
-    <string name="websearch_dialog_import_url">Tuo verkko-osoitteesta</string>
-    <string name="websearch_dialog_import_error">Annettua osoitetta ei voida tuoda automaattisesti. Voit kokeilla toista osoitetta tai syöttää vaaditut tiedot manuaalisesti.</string>
     <string name="websearch_dialog_advanced">Edistyneet</string>
     <string name="websearch_dialog_query_encoding">Haun koodaus</string>
     <string name="websearch_dialog_query_encoding_none">Ei mitään</string>
@@ -68,7 +59,6 @@
     <string name="notes_widget_action_dismiss">Hylkää</string>
     <string name="notes_widget_dismissed">Muistiinpano hylätty.</string>
     <string name="shortcut_summary">sovelluksesta %1$s</string>
-    <string name="installation_in_progress">Asennetaan... (%1$s)</string>
     <string name="easter_egg_1">Täällä ei ole yllätyksiä, ellet tuonut niitä mukanasi.</string>
     <string name="close">Sulje</string>
     <string name="nextcloud_server_url_empty">Palvelimen URL ei voi olla tyhjä</string>
@@ -90,7 +80,6 @@
     <string name="wind_west_north_west">Länsiluode</string>
     <string name="wind_north_west">Luode</string>
     <string name="wind_north_north_west">Pohjoisluode</string>
-    <string name="precipitation_none">Ei sadetta</string>
     <string name="file_meta_artist">Artisti: %1$s</string>
     <string name="file_meta_title">Kappale: %1$s</string>
     <string name="file_meta_album">Albumi: %1$s</string>
@@ -122,11 +111,9 @@
     <string name="file_type_launcherbackup">%1$s-varmuuskopio</string>
     <string name="file_type_launchertheme">%1$s-teema</string>
     <string name="file_type_generic">%1$s-tiedosto</string>
-    <string name="error_activity_not_found">Ei voitu avata %1$s</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="default_websearch_3_name">Google Play</string>
-    <string name="websearch_dialog_url_description">\'${1}\' korvataan varsinaisella hakulausekkeella.</string>
     <string name="websearch_dialog_replace_icon">Korvaa kuvake</string>
     <string name="websearch_dialog_query_encoding_url">Prosenttikoodaus</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
@@ -142,12 +129,9 @@
     <string name="duplicate">Monista</string>
     <string name="edit">Muokkaa</string>
     <string name="skip">Sivuuta</string>
-    <string name="action_continue">Jatka</string>
     <string name="action_next">Seuraava</string>
     <string name="turn_off">Poista käytöstä</string>
-    <string name="widget_action_adjust_height">Säädä korkeutta</string>
     <string name="widget_action_remove">Poista</string>
-    <string name="widget_action_settings">Asetukset</string>
     <string name="menu_item_edit_favs">Muokkaa suosikkeja</string>
     <string name="edit_favorites_dialog_unpinned">Ei kiinnitetty - usein käytetty</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Kiinnitetty - automaattisesti järjestetty</string>
@@ -159,9 +143,6 @@
     <string name="login_flow_continue">Jatka</string>
     <string name="login_flow_login">Kirjaudu sisään</string>
     <string name="disclaimer">Vastuuvapauslauseke</string>
-    <string name="preference_colors_auto_generate">Luo pääväristä</string>
-    <string name="preference_category_custom_colors_light">Vaalea värikaavio</string>
-    <string name="preference_category_custom_colors_dark">Tumma värikaavio</string>
     <string name="preference_font">Fontti</string>
     <string name="preference_font_system">Järjestelmän oletus</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
@@ -177,8 +158,6 @@
     <string name="preference_category_animations">Animaatiot</string>
     <string name="preference_category_system_bars">Järjestelmän palkit</string>
     <string name="missing_permission_file_search_settings_android10">Kaikkien tiedostojen käyttöoikeus tarvitaan paikallisten tiedostojen hakuun</string>
-    <string name="missing_permission_plugins">Liitännäisten käyttöoikeus tarvitaan liitännäisten käyttöön.</string>
-    <string name="preference_custom_colors_advanced_mode">Edistynyt tila</string>
     <string name="preference_cards_stroke_width">Lyönnin leveys</string>
     <string name="preference_search_calendar_summary">Hae tulevia tapaamisia ja tapahtumia</string>
     <string name="provider_metno">Norjan meteorologinen instituutti (MET Norway)</string>
@@ -187,11 +166,6 @@
     <string name="preference_automatic_location_summary">Käytä GPS:ää ja sijaintipalveluja sijainnin automaattiseen määritykseen</string>
     <string name="preference_icon_pack_summary_empty">Ei kuvakepaketteja asennettu</string>
     <string name="preference_search_appshortcuts_summary">Hae sovellusoikoteitä</string>
-    <string name="icon_pack_dynamic_colors">Dynaamiset värit</string>
-    <plurals name="preference_calendar_calendars_summary">
-        <item quantity="one">%1$d kalenteri valittu</item>
-        <item quantity="other">%1$d kalenteria valittu</item>
-    </plurals>
     <string name="preference_charging_animation">Latausanimaatio</string>
     <string name="preference_charging_animation_summary">Näytä kupliva animaatio, kun laite on latauksessa</string>
     <string name="preference_widgets_edit_button_summary">Näytä painike pienoisohjelmien lisäämistä, poistamista tai järjestelyä varten</string>
@@ -201,11 +175,9 @@
     </plurals>
     <string name="no_account_nextcloud">Et ole liittänyt Nextcloud-tiliä vielä</string>
     <string name="preference_enforce_icon_shape_summary">Käytä muotoa kaikkiin kuvakkeisiin, myös niihin, jotka eivät tue sitä</string>
-    <string name="backup_not_included">Liitettyjä tilejä ei varmuuskopioida. Kolmannen osapuolen sovellusten pienoisohjelmat voidaan palauttaa vain tällä laitteella.</string>
     <string name="preference_clockwidget_layout_horizontal">Tiivis</string>
     <string name="preference_search_search_actions_summary">Säädä pikatoimintoja ja hakuoikoteitä</string>
     <string name="search_action_websearch_url_hint">URL-pohja, jota käytetään verkkohaun osoitteena. Käytä \'${1}\' osoittamaan varsinaisen hakutermin paikkaa osoitteessa, esimerkiksi https://google.com/search\?q=${1}.</string>
-    <string name="preference_clock_widget_fill_height_summary">Jätä näyttö tyhjäksi kellon yläpuolella</string>
     <string name="open_search_swipe_left">Vasemmalle pyyhkäisy</string>
     <string name="preference_logs_summary">Näytä tai vie sovelluksen lokit</string>
     <string name="open_search_pull_down">Alas pyyhkäisy</string>
@@ -226,7 +198,6 @@
     <string name="preference_grid_icon_size">Kuvakkeen koko</string>
     <string name="preference_grid_column_count">Sarakkeiden määrä</string>
     <string name="preference_category_widgets">Pienoisohjelmat</string>
-    <string name="preference_clock_widget_style_summary">Valitse kello</string>
     <string name="preference_clockwidget_date_part">Päiväys</string>
     <string name="preference_restore_summary">Tuo varmuuskopio</string>
     <string name="preference_clock_widget_alignment">Kohdistus</string>
@@ -250,7 +221,6 @@
     <string name="preference_search_bar_color">Väri</string>
     <string name="preference_wikipedia_customurl">Wikipedian osoite</string>
     <string name="preference_edit_favorites_summary">Vaihda kiinnitettyjen kohteiden järjestystä</string>
-    <string name="backup_component_themes">Värikaaviot</string>
     <string name="restore_incompatible_file">Tämä varmuuskopio on luotu sovelluksen %1$s toisella versiolla eikä sitä voida palauttaa tällä versiolla.</string>
     <string name="icon_picker_default_icon">Oletus</string>
     <string name="icon_picker_title">Valitse kuvake</string>
@@ -268,16 +238,10 @@
     <string name="preference_search_localfiles">Paikalliset tiedostot</string>
     <string name="preference_search_localfiles_summary">Hae asiakirjoja, kuvia ja muita tiedostoja tältä laitteelta</string>
     <string name="preference_search_gdrive_summary">Hae käyttäjän %1$s tiedostoja Google Drivestä</string>
-    <string name="preference_search_onedrive">OneDrive</string>
-    <string name="preference_search_onedrive_summary">Hae käyttäjän %1$s tiedostoja OneDrivestä</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="preference_search_wikipedia_pictures_summary">Lisää datankulutusta merkittävästi</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_screen_calendarwidget">Kalenteri</string>
-    <string name="preference_search_wikipedia_pictures">Näytä kuvat</string>
     <string name="preference_google_signin_summary">Kirjaudu hakeaksesi Google Drivestä</string>
     <string name="preference_screen_buildinfo">Koontiversion tiedot</string>
-    <string name="preference_music_filter_sources_summary">Sivuuta media, jonka lähde ei ole musiikkisovellus</string>
     <string name="preference_calendar_calendars">Kalenterit</string>
     <string name="preference_calendar_hide_allday">Piilota koko päivän tapahtumat</string>
     <string name="preference_search_bar_style">Tyyli</string>
@@ -295,7 +259,6 @@
     <string name="preference_media_integration">Mediasäätimet</string>
     <string name="no_account_owncloud">Et ole liittänyt Owncloud-tiliä vielä</string>
     <string name="battery_part_charging">Ladataan</string>
-    <string name="backup_select_components">Valitse varmuuskopioitavat kohteet:</string>
     <string name="icon_picker_search_icon">Hae kuvakepaketeista</string>
     <string name="icon_picker_no_packs_installed">Kuvakepaketteja ei ole asennettuna</string>
     <string name="icon_picker_filter_all_packs">Kaikki kuvakepaketit</string>
@@ -314,7 +277,7 @@
         <item quantity="other">%1$d kohdetta valittu</item>
     </plurals>
     <string name="open_search_swipe_right">Oikealle pyyhkäisy</string>
-    <string name="unit_converter_show_all">Näytä kaikki</string>
+    <string name="show_all">Näytä kaikki</string>
     <string name="disclaimer_currency_converter">Euroopan keskuspankin päivittäin julkaisemat vaihtokurssit. Tiedot toimitetaan sellaisinaan ilman minkäänlaista takuuta. Mitään vastuuta ei oteta näistä tiedoista.
 \n
 \nTiedot päivitetty: %1$s</string>
@@ -333,7 +296,6 @@
     <string name="weather_condition_lightrainandthunder">Tihkusadetta ja ukkosta</string>
     <string name="weather_condition_snow">Lumisadetta</string>
     <string name="weather_condition_hail">Rakeita</string>
-    <string name="weather_condition_thunder">Ukkosmyrsky</string>
     <string name="weather_condition_heavysnowshowers">Runsaita lumikuuroja</string>
     <string name="weather_condition_heavyrainshowers">Kovia sadekuuroja</string>
     <string name="weather_condition_rain">Sadetta</string>
@@ -351,12 +313,8 @@
     <string name="missing_permission_appshortcuts_search_settings">%1$s on asetettava aloitusnäyttösovellukseksi sovellusoikoteiden hakua varten</string>
     <string name="missing_permission_file_search_settings">Ulkoisen tallennustilan käyttöoikeus tarvitaan paikallisten tiedostojen hakuun</string>
     <string name="preference_screen_appearance">Ulkoasu</string>
-    <string name="preference_colors_custom">Mukautettu</string>
-    <string name="preference_custom_colors_a1">Ensisijainen</string>
-    <string name="preference_custom_colors_a2">Toissijainen</string>
     <string name="preference_imperial_units">Brittiläiset yksiköt</string>
     <string name="widget_config_weather_compact">Tiivis tila</string>
-    <string name="preference_compact_mode_summary">Piilota tunneittaiset ja päivittäiset ennusteet</string>
     <string name="preference_category_debug">Testaus</string>
     <string name="preference_category_debug_tools">Työkalut</string>
     <string name="preference_debug_dump_heap">Muistivedos</string>
@@ -380,13 +338,8 @@
     <string name="preference_layout_fixed_search_bar">Kiinteä hakupalkki</string>
     <string name="preference_colors_default">Oletus</string>
     <string name="preference_colors_bw">Mustavalkoinen</string>
-    <string name="preference_custom_colors_a3">Kolmas</string>
-    <string name="preference_custom_colors_n1">Neutraali</string>
-    <string name="preference_custom_colors_n2">Neutraalin muunnos</string>
-    <string name="preference_custom_colors_error">Virhe</string>
     <string name="preference_custom_colors_corepalette">Väripaletti</string>
     <string name="preference_screen_colors">Värikaavio</string>
-    <string name="preference_custom_colors_simple_mode">Yksinkertainen tila</string>
     <string name="preference_screen_about">Tietoja</string>
     <string name="preference_version">Versio</string>
     <string name="preference_category_links">Linkkejä</string>
@@ -412,7 +365,6 @@
     <string name="preference_screen_plugins">Liitännäiset</string>
     <string name="preference_screen_plugins_summary">Hallitse asennettuja liitännäisiä</string>
     <string name="no_plugins_installed">Ei liitännäisiä asennettu</string>
-    <string name="plugin_host_not_installed">Liitännäisten isäntäsovellusta ei ole asennettu</string>
     <string name="preference_themed_icons">Teeman kuvakkeet</string>
     <string name="preference_force_themed_icons_summary">Käytä sovelluksen värikaaviota kaikkiin kuvakkeisiin, myös ei-tuettuihin (ei suositella)</string>
     <string name="preference_icon_pack">Kuvakepaketti</string>
@@ -426,13 +378,11 @@
     <string name="preference_google">Google</string>
     <string name="preference_icon_shape_hexagon">Kuusikulmio</string>
     <string name="preference_signin_user">Kirjauduttu sisään käyttäjänä %1$s</string>
-    <string name="preference_signin_logout">Kirjaudu ulos</string>
     <string name="preference_summary_not_logged_in">Et ole kirjautuneena</string>
     <string name="preference_blur_wallpaper_unsupported">Ei tueta tällä laitteella</string>
     <string name="preference_blur_wallpaper_radius">Sumennuksen säde</string>
     <string name="preference_wallpaper_summary">Valitse taustakuva</string>
     <string name="preference_category_badges">Pistemerkit</string>
-    <string name="preference_screen_badges_summary">Säädä kuvakkeiden pistemerkkejä</string>
     <string name="preference_notification_badges">Ilmoitusten pistemerkit</string>
     <string name="preference_notification_badges_summary">Näytä pistemerkki sovelluksille, joilla on lukemattomia ilmoituksia</string>
     <string name="preference_suspended_badges_summary">Näytä pistemerkki pysäytetyille sovelluksille</string>
@@ -453,17 +403,12 @@
     <string name="preference_grid_labels_summary">Näytä sovelluksen nimi kuvakkeen alla</string>
     <string name="preference_screen_debug">Testaus</string>
     <string name="preference_screen_debug_summary">Ongelmanratkaisutyökalut</string>
-    <string name="preference_screen_widgets_summary">Säädä pienoisohjelmia</string>
     <string name="preference_screen_weatherwidget">Sää</string>
-    <string name="preference_screen_musicwidget">Musiikki</string>
     <string name="preference_category_media_apps">Mediasovellukset</string>
     <string name="preference_screen_clockwidget">Kello</string>
     <string name="preference_screen_clockwidget_summary">Säädä kellon osia ja tyyliä</string>
-    <string name="preference_clockwidget_layout">Asettelu</string>
     <string name="preference_clockwidget_layout_vertical">Oletus</string>
     <string name="preference_clock_widget_fill_height">Täytä näytön korkeus</string>
-    <string name="preference_clock_widget_color">Väri</string>
-    <string name="preference_clock_widget_style">Tyyli</string>
     <string name="preference_clockwidget_dynamic_zone">Muuttuva alue</string>
     <string name="preference_clockwidget_favorites_part_summary">Näytä ensimmäinen rivi kiinnitettyjä kohteita</string>
     <string name="preference_clockwidget_music_part_summary">Näytä mediaohjaimet, kun mediaa on aktiivisena</string>
@@ -473,14 +418,10 @@
     <string name="preference_restore">Palauta</string>
     <string name="preference_crash_reporter_summary">Virhe- ja kaatumisraportit</string>
     <string name="preference_logs">Lokit</string>
-    <string name="preference_export_log">Vie lokitiedosto</string>
     <string name="preference_search_calculator">Laskin</string>
-    <string name="preference_search_websearch">Verkkohaku</string>
-    <string name="preference_search_websearch_summary">Näytä oikotiet hakukoneisiin</string>
     <string name="preference_search_cloud_summary">Hae %1$s:n tiedostoja</string>
     <string name="preference_google_signin">Kirjaudu Google-tilillä</string>
     <string name="preference_screen_buildinfo_summary">Lisätietoja sovelluksen tästä koontiversiosta</string>
-    <string name="preference_music_filter_sources">Rajoita musiikkisovelluksiin</string>
     <string name="preference_search_bar_auto_focus">Avaa näppäimistö</string>
     <string name="preference_screen_tags_summary">Hallitse avainsanoja ja merkittyjä kohteita</string>
     <string name="preference_edit_button">Muokkauspainike</string>
@@ -495,16 +436,10 @@
         <item quantity="one">Täynnä %1$s minuutissa</item>
         <item quantity="other">Täynnä %1$s minuutissa</item>
     </plurals>
-    <string name="backup_component_favorites">Suosikit ja piilotetut sovellukset</string>
-    <string name="backup_component_settings">Asetukset</string>
-    <string name="backup_component_websearches">Verkkohaun oikotiet</string>
-    <string name="backup_component_searchactions">Pikatoiminnot</string>
-    <string name="backup_component_widgets">Sisäänrakennetut pienoisohjelmat</string>
     <string name="backup_complete">Varmuuskopio on valmis.</string>
     <string name="restore_invalid_file">Valittu tiedosto ei vaikuta olevan varmuuskopio. Oletko varma, että valitsit oikean tiedoston\?</string>
     <string name="restore_different_minor_version">Tämä varmuuskopio on luotu sovelluksen %1$s toisella versiolla. Kaikkea dataa ei välttämättä pystytä palauttamaan.</string>
     <string name="restore_meta">%3$s loi %1$s laitteella %2$s.</string>
-    <string name="restore_select_components">Valitse mitä palautetaan. Nykyiset tiedot häviävät!</string>
     <string name="restore_complete">Varmuuskopio on palautettu.</string>
     <string name="icon_picker_suggestions">Ehdotukset</string>
     <string name="apps_profile_work">Työ</string>
@@ -529,7 +464,6 @@
     <string name="create_tag_title">Uusi avainsana</string>
     <string name="edit_tag_title">Muokkaa avainsanaa</string>
     <string name="tag_exists_error">Avainsana on jo olemassa.</string>
-    <string name="tag_empty_message">Avainsanan nimi ei voi olla tyhjä.</string>
     <string name="preference_layout_open_search">Haku / sovelluslaatikko</string>
     <string name="preference_layout_search_results">Hakutulosten järjestys</string>
     <string name="preference_layout_fixed_search_bar_summary">Älä vieritä hakupalkkia pois näkyvistä</string>
@@ -538,7 +472,6 @@
     <string name="preference_shortcut_badges">Oikoteiden merkit</string>
     <string name="preference_search_wikipedia_summary">Hae vapaasta tietosanakirjasta</string>
     <string name="preference_search_gdrive">Google Drive</string>
-    <string name="backup_component_customizations">Mukautukset</string>
     <string name="customize_tags_placeholder">Avainsanat…</string>
     <string name="frequently_used_rows">Rivien määrä</string>
     <string name="search_action_message">Viesti</string>
@@ -549,8 +482,6 @@
     <string name="calendar_widget_pinned_events">Tulevat</string>
     <string name="calendar_widget_next_events">Seuraava tapahtuma</string>
     <string name="calendar_widget_no_events">Ei tapahtumia tänään</string>
-    <string name="calendar_widget_open_app">Avaa kalenterisovellus</string>
-    <string name="calendar_widget_new_event">Uusi tapahtuma</string>
     <string name="music_widget_default_title">%1$s toistaa mediaa</string>
     <string name="weather_condition_lightrainshowersandthunder">Pieniä sadekuuroja ja ukkosta</string>
     <string name="weather_condition_heavyrain">Kovaa sadetta</string>
@@ -583,11 +514,6 @@
     <string name="weather_condition_heavyrainandthunder">Kovaa sadetta ja ukkosta</string>
     <string name="weather_condition_wind">Tuuli</string>
     <string name="weather_condition_unknown">Tuntematon</string>
-    <string name="weather_widget_show_details">Näytä yksityiskohdat</string>
-    <string name="weather_widget_hide_details">Piilota yksityiskohdat</string>
-    <string name="weather_details_humidity">Kosteus: %1$s</string>
-    <string name="weather_details_wind">Tuuli: %1$s</string>
-    <string name="weather_details_precipitation">Sademäärä: %1$s</string>
     <string name="weather_no_data">Säätietoja ei saatavilla.</string>
     <string name="missing_permission_notification_badges">Pääsy ilmoituksiin tarvitaan ilmoitusten pistemerkkien näyttämiseen</string>
     <string name="missing_permission_calendar_widget">Anna kalenterin käyttöoikeus tulevien tapaamisten ja tapahtumien näyttämiseksi.</string>
@@ -597,8 +523,6 @@
     <string name="missing_permission_appshortcuts_search">Aseta %1$s aloitusnäyttösovellukseksi sovellusoikoteiden hakua varten.</string>
     <string name="missing_permission_appshortcuts_create">Aseta %1$s aloitusnäyttösovellukseksi sovellusoikoteiden luomista varten.</string>
     <string name="grant_permission">Salli</string>
-    <string name="preference_layout">Asettelu</string>
-    <string name="preference_layout_summary">Hakupalkin, pienoisohjelmien ja hakutulosten yleinen asettelu</string>
     <string name="preference_theme">Teema</string>
     <string name="import_theme_error">Valittua tiedostoa ei voitu lukea. Varmista, että valitsit kelvollisen teematiedoston (*.kvtheme) ja että tiedosto ei ole vioittunut.</string>
     <string name="note_widget_conflict_description">Yhdistetty tiedosto ei ole tyhjä ja sen sisältö ei vastaa muistiinpanon viimeistä tallennettua versiota. Kumman version haluat säilyttää\?</string>
@@ -607,8 +531,6 @@
     <string name="gesture_action_lock_screen">Sammuta näyttö</string>
     <string name="gesture_action_quick_settings">Avaa pika-asetukset</string>
     <string name="preference_search_result_ordering_weighted">Käyttö</string>
-    <string name="preference_search_result_ordering_launch_count">Käynnistysten määrä</string>
-    <string name="widget_config_appwidget_height">Korkeus</string>
     <string name="widget_config_appwidget_borderless">Ei reunusta</string>
     <string name="widget_config_appwidget_background">Taustakortti</string>
     <string name="shortcut_label_unavailable">Ei saatavilla</string>
@@ -631,7 +553,6 @@
     <string name="preference_search_result_ordering_weight_factor_default">Tasapainoinen</string>
     <string name="preference_search_result_ordering_weight_factor_high">Muuttuva</string>
     <string name="widget_config_appwidget_configure">Säädä pienoisohjelmaa</string>
-    <string name="widget_config_appwidget_resize_hint">Vedä muuttaaksesi kokoa</string>
     <string name="widget_config_weather_integration_settings">Sääintegraatioiden asetukset</string>
     <string name="widget_config_calendar_no_calendars">Kalentereita ei löytynyt</string>
     <string name="note_widget_link_file">Yhdistä tiedostoon</string>

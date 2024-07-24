@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.component
 
+import android.icu.text.DecimalFormat
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.StarHalf
@@ -8,7 +10,9 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,7 +29,8 @@ fun RatingBar(
     rating: Float,
     modifier: Modifier = Modifier,
     tint: Color = MaterialTheme.colorScheme.primary,
-    starSize: Dp = 16.dp
+    starSize: Dp = 16.dp,
+    ratingCount: Int? = null,
 ) {
     val starRating = round(rating * 10f).toInt()
     val fullStars = starRating / 2
@@ -34,6 +39,7 @@ fun RatingBar(
     val iconModifier = Modifier.size(starSize)
     Row(
         modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         for (i in 0 until fullStars) {
             Icon(
@@ -59,11 +65,18 @@ fun RatingBar(
                 modifier = iconModifier
             )
         }
+        Text(
+            modifier = Modifier.padding(start = 4.dp),
+            text = DecimalFormat("#.0").format(starRating / 2) +
+                    if (ratingCount == null) "" else " ($ratingCount)",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 
 @Preview
 @Composable
 fun RatingBarPreview() {
-    RatingBar(0.67f)
+    RatingBar(0.68f, ratingCount = 263)
 }

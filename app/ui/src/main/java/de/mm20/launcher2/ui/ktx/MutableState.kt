@@ -17,7 +17,7 @@ suspend fun MutableState<Float>.animateTo(targetValue: Float) {
 
 suspend inline fun <T, V: AnimationVector> MutableState<T>.animateTo(targetValue: T, converter: TwoWayConverter<T, V>) {
     val animatable = Animatable(this.value, converter)
-    animatable.animateTo(targetValue) {
+    animatable.animateTo(targetValue) animatable@ {
         this@animateTo.value = this.value
     }
 }

@@ -31,7 +31,6 @@ object CrashReporter {
     }
 
     suspend fun getCrashReport(filePath: String): CrashReport {
-        val path = CrashReporter.getCrashReportPath()?.takeIf { it.isEmpty() } ?: CrashUtil.getDefaultPath()
         return CrashReport.fromFile(File(filePath), true)
     }
 

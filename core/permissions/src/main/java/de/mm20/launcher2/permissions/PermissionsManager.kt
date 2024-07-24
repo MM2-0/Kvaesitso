@@ -1,6 +1,7 @@
 package de.mm20.launcher2.permissions
 
 import android.Manifest
+import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -17,7 +18,6 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.plugin.contracts.PluginContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -64,6 +64,7 @@ enum class PermissionGroup {
     Notifications,
     AppShortcuts,
     Accessibility,
+    ManageProfiles,
 }
 
 internal class PermissionsManagerImpl(
@@ -88,6 +89,9 @@ internal class PermissionsManagerImpl(
     private val accessibilityPermissionState = MutableStateFlow(false)
     private val appShortcutsPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.AppShortcuts)
+    )
+    private val mManageProfilesPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.ManageProfiles)
     )
 
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
@@ -141,8 +145,17 @@ internal class PermissionsManagerImpl(
                 }
             }
 
+            PermissionGroup.ManageProfiles,
             PermissionGroup.AppShortcuts -> {
-                context.tryStartActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
+                if (isAtLeastApiLevel(29)) {
+                    val roleManager = context.getSystemService<RoleManager>()
+                    context.startActivityForResult(
+                        roleManager!!.createRequestRoleIntent(RoleManager.ROLE_HOME),
+                        permissionGroup.ordinal
+                    )
+                } else {
+                    context.tryStartActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
+                }
                 pendingPermissionRequests.add(PermissionGroup.AppShortcuts)
             }
 
@@ -187,6 +200,12 @@ internal class PermissionsManagerImpl(
                 context.getSystemService<LauncherApps>()?.hasShortcutHostPermission() == true
             }
 
+            PermissionGroup.ManageProfiles -> {
+                if (isAtLeastApiLevel(29)) {
+                    context.getSystemService<RoleManager>()?.isRoleHeld(RoleManager.ROLE_HOME) == true
+                } else false
+            }
+
             PermissionGroup.Accessibility -> {
                 accessibilityPermissionState.value
             }
@@ -202,6 +221,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> notificationsPermissionState
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState
             PermissionGroup.Accessibility -> accessibilityPermissionState
+            PermissionGroup.ManageProfiles -> mManageProfilesPermissionState
         }
     }
 
@@ -220,27 +240,14 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> notificationsPermissionState.value = granted
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState.value = granted
             PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
+            PermissionGroup.ManageProfiles -> mManageProfilesPermissionState.value = granted
         }
     }
 
     override fun onResume() {
-        val iterator = pendingPermissionRequests.iterator()
-        while (iterator.hasNext()) {
-            when (iterator.next()) {
-                PermissionGroup.ExternalStorage -> {
-                    externalStoragePermissionState.value =
-                        checkPermissionOnce(PermissionGroup.ExternalStorage)
-                }
-
-                PermissionGroup.AppShortcuts -> {
-                    appShortcutsPermissionState.value =
-                        checkPermissionOnce(PermissionGroup.AppShortcuts)
-                }
-
-                else -> {}
-            }
-            iterator.remove()
-        }
+        externalStoragePermissionState.value = checkPermissionOnce(PermissionGroup.ExternalStorage)
+        appShortcutsPermissionState.value = checkPermissionOnce(PermissionGroup.AppShortcuts)
+        mManageProfilesPermissionState.value = checkPermissionOnce(PermissionGroup.ManageProfiles)
     }
 
     override fun reportNotificationListenerState(running: Boolean) {

@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.favorites
 
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.services.widgets.WidgetsService
@@ -7,6 +8,8 @@ import de.mm20.launcher2.ui.common.FavoritesVM
 import de.mm20.launcher2.widgets.FavoritesWidget
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.inject
 
 class FavoritesWidgetVM : FavoritesVM() {
@@ -15,8 +18,8 @@ class FavoritesWidgetVM : FavoritesVM() {
 
     private val uiSettings: UiSettings by inject()
 
-    override val tagsExpanded: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val widget = MutableStateFlow<FavoritesWidget?>(null)
+    override val tagsExpanded = widget.map { it?.config?.tagsMultiline == true }
 
     private val isTopWidget = widgetsService.isFavoritesWidgetFirst()
     private val clockWidgetFavSlots =
@@ -40,7 +43,6 @@ class FavoritesWidgetVM : FavoritesVM() {
     }
 
     override fun setTagsExpanded(expanded: Boolean) {
-        this.tagsExpanded.value = expanded
         val widget = this.widget.value ?: return
         widgetsService.updateWidget(
             widget.copy(
@@ -50,7 +52,7 @@ class FavoritesWidgetVM : FavoritesVM() {
     }
 
     fun updateWidget(widget: FavoritesWidget) {
-        tagsExpanded.value = widget.config.tagsMultiline
+        this.widget.value = widget
     }
 
 }

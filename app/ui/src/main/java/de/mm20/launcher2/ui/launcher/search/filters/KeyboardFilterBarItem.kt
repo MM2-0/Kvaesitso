@@ -15,7 +15,7 @@ import androidx.compose.material.icons.rounded.VisibilityOff
 import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.icons.Wikipedia
+import de.mm20.launcher2.icons.Wikipedia
 
 val KeyboardFilterBarItem.icon
     get() = when (this) {

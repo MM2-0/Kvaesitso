@@ -1,16 +1,16 @@
 package de.mm20.launcher2.preferences.search
 
 import de.mm20.launcher2.preferences.LauncherDataStore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class LocationSearchSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) {
-
     val data
         get() = launcherDataStore.data.map {
             LocationSearchSettingsData(
-                enabled = it.locationSearchEnabled,
+                providers = it.locationSearchProviders,
                 searchRadius = it.locationSearchRadius,
                 hideUncategorized = it.locationSearchHideUncategorized,
                 overpassUrl = it.locationSearchOverpassUrl,
@@ -22,12 +22,32 @@ class LocationSearchSettings internal constructor(
             )
         }
 
-    val enabled
-        get() = launcherDataStore.data.map { it.locationSearchEnabled }
+    val enabledProviders: Flow<Set<String>>
+        get() = launcherDataStore.data.map { it.locationSearchProviders }
 
-    fun setEnabled(enabled: Boolean) {
+    val osmLocations
+        get() = launcherDataStore.data.map { it.locationSearchProviders.contains("openstreetmaps") }
+
+    fun setOsmLocations(osmLocations: Boolean) {
         launcherDataStore.update {
-            it.copy(locationSearchEnabled = enabled)
+            if (osmLocations) {
+                it.copy(locationSearchProviders = it.locationSearchProviders + "openstreetmaps")
+            } else {
+                it.copy(locationSearchProviders = it.locationSearchProviders - "openstreetmaps")
+            }
+        }
+    }
+
+    val enabledPlugins: Flow<Set<String>>
+        get() = launcherDataStore.data.map { it.locationSearchProviders - "openstreetmaps" }
+
+    fun setPluginEnabled(authority: String, enabled: Boolean) {
+        launcherDataStore.update {
+            if (enabled) {
+                it.copy(locationSearchProviders = it.locationSearchProviders + authority)
+            } else {
+                it.copy(locationSearchProviders = it.locationSearchProviders - authority)
+            }
         }
     }
 
@@ -52,18 +72,39 @@ class LocationSearchSettings internal constructor(
     val overpassUrl
         get() = launcherDataStore.data.map { it.locationSearchOverpassUrl }
 
-    fun setOverpassUrl(overpassUrl: String) {
+    fun setOverpassUrl(overpassUrl: String?) {
+        var url = overpassUrl
+        if (url != null) {
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://$url"
+            }
+            if (url.endsWith('/')) {
+                url = url.substringBeforeLast('/')
+            }
+            if (url.endsWith("/api/interpreter")) {
+                url = url.substringBeforeLast("/api/interpreter")
+            }
+        }
         launcherDataStore.update {
-            it.copy(locationSearchOverpassUrl = overpassUrl)
+            it.copy(locationSearchOverpassUrl = url)
         }
     }
 
     val tileServer
         get() = launcherDataStore.data.map { it.locationSearchTileServer }
 
-    fun setTileServer(tileServer: String) {
+    fun setTileServer(tileServer: String?) {
+        var url = tileServer
+        if (url != null) {
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://$url"
+            }
+            if (!url.contains("\${z}") || !url.contains("\${x}") || !url.contains("\${y}")) {
+                url = "$url/\${z}/\${x}/\${y}.png"
+            }
+        }
         launcherDataStore.update {
-            it.copy(locationSearchTileServer = tileServer)
+            it.copy(locationSearchTileServer = url)
         }
     }
 
@@ -73,15 +114,6 @@ class LocationSearchSettings internal constructor(
     fun setShowMap(showMap: Boolean) {
         launcherDataStore.update {
             it.copy(locationSearchShowMap = showMap)
-        }
-    }
-
-    val showPositionOnMap
-        get() = launcherDataStore.data.map { it.locationSearchShowPositionOnMap }
-
-    fun setShowPositionOnMap(showPositionOnMap: Boolean) {
-        launcherDataStore.update {
-            it.copy(locationSearchShowPositionOnMap = showPositionOnMap)
         }
     }
 
@@ -111,11 +143,11 @@ class LocationSearchSettings internal constructor(
 }
 
 data class LocationSearchSettingsData(
-    val enabled: Boolean = false,
+    val providers: Set<String> = setOf("openstreetmaps"),
     val searchRadius: Int = 1500,
     val hideUncategorized: Boolean = true,
-    val overpassUrl: String = LocationSearchSettings.DefaultOverpassUrl,
-    val tileServer: String = LocationSearchSettings.DefaultTileServerUrl,
+    val overpassUrl: String? = null,
+    val tileServer: String? = null,
     val imperialUnits: Boolean = false,
     val showMap: Boolean = false,
     val showPositionOnMap: Boolean = false,
