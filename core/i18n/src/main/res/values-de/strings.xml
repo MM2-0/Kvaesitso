@@ -778,4 +778,18 @@
     </plurals>
     <string name="weather_widget_no_provider">Es ist kein Wetterdienst ausgewählt oder der gewählte Dienst ist nicht verfügbar</string>
     <string name="apps_profile_private">Privater Bereich</string>
+    <string name="action_done">Fertig</string>
+    <string name="action_more_actions">Weitere Aktionen</string>
+    <string name="action_clear">Löschen</string>
+    <string name="menu_show_filters">Filter anzeigen</string>
+    <string name="menu_hide_filters">Filter ausblenden</string>
+    <string name="music_widget_previous_track">Vorheriger Titel</string>
+    <string name="music_widget_next_track">Nächster Titel</string>
+    <string name="music_widget_play">Wiedergabe</string>
+    <string name="music_widget_pause">Pause</string>
+    <string name="music_widget_open_player">App öffnen</string>
+    <string name="calendar_widget_previous_day">Vorheriger Tag</string>
+    <string name="calendar_widget_next_day">Nächster Tag</string>
+    <string name="calendar_widget_create_event">Neuen Termin erstellen</string>
+    <string name="calendar_widget_open_calendar">Kalender-App öffnen</string>
 </resources>
