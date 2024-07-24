@@ -258,7 +258,7 @@ fun MusicWidget(widget: MusicWidget) {
                             .clip(MaterialTheme.shapes.small)
                             .combinedClickable(
                                 onClick = {
-                                    viewModel.openPlayer()
+                                    viewModel.openPlayer(context)
                                 },
                                 onLongClick = {
                                     viewModel.openPlayerSelector(context)
