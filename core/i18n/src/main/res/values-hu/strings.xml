@@ -778,4 +778,18 @@
     </plurals>
     <string name="weather_widget_no_provider">Nincs időjárás-szolgáltató kiválasztva vagy a kiválasztott szolgáltató nem érhető el</string>
     <string name="apps_profile_private">Magánszféra</string>
+    <string name="action_done">Kész</string>
+    <string name="action_more_actions">További lehetőségek</string>
+    <string name="action_clear">Törlés</string>
+    <string name="menu_show_filters">Szűrők megjelenítése</string>
+    <string name="menu_hide_filters">Szűrők elrejtése</string>
+    <string name="music_widget_previous_track">Előző cím</string>
+    <string name="music_widget_next_track">Következő cím</string>
+    <string name="music_widget_play">Lejátszás</string>
+    <string name="music_widget_pause">Szünet</string>
+    <string name="music_widget_open_player">Lejátszó megnyitása</string>
+    <string name="calendar_widget_previous_day">Előző nap</string>
+    <string name="calendar_widget_next_day">Következő nap</string>
+    <string name="calendar_widget_create_event">Új esemény létrehozása</string>
+    <string name="calendar_widget_open_calendar">Naptár alkalmazás megnyitása</string>
 </resources>
