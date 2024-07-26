@@ -11,7 +11,6 @@ pluginSdk = "2.1.0-SNAPSHOT"
 
 gradle = "8.1.2"
 android-gradle-plugin = "8.2.2"
-protobuf-gradle-plugin = "0.9.4"
 ksp-gradle-plugin = "2.0.0-1.0.21"
 
 kotlin = "2.0.0"
@@ -37,7 +36,6 @@ androidx-constraint-layout = "1.1.0-alpha13"
 accompanist = "0.33.2-alpha"
 coil = "2.3.0"
 koin = "3.2.0"
-protobuf = "3.14.0"
 retrofit = "2.9.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -128,9 +126,6 @@ google-apiclient = { group = "com.google.api-client", name = "google-api-client"
 google-drive = { group = "com.google.apis", name = "google-api-services-drive", version = "v3-rev20221219-2.0.0" }
 google-oauth2 = { group = "com.google.apis", name = "google-api-services-oauth2", version = "v2-rev20200213-2.0.0" }
 
-protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
-protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
-
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidxcompose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
@@ -150,7 +145,6 @@ tests = ["junit"]
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
-protobuf = { id = "com.google.protobuf", version.ref = "protobuf-gradle-plugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

@@ -10,8 +10,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
-import androidx.datastore.core.DataStore
-import de.mm20.launcher2.preferences.LegacySettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.CorePalette
 import de.mm20.launcher2.themes.DefaultDarkColorScheme
@@ -22,9 +20,7 @@ import de.mm20.launcher2.themes.Theme
 import de.mm20.launcher2.themes.get
 import de.mm20.launcher2.themes.merge
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
-import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.inject
-import org.koin.core.component.inject
 
 @Composable
 fun lightColorSchemeOf(theme: Theme): ColorScheme {
@@ -112,45 +108,4 @@ fun systemCorePalette(): CorePalette<Int> {
             error = corePalette.error.tone(40),
         )
     }
-}
-
-fun CustomColorScheme(colors: LegacySettings.AppearanceSettings.CustomColors.Scheme): ColorScheme {
-    return ColorScheme(
-        primary = Color(colors.primary),
-        onPrimary = Color(colors.onPrimary),
-        primaryContainer = Color(colors.primaryContainer),
-        onPrimaryContainer = Color(colors.onPrimaryContainer),
-        secondary = Color(colors.secondary),
-        onSecondary = Color(colors.onSecondary),
-        secondaryContainer = Color(colors.secondaryContainer),
-        onSecondaryContainer = Color(colors.onSecondaryContainer),
-        tertiary = Color(colors.tertiary),
-        onTertiary = Color(colors.onTertiary),
-        tertiaryContainer = Color(colors.tertiaryContainer),
-        onTertiaryContainer = Color(colors.onTertiaryContainer),
-        background = Color(colors.background),
-        onBackground = Color(colors.onBackground),
-        surface = Color(colors.surface),
-        onSurface = Color(colors.onSurface),
-        surfaceVariant = Color(colors.surfaceVariant),
-        onSurfaceVariant = Color(colors.onSurfaceVariant),
-        outline = Color(colors.outline),
-        inverseSurface = Color(colors.inverseSurface),
-        inverseOnSurface = Color(colors.inverseOnSurface),
-        inversePrimary = Color(colors.inversePrimary),
-        surfaceTint = Color(colors.surfaceTint),
-        error = Color(colors.error),
-        onError = Color(colors.onError),
-        errorContainer = Color(colors.errorContainer),
-        onErrorContainer = Color(colors.onErrorContainer),
-        outlineVariant = Color(colors.outlineVariant),
-        scrim = Color(colors.scrim),
-        surfaceBright = Color(colors.surfaceBright),
-        surfaceDim = Color(colors.surfaceDim),
-        surfaceContainer = Color(colors.surfaceContainer),
-        surfaceContainerHigh = Color(colors.surfaceContainerHigh),
-        surfaceContainerHighest = Color(colors.surfaceContainerHighest),
-        surfaceContainerLow = Color(colors.surfaceContainerLow),
-        surfaceContainerLowest = Color(colors.surfaceContainerLowest),
-    )
 }

@@ -29,7 +29,6 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.BaseLayout
 import de.mm20.launcher2.preferences.GestureAction
-import de.mm20.launcher2.preferences.LegacySettings.LayoutSettings.Layout
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.SearchablePicker

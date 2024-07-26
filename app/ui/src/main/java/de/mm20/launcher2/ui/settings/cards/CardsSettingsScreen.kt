@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.LegacySettings
 import de.mm20.launcher2.preferences.SurfaceShape
 import de.mm20.launcher2.preferences.ui.CardStyle
 import de.mm20.launcher2.ui.R
