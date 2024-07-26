@@ -4,12 +4,9 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
-import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.files.providers.DeferredFile
 import de.mm20.launcher2.files.providers.GDriveFile
 import de.mm20.launcher2.files.providers.LocalFile
 import de.mm20.launcher2.files.providers.NextcloudFile
-import de.mm20.launcher2.files.providers.OneDriveFile
 import de.mm20.launcher2.files.providers.OwncloudFile
 import de.mm20.launcher2.files.providers.PluginFile
 import de.mm20.launcher2.files.providers.PluginFileProvider
@@ -18,7 +15,6 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.config.StorageStrategy
-import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
@@ -148,61 +144,6 @@ internal class GDriveFileDeserializer : SearchableDeserializer {
             isDirectory = directory,
             viewUri = uri,
             metaData = metaData.toImmutableMap()
-        )
-    }
-}
-
-internal class OneDriveFileSerializer : SearchableSerializer {
-    override fun serialize(searchable: SavableSearchable): String {
-        searchable as OneDriveFile
-        return jsonObjectOf(
-            "id" to searchable.fileId,
-            "label" to searchable.label,
-            "mimeType" to searchable.mimeType,
-            "size" to searchable.size,
-            "directory" to searchable.isDirectory,
-            "webUrl" to searchable.webUrl
-        ).apply {
-            for ((k, v) in searchable.metaData) {
-                put(
-                    when (k) {
-                        FileMetaType.Owner -> "owner"
-                        FileMetaType.Dimensions -> "dimensions"
-                        else -> "other"
-                    }, v
-                )
-            }
-        }.toString()
-    }
-
-    override val typePrefix: String
-        get() = "onedrive"
-}
-
-internal class OneDriveFileDeserializer : SearchableDeserializer {
-    override suspend fun deserialize(serialized: String): SavableSearchable {
-        val json = JSONObject(serialized)
-        val fileId = json.getString("id")
-        val label = json.getString("label")
-        val mimeType = json.getString("mimeType")
-        val size = json.getLong("size")
-        val isDirectory = json.getBoolean("directory")
-        val webUrl = json.getString("webUrl")
-        val owner = json.optString("owner")
-        val dimensions = json.optString("dimensions")
-        val metaData = mutableMapOf<FileMetaType, String>()
-        owner.takeIf { it.isNotEmpty() }?.let { metaData[FileMetaType.Owner] = it }
-        dimensions.takeIf { it.isNotEmpty() }
-            ?.let { metaData[FileMetaType.Dimensions] = it }
-        return OneDriveFile(
-            fileId = fileId,
-            label = label,
-            path = "",
-            mimeType = mimeType,
-            size = size,
-            isDirectory = isDirectory,
-            metaData = metaData.toImmutableMap(),
-            webUrl = webUrl
         )
     }
 }
