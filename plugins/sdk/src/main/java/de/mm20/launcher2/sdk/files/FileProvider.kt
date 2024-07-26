@@ -3,6 +3,7 @@ package de.mm20.launcher2.sdk.files
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.FilePluginContract.FileColumns
@@ -48,7 +49,7 @@ abstract class FileProvider(
             displayName = get(FileColumns.DisplayName) ?: return null,
             mimeType = get(FileColumns.MimeType) ?: return null,
             size = get(FileColumns.Size) ?: 0L,
-            path = get(FileColumns.Path) ?: "",
+            path = get(FileColumns.Path),
             uri = get(FileColumns.ContentUri)?.let { Uri.parse(it) } ?: return null,
             thumbnailUri = get(FileColumns.ThumbnailUri)?.let { Uri.parse(it) },
             isDirectory = get(FileColumns.IsDirectory) == false,

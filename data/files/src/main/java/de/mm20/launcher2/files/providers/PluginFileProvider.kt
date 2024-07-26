@@ -106,6 +106,7 @@ class PluginFileProvider(
         return Bundle().apply {
             set(FileColumns.Id, id)
             set(FileColumns.Path, path)
+            set(FileColumns.ContentUri, uri.toString())
             set(FileColumns.MimeType, mimeType)
             set(FileColumns.Size, size)
             set(FileColumns.MetaTitle, metaData[FileMetaType.Title])
