@@ -10,7 +10,7 @@ import kotlinx.collections.immutable.ImmutableMap
 import java.util.Locale
 
 interface File : SavableSearchable {
-    val path: String
+    val path: String?
     val mimeType: String
     val size: Long
     val isDirectory: Boolean

@@ -76,7 +76,7 @@ data class File(
      * A path to this file. This is shown to the user purely for informational purposes.
      * It is not used to open the file.
      */
-    val path: String,
+    val path: String?,
     /**
      * Whether this file is a directory. If set, a folder icon will be shown instead of a file icon.
      */

@@ -46,7 +46,7 @@ class PluginFileProvider(
                 results.add(
                     PluginFile(
                         id = cursor[FileColumns.Id] ?: continue,
-                        path = cursor[FileColumns.Path] ?: "",
+                        path = cursor[FileColumns.Path],
                         mimeType = cursor[FileColumns.MimeType] ?: "application/octet-stream",
                         size = cursor[FileColumns.Size] ?: 0L,
                         metaData = buildMap {

@@ -136,13 +136,15 @@ fun FileItem(
                                     style = MaterialTheme.typography.bodySmall
                                 )
                             }
-                            Text(
-                                text = stringResource(
-                                    R.string.file_meta_path,
-                                    file.path
-                                ),
-                                style = MaterialTheme.typography.bodySmall,
-                            )
+                            if (file.path != null) {
+                                Text(
+                                    text = stringResource(
+                                        R.string.file_meta_path,
+                                        file.path!!
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            }
                             if (!file.isDirectory) {
                                 Text(
                                     text = stringResource(
