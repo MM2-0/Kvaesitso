@@ -21,13 +21,32 @@ import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.asUpdateResult
+import de.mm20.launcher2.serialization.Json
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import org.json.JSONException
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+
+@Serializable
+internal data class SerializedFile(
+    val id: String? = null,
+    val authority: String? = null,
+    val strategy: StorageStrategy? = null,
+    val path: String? = null,
+    val mimeType: String? = null,
+    val size: Long? = null,
+    val label: String? = null,
+    val uri: String? = null,
+    val thumbnailUri: String? = null,
+    val isDirectory: Boolean? = null,
+    val metadata: Map<FileMetaType, String>? = null,
+    val timestamp: Long? = null,
+)
 
 internal class LocalFileSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
@@ -257,26 +276,32 @@ internal class OwncloudFileDeserializer : SearchableDeserializer {
 internal class PluginFileSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String? {
         searchable as PluginFile
-        if (searchable.storageStrategy == StorageStrategy.StoreReference) {
-            return jsonObjectOf(
-                "id" to searchable.id,
-                "authority" to searchable.authority,
-                "strategy" to "ref"
-            ).toString()
-        } else {
-            return jsonObjectOf(
-                "id" to searchable.id,
-                "path" to searchable.path,
-                "mimeType" to searchable.mimeType,
-                "size" to searchable.size,
-                "label" to searchable.label,
-                "uri" to searchable.uri.toString(),
-                "thumbnailUri" to searchable.thumbnailUri?.toString(),
-                "isDirectory" to searchable.isDirectory,
-                "authority" to searchable.authority,
-                "timestamp" to searchable.timestamp,
-                "strategy" to "copy",
-            ).toString()
+        return when(searchable.storageStrategy) {
+            StorageStrategy.StoreReference -> Json.Lenient.encodeToString(
+                SerializedFile(
+                    id = searchable.id,
+                    authority = searchable.authority,
+                    strategy = StorageStrategy.StoreReference
+                )
+            )
+            else -> {
+                Json.Lenient.encodeToString(
+                    SerializedFile(
+                        id = searchable.id,
+                        path = searchable.path,
+                        mimeType = searchable.mimeType,
+                        size = searchable.size,
+                        label = searchable.label,
+                        uri = searchable.uri.toString(),
+                        thumbnailUri = searchable.thumbnailUri?.toString(),
+                        isDirectory = searchable.isDirectory,
+                        authority = searchable.authority,
+                        timestamp = searchable.timestamp,
+                        metadata = searchable.metaData.toMap(),
+                        strategy = StorageStrategy.StoreCopy,
+                    )
+                )
+            }
         }
     }
 
@@ -290,46 +315,39 @@ internal class PluginFileDeserializer(
     private val pluginRepository: PluginRepository,
 ) : SearchableDeserializer {
     override suspend fun deserialize(serialized: String): SavableSearchable? {
-        val obj = JSONObject(serialized)
+        val json = Json.Lenient.decodeFromString<SerializedFile>(serialized)
+        val authority = json.authority ?: return null
+        val id = json.id ?: return null
+        val strategy = json.strategy ?: StorageStrategy.StoreCopy
 
-        val authority = obj.getString("authority")
-        val id = obj.getString("id")
         val plugin = pluginRepository.get(authority).firstOrNull() ?: return null
         if (!plugin.enabled) return null
-        val provider = PluginFileProvider(context, authority)
-        try {
-            return when (obj.optString("strategy", "copy")) {
-                "ref" -> {
-                    provider.get(id).getOrNull()
-                }
 
-                else -> {
-                    val uri = obj.getString("uri")
-                    val thumbnailUri = obj.optString("thumbnailUri")
-                    val timestamp = obj.optLong("timestamp", 0L)
-                    val file =  PluginFile(
-                        id = obj.getString("id"),
-                        path = obj.getString("path"),
-                        mimeType = obj.getString("mimeType"),
-                        size = obj.optLong("size", 0L),
-                        metaData = persistentMapOf(),
-                        label = obj.getString("label"),
-                        uri = Uri.parse(uri),
-                        thumbnailUri = thumbnailUri.takeIf { it.isNotEmpty() }?.let { Uri.parse(it) },
-                        storageStrategy = StorageStrategy.StoreCopy,
-                        isDirectory = obj.optBoolean("isDirectory", false),
-                        authority = obj.getString("authority"),
-                        timestamp = timestamp,
-                        updatedSelf = {
-                            if (it !is PluginFile) UpdateResult.TemporarilyUnavailable()
-                            else provider.refresh(it, timestamp).asUpdateResult()
-                        }
-                    )
-                    return file
-                }
+        return when(strategy) {
+            StorageStrategy.StoreReference -> {
+                PluginFileProvider(context, authority).get(id).getOrNull()
             }
-        } catch (e: JSONException) {
-            return null
+            else -> {
+                val timestamp = json.timestamp ?: 0
+                PluginFile(
+                    id = id,
+                    path = json.path,
+                    mimeType = json.mimeType ?: "binary/octet-stream",
+                    size = json.size ?: 0,
+                    metaData = json.metadata?.toImmutableMap() ?: persistentMapOf(),
+                    label = json.label ?: return null,
+                    uri = Uri.parse(json.uri ?: return null),
+                    thumbnailUri = json.thumbnailUri?.let { Uri.parse(it) },
+                    storageStrategy = StorageStrategy.StoreCopy,
+                    isDirectory = json.isDirectory ?: false,
+                    authority = authority,
+                    timestamp = timestamp,
+                    updatedSelf = {
+                        if (it !is PluginFile) UpdateResult.TemporarilyUnavailable()
+                        else PluginFileProvider(context, authority).refresh(it, timestamp).asUpdateResult()
+                    }
+                )
+            }
         }
     }
 }
