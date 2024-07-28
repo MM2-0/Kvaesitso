@@ -84,7 +84,7 @@ class PluginFileProvider(
                             }
                         }.toPersistentMap(),
                         label = cursor[FileColumns.DisplayName] ?: continue,
-                        uri = cursor[FileColumns.DisplayName]?.let { Uri.parse(it) } ?: continue,
+                        uri = cursor[FileColumns.ContentUri]?.let { Uri.parse(it) } ?: continue,
                         thumbnailUri = cursor[FileColumns.ThumbnailUri]?.let { Uri.parse(it) },
                         storageStrategy = config.storageStrategy,
                         isDirectory = cursor[FileColumns.IsDirectory] ?: false,
