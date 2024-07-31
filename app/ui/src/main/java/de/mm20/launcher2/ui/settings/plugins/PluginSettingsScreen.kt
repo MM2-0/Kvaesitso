@@ -27,6 +27,7 @@ import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -243,6 +244,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                         PluginType.FileSearch -> Icons.AutoMirrored.Rounded.InsertDriveFile
                                         PluginType.Weather -> Icons.Rounded.LightMode
                                         PluginType.LocationSearch -> Icons.Rounded.Place
+                                        PluginType.Calendar -> Icons.Rounded.Today
                                     },
                                     null,
                                     modifier = Modifier.size(16.dp),
@@ -253,6 +255,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                         PluginType.FileSearch -> stringResource(R.string.plugin_type_filesearch)
                                         PluginType.Weather -> stringResource(R.string.plugin_type_weather)
                                         PluginType.LocationSearch -> stringResource(R.string.plugin_type_locationsearch)
+                                        PluginType.Calendar -> stringResource(R.string.plugin_type_calendar)
                                     },
                                     modifier = Modifier.padding(horizontal = 4.dp),
                                     style = MaterialTheme.typography.labelMedium,

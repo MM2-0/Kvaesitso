@@ -61,19 +61,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.Contacts)
     }
 
-    val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val calendar = calendarSearchSettings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setCalendar(calendar: Boolean) {
-        calendarSearchSettings.setEnabled(calendar)
-    }
-
-    fun requestCalendarPermission(activity: AppCompatActivity) {
-        permissionsManager.requestPermission(activity, PermissionGroup.Calendar)
-    }
-
     val calculator = calculatorSearchSettings.enabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

@@ -848,6 +848,7 @@
     <string name="search_filter_online">Online results</string>
     <string name="search_filter_apps">Apps</string>
     <string name="plugin_type_locationsearch">Places search</string>
+    <string name="plugin_type_calendar">Calendar</string>
     <string name="preference_default_filter">Default filter</string>
     <string name="preference_default_filter_summary">Customize the default filter for searches</string>
     <string name="preference_filter_bar">Show filter bar</string>

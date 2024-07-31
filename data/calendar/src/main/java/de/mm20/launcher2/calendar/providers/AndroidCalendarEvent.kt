@@ -1,4 +1,4 @@
-package de.mm20.launcher2.calendar
+package de.mm20.launcher2.calendar.providers
 
 import android.content.ContentUris
 import android.content.Context
@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
+import de.mm20.launcher2.calendar.AndroidCalendarEventSerializer
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.SearchableSerializer
@@ -21,7 +22,8 @@ internal data class AndroidCalendarEvent(
     override val location: String?,
     override val attendees: List<String>,
     override val description: String?,
-    val calendar: Long,
+    internal val calendarId: Long,
+    override val calendarName: String?,
     override val labelOverride: String? = null,
 ) : CalendarEvent {
 
@@ -61,7 +63,7 @@ internal data class AndroidCalendarEvent(
     }
 
     override fun getSerializer(): SearchableSerializer {
-        return CalendarEventSerializer()
+        return AndroidCalendarEventSerializer()
     }
 
     companion object {
@@ -69,9 +71,10 @@ internal data class AndroidCalendarEvent(
     }
 }
 
-data class UserCalendar(
-    val id: Long,
+data class CalendarList(
+    val id: String,
     val name: String,
-    val owner: String,
-    val color: Int
+    val owner: String?,
+    val color: Int,
+    val providerId: String,
 )

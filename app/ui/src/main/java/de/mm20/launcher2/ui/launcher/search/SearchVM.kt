@@ -409,15 +409,15 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val missingCalendarPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Calendar),
-        calendarSearchSettings.enabled,
-    ) { perm, enabled -> !perm && enabled }
+        calendarSearchSettings.providers,
+    ) { perm, providers -> !perm && providers.contains("local") }
 
     fun requestCalendarPermission(context: AppCompatActivity) {
         permissionsManager.requestPermission(context, PermissionGroup.Calendar)
     }
 
     fun disableCalendarSearch() {
-        calendarSearchSettings.setEnabled(false)
+        calendarSearchSettings.setProviderEnabled("local", false)
     }
 
     val missingContactsPermission = combine(

@@ -34,7 +34,6 @@ import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.LinkOff
 import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -64,7 +63,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
 import androidx.core.net.toUri
 import de.mm20.launcher2.calendar.CalendarRepository
-import de.mm20.launcher2.calendar.UserCalendar
+import de.mm20.launcher2.calendar.providers.CalendarList
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -75,7 +74,6 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
-import de.mm20.launcher2.ui.component.ResizeAxis
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -91,6 +89,7 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
+import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -504,17 +503,15 @@ fun ColumnScope.ConfigureCalendarWidget(
 ) {
     val calendarRepository: CalendarRepository = get()
     val permissionsManager: PermissionsManager = get()
-    var calendars by remember { mutableStateOf(emptyList<UserCalendar>()) }
-    var ready by remember { mutableStateOf(false) }
+    val calendars by remember {
+        calendarRepository.getCalendars().map {
+            it.sortedBy { it.name }
+        }
+    }.collectAsState(null)
 
     val hasPermission by remember {
         permissionsManager.hasPermission(PermissionGroup.Calendar)
     }.collectAsState(true)
-
-    LaunchedEffect(hasPermission) {
-        calendars = calendarRepository.getCalendars().sortedBy { it.name }
-        ready = true
-    }
 
     OutlinedCard {
         Column(
@@ -537,26 +534,29 @@ fun ColumnScope.ConfigureCalendarWidget(
         text = stringResource(R.string.preference_calendar_calendars)
     )
     val context = LocalLifecycleOwner.current as AppCompatActivity
-    if (calendars.isNotEmpty()) {
+    val excludedCalendars = remember(widget.config) {
+        widget.config.excludedCalendarIds ?: widget.config.legacyExcludedCalendarIds?.map { "local:$it" } ?: emptyList()
+    }
+    if (calendars?.isNotEmpty() == true) {
         OutlinedCard {
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                for ((i, calendar) in calendars.withIndex()) {
-                    if (i > 0) Divider()
+                for ((i, calendar) in calendars!!.withIndex()) {
+                    if (i > 0) HorizontalDivider()
                     CheckboxPreference(
                         title = calendar.name,
                         summary = calendar.owner,
                         iconPadding = false,
-                        value = !widget.config.excludedCalendarIds.contains(calendar.id),
+                        value = excludedCalendars.contains(calendar.id) != true,
                         onValueChanged = {
                             onWidgetUpdated(
                                 widget.copy(
                                     config = widget.config.copy(
                                         excludedCalendarIds = if (it) {
-                                            widget.config.excludedCalendarIds - calendar.id
+                                            excludedCalendars - calendar.id
                                         } else {
-                                            widget.config.excludedCalendarIds + calendar.id
+                                            excludedCalendars + calendar.id
                                         }
                                     )
                                 )
@@ -572,7 +572,7 @@ fun ColumnScope.ConfigureCalendarWidget(
             text = stringResource(R.string.missing_permission_calendar_widget_settings),
             onClick = { permissionsManager.requestPermission(context, PermissionGroup.Calendar) },
         )
-    } else if (ready) {
+    } else if (calendars != null) {
         Text(
             modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
             style = MaterialTheme.typography.bodySmall,

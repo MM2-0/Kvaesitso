@@ -53,7 +53,9 @@ data class LauncherSettingsData internal constructor(
 
     val contactSearchEnabled: Boolean = true,
 
+    @Deprecated("Use calendarSearchProviders `local` instead")
     val calendarSearchEnabled: Boolean = true,
+    val calendarSearchProviders: Set<String> = setOf("local"),
 
     val shortcutSearchEnabled: Boolean = true,
 

@@ -116,28 +116,13 @@ fun SearchSettingsScreen() {
                     enabled = hasContactsPermission == true
                 )
 
-                val hasCalendarPermission by viewModel.hasCalendarPermission.collectAsStateWithLifecycle(
-                    null
-                )
-                AnimatedVisibility(hasCalendarPermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_calendar_search_settings),
-                        onClick = {
-                            viewModel.requestCalendarPermission(context as AppCompatActivity)
-                        },
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-                val calendar by viewModel.calendar.collectAsStateWithLifecycle(null)
-                SwitchPreference(
+                Preference(
                     title = stringResource(R.string.preference_search_calendar),
                     summary = stringResource(R.string.preference_search_calendar_summary),
                     icon = Icons.Rounded.Today,
-                    value = calendar == true && hasCalendarPermission == true,
-                    onValueChanged = {
-                        viewModel.setCalendar(it)
+                    onClick = {
+                        navController?.navigate("settings/search/calendar")
                     },
-                    enabled = hasCalendarPermission == true
                 )
 
                 val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.collectAsStateWithLifecycle(

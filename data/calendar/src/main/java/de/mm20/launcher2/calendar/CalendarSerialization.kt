@@ -1,19 +1,31 @@
 package de.mm20.launcher2.calendar
 
 import android.Manifest
-import android.content.ContentUris
 import android.content.Context
 import android.content.pm.PackageManager
-import android.provider.CalendarContract
+import android.net.Uri
+import android.util.Log
 import androidx.core.content.ContextCompat
-import androidx.core.database.getStringOrNull
+import de.mm20.launcher2.calendar.providers.AndroidCalendarEvent
+import de.mm20.launcher2.calendar.providers.AndroidCalendarProvider
+import de.mm20.launcher2.calendar.providers.PluginCalendarEvent
+import de.mm20.launcher2.calendar.providers.PluginCalendarProvider
+import de.mm20.launcher2.plugin.PluginRepository
+import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.asUpdateResult
+import de.mm20.launcher2.serialization.Json
+import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.toImmutableMap
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import org.json.JSONObject
-import java.util.*
 
-class CalendarEventSerializer: SearchableSerializer {
+class AndroidCalendarEventSerializer: SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
         searchable as AndroidCalendarEvent
         val json = JSONObject()
@@ -22,84 +34,117 @@ class CalendarEventSerializer: SearchableSerializer {
     }
 
     override val typePrefix: String
-        get() = "calendar"
+        get() = AndroidCalendarEvent.Domain
 }
 
-class CalendarEventDeserializer(val context: Context): SearchableDeserializer {
+class AndroidCalendarEventDeserializer(val context: Context): SearchableDeserializer {
     override suspend fun deserialize(serialized: String): SavableSearchable? {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) return null
         val json = JSONObject(serialized)
         val id = json.getLong("id")
-        val builder = CalendarContract.Instances.CONTENT_URI.buildUpon()
-        ContentUris.appendId(builder, System.currentTimeMillis())
-        ContentUris.appendId(builder, System.currentTimeMillis() + 63072000000L)
-        val uri = builder.build()
-        val projection = arrayOf(
-            CalendarContract.Instances.EVENT_ID,
-            CalendarContract.Instances.TITLE,
-            CalendarContract.Instances.BEGIN,
-            CalendarContract.Instances.END,
-            CalendarContract.Instances.ALL_DAY,
-            CalendarContract.Instances.DISPLAY_COLOR,
-            CalendarContract.Instances.EVENT_LOCATION,
-            CalendarContract.Instances.CALENDAR_ID,
-            CalendarContract.Instances.DESCRIPTION
-        )
-        val selection = CalendarContract.Instances.EVENT_ID + " = ?"
-        val selArgs = arrayOf(id.toString())
-        val cursor = context.contentResolver.query(uri, projection, selection, selArgs, null)
-            ?: return null
-        if (cursor.moveToNext()) {
-            val title = cursor.getStringOrNull(1) ?: ""
-            val begin = cursor.getLong(2)
-            val end = cursor.getLong(3)
-            val allday = cursor.getInt(4) != 0
-            val color = cursor.getInt(5)
-            val location = cursor.getStringOrNull(6)
-            val calendar = cursor.getLong(7)
-            val description = cursor.getStringOrNull(8)
-                ?: ""
-            cursor.close()
-            val proj = arrayOf(
-                CalendarContract.Attendees.EVENT_ID,
-                CalendarContract.Attendees.ATTENDEE_NAME,
-                CalendarContract.Attendees.ATTENDEE_EMAIL
-            )
-            val sel = "${CalendarContract.Attendees.EVENT_ID} = $id"
-            val s = "${CalendarContract.Attendees.ATTENDEE_NAME} COLLATE NOCASE ASC"
-            val cur = context.contentResolver.query(
-                CalendarContract.Attendees.CONTENT_URI,
-                proj, sel, null, s
-            ) ?: return null
-            val attendees = mutableListOf<String>()
-            while (cur.moveToNext()) {
-                attendees.add(
-                    cur.getStringOrNull(1).takeUnless { it.isNullOrBlank() }
-                    ?: cur.getStringOrNull(2)
-                    ?: continue
+        return AndroidCalendarProvider(context).get(id)
+    }
+
+}
+
+@Serializable
+internal data class SerializedCalendarEvent(
+    val id: String? = null,
+    val authority: String? = null,
+    val color: Int? = null,
+    val startTime: Long? = null,
+    val endTime: Long? = null,
+    val allDay: Boolean? = null,
+    val description: String? = null,
+    val calendarName: String? = null,
+    val location: String? = null,
+    val attendees: List<String>? = null,
+    val uri: String? = null,
+    val completed: Boolean? = null,
+    val label: String? = null,
+    val timestamp: Long = 0L,
+    val strategy: StorageStrategy = StorageStrategy.StoreCopy,
+)
+
+class PluginCalendarEventSerializer: SearchableSerializer {
+    override fun serialize(searchable: SavableSearchable): String {
+        searchable as PluginCalendarEvent
+        if (searchable.storageStrategy == StorageStrategy.StoreCopy) {
+            return Json.Lenient.encodeToString(
+                SerializedCalendarEvent(
+                    id = searchable.id,
+                    authority = searchable.authority,
+                    color = searchable.color,
+                    startTime = searchable.startTime,
+                    endTime = searchable.endTime,
+                    allDay = searchable.allDay,
+                    description = searchable.description,
+                    calendarName = searchable.calendarName,
+                    location = searchable.location,
+                    attendees = searchable.attendees,
+                    uri = searchable.uri.toString(),
+                    completed = searchable.isCompleted,
+                    label = searchable.label,
+                    strategy = searchable.storageStrategy,
+                    timestamp = searchable.timestamp,
                 )
-            }
-            cur.close()
-            val tzOffset = if (allday) {
-                Calendar.getInstance().timeZone.getOffset(begin)
-            } else {
-                0
-            }
-            return AndroidCalendarEvent(
-                label = title,
-                id = id,
-                color = color,
-                startTime = begin - tzOffset,
-                endTime = end - tzOffset - if (allday) 1 else 0,
-                allDay = allday,
-                location = location ?: "",
-                attendees = attendees,
-                description = description,
-                calendar = calendar
+            )
+        } else {
+            return Json.Lenient.encodeToString(
+                SerializedCalendarEvent(
+                    id = searchable.id,
+                    authority = searchable.authority,
+                    strategy = searchable.storageStrategy,
+                )
             )
         }
-        cursor.close()
-        return null
+    }
+
+    override val typePrefix: String
+        get() = PluginCalendarEvent.Domain
+}
+
+class PluginCalendarEventDeserializer(
+    val context: Context,
+    private val pluginRepository: PluginRepository,
+): SearchableDeserializer {
+    override suspend fun deserialize(serialized: String): SavableSearchable? {
+        val json = Json.Lenient.decodeFromString<SerializedCalendarEvent>(serialized)
+        val authority = json.authority ?: return null
+        val id = json.id ?: return null
+        val strategy = json.strategy
+        val plugin = pluginRepository.get(authority).firstOrNull() ?: return null
+        if (!plugin.enabled) return null
+
+        return when(strategy) {
+            StorageStrategy.StoreReference -> {
+                PluginCalendarProvider(context, authority).get(id).getOrNull()
+            }
+            else -> {
+                val timestamp = json.timestamp
+                PluginCalendarEvent(
+                    id = id,
+                    color = json.color,
+                    startTime = json.startTime ?: 0,
+                    endTime = json.endTime ?: 0,
+                    allDay = json.allDay ?: false,
+                    description = json.description,
+                    calendarName = json.calendarName,
+                    location = json.location,
+                    attendees = json.attendees ?: emptyList(),
+                    label = json.label ?: return null,
+                    uri = Uri.parse(json.uri ?: return null),
+                    isCompleted = json.completed,
+                    storageStrategy = StorageStrategy.StoreCopy,
+                    authority = authority,
+                    timestamp = timestamp,
+                    updatedSelf = {
+                        if (it !is PluginCalendarEvent) UpdateResult.TemporarilyUnavailable()
+                        else PluginCalendarProvider(context, authority).refresh(it, timestamp).asUpdateResult()
+                    }
+                )
+            }
+        }
     }
 
 }

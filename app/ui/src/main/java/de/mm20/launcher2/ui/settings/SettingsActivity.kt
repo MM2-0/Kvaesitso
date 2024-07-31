@@ -36,6 +36,7 @@ import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemesSettingsScreen
@@ -179,6 +180,9 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/search/files") {
                                     FileSearchSettingsScreen()
+                                }
+                                composable("settings/search/calendar") {
+                                    CalendarSearchSettingsScreen()
                                 }
                                 composable("settings/search/searchactions") {
                                     SearchActionsSettingsScreen()

@@ -51,14 +51,14 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
                 val frequentlyUsedRows = it.second.frequentlyUsedRows
 
                 val pinned = favoritesService.getFavorites(
-                    excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
+                    excludeTypes = if (excludeCalendar) listOf("calendar", "tag", "plugin.calendar") else listOf("tag"),
                     minPinnedLevel = PinnedLevel.AutomaticallySorted,
                     limit = 10 * columns,
                 )
                 if (includeFrequentlyUsed) {
                     emitAll(pinned.flatMapLatest { pinned ->
                         favoritesService.getFavorites(
-                            excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
+                            excludeTypes = if (excludeCalendar) listOf("calendar", "tag", "plugin.calendar") else listOf("tag"),
                             maxPinnedLevel = PinnedLevel.FrequentlyUsed,
                             minPinnedLevel = PinnedLevel.FrequentlyUsed,
                             limit = frequentlyUsedRows * columns - pinned.size % columns,
