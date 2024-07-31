@@ -785,4 +785,19 @@
         <item quantity="other">%1$s notifiche</item>
     </plurals>
     <string name="weather_widget_no_provider">Nessun fornitore meteo selezionato oppure il fornitore selezionato non è disponibile</string>
+    <string name="action_done">Fatto</string>
+    <string name="menu_show_filters">Mostra filtri</string>
+    <string name="menu_hide_filters">Nascondi filtri</string>
+    <string name="music_widget_previous_track">Titolo precedente</string>
+    <string name="music_widget_play">Riproduci</string>
+    <string name="apps_profile_private">Spazio privato</string>
+    <string name="action_more_actions">Più azioni</string>
+    <string name="action_clear">Cancella contenuto campo di testo</string>
+    <string name="music_widget_next_track">Titolo successivo</string>
+    <string name="music_widget_pause">Pausa</string>
+    <string name="music_widget_open_player">Apri lettore</string>
+    <string name="calendar_widget_previous_day">Giorno precedente</string>
+    <string name="calendar_widget_next_day">Giorno successivo</string>
+    <string name="calendar_widget_create_event">Crea nuovo evento</string>
+    <string name="calendar_widget_open_calendar">Apri app calendario</string>
 </resources>
