@@ -228,4 +228,6 @@
         <item quantity="many">+%1$d бягучых падзей з тых часоў</item>
         <item quantity="other">+%1$d бягучых падзей з тых часоў</item>
     </plurals>
+    <string name="missing_permission_file_search_settings_android10">Доступ да ўсіх файлаў патрэбны для пошуку праз лакальныя файлы</string>
+    <string name="missing_permission_notification_badges">Доступ да апавяшчэнняў патрэбны для адлюстроўвання бэйджаў апавяшчэнняў на значках</string>
 </resources>
