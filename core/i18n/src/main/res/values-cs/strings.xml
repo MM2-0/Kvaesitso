@@ -786,4 +786,18 @@
     </plurals>
     <string name="weather_widget_no_provider">Nebyl vybrán poskytovatel počasí nebo vybraný poskytovatel není dostupný</string>
     <string name="apps_profile_private">Soukromý prostor</string>
+    <string name="action_more_actions">Další akce</string>
+    <string name="action_clear">Vymazat</string>
+    <string name="action_done">Hotovo</string>
+    <string name="menu_show_filters">Zobrazit filtry</string>
+    <string name="menu_hide_filters">Skrýt filtry</string>
+    <string name="music_widget_previous_track">Předchozí titul</string>
+    <string name="music_widget_next_track">Další titul</string>
+    <string name="music_widget_play">Přehrát</string>
+    <string name="music_widget_pause">Pozastavit</string>
+    <string name="music_widget_open_player">Otevřít přehrávač</string>
+    <string name="calendar_widget_previous_day">Předchozí den</string>
+    <string name="calendar_widget_next_day">Další den</string>
+    <string name="calendar_widget_create_event">Vytvořit novou událost</string>
+    <string name="calendar_widget_open_calendar">Otevřít aplikaci kalendáře</string>
 </resources>
