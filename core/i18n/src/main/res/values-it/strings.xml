@@ -800,4 +800,5 @@
     <string name="calendar_widget_next_day">Giorno successivo</string>
     <string name="calendar_widget_create_event">Crea nuovo evento</string>
     <string name="calendar_widget_open_calendar">Apri app calendario</string>
+    <string name="plugin_type_calendar">Calendario</string>
 </resources>
