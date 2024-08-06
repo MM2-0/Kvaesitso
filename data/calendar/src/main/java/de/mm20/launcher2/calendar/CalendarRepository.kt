@@ -1,6 +1,7 @@
 package de.mm20.launcher2.calendar
 
 import android.content.Context
+import android.util.Log
 import de.mm20.launcher2.calendar.providers.AndroidCalendarProvider
 import de.mm20.launcher2.calendar.providers.CalendarList
 import de.mm20.launcher2.calendar.providers.CalendarProvider
@@ -58,8 +59,9 @@ internal class CalendarRepositoryImpl(
 
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
         val providerIds = settings.providers
+        val excludedCalendars = settings.excludedCalendars
 
-        return combineTransform(hasPermission, providerIds) { perm, providerIds ->
+        return combineTransform(hasPermission, providerIds, excludedCalendars) { perm, providerIds, excludedCalendars ->
             val providers = providerIds.mapNotNull {
                 when (it) {
                     "local" -> if (perm) AndroidCalendarProvider(context) else null
@@ -72,6 +74,7 @@ internal class CalendarRepositoryImpl(
                 queryCalendarEvents(
                     query = query,
                     excludeAllDayEvents = false,
+                    excludeCalendars = excludedCalendars.toList(),
                     providers = providers,
                     intervalStart = now,
                     intervalEnd = now + 730.days.inWholeMilliseconds,

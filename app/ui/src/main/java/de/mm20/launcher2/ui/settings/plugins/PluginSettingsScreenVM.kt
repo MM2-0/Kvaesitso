@@ -7,12 +7,16 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.calendar.CalendarRepository
+import de.mm20.launcher2.calendar.providers.CalendarList
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.plugins.PluginWithState
+import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.FileSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.weather.WeatherSettings
@@ -31,8 +35,10 @@ import org.koin.core.component.inject
 
 class PluginSettingsScreenVM : ViewModel(), KoinComponent {
     private val pluginService by inject<PluginService>()
+    private val calendarRepository by inject<CalendarRepository>()
     private val fileSearchSettings: FileSearchSettings by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
+    private val calendarSearchSettings: CalendarSearchSettings by inject()
     private val weatherSettings: WeatherSettings by inject()
 
     private var pluginPackageName = MutableStateFlow<String?>(null)
@@ -79,6 +85,11 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
             it.filter { it.plugin.type == PluginType.LocationSearch }
         }
 
+    val calendarPlugins = states
+        .map {
+            it.filter { it.plugin.type == PluginType.Calendar }
+        }
+
     val weatherPlugins = states
         .map {
             it.filter { it.plugin.type == PluginType.Weather }
@@ -121,8 +132,22 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
         locationSearchSettings.setPluginEnabled(authority, enabled)
     }
 
+    val enabledCalendarSearchPlugins = calendarSearchSettings.providers
+    fun setCalendarSearchPluginEnabled(authority: String, enabled: Boolean) {
+        calendarSearchSettings.setProviderEnabled(authority, enabled)
+    }
+
     val weatherProvider = weatherSettings.providerId
     fun setWeatherProvider(providerId: String) {
         weatherSettings.setProvider(providerId)
+    }
+
+    fun getCalendarLists(plugin: Plugin): Flow<List<CalendarList>> {
+        return calendarRepository.getCalendars(plugin.authority)
+    }
+
+    val excludedCalendars = calendarSearchSettings.excludedCalendars
+    fun setCalendarExcluded(calendarId: String, excluded: Boolean) {
+        calendarSearchSettings.setCalendarExcluded(calendarId, excluded)
     }
 }

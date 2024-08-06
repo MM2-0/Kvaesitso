@@ -19,7 +19,8 @@ fun PreferenceWithSwitch(
     enabled: Boolean = true,
     onClick: () -> Unit = {},
     switchValue: Boolean,
-    onSwitchChanged: (Boolean) -> Unit
+    onSwitchChanged: (Boolean) -> Unit,
+    iconPadding: Boolean = true
 ) {
     Row(
         verticalAlignment = (Alignment.CenterVertically)
@@ -32,7 +33,8 @@ fun PreferenceWithSwitch(
                 summary = summary,
                 icon = icon,
                 enabled = enabled,
-                onClick = onClick
+                onClick = onClick,
+                iconPadding = iconPadding
             )
         }
         Box(

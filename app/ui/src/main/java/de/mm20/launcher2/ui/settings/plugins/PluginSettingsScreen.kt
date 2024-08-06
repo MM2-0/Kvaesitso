@@ -16,6 +16,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -29,6 +33,9 @@ import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material.icons.rounded.Verified
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,9 +46,14 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -53,11 +65,15 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.themes.atTone
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
+import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
+import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
@@ -88,6 +104,11 @@ fun PluginSettingsScreen(pluginId: String) {
         minActiveState = Lifecycle.State.RESUMED
     )
 
+    val calendarPlugins by viewModel.calendarPlugins.collectAsStateWithLifecycle(
+        emptyList(),
+        minActiveState = Lifecycle.State.RESUMED
+    )
+
     val weatherPlugins by viewModel.weatherPlugins.collectAsStateWithLifecycle(
         emptyList(),
         minActiveState = Lifecycle.State.RESUMED
@@ -105,6 +126,10 @@ fun PluginSettingsScreen(pluginId: String) {
     )
 
     val enabledLocationSearchPlugins by viewModel.enabledLocationSearchPlugins.collectAsStateWithLifecycle(
+        null
+    )
+
+    val enabledCalendarSearchPlugins by viewModel.enabledCalendarSearchPlugins.collectAsStateWithLifecycle(
         null
     )
 
@@ -316,7 +341,9 @@ fun PluginSettingsScreen(pluginId: String) {
                                         primaryAction = {
                                             TextButton(onClick = {
                                                 try {
-                                                    state.setupActivity.sendWithBackgroundPermission(context)
+                                                    state.setupActivity.sendWithBackgroundPermission(
+                                                        context
+                                                    )
                                                 } catch (e: PendingIntent.CanceledException) {
                                                     CrashReporter.logException(e)
                                                 }
@@ -367,7 +394,9 @@ fun PluginSettingsScreen(pluginId: String) {
                                         primaryAction = {
                                             TextButton(onClick = {
                                                 try {
-                                                    state.setupActivity.sendWithBackgroundPermission(context)
+                                                    state.setupActivity.sendWithBackgroundPermission(
+                                                        context
+                                                    )
                                                 } catch (e: PendingIntent.CanceledException) {
                                                     CrashReporter.logException(e)
                                                 }
@@ -402,6 +431,111 @@ fun PluginSettingsScreen(pluginId: String) {
                             }
                         }
                     }
+                    if (calendarPlugins.isNotEmpty()) {
+                        PreferenceCategory(
+                            stringResource(R.string.plugin_type_calendar),
+                            iconPadding = false,
+                        ) {
+                            val excludedCalendars by viewModel.excludedCalendars.collectAsState(
+                                emptySet()
+                            )
+                            for (plugin in calendarPlugins) {
+                                val state = plugin.state
+                                if (state is PluginState.SetupRequired) {
+                                    Banner(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = state.message
+                                            ?: stringResource(R.string.plugin_state_setup_required),
+                                        icon = Icons.Rounded.Info,
+                                        primaryAction = {
+                                            TextButton(onClick = {
+                                                try {
+                                                    state.setupActivity.sendWithBackgroundPermission(
+                                                        context
+                                                    )
+                                                } catch (e: PendingIntent.CanceledException) {
+                                                    CrashReporter.logException(e)
+                                                }
+                                            }) {
+                                                Text(stringResource(R.string.plugin_action_setup))
+                                            }
+                                        }
+                                    )
+                                } else if (state is PluginState.Error) {
+                                    Banner(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = stringResource(R.string.plugin_state_error),
+                                        icon = Icons.Rounded.Error,
+                                        color = MaterialTheme.colorScheme.errorContainer,
+                                    )
+                                }
+                                val calendarLists by remember(plugin.state, plugin.plugin) {
+                                    viewModel.getCalendarLists(plugin.plugin)
+                                }.collectAsStateWithLifecycle(null, minActiveState = Lifecycle.State.RESUMED)
+                                var showDialog by remember { mutableStateOf(false) }
+                                val selectedCalendars = remember(excludedCalendars, calendarLists) {
+                                    calendarLists?.size?.minus(excludedCalendars.count { it.startsWith(plugin.plugin.authority) })
+                                }
+                                PreferenceWithSwitch(
+                                    title = plugin.plugin.label,
+                                    enabled = enabledCalendarSearchPlugins != null && state is PluginState.Ready,
+                                    summary = (state as? PluginState.SetupRequired)?.message
+                                        ?: if (selectedCalendars != null && calendarLists != null) "$selectedCalendars lists selected"
+                                        else (state as? PluginState.Ready)?.text ?: plugin.plugin.description,
+                                    switchValue = enabledCalendarSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                                    onSwitchChanged = {
+                                        viewModel.setCalendarSearchPluginEnabled(
+                                            plugin.plugin.authority,
+                                            it
+                                        )
+                                    },
+                                    iconPadding = false,
+                                    onClick = {
+                                        showDialog = true
+                                    }
+                                )
+                                if (showDialog && calendarLists?.isNotEmpty() == true) {
+                                    BasicAlertDialog(
+                                        onDismissRequest = {
+                                            showDialog = false
+                                        },
+                                    ) {
+                                        Surface(
+                                            modifier = Modifier.wrapContentWidth()
+                                                .wrapContentHeight(),
+                                            shape = MaterialTheme.shapes.large,
+                                            tonalElevation = AlertDialogDefaults.TonalElevation
+                                        ) {
+                                            LazyColumn {
+                                                items(calendarLists!!) {
+                                                    CheckboxPreference(
+                                                        title = it.name,
+                                                        summary = it.owner,
+                                                        iconPadding = false,
+                                                        value = it.id !in excludedCalendars,
+                                                        onValueChanged = { value ->
+                                                            viewModel.setCalendarExcluded(it.id, !value)
+                                                        },
+
+                                                        checkboxColors = CheckboxDefaults.colors(
+                                                            checkedColor = if (it.color == 0) MaterialTheme.colorScheme.primary
+                                                            else Color(
+                                                                it.color.atTone(if (LocalDarkTheme.current) 80 else 40)
+                                                            ),
+                                                            checkmarkColor = if (it.color == 0) MaterialTheme.colorScheme.onPrimary
+                                                            else Color(
+                                                                it.color.atTone(if (LocalDarkTheme.current) 20 else 100)
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (weatherPlugins.isNotEmpty()) {
                         PreferenceCategory(
                             stringResource(R.string.plugin_type_weather),
@@ -418,7 +552,9 @@ fun PluginSettingsScreen(pluginId: String) {
                                         primaryAction = {
                                             TextButton(onClick = {
                                                 try {
-                                                    state.setupActivity.sendWithBackgroundPermission(context)
+                                                    state.setupActivity.sendWithBackgroundPermission(
+                                                        context
+                                                    )
                                                 } catch (e: PendingIntent.CanceledException) {
                                                     CrashReporter.logException(e)
                                                 }

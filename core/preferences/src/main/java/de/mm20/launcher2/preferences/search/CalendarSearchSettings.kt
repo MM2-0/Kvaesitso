@@ -21,4 +21,16 @@ class CalendarSearchSettings internal constructor(
             }
         }
     }
+
+    val excludedCalendars
+        get() = dataStore.data.map { it.calendarSearchExcludedCalendars }
+    fun setCalendarExcluded(calendarId: String, excluded: Boolean) {
+        dataStore.update {
+            if (excluded) {
+                it.copy(calendarSearchExcludedCalendars = it.calendarSearchExcludedCalendars + calendarId)
+            } else {
+                it.copy(calendarSearchExcludedCalendars = it.calendarSearchExcludedCalendars - calendarId)
+            }
+        }
+    }
 }

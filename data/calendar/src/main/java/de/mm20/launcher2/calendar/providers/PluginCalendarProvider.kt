@@ -47,10 +47,12 @@ class PluginCalendarProvider(
     }
 
     override fun Uri.Builder.appendQueryParameters(query: CalendarQuery): Uri.Builder {
-        appendQueryParameter(
-            CalendarPluginContract.Params.Query,
-            query.query
-        )
+        if (query.query != null) {
+            appendQueryParameter(
+                CalendarPluginContract.Params.Query,
+                query.query
+            )
+        }
         val start = query.start
         if (start != null) {
             appendQueryParameter(
