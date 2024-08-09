@@ -60,6 +60,7 @@ sealed class Widget {
                             ?: NotesWidgetConfig()
                     NotesWidget(entity.id, config)
                 }
+                SmartspacerWidget.Type -> SmartspacerWidget(entity.id)
 
                 else -> null
             }
