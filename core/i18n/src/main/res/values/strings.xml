@@ -985,4 +985,10 @@
     <string name="calendar_widget_next_day">Next day</string>
     <string name="calendar_widget_create_event">Create new event</string>
     <string name="calendar_widget_open_calendar">Open calendar app</string>
+    <string name="profile_work_profile_state_locked">Work apps are paused.</string>
+    <string name="profile_work_profile_action_unlock">Unpause</string>
+    <string name="profile_work_profile_action_lock">Pause work apps</string>
+    <string name="profile_private_profile_state_locked">Private space is locked.</string>
+    <string name="profile_private_profile_action_unlock">Unlock</string>
+    <string name="profile_private_profile_action_lock">Lock private space</string>
 </resources>

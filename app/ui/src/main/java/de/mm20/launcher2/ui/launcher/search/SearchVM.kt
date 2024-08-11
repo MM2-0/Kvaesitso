@@ -86,6 +86,11 @@ class SearchVM : ViewModel(), KoinComponent {
         SharingStarted.WhileSubscribed(),
         replay = 1
     )
+    val profileStates = profiles.flatMapLatest {
+        combine(it.map { profileManager.getProfileState(it) }) {
+            it.toList()
+        }
+    }
     val workProfile = profiles.map {
         it.find { it.type == Profile.Type.Work }
     }
