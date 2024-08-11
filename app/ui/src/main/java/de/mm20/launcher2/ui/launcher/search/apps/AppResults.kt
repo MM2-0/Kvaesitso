@@ -105,7 +105,7 @@ fun LazyListScope.AppResults(
                     HorizontalDivider()
 
                     val profileType = profiles[selectedProfileIndex].type
-                    if (showProfileLockControls && profileType != Profile.Type.Personal) {
+                    if (profileType != Profile.Type.Personal) {
                         if (isProfileLocked) {
                             Column(
                                 modifier = Modifier
@@ -128,37 +128,38 @@ fun LazyListScope.AppResults(
                                         if (profileType == Profile.Type.Work) R.string.profile_work_profile_state_locked
                                         else R.string.profile_private_profile_state_locked
                                     ),
-                                    modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
+                                    modifier = Modifier.padding(top = 8.dp),
                                     color = MaterialTheme.colorScheme.secondary,
                                     style = MaterialTheme.typography.titleSmall,
                                 )
-                                Button(
-                                    modifier = Modifier,
-                                    onClick = {
-                                        onProfileLockChange?.invoke(
-                                            profiles[selectedProfileIndex],
-                                            false
+                                if (showProfileLockControls) {
+                                    Button(
+                                        modifier = Modifier.padding(top = 32.dp),
+                                        onClick = {
+                                            onProfileLockChange?.invoke(
+                                                profiles[selectedProfileIndex],
+                                                false
+                                            )
+                                        },
+                                        contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
+                                    ) {
+                                        Icon(
+                                            if (profileType == Profile.Type.Work) Icons.Rounded.Work else Icons.Rounded.LockOpen,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .padding(end = ButtonDefaults.IconSpacing)
+                                                .size(ButtonDefaults.IconSize)
                                         )
-                                    },
-                                    contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
-                                ) {
-                                    Icon(
-                                        if (profileType == Profile.Type.Work) Icons.Rounded.Work else Icons.Rounded.LockOpen,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .padding(end = ButtonDefaults.IconSpacing)
-                                            .size(ButtonDefaults.IconSize)
-                                    )
-                                    Text(
-                                        stringResource(
-                                            if (profileType == Profile.Type.Work) R.string.profile_work_profile_action_unlock
-                                            else R.string.profile_private_profile_action_unlock
+                                        Text(
+                                            stringResource(
+                                                if (profileType == Profile.Type.Work) R.string.profile_work_profile_action_unlock
+                                                else R.string.profile_private_profile_action_unlock
+                                            )
                                         )
-                                    )
+                                    }
                                 }
-
                             }
-                        } else {
+                        } else if (showProfileLockControls) {
                             FilledTonalButton(
                                 modifier = Modifier
                                     .padding(12.dp)

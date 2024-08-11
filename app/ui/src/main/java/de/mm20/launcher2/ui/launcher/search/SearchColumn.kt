@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Article
@@ -177,9 +178,9 @@ fun SearchColumn(
 
                 if (isSearchEmpty && profiles.size > 1) {
                     AppResults(
-                        apps = when(selectedAppProfileIndex) {
-                            1 -> privateApps
-                            2 -> workApps
+                        apps = when(profiles.getOrNull(selectedAppProfileIndex)?.type) {
+                            Profile.Type.Private -> privateApps
+                            Profile.Type.Work -> workApps
                             else -> apps
                         },
                         highlightedItem = bestMatch as? Application,
