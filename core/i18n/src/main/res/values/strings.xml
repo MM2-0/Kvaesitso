@@ -991,4 +991,5 @@
     <string name="profile_private_profile_state_locked">Private space is locked.</string>
     <string name="profile_private_profile_action_unlock">Unlock</string>
     <string name="profile_private_profile_action_lock">Lock private space</string>
+    <string name="hint_drag_and_drop_reorder">Hold and drag items to rearrange them</string>
 </resources>

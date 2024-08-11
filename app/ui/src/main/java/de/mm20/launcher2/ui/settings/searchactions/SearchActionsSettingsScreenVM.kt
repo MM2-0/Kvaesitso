@@ -54,8 +54,8 @@ class SearchActionsSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun moveItem(fromIndex: Int, toIndex: Int) {
         val actions = searchActions.value?.toMutableList() ?: return
-        if (fromIndex > actions.lastIndex) return
-        if (toIndex > actions.lastIndex) return
+        if (fromIndex > actions.lastIndex || fromIndex < 0) return
+        if (toIndex > actions.lastIndex || toIndex < 0) return
         val item = actions.removeAt(fromIndex)
         actions.add(toIndex, item)
         searchActionService.saveSearchActionBuilders(actions)
