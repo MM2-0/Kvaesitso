@@ -777,7 +777,7 @@
         <item quantity="other">%1$s Benachrichtigungen</item>
     </plurals>
     <string name="weather_widget_no_provider">Es ist kein Wetterdienst ausgewählt oder der gewählte Dienst ist nicht verfügbar</string>
-    <string name="apps_profile_private">Privater Bereich</string>
+    <string name="apps_profile_private">Vertraulich</string>
     <string name="action_done">Fertig</string>
     <string name="action_more_actions">Weitere Aktionen</string>
     <string name="action_clear">Löschen</string>
@@ -792,4 +792,11 @@
     <string name="calendar_widget_next_day">Nächster Tag</string>
     <string name="calendar_widget_create_event">Neuen Termin erstellen</string>
     <string name="calendar_widget_open_calendar">Kalender-App öffnen</string>
+    <string name="profile_work_profile_action_unlock">Nicht mehr pausieren</string>
+    <string name="profile_work_profile_action_lock">Geschäftliche Apps pausieren</string>
+    <string name="profile_private_profile_state_locked">Der private Bereich ist gesperrt.</string>
+    <string name="profile_private_profile_action_unlock">Entsperren</string>
+    <string name="profile_private_profile_action_lock">Privaten Bereich sperren</string>
+    <string name="plugin_type_calendar">Kalender</string>
+    <string name="profile_work_profile_state_locked">Geschäftliche Apps sind pausiert.</string>
 </resources>
