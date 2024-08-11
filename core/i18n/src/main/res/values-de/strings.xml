@@ -799,4 +799,5 @@
     <string name="profile_private_profile_action_lock">Privaten Bereich sperren</string>
     <string name="plugin_type_calendar">Kalender</string>
     <string name="profile_work_profile_state_locked">Geschäftliche Apps sind pausiert.</string>
+    <string name="hint_drag_and_drop_reorder">Zum Anordnen Elemente halten und ziehen</string>
 </resources>
