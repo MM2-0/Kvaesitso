@@ -792,4 +792,5 @@
     <string name="calendar_widget_next_day">Következő nap</string>
     <string name="calendar_widget_create_event">Új esemény létrehozása</string>
     <string name="calendar_widget_open_calendar">Naptár alkalmazás megnyitása</string>
+    <string name="plugin_type_calendar">Naptár</string>
 </resources>
