@@ -80,10 +80,6 @@ fun SearchColumn(
     val privateApps by viewModel.privateSpaceAppResults
     val profiles by viewModel.profiles.collectAsState(emptyList())
     val profileStates by viewModel.profileStates.collectAsState(emptyList())
-    val workProfile by viewModel.workProfile.collectAsState(null)
-    val workProfileState by viewModel.workProfileState.collectAsState(null)
-    val privateProfile by viewModel.privateProfile.collectAsState(null)
-    val privateProfileState by viewModel.privateProfileState.collectAsState(null)
 
     val appShortcuts by viewModel.appShortcutResults
     val contacts by viewModel.contactResults

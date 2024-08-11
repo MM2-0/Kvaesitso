@@ -91,18 +91,6 @@ class SearchVM : ViewModel(), KoinComponent {
             it.toList()
         }
     }
-    val workProfile = profiles.map {
-        it.find { it.type == Profile.Type.Work }
-    }
-    val privateProfile = profiles.map {
-        it.find { it.type == Profile.Type.Private }
-    }
-    val workProfileState = workProfile.flatMapLatest {
-        profileManager.getProfileState(it)
-    }
-    val privateProfileState = privateProfile.flatMapLatest {
-        profileManager.getProfileState(it)
-    }
 
     val hasProfilesPermission = permissionsManager.hasPermission(PermissionGroup.ManageProfiles)
 
