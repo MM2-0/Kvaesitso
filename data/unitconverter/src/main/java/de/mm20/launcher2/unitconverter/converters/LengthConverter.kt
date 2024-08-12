@@ -4,7 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.unitconverter.Dimension
 import de.mm20.launcher2.unitconverter.R
 
-class LengthConverter(context: Context) : SimpleFactorConverter() {
+internal class LengthConverter(context: Context) : SimpleFactorConverter() {
     override val dimension = Dimension.Length
 
     override val standardUnits = listOf(

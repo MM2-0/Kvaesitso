@@ -66,6 +66,7 @@ import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
+import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterHelpSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
 import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
@@ -168,6 +169,9 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/search/unitconverter") {
                                     UnitConverterSettingsScreen()
+                                }
+                                composable("settings/search/unitconverter/help") {
+                                    UnitConverterHelpSettingsScreen()
                                 }
                                 composable("settings/search/wikipedia") {
                                     WikipediaSettingsScreen()

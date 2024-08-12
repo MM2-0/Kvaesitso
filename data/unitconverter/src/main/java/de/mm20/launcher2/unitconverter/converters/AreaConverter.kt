@@ -4,7 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.unitconverter.Dimension
 import de.mm20.launcher2.unitconverter.R
 
-class AreaConverter(context: Context) : SimpleFactorConverter() {
+internal class AreaConverter(context: Context) : SimpleFactorConverter() {
     override val dimension = Dimension.Area
 
     override val standardUnits = listOf(

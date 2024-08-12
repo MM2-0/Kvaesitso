@@ -19,6 +19,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ import org.koin.core.component.KoinComponent
 
 interface UnitConverterRepository {
     fun search(query: String): Flow<UnitConverter?>
-    fun availableConverters(includeCurrencies: Boolean) : List<Converter>
+    suspend fun getAvailableConverters(includeCurrencies: Boolean) : List<Converter>
 }
 
 internal class UnitConverterRepositoryImpl(
@@ -55,7 +56,7 @@ internal class UnitConverterRepositoryImpl(
         }
     }
 
-    override fun availableConverters(includeCurrencies: Boolean) : List<Converter> {
+    override suspend fun getAvailableConverters(includeCurrencies: Boolean) : List<Converter> {
         val converters = mutableListOf(
             MassConverter(context),
             LengthConverter(context),
@@ -90,7 +91,7 @@ internal class UnitConverterRepositoryImpl(
         val value = valueStr.toDoubleOrNull() ?: valueStr.replace(',', '.').toDoubleOrNull()
         ?: return null
 
-        val converters = availableConverters(includeCurrencies)
+        val converters = getAvailableConverters(includeCurrencies)
 
         for (converter in converters) {
             if (!converter.isValidUnit(unitStr)) continue

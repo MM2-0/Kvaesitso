@@ -5,11 +5,12 @@ import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.unitconverter.ConverterUtils
 import de.mm20.launcher2.unitconverter.MeasureUnit
 import de.mm20.launcher2.unitconverter.UnitValue
+import kotlin.math.roundToInt
 
 /**
  * A converter for units that can converted into each other by simple multiplication with a constant factor
  */
-abstract class SimpleFactorConverter: Converter {
+internal abstract class SimpleFactorConverter: Converter {
     open val standardUnits: List<MeasureUnitWithFactor> = emptyList()
 
     /**
@@ -36,11 +37,19 @@ abstract class SimpleFactorConverter: Converter {
         val inputValue = UnitValue(value, fromUnit, ConverterUtils.formatName(context, unit, value), ConverterUtils.formatValue(context, unit, value))
         return UnitConverter(dimension, inputValue, results)
     }
+
+    override suspend fun getSupportedUnits(): List<MeasureUnit> {
+        return standardUnits
+    }
 }
 
 
 data class MeasureUnitWithFactor(
     val factor: Double,
     override val symbol: String,
-    override val nameResource: Int
-): MeasureUnit
+    val nameResource: Int
+): MeasureUnit {
+    override fun formatName(context: Context, value: Double): String {
+        return context.resources.getQuantityString(nameResource, value.roundToInt())
+    }
+}
