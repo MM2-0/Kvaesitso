@@ -10,14 +10,18 @@ import de.mm20.launcher2.unitconverter.Dimension
 import de.mm20.launcher2.unitconverter.UnitValue
 import java.text.DecimalFormat
 import java.util.Locale
-import java.util.Currency as JCurrency
 import kotlin.math.abs
+import java.util.Currency as JCurrency
 
 class CurrencyConverter(
     private val repository: CurrencyRepository,
 ) : Converter {
 
     override val dimension: Dimension = Dimension.Currency
+
+    suspend fun getAbbreviations() : List<String> {
+        return repository.getKnownUnits()
+    }
 
 
     private val topCurrencies = arrayOf("USD", "EUR", "JPY", "GBP", "AUD")

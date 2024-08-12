@@ -161,6 +161,12 @@ class CurrencyRepository(
         }
     }
 
+    suspend fun getKnownUnits(): List<String> {
+        return withContext(Dispatchers.IO) {
+            AppDatabase.getInstance(context).currencyDao().getAllCurrencies().map { it.symbol }
+        }
+    }
+
     suspend fun isValidCurrency(symbol: String): Boolean {
         val isoSymbol = currencySymbolAliases[symbol] ?: symbol
         return withContext(Dispatchers.IO) {
