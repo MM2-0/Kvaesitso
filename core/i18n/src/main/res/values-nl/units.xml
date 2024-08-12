@@ -270,4 +270,17 @@
         <item quantity="one">decimeter</item>
         <item quantity="other">decimeter</item>
     </plurals>
+    <string name="dimension_mass">Massa</string>
+    <string name="dimension_velocity">Snelheid</string>
+    <string name="dimension_volume">Volume</string>
+    <string name="dimension_area">Oppervlakte</string>
+    <string name="dimension_data">Gegevens</string>
+    <string name="dimension_pressure">Druk</string>
+    <string name="dimension_energy">Energie</string>
+    <string name="dimension_frequency">Frequentie</string>
+    <string name="dimension_temperature">Temperatuur</string>
+    <string name="dimension_time">Tijd</string>
+    <string name="dimension_length">Lengte</string>
+    <string name="dimension_currency">Munteenheid</string>
+    <string name="dimension_bitrate">Bitrate</string>
 </resources>
