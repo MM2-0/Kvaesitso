@@ -60,7 +60,7 @@ internal data class LauncherApp(
 
     private val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
 
-    override val isSystemApp: Boolean = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+    private val isSystemApp: Boolean = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
 
     override val canUninstall: Boolean
         get() = !isSystemApp && isMainProfile

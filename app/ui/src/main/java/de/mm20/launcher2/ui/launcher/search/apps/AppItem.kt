@@ -111,34 +111,43 @@ fun AppItem(
                     style = MaterialTheme.typography.titleMedium
                 )
 
-                val tags by viewModel.tags.collectAsState(emptyList())
-                if (tags.isNotEmpty()) {
-                    Text(
-                        modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
-                        text = tags.joinToString(separator = " #", prefix = "#"),
-                        color = MaterialTheme.colorScheme.secondary,
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                }
+                if (!app.isPrivate) {
+
+                    val tags by viewModel.tags.collectAsState(emptyList())
+                    if (tags.isNotEmpty()) {
+                        Text(
+                            modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
+                            text = tags.joinToString(separator = " #", prefix = "#"),
+                            color = MaterialTheme.colorScheme.secondary,
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
 
 
-                app.versionName?.let {
+                    app.versionName?.let {
+                        Text(
+                            text = stringResource(R.string.app_info_version, it),
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(top = 4.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                     Text(
-                        text = stringResource(R.string.app_info_version, it),
+                        text = app.componentName.packageName,
                         style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(top = 4.dp),
+                        modifier = Modifier.padding(top = 1.dp),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                } else {
+                    Text(
+                        stringResource(R.string.profile_private_profile_state_locked),
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(top = 8.dp),
+                        color = MaterialTheme.colorScheme.secondary,
                     )
                 }
-                Text(
-                    text = app.componentName.packageName,
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = 1.dp),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-
 
             }
             val badge by viewModel.badge.collectAsStateWithLifecycle(null)
@@ -373,13 +382,15 @@ fun AppItem(
             toolbarActions.add(favAction)
         }
 
-        toolbarActions.add(
-            DefaultToolbarAction(
-                label = stringResource(R.string.menu_app_info),
-                icon = Icons.Rounded.Info
-            ) {
-                app.openAppDetails(context)
-            })
+        if (!app.isPrivate) {
+            toolbarActions.add(
+                DefaultToolbarAction(
+                    label = stringResource(R.string.menu_app_info),
+                    icon = Icons.Rounded.Info
+                ) {
+                    app.openAppDetails(context)
+                })
+        }
 
         toolbarActions.add(
             DefaultToolbarAction(
@@ -392,49 +403,56 @@ fun AppItem(
         )
 
         val sheetManager = LocalBottomSheetManager.current
-        toolbarActions.add(DefaultToolbarAction(
-            label = stringResource(R.string.menu_customize),
-            icon = Icons.Rounded.Tune,
-            action = { sheetManager.showCustomizeSearchableModal(app) }
-        ))
-
-        val storeDetails = remember(app) { app.getStoreDetails(context) }
-        val shareAction = if (storeDetails == null) {
-            DefaultToolbarAction(
-                label = stringResource(R.string.menu_share),
-                icon = Icons.Rounded.Share
-            ) {
-                scope.launch {
-                    app.shareApkFile(context)
-                }
-            }
-        } else {
-            SubmenuToolbarAction(
-                label = stringResource(R.string.menu_share),
-                icon = Icons.Rounded.Share,
-                children = listOf(
-                    DefaultToolbarAction(
-                        label = stringResource(R.string.menu_share_store_link, storeDetails.label),
-                        icon = Icons.Rounded.Link,
-                        action = {
-                            val shareIntent = Intent(Intent.ACTION_SEND)
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, storeDetails.url)
-                            shareIntent.type = "text/plain"
-                            context.startActivity(Intent.createChooser(shareIntent, null))
-                        }
-                    ),
-                    DefaultToolbarAction(
-                        label = stringResource(R.string.menu_share_apk_file),
-                        icon = Icons.Rounded.Android
-                    ) {
-                        scope.launch {
-                            app.shareApkFile(context)
-                        }
-                    }
-                )
-            )
+        if (!app.isPrivate) {
+            toolbarActions.add(DefaultToolbarAction(
+                label = stringResource(R.string.menu_customize),
+                icon = Icons.Rounded.Tune,
+                action = { sheetManager.showCustomizeSearchableModal(app) }
+            ))
         }
-        toolbarActions.add(shareAction)
+
+        if (!app.isPrivate) {
+            val storeDetails = remember(app) { app.getStoreDetails(context) }
+            val shareAction = if (storeDetails == null) {
+                DefaultToolbarAction(
+                    label = stringResource(R.string.menu_share),
+                    icon = Icons.Rounded.Share
+                ) {
+                    scope.launch {
+                        app.shareApkFile(context)
+                    }
+                }
+            } else {
+                SubmenuToolbarAction(
+                    label = stringResource(R.string.menu_share),
+                    icon = Icons.Rounded.Share,
+                    children = listOf(
+                        DefaultToolbarAction(
+                            label = stringResource(
+                                R.string.menu_share_store_link,
+                                storeDetails.label
+                            ),
+                            icon = Icons.Rounded.Link,
+                            action = {
+                                val shareIntent = Intent(Intent.ACTION_SEND)
+                                shareIntent.putExtra(Intent.EXTRA_TEXT, storeDetails.url)
+                                shareIntent.type = "text/plain"
+                                context.startActivity(Intent.createChooser(shareIntent, null))
+                            }
+                        ),
+                        DefaultToolbarAction(
+                            label = stringResource(R.string.menu_share_apk_file),
+                            icon = Icons.Rounded.Android
+                        ) {
+                            scope.launch {
+                                app.shareApkFile(context)
+                            }
+                        }
+                    )
+                )
+            }
+            toolbarActions.add(shareAction)
+        }
 
         if (app.canUninstall) {
             toolbarActions.add(

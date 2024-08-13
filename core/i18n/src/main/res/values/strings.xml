@@ -806,6 +806,7 @@
     <string name="import_theme_apply">Apply theme</string>
     <string name="import_theme_error">The selected file could not be read. Please make sure that you selected a valid theme file (*.kvtheme), and that the file is not corrupt.</string>
     <string name="shortcut_label_unavailable">Unavailable</string>
+    <string name="app_label_locked_profile">Locked</string>
     <!-- %1$s: app name -->
     <string name="shortcut_unavailable_description">This shortcut is unavailable because %1$s isn\'t the default launcher</string>
     <string name="preference_plugin_enable">Enable plugin</string>

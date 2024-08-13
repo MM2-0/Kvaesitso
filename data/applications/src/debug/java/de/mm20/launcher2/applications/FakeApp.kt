@@ -12,7 +12,6 @@ import de.mm20.launcher2.search.SearchableSerializer
 
 class FakeApp: Application {
     override val componentName: ComponentName = ComponentName(randomString(), randomString())
-    override val isSystemApp: Boolean = false
     override val isSuspended: Boolean = false
     override val user: UserHandle = Process.myUserHandle()
     override val versionName: String = "1.0"

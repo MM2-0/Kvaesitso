@@ -46,6 +46,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class IconService(
@@ -140,6 +143,12 @@ class IconService(
 
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
+        if (searchable is Application && searchable.isPrivate) {
+            return transformations.map {
+                searchable.getPlaceholderIcon(context).transform(it)
+            }
+        }
+
         val customIcon = customAttributesRepository.getCustomIcon(searchable)
         return combine(iconProviders, transformations, customIcon) { providers, transformations, ci ->
             var icon = cache.get(searchable.key + ci.hashCode() + providers.hashCode() + transformations.hashCode())
