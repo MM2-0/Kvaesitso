@@ -800,4 +800,5 @@
     <string name="profile_private_profile_action_lock">Privátszféra lezárása</string>
     <string name="profile_private_profile_state_locked">Privátszféra lezárva.</string>
     <string name="hint_drag_and_drop_reorder">Tartsa lenyomva és húzza az elemeket az átrendezésükhöz</string>
+    <string name="preference_search_supportedunits">Támogatott mértékegységek</string>
 </resources>
