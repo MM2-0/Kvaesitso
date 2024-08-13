@@ -800,4 +800,6 @@
     <string name="plugin_type_calendar">Kalender</string>
     <string name="profile_work_profile_state_locked">Geschäftliche Apps sind pausiert.</string>
     <string name="hint_drag_and_drop_reorder">Zum Anordnen Elemente halten und ziehen</string>
+    <string name="preference_search_supportedunits">Unterstützte Einheiten</string>
+    <string name="app_label_locked_profile">Gesperrt</string>
 </resources>
