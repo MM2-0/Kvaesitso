@@ -270,4 +270,17 @@
         <item quantity="one">deciméter</item>
         <item quantity="other">deciméter</item>
     </plurals>
+    <string name="dimension_length">Hosszúság</string>
+    <string name="dimension_mass">Tömeg</string>
+    <string name="dimension_velocity">Sebesség</string>
+    <string name="dimension_area">Terület</string>
+    <string name="dimension_currency">Pénznem</string>
+    <string name="dimension_data">Adat</string>
+    <string name="dimension_pressure">Nyomás</string>
+    <string name="dimension_energy">Energia</string>
+    <string name="dimension_frequency">Frekvencia</string>
+    <string name="dimension_temperature">Hőmérséklet</string>
+    <string name="dimension_bitrate">Bitsebesség</string>
+    <string name="dimension_volume">Térfogat</string>
+    <string name="dimension_time">Idő</string>
 </resources>
