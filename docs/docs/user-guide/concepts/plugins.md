@@ -17,7 +17,7 @@ or install them manually as APK files.
 ### Activation
 
 After the plugin has been installed, it needs to be activated in the launcher settings. To do this,
-go to <a href="https://kvaesitso.mm20.de/in-app?route=settings/plugins" rel="external">settings > plugins</a>, tap on the plugin you want to activate, and enable it. The plugin will
+go to settings > plugins, tap on the plugin you want to activate, and enable it. The plugin will
 show a permission dialog. Tap on "Allow" to give the launcher the necessary permission to access
 the plugin's data.
 
