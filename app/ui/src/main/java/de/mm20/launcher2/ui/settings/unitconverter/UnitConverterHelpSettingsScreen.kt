@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,8 +23,6 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.launcher.search.unitconverter.getDimensionIcon
 import de.mm20.launcher2.unitconverter.Dimension
-import de.mm20.launcher2.unitconverter.MeasureUnit
-import kotlinx.coroutines.flow.flow
 
 @Composable
 fun UnitConverterHelpSettingsScreen() {
@@ -80,21 +77,3 @@ private fun DimensionHeader(dimension: Dimension) {
     }
 }
 
-@Composable
-private fun UnitList(units: List<MeasureUnit>) {
-    val context = LocalContext.current
-    for (unit in units) {
-        Preference(
-            title = unit.formatName(context, 1.0),
-            controls = {
-                Box(
-                    modifier = Modifier.size(36.dp)
-                        .background(MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.shapes.extraSmall),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(unit.symbol, style = MaterialTheme.typography.labelSmall)
-                }
-            }
-        )
-    }
-}
