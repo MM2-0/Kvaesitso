@@ -83,16 +83,24 @@ class SettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        val newRoute = intent?.getStringExtra(EXTRA_ROUTE)
+        val newRoute = getStartRoute(intent)
         route = newRoute
 
         setContent {
             val navController = rememberNavController()
 
             LaunchedEffect(route) {
-                navController.navigate(route ?: "settings") {
-                    popUpTo("settings") {
-                        inclusive = true
+                try {
+                    navController.navigate(route ?: "settings") {
+                        popUpTo("settings") {
+                            inclusive = true
+                        }
+                    }
+                } catch (e: IllegalArgumentException) {
+                    navController.navigate("settings") {
+                        popUpTo("settings") {
+                            inclusive = true
+                        }
                     }
                 }
             }
@@ -288,8 +296,16 @@ class SettingsActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        val newRoute = intent.getStringExtra(EXTRA_ROUTE)
+        val newRoute = getStartRoute(intent)
         route = newRoute
+    }
+
+    private fun getStartRoute(intent: Intent): String? {
+        if (intent.data?.host == "kvaesitso.mm20.de") {
+            return intent.data?.getQueryParameter("route")
+        } else {
+            return intent.getStringExtra(EXTRA_ROUTE)
+        }
     }
 
     companion object {

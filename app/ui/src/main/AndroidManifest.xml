@@ -65,6 +65,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.mm20.launcher2.ui.launcher.LauncherActivity" />
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"/>
+                <data android:path="/in-app"/>
+                <data android:host="kvaesitso.mm20.de"/>
+            </intent-filter>
         </activity>
 
         <activity android:name=".launcher.sheets.BindAndConfigureAppWidgetActivity" />
