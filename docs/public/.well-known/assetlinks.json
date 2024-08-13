@@ -1,0 +1,39 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "de.mm20.launcher2.debug",
+      "sha256_cert_fingerprints": [
+        "7A:B9:4E:11:06:F7:CE:D0:60:B0:E9:7A:A7:E0:4C:B4:B0:32:3E:CE:53:A1:5C:C0:C4:EF:5C:54:3F:90:8F:11"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "de.mm20.launcher2.release",
+      "sha256_cert_fingerprints": [
+        "BF:65:BB:D6:17:99:73:97:80:0D:02:E0:AC:2E:45:CE:E1:53:15:15:18:54:5C:23:EF:66:B3:CB:2C:FD:F7:BC",
+        "85:19:29:66:B7:CF:C3:0A:27:08:84:50:66:26:7D:BD:31:2E:42:55:56:31:FB:71:9B:A5:0B:FD:92:31:79:C3"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "de.mm20.launcher2.nightly",
+      "sha256_cert_fingerprints": [
+        "4D:B6:F5:53:9D:9C:20:9E:25:6C:CE:30:18:35:9D:75:1B:B1:36:56:3C:35:BB:79:0F:A2:75:2B:1A:79:5C:58"
+      ]
+    }
+  }
+]
