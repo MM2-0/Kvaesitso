@@ -792,4 +792,10 @@
     <string name="calendar_widget_next_day">Volgende dag</string>
     <string name="calendar_widget_open_calendar">Kalender-app openen</string>
     <string name="calendar_widget_create_event">Nieuwe afspraak aanmaken</string>
+    <string name="preference_search_supportedunits">Ondersteunde eenheden
+\n(gebruik afkorting in zoekvak)</string>
+    <string name="profile_work_profile_action_lock">Werk-apps pauzeren</string>
+    <string name="profile_private_profile_action_unlock">Ontgrendelen</string>
+    <string name="profile_work_profile_state_locked">Werk-apps zijn onderbroken.</string>
+    <string name="hint_drag_and_drop_reorder">Houd items vast en sleep ze om ze opnieuw te rangschikken</string>
 </resources>
