@@ -71,10 +71,3 @@ internal data class AndroidCalendarEvent(
     }
 }
 
-data class CalendarList(
-    val id: String,
-    val name: String,
-    val owner: String?,
-    val color: Int,
-    val providerId: String,
-)

@@ -105,6 +105,7 @@ abstract class CalendarProvider(
             put(CalendarListColumns.Name, it.name)
             put(CalendarListColumns.Color, it.color)
             put(CalendarListColumns.AccountName, it.accountName)
+            put(CalendarListColumns.ContentTypes, it.contentTypes)
         }
     }
 }

@@ -1,5 +1,7 @@
 package de.mm20.launcher2.plugin.contracts
 
+import de.mm20.launcher2.search.calendar.CalendarListType
+
 abstract class CalendarPluginContract {
     object EventColumns : Columns() {
         /**
@@ -68,6 +70,7 @@ abstract class CalendarPluginContract {
         val Name = column<String>("name")
         val Color = column<Int>("color")
         val AccountName = column<String>("account_name")
+        val ContentTypes = column<List<CalendarListType>>("content_types")
     }
 
 
