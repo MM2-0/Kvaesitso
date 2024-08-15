@@ -785,7 +785,7 @@
         <item quantity="other">%1$s oznámení</item>
     </plurals>
     <string name="weather_widget_no_provider">Nebyl vybrán poskytovatel počasí nebo vybraný poskytovatel není dostupný</string>
-    <string name="apps_profile_private">Soukromý prostor</string>
+    <string name="apps_profile_private">Soukromé</string>
     <string name="action_more_actions">Další akce</string>
     <string name="action_clear">Vymazat</string>
     <string name="action_done">Hotovo</string>
@@ -801,4 +801,13 @@
     <string name="calendar_widget_create_event">Vytvořit novou událost</string>
     <string name="calendar_widget_open_calendar">Otevřít aplikaci kalendáře</string>
     <string name="plugin_type_calendar">Kalendář</string>
+    <string name="profile_work_profile_action_unlock">Zrušit pozastavení</string>
+    <string name="hint_drag_and_drop_reorder">Přeskládejte položky jejich podržením a přesunutím</string>
+    <string name="preference_search_supportedunits">Podporované jednotky</string>
+    <string name="app_label_locked_profile">Uzamčeno</string>
+    <string name="profile_work_profile_state_locked">Pracovní aplikace jsou pozastaveny.</string>
+    <string name="profile_work_profile_action_lock">Pozastavit pracovní aplikace</string>
+    <string name="profile_private_profile_state_locked">Soukromý prostor je uzamčen.</string>
+    <string name="profile_private_profile_action_unlock">Odemknout</string>
+    <string name="profile_private_profile_action_lock">Zamknout soukromý prostor</string>
 </resources>

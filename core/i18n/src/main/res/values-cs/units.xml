@@ -324,4 +324,17 @@
         <item quantity="few">decimetry</item>
         <item quantity="other">decimetrů</item>
     </plurals>
+    <string name="dimension_length">Délka</string>
+    <string name="dimension_mass">Hmotnost</string>
+    <string name="dimension_velocity">Rychlost</string>
+    <string name="dimension_volume">Objem</string>
+    <string name="dimension_area">Oblast</string>
+    <string name="dimension_currency">Měna</string>
+    <string name="dimension_data">Data</string>
+    <string name="dimension_bitrate">Datvý tok</string>
+    <string name="dimension_pressure">Tlak</string>
+    <string name="dimension_energy">Energie</string>
+    <string name="dimension_frequency">Frekvence</string>
+    <string name="dimension_temperature">Teplota</string>
+    <string name="dimension_time">Čas</string>
 </resources>
