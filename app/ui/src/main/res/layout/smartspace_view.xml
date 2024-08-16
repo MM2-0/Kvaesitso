@@ -1,0 +1,22 @@
+<com.kieronquinn.app.smartspacer.sdk.client.views.BcSmartspaceView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bc_smartspace_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/smartspace_card_pager"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_gravity="center" />
+
+    <com.kieronquinn.app.smartspacer.sdk.client.views.PageIndicator
+        android:id="@+id/smartspace_page_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left|center_vertical|center_horizontal|center|start"
+        android:importantForAccessibility="no"
+        android:visibility="visible" />
+
+</com.kieronquinn.app.smartspacer.sdk.client.views.BcSmartspaceView>

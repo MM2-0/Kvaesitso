@@ -114,6 +114,8 @@ dependencies {
 
     implementation(libs.emoji4j)
 
+    implementation(libs.sdk.client)
+
     implementation(project(":libs:material-color-utilities"))
 
     implementation(project(":core:base"))
