@@ -806,4 +806,8 @@
     <string name="task_due_date">Fällig am %1$s</string>
     <string name="task_due_today">Heute fällig</string>
     <string name="preference_calendar_hide_completed">Abgeschlossene Aufgaben ausblenden</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s Liste ausgewählt</item>
+        <item quantity="other">%1$s Listen ausgewählt</item>
+    </plurals>
 </resources>
