@@ -407,7 +407,7 @@ private fun CalendarEvent.getSummary(context: Context): String {
                 return context.getString(R.string.task_due_today)
             }
             return context.getString(
-                R.string.task_due_date, DateUtils.formatDateTime(
+                R.string.task_due_time, DateUtils.formatDateTime(
                     context,
                     endTime,
                     DateUtils.FORMAT_SHOW_TIME
@@ -424,7 +424,7 @@ private fun CalendarEvent.getSummary(context: Context): String {
             )
         }
         return context.getString(
-            R.string.task_due_time, DateUtils.formatDateTime(
+            R.string.task_due_date, DateUtils.formatDateTime(
                 context,
                 endTime,
                 DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
