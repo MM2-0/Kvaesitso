@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -125,7 +126,13 @@ fun CalendarSearchSettingsScreen() {
                     title = plugin.plugin.label,
                     enabled = state is PluginState.Ready,
                     summary = (state as? PluginState.SetupRequired)?.message
-                        ?: if (selectedCalendars != null && calendarLists != null) "$selectedCalendars lists selected"
+                        ?: if (selectedCalendars != null && calendarLists != null) {
+                            pluralStringResource(
+                                R.plurals.calendar_search_enabled_lists,
+                                selectedCalendars,
+                                selectedCalendars
+                            )
+                        }
                         else (state as? PluginState.Ready)?.text ?: plugin.plugin.description,
                     switchValue = enabledProviders.contains(plugin.plugin.authority) && state is PluginState.Ready,
                     onSwitchChanged = {

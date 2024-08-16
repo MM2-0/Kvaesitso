@@ -998,4 +998,8 @@
     <string name="profile_private_profile_action_unlock">Unlock</string>
     <string name="profile_private_profile_action_lock">Lock private space</string>
     <string name="hint_drag_and_drop_reorder">Hold and drag items to rearrange them</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s list selected</item>
+        <item quantity="other">%1$s lists selected</item>
+    </plurals>
 </resources>

@@ -32,7 +32,7 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
         versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2024072400
-        versionName = "1.32.2"
+        versionName = "1.33.0"
         signingConfig = signingConfigs.getByName("debug")
     }
 

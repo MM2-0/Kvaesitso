@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -33,12 +31,11 @@ import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material.icons.rounded.Verified
-import androidx.compose.material3.AlertDialogDefaults
-import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -55,6 +52,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -471,17 +469,31 @@ fun PluginSettingsScreen(pluginId: String) {
                                 }
                                 val calendarLists by remember(plugin.state, plugin.plugin) {
                                     viewModel.getCalendarLists(plugin.plugin)
-                                }.collectAsStateWithLifecycle(null, minActiveState = Lifecycle.State.RESUMED)
+                                }.collectAsStateWithLifecycle(
+                                    null,
+                                    minActiveState = Lifecycle.State.RESUMED
+                                )
                                 var showDialog by remember { mutableStateOf(false) }
                                 val selectedCalendars = remember(excludedCalendars, calendarLists) {
-                                    calendarLists?.size?.minus(excludedCalendars.count { it.startsWith(plugin.plugin.authority) })
+                                    calendarLists?.size?.minus(excludedCalendars.count {
+                                        it.startsWith(
+                                            plugin.plugin.authority
+                                        )
+                                    })
                                 }
                                 PreferenceWithSwitch(
                                     title = plugin.plugin.label,
                                     enabled = enabledCalendarSearchPlugins != null && state is PluginState.Ready,
                                     summary = (state as? PluginState.SetupRequired)?.message
-                                        ?: if (selectedCalendars != null && calendarLists != null) "$selectedCalendars lists selected"
-                                        else (state as? PluginState.Ready)?.text ?: plugin.plugin.description,
+                                        ?: if (selectedCalendars != null && calendarLists != null) {
+                                            pluralStringResource(
+                                                R.plurals.calendar_search_enabled_lists,
+                                                selectedCalendars,
+                                                selectedCalendars
+                                            )
+                                        }
+                                        else (state as? PluginState.Ready)?.text
+                                            ?: plugin.plugin.description,
                                     switchValue = enabledCalendarSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
                                     onSwitchChanged = {
                                         viewModel.setCalendarSearchPluginEnabled(
@@ -495,40 +507,33 @@ fun PluginSettingsScreen(pluginId: String) {
                                     }
                                 )
                                 if (showDialog && calendarLists?.isNotEmpty() == true) {
-                                    BasicAlertDialog(
+                                    ModalBottomSheet(
                                         onDismissRequest = {
                                             showDialog = false
                                         },
                                     ) {
-                                        Surface(
-                                            modifier = Modifier.wrapContentWidth()
-                                                .wrapContentHeight(),
-                                            shape = MaterialTheme.shapes.large,
-                                            tonalElevation = AlertDialogDefaults.TonalElevation
-                                        ) {
-                                            LazyColumn {
-                                                items(calendarLists!!) {
-                                                    CheckboxPreference(
-                                                        title = it.name,
-                                                        summary = it.owner,
-                                                        iconPadding = false,
-                                                        value = it.id !in excludedCalendars,
-                                                        onValueChanged = { value ->
-                                                            viewModel.setCalendarExcluded(it.id, !value)
-                                                        },
+                                        LazyColumn {
+                                            items(calendarLists!!) {
+                                                CheckboxPreference(
+                                                    title = it.name,
+                                                    summary = it.owner,
+                                                    iconPadding = false,
+                                                    value = it.id !in excludedCalendars,
+                                                    onValueChanged = { value ->
+                                                        viewModel.setCalendarExcluded(it.id, !value)
+                                                    },
 
-                                                        checkboxColors = CheckboxDefaults.colors(
-                                                            checkedColor = if (it.color == 0) MaterialTheme.colorScheme.primary
-                                                            else Color(
-                                                                it.color.atTone(if (LocalDarkTheme.current) 80 else 40)
-                                                            ),
-                                                            checkmarkColor = if (it.color == 0) MaterialTheme.colorScheme.onPrimary
-                                                            else Color(
-                                                                it.color.atTone(if (LocalDarkTheme.current) 20 else 100)
-                                                            )
+                                                    checkboxColors = CheckboxDefaults.colors(
+                                                        checkedColor = if (it.color == 0) MaterialTheme.colorScheme.primary
+                                                        else Color(
+                                                            it.color.atTone(if (LocalDarkTheme.current) 80 else 40)
+                                                        ),
+                                                        checkmarkColor = if (it.color == 0) MaterialTheme.colorScheme.onPrimary
+                                                        else Color(
+                                                            it.color.atTone(if (LocalDarkTheme.current) 20 else 100)
                                                         )
                                                     )
-                                                }
+                                                )
                                             }
                                         }
                                     }
