@@ -802,4 +802,8 @@
     <string name="hint_drag_and_drop_reorder">Zum Anordnen Elemente halten und ziehen</string>
     <string name="preference_search_supportedunits">Unterstützte Einheiten</string>
     <string name="app_label_locked_profile">Gesperrt</string>
+    <string name="task_due_time">Fällig um %1$s</string>
+    <string name="task_due_date">Fällig am %1$s</string>
+    <string name="task_due_today">Heute fällig</string>
+    <string name="preference_calendar_hide_completed">Abgeschlossene Aufgaben ausblenden</string>
 </resources>
