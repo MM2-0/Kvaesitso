@@ -404,32 +404,32 @@ private fun CalendarEvent.getSummary(context: Context): String {
         val isToday = DateUtils.isToday(endTime)
         if (isToday) {
             if (allDay) {
-                return "Due today"
+                return context.getString(R.string.task_due_today)
             }
-            return "Due ${
-                DateUtils.formatDateTime(
+            return context.getString(
+                R.string.task_due_date, DateUtils.formatDateTime(
                     context,
                     endTime,
                     DateUtils.FORMAT_SHOW_TIME
                 )
-            }"
+            )
         }
         if (allDay) {
-            return "Due ${
-                DateUtils.formatDateTime(
+            return context.getString(
+                R.string.task_due_date, DateUtils.formatDateTime(
                     context,
                     endTime,
                     DateUtils.FORMAT_SHOW_DATE
                 )
-            }"
+            )
         }
-        return "Due ${
-            DateUtils.formatDateTime(
+        return context.getString(
+            R.string.task_due_time, DateUtils.formatDateTime(
                 context,
                 endTime,
                 DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
             )
-        }"
+        )
     }
 
     val isToday =

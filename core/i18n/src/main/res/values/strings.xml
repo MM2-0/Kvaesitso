@@ -324,6 +324,9 @@
     </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">all-day</string>
+    <string name="task_due_time">Due at %1$s</string>
+    <string name="task_due_date">Due on %1$s</string>
+    <string name="task_due_today">Due today</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s is playing media</string>
     <string name="music_widget_no_data">No media has been played yet</string>
