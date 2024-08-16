@@ -208,7 +208,8 @@ fun CalendarWidget(
                             ),
                             onClick = {
                                 viewModel.showAllEvents()
-                            }
+                            },
+                            modifier = Modifier.padding(top = 8.dp)
                         )
                     }
                     if (nextEvents.isNotEmpty()) {
@@ -263,10 +264,11 @@ fun CalendarWidget(
 @Composable
 private fun Info(
     text: String,
+    modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.small)
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.small)

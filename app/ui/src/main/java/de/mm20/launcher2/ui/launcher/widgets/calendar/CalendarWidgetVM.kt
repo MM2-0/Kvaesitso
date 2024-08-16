@@ -176,7 +176,10 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
                     maxVisibility = VisibilityLevel.SearchOnly,
                     limit = 9999,
                 ).collectLatest { hidden ->
-                    upcomingEvents = events.filter { !hidden.contains(it.key) }.sortedBy { it.startTime ?: it.endTime }
+                    upcomingEvents = events
+                        .filter {
+                            !hidden.contains(it.key) && !(!config.completedTasks && it.isCompleted == true)
+                        }.sortedBy { it.startTime ?: it.endTime }
                 }
             }
 

@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
@@ -121,7 +122,13 @@ fun CalendarItem(
                                         this@AnimatedContent
                                     ),
                                 text = calendar.labelOverride ?: calendar.label,
-                                style = MaterialTheme.typography.titleMedium
+                                style = MaterialTheme.typography.titleMedium,
+                                maxLines = 1,
+                                textDecoration = if (calendar.isCompleted == true) {
+                                    TextDecoration.LineThrough
+                                } else {
+                                    TextDecoration.None
+                                }
                             )
                             if (calendar.calendarName != null) {
                                 Text(
@@ -300,7 +307,13 @@ fun CalendarItem(
                                 this@AnimatedContent
                             ),
                             text = calendar.labelOverride ?: calendar.label,
-                            style = MaterialTheme.typography.titleSmall
+                            style = MaterialTheme.typography.titleSmall,
+                            maxLines = 1,
+                            textDecoration = if (calendar.isCompleted == true) {
+                                TextDecoration.LineThrough
+                            } else {
+                                TextDecoration.None
+                            }
                         )
                         Text(
                             modifier = Modifier

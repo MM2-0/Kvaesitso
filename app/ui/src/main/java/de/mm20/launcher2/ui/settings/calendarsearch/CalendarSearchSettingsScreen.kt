@@ -1,20 +1,19 @@
 package de.mm20.launcher2.ui.settings.calendarsearch
 
 import android.app.PendingIntent
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CalendarToday
+import androidx.compose.material.icons.rounded.Checklist
 import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material3.AlertDialogDefaults
-import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,14 +34,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
+import de.mm20.launcher2.search.calendar.CalendarListType
 import de.mm20.launcher2.themes.atTone
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
-import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 
 @Composable
@@ -76,7 +76,7 @@ fun CalendarSearchSettingsScreen() {
             val selectedCalendars = remember(excludedCalendars, calendarLists) {
                 calendarLists?.count { it.providerId == "local" }
                     ?.minus(excludedCalendars.count {
-                        it.startsWith("local")
+                        it.startsWith("local:")
                     })
             }
             PreferenceWithSwitch(
@@ -117,7 +117,7 @@ fun CalendarSearchSettingsScreen() {
                     calendarLists?.count { it.providerId == plugin.plugin.authority }
                         ?.minus(excludedCalendars.count {
                             it.startsWith(
-                                plugin.plugin.authority
+                                "${plugin.plugin.authority}:"
                             )
                         })
                 }
@@ -126,7 +126,7 @@ fun CalendarSearchSettingsScreen() {
                     enabled = state is PluginState.Ready,
                     summary = (state as? PluginState.SetupRequired)?.message
                         ?: if (selectedCalendars != null && calendarLists != null) "$selectedCalendars lists selected"
-                                else (state as? PluginState.Ready)?.text ?: plugin.plugin.description,
+                        else (state as? PluginState.Ready)?.text ?: plugin.plugin.description,
                     switchValue = enabledProviders.contains(plugin.plugin.authority) && state is PluginState.Ready,
                     onSwitchChanged = {
                         viewModel.setProviderEnabled(plugin.plugin.authority, it)
@@ -139,6 +139,8 @@ fun CalendarSearchSettingsScreen() {
         }
     }
 
+    Log.d("MM20", "${calendarLists.toString()}")
+
     val dialogCalendarLists by remember {
         derivedStateOf {
             if (showDialogForProvider == null) null
@@ -147,39 +149,41 @@ fun CalendarSearchSettingsScreen() {
     }
 
     if (showDialogForProvider != null && dialogCalendarLists != null) {
-        BasicAlertDialog(
+        ModalBottomSheet(
             onDismissRequest = {
                 showDialogForProvider = null
             },
         ) {
-            Surface(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .wrapContentHeight(),
-                shape = MaterialTheme.shapes.large,
-                tonalElevation = AlertDialogDefaults.TonalElevation
-            ) {
-                LazyColumn {
-                    items(dialogCalendarLists ?: emptyList()) {
-                        CheckboxPreference(
-                            title = it.name,
-                            summary = it.owner,
-                            iconPadding = false,
-                            value = it.id !in excludedCalendars,
-                            onValueChanged = { value ->
-                                viewModel.setCalendarExcluded(it.id, !value)
-                            },
-                            checkboxColors = CheckboxDefaults.colors(
-                                checkedColor = if (it.color == 0) MaterialTheme.colorScheme.primary
-                                else Color(
-                                    it.color.atTone(if (LocalDarkTheme.current) 80 else 40)
-                                ),
-                                checkmarkColor = if (it.color == 0) MaterialTheme.colorScheme.onPrimary
-                                else Color(
-                                    it.color.atTone(if (LocalDarkTheme.current) 20 else 100)
+            val groups = remember(dialogCalendarLists) {
+                dialogCalendarLists!!.groupBy { it.owner }.entries.sortedBy { it.key }
+            }
+
+            LazyColumn {
+                items(groups) {
+                    PreferenceCategory(
+                        title = it.key,
+                        iconPadding = false,
+                    ) {
+                        for (list in it.value) {
+                            CheckboxPreference(
+                                title = list.name,
+                                iconPadding = false,
+                                value = list.id !in excludedCalendars,
+                                onValueChanged = { value ->
+                                    viewModel.setCalendarExcluded(list.id, !value)
+                                },
+                                checkboxColors = CheckboxDefaults.colors(
+                                    checkedColor = if (list.color == 0) MaterialTheme.colorScheme.primary
+                                    else Color(
+                                        list.color.atTone(if (LocalDarkTheme.current) 80 else 40)
+                                    ),
+                                    checkmarkColor = if (list.color == 0) MaterialTheme.colorScheme.onPrimary
+                                    else Color(
+                                        list.color.atTone(if (LocalDarkTheme.current) 20 else 100)
+                                    )
                                 )
                             )
-                        )
+                        }
                     }
                 }
             }

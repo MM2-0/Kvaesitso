@@ -6,6 +6,7 @@ import android.provider.CalendarContract
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.calendar.CalendarListType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Calendar
@@ -201,6 +202,7 @@ class AndroidCalendarProvider(
                             name = cursor.getStringOrNull(5) ?: cursor.getStringOrNull(1) ?: "",
                             owner = cursor.getStringOrNull(2),
                             color = cursor.getInt(3),
+                            types = listOf(CalendarListType.Calendar),
                             providerId = "local",
                         )
                     )
