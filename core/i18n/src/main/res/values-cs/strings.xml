@@ -810,4 +810,13 @@
     <string name="profile_private_profile_state_locked">Soukromý prostor je uzamčen.</string>
     <string name="profile_private_profile_action_unlock">Odemknout</string>
     <string name="profile_private_profile_action_lock">Zamknout soukromý prostor</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">Vybrán %1$s seznam</item>
+        <item quantity="few">Vybrány %1$s seznamy</item>
+        <item quantity="other">Vybráno %1$s seznamů</item>
+    </plurals>
+    <string name="task_due_time">Dokončit do %1$s</string>
+    <string name="task_due_date">Dokončit do %1$s</string>
+    <string name="task_due_today">Dokončit dnes</string>
+    <string name="preference_calendar_hide_completed">Skrýt dokončené úkoly</string>
 </resources>
