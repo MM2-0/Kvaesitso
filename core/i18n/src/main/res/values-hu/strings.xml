@@ -802,4 +802,12 @@
     <string name="hint_drag_and_drop_reorder">Tartsa lenyomva és húzza az elemeket az átrendezésükhöz</string>
     <string name="preference_search_supportedunits">Támogatott mértékegységek</string>
     <string name="app_label_locked_profile">Lezárva</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s lista kiválasztva</item>
+        <item quantity="other">%1$s lista kiválasztva</item>
+    </plurals>
+    <string name="task_due_time">Ekkor esedékes: %1$s</string>
+    <string name="task_due_date">Ekkor esedékes: %1$s</string>
+    <string name="task_due_today">Ekkor esedékes: Ma</string>
+    <string name="preference_calendar_hide_completed">Befejezett események elrejtése</string>
 </resources>
