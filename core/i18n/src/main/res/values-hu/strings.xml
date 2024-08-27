@@ -208,7 +208,7 @@
     <string name="missing_permission_notification_badges">Az értesítési jelvények megjelenítéséhez értesítési hozzáférés szükséges</string>
     <string name="preference_category_licenses">Nyílt forráskódú licencek</string>
     <string name="preference_icon_shape_hexagon">Hatszög</string>
-    <string name="preference_category_searchbar">Keresés sáv</string>
+    <string name="preference_category_searchbar">Keresősáv</string>
     <string name="missing_permission_file_search_settings">A helyi fájlok kereséséhez, tárhely engedélyre van szükség</string>
     <string name="widget_config_calendar_missing_calendars_hint">Nem találja a naptárakat?</string>
     <string name="missing_permission_file_search_settings_android10">A helyi fájlok kereséséhez, összes fájl kezelése engedélyre van szükség</string>
@@ -229,7 +229,7 @@
     <string name="weather_condition_rainshowersandthunder">Eső záporok és mennydörgés</string>
     <string name="weather_condition_heavyrainshowers">Heves eső záporok</string>
     <string name="preference_version">Verzió</string>
-    <string name="preference_category_system_bars">Rendszer sávok</string>
+    <string name="preference_category_system_bars">Rendszersávok</string>
     <string name="preference_theme">Színséma</string>
     <string name="preference_status_bar_icons">Állapotsori ikonok</string>
     <string name="preference_category_links">Hivatkozások</string>
