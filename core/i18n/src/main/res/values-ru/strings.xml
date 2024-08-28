@@ -794,4 +794,27 @@
     <string name="preference_search_bar_separate_work_profile">Отделить рабочие приложения</string>
     <string name="poi_category_car_wash">Мойка</string>
     <string name="apps_profile_private">Private space</string>
+    <string name="music_widget_previous_track">Предыдущий трек</string>
+    <string name="calendar_widget_next_day">Следующий день</string>
+    <string name="calendar_widget_create_event">Создать новое событие</string>
+    <string name="action_done">Выполнено</string>
+    <string name="action_more_actions">Больше действий</string>
+    <string name="action_clear">Очистить поле</string>
+    <string name="preference_search_supportedunits">Поддерживаемые единицы</string>
+    <string name="menu_show_filters">Показать фильтры</string>
+    <string name="menu_hide_filters">Скрыть фильтры</string>
+    <string name="music_widget_next_track">Следующий трек</string>
+    <string name="music_widget_open_player">Открыть плеер</string>
+    <string name="plugin_type_calendar">Календарь</string>
+    <string name="profile_work_profile_state_locked">Рабочие приложения были приостановлены.</string>
+    <string name="profile_work_profile_action_lock">Остановить рабочие приложения</string>
+    <string name="task_due_time">Выполнить до %1$s</string>
+    <string name="task_due_date">Выполнить до %1$s</string>
+    <string name="task_due_today">Выполнить до конца сегодняшнего дня</string>
+    <string name="preference_calendar_hide_completed">Скрыть выполненные задачи</string>
+    <string name="music_widget_play">Воспроизвести</string>
+    <string name="music_widget_pause">Пауза</string>
+    <string name="calendar_widget_previous_day">Предыдущий день</string>
+    <string name="app_label_locked_profile">Заблокировано</string>
+    <string name="calendar_widget_open_calendar">Открыть приложение календаря</string>
 </resources>
