@@ -199,7 +199,7 @@
     <string name="weather_condition_hail">Jégeső</string>
     <string name="weather_condition_snowshowersandthunder">Hó záporok és mennydörgés</string>
     <string name="weather_condition_lightssleetshowersandthunder">Enyhe havas eső záporok és mennydörgés</string>
-    <string name="preference_screen_colors">Szín összeállítás</string>
+    <string name="preference_screen_colors">Színösszeállítás</string>
     <string name="weather_condition_wind">Szél</string>
     <string name="weather_condition_snowshowers">Hó záporok</string>
     <string name="weather_condition_heavyrainandthunder">Heves eső és mennydörgés</string>
@@ -269,11 +269,11 @@
     <string name="preference_debug_cleanup_database">Az adatbázis tisztítása</string>
     <string name="preference_category_icons">Ikonok</string>
     <string name="preference_cards">Kártyák</string>
-    <string name="preference_cards_corner_radius">A sarok sugara</string>
+    <string name="preference_cards_corner_radius">Sarok sugara</string>
     <string name="weather_no_data">Az időjárás adatok nem állnak rendelkezésre.</string>
     <string name="missing_permission_auto_location">A helyszín automatikus meghatározásához helyhozzáférés szükséges</string>
     <string name="missing_permission_contact_search_settings">A névjegyek kereséséhez, névjegy engedélyre van szükség</string>
-    <string name="preference_cards_stroke_width">A keret szélessége</string>
+    <string name="preference_cards_stroke_width">Keret szélessége</string>
     <string name="preference_cards_opacity">Átlátszatlanság</string>
     <string name="preference_cards_shape">Alakzat</string>
     <string name="preference_cards_shape_rounded">Kerekített</string>
@@ -551,7 +551,7 @@
     <string name="preference_screen_homescreen_summary">Óra, keresősáv, háttérkép, rendszersávok</string>
     <string name="preference_category_accounts">Fiókok</string>
     <string name="preference_weather_integration">Időjárás</string>
-    <string name="preference_media_integration">Média vezérlés</string>
+    <string name="preference_media_integration">Médiavezérlés</string>
     <string name="no_account_nextcloud">Még nem kapcsolódik egyetlen Nextcloud fiókhoz sem</string>
     <string name="restore_invalid_file">A kiválasztott fájl nem tűnik biztonsági mentésnek. Biztos, hogy a megfelelő fájlt választottad ki?</string>
     <string name="restore_incompatible_file">Ez a biztonsági mentés a(z) %1$s egy másik verziójával készült, és ezzel a verzióval nem állítható vissza.</string>
