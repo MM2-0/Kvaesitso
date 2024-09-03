@@ -129,7 +129,7 @@ google-oauth2 = { group = "com.google.apis", name = "google-api-services-oauth2"
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidxcompose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
-tinypinyin = { group = "com.github.promeg", name = "tinypinyin", version = "2.0.2" }
+tinypinyin = { group = "com.github.promeg", name = "tinypinyin", version = "2.0.3" }
 emoji4j = { group = "com.sigpwned", name = "emoji4j-core", version = "15.0.1" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
