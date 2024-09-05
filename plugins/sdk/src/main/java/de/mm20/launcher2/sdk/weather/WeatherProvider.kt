@@ -132,7 +132,7 @@ abstract class WeatherProvider(
             return getWeatherData(lat, lon, lang)
         }
         if (id != null && locationName != null) {
-            return getWeatherData(WeatherLocation.Id(id, locationName), lang)
+            return getWeatherData(WeatherLocation.Id(locationName, id), lang)
         }
         if (locationName != null && lat != null && lon != null) {
             return getWeatherData(WeatherLocation.LatLon(locationName, lat, lon), lang)
