@@ -13,15 +13,6 @@ current weather + forecast).
 1. Create a new API key
 1. Uncomment the resource `openweather_key` in config.xml and paste your key as value.
 
-#### HERE
-
-HERE offers 250 000 free API calls per month. Each weather update uses one call.
-
-1. Sign up at the [HERE developer portal](https://developer.here.com/)
-1. Create a new project.
-1. Go to project details and under JavaScript, create a new API key.
-1. Uncomment the resource `here_key` in config.xml and paste your key as value.
-
 #### Meteorologisk institutt[^1]
 
 The Norwegian Meteorological Institute offers a free weather API. It has a rate limit of 20
