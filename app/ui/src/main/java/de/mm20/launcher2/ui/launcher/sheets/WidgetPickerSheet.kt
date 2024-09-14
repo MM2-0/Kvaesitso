@@ -387,7 +387,7 @@ fun WidgetPickerSheet(
                                 viewModel.toggleGroup(group.packageName)
                             }
                             .padding(horizontal = 16.dp, vertical = 12.dp)
-                            .animateItemPlacement(),
+                            .animateItem(),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -417,7 +417,7 @@ fun WidgetPickerSheet(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp, vertical = 4.dp)
-                                .animateItemPlacement(),
+                                .animateItem(),
                             onClick = {
                                 bindAppWidgetStarter.launch(it)
                             }) {

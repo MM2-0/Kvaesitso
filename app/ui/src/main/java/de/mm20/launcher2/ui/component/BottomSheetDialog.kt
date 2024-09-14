@@ -149,7 +149,7 @@ fun BottomSheetDialog(
 
             override suspend fun onPreFling(available: Velocity): Velocity {
                 val toFling = Offset(available.x, available.y).toFloat()
-                return if (toFling < 0 && draggableState.offset > draggableState.anchors.minAnchor()) {
+                return if (toFling < 0 && draggableState.offset > draggableState.anchors.minPosition()) {
                     draggableState.settle(velocity = toFling)
                     // since we go to the anchor with tween settling, consume all for the best UX
                     available
