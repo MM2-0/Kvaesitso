@@ -310,4 +310,10 @@
     <string name="preference_icon_shape_hexagon">Шасцівугольнік</string>
     <string name="preference_cards_shape">Фігура</string>
     <string name="preference_cards_shape_cut">Абрэзаная</string>
+    <string name="preference_category_searchbar">Поле пошуку</string>
+    <string name="preference_screen_integrations">Інтэграцыі</string>
+    <string name="preference_screen_plugins">Плагіны</string>
+    <string name="preference_screen_plugins_summary">Кіраванне ўсталяванымі пашырэннямі</string>
+    <string name="no_plugins_installed">Плагінаў не ўсталявана</string>
+    <string name="preference_theme_system">Як у сістэме</string>
 </resources>
