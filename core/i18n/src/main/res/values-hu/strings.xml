@@ -764,8 +764,8 @@
         <item quantity="other">%1$s telefonszám</item>
     </plurals>
     <plurals name="contact_email_addresses">
-        <item quantity="one">%1$s e-mail cím</item>
-        <item quantity="other">%1$s e-mail cím</item>
+        <item quantity="one">%1$s E-mail-cím</item>
+        <item quantity="other">%1$s E-mail-cím</item>
     </plurals>
     <plurals name="contact_postal_addresses">
         <item quantity="one">%1$s irányítószám</item>
