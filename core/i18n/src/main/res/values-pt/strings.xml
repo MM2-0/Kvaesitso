@@ -749,4 +749,57 @@
     <string name="poi_category_soup_restaurant">Restaurante de sopas</string>
     <string name="poi_category_brunch_restaurant">Restaurante de brunch</string>
     <string name="poi_category_car_wash">Lavagem de carros</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s lista selecionada</item>
+        <item quantity="many">%1$s listas selecionadas</item>
+        <item quantity="other">%1$s listas selecionadas</item>
+    </plurals>
+    <string name="customize_item_label">Texto</string>
+    <string name="contact_info_home">Casa</string>
+    <string name="hint_drag_and_drop_reorder">Prima e arraste os itens para os organizar</string>
+    <string name="contact_info_mobile">Telemóvel</string>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s endereço postal</item>
+        <item quantity="many">%1$s endereços postais</item>
+        <item quantity="other">%1$s endereços postais</item>
+    </plurals>
+    <string name="weather_widget_no_provider">Não escolheu o serviço de meteorologia ou o serviço está indisponível</string>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s notificação</item>
+        <item quantity="many">%1$s notificações</item>
+        <item quantity="other">%1$s notificações</item>
+    </plurals>
+    <string name="preference_search_locations_radius_large_radius_warning">Um grande raio de pesquisa pode afetar o desempenho da pesquisa.</string>
+    <string name="customize_item_tags">Etiquetas</string>
+    <string name="customize_item_visibility">Mostrar em</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s número de telefone</item>
+        <item quantity="many">%1$s números de telefone</item>
+        <item quantity="other">%1$s números de telefone</item>
+    </plurals>
+    <string name="music_widget_previous_track">Título anterior</string>
+    <string name="music_widget_pause">Pausa</string>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s endereço de e-mail</item>
+        <item quantity="many">%1$s endereços de e-mail</item>
+        <item quantity="other">%1$s endereços de e-mail</item>
+    </plurals>
+    <string name="item_visibility_app_default">Grelha de aplicações e pesquisas</string>
+    <string name="item_visibility_calendar_default">Widget de calendário e pesquisas</string>
+    <string name="item_visibility_search_only">Pesquisas</string>
+    <string name="item_visibility_hidden">Nunca</string>
+    <string name="contact_info_work">Trabalho</string>
+    <string name="music_widget_next_track">Título seguinte</string>
+    <string name="music_widget_play">Reproduzir</string>
+    <string name="music_widget_open_player">Abrir reprodutor</string>
+    <string name="calendar_widget_previous_day">Dia anterior</string>
+    <string name="calendar_widget_next_day">Dia seguinte</string>
+    <string name="calendar_widget_create_event">Criar evento</string>
+    <string name="calendar_widget_open_calendar">Abrir calendário</string>
+    <string name="profile_work_profile_state_locked">Aplicações profissionais em pausa</string>
+    <string name="profile_work_profile_action_unlock">Cancelar pausa</string>
+    <string name="profile_work_profile_action_lock">Pausa nas aplicações profissionais</string>
+    <string name="profile_private_profile_state_locked">O espaço privado está bloqueado.</string>
+    <string name="profile_private_profile_action_unlock">Desbloquear</string>
+    <string name="profile_private_profile_action_lock">Bloquear espaço privado</string>
 </resources>
