@@ -316,4 +316,17 @@
     <string name="preference_screen_plugins_summary">Кіраванне ўсталяванымі пашырэннямі</string>
     <string name="no_plugins_installed">Плагінаў не ўсталявана</string>
     <string name="preference_theme_system">Як у сістэме</string>
+    <string name="preference_themed_icons">Значкі з тэмай</string>
+    <string name="preference_themed_icons_summary">Прызначыць значкам колеравую схему праграмы</string>
+    <string name="preference_force_themed_icons">Прымусовыя значкі з тэмай</string>
+    <string name="preference_system_bar_icons_auto">Аўтаматычна</string>
+    <string name="preference_system_bar_icons_light">Светлыя</string>
+    <string name="preference_system_bar_icons_dark">Цёмныя</string>
+    <string name="preference_hide_status_bar">Схаваць панэль статусу</string>
+    <string name="preference_icon_pack_summary_empty">Пакетаў значкоў не ўсталявана</string>
+    <string name="preference_force_themed_icons_summary">Прызначыць тэму праграмы ўсім значкам, нават тым, якія не прдтрымліваюцца (не рэкамендуецца)</string>
+    <string name="preference_icon_pack">Пакеты значкоў</string>
+    <string name="preference_category_animations">Анімацыі</string>
+    <string name="preference_charging_animation_summary">Прайгрываць анімацыю пузыркоў, калі прылада зараджаецца</string>
+    <string name="preference_charging_animation">Анімацыя зарадкі</string>
 </resources>
