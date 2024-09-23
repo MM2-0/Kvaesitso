@@ -148,7 +148,7 @@
     <string name="calendar_event_allday">todo o dia</string>
     <string name="music_widget_default_title">%1$s está a reproduzir</string>
     <string name="music_widget_no_data">Ainda nada foi reproduzido</string>
-    <string name="weather_condition_lightrainshowersandthunder">Aguaceiros e trovoada</string>
+    <string name="weather_condition_lightrainshowersandthunder">Aguaceiros ligeiros e trovoada</string>
     <string name="weather_condition_sleetshowers"/>
     <string name="weather_condition_heavysleet"/>
     <string name="weather_condition_lightrain">Chuva ligeira</string>
@@ -177,7 +177,7 @@
     <string name="disclaimer_currency_converter">As taxas de câmbio são publicadas diariamente pelo Banco Central Europeu. Todas as informações são dadas \"as is\" e sem qualquer garantia. Não assumimos a responsabilidade pela veracidade da informação.
 \n
 \nAtualizadas em: %1$s</string>
-    <string name="weather_condition_heavyrain">Chuva forte</string>
+    <string name="weather_condition_heavyrain">Chuva intensa</string>
     <string name="weather_condition_rainshowers">Aguaceiros</string>
     <string name="weather_condition_heavyrainandthunder">Chuva intensa e trovoada</string>
     <string name="owncloud_username_empty">Nome de utilizador não pode estar vazio</string>
@@ -253,7 +253,7 @@
     <string name="preference_cards_opacity">Opacidade</string>
     <string name="preference_cards_shape">Forma</string>
     <string name="preference_cards_shape_rounded">Arredondado</string>
-    <string name="preference_cards_shape_cut">Cortar</string>
+    <string name="preference_cards_shape_cut">Recortado</string>
     <string name="preference_icon_shape">Forma</string>
     <string name="preference_icon_shape_platform">Definições do sistema</string>
     <string name="preference_icon_shape_square">Quadrado</string>
@@ -300,7 +300,7 @@
     <string name="preference_force_themed_icons">Impor ícones coloridos</string>
     <string name="preference_charging_animation_summary">Mostrar bolha quando o dispositivo está a ser carregado</string>
     <string name="missing_permission_calendar_widget">Conceda a permissão de acesso ao calendário para mostrar os eventos e lembretes.</string>
-    <string name="weather_condition_lightsnowshowers">Nevascas leves</string>
+    <string name="weather_condition_lightsnowshowers"></string>
     <string name="location_open">Aberto</string>
     <string name="location_closed">Fechado</string>
     <string name="menu_map">Ver no mapa</string>
@@ -344,7 +344,7 @@
     <string name="missing_permission_files_search">Conceda a permissão ao armazenamento para pesquisar fotos, ficheiros e documentos.</string>
     <string name="missing_permission_location_search">Conceda a permissão à localização para pesquisar nas redondezas.</string>
     <string name="missing_permission_appshortcuts_search">Defina %1$s como a aplicação padrão para pesquisar atalhos de aplicações.</string>
-    <string name="preference_notification_badges_summary">Mostra um indicador nas aplicações com notificações pendentes</string>
+    <string name="preference_notification_badges_summary">Mostra um indicador nas aplicações com notificações por ler</string>
     <string name="preference_suspended_badges">Aplicações suspensas</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_owncloud">Owncloud</string>
@@ -434,7 +434,7 @@
     <string name="plugin_weather_provider_enable">Definir como serviço de meteorologia</string>
     <string name="preference_nextcloud_signin_summary">Inicie sessão para pesquisar no servidor Nextcloud</string>
     <string name="widget_config_appwidget_resize">Redimensionar</string>
-    <string name="preference_search_websites_summary">Pré-visualizar de sites se o termo de pesquisa for um URL</string>
+    <string name="preference_search_websites_summary">Pré-visualização de sites se o termo de pesquisa for um URL</string>
     <string name="preference_search_localfiles">Ficheiros locais</string>
     <string name="preference_search_gdrive_summary">Pesquisar ficheiros de %1$s no Google Drive</string>
     <string name="preference_search_cloud_summary">Pesquisar ficheiros de %1$s</string>
@@ -515,9 +515,9 @@
     <string name="preference_search_favorites_summary">Mostrar itens afixados e frequentes por cima da grelha de aplicações</string>
     <string name="preference_search_files">Ficheiros</string>
     <string name="preference_cloud_badges">Indicadores de cloud</string>
-    <string name="preference_cloud_badges_summary">Mostrar indicador para ficheiros que estejam na cloud</string>
+    <string name="preference_cloud_badges_summary">Mostra um indicador para ficheiros que estejam na cloud</string>
     <string name="preference_shortcut_badges">Indicadores de atalhos</string>
-    <string name="preference_shortcut_badges_summary">Mostrar indicador para identificar a que aplicação o atalho pertence</string>
+    <string name="preference_shortcut_badges_summary">Mostra um indicador para identificar a que aplicação o atalho pertence</string>
     <string name="preference_plugin_badges">Indicador de plugins</string>
     <string name="preference_plugin_badges_summary">Indica qual o plugin em que o resultado da pesquisa foi criado</string>
     <string name="task_due_time">Termina a %1$s</string>
@@ -533,7 +533,7 @@
     <string name="preference_search_calculator">Calculadora</string>
     <string name="preference_search_calculator_summary">Avaliar termos matemáticos</string>
     <string name="preference_search_unitconverter">Conversor de unidades</string>
-    <string name="preference_search_unitconverter_summary">Exemplo: 1,5 kgs ou 4cm -&gt; pol</string>
+    <string name="preference_search_unitconverter_summary">Exemplo: 1,5 kg ou 4 cm -&gt; pol</string>
     <string name="preference_search_currencyconverter">Conversor de moeda</string>
     <string name="preference_search_currencyconverter_summary">Periodicamente, descarregar taxas de câmbio para conversão de moeda</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
@@ -802,4 +802,7 @@
     <string name="profile_private_profile_state_locked">O espaço privado está bloqueado.</string>
     <string name="profile_private_profile_action_unlock">Desbloquear</string>
     <string name="profile_private_profile_action_lock">Bloquear espaço privado</string>
+    <string name="weather_condition_rainshowersandthunder">Aguaceiros e trovoada</string>
+    <string name="weather_condition_heavyrainshowersandthunder">Aguaceiros intensos e trovoada</string>
+    <string name="weather_condition_heavyrainshowers">Aguaceiros intensos</string>
 </resources>
