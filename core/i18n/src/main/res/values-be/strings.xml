@@ -393,9 +393,20 @@
     <string name="preference_clockwidget_date_part">Дата</string>
     <string name="preference_clockwidget_dynamic_zone">Дынамічная зона</string>
     <string name="preference_clockwidget_date_part_summary">Адлюстроўвае дату</string>
-    <string name="preference_clockwidget_favorites_part">Док</string>
+    <string name="preference_clockwidget_favorites_part">Док-панэль</string>
     <string name="preference_clockwidget_favorites_part_summary">Адлюстроўвае первы рад замацаваных ярлыкоў</string>
     <string name="preference_about_telegram">Група ў Telegram</string>
     <string name="preference_about_fdroid">Рэпазіторый F-Droid</string>
     <string name="preference_category_license">Ліцэнзія</string>
+    <string name="preference_clockwidget_music_part_summary">Адлюстроўвае кнопкі для кіравання мультымедыя, калі ёсць актыўны сеанс медыя</string>
+    <string name="preference_screen_backup">Рэзэрвовае капіраванне і аднаўленне</string>
+    <string name="preference_screen_backup_summary">Экспарт і імпарт дадзеных праграмы запуску</string>
+    <string name="preference_clockwidget_battery_part_summary">Адлюстроўвае бягучы зарад батарэі, калі ён нізкі, або калі прылада зараджаецца</string>
+    <string name="preference_clockwidget_alarm_part_summary">Адлюстроўвае будзільнікі, якія празвоняць меньш чым праз 8 гадзін</string>
+    <string name="preference_clockwidget_battery_part">Батарэя</string>
+    <string name="preference_backup_summary">Экспартаваць налады і дадзеныя праграмы запуску</string>
+    <string name="preference_restore">Аднаўленне</string>
+    <string name="preference_restore_summary">Аднавіць з дапамогай раней створанай рэзервовай копіі</string>
+    <string name="preference_backup">Рэзервовае капіраванне</string>
+    <string name="preference_clockwidget_alarm_part">Будзільнікі</string>
 </resources>
