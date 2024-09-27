@@ -125,9 +125,9 @@ class PluginCalendarEventDeserializer(
                 PluginCalendarEvent(
                     id = id,
                     color = json.color,
-                    startTime = json.startTime ?: 0,
-                    endTime = json.endTime ?: 0,
-                    allDay = json.allDay ?: false,
+                    startTime = json.startTime,
+                    endTime = json.endTime ?: return null,
+                    allDay = json.allDay == true,
                     description = json.description,
                     calendarName = json.calendarName,
                     location = json.location,
