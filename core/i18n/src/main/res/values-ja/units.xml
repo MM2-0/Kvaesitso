@@ -227,4 +227,6 @@
     <string name="dimension_energy">エネルギー</string>
     <string name="dimension_frequency">周波数</string>
     <string name="dimension_time">時間</string>
+    <string name="unit_decimeter_symbol">dm</string>
+    <string name="dimension_pressure">圧力</string>
 </resources>

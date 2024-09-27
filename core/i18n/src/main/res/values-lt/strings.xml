@@ -588,4 +588,7 @@
     <string name="theme_color_scheme_system_default">Naudokite sistemos numatyta spalva</string>
     <string name="shortcut_label_unavailable">Nepasiekemas</string>
     <string name="shortcut_unavailable_description">Nuoroda nepasiekiama ,nes %1$s nėra numatytoji namų programėlė</string>
+    <string name="location_open">Atidarytas</string>
+    <string name="location_closed">Uždaryta</string>
+    <string name="location_closes">Užsidaro %1$s</string>
 </resources>
