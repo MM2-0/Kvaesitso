@@ -206,4 +206,12 @@
     <string name="weather_condition_wind">ريح</string>
     <string name="weather_condition_unknown">مجهول</string>
     <string name="weather_condition_snowshowersandthunder">زخات ثلجية ورعد</string>
+    <string name="location_closes">الإغلاق عند %1$s</string>
+    <string name="location_closes_other_day">يغلق %1$s، %2$s</string>
+    <string name="location_opens">يفتح في %1$s</string>
+    <string name="location_opens_other_day">يفتح %1$s, %2$s</string>
+    <string name="weather_condition_sleetshowers">زخات من المطر</string>
+    <string name="weather_condition_heavysleet">ثلج كثيف</string>
+    <string name="location_open">فتح</string>
+    <string name="location_closed">مغلق</string>
 </resources>
