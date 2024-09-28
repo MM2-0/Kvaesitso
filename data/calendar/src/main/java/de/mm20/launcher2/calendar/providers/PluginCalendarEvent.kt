@@ -2,6 +2,7 @@ package de.mm20.launcher2.calendar.providers
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import de.mm20.launcher2.calendar.PluginCalendarEventSerializer
@@ -13,6 +14,8 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 data class PluginCalendarEvent(
     val id: String,
@@ -57,6 +60,12 @@ data class PluginCalendarEvent(
 
     override fun getSerializer(): SearchableSerializer {
         return PluginCalendarEventSerializer()
+    }
+
+    override suspend fun getProviderIcon(context: Context): Drawable? {
+        return withContext(Dispatchers.IO) {
+            context.packageManager.resolveContentProvider(authority, 0)?.loadIcon(context.packageManager)
+        }
     }
 
     companion object {
