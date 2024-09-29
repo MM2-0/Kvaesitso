@@ -75,6 +75,7 @@ abstract class CalendarProvider(
             includeTime = get(EventColumns.IncludeTime) ?: true,
             attendees = get(EventColumns.Attendees) ?: emptyList(),
             uri = Uri.parse(get(EventColumns.Uri) ?: return null),
+            isCompleted = get(EventColumns.IsCompleted),
         )
     }
 
