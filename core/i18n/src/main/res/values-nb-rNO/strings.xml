@@ -451,4 +451,21 @@
     <string name="action_clear">Tøm</string>
     <string name="weather_condition_heavyrainshowers">Kraftige regnbyger</string>
     <string name="weather_condition_heavysnowshowers">Kraftige snøbyger</string>
+    <string name="missing_permission_auto_location">Lokasjonstilgang kreves for å automatisk kunne fastslå lokasjon</string>
+    <string name="widget_use_theme_colors">Bruk temafarge</string>
+    <string name="preference_signin_user">Innlogget som %1$s</string>
+    <string name="preference_summary_not_logged_in">Du er ikke innlogget</string>
+    <string name="preference_signout">Logg ut</string>
+    <string name="preference_search_contacts">Kontakter</string>
+    <string name="preference_search_contacts_summary">Søk i kontakter på denne enheten</string>
+    <string name="preference_search_calendar">Kalender</string>
+    <string name="task_due_time">Forfaller klokka %1$s</string>
+    <string name="preference_hide_status_bar">Skjul statusmeny</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Tøm og bygg ikonpakke-mellomlager på nytt</string>
+    <string name="preference_about_fdroid">F-Droid-pakkebrønn</string>
+    <string name="preference_clock_widget_show_seconds">Vis sekunder</string>
+    <string name="preference_search_files_summary">Søk i lokale filer og skylagrede filer</string>
+    <string name="preference_grid_labels">Vis merkelapper</string>
+    <string name="preference_screen_debug">Feilsøking</string>
+    <string name="preference_cards_shape_cut">Klipp ut</string>
 </resources>

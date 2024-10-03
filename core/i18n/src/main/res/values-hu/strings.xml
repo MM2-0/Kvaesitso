@@ -294,7 +294,7 @@
     <string name="preference_icon_pack">Ikoncsomag</string>
     <string name="preference_icon_pack_summary_empty">Nincs telepítve ikoncsomag</string>
     <string name="preference_category_animations">Animációk</string>
-    <string name="preference_charging_animation_summary">Buborék animáció lejátszása a készülék töltése közben</string>
+    <string name="preference_charging_animation_summary">Buborék animáció lejátszása a készülék töltésekor</string>
     <string name="preference_nav_bar_icons">Navigációs sáv ikonok</string>
     <string name="preference_system_bar_icons_auto">Automatikus</string>
     <string name="preference_system_bar_icons_light">Világos</string>
@@ -569,7 +569,7 @@
     <string name="note_widget_conflict_local_version">Utolsó mentett verzió:</string>
     <string name="note_widget_conflict_file_version">Aktuális fájl tartalma:</string>
     <string name="note_widget_file_read_error">Hiba a jegyzet olvasásakor</string>
-    <string name="note_widget_file_write_error">Hiba a jegyzet mentése közben</string>
+    <string name="note_widget_file_write_error">Hiba a jegyzet mentésekor</string>
     <string name="note_widget_file_write_error_description">A jegyzetet nem lehetett a kapcsolódó fájlba írni. Lehetséges, hogy áthelyezték vagy törölték. A másolat el lett mentve az indító alkalmazás belső tárolójába.</string>
     <string name="confirmation_delete_color_scheme">Biztosan törölni szeretné a(z) %1$s színsémát?</string>
     <string name="new_color_scheme_name">Új színséma</string>

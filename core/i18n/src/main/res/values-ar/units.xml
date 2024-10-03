@@ -172,4 +172,13 @@
         <item quantity="many">هكتارات</item>
         <item quantity="other">هكتارات</item>
     </plurals>
+    <string name="dimension_length">الطول</string>
+    <string name="dimension_mass">كتلة</string>
+    <string name="dimension_velocity">السرعة</string>
+    <string name="dimension_volume">الحجم</string>
+    <string name="dimension_area">المنطقة</string>
+    <string name="dimension_currency">العملة</string>
+    <string name="dimension_data">البيانات</string>
+    <string name="dimension_bitrate">معدل البِت</string>
+    <string name="dimension_pressure">الضغط</string>
 </resources>
