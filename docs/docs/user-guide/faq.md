@@ -8,24 +8,44 @@ sidebar_position: 2
 
 There are two options:
 
-1. Go to Settings > Home screen > Clock and enable "Favorites". This will display the first row of pinned items
+1. Go to Settings > Home screen > Clock and enable "Favorites". This will display the first row of
+   pinned items
    as part of the clock widget.
 
-2. Scroll down to the end of the widgets list, select "Edit widgets" > "Add widget" > "Favorites" to add
+2. Scroll down to the end of the widgets list, select "Edit widgets" > "Add widget" > "Favorites" to
+   add
    the favorites widget to the home screen.
 
 ## Can I remove / customize the clock?
 
-Yes, you can customize the clock style by going to Settings > Home screen > Clock and selecting a different
+Yes, you can customize the clock style by going to Settings > Home screen > Clock and selecting a
+different
 style. There is also an "empty style" that will remove the clock entirely.
 
 ## The toggle to grant notification access or to enable the accessibility service is disabled
 
-Please refer to the [Restricted Settings on Android 13+](/docs/user-guide/troubleshooting/restricted-settings) page.
+Please refer to
+the [Restricted Settings on Android 13+](/docs/user-guide/troubleshooting/restricted-settings) page.
 
 ## The launcher keeps asking for notification access or accessibility service
 
-Please refer to the [this page](/docs/user-guide/troubleshooting/granted-permissions).
+Please refer to [this page](/docs/user-guide/troubleshooting/granted-permissions).
+
+## I can't update to the latest version
+
+Please refer to the [Launcher Cannot Be Updated](/docs/user-guide/troubleshooting/update-not-installed) page.
+
+## Why is wallpaper blur not supported on my device?
+
+Wallpaper blur is available if:
+
+- the device runs Android 12 or higher
+- battery saver is not enabled
+
+Furthermore, the device has to have support for [cross window
+blur](https://source.android.com/docs/core/display/window-blurs). This is a flag that has to
+be enabled by the device manufacturer to indicate that their implementation of the render engine
+supports blur effects and that the GPU is powerful enough to handle them.
 
 ## How can I set up the nightly version?
 
