@@ -103,8 +103,8 @@ Kvaesitso's functionality can be extended by plugins. The launcher shares the fo
 plugins (as long as they are enabled in launcher settings):
 
 - all search queries that are typed into the search bar
-- your current location (if the plugin is a places search plugin and you have granted the location
-  permission to the launcher)
+- your current location (if the plugin is a places search or weather provider plugin and you have
+  granted the location permission to the launcher)
 
 For plugins developed by third parties, additional privacy policies might apply. Please refer to the
 respective plugin's documentation for more information.
@@ -128,12 +128,12 @@ The following data on your Google account is accessed by the plugin:
   attendees, description)
 - Task lists and tasks on Google Tasks (i.e. task title, due date, notes, completed status)
 
-The launcher uses this data to provide you with search results from your Google Drive, Google
-Calendar, and Google Tasks. Copies of this data might be stored indefinitely on your device to
-improve search results and to provide quicker access to your files, events, and tasks.
-The data is only stored locally on your device, in a protected area that no other app or user can
-access, and will never leave it. You can delete it at any time by uninstalling the launcher or by
-clearing its app's data.
+The launcher uses this data to provide search results from your Google Drive, Calendar, and Tasks.
+Copies of this data may be stored locally in the launcher's database to enhance search accuracy and
+offer quicker access to your files, events, and tasks. This data is stored exclusively on your
+device, within the launcher's private storage, which is inaccessible to other apps or users. It will
+never leave your device without your consent. You can delete the stored data anytime by uninstalling
+the launcher or clearing its app data.
 
 The following data is shared with Google:
 
