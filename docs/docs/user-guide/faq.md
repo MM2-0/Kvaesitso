@@ -19,7 +19,7 @@ There are two options:
 Yes, you can customize the clock style by going to Settings > Home screen > Clock and selecting a different
 style. There is also an "empty style" that will remove the clock entirely.
 
-## The toggle to grant notification access is disabled
+## The toggle to grant notification access or to enable the accessibility service is disabled
 
 Please refer to the [Restricted Settings on Android 13+](/docs/user-guide/troubleshooting/restricted-settings) page.
 
