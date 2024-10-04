@@ -24,7 +24,7 @@ internal class TextClassifierImpl : TextClassifier {
                 email = query
             )
 
-            query.matches(Regex("^\\+?[0-9- ]{4,18}$")) -> TextClassificationResult(
+            query.matches(Regex("^\\+?[0-9- /]{4,18}$")) -> TextClassificationResult(
                 type = TextType.PhoneNumber,
                 text = query,
                 phoneNumber = query
