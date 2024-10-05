@@ -137,7 +137,7 @@ the launcher or clearing its app data.
 
 The following data is shared with Google:
 
-- your search queries
+- your search queries (only while online results are enabled)
 
 The [Google privacy policy](https://policies.google.com/privacy) applies.
 
