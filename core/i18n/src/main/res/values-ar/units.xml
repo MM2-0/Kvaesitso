@@ -181,4 +181,6 @@
     <string name="dimension_data">البيانات</string>
     <string name="dimension_bitrate">معدل البِت</string>
     <string name="dimension_pressure">الضغط</string>
+    <string name="dimension_energy">طاقة</string>
+    <string name="dimension_frequency">التردد</string>
 </resources>
