@@ -28,6 +28,7 @@ import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.StoreLink
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,7 @@ internal data class LauncherApp(
     override val isSuspended: Boolean = false,
     internal val userSerialNumber: Long,
     override val labelOverride: String? = null,
+    override val score: ResultScore = ResultScore.Zero,
 ) : Application {
 
     override val componentName: ComponentName
@@ -48,11 +50,12 @@ internal data class LauncherApp(
     override val label: String = launcherActivityInfo.label.toString()
 
 
-    constructor(context: Context, launcherActivityInfo: LauncherActivityInfo) : this(
+    constructor(context: Context, launcherActivityInfo: LauncherActivityInfo, score: ResultScore = ResultScore.Zero) : this(
         launcherActivityInfo,
         versionName = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
         isSuspended = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED != 0,
-        userSerialNumber = launcherActivityInfo.user.getSerialNumber(context)
+        userSerialNumber = launcherActivityInfo.user.getSerialNumber(context),
+        score = score,
     )
 
     override val user: UserHandle

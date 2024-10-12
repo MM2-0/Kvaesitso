@@ -118,6 +118,7 @@ leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary", version =
 suncalc = { group = "org.shredzone.commons", name = "commons-suncalc", version = "3.7" }
 jsoup = { group = "org.jsoup", name = "jsoup", version = "1.16.1" }
 commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.10.0" }
+stringsimilarity = { group = "com.aallam.similarity", name = "string-similarity-kotlin", version = "0.1.0" }
 
 # 4.4.2 is the last GPL compatible version, don't update to 5.x
 mathparser = { group = "org.mariuszgromada.math", name = "MathParser.org-mXparser", version = "4.4.2" }

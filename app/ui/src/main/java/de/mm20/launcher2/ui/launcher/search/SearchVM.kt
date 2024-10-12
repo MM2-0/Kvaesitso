@@ -472,20 +472,15 @@ class SearchVM : ViewModel(), KoinComponent {
     private suspend fun <T : SavableSearchable> List<T>.applyRanking(order: SearchResultOrder): List<T> {
         if (size <= 1) return this
         val sequence = asSequence()
-        val sorted = if (order == SearchResultOrder.Weighted) {
-            val sortedKeys = searchableRepository.sortByWeight(map { it.key }).first()
-            sequence.sortedWith { a, b ->
-                val aRank = sortedKeys.indexOf(a.key)
-                val bRank = sortedKeys.indexOf(b.key)
-                when {
-                    aRank != -1 && bRank != -1 -> aRank.compareTo(bRank)
-                    aRank == -1 && bRank != -1 -> 1
-                    aRank != -1 && bRank == -1 -> -1
-                    else -> a.compareTo(b)
-                }
-            }
-        } else {
-            sequence.sorted()
+        val weights = searchableRepository.getWeights(map { it.key }).first()
+        val sorted = sequence.sortedWith { a, b ->
+            val aWeight = weights[a.key] ?: 0.0
+            val bWeight = weights[b.key] ?: 0.0
+
+            val aScore = a.score.score * 0.7f + aWeight.toFloat() * 0.3f
+            val bScore = b.score.score * 0.7f + bWeight.toFloat() * 0.3f
+
+            bScore.compareTo(aScore)
         }
         return sorted.distinctBy { it.key }.toList()
     }
