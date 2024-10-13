@@ -179,7 +179,7 @@
     <string name="weather_condition_heavysnowandthunder">Heves havazás és mennydörgés</string>
     <string name="weather_widget_set_location">Helyszín kiválasztása</string>
     <string name="weather_location_search_no_result">A helyszín nem található.</string>
-    <string name="missing_permission_appshortcuts_search">Állítsa be a(z) %1$s alkalmazást alapértelmezett indítóként az alkalmazások parancsikonjainak kereséséhez.</string>
+    <string name="missing_permission_appshortcuts_search">Állítsa be a(z) %1$s alkalmazást alapértelmezett indítóként a telepített alkalmazások kereséséhez.</string>
     <string name="preference_colors_default">Alapértelmezett</string>
     <string name="preference_force_themed_icons">Ikonok kényszerítése a színsémához</string>
     <string name="missing_permission_music_widget">A médialejátszás vezérléséhez értesítési hozzáférés szükséges</string>
@@ -204,7 +204,7 @@
     <string name="weather_condition_snowshowers">Hó záporok</string>
     <string name="weather_condition_heavyrainandthunder">Heves eső és mennydörgés</string>
     <string name="missing_permission_calendar_widget_settings">Ehhez a modulhoz naptár-engedély szükséges</string>
-    <string name="missing_permission_appshortcuts_search_settings">A(z) %1$s-t alapértelmezett indítóként kell beállítani az alkalmazások parancsikonjainak kereséséhez</string>
+    <string name="missing_permission_appshortcuts_search_settings">A(z) %1$s alkalmazást alapértelmezett indítóként kell beállítani az telepített alkalmazások kereséséhez</string>
     <string name="missing_permission_notification_badges">Az értesítési jelvények megjelenítéséhez értesítési hozzáférés szükséges</string>
     <string name="preference_category_licenses">Nyílt forráskódú megállapodások</string>
     <string name="preference_icon_shape_hexagon">Hatszög</string>
@@ -376,7 +376,7 @@
     <string name="preference_blur_wallpaper_summary">Használjon elmosódást a háttérképen</string>
     <string name="preference_blur_wallpaper_unsupported">Nem támogatott ezen az eszközön</string>
     <string name="preference_wallpaper_summary">Háttérkép kiválasztása</string>
-    <string name="preference_shortcut_badges_summary">Egy jelvény megjelenítése, amely jelzi, hogy egy parancsikon melyik alkalmazáshoz tartozik</string>
+    <string name="preference_shortcut_badges_summary">Egy jelvény megjelenítése, amely azt jelzi, hogy egy parancsikon melyik alkalmazáshoz tartozik</string>
     <string name="app_widget_loading_failed">Az alkalmazásmodult nem sikerült betölteni.</string>
     <string name="preference_screen_search">Keresés</string>
     <string name="preference_nextcloud_signin_summary">A Nextcloud kiszolgálón való kereséshez be kell jelentkezni</string>
@@ -527,7 +527,7 @@
     <string name="preference_search_files">Fájlok</string>
     <string name="preference_search_calendar">Naptár</string>
     <string name="preference_search_calendar_summary">Keresés a naptárban a közelgő találkozók és események között</string>
-    <string name="preference_search_appshortcuts">Alkalmazások</string>
+    <string name="preference_search_appshortcuts">Telepített alkalmazások</string>
     <string name="preference_search_appshortcuts_summary">Keresés a telepített alkalmazások között</string>
     <string name="preference_search_calculator">Számológép</string>
     <string name="preference_search_calculator_summary">Matematikai kifejezések kiértékelése</string>
