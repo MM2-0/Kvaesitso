@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Sort
 import androidx.compose.material.icons.rounded.AppShortcut
 import androidx.compose.material.icons.rounded.ArrowOutward
 import androidx.compose.material.icons.rounded.Calculate
@@ -37,7 +38,6 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -296,22 +296,6 @@ fun SearchSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                val searchResultOrdering by viewModel.searchResultOrdering.collectAsStateWithLifecycle(
-                    null
-                )
-                ListPreference(
-                    title = stringResource(R.string.preference_search_result_ordering),
-                    items = listOf(
-                        stringResource(R.string.preference_search_result_ordering_alphabetic) to SearchResultOrder.Alphabetical,
-                        stringResource(R.string.preference_search_result_ordering_weighted) to SearchResultOrder.Weighted
-                    ),
-                    value = searchResultOrdering,
-                    onValueChanged = {
-                        if (it != null) viewModel.setSearchResultOrdering(it)
-                    },
-                    icon = Icons.Rounded.Sort
-                )
-
                 val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(
                     null
                 )
@@ -325,6 +309,7 @@ fun SearchSettingsScreen() {
                     onValueChanged = {
                         if (it != null) viewModel.setReverseSearchResults(it)
                     },
+                    icon = Icons.AutoMirrored.Rounded.Sort
                 )
             }
         }
