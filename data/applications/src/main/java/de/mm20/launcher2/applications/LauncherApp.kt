@@ -41,7 +41,7 @@ internal data class LauncherApp(
     override val isSuspended: Boolean = false,
     internal val userSerialNumber: Long,
     override val labelOverride: String? = null,
-    override val score: ResultScore = ResultScore.Zero,
+    override val score: ResultScore = ResultScore.Unspecified,
 ) : Application {
 
     override val componentName: ComponentName
@@ -50,7 +50,7 @@ internal data class LauncherApp(
     override val label: String = launcherActivityInfo.label.toString()
 
 
-    constructor(context: Context, launcherActivityInfo: LauncherActivityInfo, score: ResultScore = ResultScore.Zero) : this(
+    constructor(context: Context, launcherActivityInfo: LauncherActivityInfo, score: ResultScore = ResultScore.Unspecified) : this(
         launcherActivityInfo,
         versionName = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
         isSuspended = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED != 0,

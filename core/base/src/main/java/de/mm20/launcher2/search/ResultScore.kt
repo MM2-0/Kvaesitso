@@ -45,7 +45,7 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
      * A total score for the result, combining the similarity with additional factors.
      */
     val score: Float
-        get() = (similarity + (if (isPrefix) 0.8f else 0f) + (if (isSubstring) 0.8f else 0f)) * (if (isPrimary) 1f else 0.5f)
+        get() = (similarity + (if (isPrefix) 0.8f else 0f) + (if (isSubstring) 0.8f else 0f)) * (if (isPrimary) 1f else 0.8f)
 
     override fun compareTo(other: ResultScore): Int {
         return score.compareTo(other.score)
@@ -89,6 +89,15 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
             isPrimary = false,
             similarity = 0f
         )
-    }
 
+        val Unspecified = ResultScore(
+            isPrefix = false,
+            isSubstring = false,
+            isPrimary = false,
+            similarity = Float.NaN,
+        )
+    }
 }
+
+inline val ResultScore.isUnspecified : Boolean
+    get() = this == ResultScore.Unspecified

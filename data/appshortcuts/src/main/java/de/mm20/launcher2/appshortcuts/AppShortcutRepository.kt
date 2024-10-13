@@ -14,6 +14,7 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -141,22 +142,20 @@ internal class AppShortcutRepositoryImpl(
                                 LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
                     )
                     val shortcuts = launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle())
-                        ?.filter {
-                            if (it.longLabel != null) {
-                                return@filter matches(it.longLabel.toString(), query)
-                            }
-                            if (it.shortLabel != null) {
-                                return@filter matches(it.shortLabel.toString(), query)
-                            }
-                            return@filter false
+                        ?.mapNotNull {
+                            val score = ResultScore(
+                                query = query,
+                                primaryFields = listOfNotNull(it.longLabel?.toString(), it.shortLabel?.toString())
+                            )
+                            if (score.score < 0.8f) return@mapNotNull null
+                            LauncherShortcut(
+                                context,
+                                it,
+                                score
+                            )
                         } ?: emptyList()
 
-                    shortcuts.mapNotNull {
-                        LauncherShortcut(
-                            context,
-                            it
-                        )
-                    }.toImmutableList()
+                    shortcuts.toImmutableList()
 
                 } else {
                     persistentListOf()

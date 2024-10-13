@@ -4,5 +4,5 @@ import kotlinx.coroutines.Deferred
 
 interface Searchable {
     val score: ResultScore
-        get() = ResultScore.Zero
+        get() = ResultScore.Unspecified
 }
