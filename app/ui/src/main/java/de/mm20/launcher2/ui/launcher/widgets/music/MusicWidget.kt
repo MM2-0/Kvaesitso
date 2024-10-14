@@ -447,7 +447,6 @@ fun CustomActions(
                             )
                         },
                         onClick = {
-                            showOverflowMenu = false
                             onActionSelected(action)
                         }
                     )
