@@ -409,4 +409,21 @@
     <string name="preference_restore_summary">Аднавіць з дапамогай раней створанай рэзервовай копіі</string>
     <string name="preference_backup">Рэзервовае капіраванне</string>
     <string name="preference_clockwidget_alarm_part">Будзільнікі</string>
+    <string name="preference_logs_summary">Праглядвайце і экспартуйце запісы з журнала праграмы</string>
+    <string name="preference_screen_search">Пошук</string>
+    <string name="preference_search_contacts_summary">Пошук кантактаў на гэтай прыладзе</string>
+    <string name="preference_search_calendar">Каляндар</string>
+    <string name="preference_search_favorites">Абраныя</string>
+    <string name="preference_search_files">Файлы</string>
+    <string name="preference_search_files_summary">Пошук файлаў на прыладзе і ў воблаке</string>
+    <string name="preference_search_appshortcuts_summary">Пошук ярлыкоў праграм</string>
+    <string name="preference_search_calculator">Калькулятар</string>
+    <string name="preference_logs">Журнал аўдыта</string>
+    <string name="preference_search_calendar_summary">Пошук будучых сустрэч і падзей</string>
+    <string name="preference_crash_reporter_summary">Памылкі і справаздачы аб збоях</string>
+    <string name="preference_screen_search_summary">Шуканне, тэгі, схаваныя ярлыкі</string>
+    <string name="preference_search_favorites_summary">Адлюстроўваць замацаваныя праграмы і праграмы, якія часта выкарыстоўваюцца, уверсе меню</string>
+    <string name="preference_search_contacts">Кантакты</string>
+    <string name="preference_search_appshortcuts">Ярлыкі праграм</string>
+    <string name="preference_crash_reporter">Журнал збояў</string>
 </resources>
