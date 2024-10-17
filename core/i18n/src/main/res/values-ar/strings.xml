@@ -288,4 +288,12 @@
     <string name="preference_location_managed_summary">الموقع لهذا المزود تمت ادارته بواسطة الاضافة</string>
     <string name="preference_imperial_units">الوحدات الامبراطورية</string>
     <string name="widget_config_weather_compact">الوضع المضغوط</string>
+    <string name="preference_cards_stroke_width">عرض الحد</string>
+    <string name="preference_cards_summary">تخصيص مظهر البطاقة</string>
+    <string name="preference_cards_corner_radius">شعاع الزاوية</string>
+    <string name="preference_cards">بطاقات</string>
+    <string name="preference_cards_opacity">العتامة</string>
+    <string name="missing_permission_appshortcuts_search_settings">يجب تعيين %1$s كتطبيق رئيسي افتراضي للبحث في اختصارات التطبيقات</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">مسح وإعادة بناء ذاكرة التخزين المؤقت لحزمة الأيقونات</string>
+    <string name="preference_category_icons">أيقونات</string>
 </resources>
