@@ -50,6 +50,8 @@ dependencies {
 
     implementation(libs.androidx.appcompat)
 
+    implementation(libs.osmopeninghours)
+
     implementation(project(":core:preferences"))
     implementation(project(":core:base"))
     implementation(project(":core:ktx"))
@@ -57,4 +59,5 @@ dependencies {
     implementation(project(":core:crashreporter"))
     implementation(project(":core:devicepose"))
     implementation(project(":libs:address-formatter"))
+    testImplementation(libs.junit)
 }

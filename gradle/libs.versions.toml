@@ -42,6 +42,9 @@ junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 
+osmOpeningHours = "0.1.0"
+testng = "6.9.6"
+
 [libraries]
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
 gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradle-plugin" }
@@ -137,6 +140,9 @@ emoji4j = { group = "com.sigpwned", name = "emoji4j-core", version = "15.0.1" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+osmopeninghours = { group = "de.westnordost", name = "osm-opening-hours", version.ref = "osmOpeningHours" }
+testng = { group = "org.testng", name = "testng", version.ref = "testng" }
 
 [bundles]
 kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]
