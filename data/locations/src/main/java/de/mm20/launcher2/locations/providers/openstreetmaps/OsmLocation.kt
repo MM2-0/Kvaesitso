@@ -411,11 +411,9 @@ private fun List<Range>.filterMonths(localTime: LocalDateTime): List<Range> = wh
     else -> filter {
         (it.months ?: return@filter false).any {
             when (it) {
-                is MonthRange -> (it.year?.let { it == localTime.year }
-                    ?: true) && localTime.month.ordinal in it.start.ordinal..it.end.ordinal
+                is MonthRange -> (it.year?.let { it == localTime.year } != false) && localTime.month.ordinal in it.start.ordinal..it.end.ordinal
 
-                is SingleMonth -> (it.year?.let { it == localTime.year }
-                    ?: true) && localTime.month.ordinal == it.month.ordinal
+                is SingleMonth -> (it.year?.let { it == localTime.year } != false) && localTime.month.ordinal == it.month.ordinal
 
                 else -> false
             }
@@ -508,6 +506,6 @@ private fun LocalDateTime.getNthWeekdaysOfCurrentWeek(): List<Triple<DayOfWeek, 
                 ).toInt() + 1
             )
         }
-        Triple(DayOfWeek.values()[i], nth, nthLast)
+        Triple(DayOfWeek.entries[i], nth, nthLast)
     }
 }

@@ -128,7 +128,7 @@ class OpeningHoursTest {
         val expectedNoDecember =
             listOf(OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8, 0), Duration.ofHours(8)))
 
-        for (month in Month.values()) {
+        for (month in Month.entries) {
             OpeningSchedule.Hours(
                 if (month == Month.DECEMBER)
                     expectedDecember
@@ -150,7 +150,7 @@ class OpeningHoursTest {
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8, 0), Duration.ofHours(8))
         )
 
-        for (month in Month.values()) {
+        for (month in Month.entries) {
             OpeningSchedule.Hours(
                 if (month in Month.JANUARY..Month.MARCH)
                     expectedInRange
