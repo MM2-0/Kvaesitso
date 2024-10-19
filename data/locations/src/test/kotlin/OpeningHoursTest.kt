@@ -40,7 +40,7 @@ class OpeningHoursTest {
 
     @Test
     fun testEveryDaySame() = OpeningSchedule.Hours(
-        DayOfWeek.values().map {
+        DayOfWeek.entries.map {
             OpeningHours(
                 it, LocalTime.of(8, 0), Duration.ofHours(11)
             )
@@ -108,7 +108,7 @@ class OpeningHoursTest {
         )
         val expectedDecember = emptyList<OpeningHours>()
 
-        for (month in Month.values()) {
+        for (month in Month.entries) {
             OpeningSchedule.Hours(
                 if (month == Month.DECEMBER)
                     expectedDecember
@@ -209,7 +209,7 @@ class OpeningHoursTest {
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8)),
             OpeningHours(DayOfWeek.FRIDAY, LocalTime.of(8,0), Duration.ofHours(2))
         )
-        for (month in Month.values()) {
+        for (month in Month.entries) {
             OpeningSchedule.Hours(
                 if (month == Month.DECEMBER)
                     december
@@ -221,4 +221,14 @@ class OpeningHoursTest {
             )
         }
     }
+
+    // future work
+//    @Test
+//    fun testSpecificDaysOfMonth() {
+//
+//
+//        scheduleAt(
+//            "Mo-Su 08:00-18:00; Apr 10-15 off; Jun 08:00-14:00; Aug off; Dec 25 off"
+//        )
+//    }
 }
