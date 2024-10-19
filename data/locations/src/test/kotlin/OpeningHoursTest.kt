@@ -16,7 +16,8 @@ class OpeningHoursTest {
         is OpeningSchedule.Hours -> {
             actual as OpeningSchedule.Hours
             Assert.assertEquals(openingHours.size, actual.openingHours.size)
-            Assert.assertEquals(openingHours.toSet(), actual.openingHours.toSet())
+            val diff = openingHours.toSet() - actual.openingHours.toSet()
+            Assert.assertTrue("Set difference not empty: $diff", diff.isEmpty())
         }
 
         null -> Assert.assertNull(actual)
@@ -200,6 +201,28 @@ class OpeningHoursTest {
     }
 
     @Test
+    fun testLastNthWeekday() {
+        val usualWeek = listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8))
+        )
+        val specialMondayWeek = listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(4))
+        )
+
+        for (week in 1..5) {
+            OpeningSchedule.Hours(
+                if (week == 5)
+                    specialMondayWeek
+                else
+                    usualWeek
+            ) assertEqualTo scheduleAt(
+                "Mo 08:00-16:00; Mo[-1] 08:00-12:00",
+                dayOfMonth = 1 + (week - 1) * 7
+            )
+        }
+    }
+
+    @Test
     fun testMondayOnDecember() {
         val december = listOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(4)),
@@ -222,13 +245,39 @@ class OpeningHoursTest {
         }
     }
 
-    // future work
-//    @Test
-//    fun testSpecificDaysOfMonth() {
-//
-//
-//        scheduleAt(
-//            "Mo-Su 08:00-18:00; Apr 10-15 off; Jun 08:00-14:00; Aug off; Dec 25 off"
-//        )
-//    }
+    @Test
+    fun testAllTogether() {
+        val dec = listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8))
+        ) + listOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.SATURDAY).map {
+            OpeningHours(it, LocalTime.of(17,0), Duration.ofHours(8))
+        }
+        val janMar = listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(6,0), Duration.ofHours(6))
+        ) + listOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY).map {
+            OpeningHours(it, LocalTime.of(17,0), Duration.ofHours(8))
+        }
+        val aug = listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(0,30), Duration.ofMinutes(45))
+        ) + listOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY).map {
+            OpeningHours(it, LocalTime.of(17,0), Duration.ofHours(8))
+        }
+        val elze = listOf(
+            OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8))
+        ) + listOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY).map {
+            OpeningHours(it, LocalTime.of(17,0), Duration.ofHours(8))
+        }
+
+        for (month in Month.entries) {
+            OpeningSchedule.Hours(when (month) {
+                in Month.JANUARY..Month.MARCH -> janMar
+                Month.AUGUST -> aug
+                Month.DECEMBER -> dec
+                else -> elze
+            }) assertEqualTo scheduleAt(
+                "Mo 08:00-16:00; We-Sa 17:00-01:00; Jan-Mar Mo 06:00-12:00; Dec Fr off; Aug Mo 00:30-01:15; PH,Su off; \"Holiday until 06.09.2420\"",
+                month = month
+            )
+        }
+    }
 }

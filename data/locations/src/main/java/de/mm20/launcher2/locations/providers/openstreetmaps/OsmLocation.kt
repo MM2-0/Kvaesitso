@@ -482,11 +482,11 @@ private fun TimesSelector.toLocalTimeWithDuration(): List<Pair<LocalTime, Durati
                 LocalTime.of(
                     start.hour,
                     start.minutes
-                ) to Duration.ofMinutes(((end.hour - start.hour) * 60 + end.minutes - start.minutes).toLong())
+                ) to Duration.ofMinutes((Math.floorMod(end.hour - start.hour, 24) * 60 + end.minutes - start.minutes).toLong())
             )
         }
 
-        else -> emptyList() // TODO
+        else -> return emptyList()
     }
 }
 
