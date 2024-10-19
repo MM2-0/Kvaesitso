@@ -55,7 +55,7 @@ fun RowScope.SearchBarMenu(
                 rightIcon,
                 atEnd = searchBarValue.isNotEmpty()
             ),
-            contentDescription = null,
+            contentDescription = stringResource(if (searchBarValue.isNotBlank()) R.string.action_clear else R.string.action_more_actions),
             tint = LocalContentColor.current
         )
     }

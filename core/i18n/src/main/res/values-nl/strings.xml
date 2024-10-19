@@ -429,7 +429,7 @@
     <string name="search_action_timer">Timer starten</string>
     <string name="search_action_contact">Contact maken</string>
     <string name="search_action_open_url">Website bekijken</string>
-    <string name="search_action_event">Event plannen</string>
+    <string name="search_action_event">Afspraak plannen</string>
     <string name="create_search_action_type">Welke actie wil je maken\?</string>
     <string name="create_search_action_type_web">Zoeken op website</string>
     <string name="create_search_action_type_app">Zoeken in applicatie</string>
@@ -777,4 +777,35 @@
         <item quantity="other">%1$s meldingen</item>
     </plurals>
     <string name="weather_widget_no_provider">Geen aanbieder van weergegevens geselecteerd of de geselecteerde aanbieder is niet beschikbaar</string>
+    <string name="plugin_type_calendar">Kalender</string>
+    <string name="music_widget_previous_track">Vorige titel</string>
+    <string name="music_widget_next_track">Volgende titel</string>
+    <string name="music_widget_play">Afspelen</string>
+    <string name="action_done">Klaar</string>
+    <string name="action_more_actions">Meer acties</string>
+    <string name="action_clear">Wissen</string>
+    <string name="menu_show_filters">Filters weergeven</string>
+    <string name="menu_hide_filters">Filters verbergen</string>
+    <string name="music_widget_pause">Pauze</string>
+    <string name="music_widget_open_player">Speler openen</string>
+    <string name="calendar_widget_previous_day">Vorige dag</string>
+    <string name="calendar_widget_next_day">Volgende dag</string>
+    <string name="calendar_widget_open_calendar">Kalender-app openen</string>
+    <string name="calendar_widget_create_event">Nieuwe afspraak aanmaken</string>
+    <string name="preference_search_supportedunits">Ondersteunde eenheden</string>
+    <string name="profile_work_profile_action_lock">Werk-apps pauzeren</string>
+    <string name="profile_private_profile_action_unlock">Ontgrendelen</string>
+    <string name="profile_work_profile_state_locked">Werk-apps zijn onderbroken.</string>
+    <string name="hint_drag_and_drop_reorder">Houd items vast en sleep ze om ze opnieuw te rangschikken</string>
+    <string name="task_due_time">Gepland voor %1$s</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s lijst geselecteerd</item>
+        <item quantity="other">%1$s lijsten geselecteerd</item>
+    </plurals>
+    <string name="preference_calendar_hide_completed">Voltooide taken verbergen</string>
+    <string name="profile_work_profile_action_unlock">Pauze onderbreken</string>
+    <string name="task_due_date">Gepland voor %1$s</string>
+    <string name="task_due_today">Voor vandaag</string>
+    <string name="apps_profile_private"></string>
+    <string name="app_label_locked_profile">Vergrendeld</string>
 </resources>

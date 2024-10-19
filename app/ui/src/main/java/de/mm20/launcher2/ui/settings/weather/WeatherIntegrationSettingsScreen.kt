@@ -17,6 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
@@ -58,7 +59,7 @@ fun WeatherIntegrationSettingsScreen() {
                         primaryAction = {
                             TextButton(onClick = {
                                 try {
-                                    state.setupActivity.send()
+                                    state.setupActivity.sendWithBackgroundPermission(context)
                                 } catch (e: PendingIntent.CanceledException) {
                                     CrashReporter.logException(e)
                                 }

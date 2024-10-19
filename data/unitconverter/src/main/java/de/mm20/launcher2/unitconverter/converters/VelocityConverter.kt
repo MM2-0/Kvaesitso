@@ -4,7 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.unitconverter.Dimension
 import de.mm20.launcher2.unitconverter.R
 
-class VelocityConverter(context: Context) : SimpleFactorConverter() {
+internal class VelocityConverter(context: Context) : SimpleFactorConverter() {
     override val dimension = Dimension.Velocity
 
     override val standardUnits = listOf(

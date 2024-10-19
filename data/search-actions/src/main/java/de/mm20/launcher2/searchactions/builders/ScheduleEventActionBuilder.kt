@@ -3,7 +3,6 @@ package de.mm20.launcher2.searchactions.builders
 import android.content.Context
 import de.mm20.launcher2.searchactions.R
 import de.mm20.launcher2.searchactions.TextClassificationResult
-import de.mm20.launcher2.searchactions.actions.MessageAction
 import de.mm20.launcher2.searchactions.actions.ScheduleEventAction
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
@@ -28,7 +27,10 @@ class ScheduleEventActionBuilder(
                 time = classifiedQuery.time
             )
         }
-        if (classifiedQuery.timespan != null && classifiedQuery.timespan.seconds > 86400) {
+        // Time spans that are shorter than 24 hours are already handled by the TimerActionBuilder
+        if (classifiedQuery.timespan != null && classifiedQuery.timespan.seconds > 86400
+            && classifiedQuery.timespan.seconds < 3153600000
+        ) {
             val datetime = LocalDateTime.now().plus(classifiedQuery.timespan)
             return ScheduleEventAction(
                 context.getString(R.string.search_action_event),

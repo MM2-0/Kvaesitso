@@ -785,5 +785,38 @@
         <item quantity="other">%1$s oznámení</item>
     </plurals>
     <string name="weather_widget_no_provider">Nebyl vybrán poskytovatel počasí nebo vybraný poskytovatel není dostupný</string>
-    <string name="apps_profile_private">Soukromý prostor</string>
+    <string name="apps_profile_private">Soukromé</string>
+    <string name="action_more_actions">Další akce</string>
+    <string name="action_clear">Vymazat</string>
+    <string name="action_done">Hotovo</string>
+    <string name="menu_show_filters">Zobrazit filtry</string>
+    <string name="menu_hide_filters">Skrýt filtry</string>
+    <string name="music_widget_previous_track">Předchozí titul</string>
+    <string name="music_widget_next_track">Další titul</string>
+    <string name="music_widget_play">Přehrát</string>
+    <string name="music_widget_pause">Pozastavit</string>
+    <string name="music_widget_open_player">Otevřít přehrávač</string>
+    <string name="calendar_widget_previous_day">Předchozí den</string>
+    <string name="calendar_widget_next_day">Další den</string>
+    <string name="calendar_widget_create_event">Vytvořit novou událost</string>
+    <string name="calendar_widget_open_calendar">Otevřít aplikaci kalendáře</string>
+    <string name="plugin_type_calendar">Kalendář</string>
+    <string name="profile_work_profile_action_unlock">Zrušit pozastavení</string>
+    <string name="hint_drag_and_drop_reorder">Přeskládejte položky jejich podržením a přesunutím</string>
+    <string name="preference_search_supportedunits">Podporované jednotky</string>
+    <string name="app_label_locked_profile">Uzamčeno</string>
+    <string name="profile_work_profile_state_locked">Pracovní aplikace jsou pozastaveny.</string>
+    <string name="profile_work_profile_action_lock">Pozastavit pracovní aplikace</string>
+    <string name="profile_private_profile_state_locked">Soukromý prostor je uzamčen.</string>
+    <string name="profile_private_profile_action_unlock">Odemknout</string>
+    <string name="profile_private_profile_action_lock">Zamknout soukromý prostor</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">Vybrán %1$s seznam</item>
+        <item quantity="few">Vybrány %1$s seznamy</item>
+        <item quantity="other">Vybráno %1$s seznamů</item>
+    </plurals>
+    <string name="task_due_time">Dokončit do %1$s</string>
+    <string name="task_due_date">Dokončit do %1$s</string>
+    <string name="task_due_today">Dokončit dnes</string>
+    <string name="preference_calendar_hide_completed">Skrýt dokončené úkoly</string>
 </resources>

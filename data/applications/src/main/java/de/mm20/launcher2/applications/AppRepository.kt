@@ -14,6 +14,7 @@ import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -37,6 +38,7 @@ interface AppRepository : SearchableRepository<Application> {
         packageName: String,
         user: UserHandle,
     ): Flow<Application?>
+
     fun findMany(): Flow<ImmutableList<Application>>
 }
 
@@ -244,8 +246,13 @@ internal class AppRepositoryImpl(
                 if (query.isEmpty()) {
                     appResults.addAll(apps)
                 } else {
-                    appResults.addAll(apps.filter {
-                        matches(it.label, query)
+                    appResults.addAll(apps.mapNotNull {
+                        it.copy(
+                            score = ResultScore(
+                                query = query,
+                                primaryFields = listOf(it.label),
+                            )
+                        ).takeIf { it.score.score >= 0.8f }
                     })
 
                     val componentName = ComponentName.unflattenFromString(query)
@@ -255,14 +262,6 @@ internal class AppRepositoryImpl(
                 appResults.toImmutableList()
             }
         }
-    }
-
-    private fun matches(label: String, query: String): Boolean {
-        val normalizedLabel = label.normalize()
-        val normalizedQuery = query.normalize()
-        if (normalizedLabel.contains(normalizedQuery)) return true
-        val fuzzyScore = FuzzyScore(Locale.getDefault())
-        return fuzzyScore.fuzzyScore(normalizedLabel, normalizedQuery) >= query.length * 1.5
     }
 
     private fun getActivityByComponentName(componentName: ComponentName?): LauncherApp? {

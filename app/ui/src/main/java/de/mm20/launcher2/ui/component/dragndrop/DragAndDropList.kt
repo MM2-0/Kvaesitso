@@ -342,7 +342,7 @@ fun LazyItemScope.DraggableItem(
     val isDragged = state.draggedItem?.key == key || state.droppedItemKey == key
     Box(
         modifier = modifier
-            .then(if (isDragged) Modifier else Modifier.animateItemPlacement())
+            .then(if (isDragged) Modifier else Modifier.animateItem())
             .zIndex(if (isDragged) 1f else 0f)
             .offset {
                 if (state.draggedItem?.key == key) {

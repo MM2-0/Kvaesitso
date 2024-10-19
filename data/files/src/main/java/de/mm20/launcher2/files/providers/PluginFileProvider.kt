@@ -46,7 +46,7 @@ class PluginFileProvider(
                 results.add(
                     PluginFile(
                         id = cursor[FileColumns.Id] ?: continue,
-                        path = cursor[FileColumns.Path] ?: "",
+                        path = cursor[FileColumns.Path],
                         mimeType = cursor[FileColumns.MimeType] ?: "application/octet-stream",
                         size = cursor[FileColumns.Size] ?: 0L,
                         metaData = buildMap {
@@ -84,10 +84,10 @@ class PluginFileProvider(
                             }
                         }.toPersistentMap(),
                         label = cursor[FileColumns.DisplayName] ?: continue,
-                        uri = cursor[FileColumns.DisplayName]?.let { Uri.parse(it) } ?: continue,
+                        uri = cursor[FileColumns.ContentUri]?.let { Uri.parse(it) } ?: continue,
                         thumbnailUri = cursor[FileColumns.ThumbnailUri]?.let { Uri.parse(it) },
                         storageStrategy = config.storageStrategy,
-                        isDirectory = cursor[FileColumns.IsDirectory] ?: false,
+                        isDirectory = cursor[FileColumns.IsDirectory] == true,
                         authority = pluginAuthority,
                         timestamp = timestamp,
                         updatedSelf = {
@@ -106,6 +106,7 @@ class PluginFileProvider(
         return Bundle().apply {
             set(FileColumns.Id, id)
             set(FileColumns.Path, path)
+            set(FileColumns.ContentUri, uri.toString())
             set(FileColumns.MimeType, mimeType)
             set(FileColumns.Size, size)
             set(FileColumns.MetaTitle, metaData[FileMetaType.Title])

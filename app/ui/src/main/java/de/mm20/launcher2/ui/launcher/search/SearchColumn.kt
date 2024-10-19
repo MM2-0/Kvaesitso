@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Article
@@ -76,10 +78,8 @@ fun SearchColumn(
     val apps by viewModel.appResults
     val workApps by viewModel.workAppResults
     val privateApps by viewModel.privateSpaceAppResults
-    val workProfile by viewModel.workProfile.collectAsState(null)
-    val workProfileState by viewModel.workProfileState.collectAsState(null)
-    val privateProfile by viewModel.privateProfile.collectAsState(null)
-    val privateProfileState by viewModel.privateProfileState.collectAsState(null)
+    val profiles by viewModel.profiles.collectAsState(emptyList())
+    val profileStates by viewModel.profileStates.collectAsState(emptyList())
 
     val appShortcuts by viewModel.appShortcutResults
     val contacts by viewModel.contactResults
@@ -110,6 +110,7 @@ fun SearchColumn(
 
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
+    var selectedAppProfileIndex: Int by remember(isSearchEmpty) { mutableIntStateOf(0) }
     var selectedContactIndex: Int by remember(contacts) { mutableIntStateOf(-1) }
     var selectedFileIndex: Int by remember(files) { mutableIntStateOf(-1) }
     var selectedCalendarIndex: Int by remember(events) { mutableIntStateOf(-1) }
@@ -171,39 +172,34 @@ fun SearchColumn(
                     )
                 }
 
-                AppResults(
-                    key = "apps",
-                    apps = apps,
-                    highlightedItem = bestMatch as? Application,
-                    columns = columns,
-                    reverse = reverse
-                )
-
-                if (privateProfile != null && isSearchEmpty) {
+                if (isSearchEmpty && profiles.size > 1) {
                     AppResults(
-                        key = "apps-priv",
-                        apps = privateApps,
-                        profile = privateProfile,
-                        isProfileLocked = privateProfileState?.locked == true,
-                        onProfileLockChange = if (hasProfilesPermission) {
-                            { viewModel.setProfileLock(privateProfile, it) }
-                        } else null,
+                        apps = when(profiles.getOrNull(selectedAppProfileIndex)?.type) {
+                            Profile.Type.Private -> privateApps
+                            Profile.Type.Work -> workApps
+                            else -> apps
+                        },
                         highlightedItem = bestMatch as? Application,
+                        profiles = profiles,
+                        selectedProfileIndex = selectedAppProfileIndex,
+                        onProfileSelected = {
+                            selectedAppProfileIndex = it
+                        },
+                        isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true,
+                        onProfileLockChange = { p, l ->
+                            viewModel.setProfileLock(p, l)
+                        },
                         columns = columns,
-                        reverse = reverse
+                        reverse = reverse,
+                        showProfileLockControls = hasProfilesPermission,
                     )
-                }
-
-                if (workProfile != null && isSearchEmpty) {
+                } else {
                     AppResults(
-                        key = "apps-work",
-                        apps = workApps,
-                        profile = workProfile,
-                        isProfileLocked = workProfileState?.locked == true,
-                        onProfileLockChange = if (hasProfilesPermission) {
-                            { viewModel.setProfileLock(workProfile, it) }
-                        } else null,
+                        apps = apps,
                         highlightedItem = bestMatch as? Application,
+                        onProfileSelected = {
+                            selectedAppProfileIndex = it
+                        },
                         columns = columns,
                         reverse = reverse
                     )

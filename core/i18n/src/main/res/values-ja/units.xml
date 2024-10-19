@@ -212,4 +212,21 @@
     <plurals name="unit_kelvin">
         <item quantity="other">ケルビン</item>
     </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="other">デシメートル</item>
+    </plurals>
+    <string name="dimension_velocity">速度</string>
+    <string name="dimension_length">長さ</string>
+    <string name="dimension_mass">質量</string>
+    <string name="dimension_volume">音量</string>
+    <string name="dimension_area">エリア</string>
+    <string name="dimension_temperature">温度</string>
+    <string name="dimension_currency">通貨</string>
+    <string name="dimension_data">日付</string>
+    <string name="dimension_bitrate">ビットレート</string>
+    <string name="dimension_energy">エネルギー</string>
+    <string name="dimension_frequency">周波数</string>
+    <string name="dimension_time">時間</string>
+    <string name="unit_decimeter_symbol">dm</string>
+    <string name="dimension_pressure">圧力</string>
 </resources>

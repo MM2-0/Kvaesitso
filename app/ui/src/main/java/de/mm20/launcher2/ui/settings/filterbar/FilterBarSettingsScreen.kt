@@ -2,9 +2,13 @@ package de.mm20.launcher2.ui.settings.filterbar
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.HorizontalDivider
@@ -19,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -86,7 +91,7 @@ fun FilterBarSettingsScreen() {
                             activity?.onBackPressed()
                         }
                     }) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(imageVector = Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
                     }
                 },
             )
@@ -103,6 +108,26 @@ fun FilterBarSettingsScreen() {
             modifier = Modifier
                 .fillMaxSize()
         ) {
+            item(
+                key = "disabled-info"
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(start = 28.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(Icons.Outlined.Info, null,
+                        modifier = Modifier.padding(end = 24.dp).size(16.dp),
+                        tint = MaterialTheme.colorScheme.secondary
+                    )
+                    Text(
+                        modifier = Modifier,
+                        text = stringResource(R.string.hint_drag_and_drop_reorder),
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                }
+            }
             for (i in 0 until KeyboardFilterBarItem.entries.size) {
                 val item = enabledItems!!.getOrNull(i) ?: disabledItems[i - enabledItems!!.size]
                 val prevItem = enabledItems!!.getOrNull(i - 1) ?: disabledItems.getOrNull(i - enabledItems!!.size - 1)

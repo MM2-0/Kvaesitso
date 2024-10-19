@@ -1,5 +1,6 @@
 package de.mm20.launcher2.search
 
+import android.util.Log
 import de.mm20.launcher2.calculator.CalculatorRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
@@ -253,7 +254,7 @@ internal class SearchServiceImpl(
     }
 
     override fun getAllApps(): Flow<AllAppsResults> {
-        return profileManager.activeProfiles.flatMapLatest { profiles ->
+        return profileManager.profiles.flatMapLatest { profiles ->
             val standardProfile = profiles.find { it.type == Profile.Type.Personal }
             val workProfile = profiles.find { it.type == Profile.Type.Work }
             val privateSpace = profiles.find { it.type == Profile.Type.Private }
@@ -268,7 +269,9 @@ internal class SearchServiceImpl(
                             standardProfile != null && app.user == standardProfile.userHandle -> standardProfileApps.add(app)
                             workProfile != null && app.user == workProfile.userHandle -> workProfileApps.add(app)
                             privateSpace != null && app.user == privateSpace.userHandle -> privateSpaceApps.add(app)
-                            else -> standardProfileApps.add(app)
+                            else -> {
+                                Log.w("MM20", "App ${app.label} does not belong to any known profile. Ignoring.")
+                            }
                         }
                     }
 

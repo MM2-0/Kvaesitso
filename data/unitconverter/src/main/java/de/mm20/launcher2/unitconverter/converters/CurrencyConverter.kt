@@ -7,17 +7,22 @@ import de.mm20.launcher2.currencies.CurrencyRepository
 import de.mm20.launcher2.search.data.CurrencyUnitConverter
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.unitconverter.Dimension
+import de.mm20.launcher2.unitconverter.MeasureUnit
 import de.mm20.launcher2.unitconverter.UnitValue
 import java.text.DecimalFormat
 import java.util.Locale
-import java.util.Currency as JCurrency
 import kotlin.math.abs
+import java.util.Currency as JCurrency
 
 class CurrencyConverter(
     private val repository: CurrencyRepository,
 ) : Converter {
 
     override val dimension: Dimension = Dimension.Currency
+
+    suspend fun getAbbreviations(): List<String> {
+        return repository.getKnownUnits()
+    }
 
 
     private val topCurrencies = arrayOf("USD", "EUR", "JPY", "GBP", "AUD")
@@ -31,7 +36,14 @@ class CurrencyConverter(
         val text = StringBuilder()
         val currency = Currency.getInstance(symbol) ?: return formatNameFallback(symbol)
         val pluralCount = PluralRules.forLocale(Locale.getDefault()).select(value)
-        text.append(currency.getName(Locale.getDefault(), Currency.PLURAL_LONG_NAME, pluralCount, booleanArrayOf(false)))
+        text.append(
+            currency.getName(
+                Locale.getDefault(),
+                Currency.PLURAL_LONG_NAME,
+                pluralCount,
+                booleanArrayOf(false)
+            )
+        )
 
         return text.toString()
     }
@@ -58,12 +70,22 @@ class CurrencyConverter(
     }
 
 
-    override suspend fun convert(context: Context, fromUnit: String, value: Double, toUnit: String?): UnitConverter {
+    override suspend fun convert(
+        context: Context,
+        fromUnit: String,
+        value: Double,
+        toUnit: String?
+    ): UnitConverter {
         val fromIsoCode = repository.resolveAlias(fromUnit)
         val toIsoCode = toUnit?.let { repository.resolveAlias(it) }
 
         val values = repository.convertCurrency(fromIsoCode, value, toIsoCode).map {
-            UnitValue(it.second, it.first, formatName(it.first, it.second), formatValue(it.first, it.second))
+            UnitValue(
+                it.second,
+                it.first,
+                formatName(it.first, it.second),
+                formatValue(it.first, it.second)
+            )
         }.toMutableList()
 
         val ownCurrencySymbol = JCurrency.getInstance(Locale.getDefault()).currencyCode ?: "USD"
@@ -85,8 +107,46 @@ class CurrencyConverter(
             values.add(0, ownCurrency)
         }
 
-        val inputValue = UnitValue(value, fromIsoCode, formatName(fromIsoCode, value), formatValue(fromIsoCode, value))
+        val inputValue = UnitValue(
+            value,
+            fromIsoCode,
+            formatName(fromIsoCode, value),
+            formatValue(fromIsoCode, value)
+        )
         val lastUpdate = repository.getLastUpdate(fromIsoCode)
         return CurrencyUnitConverter(dimension, inputValue, values, lastUpdate)
+    }
+
+    override suspend fun getSupportedUnits(): List<MeasureUnit> {
+        val currencies = repository.getKnownUnits()
+        return currencies.map {
+            CurrencyUnit(
+                symbol = it,
+            )
+        }
+    }
+}
+
+internal data class CurrencyUnit(
+    override val symbol: String,
+) : MeasureUnit {
+    override fun formatName(context: Context, value: Double): String {
+        val text = StringBuilder()
+        val currency = try {
+            Currency.getInstance(symbol)
+        } catch (e: IllegalArgumentException) {
+            null
+        } ?: return symbol
+        val pluralCount = PluralRules.forLocale(Locale.getDefault()).select(value)
+        text.append(
+            currency.getName(
+                Locale.getDefault(),
+                Currency.LONG_NAME,
+                pluralCount,
+                booleanArrayOf(false)
+            )
+        )
+
+        return text.toString()
     }
 }

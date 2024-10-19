@@ -36,6 +36,7 @@ import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemesSettingsScreen
@@ -65,6 +66,7 @@ import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
+import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterHelpSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
 import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
@@ -81,16 +83,24 @@ class SettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        val newRoute = intent?.getStringExtra(EXTRA_ROUTE)
+        val newRoute = getStartRoute(intent)
         route = newRoute
 
         setContent {
             val navController = rememberNavController()
 
             LaunchedEffect(route) {
-                navController.navigate(route ?: "settings") {
-                    popUpTo("settings") {
-                        inclusive = true
+                try {
+                    navController.navigate(route ?: "settings") {
+                        popUpTo("settings") {
+                            inclusive = true
+                        }
+                    }
+                } catch (e: IllegalArgumentException) {
+                    navController.navigate("settings") {
+                        popUpTo("settings") {
+                            inclusive = true
+                        }
                     }
                 }
             }
@@ -168,6 +178,9 @@ class SettingsActivity : BaseActivity() {
                                 composable("settings/search/unitconverter") {
                                     UnitConverterSettingsScreen()
                                 }
+                                composable("settings/search/unitconverter/help") {
+                                    UnitConverterHelpSettingsScreen()
+                                }
                                 composable("settings/search/wikipedia") {
                                     WikipediaSettingsScreen()
                                 }
@@ -179,6 +192,9 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/search/files") {
                                     FileSearchSettingsScreen()
+                                }
+                                composable("settings/search/calendar") {
+                                    CalendarSearchSettingsScreen()
                                 }
                                 composable("settings/search/searchactions") {
                                     SearchActionsSettingsScreen()
@@ -280,8 +296,16 @@ class SettingsActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        val newRoute = intent.getStringExtra(EXTRA_ROUTE)
+        val newRoute = getStartRoute(intent)
         route = newRoute
+    }
+
+    private fun getStartRoute(intent: Intent): String? {
+        if (intent.data?.host == "kvaesitso.mm20.de") {
+            return intent.data?.getQueryParameter("route")
+        } else {
+            return intent.getStringExtra(EXTRA_ROUTE)
+        }
     }
 
     companion object {

@@ -22,9 +22,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.music.PlaybackState
 import de.mm20.launcher2.music.SupportedActions
@@ -68,8 +71,11 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         .combinedClickable(
                             onClick = {
                                 try {
-                                    musicService.openPlayer()?.send()
+                                    musicService
+                                        .openPlayer()
+                                        ?.sendWithBackgroundPermission(context)
                                 } catch (e: PendingIntent.CanceledException) {
+                                    CrashReporter.logException(e)
                                 }
                             },
                             onLongClick = {
@@ -99,14 +105,17 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         painter = rememberAnimatedVectorPainter(
                             animatedImageVector = playIcon,
                             atEnd = state == PlaybackState.Playing
-                        ), contentDescription = null
+                        ), contentDescription = stringResource(
+                            if (state == PlaybackState.Playing) R.string.music_widget_pause
+                            else R.string.music_widget_play
+                        )
                     )
                 }
                 if (supportedActions.skipToNext) {
                     IconButton(onClick = { musicService.next() }) {
                         Icon(
                             imageVector = Icons.Rounded.SkipNext,
-                            contentDescription = null
+                            contentDescription = stringResource(R.string.music_widget_next_track)
                         )
                     }
                 }
@@ -122,7 +131,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         .combinedClickable(
                             onClick = {
                                 try {
-                                    musicService.openPlayer()?.send()
+                                    musicService.openPlayer()?.sendWithBackgroundPermission(context)
                                 } catch (e: PendingIntent.CanceledException) {
                                 }
                             },
@@ -156,7 +165,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         IconButton(onClick = { musicService.previous() }) {
                             Icon(
                                 imageVector = Icons.Rounded.SkipPrevious,
-                                contentDescription = null
+                                contentDescription = stringResource(R.string.music_widget_previous_track)
                             )
                         }
                     }
@@ -165,14 +174,17 @@ class MusicPartProvider : PartProvider, KoinComponent {
                             painter = rememberAnimatedVectorPainter(
                                 animatedImageVector = playIcon,
                                 atEnd = state == PlaybackState.Playing
-                            ), contentDescription = null
+                            ), contentDescription = stringResource(
+                                if (state == PlaybackState.Playing) R.string.music_widget_pause
+                                else R.string.music_widget_play
+                            )
                         )
                     }
                     if (supportedActions.skipToPrevious) {
                         IconButton(onClick = { musicService.next() }) {
                             Icon(
                                 imageVector = Icons.Rounded.SkipNext,
-                                contentDescription = null
+                                contentDescription = stringResource(R.string.music_widget_next_track)
                             )
                         }
                     }

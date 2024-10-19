@@ -206,4 +206,9 @@
     <plurals name="unit_kelvin">
         <item quantity="other">kelvin</item>
     </plurals>
+    <string name="dimension_length">Panjang</string>
+    <string name="dimension_mass">Massa</string>
+    <string name="dimension_velocity">Kecepatan</string>
+    <string name="dimension_volume">Volume</string>
+    <string name="dimension_area">Area</string>
 </resources>

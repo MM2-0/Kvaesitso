@@ -233,4 +233,17 @@
         <item quantity="one">kilobit</item>
         <item quantity="other">kilobits</item>
     </plurals>
+    <string name="dimension_bitrate">Bitrate</string>
+    <string name="dimension_length">Lengde</string>
+    <string name="dimension_mass">Masse</string>
+    <string name="dimension_velocity">Hastighet</string>
+    <string name="dimension_volume">Volum</string>
+    <string name="dimension_area">Areal</string>
+    <string name="dimension_currency">Valuta</string>
+    <string name="dimension_data">Data</string>
+    <string name="dimension_pressure">Trykk</string>
+    <string name="dimension_energy">Energi</string>
+    <string name="dimension_frequency">Frekvens</string>
+    <string name="dimension_temperature">Temperatur</string>
+    <string name="dimension_time">Tid</string>
 </resources>

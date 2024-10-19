@@ -73,7 +73,7 @@ interface SavableSearchableRepository : Backupable {
         maxPinnedLevel: PinnedLevel = PinnedLevel.ManuallySorted,
         minVisibility: VisibilityLevel = VisibilityLevel.Hidden,
         maxVisibility: VisibilityLevel = VisibilityLevel.Default,
-        limit: Int = 100,
+        limit: Int = 9999,
     ): Flow<List<SavableSearchable>>
 
     fun getKeys(
@@ -83,7 +83,7 @@ interface SavableSearchableRepository : Backupable {
         maxPinnedLevel: PinnedLevel = PinnedLevel.ManuallySorted,
         minVisibility: VisibilityLevel = VisibilityLevel.Hidden,
         maxVisibility: VisibilityLevel = VisibilityLevel.Default,
-        limit: Int = 100,
+        limit: Int = 9999,
     ): Flow<List<String>>
 
 
@@ -102,6 +102,8 @@ interface SavableSearchableRepository : Backupable {
     fun sortByRelevance(keys: List<String>): Flow<List<String>>
 
     fun sortByWeight(keys: List<String>): Flow<List<String>>
+
+    fun getWeights(keys: List<String>): Flow<Map<String, Double>>
 
     /**
      * Remove this item from the Searchable database
@@ -368,6 +370,11 @@ internal class SavableSearchableRepositoryImpl(
     override fun sortByWeight(keys: List<String>): Flow<List<String>> {
         if (keys.size > 999) return flowOf(emptyList())
         return database.searchableDao().sortByWeight(keys)
+    }
+
+    override fun getWeights(keys: List<String>): Flow<Map<String, Double>> {
+        if (keys.size > 999) return flowOf(emptyMap())
+        return database.searchableDao().getWeights(keys)
     }
 
     private suspend fun fromDatabaseEntity(entity: SavedSearchableEntity): SavedSearchable {

@@ -17,8 +17,13 @@ interface Application: SavableSearchable {
         get() = false
 
     val componentName: ComponentName
-    val isSystemApp: Boolean
     val isSuspended: Boolean
+
+    /**
+     * If true, the app's identity should not be revealed to the user.
+     */
+    val isPrivate: Boolean
+        get() = false
     val user: UserHandle
     val versionName: String?
 

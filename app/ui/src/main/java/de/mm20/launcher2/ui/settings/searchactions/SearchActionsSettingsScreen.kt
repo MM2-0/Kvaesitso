@@ -7,16 +7,24 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.HelpOutline
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +35,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -66,7 +78,7 @@ fun SearchActionsSettingsScreen() {
         onDragStart = {
             it.key != "divider" && !(it.key as String).startsWith("disabled-")
         },
-        onItemMove = { from, to -> viewModel.moveItem(from.index, to.index) }
+        onItemMove = { from, to -> viewModel.moveItem(from.index - 1, to.index - 1) }
     )
 
     val searchActions by viewModel.searchActions.collectAsState()
@@ -102,11 +114,14 @@ fun SearchActionsSettingsScreen() {
                         CustomTabsIntent.Builder()
                             .setDefaultColorSchemeParams(
                                 CustomTabColorSchemeParams.Builder()
-                                .setToolbarColor(colorScheme.primaryContainer.toArgb())
-                                .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
-                                .build()
+                                    .setToolbarColor(colorScheme.primaryContainer.toArgb())
+                                    .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
+                                    .build()
                             )
-                            .build().launchUrl(context, Uri.parse("https://kvaesitso.mm20.de/docs/user-guide/search/quickactions"))
+                            .build().launchUrl(
+                                context,
+                                Uri.parse("https://kvaesitso.mm20.de/docs/user-guide/search/quickactions")
+                            )
                     }) {
                         Icon(
                             imageVector = Icons.Rounded.HelpOutline,
@@ -124,6 +139,26 @@ fun SearchActionsSettingsScreen() {
             modifier = Modifier
                 .fillMaxSize()
         ) {
+            item(
+                key = "disabled-info"
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(start = 28.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(Icons.Outlined.Info, null,
+                        modifier = Modifier.padding(end = 24.dp).size(16.dp),
+                        tint = MaterialTheme.colorScheme.secondary
+                    )
+                    Text(
+                        modifier = Modifier,
+                        text = stringResource(R.string.hint_drag_and_drop_reorder),
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                }
+            }
             items(
                 items = searchActions,
                 key = { it.key }
@@ -146,6 +181,51 @@ fun SearchActionsSettingsScreen() {
                                 title = item.label,
                                 onClick = {
                                     viewModel.editAction(item)
+                                },
+                                controls = {
+                                    var showDropdown by remember { mutableStateOf(false) }
+                                    IconButton(
+                                        onClick = {
+                                            showDropdown = true
+                                        }
+                                    ) {
+                                        Icon(Icons.Rounded.MoreVert, stringResource(R.string.edit))
+                                        DropdownMenu(
+                                            expanded = showDropdown,
+                                            onDismissRequest = { showDropdown = false }
+                                        ) {
+                                            DropdownMenuItem(
+                                                leadingIcon = {
+                                                    Icon(
+                                                        Icons.Rounded.Edit,
+                                                        contentDescription = null
+                                                    )
+                                                },
+                                                text = {
+                                                    Text(stringResource(R.string.edit))
+                                                },
+                                                onClick = {
+                                                    viewModel.editAction(item)
+                                                    showDropdown = false
+                                                }
+                                            )
+                                            DropdownMenuItem(
+                                                leadingIcon = {
+                                                    Icon(
+                                                        Icons.Rounded.Delete,
+                                                        contentDescription = null
+                                                    )
+                                                },
+                                                text = {
+                                                    Text(stringResource(R.string.menu_delete))
+                                                },
+                                                onClick = {
+                                                    viewModel.removeAction(item)
+                                                    showDropdown = false
+                                                }
+                                            )
+                                        }
+                                    }
                                 }
                             )
                         } else {

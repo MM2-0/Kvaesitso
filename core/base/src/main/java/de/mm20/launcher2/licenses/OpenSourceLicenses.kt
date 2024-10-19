@@ -220,4 +220,12 @@ val OpenSourceLicenses = arrayOf(
         url = "https://github.com/woheller69/AndroidAddressFormatter",
         copyrightNote = "Copyright (c) 2022 woheller69",
     ),
+    OpenSourceLibrary(
+        name = "String Similarity for Kotlin",
+        description = "A library that implements various measures of string similarity and distance.",
+        licenseName = R.string.mit_license_name,
+        licenseText = R.raw.license_mit,
+        url = "https://github.com/aallam/string-similarity-kotlin",
+        copyrightNote = "Copyright (c) 2023 Mouaad Aallam",
+    ),
 )

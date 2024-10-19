@@ -29,7 +29,7 @@ class CrashReportScreenVM : ViewModel() {
         val body =
             "## Description\n\n" +
                     "*Please provide as many information about the crash as possible (What did you do before the crash happened? Steps to reproduce?)*\n\n" +
-                    "## Strack trace\n\n" +
+                    "## Stack trace\n\n" +
                     "```\n" +
                     "${stacktrace}\n" +
                     "```\n\n" +

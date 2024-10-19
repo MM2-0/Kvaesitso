@@ -6,7 +6,6 @@ import android.media.session.PlaybackState.CustomAction
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -74,6 +73,8 @@ import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
@@ -257,12 +258,16 @@ fun MusicWidget(widget: MusicWidget) {
                             .clip(MaterialTheme.shapes.small)
                             .combinedClickable(
                                 onClick = {
-                                    viewModel.openPlayer()
+                                    viewModel.openPlayer(context)
                                 },
                                 onLongClick = {
                                     viewModel.openPlayerSelector(context)
-                                }
+                                },
                             )
+                            .semantics {
+                                contentDescription =
+                                    context.getString(R.string.music_widget_open_player)
+                            }
                             .conditional(
                                 art == null,
                                 Modifier.background(
@@ -333,7 +338,7 @@ fun MusicWidget(widget: MusicWidget) {
                     }) {
                     Icon(
                         imageVector = Icons.Rounded.SkipPrevious,
-                        null
+                        stringResource(R.string.music_widget_previous_track)
                     )
                 }
             }
@@ -350,7 +355,11 @@ fun MusicWidget(widget: MusicWidget) {
                         playPauseIcon,
                         atEnd = playbackState == PlaybackState.Playing
                     ),
-                    contentDescription = null
+                    contentDescription = if (playbackState == PlaybackState.Playing) {
+                        stringResource(R.string.music_widget_pause)
+                    } else {
+                        stringResource(R.string.music_widget_play)
+                    }
                 )
             }
             if (supportedActions.skipToNext) {
@@ -359,7 +368,7 @@ fun MusicWidget(widget: MusicWidget) {
                 }) {
                     Icon(
                         imageVector = Icons.Rounded.SkipNext,
-                        null
+                        stringResource(R.string.music_widget_next_track)
                     )
                 }
             }

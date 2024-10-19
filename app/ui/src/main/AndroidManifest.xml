@@ -53,7 +53,7 @@
             android:exported="true"
             android:label="@string/settings"
             android:launchMode="singleTop"
-            android:parentActivityName=".launcher.SharedLauncherActivity"
+            android:parentActivityName=".launcher.LauncherActivity"
             android:taskAffinity="de.mm20.launcher2.settings"
             android:theme="@style/SettingsTheme.NoActionBar"
             android:enableOnBackInvokedCallback="true"
@@ -64,7 +64,17 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.mm20.launcher2.ui.launcher.SharedLauncherActivity" />
+                android:value="de.mm20.launcher2.ui.launcher.LauncherActivity" />
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"/>
+                <data android:path="/in-app"/>
+                <data android:path="/in-app.html"/>
+                <data android:host="kvaesitso.mm20.de"/>
+            </intent-filter>
         </activity>
 
         <activity android:name=".launcher.sheets.BindAndConfigureAppWidgetActivity" />

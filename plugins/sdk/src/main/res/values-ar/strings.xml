@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="request_permission_message"><b>%1$s</b> يريد الوصول إلى البيانات من <b>%2$s</b>.</string>
+    <string name="request_permission_deny_button">رفض</string>
+    <string name="request_permission_allow_button">اسمح</string>
+</resources>

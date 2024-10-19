@@ -4,10 +4,10 @@ import android.content.Context
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.unitconverter.*
 
-class TemperatureConverter(context: Context) : Converter {
+internal class TemperatureConverter(context: Context) : Converter {
     override val dimension = Dimension.Temperature
 
-    private val units = listOf(
+    val units = listOf(
         TemperatureMeasureUnit(
             context.getString(R.string.unit_degree_celsius_symbol),
             R.plurals.unit_degree_celsius,
@@ -100,16 +100,23 @@ class TemperatureConverter(context: Context) : Converter {
         }
         throw IllegalArgumentException()
     }
+
+    override suspend fun getSupportedUnits(): List<MeasureUnit> {
+        return units
+    }
 }
 
-private data class TemperatureMeasureUnit(
+data class TemperatureMeasureUnit(
     override val symbol: String,
-    override val nameResource: Int,
+    val nameResource: Int,
     val unit: TemperatureUnit
-) :
-    MeasureUnit
+) : MeasureUnit {
+    override fun formatName(context: Context, value: Double): String {
+        return context.resources.getQuantityString(nameResource, value.toInt())
+    }
+}
 
-private enum class TemperatureUnit {
+enum class TemperatureUnit {
     DegreeCelsius,
     DegreeFahrenheit,
     Kelvin,

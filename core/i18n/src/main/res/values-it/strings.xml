@@ -785,4 +785,38 @@
         <item quantity="other">%1$s notifiche</item>
     </plurals>
     <string name="weather_widget_no_provider">Nessun fornitore meteo selezionato oppure il fornitore selezionato non è disponibile</string>
+    <string name="action_done">Fatto</string>
+    <string name="menu_show_filters">Mostra filtri</string>
+    <string name="menu_hide_filters">Nascondi filtri</string>
+    <string name="music_widget_previous_track">Titolo precedente</string>
+    <string name="music_widget_play">Riproduci</string>
+    <string name="apps_profile_private">Privato</string>
+    <string name="action_more_actions">Più azioni</string>
+    <string name="action_clear">Cancella contenuto campo di testo</string>
+    <string name="music_widget_next_track">Titolo successivo</string>
+    <string name="music_widget_pause">Pausa</string>
+    <string name="music_widget_open_player">Apri lettore</string>
+    <string name="calendar_widget_previous_day">Giorno precedente</string>
+    <string name="calendar_widget_next_day">Giorno successivo</string>
+    <string name="calendar_widget_create_event">Crea nuovo evento</string>
+    <string name="calendar_widget_open_calendar">Apri app calendario</string>
+    <string name="plugin_type_calendar">Calendario</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">Selezionato %1$s elenco</item>
+        <item quantity="many">Selezionati %1$s elenchi</item>
+        <item quantity="other">Selezionati %1$s elenchi</item>
+    </plurals>
+    <string name="task_due_time">Scadenza alle %1$s</string>
+    <string name="preference_calendar_hide_completed">Nascondi attività completate</string>
+    <string name="preference_search_supportedunits">Unità supportate</string>
+    <string name="task_due_date">Scadenza il %1$s</string>
+    <string name="task_due_today">Scadenza oggi</string>
+    <string name="profile_work_profile_state_locked">Le app di lavoro sono in pausa.</string>
+    <string name="profile_work_profile_action_unlock">Riattiva</string>
+    <string name="profile_work_profile_action_lock">Metti in pausa app di lavoro</string>
+    <string name="profile_private_profile_state_locked">Lo spazio privato è bloccato.</string>
+    <string name="profile_private_profile_action_unlock">Sblocca</string>
+    <string name="profile_private_profile_action_lock">Blocca spazio privato</string>
+    <string name="hint_drag_and_drop_reorder">Tieni premuto e trascina gli elementi per riorganizzarli</string>
+    <string name="app_label_locked_profile">Bloccata</string>
 </resources>

@@ -67,7 +67,7 @@ fun <T : SavableSearchable> LazyListScope.ListResults(
             reverse = reverse,
             isExpanded = showDetails,
             isBeforeExpanded = selectedIndex - 1 == it,
-            isAfterExpanded = selectedIndex + 1 == it,
+            isAfterExpanded = selectedIndex >= 0 && selectedIndex + 1 == it,
         ) {
             itemContent(item, showDetails, it)
         }

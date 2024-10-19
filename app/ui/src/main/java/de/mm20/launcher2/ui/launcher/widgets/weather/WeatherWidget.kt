@@ -51,6 +51,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
@@ -400,7 +402,10 @@ fun WeatherTimeSelector(
                     verticalArrangement = Arrangement.SpaceEvenly
                 ) {
                     WeatherIcon(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                            .semantics {
+                                contentDescription = fc.condition
+                            },
                         icon = weatherIconById(fc.icon),
                         night = fc.night
                     )

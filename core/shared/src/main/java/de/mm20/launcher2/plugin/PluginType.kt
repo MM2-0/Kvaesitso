@@ -4,4 +4,5 @@ enum class PluginType {
     FileSearch,
     Weather,
     LocationSearch,
+    Calendar,
 }

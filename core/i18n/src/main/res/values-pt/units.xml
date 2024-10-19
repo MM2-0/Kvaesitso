@@ -319,4 +319,22 @@
         <item quantity="many">onças</item>
         <item quantity="other">onças</item>
     </plurals>
+    <string name="dimension_length">Comprimento</string>
+    <plurals name="unit_megabyte">
+        <item quantity="one">megabyte</item>
+        <item quantity="many">megabytes</item>
+        <item quantity="other">megabytes</item>
+    </plurals>
+    <string name="dimension_mass">Massa</string>
+    <string name="dimension_velocity">Velocidade</string>
+    <string name="dimension_volume">Volume</string>
+    <string name="dimension_area">Área</string>
+    <string name="dimension_currency">Moeda</string>
+    <string name="dimension_data">Dados</string>
+    <string name="dimension_bitrate">Taxa de dados</string>
+    <string name="dimension_pressure">Pressão</string>
+    <string name="dimension_energy">Energia</string>
+    <string name="dimension_frequency">Frequência</string>
+    <string name="dimension_temperature">Temperatura</string>
+    <string name="dimension_time">Tempo</string>
 </resources>

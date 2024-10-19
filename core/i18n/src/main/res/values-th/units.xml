@@ -216,4 +216,17 @@
         <item quantity="other">เดซิเมตร</item>
     </plurals>
     <string name="unit_decimeter_symbol">ดม.</string>
+    <string name="dimension_pressure">ความดัน</string>
+    <string name="dimension_length">ความยาว</string>
+    <string name="dimension_mass">มวล</string>
+    <string name="dimension_velocity">ความเร็ว</string>
+    <string name="dimension_volume">ปริมาตร</string>
+    <string name="dimension_area">พื้นที่</string>
+    <string name="dimension_currency">สกุลเงิน</string>
+    <string name="dimension_data">ข้อมูล</string>
+    <string name="dimension_bitrate">อัตราบิต</string>
+    <string name="dimension_energy">พลังงาน</string>
+    <string name="dimension_frequency">ความถี่</string>
+    <string name="dimension_temperature">อุณหภูมิ</string>
+    <string name="dimension_time">เวลา</string>
 </resources>

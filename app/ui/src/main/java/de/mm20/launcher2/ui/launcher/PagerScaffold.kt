@@ -591,7 +591,7 @@ fun PagerScaffold(
                 },
                 navigationIcon = {
                     IconButton(onClick = { viewModel.setWidgetEditMode(false) }) {
-                        Icon(imageVector = Icons.Rounded.Done, contentDescription = null)
+                        Icon(imageVector = Icons.Rounded.Done, contentDescription = stringResource(R.string.action_done))
                     }
                 },
             )

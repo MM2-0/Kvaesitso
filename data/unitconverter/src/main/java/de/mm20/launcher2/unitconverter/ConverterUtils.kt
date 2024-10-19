@@ -8,9 +8,7 @@ import kotlin.math.roundToInt
 internal object ConverterUtils {
 
     fun formatName(context: Context, unit: MeasureUnit, value: Double): String {
-        val resId = unit.nameResource
-        val text = context.resources.getQuantityString(resId, value.roundToInt())
-        return text
+        return unit.formatName(context, value)
     }
 
     fun formatValue(context: Context, unit: MeasureUnit, value: Double): String {

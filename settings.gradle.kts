@@ -10,7 +10,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // For tinypinyin
     }
 }
 
@@ -69,3 +68,4 @@ include(":data:locations")
 include(":services:plugins")
 include(":core:devicepose")
 include(":core:profiles")
+include(":libs:tinypinyin")

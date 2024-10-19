@@ -46,7 +46,7 @@ abstract class QueryPluginApi<TQuery, TResult>(
             val uri = Uri.Builder()
                 .scheme("content")
                 .authority(pluginAuthority)
-                .path(LocationPluginContract.Paths.Search)
+                .path(SearchPluginContract.Paths.Search)
                 .appendQueryParameters(query)
                 .appendQueryParameter(
                     SearchPluginContract.Params.AllowNetwork,

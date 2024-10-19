@@ -29,6 +29,10 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -136,10 +140,18 @@ fun WidgetColumn(
 
         val editButton by viewModel.editButton.collectAsState()
         if (editMode || editButton == true) {
+            val title = stringResource(
+                if (editMode) R.string.widget_add_widget
+                else R.string.menu_edit_widgets
+            )
             val icon =
                 AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_edit_add)
             ExtendedFloatingActionButton(
                 modifier = Modifier
+                    .semantics {
+                        role = Role.Button
+                        contentDescription = title
+                    }
                     .padding(16.dp)
                     .align(Alignment.CenterHorizontally),
                 icon = {
@@ -151,12 +163,7 @@ fun WidgetColumn(
                     )
                 },
                 text = {
-                    Text(
-                        stringResource(
-                            if (editMode) R.string.widget_add_widget
-                            else R.string.menu_edit_widgets
-                        )
-                    )
+                    Text(title)
                 }, onClick = {
                     if (!editMode) {
                         onEditModeChange(true)

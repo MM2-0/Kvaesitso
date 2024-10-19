@@ -15,8 +15,16 @@ class CurrencyRepository(
     private val context: Context,
 ) {
 
+    private fun getOwnCurrency(): String {
+        return try {
+            java.util.Currency.getInstance(Locale.getDefault()).currencyCode ?: "USD"
+        } catch (e: IllegalArgumentException) {
+            "USD"
+        }
+    }
+
     private val currencySymbolAliases = buildMap {
-        val ownCurrency = java.util.Currency.getInstance(Locale.getDefault()).currencyCode ?: "USD"
+        val ownCurrency = getOwnCurrency()
 
         put("€", "EUR")
 
@@ -150,6 +158,12 @@ class CurrencyRepository(
                 }
                 listOf(toCurrency to value * to.value / from.value)
             }
+        }
+    }
+
+    suspend fun getKnownUnits(): List<String> {
+        return withContext(Dispatchers.IO) {
+            AppDatabase.getInstance(context).currencyDao().getAllCurrencies().map { it.symbol }
         }
     }
 
