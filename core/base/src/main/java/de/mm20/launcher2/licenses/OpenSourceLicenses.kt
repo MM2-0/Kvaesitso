@@ -228,4 +228,12 @@ val OpenSourceLicenses = arrayOf(
         url = "https://github.com/aallam/string-similarity-kotlin",
         copyrightNote = "Copyright (c) 2023 Mouaad Aallam",
     ),
+    OpenSourceLibrary(
+        name = "osm-opening-hours",
+        description = "Kotlin multiplatform library to parse OpenStreetMap opening hours",
+        licenseName = R.string.mit_license_name,
+        licenseText = R.raw.license_mit,
+        url = "https://github.com/westnordost/osm-opening-hours",
+        copyrightNote = "Copyright (c) 2024 Tobias Zwick",
+    )
 )
