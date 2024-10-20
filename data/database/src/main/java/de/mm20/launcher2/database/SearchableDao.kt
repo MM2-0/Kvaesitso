@@ -209,4 +209,13 @@ interface SearchableDao {
 
     @Query("SELECT pinPosition FROM Searchable WHERE `key` = :key UNION SELECT 0 as pinPosition ORDER BY pinPosition DESC LIMIT 1")
     fun isPinned(key: String): Flow<Boolean>
+
+    @Transaction
+    suspend fun replace(key: String, item: SavedSearchableUpdateContentEntity) {
+        updateKey(key, item.key)
+        update(item)
+    }
+
+    @Query("UPDATE Searchable SET `key` = :newKey WHERE `key` = :oldKey")
+    suspend fun updateKey(oldKey: String, newKey: String)
 }

@@ -6,6 +6,7 @@ import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
+import de.mm20.launcher2.database.entities.SavedSearchableUpdateContentEntity
 import de.mm20.launcher2.database.entities.SavedSearchableUpdatePinEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.preferences.WeightFactor
@@ -51,6 +52,16 @@ interface SavableSearchableRepository : Backupable {
         pinned: Boolean? = null,
         launchCount: Int? = null,
         weight: Double? = null,
+    )
+
+    /**
+     * Replace a searchable in the database.
+     * The new entry will inherit the visibility, launch count, weight and pin position of the old entry,
+     * but it will have a different key and searchable.
+     */
+    fun replace(
+        key: String,
+        newSearchable: SavableSearchable,
     )
 
     /**
@@ -325,6 +336,19 @@ internal class SavableSearchableRepositoryImpl(
     override fun delete(searchable: SavableSearchable) {
         scope.launch {
             database.searchableDao().delete(searchable.key)
+        }
+    }
+
+    override fun replace(key: String, newSearchable: SavableSearchable) {
+        scope.launch {
+            database.searchableDao().replace(
+                key,
+                SavedSearchableUpdateContentEntity(
+                    key = newSearchable.key,
+                    type = newSearchable.domain,
+                    serializedSearchable = newSearchable.serialize() ?: return@launch
+                )
+            )
         }
     }
 
