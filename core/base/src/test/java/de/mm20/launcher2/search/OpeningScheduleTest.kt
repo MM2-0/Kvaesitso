@@ -18,8 +18,7 @@ class OpeningScheduleTest(val date: LocalDateTime, val expected: Boolean) {
 
     @Test
     fun isOpen() {
-        val openingSchedule = OpeningSchedule(
-            isTwentyFourSeven = false,
+        val openingSchedule = OpeningSchedule.Hours(
             /**
              * Monday: 18:00 - Tue. 01:00
              * Tuesday: 10:00 - 00:00
