@@ -15,6 +15,7 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
     val customizeSearchableSheetShown = mutableStateOf<SavableSearchable?>(null)
     val editFavoritesSheetShown = mutableStateOf(false)
     val hiddenItemsSheetShown = mutableStateOf(false)
+    val editTagSheetShown = mutableStateOf<String?>(null)
 
     init {
         registryOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
@@ -25,8 +26,9 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
 
                 val state = registry.consumeRestoredStateForKey(PROVIDER)
 
-                editFavoritesSheetShown.value = state?.getBoolean(FAVORITES) ?: false
-                hiddenItemsSheetShown.value = state?.getBoolean(HIDDEN) ?: false
+                editFavoritesSheetShown.value = state?.getBoolean(FAVORITES) == true
+                hiddenItemsSheetShown.value = state?.getBoolean(HIDDEN) == true
+                editTagSheetShown.value = state?.getString(TAG)
             }
         })
     }
@@ -35,6 +37,7 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
         return bundleOf(
             FAVORITES to editFavoritesSheetShown.value,
             HIDDEN to hiddenItemsSheetShown.value,
+            TAG to editTagSheetShown.value,
         )
     }
 
@@ -62,10 +65,19 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
         hiddenItemsSheetShown.value = false
     }
 
+    fun showEditTagSheet(tagName: String) {
+        editTagSheetShown.value = tagName
+    }
+
+    fun dismissEditTagSheet() {
+        editTagSheetShown.value = null
+    }
+
     companion object {
         private const val PROVIDER = "bottom_sheet_manager"
         private const val FAVORITES = "favorites"
         private const val HIDDEN = "hidden"
+        private const val TAG = "tag"
         private const val WIDGETS = "widgets"
 
     }
