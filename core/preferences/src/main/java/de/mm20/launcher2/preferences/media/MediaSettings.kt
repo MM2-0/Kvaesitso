@@ -22,7 +22,7 @@ class MediaSettings internal constructor(
 
     fun setLists(allowList: Set<String>, denyList: Set<String>) {
         launcherDataStore.update {
-            it.copy(mediaAllowList = allowList)
+            it.copy(mediaAllowList = allowList, mediaDenyList = denyList)
         }
     }
 
