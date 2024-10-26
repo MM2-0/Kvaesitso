@@ -68,7 +68,7 @@ fun LauncherSearchBar(
 
     val searchVM: SearchVM = viewModel()
     val hiddenItemsButtonEnabled by searchVM.hiddenResultsButton.collectAsState(false)
-    val hiddenItems by searchVM.hiddenResults
+    val hiddenItems = searchVM.hiddenResults
 
     val sheetManager = LocalBottomSheetManager.current
 

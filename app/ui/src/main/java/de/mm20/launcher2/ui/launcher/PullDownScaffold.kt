@@ -47,6 +47,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -106,7 +107,7 @@ fun PullDownScaffold(
     val density = LocalDensity.current
     val context = LocalContext.current
 
-    val actions by searchVM.searchActionResults
+    val actions = searchVM.searchActionResults
 
     val isSearchOpen by viewModel.isSearchOpen
     val isWidgetEditMode by viewModel.isWidgetEditMode
@@ -116,7 +117,7 @@ fun PullDownScaffold(
 
     val pagerState = rememberPagerState { 2 }
 
-    val offsetY = remember { mutableStateOf(0f) }
+    val offsetY = remember { mutableFloatStateOf(0f) }
     val maxOffset = with(density) { 64.dp.toPx() }
     val toggleSearchThreshold = with(density) { 48.dp.toPx() }
 
@@ -153,13 +154,13 @@ fun PullDownScaffold(
 
     val isOverThreshold by remember {
         derivedStateOf {
-            offsetY.value.absoluteValue > toggleSearchThreshold
+            offsetY.floatValue.absoluteValue > toggleSearchThreshold
         }
     }
 
     val dragProgress by remember {
         derivedStateOf {
-            (offsetY.value.absoluteValue / toggleSearchThreshold).coerceAtMost(1f)
+            (offsetY.floatValue.absoluteValue / toggleSearchThreshold).coerceAtMost(1f)
         }
     }
 
@@ -236,7 +237,7 @@ fun PullDownScaffold(
         }
     }
 
-    val searchBarOffset = remember { mutableStateOf(0f) }
+    val searchBarOffset = remember { mutableFloatStateOf(0f) }
 
     val maxSearchBarOffset = with(density) { 128.dp.toPx() }
 
@@ -281,7 +282,7 @@ fun PullDownScaffold(
     }
 
     LaunchedEffect(isWidgetEditMode) {
-        if (!isWidgetEditMode) searchBarOffset.value = 0f
+        if (!isWidgetEditMode) searchBarOffset.floatValue = 0f
     }
 
     val handleBackOrHomeEvent = {
@@ -321,7 +322,7 @@ fun PullDownScaffold(
     LaunchedEffect(isOverThreshold) {
         if (isOverThreshold) {
             view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-        } else if (offsetY.value != 0f) {
+        } else if (offsetY.floatValue != 0f) {
             view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE)
         }
     }
@@ -342,15 +343,15 @@ fun PullDownScaffold(
                 val canPullUp = isSearchOpen && isSearchAtBottom
 
                 val consumed = when {
-                    canPullUp && available.y < 0 || offsetY.value < 0 -> {
+                    canPullUp && available.y < 0 || offsetY.floatValue < 0 -> {
                         val consumed = available.y
-                        offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(-maxOffset, 0f)
+                        offsetY.floatValue = (offsetY.floatValue + (consumed * 0.5f)).coerceIn(-maxOffset, 0f)
                         consumed
                     }
 
-                    canPullDown && available.y > 0 || offsetY.value > 0 -> {
+                    canPullDown && available.y > 0 || offsetY.floatValue > 0 -> {
                         val consumed = available.y
-                        offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(0f, maxOffset)
+                        offsetY.floatValue = (offsetY.floatValue + (consumed * 0.5f)).coerceIn(0f, maxOffset)
                         consumed
                     }
 
@@ -367,17 +368,17 @@ fun PullDownScaffold(
             ): Offset {
                 val deltaSearchBarOffset =
                     consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
-                searchBarOffset.value =
-                    (searchBarOffset.value + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
+                searchBarOffset.floatValue =
+                    (searchBarOffset.floatValue + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
                 return super.onPostScroll(consumed, available, source)
             }
 
             override suspend fun onPreFling(available: Velocity): Velocity {
-                if (offsetY.value > toggleSearchThreshold || offsetY.value < -toggleSearchThreshold) {
+                if (offsetY.floatValue > toggleSearchThreshold || offsetY.floatValue < -toggleSearchThreshold) {
                     viewModel.toggleSearch()
                 }
                 if (!isWidgetEditMode) gestureManager.dispatchDragEnd()
-                if (offsetY.value != 0f) {
+                if (offsetY.floatValue != 0f) {
                     offsetY.animateTo(0f)
                     return available
                 }
@@ -406,7 +407,7 @@ fun PullDownScaffold(
                     }
                 )
             }
-            .offset { IntOffset(0, offsetY.value.toInt()) },
+            .offset { IntOffset(0, offsetY.floatValue.toInt()) },
         contentAlignment = Alignment.TopCenter
     ) {
         BoxWithConstraints(
@@ -576,7 +577,7 @@ fun PullDownScaffold(
         val searchBarLevel by remember {
             derivedStateOf {
                 when {
-                    offsetY.value != 0f -> SearchBarLevel.Raised
+                    offsetY.floatValue != 0f -> SearchBarLevel.Raised
                     !isSearchOpen && isWidgetsAtStart && (fillClockHeight || !bottomSearchBar) -> SearchBarLevel.Resting
                     isSearchOpen && isSearchAtTop && !bottomSearchBar -> SearchBarLevel.Active
                     isSearchOpen && isSearchAtBottom && bottomSearchBar -> SearchBarLevel.Active
@@ -613,7 +614,7 @@ fun PullDownScaffold(
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
             bottomSearchBar = bottomSearchBar,
             searchBarOffset = {
-                (if (searchBarFocused || fixedSearchBar) 0 else searchBarOffset.value.toInt() * (if (bottomSearchBar) 1 else -1)) +
+                (if (searchBarFocused || fixedSearchBar) 0 else searchBarOffset.floatValue.toInt() * (if (bottomSearchBar) 1 else -1)) +
                         with(density) {
                             (editModeSearchBarOffset - if (bottomSearchBar) keyboardFilterBarPadding else 0.dp)
                                 .toPx()

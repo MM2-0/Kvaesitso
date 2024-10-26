@@ -147,7 +147,7 @@ fun AssistantScaffold(
     val density = LocalDensity.current
     val maxSearchBarOffset = with(density) { 128.dp.toPx() }
     var searchBarOffset by remember {
-        mutableStateOf(0f)
+        mutableFloatStateOf(0f)
     }
 
     val nestedScrollConnection = remember {
@@ -159,7 +159,7 @@ fun AssistantScaffold(
             }
         }
     }
-    val actions by searchVM.searchActionResults
+    val actions = searchVM.searchActionResults
     val webSearchPadding by animateDpAsState(
         if (actions.isEmpty()) 0.dp else 48.dp
     )

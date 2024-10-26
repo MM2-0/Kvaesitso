@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
@@ -75,22 +74,22 @@ fun SearchColumn(
     val hideFavs by viewModel.hideFavorites
     val favoritesEnabled by viewModel.favoritesEnabled.collectAsState(false)
 
-    val apps by viewModel.appResults
-    val workApps by viewModel.workAppResults
-    val privateApps by viewModel.privateSpaceAppResults
+    val apps = viewModel.appResults
+    val workApps = viewModel.workAppResults
+    val privateApps = viewModel.privateSpaceAppResults
     val profiles by viewModel.profiles.collectAsState(emptyList())
     val profileStates by viewModel.profileStates.collectAsState(emptyList())
 
-    val appShortcuts by viewModel.appShortcutResults
-    val contacts by viewModel.contactResults
-    val files by viewModel.fileResults
-    val events by viewModel.calendarResults
-    val unitConverter by viewModel.unitConverterResults
-    val calculator by viewModel.calculatorResults
-    val wikipedia by viewModel.articleResults
-    val locations by viewModel.locationResults
-    val website by viewModel.websiteResults
-    val hiddenResults by viewModel.hiddenResults
+    val appShortcuts = viewModel.appShortcutResults
+    val contacts = viewModel.contactResults
+    val files = viewModel.fileResults
+    val events = viewModel.calendarResults
+    val unitConverter = viewModel.unitConverterResults
+    val calculator = viewModel.calculatorResults
+    val wikipedia = viewModel.articleResults
+    val locations = viewModel.locationResults
+    val website = viewModel.websiteResults
+    val hiddenResults = viewModel.hiddenResults
 
     val bestMatch by viewModel.bestMatch
 
