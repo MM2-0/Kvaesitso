@@ -226,10 +226,10 @@
     <string name="missing_permission_appshortcuts_create">Stel %1$s in als standaard startschermapplicatie om applicatiesnelkoppelingen te maken.</string>
     <string name="preference_screen_about_summary">Applicatie- en licentie-informatie</string>
     <string name="preference_screen_appearance_summary">Pas het uitzicht aan</string>
-    <string name="preference_weather_provider">Provider</string>
+    <string name="preference_weather_provider">Aanbieder</string>
     <string name="provider_metno">MET Norway</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
-    <string name="provider_brightsky">Deutscher Wetterdienst (Enkel Duitsland)</string>
+    <string name="provider_brightsky">Deutscher Wetterdienst (Alleen Duitsland)</string>
     <string name="provider_here">HERE</string>
     <string name="preference_category_location">Locatie</string>
     <string name="preference_automatic_location">Automatische locatie</string>
@@ -307,7 +307,7 @@
     <string name="edit_favorites_dialog_new_tag">Label aanmaken…</string>
     <string name="preference_clockwidget_favorites_part_summary">Eerste rij van de vastgezette items tonen</string>
     <string name="preference_clockwidget_music_part">Media</string>
-    <string name="preference_clockwidget_alarm_part_summary">Alarmen die afgaan in de komende 15 minuten tonen</string>
+    <string name="preference_clockwidget_alarm_part_summary">Alarmen tonen die binnen 8 uur zullen afgaan</string>
     <string name="preference_screen_backup_summary">Launchergegevens exporteren en importeren</string>
     <string name="preference_backup">Backup</string>
     <string name="preference_backup_summary">Voorkeuren en launchergegevens exporteren</string>
@@ -429,7 +429,7 @@
     <string name="search_action_timer">Timer starten</string>
     <string name="search_action_contact">Contact maken</string>
     <string name="search_action_open_url">Website bekijken</string>
-    <string name="search_action_event">Event plannen</string>
+    <string name="search_action_event">Afspraak plannen</string>
     <string name="create_search_action_type">Welke actie wil je maken\?</string>
     <string name="create_search_action_type_web">Zoeken op website</string>
     <string name="create_search_action_type_app">Zoeken in applicatie</string>
@@ -663,9 +663,9 @@
     <string name="plugin_state_setup_required">Je moet deze plug-in eerst instellen</string>
     <string name="plugin_action_setup">Instellen</string>
     <string name="plugin_type_filesearch">Bestanden zoeken</string>
-    <string name="plugin_type_weather">Weerprovider</string>
-    <string name="plugin_weather_provider_enable">Instellen als weerprovider</string>
-    <string name="plugin_weather_provider_enabled">Momenteel ingesteld als weerprovider</string>
+    <string name="plugin_type_weather">Aanbieder van weergegevens</string>
+    <string name="plugin_weather_provider_enable">Instellen als aanbieder van weer</string>
+    <string name="plugin_weather_provider_enabled">Momenteel ingesteld als aanbieder van weer</string>
     <string name="clock_style_digital2">Eenvoudig</string>
     <string name="clock_style_binary">Binair</string>
     <string name="clock_style_analog">Wijzers</string>
@@ -680,7 +680,7 @@
     <string name="preference_filter_bar_summary">Snelle filters tonen boven het toetsenbord</string>
     <string name="filter_settings_network_warning">De huidige filters staan onlineresultaten toe. Je zoektermen kunnen per ongeluk naar externe webdiensten gestuurd worden. Dit is niet aanbevolen voor jouw privacy.</string>
     <string name="preference_location_managed">Door plug-in beheerd</string>
-    <string name="preference_location_managed_summary">De locatie voor deze provider wordt beheerd door de app van de plug-in</string>
+    <string name="preference_location_managed_summary">De locatie voor deze aanbieder wordt beheerd door de app van de plug-in</string>
     <string name="preference_customize_filter_bar">Filterbalk aanpassen</string>
     <string name="preference_customize_filter_bar_summary">Aanpassen welke items getoond worden in de filterbalk</string>
     <string name="preference_plugin_enable">Plug-in activeren</string>
@@ -757,4 +757,57 @@
     <string name="item_visibility_calendar_default">Kalender widget &amp; Zoekresultaten</string>
     <string name="item_visibility_search_only">Zoekresultaten</string>
     <string name="item_visibility_hidden">Nooit</string>
+    <string name="contact_info_home">Thuis</string>
+    <string name="contact_info_work">Werk</string>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s postadres</item>
+        <item quantity="other">%1$s postadressen</item>
+    </plurals>
+    <string name="contact_info_mobile">Mobiel</string>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s emailadres</item>
+        <item quantity="other">%1$s emailadressen</item>
+    </plurals>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s telefoonnumer</item>
+        <item quantity="other">%1$s telefoonnummers</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s melding</item>
+        <item quantity="other">%1$s meldingen</item>
+    </plurals>
+    <string name="weather_widget_no_provider">Geen aanbieder van weergegevens geselecteerd of de geselecteerde aanbieder is niet beschikbaar</string>
+    <string name="plugin_type_calendar">Kalender</string>
+    <string name="music_widget_previous_track">Vorige titel</string>
+    <string name="music_widget_next_track">Volgende titel</string>
+    <string name="music_widget_play">Afspelen</string>
+    <string name="action_done">Klaar</string>
+    <string name="action_more_actions">Meer acties</string>
+    <string name="action_clear">Wissen</string>
+    <string name="menu_show_filters">Filters weergeven</string>
+    <string name="menu_hide_filters">Filters verbergen</string>
+    <string name="music_widget_pause">Pauze</string>
+    <string name="music_widget_open_player">Speler openen</string>
+    <string name="calendar_widget_previous_day">Vorige dag</string>
+    <string name="calendar_widget_next_day">Volgende dag</string>
+    <string name="calendar_widget_open_calendar">Kalender-app openen</string>
+    <string name="calendar_widget_create_event">Nieuwe afspraak aanmaken</string>
+    <string name="preference_search_supportedunits">Ondersteunde eenheden</string>
+    <string name="profile_work_profile_action_lock">Werk-apps pauzeren</string>
+    <string name="profile_private_profile_action_unlock">Ontgrendelen</string>
+    <string name="profile_work_profile_state_locked">Werk-apps zijn onderbroken.</string>
+    <string name="hint_drag_and_drop_reorder">Houd items vast en sleep ze om ze opnieuw te rangschikken</string>
+    <string name="task_due_time">Gepland voor %1$s</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s lijst geselecteerd</item>
+        <item quantity="other">%1$s lijsten geselecteerd</item>
+    </plurals>
+    <string name="preference_calendar_hide_completed">Voltooide taken verbergen</string>
+    <string name="profile_work_profile_action_unlock">Pauze onderbreken</string>
+    <string name="task_due_date">Gepland voor %1$s</string>
+    <string name="task_due_today">Voor vandaag</string>
+    <string name="apps_profile_private">Privé</string>
+    <string name="app_label_locked_profile">Vergrendeld</string>
+    <string name="profile_private_profile_action_lock">Privéruimte vergrendelen</string>
+    <string name="profile_private_profile_state_locked">Privéruimte is vergrendeld.</string>
 </resources>

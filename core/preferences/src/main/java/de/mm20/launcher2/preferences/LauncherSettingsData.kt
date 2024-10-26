@@ -53,7 +53,10 @@ data class LauncherSettingsData internal constructor(
 
     val contactSearchEnabled: Boolean = true,
 
+    @Deprecated("Use calendarSearchProviders `local` instead")
     val calendarSearchEnabled: Boolean = true,
+    val calendarSearchProviders: Set<String> = setOf("local"),
+    val calendarSearchExcludedCalendars: Set<String> = setOf(),
 
     val shortcutSearchEnabled: Boolean = true,
 
@@ -62,11 +65,11 @@ data class LauncherSettingsData internal constructor(
     val unitConverterEnabled: Boolean = true,
     val unitConverterCurrencies: Boolean = true,
 
-    val wikipediaSearchEnabled: Boolean = false,
-    val wikipediaSearchImages: Boolean = false,
+    val wikipediaSearchEnabled: Boolean = true,
+    val wikipediaSearchImages: Boolean = true,
     val wikipediaCustomUrl: String? = null,
 
-    val websiteSearchEnabled: Boolean = false,
+    val websiteSearchEnabled: Boolean = true,
 
     val badgesNotifications: Boolean = true,
     val badgesSuspendedApps: Boolean = true,
@@ -86,7 +89,6 @@ data class LauncherSettingsData internal constructor(
     val searchBarFixed: Boolean = false,
 
     val searchResultsReversed: Boolean = false,
-    val searchResultOrder: SearchResultOrder = SearchResultOrder.Weighted,
     val separateWorkProfile: Boolean = true,
 
     val rankingWeightFactor: WeightFactor = WeightFactor.Default,
@@ -141,8 +143,8 @@ data class LauncherSettingsData internal constructor(
     val locationSearchImperialUnits: Boolean = false,
     val locationSearchRadius: Int = 1500,
     val locationSearchHideUncategorized: Boolean = true,
-    val locationSearchOverpassUrl: String = LocationSearchSettings.DefaultOverpassUrl,
-    val locationSearchTileServer: String = LocationSearchSettings.DefaultTileServerUrl,
+    val locationSearchOverpassUrl: String? = null,
+    val locationSearchTileServer: String? = null,
     val locationSearchShowMap: Boolean = true,
     val locationSearchShowPositionOnMap: Boolean = false,
     val locationSearchThemeMap: Boolean = true,
@@ -371,12 +373,6 @@ sealed interface GestureAction {
     data class Launch(val key: String?) : GestureAction
 }
 
-@Serializable
-enum class SearchResultOrder {
-    Weighted,
-    Alphabetical,
-    LaunchCount,
-}
 
 @Serializable
 enum class WeightFactor {

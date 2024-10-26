@@ -10,6 +10,7 @@ import android.content.pm.ShortcutInfo
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.Bundle
 import android.os.Process
+import android.os.UserHandle
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
@@ -17,8 +18,8 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.search.AppProfile
 import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -32,6 +33,7 @@ internal data class LauncherShortcut(
     override val appName: String?,
     internal val userSerialNumber: Long,
     override val labelOverride: String? = null,
+    override val score: ResultScore = ResultScore.Unspecified,
 ) : AppShortcut {
 
     override val domain: String = Domain
@@ -41,9 +43,13 @@ internal data class LauncherShortcut(
     override val packageName: String
         get() = launcherShortcut.`package`
 
+    override val user: UserHandle
+        get() = launcherShortcut.userHandle
+
     constructor(
         context: Context,
         launcherShortcut: ShortcutInfo,
+        score: ResultScore = ResultScore.Unspecified,
     ): this(
         launcherShortcut = launcherShortcut,
         appName = try {
@@ -52,7 +58,8 @@ internal data class LauncherShortcut(
         } catch (e: PackageManager.NameNotFoundException) {
             null
         },
-        userSerialNumber = launcherShortcut.userHandle.getSerialNumber(context)
+        userSerialNumber = launcherShortcut.userHandle.getSerialNumber(context),
+        score = score,
     )
 
     override val label: String
@@ -65,9 +72,6 @@ internal data class LauncherShortcut(
     override val preferDetailsOverLaunch: Boolean = false
 
     private val isMainProfile = launcherShortcut.userHandle == Process.myUserHandle()
-    override val profile: AppProfile
-        get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
-
 
     override val key: String
         get() = if (isMainProfile) {

@@ -44,6 +44,7 @@ import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.AirplanemodeActive
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Commute
+import androidx.compose.material.icons.rounded.Directions
 import androidx.compose.material.icons.rounded.DirectionsBoat
 import androidx.compose.material.icons.rounded.DirectionsBus
 import androidx.compose.material.icons.rounded.DirectionsRailway
@@ -57,6 +58,7 @@ import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.Subway
 import androidx.compose.material.icons.rounded.Train
 import androidx.compose.material.icons.rounded.Tram
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.AssistChip
@@ -674,7 +676,7 @@ fun LocationItem(
                                 label = { Text(stringResource(R.string.menu_navigation)) },
                                 leadingIcon = {
                                     Icon(
-                                        Icons.Rounded.Navigation, null,
+                                        Icons.Rounded.Directions, null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
@@ -757,8 +759,8 @@ fun LocationItem(
                     val snackbarHostState = LocalSnackbarHostState.current
 
                     toolbarActions.add(DefaultToolbarAction(
-                        label = stringResource(de.mm20.launcher2.ui.R.string.menu_customize),
-                        icon = Icons.Rounded.Edit,
+                        label = stringResource(R.string.menu_customize),
+                        icon = Icons.Rounded.Tune,
                         action = { sheetManager.showCustomizeSearchableModal(location) }
                     ))
 

@@ -54,14 +54,18 @@ class CalculatorRepositoryImpl(
 
             else -> {
                 withContext(Dispatchers.Default) {
-                    val exp = Expression(query)
-                    if (exp.checkSyntax()) {
-                        Calculator(term = query, solution = exp.calculate())
-                    } else {
-                        val exp2 = Expression(query.replace(',', '.').replace(';', ','))
-                        if (exp2.checkSyntax()) {
-                            Calculator(term = query, solution = exp2.calculate())
-                        } else null
+                    try {
+                        val exp = Expression(query)
+                        if (exp.checkSyntax()) {
+                            Calculator(term = query, solution = exp.calculate())
+                        } else {
+                            val exp2 = Expression(query.replace(',', '.').replace(';', ','))
+                            if (exp2.checkSyntax()) {
+                                Calculator(term = query, solution = exp2.calculate())
+                            } else null
+                        }
+                    } catch (e: ArithmeticException) {
+                        null
                     }
                 }
             }

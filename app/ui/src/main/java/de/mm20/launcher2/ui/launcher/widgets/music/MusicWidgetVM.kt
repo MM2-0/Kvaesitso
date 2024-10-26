@@ -7,6 +7,7 @@ import android.media.session.PlaybackState.CustomAction
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.music.PlaybackState
 import de.mm20.launcher2.music.SupportedActions
@@ -50,9 +51,9 @@ class MusicWidgetVM: ViewModel(), KoinComponent {
         musicService.togglePause()
     }
 
-    fun openPlayer() {
+    fun openPlayer(context: Context) {
         try {
-            musicService.openPlayer()?.send()
+            musicService.openPlayer()?.sendWithBackgroundPermission(context)
         } catch (e: PendingIntent.CanceledException) {
             CrashReporter.logException(e)
         }

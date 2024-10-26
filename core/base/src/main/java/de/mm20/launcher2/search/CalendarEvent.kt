@@ -6,14 +6,17 @@ import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
 import java.text.SimpleDateFormat
 
-interface CalendarEvent: SavableSearchable {
+interface CalendarEvent : SavableSearchable {
     val color: Int?
-    val startTime: Long
+    val startTime: Long?
     val endTime: Long
     val allDay: Boolean
     val description: String?
+    val calendarName: String?
     val location: String?
     val attendees: List<String>
+    val isCompleted: Boolean?
+        get() = null
 
 
     override val preferDetailsOverLaunch: Boolean
@@ -24,7 +27,7 @@ interface CalendarEvent: SavableSearchable {
         val df = SimpleDateFormat("dd")
         return StaticLauncherIcon(
             foregroundLayer = TextLayer(
-                text = df.format(startTime),
+                text = df.format(startTime ?: endTime),
                 color = color ?: 0,
             ),
             backgroundLayer = ColorLayer(color ?: 0)

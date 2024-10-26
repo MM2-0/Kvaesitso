@@ -709,4 +709,9 @@
     <string name="poi_category_basketball">Koszykówka</string>
     <string name="poi_category_museum">Muzea</string>
     <string name="poi_category_fitness_center">Centrum ćwiczeń</string>
+    <string name="poi_category_car_rental">Wypożyczalnia aut</string>
+    <string name="plugin_type_locationsearch">Przeszukaj miejsca</string>
+    <string name="menu_hide_filters">Ukryj filtry</string>
+    <string name="preference_search_osm_locations">OpenStreetMap</string>
+    <string name="preference_search_osm_locations_summary">Przeszukaj OpenStreetMap w poszukiwaniu sklepów oraz innych obiektów w okolicy</string>
 </resources>

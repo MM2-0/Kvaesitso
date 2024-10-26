@@ -38,8 +38,7 @@ internal class OsmLocationProvider(
         try {
             Retrofit.Builder()
                 .client(HttpClient)
-                .baseUrl(it.takeIf { it.isNotBlank() }
-                    ?: LocationSearchSettings.DefaultOverpassUrl)
+                .baseUrl(it?.takeIf { it.isNotBlank() } ?: LocationSearchSettings.DefaultOverpassUrl)
                 .addConverterFactory(OverpassQueryConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.ChevronLeft
@@ -38,6 +40,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -83,7 +86,7 @@ fun CalendarWidget(
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 4.dp)
         ) {
             IconButton(onClick = { viewModel.previousDay() }) {
-                Icon(imageVector = Icons.Rounded.ChevronLeft, contentDescription = null)
+                Icon(imageVector = Icons.Rounded.ChevronLeft, contentDescription = stringResource(R.string.calendar_widget_previous_day))
             }
             Box(
                 modifier = Modifier.weight(1f),
@@ -117,13 +120,13 @@ fun CalendarWidget(
                 }
             }
             IconButton(onClick = { viewModel.nextDay() }) {
-                Icon(imageVector = Icons.Rounded.ChevronRight, contentDescription = null)
+                Icon(imageVector = Icons.Rounded.ChevronRight, contentDescription = stringResource(R.string.calendar_widget_next_day))
             }
             IconButton(onClick = { viewModel.createEvent(context) }) {
-                Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                Icon(imageVector = Icons.Rounded.Add, contentDescription = stringResource(R.string.calendar_widget_create_event))
             }
             IconButton(onClick = { viewModel.openCalendarApp(context) }) {
-                Icon(imageVector = Icons.Rounded.OpenInNew, contentDescription = null)
+                Icon(imageVector = Icons.AutoMirrored.Rounded.OpenInNew, contentDescription = stringResource(R.string.calendar_widget_open_calendar))
             }
         }
         val events by viewModel.calendarEvents
@@ -205,7 +208,8 @@ fun CalendarWidget(
                             ),
                             onClick = {
                                 viewModel.showAllEvents()
-                            }
+                            },
+                            modifier = Modifier.padding(top = 8.dp)
                         )
                     }
                     if (nextEvents.isNotEmpty()) {
@@ -260,12 +264,14 @@ fun CalendarWidget(
 @Composable
 private fun Info(
     text: String,
+    modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
 ) {
-    InnerCard(
-        modifier = Modifier
+    Box(
+        modifier = modifier
             .fillMaxWidth()
-            .padding(4.dp)
+            .clip(MaterialTheme.shapes.small)
+            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.small)
     ) {
         Box(
             contentAlignment = Alignment.CenterStart,

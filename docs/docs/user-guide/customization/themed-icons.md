@@ -17,15 +17,12 @@ While themed icons were originally introduced in Android 13, support has been ba
 Note however, that some apps (especially preinstalled system apps) may not support themed icons on
 older Android versions.
 
-## Themed icon packs
+## Themable icon packs
 
 Some icon packs, notably [Lawnicons](https://github.com/LawnchairLauncher/lawnicons)
 and [Arcticons](https://github.com/Donnnno/Arcticons), have support
-for themed icons. This is indicated by a "Dynamic colors" badge in the icon pack selection dialog.
-After you have selected an icon pack with support for themed icons, you can enable themed icons for
-that pack using the toggle button that appears in the icon pack preference:
-
-![Themed icon pack](/img/themed-icon-pack.png)
+for themed icons. This is indicated by a <span class="material-symbols-rounded">palette</span> icon
+in the icon pack selection dialog.
 
 > [!NOTE]
 > If you are an icon pack developer, you can indicate that your icon pack supports themed icons by

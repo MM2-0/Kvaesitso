@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.base
 
 import androidx.compose.runtime.*
 import de.mm20.launcher2.preferences.IconShape
-import de.mm20.launcher2.preferences.LegacySettings
 import de.mm20.launcher2.preferences.ui.CardStyle
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.preferences.ui.UiSettings

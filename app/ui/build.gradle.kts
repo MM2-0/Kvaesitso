@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.androidx.compose.materialicons)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.animationgraphics)
+    implementation(libs.androidx.constraintlayout.compose)
 
     implementation(libs.androidx.navigation.compose)
 
@@ -119,6 +120,7 @@ dependencies {
     implementation(project(":core:i18n"))
     implementation(project(":core:compat"))
     implementation(project(":core:ktx"))
+    implementation(project(":core:profiles"))
     implementation(project(":services:icons"))
     implementation(project(":services:music"))
     implementation(project(":services:tags"))

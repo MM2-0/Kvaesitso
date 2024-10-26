@@ -31,8 +31,8 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2024051000
-        versionName = "1.30.4"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2024090300
+        versionName = "1.33.1"
         signingConfig = signingConfigs.getByName("debug")
     }
 
@@ -115,7 +115,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.exifinterface)
     implementation(libs.materialcomponents.core)
-    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.constraintlayout.views)
 
     implementation(libs.bundles.androidx.lifecycle)
 
@@ -152,6 +152,7 @@ dependencies {
     implementation(project(":data:notifications"))
     implementation(project(":libs:owncloud"))
     implementation(project(":core:permissions"))
+    implementation(project(":core:profiles"))
     implementation(project(":core:preferences"))
     implementation(project(":services:search"))
     implementation(project(":services:tags"))

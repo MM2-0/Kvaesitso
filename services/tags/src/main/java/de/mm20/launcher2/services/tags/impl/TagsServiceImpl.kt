@@ -51,8 +51,7 @@ internal class TagsServiceImpl(
                 ).first()
                 val oldTag = Tag(tag)
                 if (pinnedTags.any { it.key == oldTag.key }) {
-                    searchableRepository.update(oldTag, pinned = false)
-                    searchableRepository.update(Tag(newName), pinned = true)
+                    searchableRepository.replace(oldTag.key, Tag(newName))
                 }
             }
 

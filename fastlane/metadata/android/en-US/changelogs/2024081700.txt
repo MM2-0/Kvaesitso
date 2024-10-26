@@ -1,0 +1,4 @@
+- Added support for calendar plugins
+- Added a preference to exclude calendar lists from search
+- Restored the tab based layout for profiles
+- Bug fixes

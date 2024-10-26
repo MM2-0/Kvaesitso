@@ -37,6 +37,9 @@
     <string name="msg_item_hidden">%1$s has been hidden.</string>
     <string name="action_undo">Undo</string>
     <string name="action_import">Import</string>
+    <string name="action_done">Done</string>
+    <string name="action_more_actions">More actions</string>
+    <string name="action_clear">Clear</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
     <string name="menu_remove">Remove</string>
@@ -321,6 +324,9 @@
     </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">all-day</string>
+    <string name="task_due_time">Due at %1$s</string>
+    <string name="task_due_date">Due on %1$s</string>
+    <string name="task_due_today">Due today</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s is playing media</string>
     <string name="music_widget_no_data">No media has been played yet</string>
@@ -576,7 +582,7 @@
     <string name="preference_clockwidget_battery_part">Battery</string>
     <string name="preference_clockwidget_battery_part_summary">Show the current battery level when the battery is low or charging</string>
     <string name="preference_clockwidget_alarm_part">Alarms</string>
-    <string name="preference_clockwidget_alarm_part_summary">Show alarms that will ring within the next 15 minutes</string>
+    <string name="preference_clockwidget_alarm_part_summary">Show alarms that will ring within the next 8 hours</string>
     <string name="preference_screen_backup">Backup &amp; Restore</string>
     <string name="preference_screen_backup_summary">Export and import launcher data</string>
     <string name="preference_backup">Backup</string>
@@ -605,6 +611,7 @@
     <string name="preference_search_unitconverter_summary">Usage: 1.5 kg or 4 cm &gt;&gt; in</string>
     <string name="preference_search_currencyconverter">Currency converter</string>
     <string name="preference_search_currencyconverter_summary">Periodically download exchange rates to convert currencies</string>
+    <string name="preference_search_supportedunits">Supported units</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Search the free encyclopedia</string>
     <string name="preference_search_websites">Websites</string>
@@ -623,6 +630,7 @@
     <string name="preference_google_signin_summary">Sign in to search Google Drive</string>
     <string name="preference_calendar_calendars">Calendars</string>
     <string name="preference_calendar_hide_allday">Hide all-day events</string>
+    <string name="preference_calendar_hide_completed">Hide completed tasks</string>
     <string name="preference_screen_buildinfo">Build information</string>
     <string name="preference_screen_buildinfo_summary">More information about this build of this app</string>
     <string name="preference_search_bar_style">Style</string>
@@ -682,6 +690,7 @@
     <string name="icon_picker_filter_all_packs">All icon packs</string>
     <string name="apps_profile_main">Personal</string>
     <string name="apps_profile_work">Work</string>
+    <string name="apps_profile_private">Private</string>
     <string name="favorites">Favorites</string>
     <string name="favorites_empty">Pinned and frequently used items will appear here</string>
     <string name="favorites_empty_tag">There are no items with this tag</string>
@@ -801,6 +810,7 @@
     <string name="import_theme_apply">Apply theme</string>
     <string name="import_theme_error">The selected file could not be read. Please make sure that you selected a valid theme file (*.kvtheme), and that the file is not corrupt.</string>
     <string name="shortcut_label_unavailable">Unavailable</string>
+    <string name="app_label_locked_profile">Locked</string>
     <!-- %1$s: app name -->
     <string name="shortcut_unavailable_description">This shortcut is unavailable because %1$s isn\'t the default launcher</string>
     <string name="preference_plugin_enable">Enable plugin</string>
@@ -838,10 +848,13 @@
     <string name="clock_style_empty">No clock</string>
     <string name="clock_style_custom">Custom widget</string>
     <string name="clock_variant_outlined">Outlined</string>
+    <string name="menu_show_filters">Show filters</string>
+    <string name="menu_hide_filters">Hide filters</string>
     <string name="search_filter_tools">Tools</string>
     <string name="search_filter_online">Online results</string>
     <string name="search_filter_apps">Apps</string>
     <string name="plugin_type_locationsearch">Places search</string>
+    <string name="plugin_type_calendar">Calendar</string>
     <string name="preference_default_filter">Default filter</string>
     <string name="preference_default_filter_summary">Customize the default filter for searches</string>
     <string name="preference_filter_bar">Show filter bar</string>
@@ -949,4 +962,44 @@
     <string name="item_visibility_calendar_default">Calendar widget &amp; search results</string>
     <string name="item_visibility_search_only">Search results</string>
     <string name="item_visibility_hidden">Never</string>
+    <string name="contact_info_home">Home</string>
+    <string name="contact_info_mobile">Mobile</string>
+    <string name="contact_info_work">Work</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s phone number</item>
+        <item quantity="other">%1$s phone numbers</item>
+    </plurals>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s email address</item>
+        <item quantity="other">%1$s email addresses</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s postal address</item>
+        <item quantity="other">%1$s postal addresses</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s notification</item>
+        <item quantity="other">%1$s notifications</item>
+    </plurals>
+    <string name="weather_widget_no_provider">No weather provider selected or the selected provider is not available</string>
+    <string name="music_widget_previous_track">Previous title</string>
+    <string name="music_widget_next_track">Next title</string>
+    <string name="music_widget_play">Play</string>
+    <string name="music_widget_pause">Pause</string>
+    <string name="music_widget_open_player">Open player</string>
+    <string name="calendar_widget_previous_day">Previous day</string>
+    <string name="calendar_widget_next_day">Next day</string>
+    <string name="calendar_widget_create_event">Create new event</string>
+    <string name="calendar_widget_open_calendar">Open calendar app</string>
+    <string name="profile_work_profile_state_locked">Work apps are paused.</string>
+    <string name="profile_work_profile_action_unlock">Unpause</string>
+    <string name="profile_work_profile_action_lock">Pause work apps</string>
+    <string name="profile_private_profile_state_locked">Private space is locked.</string>
+    <string name="profile_private_profile_action_unlock">Unlock</string>
+    <string name="profile_private_profile_action_lock">Lock private space</string>
+    <string name="hint_drag_and_drop_reorder">Hold and drag items to rearrange them</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s list selected</item>
+        <item quantity="other">%1$s lists selected</item>
+    </plurals>
 </resources>

@@ -95,6 +95,7 @@ internal class PluginLocationProvider(
                 )
             }
         }
+        cursor.close()
         return results
     }
 

@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.component.preferences
 
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxColors
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -12,7 +14,8 @@ fun CheckboxPreference(
     summary: String? = null,
     value: Boolean,
     onValueChanged: (Boolean) -> Unit,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    checkboxColors: CheckboxColors = CheckboxDefaults.colors(),
 ) {
     Preference(
         title = title,
@@ -25,7 +28,7 @@ fun CheckboxPreference(
         },
         controls = {
             Checkbox(
-                enabled = enabled, checked = value, onCheckedChange = onValueChanged,
+                enabled = enabled, checked = value, onCheckedChange = onValueChanged, colors = checkboxColors
             )
         }
     )

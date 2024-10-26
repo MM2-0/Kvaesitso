@@ -276,4 +276,16 @@
         <item quantity="one">Dezimeter</item>
         <item quantity="other">Dezimeter</item>
     </plurals>
+    <string name="dimension_length">Länge</string>
+    <string name="dimension_mass">Masse</string>
+    <string name="dimension_velocity">Geschwindigkeit</string>
+    <string name="dimension_volume">Volumen</string>
+    <string name="dimension_area">Fläche</string>
+    <string name="dimension_currency">Währung</string>
+    <string name="dimension_bitrate">Bitrate</string>
+    <string name="dimension_pressure">Druck</string>
+    <string name="dimension_energy">Energie</string>
+    <string name="dimension_frequency">Frequenz</string>
+    <string name="dimension_temperature">Temperatur</string>
+    <string name="dimension_time">Zeit</string>
 </resources>

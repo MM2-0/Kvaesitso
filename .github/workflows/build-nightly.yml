@@ -41,7 +41,7 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         run: ./gradlew assembleDefaultNightly
       - name: Upload APK
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: de.mm20.launcher2.nightly.apk
           path: app/app/build/outputs/apk/default/nightly/app-default-nightly.apk

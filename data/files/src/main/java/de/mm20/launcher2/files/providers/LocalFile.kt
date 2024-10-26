@@ -357,12 +357,15 @@ internal data class LocalFile(
                 mimeType == "application/vnd.android.package-archive" -> {
                     val pkgInfo = context.packageManager.getPackageArchiveInfo(path, 0)
                         ?: return metaData.toImmutableMap()
-                    metaData[FileMetaType.AppName] =
-                        pkgInfo.applicationInfo.loadLabel(context.packageManager).toString()
+
+                    pkgInfo.applicationInfo?.loadLabel(context.packageManager)?.toString()?.let {
+                        metaData[FileMetaType.AppName] = it
+                    }
                     pkgInfo.versionName?.let { metaData[FileMetaType.AppVersion] = it }
-                    pkgInfo.packageName?.let { metaData[FileMetaType.AppPackageName] = it }
-                    metaData[FileMetaType.AppMinSdk] =
-                        pkgInfo.applicationInfo.minSdkVersion.toString()
+                    pkgInfo.packageName.let { metaData[FileMetaType.AppPackageName] = it }
+                    pkgInfo.applicationInfo?.minSdkVersion?.toString()?.let {
+                        metaData[FileMetaType.AppMinSdk] = it
+                    }
                 }
             }
             return metaData.toImmutableMap()

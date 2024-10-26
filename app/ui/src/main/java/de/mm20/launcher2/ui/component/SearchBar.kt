@@ -36,8 +36,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.ui.R
@@ -62,6 +66,7 @@ fun SearchBar(
 ) {
 
     val transition = updateTransition(level, label = "Searchbar")
+    val context = LocalContext.current
 
     val elevation by transition.animateDp(
         label = "elevation",
@@ -169,7 +174,10 @@ fun SearchBar(
                                     if (it.hasFocus) onFocus()
                                 }
                                 .focusRequester(focusRequester)
-                                .fillMaxWidth(),
+                                .fillMaxWidth()
+                                .semantics {
+                                    contentDescription = context.getString(R.string.search_bar_placeholder)
+                                },
                             textStyle = MaterialTheme.typography.titleMedium.copy(
                                 color = contentColor
                             ),
@@ -177,7 +185,11 @@ fun SearchBar(
                             value = value,
                             onValueChange = onValueChange,
                             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Go),
+                            keyboardOptions = KeyboardOptions(
+                                imeAction = ImeAction.Go,
+                                autoCorrectEnabled = false,
+                                capitalization = KeyboardCapitalization.None,
+                            ),
                             keyboardActions = KeyboardActions(
                                 onGo = onKeyboardActionGo,
                             )

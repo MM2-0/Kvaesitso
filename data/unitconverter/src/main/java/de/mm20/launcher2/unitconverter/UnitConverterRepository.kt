@@ -5,6 +5,7 @@ import de.mm20.launcher2.currencies.CurrencyRepository
 import de.mm20.launcher2.preferences.search.UnitConverterSettings
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.unitconverter.converters.AreaConverter
+import de.mm20.launcher2.unitconverter.converters.Converter
 import de.mm20.launcher2.unitconverter.converters.CurrencyConverter
 import de.mm20.launcher2.unitconverter.converters.DataConverter
 import de.mm20.launcher2.unitconverter.converters.LengthConverter
@@ -18,6 +19,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -25,6 +27,7 @@ import org.koin.core.component.KoinComponent
 
 interface UnitConverterRepository {
     fun search(query: String): Flow<UnitConverter?>
+    suspend fun getAvailableConverters(includeCurrencies: Boolean) : List<Converter>
 }
 
 internal class UnitConverterRepositoryImpl(
@@ -53,11 +56,29 @@ internal class UnitConverterRepositoryImpl(
         }
     }
 
+    override suspend fun getAvailableConverters(includeCurrencies: Boolean) : List<Converter> {
+        val converters = mutableListOf(
+            MassConverter(context),
+            LengthConverter(context),
+            DataConverter(context),
+            TimeConverter(context),
+            VelocityConverter(context),
+            AreaConverter(context),
+            TemperatureConverter(context)
+        )
+        if (includeCurrencies) converters.add(CurrencyConverter(currencyRepository))
+
+        return converters
+    }
+
     private suspend fun queryUnitConverter(
         query: String,
         includeCurrencies: Boolean
     ): UnitConverter? {
-        if (!query.matches(Regex("[0-9,.:]+ [^\\s]+")) && !query.matches(Regex("[0-9,.:]+ [^\\s]+ >> [^\\s]+"))) return null
+        if (!query.matches(Regex("[0-9,.:]+ [^\\s]+")) &&
+            !query.matches(Regex("[0-9,.:]+ [^\\s]+ >> [^\\s]+")) &&
+            !query.matches(Regex("[0-9,.:]+ [^\\s]+ > [^\\s]+")) &&
+            !query.matches(Regex("[0-9,.:]+ [^\\s]+ - [^\\s]+"))) return null
         val valueStr: String
         val unitStr: String
         val targetUnitStr: String?
@@ -70,17 +91,7 @@ internal class UnitConverterRepositoryImpl(
         val value = valueStr.toDoubleOrNull() ?: valueStr.replace(',', '.').toDoubleOrNull()
         ?: return null
 
-        val converters = mutableListOf(
-            MassConverter(context),
-            LengthConverter(context),
-            DataConverter(context),
-            TimeConverter(context),
-            VelocityConverter(context),
-            AreaConverter(context),
-            TemperatureConverter(context)
-        )
-
-        if (includeCurrencies) converters.add(CurrencyConverter(currencyRepository))
+        val converters = getAvailableConverters(includeCurrencies)
 
         for (converter in converters) {
             if (!converter.isValidUnit(unitStr)) continue

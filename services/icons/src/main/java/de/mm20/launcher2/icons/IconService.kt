@@ -46,6 +46,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class IconService(
@@ -140,6 +143,12 @@ class IconService(
 
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
+        if (searchable is Application && searchable.isPrivate) {
+            return transformations.map {
+                searchable.getPlaceholderIcon(context).transform(it)
+            }
+        }
+
         val customIcon = customAttributesRepository.getCustomIcon(searchable)
         return combine(iconProviders, transformations, customIcon) { providers, transformations, ci ->
             var icon = cache.get(searchable.key + ci.hashCode() + providers.hashCode() + transformations.hashCode())
@@ -367,27 +376,15 @@ class IconService(
     suspend fun searchCustomIcons(query: String, iconPack: IconPack?): List<CustomIconWithPreview> {
         val transformations = this.transformations.first()
         val iconPackIcons = iconPackManager.searchIconPackIcon(query, iconPack).flatMap {
-            val unthemedIcon = if (it.themed) {
-                iconPackManager.getIcon(it.iconPack, it, false)
+            val themedIcon = if (it.themed) {
+                iconPackManager.getIcon(it.iconPack, it, true)
                     ?.transform(transformations)
             } else null
-            val icon = iconPackManager.getIcon(it.iconPack, it, true)
+            val unthemedIcon = iconPackManager.getIcon(it.iconPack, it, false)
                 ?.transform(transformations)
 
             buildList {
                 val ent = it.toDatabaseEntity()
-                if (icon != null) {
-                    add(CustomIconWithPreview(
-                        customIcon = CustomIconPackIcon(
-                            iconPackPackage = it.iconPack,
-                            type = ent.type,
-                            drawable = ent.drawable,
-                            extras = ent.extras,
-                            allowThemed = true,
-                        ),
-                        preview = icon
-                    ))
-                }
                 if (unthemedIcon != null) {
                     add(CustomIconWithPreview(
                         customIcon = CustomIconPackIcon(
@@ -398,6 +395,18 @@ class IconService(
                             allowThemed = false,
                         ),
                         preview = unthemedIcon
+                    ))
+                }
+                if (themedIcon != null) {
+                    add(CustomIconWithPreview(
+                        customIcon = CustomIconPackIcon(
+                            iconPackPackage = it.iconPack,
+                            type = ent.type,
+                            drawable = ent.drawable,
+                            extras = ent.extras,
+                            allowThemed = true,
+                        ),
+                        preview = themedIcon
                     ))
                 }
             }

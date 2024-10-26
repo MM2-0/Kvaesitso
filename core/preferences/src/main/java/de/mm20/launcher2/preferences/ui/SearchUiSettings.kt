@@ -1,13 +1,12 @@
 package de.mm20.launcher2.preferences.ui
 
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.SearchResultOrder
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 class SearchUiSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
-){
+) {
     val launchOnEnter
         get() = launcherDataStore.data.map { it.searchLaunchOnEnter }.distinctUntilChanged()
 
@@ -32,15 +31,6 @@ class SearchUiSettings internal constructor(
     fun setFavorites(favorites: Boolean) {
         launcherDataStore.update {
             it.copy(favoritesEnabled = favorites)
-        }
-    }
-
-    val resultOrder
-        get() = launcherDataStore.data.map { it.searchResultOrder }.distinctUntilChanged()
-
-    fun setResultOrder(resultOrder: SearchResultOrder) {
-        launcherDataStore.update {
-            it.copy(searchResultOrder = resultOrder)
         }
     }
 

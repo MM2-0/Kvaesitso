@@ -1,9 +1,6 @@
-import com.google.protobuf.gradle.*
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.protobuf)
     alias(libs.plugins.kotlin.plugin.serialization)
 }
 
@@ -37,32 +34,12 @@ android {
     namespace = "de.mm20.launcher2.preferences"
 }
 
-protobuf {
-    protoc {
-        artifact = libs.protobuf.protoc.get().toString()
-    }
-
-    // Generates the java Protobuf-lite code for the Protobufs in this project. See
-    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
-    // for more information.
-    generateProtoTasks {
-        all().forEach { task ->
-            task.plugins {
-                create("java") {
-                    option("lite")
-                }
-            }
-        }
-    }
-}
-
 dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     api(libs.androidx.datastore)
-    api(libs.protobuf.javalite)
     implementation(libs.koin.android)
 
     implementation(project(":core:ktx"))

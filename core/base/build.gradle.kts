@@ -52,6 +52,8 @@ dependencies {
     runtimeOnly(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.materialicons)
 
+    implementation(libs.stringsimilarity)
+
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))
     implementation(project(":libs:material-color-utilities"))

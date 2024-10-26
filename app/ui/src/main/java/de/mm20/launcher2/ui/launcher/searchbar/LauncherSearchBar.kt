@@ -19,8 +19,10 @@ import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Badge
 import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.FilledTonalIconToggleButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,11 +34,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.searchactions.actions.SearchAction
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchVM
@@ -95,9 +99,9 @@ fun LauncherSearchBar(
                     enter = scaleIn(tween(100)),
                     exit = scaleOut(tween(100))
                 ) {
-                    FilledIconButton(
-                        onClick = { sheetManager.showHiddenItemsSheet() },
-                        colors = if (sheetManager.hiddenItemsSheetShown.value) IconButtonDefaults.filledTonalIconButtonColors() else IconButtonDefaults.iconButtonColors()
+                    IconToggleButton(
+                        checked = sheetManager.hiddenItemsSheetShown.value,
+                        onCheckedChange = { if (it) sheetManager.showHiddenItemsSheet() },
                     ) {
                         Icon(imageVector = Icons.Rounded.VisibilityOff, contentDescription = null)
                     }
@@ -107,15 +111,16 @@ fun LauncherSearchBar(
                     enter = scaleIn(tween(100)),
                     exit = scaleOut(tween(100))
                 ) {
-                    FilledIconButton(
-                        onClick = {
-                            searchVM.showFilters.value = !searchVM.showFilters.value
+                    IconToggleButton(
+                        checked = searchVM.showFilters.value,
+                        onCheckedChange = {
+                            searchVM.showFilters.value = it
                         },
-                        colors = if (searchVM.showFilters.value) IconButtonDefaults.filledTonalIconButtonColors()
-                        else IconButtonDefaults.iconButtonColors()
                     ) {
                         Box {
-                            Icon(imageVector = Icons.Rounded.FilterAlt, contentDescription = null)
+                            Icon(imageVector = Icons.Rounded.FilterAlt, contentDescription = stringResource(
+                                if (searchVM.showFilters.value) R.string.menu_hide_filters else R.string.menu_show_filters
+                            ))
                             androidx.compose.animation.AnimatedVisibility(
                                 !searchVM.filters.value.allCategoriesEnabled,
                                 enter = scaleIn(tween(100)),

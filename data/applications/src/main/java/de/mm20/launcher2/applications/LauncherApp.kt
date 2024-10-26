@@ -27,8 +27,8 @@ import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.search.AppProfile
 import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.StoreLink
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +41,7 @@ internal data class LauncherApp(
     override val isSuspended: Boolean = false,
     internal val userSerialNumber: Long,
     override val labelOverride: String? = null,
+    override val score: ResultScore = ResultScore.Unspecified,
 ) : Application {
 
     override val componentName: ComponentName
@@ -49,11 +50,12 @@ internal data class LauncherApp(
     override val label: String = launcherActivityInfo.label.toString()
 
 
-    constructor(context: Context, launcherActivityInfo: LauncherActivityInfo) : this(
+    constructor(context: Context, launcherActivityInfo: LauncherActivityInfo, score: ResultScore = ResultScore.Unspecified) : this(
         launcherActivityInfo,
         versionName = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
         isSuspended = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED != 0,
-        userSerialNumber = launcherActivityInfo.user.getSerialNumber(context)
+        userSerialNumber = launcherActivityInfo.user.getSerialNumber(context),
+        score = score,
     )
 
     override val user: UserHandle
@@ -61,10 +63,7 @@ internal data class LauncherApp(
 
     private val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
 
-    override val profile: AppProfile
-        get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
-
-    override val isSystemApp: Boolean = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+    private val isSystemApp: Boolean = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
 
     override val canUninstall: Boolean
         get() = !isSystemApp && isMainProfile
@@ -145,8 +144,10 @@ internal data class LauncherApp(
                 options
             )
         } catch (e: SecurityException) {
+            Log.e("MM20", "Could not launch app", e)
             return false
         } catch (e: ActivityNotFoundException) {
+            Log.e("MM20", "Could not launch app", e)
             return false
         }
         return true

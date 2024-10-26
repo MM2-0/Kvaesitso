@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.compose.materialicons)
 
     implementation(libs.bundles.androidx.lifecycle)
 
@@ -47,5 +48,6 @@ dependencies {
     implementation(project(":core:base"))
     implementation(project(":core:ktx"))
     implementation(project(":core:compat"))
+    implementation(project(":core:profiles"))
 
 }

@@ -43,7 +43,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     val calendarEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
     val pinnedCalendarEvents =
         favoritesService.getFavorites(
-            includeTypes = listOf("calendar"),
+            includeTypes = listOf("calendar", "plugin.calendar"),
             minPinnedLevel = PinnedLevel.AutomaticallySorted,
         ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
     val nextEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
@@ -67,10 +67,10 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
             field = value
             val dates = value.flatMap {
                 val startDate =
-                    Instant.ofEpochMilli(it.startTime).atZone(ZoneId.systemDefault()).toLocalDate()
+                    it.startTime?.let { Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate() }
                 val endDate =
                     Instant.ofEpochMilli(it.endTime).atZone(ZoneId.systemDefault()).toLocalDate()
-                return@flatMap listOf(
+                return@flatMap listOfNotNull(
                     startDate,
                     endDate
                 )
@@ -136,14 +136,14 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         val dayStart = max(now, date.atStartOfDay().toEpochSecond(offset) * 1000)
         val dayEnd = date.plusDays(1).atStartOfDay().toEpochSecond(offset) * 1000
         var events = upcomingEvents.filter {
-            it.endTime >= dayStart && it.startTime < dayEnd
+            it.endTime >= dayStart && (it.startTime ?: it.endTime) < dayEnd
         }
 
         if (!showRunningPastDayEvents) {
             val totalCount = events.size
 
             events = events.filter {
-                it.startTime >= date.atStartOfDay().toEpochSecond(offset) * 1000 ||
+                (it.startTime != null && it.startTime!! >= date.atStartOfDay().toEpochSecond(offset) * 1000) ||
                         it.endTime < date.atStartOfDay().plusDays(1).toEpochSecond(offset) * 1000
             }
 
@@ -169,14 +169,17 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
                 from = System.currentTimeMillis(),
                 to = System.currentTimeMillis() + 14 * 24 * 60 * 60 * 1000L,
                 excludeAllDayEvents = !config.allDayEvents,
-                excludeCalendars = config.excludedCalendarIds,
+                excludeCalendars = config.excludedCalendarIds ?: config.legacyExcludedCalendarIds?.map { "local:$it" } ?: emptyList(),
             ).collectLatest { events ->
                 searchableRepository.getKeys(
-                    includeTypes = listOf("calendar"),
+                    includeTypes = listOf("calendar", "plugin.calendar"),
                     maxVisibility = VisibilityLevel.SearchOnly,
                     limit = 9999,
                 ).collectLatest { hidden ->
-                    upcomingEvents = events.filter { !hidden.contains(it.key) }
+                    upcomingEvents = events
+                        .filter {
+                            !hidden.contains(it.key) && !(!config.completedTasks && it.isCompleted == true)
+                        }.sortedBy { it.startTime ?: it.endTime }
                 }
             }
 

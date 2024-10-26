@@ -30,7 +30,7 @@ class BadgeDrawable(context: Context, drawable: Drawable) : Drawable() {
         }
         val bitmap = drw.toBitmap(size, size).run {
             if(isMutable) this
-            else this.copy(config, true)
+            else this.copy(config ?: Bitmap.Config.ARGB_8888, true)
         }
         this.drawable = BitmapDrawable(context.resources, bitmap)
     }

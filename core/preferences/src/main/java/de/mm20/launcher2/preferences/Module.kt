@@ -27,8 +27,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val preferencesModule = module {
-    single { androidContext().legacyDataStore }
-    single { LauncherDataStore(androidContext(), get()) }
+    single { LauncherDataStore(androidContext()) }
     factory<Backupable>(named<LauncherDataStore>()) { get<LauncherDataStore>() }
     factory { MediaSettings(get()) }
     factory { ContactSearchSettings(get()) }

@@ -6,6 +6,7 @@ import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
+import de.mm20.launcher2.database.entities.SavedSearchableUpdateContentEntity
 import de.mm20.launcher2.database.entities.SavedSearchableUpdatePinEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.preferences.WeightFactor
@@ -54,6 +55,16 @@ interface SavableSearchableRepository : Backupable {
     )
 
     /**
+     * Replace a searchable in the database.
+     * The new entry will inherit the visibility, launch count, weight and pin position of the old entry,
+     * but it will have a different key and searchable.
+     */
+    fun replace(
+        key: String,
+        newSearchable: SavableSearchable,
+    )
+
+    /**
      * Touch a searchable to update its weight and launch counter
      **/
     fun touch(
@@ -73,7 +84,7 @@ interface SavableSearchableRepository : Backupable {
         maxPinnedLevel: PinnedLevel = PinnedLevel.ManuallySorted,
         minVisibility: VisibilityLevel = VisibilityLevel.Hidden,
         maxVisibility: VisibilityLevel = VisibilityLevel.Default,
-        limit: Int = 100,
+        limit: Int = 9999,
     ): Flow<List<SavableSearchable>>
 
     fun getKeys(
@@ -83,7 +94,7 @@ interface SavableSearchableRepository : Backupable {
         maxPinnedLevel: PinnedLevel = PinnedLevel.ManuallySorted,
         minVisibility: VisibilityLevel = VisibilityLevel.Hidden,
         maxVisibility: VisibilityLevel = VisibilityLevel.Default,
-        limit: Int = 100,
+        limit: Int = 9999,
     ): Flow<List<String>>
 
 
@@ -102,6 +113,8 @@ interface SavableSearchableRepository : Backupable {
     fun sortByRelevance(keys: List<String>): Flow<List<String>>
 
     fun sortByWeight(keys: List<String>): Flow<List<String>>
+
+    fun getWeights(keys: List<String>): Flow<Map<String, Double>>
 
     /**
      * Remove this item from the Searchable database
@@ -326,6 +339,19 @@ internal class SavableSearchableRepositoryImpl(
         }
     }
 
+    override fun replace(key: String, newSearchable: SavableSearchable) {
+        scope.launch {
+            database.searchableDao().replace(
+                key,
+                SavedSearchableUpdateContentEntity(
+                    key = newSearchable.key,
+                    type = newSearchable.domain,
+                    serializedSearchable = newSearchable.serialize() ?: return@launch
+                )
+            )
+        }
+    }
+
     override fun updateFavorites(
         manuallySorted: List<SavableSearchable>,
         automaticallySorted: List<SavableSearchable>
@@ -368,6 +394,11 @@ internal class SavableSearchableRepositoryImpl(
     override fun sortByWeight(keys: List<String>): Flow<List<String>> {
         if (keys.size > 999) return flowOf(emptyList())
         return database.searchableDao().sortByWeight(keys)
+    }
+
+    override fun getWeights(keys: List<String>): Flow<Map<String, Double>> {
+        if (keys.size > 999) return flowOf(emptyMap())
+        return database.searchableDao().getWeights(keys)
     }
 
     private suspend fun fromDatabaseEntity(entity: SavedSearchableEntity): SavedSearchable {

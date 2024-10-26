@@ -7,10 +7,12 @@ import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
 import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import java.util.Locale
 
 interface File : SavableSearchable {
-    val path: String
+    val path: String?
     val mimeType: String
     val size: Long
     val isDirectory: Boolean
@@ -140,17 +142,18 @@ interface File : SavableSearchable {
 
 }
 
+@Serializable
 enum class FileMetaType {
-    Title,
-    Artist,
-    Album,
-    Duration,
-    Year,
-    Dimensions,
-    Location,
-    AppName,
-    AppVersion,
-    AppMinSdk,
-    AppPackageName,
-    Owner,
+    @SerialName("title") Title,
+    @SerialName("artist") Artist,
+    @SerialName("album") Album,
+    @SerialName("duration") Duration,
+    @SerialName("year") Year,
+    @SerialName("dimensions") Dimensions,
+    @SerialName("location") Location,
+    @SerialName("app_name") AppName,
+    @SerialName("app_version") AppVersion,
+    @SerialName("app_minsdk") AppMinSdk,
+    @SerialName("app_packagename") AppPackageName,
+    @SerialName("owner") Owner,
 }

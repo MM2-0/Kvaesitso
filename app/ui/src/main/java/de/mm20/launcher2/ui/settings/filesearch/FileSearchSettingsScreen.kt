@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.accounts.AccountType
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
@@ -196,7 +197,7 @@ fun FileSearchSettingsScreen() {
                             primaryAction = {
                                 TextButton(onClick = {
                                     try {
-                                        state.setupActivity.send()
+                                        state.setupActivity.sendWithBackgroundPermission(context)
                                     } catch (e: PendingIntent.CanceledException) {
                                         CrashReporter.logException(e)
                                     }

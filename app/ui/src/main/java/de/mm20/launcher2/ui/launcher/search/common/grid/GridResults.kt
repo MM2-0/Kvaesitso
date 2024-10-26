@@ -34,6 +34,10 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
             val isBottom = reverse || items.isEmpty() && after == null
             Box(
                 modifier = Modifier
+                    .padding(
+                        top = if (reverse && isTop) 8.dp else 0.dp,
+                        bottom = if (!reverse && isBottom) 8.dp else 0.dp,
+                    )
                     .background(
                         MaterialTheme.colorScheme.surface.copy(alpha = LocalCardStyle.current.opacity),
                         MaterialTheme.shapes.medium.withCorners(

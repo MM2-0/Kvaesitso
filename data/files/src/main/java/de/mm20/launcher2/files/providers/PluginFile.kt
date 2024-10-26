@@ -26,7 +26,7 @@ import kotlinx.coroutines.withContext
 
 data class PluginFile(
     val id: String,
-    override val path: String,
+    override val path: String?,
     override val mimeType: String,
     override val size: Long,
     override val metaData: ImmutableMap<FileMetaType, String>,

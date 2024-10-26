@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -34,7 +35,7 @@ import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.LinkOff
 import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -43,7 +44,6 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,29 +53,32 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
 import androidx.core.net.toUri
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import de.mm20.launcher2.calendar.CalendarRepository
-import de.mm20.launcher2.calendar.UserCalendar
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.plugin.PluginRepository
+import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.search.calendar.CalendarListType
+import de.mm20.launcher2.themes.atTone
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
-import de.mm20.launcher2.ui.component.ResizeAxis
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -91,6 +94,7 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
+import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -384,7 +388,7 @@ fun ColumnScope.ConfigureAppWidget(
             val minHeight = if (widgetInfo.minResizeHeight in 1..widgetInfo.minHeight) {
                 widgetInfo.minResizeHeight.toDp()
             } else {
-                    widgetInfo.minHeight.toDp()
+                widgetInfo.minHeight.toDp()
             }
 
             DragResizeHandle(
@@ -504,65 +508,103 @@ fun ColumnScope.ConfigureCalendarWidget(
 ) {
     val calendarRepository: CalendarRepository = get()
     val permissionsManager: PermissionsManager = get()
-    var calendars by remember { mutableStateOf(emptyList<UserCalendar>()) }
-    var ready by remember { mutableStateOf(false) }
+    val pluginRepository: PluginRepository = get()
+    val calendars by remember {
+        calendarRepository.getCalendars().map {
+            it.sortedBy { it.name }
+        }
+    }.collectAsState(null)
+    val plugins by remember {
+        pluginRepository.findMany(
+            type = PluginType.Calendar,
+            enabled = true,
+        )
+    }.collectAsState(emptyList())
 
     val hasPermission by remember {
         permissionsManager.hasPermission(PermissionGroup.Calendar)
     }.collectAsState(true)
 
-    LaunchedEffect(hasPermission) {
-        calendars = calendarRepository.getCalendars().sortedBy { it.name }
-        ready = true
+    val hasTasks = remember(calendars) {
+        calendars?.any { it.types.contains(CalendarListType.Tasks) } == true
     }
 
-    OutlinedCard {
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            SwitchPreference(
-                title = stringResource(R.string.preference_calendar_hide_allday),
-                iconPadding = false,
-                value = !widget.config.allDayEvents,
-                onValueChanged = {
-                    onWidgetUpdated(widget.copy(config = widget.config.copy(allDayEvents = !it)))
-                }
-            )
-        }
-    }
-    Text(
-        modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.secondary,
-        text = stringResource(R.string.preference_calendar_calendars)
-    )
-    val context = LocalLifecycleOwner.current as AppCompatActivity
-    if (calendars.isNotEmpty()) {
+    AnimatedVisibility(hasTasks) {
         OutlinedCard {
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                for ((i, calendar) in calendars.withIndex()) {
-                    if (i > 0) Divider()
-                    CheckboxPreference(
-                        title = calendar.name,
-                        summary = calendar.owner,
-                        iconPadding = false,
-                        value = !widget.config.excludedCalendarIds.contains(calendar.id),
-                        onValueChanged = {
-                            onWidgetUpdated(
-                                widget.copy(
-                                    config = widget.config.copy(
-                                        excludedCalendarIds = if (it) {
-                                            widget.config.excludedCalendarIds - calendar.id
-                                        } else {
-                                            widget.config.excludedCalendarIds + calendar.id
-                                        }
+                SwitchPreference(
+                    title = stringResource(R.string.preference_calendar_hide_completed),
+                    iconPadding = false,
+                    value = !widget.config.completedTasks,
+                    onValueChanged = {
+                        onWidgetUpdated(widget.copy(config = widget.config.copy(completedTasks = !it)))
+                    }
+                )
+            }
+        }
+    }
+    val context = LocalLifecycleOwner.current as AppCompatActivity
+    val excludedCalendars = remember(widget.config) {
+        widget.config.excludedCalendarIds
+            ?: widget.config.legacyExcludedCalendarIds?.map { "local:$it" } ?: emptyList()
+    }
+
+    val groups = remember(calendars) {
+        calendars?.groupBy { it.providerId }?.entries
+    }
+
+    if (groups?.isNotEmpty() == true) {
+        for (group in groups) {
+            val pluginName = remember(plugins, group.key) {
+                if (group.key == "local") context.getString(R.string.preference_calendar_calendars)
+                else plugins.find { it.authority == group.key }?.label
+            }
+            if (pluginName != null) {
+                Text(
+                    modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                    text = pluginName
+                )
+            }
+            OutlinedCard {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    for ((i, calendar) in group.value.withIndex()) {
+                        if (i > 0) HorizontalDivider()
+                        CheckboxPreference(
+                            title = calendar.name,
+                            summary = calendar.owner,
+                            iconPadding = false,
+                            value = !excludedCalendars.contains(calendar.id),
+                            onValueChanged = {
+                                onWidgetUpdated(
+                                    widget.copy(
+                                        config = widget.config.copy(
+                                            excludedCalendarIds = if (it) {
+                                                excludedCalendars - calendar.id
+                                            } else {
+                                                excludedCalendars + calendar.id
+                                            }
+                                        )
                                     )
                                 )
+                            },
+                            checkboxColors = CheckboxDefaults.colors(
+                                checkedColor = if (calendar.color == 0) MaterialTheme.colorScheme.primary
+                                else Color(
+                                    calendar.color.atTone(if (LocalDarkTheme.current) 80 else 40)
+                                ),
+                                checkmarkColor = if (calendar.color == 0) MaterialTheme.colorScheme.onPrimary
+                                else Color(
+                                    calendar.color.atTone(if (LocalDarkTheme.current) 20 else 100)
+                                )
                             )
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
@@ -572,7 +614,7 @@ fun ColumnScope.ConfigureCalendarWidget(
             text = stringResource(R.string.missing_permission_calendar_widget_settings),
             onClick = { permissionsManager.requestPermission(context, PermissionGroup.Calendar) },
         )
-    } else if (ready) {
+    } else if (calendars != null) {
         Text(
             modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
             style = MaterialTheme.typography.bodySmall,

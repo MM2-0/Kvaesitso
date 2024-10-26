@@ -164,6 +164,8 @@ internal class PluginServiceImpl(
                 } ?: return PluginState.Error
             } catch (e: SecurityException) {
                 return PluginState.NoPermission
+            } catch (e: IllegalArgumentException) {
+                return PluginState.Error
             }
         return PluginState.fromBundle(bundle) ?: PluginState.Error
     }
@@ -287,13 +289,13 @@ internal class PluginServiceImpl(
                 packageName,
                 PackageManager.GET_SIGNING_CERTIFICATES
             )
-            pi.signingInfo.apkContentsSigners.firstOrNull()
+            pi.signingInfo?.apkContentsSigners?.firstOrNull()
         } else {
             val pi = context.packageManager.getPackageInfo(
                 packageName,
                 PackageManager.GET_SIGNATURES
             )
-            pi.signatures.firstOrNull()
+            pi.signatures?.firstOrNull()
         }
         return if (signature != null) {
             val digest = MessageDigest.getInstance("SHA")

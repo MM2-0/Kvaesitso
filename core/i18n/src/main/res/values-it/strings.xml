@@ -272,7 +272,7 @@
     <string name="preference_clockwidget_battery_part">Batteria</string>
     <string name="preference_clockwidget_battery_part_summary">Mostra il livello della batteria quando la batteria è scarica o in ricarica</string>
     <string name="preference_clockwidget_alarm_part">Sveglie</string>
-    <string name="preference_clockwidget_alarm_part_summary">Mostra le sveglie che suoneranno nei prossimi 15 minuti</string>
+    <string name="preference_clockwidget_alarm_part_summary">Mostra le sveglie che suoneranno nelle prossime 8 ore</string>
     <string name="preference_screen_search">Ricerca</string>
     <string name="preference_screen_search_summary">Cerca, tag, oggetti nascosti</string>
     <string name="preference_search_favorites">Preferiti</string>
@@ -761,4 +761,62 @@
     <string name="item_visibility_search_only">Risultati ricerca</string>
     <string name="item_visibility_hidden">Nessuno</string>
     <string name="customize_item_label">Etichetta</string>
+    <string name="contact_info_home">Casa</string>
+    <string name="contact_info_work">Lavoro</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s numero di telefono</item>
+        <item quantity="many">%1$s numeri di telefono</item>
+        <item quantity="other">%1$s numeri di telefono</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s indirizzo postale</item>
+        <item quantity="many">%1$s indirizzi postali</item>
+        <item quantity="other">%1$s indirizzi postali</item>
+    </plurals>
+    <string name="contact_info_mobile">Cellulare</string>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s indirizzo e-mail</item>
+        <item quantity="many">%1$s indirizzi e-mail</item>
+        <item quantity="other">%1$s indirizzi e-mail</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s notifica</item>
+        <item quantity="many">%1$s notifiche</item>
+        <item quantity="other">%1$s notifiche</item>
+    </plurals>
+    <string name="weather_widget_no_provider">Nessun fornitore meteo selezionato oppure il fornitore selezionato non è disponibile</string>
+    <string name="action_done">Fatto</string>
+    <string name="menu_show_filters">Mostra filtri</string>
+    <string name="menu_hide_filters">Nascondi filtri</string>
+    <string name="music_widget_previous_track">Titolo precedente</string>
+    <string name="music_widget_play">Riproduci</string>
+    <string name="apps_profile_private">Privato</string>
+    <string name="action_more_actions">Più azioni</string>
+    <string name="action_clear">Cancella contenuto campo di testo</string>
+    <string name="music_widget_next_track">Titolo successivo</string>
+    <string name="music_widget_pause">Pausa</string>
+    <string name="music_widget_open_player">Apri lettore</string>
+    <string name="calendar_widget_previous_day">Giorno precedente</string>
+    <string name="calendar_widget_next_day">Giorno successivo</string>
+    <string name="calendar_widget_create_event">Crea nuovo evento</string>
+    <string name="calendar_widget_open_calendar">Apri app calendario</string>
+    <string name="plugin_type_calendar">Calendario</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">Selezionato %1$s elenco</item>
+        <item quantity="many">Selezionati %1$s elenchi</item>
+        <item quantity="other">Selezionati %1$s elenchi</item>
+    </plurals>
+    <string name="task_due_time">Scadenza alle %1$s</string>
+    <string name="preference_calendar_hide_completed">Nascondi attività completate</string>
+    <string name="preference_search_supportedunits">Unità supportate</string>
+    <string name="task_due_date">Scadenza il %1$s</string>
+    <string name="task_due_today">Scadenza oggi</string>
+    <string name="profile_work_profile_state_locked">Le app di lavoro sono in pausa.</string>
+    <string name="profile_work_profile_action_unlock">Riattiva</string>
+    <string name="profile_work_profile_action_lock">Metti in pausa app di lavoro</string>
+    <string name="profile_private_profile_state_locked">Lo spazio privato è bloccato.</string>
+    <string name="profile_private_profile_action_unlock">Sblocca</string>
+    <string name="profile_private_profile_action_lock">Blocca spazio privato</string>
+    <string name="hint_drag_and_drop_reorder">Tieni premuto e trascina gli elementi per riorganizzarli</string>
+    <string name="app_label_locked_profile">Bloccata</string>
 </resources>

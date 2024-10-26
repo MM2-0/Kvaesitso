@@ -4,7 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.unitconverter.Dimension
 import de.mm20.launcher2.unitconverter.R
 
-class TimeConverter(context: Context) : SimpleFactorConverter() {
+internal class TimeConverter(context: Context) : SimpleFactorConverter() {
     override val dimension = Dimension.Time
 
     override val standardUnits = listOf(

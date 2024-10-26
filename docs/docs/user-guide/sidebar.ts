@@ -117,6 +117,10 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         text: 'Restricted Settings on Android 13+',
         link: '/docs/user-guide/troubleshooting/restricted-settings',
       },
+      {
+        text: 'Launcher Cannot Be Updated',
+        link: '/docs/user-guide/troubleshooting/update-not-installed',
+      },
     ],
   },
 ]

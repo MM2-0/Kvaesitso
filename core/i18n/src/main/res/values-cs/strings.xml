@@ -314,7 +314,7 @@
     <string name="preference_clockwidget_music_part_summary">Zobrazit ovládání médií, když je aktivní jejich přehrávání</string>
     <string name="preference_clockwidget_battery_part">Baterie</string>
     <string name="preference_clockwidget_alarm_part">Budíky</string>
-    <string name="preference_clockwidget_alarm_part_summary">Zobrazit budíky, které zazvoní v následujících 15 minutách</string>
+    <string name="preference_clockwidget_alarm_part_summary">Zobrazit budíky, které zazvoní v následujících 8 hodinách</string>
     <string name="preference_screen_backup">Záloha a obnovení</string>
     <string name="preference_screen_backup_summary">Exportovat a importovat data spouštěče</string>
     <string name="preference_backup">Záloha</string>
@@ -413,7 +413,7 @@
     <string name="favorites_empty">Zde se zobrazí připnuté a často používané položky</string>
     <string name="frequently_used_show_in_favorites">Zobrazit v oblíbených</string>
     <string name="frequently_used_rows">Počet řádků</string>
-    <string name="customize_tags_placeholder">Štítky…</string>
+    <string name="customize_tags_placeholder">Štítky</string>
     <string name="create_app_shortcut">Vytvořit zkratku</string>
     <string name="search_action_email">E-mail</string>
     <string name="search_action_contact">Přidat do kontaktů</string>
@@ -754,4 +754,69 @@
     <string name="poi_category_baseball">Baseballové hřiště</string>
     <string name="poi_category_amusement_park">Zábavní park</string>
     <string name="preference_signout">Odhlásit se</string>
+    <string name="customize_item_tags">Štítky</string>
+    <string name="customize_item_visibility">Zobrazit v</string>
+    <string name="item_visibility_app_default">Mřížka aplikací a výsledky hledání</string>
+    <string name="item_visibility_search_only">Výsledky hledání</string>
+    <string name="item_visibility_hidden">Nikdy</string>
+    <string name="item_visibility_calendar_default">Widget kalendáře a výsledky hledání</string>
+    <string name="customize_item_label">Značka</string>
+    <string name="contact_info_work">Práce</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s telefonní číslo</item>
+        <item quantity="few">%1$s telefonní čísla</item>
+        <item quantity="other">%1$s telefonních čísel</item>
+    </plurals>
+    <string name="contact_info_mobile">Mobil</string>
+    <string name="contact_info_home">Domů</string>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s e-mailová adresa</item>
+        <item quantity="few">%1$s e-mailové adresy</item>
+        <item quantity="other">%1$s e-mailové adresy</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s poštovní adresa</item>
+        <item quantity="few">%1$s poštovní adresy</item>
+        <item quantity="other">%1$s poštovních adres</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s oznámení</item>
+        <item quantity="few">%1$s oznámení</item>
+        <item quantity="other">%1$s oznámení</item>
+    </plurals>
+    <string name="weather_widget_no_provider">Nebyl vybrán poskytovatel počasí nebo vybraný poskytovatel není dostupný</string>
+    <string name="apps_profile_private">Soukromé</string>
+    <string name="action_more_actions">Další akce</string>
+    <string name="action_clear">Vymazat</string>
+    <string name="action_done">Hotovo</string>
+    <string name="menu_show_filters">Zobrazit filtry</string>
+    <string name="menu_hide_filters">Skrýt filtry</string>
+    <string name="music_widget_previous_track">Předchozí titul</string>
+    <string name="music_widget_next_track">Další titul</string>
+    <string name="music_widget_play">Přehrát</string>
+    <string name="music_widget_pause">Pozastavit</string>
+    <string name="music_widget_open_player">Otevřít přehrávač</string>
+    <string name="calendar_widget_previous_day">Předchozí den</string>
+    <string name="calendar_widget_next_day">Další den</string>
+    <string name="calendar_widget_create_event">Vytvořit novou událost</string>
+    <string name="calendar_widget_open_calendar">Otevřít aplikaci kalendáře</string>
+    <string name="plugin_type_calendar">Kalendář</string>
+    <string name="profile_work_profile_action_unlock">Zrušit pozastavení</string>
+    <string name="hint_drag_and_drop_reorder">Přeskládejte položky jejich podržením a přesunutím</string>
+    <string name="preference_search_supportedunits">Podporované jednotky</string>
+    <string name="app_label_locked_profile">Uzamčeno</string>
+    <string name="profile_work_profile_state_locked">Pracovní aplikace jsou pozastaveny.</string>
+    <string name="profile_work_profile_action_lock">Pozastavit pracovní aplikace</string>
+    <string name="profile_private_profile_state_locked">Soukromý prostor je uzamčen.</string>
+    <string name="profile_private_profile_action_unlock">Odemknout</string>
+    <string name="profile_private_profile_action_lock">Zamknout soukromý prostor</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">Vybrán %1$s seznam</item>
+        <item quantity="few">Vybrány %1$s seznamy</item>
+        <item quantity="other">Vybráno %1$s seznamů</item>
+    </plurals>
+    <string name="task_due_time">Dokončit do %1$s</string>
+    <string name="task_due_date">Dokončit do %1$s</string>
+    <string name="task_due_today">Dokončit dnes</string>
+    <string name="preference_calendar_hide_completed">Skrýt dokončené úkoly</string>
 </resources>

@@ -318,4 +318,7 @@
         <item quantity="few">mylios per valandą</item>
         <item quantity="other">mylių per valandą</item>
     </plurals>
+    <string name="dimension_length">Ilgis</string>
+    <string name="dimension_mass">Masė</string>
+    <string name="dimension_velocity">Greitis</string>
 </resources>

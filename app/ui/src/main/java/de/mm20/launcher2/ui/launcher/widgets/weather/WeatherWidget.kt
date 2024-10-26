@@ -23,7 +23,15 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Air
+import androidx.compose.material.icons.rounded.ErrorOutline
+import androidx.compose.material.icons.rounded.LightMode
+import androidx.compose.material.icons.rounded.LocationCity
+import androidx.compose.material.icons.rounded.MyLocation
+import androidx.compose.material.icons.rounded.North
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -42,21 +50,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.icons.HumidityPercentage
+import de.mm20.launcher2.icons.Rain
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
+import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
-import de.mm20.launcher2.icons.HumidityPercentage
-import de.mm20.launcher2.icons.Rain
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.modifier.consumeAllScrolling
@@ -86,16 +98,42 @@ fun WeatherWidget(widget: WeatherWidget) {
     val imperialUnits by viewModel.imperialUnits.collectAsState(false)
     val compactMode = !widget.config.showForecast
 
+    val isProviderAvailable by viewModel.isProviderAvailable.collectAsStateWithLifecycle(true)
+
     var showLocationDialog by remember { mutableStateOf(false) }
 
     if (showLocationDialog) {
         WeatherLocationSearchDialog(onDismissRequest = { showLocationDialog = false })
     }
 
-    val forecast = selectedForecast ?: run {
-        val hasPermission by viewModel.hasLocationPermission.collectAsState()
-        val autoLocation by viewModel.autoLocation.collectAsState()
-        Column {
+
+    Column {
+        if (!isProviderAvailable) {
+            Banner(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                text = stringResource(R.string.weather_widget_no_provider),
+                icon = Icons.Rounded.ErrorOutline,
+                primaryAction = {
+                    Button(
+                        onClick = {
+                            viewModel.openSettings(context)
+                        },
+                        contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                    ) {
+                        Icon(
+                            Icons.AutoMirrored.Rounded.OpenInNew,
+                            null,
+                            modifier = Modifier.padding(end = ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
+                        )
+                        Text(stringResource(R.string.settings))
+                    }
+                }
+            )
+        }
+
+        val forecast = selectedForecast ?: run {
+            val hasPermission by viewModel.hasLocationPermission.collectAsState()
+            val autoLocation by viewModel.autoLocation.collectAsState()
             AnimatedVisibility(hasPermission == false && autoLocation == true) {
                 MissingPermissionBanner(
                     modifier = Modifier
@@ -117,11 +155,10 @@ fun WeatherWidget(widget: WeatherWidget) {
                 )
             }
             NoData()
+            return
         }
-        return
-    }
 
-    Column {
+
         CurrentWeather(forecast, imperialUnits)
 
         if (!compactMode) {
@@ -339,7 +376,9 @@ fun WeatherTimeSelector(
     val listState = rememberLazyListState()
     LazyRow(
         state = listState,
-        modifier = modifier.fillMaxWidth().consumeAllScrolling(),
+        modifier = modifier
+            .fillMaxWidth()
+            .consumeAllScrolling(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -363,7 +402,10 @@ fun WeatherTimeSelector(
                     verticalArrangement = Arrangement.SpaceEvenly
                 ) {
                     WeatherIcon(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                            .semantics {
+                                contentDescription = fc.condition
+                            },
                         icon = weatherIconById(fc.icon),
                         night = fc.night
                     )
@@ -398,7 +440,9 @@ fun WeatherDaySelector(
     val listState = rememberLazyListState()
     LazyRow(
         state = listState,
-        modifier = modifier.fillMaxWidth().consumeAllScrolling(),
+        modifier = modifier
+            .fillMaxWidth()
+            .consumeAllScrolling(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp),

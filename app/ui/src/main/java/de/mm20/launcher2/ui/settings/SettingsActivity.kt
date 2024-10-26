@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -14,7 +15,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
@@ -33,6 +36,7 @@ import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemesSettingsScreen
@@ -55,12 +59,14 @@ import de.mm20.launcher2.ui.settings.log.LogScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.media.MediaIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.nextcloud.NextcloudSettingsScreen
+import de.mm20.launcher2.ui.settings.osm.OsmSettingsScreen
 import de.mm20.launcher2.ui.settings.owncloud.OwncloudSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
+import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterHelpSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
 import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
@@ -71,16 +77,32 @@ import java.util.UUID
 
 class SettingsActivity : BaseActivity() {
 
+    private var route by mutableStateOf<String?>(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        val newRoute = getStartRoute(intent)
+        route = newRoute
+
         setContent {
             val navController = rememberNavController()
 
-            LaunchedEffect(intent) {
-                intent.getStringExtra(EXTRA_ROUTE)
-                    ?.let { navController.navigate(it) }
+            LaunchedEffect(route) {
+                try {
+                    navController.navigate(route ?: "settings") {
+                        popUpTo("settings") {
+                            inclusive = true
+                        }
+                    }
+                } catch (e: IllegalArgumentException) {
+                    navController.navigate("settings") {
+                        popUpTo("settings") {
+                            inclusive = true
+                        }
+                    }
+                }
             }
             val wallpaperColors by wallpaperColorsAsState()
             CompositionLocalProvider(
@@ -106,16 +128,16 @@ class SettingsActivity : BaseActivity() {
                                 navController = navController,
                                 startDestination = "settings",
                                 exitTransition = {
-                                    slideOutHorizontally { it / 2 } + fadeOut()
+                                    slideOutHorizontally { -it / 4 }
                                 },
                                 enterTransition = {
-                                    slideInHorizontally { it / 2 } + scaleIn(initialScale = 0.95f)
+                                    slideInHorizontally { it / 2 } + scaleIn(initialScale = 0.9f) + fadeIn()
                                 },
                                 popEnterTransition = {
-                                    slideInHorizontally { -it / 2 } + fadeIn()
+                                    slideInHorizontally { -it / 4 }
                                 },
                                 popExitTransition = {
-                                    slideOutHorizontally { it / 2 } + scaleOut(targetScale = 0.95f)
+                                    slideOutHorizontally { it / 2 } + scaleOut(targetScale = 0.9f) + fadeOut()
                                 },
                             ) {
                                 composable("settings") {
@@ -156,14 +178,23 @@ class SettingsActivity : BaseActivity() {
                                 composable("settings/search/unitconverter") {
                                     UnitConverterSettingsScreen()
                                 }
+                                composable("settings/search/unitconverter/help") {
+                                    UnitConverterHelpSettingsScreen()
+                                }
                                 composable("settings/search/wikipedia") {
                                     WikipediaSettingsScreen()
                                 }
                                 composable("settings/search/locations") {
                                     LocationsSettingsScreen()
                                 }
+                                composable("settings/search/locations/osm") {
+                                    OsmSettingsScreen()
+                                }
                                 composable("settings/search/files") {
                                     FileSearchSettingsScreen()
+                                }
+                                composable("settings/search/calendar") {
+                                    CalendarSearchSettingsScreen()
                                 }
                                 composable("settings/search/searchactions") {
                                     SearchActionsSettingsScreen()
@@ -260,6 +291,20 @@ class SettingsActivity : BaseActivity() {
                     }
                 }
             }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        val newRoute = getStartRoute(intent)
+        route = newRoute
+    }
+
+    private fun getStartRoute(intent: Intent): String? {
+        if (intent.data?.host == "kvaesitso.mm20.de") {
+            return intent.data?.getQueryParameter("route")
+        } else {
+            return intent.getStringExtra(EXTRA_ROUTE)
         }
     }
 

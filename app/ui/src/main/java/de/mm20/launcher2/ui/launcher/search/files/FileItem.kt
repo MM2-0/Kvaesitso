@@ -20,6 +20,7 @@ import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.AlertDialog
@@ -81,9 +82,6 @@ fun FileItem(
         viewModel.init(file, iconSize.toInt())
     }
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val snackbarHostState = LocalSnackbarHostState.current
-
     val icon by viewModel.icon.collectAsStateWithLifecycle()
     val badge by viewModel.badge.collectAsState(null)
 
@@ -92,8 +90,7 @@ fun FileItem(
     ) {
         AnimatedContent(showDetails) { showDetails ->
             if (showDetails) {
-                Column(
-                ) {
+                Column {
                     Row(
                         modifier = Modifier
                             .padding(
@@ -139,13 +136,15 @@ fun FileItem(
                                     style = MaterialTheme.typography.bodySmall
                                 )
                             }
-                            Text(
-                                text = stringResource(
-                                    R.string.file_meta_path,
-                                    file.path
-                                ),
-                                style = MaterialTheme.typography.bodySmall,
-                            )
+                            if (file.path != null) {
+                                Text(
+                                    text = stringResource(
+                                        R.string.file_meta_path,
+                                        file.path!!
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            }
                             if (!file.isDirectory) {
                                 Text(
                                     text = stringResource(
@@ -253,7 +252,7 @@ fun FileItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(DefaultToolbarAction(
                         label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Edit,
+                        icon = Icons.Rounded.Tune,
                         action = { sheetManager.showCustomizeSearchableModal(file) }
                     ))
 

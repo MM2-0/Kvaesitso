@@ -5,6 +5,7 @@
     "docs:preview": "vitepress preview ."
   },
   "devDependencies": {
+    "qrcode": "^1.5.4",
     "sass": "^1.70.0",
     "vitepress": "^1.0.0-rc.41",
     "vue": "^3.4.15"

@@ -28,11 +28,11 @@ class WebsiteDeserializer: SearchableDeserializer {
         val json = JSONObject(serialized)
         return WebsiteImpl(
             label = json.getString("label"),
-            faviconUrl = json.getString("favicon"),
-            imageUrl = json.getString("image"),
-            description = json.getString("description"),
+            faviconUrl = json.optString("favicon").takeIf { it.isNotBlank() },
+            imageUrl = json.optString("image").takeIf { it.isNotBlank() },
+            description = json.optString("description").takeIf { it.isNotBlank() },
             url = json.getString("url"),
-            color = json.getInt("color")
+            color = json.optInt("color").takeIf { it != 0 }
         )
     }
 }

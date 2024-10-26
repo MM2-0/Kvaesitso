@@ -1,8 +1,8 @@
 package de.mm20.launcher2.database
 
-import android.util.Log
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
@@ -201,9 +201,21 @@ interface SearchableDao {
     @Query("SELECT `key` FROM Searchable WHERE `key` IN (:keys) ORDER BY `weight` DESC, pinPosition DESC")
     fun sortByWeight(keys: List<String>): Flow<List<String>>
 
+    @Query("SELECT `key`, `weight` FROM Searchable WHERE `key` IN (:keys)")
+    fun getWeights(keys: List<String>): Flow<Map<@MapColumn(columnName = "key") String, @MapColumn(columnName = "weight") Double>>
+
     @Query("SELECT hidden FROM Searchable WHERE `key` = :key UNION SELECT 0 as hidden ORDER BY hidden DESC LIMIT 1")
     fun getVisibility(key: String): Flow<Int>
 
     @Query("SELECT pinPosition FROM Searchable WHERE `key` = :key UNION SELECT 0 as pinPosition ORDER BY pinPosition DESC LIMIT 1")
     fun isPinned(key: String): Flow<Boolean>
+
+    @Transaction
+    suspend fun replace(key: String, item: SavedSearchableUpdateContentEntity) {
+        updateKey(key, item.key)
+        update(item)
+    }
+
+    @Query("UPDATE Searchable SET `key` = :newKey WHERE `key` = :oldKey")
+    suspend fun updateKey(oldKey: String, newKey: String)
 }

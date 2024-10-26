@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
@@ -17,10 +18,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -28,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Article
@@ -74,8 +74,13 @@ fun SearchColumn(
 
     val hideFavs by viewModel.hideFavorites
     val favoritesEnabled by viewModel.favoritesEnabled.collectAsState(false)
+
     val apps by viewModel.appResults
     val workApps by viewModel.workAppResults
+    val privateApps by viewModel.privateSpaceAppResults
+    val profiles by viewModel.profiles.collectAsState(emptyList())
+    val profileStates by viewModel.profileStates.collectAsState(emptyList())
+
     val appShortcuts by viewModel.appShortcutResults
     val contacts by viewModel.contactResults
     val files by viewModel.fileResults
@@ -96,28 +101,16 @@ fun SearchColumn(
     val missingContactsPermission by viewModel.missingContactsPermission.collectAsState(false)
     val missingLocationPermission by viewModel.missingLocationPermission.collectAsState(false)
     val missingFilesPermission by viewModel.missingFilesPermission.collectAsState(false)
+    val hasProfilesPermission by viewModel.hasProfilesPermission.collectAsState(false)
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
     val selectedTag by favoritesVM.selectedTag.collectAsState(null)
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
-    var showWorkProfileApps by remember { mutableStateOf(false) }
-    val separateWorkProfile by viewModel.separateWorkProfile.collectAsState(true)
-    val visibleApps by remember {
-        derivedStateOf {
-            when {
-                !separateWorkProfile -> (apps + workApps).sorted()
-                workApps.isEmpty() -> apps
-                apps.isEmpty() -> workApps
-                showWorkProfileApps -> workApps
-                else -> apps
-            }
-        }
-    }
-
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
+    var selectedAppProfileIndex: Int by remember(isSearchEmpty) { mutableIntStateOf(0) }
     var selectedContactIndex: Int by remember(contacts) { mutableIntStateOf(-1) }
     var selectedFileIndex: Int by remember(files) { mutableIntStateOf(-1) }
     var selectedCalendarIndex: Int by remember(events) { mutableIntStateOf(-1) }
@@ -179,15 +172,38 @@ fun SearchColumn(
                     )
                 }
 
-                AppResults(
-                    apps = visibleApps,
-                    showTabs = separateWorkProfile && apps.isNotEmpty() && workApps.isNotEmpty(),
-                    highlightedItem = bestMatch as? Application,
-                    selectedTab = if (showWorkProfileApps) 1 else 0,
-                    onSelectedTabChange = { showWorkProfileApps = it == 1 },
-                    columns = columns,
-                    reverse = reverse
-                )
+                if (isSearchEmpty && profiles.size > 1) {
+                    AppResults(
+                        apps = when(profiles.getOrNull(selectedAppProfileIndex)?.type) {
+                            Profile.Type.Private -> privateApps
+                            Profile.Type.Work -> workApps
+                            else -> apps
+                        },
+                        highlightedItem = bestMatch as? Application,
+                        profiles = profiles,
+                        selectedProfileIndex = selectedAppProfileIndex,
+                        onProfileSelected = {
+                            selectedAppProfileIndex = it
+                        },
+                        isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true,
+                        onProfileLockChange = { p, l ->
+                            viewModel.setProfileLock(p, l)
+                        },
+                        columns = columns,
+                        reverse = reverse,
+                        showProfileLockControls = hasProfilesPermission,
+                    )
+                } else {
+                    AppResults(
+                        apps = apps,
+                        highlightedItem = bestMatch as? Application,
+                        onProfileSelected = {
+                            selectedAppProfileIndex = it
+                        },
+                        columns = columns,
+                        reverse = reverse
+                    )
+                }
 
                 if (!isSearchEmpty) {
 

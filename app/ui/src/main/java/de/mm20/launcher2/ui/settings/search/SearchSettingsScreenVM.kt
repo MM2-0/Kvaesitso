@@ -1,15 +1,10 @@
 package de.mm20.launcher2.ui.settings.search
 
-import android.content.Context
-import android.content.pm.LauncherApps
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.mutableStateOf
-import androidx.core.content.getSystemService
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.preferences.search.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
@@ -40,12 +35,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
 
-    val hasWorkProfile = mutableStateOf(false)
-
-    fun onResume(context: Context) {
-        hasWorkProfile.value = context.getSystemService<LauncherApps>()!!.profiles.size > 1
-    }
-
     val favorites = searchUiSettings.favorites
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
@@ -65,19 +54,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun requestContactsPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Contacts)
-    }
-
-    val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val calendar = calendarSearchSettings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setCalendar(calendar: Boolean) {
-        calendarSearchSettings.setEnabled(calendar)
-    }
-
-    fun requestCalendarPermission(activity: AppCompatActivity) {
-        permissionsManager.requestPermission(activity, PermissionGroup.Calendar)
     }
 
     val calculator = calculatorSearchSettings.enabled
@@ -130,26 +106,11 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         shortcutSearchSettings.setEnabled(appShortcuts)
     }
 
-    val searchResultOrdering = searchUiSettings.resultOrder
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setSearchResultOrdering(searchResultOrdering: SearchResultOrder) {
-        searchUiSettings.setResultOrder(searchResultOrdering)
-    }
-
-
     val reverseSearchResults = searchUiSettings.reversedResults
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setReverseSearchResults(reverseSearchResults: Boolean) {
         searchUiSettings.setReversedResults(reverseSearchResults)
-    }
-
-    val separateWorkProfile = searchUiSettings.separateWorkProfile
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setSeparateWorkProfile(separateWorkProfile: Boolean) {
-        searchUiSettings.setSeparateWorkProfile(separateWorkProfile)
     }
 
     fun requestAppShortcutsPermission(activity: AppCompatActivity) {

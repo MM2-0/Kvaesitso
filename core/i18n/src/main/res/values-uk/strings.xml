@@ -16,7 +16,7 @@
     <string name="action_undo">Скасувати</string>
     <string name="menu_delete">Видалити</string>
     <string name="menu_remove">Прибрати</string>
-    <string name="menu_contacts_open_externally">Відкрити у додатку Контакти</string>
+    <string name="menu_contacts_open_externally">Відкрити у Контактах</string>
     <string name="menu_calendar_open_externally">Відкрити у Календарі</string>
     <string name="search_bar_placeholder">Пошук</string>
     <string name="app_info_version">Версія %1$s</string>

@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Sort
 import androidx.compose.material.icons.rounded.AppShortcut
 import androidx.compose.material.icons.rounded.ArrowOutward
 import androidx.compose.material.icons.rounded.Calculate
@@ -37,7 +38,6 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -60,14 +60,6 @@ fun SearchSettingsScreen() {
     val lifecycleOwner = LocalLifecycleOwner.current
 
     val navController = LocalNavController.current
-
-    val hasWorkProfile by viewModel.hasWorkProfile
-
-    LaunchedEffect(Unit) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            viewModel.onResume(context)
-        }
-    }
 
     var showFilterEditor by remember {
         mutableStateOf(false)
@@ -124,28 +116,13 @@ fun SearchSettingsScreen() {
                     enabled = hasContactsPermission == true
                 )
 
-                val hasCalendarPermission by viewModel.hasCalendarPermission.collectAsStateWithLifecycle(
-                    null
-                )
-                AnimatedVisibility(hasCalendarPermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_calendar_search_settings),
-                        onClick = {
-                            viewModel.requestCalendarPermission(context as AppCompatActivity)
-                        },
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-                val calendar by viewModel.calendar.collectAsStateWithLifecycle(null)
-                SwitchPreference(
+                Preference(
                     title = stringResource(R.string.preference_search_calendar),
                     summary = stringResource(R.string.preference_search_calendar_summary),
                     icon = Icons.Rounded.Today,
-                    value = calendar == true && hasCalendarPermission == true,
-                    onValueChanged = {
-                        viewModel.setCalendar(it)
+                    onClick = {
+                        navController?.navigate("settings/search/calendar")
                     },
-                    enabled = hasCalendarPermission == true
                 )
 
                 val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.collectAsStateWithLifecycle(
@@ -294,24 +271,6 @@ fun SearchSettingsScreen() {
                 }
             }
         }
-        if (hasWorkProfile) {
-            item {
-                PreferenceCategory {
-                    val separateWorkProfile by viewModel.separateWorkProfile.collectAsStateWithLifecycle(
-                        null
-                    )
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_search_bar_separate_work_profile),
-                        summary = stringResource(R.string.preference_search_bar_separate_work_profile_summary),
-                        icon = Icons.Rounded.Work,
-                        value = separateWorkProfile == true,
-                        onValueChanged = {
-                            viewModel.setSeparateWorkProfile(it)
-                        }
-                    )
-                }
-            }
-        }
         item {
             PreferenceCategory {
                 val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
@@ -337,22 +296,6 @@ fun SearchSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                val searchResultOrdering by viewModel.searchResultOrdering.collectAsStateWithLifecycle(
-                    null
-                )
-                ListPreference(
-                    title = stringResource(R.string.preference_search_result_ordering),
-                    items = listOf(
-                        stringResource(R.string.preference_search_result_ordering_alphabetic) to SearchResultOrder.Alphabetical,
-                        stringResource(R.string.preference_search_result_ordering_weighted) to SearchResultOrder.Weighted
-                    ),
-                    value = searchResultOrdering,
-                    onValueChanged = {
-                        if (it != null) viewModel.setSearchResultOrdering(it)
-                    },
-                    icon = Icons.Rounded.Sort
-                )
-
                 val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(
                     null
                 )
@@ -366,6 +309,7 @@ fun SearchSettingsScreen() {
                     onValueChanged = {
                         if (it != null) viewModel.setReverseSearchResults(it)
                     },
+                    icon = Icons.AutoMirrored.Rounded.Sort
                 )
             }
         }

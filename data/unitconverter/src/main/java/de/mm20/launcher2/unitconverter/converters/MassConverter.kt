@@ -4,7 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.unitconverter.Dimension
 import de.mm20.launcher2.unitconverter.R
 
-class MassConverter(context: Context): SimpleFactorConverter() {
+internal class MassConverter(context: Context): SimpleFactorConverter() {
     override val dimension = Dimension.Mass
 
     override val standardUnits = listOf(
