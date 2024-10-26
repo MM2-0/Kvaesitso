@@ -122,17 +122,6 @@ class SearchVM : ViewModel(), KoinComponent {
 
     var previousResults: SearchResults? = null
 
-    private fun <T> mergeStateLists(state: SnapshotStateList<T>, newItems: List<T>) {
-        val diff = state.toSet() subtract newItems.toSet()
-        state.removeAll(diff)
-        for ((i, item) in newItems.withIndex()) {
-            if (i < state.size)
-                state[i] = item
-            else
-                state.add(item)
-        }
-    }
-
     val hiddenResultsButton = searchUiSettings.hiddenItemsButton
     val hiddenResults = mutableStateListOf<SavableSearchable>()
 
@@ -258,12 +247,13 @@ class SearchVM : ViewModel(), KoinComponent {
                             )
                         }
                         hiddenItems += hiddenPrivateApps
+                        previousResults = SearchResults(apps = apps)
 
                         searchActionResults.clear()
-                        mergeStateLists(appResults, apps)
-                        mergeStateLists(workAppResults, workApps)
-                        mergeStateLists(privateSpaceAppResults, privateApps)
-                        mergeStateLists(hiddenResults, hiddenItems)
+                        appResults.mergeWith(apps)
+                        workAppResults.mergeWith(workApps)
+                        privateSpaceAppResults.mergeWith(privateApps)
+                        hiddenResults.mergeWith(hiddenItems)
                     }
 
             } else {
@@ -283,33 +273,19 @@ class SearchVM : ViewModel(), KoinComponent {
                         workAppResults.clear()
                         privateSpaceAppResults.clear()
 
-                        mergeStateLists(
-                            appResults,
-                            results.apps?.filterNot { hiddenKeys.contains(it.key) }
-                                ?.applyRanking(query) ?: emptyList()
-                        )
-                        mergeStateLists(
-                            appShortcutResults,
-                            results.shortcuts?.filterNot { hiddenKeys.contains(it.key) }
-                                ?.applyRanking(query) ?: emptyList()
-                        )
-                        mergeStateLists(
-                            fileResults,
-                            results.files?.filterNot { hiddenKeys.contains(it.key) }
-                                ?.applyRanking(query) ?: emptyList()
-                        )
-                        mergeStateLists(
-                            contactResults,
+                        appResults.mergeWith(results.apps, hiddenKeys, query)
+                        appShortcutResults.mergeWith(results.shortcuts, hiddenKeys, query)
+                        fileResults.mergeWith(results.files, hiddenKeys, query)
+
+                        contactResults.mergeWith(
                             results.contacts?.filterNot { hiddenKeys.contains(it.key) }
-                                ?.applyRanking(query) ?: emptyList()
+                                ?.applyRanking(query)
                         )
-                        mergeStateLists(
-                            calendarResults,
+                        calendarResults.mergeWith(
                             results.calendars?.filterNot { hiddenKeys.contains(it.key) }
-                                ?.applyRanking(query) ?: emptyList()
+                                ?.applyRanking(query)
                         )
-                        mergeStateLists(
-                            locationResults,
+                        locationResults.mergeWith(
                             results.locations?.filterNot { hiddenKeys.contains(it.key) }
                                 ?.let { locations ->
                                     devicePoseProvider.lastLocation?.let {
@@ -320,21 +296,19 @@ class SearchVM : ViewModel(), KoinComponent {
                                             .distinctBy { it.key }
                                             .toList()
                                     } ?: locations.applyRanking(query)
-                                } ?: emptyList()
+                                }
                         )
-                        mergeStateLists(
-                            articleResults,
-                            results.wikipedia?.applyRanking(query) ?: emptyList()
+                        articleResults.mergeWith(
+                            results.wikipedia?.applyRanking(query)
                         )
-                        mergeStateLists(
-                            websiteResults,
-                            results.websites?.applyRanking(query) ?: emptyList()
+                        websiteResults.mergeWith(
+                            results.websites?.applyRanking(query)
                         )
-                        mergeStateLists(calculatorResults, results.calculators ?: emptyList())
-                        mergeStateLists(unitConverterResults, results.unitConverters ?: emptyList())
+                        calculatorResults.mergeWith(results.calculators)
+                        unitConverterResults.mergeWith(results.unitConverters)
 
                         if (results.searchActions != null) {
-                            mergeStateLists(searchActionResults, results.searchActions!!)
+                            searchActionResults.mergeWith(results.searchActions!!)
                         }
 
                         if (launchOnEnter.value) {
@@ -454,6 +428,23 @@ class SearchVM : ViewModel(), KoinComponent {
         }
         return sorted.distinctBy { it.key }.toList()
     }
+
+    private fun <T> SnapshotStateList<T>.mergeWith(newItems: List<T>?) {
+        val items = newItems ?: emptyList()
+        val diff = toSet() subtract items.toSet()
+        removeAll(diff)
+        for ((i, item) in items.withIndex()) {
+            if (i < size)
+                set(i, item)
+            else
+                add(item)
+        }
+    }
+    private suspend fun <T : SavableSearchable> SnapshotStateList<T>.mergeWith(
+        newItems: List<T>?,
+        hiddenKeys: List<String>,
+        query: String
+    ) = this.mergeWith((newItems ?: emptyList()).filterNot { hiddenKeys.contains(it.key) }.applyRanking(query))
 }
 
 
