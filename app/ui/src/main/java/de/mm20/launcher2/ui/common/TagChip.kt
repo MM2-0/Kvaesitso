@@ -3,11 +3,14 @@ package de.mm20.launcher2.ui.common
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,7 +32,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.ui.ktx.splitLeadingEmoji
@@ -39,12 +45,11 @@ fun TagChip(
     modifier: Modifier = Modifier,
     tag: Tag,
     selected: Boolean = false,
+    dragged: Boolean = false,
     onClick: () -> Unit = {},
     onLongClick: (() -> Unit)? = null,
     clearable: Boolean = false,
     onClear: (() -> Unit)? = null,
-    colors: SelectableChipColors = FilterChipDefaults.filterChipColors(),
-    elevation: SelectableChipElevation? = FilterChipDefaults.filterChipElevation(),
 ) {
     val (emoji, tagName) = remember(tag.tag) {
         tag.tag.splitLeadingEmoji()
@@ -52,22 +57,39 @@ fun TagChip(
 
     val shape = MaterialTheme.shapes.small
 
-    val transition = updateTransition(selected)
+    val transition = updateTransition(
+        if (dragged) 2 else 0 + if (selected) 1 else 0
+    )
 
-    val backgroundColor by transition.animateColor {
-        if (it) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerLow
+    val backgroundColor by transition.animateColor(
+        transitionSpec = {
+            if (targetState == 0) tween(100, 200) else tween(100, 0)
+        }
+    ) {
+        when(it) {
+            0 -> Color.Transparent
+            2 -> MaterialTheme.colorScheme.surfaceContainerLow
+            else -> MaterialTheme.colorScheme.secondaryContainer
+        }
     }
     val borderColor by transition.animateColor {
-        if (it) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.outlineVariant
+        if (it and 1 == 1) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.outlineVariant
     }
     val borderWidth by transition.animateDp {
-        if (it) 0.dp else 1.dp
+        if (it and 1 == 1) 0.dp else 1.dp
     }
     val textColor by transition.animateColor {
-        if (it) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+        if (it and 1 == 1) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
     }
     val iconColor by transition.animateColor {
-        if (it) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.primary
+        if (it and 1 == 1) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.primary
+    }
+    val elevation by transition.animateDp(
+        transitionSpec = {
+            if (targetState >=2) tween(100, 200) else tween(100, 0)
+        }
+    ) {
+        if (it >= 2) 8.dp else 0.dp
     }
 
 
@@ -75,9 +97,9 @@ fun TagChip(
         modifier = modifier
             .minimumInteractiveComponentSize()
             .height(32.dp)
-            .background(backgroundColor, shape)
+            .shadow(elevation, shape, true)
             .border(borderWidth, borderColor, shape)
-            .clip(shape)
+            .background(backgroundColor)
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
@@ -118,45 +140,4 @@ fun TagChip(
             )
         }
     }
-
-    /*FilterChip(
-        modifier = modifier,
-        selected = selected,
-        onClick = onClick,
-        leadingIcon = {
-            if (emoji != null && tagName != null) {
-                Text(
-                    emoji,
-                    modifier = Modifier.width(FilterChipDefaults.IconSize),
-                    textAlign = TextAlign.Center,
-                )
-            } else if (tagName != null) {
-                Icon(
-                    modifier = Modifier.size(FilterChipDefaults.IconSize),
-                    imageVector = Icons.Rounded.Tag,
-                    contentDescription = null
-                )
-            }
-        },
-        label = {
-            Text(
-                tagName ?: emoji ?: "",
-            )
-        },
-        colors = colors,
-        elevation = elevation,
-        trailingIcon = if (clearable) {
-            {
-                Icon(
-                    modifier = Modifier
-                        .clickable {
-                            onClear?.invoke()
-                        }
-                        .size(FilterChipDefaults.IconSize),
-                    imageVector = Icons.Rounded.Close,
-                    contentDescription = null,
-                )
-            }
-        } else null
-    )*/
 }

@@ -565,11 +565,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                                 },
                                             tag = tag,
                                             selected = tag.tag == hoveredTag,
-                                            elevation = if (dragged) FilterChipDefaults.elevatedFilterChipElevation() else FilterChipDefaults.filterChipElevation(),
-                                            colors = if (dragged) FilterChipDefaults.elevatedFilterChipColors()
-                                            else FilterChipDefaults.filterChipColors(
-                                                containerColor = MaterialTheme.colorScheme.surface
-                                            ),
+                                            dragged = dragged,
                                             clearable = true,
                                             onClear = {
                                                 viewModel.unpinTag(tag)
