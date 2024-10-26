@@ -1,13 +1,12 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.search
 
 import android.content.Context
 import android.os.Bundle
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Tag
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
-import de.mm20.launcher2.icons.TextLayer
-import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.searchable.TagSerializer
+import de.mm20.launcher2.icons.VectorLayer
 
 data class Tag(
     val tag: String,
@@ -30,7 +29,7 @@ data class Tag(
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
-            foregroundLayer = TextLayer("#"),
+            foregroundLayer = VectorLayer(Icons.Rounded.Tag),
             backgroundLayer = ColorLayer()
         )
     }

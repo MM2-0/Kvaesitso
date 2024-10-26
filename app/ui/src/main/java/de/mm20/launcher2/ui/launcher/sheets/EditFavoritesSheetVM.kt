@@ -21,14 +21,13 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.appshortcuts.AppShortcut
 import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.search.Searchable
-import de.mm20.launcher2.search.data.Tag
+import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.searchable.PinnedLevel
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent

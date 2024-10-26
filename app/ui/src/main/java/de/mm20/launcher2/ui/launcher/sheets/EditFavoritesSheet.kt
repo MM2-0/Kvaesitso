@@ -77,7 +77,7 @@ import coil.compose.AsyncImage
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.data.Tag
+import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.TagChip
 import de.mm20.launcher2.ui.component.BottomSheetDialog

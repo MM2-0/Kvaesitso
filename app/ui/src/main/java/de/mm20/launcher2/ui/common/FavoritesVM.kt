@@ -7,7 +7,7 @@ import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
 import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.preferences.search.FavoritesSettingsData
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.data.Tag
+import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.searchable.PinnedLevel
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.widgets.CalendarWidget

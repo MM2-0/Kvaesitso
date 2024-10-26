@@ -1,9 +1,5 @@
-package de.mm20.launcher2.searchable
+package de.mm20.launcher2.search
 
-import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.SearchableDeserializer
-import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.data.Tag
 import org.json.JSONObject
 
 class TagSerializer: SearchableSerializer {
