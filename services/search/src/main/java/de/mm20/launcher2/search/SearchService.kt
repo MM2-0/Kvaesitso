@@ -30,7 +30,7 @@ interface SearchService {
     fun search(
         query: String,
         filters: SearchFilters,
-        state: SearchResults? = null
+        initialResults: SearchResults? = null,
     ): Flow<SearchResults>
 
     fun getAllApps(): Flow<AllAppsResults>
@@ -55,10 +55,10 @@ internal class SearchServiceImpl(
     override fun search(
         query: String,
         filters: SearchFilters,
-        state: SearchResults?
+        initialResults: SearchResults?,
     ): Flow<SearchResults> = flow {
         supervisorScope {
-            val results = MutableStateFlow(state ?: SearchResults())
+            val results = MutableStateFlow(initialResults ?: SearchResults())
 
             val customAttrResults = customAttributesRepository.search(query)
                 .map { items ->
