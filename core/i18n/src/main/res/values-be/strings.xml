@@ -462,4 +462,9 @@
     <string name="preference_search_bar_color">Колер</string>
     <string name="preference_search_bar_auto_focus">Адкрываць клавіятуру</string>
     <string name="preference_search_supportedunits">Адзінкі, якія падтрымліваюцца</string>
+    <string name="preference_screen_tags_summary">Кіраванне тэгамі і ярлыкамі</string>
+    <string name="preference_wikipedia_customurl">Спасылка на Вікіпедыю</string>
+    <string name="preference_hidden_items_reveal_button_summary">Адлюстроўваць кнопку для паказу схаваных рэзультатаў пошуку</string>
+    <string name="preference_screen_tags">Тэгі</string>
+    <string name="preference_hidden_items_reveal_button">Кнопка \"Паказаць схаваныя\"</string>
 </resources>
