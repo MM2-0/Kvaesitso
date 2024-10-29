@@ -467,4 +467,15 @@
     <string name="preference_hidden_items_reveal_button_summary">Адлюстроўваць кнопку для паказу схаваных рэзультатаў пошуку</string>
     <string name="preference_screen_tags">Тэгі</string>
     <string name="preference_hidden_items_reveal_button">Кнопка \"Паказаць схаваныя\"</string>
+    <string name="preference_category_favorites_frequently_used">Нядаўна выкарыстаныя</string>
+    <string name="preference_screen_icons">Сетка і значкі</string>
+    <string name="preference_screen_icons_summary">Сетка, памер і пакеты значкоў, бэйджы</string>
+    <string name="preference_category_accounts">Уліковыя запісы</string>
+    <string name="preference_widgets_edit_button_summary">Адлюстроўваць кнопку для дадавання, выдалення і змянення парадку віджэтаў</string>
+    <string name="preference_screen_homescreen">Галоўны экран</string>
+    <string name="preference_weather_integration">Надвор\'е</string>
+    <string name="preference_screen_homescreen_summary">Гадзіннік, поле пошуку, шпалеры, сістэмныя панэлі</string>
+    <string name="preference_media_integration">Кіраванне медыя</string>
+    <string name="no_account_nextcloud">Вы яшчэ не далучылі уліковы запіс Nextcloud</string>
+    <string name="preference_edit_favorites_summary">Змяненне парадку замацаваных ярлыкоў</string>
 </resources>
