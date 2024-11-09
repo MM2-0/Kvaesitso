@@ -476,6 +476,23 @@
     <string name="preference_weather_integration">Надвор\'е</string>
     <string name="preference_screen_homescreen_summary">Гадзіннік, поле пошуку, шпалеры, сістэмныя панэлі</string>
     <string name="preference_media_integration">Кіраванне медыя</string>
-    <string name="no_account_nextcloud">Вы яшчэ не далучылі уліковы запіс Nextcloud</string>
+    <string name="no_account_nextcloud">Вы яшчэ не далучылі ўліковы запіс Nextcloud</string>
     <string name="preference_edit_favorites_summary">Змяненне парадку замацаваных ярлыкоў</string>
+    <string name="connect_account">Далучыць уліковы запіс</string>
+    <string name="battery_part_charging">Зараджаецца</string>
+    <string name="preference_favorites_frequently_used_summary">Паказваць нядаўна высарыстаныя ярлыкі ў панэлі абранага</string>
+    <string name="no_account_owncloud">Вы яшчэ не далучылі ўліковы запіс Owncloud</string>
+    <string name="backup_complete">Рэзервовае капіяванне скончана.</string>
+    <string name="restore_invalid_file">Здаецца, выбраны файл не з\'яўляецца рэзервовай копіяй. Вы ўпэўнены, што выбралі пэўны файл?</string>
+    <string name="preference_favorites_edit_button_summary">Паказваць кнопку рэдагавання абраных</string>
+    <string name="restore_different_minor_version">Гэты бэкап быў створаны з іншай версіі %1$s. Некаторыя дадзеныя могуць не аднавіцца пэўна.</string>
+    <string name="no_account_google">Вы яшчэ не далучылі ўліковы запіс Google</string>
+    <plurals name="battery_part_remaining_charge_time">
+        <item quantity="one">Зарадзіцца поўнасцю праз %1$s хвіліну</item>
+        <item quantity="few">Зарадзіцца поўнасцю праз %1$s хвіліны</item>
+        <item quantity="many">Зарадзіцца поўнасцю праз %1$s хвілін</item>
+        <item quantity="other">Зарадзіцца поўнасцю праз %1$s хвілін</item>
+    </plurals>
+    <string name="restore_incompatible_file">Гэта рэзервовая копія была створана з іншай версіяй %1$s і не можа быць адноўлены з гэтай версіяй.</string>
+    <string name="preference_edit_button">Кнопка рэдагавання</string>
 </resources>
