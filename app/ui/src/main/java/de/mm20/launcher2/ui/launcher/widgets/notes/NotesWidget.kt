@@ -184,7 +184,7 @@ fun NotesWidget(
                     val tooltipState = rememberTooltipState()
                     TooltipBox(
                         state = tooltipState,
-                        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
                         tooltip = {
                             PlainTooltip {
                                 Text(
@@ -227,7 +227,7 @@ fun NotesWidget(
                     if (isLastWidget == false) {
                         TooltipBox(
                             state = tooltipState,
-                            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
                             tooltip = {
                                 PlainTooltip {
                                     Text(stringResource(R.string.notes_widget_action_dismiss))

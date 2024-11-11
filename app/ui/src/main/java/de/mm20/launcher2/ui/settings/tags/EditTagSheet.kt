@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -22,8 +23,11 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -38,6 +42,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -48,6 +56,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.SmallMessage
+import de.mm20.launcher2.ui.component.emojipicker.EmojiPicker
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 
@@ -87,10 +96,16 @@ fun EditTagSheet(
                     Text(stringResource(R.string.action_next))
                 }
             }
-        } else {
+        } else if (viewModel.page == EditTagSheetPage.PickItems) {
             {
                 OutlinedButton(onClick = { viewModel.closeItemPicker() }) {
                     Text(stringResource(id = R.string.ok))
+                }
+            }
+        } else {
+            {
+                OutlinedButton(onClick = { viewModel.closeIconPicker() }) {
+                    Text(stringResource(id = android.R.string.cancel))
                 }
             }
         },
@@ -109,6 +124,7 @@ fun EditTagSheet(
             EditTagSheetPage.CreateTag -> CreateNewTagPage(viewModel, it)
             EditTagSheetPage.PickItems -> PickItems(viewModel, it)
             EditTagSheetPage.CustomizeTag -> CustomizeTag(viewModel, it)
+            EditTagSheetPage.PickIcon -> PickIcon(viewModel, it)
         }
     }
 }
@@ -238,19 +254,72 @@ fun ListItem(
 @Composable
 fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
     val iconSize = 32.dp.toPixels()
+    val tagEmoji = viewModel.tagEmoji
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
             .fillMaxWidth()
             .padding(paddingValues)
     ) {
-        OutlinedTextField(
+
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            label = { Text(stringResource(R.string.tag_name)) },
-            value = viewModel.tagName,
-            onValueChange = { viewModel.tagName = it }
-        )
+        ) {
+            val outlineVariant = MaterialTheme.colorScheme.outlineVariant
+            Box(
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .clip(CircleShape)
+                    .clickable {
+                        viewModel.openIconPicker()
+                    }
+                    .size(56.dp)
+                        then (
+                        if (tagEmoji != null) {
+                            Modifier.background(
+                                MaterialTheme.colorScheme.secondaryContainer,
+                                CircleShape
+                            )
+                        } else {
+                            Modifier.drawBehind {
+                                val w = with(density) { 2.dp.toPx() }
+                                drawCircle(
+                                    color = outlineVariant,
+                                    style = Stroke(
+                                        width = w,
+                                        pathEffect = PathEffect.dashPathEffect(
+                                            floatArrayOf(
+                                                w * 2,
+                                                w * 2
+                                            )
+                                        )
+                                    )
+                                )
+                            }
+                        }
+                        ),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (tagEmoji != null) {
+                    Text(tagEmoji)
+                } else {
+                    Icon(
+                        Icons.Rounded.Tag,
+                        null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            OutlinedTextField(
+                modifier = Modifier.weight(1f),
+                singleLine = true,
+                placeholder = { Text(stringResource(R.string.tag_name)) },
+                value = viewModel.tagName,
+                onValueChange = { viewModel.tagName = it },
+            )
+        }
+
         val icon1 = remember(viewModel.taggedItems.getOrNull(0)?.key) {
             viewModel.taggedItems.getOrNull(0)?.let {
                 viewModel.getIcon(it, iconSize.toInt())
@@ -286,21 +355,27 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
                     .height(32.dp),
                 contentAlignment = Alignment.CenterEnd
             ) {
-                ShapedLauncherIcon(
-                    size = 32.dp,
-                    icon = { icon1?.value },
-                    modifier = Modifier.offset(x = -0.dp)
-                )
-                ShapedLauncherIcon(
-                    size = 32.dp,
-                    icon = { icon2?.value },
-                    modifier = Modifier.offset(x = -16.dp)
-                )
-                ShapedLauncherIcon(
-                    size = 32.dp,
-                    icon = { icon3?.value },
-                    modifier = Modifier.offset(x = -32.dp)
-                )
+                icon1?.value?.let {
+                    ShapedLauncherIcon(
+                        size = 32.dp,
+                        icon = { it },
+                        modifier = Modifier.offset(x = -0.dp)
+                    )
+                }
+                icon2?.value?.let {
+                    ShapedLauncherIcon(
+                        size = 32.dp,
+                        icon = { it },
+                        modifier = Modifier.offset(x = -16.dp)
+                    )
+                }
+                icon3?.value?.let {
+                    ShapedLauncherIcon(
+                        size = 32.dp,
+                        icon = { it },
+                        modifier = Modifier.offset(x = -32.dp)
+                    )
+                }
             }
         }
         AnimatedVisibility(viewModel.tagNameExists || viewModel.taggedItems.isEmpty()) {
@@ -313,4 +388,44 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
             )
         }
     }
+}
+
+@Composable
+fun PickIcon(
+    viewModel: EditTagSheetVM,
+    paddingValues: PaddingValues
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(paddingValues)
+    ) {
+        OutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            onClick = {
+                viewModel.selectIcon(null)
+            },
+            contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+        ) {
+            Icon(
+                Icons.Rounded.Delete,
+                null,
+                modifier = Modifier
+                    .padding(end = ButtonDefaults.IconSpacing)
+                    .size(ButtonDefaults.IconSize)
+            )
+            Text(stringResource(R.string.reset_icon))
+        }
+        EmojiPicker(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            onEmojiSelected = {
+                viewModel.selectIcon(it)
+            }
+        )
+    }
+
 }

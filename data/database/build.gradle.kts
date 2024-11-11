@@ -49,6 +49,7 @@ dependencies {
     ksp(libs.androidx.roomcompiler)
     api(libs.androidx.room)
     implementation(libs.koin.android)
+    implementation(libs.emoji4j)
 
     implementation(project(":core:i18n"))
     implementation(project(":core:ktx"))

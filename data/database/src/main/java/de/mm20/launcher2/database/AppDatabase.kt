@@ -36,6 +36,7 @@ import de.mm20.launcher2.database.migrations.Migration_22_23
 import de.mm20.launcher2.database.migrations.Migration_23_24
 import de.mm20.launcher2.database.migrations.Migration_24_25
 import de.mm20.launcher2.database.migrations.Migration_25_26
+import de.mm20.launcher2.database.migrations.Migration_26_27
 import de.mm20.launcher2.database.migrations.Migration_6_7
 import de.mm20.launcher2.database.migrations.Migration_7_8
 import de.mm20.launcher2.database.migrations.Migration_8_9
@@ -55,7 +56,7 @@ import java.util.UUID
         SearchActionEntity::class,
         ThemeEntity::class,
         PluginEntity::class,
-    ], version = 26, exportSchema = true
+    ], version = 27, exportSchema = true
 )
 @TypeConverters(ComponentNameConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -154,6 +155,7 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_23_24(),
                         Migration_24_25(),
                         Migration_25_26(),
+                        Migration_26_27(),
                     ).build()
             if (_instance == null) _instance = instance
             return instance

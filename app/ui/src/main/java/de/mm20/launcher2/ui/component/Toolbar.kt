@@ -84,7 +84,7 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
             val action = actions[i]
             val tooltipState = rememberTooltipState()
             TooltipBox(
-                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
                 tooltip = {
                     PlainTooltip {
                         Text(action.label)

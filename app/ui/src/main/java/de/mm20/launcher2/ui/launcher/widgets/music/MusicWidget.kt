@@ -398,7 +398,7 @@ fun CustomActions(
         val action = actions.customActions[i]
         val tooltipState = rememberTooltipState()
         TooltipBox(
-            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
             state = tooltipState,
             tooltip = {
                 PlainTooltip {
@@ -458,7 +458,7 @@ fun CustomActions(
         val action = actions.customActions.last()
         TooltipBox(
             state = tooltipState,
-            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
             tooltip = {
                 PlainTooltip {
                     Text(action.name.toString())

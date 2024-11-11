@@ -1002,4 +1002,5 @@
         <item quantity="one">%1$s list selected</item>
         <item quantity="other">%1$s lists selected</item>
     </plurals>
+    <string name="reset_icon">Reset icon</string>
 </resources>

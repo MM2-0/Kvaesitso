@@ -11,6 +11,7 @@ import de.mm20.launcher2.data.customattrs.AdaptifiedLegacyIcon
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.CustomIcon
 import de.mm20.launcher2.data.customattrs.CustomIconPackIcon
+import de.mm20.launcher2.data.customattrs.CustomTextIcon
 import de.mm20.launcher2.data.customattrs.LegacyCustomIconPackIcon
 import de.mm20.launcher2.data.customattrs.CustomThemedIcon
 import de.mm20.launcher2.data.customattrs.DefaultPlaceholderIcon
@@ -19,6 +20,7 @@ import de.mm20.launcher2.data.customattrs.UnmodifiedSystemDefaultIcon
 import de.mm20.launcher2.icons.providers.CalendarIconProvider
 import de.mm20.launcher2.icons.providers.CompatIconProvider
 import de.mm20.launcher2.icons.providers.CustomIconPackIconProvider
+import de.mm20.launcher2.icons.providers.CustomTextIconProvider
 import de.mm20.launcher2.icons.providers.LegacyCustomIconPackIconProvider
 import de.mm20.launcher2.icons.providers.CustomThemedIconProvider
 import de.mm20.launcher2.icons.providers.DynamicClockIconProvider
@@ -202,6 +204,9 @@ class IconService(
         }
         if (customIcon is DefaultPlaceholderIcon) {
             return iconProviders.value.lastOrNull()?.let { listOf(it) } ?: emptyList()
+        }
+        if (customIcon is CustomTextIcon) {
+            return listOf(CustomTextIconProvider(customIcon))
         }
         return emptyList()
     }

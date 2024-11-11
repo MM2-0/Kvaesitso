@@ -45,14 +45,7 @@ internal class TagsServiceImpl(
             }
             if (newName != null && newName != tag) {
                 customAttributesRepository.renameTag(tag, newName).join()
-                val pinnedTags = searchableRepository.get(
-                    includeTypes = listOf(Tag.Domain),
-                    minPinnedLevel = PinnedLevel.AutomaticallySorted,
-                ).first()
-                val oldTag = Tag(tag)
-                if (pinnedTags.any { it.key == oldTag.key }) {
-                    searchableRepository.replace(oldTag.key, Tag(newName))
-                }
+                searchableRepository.replace(Tag(tag).key, Tag(newName))
             }
 
         }

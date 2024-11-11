@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.common
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.tween
@@ -8,16 +9,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Tag
+import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
@@ -30,8 +35,13 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.icons.IconService
+import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.TextLayer
+import de.mm20.launcher2.icons.VectorLayer
 import de.mm20.launcher2.search.Tag
-import de.mm20.launcher2.ui.ktx.splitLeadingEmoji
+import de.mm20.launcher2.ui.ktx.toPixels
+import org.koin.androidx.compose.inject
 
 @Composable
 fun TagChip(
@@ -39,15 +49,12 @@ fun TagChip(
     tag: Tag,
     selected: Boolean = false,
     dragged: Boolean = false,
+    compact: Boolean = false,
     onClick: () -> Unit = {},
     onLongClick: (() -> Unit)? = null,
     clearable: Boolean = false,
     onClear: (() -> Unit)? = null,
 ) {
-    val (emoji, tagName) = remember(tag.tag) {
-        tag.tag.splitLeadingEmoji()
-    }
-
     val shape = MaterialTheme.shapes.small
 
     val transition = updateTransition(
@@ -56,10 +63,10 @@ fun TagChip(
 
     val backgroundColor by transition.animateColor(
         transitionSpec = {
-            if (targetState == 0) tween(100, 200) else tween(100, 0)
+            if (targetState == 0 && initialState >= 2) tween(100, 200) else tween(100, 0)
         }
     ) {
-        when(it) {
+        when (it) {
             0 -> Color.Transparent
             2 -> MaterialTheme.colorScheme.surfaceContainerLow
             else -> MaterialTheme.colorScheme.secondaryContainer
@@ -79,17 +86,28 @@ fun TagChip(
     }
     val elevation by transition.animateDp(
         transitionSpec = {
-            if (targetState >=2) tween(100, 200) else tween(100, 0)
+            if (targetState >= 2) tween(100, 200) else tween(100, 0)
         }
     ) {
         if (it >= 2) 8.dp else 0.dp
     }
 
+    val iconService by inject<IconService>()
+    val iconSize = InputChipDefaults.AvatarSize.toPixels()
+
+    val icon by remember(tag, iconSize) {
+        iconService.getIcon(
+            tag,
+            iconSize.toInt()
+        )
+    }.collectAsState(null)
+
 
     Row(
         modifier = modifier
-            .minimumInteractiveComponentSize()
+            .padding(vertical = 8.dp)
             .height(32.dp)
+            .widthIn(min = 48.dp)
             .shadow(elevation, shape, true)
             .border(borderWidth, borderColor, shape)
             .background(backgroundColor)
@@ -99,28 +117,34 @@ fun TagChip(
             )
             .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
     ) {
-        if (emoji != null && tagName != null) {
+        val foregroundLayer = (icon as? StaticLauncherIcon)?.foregroundLayer
+        AnimatedVisibility(foregroundLayer != null && (!compact || foregroundLayer is TextLayer)) {
+            if (foregroundLayer is TextLayer) {
+                Text(
+                    text = foregroundLayer.text,
+                    modifier = Modifier.width(FilterChipDefaults.IconSize),
+                    textAlign = TextAlign.Center,
+                )
+            } else if (foregroundLayer is VectorLayer && !compact) {
+                Icon(
+                    modifier = Modifier
+                        .size(FilterChipDefaults.IconSize),
+                    imageVector = foregroundLayer.vector,
+                    contentDescription = null,
+                    tint = iconColor
+                )
+            }
+        }
+        AnimatedVisibility(foregroundLayer != null && (!compact || foregroundLayer is VectorLayer)) {
             Text(
-                emoji,
-                modifier = Modifier.width(FilterChipDefaults.IconSize),
-                textAlign = TextAlign.Center,
-            )
-        } else {
-            Icon(
-                modifier = Modifier
-                    .size(FilterChipDefaults.IconSize),
-                imageVector = Icons.Rounded.Tag,
-                contentDescription = null,
-                tint = iconColor
+                tag.tag,
+                style = MaterialTheme.typography.labelLarge,
+                color = textColor,
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
         }
-        Text(
-            tagName ?: emoji ?: "",
-            style = MaterialTheme.typography.labelLarge,
-            color = textColor,
-            modifier = Modifier.padding(horizontal = 8.dp)
-        )
         if (clearable) {
             Icon(
                 modifier = Modifier

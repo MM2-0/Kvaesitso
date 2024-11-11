@@ -56,7 +56,7 @@ fun CorePaletteColorPreference(
 
     TooltipBox(
         state = tooltipState,
-        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
         tooltip = {
             PlainTooltip {
                 Text(title)

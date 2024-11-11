@@ -119,6 +119,12 @@ sealed class CustomIcon : CustomAttribute {
                 }
                 "force_themed_icon" -> ForceThemedIcon
                 "default_placeholder_icon" -> DefaultPlaceholderIcon
+                "custom_text_icon" -> {
+                    CustomTextIcon(
+                        text = payload.getString("text"),
+                        color = payload.getInt("color")
+                    )
+                }
                 else -> null
             }
         }
@@ -231,6 +237,19 @@ data object DefaultPlaceholderIcon: CustomIcon() {
     override fun toDatabaseValue(): String {
         return jsonObjectOf(
             "type" to "default_placeholder_icon"
+        ).toString()
+    }
+}
+
+data class CustomTextIcon(
+    val text: String,
+    val color: Int = 0,
+): CustomIcon() {
+    override fun toDatabaseValue(): String {
+        return jsonObjectOf(
+            "type" to "custom_text_icon",
+            "text" to text,
+            "color" to color,
         ).toString()
     }
 }

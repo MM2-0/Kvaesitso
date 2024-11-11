@@ -100,6 +100,7 @@ dependencies {
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.browser)
+    implementation(libs.androidx.emojipicker)
 
     implementation(libs.androidx.lifecycle.viewmodelcompose)
     implementation(libs.androidx.lifecycle.runtimecompose)

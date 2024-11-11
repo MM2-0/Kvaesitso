@@ -186,7 +186,7 @@ fun LazyVerticalDragAndDropGrid(
         horizontalArrangement,
         flingBehavior,
         userScrollEnabled,
-        content,
+        content = content,
     )
 }
 
@@ -215,7 +215,7 @@ fun LazyHorizontalDragAndDropGrid(
         verticalArrangement,
         flingBehavior,
         userScrollEnabled,
-        content,
+        content = content,
     )
 }
 
