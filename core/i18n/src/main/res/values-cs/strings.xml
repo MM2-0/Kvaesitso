@@ -819,4 +819,5 @@
     <string name="task_due_date">Dokončit do %1$s</string>
     <string name="task_due_today">Dokončit dnes</string>
     <string name="preference_calendar_hide_completed">Skrýt dokončené úkoly</string>
+    <string name="reset_icon">Resetovat ikonu</string>
 </resources>
