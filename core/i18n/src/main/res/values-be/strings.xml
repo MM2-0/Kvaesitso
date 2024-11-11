@@ -495,4 +495,12 @@
     </plurals>
     <string name="restore_incompatible_file">Гэта рэзервовая копія была створана з іншай версіяй %1$s і не можа быць адноўлены з гэтай версіяй.</string>
     <string name="preference_edit_button">Кнопка рэдагавання</string>
+    <string name="restore_complete">Рэзервовая копія адноўлена.</string>
+    <string name="icon_picker_title">Выберыце значок</string>
+    <string name="icon_picker_suggestions">Прапановы</string>
+    <string name="icon_picker_search_icon">Пошук у пакетах значкоў</string>
+    <string name="icon_picker_default_icon">Прадвызначаны</string>
+    <string name="restore_meta">Створана %1$s на %2$s з %3$s.</string>
+    <string name="icon_picker_no_packs_installed">Пакетаў значкоў не ўсталявана</string>
+    <string name="icon_picker_filter_all_packs">Усе пакеты значкоў</string>
 </resources>
