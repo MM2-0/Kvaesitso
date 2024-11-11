@@ -186,4 +186,6 @@
     <string name="weather_condition_heavysleet">Yoğun karla karışık yağmur</string>
     <string name="weather_condition_heavysleetshowers">Şiddetli karla karışık yağmur</string>
     <string name="location_closes">%1$s de kapanıyor</string>
+    <string name="location_closes_other_day">%1$s %2$s\'de kapanır</string>
+    <string name="location_opens">%1$s saatinde açılır</string>
 </resources>

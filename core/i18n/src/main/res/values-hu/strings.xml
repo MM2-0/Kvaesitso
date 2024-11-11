@@ -19,7 +19,7 @@
     <string name="search_bar_placeholder">Keresés</string>
     <string name="app_info_version">%1$s verzió</string>
     <string name="settings">Beállítások</string>
-    <string name="help">Segítség</string>
+    <string name="help">Súgó</string>
     <string name="wallpaper">Háttérkép</string>
     <string name="menu_share_store_link">%1$s hivatkozás</string>
     <string name="menu_open_file">Megnyitás</string>
@@ -190,7 +190,7 @@
         <item quantity="one">%1$d bejegyzés el lett távolítva</item>
         <item quantity="other">%1$d bejegyzés el lett távolítva</item>
     </plurals>
-    <string name="preference_screen_integrations_summary">Csatlakoztatott fiókok és szolgáltatások kezelése</string>
+    <string name="preference_screen_integrations_summary">Fiókok és szolgáltatások kezelése</string>
     <string name="missing_permission_calendar_widget">Adjon engedélyt a naptárnak a közelgő találkozók és események megjelenítéséhez.</string>
     <string name="weather_condition_heavysnowshowers">Heves hó záporok</string>
     <string name="preference_colors_bw">Fekete-fehér</string>
@@ -218,7 +218,7 @@
     <string name="preference_cards_summary">A kártyák megjelenésének testreszabása</string>
     <string name="preference_font">Betűtípus</string>
     <string name="preference_font_system">Rendszer alapértelmezett</string>
-    <string name="preference_screen_about">Rólunk</string>
+    <string name="preference_screen_about">Névjegy</string>
     <string name="weather_condition_snowandthunder">Havazás és mennydörgés</string>
     <string name="weather_condition_clearsky">Tiszta ég</string>
     <string name="weather_condition_heavysleetshowers">Heves havas eső záporok</string>
@@ -231,7 +231,7 @@
     <string name="preference_version">Verzió</string>
     <string name="preference_category_system_bars">Rendszersávok</string>
     <string name="preference_theme">Színséma</string>
-    <string name="preference_status_bar_icons">Állapotsori ikonok</string>
+    <string name="preference_status_bar_icons">Állapotsor ikonjai</string>
     <string name="preference_category_links">Hivatkozások</string>
     <string name="preference_hide_nav_bar">Navigációs sáv elrejtése</string>
     <string name="preference_debug_reinstall_iconpacks">Ikoncsomagok újratelepítése</string>
@@ -265,7 +265,7 @@
     <string name="preference_imperial_units_summary">Használja a Fahrenheit fokot és a mérföld per órát</string>
     <string name="preference_imperial_units">Birodalmi mértékegységek</string>
     <string name="widget_config_weather_compact">Kompakt mód</string>
-    <string name="preference_debug_dump_heap">Memória pillanatkép</string>
+    <string name="preference_debug_dump_heap">Memória-pillanatkép</string>
     <string name="preference_debug_cleanup_database">Az adatbázis tisztítása</string>
     <string name="preference_category_icons">Ikonok</string>
     <string name="preference_cards">Kártyák</string>
@@ -384,7 +384,7 @@
     <string name="preference_category_widgets">Modulok</string>
     <string name="preference_clockwidget_music_part_summary">Médiavezérlők megjelenítése, ha aktív médiamunkamenet van</string>
     <string name="plugin_type_filesearch">Fájlkeresés</string>
-    <string name="preference_crash_reporter_summary">Hiba és összeomlási-jelentések</string>
+    <string name="preference_crash_reporter_summary">Hiba- és összeomlás-jelentések</string>
     <string name="preference_search_result_ordering_weight_factor_high">Változtatható</string>
     <string name="preference_search_currencyconverter">Valutaváltó</string>
     <string name="preference_search_bar_auto_focus_summary">A billentyűzet automatikus megjelenítése az alkalmazásfiók kinyitásakor</string>
@@ -487,11 +487,11 @@
     <string name="preference_suspended_badges">Felfüggesztett alkalmazások</string>
     <string name="preference_cloud_badges">Felhő jelvények</string>
     <string name="preference_cloud_badges_summary">A felhőben tárolt fájlok jelvényének megjelenítése</string>
-    <string name="preference_nextcloud_signin">Bejelentkezés a Nextcloud-ba</string>
+    <string name="preference_nextcloud_signin">Bejelentkezés a Nextcloudba</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_category_badges">Jelvények</string>
     <string name="preference_owncloud">Owncloud</string>
-    <string name="preference_owncloud_signin">Bejelentkezés az Owncloud-ba</string>
+    <string name="preference_owncloud_signin">Bejelentkezés az Owncloudba</string>
     <string name="preference_owncloud_signin_summary">Az Owncloud kiszolgálón való kereséshez be kell jelentkezni</string>
     <string name="preference_enforce_icon_shape_summary">Alkalmazza az alakzatot az összes ikonra, beleértve azokat is, amelyek általában nem támogatnák</string>
     <string name="preference_category_license">Megállapodás</string>
@@ -648,7 +648,7 @@
     <string name="preference_customize_filter_bar_summary">Adja meg, hogy mely elemek szerepeljenek a szűrősávon</string>
     <string name="preference_customize_filter_bar">Szűrősáv testreszabása</string>
     <string name="preference_location_managed">Bővítmény által kezelt</string>
-    <string name="preference_location_managed_summary">A helyszín szolgáltatót a bővítmény alkalmazás kezeli</string>
+    <string name="preference_location_managed_summary">A helyszínszolgáltatót a bővítmény-alkalmazás kezeli</string>
     <string name="location_closes">bezár ekkor: %1$s</string>
     <string name="location_closes_other_day">bezár ekkor: %1$s, %2$s</string>
     <string name="location_opens">kinyit ekkor: %1$s</string>

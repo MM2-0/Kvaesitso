@@ -10,8 +10,8 @@
     <string name="menu_open_file">Otwórz</string>
     <string name="menu_hide">Ukryj</string>
     <string name="menu_unhide">Nie ukrywaj</string>
-    <string name="menu_contacts_open_externally">Otwórz w aplikacji do kontaktów</string>
-    <string name="menu_calendar_open_externally">Otwórz w aplikacji kalendarza</string>
+    <string name="menu_contacts_open_externally">Otwórz w kontaktach</string>
+    <string name="menu_calendar_open_externally">Otwórz w kalendarzu</string>
     <string name="app_info_version">Wersja %1$s</string>
     <string name="settings">Ustawienia</string>
     <string name="wallpaper">Tapeta</string>
@@ -651,10 +651,10 @@
     <string name="preference_default_filter_summary">Dostosuj domyślny filtr wyszukiwania</string>
     <string name="preference_filter_bar">Pokaż pasek filtrów</string>
     <string name="preference_filter_bar_summary">Pokaż szybkie filtry nad klawiaturą</string>
-    <string name="location_closes">Zamyka się za %1$s</string>
+    <string name="location_closes">Zamyka się o %1$s</string>
     <string name="location_closes_other_day">Zamknięcie %1$s, %2$s</string>
-    <string name="location_opens">Otwórz o %1$s</string>
-    <string name="location_opens_other_day">Otwórz %1$s, %2$s</string>
+    <string name="location_opens">"Otwarte od  %1$s"</string>
+    <string name="location_opens_other_day">"Otwarte  %1$s, %2$s"</string>
     <string name="menu_map">Zobacz na mapie</string>
     <string name="menu_website">Otwórz stronę www</string>
     <string name="action_import">Importuj</string>

@@ -806,6 +806,8 @@
     <string name="profile_work_profile_action_unlock">Pauze onderbreken</string>
     <string name="task_due_date">Gepland voor %1$s</string>
     <string name="task_due_today">Voor vandaag</string>
-    <string name="apps_profile_private"></string>
+    <string name="apps_profile_private">Privé</string>
     <string name="app_label_locked_profile">Vergrendeld</string>
+    <string name="profile_private_profile_action_lock">Privégedeelte vergrendelen</string>
+    <string name="profile_private_profile_state_locked">Privégedeelte is vergrendeld.</string>
 </resources>
