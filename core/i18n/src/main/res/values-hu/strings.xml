@@ -810,4 +810,5 @@
     <string name="task_due_date">Ekkor esedékes: %1$s</string>
     <string name="task_due_today">Ekkor esedékes: Ma</string>
     <string name="preference_calendar_hide_completed">Befejezett események elrejtése</string>
+    <string name="reset_icon">Ikon visszaállítása</string>
 </resources>
