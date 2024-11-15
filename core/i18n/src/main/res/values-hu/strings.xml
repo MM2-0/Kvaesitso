@@ -155,7 +155,7 @@
     <string name="wind_north_north_west">Észak-északnyugat</string>
     <string name="nextcloud_server_url_empty">A kiszolgáló webcíme nem lehet üres</string>
     <string name="owncloud_username_empty">A felhasználónév nem lehet üres</string>
-    <string name="disclaimer_currency_converter">Az Európai Központi Bank által naponta egyszer közzétett árfolyamok. Minden információ \"úgy, ahogy van\", mindenféle garancia nélkül. Ezen információkért semmilyen felelősséget nem vállalunk.
+    <string name="disclaimer_currency_converter">Az Európai Központi Bank által naponta egyszer közzétett árfolyamok. Az összes információ „úgy, ahogy van”, mindenféle garancia nélkül. Ezen információkért semmilyen felelősséget nem vállalunk.
 \n
 \nUtoljára frissítve: %1$s</string>
     <string name="music_widget_no_data">Még nem játszott le média tartalmat</string>
@@ -427,7 +427,7 @@
     <string name="search_results_order_bottom_up">Lentről-fölfelé</string>
     <string name="tag_no_items_message">Ehhez a címkéhez nincsenek elemek hozzárendelve. Ha folytatja, a címke törlődik.</string>
     <string name="tag_select_items">Elemek kiválasztása:</string>
-    <string name="gesture_failed_message">Egy \"%1$s\" gesztust hajtott végre. Ez a gesztus jelenleg egy \"%2$s\" művelet kiváltására van beállítva. Az akciót azonban a következő okból nem lehetett végrehajtani:</string>
+    <string name="gesture_failed_message">Egy „%1$s” gesztust hajtott végre. Ez a gesztus jelenleg egy „%2$s” művelet kiváltására van beállítva. Az akciót azonban a következő okból nem lehetett végrehajtani:</string>
     <string name="search_results_order_top_down">Föntről-lefelé</string>
     <string name="preference_gesture_swipe_down">Lefelé húzás</string>
     <string name="gesture_action_power_menu">Kikapcsolási menü megjelenítése</string>
