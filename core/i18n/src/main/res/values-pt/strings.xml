@@ -300,7 +300,7 @@
     <string name="preference_force_themed_icons">Impor ícones coloridos</string>
     <string name="preference_charging_animation_summary">Mostrar bolha quando o dispositivo está a ser carregado</string>
     <string name="missing_permission_calendar_widget">Conceda a permissão de acesso ao calendário para mostrar os eventos e lembretes.</string>
-    <string name="weather_condition_lightsnowshowers"></string>
+    <string name="weather_condition_lightsnowshowers"/>
     <string name="location_open">Aberto</string>
     <string name="location_closed">Fechado</string>
     <string name="menu_map">Ver no mapa</string>
@@ -805,4 +805,5 @@
     <string name="weather_condition_rainshowersandthunder">Aguaceiros e trovoada</string>
     <string name="weather_condition_heavyrainshowersandthunder">Aguaceiros intensos e trovoada</string>
     <string name="weather_condition_heavyrainshowers">Aguaceiros intensos</string>
+    <string name="reset_icon">Repor ícone</string>
 </resources>

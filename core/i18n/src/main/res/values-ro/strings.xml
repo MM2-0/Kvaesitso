@@ -453,4 +453,17 @@
     <string name="preference_blur_wallpaper_unsupported">Nesuportat de acest dispozitiv</string>
     <string name="preference_screen_homescreen_summary">Ceas, bară de căutare, fundal, bare de sistem</string>
     <string name="preference_layout_search_bar_position">Poziția barei de căutare</string>
+    <string name="preference_clock_widget_fill_height">Umpleți înălțimea ecranului</string>
+    <string name="preference_clock_widget_alignment">Aliniere</string>
+    <string name="preference_category_media_apps">Aplicați Media</string>
+    <string name="widget_use_theme_colors">Folosește temă colorată</string>
+    <string name="preference_plugin_badges">Plugin \"badges\"</string>
+    <string name="preference_blur_wallpaper_radius">Raza de vedere burată</string>
+    <string name="preference_enforce_icon_shape_summary">Aplică forme la toate iconițele incluziv cele care in mod normal nu le suportă</string>
+    <string name="preference_enforce_icon_shape">Formă forțată</string>
+    <string name="preference_clock_widget_show_seconds">Arată secundele</string>
+    <string name="task_due_time">Din cauză la %1$s</string>
+    <string name="task_due_date">Cauza la %1$s</string>
+    <string name="task_due_today">Cauza azi</string>
+    <string name="preference_plugin_badges_summary">Indică care plugin la rezultatul căutări va fi creat</string>
 </resources>
