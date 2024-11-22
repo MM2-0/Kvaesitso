@@ -105,6 +105,7 @@ fun SearchColumn(
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
     val selectedTag by favoritesVM.selectedTag.collectAsState(null)
+    val compactTags by favoritesVM.compactTags.collectAsState(false)
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
@@ -168,6 +169,7 @@ fun SearchColumn(
                         onExpandTags = {
                             favoritesVM.setTagsExpanded(it)
                         },
+                        compactTags = compactTags,
                         editButton = favoritesEditButton
                     )
                 }

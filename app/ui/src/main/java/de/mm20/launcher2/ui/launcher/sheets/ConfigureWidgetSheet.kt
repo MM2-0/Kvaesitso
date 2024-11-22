@@ -207,6 +207,14 @@ fun ColumnScope.ConfigureFavoritesWidget(
                     onWidgetUpdated(widget.copy(config = widget.config.copy(editButton = it)))
                 }
             )
+            SwitchPreference(
+                title = stringResource(R.string.preference_compact_tags),
+                iconPadding = false,
+                value = widget.config.compactTags,
+                onValueChanged = {
+                    onWidgetUpdated(widget.copy(config = widget.config.copy(compactTags = it)))
+                }
+            )
         }
     }
     TextButton(

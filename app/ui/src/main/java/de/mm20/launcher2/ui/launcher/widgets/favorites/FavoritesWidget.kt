@@ -32,6 +32,7 @@ fun FavoritesWidget(widget: FavoritesWidget) {
     val favorites by remember { viewModel.favorites }.collectAsState(emptyList())
     val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)
+    val compactTags by viewModel.compactTags.collectAsState(false)
     val favoritesEditButton = widget.config.editButton
 
     val tagsExpanded by viewModel.tagsExpanded.collectAsState(false)
@@ -61,6 +62,7 @@ fun FavoritesWidget(widget: FavoritesWidget) {
                 onSelectTag = { viewModel.selectTag(it) },
                 scrollState = rememberScrollState(),
                 expanded = tagsExpanded,
+                compact = compactTags,
                 onExpand = { viewModel.setTagsExpanded(it) }
             )
         }

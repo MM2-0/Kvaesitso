@@ -27,6 +27,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
 
     val showEditButton = settings.showEditButton.stateIn(viewModelScope, SharingStarted.Lazily, false)
     abstract val tagsExpanded: Flow<Boolean>
+    abstract val compactTags: Flow<Boolean>
 
     val pinnedTags = favoritesService.getFavorites(
         includeTypes = listOf("tag"),

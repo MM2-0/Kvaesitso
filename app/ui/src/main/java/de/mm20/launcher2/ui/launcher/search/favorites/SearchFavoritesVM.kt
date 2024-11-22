@@ -19,4 +19,6 @@ class SearchFavoritesVM : FavoritesVM() {
         uiState.setFavoritesTagsExpanded(expanded)
     }
 
+    override val compactTags: Flow<Boolean> = settings.compactTags
+
 }

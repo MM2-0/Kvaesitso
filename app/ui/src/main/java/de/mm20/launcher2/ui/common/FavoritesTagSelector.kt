@@ -49,6 +49,7 @@ fun FavoritesTagSelector(
     reverse: Boolean,
     onSelectTag: (String?) -> Unit,
     scrollState: ScrollState,
+    compact: Boolean,
     expanded: Boolean,
     onExpand: (Boolean) -> Unit,
 ) {
@@ -86,14 +87,26 @@ fun FavoritesTagSelector(
                                 ),
                             selected = selectedTag == null,
                             onClick = { onSelectTag(null) },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Rounded.Star,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                )
+                            leadingIcon = if (compact) null else {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Star,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                    )
+                                }
                             },
-                            label = { Text(stringResource(R.string.favorites)) }
+                            label = {
+                                if (compact) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Star,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                    )
+                                } else {
+                                    Text(stringResource(R.string.favorites))
+                                }
+                            }
                         )
                         for (tag in tags) {
                             TagChip(
@@ -112,6 +125,7 @@ fun FavoritesTagSelector(
                                         onSelectTag(tag.tag)
                                     }
                                 },
+                                compact = compact,
                                 onLongClick = {
                                     sheetManager.showEditTagSheet(tag.tag)
                                 }
@@ -164,24 +178,43 @@ fun FavoritesTagSelector(
                         FilterChip(
                             modifier = Modifier
                                 .padding(end = 8.dp)
-                                .sharedBounds(rememberSharedContentState("favorites"), this@AnimatedContent),
+                                .sharedBounds(
+                                    rememberSharedContentState("favorites"),
+                                    this@AnimatedContent
+                                ),
                             selected = selectedTag == null,
                             onClick = { onSelectTag(null) },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Rounded.Star,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                )
+                            leadingIcon = if (compact) null else {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Star,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                    )
+                                }
                             },
-                            label = { Text(stringResource(R.string.favorites)) }
+                            label = {
+                                if (compact) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Star,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                    )
+                                } else {
+                                    Text(stringResource(R.string.favorites))
+                                }
+                            }
                         )
                         for (tag in tags) {
                             TagChip(
                                 modifier = Modifier
                                     .padding(end = 8.dp)
-                                    .sharedBounds(rememberSharedContentState("tag-${tag.tag}"), this@AnimatedContent),
+                                    .sharedBounds(
+                                        rememberSharedContentState("tag-${tag.tag}"),
+                                        this@AnimatedContent
+                                    ),
                                 tag = tag,
+                                compact = compact,
                                 selected = selectedTag == tag.tag,
                                 onClick = {
                                     if (selectedTag == tag.tag) {
@@ -207,7 +240,10 @@ fun FavoritesTagSelector(
                         IconButton(
                             modifier = Modifier
                                 .rotate(rot)
-                                .sharedBounds(rememberSharedContentState("expand"), this@AnimatedContent),
+                                .sharedBounds(
+                                    rememberSharedContentState("expand"),
+                                    this@AnimatedContent
+                                ),
                             onClick = { onExpand(false) }
                         ) {
                             Icon(Icons.Rounded.ExpandLess, null)
@@ -216,7 +252,10 @@ fun FavoritesTagSelector(
                         if (editButton) {
                             SmallFloatingActionButton(
                                 modifier = Modifier
-                                    .sharedBounds(rememberSharedContentState("edit"), this@AnimatedContent),
+                                    .sharedBounds(
+                                        rememberSharedContentState("edit"),
+                                        this@AnimatedContent
+                                    ),
                                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
                                 onClick = { sheetManager.showEditFavoritesSheet() }
                             ) {

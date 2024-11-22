@@ -41,4 +41,11 @@ class FavoritesSettings internal constructor(
     fun setFrequentlyUsedRows(frequentlyUsedRows: Int) {
         dataStore.update { it.copy(favoritesFrequentlyUsedRows = frequentlyUsedRows) }
     }
+
+    val compactTags: Flow<Boolean>
+        get() = dataStore.data.map { it.favoritesCompactTags }.distinctUntilChanged()
+
+    fun setCompactTags(compactTags: Boolean) {
+        dataStore.update { it.copy(favoritesCompactTags = compactTags) }
+    }
 }

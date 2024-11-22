@@ -652,6 +652,8 @@
     <string name="preference_favorites_frequently_used_summary">Show frequently used items in favorites</string>
     <string name="preference_edit_button">Edit button</string>
     <string name="preference_favorites_edit_button_summary">Show a button to rearrange the favorites</string>
+    <string name="preference_compact_tags">Compact tags</string>
+    <string name="preference_compact_tags_summary">Hide tag labels or icons to reduce the space occupied by tags</string>
     <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
     <string name="preference_screen_homescreen">Home screen</string>
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>

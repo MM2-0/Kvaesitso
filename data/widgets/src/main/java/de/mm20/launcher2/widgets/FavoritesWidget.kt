@@ -10,6 +10,7 @@ import java.util.UUID
 data class FavoritesWidgetConfig(
     val editButton: Boolean = true,
     val tagsMultiline: Boolean = false,
+    val compactTags: Boolean = false,
 )
 
 data class FavoritesWidget(

@@ -6,6 +6,7 @@ import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.services.widgets.WidgetsService
 import de.mm20.launcher2.ui.common.FavoritesVM
 import de.mm20.launcher2.widgets.FavoritesWidget
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -20,6 +21,7 @@ class FavoritesWidgetVM : FavoritesVM() {
 
     private val widget = MutableStateFlow<FavoritesWidget?>(null)
     override val tagsExpanded = widget.map { it?.config?.tagsMultiline == true }
+    override val compactTags: Flow<Boolean> = widget.map { it?.config?.compactTags == true }
 
     private val isTopWidget = widgetsService.isFavoritesWidgetFirst()
     private val clockWidgetFavSlots =

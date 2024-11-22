@@ -39,4 +39,10 @@ class FavoritesSettingsScreenVM: ViewModel(), KoinComponent {
     fun setSearchResultWeightFactor(searchResultWeightFactor: WeightFactor) {
         rankingSettings.setWeightFactor(searchResultWeightFactor)
     }
+
+    val compactTags = favoritesSettings.compactTags
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    fun setCompactTags(compactTags: Boolean) {
+        favoritesSettings.setCompactTags(compactTags)
+    }
 }

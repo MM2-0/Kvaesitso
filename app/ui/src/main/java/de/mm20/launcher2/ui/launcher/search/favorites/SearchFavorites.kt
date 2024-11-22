@@ -28,6 +28,7 @@ fun LazyListScope.SearchFavorites(
     favorites: List<SavableSearchable>,
     pinnedTags: List<Tag>,
     selectedTag: String?,
+    compactTags: Boolean,
     tagsExpanded: Boolean,
     onExpandTags: (Boolean) -> Unit,
     onSelectTag: (String?) -> Unit,
@@ -72,6 +73,7 @@ fun LazyListScope.SearchFavorites(
                         onSelectTag = onSelectTag,
                         scrollState = rememberScrollState(),
                         expanded = tagsExpanded,
+                        compact = compactTags,
                         onExpand = onExpandTags,
                     )
                 }
