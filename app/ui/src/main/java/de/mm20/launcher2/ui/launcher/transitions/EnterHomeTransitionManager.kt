@@ -2,10 +2,12 @@ package de.mm20.launcher2.ui.launcher.transitions
 
 import android.view.Window
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.graphics.toAndroidRectF
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.IntSize
+import androidx.core.graphics.toRectF
 import com.android.launcher3.GestureNavContract
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -19,14 +21,19 @@ class EnterHomeTransitionManager {
         for (handler in handlers) {
             val result = handler.handle(gestureNavContract)
             if (result != null) {
-                val startRect = Rect(Offset(0f, 0f), Size(window.decorView.width.toFloat(), window.decorView.height.toFloat()))
+                val startRect = IntRect(
+                    IntOffset.Zero,
+                    IntSize(window.decorView.width, window.decorView.height)
+                )
                 val targetBounds = result.targetBounds
-                gestureNavContract.sendEndPosition(targetBounds.toAndroidRectF())
-                currentTransition.tryEmit(EnterHomeTransition(
-                    startBounds = startRect,
-                    icon = result.icon,
-                    targetBounds = targetBounds,
-                ))
+                gestureNavContract.sendEndPosition(targetBounds.toAndroidRect().toRectF())
+                currentTransition.tryEmit(
+                    EnterHomeTransition(
+                        startBounds = startRect,
+                        icon = result.icon,
+                        targetBounds = targetBounds,
+                    )
+                )
                 return
             }
         }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -16,11 +15,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.roundToIntRect
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.search.CalendarEvent
@@ -68,12 +68,12 @@ fun ListItem(
         )
     )
 
-    var bounds by remember { mutableStateOf(Rect.Zero) }
+    var bounds by remember { mutableStateOf(IntRect.Zero) }
     Box(
         modifier = modifier
             .background(background)
             .onGloballyPositioned {
-                bounds = it.boundsInWindow()
+                bounds = it.boundsInWindow().roundToIntRect()
             },
     ) {
         CompositionLocalProvider(

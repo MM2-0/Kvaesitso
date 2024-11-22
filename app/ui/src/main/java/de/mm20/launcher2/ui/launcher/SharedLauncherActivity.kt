@@ -29,6 +29,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.IntOffset
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
@@ -254,7 +255,7 @@ abstract class SharedLauncherActivity(
                                             scaleY = 1f + s * (1 - p)
                                         }) {
                                     it.icon?.invoke(
-                                        Offset(
+                                        IntOffset(
                                             dX,
                                             dY
                                         )

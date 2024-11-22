@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.fromHtml
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import coil.compose.AsyncImage
@@ -268,7 +269,7 @@ fun ArticleItemGridPopup(
     article: Article,
     show: MutableTransitionState<Boolean>,
     animationProgress: Float,
-    origin: Rect,
+    origin: IntRect,
     onDismiss: () -> Unit
 ) {
     AnimatedVisibility(
@@ -276,11 +277,11 @@ fun ArticleItemGridPopup(
         enter = expandIn(
             animationSpec = tween(300),
             expandFrom = Alignment.Center,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
         exit = shrinkOut(
             animationSpec = tween(300),
             shrinkTowards = Alignment.Center,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
     ) {
         ArticleItem(
             modifier = Modifier

@@ -76,7 +76,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.roundToIntRect
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -278,13 +280,13 @@ fun MusicWidget(widget: MusicWidget) {
                     ) {
                         if (art != null) {
                             val windowSize = LocalWindowSize.current
-                            var bounds by remember { mutableStateOf(Rect.Zero) }
+                            var bounds by remember { mutableStateOf(IntRect.Zero) }
                             Image(
                                 bitmap = art.asImageBitmap(),
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .onGloballyPositioned {
-                                        bounds = it.boundsInWindow()
+                                        bounds = it.boundsInWindow().roundToIntRect()
                                     },
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop

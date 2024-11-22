@@ -28,7 +28,6 @@ import androidx.compose.material.icons.automirrored.rounded.Message
 import androidx.compose.material.icons.automirrored.rounded.NavigateNext
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Directions
-import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Phone
@@ -51,7 +50,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -62,6 +60,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -605,7 +604,7 @@ fun ContactItemGridPopup(
     contact: Contact,
     show: MutableTransitionState<Boolean>,
     animationProgress: Float,
-    origin: Rect,
+    origin: IntRect,
     onDismiss: () -> Unit
 ) {
     AnimatedVisibility(
@@ -613,11 +612,11 @@ fun ContactItemGridPopup(
         enter = expandIn(
             animationSpec = tween(300),
             expandFrom = Alignment.TopStart,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
         exit = shrinkOut(
             animationSpec = tween(300),
             shrinkTowards = Alignment.TopStart,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
     ) {
         ContactItem(
             modifier = Modifier

@@ -46,14 +46,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -71,7 +70,6 @@ import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import de.mm20.launcher2.ui.modifier.scale
 import kotlin.math.pow
 
 @Composable
@@ -201,10 +199,13 @@ fun AppShortcutItem(
                         )
                     }
 
-                    if(shortcut.isUnavailable) {
+                    if (shortcut.isUnavailable) {
                         MissingPermissionBanner(
                             modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                            text = stringResource(R.string.shortcut_unavailable_description, stringResource(R.string.app_name)),
+                            text = stringResource(
+                                R.string.shortcut_unavailable_description,
+                                stringResource(R.string.app_name)
+                            ),
                             onClick = {
                                 viewModel.requestShortcutPermission(context as AppCompatActivity)
                             }
@@ -491,7 +492,7 @@ fun ShortcutItemGridPopup(
     shortcut: AppShortcut,
     show: MutableTransitionState<Boolean>,
     animationProgress: Float,
-    origin: Rect,
+    origin: IntRect,
     onDismiss: () -> Unit
 ) {
     AnimatedVisibility(
@@ -499,11 +500,11 @@ fun ShortcutItemGridPopup(
         enter = expandIn(
             animationSpec = tween(300),
             expandFrom = Alignment.TopEnd,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
         exit = shrinkOut(
             animationSpec = tween(300),
             shrinkTowards = Alignment.TopEnd,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
     ) {
         AppShortcutItem(
             modifier = Modifier

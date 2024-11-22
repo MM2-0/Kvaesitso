@@ -29,11 +29,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import coil.compose.AsyncImage
@@ -169,11 +169,13 @@ fun WebsiteItem(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Column(
-                            modifier = Modifier.weight(1f).padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                top = 16.dp,
-                            )
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    top = 16.dp,
+                                )
                         ) {
                             Text(
                                 text = website.labelOverride ?: website.label,
@@ -280,7 +282,7 @@ fun WebsiteItemGridPopup(
     website: Website,
     show: MutableTransitionState<Boolean>,
     animationProgress: Float,
-    origin: Rect,
+    origin: IntRect,
     onDismiss: () -> Unit
 ) {
     AnimatedVisibility(
@@ -288,11 +290,11 @@ fun WebsiteItemGridPopup(
         enter = expandIn(
             animationSpec = tween(300),
             expandFrom = Alignment.Center,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
         exit = shrinkOut(
             animationSpec = tween(300),
             shrinkTowards = Alignment.Center,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
     ) {
         WebsiteItem(
             modifier = Modifier

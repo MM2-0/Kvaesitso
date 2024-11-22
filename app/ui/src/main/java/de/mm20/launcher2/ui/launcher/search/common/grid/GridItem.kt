@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.common.grid
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.MutableTransitionState
@@ -32,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInWindow
@@ -45,7 +45,9 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
@@ -97,7 +99,7 @@ fun GridItem(
     val context = LocalContext.current
 
     var showPopup by remember(item.key) { mutableStateOf(false) }
-    var bounds by remember { mutableStateOf(Rect.Zero) }
+    var bounds by remember { mutableStateOf(IntRect.Zero) }
 
     val launchOnPress = !item.preferDetailsOverLaunch
     val hapticFeedback = LocalHapticFeedback.current
@@ -168,7 +170,7 @@ fun GridItem(
                 modifier = Modifier
                     .padding(4.dp)
                     .onGloballyPositioned {
-                        bounds = it.boundsInWindow()
+                        bounds = it.boundsInWindow().roundToIntRect()
                     } then
                         if (highlight) Modifier.background(
                             MaterialTheme.colorScheme.surface,
@@ -201,7 +203,7 @@ fun GridItem(
 }
 
 @Composable
-fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit) {
+fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> Unit) {
     val show = remember {
         MutableTransitionState(false).apply {
             targetState = true
@@ -265,9 +267,9 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                 modifier = Modifier
                     .placeOverlay(
                         origin.translate(
-                            -8.dp.toPixels(),
+                            -8.dp.toPixels().toInt(),
                             -WindowInsets.systemBars.union(WindowInsets.ime)
-                                .getTop(LocalDensity.current).toFloat()
+                                .getTop(LocalDensity.current)
                         ),
                         animationProgress.value
                     )
@@ -376,7 +378,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
 }
 
 private fun Modifier.placeOverlay(
-    origin: Rect,
+    origin: IntRect,
     animationProgress: Float,
 ): Modifier {
     return layout { measurable, constraints ->
@@ -386,16 +388,16 @@ private fun Modifier.placeOverlay(
                 (
                         lerp(
                             origin.center.x,
-                            constraints.maxWidth / 2f,
+                            constraints.maxWidth / 2,
                             ((placeable.width.toFloat() - origin.width) / (constraints.maxWidth.toFloat() - origin.width))
-                        ) - placeable.width / 2f).toInt(),
+                        ) - placeable.width / 2),
                 lerp(
                     origin.top,
-                    (origin.center.y - placeable.height / 2f).coerceIn(
-                        0f,
-                        constraints.maxHeight.toFloat() - placeable.height.toFloat(),
+                    (origin.center.y - placeable.height / 2).coerceIn(
+                        0,
+                        constraints.maxHeight - placeable.height,
                     ),
-                    animationProgress.pow(2f)
+                    animationProgress.pow(2)
                 ).toInt()
             )
         }

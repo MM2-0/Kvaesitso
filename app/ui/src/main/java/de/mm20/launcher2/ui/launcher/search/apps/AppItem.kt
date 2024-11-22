@@ -53,12 +53,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.roundToIntRect
@@ -485,7 +485,7 @@ fun AppItemGridPopup(
     app: Application,
     show: MutableTransitionState<Boolean>,
     animationProgress: Float,
-    origin: Rect,
+    origin: IntRect,
     onDismiss: () -> Unit
 ) {
     AnimatedVisibility(
@@ -493,11 +493,11 @@ fun AppItemGridPopup(
         enter = expandIn(
             animationSpec = tween(300),
             expandFrom = Alignment.TopEnd,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
         exit = shrinkOut(
             animationSpec = tween(300),
             shrinkTowards = Alignment.TopEnd,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
     ) {
         AppItem(
             modifier = Modifier

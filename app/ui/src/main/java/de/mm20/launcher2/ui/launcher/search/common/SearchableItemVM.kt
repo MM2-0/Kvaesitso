@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.unit.IntRect
 import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -96,7 +95,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     }
 
     val children = searchable.flatMapLatest {
-        when(it) {
+        when (it) {
             is Application -> appShortcutRepository
                 .findMany(
                     componentName = it.componentName,
@@ -104,6 +103,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                     manifest = true,
                     dynamic = true,
                 )
+
             is AppShortcut -> {
                 val packageName = it.componentName?.packageName ?: return@flatMapLatest flowOf(
                     emptyList()
@@ -115,22 +115,23 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                     )
                     .map { listOfNotNull(it) }
             }
+
             else -> flowOf(
                 emptyList()
             )
         }
     }
 
-    fun launch(context: Context, bounds: Rect? = null): Boolean {
+    fun launch(context: Context, bounds: IntRect? = null): Boolean {
         val searchable = searchable.value ?: return false
         val view = (context as? AppCompatActivity)?.window?.decorView
         val options = if (bounds != null && view != null) {
             ActivityOptionsCompat.makeScaleUpAnimation(
                 view,
-                bounds.left.toInt(),
-                bounds.top.toInt(),
-                bounds.width.toInt(),
-                bounds.height.toInt()
+                bounds.left,
+                bounds.top,
+                bounds.width,
+                bounds.height,
             )
         } else {
             ActivityOptionsCompat.makeBasic()
@@ -166,7 +167,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     }
 
     fun launchChild(context: Context, child: SavableSearchable) {
-        if(child.launch(context, null)) {
+        if (child.launch(context, null)) {
             favoritesService.reportLaunch(child)
         }
     }

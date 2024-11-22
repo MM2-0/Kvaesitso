@@ -118,7 +118,7 @@ fun TagChip(
         horizontalArrangement = Arrangement.Center,
     ) {
         val foregroundLayer = (icon as? StaticLauncherIcon)?.foregroundLayer
-        AnimatedVisibility(foregroundLayer != null && (!compact || foregroundLayer is TextLayer)) {
+        AnimatedVisibility(!compact || foregroundLayer is TextLayer) {
             if (foregroundLayer is TextLayer) {
                 Text(
                     text = foregroundLayer.text,
@@ -135,7 +135,7 @@ fun TagChip(
                 )
             }
         }
-        AnimatedVisibility(foregroundLayer != null && (!compact || foregroundLayer is VectorLayer)) {
+        AnimatedVisibility(!compact || foregroundLayer is VectorLayer) {
             Text(
                 tag.tag,
                 style = MaterialTheme.typography.labelLarge,

@@ -43,6 +43,7 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -324,7 +325,7 @@ fun FileItemGridPopup(
     file: File,
     show: MutableTransitionState<Boolean>,
     animationProgress: Float,
-    origin: Rect,
+    origin: IntRect,
     onDismiss: () -> Unit
 ) {
     AnimatedVisibility(
@@ -332,11 +333,11 @@ fun FileItemGridPopup(
         enter = expandIn(
             animationSpec = tween(300),
             expandFrom = Alignment.TopEnd,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
         exit = shrinkOut(
             animationSpec = tween(300),
             shrinkTowards = Alignment.TopEnd,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
     ) {
         FileItem(
             modifier = Modifier

@@ -39,13 +39,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import de.mm20.launcher2.search.CalendarEvent
@@ -340,7 +340,7 @@ fun CalendarItemGridPopup(
     calendar: CalendarEvent,
     show: MutableTransitionState<Boolean>,
     animationProgress: Float,
-    origin: Rect,
+    origin: IntRect,
     onDismiss: () -> Unit
 ) {
     AnimatedVisibility(
@@ -348,11 +348,11 @@ fun CalendarItemGridPopup(
         enter = expandIn(
             animationSpec = tween(300),
             expandFrom = Alignment.Center,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
         exit = shrinkOut(
             animationSpec = tween(300),
             shrinkTowards = Alignment.Center,
-        ) { origin.roundToIntRect().size },
+        ) { origin.size },
     ) {
         CalendarItem(
             modifier = Modifier
