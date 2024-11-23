@@ -55,107 +55,172 @@ fun FavoritesTagSelector(
 ) {
     val sheetManager = LocalBottomSheetManager.current
 
-    SharedTransitionScope {
-        AnimatedContent(
-            modifier = it
-                .fillMaxWidth()
-                .padding(
-                    top = if (reverse) 8.dp else 4.dp,
-                    bottom = if (reverse) 4.dp else 8.dp,
-                    end = if (editButton) 8.dp else 0.dp
-                ),
-            targetState = expanded,
-        ) {
-            if (!it) {
-                val canScroll by remember {
-                    derivedStateOf { scrollState.canScrollForward || scrollState.canScrollBackward }
-                }
-                Row {
-                    Row(
+    AnimatedContent(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                top = if (reverse) 8.dp else 4.dp,
+                bottom = if (reverse) 4.dp else 8.dp,
+                end = if (editButton) 8.dp else 0.dp
+            ),
+        targetState = expanded,
+    ) {
+        if (!it) {
+            val canScroll by remember {
+                derivedStateOf { scrollState.canScrollForward || scrollState.canScrollBackward }
+            }
+            Row {
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .consumeAllScrolling()
+                        .horizontalScroll(scrollState)
+                        .padding(end = 12.dp),
+                ) {
+                    FilterChip(
                         modifier = Modifier
-                            .weight(1f)
-                            .consumeAllScrolling()
-                            .horizontalScroll(scrollState)
-                            .padding(end = 12.dp),
-                    ) {
-                        FilterChip(
+                            .padding(start = 16.dp),
+                        selected = selectedTag == null,
+                        onClick = { onSelectTag(null) },
+                        leadingIcon = if (compact) null else {
+                            {
+                                Icon(
+                                    imageVector = Icons.Rounded.Star,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                )
+                            }
+                        },
+                        label = {
+                            if (compact) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Star,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                )
+                            } else {
+                                Text(stringResource(R.string.favorites))
+                            }
+                        }
+                    )
+                    for (tag in tags) {
+                        TagChip(
                             modifier = Modifier
-                                .padding(start = 16.dp)
-                                .sharedBounds(
-                                    rememberSharedContentState("favorites"),
-                                    this@AnimatedContent
-                                ),
-                            selected = selectedTag == null,
-                            onClick = { onSelectTag(null) },
-                            leadingIcon = if (compact) null else {
-                                {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Star,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                    )
+                                .padding(start = 8.dp),
+                            tag = tag,
+                            selected = selectedTag == tag.tag,
+                            onClick = {
+                                if (selectedTag == tag.tag) {
+                                    onSelectTag(null)
+                                } else {
+                                    onSelectTag(tag.tag)
                                 }
                             },
-                            label = {
-                                if (compact) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Star,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                    )
-                                } else {
-                                    Text(stringResource(R.string.favorites))
-                                }
+                            compact = compact,
+                            onLongClick = {
+                                sheetManager.showEditTagSheet(tag.tag)
                             }
                         )
-                        for (tag in tags) {
-                            TagChip(
-                                modifier = Modifier
-                                    .padding(start = 8.dp)
-                                    .sharedBounds(
-                                        rememberSharedContentState("tag-${tag.tag}"),
-                                        this@AnimatedContent
-                                    ),
-                                tag = tag,
-                                selected = selectedTag == tag.tag,
-                                onClick = {
-                                    if (selectedTag == tag.tag) {
-                                        onSelectTag(null)
-                                    } else {
-                                        onSelectTag(tag.tag)
-                                    }
-                                },
-                                compact = compact,
-                                onLongClick = {
-                                    sheetManager.showEditTagSheet(tag.tag)
-                                }
-                            )
+                    }
+                    if (canScroll) {
+                        val rot by transition.animateFloat {
+                            if (it == EnterExitState.Visible) 0f else 180f
                         }
-                        if (canScroll) {
-                            val rot by transition.animateFloat {
-                                if (it == EnterExitState.Visible) 0f else 180f
-                            }
-                            IconButton(
-                                modifier = Modifier
-                                    .rotate(rot)
-                                    .sharedBounds(
-                                        rememberSharedContentState("expand"),
-                                        this@AnimatedContent
-                                    ),
-                                onClick = { onExpand(true) }) {
-                                Icon(Icons.Rounded.ExpandMore, null)
-                            }
+                        IconButton(
+                            modifier = Modifier
+                                .rotate(rot),
+                            onClick = { onExpand(true) }) {
+                            Icon(Icons.Rounded.ExpandMore, null)
                         }
+                    }
 
+                    }
+
+                if (editButton) {
+                    SmallFloatingActionButton(
+                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
+                        onClick = { sheetManager.showEditFavoritesSheet() }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Edit,
+                            contentDescription = null
+                        )
+                    }
+                }
+            }
+        } else {
+            Row(
+                verticalAlignment = if (reverse) Alignment.Top else Alignment.Bottom,
+            ) {
+                FlowRow(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 12.dp, start = 16.dp),
+                ) {
+                    FilterChip(
+                        modifier = Modifier
+                            .padding(end = 8.dp),
+                        selected = selectedTag == null,
+                        onClick = { onSelectTag(null) },
+                        leadingIcon = if (compact) null else {
+                            {
+                                Icon(
+                                    imageVector = Icons.Rounded.Star,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                )
+                            }
+                        },
+                        label = {
+                            if (compact) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Star,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                )
+                            } else {
+                                Text(stringResource(R.string.favorites))
+                            }
+                        }
+                    )
+                    for (tag in tags) {
+                        TagChip(
+                            modifier = Modifier
+                                .padding(end = 8.dp),
+                            tag = tag,
+                            compact = compact,
+                            selected = selectedTag == tag.tag,
+                            onClick = {
+                                if (selectedTag == tag.tag) {
+                                    onSelectTag(null)
+                                } else {
+                                    onSelectTag(tag.tag)
+                                }
+                            },
+                            onLongClick = {
+                                sheetManager.showEditTagSheet(tag.tag)
+                            }
+                        )
+                    }
+                }
+
+                Column(
+                    modifier = Modifier.fillMaxHeight(),
+                    verticalArrangement = if (reverse) Arrangement.TopReversed else Arrangement.Bottom,
+                ) {
+                    val rot by transition.animateFloat {
+                        if (it == EnterExitState.Visible) 0f else 180f
+                    }
+                    IconButton(
+                        modifier = Modifier
+                            .rotate(rot),
+                        onClick = { onExpand(false) }
+                    ) {
+                        Icon(Icons.Rounded.ExpandLess, null)
                     }
 
                     if (editButton) {
                         SmallFloatingActionButton(
-                            modifier = Modifier
-                                .sharedBounds(
-                                    rememberSharedContentState("edit"),
-                                    this@AnimatedContent
-                                ),
                             elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
                             onClick = { sheetManager.showEditFavoritesSheet() }
                         ) {
@@ -163,107 +228,6 @@ fun FavoritesTagSelector(
                                 imageVector = Icons.Rounded.Edit,
                                 contentDescription = null
                             )
-                        }
-                    }
-                }
-            } else {
-                Row(
-                    verticalAlignment = if (reverse) Alignment.Top else Alignment.Bottom,
-                ) {
-                    FlowRow(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 12.dp, start = 16.dp),
-                    ) {
-                        FilterChip(
-                            modifier = Modifier
-                                .padding(end = 8.dp)
-                                .sharedBounds(
-                                    rememberSharedContentState("favorites"),
-                                    this@AnimatedContent
-                                ),
-                            selected = selectedTag == null,
-                            onClick = { onSelectTag(null) },
-                            leadingIcon = if (compact) null else {
-                                {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Star,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                    )
-                                }
-                            },
-                            label = {
-                                if (compact) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Star,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                    )
-                                } else {
-                                    Text(stringResource(R.string.favorites))
-                                }
-                            }
-                        )
-                        for (tag in tags) {
-                            TagChip(
-                                modifier = Modifier
-                                    .padding(end = 8.dp)
-                                    .sharedBounds(
-                                        rememberSharedContentState("tag-${tag.tag}"),
-                                        this@AnimatedContent
-                                    ),
-                                tag = tag,
-                                compact = compact,
-                                selected = selectedTag == tag.tag,
-                                onClick = {
-                                    if (selectedTag == tag.tag) {
-                                        onSelectTag(null)
-                                    } else {
-                                        onSelectTag(tag.tag)
-                                    }
-                                },
-                                onLongClick = {
-                                    sheetManager.showEditTagSheet(tag.tag)
-                                }
-                            )
-                        }
-                    }
-
-                    Column(
-                        modifier = Modifier.fillMaxHeight(),
-                        verticalArrangement = if (reverse) Arrangement.TopReversed else Arrangement.Bottom,
-                    ) {
-                        val rot by transition.animateFloat {
-                            if (it == EnterExitState.Visible) 0f else 180f
-                        }
-                        IconButton(
-                            modifier = Modifier
-                                .rotate(rot)
-                                .sharedBounds(
-                                    rememberSharedContentState("expand"),
-                                    this@AnimatedContent
-                                ),
-                            onClick = { onExpand(false) }
-                        ) {
-                            Icon(Icons.Rounded.ExpandLess, null)
-                        }
-
-                        if (editButton) {
-                            SmallFloatingActionButton(
-                                modifier = Modifier
-                                    .sharedBounds(
-                                        rememberSharedContentState("edit"),
-                                        this@AnimatedContent
-                                    ),
-                                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
-                                onClick = { sheetManager.showEditFavoritesSheet() }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Edit,
-                                    contentDescription = null
-                                )
-                            }
                         }
                     }
                 }
