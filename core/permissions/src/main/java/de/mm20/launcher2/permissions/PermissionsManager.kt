@@ -90,7 +90,7 @@ internal class PermissionsManagerImpl(
     private val appShortcutsPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.AppShortcuts)
     )
-    private val mManageProfilesPermissionState = MutableStateFlow(
+    private val manageProfilesPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.ManageProfiles)
     )
 
@@ -221,7 +221,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> notificationsPermissionState
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState
             PermissionGroup.Accessibility -> accessibilityPermissionState
-            PermissionGroup.ManageProfiles -> mManageProfilesPermissionState
+            PermissionGroup.ManageProfiles -> manageProfilesPermissionState
         }
     }
 
@@ -240,14 +240,14 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> notificationsPermissionState.value = granted
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState.value = granted
             PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
-            PermissionGroup.ManageProfiles -> mManageProfilesPermissionState.value = granted
+            PermissionGroup.ManageProfiles -> manageProfilesPermissionState.value = granted
         }
     }
 
     override fun onResume() {
         externalStoragePermissionState.value = checkPermissionOnce(PermissionGroup.ExternalStorage)
         appShortcutsPermissionState.value = checkPermissionOnce(PermissionGroup.AppShortcuts)
-        mManageProfilesPermissionState.value = checkPermissionOnce(PermissionGroup.ManageProfiles)
+        manageProfilesPermissionState.value = checkPermissionOnce(PermissionGroup.ManageProfiles)
     }
 
     override fun reportNotificationListenerState(running: Boolean) {
