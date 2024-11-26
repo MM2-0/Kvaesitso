@@ -819,4 +819,7 @@
     <string name="profile_private_profile_action_lock">Blocca spazio privato</string>
     <string name="hint_drag_and_drop_reorder">Tieni premuto e trascina gli elementi per riorganizzarli</string>
     <string name="app_label_locked_profile">Bloccata</string>
+    <string name="reset_icon">Reimposta icona</string>
+    <string name="preference_compact_tags">Tag compatti</string>
+    <string name="preference_compact_tags_summary">Nascondi le etichette o le icone dei tag per ridurre lo spazio occupato dai tag</string>
 </resources>
