@@ -316,7 +316,7 @@
     <string name="preference_restore_summary">Vroeger gemaakte backup herstellen</string>
     <string name="preference_search_calendar_summary">Toekomstige afspraken en evenementen doorzoeken</string>
     <string name="preference_search_appshortcuts">Applicatiesnelkoppelingen</string>
-    <string name="preference_grid_labels_summary">Applicatienaam onder pictrogram tonen</string>
+    <string name="preference_grid_labels_summary">Applicatienaam onder pictogram tonen</string>
     <string name="preference_screen_debug">Foutopsporing</string>
     <string name="preference_screen_debug_summary">Hulpmiddelen</string>
     <string name="preference_category_widgets">Widgets</string>
@@ -447,15 +447,15 @@
     <string name="experimental_feature">Experimenteel</string>
     <string name="help">Hulp</string>
     <string name="skip">Overslaan</string>
-    <string name="preference_screen_tags">Tags</string>
+    <string name="preference_screen_tags">Labels</string>
     <string name="preference_screen_tags_summary">Beheer tags en getagde items</string>
     <string name="create_tag_title">Nieuwe tag</string>
-    <string name="edit_tag_title">Tag bewerken</string>
+    <string name="edit_tag_title">Label bewerken</string>
     <string name="tag_exists_error">Er bestaat al een tag met deze naam.</string>
     <string name="tag_exists_message">Er bestaat al een tag met deze naam. Als je doorgaat worden de twee tags samengevoegd.</string>
     <string name="tag_no_items_message">Deze tag bevat geen items. Als je doorgaat wordt de tag verwijderd.</string>
     <string name="tag_select_items">Kies items:</string>
-    <string name="tag_name">Tagnaam</string>
+    <string name="tag_name">Labelnaam</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item geselecteerd</item>
         <item quantity="other">%1$d</item>
@@ -811,4 +811,6 @@
     <string name="profile_private_profile_action_lock">Privégedeelte vergrendelen</string>
     <string name="profile_private_profile_state_locked">Privégedeelte is vergrendeld.</string>
     <string name="reset_icon">Pictogram herstellen</string>
+    <string name="preference_compact_tags_summary">Labels of pictogrammen verbergen om de ruimte die door labels wordt ingenomen te verkleinen</string>
+    <string name="preference_compact_tags">Compacte labels</string>
 </resources>
