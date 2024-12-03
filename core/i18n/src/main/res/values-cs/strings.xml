@@ -820,4 +820,6 @@
     <string name="task_due_today">Dokončit dnes</string>
     <string name="preference_calendar_hide_completed">Skrýt dokončené úkoly</string>
     <string name="reset_icon">Resetovat ikonu</string>
+    <string name="preference_compact_tags">Kompaktní štítky</string>
+    <string name="preference_compact_tags_summary">Skrýt popisky nebo ikony štítků, aby se zmenšilo místo jimi zabrané</string>
 </resources>
