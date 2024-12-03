@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.FilterChipDefaults
@@ -38,6 +39,7 @@ import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
 import de.mm20.launcher2.icons.VectorLayer
 import de.mm20.launcher2.search.Tag
+import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
 import org.koin.androidx.compose.inject
 
@@ -113,21 +115,31 @@ fun TagChip(
                 onClick = onClick,
                 onLongClick = onLongClick
             )
-            .padding(horizontal = 8.dp),
+            .padding(start = 4.dp, end = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
         val foregroundLayer = (icon as? StaticLauncherIcon)?.foregroundLayer
-        AnimatedVisibility(!compact || foregroundLayer is TextLayer) {
+        AnimatedVisibility(!compact || foregroundLayer !is VectorLayer) {
             if (foregroundLayer is TextLayer) {
                 Text(
                     text = foregroundLayer.text,
-                    modifier = Modifier.width(FilterChipDefaults.IconSize),
+                    modifier = Modifier
+                        .padding(start = 4.dp)
+                        .width(FilterChipDefaults.IconSize),
                     textAlign = TextAlign.Center,
                 )
-            } else if (foregroundLayer is VectorLayer && !compact) {
+            } else if (foregroundLayer !is VectorLayer) {
+                ShapedLauncherIcon(
+                    modifier = Modifier.padding(start = if(compact) 4.dp else 0.dp),
+                    size = InputChipDefaults.AvatarSize,
+                    icon = { icon },
+                    shape = CircleShape,
+                )
+            } else if (!compact) {
                 Icon(
                     modifier = Modifier
+                        .padding(start = 4.dp)
                         .size(FilterChipDefaults.IconSize),
                     imageVector = foregroundLayer.vector,
                     contentDescription = null,
@@ -140,7 +152,7 @@ fun TagChip(
                 tag.tag,
                 style = MaterialTheme.typography.labelLarge,
                 color = textColor,
-                modifier = Modifier.padding(horizontal = 8.dp)
+                modifier = Modifier.padding(start = if (compact) 12.dp else 8.dp, end = 8.dp)
             )
         }
         if (clearable) {

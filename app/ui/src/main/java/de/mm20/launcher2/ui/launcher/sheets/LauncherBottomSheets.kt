@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
 import androidx.compose.runtime.Composable
-import de.mm20.launcher2.ui.settings.tags.EditTagSheet
 
 @Composable
 fun LauncherBottomSheets() {

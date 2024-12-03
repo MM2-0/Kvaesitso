@@ -1,5 +1,6 @@
-package de.mm20.launcher2.ui.settings.tags
+package de.mm20.launcher2.ui.launcher.sheets
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,16 +23,19 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.EmojiEmotions
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -39,6 +43,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,13 +51,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.data.customattrs.CustomTextIcon
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.IconPicker
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.SmallMessage
@@ -70,8 +79,10 @@ fun EditTagSheet(
 
     val isCreatingNewTag = tag == null
 
+    val density = LocalDensity.current
+
     LaunchedEffect(tag) {
-        viewModel.init(tag)
+        viewModel.init(tag, with(density) { 56.dp.toPx().toInt() })
     }
 
     if (viewModel.loading) return
@@ -254,7 +265,7 @@ fun ListItem(
 @Composable
 fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
     val iconSize = 32.dp.toPixels()
-    val tagEmoji = viewModel.tagEmoji
+    val tagIcon by remember(viewModel.tagCustomIcon) { viewModel.tagCustomIcon }.collectAsState()
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -275,11 +286,8 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
                     }
                     .size(56.dp)
                         then (
-                        if (tagEmoji != null) {
-                            Modifier.background(
-                                MaterialTheme.colorScheme.secondaryContainer,
-                                CircleShape
-                            )
+                        if (tagIcon != null) {
+                            Modifier
                         } else {
                             Modifier.drawBehind {
                                 val w = with(density) { 2.dp.toPx() }
@@ -300,8 +308,13 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
                         ),
                 contentAlignment = Alignment.Center,
             ) {
-                if (tagEmoji != null) {
-                    Text(tagEmoji)
+                if (tagIcon != null) {
+                    var icon = remember(viewModel.tagIcon) { viewModel.tagIcon }.collectAsState(null)
+                    ShapedLauncherIcon(
+                        size = 56.dp,
+                        icon = { icon.value },
+                        shape = CircleShape,
+                    )
                 } else {
                     Icon(
                         Icons.Rounded.Tag,
@@ -395,37 +408,63 @@ fun PickIcon(
     viewModel: EditTagSheetVM,
     paddingValues: PaddingValues
 ) {
+    val icon by remember (viewModel.tagCustomIcon) { viewModel.tagCustomIcon }.collectAsState()
+    val tag = Tag(viewModel.tagName)
+    var selectedTabIndex = remember {
+        mutableIntStateOf(
+            when (icon) {
+                is CustomTextIcon -> 1
+                else -> 0
+            }
+        )
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(paddingValues)
     ) {
-        OutlinedButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            onClick = {
-                viewModel.selectIcon(null)
-            },
-            contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+        SingleChoiceSegmentedButtonRow(
+            modifier = Modifier.fillMaxWidth(),
         ) {
-            Icon(
-                Icons.Rounded.Delete,
-                null,
-                modifier = Modifier
-                    .padding(end = ButtonDefaults.IconSpacing)
-                    .size(ButtonDefaults.IconSize)
+            SegmentedButton(
+                selected = selectedTabIndex.intValue == 0,
+                icon = { Icon(Icons.Rounded.Apps, null) },
+                label = { Text("Icon") },
+                onClick = { selectedTabIndex.intValue = 0 },
+                shape = SegmentedButtonDefaults.itemShape(0, 2)
             )
-            Text(stringResource(R.string.reset_icon))
+            SegmentedButton(
+                selected = selectedTabIndex.intValue == 1,
+                icon = { Icon(Icons.Rounded.EmojiEmotions, null) },
+                label = { Text("Emoji") },
+                onClick = { selectedTabIndex.intValue = 1 },
+                shape = SegmentedButtonDefaults.itemShape(1, 2)
+            )
         }
-        EmojiPicker(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            onEmojiSelected = {
-                viewModel.selectIcon(it)
+        AnimatedContent(
+            selectedTabIndex.intValue,
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            when (it) {
+                0 -> {
+                    IconPicker(
+                        searchable = tag,
+                        onSelect = { viewModel.selectIcon(it) },
+                    )
+                }
+
+                1 -> {
+                    EmojiPicker(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        onEmojiSelected = {
+                            viewModel.selectIcon(CustomTextIcon(text = it))
+                        },
+                    )
+                }
             }
-        )
+        }
     }
 
 }

@@ -65,6 +65,7 @@ import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.IconPicker
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.OutlinedTagsInputField
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -80,7 +81,6 @@ fun CustomizeSearchableSheet(
 ) {
     val viewModel: CustomizeSearchableSheetVM =
         remember(searchable.key) { CustomizeSearchableSheetVM(searchable) }
-    val context = LocalContext.current
 
     val pickIcon by viewModel.isIconPickerOpen
 
@@ -312,194 +312,13 @@ fun CustomizeSearchableSheet(
                 }
             }
         } else {
-            val iconSize = 48.dp
-            val iconSizePx = iconSize.toPixels()
-
-            val scope = rememberCoroutineScope()
-
-            val suggestions by remember { viewModel.getIconSuggestions(iconSizePx.toInt()) }
-                .collectAsState(emptyList())
-
-            val defaultIcon by remember {
-                viewModel.getDefaultIcon(iconSizePx.toInt())
-            }.collectAsState(null)
-
-            var query by remember { mutableStateOf("") }
-            var filterIconPack by remember { mutableStateOf<IconPack?>(null) }
-            val isSearching by viewModel.isSearchingIcons
-            val iconResults by viewModel.iconSearchResults
-
-            var showIconPackFilter by remember { mutableStateOf(false) }
-            val installedIconPacks by viewModel.installedIconPacks.collectAsState(null)
-            val noPacksInstalled = installedIconPacks?.isEmpty() == true
-
-            val columns = LocalGridSettings.current.columnCount
-
-            LazyVerticalGrid(
-                modifier = Modifier.fillMaxSize(),
-                columns = GridCells.Fixed(columns),
+            IconPicker(
+                searchable = searchable,
+                onSelect = {
+                    viewModel.pickIcon(it)
+                },
                 contentPadding = it,
-            ) {
-
-                item(span = { GridItemSpan(columns) }) {
-                    OutlinedTextField(
-                        modifier = Modifier.padding(bottom = 16.dp),
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Rounded.Search,
-                                contentDescription = null
-                            )
-                        },
-                        enabled = !noPacksInstalled,
-                        placeholder = {
-                            Text(
-                                stringResource(
-                                    if (noPacksInstalled) R.string.icon_picker_no_packs_installed else R.string.icon_picker_search_icon
-                                )
-                            )
-                        },
-                        value = query,
-                        onValueChange = {
-                            query = it
-                            scope.launch {
-                                viewModel.searchIcon(query, filterIconPack)
-                            }
-                        },
-                        singleLine = true,
-                    )
-                }
-
-                if (query.isEmpty()) {
-                    if (defaultIcon != null) {
-                        item(span = { GridItemSpan(columns) }) {
-                            Separator(stringResource(R.string.icon_picker_default_icon))
-                        }
-                        item {
-                            IconPreview(item = defaultIcon, iconSize = iconSize, onClick = {
-                                viewModel.pickIcon(null)
-                            })
-                        }
-                    }
-                    item(span = { GridItemSpan(columns) }) {
-                        Separator(stringResource(R.string.icon_picker_suggestions))
-                    }
-
-                    items(suggestions) {
-                        IconPreview(
-                            it,
-                            iconSize,
-                            onClick = { viewModel.pickIcon(it.customIcon) }
-                        )
-                    }
-                } else {
-
-                    if (!installedIconPacks.isNullOrEmpty()) {
-                        item(
-                            span = { GridItemSpan(columns) },
-                        ) {
-                            Button(
-                                onClick = { showIconPackFilter = !showIconPackFilter },
-                                modifier = Modifier
-                                    .wrapContentWidth(align = Alignment.CenterHorizontally)
-                                    .padding(bottom = 16.dp),
-                                contentPadding = PaddingValues(
-                                    horizontal = 16.dp,
-                                    vertical = 8.dp
-                                )
-                            ) {
-                                if (filterIconPack == null) {
-                                    Icon(
-                                        modifier = Modifier
-                                            .padding(end = ButtonDefaults.IconSpacing)
-                                            .size(ButtonDefaults.IconSize),
-                                        imageVector = Icons.Rounded.FilterAlt,
-                                        contentDescription = null
-                                    )
-                                } else {
-                                    val icon = remember(filterIconPack?.packageName) {
-                                        try {
-                                            filterIconPack?.packageName?.let { pkg ->
-                                                context.packageManager.getApplicationIcon(pkg)
-                                            }
-                                        } catch (e: PackageManager.NameNotFoundException) {
-                                            null
-                                        }
-                                    }
-                                    AsyncImage(
-                                        modifier = Modifier
-                                            .padding(end = ButtonDefaults.IconSpacing)
-                                            .size(ButtonDefaults.IconSize),
-                                        model = icon,
-                                        contentDescription = null
-                                    )
-                                }
-                                DropdownMenu(
-                                    expanded = showIconPackFilter,
-                                    onDismissRequest = { showIconPackFilter = false }) {
-                                    DropdownMenuItem(
-                                        text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
-                                        onClick = {
-                                            showIconPackFilter = false
-                                            filterIconPack = null
-                                            scope.launch {
-                                                viewModel.searchIcon(query, filterIconPack)
-                                            }
-                                        }
-                                    )
-                                    installedIconPacks?.forEach { iconPack ->
-                                        DropdownMenuItem(
-                                            onClick = {
-                                                showIconPackFilter = false
-                                                filterIconPack = iconPack
-                                                scope.launch {
-                                                    viewModel.searchIcon(query, filterIconPack)
-                                                }
-                                            },
-                                            text = {
-                                                Text(iconPack.name)
-                                            })
-                                    }
-                                }
-                                Text(
-                                    text = filterIconPack?.name
-                                        ?: stringResource(id = R.string.icon_picker_filter_all_packs),
-                                    modifier = Modifier.animateContentSize()
-                                )
-                                Icon(
-                                    Icons.Rounded.ArrowDropDown,
-                                    modifier = Modifier
-                                        .padding(start = ButtonDefaults.IconSpacing)
-                                        .size(ButtonDefaults.IconSize),
-                                    contentDescription = null
-                                )
-                            }
-                        }
-                    }
-
-                    items(iconResults) {
-                        IconPreview(
-                            it,
-                            iconSize,
-                            onClick = { viewModel.pickIcon(it.customIcon) }
-                        )
-                    }
-
-                    if (isSearching) {
-                        item(span = { GridItemSpan(columns) }) {
-                            Box(
-                                contentAlignment = Alignment.Center
-                            ) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier
-                                        .padding(12.dp)
-                                        .size(24.dp)
-                                )
-                            }
-                        }
-                    }
-                }
-
-            }
+            )
         }
     }
 }

@@ -35,10 +35,6 @@ class CustomizeSearchableSheetVM(
         return iconService.getIcon(searchable, size)
     }
 
-    fun getIconSuggestions(size: Int) = flow {
-        emit(iconService.getCustomIconSuggestions(searchable, size))
-    }
-
     fun openIconPicker() {
         isIconPickerOpen.value = true
     }
@@ -50,34 +46,6 @@ class CustomizeSearchableSheetVM(
     fun pickIcon(icon: CustomIcon?) {
         iconService.setCustomIcon(searchable, icon)
         closeIconPicker()
-    }
-
-    fun getDefaultIcon(size: Int) = flow {
-        emit(iconService.getUncustomizedDefaultIcon(searchable, size))
-    }
-
-    val iconSearchResults = mutableStateOf(emptyList<CustomIconWithPreview>())
-    val isSearchingIcons = mutableStateOf(false)
-
-    val installedIconPacks = iconService.getInstalledIconPacks()
-
-    private var debounceSearchJob: Job? = null
-    suspend fun searchIcon(query: String, iconPack: IconPack?) {
-        debounceSearchJob?.cancelAndJoin()
-        if (query.isBlank()) {
-            iconSearchResults.value = emptyList()
-            isSearchingIcons.value = false
-            return
-        }
-        withContext(coroutineContext) {
-            debounceSearchJob = launch {
-                delay(500)
-                isSearchingIcons.value = true
-                iconSearchResults.value = emptyList()
-                iconSearchResults.value = iconService.searchCustomIcons(query, iconPack)
-                isSearchingIcons.value = false
-            }
-        }
     }
 
     fun setCustomLabel(label: String) {

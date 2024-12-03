@@ -38,6 +38,8 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.ui.IconSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.Tag
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -48,6 +50,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMap
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -143,6 +147,10 @@ class IconService(
         }
     }
 
+    fun getCustomIcon(searchable: SavableSearchable) : Flow<CustomIcon?> {
+        return customAttributesRepository.getCustomIcon(searchable)
+    }
+
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
         if (searchable is Application && searchable.isPrivate) {
@@ -151,22 +159,29 @@ class IconService(
             }
         }
 
-        val customIcon = customAttributesRepository.getCustomIcon(searchable)
-        return combine(iconProviders, transformations, customIcon) { providers, transformations, ci ->
-            var icon = cache.get(searchable.key + ci.hashCode() + providers.hashCode() + transformations.hashCode())
+        val customIcon = getCustomIcon(searchable)
+
+        return customIcon.flatMapLatest {
+            resolveCustomIcon(searchable, size, it)
+        }
+    }
+
+    fun resolveCustomIcon(searchable: SavableSearchable, size: Int, customIcon: CustomIcon?): Flow<LauncherIcon> {
+        return combine(iconProviders, transformations) { providers, transformations ->
+            var icon = cache.get(searchable.key + customIcon.hashCode() + providers.hashCode() + transformations.hashCode())
             if (icon != null) {
                 return@combine icon
             }
 
-            val provs = if (ci != null) getProviders(ci) + providers else providers
-            val transforms = getTransformations(ci) ?: transformations
+            val provs = if (customIcon != null) getProviders(customIcon) + providers else providers
+            val transforms = getTransformations(customIcon) ?: transformations
 
             icon = provs.getFirstIcon(searchable, size)
 
             if (icon != null) {
                 icon = icon.transform(transforms)
 
-                cache.put(searchable.key + ci.hashCode() + providers.hashCode() + transformations.hashCode(), icon)
+                cache.put(searchable.key + customIcon.hashCode() + providers.hashCode() + transformations.hashCode(), icon)
             }
             return@combine icon
         }
@@ -262,7 +277,11 @@ class IconService(
 
         val defaultTransformations = transformations.first()
 
-        val transformationOptions = mutableListOf<CustomIcon>(UnmodifiedSystemDefaultIcon)
+        val transformationOptions = mutableListOf<CustomIcon>()
+
+        if (searchable is Application) {
+            transformationOptions.add(UnmodifiedSystemDefaultIcon)
+        }
 
         if (rawIcon is StaticLauncherIcon && rawIcon.backgroundLayer is TransparentLayer) {
             // Legacy icons that simply fill the entire canvas
@@ -325,13 +344,11 @@ class IconService(
             transformationOptions.add(
                 ForceThemedIcon
             )
-        } else {
-            transformationOptions.add(
-                ForceThemedIcon
-            )
         }
 
-        providerOptions.add(DefaultPlaceholderIcon)
+        if (searchable !is Tag) {
+            providerOptions.add(DefaultPlaceholderIcon)
+        }
 
         suggestions.addAll(
             transformationOptions.map {
