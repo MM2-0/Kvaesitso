@@ -810,4 +810,7 @@
         <item quantity="one">%1$s Liste ausgewählt</item>
         <item quantity="other">%1$s Listen ausgewählt</item>
     </plurals>
+    <string name="reset_icon">Symbol zurücksetzen</string>
+    <string name="preference_compact_tags">Kompakte Tags</string>
+    <string name="preference_compact_tags_summary">Beschriftungen oder Symbole von Tags ausblenden um den von Tags eingenommenen Platz zu reduzieren</string>
 </resources>
