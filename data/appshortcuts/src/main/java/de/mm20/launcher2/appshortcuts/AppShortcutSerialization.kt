@@ -6,6 +6,7 @@ import android.content.Intent.ShortcutIconResource
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
 import android.os.UserManager
+import android.util.Log
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SavableSearchable
@@ -35,42 +36,48 @@ class LauncherShortcutDeserializer(
 ) : SearchableDeserializer, KoinComponent {
 
     override suspend fun deserialize(serialized: String): SavableSearchable? {
-        val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+        try {
+            val launcherApps =
+                context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
 
-        val json = JSONObject(serialized)
-        val packageName = json.getString("packagename")
-        val id = json.getString("id")
-        val userSerial = json.optLong("user")
+            val json = JSONObject(serialized)
+            val packageName = json.getString("packagename")
+            val id = json.getString("id")
+            val userSerial = json.optLong("user")
 
-        val userManager = context.getSystemService<UserManager>()!!
-        val user = userManager.getUserForSerialNumber(userSerial) ?: return null
+            val userManager = context.getSystemService<UserManager>()!!
+            val user = userManager.getUserForSerialNumber(userSerial) ?: return null
 
-        if (!launcherApps.hasShortcutHostPermission()) {
-            return UnavailableShortcut(context, id, packageName, user, userSerial)
-        }
-        else {
-            val query = LauncherApps.ShortcutQuery()
-            query.setPackage(packageName)
-            query.setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED or
-                    LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or
-                    LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST or
-                    LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED or
-                    LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
-            )
-            query.setShortcutIds(mutableListOf(id))
-            val shortcuts = try {
-                launcherApps.getShortcuts(query, user)
-            } catch (e: IllegalStateException) {
-                return null
-            }
-            if (shortcuts.isNullOrEmpty()) {
-                return null
+            if (!launcherApps.hasShortcutHostPermission()) {
+                return UnavailableShortcut(context, id, packageName, user, userSerial)
             } else {
-                return LauncherShortcut(
-                    context = context,
-                    launcherShortcut = shortcuts[0],
+                val query = LauncherApps.ShortcutQuery()
+                query.setPackage(packageName)
+                query.setQueryFlags(
+                    LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED or
+                            LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or
+                            LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST or
+                            LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED or
+                            LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
                 )
+                query.setShortcutIds(mutableListOf(id))
+                val shortcuts = try {
+                    launcherApps.getShortcuts(query, user)
+                } catch (e: IllegalStateException) {
+                    return null
+                }
+                if (shortcuts.isNullOrEmpty()) {
+                    return null
+                } else {
+                    return LauncherShortcut(
+                        context = context,
+                        launcherShortcut = shortcuts[0],
+                    )
+                }
             }
+        } catch (e: SecurityException) {
+            Log.e("MM20", "Failed to deserialize shortcut: $serialized", e)
+            return null
         }
     }
 }
