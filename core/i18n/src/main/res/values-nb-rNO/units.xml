@@ -246,4 +246,41 @@
     <string name="dimension_frequency">Frekvens</string>
     <string name="dimension_temperature">Temperatur</string>
     <string name="dimension_time">Tid</string>
+    <plurals name="unit_acre">
+        <item quantity="one">acre</item>
+        <item quantity="other">acres</item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="one">stone</item>
+        <item quantity="other">stones</item>
+    </plurals>
+    <string name="unit_pound_symbol">lb.</string>
+    <plurals name="unit_pound">
+        <item quantity="one">pound</item>
+        <item quantity="other">pounds</item>
+    </plurals>
+    <string name="unit_ounce_symbol">oz.</string>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">mile per hour</item>
+        <item quantity="other">miles per hour</item>
+    </plurals>
+    <string name="unit_long_ton_symbol">tn.l.</string>
+    <plurals name="unit_long_ton">
+        <item quantity="one">long ton</item>
+        <item quantity="other">long tons</item>
+    </plurals>
+    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_acre_symbol">ac</string>
+    <plurals name="unit_ounce">
+        <item quantity="one">ounce</item>
+        <item quantity="other">ounces</item>
+    </plurals>
+    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <plurals name="unit_short_ton">
+        <item quantity="one">short ton</item>
+        <item quantity="other">short tons</item>
+    </plurals>
 </resources>
