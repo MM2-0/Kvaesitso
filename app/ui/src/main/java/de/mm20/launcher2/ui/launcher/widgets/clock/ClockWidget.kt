@@ -213,15 +213,17 @@ fun ClockWidget(
                                         provider = partProvider,
                                     )
                                 }
-                                Box(
-                                    modifier = Modifier
-                                        .padding(horizontal = 16.dp)
-                                        .height(56.dp)
-                                        .width(2.dp)
-                                        .background(
-                                            LocalContentColor.current
-                                        ),
-                                )
+                                if (clockStyle !is ClockWidgetStyle.Empty) {
+                                    Box(
+                                        modifier = Modifier
+                                            .padding(horizontal = 16.dp)
+                                            .height(56.dp)
+                                            .width(2.dp)
+                                            .background(
+                                                LocalContentColor.current
+                                            ),
+                                    )
+                                }
                                 Box(
                                     modifier = Modifier.clickable(
                                         enabled = clockStyle !is ClockWidgetStyle.Empty,
