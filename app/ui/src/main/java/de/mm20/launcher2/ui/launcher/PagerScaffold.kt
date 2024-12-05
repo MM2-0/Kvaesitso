@@ -51,7 +51,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -124,7 +124,7 @@ fun PagerScaffold(
     val isSearchOpen by viewModel.isSearchOpen
     val isWidgetEditMode by viewModel.isWidgetEditMode
 
-    val actions by searchVM.searchActionResults
+    val actions = searchVM.searchActionResults
 
     val widgetsScrollState = rememberScrollState()
     val searchState = rememberLazyListState()
@@ -272,7 +272,7 @@ fun PagerScaffold(
         }
     }
 
-    val searchBarOffset = remember { mutableStateOf(0f) }
+    val searchBarOffset = remember { mutableFloatStateOf(0f) }
 
     val scope = rememberCoroutineScope()
 
@@ -341,8 +341,8 @@ fun PagerScaffold(
                 }
                 val deltaSearchBarOffset =
                     consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
-                searchBarOffset.value =
-                    (searchBarOffset.value + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
+                searchBarOffset.floatValue =
+                    (searchBarOffset.floatValue + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
                 return super.onPostScroll(consumed, available, source)
             }
 

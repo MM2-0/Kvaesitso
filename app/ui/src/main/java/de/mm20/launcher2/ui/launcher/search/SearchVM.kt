@@ -2,7 +2,9 @@ package de.mm20.launcher2.ui.launcher.search
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.devicepose.DevicePoseProvider
@@ -28,6 +30,7 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchFilters
+import de.mm20.launcher2.search.SearchResults
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.Website
@@ -79,8 +82,6 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val expandedCategory = mutableStateOf<SearchCategory?>(null)
 
-    val locationResults = mutableStateOf<List<Location>>(emptyList())
-
     val profiles = profileManager.profiles.shareIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(),
@@ -104,22 +105,25 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
-    val appResults = mutableStateOf<List<Application>>(emptyList())
-    val workAppResults = mutableStateOf<List<Application>>(emptyList())
-    val privateSpaceAppResults = mutableStateOf<List<Application>>(emptyList())
+    val appResults = mutableStateListOf<Application>()
+    val workAppResults = mutableStateListOf<Application>()
+    val privateSpaceAppResults = mutableStateListOf<Application>()
 
-    val appShortcutResults = mutableStateOf<List<AppShortcut>>(emptyList())
-    val fileResults = mutableStateOf<List<File>>(emptyList())
-    val contactResults = mutableStateOf<List<Contact>>(emptyList())
-    val calendarResults = mutableStateOf<List<CalendarEvent>>(emptyList())
-    val articleResults = mutableStateOf<List<Article>>(emptyList())
-    val websiteResults = mutableStateOf<List<Website>>(emptyList())
-    val calculatorResults = mutableStateOf<List<Calculator>>(emptyList())
-    val unitConverterResults = mutableStateOf<List<UnitConverter>>(emptyList())
-    val searchActionResults = mutableStateOf<List<SearchAction>>(emptyList())
+    val appShortcutResults = mutableStateListOf<AppShortcut>()
+    val fileResults = mutableStateListOf<File>()
+    val contactResults = mutableStateListOf<Contact>()
+    val calendarResults = mutableStateListOf<CalendarEvent>()
+    val articleResults = mutableStateListOf<Article>()
+    val websiteResults = mutableStateListOf<Website>()
+    val calculatorResults = mutableStateListOf<Calculator>()
+    val unitConverterResults = mutableStateListOf<UnitConverter>()
+    val searchActionResults = mutableStateListOf<SearchAction>()
+    val locationResults = mutableStateListOf<Location>()
+
+    var previousResults: SearchResults? = null
 
     val hiddenResultsButton = searchUiSettings.hiddenItemsButton
-    val hiddenResults = mutableStateOf<List<SavableSearchable>>(emptyList())
+    val hiddenResults = mutableStateListOf<SavableSearchable>()
 
     val favoritesEnabled = searchUiSettings.favorites
     val hideFavorites = mutableStateOf(false)
@@ -179,7 +183,6 @@ class SearchVM : ViewModel(), KoinComponent {
         }
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
-        hiddenResults.value = emptyList()
 
         val filters = filters.value
 
@@ -218,15 +221,6 @@ class SearchVM : ViewModel(), KoinComponent {
                     flowOf(emptyList())
                 }
                 val allApps = searchService.getAllApps()
-                fileResults.value = emptyList()
-                contactResults.value = emptyList()
-                calendarResults.value = emptyList()
-                locationResults.value = emptyList()
-                articleResults.value = emptyList()
-                websiteResults.value = emptyList()
-                calculatorResults.value = emptyList()
-                unitConverterResults.value = emptyList()
-                searchActionResults.value = emptyList()
 
                 allApps
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
@@ -253,11 +247,13 @@ class SearchVM : ViewModel(), KoinComponent {
                             )
                         }
                         hiddenItems += hiddenPrivateApps
+                        previousResults = SearchResults(apps = apps)
 
-                        appResults.value = apps
-                        workAppResults.value = workApps
-                        privateSpaceAppResults.value = privateApps
-                        hiddenResults.value = hiddenItems
+                        searchActionResults.clear()
+                        appResults.mergeWith(apps)
+                        workAppResults.mergeWith(workApps)
+                        privateSpaceAppResults.mergeWith(privateApps)
+                        hiddenResults.mergeWith(hiddenItems)
                     }
 
             } else {
@@ -267,127 +263,65 @@ class SearchVM : ViewModel(), KoinComponent {
                 searchService.search(
                     query,
                     filters = if (query.isEmpty()) filters.copy(apps = true) else filters,
+                    previousResults,
                 )
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
                     .collectLatest { (results, hiddenKeys) ->
-                        val hiddenItems = mutableListOf<SavableSearchable>()
+                        previousResults = results
 
-                        if (results.apps != null) {
-                            val (hiddenApps, apps) = results.apps!!.partition {
-                                hiddenKeys.contains(
-                                    it.key
-                                )
-                            }
-                            hiddenItems += hiddenApps
-                            appResults.value = apps.applyRanking(query)
-                        } else {
-                            appResults.value = emptyList()
-                        }
-                        workAppResults.value = emptyList()
-                        privateSpaceAppResults.value = emptyList()
+                        hiddenResults.clear()
+                        workAppResults.clear()
+                        privateSpaceAppResults.clear()
 
-                        if (results.shortcuts != null) {
-                            val (hiddenShortcuts, shortcuts) = results.shortcuts!!.partition {
-                                hiddenKeys.contains(
-                                    it.key
-                                )
-                            }
-                            hiddenItems += hiddenShortcuts
-                            appShortcutResults.value = shortcuts.applyRanking(query)
-                        } else {
-                            appShortcutResults.value = emptyList()
-                        }
+                        appResults.mergeWith(results.apps, hiddenKeys, query)
+                        appShortcutResults.mergeWith(results.shortcuts, hiddenKeys, query)
+                        fileResults.mergeWith(results.files, hiddenKeys, query)
 
-                        if (results.files != null) {
-                            val (hiddenFiles, files) = results.files!!.partition {
-                                hiddenKeys.contains(
-                                    it.key
-                                )
-                            }
-                            hiddenItems += hiddenFiles
-                            fileResults.value = files.applyRanking(query)
-                        } else {
-                            fileResults.value = emptyList()
-                        }
-
-                        if (results.contacts != null) {
-                            val (hiddenContacts, contacts) = results.contacts!!.partition {
-                                hiddenKeys.contains(
-                                    it.key
-                                )
-                            }
-                            hiddenItems += hiddenContacts
-                            contactResults.value = contacts.applyRanking(query)
-                        } else {
-                            contactResults.value = emptyList()
-                        }
-
-                        if (results.calendars != null) {
-                            val (hiddenEvents, events) = results.calendars!!.partition {
-                                hiddenKeys.contains(
-                                    it.key
-                                )
-                            }
-                            hiddenItems += hiddenEvents
-                            calendarResults.value = events.applyRanking(query)
-                        } else {
-                            calendarResults.value = emptyList()
-                        }
-
-                        if (results.locations != null && results.locations!!.isNotEmpty()) {
-                            val (hiddenLocations, locations) = results.locations!!.partition {
-                                hiddenKeys.contains(
-                                    it.key
-                                )
-                            }
-                            hiddenItems += hiddenLocations
-                            val lastLocation = devicePoseProvider.lastLocation
-                            if (lastLocation != null) {
-                                locationResults.value = locations.asSequence()
-                                    .sortedWith { a, b ->
-                                        a.distanceTo(lastLocation)
-                                            .compareTo(b.distanceTo(lastLocation))
-                                    }
-                                    .distinctBy { it.key }
-                                    .toList()
-                            } else {
-                                locationResults.value = locations.applyRanking(query)
-                            }
-                        } else {
-                            locationResults.value = emptyList()
-                        }
-
-                        if (results.wikipedia != null) {
-                            articleResults.value = results.wikipedia!!.applyRanking(query)
-                        } else {
-                            articleResults.value = emptyList()
-                        }
-
-                        if (results.websites != null) {
-                            websiteResults.value = results.websites!!.applyRanking(query)
-                        } else {
-                            websiteResults.value = emptyList()
-                        }
-
-
-                        calculatorResults.value = results.calculators ?: emptyList()
-                        unitConverterResults.value = results.unitConverters ?: emptyList()
+                        contactResults.mergeWith(
+                            results.contacts?.filterNot { hiddenKeys.contains(it.key) }
+                                ?.applyRanking(query)
+                        )
+                        calendarResults.mergeWith(
+                            results.calendars?.filterNot { hiddenKeys.contains(it.key) }
+                                ?.applyRanking(query)
+                        )
+                        locationResults.mergeWith(
+                            results.locations?.filterNot { hiddenKeys.contains(it.key) }
+                                ?.let { locations ->
+                                    devicePoseProvider.lastLocation?.let {
+                                        locations.asSequence()
+                                            .sortedWith { a, b ->
+                                                a.distanceTo(it).compareTo(b.distanceTo(it))
+                                            }
+                                            .distinctBy { it.key }
+                                            .toList()
+                                    } ?: locations.applyRanking(query)
+                                }
+                        )
+                        articleResults.mergeWith(
+                            results.wikipedia?.applyRanking(query)
+                        )
+                        websiteResults.mergeWith(
+                            results.websites?.applyRanking(query)
+                        )
+                        calculatorResults.mergeWith(results.calculators)
+                        unitConverterResults.mergeWith(results.unitConverters)
 
                         if (results.searchActions != null) {
-                            searchActionResults.value = results.searchActions!!
+                            searchActionResults.mergeWith(results.searchActions!!)
                         }
 
                         if (launchOnEnter.value) {
                             bestMatch.value = when {
-                                appResults.value.isNotEmpty() -> appResults.value.first()
-                                appShortcutResults.value.isNotEmpty() -> appShortcutResults.value.first()
-                                calendarResults.value.isNotEmpty() -> calendarResults.value.first()
-                                locationResults.value.isNotEmpty() -> locationResults.value.first()
-                                contactResults.value.isNotEmpty() -> contactResults.value.first()
-                                articleResults.value.isNotEmpty() -> articleResults.value.first()
-                                websiteResults.value.isNotEmpty() -> websiteResults.value.first()
-                                fileResults.value.isNotEmpty() -> fileResults.value.first()
-                                searchActionResults.value.isNotEmpty() -> searchActionResults.value.first()
+                                appResults.isNotEmpty() -> appResults.first()
+                                appShortcutResults.isNotEmpty() -> appShortcutResults.first()
+                                calendarResults.isNotEmpty() -> calendarResults.first()
+                                locationResults.isNotEmpty() -> locationResults.first()
+                                contactResults.isNotEmpty() -> contactResults.first()
+                                articleResults.isNotEmpty() -> articleResults.first()
+                                websiteResults.isNotEmpty() -> websiteResults.first()
+                                fileResults.isNotEmpty() -> fileResults.first()
+                                searchActionResults.isNotEmpty() -> searchActionResults.first()
                                 else -> null
                             }
                         } else {
@@ -494,6 +428,23 @@ class SearchVM : ViewModel(), KoinComponent {
         }
         return sorted.distinctBy { it.key }.toList()
     }
+
+    private fun <T> SnapshotStateList<T>.mergeWith(newItems: List<T>?) {
+        val items = newItems ?: emptyList()
+        val diff = toSet() subtract items.toSet()
+        removeAll(diff)
+        for ((i, item) in items.withIndex()) {
+            if (i < size)
+                set(i, item)
+            else
+                add(item)
+        }
+    }
+    private suspend fun <T : SavableSearchable> SnapshotStateList<T>.mergeWith(
+        newItems: List<T>?,
+        hiddenKeys: List<String>,
+        query: String
+    ) = this.mergeWith((newItems ?: emptyList()).filterNot { hiddenKeys.contains(it.key) }.applyRanking(query))
 }
 
 
