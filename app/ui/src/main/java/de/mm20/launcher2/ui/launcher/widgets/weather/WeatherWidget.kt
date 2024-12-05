@@ -499,7 +499,7 @@ private fun convertTemperature(imperialUnits: Boolean, temp: Double): Int {
 private fun formatWindSpeed(imperialUnits: Boolean, forecast: Forecast): String {
     if (forecast.windSpeed == null) return ""
     val formatter = DecimalFormat("0.#")
-    val speedValue = formatter.format(forecast.windSpeed!! * if (imperialUnits) 0.621371 else 1.0)
+    val speedValue = formatter.format(forecast.windSpeed!! * if (imperialUnits) 2.2369 else 1.0)
     val speedUnit =
         stringResource(id = if (imperialUnits) R.string.unit_mile_per_hour_symbol else R.string.unit_meter_per_second_symbol)
     return "$speedValue $speedUnit"
