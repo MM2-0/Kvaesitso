@@ -1,0 +1,5 @@
+- Improved search result ranking: the order of the search results is now more relevant to the search query
+  - The option to sort search results alphabetically has been removed
+- Custom icons for tags: you can now use any emoji or icon from an icon pack as tag icon
+- Compact tags: pinned tags can now be displayed in a more compact way.
+- You can now long-press tags to edit them
