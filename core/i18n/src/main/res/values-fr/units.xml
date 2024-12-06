@@ -334,4 +334,17 @@
         <item quantity="many">décimètres</item>
         <item quantity="other">décimètres</item>
     </plurals>
+    <string name="dimension_velocity">Vélocité</string>
+    <string name="dimension_length">Longueur</string>
+    <string name="dimension_mass">Masse</string>
+    <string name="dimension_volume">Volume</string>
+    <string name="dimension_currency">Devise</string>
+    <string name="dimension_area">Surface</string>
+    <string name="dimension_pressure">Pression</string>
+    <string name="dimension_energy">Énergie</string>
+    <string name="dimension_frequency">Fréquence</string>
+    <string name="dimension_bitrate">Débit</string>
+    <string name="dimension_data">Données</string>
+    <string name="dimension_temperature">Température</string>
+    <string name="dimension_time">Temps</string>
 </resources>
