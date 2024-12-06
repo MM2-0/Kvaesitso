@@ -355,7 +355,7 @@
     <string name="preference_clockwidget_battery_part">Batterie</string>
     <string name="preference_clockwidget_battery_part_summary">Afficher le niveau de la batterie lorsque celle-ci est basse ou en chargement</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
-    <string name="preference_clockwidget_alarm_part_summary">Afficher les alarmes qui vont sonner dans les 15 prochaines minutes</string>
+    <string name="preference_clockwidget_alarm_part_summary">Afficher les alarmes qui sonneront dans les 8 prochaines heures</string>
     <string name="battery_part_charging">Chargement</string>
     <string name="missing_permission_appshortcuts_search_settings">%1$s doit être défini comme appli d\'accueil par défaut pour rechercher les raccourcis des applications</string>
     <string name="missing_permission_appshortcuts_search">Définissez %1$s comme appli d\'accueil par défaut pour recherche les raccourcis d\'applications.</string>
@@ -737,7 +737,7 @@
     <string name="poi_category_government_building">Bâtiment du gouvernement</string>
     <string name="poi_category_discount_store">Hard-discount</string>
     <string name="poi_category_monument">Monument</string>
-    <string name="poi_category_synagogue"/>
+    <string name="poi_category_synagogue">Synagogue</string>
     <string name="poi_category_chinese_restaurant">Restaurant chinois</string>
     <string name="poi_category_japanese_restaurant">Restaurant japonais</string>
     <string name="poi_category_kebab_restaurant">Kebab</string>
@@ -783,4 +783,63 @@
     <string name="poi_category_townhall">Mairie</string>
     <string name="preference_search_locations_radius_large_radius_warning">De grands rayons de recherche peuvent ralentir considérablement la recherche.</string>
     <string name="poi_category_hindu_temple">Temple hindou</string>
+    <string name="item_visibility_app_default">Grille d\'applications et résultats de recherche</string>
+    <string name="customize_item_label">Étiquette</string>
+    <string name="customize_item_tags">Étiquette</string>
+    <string name="customize_item_visibility">Afficher dans</string>
+    <string name="contact_info_mobile">Mobile</string>
+    <string name="contact_info_home">Domicile</string>
+    <string name="preference_compact_tags">Étiquettes compactes</string>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s adresse e-mail</item>
+        <item quantity="many">%1$s adresses e-mail</item>
+        <item quantity="other">%1$s adresses e-mail</item>
+    </plurals>
+    <string name="preference_calendar_hide_completed">Masquer les tâches terminées</string>
+    <string name="weather_widget_no_provider">Aucun fournisseur de services météorologiques n\'a été sélectionné ou le fournisseur sélectionné n\'est pas disponible</string>
+    <string name="preference_compact_tags_summary">Masquer les étiquettes ou les icônes pour réduire l\'espace occupé par les étiquettes</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s numéro de téléphone</item>
+        <item quantity="many">%1$s numéros de téléphone</item>
+        <item quantity="other">%1$s numéros de téléphone</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s notification</item>
+        <item quantity="many">%1$s notifications</item>
+        <item quantity="other">%1$s notifications</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s adresse postale</item>
+        <item quantity="many">%1$s adresses postales</item>
+        <item quantity="other">%1$s adresses postales</item>
+    </plurals>
+    <string name="reset_icon">Icône de réinitialisation</string>
+    <string name="task_due_time">Échéance à %1$s</string>
+    <string name="task_due_date">Échéance le %1$s</string>
+    <string name="item_visibility_calendar_default">Widget calendrier et résultats de recherche</string>
+    <string name="contact_info_work">Bureau</string>
+    <string name="calendar_widget_next_day">Jour suivant</string>
+    <string name="calendar_widget_open_calendar">Ouvrir l\'application calendrier</string>
+    <string name="plugin_type_calendar">Calendrier</string>
+    <string name="music_widget_play">Jouer</string>
+    <string name="hint_drag_and_drop_reorder">Maintenir et faire glisser les éléments pour les réorganiser</string>
+    <string name="calendar_widget_create_event">Créer un nouvel événement</string>
+    <string name="profile_work_profile_action_unlock">Désactiver la pause</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s liste sélectionnée</item>
+        <item quantity="many">%1$s listes sélectionnées</item>
+        <item quantity="other">%1$s listes sélectionnées</item>
+    </plurals>
+    <string name="calendar_widget_previous_day">Jour précédent</string>
+    <string name="action_clear">Effacer</string>
+    <string name="item_visibility_hidden">Jamais</string>
+    <string name="music_widget_previous_track">Titre précédent</string>
+    <string name="preference_search_supportedunits">Unités prises en charge</string>
+    <string name="item_visibility_search_only">Résultats de recherche</string>
+    <string name="music_widget_pause">Pause</string>
+    <string name="music_widget_open_player">Ouvrir le lecteur</string>
+    <string name="music_widget_next_track">Titre suivant</string>
+    <string name="menu_show_filters">Afficher les filtres</string>
+    <string name="menu_hide_filters">Masquer les filtres</string>
+    <string name="profile_private_profile_action_unlock">Déverrouiller</string>
 </resources>
