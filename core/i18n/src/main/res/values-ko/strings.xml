@@ -120,10 +120,10 @@
     <string name="weather_condition_rain">비</string>
     <string name="weather_condition_fog">안개</string>
     <string name="menu_customize">사용자 정의</string>
-    <string name="missing_permission_calendar_widget">다가오는 약속과 일정을 여기에 표시하려면 캘린더 권한을 허용해 주세요.</string>
-    <string name="missing_permission_files_search">이 기기에 있는 사진이나 문서, 미디어를 검색하려면 저장공간 권한을 허용해 주세요.</string>
-    <string name="missing_permission_contact_search">연락처 항목을 검색하려면 권한을 허용해 주세요.</string>
-    <string name="missing_permission_calendar_search">캘린더에서 항목을 검색하려면 권한을 허용해 주세요.</string>
+    <string name="missing_permission_calendar_widget">다가오는 약속과 일정을 여기에 표시하려면 캘린더 권한이 필요합니다.</string>
+    <string name="missing_permission_files_search">이 기기에 있는 사진이나 문서, 미디어를 검색하려면 저장공간 권한이 필요합니다.</string>
+    <string name="missing_permission_contact_search">연락처에서 항목을 검색하려면 연락처 권한이 필요합니다.</string>
+    <string name="missing_permission_calendar_search">캘린더에서 항목을 검색하려면 캘린더 권한이 필요합니다.</string>
     <string name="grant_permission">허용</string>
     <string name="widget_name_notes">메모</string>
     <string name="websearch_dialog_custom_icon">사용자 지정 아이콘</string>
@@ -509,4 +509,6 @@
     <string name="poi_category_hindu_temple">힌두 사원</string>
     <string name="poi_category_police">경찰서</string>
     <string name="poi_category_bakery">빵집</string>
+    <string name="preference_hidden_items_summary">숨긴 앱 및 검색 결과 관리</string>
+    <string name="preference_hidden_items">숨긴 검색 결과</string>
 </resources>
