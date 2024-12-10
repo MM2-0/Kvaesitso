@@ -842,4 +842,11 @@
     <string name="menu_show_filters">Afficher les filtres</string>
     <string name="menu_hide_filters">Masquer les filtres</string>
     <string name="profile_private_profile_action_unlock">Déverrouiller</string>
+    <string name="task_due_today">À terminer aujourd\'hui</string>
+    <string name="profile_private_profile_state_locked">L\'espace privé est verrouillé.</string>
+    <string name="action_more_actions">Plus d\'actions</string>
+    <string name="action_done">Fait</string>
+    <string name="apps_profile_private">Privé</string>
+    <string name="app_label_locked_profile">Verrouillé</string>
+    <string name="profile_private_profile_action_lock">Verrouiller l\'espace privé</string>
 </resources>
