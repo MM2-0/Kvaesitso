@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="location_opens_other_day">адкрываецца ў %1$s, у %2$s</string>
-    <string name="location_open">Адкрыта</string>
-    <string name="location_closed">Закрыта</string>
-    <string name="location_closes">закрываецца ў %1$s</string>
-    <string name="location_closes_other_day">закрываецца ў %1$s, у %2$s</string>
-    <string name="location_opens">адкрываецца ў %1$s</string>
+    <string name="location_opens_other_day">адкрываецца ў %1$s, а %2$s</string>
+    <string name="location_open">Адкрытае</string>
+    <string name="location_closed">Закрытае</string>
+    <string name="location_closes">закрываецца а %1$s</string>
+    <string name="location_closes_other_day">закрываецца ў %1$s, а %2$s</string>
+    <string name="location_opens">адкрываецца а %1$s</string>
     <string name="menu_share">Абагуліць</string>
     <string name="menu_share_store_link">Спасылка на старонку ў %1$s</string>
     <string name="menu_share_apk_file">Файл пакета</string>
@@ -553,4 +553,13 @@
         <item quantity="other">Выбраныя %1$d ярлыкоў</item>
     </plurals>
     <string name="tag_no_items_message">Няма ярлыкоў з гэтым цэтлікам. Калі вы працягніце, цэтлік будзе выдалены.</string>
+    <string name="search_bar_position_top">Наверсе</string>
+    <string name="search_bar_position_bottom">Унізе</string>
+    <string name="preference_layout_search_bar_position">Пазіцыя поля пошуку</string>
+    <string name="open_search_pull_down">Чырканне ўніз</string>
+    <string name="open_search_swipe_left">Чырканне ўлева</string>
+    <string name="preference_layout_open_search">Пошук / меню праграм</string>
+    <string name="preference_compact_tags">Кампактныя цэтлікі</string>
+    <string name="preference_compact_tags_summary">Схаваць назвы або значкі цэтлікаў, каб паменшыць месца, якое яны займаюць</string>
+    <string name="open_search_swipe_right">Чырканне ўправа</string>
 </resources>
