@@ -215,7 +215,6 @@ fun GridItem(
                             MaterialTheme.colorScheme.surfaceVariant,
                             MaterialTheme.shapes.small
                         )
-                        .padding(horizontal = 8.dp)
                 } else Modifier
             ) {
                 Text(
