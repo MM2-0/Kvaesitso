@@ -22,7 +22,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
@@ -195,6 +194,7 @@ fun LazyListScope.AppResults(
             GridItem(
                 item = it,
                 showLabels = LocalGridSettings.current.showLabels,
+                showIcons = LocalGridSettings.current.showIcons,
                 highlight = it.key == highlightedItem?.key
             )
         },

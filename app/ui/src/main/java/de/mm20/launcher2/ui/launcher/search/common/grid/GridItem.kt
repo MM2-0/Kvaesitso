@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.common.grid
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.MutableTransitionState
@@ -86,6 +85,7 @@ fun GridItem(
     modifier: Modifier = Modifier,
     item: SavableSearchable,
     showLabels: Boolean = true,
+    showIcons: Boolean = true,
     labelMaxLines: Int = 1,
     highlight: Boolean = false
 ) {
@@ -154,51 +154,87 @@ fun GridItem(
 
         val iconShape = LocalIconShape.current
 
-        Box(
-            modifier = if (highlight) {
-                Modifier
-                    .background(
-                        MaterialTheme.colorScheme.surfaceVariant,
-                        iconShape
-                    )
-            } else Modifier then if (showLabels) Modifier else Modifier
-                .semantics {
-                    contentDescription = item.label
-                },
-        ) {
-            ShapedLauncherIcon(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .onGloballyPositioned {
-                        bounds = it.boundsInWindow().roundToIntRect()
-                    } then
-                        if (highlight) Modifier.background(
-                            MaterialTheme.colorScheme.surface,
+        if (showIcons) {
+            Box(
+                modifier = if (highlight) {
+                    Modifier
+                        .background(
+                            MaterialTheme.colorScheme.surfaceVariant,
                             iconShape
                         )
-                        else Modifier,
-                size = LocalGridSettings.current.iconSize.dp,
-                badge = { badge },
-                icon = { icon },
-            )
-        }
-        if (showLabels) {
-            Text(
+                } else Modifier then if (showLabels) Modifier else Modifier
+                    .semantics {
+                        contentDescription = item.label
+                    },
+            ) {
+                ShapedLauncherIcon(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .onGloballyPositioned {
+                            bounds = it
+                                .boundsInWindow()
+                                .roundToIntRect()
+                        } then
+                            if (highlight) Modifier.background(
+                                MaterialTheme.colorScheme.surface,
+                                iconShape
+                            )
+                            else Modifier,
+                    size = LocalGridSettings.current.iconSize.dp,
+                    badge = { badge },
+                    icon = { icon },
+                )
+            }
+            if (showLabels) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    text = item.labelOverride ?: item.label,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodySmall,
+                    maxLines = labelMaxLines,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            }
+        } else {
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                text = item.labelOverride ?: item.label,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodySmall,
-                maxLines = labelMaxLines,
-                overflow = TextOverflow.Ellipsis,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
+                    .padding(horizontal = 8.dp)
+                    .semantics {
+                        contentDescription = item.label
+                    }
+                    .onGloballyPositioned {
+                        bounds = it
+                            .boundsInWindow()
+                            .roundToIntRect()
+                    } then if (highlight) {
+                    Modifier
+                        .background(
+                            MaterialTheme.colorScheme.surfaceVariant,
+                            MaterialTheme.shapes.small
+                        )
+                        .padding(horizontal = 8.dp)
+                } else Modifier
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    text = item.labelOverride ?: item.label,
+                    textAlign = TextAlign.Start,
+                    style = MaterialTheme.typography.headlineLarge,
+                    maxLines = labelMaxLines,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            }
         }
+    }
 
-        if (showPopup) {
-            ItemPopup(origin = bounds, searchable = item, onDismissRequest = { showPopup = false })
-        }
+    if (showPopup) {
+        ItemPopup(origin = bounds, searchable = item, onDismissRequest = { showPopup = false })
     }
 }
 
@@ -398,7 +434,7 @@ private fun Modifier.placeOverlay(
                         constraints.maxHeight - placeable.height,
                     ),
                     animationProgress.pow(2)
-                ).toInt()
+                )
             )
         }
     }

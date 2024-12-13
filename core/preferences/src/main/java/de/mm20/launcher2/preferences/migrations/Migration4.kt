@@ -3,22 +3,18 @@ package de.mm20.launcher2.preferences.migrations
 import androidx.datastore.core.DataMigration
 import de.mm20.launcher2.preferences.LauncherSettingsData
 
-class Migration3: DataMigration<LauncherSettingsData> {
+class Migration4: DataMigration<LauncherSettingsData> {
     override suspend fun cleanUp() {
     }
 
     override suspend fun shouldMigrate(currentData: LauncherSettingsData): Boolean {
-        return currentData.schemaVersion < 3
+        return currentData.schemaVersion < 4
     }
 
     override suspend fun migrate(currentData: LauncherSettingsData): LauncherSettingsData {
         return currentData.copy(
-            schemaVersion = 3,
-            locationSearchProviders = buildSet {
-                if (currentData.locationSearchProviders.isNotEmpty()) {
-                    add("openstreetmaps")
-                }
-            }
+            schemaVersion = 4,
+            gridIcons = true
         )
     }
 }

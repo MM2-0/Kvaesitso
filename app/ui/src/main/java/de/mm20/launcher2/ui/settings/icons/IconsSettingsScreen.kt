@@ -4,7 +4,6 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,9 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.FormatPaint
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -116,10 +113,18 @@ fun IconsSettingsScreen() {
                         viewModel.setShowLabels(it)
                     }
                 )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_grid_show_icons),
+                    summary = stringResource(R.string.preference_grid_icons_summary),
+                    value = grid.showIcons,
+                    onValueChanged = {
+                        viewModel.setShowIcons(it)
+                    }
+                )
                 SliderPreference(
                     title = stringResource(R.string.preference_grid_column_count),
                     value = grid.columnCount,
-                    min = 3,
+                    min = 1,
                     max = 12,
                     onValueChanged = {
                         viewModel.setColumnCount(it)

@@ -81,6 +81,7 @@ data class LauncherSettingsData internal constructor(
     val gridColumnCount: Int = 5,
     val gridIconSize: Int = 48,
     val gridLabels: Boolean = true,
+    val gridIcons: Boolean = true,
 
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Transparent,
     val searchBarColors: SearchBarColors = SearchBarColors.Auto,
