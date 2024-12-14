@@ -114,17 +114,25 @@ fun IconsSettingsScreen() {
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_grid_show_icons),
-                    summary = stringResource(R.string.preference_grid_icons_summary),
-                    value = grid.showIcons,
+                    title = stringResource(R.string.preference_grid_list_style),
+                    summary = stringResource(R.string.preference_grid_list_style_summary),
+                    value = grid.showList,
                     onValueChanged = {
-                        viewModel.setShowIcons(it)
+                        viewModel.setShowList(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_grid_list_icons),
+                    summary = stringResource(R.string.preference_grid_list_icons_summary),
+                    value = grid.showListIcons,
+                    onValueChanged = {
+                        viewModel.setShowListIcons(it)
                     }
                 )
                 SliderPreference(
                     title = stringResource(R.string.preference_grid_column_count),
                     value = grid.columnCount,
-                    min = 1,
+                    min = 3,
                     max = 12,
                     onValueChanged = {
                         viewModel.setColumnCount(it)

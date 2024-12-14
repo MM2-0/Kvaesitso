@@ -53,8 +53,12 @@ class IconsSettingsScreenVM(
         uiSettings.setGridShowLabels(showLabels)
     }
 
-    fun setShowIcons(showIcons: Boolean) {
-        uiSettings.setGridShowIcons(showIcons)
+    fun setShowList(showList: Boolean) {
+        uiSettings.setGridShowList(showList)
+    }
+
+    fun setShowListIcons(showIcons: Boolean) {
+        uiSettings.setGridShowListIcons(showIcons)
     }
 
     val iconShape = uiSettings.iconShape

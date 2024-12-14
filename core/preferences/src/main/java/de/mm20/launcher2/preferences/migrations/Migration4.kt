@@ -14,7 +14,8 @@ class Migration4: DataMigration<LauncherSettingsData> {
     override suspend fun migrate(currentData: LauncherSettingsData): LauncherSettingsData {
         return currentData.copy(
             schemaVersion = 4,
-            gridIcons = true
+            gridList = true,
+            gridListIcons = true,
         )
     }
 }

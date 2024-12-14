@@ -1,7 +1,6 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
-import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.SearchFilters
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -81,7 +80,8 @@ data class LauncherSettingsData internal constructor(
     val gridColumnCount: Int = 5,
     val gridIconSize: Int = 48,
     val gridLabels: Boolean = true,
-    val gridIcons: Boolean = true,
+    val gridList: Boolean = true,
+    val gridListIcons: Boolean = true,
 
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Transparent,
     val searchBarColors: SearchBarColors = SearchBarColors.Auto,

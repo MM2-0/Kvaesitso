@@ -554,10 +554,12 @@
     <string name="preference_category_grid">Grid</string>
     <string name="preference_grid_icon_size">Icon size</string>
     <string name="preference_grid_column_count">Number of columns</string>
-    <string name="preference_grid_show_icons">Show Icons in Grid</string>
+    <string name="preference_grid_list_style">Show app results in a list</string>
+    <string name="preference_grid_list_icons">Show app icons in list</string>
     <string name="preference_grid_labels">Show labels</string>
     <string name="preference_grid_labels_summary">Show the app name below the icon</string>
-    <string name="preference_grid_icons_summary">Show the app icons (will show only lables)</string>
+    <string name="preference_grid_list_style_summary">Show applications in a list view instead of grid</string>
+    <string name="preference_grid_list_icons_summary">Show icons in the list view</string>
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Troubleshooting tools</string>
     <string name="preference_category_widgets">Widgets</string>

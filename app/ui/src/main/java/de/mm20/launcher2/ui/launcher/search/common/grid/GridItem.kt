@@ -12,6 +12,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -85,7 +86,8 @@ fun GridItem(
     modifier: Modifier = Modifier,
     item: SavableSearchable,
     showLabels: Boolean = true,
-    showIcons: Boolean = true,
+    showList: Boolean = false,
+    showListIcons: Boolean = true,
     labelMaxLines: Int = 1,
     highlight: Boolean = false
 ) {
@@ -110,6 +112,7 @@ fun GridItem(
 
     Column(
         modifier = modifier
+            .padding(if (showList) 0.dp else 4.dp)
             .combinedClickable(
                 onClick = {
                     if (!launchOnPress || !viewModel.launch(context, bounds)) {
@@ -154,7 +157,7 @@ fun GridItem(
 
         val iconShape = LocalIconShape.current
 
-        if (showIcons) {
+        if (!showList) {
             Box(
                 modifier = if (highlight) {
                     Modifier
@@ -199,12 +202,11 @@ fun GridItem(
                 )
             }
         } else {
-            Box(
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .semantics {
-                        contentDescription = item.label
-                    }
+                    .padding(start = 8.dp, end = 8.dp, bottom = 4.dp)
+                    .semantics { contentDescription = item.label }
                     .onGloballyPositioned {
                         bounds = it
                             .boundsInWindow()
@@ -217,10 +219,25 @@ fun GridItem(
                         )
                 } else Modifier
             ) {
+                if (showListIcons) {
+                    ShapedLauncherIcon(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .onGloballyPositioned {
+                                bounds = it
+                                    .boundsInWindow()
+                                    .roundToIntRect()
+                            },
+                        size = LocalGridSettings.current.iconSize.dp - 2.dp,
+                        badge = { badge },
+                        icon = { icon },
+                    )
+                }
+
                 Text(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
+                        .padding(vertical = 4.dp, horizontal = 6.dp)
+                        .fillMaxWidth(),
                     text = item.labelOverride ?: item.label,
                     textAlign = TextAlign.Start,
                     style = MaterialTheme.typography.headlineLarge,

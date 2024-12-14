@@ -64,6 +64,7 @@ fun SearchColumn(
 ) {
 
     val columns = LocalGridSettings.current.columnCount
+    val showList = LocalGridSettings.current.showList
     val context = LocalContext.current
 
     val viewModel: SearchVM = viewModel()
@@ -193,6 +194,7 @@ fun SearchColumn(
                         columns = columns,
                         reverse = reverse,
                         showProfileLockControls = hasProfilesPermission,
+                        showList = showList,
                     )
                 } else {
                     AppResults(
@@ -202,7 +204,8 @@ fun SearchColumn(
                             selectedAppProfileIndex = it
                         },
                         columns = columns,
-                        reverse = reverse
+                        reverse = reverse,
+                        showList = showList,
                     )
                 }
 
