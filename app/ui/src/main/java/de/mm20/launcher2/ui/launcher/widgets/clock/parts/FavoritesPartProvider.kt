@@ -32,7 +32,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
     }
 
     @Composable
-    override fun Component(compactLayout: Boolean) {
+    override fun Component(compactLayout: Boolean, useThemeColor: Boolean) {
         val columns by remember {
             uiSettings.gridSettings.map {
                 it.columnCount
@@ -61,6 +61,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                 showLabels = false,
                 columns = columns.coerceAtMost(favorites.size),
                 transitionKey = null,
+                showList = false,
             )
         }
     }
