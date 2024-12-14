@@ -83,8 +83,8 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                 .padding(
                     top = if (it == 0) 8.dp else 0.dp,
                     bottom = if (it == rows - 1) 8.dp else 0.dp,
-                    start = 4.dp,
-                    end = 4.dp,
+                    start = if (columns == 1) 0.dp else 4.dp,
+                    end = if (columns == 1) 0.dp else 4.dp,
                 )
         ) {
             Row {
@@ -94,7 +94,6 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                         Box(
                             modifier = Modifier
                                 .weight(1f)
-                                .padding(4.dp)
                         ) {
                             itemContent(item)
                         }
