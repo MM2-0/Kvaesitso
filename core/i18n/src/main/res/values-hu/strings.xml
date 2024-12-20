@@ -26,7 +26,7 @@
     <string name="menu_calendar_open_externally">Megnyitás a naptár alkalmazásban</string>
     <string name="wind_north">Észak</string>
     <string name="wind_north_east">Északkelet</string>
-    <string name="wikipedia_source">Forrás: Wikipedia</string>
+    <string name="wikipedia_source">Forrás: Wikipédia</string>
     <string name="file_meta_title">Cím: %1$s</string>
     <string name="file_meta_artist">Előadó: %1$s</string>
     <string name="file_meta_album">Album: %1$s</string>
@@ -337,7 +337,7 @@
     <string name="preference_screen_buildinfo_summary">További információ az alkalmazás ezen verziójáról</string>
     <string name="preference_search_bar_launch_on_enter">Keresés enterrel</string>
     <string name="preference_hidden_items_summary">Rejtett alkalmazások és keresési eredmények kezelése</string>
-    <string name="preference_wikipedia_customurl">Wikipedia webcím</string>
+    <string name="preference_wikipedia_customurl">Wikipédia-webcím</string>
     <string name="preference_screen_icons_summary">Rács, ikonméret, ikoncsomagok, jelvények</string>
     <string name="apps_profile_main">Személyes</string>
     <string name="favorites_empty">A kitűzött és gyakran használt elemek itt jelennek meg</string>
@@ -533,8 +533,8 @@
     <string name="preference_search_calculator_summary">Matematikai kifejezések kiértékelése</string>
     <string name="preference_search_unitconverter">Mértékegység váltó</string>
     <string name="preference_search_currencyconverter_summary">Rendszeresen töltse le az árfolyamokat a valuták átváltásához</string>
-    <string name="preference_search_wikipedia">Wikipedia</string>
-    <string name="preference_search_wikipedia_summary">Keresés a Wikipedia-n</string>
+    <string name="preference_search_wikipedia">Wikipédia</string>
+    <string name="preference_search_wikipedia_summary">Keresés a Wikipédián</string>
     <string name="preference_search_localfiles">Helyi fájlok</string>
     <string name="preference_search_localfiles_summary">Dokumentumok, fényképek és egyéb, ezen az eszközön tárolt fájlok keresése</string>
     <string name="preference_search_gdrive_summary">Keresés a(z) %1$s fájljai között a Google Drive-on</string>
