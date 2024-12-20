@@ -262,7 +262,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 ) else flowOf(emptyList())
                 searchService.search(
                     query,
-                    filters = if (query.isEmpty()) filters.copy(apps = true) else filters,
+                    filters = filters,
                     previousResults,
                 )
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
@@ -440,11 +440,13 @@ class SearchVM : ViewModel(), KoinComponent {
                 add(item)
         }
     }
+
     private suspend fun <T : SavableSearchable> SnapshotStateList<T>.mergeWith(
         newItems: List<T>?,
         hiddenKeys: List<String>,
         query: String
-    ) = this.mergeWith((newItems ?: emptyList()).filterNot { hiddenKeys.contains(it.key) }.applyRanking(query))
+    ) = this.mergeWith((newItems ?: emptyList()).filterNot { hiddenKeys.contains(it.key) }
+        .applyRanking(query))
 }
 
 
