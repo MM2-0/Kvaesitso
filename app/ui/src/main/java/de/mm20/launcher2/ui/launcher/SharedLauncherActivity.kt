@@ -27,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
@@ -35,10 +34,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.IntOffset
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.BaseLayout
 import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.ui.assistant.AssistantScaffold
@@ -136,7 +135,6 @@ abstract class SharedLauncherActivity(
                         }
 
 
-                        val systemUiController = rememberSystemUiController()
                         val windowInsetsController = WindowInsetsControllerCompat(
                             window, window.decorView.rootView
                         )
@@ -163,10 +161,18 @@ abstract class SharedLauncherActivity(
                         }
 
                         LaunchedEffect(hideStatus) {
-                            systemUiController.isStatusBarVisible = !hideStatus
+                            if (hideStatus) {
+                                windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
+                            } else {
+                                windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
+                            }
                         }
                         LaunchedEffect(hideNav) {
-                            systemUiController.isNavigationBarVisible = !hideNav
+                            if (hideNav) {
+                                windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+                            } else {
+                                windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())
+                            }
                         }
 
                         OverlayHost(
