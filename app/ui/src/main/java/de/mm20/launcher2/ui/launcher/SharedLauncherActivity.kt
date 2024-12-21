@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.app.WallpaperManager
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -22,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -77,8 +77,6 @@ abstract class SharedLauncherActivity(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val wallpaperManager = WallpaperManager.getInstance(this)
 
         val windowSize = Resources.getSystem().displayMetrics.let {
             Size(it.widthPixels.toFloat(), it.heightPixels.toFloat())
@@ -139,7 +137,7 @@ abstract class SharedLauncherActivity(
                             window, window.decorView.rootView
                         )
 
-                        val enterTransitionProgress = remember { mutableStateOf(1f) }
+                        val enterTransitionProgress = remember { mutableFloatStateOf(1f) }
                         var enterTransition by remember {
                             mutableStateOf<EnterHomeTransition?>(
                                 null
@@ -152,7 +150,7 @@ abstract class SharedLauncherActivity(
                                 .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
                                 .collect {
                                     if (it != null) {
-                                        enterTransitionProgress.value = 0f
+                                        enterTransitionProgress.floatValue = 0f
                                         enterTransition = it
                                         enterTransitionProgress.animateTo(1f)
                                         enterTransition = null
@@ -208,10 +206,10 @@ abstract class SharedLauncherActivity(
                                                     .fillMaxSize()
                                                     .graphicsLayer {
                                                         scaleX =
-                                                            0.5f + enterTransitionProgress.value * 0.5f
+                                                            0.5f + enterTransitionProgress.floatValue * 0.5f
                                                         scaleY =
-                                                            0.5f + enterTransitionProgress.value * 0.5f
-                                                        alpha = enterTransitionProgress.value
+                                                            0.5f + enterTransitionProgress.floatValue * 0.5f
+                                                        alpha = enterTransitionProgress.floatValue
                                                     },
                                                 darkStatusBarIcons = lightStatus,
                                                 darkNavBarIcons = lightNav,
@@ -230,10 +228,10 @@ abstract class SharedLauncherActivity(
                                                     .fillMaxSize()
                                                     .graphicsLayer {
                                                         scaleX =
-                                                            0.5f + enterTransitionProgress.value * 0.5f
+                                                            0.5f + enterTransitionProgress.floatValue * 0.5f
                                                         scaleY =
-                                                            0.5f + enterTransitionProgress.value * 0.5f
-                                                        alpha = enterTransitionProgress.value
+                                                            0.5f + enterTransitionProgress.floatValue * 0.5f
+                                                        alpha = enterTransitionProgress.floatValue
                                                     },
                                                 darkStatusBarIcons = lightStatus,
                                                 darkNavBarIcons = lightNav,
@@ -264,11 +262,11 @@ abstract class SharedLauncherActivity(
                                     modifier = Modifier
                                         .align(Alignment.TopStart)
                                         .graphicsLayer {
-                                            val p = (enterTransitionProgress.value).pow(2f)
+                                            val p = (enterTransitionProgress.floatValue).pow(2f)
                                             transformOrigin = TransformOrigin.Center
                                             translationX = it.targetBounds.left + dX * (1 - p)
                                             translationY = it.targetBounds.top + dY * (1 - p)
-                                            alpha = enterTransitionProgress.value
+                                            alpha = enterTransitionProgress.floatValue
                                             scaleX = 1f + s * (1 - p)
                                             scaleY = 1f + s * (1 - p)
                                         }) {
@@ -277,7 +275,7 @@ abstract class SharedLauncherActivity(
                                             dX,
                                             dY
                                         )
-                                    ) { enterTransitionProgress.value }
+                                    ) { enterTransitionProgress.floatValue }
                                 }
                             }
                             LauncherBottomSheets()
