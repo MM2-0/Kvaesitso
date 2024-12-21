@@ -76,7 +76,7 @@ internal class WeatherRepositoryImpl(
                 .build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "weather",
-            ExistingPeriodicWorkPolicy.KEEP, weatherRequest
+            ExistingPeriodicWorkPolicy.UPDATE, weatherRequest
         )
 
         scope.launch {
@@ -216,7 +216,7 @@ class WeatherUpdateWorker(
         val lastUpdate = settingsData.lastUpdate
 
         if (lastUpdate + updateInterval > System.currentTimeMillis()) {
-            Log.d("MM20", "No weather update required")
+            Log.d("WeatherUpdateWorker", "No weather update required")
             return Result.failure()
         }
 
