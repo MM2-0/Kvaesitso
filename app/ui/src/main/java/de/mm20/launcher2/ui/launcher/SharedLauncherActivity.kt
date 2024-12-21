@@ -9,8 +9,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -29,6 +32,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.IntOffset
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -91,6 +95,8 @@ abstract class SharedLauncherActivity(
             val snackbarHostState = remember { SnackbarHostState() }
             val wallpaperColors by wallpaperColorsAsState()
             val dimBackground by viewModel.dimBackground.collectAsState()
+            val bottomInset = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+
             CompositionLocalProvider(
                 LocalEnterHomeTransitionManager provides enterHomeTransitionManager,
                 LocalWindowSize provides windowSize,
@@ -131,6 +137,9 @@ abstract class SharedLauncherActivity(
 
 
                         val systemUiController = rememberSystemUiController()
+                        val windowInsetsController = WindowInsetsControllerCompat(
+                            window, window.decorView.rootView
+                        )
 
                         val enterTransitionProgress = remember { mutableStateOf(1f) }
                         var enterTransition by remember {
@@ -162,6 +171,9 @@ abstract class SharedLauncherActivity(
 
                         OverlayHost(
                             modifier = Modifier
+                                .pointerInteropFilter { motionEvent ->
+                                    isTouchInNavBarArea(motionEvent.y, windowSize.height, bottomInset.value)
+                                }
                                 .fillMaxSize()
                                 .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
                             contentAlignment = Alignment.BottomCenter
@@ -289,6 +301,11 @@ abstract class SharedLauncherActivity(
         val windowController = WindowCompat.getInsetsController(window, window.decorView.rootView)
         windowController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    }
+
+    private fun isTouchInNavBarArea(touchY: Float, screenHeight: Float, navBarHeight: Float): Boolean {
+        val navBarThreshold = screenHeight - (navBarHeight)
+        return touchY >= navBarThreshold
     }
 
     enum class LauncherActivityMode {
