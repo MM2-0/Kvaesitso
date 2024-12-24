@@ -43,12 +43,12 @@
         <item quantity="one">millimeter</item>
         <item quantity="other">millimeters</item>
     </plurals>
-    <string name="unit_nanometer_symbol">mm</string>
+    <string name="unit_nanometer_symbol">nm</string>
     <plurals name="unit_nanometer">
         <item quantity="one">nanometer</item>
         <item quantity="other">nanometers</item>
     </plurals>
-    <string name="unit_picometer_symbol">mm</string>
+    <string name="unit_picometer_symbol">pm</string>
     <plurals name="unit_picometer">
         <item quantity="one">picometer</item>
         <item quantity="other">picometers</item>
