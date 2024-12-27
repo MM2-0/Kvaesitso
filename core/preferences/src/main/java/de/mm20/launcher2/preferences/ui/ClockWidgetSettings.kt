@@ -96,7 +96,7 @@ class ClockWidgetSettings internal constructor(
                 ClockWidgetStyleEnum.Digital2 -> ClockWidgetStyle.Digital2
                 ClockWidgetStyleEnum.Orbit -> ClockWidgetStyle.Orbit
                 ClockWidgetStyleEnum.Analog -> ClockWidgetStyle.Analog
-                ClockWidgetStyleEnum.Binary -> ClockWidgetStyle.Binary
+                ClockWidgetStyleEnum.Binary -> it.clockWidgetBinary
                 ClockWidgetStyleEnum.Segment -> ClockWidgetStyle.Segment
                 ClockWidgetStyleEnum.Empty -> ClockWidgetStyle.Empty
                 ClockWidgetStyleEnum.Custom -> it.clockWidgetCustom
@@ -106,6 +106,9 @@ class ClockWidgetSettings internal constructor(
     val digital1: Flow<ClockWidgetStyle.Digital1>
         get() = launcherDataStore.data.map { it.clockWidgetDigital1 }
 
+    val binary: Flow<ClockWidgetStyle.Binary>
+        get() = launcherDataStore.data.map { it.clockWidgetBinary }
+
     val custom: Flow<ClockWidgetStyle.Custom>
         get() = launcherDataStore.data.map { it.clockWidgetCustom }
 
@@ -114,6 +117,7 @@ class ClockWidgetSettings internal constructor(
             it.copy(
                 clockWidgetStyle = clockStyle.enumValue,
                 clockWidgetDigital1 = if (clockStyle is ClockWidgetStyle.Digital1) clockStyle else it.clockWidgetDigital1,
+                clockWidgetBinary = if (clockStyle is ClockWidgetStyle.Binary) clockStyle else it.clockWidgetBinary,
                 clockWidgetCustom = if (clockStyle is ClockWidgetStyle.Custom) clockStyle else it.clockWidgetCustom,
             )
         }
