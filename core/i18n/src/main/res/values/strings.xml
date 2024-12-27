@@ -956,7 +956,7 @@
     <string name="poi_category_fire_station">Fire station</string>
     <string name="poi_category_courthouse">Courthouse</string>
     <string name="poi_category_townhall">Townhall</string>
-    <string name="preference_search_locations_radius_large_radius_warning">Large search radii can significantly slow down the search.</string>
+    <string name="preference_search_locations_radius_large_radius_warning">Large search radius can significantly slow down the search.</string>
     <string name="customize_item_label">Label</string>
     <string name="customize_item_tags">Tags</string>
     <string name="customize_item_visibility">Show in</string>
