@@ -24,6 +24,8 @@ fun SearchResultGrid(
     items: List<SavableSearchable>,
     modifier: Modifier = Modifier,
     showLabels: Boolean = LocalGridSettings.current.showLabels,
+    showList: Boolean = LocalGridSettings.current.showList,
+    showListIcons: Boolean = LocalGridSettings.current.showListIcons,
     columns: Int = LocalGridSettings.current.columnCount,
     reverse: Boolean = false,
     highlightedItem: SavableSearchable? = null,
@@ -53,7 +55,9 @@ fun SearchResultGrid(
                                         .weight(1f)
                                         .padding(4.dp),
                                     item = item,
+                                    showList = showList,
                                     showLabels = showLabels,
+                                    showListIcons = showListIcons,
                                     highlight = item.key == highlightedItem?.key
                                 )
                             }

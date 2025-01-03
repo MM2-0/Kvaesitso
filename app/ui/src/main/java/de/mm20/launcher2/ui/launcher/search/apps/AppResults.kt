@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,7 +21,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
@@ -50,8 +48,8 @@ fun LazyListScope.AppResults(
     highlightedItem: Application? = null,
     columns: Int,
     reverse: Boolean,
+    showList: Boolean,
 ) {
-
     GridResults(
         key = "apps",
         items = apps,
@@ -195,10 +193,12 @@ fun LazyListScope.AppResults(
             GridItem(
                 item = it,
                 showLabels = LocalGridSettings.current.showLabels,
+                showListIcons = LocalGridSettings.current.showListIcons,
+                showList = showList,
                 highlight = it.key == highlightedItem?.key
             )
         },
         reverse = reverse,
-        columns = columns,
+        columns = if (showList) 1 else columns,
     )
 }
