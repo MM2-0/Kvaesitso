@@ -21,14 +21,14 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setCompact(compact)
     }
 
-    val availableClockStyles = combine(settings.digital1, settings.custom) {digital1, custom ->
+    val availableClockStyles = combine(settings.digital1, settings.binary, settings.custom) {digital1, binary, custom ->
         listOf(
             digital1,
             ClockWidgetStyle.Digital2,
             ClockWidgetStyle.Analog,
             ClockWidgetStyle.Orbit,
             ClockWidgetStyle.Segment,
-            ClockWidgetStyle.Binary,
+            binary,
             custom,
             ClockWidgetStyle.Empty,
         )

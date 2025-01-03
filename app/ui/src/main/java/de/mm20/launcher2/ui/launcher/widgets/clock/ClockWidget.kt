@@ -288,6 +288,7 @@ fun Clock(
 
         is ClockWidgetStyle.Binary -> BinaryClock(
             time,
+            style,
             compact,
             showSeconds,
             useThemeColor,
