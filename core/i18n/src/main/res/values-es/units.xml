@@ -324,4 +324,5 @@
         <item quantity="many">decímetros</item>
         <item quantity="other">decímetros</item>
     </plurals>
+    <string name="dimension_velocity">Velocidad</string>
 </resources>

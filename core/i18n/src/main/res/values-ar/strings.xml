@@ -296,4 +296,9 @@
     <string name="missing_permission_appshortcuts_search_settings">يجب تعيين %1$s كتطبيق رئيسي افتراضي للبحث في اختصارات التطبيقات</string>
     <string name="preference_debug_reinstall_iconpacks_summary">مسح وإعادة بناء ذاكرة التخزين المؤقت لحزمة الأيقونات</string>
     <string name="preference_category_icons">أيقونات</string>
+    <string name="preference_icon_shape_circle">دائرة</string>
+    <string name="preference_cards_shape">شكل</string>
+    <string name="preference_icon_shape_square">مربع</string>
+    <string name="preference_icon_shape_rounded_square">مربع مدور</string>
+    <string name="preference_icon_shape_squircle"></string>
 </resources>
