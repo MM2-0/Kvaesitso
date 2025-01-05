@@ -621,4 +621,25 @@
     <string name="preference_plugin_enable">Gehigarria baimendu</string>
     <string name="length_unit">Luzera unitatea</string>
     <string name="metric">Metrikoa</string>
+    <string name="preference_calendar_hide_completed">Amaitutako zereginak ezkutatu</string>
+    <string name="action_import">Inportatu</string>
+    <string name="missing_permission_location_search">Kokapen-baimena eman inguruko lekuak bilatzeko.</string>
+    <string name="preference_mdy_color_source">Kolore dinamikoen jatorria</string>
+    <string name="preference_mdy_color_source_system">Sistema</string>
+    <string name="preference_mdy_color_source_wallpaper">Horma-papera</string>
+    <string name="preference_category_advanced">Aurreratua</string>
+    <string name="preference_debug_dump_heap">Memoriaren argazkia</string>
+    <string name="preference_clockwidget_dynamic_zone">Eremu dinamikoa</string>
+    <string name="preference_search_gdrive_summary">%1$s-(r)en fitxategiak Google Drive-n bilatu</string>
+    <string name="preference_search_cloud_summary">%1$s-(r)en fitxategiak bilatu</string>
+    <string name="file_type_launchertheme">%1$s-(r)en gaia</string>
+    <string name="preference_compact_tags">Etiketa trinkoak</string>
+    <string name="preference_compact_tags_summary">Ezkutatu etiketen testua edo ikonoak etiketen lekua murrizteko</string>
+    <string name="icon_picker_search_icon">Ikono paketeetan bilatu</string>
+    <string name="search_action_websearch">Web bilaketa</string>
+    <string name="import_theme_apply">Gaia ezarri</string>
+    <string name="menu_website">Web gunea ireki</string>
+    <string name="preference_location_managed">Gehigarriak kudeatua</string>
+    <string name="preference_location_managed_summary">Hornitzaile honen kokapena gehigarriak kudeatzen du</string>
+    <string name="preference_search_supportedunits">Onartutako unitateak</string>
 </resources>
