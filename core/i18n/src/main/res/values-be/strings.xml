@@ -660,4 +660,22 @@
     <string name="clock_style_digital1">Тоўсты</string>
     <string name="clock_style_digital2">Звычайны</string>
     <string name="clock_style_orbit">Арбітальны</string>
+    <string name="preference_customize_filter_bar_summary">Дапасуйце элементы ў панэлі фільтраў</string>
+    <string name="clock_style_custom">Уласны віджэт</string>
+    <string name="clock_variant_outlined">Лініі</string>
+    <string name="menu_show_filters">Паказаць фільтры</string>
+    <string name="menu_hide_filters">Схаваць фільтры</string>
+    <string name="clock_style_segment">7 сегментаў</string>
+    <string name="clock_style_empty">Без гадзінніка</string>
+    <string name="search_filter_online">Сеткавыя рэзультаты</string>
+    <string name="search_filter_apps">Праграмы</string>
+    <string name="plugin_type_locationsearch">Пошук па месцам</string>
+    <string name="preference_filter_bar_summary">Адлюстроўваць хуткія фільтры над клавіятурай</string>
+    <string name="preference_customize_filter_bar">Дапасаваць панэль фільтраў</string>
+    <string name="plugin_type_calendar">Каляндар</string>
+    <string name="preference_default_filter">Прадвызначаны фільтр</string>
+    <string name="preference_default_filter_summary">Дапасаваць прадвызначаны фільтр для пошуку</string>
+    <string name="preference_filter_bar">Адлюстроўваць панэль фільтраў</string>
+    <string name="clock_style_binary">Дваічныя</string>
+    <string name="clock_style_analog">Рукі</string>
 </resources>
