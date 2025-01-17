@@ -35,14 +35,30 @@ syntax is supported:
 
 ### Export notes
 
-Notes can be exported as markdown files. To do so, tap the <span class="material-symbols-rounded">more_vert</span> icon in the bottom right corner and select "Save".
+Notes can be exported as markdown files. To do so, tap the <span class="material-symbols-rounded">
+more_vert</span> icon in the bottom right corner and select "Save".
 
 ### Add notes
 
-A new instance of the notes widget can be added by tapping the <span class="material-symbols-rounded">more_vert</span> in an existing notes widget and selecting "New note".
+A new instance of the notes widget can be added by tapping
+the <span class="material-symbols-rounded">more_vert</span> in an existing notes widget and
+selecting "New note".
 
 ### Dismiss notes
 
-Notes can be dismissed by tapping the <span class="material-symbols-rounded">more_vert</span> icon in the bottom right corner and
-selecting "Dismiss". If you dismiss a note, the widget will be removed, unless it is the last instance
+Notes can be dismissed by tapping the <span class="material-symbols-rounded">more_vert</span> icon
+in the bottom right corner and
+selecting "Dismiss". If you dismiss a note, the widget will be removed, unless it is the last
+instance
 of a note widget. In this case the note widget's content will be cleared instead.
+
+## File linking
+
+An instance of a notes widget can be linked to a file. If a file is linked, the content of the file
+is kept in sync with the note widget's content. To link a file, tap on
+the <span class="material-symbols-rounded">link</span> icon and select a file. If the notes widget
+is not empty and you select a file that is not empty, you will be asked which content you want to
+keep.
+
+To unlink a file, tap
+on **<span class="material-symbols-rounded">link_off</span> Unlink**. 
