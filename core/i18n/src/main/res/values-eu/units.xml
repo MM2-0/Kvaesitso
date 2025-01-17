@@ -260,4 +260,21 @@
         <item quantity="one">kelvin</item>
         <item quantity="other">kelvin</item>
     </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">dezimetro</item>
+        <item quantity="other">dezimetro</item>
+    </plurals>
+    <string name="dimension_length">Luzera</string>
+    <string name="dimension_velocity">Abiadura</string>
+    <string name="dimension_volume">Bolumena</string>
+    <string name="dimension_area">Azalera</string>
+    <string name="dimension_currency">Moneta</string>
+    <string name="dimension_pressure">Presioa</string>
+    <string name="dimension_energy">Energia</string>
+    <string name="dimension_frequency">Maiztasuna</string>
+    <string name="dimension_temperature">Tenperatura</string>
+    <string name="dimension_time">Denbora</string>
+    <string name="dimension_mass">Masa</string>
+    <string name="dimension_bitrate">Bit-tasa</string>
 </resources>

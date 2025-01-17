@@ -801,4 +801,7 @@
     <string name="music_widget_open_player">เปิดเครื่องเล่น</string>
     <string name="calendar_widget_next_day">วันถัดไป</string>
     <string name="calendar_widget_create_event">สร้างกิจกรรมใหม่</string>
+    <string name="preference_compact_tags">แท็กขนาดกะทัดรัด</string>
+    <string name="preference_compact_tags_summary">ซ่อนชื่อหรือไอคอนของแท็กเพื่อทำให้แท็กใช้พื้นที่น้อยลง</string>
+    <string name="reset_icon">รีเซ็ตไอคอน</string>
 </resources>
