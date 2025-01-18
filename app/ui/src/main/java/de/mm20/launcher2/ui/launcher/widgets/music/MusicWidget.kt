@@ -49,23 +49,17 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -88,13 +82,13 @@ import de.mm20.launcher2.music.PlaybackState
 import de.mm20.launcher2.music.SupportedActions
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
 import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.widgets.MusicWidget
-import kotlinx.coroutines.launch
 import kotlin.math.min
 
 @Composable
@@ -334,44 +328,58 @@ fun MusicWidget(widget: MusicWidget) {
 
             ) {
             if (supportedActions.skipToPrevious) {
-                IconButton(
-                    onClick = {
-                        viewModel.skipPrevious()
-                    }) {
-                    Icon(
-                        imageVector = Icons.Rounded.SkipPrevious,
-                        stringResource(R.string.music_widget_previous_track)
-                    )
+                Tooltip(
+                    tooltipText = stringResource(R.string.music_widget_previous_track)
+                ) {
+                    IconButton(
+                        onClick = {
+                            viewModel.skipPrevious()
+                        }) {
+                        Icon(
+                            imageVector = Icons.Rounded.SkipPrevious,
+                            stringResource(R.string.music_widget_previous_track)
+                        )
+                    }
                 }
             }
             val playPauseIcon =
                 AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
-            FilledTonalIconButton(
-                colors = IconButtonDefaults.filledTonalIconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
-                ),
-                onClick = { viewModel.togglePause() },
-            ) {
-                Icon(
-                    painter = rememberAnimatedVectorPainter(
-                        playPauseIcon,
-                        atEnd = playbackState == PlaybackState.Playing
-                    ),
-                    contentDescription = if (playbackState == PlaybackState.Playing) {
-                        stringResource(R.string.music_widget_pause)
-                    } else {
-                        stringResource(R.string.music_widget_play)
-                    }
+            Tooltip(
+                tooltipText = stringResource(
+                    if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
+                    else R.string.music_widget_play
                 )
+            ) {
+                FilledTonalIconButton(
+                    colors = IconButtonDefaults.filledTonalIconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
+                    ),
+                    onClick = { viewModel.togglePause() },
+                ) {
+                    Icon(
+                        painter = rememberAnimatedVectorPainter(
+                            playPauseIcon,
+                            atEnd = playbackState == PlaybackState.Playing
+                        ),
+                        contentDescription = stringResource(
+                            if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
+                            else R.string.music_widget_play
+                        )
+                    )
+                }
             }
             if (supportedActions.skipToNext) {
-                IconButton(onClick = {
-                    viewModel.skipNext()
-                }) {
-                    Icon(
-                        imageVector = Icons.Rounded.SkipNext,
-                        stringResource(R.string.music_widget_next_track)
-                    )
+                Tooltip(
+                    tooltipText = stringResource(R.string.music_widget_next_track)
+                ) {
+                    IconButton(onClick = {
+                        viewModel.skipNext()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Rounded.SkipNext,
+                            stringResource(R.string.music_widget_next_track)
+                        )
+                    }
                 }
             }
             CustomActions(
@@ -394,29 +402,12 @@ fun CustomActions(
     val usedSlots = 1 + (if (actions.skipToPrevious) 1 else 0) + (if (actions.skipToNext) 1 else 0)
     val slots = 5 - usedSlots
 
-    val scope = rememberCoroutineScope()
-
     for (i in 0 until min(actions.customActions.size, slots - 1)) {
         val action = actions.customActions[i]
-        val tooltipState = rememberTooltipState()
-        TooltipBox(
-            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
-            state = tooltipState,
-            tooltip = {
-                PlainTooltip {
-                    Text(action.name.toString())
-                }
-            },
+        Tooltip(
+            tooltipText = action.name.toString()
         ) {
             IconButton(
-                modifier = Modifier.combinedClickable(
-                    onClick = {},
-                    onLongClick = {
-                        scope.launch {
-                            tooltipState.show()
-                        }
-                    }
-                ),
                 onClick = {
                     onActionSelected(action)
                 }
@@ -428,8 +419,12 @@ fun CustomActions(
     if (slots < actions.customActions.size) {
         var showOverflowMenu by remember { mutableStateOf(false) }
         Box {
-            IconButton(onClick = { showOverflowMenu = true }) {
-                Icon(imageVector = Icons.Rounded.MoreVert, contentDescription = null)
+            Tooltip(
+                tooltipText = stringResource(R.string.action_more_actions)
+            ) {
+                IconButton(onClick = { showOverflowMenu = true }) {
+                    Icon(imageVector = Icons.Rounded.MoreVert, contentDescription = null)
+                }
             }
             DropdownMenu(
                 expanded = showOverflowMenu,
@@ -456,26 +451,11 @@ fun CustomActions(
             }
         }
     } else if (slots == actions.customActions.size) {
-        val tooltipState = rememberTooltipState()
         val action = actions.customActions.last()
-        TooltipBox(
-            state = tooltipState,
-            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
-            tooltip = {
-                PlainTooltip {
-                    Text(action.name.toString())
-                }
-            }
+        Tooltip (
+            tooltipText = action.name.toString()
         ) {
             IconButton(
-                modifier = Modifier.combinedClickable(
-                    onClick = {},
-                    onLongClick = {
-                        scope.launch {
-                            tooltipState.show()
-                        }
-                    }
-                ),
                 onClick = {
                     onActionSelected(action)
                 }

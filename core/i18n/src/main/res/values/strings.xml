@@ -1005,4 +1005,7 @@
         <item quantity="other">%1$s lists selected</item>
     </plurals>
     <string name="reset_icon">Reset icon</string>
+    <string name="weather_forecast_humidity">Humidity</string>
+    <string name="weather_forecast_wind">Wind</string>
+    <string name="weather_forecast_precipitation">Precipitation</string>
 </resources>
