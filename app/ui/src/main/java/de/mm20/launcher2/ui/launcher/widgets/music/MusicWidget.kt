@@ -345,11 +345,10 @@ fun MusicWidget(widget: MusicWidget) {
             val playPauseIcon =
                 AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
             Tooltip(
-                tooltipText = if (playbackState == PlaybackState.Playing) {
-                    stringResource(R.string.music_widget_pause)
-                } else {
-                    stringResource(R.string.music_widget_play)
-                }
+                tooltipText = stringResource(
+                    if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
+                    else R.string.music_widget_play
+                )
             ) {
                 FilledTonalIconButton(
                     colors = IconButtonDefaults.filledTonalIconButtonColors(
@@ -362,11 +361,10 @@ fun MusicWidget(widget: MusicWidget) {
                             playPauseIcon,
                             atEnd = playbackState == PlaybackState.Playing
                         ),
-                        contentDescription = if (playbackState == PlaybackState.Playing) {
-                            stringResource(R.string.music_widget_pause)
-                        } else {
-                            stringResource(R.string.music_widget_play)
-                        }
+                        contentDescription = stringResource(
+                            if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
+                            else R.string.music_widget_play
+                        )
                     )
                 }
             }
