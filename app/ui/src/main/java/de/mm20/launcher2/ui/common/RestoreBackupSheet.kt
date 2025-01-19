@@ -2,12 +2,22 @@ package de.mm20.launcher2.ui.common
 
 import android.net.Uri
 import android.text.format.DateUtils
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
+import androidx.compose.material.icons.rounded.CheckCircleOutline
+import androidx.compose.material.icons.rounded.ErrorOutline
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,29 +47,12 @@ fun RestoreBackupSheet(
     val state by viewModel.state
     val compatibility by viewModel.compatibility
 
-    BottomSheetDialog(
-        onDismissRequest = onDismissRequest,
-        confirmButton = {
-            if (state == RestoreBackupState.Ready && compatibility != BackupCompatibility.Incompatible) {
-                Button(
-                    onClick = { viewModel.restore() }) {
-                    Text(stringResource(R.string.preference_restore))
-                }
-            } else if (state == RestoreBackupState.InvalidFile || state == RestoreBackupState.Restored || state == RestoreBackupState.Ready) {
-                OutlinedButton(
-                    onClick = onDismissRequest
-                ) {
-                    Text(stringResource(R.string.close))
-                }
-            }
-        },
-    ) {
-        Box(
+    BottomSheetDialog(onDismissRequest) {
+        Column (
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
-                .verticalScroll(rememberScrollState())
-                .padding(it)
+                .padding(it),
+            horizontalAlignment = Alignment.End,
         ) {
             when (state) {
                 RestoreBackupState.Parsing -> {
@@ -151,6 +144,14 @@ fun RestoreBackupSheet(
                             id = R.string.restore_complete
                         )
                     )
+                }
+            }
+
+            if (state == RestoreBackupState.Ready && compatibility != BackupCompatibility.Incompatible) {
+                Button(
+                    onClick = { viewModel.restore() }
+                ) {
+                    Text(stringResource(R.string.preference_restore))
                 }
             }
         }
