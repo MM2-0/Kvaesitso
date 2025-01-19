@@ -804,4 +804,7 @@
     <string name="preference_compact_tags">แท็กขนาดกะทัดรัด</string>
     <string name="preference_compact_tags_summary">ซ่อนชื่อหรือไอคอนของแท็กเพื่อทำให้แท็กใช้พื้นที่น้อยลง</string>
     <string name="reset_icon">รีเซ็ตไอคอน</string>
+    <string name="weather_forecast_precipitation">หยาดน้ำฟ้า</string>
+    <string name="weather_forecast_humidity">ความชื้น</string>
+    <string name="weather_forecast_wind">ลม</string>
 </resources>
