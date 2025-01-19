@@ -74,14 +74,14 @@ class IconService(
 
     private val cache = LruCache<String, LauncherIcon>(200)
 
-    private var iconProviders: MutableStateFlow<List<IconProvider>> = MutableStateFlow(listOf())
+    private val iconProviders: MutableStateFlow<List<IconProvider>> = MutableStateFlow(listOf())
 
     /**
      * Signal that installed icon packs have been updated. Force a reload of all icons.
      */
     private val iconPacksUpdated = MutableSharedFlow<Unit>(1)
 
-    private var transformations: MutableStateFlow<List<LauncherIconTransformation>> =
+    private val transformations: MutableStateFlow<List<LauncherIconTransformation>> =
         MutableStateFlow(
             listOf()
         )

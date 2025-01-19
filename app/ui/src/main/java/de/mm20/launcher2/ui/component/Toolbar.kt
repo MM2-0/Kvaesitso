@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.component
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -16,16 +15,11 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -35,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.locals.LocalWindowPosition
-import kotlinx.coroutines.launch
 import kotlin.math.min
 
 @Composable
@@ -57,7 +50,6 @@ fun Toolbar(
 
 @Composable
 fun Icons(actions: List<ToolbarAction>, slots: Int) {
-    val scope = rememberCoroutineScope()
     for (i in 0 until min(slots, actions.size)) {
         if (i == slots - 1 && slots != actions.size) {
             var showMenu by remember { mutableStateOf(false) }
@@ -82,28 +74,11 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
             }
         } else {
             val action = actions[i]
-            val tooltipState = rememberTooltipState()
-            TooltipBox(
-                positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
-                tooltip = {
-                    PlainTooltip {
-                        Text(action.label)
-                    }
-                },
-                state = tooltipState
-            ) {
+            Tooltip(action.label) {
                 when (action) {
                     is DefaultToolbarAction -> {
                         IconButton(
                             onClick = action.action,
-                            modifier = Modifier.combinedClickable(
-                                onClick = {},
-                                onLongClick = {
-                                    scope.launch {
-                                        tooltipState.show()
-                                    }
-                                }
-                            )
                         ) {
                             Icon(action.icon, contentDescription = action.label)
                         }
@@ -116,14 +91,6 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                                 onClick = {
                                     showMenu = true
                                 },
-                                modifier = Modifier.combinedClickable(
-                                    onClick = {},
-                                    onLongClick = {
-                                        scope.launch {
-                                            tooltipState.show()
-                                        }
-                                    }
-                                )
                             ) {
                                 Icon(action.icon, contentDescription = action.label)
                             }

@@ -27,11 +27,11 @@ class SearchablePickerVM : ViewModel(), KoinComponent {
 
     var searchQuery by mutableStateOf("")
 
+    var items by mutableStateOf(emptyList<SavableSearchable>())
+
     init {
         onSearchQueryChanged("", true)
     }
-
-    var items by mutableStateOf(emptyList<SavableSearchable>())
 
     var searchJob: Job? = null
     fun onSearchQueryChanged(query: String, forceRestart: Boolean = false) {

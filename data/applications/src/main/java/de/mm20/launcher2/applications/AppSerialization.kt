@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
+import android.os.Process
 import android.os.UserManager
 import android.util.Log
 import androidx.core.content.getSystemService
@@ -47,8 +48,8 @@ class LauncherAppDeserializer(val context: Context) : SearchableDeserializer {
             val json = JSONObject(serialized)
             val launcherApps = context.getSystemService<LauncherApps>()!!
             val userManager = context.getSystemService<UserManager>()!!
-            val userSerial = json.optLong("user")
-            val user = userManager.getUserForSerialNumber(userSerial) ?: return null
+            val userSerial = json.optLong("user", -1L)
+            val user = if (userSerial == -1L) Process.myUserHandle() else (userManager.getUserForSerialNumber(userSerial) ?: return null)
 
             val pkg = json.getString("package")
             val activity = json.getString("activity")

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.Intent.ShortcutIconResource
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
+import android.os.Process
 import android.os.UserManager
 import android.util.Log
 import androidx.core.content.getSystemService
@@ -43,10 +44,10 @@ class LauncherShortcutDeserializer(
             val json = JSONObject(serialized)
             val packageName = json.getString("packagename")
             val id = json.getString("id")
-            val userSerial = json.optLong("user")
+            val userSerial = json.optLong("user", -1L)
 
             val userManager = context.getSystemService<UserManager>()!!
-            val user = userManager.getUserForSerialNumber(userSerial) ?: return null
+            val user = if (userSerial == -1L) Process.myUserHandle() else (userManager.getUserForSerialNumber(userSerial) ?: return null)
 
             if (!launcherApps.hasShortcutHostPermission()) {
                 return UnavailableShortcut(context, id, packageName, user, userSerial)

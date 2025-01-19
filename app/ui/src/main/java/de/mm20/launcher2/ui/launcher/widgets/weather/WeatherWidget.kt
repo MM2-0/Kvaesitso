@@ -67,6 +67,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
@@ -231,32 +232,36 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                     style = MaterialTheme.typography.titleMedium
                 )
             }
-            Surface(
-                shape = MaterialTheme.shapes.extraSmall.copy(
-                    topStart = CornerSize(0),
-                    topEnd = CornerSize(0),
-                    bottomEnd = CornerSize(0)
-                ),
-                color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
+            Tooltip(
+                tooltipText = stringResource(R.string.preference_weather_provider)
             ) {
-                Text(
-                    text = "${forecast.provider} (${
-                        formatTime(
-                            LocalContext.current,
-                            forecast.updateTime
-                        )
-                    })",
-                    style = MaterialTheme.typography.bodySmall.copy(fontSize = 8.sp),
-                    modifier = Modifier
-                        .clickable(onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW).apply {
-                                data = Uri.parse(forecast.providerUrl)
-                                    ?: return@clickable
-                            }
-                            context.tryStartActivity(intent)
-                        })
-                        .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 12.dp)
-                )
+                Surface(
+                    shape = MaterialTheme.shapes.extraSmall.copy(
+                        topStart = CornerSize(0),
+                        topEnd = CornerSize(0),
+                        bottomEnd = CornerSize(0)
+                    ),
+                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
+                ) {
+                    Text(
+                        text = "${forecast.provider} (${
+                            formatTime(
+                                LocalContext.current,
+                                forecast.updateTime
+                            )
+                        })",
+                        style = MaterialTheme.typography.bodySmall.copy(fontSize = 8.sp),
+                        modifier = Modifier
+                            .clickable(onClick = {
+                                val intent = Intent(Intent.ACTION_VIEW).apply {
+                                    data = Uri.parse(forecast.providerUrl)
+                                        ?: return@clickable
+                                }
+                                context.tryStartActivity(intent)
+                            })
+                            .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 12.dp)
+                    )
+                }
             }
         }
         Row(
@@ -293,71 +298,84 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         if (forecast.humidity != null) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
+            Tooltip(
+                tooltipText = stringResource(R.string.weather_forecast_humidity)
             ) {
-                Icon(
-                    imageVector = Icons.Rounded.HumidityPercentage,
-                    modifier = Modifier.size(20.dp),
-                    tint = MaterialTheme.colorScheme.secondary,
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.padding(3.dp))
-                Text(
-                    text = "${forecast.humidity!!.roundToInt()} %",
-                    style = MaterialTheme.typography.bodySmall,
-                )
-            }
-        }
-        if (forecast.windDirection != null || forecast.windSpeed != null) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                if (forecast.windDirection != null) {
-                    // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
-                    val angle by animateFloatAsState(forecast.windDirection!!.toFloat() + 180f)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Icon(
-                        imageVector = Icons.Rounded.North,
-                        modifier = Modifier
-                            .rotate(angle)
-                            .size(20.dp),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.secondary,
-                    )
-                } else {
-                    Icon(
-                        imageVector = Icons.Rounded.Air,
-                        contentDescription = null,
+                        imageVector = Icons.Rounded.HumidityPercentage,
                         modifier = Modifier.size(20.dp),
                         tint = MaterialTheme.colorScheme.secondary,
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.padding(3.dp))
+                    Text(
+                        text = "${forecast.humidity!!.roundToInt()} %",
+                        style = MaterialTheme.typography.bodySmall,
                     )
                 }
-                Spacer(modifier = Modifier.padding(3.dp))
-                Text(
-                    text = if (forecast.windSpeed != null) {
-                        formatWindSpeed(imperialUnits, forecast)
+            }
+
+        }
+        if (forecast.windDirection != null || forecast.windSpeed != null) {
+            Tooltip(
+                tooltipText = stringResource(R.string.weather_forecast_wind)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    if (forecast.windDirection != null) {
+                        // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
+                        val angle by animateFloatAsState(forecast.windDirection!!.toFloat() + 180f)
+                        Icon(
+                            imageVector = Icons.Rounded.North,
+                            modifier = Modifier
+                                .rotate(angle)
+                                .size(20.dp),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary,
+                        )
                     } else {
-                        windDirectionAsWord(forecast.windDirection!!)
-                    },
-                    style = MaterialTheme.typography.bodySmall,
-                )
+                        Icon(
+                            imageVector = Icons.Rounded.Air,
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.secondary,
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(3.dp))
+                    Text(
+                        text = if (forecast.windSpeed != null) {
+                            formatWindSpeed(imperialUnits, forecast)
+                        } else {
+                            windDirectionAsWord(forecast.windDirection!!)
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
             }
         }
         if (forecast.precipitation != null) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
+            Tooltip(
+                tooltipText = stringResource(id = R.string.weather_forecast_precipitation)
             ) {
-                Icon(
-                    imageVector = Icons.Rounded.Rain,
-                    modifier = Modifier.size(20.dp),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.secondary,
-                )
-                Spacer(modifier = Modifier.padding(3.dp))
-                Text(
-                    text = formatPrecipitation(imperialUnits, forecast),
-                    style = MaterialTheme.typography.bodySmall,
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Rain,
+                        modifier = Modifier.size(20.dp),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.secondary,
+                    )
+                    Spacer(modifier = Modifier.padding(3.dp))
+                    Text(
+                        text = formatPrecipitation(imperialUnits, forecast),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
             }
         }
     }

@@ -43,22 +43,17 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,6 +69,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.markdown.MarkdownEditor
 import de.mm20.launcher2.ui.component.markdown.MarkdownText
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
@@ -93,8 +89,6 @@ fun NotesWidget(
     val context = LocalContext.current
     val snackbarHostState = LocalSnackbarHostState.current
     val lifecycleOwner = LocalLifecycleOwner.current
-
-    val scope = rememberCoroutineScope()
 
     var showConflictResolveSheet by remember { mutableStateOf(false) }
     var readWriteErrorSheetText by remember { mutableStateOf<String?>(null) }
@@ -181,20 +175,12 @@ fun NotesWidget(
                 Row(
                     modifier = Modifier.padding(8.dp),
                 ) {
-                    val tooltipState = rememberTooltipState()
-                    TooltipBox(
-                        state = tooltipState,
-                        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
-                        tooltip = {
-                            PlainTooltip {
-                                Text(
-                                    stringResource(
-                                        if (widget.config.linkedFile == null) R.string.note_widget_link_file
-                                        else R.string.note_widget_action_unlink_file
-                                    )
-                                )
-                            }
-                        }) {
+                    Tooltip(
+                        tooltipText = stringResource(
+                            if (widget.config.linkedFile == null) R.string.note_widget_link_file
+                            else R.string.note_widget_action_unlink_file
+                        ),
+                    ) {
                         IconButton(
                             onClick = {
                                 if (widget.config.linkedFile == null) {
@@ -205,14 +191,6 @@ fun NotesWidget(
                                     viewModel.unlinkFile(context)
                                 }
                             },
-                            modifier = Modifier.combinedClickable(
-                                onClick = {},
-                                onLongClick = {
-                                    scope.launch {
-                                        tooltipState.show()
-                                    }
-                                }
-                            )
                         ) {
                             Icon(
                                 if (widget.config.linkedFile == null) Icons.Rounded.Link
@@ -225,26 +203,13 @@ fun NotesWidget(
                         }
                     }
                     if (isLastWidget == false) {
-                        TooltipBox(
-                            state = tooltipState,
-                            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
-                            tooltip = {
-                                PlainTooltip {
-                                    Text(stringResource(R.string.notes_widget_action_dismiss))
-                                }
-                            }) {
+                        Tooltip(
+                            tooltipText = stringResource(R.string.notes_widget_action_dismiss)
+                        ) {
                             IconButton(
                                 onClick = {
                                     viewModel.dismissNote()
                                 },
-                                modifier = Modifier.combinedClickable(
-                                    onClick = {},
-                                    onLongClick = {
-                                        scope.launch {
-                                            tooltipState.show()
-                                        }
-                                    }
-                                )
                             ) {
                                 Icon(Icons.Rounded.Delete, null)
                             }
@@ -297,8 +262,12 @@ fun NotesWidget(
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 Box {
-                    IconButton(onClick = { showMenu = true }) {
-                        Icon(Icons.Rounded.MoreVert, stringResource(R.string.action_more_actions))
+                    Tooltip(
+                        tooltipText = stringResource(R.string.action_more_actions)
+                    ) {
+                        IconButton(onClick = { showMenu = true }) {
+                            Icon(Icons.Rounded.MoreVert, stringResource(R.string.action_more_actions))
+                        }
                     }
                     DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                         DropdownMenuItem(
