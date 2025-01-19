@@ -52,11 +52,6 @@ fun CreateBackupSheet(
 
     BottomSheetDialog(
         onDismissRequest = onDismissRequest,
-        title = {
-            Text(
-                stringResource(id = R.string.preference_backup),
-            )
-        },
         confirmButton = {
             if (state == CreateBackupState.Ready) {
                 Button(

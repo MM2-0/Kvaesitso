@@ -26,16 +26,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -75,12 +78,9 @@ import kotlin.math.roundToInt
 @Composable
 fun BottomSheetDialog(
     onDismissRequest: () -> Unit,
-    title: (@Composable () -> Unit)? = null,
     actions: (@Composable RowScope.() -> Unit)? = null,
     confirmButton: @Composable (() -> Unit)? = null,
     dismissButton: @Composable (() -> Unit)? = null,
-    dismissible: () -> Boolean = { true },
-    zIndex: Float = LocalZIndex.current + 1f,
     content: @Composable (paddingValues: PaddingValues) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -90,94 +90,36 @@ fun BottomSheetDialog(
         focusManager.clearFocus(true)
     }
 
-    var isOpenAnimationFinished by remember { mutableStateOf(false) }
-
-    val draggableState = remember {
-        AnchoredDraggableState(
-            initialValue = SwipeState.Dismiss,
-            positionalThreshold = { it * 0.5f },
-            velocityThreshold = { 200f },
-            snapAnimationSpec = spring(),
-            decayAnimationSpec = exponentialDecay(),
-            confirmValueChange = {
-                it != SwipeState.Dismiss || dismissible()
-            }
-        )
-    }
-
-    BackHandler {
-        if (dismissible()) {
-            scope.launch {
-                draggableState.animateTo(SwipeState.Dismiss)
-                onDismissRequest()
+    ModalBottomSheet(
+        onDismissRequest,
+        modifier = Modifier.padding()
+    ) {
+        content(PaddingValues(horizontal = 24.dp, vertical = 8.dp))
+        if (confirmButton != null || dismissButton != null) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(PaddingValues(horizontal = 24.dp, vertical = 8.dp)),
+                horizontalArrangement = Arrangement.End
+            ) {
+                if (dismissButton != null) {
+                    dismissButton()
+                }
+                if (confirmButton != null && dismissButton != null) {
+                    Spacer(modifier = Modifier.width(16.dp))
+                }
+                if (confirmButton != null) {
+                    confirmButton()
+                }
             }
         }
     }
-
-    LaunchedEffect(draggableState.settledValue) {
-        if (isOpenAnimationFinished && draggableState.settledValue == SwipeState.Dismiss) {
-            onDismissRequest()
-        } else {
-            isOpenAnimationFinished = true
-        }
-    }
-
-
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                val delta = available.toFloat()
-                return if (delta < 0 && source == NestedScrollSource.Drag) {
-                    draggableState.dispatchRawDelta(delta).toOffset()
-                } else {
-                    Offset.Zero
-                }
-            }
-
-            override fun onPostScroll(
-                consumed: Offset,
-                available: Offset,
-                source: NestedScrollSource
-            ): Offset {
-                return if (source == NestedScrollSource.Drag) {
-                    draggableState.dispatchRawDelta(available.toFloat()).toOffset()
-                } else {
-                    Offset.Zero
-                }
-            }
-
-            override suspend fun onPreFling(available: Velocity): Velocity {
-                val toFling = Offset(available.x, available.y).toFloat()
-                return if (toFling < 0 && draggableState.offset > draggableState.anchors.minPosition()) {
-                    draggableState.settle(velocity = toFling)
-                    // since we go to the anchor with tween settling, consume all for the best UX
-                    available
-                } else {
-                    Velocity.Zero
-                }
-            }
-
-            override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
-                draggableState.settle(velocity = Offset(available.x, available.y).toFloat())
-                return available
-            }
-
-            private fun Float.toOffset(): Offset = Offset(0f, this)
-
-            private fun Offset.toFloat(): Float = this.y
-        }
-    }
-
-    CompositionLocalProvider(
+    /*CompositionLocalProvider(
         LocalAbsoluteTonalElevation provides 0.dp,
     ) {
         Overlay(zIndex = zIndex) {
             BoxWithConstraints(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .systemBarsPadding()
-                    .imePadding(),
+                modifier = Modifier.fillMaxSize(),
                 propagateMinConstraints = true,
                 contentAlignment = Alignment.BottomCenter
             ) {
@@ -203,10 +145,7 @@ fun BottomSheetDialog(
                 )
 
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .clipToBounds(),
+                    modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.TopCenter,
                 ) {
                     var sheetHeight by remember {
@@ -275,83 +214,52 @@ fun BottomSheetDialog(
                         tonalElevation = 1.dp,
                         color = MaterialTheme.colorScheme.surfaceContainerLow,
                     ) {
-                        Column {
-                            if (title != null || actions != null) {
-                                CenterAlignedTopAppBar(
-                                    title = title ?: { BottomSheetDefaults.DragHandle() },
-                                    actions = actions ?: {},
-                                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                                        containerColor = Color.Transparent,
-                                    ),
-                                )
-                            } else {
-                                Box(
-                                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                                ) {
-                                    BottomSheetDefaults.DragHandle()
-                                }
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .then(
-                                        if (confirmButton != null || dismissButton != null) Modifier.padding(
-                                            bottom = 64.dp
-                                        ) else Modifier
-                                    )
-                                    .wrapContentHeight(),
-                                propagateMinConstraints = true,
-                                contentAlignment = Alignment.Center
-                            ) {
-                                content(PaddingValues(horizontal = 24.dp, vertical = 8.dp))
-                            }
-
-                        }
-                    }
-
-                    if (confirmButton != null || dismissButton != null) {
-                        val elevation = 1.dp
-                        val heightPx = -64.dp.toPixels()
-                        Surface(
+                        Box(
                             modifier = Modifier
-                                .height(64.dp)
-                                .offset {
-                                    IntOffset(
-                                        0,
-                                        maxHeightPx.toInt() +
-                                                (draggableState.offset
-                                                    .takeIf { !it.isNaN() }
-                                                    ?.roundToInt()
-                                                    ?: 0).coerceAtLeast(heightPx.toInt())
-                                    )
-                                }
-                                .fillMaxWidth(),
-                            tonalElevation = elevation,
+                                .fillMaxWidth()
+                                .systemBarsPadding()
                         ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(12.dp),
-                                horizontalArrangement = Arrangement.End
-                            ) {
-                                if (dismissButton != null) {
-                                    dismissButton()
+                            Column {
+                                if (title != null || actions != null) {
+                                    CenterAlignedTopAppBar(
+                                        title = title ?: { BottomSheetDefaults.DragHandle() },
+                                        actions = actions ?: {},
+                                        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                                            containerColor = Color.Transparent,
+                                        ),
+                                    )
+                                } else {
+                                    Box(
+                                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                                    ) {
+                                        BottomSheetDefaults.DragHandle()
+                                    }
                                 }
-                                if (confirmButton != null && dismissButton != null) {
-                                    Spacer(modifier = Modifier.width(16.dp))
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .then(
+                                            if (confirmButton != null || dismissButton != null) Modifier.padding(
+                                                bottom = 64.dp
+                                            ) else Modifier
+                                        )
+                                        .wrapContentHeight(),
+                                    propagateMinConstraints = true,
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    content(PaddingValues(horizontal = 24.dp, vertical = 8.dp))
                                 }
-                                if (confirmButton != null) {
-                                    confirmButton()
-                                }
+
+
+
                             }
-
                         }
-
                     }
+
                 }
             }
         }
-    }
+    }*/
 }
 
 private enum class SwipeState {

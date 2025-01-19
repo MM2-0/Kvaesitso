@@ -39,13 +39,7 @@ fun RestoreBackupSheet(
 
     BottomSheetDialog(
         onDismissRequest = onDismissRequest,
-        title = {
-            Text(
-                stringResource(id = R.string.preference_restore),
-            )
-        },
         confirmButton = {
-
             if (state == RestoreBackupState.Ready && compatibility != BackupCompatibility.Incompatible) {
                 Button(
                     onClick = { viewModel.restore() }) {

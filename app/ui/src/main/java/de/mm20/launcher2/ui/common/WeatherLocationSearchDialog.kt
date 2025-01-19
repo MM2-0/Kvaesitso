@@ -33,12 +33,7 @@ fun WeatherLocationSearchDialog(
     val locations by viewModel.locationResults
 
     BottomSheetDialog(
-        onDismissRequest = onDismissRequest,
-        title = {
-            Text(
-                text = stringResource(R.string.preference_location),
-            )
-        },
+        onDismissRequest = onDismissRequest
     ) {
         var query by remember { mutableStateOf("") }
         Column(

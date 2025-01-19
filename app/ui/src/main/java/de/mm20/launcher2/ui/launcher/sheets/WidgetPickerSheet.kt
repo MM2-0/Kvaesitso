@@ -277,10 +277,8 @@ fun WidgetPickerSheet(
     val query by viewModel.searchQuery.collectAsState("")
 
     BottomSheetDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(title)
-        }) {
+        onDismissRequest = onDismiss
+    ) {
         val builtIn by viewModel.builtInWidgets.collectAsState(emptyList())
         LazyColumn(
             modifier = Modifier

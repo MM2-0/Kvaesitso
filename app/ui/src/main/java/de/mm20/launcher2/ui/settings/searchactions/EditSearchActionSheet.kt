@@ -114,9 +114,6 @@ fun EditSearchActionSheet(
             viewModel.onDismiss()
             onDismiss()
         },
-        dismissible = {
-            page != EditSearchActionPage.PickIcon
-        },
         confirmButton = when (page) {
             EditSearchActionPage.CustomizeAppSearch,
             EditSearchActionPage.CustomizeWebSearch,
@@ -190,17 +187,6 @@ fun EditSearchActionSheet(
                     }
                 }
             }
-        },
-        title = {
-            Text(
-                stringResource(
-                    if (createNew) {
-                        R.string.create_search_action_title
-                    } else {
-                        R.string.edit_search_action_title
-                    }
-                )
-            )
         }) {
         when (page) {
             EditSearchActionPage.SelectType -> SelectTypePage(viewModel, it)

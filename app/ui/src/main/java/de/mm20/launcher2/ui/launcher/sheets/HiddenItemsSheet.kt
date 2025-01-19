@@ -32,14 +32,6 @@ fun HiddenItemsSheet(
 
     BottomSheetDialog(
         onDismissRequest = onDismiss,
-        title = {
-            Text(
-                stringResource(R.string.preference_hidden_items),
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(end = 16.dp),
-                maxLines = 1
-            )
-        },
         actions = {
             IconButton(onClick = { viewModel.showHiddenItems(context) }) {
                 Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)

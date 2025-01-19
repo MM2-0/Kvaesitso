@@ -47,7 +47,6 @@ fun FailedGestureSheet(
     })
 
     BottomSheetDialog(
-        title = { Text(actionName) },
         onDismissRequest = onDismiss,
     ) {
         Column(
