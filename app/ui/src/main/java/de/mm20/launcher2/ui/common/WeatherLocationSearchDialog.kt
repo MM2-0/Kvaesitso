@@ -2,7 +2,7 @@ package de.mm20.launcher2.ui.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,8 +11,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,33 +41,39 @@ fun WeatherLocationSearchDialog(
     val isSearching by viewModel.isSearchingLocation
     val locations by viewModel.locationResults
 
-    BottomSheetDialog(
-        onDismissRequest = onDismissRequest
-    ) {
+    BottomSheetDialog(onDismissRequest) {
         var query by remember { mutableStateOf("") }
         Column(
-            modifier = Modifier.fillMaxSize().padding(it)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
         ) {
-            Row(
-                Modifier.padding(bottom = 16.dp)
-            ) {
-                OutlinedTextField(
-                    singleLine = true,
-                    value = query,
-                    textStyle = MaterialTheme.typography.bodyLarge,
-                    onValueChange = {
-                        query = it
-                        scope.launch {
-                            viewModel.searchLocation(it)
-                        }
-                    },
-                    leadingIcon = {
-                        Icon(imageVector = Icons.Rounded.Search, contentDescription = null)
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                )
-            }
+            SearchBar(
+                modifier = Modifier.padding(bottom = 8.dp),
+                windowInsets = WindowInsets(0.dp),
+                expanded = false,
+                onExpandedChange = {},
+                inputField = {
+                    SearchBarDefaults.InputField(
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Rounded.Search,
+                                contentDescription = null
+                            )
+                        },
+                        onSearch = {},
+                        expanded = false,
+                        onExpandedChange = {},
+                        query = query,
+                        onQueryChange = {
+                            query = it
+                            scope.launch {
+                                viewModel.searchLocation(it)
+                            }
+                        },
+                    )
+                }
+            ) {}
             if (isSearching) {
                 CircularProgressIndicator(
                     modifier = Modifier
