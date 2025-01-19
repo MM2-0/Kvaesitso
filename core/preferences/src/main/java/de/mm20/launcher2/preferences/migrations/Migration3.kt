@@ -15,7 +15,7 @@ class Migration3: DataMigration<LauncherSettingsData> {
         return currentData.copy(
             schemaVersion = 3,
             locationSearchProviders = buildSet {
-                if (currentData.locationSearchProviders.isNotEmpty()) {
+                if (currentData.locationSearchEnabled) {
                     add("openstreetmaps")
                 }
             }
