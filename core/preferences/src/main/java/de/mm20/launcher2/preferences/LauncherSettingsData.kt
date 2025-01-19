@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 2,
+    val schemaVersion: Int = 3,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     val uiTheme: ThemeDescriptor = ThemeDescriptor.Default,
