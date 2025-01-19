@@ -45,7 +45,6 @@ class CustomizeSearchableSheetVM(
 
     fun pickIcon(icon: CustomIcon?) {
         iconService.setCustomIcon(searchable, icon)
-        closeIconPicker()
     }
 
     fun setCustomLabel(label: String) {
