@@ -34,13 +34,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -69,6 +72,7 @@ import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupPositionProvider
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.gestures.LauncherGestureHandler
 import de.mm20.launcher2.ui.overlays.LocalZIndex
 import de.mm20.launcher2.ui.overlays.Overlay
 import kotlinx.coroutines.launch
@@ -83,13 +87,6 @@ fun BottomSheetDialog(
     dismissButton: @Composable (() -> Unit)? = null,
     content: @Composable (paddingValues: PaddingValues) -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
-
-    val focusManager = LocalFocusManager.current
-    LaunchedEffect(Unit) {
-        focusManager.clearFocus(true)
-    }
-
     ModalBottomSheet(
         onDismissRequest,
         modifier = Modifier.padding()
