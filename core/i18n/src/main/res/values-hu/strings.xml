@@ -813,4 +813,7 @@
     <string name="reset_icon">Ikon visszaállítása</string>
     <string name="preference_compact_tags">Kompakt címkék</string>
     <string name="preference_compact_tags_summary">Címkenevek vagy ikonok elrejtése a címkék által elfoglalt hely csökkentése érdekében</string>
+    <string name="weather_forecast_wind">Szél</string>
+    <string name="weather_forecast_precipitation">Csapadék</string>
+    <string name="weather_forecast_humidity">Páratartalom</string>
 </resources>
