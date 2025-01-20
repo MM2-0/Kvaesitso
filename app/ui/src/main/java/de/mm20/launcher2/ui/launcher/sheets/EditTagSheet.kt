@@ -148,11 +148,21 @@ fun PickItems(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
         modifier = Modifier.padding(paddingValues),
         containerColor = Color.Transparent,
         bottomBar = {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                Button(
-                    onClick = { viewModel.closeItemPicker() },
-                    modifier = Modifier.align(Alignment.BottomEnd)) {
-                    Text(stringResource(R.string.action_next))
+            Surface (
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
+                shape = MaterialTheme.shapes.medium
+            ) {
+                Box {
+                    Button(
+                        onClick = { viewModel.closeItemPicker() },
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(all = 8.dp)
+                            .padding(end = 12.dp)
+                    ) {
+                        Text(stringResource(R.string.action_next))
+                    }
                 }
             }
         }
