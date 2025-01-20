@@ -16,9 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -114,7 +112,7 @@ fun DragResizeHandle(
                 Box(
                     Modifier
                         .align(Alignment.CenterEnd)
-                        .offset(x = 64.dp)
+                        .offset(x = 128.dp)
                         .draggable(
                             state = horizontalDragState,
                             orientation = Orientation.Horizontal,
@@ -127,7 +125,7 @@ fun DragResizeHandle(
                             },
                             startDragImmediately = true,
                         )
-                        .requiredSize(128.dp)
+                        .requiredSize(width = 256.dp, height = measuredHeight)
                 ) {
                     Icon(
                         modifier = Modifier
@@ -171,7 +169,7 @@ fun DragResizeHandle(
                 Box(
                     Modifier
                         .align(Alignment.BottomCenter)
-                        .offset(y = 64.dp)
+                        .offset(y = 32.dp)
                         .draggable(
                             state = verticalDragState,
                             orientation = Orientation.Vertical,
@@ -184,7 +182,7 @@ fun DragResizeHandle(
                             },
                             startDragImmediately = true,
                         )
-                        .requiredSize(128.dp)
+                        .requiredSize(height = 64.dp, width = measuredWidth)
                 ) {
                     Icon(
                         modifier = Modifier
