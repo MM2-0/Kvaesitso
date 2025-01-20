@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
+import androidx.compose.ui.unit.min
 
 enum class ResizeAxis {
     Horizontal,
@@ -112,7 +113,7 @@ fun DragResizeHandle(
                 Box(
                     Modifier
                         .align(Alignment.CenterEnd)
-                        .offset(x = 128.dp)
+                        .offset(x = min(256.dp, width) / 2)
                         .draggable(
                             state = horizontalDragState,
                             orientation = Orientation.Horizontal,
@@ -125,7 +126,7 @@ fun DragResizeHandle(
                             },
                             startDragImmediately = true,
                         )
-                        .requiredSize(width = 256.dp, height = measuredHeight)
+                        .requiredSize(width = min(256.dp, width), height = measuredHeight)
                 ) {
                     Icon(
                         modifier = Modifier
@@ -169,7 +170,7 @@ fun DragResizeHandle(
                 Box(
                     Modifier
                         .align(Alignment.BottomCenter)
-                        .offset(y = 32.dp)
+                        .offset(y = min(64.dp, height) / 2)
                         .draggable(
                             state = verticalDragState,
                             orientation = Orientation.Vertical,
@@ -182,7 +183,7 @@ fun DragResizeHandle(
                             },
                             startDragImmediately = true,
                         )
-                        .requiredSize(height = 64.dp, width = measuredWidth)
+                        .requiredSize(height = min(64.dp, height), width = measuredWidth)
                 ) {
                     Icon(
                         modifier = Modifier
