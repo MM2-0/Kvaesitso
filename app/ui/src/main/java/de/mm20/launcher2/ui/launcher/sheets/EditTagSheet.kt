@@ -40,6 +40,7 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -88,6 +89,7 @@ fun EditTagSheet(
     if (viewModel.loading) return
 
     BottomSheetDialog(
+        bottomSheetState = rememberModalBottomSheetState(true),
         onDismissRequest = {
             if (viewModel.page == EditTagSheetPage.CustomizeTag) {
                 viewModel.save()
