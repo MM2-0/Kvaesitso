@@ -382,17 +382,17 @@
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="file_type_launcherbackup">ข้อมูลสำรอง %1$s</string>
     <string name="default_websearch_3_name">Google Play</string>
-    <string name="preference_debug_cleanup_database_summary">ลบรายการที่เสียและไม่จำเป็นออกจากฐานข้อมูลของตัวใช้งาน</string>
+    <string name="preference_debug_cleanup_database_summary">ลบรายการที่เสียและไม่จำเป็นออกจากฐานข้อมูลของแอปหน้าแรก</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="preference_screen_backup_summary">ส่งออกและนำเข้าข้อมูลตัวใช้งาน</string>
-    <string name="preference_backup_summary">ส่งออกการตั้งค่าและข้อมูลตัวใช้งาน</string>
-    <string name="missing_permission_accessibility_gesture_failed">จำเป็นต้องเปิดใช้งานสิทธิ์การเข้าถึงของตัวใช้งานจึงจะสามารถดำเนินการนี้ได้</string>
+    <string name="preference_screen_backup_summary">ส่งออกและนำเข้าข้อมูลแอปหน้าแรก</string>
+    <string name="preference_backup_summary">ส่งออกการตั้งค่าและข้อมูลแอปหน้าแรก</string>
+    <string name="missing_permission_accessibility_gesture_failed">จำเป็นต้องเปิดใช้งานสิทธิ์การเข้าถึงของแอปหน้าแรกจึงจะสามารถดำเนินการนี้ได้</string>
     <string name="websearch_dialog_query_encoding_url">เข้ารหัสแบบเปอร์เซ็นต์</string>
-    <string name="missing_permission_accessibility_gesture_settings">การดำเนินการนี้ต้องการสิทธิ์การเข้าถึงของตัวใช้งาน</string>
+    <string name="missing_permission_accessibility_gesture_settings">การดำเนินการนี้ต้องการสิทธิ์การเข้าถึงของแอปหน้าแรก</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="menu_edit_widgets">แก้ไขวิดเจ็ต</string>
-    <string name="note_widget_file_read_error_description">ไม่สามารถอ่านไฟล์โน้ตต้นฉบับได้ เป็นไปได้ว่ามันอาจโดนย้ายหรือลบ ข้อมูลสำเนาถูกกู้คืนมาจากพื้นที่จัดเก็บภายในของตัวเปิดใช้ ถ้าคุณแก้ไขโน้ต ไฟล์โน้ตต้นฉบับอาจโดนเขียนทับ</string>
-    <string name="note_widget_file_write_error_description">ไม่สามารถเขียนโน้ตไปยังไฟล์ต้นฉบับได้ เป็นไปได้ว่ามันอาจโดนย้ายหรือลบ ข้อมูลสำเนาถูกบันทึกไปที่พื้นที่จัดเก็บภายในของตัวเปิดใช้</string>
+    <string name="note_widget_file_read_error_description">ไม่สามารถอ่านไฟล์โน้ตต้นฉบับได้ เป็นไปได้ว่าอาจโดนย้ายหรือลบ ข้อมูลสำเนาถูกกู้คืนมาจากพื้นที่จัดเก็บภายในของแอปหน้าแรก ถ้าคุณแก้ไขโน้ต ไฟล์โน้ตต้นฉบับอาจโดนเขียนทับ</string>
+    <string name="note_widget_file_write_error_description">ไม่สามารถเขียนโน้ตไปยังไฟล์ต้นฉบับได้ เป็นไปได้ว่ามันอาจโดนย้ายหรือลบ ข้อมูลสำเนาถูกบันทึกไปที่พื้นที่จัดเก็บภายในของแอปหน้าแรก</string>
     <string name="menu_share_store_link">ลิงก์ %1$s</string>
     <string name="widget_add_widget">เพิ่มวิดเจ็ต</string>
     <string name="menu_favorites_pin">ปักหมุดไปยังรายการโปรด</string>
@@ -575,7 +575,7 @@
     <string name="shortcut_label_unavailable">เข้าถึงไม่ได้</string>
     <string name="preference_clock_widget_alignment">การจัดตำแหน่ง</string>
     <string name="preference_clock_widget_alignment_bottom">ด้านล่าง</string>
-    <string name="shortcut_unavailable_description">ไม่สามารถเข้าถึงทางลัดนี้ได้ เนื่องจาก %1$s ไม่ได้ถูกตั้งเป็นตัวใช้งานเริ่มต้น</string>
+    <string name="shortcut_unavailable_description">ไม่สามารถเข้าถึงทางลัดนี้ได้ เนื่องจาก %1$s ไม่ได้ถูกตั้งเป็นแอปหน้าแรกริ่มต้น</string>
     <string name="preference_clockwidget_dynamic_zone">ส่วนไดนามิก</string>
     <string name="preference_screen_plugins">ปลั๊กอิน</string>
     <string name="preference_screen_plugins_summary">จัดการส่วนเสริมที่ติดตั้งไว้</string>
@@ -621,7 +621,7 @@
     <string name="preference_search_locations_radius">ขอบเขตการค้นหา</string>
     <string name="preference_search_locations_summary">ค้นหาร้านค้าและสถานที่อื่นๆในพื้นที่ใกล้เคียง</string>
     <string name="preference_search_locations_show_map">แผนที่</string>
-    <string name="preference_search_locations_theme_map_summary">ปรับสีของแผนที่ตามโทนสีของตัวใช้งาน</string>
+    <string name="preference_search_locations_theme_map_summary">ปรับสีของแผนที่ตามโทนสีของแอปหน้าแรก</string>
     <string name="plugin_state_setup_required">คุณต้องติดตั้งปลั๊กอินนี้ก่อน</string>
     <string name="weather_condition_thunderstorm">พายุฝนฟ้าคะนอง</string>
     <string name="preference_search_locations">สถานที่</string>
