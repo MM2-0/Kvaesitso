@@ -32,9 +32,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.ManageSearch
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.RemoveCircleOutline
 import androidx.compose.material.icons.rounded.ToggleOn
 import androidx.compose.material.icons.rounded.TravelExplore
@@ -99,13 +97,11 @@ fun EditSearchActionSheet(
     initialSearchAction: CustomizableSearchActionBuilder?,
     onSave: (CustomizableSearchActionBuilder) -> Unit,
     onDismiss: () -> Unit,
-    onDelete: () -> Unit = {},
 ) {
     val viewModel: EditSearchActionSheetVM = viewModel()
     LaunchedEffect(initialSearchAction) {
         viewModel.init(initialSearchAction)
     }
-    val createNew by viewModel.createNew
     val page by viewModel.currentPage
 
     val searchAction by viewModel.searchAction
@@ -119,17 +115,6 @@ fun EditSearchActionSheet(
             EditSearchActionPage.CustomizeWebSearch,
             EditSearchActionPage.CustomizeCustomIntent -> {
                 {
-                    if (!createNew) {
-                        OutlinedButton(
-                            onClick = { onDelete() },
-                            colors = ButtonDefaults.outlinedButtonColors(
-                                contentColor = MaterialTheme.colorScheme.error
-                            )
-                        ) {
-                            Text(stringResource(R.string.menu_delete))
-                        }
-                    }
-
                     Button(onClick = {
                         if (viewModel.validate()) {
                             viewModel.onSave()
