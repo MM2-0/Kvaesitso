@@ -45,7 +45,6 @@ fun LauncherCard(
         contentColor = MaterialTheme.colorScheme.onSurface,
         color = color,
         shadowElevation = if (backgroundOpacity == 1f) elevation else 0.dp,
-        tonalElevation = elevation,
     )
 }
 
