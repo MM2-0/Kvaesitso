@@ -267,9 +267,9 @@ fun CustomizeSearchableSheet(
         }
         if (pickIcon) {
             val bottomSheetState = rememberModalBottomSheetState()
-            ModalBottomSheet (
+            BottomSheetDialog (
                 onDismissRequest = { viewModel.closeIconPicker() },
-                sheetState = bottomSheetState
+                bottomSheetState = bottomSheetState
             ) {
                 IconPicker(
                     searchable = searchable,

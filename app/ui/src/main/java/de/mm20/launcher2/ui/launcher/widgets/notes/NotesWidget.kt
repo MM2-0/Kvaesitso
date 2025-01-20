@@ -7,9 +7,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -48,6 +48,7 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -57,7 +58,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -398,39 +398,11 @@ fun NoteWidgetConflictResolveSheet(
     onDismissRequest: () -> Unit,
 ) {
     var selectedStrategy by remember { mutableStateOf<LinkedFileConflictStrategy?>(null) }
+    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     BottomSheetDialog(
         onDismissRequest = onDismissRequest,
-        confirmButton = {
-            Button(
-                onClick = { onResolve(selectedStrategy ?: return@Button) },
-                enabled = selectedStrategy != null,
-                contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-            ) {
-                Icon(
-                    Icons.Rounded.CheckCircleOutline,
-                    null,
-                    modifier = Modifier
-                        .padding(end = ButtonDefaults.IconSpacing)
-                        .size(ButtonDefaults.IconSize)
-                )
-                Text(stringResource(R.string.note_widget_conflict_keep_selected))
-            }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = { onResolve(LinkedFileConflictStrategy.Unlink) },
-                contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
-            ) {
-                Icon(
-                    Icons.Rounded.LinkOff,
-                    null,
-                    modifier = Modifier
-                        .padding(end = ButtonDefaults.IconSpacing)
-                        .size(ButtonDefaults.IconSize)
-                )
-                Text(stringResource(R.string.note_widget_action_unlink_file))
-            }
-        }
+        bottomSheetState = bottomSheetState
+
     ) {
         Column(
             modifier = Modifier
@@ -463,6 +435,41 @@ fun NoteWidgetConflictResolveSheet(
                 selected = selectedStrategy == LinkedFileConflictStrategy.KeepFile,
                 onSelect = { selectedStrategy = LinkedFileConflictStrategy.KeepFile },
             )
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.End
+            ){
+                TextButton(
+                    onClick = { onResolve(LinkedFileConflictStrategy.Unlink) },
+                    contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
+                ) {
+                    Icon(
+                        Icons.Rounded.LinkOff,
+                        null,
+                        modifier = Modifier
+                            .padding(end = ButtonDefaults.IconSpacing)
+                            .size(ButtonDefaults.IconSize)
+                    )
+                    Text(stringResource(R.string.note_widget_action_unlink_file))
+                }
+                Spacer(modifier = Modifier.padding(8.dp))
+                Button(
+                    onClick = { onResolve(selectedStrategy ?: return@Button) },
+                    enabled = selectedStrategy != null,
+                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                ) {
+                    Icon(
+                        Icons.Rounded.CheckCircleOutline,
+                        null,
+                        modifier = Modifier
+                            .padding(end = ButtonDefaults.IconSpacing)
+                            .size(ButtonDefaults.IconSize)
+                    )
+                    Text(stringResource(R.string.note_widget_conflict_keep_selected))
+                }
+            }
         }
     }
 }
@@ -504,21 +511,6 @@ fun SelectableNoteContent(
                     .padding(16.dp),
                 text = content, onTextChange = {}
             )
-            if (!expanded) {
-                Canvas(
-                    modifier = Modifier
-                        .height(32.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                ) {
-                    drawRect(
-                        brush = Brush.verticalGradient(
-                            0f to color.copy(alpha = 0f),
-                            1f to color.copy(alpha = 0.8f),
-                        ),
-                    )
-                }
-            }
             IconButton(
                 modifier = Modifier.align(Alignment.TopEnd),
                 onClick = onSelect
