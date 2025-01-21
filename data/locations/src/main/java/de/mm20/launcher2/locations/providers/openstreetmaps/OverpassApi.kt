@@ -62,10 +62,12 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
             ) { Regex.escapeReplacement(it) }
 
         val overpassQlBuilder = StringBuilder()
-        overpassQlBuilder.append("[out:json];")
+        val degreeChange = value.radius * 0.00001
+        val boundingBox = arrayOf(value.latitude - degreeChange, value.longitude - degreeChange,
+            value.latitude + degreeChange, value.longitude + degreeChange)
+        overpassQlBuilder.append("[out:json][timeout:10][bbox:" + boundingBox.joinToString(",") + "];")
         // nw: node or way
-        overpassQlBuilder.append("nw(around:", value.radius, ',', value.latitude, ',', value.longitude, ')')
-        overpassQlBuilder.append('[', value.tag, '~', escapedQueryName, if (value.caseInvariant) ",i];" else "];")
+        overpassQlBuilder.append("nw[", value.tag, "~", escapedQueryName, if (value.caseInvariant) ",i];" else "];")
         // center to add the center coordinate of a way to the result, if applicable
         overpassQlBuilder.append("out center;")
 
