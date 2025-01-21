@@ -706,4 +706,12 @@
     <string name="poi_category_fast_food">Фаст-фуд</string>
     <string name="poi_category_bar">Бар</string>
     <string name="poi_category_cinema">Кінатэатр</string>
+    <string name="poi_category_hairdresser">Цырульня</string>
+    <string name="poi_category_convenience">Крама у дома</string>
+    <string name="poi_category_car_rental">Арэнда аўтамабіляў</string>
+    <string name="poi_category_books">Кніжная крама</string>
+    <string name="poi_category_bakery">Пякарня</string>
+    <string name="poi_category_car_sharing">Каршэрынг</string>
+    <string name="poi_category_mobile_phone">Крама тэлефонаў</string>
+    <string name="poi_category_furniture">Крама мэблі</string>
 </resources>
