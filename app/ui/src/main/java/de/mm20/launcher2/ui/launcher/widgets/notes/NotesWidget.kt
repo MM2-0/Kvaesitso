@@ -9,7 +9,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,6 +42,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
@@ -435,15 +435,15 @@ fun NoteWidgetConflictResolveSheet(
                 selected = selectedStrategy == LinkedFileConflictStrategy.KeepFile,
                 onSelect = { selectedStrategy = LinkedFileConflictStrategy.KeepFile },
             )
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                horizontalArrangement = Arrangement.End
+            Column (
+                modifier = Modifier.padding(top = 8.dp),
             ){
-                TextButton(
+                OutlinedButton (
                     onClick = { onResolve(LinkedFileConflictStrategy.Unlink) },
-                    contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error
+                    ),
                 ) {
                     Icon(
                         Icons.Rounded.LinkOff,
@@ -454,11 +454,10 @@ fun NoteWidgetConflictResolveSheet(
                     )
                     Text(stringResource(R.string.note_widget_action_unlink_file))
                 }
-                Spacer(modifier = Modifier.padding(8.dp))
                 Button(
                     onClick = { onResolve(selectedStrategy ?: return@Button) },
                     enabled = selectedStrategy != null,
-                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Icon(
                         Icons.Rounded.CheckCircleOutline,
