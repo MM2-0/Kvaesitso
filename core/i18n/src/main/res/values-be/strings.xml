@@ -147,7 +147,7 @@
     <string name="edit_favorites_dialog_pinned_unsorted">Замацаваныя – адсартаваныя аўтаматычна</string>
     <string name="edit_favorites_dialog_pinned_sorted">Замацаваныя – адсартаваныя ўручную</string>
     <string name="edit_favorites_dialog_empty_section">Перацягніце ярлыкі сюды</string>
-    <string name="edit_favorites_dialog_tags">Тэгі</string>
+    <string name="edit_favorites_dialog_tags">Цэтлікі</string>
     <string name="edit_favorites_dialog_tag_section_empty">Замацаваныя цэтлікі з\'явяцца тут</string>
     <string name="edit_favorites_dialog_new_tag">Стварыць цэтлік…</string>
     <string name="nextcloud_server_url">URL сервера Nextcloud</string>
@@ -465,7 +465,7 @@
     <string name="preference_screen_tags_summary">Кіраванне цэтлікамі і ярлыкамі</string>
     <string name="preference_wikipedia_customurl">Спасылка на Вікіпедыю</string>
     <string name="preference_hidden_items_reveal_button_summary">Адлюстроўваць кнопку для паказу схаваных рэзультатаў пошуку</string>
-    <string name="preference_screen_tags">Тэгі</string>
+    <string name="preference_screen_tags">Цэтлікі</string>
     <string name="preference_hidden_items_reveal_button">Кнопка \"Паказаць схаваныя\"</string>
     <string name="preference_category_favorites_frequently_used">Нядаўна выкарыстаныя</string>
     <string name="preference_screen_icons">Сетка і значкі</string>
@@ -525,7 +525,7 @@
     <string name="create_app_shortcut">Стварыць ярлык</string>
     <string name="frequently_used_show_in_favorites">Паказваць у абраных</string>
     <string name="frequently_used_rows">Колькасць радкоў</string>
-    <string name="customize_tags_placeholder">Тэгі</string>
+    <string name="customize_tags_placeholder">Цэтлікі</string>
     <string name="search_action_email">Напісаць на эл. пошту</string>
     <string name="search_action_timer">Запусціць таймер</string>
     <string name="search_action_share">Абагуліць</string>
@@ -774,4 +774,65 @@
     <string name="poi_category_courthouse">Суд</string>
     <string name="poi_category_townhall">Ратуша</string>
     <string name="preference_search_locations_radius_large_radius_warning">Вялікі радыус пошуку можа сур\'ёзна замарудзіць шуканне.</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">Выбраны %1$s спіс</item>
+        <item quantity="few">Выбраныя %1$s спіса</item>
+        <item quantity="many">Выбраныя %1$s спісаў</item>
+        <item quantity="other">Выбраныя %1$s спісаў</item>
+    </plurals>
+    <string name="customize_item_tags">Цэтлікі</string>
+    <string name="contact_info_home">Хатні</string>
+    <string name="contact_info_mobile">Мабільны</string>
+    <string name="music_widget_previous_track">Папярэдні трэк</string>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s паштовы адрас</item>
+        <item quantity="few">%1$s паштовых адраса</item>
+        <item quantity="many">%1$s паштовых адрасоў</item>
+        <item quantity="other">%1$s паштовых адрасоў</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s апавяшчэнне</item>
+        <item quantity="few">%1$s апавяшчэнні</item>
+        <item quantity="many">%1$s апавяшчэнняў</item>
+        <item quantity="other">%1$s апавяшчэнняў</item>
+    </plurals>
+    <string name="calendar_widget_create_event">Стварыць новую падзею</string>
+    <string name="calendar_widget_open_calendar">Адкрыць праграму календара</string>
+    <string name="profile_private_profile_state_locked">Private space замкнутае.</string>
+    <string name="profile_private_profile_action_unlock">Разблакіраваць</string>
+    <string name="profile_private_profile_action_lock">Заблакіраваць Private space</string>
+    <string name="hint_drag_and_drop_reorder">Утрымлівайце і перацягвайце элементы, каб змяніць іх парадак</string>
+    <string name="weather_forecast_humidity">Вільготнасць</string>
+    <string name="weather_forecast_wind">Вецер</string>
+    <string name="customize_item_visibility">Адлюстроўваць у</string>
+    <string name="tag_empty_name">Цэтлік не можа існаваць без назвы. Калі вы працягніце, цэтлік будзе выдалены.</string>
+    <string name="reset_icon">Значок скіду</string>
+    <string name="item_visibility_app_default">Сетцы праграм і ў пошукавых выніках</string>
+    <string name="music_widget_next_track">Наступны трэк</string>
+    <string name="music_widget_play">Граць</string>
+    <string name="music_widget_open_player">Адкрыць прайгравальнік</string>
+    <string name="music_widget_pause">Прыпыніць</string>
+    <string name="contact_info_work">Працоўны</string>
+    <string name="calendar_widget_previous_day">Мінулы дзень</string>
+    <string name="calendar_widget_next_day">Наступны дзень</string>
+    <string name="profile_work_profile_state_locked">Працоўныя праграмы прыпыненыя.</string>
+    <string name="profile_work_profile_action_lock">Прыпыніць працоўныя праграмы</string>
+    <string name="profile_work_profile_action_unlock">Зняць</string>
+    <string name="weather_forecast_precipitation">Ападкі</string>
+    <string name="item_visibility_calendar_default">Віджэце календара і ў пошукавых выніках</string>
+    <string name="item_visibility_search_only">Пошукавых выніках</string>
+    <string name="item_visibility_hidden">Нідзе</string>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s электронны адрас</item>
+        <item quantity="few">%1$s электронных адраса</item>
+        <item quantity="many">%1$s электронных адрасоў</item>
+        <item quantity="other">%1$s электронных адрасоў</item>
+    </plurals>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s нумар тэлефону</item>
+        <item quantity="few">%1$s нумары тэлефону</item>
+        <item quantity="many">%1$s нумароў тэлефону</item>
+        <item quantity="other">%1$s нумароў тэлефону</item>
+    </plurals>
+    <string name="weather_widget_no_provider">Правайдара надвор\'я не выбрана, альбо выбраны правайдар недаступны</string>
 </resources>
