@@ -106,17 +106,7 @@ fun ConfigureWidgetSheet(
     onWidgetUpdated: (Widget) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    BottomSheetDialog(onDismissRequest = onDismiss,
-        title = {
-            Box(
-                modifier = Modifier
-                    .width(32.dp)
-                    .height(4.dp)
-                    .clip(MaterialTheme.shapes.small)
-                    .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f))
-            )
-        }
-    ) {
+    BottomSheetDialog(onDismissRequest = onDismiss) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

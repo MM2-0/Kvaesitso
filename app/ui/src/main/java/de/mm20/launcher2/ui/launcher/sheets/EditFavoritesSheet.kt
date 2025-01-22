@@ -39,7 +39,6 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -106,28 +105,7 @@ fun EditFavoritesSheet(
     val loading by viewModel.loading
     val createShortcutTarget by viewModel.createShortcutTarget
 
-    BottomSheetDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(
-                if (createShortcutTarget == null) {
-                    stringResource(id = R.string.menu_item_edit_favs)
-                } else {
-                    stringResource(id = R.string.create_app_shortcut)
-                }
-            )
-        },
-        dismissible = {
-            createShortcutTarget == null
-        },
-        confirmButton = if (createShortcutTarget != null) {
-            {
-                OutlinedButton(onClick = { viewModel.cancelPickShortcut() }) {
-                    Text(stringResource(id = android.R.string.cancel))
-                }
-            }
-        } else null
-    ) {
+    BottomSheetDialog(onDismiss) {
         if (loading) {
             Box(
                 modifier = Modifier

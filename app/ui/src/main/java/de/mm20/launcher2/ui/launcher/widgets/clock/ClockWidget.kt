@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.rounded.AccessTime
 import androidx.compose.material.icons.rounded.Alarm
 import androidx.compose.material.icons.rounded.AlignVerticalBottom
@@ -370,11 +371,16 @@ fun ConfigureClockWidgetSheet(
                     icon = {
                         SegmentedButtonDefaults.Icon(
                             active = compact == false,
+                            activeContent = {
+                                Icon(
+                                    imageVector = Icons.Filled.Check,
+                                    contentDescription = null,
+                                )
+                            }
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.HorizontalSplit,
                                 contentDescription = null,
-                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                             )
                         }
                     }
@@ -390,11 +396,16 @@ fun ConfigureClockWidgetSheet(
                     icon = {
                         SegmentedButtonDefaults.Icon(
                             active = compact == true,
+                            activeContent = {
+                                Icon(
+                                    imageVector = Icons.Filled.Check,
+                                    contentDescription = null,
+                                )
+                            }
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.VerticalSplit,
                                 contentDescription = null,
-                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                             )
                         }
                     }

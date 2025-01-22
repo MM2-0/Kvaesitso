@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,7 +23,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
@@ -79,7 +79,7 @@ fun IconPicker(
 
     var showIconPackFilter by remember { mutableStateOf(false) }
     val installedIconPacks by viewModel.installedIconPacks.collectAsState(null)
-    val noPacksInstalled = installedIconPacks?.isEmpty() == true
+    val packsInstalled = installedIconPacks?.isEmpty() == false
 
     val columns = LocalGridSettings.current.columnCount
 
@@ -88,42 +88,38 @@ fun IconPicker(
         columns = GridCells.Fixed(columns),
         contentPadding = contentPadding,
     ) {
-
-        item(span = { GridItemSpan(columns) }) {
-            SearchBar(
-                modifier = Modifier.padding(bottom = 16.dp),
-                expanded = false,
-                onExpandedChange = {},
-                inputField = {
-                    SearchBarDefaults.InputField(
-                        enabled = !noPacksInstalled,
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Rounded.Search,
-                                contentDescription = null
-                            )
-                        },
-                        onSearch = {},
-                        expanded = false,
-                        onExpandedChange = {},
-                        placeholder = {
-                            Text(
-                                stringResource(
-                                    if (noPacksInstalled) R.string.icon_picker_no_packs_installed else R.string.icon_picker_search_icon
+        if (packsInstalled) {
+            item(span = { GridItemSpan(columns) }) {
+                SearchBar(
+                    windowInsets = WindowInsets(0.dp),
+                    expanded = false,
+                    onExpandedChange = {},
+                    inputField = {
+                        SearchBarDefaults.InputField(
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Rounded.Search,
+                                    contentDescription = null
                                 )
-                            )
-                        },
-                        query = query,
-                        onQueryChange = {
-                            query = it
-                            scope.launch {
-                                viewModel.searchIcon(query, filterIconPack)
-                            }
-                        },
-                    )
-                }
-            ) {
+                            },
+                            onSearch = {},
+                            expanded = false,
+                            onExpandedChange = {},
+                            placeholder = {
+                                Text(stringResource(R.string.icon_picker_search_icon))
+                            },
+                            query = query,
+                            onQueryChange = {
+                                query = it
+                                scope.launch {
+                                    viewModel.searchIcon(query, filterIconPack)
+                                }
+                            },
+                        )
+                    }
+                ) {
 
+                }
             }
         }
 
@@ -138,11 +134,11 @@ fun IconPicker(
                     })
                 }
             }
-            item(span = { GridItemSpan(columns) }) {
-                Separator(stringResource(R.string.icon_picker_suggestions))
-            }
 
             if (suggestions.isNotEmpty()) {
+                item(span = { GridItemSpan(columns) }) {
+                    Separator(stringResource(R.string.icon_picker_suggestions))
+                }
                 items(suggestions) {
                     IconPreview(
                         it,
@@ -152,87 +148,82 @@ fun IconPicker(
                 }
             }
         } else {
-
-            if (!installedIconPacks.isNullOrEmpty()) {
-                item(
-                    span = { GridItemSpan(columns) },
+            item(span = { GridItemSpan(columns) }) {
+                Button(
+                    onClick = { showIconPackFilter = !showIconPackFilter },
+                    modifier = Modifier
+                        .wrapContentWidth(align = Alignment.CenterHorizontally)
+                        .padding(16.dp),
+                    contentPadding = PaddingValues(
+                        horizontal = 16.dp,
+                        vertical = 8.dp
+                    )
                 ) {
-                    Button(
-                        onClick = { showIconPackFilter = !showIconPackFilter },
-                        modifier = Modifier
-                            .wrapContentWidth(align = Alignment.CenterHorizontally)
-                            .padding(bottom = 16.dp),
-                        contentPadding = PaddingValues(
-                            horizontal = 16.dp,
-                            vertical = 8.dp
-                        )
-                    ) {
-                        if (filterIconPack == null) {
-                            Icon(
-                                modifier = Modifier
-                                    .padding(end = ButtonDefaults.IconSpacing)
-                                    .size(ButtonDefaults.IconSize),
-                                imageVector = Icons.Rounded.FilterAlt,
-                                contentDescription = null
-                            )
-                        } else {
-                            val icon = remember(filterIconPack?.packageName) {
-                                try {
-                                    filterIconPack?.packageName?.let { pkg ->
-                                        context.packageManager.getApplicationIcon(pkg)
-                                    }
-                                } catch (e: PackageManager.NameNotFoundException) {
-                                    null
-                                }
-                            }
-                            AsyncImage(
-                                modifier = Modifier
-                                    .padding(end = ButtonDefaults.IconSpacing)
-                                    .size(ButtonDefaults.IconSize),
-                                model = icon,
-                                contentDescription = null
-                            )
-                        }
-                        DropdownMenu(
-                            expanded = showIconPackFilter,
-                            onDismissRequest = { showIconPackFilter = false }) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
-                                onClick = {
-                                    showIconPackFilter = false
-                                    filterIconPack = null
-                                    scope.launch {
-                                        viewModel.searchIcon(query, filterIconPack)
-                                    }
-                                }
-                            )
-                            installedIconPacks?.forEach { iconPack ->
-                                DropdownMenuItem(
-                                    onClick = {
-                                        showIconPackFilter = false
-                                        filterIconPack = iconPack
-                                        scope.launch {
-                                            viewModel.searchIcon(query, filterIconPack)
-                                        }
-                                    },
-                                    text = {
-                                        Text(iconPack.name)
-                                    })
-                            }
-                        }
-                        Text(
-                            text = filterIconPack?.name
-                                ?: stringResource(id = R.string.icon_picker_filter_all_packs),
-                            modifier = Modifier.animateContentSize()
-                        )
+                    if (filterIconPack == null) {
                         Icon(
-                            Icons.Rounded.ArrowDropDown,
                             modifier = Modifier
-                                .padding(start = ButtonDefaults.IconSpacing)
+                                .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize),
+                            imageVector = Icons.Rounded.FilterAlt,
+                            contentDescription = null
+                        )
+                    } else {
+                        val icon = remember(filterIconPack?.packageName) {
+                            try {
+                                filterIconPack?.packageName?.let { pkg ->
+                                    context.packageManager.getApplicationIcon(pkg)
+                                }
+                            } catch (e: PackageManager.NameNotFoundException) {
+                                null
+                            }
+                        }
+                        AsyncImage(
+                            modifier = Modifier
+                                .padding(end = ButtonDefaults.IconSpacing)
+                                .size(ButtonDefaults.IconSize),
+                            model = icon,
                             contentDescription = null
                         )
                     }
+                    DropdownMenu(
+                        expanded = showIconPackFilter,
+                        onDismissRequest = { showIconPackFilter = false }) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
+                            onClick = {
+                                showIconPackFilter = false
+                                filterIconPack = null
+                                scope.launch {
+                                    viewModel.searchIcon(query, filterIconPack)
+                                }
+                            }
+                        )
+                        installedIconPacks?.forEach { iconPack ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    showIconPackFilter = false
+                                    filterIconPack = iconPack
+                                    scope.launch {
+                                        viewModel.searchIcon(query, filterIconPack)
+                                    }
+                                },
+                                text = {
+                                    Text(iconPack.name)
+                                })
+                        }
+                    }
+                    Text(
+                        text = filterIconPack?.name
+                            ?: stringResource(id = R.string.icon_picker_filter_all_packs),
+                        modifier = Modifier.animateContentSize()
+                    )
+                    Icon(
+                        Icons.Rounded.ArrowDropDown,
+                        modifier = Modifier
+                            .padding(start = ButtonDefaults.IconSpacing)
+                            .size(ButtonDefaults.IconSize),
+                        contentDescription = null
+                    )
                 }
             }
 

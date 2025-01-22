@@ -279,7 +279,6 @@ fun GesturePreference(
 
     if (!isOpenSearch && value is GestureAction.Launch && (showAppPicker || app == null)) {
         SearchablePicker(
-            title = { Text(title) },
             onDismissRequest = {
                 showAppPicker = false
                 if (app == null) onValueChanged(GestureAction.NoAction)

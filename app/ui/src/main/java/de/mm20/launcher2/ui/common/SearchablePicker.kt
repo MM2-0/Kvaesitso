@@ -36,12 +36,11 @@ import de.mm20.launcher2.ui.ktx.toPixels
 fun SearchablePicker(
     value: SavableSearchable?,
     onValueChanged: (SavableSearchable?) -> Unit,
-    title: @Composable () -> Unit,
     onDismissRequest: () -> Unit,
 ) {
     val viewModel: SearchablePickerVM = viewModel()
 
-    BottomSheetDialog(onDismissRequest = onDismissRequest, title = title) {
+    BottomSheetDialog(onDismissRequest = onDismissRequest) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
