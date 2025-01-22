@@ -816,4 +816,5 @@
     <string name="weather_forecast_wind">Szél</string>
     <string name="weather_forecast_precipitation">Csapadék</string>
     <string name="weather_forecast_humidity">Páratartalom</string>
+    <string name="tag_empty_name">Egy címke nem létezhet név nélkül. Ha folytatja, a címke törlődik.</string>
 </resources>
