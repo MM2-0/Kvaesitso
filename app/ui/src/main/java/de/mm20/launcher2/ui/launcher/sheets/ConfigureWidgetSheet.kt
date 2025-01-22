@@ -79,6 +79,7 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.ResizeAxis
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -379,21 +380,23 @@ fun ColumnScope.ConfigureAppWidget(
                 onLightBackground = (!LocalDarkTheme.current && widget.config.background) || LocalPreferDarkContentOverWallpaper.current
             )
 
-            val maxWidth = if (isAtLeastApiLevel(31)) {
+            val maxWidth = if (isAtLeastApiLevel(31) && !widget.config.forceResize) {
                 widgetInfo.maxResizeWidth.takeIf { it > 0 }?.toDp() ?: Dp.Unspecified
             } else Dp.Unspecified
 
-            val maxHeight = if (isAtLeastApiLevel(31)) {
+            val maxHeight = if (isAtLeastApiLevel(31) && !widget.config.forceResize) {
                 widgetInfo.maxResizeHeight.takeIf { it > 0 }?.toDp() ?: 2000.dp
             } else 2000.dp
 
-            val minWidth = if (widgetInfo.minResizeWidth in 1..widgetInfo.minWidth) {
+            val minWidth = if (widget.config.forceResize) 20.dp
+            else if (widgetInfo.minResizeWidth in 1..widgetInfo.minWidth) {
                 widgetInfo.minResizeWidth.toDp()
             } else {
                 widgetInfo.minWidth.toDp()
             }
 
-            val minHeight = if (widgetInfo.minResizeHeight in 1..widgetInfo.minHeight) {
+            val minHeight = if (widget.config.forceResize) 20.dp
+            else if (widgetInfo.minResizeHeight in 1..widgetInfo.minHeight) {
                 widgetInfo.minResizeHeight.toDp()
             } else {
                 widgetInfo.minHeight.toDp()
@@ -401,6 +404,10 @@ fun ColumnScope.ConfigureAppWidget(
 
             DragResizeHandle(
                 alignment = Alignment.TopCenter,
+                resizeAxis = if (minWidth == maxWidth && minHeight == maxHeight) ResizeAxis.None
+                    else if (minWidth == maxWidth) ResizeAxis.Vertical
+                    else if (minHeight == maxHeight) ResizeAxis.Horizontal
+                    else ResizeAxis.Both,
                 height = resizeHeight,
                 width = resizeWidth,
                 minWidth = minWidth,
@@ -408,6 +415,7 @@ fun ColumnScope.ConfigureAppWidget(
                 maxWidth = maxWidth,
                 maxHeight = maxHeight,
                 snapToMeasuredWidth = true,
+                snapToMeasuredHeight = true,
                 onResize = { w, h ->
                     resizeWidth = w
                     resizeHeight = h
@@ -448,6 +456,15 @@ fun ColumnScope.ConfigureAppWidget(
                     value = widget.config.background,
                     onValueChanged = {
                         onWidgetUpdated(widget.copy(config = widget.config.copy(background = it)))
+                    }
+                )
+                HorizontalDivider()
+                SwitchPreference(
+                    title = stringResource(R.string.widget_config_appwidget_force_resize),
+                    iconPadding = false,
+                    value = widget.config.forceResize,
+                    onValueChanged = {
+                        onWidgetUpdated(widget.copy(config = widget.config.copy(forceResize = it)))
                     }
                 )
                 if (isAtLeastApiLevel(31)) {

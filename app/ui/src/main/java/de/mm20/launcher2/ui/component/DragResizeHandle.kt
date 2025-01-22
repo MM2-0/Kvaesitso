@@ -69,6 +69,9 @@ fun DragResizeHandle(
         val measuredWidth = this.maxWidth
         val measuredHeight = this.maxHeight
 
+        val actualMaxWidth = if (maxWidth == Dp.Unspecified) measuredWidth else min(measuredWidth, maxWidth)
+        val actualMaxHeight = if (maxHeight == Dp.Unspecified) measuredHeight else min(measuredHeight, maxHeight)
+
         var dragging by remember { mutableStateOf(false) }
 
         val density = LocalDensity.current
@@ -93,27 +96,32 @@ fun DragResizeHandle(
 
                     val newWidth = (currentWidth + with(density) { dragDelta.toDp() }).coerceIn(
                         minWidth,
-                        maxWidth
+                        actualMaxWidth
                     )
 
                     if (snapToMeasuredWidth &&
-                        maxWidth >= measuredWidth &&
-                        newWidth > measuredWidth - 16.dp &&
+                        newWidth > actualMaxWidth - 16.dp &&
+                        width < actualMaxWidth &&
                         dragDelta > 0
                     ) {
-                        if (!width.isUnspecified) {
-                            hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                            onResize(Dp.Unspecified, height)
-                        }
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        onResize(actualMaxWidth, height)
+                    } else if (
+                        snapToMeasuredWidth &&
+                        newWidth <= minWidth + 16.dp &&
+                        width > minWidth &&
+                        dragDelta < 0
+                    ) {
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        onResize(minWidth, height)
                     } else {
                         onResize(newWidth, height)
                     }
-
                 }
                 Box(
                     Modifier
                         .align(Alignment.CenterEnd)
-                        .offset(x = min(256.dp, width) / 2)
+                        .offset(x = min(128.dp, width) / 2)
                         .draggable(
                             state = horizontalDragState,
                             orientation = Orientation.Horizontal,
@@ -126,7 +134,7 @@ fun DragResizeHandle(
                             },
                             startDragImmediately = true,
                         )
-                        .requiredSize(width = min(256.dp, width), height = measuredHeight)
+                        .requiredSize(width = min(128.dp, width), height = height)
                 ) {
                     Icon(
                         modifier = Modifier
@@ -151,18 +159,24 @@ fun DragResizeHandle(
                         }
                     val newHeight = (currentHeight + with(density) { dragDelta.toDp() }).coerceIn(
                         minHeight,
-                        maxHeight
+                        actualMaxHeight
                     )
 
                     if (snapToMeasuredHeight &&
-                        maxHeight >= measuredHeight &&
-                        newHeight > measuredHeight - 16.dp &&
+                        newHeight > actualMaxHeight - 16.dp &&
+                        height < actualMaxHeight &&
                         dragDelta > 0
                     ) {
-                        if (!height.isUnspecified) {
-                            hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                            onResize(width, Dp.Unspecified)
-                        }
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        onResize(width, actualMaxHeight)
+                    } else if (
+                        snapToMeasuredHeight &&
+                        newHeight <= minHeight + 16.dp &&
+                        height > minHeight &&
+                        dragDelta < 0
+                    ) {
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        onResize(width, minHeight)
                     } else {
                         onResize(width, newHeight)
                     }
@@ -183,7 +197,7 @@ fun DragResizeHandle(
                             },
                             startDragImmediately = true,
                         )
-                        .requiredSize(height = min(64.dp, height), width = measuredWidth)
+                        .requiredSize(height = min(64.dp, height), width = width)
                 ) {
                     Icon(
                         modifier = Modifier

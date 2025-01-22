@@ -1,10 +1,5 @@
 package de.mm20.launcher2.widgets
 
-import android.app.Activity
-import android.appwidget.AppWidgetHost
-import android.appwidget.AppWidgetProviderInfo
-import android.content.Context
-import android.os.Build
 import de.mm20.launcher2.database.entities.PartialWidgetEntity
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -18,6 +13,7 @@ data class AppWidgetConfig(
     val width: Int? = null,
     val borderless: Boolean = false,
     val background: Boolean = true,
+    val forceResize: Boolean = false,
     val themeColors: Boolean = true,
 )
 
