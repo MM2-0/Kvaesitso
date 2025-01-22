@@ -764,4 +764,14 @@
     <string name="poi_category_amusement_park">Парк з атракцыёнамі</string>
     <string name="poi_category_ramen_restaurant">Рэстаран рамэна</string>
     <string name="poi_category_soup_restaurant">Рэстаран супаў</string>
+    <string name="poi_category_park">Парк</string>
+    <string name="poi_category_monument">Помнік</string>
+    <string name="poi_category_cricket">Крыкетная пляцоўка</string>
+    <string name="customize_item_label">Подпіс</string>
+    <string name="poi_category_government_building">Дзяржаўная будова</string>
+    <string name="poi_category_fire_station">Пажарная станцыя</string>
+    <string name="poi_category_skiing">Лыжня</string>
+    <string name="poi_category_courthouse">Суд</string>
+    <string name="poi_category_townhall">Ратуша</string>
+    <string name="preference_search_locations_radius_large_radius_warning">Вялікі радыус пошуку можа сур\'ёзна замарудзіць шуканне.</string>
 </resources>
