@@ -73,13 +73,18 @@ fun DragResizeHandle(
         val measuredWidth = this.maxWidth
         val measuredHeight = this.maxHeight
 
-        val actualMaxWidth = if (maxWidth.isUnspecified) measuredWidth else min(measuredWidth, maxWidth)
-        val actualMaxHeight = if (maxHeight.isUnspecified) measuredHeight else min(measuredHeight, maxHeight)
+        val actualMaxWidth = if (maxWidth.isUnspecified || forceResize) measuredWidth
+            else min(measuredWidth, maxWidth)
+        val actualMaxHeight = if (maxHeight.isUnspecified || forceResize) measuredHeight
+            else min(measuredHeight, maxHeight)
         val actualMinWidth = if (forceResize) 40.dp else max(minWidth, 40.dp)
         val actualMinHeight = if (forceResize) 40.dp else max(minHeight, 40.dp)
 
-        if (width !in actualMinWidth..actualMaxWidth || height !in actualMinHeight..actualMaxHeight)
-            onResize(width.coerceIn(actualMinWidth, actualMaxWidth), height.coerceIn(actualMinHeight, actualMaxHeight))
+        if (width !in actualMinWidth..actualMaxWidth)
+            onResize(width.coerceIn(actualMinWidth, actualMaxWidth), height)
+        if (height !in actualMinHeight..actualMaxHeight)
+            onResize(width, height.coerceIn(actualMinHeight, actualMaxHeight))
+        if (width.isUnspecified && !forceResize && width > maxWidth) onResize(maxWidth, height)
 
         var dragging by remember { mutableStateOf(false) }
 
@@ -94,7 +99,7 @@ fun DragResizeHandle(
                 .align(alignment)
                 .border(1.dp, color = MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium)
         ) {
-            if (resizeAxis == ResizeAxis.Both || resizeAxis == ResizeAxis.Horizontal) {
+            if (resizeAxis == ResizeAxis.Both || resizeAxis == ResizeAxis.Horizontal || forceResize) {
                 val horizontalDragState = rememberDraggableState {
                     val currentWidth = if (width.isUnspecified) measuredWidth else width
                     val dragDelta =
@@ -110,11 +115,12 @@ fun DragResizeHandle(
 
                     if (snapToMeasuredWidth &&
                         newWidth > actualMaxWidth - 16.dp &&
-                        width < actualMaxWidth &&
                         dragDelta > 0
                     ) {
-                        hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                        onResize(actualMaxWidth, height)
+                        if (!width.isUnspecified) {
+                            hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                            onResize(Dp.Unspecified, height)
+                        }
                     } else if (
                         snapToMeasuredWidth &&
                         newWidth <= actualMinWidth + 16.dp &&
@@ -131,7 +137,7 @@ fun DragResizeHandle(
                 Box(
                     Modifier
                         .align(Alignment.CenterEnd)
-                        .offset(x = min(128.dp, width) / 2)
+                        .offset(x = if (!width.isUnspecified) min(128.dp, width) / 2 else 64.dp)
                         .draggable(
                             state = horizontalDragState,
                             orientation = Orientation.Horizontal,
@@ -144,7 +150,7 @@ fun DragResizeHandle(
                             },
                             startDragImmediately = true,
                         )
-                        .requiredSize(width = min(128.dp, width), height = height)
+                        .requiredSize(width = if (!width.isUnspecified) min(128.dp, width) else 128.dp, height = height)
                 ) {
                     Icon(
                         modifier = Modifier
@@ -160,7 +166,7 @@ fun DragResizeHandle(
                 }
             }
 
-            if (resizeAxis == ResizeAxis.Both || resizeAxis == ResizeAxis.Vertical) {
+            if (resizeAxis == ResizeAxis.Both || resizeAxis == ResizeAxis.Vertical || forceResize) {
                 val verticalDragState = rememberDraggableState {
                     val currentHeight = if (height.isUnspecified) measuredHeight else height
                     val dragDelta =
@@ -175,7 +181,7 @@ fun DragResizeHandle(
 
                     if (snapToMeasuredHeight &&
                         newHeight > actualMaxHeight - 16.dp &&
-                        height < actualMaxHeight &&
+                        newHeight < actualMaxHeight &&
                         dragDelta > 0
                     ) {
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)

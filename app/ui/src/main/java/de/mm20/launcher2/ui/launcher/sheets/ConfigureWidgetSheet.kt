@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetProviderInfo
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -380,11 +381,11 @@ fun ColumnScope.ConfigureAppWidget(
                 onLightBackground = (!LocalDarkTheme.current && widget.config.background) || LocalPreferDarkContentOverWallpaper.current
             )
 
-            val maxWidth = if (isAtLeastApiLevel(31) && !widget.config.forceResize) {
+            val maxWidth = if (isAtLeastApiLevel(31)) {
                 widgetInfo.maxResizeWidth.takeIf { it > 0 }?.toDp() ?: Dp.Unspecified
             } else Dp.Unspecified
 
-            val maxHeight = if (isAtLeastApiLevel(31) && !widget.config.forceResize) {
+            val maxHeight = if (isAtLeastApiLevel(31)) {
                 widgetInfo.maxResizeHeight.takeIf { it > 0 }?.toDp() ?: 2000.dp
             } else 2000.dp
 
@@ -418,6 +419,7 @@ fun ColumnScope.ConfigureAppWidget(
                 onResize = { w, h ->
                     resizeWidth = w
                     resizeHeight = h
+                    Log.e("resizeWidth", resizeWidth.toString())
                 },
                 onResizeStopped = {
                     onWidgetUpdated(
