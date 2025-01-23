@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -39,6 +41,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 
 enum class ResizeAxis {
@@ -51,6 +54,7 @@ enum class ResizeAxis {
 @Composable
 fun DragResizeHandle(
     resizeAxis: ResizeAxis = ResizeAxis.Both,
+    forceResize: Boolean = false,
     alignment: Alignment = Alignment.TopStart,
     minWidth: Dp = 0.dp,
     minHeight: Dp = 0.dp,
@@ -69,8 +73,13 @@ fun DragResizeHandle(
         val measuredWidth = this.maxWidth
         val measuredHeight = this.maxHeight
 
-        val actualMaxWidth = if (maxWidth == Dp.Unspecified) measuredWidth else min(measuredWidth, maxWidth)
-        val actualMaxHeight = if (maxHeight == Dp.Unspecified) measuredHeight else min(measuredHeight, maxHeight)
+        val actualMaxWidth = if (maxWidth.isUnspecified) measuredWidth else min(measuredWidth, maxWidth)
+        val actualMaxHeight = if (maxHeight.isUnspecified) measuredHeight else min(measuredHeight, maxHeight)
+        val actualMinWidth = if (forceResize) 40.dp else max(minWidth, 40.dp)
+        val actualMinHeight = if (forceResize) 40.dp else max(minHeight, 40.dp)
+
+        if (width !in actualMinWidth..actualMaxWidth || height !in actualMinHeight..actualMaxHeight)
+            onResize(width.coerceIn(actualMinWidth, actualMaxWidth), height.coerceIn(actualMinHeight, actualMaxHeight))
 
         var dragging by remember { mutableStateOf(false) }
 
@@ -95,7 +104,7 @@ fun DragResizeHandle(
                         }
 
                     val newWidth = (currentWidth + with(density) { dragDelta.toDp() }).coerceIn(
-                        minWidth,
+                        actualMinWidth,
                         actualMaxWidth
                     )
 
@@ -108,16 +117,17 @@ fun DragResizeHandle(
                         onResize(actualMaxWidth, height)
                     } else if (
                         snapToMeasuredWidth &&
-                        newWidth <= minWidth + 16.dp &&
-                        width > minWidth &&
+                        newWidth <= actualMinWidth + 16.dp &&
+                        width > actualMinWidth &&
                         dragDelta < 0
                     ) {
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                        onResize(minWidth, height)
+                        onResize(actualMinWidth, height)
                     } else {
                         onResize(newWidth, height)
                     }
                 }
+                val handleSize by animateDpAsState(if (!dragging) 24.dp else 10.dp)
                 Box(
                     Modifier
                         .align(Alignment.CenterEnd)
@@ -140,6 +150,7 @@ fun DragResizeHandle(
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.primary, CircleShape)
                             .padding(8.dp)
+                            .size(handleSize)
                             .rotate(90f)
                             .align(Alignment.Center),
                         imageVector = Icons.Rounded.UnfoldMore,
@@ -158,7 +169,7 @@ fun DragResizeHandle(
                             else -> it
                         }
                     val newHeight = (currentHeight + with(density) { dragDelta.toDp() }).coerceIn(
-                        minHeight,
+                        actualMinHeight,
                         actualMaxHeight
                     )
 
@@ -171,16 +182,17 @@ fun DragResizeHandle(
                         onResize(width, actualMaxHeight)
                     } else if (
                         snapToMeasuredHeight &&
-                        newHeight <= minHeight + 16.dp &&
-                        height > minHeight &&
+                        newHeight <= actualMinHeight + 16.dp &&
+                        height > actualMinHeight &&
                         dragDelta < 0
                     ) {
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                        onResize(width, minHeight)
+                        onResize(width, actualMinHeight)
                     } else {
                         onResize(width, newHeight)
                     }
                 }
+                val handleSize by animateDpAsState(if (!dragging) 24.dp else 10.dp)
                 Box(
                     Modifier
                         .align(Alignment.BottomCenter)
@@ -203,6 +215,7 @@ fun DragResizeHandle(
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.primary, CircleShape)
                             .padding(8.dp)
+                            .size(handleSize)
                             .align(Alignment.Center),
                         imageVector = Icons.Rounded.UnfoldMore,
                         contentDescription = null,
@@ -211,7 +224,7 @@ fun DragResizeHandle(
                 }
             }
             AnimatedVisibility(
-                visible = dragging,
+                visible = dragging && width >= 100.dp && height >= 100.dp,
                 modifier = Modifier.align(Alignment.TopStart).padding(8.dp),
                 enter = fadeIn(),
                 exit = fadeOut(),
@@ -222,9 +235,10 @@ fun DragResizeHandle(
                         .padding(vertical = 4.dp, horizontal = 8.dp)
                 ) {
                     Text(
-                        "W: ${formatDimension(width)} H: ${formatDimension(height)}",
+                        "W: ${formatDimension(width)}\nH: ${formatDimension(height)}",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onPrimary,
+                        maxLines = 2,
                     )
                 }
             }

@@ -388,15 +388,13 @@ fun ColumnScope.ConfigureAppWidget(
                 widgetInfo.maxResizeHeight.takeIf { it > 0 }?.toDp() ?: 2000.dp
             } else 2000.dp
 
-            val minWidth = if (widget.config.forceResize) 20.dp
-            else if (widgetInfo.minResizeWidth in 1..widgetInfo.minWidth) {
+            val minWidth = if (widgetInfo.minResizeWidth in 1..widgetInfo.minWidth) {
                 widgetInfo.minResizeWidth.toDp()
             } else {
                 widgetInfo.minWidth.toDp()
             }
 
-            val minHeight = if (widget.config.forceResize) 20.dp
-            else if (widgetInfo.minResizeHeight in 1..widgetInfo.minHeight) {
+            val minHeight = if (widgetInfo.minResizeHeight in 1..widgetInfo.minHeight) {
                 widgetInfo.minResizeHeight.toDp()
             } else {
                 widgetInfo.minHeight.toDp()
@@ -404,6 +402,7 @@ fun ColumnScope.ConfigureAppWidget(
 
             DragResizeHandle(
                 alignment = Alignment.TopCenter,
+                forceResize = widget.config.forceResize,
                 resizeAxis = if (minWidth == maxWidth && minHeight == maxHeight) ResizeAxis.None
                     else if (minWidth == maxWidth) ResizeAxis.Vertical
                     else if (minHeight == maxHeight) ResizeAxis.Horizontal
@@ -425,7 +424,7 @@ fun ColumnScope.ConfigureAppWidget(
                         widget.copy(
                             config = widget.config.copy(
                                 height = resizeHeight.value.roundToInt(),
-                                width = resizeWidth.takeIf { it != Dp.Unspecified }?.value?.roundToInt()
+                                width = resizeWidth.takeIf { !it.isUnspecified }?.value?.roundToInt()
                             )
                         )
                     )
