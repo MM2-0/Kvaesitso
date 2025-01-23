@@ -652,7 +652,7 @@
     <string name="plugin_weather_provider_enable">Задаць правайдарам надвор\'я</string>
     <string name="plugin_weather_provider_enabled">Бягучы правайдар надвор\'я</string>
     <string name="menu_dial">Выклік</string>
-    <string name="preference_search_location_custom_tile_server_url">Плітачны сервер спасылкі</string>
+    <string name="preference_search_location_custom_tile_server_url">Спасылка на Tileserver</string>
     <string name="menu_navigation">Навігацыя</string>
     <string name="menu_bugreport">Справаздача аб памылцы</string>
     <string name="plugin_type_filesearch">Пошук файлаў</string>
