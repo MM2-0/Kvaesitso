@@ -133,7 +133,7 @@
         <item quantity="other">мілісекунд</item>
     </plurals>
     <string name="unit_minute_symbol">хв</string>
-    <string name="unit_hour_symbol">г</string>
+    <string name="unit_hour_symbol">гадз</string>
     <string name="unit_day_symbol">дз</string>
     <plurals name="unit_day">
         <item quantity="one">дзень</item>
@@ -257,5 +257,138 @@
         <item quantity="few">кілабайта</item>
         <item quantity="many">кілабайтаў</item>
         <item quantity="other">кілабайтаў</item>
+    </plurals>
+    <string name="unit_meter_per_second_symbol">м/с</string>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">кіламетр у гадзіну</item>
+        <item quantity="few">кіламетра ў гадзіну</item>
+        <item quantity="many">кіламетраў у гадзіну</item>
+        <item quantity="other">кіламетраў у гадзіну</item>
+    </plurals>
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">метр у секунду</item>
+        <item quantity="few">метра ў секунду</item>
+        <item quantity="many">метраў у секунду</item>
+        <item quantity="other">метраў у секунду</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="one">доўгая тона</item>
+        <item quantity="few">доўгія тоны</item>
+        <item quantity="many">доугіх тон</item>
+        <item quantity="other">доугіх тон</item>
+    </plurals>
+    <string name="unit_kilobit_symbol">кбіт</string>
+    <plurals name="unit_kilobit">
+        <item quantity="one">кілабіт</item>
+        <item quantity="few">кілабіта</item>
+        <item quantity="many">кілабітаў</item>
+        <item quantity="other">кілабітаў</item>
+    </plurals>
+    <string name="unit_megabit_symbol">Мбіт</string>
+    <plurals name="unit_megabit">
+        <item quantity="one">мегабіт</item>
+        <item quantity="few">мегабіта</item>
+        <item quantity="many">мегабітаў</item>
+        <item quantity="other">мегабітаў</item>
+    </plurals>
+    <string name="unit_gigabit_symbol">Гбіт</string>
+    <plurals name="unit_gigabit">
+        <item quantity="one">гігабіт</item>
+        <item quantity="few">гігабіта</item>
+        <item quantity="many">гігабітаў</item>
+        <item quantity="other">гігабітаў</item>
+    </plurals>
+    <string name="unit_terabit_symbol">Тбіт</string>
+    <plurals name="unit_terabit">
+        <item quantity="one">тэрабіт</item>
+        <item quantity="few">тэрабіта</item>
+        <item quantity="many">тэрабітаў</item>
+        <item quantity="other">тэрабітаў</item>
+    </plurals>
+    <string name="unit_kilogram_symbol">кг</string>
+    <plurals name="unit_kilogram">
+        <item quantity="one">кілаграм</item>
+        <item quantity="few">кілаграма</item>
+        <item quantity="many">кілаграмаў</item>
+        <item quantity="other">кілаграмаў</item>
+    </plurals>
+    <string name="unit_gram_symbol">г</string>
+    <plurals name="unit_gram">
+        <item quantity="one">грам</item>
+        <item quantity="few">грама</item>
+        <item quantity="many">грамаў</item>
+        <item quantity="other">грамаў</item>
+    </plurals>
+    <string name="unit_metric_ton_symbol">т</string>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">метрычная тона</item>
+        <item quantity="few">метрычныя тоны</item>
+        <item quantity="many">метрычных тон</item>
+        <item quantity="other">метрычных тон</item>
+    </plurals>
+    <string name="unit_long_ton_symbol">доўг.т.</string>
+    <string name="unit_stone_symbol">ст.</string>
+    <plurals name="unit_stone">
+        <item quantity="one">стоўн</item>
+        <item quantity="few">стоўна</item>
+        <item quantity="many">стоўнаў</item>
+        <item quantity="other">стоўнаў</item>
+    </plurals>
+    <string name="unit_pound_symbol">фт.</string>
+    <plurals name="unit_pound">
+        <item quantity="one">фунт</item>
+        <item quantity="few">фунта</item>
+        <item quantity="many">фунтаў</item>
+        <item quantity="other">фунтаў</item>
+    </plurals>
+    <string name="unit_ounce_symbol">ун.</string>
+    <plurals name="unit_ounce">
+        <item quantity="one">унцыя</item>
+        <item quantity="few">унцыі</item>
+        <item quantity="many">унцый</item>
+        <item quantity="other">унцый</item>
+    </plurals>
+    <string name="unit_short_ton_symbol">кар.т.</string>
+    <plurals name="unit_short_ton">
+        <item quantity="one">кароткая тона</item>
+        <item quantity="few">кароткіх тоны</item>
+        <item quantity="many">кароткіх тон</item>
+        <item quantity="other">кароткіх тон</item>
+    </plurals>
+    <string name="unit_degree_celsius_symbol">°C</string>
+    <string name="unit_degree_fahrenheit_symbol">°F</string>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">градус Фарэнгейта</item>
+        <item quantity="few">градуса Фарэнгейта</item>
+        <item quantity="many">градусаў Фарэнгейта</item>
+        <item quantity="other">градусаў Фарэнгейта</item>
+    </plurals>
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">градус Цэльсія</item>
+        <item quantity="few">градуса Цэльсія</item>
+        <item quantity="many">градусаў Цэльсія</item>
+        <item quantity="other">градусаў Цэльсія</item>
+    </plurals>
+    <string name="unit_kelvin_symbol">К</string>
+    <plurals name="unit_kelvin">
+        <item quantity="one">Кельвін</item>
+        <item quantity="few">Кельвіна</item>
+        <item quantity="many">Кельвінаў</item>
+        <item quantity="other">Кельвінаў</item>
+    </plurals>
+    <string name="unit_kilometer_per_hour_symbol">км/г</string>
+    <string name="unit_mile_per_hour_symbol">м/г</string>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">міля ў гадзіну</item>
+        <item quantity="few">мілі ў гадзіну</item>
+        <item quantity="many">міляў у гадзіну</item>
+        <item quantity="other">міляў у гадзіну</item>
+    </plurals>
+    <string name="unit_knot_symbol">вуз</string>
+    <plurals name="unit_knot">
+        <item quantity="one">вузел</item>
+        <item quantity="few">вузла</item>
+        <item quantity="many">вузлоў</item>
+        <item quantity="other">вузлоў</item>
     </plurals>
 </resources>
