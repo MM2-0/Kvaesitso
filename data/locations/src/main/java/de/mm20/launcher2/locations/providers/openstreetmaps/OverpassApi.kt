@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.http.Body
 import retrofit2.http.POST
 import java.lang.reflect.Type
+import kotlin.math.cos
 
 data class OverpassFuzzyRadiusQuery(
     val tag: String = "name",
@@ -62,9 +63,10 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
             ) { Regex.escapeReplacement(it) }
 
         val overpassQlBuilder = StringBuilder()
-        val degreeChange = value.radius * 0.00001
-        val boundingBox = arrayOf(value.latitude - degreeChange, value.longitude - degreeChange,
-            value.latitude + degreeChange, value.longitude + degreeChange)
+        val latDegreeChange = value.radius * 0.00001 / 1.11
+        val lonDegreeChange = latDegreeChange / cos(Math.toRadians(value.latitude))
+        val boundingBox = arrayOf(value.latitude - latDegreeChange, value.longitude - lonDegreeChange,
+            value.latitude + latDegreeChange, value.longitude + lonDegreeChange)
         overpassQlBuilder.append("[out:json][timeout:10][bbox:" + boundingBox.joinToString(",") + "];")
         // nw: node or way
         overpassQlBuilder.append("nw[", value.tag, "~", escapedQueryName, if (value.caseInvariant) ",i];" else "];")
