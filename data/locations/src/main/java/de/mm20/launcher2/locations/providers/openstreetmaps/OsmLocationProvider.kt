@@ -25,6 +25,8 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.UnknownHostException
+import de.mm20.launcher2.openstreetmaps.R
+import de.mm20.launcher2.search.ResultScore
 
 private val Scope = CoroutineScope(Job() + Dispatchers.IO)
 private val HttpClient = OkHttpClient()
@@ -38,7 +40,8 @@ internal class OsmLocationProvider(
         try {
             Retrofit.Builder()
                 .client(HttpClient)
-                .baseUrl(it?.takeIf { it.isNotBlank() } ?: LocationSearchSettings.DefaultOverpassUrl)
+                .baseUrl(it?.takeIf { it.isNotBlank() }
+                    ?: LocationSearchSettings.DefaultOverpassUrl)
                 .addConverterFactory(OverpassQueryConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -109,12 +112,12 @@ internal class OsmLocationProvider(
             HttpClient.dispatcher.cancelAll()
         }
 
-        suspend fun searchByTag(tag: String): OverpassResponse? =
+        suspend fun searchByTag(tag: String, overrideQuery: String? = null): OverpassResponse? =
             overpassApi.first()?.runCatching {
                 this.search(
                     OverpassFuzzyRadiusQuery(
                         tag = tag,
-                        query = query,
+                        query = overrideQuery ?: query,
                         radius = searchRadiusMeters,
                         latitude = userLocation.latitude,
                         longitude = userLocation.longitude,
@@ -126,12 +129,13 @@ internal class OsmLocationProvider(
                 }
             }?.getOrNull()
 
+        val delocalizedCategory = delocalizeCategoryQuery(query)
+
         val result = awaitAll(
-            // optionally query by "amenity" or "shop" here
-            // if we want to make searching for locations fuzzier
-            // however, this would not account for localized queries like "Bäcker" (shop:bakery)
             Scope.async { searchByTag("name") },
             Scope.async { searchByTag("brand") },
+            Scope.async { delocalizedCategory?.let { searchByTag("amenity", it) } },
+            Scope.async { delocalizedCategory?.let { searchByTag("shop", it) } }
         ).flatMap {
             it?.let {
                 OsmLocation.fromOverpassResponse(it, context)
@@ -167,4 +171,23 @@ internal class OsmLocationProvider(
             .take(7)
             .toImmutableList()
     }
+
+    private val poiCategories by lazy {
+        R.string::class.java.declaredFields.mapNotNull {
+            if (it.name.startsWith("poi_category_"))
+                it to it.name.removePrefix("poi_category_")
+            else null
+        }
+    }
+
+    private fun delocalizeCategoryQuery(localizedQuery: String): String? =
+        poiCategories.asSequence().map { (field, category) ->
+            ResultScore(
+                localizedQuery,
+                primaryFields = listOf(context.getString(field.getInt(null)))
+            ) to category
+        }.maxByOrNull {
+            it.first
+        }?.takeIf { it.first.score > 0.8f }?.second
+
 }
