@@ -140,7 +140,7 @@
     <string name="edit_favorites_dialog_unpinned">未固定 – 常用</string>
     <string name="edit_favorites_dialog_pinned_unsorted">固定 – 自動排序</string>
     <string name="edit_favorites_dialog_pinned_sorted">固定 – 手動排序</string>
-    <string name="edit_favorites_dialog_empty_section">拖動專案到此</string>
+    <string name="edit_favorites_dialog_empty_section">拖動項目到此</string>
     <string name="edit_favorites_dialog_tags">標籤</string>
     <string name="edit_favorites_dialog_tag_section_empty">被固定的標籤將出現在這裡</string>
     <string name="edit_favorites_dialog_new_tag">建立標籤…</string>
@@ -339,7 +339,7 @@
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">顯示當前日期</string>
     <string name="preference_clockwidget_favorites_part">我的最愛</string>
-    <string name="preference_clockwidget_favorites_part_summary">顯示已固定專案的第一行</string>
+    <string name="preference_clockwidget_favorites_part_summary">顯示已固定項目的第一行</string>
     <string name="preference_clockwidget_music_part">媒體</string>
     <string name="preference_clockwidget_music_part_summary">在有活動媒體會話時顯示媒體控制元件</string>
     <string name="preference_clockwidget_battery_part">電池</string>
@@ -356,7 +356,7 @@
     <string name="preference_crash_reporter_summary">錯誤和崩潰報告</string>
     <string name="preference_logs">日誌</string>
     <string name="preference_logs_summary">檢視和匯出應用日誌</string>
-    <string name="preference_search_favorites_summary">在應用抽屜上方顯示固定和常用專案</string>
+    <string name="preference_search_favorites_summary">在應用抽屜上方顯示固定和常用項目</string>
     <string name="preference_search_files">檔案</string>
     <string name="preference_search_files_summary">搜尋本地檔案和雲伺服器檔案</string>
     <string name="preference_search_contacts">聯絡人</string>
@@ -396,11 +396,11 @@
     <string name="preference_hidden_items">隱藏搜尋結果</string>
     <string name="preference_hidden_items_summary">管理隱藏應用和搜尋結果</string>
     <string name="preference_screen_tags">標籤</string>
-    <string name="preference_screen_tags_summary">管理標籤與標記專案</string>
+    <string name="preference_screen_tags_summary">管理標籤與標記項目</string>
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
-    <string name="preference_edit_favorites_summary">改變固定專案的順序</string>
+    <string name="preference_edit_favorites_summary">改變固定項目的順序</string>
     <string name="preference_category_favorites_frequently_used">常用的</string>
-    <string name="preference_favorites_frequently_used_summary">在我的最愛顯示常用的專案</string>
+    <string name="preference_favorites_frequently_used_summary">在我的最愛顯示常用的項目</string>
     <string name="preference_edit_button">編輯按鈕</string>
     <string name="preference_favorites_edit_button_summary">顯示一個按鈕以重新排列我的最愛</string>
     <string name="preference_widgets_edit_button_summary">顯示一個按鈕以新增、移除和重新排列元件</string>
@@ -421,8 +421,8 @@
     <string name="apps_profile_main">個人</string>
     <string name="apps_profile_work">工作</string>
     <string name="favorites">我的最愛</string>
-    <string name="favorites_empty">被固定的和常用的專案會出現在這裡</string>
-    <string name="favorites_empty_tag">此標籤裡沒有專案</string>
+    <string name="favorites_empty">被固定的和常用的項目會出現在這裡</string>
+    <string name="favorites_empty_tag">此標籤裡沒有項目</string>
     <string name="create_app_shortcut">建立快捷方式</string>
     <string name="frequently_used_show_in_favorites">顯示在我的最愛</string>
     <string name="frequently_used_rows">行數</string>
@@ -456,8 +456,8 @@
     <string name="edit_tag_title">編輯標籤</string>
     <string name="tag_exists_error">以此命名的標籤已經存在.</string>
     <string name="tag_exists_message">以此命名的標籤已經存在.如果你執意而為，兩個標籤將會被合併.</string>
-    <string name="tag_no_items_message">沒有專案被分配給此標籤.如果你執意而為,此標籤將會被刪除.</string>
-    <string name="tag_select_items">選擇專案:</string>
+    <string name="tag_no_items_message">沒有項目被分配給此標籤.如果你執意而為,此標籤將會被刪除.</string>
+    <string name="tag_select_items">選擇項目:</string>
     <string name="tag_name">標籤名字</string>
     <string name="preference_layout_open_search">搜尋 / 應用抽屜</string>
     <string name="open_search_pull_down">下滑</string>
