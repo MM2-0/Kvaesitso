@@ -41,25 +41,25 @@ this solution has some drawbacks:
 - The calendar widget will not open the event in the Proton Calendar app, but in the default calendar app
 - You effectively bypass Proton's privacy features
 
-### Simple Calendar
+### Fossify Calendar (Simple Calendar)
 
-Simple calendar uses its own internal calendar storage by default. These calendars are not accessible
-to other apps. Simple calendar can also read and write calendars to the Android calendar provider.
-This feature mainly intended to allow Simple Calendar users to use their (Google, Outlook, etc.)
-calendars in Simple Calendar. Unfortunately, Simple Calendar cannot act as a calendar provider, so
+Fossify Calendar uses its own internal calendar storage by default. These calendars are not accessible
+to other apps. Fossify Calendar can also read and write calendars to the Android calendar provider.
+This feature mainly intended to allow Fossify Calendar users to use their (Google, Outlook, etc.)
+calendars in Fossify Calendar. Unfortunately, Fossify Calendar cannot act as a calendar provider, so
 you need to rely on another calendar provider app.
 
 If you want an offline solution, you
 can use [Etar](https://f-droid.org/de/packages/ws.xsoh.etar/) (which is a full-blown calendar app by
 its own, but it has the capability to create offline calendars) or
-[Offline Calendar](https://f-droid.org/de/packages/org.sufficientlysecure.localcalendar/) (which is
-just a calendar provider but no longer maintained). It is also possible that your device's default
-calendar app has this feature built-in, so best check that first.
+Offline Calendar (`org.sufficientlysecure.localcalendar`) in F-Droid Archive repo (which is
+just a calendar provider but no [longer maintained](https://github.com/SufficientlySecure/offline-calendar)).
+It is also possible that your device's default calendar app has this feature built-in, so best check that first.
 
-After you have created an offline calendar, you can sync it with Simple Calendar by opening the
-Simple Calendar settings, and enabling 'CalDAV sync'. There you can select your offline calendar.
+After you have created an offline calendar, you can sync it with Fossify Calendar by opening the
+Fossify Calendar settings, and enabling 'CalDAV sync'. There you can select your offline calendar.
 
-To migrate your existing Simple Calendar calendars to the new calendar provider, select
-'Export events to an .ics file', then clear them from Simple Calendar (settings > Delete all events and tasks)
+To migrate your existing Fossify Calendar calendars to the new calendar provider, select
+'Export events to an .ics file', then clear them from Fossify Calendar (settings > Delete all events and tasks)
 and reimport them ('Import events from an .ics file'). Make sure to select the right calendar
 and that 'Ignore event types in the file, always use the default one' is ticked.
