@@ -217,8 +217,8 @@
     <string name="missing_permission_contact_search_settings">需要聯絡人許可權以便搜尋聯絡人</string>
     <string name="missing_permission_calendar_search_settings">需要日曆許可權以便搜尋日曆</string>
     <string name="missing_permission_appshortcuts_search_settings">%1$s 必須設定成預設主畫面應用程式以搜尋應用程式捷徑</string>
-    <string name="missing_permission_file_search_settings">需要外部儲存許可權以便搜尋本地檔案</string>
-    <string name="missing_permission_file_search_settings_android10">需要「管理所有檔案」許可權以便搜尋本地檔案</string>
+    <string name="missing_permission_file_search_settings">需要外部儲存許可權以便搜尋本機檔案</string>
+    <string name="missing_permission_file_search_settings_android10">需要「管理所有檔案」許可權以便搜尋本機檔案</string>
     <string name="missing_permission_notification_badges">需要通知存取權以便顯示通知標記</string>
     <string name="missing_permission_calendar_widget">授予日曆許可權以在此處顯示即將到來的約會與事件。</string>
     <string name="missing_permission_calendar_search">授予日曆搜尋日曆的許可權。</string>
@@ -356,7 +356,7 @@
     <string name="preference_logs_summary">檢視與匯出應用程式日誌</string>
     <string name="preference_search_favorites_summary">在應用程式抽屜上方顯示釘選與常用項目</string>
     <string name="preference_search_files">檔案</string>
-    <string name="preference_search_files_summary">搜尋本地檔案與雲伺服器檔案</string>
+    <string name="preference_search_files_summary">搜尋本機檔案與雲伺服器檔案</string>
     <string name="preference_search_contacts">聯絡人</string>
     <string name="preference_search_contacts_summary">搜尋在此裝置上的聯絡人</string>
     <string name="preference_search_calendar">日曆</string>
@@ -373,7 +373,7 @@
     <string name="preference_search_wikipedia_summary">搜尋免費的百科全書</string>
     <string name="preference_search_websites">網站</string>
     <string name="preference_search_websites_summary">如果搜尋查詢是 URL，則顯示網站的預覽</string>
-    <string name="preference_search_localfiles">本地檔案</string>
+    <string name="preference_search_localfiles">本機檔案</string>
     <string name="preference_search_localfiles_summary">搜尋儲存在此裝置上的文件、照片與其它檔案</string>
     <string name="preference_search_gdrive">Google Drive</string>
     <string name="preference_search_gdrive_summary">在Google Drive上搜尋 %1$s</string>
