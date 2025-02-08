@@ -1,6 +1,5 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
-import android.util.Log
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Converter
@@ -96,7 +95,7 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
         // center to add the center coordinate of a way to the result, if applicable
         overpassQlBuilder.append("out center;")
 
-        return overpassQlBuilder.toString().also { Log.d("MM20", it) }.toRequestBody()
+        return overpassQlBuilder.toString().toRequestBody()
     }
 }
 
