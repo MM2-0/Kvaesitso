@@ -30,3 +30,9 @@ fun String.normalize(): String {
 fun String.romanize(): String {
     return Pinyin.toPinyin(this, "")
 }
+
+fun String.stripStartOrNull(s: String): String?
+    = if (startsWith(s)) removePrefix(s) else null
+
+fun String.stripEndOrNull(s: String): String?
+    = if (endsWith(s)) removeSuffix(s) else null
