@@ -71,6 +71,8 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
             value.latitude + latDegreeChange, value.longitude + lonDegreeChange
         )
         overpassQlBuilder.append("[out:json][timeout:10][bbox:" + boundingBox.joinToString(",") + "];")
+        // (query; query;);
+        // https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL#Union
         overpassQlBuilder.append('(')
         tagQueries.forEach { (t, v) ->
             overpassQlBuilder.append(
