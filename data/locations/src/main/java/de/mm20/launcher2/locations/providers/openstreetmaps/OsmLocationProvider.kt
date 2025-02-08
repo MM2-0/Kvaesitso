@@ -3,6 +3,8 @@ package de.mm20.launcher2.locations.providers.openstreetmaps
 import android.content.Context
 import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.ktx.stripEndOrNull
+import de.mm20.launcher2.ktx.stripStartOrNull
 import de.mm20.launcher2.locations.providers.AndroidLocation
 import de.mm20.launcher2.locations.providers.LocationProvider
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
@@ -25,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.net.UnknownHostException
 import de.mm20.launcher2.openstreetmaps.R
 import de.mm20.launcher2.search.ResultScore
+import java.lang.reflect.Field
 
 private val Scope = CoroutineScope(Job() + Dispatchers.IO)
 private val HttpClient = OkHttpClient()
@@ -114,13 +117,9 @@ internal class OsmLocationProvider(
             search(
                 OverpassFuzzyRadiusQuery(
                     mutableListOf(
-                        "name" to query,
-                        "brand" to query
+                        QueryableTags(listOf("name" to query, "brand" to query))
                     ).apply {
-                        delocalizeCategoryQuery(query)?.let {
-                            add("amenity" to it)
-                            add("shop" to it)
-                        }
+                        delocalizeToQueryableTags(query)?.let { add(it) }
                     },
                     radius = searchRadiusMeters,
                     latitude = userLocation.latitude,
@@ -156,20 +155,39 @@ internal class OsmLocationProvider(
         }?.take(7)?.toImmutableList() ?: emptyList()
     }
 
+    private data class PoiCategory(
+        val field: Field,
+        val queryableTags: QueryableTags
+    )
+
     private val poiCategories by lazy {
-        R.string::class.java.declaredFields.mapNotNull {
-            if (it.name.startsWith("poi_category_"))
-                it to it.name.removePrefix("poi_category_")
-            else null
+        R.string::class.java.declaredFields.mapNotNull { field ->
+            field.name.stripStartOrNull("poi_category_")?.let { category ->
+                PoiCategory(
+                    field,
+                    category.stripEndOrNull("_restaurant")?.let { cuisine ->
+                        if (cuisine.isNotBlank())
+                            QueryableTags(
+                                listOf(
+                                    "amenity" to "restaurant",
+                                    "cuisine" to cuisine
+                                ),
+                                intersection = true
+                            )
+                        else
+                            QueryableTags(listOf("amenity" to "restaurant"))
+                    } ?: QueryableTags(listOf("amenity" to category, "shop" to category))
+                )
+            }
         }
     }
 
-    private fun delocalizeCategoryQuery(localizedQuery: String): String? =
-        poiCategories.asSequence().map { (field, category) ->
+    private fun delocalizeToQueryableTags(localizedQuery: String): QueryableTags? =
+        poiCategories.asSequence().map { (field, queryableTags) ->
             ResultScore(
                 localizedQuery,
                 primaryFields = listOf(context.getString(field.getInt(null)))
-            ) to category
+            ) to queryableTags
         }.maxByOrNull {
             it.first
         }?.takeIf { it.first.score > 0.8f }?.second

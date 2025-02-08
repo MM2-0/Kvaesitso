@@ -9,8 +9,10 @@ import retrofit2.http.POST
 import java.lang.reflect.Type
 import kotlin.math.cos
 
+data class QueryableTags(val tags: List<Pair<String, String>>, val intersection: Boolean = false)
+
 data class OverpassFuzzyRadiusQuery(
-    val tagQueries: List<Pair<String, String>>,
+    val queries: List<QueryableTags>,
     val radius: Int,
     val latitude: Double,
     val longitude: Double,
@@ -52,15 +54,17 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
 
         // allow other characters in between query words, if there are multiple
         // https://dev.overpass-api.de/overpass-doc/en/criteria/per_tag.html#regex
-        val tagQueries = value
-            .tagQueries
-            .map { (t, v) ->
-                t to v.split(' ')
-                    .joinToString(
-                        separator = ".*",
-                        prefix = "\"",
-                        postfix = "\""
-                    ) { Regex.escapeReplacement(it) }
+        val queries = value
+            .queries
+            .map {
+                QueryableTags(it.tags.map { (t, v) ->
+                    t to v.split(' ')
+                        .joinToString(
+                            separator = ".*",
+                            prefix = "\"",
+                            postfix = "\""
+                        ) { Regex.escapeReplacement(it) }
+                }, it.intersection)
             }
 
         val overpassQlBuilder = StringBuilder()
@@ -74,11 +78,23 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
         // (query; query;);
         // https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL#Union
         overpassQlBuilder.append('(')
-        tagQueries.forEach { (t, v) ->
-            overpassQlBuilder.append(
-                // nw: node or way
-                "nw[", t, "~", v, if (value.caseInvariant) ",i];" else "];"
-            )
+        queries.forEach { (queryableTags, intersection) ->
+            // nw: node or way
+            if (intersection) {
+                overpassQlBuilder.append("nw")
+                queryableTags.forEach { (t, v) ->
+                    overpassQlBuilder.append(
+                        "[", t, "~", v, if (value.caseInvariant) ",i]" else "]"
+                    )
+                }
+                overpassQlBuilder.append(";")
+            } else {
+                queryableTags.forEach { (t, v) ->
+                    overpassQlBuilder.append(
+                        "nw[", t, "~", v, if (value.caseInvariant) ",i];" else "];"
+                    )
+                }
+            }
         }
         overpassQlBuilder.append(");")
         // center to add the center coordinate of a way to the result, if applicable
