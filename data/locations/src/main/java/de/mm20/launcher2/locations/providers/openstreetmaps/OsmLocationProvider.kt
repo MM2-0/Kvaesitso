@@ -152,7 +152,7 @@ internal class OsmLocationProvider(
             }
         }?.sortedBy {
             it.distanceTo(userLocation)
-        }?.take(7)?.toImmutableList() ?: emptyList()
+        }?.take(9)?.toImmutableList() ?: emptyList()
     }
 
     private data class PoiCategory(
