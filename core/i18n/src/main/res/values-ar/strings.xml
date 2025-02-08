@@ -537,10 +537,10 @@
     <plurals name="calendar_search_enabled_lists">
         <item quantity="zero">تم تحديد %1$s قائمة</item>
         <item quantity="one">تم تحديد %1$s قائمة</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
         <item quantity="many">تم تحديد %1$s قوائم</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="theme_color_scheme_palette_color">لوحة</string>
     <string name="preference_blur_wallpaper_unsupported">غير مدعوم على هذا الجهاز</string>
@@ -730,18 +730,18 @@
     <plurals name="contact_phone_numbers">
         <item quantity="zero">%1$s رقم هاتف</item>
         <item quantity="one">%1$s رقم الهاتف</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
         <item quantity="many">%1$sأرقام الهواتف</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="contact_email_addresses">
         <item quantity="zero">%1$s عنوان بريد إلكتروني</item>
         <item quantity="one">%1$sعنوان بريد إلكتروني</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
         <item quantity="many">%1$s عناوين البريد الإلكتروني</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="music_widget_open_player">فتح المشغل</string>
     <string name="calendar_widget_previous_day">اليوم السابق</string>
@@ -751,10 +751,10 @@
     <plurals name="debug_cleanup_database_result">
         <item quantity="zero">تمت إزالة %1$d مُدخل.</item>
         <item quantity="one">تمت إزالة %1$d مدخلات.</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="menu_dial">اتصال</string>
     <string name="plugin_action_setup">إعداد</string>
@@ -768,10 +768,10 @@
     <plurals name="tag_selected_items">
         <item quantity="zero">تم تحديد %1$d عنصر</item>
         <item quantity="one">تم تحديد %1$d عناصر</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="preference_category_badges">الشارات</string>
     <string name="search_filter_apps">التطبيقات</string>
@@ -802,19 +802,19 @@
     <plurals name="contact_postal_addresses">
         <item quantity="zero">%1$s عنوان بريدي</item>
         <item quantity="one">%1$s عنوان البريد</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
         <item quantity="many">%1$s عناوين بريدية</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="poi_category_fire_station">محطة إطفاء</string>
     <plurals name="app_info_notifications">
         <item quantity="zero">%1$s إشعار</item>
         <item quantity="one">%1$s إشعار</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
         <item quantity="many">%1$s إشعارات</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="poi_category_courthouse">محكمة</string>
     <string name="calendar_widget_create_event">إنشاء حدث جديد</string>
@@ -833,7 +833,7 @@
         <item quantity="two">%1$sدقيقة</item>
         <item quantity="few">%1$s دقائق</item>
         <item quantity="many">%1$sدقائق</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="preference_search_locations_hide_uncategorized">إخفاء الأماكن غير المصنفة</string>
     <string name="metric">متري</string>
@@ -849,4 +849,8 @@
     <string name="poi_category_tennis">ملعب تنس</string>
     <string name="profile_private_profile_state_locked">المساحة الخاصة مقفلة.</string>
     <string name="profile_private_profile_action_unlock">إلغاء القفل</string>
+    <string name="tag_empty_name">لا يمكن أن توجد علامة بدون اسم. إذا تابعت، سيتم حذف العلامة.</string>
+    <string name="weather_forecast_humidity">رطوبة</string>
+    <string name="weather_forecast_wind">رياح</string>
+    <string name="weather_forecast_precipitation">هطول الأمطار</string>
 </resources>
