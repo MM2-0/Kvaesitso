@@ -141,7 +141,7 @@ internal class OsmLocationProvider(
         return result
             .asSequence()
             .filter {
-                !hideUncategorized || (it.category != null)
+                (!hideUncategorized || (it.category != null)) && it.distanceTo(userLocation) < searchRadiusMeters
             }
             .groupBy {
                 it.label.lowercase()
