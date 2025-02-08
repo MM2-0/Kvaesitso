@@ -1,5 +1,6 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
+import android.util.Log
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Converter
@@ -9,14 +10,28 @@ import retrofit2.http.POST
 import java.lang.reflect.Type
 import kotlin.math.cos
 
-data class QueryableTags(val tags: List<Pair<String, String>>, val intersection: Boolean = false)
-
+/**
+ * Overpass API query builder
+ * Searches for nodes and ways that at least:
+ * - match the query string in their name or brand tag
+ * - match one of the given tag groups
+ */
 data class OverpassFuzzyRadiusQuery(
-    val queries: List<QueryableTags>,
+    /**
+     * Free text query to search for.
+     */
+    val query: String,
+    /**
+     * Tags groups to search for. Each item represents a group of tags, separated by commas.
+     * The query matches if all tags in a group are present in the element.
+     * For example:
+     * ["amenity=restaurant,cuisine=italian", "amenity=cafe"]
+     * This query will match elements that are either a restaurant with italian cuisine or a cafe.
+     */
+    val tagGroups: List<String>,
     val radius: Int,
     val latitude: Double,
     val longitude: Double,
-    val caseInvariant: Boolean = true,
 )
 
 data class OverpassIdQuery(
@@ -51,21 +66,12 @@ interface OverpassApi {
 
 class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, RequestBody> {
     override fun convert(value: OverpassFuzzyRadiusQuery): RequestBody {
-
-        // allow other characters in between query words, if there are multiple
-        // https://dev.overpass-api.de/overpass-doc/en/criteria/per_tag.html#regex
-        val queries = value
-            .queries
-            .map {
-                QueryableTags(it.tags.map { (t, v) ->
-                    t to v.split(' ')
-                        .joinToString(
-                            separator = ".*",
-                            prefix = "\"",
-                            postfix = "\""
-                        ) { Regex.escapeReplacement(it) }
-                }, it.intersection)
-            }
+        val encodedQuery = value.query.split(' ')
+            .joinToString(
+                separator = ".*",
+                prefix = "\"",
+                postfix = "\""
+            ) { Regex.escapeReplacement(it) }
 
         val overpassQlBuilder = StringBuilder()
         val latDegreeChange = value.radius * 0.00001 / 1.11
@@ -75,32 +81,22 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
             value.latitude + latDegreeChange, value.longitude + lonDegreeChange
         )
         overpassQlBuilder.append("[out:json][timeout:10][bbox:" + boundingBox.joinToString(",") + "];")
-        // (query; query;);
-        // https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL#Union
-        overpassQlBuilder.append('(')
-        queries.forEach { (queryableTags, intersection) ->
-            // nw: node or way
-            if (intersection) {
-                overpassQlBuilder.append("nw")
-                queryableTags.forEach { (t, v) ->
-                    overpassQlBuilder.append(
-                        "[", t, "~", v, if (value.caseInvariant) ",i]" else "]"
-                    )
-                }
-                overpassQlBuilder.append(";")
-            } else {
-                queryableTags.forEach { (t, v) ->
-                    overpassQlBuilder.append(
-                        "nw[", t, "~", v, if (value.caseInvariant) ",i];" else "];"
-                    )
-                }
-            }
+
+        overpassQlBuilder.append("(")
+        overpassQlBuilder.append("nw[name~$encodedQuery,i];")
+        overpassQlBuilder.append("nw[brand~$encodedQuery,i];")
+        for (tag in value.tagGroups) {
+            val tags = tag.split(',')
+
+            if (tags.isEmpty()) continue
+
+            overpassQlBuilder.append("nw[${tags.joinToString("][")}];")
         }
         overpassQlBuilder.append(");")
         // center to add the center coordinate of a way to the result, if applicable
         overpassQlBuilder.append("out center;")
 
-        return overpassQlBuilder.toString().toRequestBody()
+        return overpassQlBuilder.toString().also { Log.d("MM20", it) }.toRequestBody()
     }
 }
 
