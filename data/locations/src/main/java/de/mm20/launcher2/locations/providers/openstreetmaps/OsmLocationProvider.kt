@@ -112,64 +112,50 @@ internal class OsmLocationProvider(
             HttpClient.dispatcher.cancelAll()
         }
 
-        suspend fun searchByTag(tag: String, overrideQuery: String? = null): OverpassResponse? =
-            overpassApi.first()?.runCatching {
-                this.search(
-                    OverpassFuzzyRadiusQuery(
-                        tag = tag,
-                        query = overrideQuery ?: query,
-                        radius = searchRadiusMeters,
-                        latitude = userLocation.latitude,
-                        longitude = userLocation.longitude,
-                    )
+        return overpassApi.first()?.runCatching {
+            search(
+                OverpassFuzzyRadiusQuery(
+                    mutableListOf(
+                        "name" to query,
+                        "brand" to query
+                    ).apply {
+                        delocalizeCategoryQuery(query)?.let {
+                            add("amenity" to it)
+                            add("shop" to it)
+                        }
+                    },
+                    radius = searchRadiusMeters,
+                    latitude = userLocation.latitude,
+                    longitude = userLocation.longitude
                 )
-            }?.onFailure {
-                if (it !is HttpException && it !is CancellationException) {
-                    Log.e("OsmLocationProvider", "Failed to search for $tag: $query", it)
-                }
-            }?.getOrNull()
-
-        val delocalizedCategory = delocalizeCategoryQuery(query)
-
-        val result = awaitAll(
-            Scope.async { searchByTag("name") },
-            Scope.async { searchByTag("brand") },
-            Scope.async { delocalizedCategory?.let { searchByTag("amenity", it) } },
-            Scope.async { delocalizedCategory?.let { searchByTag("shop", it) } }
-        ).flatMap {
-            it?.let {
-                OsmLocation.fromOverpassResponse(it, context)
-            } ?: emptyList()
-        }
-
-        return result
-            .asSequence()
-            .filter {
-                (!hideUncategorized || (it.category != null)) && it.distanceTo(userLocation) < searchRadiusMeters
+            )
+        }?.onFailure {
+            if (it !is HttpException && it !is CancellationException) {
+                Log.e("OsmLocationProvider", "Failed to search for: $query", it)
             }
-            .groupBy {
-                it.label.lowercase()
+        }?.getOrNull()?.let {
+            OsmLocation.fromOverpassResponse(it, context)
+        }?.asSequence()?.filter {
+            (!hideUncategorized || (it.category != null)) && it.distanceTo(userLocation) < searchRadiusMeters
+        }?.groupBy {
+            it.label.lowercase()
+        }?.flatMap { (_, duplicates) ->
+            // deduplicate results with same labels, if
+            // - same category
+            // - distance is less than 100m
+            if (duplicates.size < 2) duplicates
+            else {
+                val luckyFirst = duplicates.first()
+                duplicates
+                    .drop(1)
+                    .filter {
+                        it.category != luckyFirst.category ||
+                                it.distanceTo(luckyFirst) > 100.0
+                    } + luckyFirst
             }
-            .flatMap { (_, duplicates) ->
-                // deduplicate results with same labels, if
-                // - same category
-                // - distance is less than 100m
-                if (duplicates.size < 2) duplicates
-                else {
-                    val luckyFirst = duplicates.first()
-                    duplicates
-                        .drop(1)
-                        .filter {
-                            it.category != luckyFirst.category ||
-                                    it.distanceTo(luckyFirst) > 100.0
-                        } + luckyFirst
-                }
-            }
-            .sortedBy {
-                it.distanceTo(userLocation)
-            }
-            .take(7)
-            .toImmutableList()
+        }?.sortedBy {
+            it.distanceTo(userLocation)
+        }?.take(7)?.toImmutableList() ?: emptyList()
     }
 
     private val poiCategories by lazy {

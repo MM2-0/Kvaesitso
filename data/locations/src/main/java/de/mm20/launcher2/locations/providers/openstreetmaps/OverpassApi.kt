@@ -10,8 +10,7 @@ import java.lang.reflect.Type
 import kotlin.math.cos
 
 data class OverpassFuzzyRadiusQuery(
-    val tag: String = "name",
-    val query: String,
+    val tagQueries: List<Pair<String, String>>,
     val radius: Int,
     val latitude: Double,
     val longitude: Double,
@@ -53,23 +52,33 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
 
         // allow other characters in between query words, if there are multiple
         // https://dev.overpass-api.de/overpass-doc/en/criteria/per_tag.html#regex
-        val escapedQueryName = value
-            .query
-            .split(' ')
-            .joinToString(
-                separator = ".*",
-                prefix = "\"",
-                postfix = "\""
-            ) { Regex.escapeReplacement(it) }
+        val tagQueries = value
+            .tagQueries
+            .map { (t, v) ->
+                t to v.split(' ')
+                    .joinToString(
+                        separator = ".*",
+                        prefix = "\"",
+                        postfix = "\""
+                    ) { Regex.escapeReplacement(it) }
+            }
 
         val overpassQlBuilder = StringBuilder()
         val latDegreeChange = value.radius * 0.00001 / 1.11
         val lonDegreeChange = latDegreeChange / cos(Math.toRadians(value.latitude))
-        val boundingBox = arrayOf(value.latitude - latDegreeChange, value.longitude - lonDegreeChange,
-            value.latitude + latDegreeChange, value.longitude + lonDegreeChange)
+        val boundingBox = arrayOf(
+            value.latitude - latDegreeChange, value.longitude - lonDegreeChange,
+            value.latitude + latDegreeChange, value.longitude + lonDegreeChange
+        )
         overpassQlBuilder.append("[out:json][timeout:10][bbox:" + boundingBox.joinToString(",") + "];")
-        // nw: node or way
-        overpassQlBuilder.append("nw[", value.tag, "~", escapedQueryName, if (value.caseInvariant) ",i];" else "];")
+        overpassQlBuilder.append('(')
+        tagQueries.forEach { (t, v) ->
+            overpassQlBuilder.append(
+                // nw: node or way
+                "nw[", t, "~", v, if (value.caseInvariant) ",i];" else "];"
+            )
+        }
+        overpassQlBuilder.append(");")
         // center to add the center coordinate of a way to the result, if applicable
         overpassQlBuilder.append("out center;")
 
