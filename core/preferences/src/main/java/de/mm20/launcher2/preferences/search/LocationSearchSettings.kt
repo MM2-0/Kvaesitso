@@ -74,9 +74,7 @@ class LocationSearchSettings internal constructor(
 
     fun setOverpassUrl(overpassUrl: String?) {
         var url = overpassUrl
-        if (url.isNullOrBlank()) {
-            url = DefaultOverpassUrl
-        } else {
+        if (url != null) {
             if (!url.startsWith("http://") && !url.startsWith("https://")) {
                 url = "https://$url"
             }
@@ -97,9 +95,7 @@ class LocationSearchSettings internal constructor(
 
     fun setTileServer(tileServer: String?) {
         var url = tileServer
-        if (url.isNullOrBlank()) {
-            url = DefaultTileServerUrl
-        } else {
+        if (url != null) {
             if (!url.startsWith("http://") && !url.startsWith("https://")) {
                 url = "https://$url"
             }
@@ -140,8 +136,8 @@ class LocationSearchSettings internal constructor(
     }
 
     companion object {
-        const val DefaultTileServerUrl = "https://tile.openstreetmap.org/\${z}/\${x}/\${y}.png"
-        const val DefaultOverpassUrl = "https://overpass-api.de"
+        const val DefaultTileServerUrl = "https://tile.openstreetmap.org"
+        const val DefaultOverpassUrl = "https://overpass-api.de/"
     }
 
 }
