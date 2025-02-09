@@ -108,21 +108,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://mathparser.org/"
     ),
     OpenSourceLibrary(
-        name = "Google Auth Library",
-        description = "Open source authentication client library for Java.",
-        licenseName = R.string.bsd_3clause_name,
-        licenseText = R.raw.license_bsd_3clause,
-        copyrightNote = "Copyright 2014, Google Inc. All rights reserved.",
-        url = "https://github.com/googleapis/google-auth-library-java"
-    ),
-    OpenSourceLibrary(
-        name = "Google APIs Client Library for Android",
-        description = "The Google APIs Client Library for Java is a flexible, efficient, and powerful Java client library for accessing any HTTP-based API on the web, not just Google APIs.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        url = "https://github.com/googleapis/google-api-java-client"
-    ),
-    OpenSourceLibrary(
         name = "CrashReporter",
         description = "CrashReporter is a handy tool to capture app crashes and save them in a file.",
         licenseName = R.string.apache_license_name,

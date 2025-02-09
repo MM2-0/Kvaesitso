@@ -143,7 +143,6 @@ dependencies {
     implementation(project(":data:plugins"))
     implementation(project(":data:themes"))
     implementation(project(":data:files"))
-    implementation(project(":libs:g-services"))
     implementation(project(":core:i18n"))
     implementation(project(":services:icons"))
     implementation(project(":core:ktx"))

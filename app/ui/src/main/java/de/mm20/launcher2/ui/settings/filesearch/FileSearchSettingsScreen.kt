@@ -153,40 +153,6 @@ fun FileSearchSettingsScreen() {
                     enabled = owncloudAccount != null
                 )
 
-                if (viewModel.googleAvailable) {
-                    val gdrive by viewModel.gdrive.collectAsState()
-                    val googleAccount by viewModel.googleAccount
-                    AnimatedVisibility(googleAccount == null) {
-                        Banner(
-                            text = stringResource(R.string.no_account_google),
-                            icon = Icons.Rounded.AccountBox,
-                            primaryAction = {
-                                TextButton(onClick = {
-                                    viewModel.login(
-                                        context as AppCompatActivity,
-                                        AccountType.Google
-                                    )
-                                }) {
-                                    Text(
-                                        stringResource(R.string.connect_account),
-                                    )
-                                }
-                            },
-                            modifier = Modifier.padding(16.dp)
-                        )
-                    }
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_search_gdrive),
-                        summary = googleAccount?.let {
-                            stringResource(R.string.preference_search_gdrive_summary, it.userName)
-                        } ?: stringResource(R.string.preference_summary_not_logged_in),
-                        value = gdrive == true && googleAccount != null,
-                        onValueChanged = {
-                            viewModel.setGdrive(it)
-                        },
-                        enabled = googleAccount != null
-                    )
-                }
                 for (plugin in plugins) {
                     val state = plugin.state
                     if (state is PluginState.SetupRequired) {

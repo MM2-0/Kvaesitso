@@ -127,11 +127,6 @@ stringsimilarity = { group = "com.aallam.similarity", name = "string-similarity-
 # 4.4.2 is the last GPL compatible version, don't update to 5.x
 mathparser = { group = "org.mariuszgromada.math", name = "MathParser.org-mXparser", version = "4.4.2" }
 
-google-auth = { group = "com.google.auth", name = "google-auth-library-oauth2-http", version = "1.14.0" }
-google-apiclient = { group = "com.google.api-client", name = "google-api-client", version = "2.1.2" }
-google-drive = { group = "com.google.apis", name = "google-api-services-drive", version = "v3-rev20221219-2.0.0" }
-google-oauth2 = { group = "com.google.apis", name = "google-api-services-oauth2", version = "v2-rev20200213-2.0.0" }
-
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidxcompose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 

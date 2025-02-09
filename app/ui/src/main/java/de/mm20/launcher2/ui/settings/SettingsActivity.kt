@@ -48,7 +48,6 @@ import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.filterbar.FilterBarSettingsScreen
 import de.mm20.launcher2.ui.settings.gestures.GestureSettingsScreen
-import de.mm20.launcher2.ui.settings.google.GoogleSettingsScreen
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
 import de.mm20.launcher2.ui.settings.homescreen.HomescreenSettingsScreen
 import de.mm20.launcher2.ui.settings.icons.IconsSettingsScreen
@@ -225,9 +224,6 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/integrations/owncloud") {
                                     OwncloudSettingsScreen()
-                                }
-                                composable("settings/integrations/google") {
-                                    GoogleSettingsScreen()
                                 }
                                 composable("settings/plugins") {
                                     PluginsSettingsScreen()
