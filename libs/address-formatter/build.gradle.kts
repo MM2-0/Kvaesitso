@@ -35,8 +35,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.bundles.kotlin)
     implementation(libs.jackson.core)
     implementation(libs.jackson.dataformat.yaml)
-    implementation(libs.guava)
     implementation(libs.mustache.compiler)
 }
