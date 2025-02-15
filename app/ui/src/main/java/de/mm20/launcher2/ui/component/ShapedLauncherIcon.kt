@@ -90,7 +90,7 @@ import android.graphics.Shader as PlatformShader
 @Composable
 fun ShapedLauncherIcon(
     modifier: Modifier = Modifier,
-    size: Dp,
+    size: Dp = LocalGridSettings.current.iconSize.dp,
     icon: () -> LauncherIcon? = { null },
     badge: () -> Badge? = { null },
     shape: Shape = LocalIconShape.current
@@ -108,10 +108,8 @@ fun ShapedLauncherIcon(
         )
     }
 
-    val defaultIconSize = LocalGridSettings.current.iconSize.dp
-
     val renderSettings = LauncherIconRenderSettings(
-        size = defaultIconSize.toPixels().toInt(),
+        size = size.toPixels().toInt(),
         fgThemeColor = MaterialTheme.colorScheme.onPrimaryContainer.toArgb(),
         bgThemeColor = MaterialTheme.colorScheme.primaryContainer.toArgb(),
         fgTone = if (LocalDarkTheme.current) 90 else 10,
@@ -146,9 +144,7 @@ fun ShapedLauncherIcon(
             val ic = currentIcon
             if (bmp != null && ic != null) {
                 Canvas(
-                    modifier = Modifier
-                        .requiredSize(defaultIconSize)
-                        .scale(size / defaultIconSize, TransformOrigin.Center)
+                    modifier = Modifier.requiredSize(size)
                 ) {
                     val brush = BitmapShaderBrush(bmp)
                     if (ic.backgroundLayer is TransparentLayer) {
