@@ -226,6 +226,9 @@ abstract class SharedLauncherActivity(
                                             )
                                         }
                                     }
+                                    BaseLayout.Ng -> {
+                                        NgScaffold()
+                                    }
 
                                     else -> {}
                                 }
