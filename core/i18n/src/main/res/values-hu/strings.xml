@@ -80,7 +80,7 @@
     <string name="file_type_presentation">Prezentáció</string>
     <string name="file_type_form">Űrlap</string>
     <string name="file_type_launcherbackup">%1$s biztonsági mentés</string>
-    <string name="alert_delete_directory">A(z) %1$s könyvtár és annak teljes tartalma véglegesen törlődni fog. Folytatatja?</string>
+    <string name="alert_delete_directory">A(z) %1$s könyvtár és annak teljes tartalma véglegesen törlődni fog. Folytatja?</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="default_websearch_3_name">Play Áruház</string>
@@ -136,7 +136,7 @@
     <string name="notes_widget_dismissed">Jegyzet elvetve.</string>
     <string name="nextcloud_server_invalid_url">Ez a webcím nem egy érvényes Nextcloud telepítésre mutat</string>
     <string name="widget_name_unknown">Ismeretlen alkalmazásmodul</string>
-    <string name="easter_egg_3">Nem mondom még egyszer: itt egyáltalán nincsenek elrejtett Easter Egg-ek</string>
+    <string name="easter_egg_3">Nem mondom még egyszer: itt egyáltalán nincsenek elrejtett Easter Eggek</string>
     <string name="widget_action_replace">Csere</string>
     <string name="disclaimer">Jogi nyilatkozat</string>
     <string name="edit_favorites_dialog_tags">Címkék</string>
@@ -187,8 +187,8 @@
     <string name="preference_debug_dump_heap_summary">Pillanatfelvétel készítése a memóriahasználat elemzéséhez. Az alkalmazás lefagy, amíg ez a folyamat be nem fejeződik.</string>
     <string name="preference_debug_cleanup_database_summary">Hibás- és nem használt bejegyzések eltávolítása az indító adatbázisból</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d bejegyzés el lett távolítva</item>
-        <item quantity="other">%1$d bejegyzés el lett távolítva</item>
+        <item quantity="one">%1$d bejegyzés el lett távolítva.</item>
+        <item quantity="other">%1$d bejegyzés el lett távolítva.</item>
     </plurals>
     <string name="preference_screen_integrations_summary">Fiókok és szolgáltatások kezelése</string>
     <string name="missing_permission_calendar_widget">Adjon engedélyt a naptárnak a közelgő találkozók és események megjelenítéséhez.</string>
@@ -578,7 +578,7 @@
     <string name="preference_restore_default">Alapértelmezett visszaállítása</string>
     <string name="import_theme_apply">Színséma alkalmazása</string>
     <string name="shortcut_label_unavailable">Nem érhető el</string>
-    <string name="edit_tag_title">címke szerkesztése</string>
+    <string name="edit_tag_title">Címke szerkesztése</string>
     <string name="tag_exists_error">Egy ilyen nevű címke már létezik.</string>
     <string name="tag_name">Címkenév</string>
     <string name="open_search_pull_down">Lefelé húzás</string>
@@ -592,7 +592,7 @@
     <string name="missing_permission_accessibility_gesture_failed">A művelet végrehajtásához engedélyezni kell a Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
     <string name="preference_search_result_ordering_weighted">Utoljára használva</string>
     <string name="preference_search_result_ordering_weight_factor">Rugalmasság a rangsorolásban</string>
-    <string name="preference_search_result_ordering_weight_factor_low">Stabíl</string>
+    <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
     <string name="preference_mdy_color_source_system">Rendszer</string>
     <string name="preference_mdy_color_source">A dinamikus színek forrása</string>
     <string name="preference_mdy_color_source_wallpaper">Háttérkép</string>
@@ -755,7 +755,7 @@
     <string name="item_visibility_search_only">Keresési találatok</string>
     <string name="item_visibility_hidden">Soha</string>
     <string name="item_visibility_app_default">Alkalmazásrács és keresési találatok</string>
-    <string name="customize_item_visibility">Megjelenítés ebben:</string>
+    <string name="customize_item_visibility">Megjelenítés ebben</string>
     <string name="item_visibility_calendar_default">Naptár modul és keresési találatok</string>
     <string name="contact_info_home">Otthoni</string>
     <string name="contact_info_work">Munkahelyi</string>
@@ -777,7 +777,7 @@
         <item quantity="other">%1$s értesítés</item>
     </plurals>
     <string name="weather_widget_no_provider">Nincs időjárás-szolgáltató kiválasztva vagy a kiválasztott szolgáltató nem érhető el</string>
-    <string name="apps_profile_private">Privátszféra</string>
+    <string name="apps_profile_private">Privát</string>
     <string name="action_done">Kész</string>
     <string name="action_more_actions">További lehetőségek</string>
     <string name="action_clear">Kiürítés</string>
@@ -797,8 +797,8 @@
     <string name="profile_work_profile_action_unlock">Szüneteltetés feloldása</string>
     <string name="profile_work_profile_action_lock">Munka-alkalmazások szüneteltetése</string>
     <string name="profile_private_profile_action_unlock">Feloldás</string>
-    <string name="profile_private_profile_action_lock">Privátszféra lezárása</string>
-    <string name="profile_private_profile_state_locked">Privátszféra lezárva.</string>
+    <string name="profile_private_profile_action_lock">Privát szféra lezárása</string>
+    <string name="profile_private_profile_state_locked">Privát szféra lezárva.</string>
     <string name="hint_drag_and_drop_reorder">Tartsa lenyomva és húzza az elemeket az átrendezésükhöz</string>
     <string name="preference_search_supportedunits">Támogatott mértékegységek</string>
     <string name="app_label_locked_profile">Lezárva</string>
