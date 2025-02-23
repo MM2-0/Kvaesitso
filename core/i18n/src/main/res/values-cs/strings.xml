@@ -826,4 +826,5 @@
     <string name="weather_forecast_precipitation">Srážky</string>
     <string name="weather_forecast_humidity">Vlhkost</string>
     <string name="tag_empty_name">Štítek nemůže existovat bez názvu. Pokud budete pokračovat, bude štítek odstraněn.</string>
+    <string name="widget_removed">Widget odstraněn</string>
 </resources>
