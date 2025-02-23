@@ -8,9 +8,7 @@ sidebar_position: 2
 
 There are two options:
 
-1. Go to Settings > Home screen > Clock and enable "Favorites". This will display the first row of
-   pinned items
-   as part of the clock widget.
+1. Enable Settings > Home screen > Dock.
 
 2. Scroll down to the end of the widgets list, select "Edit widgets" > "Add widget" > "Favorites" to
    add
