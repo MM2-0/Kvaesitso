@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -65,16 +66,20 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.CustomClock
@@ -85,6 +90,8 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.SegmentClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreenVM
+import de.mm20.launcher2.ui.settings.gestures.GesturePreference
+import de.mm20.launcher2.ui.settings.gestures.requiresAccessibilityService
 import de.mm20.launcher2.ui.utils.isTwentyFourHours
 import org.koin.androidx.compose.inject
 
@@ -576,6 +583,29 @@ fun ConfigureClockWidgetSheet(
                             viewModel.setFillHeight(it)
                         }
                     )
+
+                    val options = buildList {
+                        add(stringResource(R.string.gesture_action_none) to GestureAction.NoAction)
+                        add(stringResource(R.string.gesture_action_alarms) to GestureAction.Alarms)
+                        add(stringResource(R.string.gesture_action_launch_app) to GestureAction.Launch(null))
+                    }
+                    val appIconSize = 32.dp.toPixels()
+                    val tapAction by viewModel.tapAction.collectAsStateWithLifecycle(null)
+                    val tapApp by viewModel.tapApp.collectAsState(null)
+                    val tapAppIcon by remember(tapApp?.key) {
+                        viewModel.getIcon(tapApp, appIconSize.toInt())
+                    }.collectAsState(null)
+                    GesturePreference(
+                        title = stringResource(R.string.preference_gesture_tap),
+                        value = tapAction,
+                        onValueChanged = { viewModel.setTapAction(it) },
+                        isOpenSearch = false,
+                        options = options,
+                        app = tapApp,
+                        appIcon = tapAppIcon,
+                        onAppChanged = { viewModel.setTapApp(it) }
+                    )
+
                     AnimatedVisibility(fillHeight == true) {
                         var showDropdown by remember { mutableStateOf(false) }
                         Preference(
