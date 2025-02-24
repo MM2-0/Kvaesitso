@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -118,6 +119,18 @@ fun SearchColumn(
     var selectedShortcutIndex: Int by remember(appShortcuts) { mutableIntStateOf(-1) }
     var selectedArticleIndex: Int by remember(wikipedia) { mutableIntStateOf(-1) }
     var selectedWebsiteIndex: Int by remember(website) { mutableIntStateOf(-1) }
+
+    val query by viewModel.searchQuery
+    LaunchedEffect(query) {
+        selectedAppProfileIndex = 0
+        selectedContactIndex = -1
+        selectedFileIndex = -1
+        selectedCalendarIndex = -1
+        selectedLocationIndex = -1
+        selectedShortcutIndex = -1
+        selectedArticleIndex = -1
+        selectedWebsiteIndex = -1
+    }
 
     val showFilters by viewModel.showFilters
 
