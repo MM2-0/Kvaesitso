@@ -21,4 +21,5 @@ class SearchFavoritesVM : FavoritesVM() {
 
     override val compactTags: Flow<Boolean> = settings.compactTags
 
+    override val tagsPosition: Flow<Boolean> = settings.tagsPosition
 }
