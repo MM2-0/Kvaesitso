@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -31,14 +32,15 @@ import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -49,6 +51,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
@@ -77,8 +80,6 @@ fun EditTagSheet(
 ) {
     val viewModel: EditTagSheetVM = viewModel()
 
-    val isCreatingNewTag = tag == null
-
     val density = LocalDensity.current
 
     LaunchedEffect(tag) {
@@ -88,48 +89,14 @@ fun EditTagSheet(
     if (viewModel.loading) return
 
     BottomSheetDialog(
-        title = {
-            Text(
-                stringResource(
-                    if (viewModel.page == EditTagSheetPage.CustomizeTag || !isCreatingNewTag) R.string.edit_tag_title
-                    else R.string.create_tag_title
-                )
-            )
-        },
-        confirmButton = if (viewModel.page == EditTagSheetPage.CustomizeTag) {
-            null
-        } else if (isCreatingNewTag) {
-            {
-                Button(
-                    enabled = (viewModel.tagName.isNotBlank() && viewModel.page == EditTagSheetPage.CreateTag && !viewModel.tagNameExists)
-                            || (viewModel.page == EditTagSheetPage.PickItems && viewModel.taggedItems.isNotEmpty()),
-                    onClick = { viewModel.onClickContinue() }) {
-                    Text(stringResource(R.string.action_next))
-                }
-            }
-        } else if (viewModel.page == EditTagSheetPage.PickItems) {
-            {
-                OutlinedButton(onClick = { viewModel.closeItemPicker() }) {
-                    Text(stringResource(id = R.string.ok))
-                }
-            }
-        } else {
-            {
-                OutlinedButton(onClick = { viewModel.closeIconPicker() }) {
-                    Text(stringResource(id = android.R.string.cancel))
-                }
-            }
-        },
+        bottomSheetState = rememberModalBottomSheetState(true),
         onDismissRequest = {
             if (viewModel.page == EditTagSheetPage.CustomizeTag) {
                 viewModel.save()
                 onTagSaved(viewModel.tagName)
             }
             onDismiss()
-        },
-        dismissible = {
-            !(!isCreatingNewTag && viewModel.page == EditTagSheetPage.PickItems)
-        },
+        }
     ) {
         when (viewModel.page) {
             EditTagSheetPage.CreateTag -> CreateNewTagPage(viewModel, it)
@@ -161,55 +128,91 @@ fun CreateNewTagPage(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
             value = viewModel.tagName,
             onValueChange = { viewModel.tagName = it }
         )
+
+        Button(
+            modifier = Modifier.align(Alignment.End),
+            enabled = (viewModel.tagName.isNotBlank() && viewModel.page == EditTagSheetPage.CreateTag && !viewModel.tagNameExists)
+                    || (viewModel.page == EditTagSheetPage.PickItems && viewModel.taggedItems.isNotEmpty()),
+            onClick = { viewModel.onClickContinue() }) {
+            Text(stringResource(R.string.action_next))
+        }
     }
 }
 
 @Composable
 fun PickItems(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
     val columns = LocalGridSettings.current.columnCount - 1
-    LazyVerticalGrid(
-        modifier = Modifier.fillMaxWidth(),
-        columns = GridCells.Fixed(columns),
-        contentPadding = paddingValues,
+
+    Scaffold (
+        contentWindowInsets = WindowInsets(0.dp),
+        modifier = Modifier.padding(paddingValues),
+        containerColor = Color.Transparent,
+        bottomBar = {
+            Surface (
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
+                shape = MaterialTheme.shapes.medium
+            ) {
+                Box {
+                    Button(
+                        onClick = { viewModel.closeItemPicker() },
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(all = 8.dp)
+                            .padding(end = 12.dp)
+                    ) {
+                        Text(stringResource(R.string.action_next))
+                    }
+                }
+            }
+        }
     ) {
-        item(span = { GridItemSpan(columns) }) {
-            Text(
-                stringResource(id = R.string.tag_select_items),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-        }
-        items(viewModel.taggableApps) {
-            val iconSize = 32.dp.toPixels()
-            val icon by remember(it.item.key) {
-                viewModel.getIcon(it.item, iconSize.toInt())
-            }.collectAsState(null)
-            ListItem(item = it, icon = icon, onTagChanged = { tagged ->
-                if (tagged) viewModel.tagItem(it.item)
-                else viewModel.untagItem(it.item)
-            })
-        }
+        LazyVerticalGrid(
+            modifier = Modifier.fillMaxWidth(),
+            columns = GridCells.Fixed(columns),
+            contentPadding = it
+        ) {
+            item(span = { GridItemSpan(columns) }) {
+                Text(
+                    stringResource(id = R.string.tag_select_items),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+            items(viewModel.taggableApps) {
+                val iconSize = 32.dp.toPixels()
+                val icon by remember(it.item.key) {
+                    viewModel.getIcon(it.item, iconSize.toInt())
+                }.collectAsState(null)
+                ListItem(item = it, icon = icon, onTagChanged = { tagged ->
+                    if (tagged) viewModel.tagItem(it.item)
+                    else viewModel.untagItem(it.item)
+                })
+            }
 
-        item(span = { GridItemSpan(columns) }) {
-            Box(
-                modifier = Modifier
-                    .padding(vertical = 8.dp)
-                    .background(MaterialTheme.colorScheme.outlineVariant)
-                    .fillMaxWidth()
-                    .height(1.dp)
-            )
-        }
+            if (viewModel.taggableOther.isNotEmpty()) {
+                item(span = { GridItemSpan(columns) }) {
+                    Box(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .background(MaterialTheme.colorScheme.outlineVariant)
+                            .fillMaxWidth()
+                            .height(1.dp)
+                    )
+                }
 
-        items(viewModel.taggableOther) {
-            val iconSize = 32.dp.toPixels()
-            val icon by remember(it.item.key) {
-                viewModel.getIcon(it.item, iconSize.toInt())
-            }.collectAsState(null)
-            ListItem(item = it, icon = icon, onTagChanged = { tagged ->
-                if (tagged) viewModel.tagItem(it.item)
-                else viewModel.untagItem(it.item)
-            })
+                items(viewModel.taggableOther) {
+                    val iconSize = 32.dp.toPixels()
+                    val icon by remember(it.item.key) {
+                        viewModel.getIcon(it.item, iconSize.toInt())
+                    }.collectAsState(null)
+                    ListItem(item = it, icon = icon, onTagChanged = { tagged ->
+                        if (tagged) viewModel.tagItem(it.item)
+                        else viewModel.untagItem(it.item)
+                    })
+                }
+            }
         }
     }
 }
@@ -284,7 +287,7 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
                     .clickable {
                         viewModel.openIconPicker()
                     }
-                    .size(56.dp)
+                    .size(72.dp)
                         then (
                         if (tagIcon != null) {
                             Modifier
@@ -327,7 +330,7 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
             OutlinedTextField(
                 modifier = Modifier.weight(1f),
                 singleLine = true,
-                placeholder = { Text(stringResource(R.string.tag_name)) },
+                label = { Text(stringResource(R.string.tag_name)) },
                 value = viewModel.tagName,
                 onValueChange = { viewModel.tagName = it },
             )
@@ -391,12 +394,14 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
                 }
             }
         }
-        AnimatedVisibility(viewModel.tagNameExists || viewModel.taggedItems.isEmpty()) {
+        AnimatedVisibility(viewModel.tagNameExists || viewModel.taggedItems.isEmpty() || viewModel.tagName.isEmpty()) {
             SmallMessage(
                 modifier = Modifier.fillMaxWidth(),
                 icon = Icons.Rounded.Warning,
                 text = stringResource(
-                    if (viewModel.taggedItems.isEmpty()) R.string.tag_no_items_message else R.string.tag_exists_message
+                    if (viewModel.taggedItems.isEmpty()) R.string.tag_no_items_message
+                    else if (viewModel.tagNameExists) R.string.tag_exists_message
+                    else R.string.tag_empty_name
                 )
             )
         }

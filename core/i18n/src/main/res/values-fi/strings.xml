@@ -584,4 +584,12 @@
     <string name="preference_search_result_ordering_alphabetic">Aakkosellinen</string>
     <string name="preference_search_result_ordering_weight_factor">Sijoittelun joustavuus</string>
     <string name="app_widget_loading_failed">Sovelluksen pienoisohjelmaa ei voitu ladata.</string>
+    <string name="location_closes">Suljetaan %1$s</string>
+    <string name="location_closes_other_day">Suljetaan %1$s, %2$s</string>
+    <string name="location_opens">Avataan %1$s</string>
+    <string name="location_opens_other_day">Avataan %1$s, %2$s</string>
+    <string name="menu_website">Avaa verkkosivu</string>
+    <string name="location_closed">Suljettu</string>
+    <string name="location_open">Avoinna</string>
+    <string name="menu_map">Näytä kartalla</string>
 </resources>

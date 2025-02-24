@@ -289,9 +289,6 @@ fun SearchActionsSettingsScreen() {
             },
             onDismiss = {
                 viewModel.dismissDialogs()
-            },
-            onDelete = {
-                viewModel.removeAction(editAction!!)
             }
         )
     }

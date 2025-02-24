@@ -20,9 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -83,7 +81,7 @@ class EditTagSheetVM : ViewModel(), KoinComponent {
         val oldName = oldTagName
         val newName = tagName
         val tagIcon = tagCustomIcon
-        if (taggedItems.isEmpty() && oldName != null) tagService.deleteTag(oldName)
+        if ((taggedItems.isEmpty() || tagName.isEmpty()) && oldName != null) tagService.deleteTag(oldName)
         else if (oldName != null) tagService.updateTag(oldName, newName = newName, items = taggedItems)
         else tagService.createTag(tagName, taggedItems)
 

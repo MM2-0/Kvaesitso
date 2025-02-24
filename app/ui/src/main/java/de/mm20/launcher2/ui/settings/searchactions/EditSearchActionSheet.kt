@@ -11,6 +11,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,9 +32,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.ManageSearch
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.RemoveCircleOutline
 import androidx.compose.material.icons.rounded.ToggleOn
 import androidx.compose.material.icons.rounded.TravelExplore
@@ -56,7 +55,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -85,8 +83,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.AppSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomIntentActionBuilder
-import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomWebsearchActionBuilder
+import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ExperimentalBadge
@@ -99,13 +97,11 @@ fun EditSearchActionSheet(
     initialSearchAction: CustomizableSearchActionBuilder?,
     onSave: (CustomizableSearchActionBuilder) -> Unit,
     onDismiss: () -> Unit,
-    onDelete: () -> Unit = {},
 ) {
     val viewModel: EditSearchActionSheetVM = viewModel()
     LaunchedEffect(initialSearchAction) {
         viewModel.init(initialSearchAction)
     }
-    val createNew by viewModel.createNew
     val page by viewModel.currentPage
 
     val searchAction by viewModel.searchAction
@@ -114,10 +110,7 @@ fun EditSearchActionSheet(
             viewModel.onDismiss()
             onDismiss()
         },
-        dismissible = {
-            page != EditSearchActionPage.PickIcon
-        },
-        confirmButton = when (page) {
+        footerItems = when (page) {
             EditSearchActionPage.CustomizeAppSearch,
             EditSearchActionPage.CustomizeWebSearch,
             EditSearchActionPage.CustomizeCustomIntent -> {
@@ -170,37 +163,6 @@ fun EditSearchActionSheet(
             }
 
             else -> null
-        },
-        actions = {
-            var showMenu by remember { mutableStateOf(false) }
-            if (!createNew) {
-                IconButton(onClick = { showMenu = !showMenu }) {
-                    Icon(imageVector = Icons.Rounded.MoreVert, contentDescription = null)
-                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(id = R.string.menu_delete)) },
-                            leadingIcon = {
-                                Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
-                            },
-                            onClick = {
-                                onDelete()
-                                showMenu = false
-                            }
-                        )
-                    }
-                }
-            }
-        },
-        title = {
-            Text(
-                stringResource(
-                    if (createNew) {
-                        R.string.create_search_action_title
-                    } else {
-                        R.string.edit_search_action_title
-                    }
-                )
-            )
         }) {
         when (page) {
             EditSearchActionPage.SelectType -> SelectTypePage(viewModel, it)
@@ -741,7 +703,7 @@ fun PickIcon(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
     if (action?.customIcon == null) {
 
         val availableIcons =
-            remember { SearchActionIcon.values().filter { it != SearchActionIcon.Custom } }
+            remember { SearchActionIcon.entries.filter { it != SearchActionIcon.Custom } }
 
         Column(
             modifier = Modifier.padding(paddingValues)
@@ -787,7 +749,7 @@ fun PickIcon(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
                 }
             }
             TextButton(
-                modifier = Modifier.padding(top = 16.dp, bottom = 24.dp),
+                modifier = Modifier.padding(vertical = 8.dp),
                 onClick = { pickIconLauncher.launch("image/*") }) {
                 Text(stringResource(R.string.websearch_dialog_custom_icon))
             }
@@ -795,7 +757,8 @@ fun PickIcon(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
     } else {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues).fillMaxWidth()
+
         ) {
             SearchActionIconTile {
                 SearchActionIcon(builder = action!!, size = 24.dp)
@@ -817,15 +780,17 @@ fun PickIcon(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
             Row(
                 modifier = Modifier
                     .padding(top = 24.dp)
-                    .horizontalScroll(rememberScrollState())
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = 16.dp,
+                    alignment = Alignment.End
+                )
             ) {
                 OutlinedButton(
-                    modifier = Modifier.padding(start = 16.dp),
                     onClick = { pickIconLauncher.launch("image/*") }) {
                     Text(stringResource(R.string.websearch_dialog_replace_icon))
                 }
                 OutlinedButton(
-                    modifier = Modifier.padding(start = 16.dp),
                     onClick = { viewModel.setIcon(SearchActionIcon.Search) },
                     colors = ButtonDefaults.outlinedButtonColors(
                         contentColor = MaterialTheme.colorScheme.error

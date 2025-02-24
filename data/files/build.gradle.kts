@@ -49,7 +49,6 @@ dependencies {
 
     implementation(project(":core:base"))
     implementation(project(":core:ktx"))
-    implementation(project(":libs:g-services"))
     implementation(project(":libs:nextcloud"))
     implementation(project(":libs:owncloud"))
     implementation(project(":core:i18n"))

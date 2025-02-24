@@ -16,17 +16,12 @@ import androidx.compose.material.icons.rounded.SettingsSuggest
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.colorpicker.HctColorPicker
 import de.mm20.launcher2.ui.component.colorpicker.rememberHctColorPickerState
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -51,17 +47,8 @@ fun CorePaletteColorPreference(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    val scope = rememberCoroutineScope()
-    val tooltipState = rememberTooltipState()
-
-    TooltipBox(
-        state = tooltipState,
-        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
-        tooltip = {
-            PlainTooltip {
-                Text(title)
-            }
-        },
+    Tooltip(
+        tooltipText = title
     ) {
         ColorSwatch(
             color = Color(value ?: defaultValue),

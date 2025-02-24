@@ -4,11 +4,11 @@
     <plurals name="unit_meter">
         <item quantity="other">公尺</item>
     </plurals>
-    <string name="unit_kilometer_symbol">公里</string>
+    <string name="unit_kilometer_symbol">km</string>
     <plurals name="unit_kilometer">
         <item quantity="other">公里</item>
     </plurals>
-    <string name="unit_centimeter_symbol">公分</string>
+    <string name="unit_centimeter_symbol">cm</string>
     <plurals name="unit_sqyard">
         <item quantity="other">平方碼</item>
     </plurals>
@@ -93,7 +93,7 @@
     </plurals>
     <string name="unit_day_symbol">d</string>
     <plurals name="unit_day">
-        <item quantity="other">天</item>
+        <item quantity="other">日</item>
     </plurals>
     <string name="unit_year_symbol">a</string>
     <plurals name="unit_year">
@@ -106,7 +106,7 @@
     <string name="unit_kilobyte_symbol">kB</string>
     <string name="unit_megabyte_symbol">MB</string>
     <plurals name="unit_megabyte">
-        <item quantity="other">兆位元組</item>
+        <item quantity="other">百萬位元組</item>
     </plurals>
     <string name="unit_gigabyte_symbol">GB</string>
     <plurals name="unit_gigabyte">
@@ -212,4 +212,21 @@
     <plurals name="unit_kelvin">
         <item quantity="other">克耳文</item>
     </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="other">公寸</item>
+    </plurals>
+    <string name="dimension_length">長度</string>
+    <string name="dimension_mass">質量</string>
+    <string name="dimension_velocity">速度</string>
+    <string name="dimension_volume">音量</string>
+    <string name="dimension_area">地區</string>
+    <string name="dimension_currency">貨幣</string>
+    <string name="dimension_data">資料</string>
+    <string name="dimension_bitrate">位元率</string>
+    <string name="dimension_pressure">壓力</string>
+    <string name="dimension_energy">能量</string>
+    <string name="dimension_frequency">頻率</string>
+    <string name="dimension_temperature">溫度</string>
+    <string name="dimension_time">時間</string>
 </resources>

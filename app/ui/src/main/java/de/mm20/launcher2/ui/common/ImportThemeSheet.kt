@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.ErrorOutline
@@ -69,21 +67,7 @@ fun ImportThemeSheet(
     val error by viewModel.error
     var apply by viewModel.apply
 
-    BottomSheetDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = if (theme != null && !error) {
-            {
-                Button(
-                    onClick = {
-                        viewModel.import()
-                        onDismiss()
-                    }
-                ) {
-                    Text(stringResource(R.string.action_import))
-                }
-            }
-        } else null,
-    ) {
+    BottomSheetDialog(onDismiss) {
         if (theme == null && !error) {
             Box(
                 modifier = Modifier
@@ -111,8 +95,8 @@ fun ImportThemeSheet(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-                    .padding(it)
+                    .padding(it),
+                horizontalAlignment = Alignment.End
             ) {
                 ThemePreview(
                     theme!!,
@@ -131,6 +115,15 @@ fun ImportThemeSheet(
                         onValueChanged = {
                             apply = it
                         })
+                }
+                Button(
+                    modifier = Modifier.padding(top = 8.dp),
+                    onClick = {
+                        viewModel.import()
+                        onDismiss()
+                    },
+                ) {
+                    Text(stringResource(R.string.action_import))
                 }
             }
         }

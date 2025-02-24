@@ -71,6 +71,14 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         text: 'Quick Actions',
         link: '/docs/user-guide/search/quickactions',
       },
+      {
+        text: 'Online Results',
+        link: '/docs/user-guide/search/online-results',
+      },
+      {
+        text: 'Filters',
+        link: '/docs/user-guide/search/filters',
+      },
     ],
   },
   {

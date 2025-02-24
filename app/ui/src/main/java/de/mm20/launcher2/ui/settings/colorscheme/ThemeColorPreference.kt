@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,21 +24,16 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,11 +55,11 @@ import de.mm20.launcher2.themes.atTone
 import de.mm20.launcher2.themes.get
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.colorpicker.HctColorPicker
 import de.mm20.launcher2.ui.component.colorpicker.rememberHctColorPickerState
 import de.mm20.launcher2.ui.ktx.hct
 import hct.Hct
-import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import de.mm20.launcher2.themes.Color as ThemeColor
 
@@ -80,25 +74,15 @@ fun ThemeColorPreference(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    val scope = rememberCoroutineScope()
-    val tooltipState = rememberTooltipState()
-
-    TooltipBox(
-        state = tooltipState,
-        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
-        tooltip = { PlainTooltip { Text(title) } }
+    Tooltip(
+        tooltipText = title
     ) {
         ColorSwatch(
             color = Color((value ?: defaultValue).get(corePalette)),
             modifier = modifier
                 .size(48.dp)
-                .combinedClickable(
+                .clickable(
                     onClick = { showDialog = true },
-                    onLongClick = {
-                        scope.launch {
-                            tooltipState.show()
-                        }
-                    }
                 ),
         )
     }

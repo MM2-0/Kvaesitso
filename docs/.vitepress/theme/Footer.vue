@@ -20,7 +20,7 @@
       </div>
     </div>
     <p class="copyright">
-      Copyright © 2024 MM2-0 and the Kvaesitso contributors. Built with
+      Copyright © 2025 MM2-0 and the Kvaesitso contributors. Built with
       VitePress.
     </p>
   </div>

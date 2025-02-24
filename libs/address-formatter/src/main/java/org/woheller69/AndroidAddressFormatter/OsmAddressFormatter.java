@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.mustachejava.*;
-import com.google.common.primitives.Ints;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.StringReader;
@@ -21,7 +20,6 @@ import java.util.HashMap;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.Function;
-import com.google.common.base.CaseFormat;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -100,12 +98,19 @@ public class OsmAddressFormatter {
     for (Map.Entry<String, Object> entry : components.entrySet()) {
       String field = entry.getKey();
       Object value = entry.getValue();
-      String newField = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, field);
+      String newField = lowerCamelToUnderscore(field);
       if (!normalizedComponents.containsKey(newField)) {
         normalizedComponents.put(newField, value);
       }
     }
     return normalizedComponents;
+  }
+
+  private String lowerCamelToUnderscore(String input) {
+    Pattern pattern = Pattern.compile("([a-z])([A-Z])");
+    Matcher matcher = pattern.matcher(input);
+    String result = matcher.replaceAll("$1_$2");
+    return result.toLowerCase();
   }
 
   Map<String, Object> determineCountryCode(Map<String, Object> components,
@@ -194,7 +199,7 @@ public class OsmAddressFormatter {
     Object country = components.get("country");
     Object state = components.get("state");
 
-    if (country != null && state != null && Ints.tryParse((String) country) != null) {
+    if (country != null && state != null && Kt.toIntOrNull((String) country) != null) {
       components.put("country", state);
       components.remove("state");
     }

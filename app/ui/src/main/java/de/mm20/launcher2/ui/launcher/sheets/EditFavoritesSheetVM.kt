@@ -86,6 +86,8 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
                 .map { Tag(it) }
         this.pinnedTags.value = pinnedTags
 
+        createShortcutTarget.value = null
+
         buildItemList()
         loading.value = false
     }

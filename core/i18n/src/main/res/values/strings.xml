@@ -229,6 +229,7 @@
     <string name="widget_name_notes">Note</string>
     <string name="widget_name_unknown">Unknown app widget</string>
     <string name="widget_add_widget">Add widget</string>
+    <string name="widget_removed">Widget removed</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Write a note…</string>
     <string name="notes_widget_action_new">New note</string>
@@ -732,6 +733,7 @@
     <string name="tag_exists_error">A tag with this name already exists.</string>
     <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged.</string>
     <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted.</string>
+    <string name="tag_empty_name">A tag cannot exist without a name. If you continue, the tag will be deleted.</string>
     <string name="tag_select_items">Select items:</string>
     <string name="tag_name">Tag name</string>
     <plurals name="tag_selected_items">
@@ -957,7 +959,7 @@
     <string name="poi_category_fire_station">Fire station</string>
     <string name="poi_category_courthouse">Courthouse</string>
     <string name="poi_category_townhall">Townhall</string>
-    <string name="preference_search_locations_radius_large_radius_warning">Large search radii can significantly slow down the search.</string>
+    <string name="preference_search_locations_radius_large_radius_warning">Large search radius can significantly slow down the search.</string>
     <string name="customize_item_label">Label</string>
     <string name="customize_item_tags">Tags</string>
     <string name="customize_item_visibility">Show in</string>
@@ -1006,4 +1008,7 @@
         <item quantity="other">%1$s lists selected</item>
     </plurals>
     <string name="reset_icon">Reset icon</string>
+    <string name="weather_forecast_humidity">Humidity</string>
+    <string name="weather_forecast_wind">Wind</string>
+    <string name="weather_forecast_precipitation">Precipitation</string>
 </resources>

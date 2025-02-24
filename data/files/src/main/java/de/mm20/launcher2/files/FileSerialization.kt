@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
-import de.mm20.launcher2.files.providers.GDriveFile
 import de.mm20.launcher2.files.providers.LocalFile
 import de.mm20.launcher2.files.providers.NextcloudFile
 import de.mm20.launcher2.files.providers.OwncloudFile
@@ -104,66 +103,6 @@ internal class LocalFileDeserializer(
         }
         cursor.close()
         return null
-    }
-}
-
-internal class GDriveFileSerializer : SearchableSerializer {
-    override fun serialize(searchable: SavableSearchable): String {
-        searchable as GDriveFile
-        return jsonObjectOf(
-            "id" to searchable.fileId,
-            "label" to searchable.label,
-            "path" to searchable.path,
-            "mimeType" to searchable.mimeType,
-            "size" to searchable.size,
-            "directory" to searchable.isDirectory,
-            "color" to searchable.directoryColor,
-            "uri" to searchable.viewUri
-        ).apply {
-            for ((k, v) in searchable.metaData) {
-                put(
-                    when (k) {
-                        FileMetaType.Owner -> "owner"
-                        FileMetaType.Dimensions -> "dimensions"
-                        else -> "other"
-                    }, v
-                )
-            }
-        }.toString()
-    }
-
-    override val typePrefix: String
-        get() = "gdrive"
-}
-
-internal class GDriveFileDeserializer : SearchableDeserializer {
-    override suspend fun deserialize(serialized: String): SavableSearchable {
-        val json = JSONObject(serialized)
-        val id = json.getString("id")
-        val label = json.getString("label")
-        val path = json.getString("path")
-        val mimeType = json.getString("mimeType")
-        val size = json.getLong("size")
-        val directory = json.getBoolean("directory")
-        val color = json.optString("color")
-        val uri = json.getString("uri")
-        val owner = json.optString("owner")
-        val dimensions = json.optString("dimensions")
-        val metaData = mutableMapOf<FileMetaType, String>()
-        owner.takeIf { it.isNotEmpty() }?.let { metaData[FileMetaType.Owner] = it }
-        dimensions.takeIf { it.isNotEmpty() }
-            ?.let { metaData[FileMetaType.Dimensions] = it }
-        return GDriveFile(
-            fileId = id,
-            label = label,
-            path = path,
-            mimeType = mimeType,
-            size = size,
-            directoryColor = color,
-            isDirectory = directory,
-            viewUri = uri,
-            metaData = metaData.toImmutableMap()
-        )
     }
 }
 
