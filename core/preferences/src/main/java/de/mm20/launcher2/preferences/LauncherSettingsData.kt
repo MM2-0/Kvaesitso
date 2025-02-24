@@ -31,10 +31,10 @@ data class LauncherSettingsData internal constructor(
     @SerialName("clockWidgetStyle2")
     internal val clockWidgetStyle: ClockWidgetStyleEnum = ClockWidgetStyleEnum.Digital1,
     val clockWidgetDigital1: ClockWidgetStyle.Digital1 = ClockWidgetStyle.Digital1(),
-    val clockWidgetBinary: ClockWidgetStyle.Binary = ClockWidgetStyle.Binary(),
     val clockWidgetCustom: ClockWidgetStyle.Custom = ClockWidgetStyle.Custom(),
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
     val clockWidgetShowSeconds: Boolean = false,
+    val clockWidgetTimeFormat: TimeFormat = TimeFormat.System,
     val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
     val clockWidgetBatteryPart: Boolean = true,
@@ -251,9 +251,7 @@ sealed interface ClockWidgetStyle {
 
     @Serializable
     @SerialName("binary")
-    data class Binary(
-        val twentyfourhour: Boolean = false,
-    ) : ClockWidgetStyle
+    data object Binary : ClockWidgetStyle
 
     @Serializable
     @SerialName("segment")
@@ -411,4 +409,11 @@ enum class KeyboardFilterBarItem {
     @SerialName("events") Events,
     @SerialName("tools") Tools,
     @SerialName("hidden") HiddenResults,
+}
+
+@Serializable
+enum class TimeFormat {
+    @SerialName("system") System,
+    @SerialName("12h") TwelveHour,
+    @SerialName("24h") TwentyFourHour
 }

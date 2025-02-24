@@ -5,6 +5,7 @@ import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.preferences.ClockWidgetStyleEnum
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.TimeFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -96,7 +97,7 @@ class ClockWidgetSettings internal constructor(
                 ClockWidgetStyleEnum.Digital2 -> ClockWidgetStyle.Digital2
                 ClockWidgetStyleEnum.Orbit -> ClockWidgetStyle.Orbit
                 ClockWidgetStyleEnum.Analog -> ClockWidgetStyle.Analog
-                ClockWidgetStyleEnum.Binary -> it.clockWidgetBinary
+                ClockWidgetStyleEnum.Binary -> ClockWidgetStyle.Binary
                 ClockWidgetStyleEnum.Segment -> ClockWidgetStyle.Segment
                 ClockWidgetStyleEnum.Empty -> ClockWidgetStyle.Empty
                 ClockWidgetStyleEnum.Custom -> it.clockWidgetCustom
@@ -106,9 +107,6 @@ class ClockWidgetSettings internal constructor(
     val digital1: Flow<ClockWidgetStyle.Digital1>
         get() = launcherDataStore.data.map { it.clockWidgetDigital1 }
 
-    val binary: Flow<ClockWidgetStyle.Binary>
-        get() = launcherDataStore.data.map { it.clockWidgetBinary }
-
     val custom: Flow<ClockWidgetStyle.Custom>
         get() = launcherDataStore.data.map { it.clockWidgetCustom }
 
@@ -117,7 +115,6 @@ class ClockWidgetSettings internal constructor(
             it.copy(
                 clockWidgetStyle = clockStyle.enumValue,
                 clockWidgetDigital1 = if (clockStyle is ClockWidgetStyle.Digital1) clockStyle else it.clockWidgetDigital1,
-                clockWidgetBinary = if (clockStyle is ClockWidgetStyle.Binary) clockStyle else it.clockWidgetBinary,
                 clockWidgetCustom = if (clockStyle is ClockWidgetStyle.Custom) clockStyle else it.clockWidgetCustom,
             )
         }
@@ -138,6 +135,15 @@ class ClockWidgetSettings internal constructor(
     fun setShowSeconds(enabled: Boolean) {
         launcherDataStore.update {
             it.copy(clockWidgetShowSeconds = enabled)
+        }
+    }
+
+    val timeFormat
+        get() = launcherDataStore.data.map { it.clockWidgetTimeFormat }
+
+    fun setTimeFormat(timeFormat: TimeFormat) {
+        launcherDataStore.update {
+            it.copy(clockWidgetTimeFormat = timeFormat)
         }
     }
 

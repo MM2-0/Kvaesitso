@@ -13,16 +13,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import de.mm20.launcher2.ui.utils.isTwentyFourHours
 import java.util.Calendar
 
 @Composable
 fun BinaryClock(
     time: Long,
-    style: ClockWidgetStyle.Binary = ClockWidgetStyle.Binary(),
     compact: Boolean,
+    twentyFourHours: Boolean,
     showSeconds: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
@@ -32,8 +35,8 @@ fun BinaryClock(
     date.timeInMillis = time
     val second = date[Calendar.SECOND]
     val minute = date[Calendar.MINUTE]
-    var hour = date[if(!style.twentyfourhour) Calendar.HOUR else Calendar.HOUR_OF_DAY]
-    if (!style.twentyfourhour && hour == 0) hour = 12
+    var hour = date[if(!twentyFourHours) Calendar.HOUR else Calendar.HOUR_OF_DAY]
+    if (!twentyFourHours && hour == 0) hour = 12
 
     val color = if (useThemeColor) {
         if (!darkColors) {
@@ -58,11 +61,11 @@ fun BinaryClock(
             Row(
                 modifier = Modifier.padding(start = 0.dp, top = 24.dp, end = 0.dp, bottom = 6.dp)
             ) {
-                for (i in 0 until if (style.twentyfourhour) 11 else 10) {
-                    val active = if (i < if (style.twentyfourhour) 5 else 4) {
-                        hour and (1 shl ((if (style.twentyfourhour) 4 else 3) - i)) != 0
+                for (i in 0 until if (twentyFourHours) 11 else 10) {
+                    val active = if (i < if (twentyFourHours) 5 else 4) {
+                        hour and (1 shl ((if (twentyFourHours) 4 else 3) - i)) != 0
                     } else {
-                        minute and (1 shl ((if (style.twentyfourhour) 10 else 9) - i)) != 0
+                        minute and (1 shl ((if (twentyFourHours) 10 else 9) - i)) != 0
                     }
                     Box(
                         modifier = Modifier
@@ -72,7 +75,7 @@ fun BinaryClock(
                                 if (active) color else disabledColor
                             )
                     )
-                    if (i == if (style.twentyfourhour) 4 else 3) {
+                    if (i == if (twentyFourHours) 4 else 3) {
                         Box(Modifier.size(8.dp))
                     }
                 }
@@ -100,8 +103,8 @@ fun BinaryClock(
             horizontalAlignment = Alignment.End
         ) {
             Row {
-                for (i in 0 until if (style.twentyfourhour) 5 else 4) {
-                    val active = hour and (1 shl ((if (style.twentyfourhour) 4 else 3) - i)) != 0
+                for (i in 0 until if (twentyFourHours) 5 else 4) {
+                    val active = hour and (1 shl ((if (twentyFourHours) 4 else 3) - i)) != 0
                     Box(
                         modifier = Modifier
                             .padding( 4.dp)

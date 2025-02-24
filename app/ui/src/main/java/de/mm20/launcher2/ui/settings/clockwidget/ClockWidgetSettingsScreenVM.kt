@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -21,14 +22,14 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setCompact(compact)
     }
 
-    val availableClockStyles = combine(settings.digital1, settings.binary, settings.custom) {digital1, binary, custom ->
+    val availableClockStyles = combine(settings.digital1, settings.custom) { digital1, custom ->
         listOf(
             digital1,
             ClockWidgetStyle.Digital2,
             ClockWidgetStyle.Analog,
             ClockWidgetStyle.Orbit,
             ClockWidgetStyle.Segment,
-            binary,
+            ClockWidgetStyle.Binary,
             custom,
             ClockWidgetStyle.Empty,
         )
@@ -52,6 +53,13 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setShowSeconds(showSeconds: Boolean) {
         settings.setShowSeconds(showSeconds)
+    }
+
+    val timeFormat = settings.timeFormat
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), TimeFormat.System)
+
+    fun setTimeFormat(timeFormat: TimeFormat) {
+        settings.setTimeFormat(timeFormat)
     }
 
     val useThemeColor = settings.useThemeColor
