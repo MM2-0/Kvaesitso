@@ -73,7 +73,6 @@ import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.BottomSheetDialog
-import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
@@ -168,7 +167,8 @@ fun ClockWidget(
                 Box(
                     modifier = Modifier
                         .then(if (fillScreenHeight) Modifier.weight(1f) else Modifier)
-                        .fillMaxWidth().padding(horizontal = if (compact == true) 0.dp else 24.dp),
+                        .fillMaxWidth()
+                        .padding(horizontal = if (compact == true) 0.dp else 24.dp),
                     contentAlignment = when (alignment) {
                         ClockWidgetAlignment.Center -> Alignment.Center
                         ClockWidgetAlignment.Top -> Alignment.TopCenter
@@ -281,20 +281,21 @@ fun Clock(
 
     when (style) {
         is ClockWidgetStyle.Digital1 -> DigitalClock1(
-            time,
-            style,
-            compact,
-            showSeconds,
-            useThemeColor,
-            darkColors
+            time = time,
+            compact = compact,
+            showSeconds = showSeconds,
+            twentyFourHours = isTwentyFourHours,
+            useThemeColor = useThemeColor,
+            darkColors = darkColors,
         )
 
         is ClockWidgetStyle.Digital2 -> DigitalClock2(
-            time,
-            compact,
-            showSeconds,
-            useThemeColor,
-            darkColors
+            time = time,
+            compact = compact,
+            showSeconds = showSeconds,
+            twentyFourHours = isTwentyFourHours,
+            useThemeColor = useThemeColor,
+            darkColors = darkColors,
         )
 
         is ClockWidgetStyle.Binary -> BinaryClock(
@@ -315,19 +316,21 @@ fun Clock(
         )
 
         is ClockWidgetStyle.Orbit -> OrbitClock(
-            time,
-            compact,
-            showSeconds,
-            useThemeColor,
-            darkColors
+            time = time,
+            compact = compact,
+            showSeconds = showSeconds,
+            twentyFourHours = isTwentyFourHours,
+            useThemeColor = useThemeColor,
+            darkColors = darkColors,
         )
 
         is ClockWidgetStyle.Segment -> SegmentClock(
-            time,
-            compact,
-            showSeconds,
-            useThemeColor,
-            darkColors
+            time = time,
+            compact = compact,
+            showSeconds = showSeconds,
+            twentyFourHours = isTwentyFourHours,
+            useThemeColor = useThemeColor,
+            darkColors = darkColors,
         )
 
         is ClockWidgetStyle.Custom -> CustomClock(style, compact, useThemeColor, darkColors)
@@ -507,11 +510,15 @@ fun ConfigureClockWidgetSheet(
                             }
                         )
                     }
-                    AnimatedVisibility(style is ClockWidgetStyle.Binary) {
+                    AnimatedVisibility(
+                        style !is ClockWidgetStyle.Analog &&
+                                style !is ClockWidgetStyle.Custom &&
+                                style !is ClockWidgetStyle.Empty
+                    ) {
                         var showDropdown by remember { mutableStateOf(false) }
                         Preference(
                             title = stringResource(R.string.preference_clock_widget_time_format),
-                            summary = when(timeFormat) {
+                            summary = when (timeFormat) {
                                 TimeFormat.TwelveHour -> stringResource(R.string.preference_clock_widget_time_format_12h)
                                 TimeFormat.TwentyFourHour -> stringResource(R.string.preference_clock_widget_time_format_24h)
                                 TimeFormat.System -> stringResource(R.string.preference_clock_widget_time_format_system)

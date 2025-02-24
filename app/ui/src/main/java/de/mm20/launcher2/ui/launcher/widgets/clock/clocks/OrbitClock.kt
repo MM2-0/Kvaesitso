@@ -48,6 +48,7 @@ fun OrbitClock(
     time: Long,
     compact: Boolean,
     showSeconds: Boolean,
+    twentyFourHours: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
 ) {
@@ -59,7 +60,7 @@ fun OrbitClock(
     val minute = parsed.minute
     val hour = parsed.hour
     val formattedHour = (
-            if (DateFormat.is24HourFormat(LocalContext.current))
+            if (twentyFourHours)
                 hour
             else {
                 ((hour + 11) % 12) + 1
