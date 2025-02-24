@@ -13,7 +13,6 @@ import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.inject
 
 @Composable
