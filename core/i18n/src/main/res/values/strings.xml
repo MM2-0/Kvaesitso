@@ -567,6 +567,10 @@
     <string name="preference_clockwidget_layout_vertical">Default</string>
     <string name="preference_clockwidget_layout_horizontal">Compact</string>
     <string name="preference_clock_widget_show_seconds">Show seconds</string>
+    <string name="preference_clock_widget_time_format">Time format</string>
+    <string name="preference_clock_widget_time_format_24h">24-hour</string>
+    <string name="preference_clock_widget_time_format_12h">12-hour</string>
+    <string name="preference_clock_widget_time_format_system">System default</string>
     <string name="widget_use_theme_colors">Use theme color</string>
     <string name="preference_clock_widget_fill_height">Fill screen height</string>
     <string name="preference_clock_widget_alignment">Alignment</string>
