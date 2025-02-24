@@ -99,12 +99,14 @@ class ProfileManager(
             val profiles = mutableListOf<ProfileWithState>()
 
             for (userHandle in launcherApps.profiles) {
+                val serial = userManager.getSerialNumberForUser(userHandle)
+                if (android.os.Build.MANUFACTURER == "samsung" && serial == 150L) continue // Hide Samsung Secure Folder
                 profiles.add(
                     ProfileWithState(
                         Profile(
                             type = getProfileType(userHandle),
                             userHandle = userHandle,
-                            serial = userManager.getSerialNumberForUser(userHandle),
+                            serial = serial,
                         ),
                         getProfileState(userHandle),
                     )
