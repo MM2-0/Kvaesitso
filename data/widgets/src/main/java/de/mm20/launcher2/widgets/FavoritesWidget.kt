@@ -11,6 +11,7 @@ data class FavoritesWidgetConfig(
     val editButton: Boolean = true,
     val tagsMultiline: Boolean = false,
     val compactTags: Boolean = false,
+    val tagsPosition: Boolean = false,
 )
 
 data class FavoritesWidget(
