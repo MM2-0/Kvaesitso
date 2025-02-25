@@ -33,6 +33,7 @@ fun DigitalClock1(
     time: Long,
     style: ClockWidgetStyle.Digital1 = ClockWidgetStyle.Digital1(),
     compact: Boolean,
+    twentyFourHours: Boolean,
     showSeconds: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
@@ -40,10 +41,10 @@ fun DigitalClock1(
     val verticalLayout = !compact
     val format = SimpleDateFormat(
         when {
-            DateFormat.is24HourFormat(LocalContext.current) && verticalLayout -> {
+            twentyFourHours && verticalLayout -> {
                 "HH\nmm"
             }
-            DateFormat.is24HourFormat(LocalContext.current) -> {
+            twentyFourHours -> {
                 "HH mm"
             }
             verticalLayout -> {

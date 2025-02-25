@@ -833,4 +833,5 @@
         <item quantity="other">%1$s нумароў тэлефону</item>
     </plurals>
     <string name="weather_widget_no_provider">Правайдара надвор\'я не выбрана, альбо выбраны правайдар недаступны</string>
+    <string name="widget_removed">Віджэт выдалены</string>
 </resources>

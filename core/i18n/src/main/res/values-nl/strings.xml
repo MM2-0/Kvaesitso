@@ -817,4 +817,5 @@
     <string name="weather_forecast_wind">Wind</string>
     <string name="weather_forecast_precipitation">Neerslag</string>
     <string name="tag_empty_name">Een label kan niet bestaan zonder een naam. Als je doorgaat, wordt het label verwijderd.</string>
+    <string name="widget_removed">Widget verwijderd</string>
 </resources>

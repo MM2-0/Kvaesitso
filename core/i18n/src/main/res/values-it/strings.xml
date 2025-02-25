@@ -822,4 +822,9 @@
     <string name="reset_icon">Reimposta icona</string>
     <string name="preference_compact_tags">Tag compatti</string>
     <string name="preference_compact_tags_summary">Nascondi le etichette o le icone dei tag per ridurre lo spazio occupato dai tag</string>
+    <string name="weather_forecast_humidity">Umidità</string>
+    <string name="weather_forecast_precipitation">Precipitazione</string>
+    <string name="weather_forecast_wind">Vento</string>
+    <string name="widget_removed">Widget rimosso</string>
+    <string name="tag_empty_name">Un tag non può esistere senza un nome. Se continui, il tag verrà eliminato.</string>
 </resources>
