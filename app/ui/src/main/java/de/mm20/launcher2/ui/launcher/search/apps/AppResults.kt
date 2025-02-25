@@ -54,7 +54,7 @@ fun LazyListScope.AppResults(
 
     GridResults(
         key = "apps",
-        items = apps,
+        items = apps.filter { it.user == profiles[selectedProfileIndex].userHandle },
         before = if (profiles.size > 1) {
             {
                 Column(
