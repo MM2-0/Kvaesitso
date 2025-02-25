@@ -107,9 +107,9 @@
     <string name="alert_delete_shortcut">捷徑 %1$s 將被永久移除。繼續？</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
-    <string name="default_websearch_3_name">Google Play商店</string>
+    <string name="default_websearch_3_name">Google Play</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="websearch_dialog_url_error">此 URL 中缺少預留位置’${1}‘</string>
+    <string name="websearch_dialog_url_error">此 URL 中缺少預留位置『${1}』</string>
     <string name="websearch_dialog_replace_icon">替換圖示</string>
     <string name="websearch_dialog_delete_icon">刪除圖示</string>
     <string name="websearch_dialog_custom_icon">自訂圖示</string>
@@ -145,7 +145,7 @@
     <string name="edit_favorites_dialog_tag_section_empty">被釘選的標籤將出現在這裡</string>
     <string name="edit_favorites_dialog_new_tag">建立標籤…</string>
     <string name="nextcloud_server_url">Nextcloud 伺服器 URL</string>
-    <string name="nextcloud_server_url_empty">伺服器URL禁止為空</string>
+    <string name="nextcloud_server_url_empty">伺服器 URL 禁止為空</string>
     <string name="nextcloud_server_invalid_url">此 URL 不能指向一個有效的 Nextcloud 安裝器</string>
     <string name="owncloud_server_url">Owncloud 伺服器 URL</string>
     <string name="owncloud_server_invalid_url">此 URL 不能指向一個有效的 Owncloud 安裝器</string>
@@ -376,12 +376,12 @@
     <string name="preference_search_localfiles">本機檔案</string>
     <string name="preference_search_localfiles_summary">搜尋儲存在此裝置上的文件、照片與其它檔案</string>
     <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">在Google Drive上搜尋 %1$s</string>
+    <string name="preference_search_gdrive_summary">在 Google Drive 上搜尋 %1$s</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">搜尋%1$s的檔案</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_google_signin">使用 Google 登入</string>
-    <string name="preference_google_signin_summary">登入以查詢 Google Drive</string>
+    <string name="preference_google_signin_summary">登入以搜尋 Google Drive</string>
     <string name="preference_calendar_calendars">日曆</string>
     <string name="preference_calendar_hide_allday">隱藏全天事件</string>
     <string name="preference_screen_buildinfo_summary">有關此版本應用程式的更多資訊</string>
@@ -478,10 +478,10 @@
     <string name="login_flow_login">登入</string>
     <string name="icon_picker_no_packs_installed">未安裝任何圖示包</string>
     <plurals name="calendar_widget_running_events">
-        <item quantity="other">從過去%1$d天運行的事件</item>
+        <item quantity="other">從過去 %1$d 天運行的事件</item>
     </plurals>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="other">已刪除%1$d條目。</item>
+        <item quantity="other">已刪除 %1$d 個條目。</item>
     </plurals>
     <string name="preference_search_bar_launch_on_enter">輸入時啟動</string>
     <string name="preference_search_bar_launch_on_enter_summary">在點擊「前往」後啟動突顯顯示的匹配項或快速操作</string>
@@ -489,7 +489,7 @@
         <item quantity="other">%1$s 分鐘內完成</item>
     </plurals>
     <plurals name="tag_selected_items">
-        <item quantity="other">已選擇 %1$d 項目</item>
+        <item quantity="other">已選擇 %1$d 個項目</item>
     </plurals>
     <string name="gesture_action_launch_app">啟動應用程式</string>
     <string name="icon_picker_filter_all_packs">所有圖示包</string>
@@ -576,7 +576,7 @@
     <string name="length_unit">長度單位</string>
     <string name="preference_search_location_custom_overpass_url">Overpass URL</string>
     <plurals name="app_info_notifications">
-        <item quantity="other">%1$s 通知</item>
+        <item quantity="other">%1$s 個通知</item>
     </plurals>
     <string name="weather_widget_no_provider">沒有天氣服務商被選擇或者選擇的服務商不可用</string>
     <string name="preference_screen_plugins_summary">管理已安裝的擴充套件</string>
@@ -748,7 +748,7 @@
     <string name="profile_private_profile_state_locked">私人空間被鎖定。</string>
     <string name="profile_work_profile_action_lock">暫停工作應用程式</string>
     <plurals name="contact_phone_numbers">
-        <item quantity="other">%1$s電話號碼</item>
+        <item quantity="other">%1$s 個電話號碼</item>
     </plurals>
     <string name="poi_category_handball">手球場</string>
     <string name="apps_profile_private">私人</string>
@@ -782,10 +782,10 @@
     <string name="item_visibility_app_default">應用程式網格 &amp; 搜尋結果</string>
     <string name="calendar_widget_open_calendar">開啟日曆應用程式</string>
     <plurals name="contact_email_addresses">
-        <item quantity="other">%1$s電子郵件位址</item>
+        <item quantity="other">%1$s 個電子郵件位址</item>
     </plurals>
     <plurals name="contact_postal_addresses">
-        <item quantity="other">%1$s郵政地址</item>
+        <item quantity="other">%1$s 個郵政地址</item>
     </plurals>
     <string name="poi_category_gymnastics">體操場</string>
     <string name="poi_category_monument">紀念碑</string>
@@ -804,6 +804,11 @@
     <string name="music_widget_previous_track">上一首</string>
     <string name="music_widget_next_track">下一首</string>
     <plurals name="calendar_search_enabled_lists">
-        <item quantity="other">已選擇 %1$s 列表</item>
+        <item quantity="other">已選擇 %1$s 個列表</item>
     </plurals>
+    <string name="preference_clock_widget_time_format_24h">24 小時制</string>
+    <string name="preference_clock_widget_time_format_12h">12 小時制</string>
+    <string name="preference_clock_widget_time_format_system">系統預設</string>
+    <string name="preference_clock_widget_time_format">時間格式</string>
+    <string name="widget_removed">小工具已移除</string>
 </resources>
