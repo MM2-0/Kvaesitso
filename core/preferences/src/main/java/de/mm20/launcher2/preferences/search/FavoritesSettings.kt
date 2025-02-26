@@ -48,4 +48,11 @@ class FavoritesSettings internal constructor(
     fun setCompactTags(compactTags: Boolean) {
         dataStore.update { it.copy(favoritesCompactTags = compactTags) }
     }
+
+    val tagsPosition: Flow<Boolean>
+        get() = dataStore.data.map { it.favoritesTagsPosition }.distinctUntilChanged()
+
+    fun setTagsPosition(tagsPosition: Boolean) {
+        dataStore.update { it.copy(favoritesTagsPosition = tagsPosition) }
+    }
 }

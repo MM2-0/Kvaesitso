@@ -50,6 +50,7 @@ data class LauncherSettingsData internal constructor(
     val favoritesFrequentlyUsedRows: Int = 1,
     val favoritesEditButton: Boolean = true,
     val favoritesCompactTags: Boolean = false,
+    val favoritesTagsPosition: Boolean = false,
 
     val fileSearchProviders: Set<String> = setOf("local"),
 
