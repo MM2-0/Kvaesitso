@@ -47,6 +47,11 @@ internal class MassConverter(context: Context): SimpleFactorConverter() {
                     1000.0 / (453.59237 * 2000.0),
                     context.getString(R.string.unit_short_ton_symbol),
                     R.plurals.unit_short_ton
+            ),
+            MeasureUnitWithFactor(
+                    2.176434e-8,
+                    context.getString(R.string.unit_planck_mass_symbol),
+                    R.plurals.unit_planck_mass
             )
     )
 
