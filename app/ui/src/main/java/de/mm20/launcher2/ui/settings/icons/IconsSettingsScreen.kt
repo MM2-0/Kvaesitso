@@ -428,6 +428,10 @@ fun IconShapePreference(
                                     modifier = Modifier.clip(getShape(it))
                                         .size(48.dp)
                                         .background(MaterialTheme.colorScheme.primary)
+                                        .clickable {
+                                            onValueChanged(it)
+                                            showDialog = false
+                                        }
                                 )
                                 Text(
                                     getShapeName(it) ?: "",
