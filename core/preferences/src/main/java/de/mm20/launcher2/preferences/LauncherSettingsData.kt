@@ -42,6 +42,7 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetDatePart: Boolean = true,
     val clockWidgetFillHeight: Boolean = true,
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
+    val clockTapAction: GestureAction = GestureAction.Alarms,
 
     val homeScreenDock: Boolean = false,
 
@@ -373,6 +374,10 @@ sealed interface GestureAction {
     @Serializable
     @SerialName("launch_searchable")
     data class Launch(val key: String?) : GestureAction
+
+    @Serializable
+    @SerialName("alarms")
+    data object Alarms : GestureAction
 }
 
 
