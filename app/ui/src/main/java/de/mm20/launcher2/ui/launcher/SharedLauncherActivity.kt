@@ -24,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
@@ -44,6 +43,7 @@ import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.gestures.GestureDetector
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffold
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
@@ -227,7 +227,7 @@ abstract class SharedLauncherActivity(
                                         }
                                     }
                                     BaseLayout.Ng -> {
-                                        NgScaffold()
+                                        LauncherScaffold()
                                     }
 
                                     else -> {}
