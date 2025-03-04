@@ -1,7 +1,9 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
 
+import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -14,6 +16,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -116,8 +120,8 @@ fun ClockWidget(
         viewModel.updateTime(time)
     }
 
-    val partProvider by remember { viewModel.getActivePart(context) }.collectAsStateWithLifecycle(
-        null
+    val partProvider by remember { viewModel.getActiveParts(context) }.collectAsStateWithLifecycle(
+        listOf()
     )
 
     AnimatedContent(editMode, label = "ClockWidget") {
@@ -194,11 +198,18 @@ fun ClockWidget(
                                     Clock(clockStyle, false, darkColors)
                                 }
 
-                                if (partProvider != null) {
+                                val pagerState = rememberPagerState { partProvider.size }
+
+                                HorizontalPager(
+                                    modifier = Modifier.animateContentSize(),
+                                    state = pagerState,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) { page ->
                                     DynamicZone(
-                                        modifier = Modifier.padding(bottom = 8.dp),
+                                        modifier = Modifier.padding(bottom = 8.dp).fillMaxWidth(),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
                                         compact = false,
-                                        provider = partProvider,
+                                        provider = partProvider[page],
                                     )
                                 }
                             }
@@ -211,11 +222,17 @@ fun ClockWidget(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                if (partProvider != null) {
+                                val pagerState = rememberPagerState { partProvider.size }
+                                HorizontalPager(
+                                    modifier = Modifier.animateContentSize()
+                                        .weight(1f),
+                                    state = pagerState,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) { page ->
                                     DynamicZone(
-                                        modifier = Modifier.weight(1f),
+                                        horizontalAlignment = Alignment.Start,
                                         compact = true,
-                                        provider = partProvider,
+                                        provider = partProvider[page],
                                     )
                                 }
                                 if (clockStyle !is ClockWidgetStyle.Empty) {
@@ -342,11 +359,14 @@ fun Clock(
 @Composable
 fun DynamicZone(
     modifier: Modifier = Modifier,
+    horizontalAlignment: Alignment.Horizontal,
     compact: Boolean,
     provider: PartProvider?,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
+        horizontalAlignment = horizontalAlignment,
+        verticalArrangement = Arrangement.Center
     ) {
         provider?.Component(compact)
     }

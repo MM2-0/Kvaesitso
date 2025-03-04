@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -35,18 +36,17 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
         providers
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-    fun getActivePart(context: Context): Flow<PartProvider?> = channelFlow {
-        partProviders.collectLatest { providers ->
-            if (providers.isEmpty()) {
-                send(null)
-                return@collectLatest
-            }
+    fun getActiveParts(context: Context): Flow<List<PartProvider>> = channelFlow {
+        combine(partProviders, partProviders.map { it.map { it.getRanking(context) }.merge() }) { providers, _ ->
+            providers
+        }.collectLatest { providers ->
             val rankings = providers.map { it.getRanking(context).map { r -> r to it } }
             combine(rankings) { r ->
-                r.filter { it.first > 0 }.maxByOrNull { it.first }?.second
-            }.collectLatest {
-                send(it)
-            }
+                r.toList()
+                    .filter { it.first > 0 }
+                    .sortedByDescending { it.first }
+                    .map { it.second }
+            }.collectLatest { send(it) }
         }
     }
 
