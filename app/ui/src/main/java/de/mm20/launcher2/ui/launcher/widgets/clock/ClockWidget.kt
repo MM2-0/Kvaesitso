@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
 
-import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
