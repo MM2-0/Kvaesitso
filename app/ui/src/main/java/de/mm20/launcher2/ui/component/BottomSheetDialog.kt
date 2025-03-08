@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -21,6 +22,7 @@ fun BottomSheetDialog(
     content: @Composable (paddingValues: PaddingValues) -> Unit,
 ) {
     ModalBottomSheet(
+        modifier = Modifier.statusBarsPadding().padding(top = 8.dp),
         sheetState = bottomSheetState,
         onDismissRequest = onDismissRequest,
     ) {
