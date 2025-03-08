@@ -61,6 +61,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                 showLabels = false,
                 columns = columns.coerceAtMost(favorites.size),
                 transitionKey = null,
+                showList = false,
             )
         }
     }

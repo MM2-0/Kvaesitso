@@ -2,6 +2,7 @@ package de.mm20.launcher2.preferences
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
@@ -21,6 +22,7 @@ internal object LauncherSettingsDataSerializer : Serializer<LauncherSettingsData
     override val defaultValue: LauncherSettingsData
         get() = LauncherSettingsData(schemaVersion = 0)
 
+    @OptIn(ExperimentalSerializationApi::class)
     override suspend fun readFrom(input: InputStream): LauncherSettingsData {
         try {
             return json.decodeFromStream(input)
