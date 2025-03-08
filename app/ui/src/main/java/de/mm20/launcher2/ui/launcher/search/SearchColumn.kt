@@ -107,6 +107,7 @@ fun SearchColumn(
     val compactTags by favoritesVM.compactTags.collectAsState(false)
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
+    val tagsPosition by favoritesVM.tagsPosition.collectAsState(false)
 
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
@@ -169,7 +170,8 @@ fun SearchColumn(
                             favoritesVM.setTagsExpanded(it)
                         },
                         compactTags = compactTags,
-                        editButton = favoritesEditButton
+                        editButton = favoritesEditButton,
+                        tagsPosition = tagsPosition,
                     )
                 }
 

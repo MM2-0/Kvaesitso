@@ -34,6 +34,7 @@ fun LazyListScope.SearchFavorites(
     onSelectTag: (String?) -> Unit,
     editButton: Boolean,
     reverse: Boolean,
+    tagsPosition: Boolean,
 ) {
     item(
         key = "favorites",
@@ -53,6 +54,19 @@ fun LazyListScope.SearchFavorites(
                     ),
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
             ) {
+                if (tagsPosition && (pinnedTags.isNotEmpty() || editButton)) {
+                    FavoritesTagSelector(
+                        tags = pinnedTags,
+                        selectedTag = selectedTag,
+                        editButton = editButton,
+                        reverse = reverse,
+                        onSelectTag = onSelectTag,
+                        scrollState = rememberScrollState(),
+                        expanded = tagsExpanded,
+                        compact = compactTags,
+                        onExpand = onExpandTags,
+                    )
+                }
                 if (favorites.isNotEmpty()) {
                     SearchResultGrid(favorites, transitionKey = selectedTag, reverse = reverse)
                 } else {
@@ -64,12 +78,12 @@ fun LazyListScope.SearchFavorites(
                         icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
                     )
                 }
-                if (pinnedTags.isNotEmpty() || editButton) {
+                if (!tagsPosition && (pinnedTags.isNotEmpty() || editButton)) {
                     FavoritesTagSelector(
                         tags = pinnedTags,
                         selectedTag = selectedTag,
                         editButton = editButton,
-                        reverse = false,
+                        reverse = reverse,
                         onSelectTag = onSelectTag,
                         scrollState = rememberScrollState(),
                         expanded = tagsExpanded,
