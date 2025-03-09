@@ -813,4 +813,6 @@
     <string name="reset_icon">Symbol zurücksetzen</string>
     <string name="preference_compact_tags">Kompakte Tags</string>
     <string name="preference_compact_tags_summary">Beschriftungen oder Symbole von Tags ausblenden um den von Tags eingenommenen Platz zu reduzieren</string>
+    <string name="departure_time_now">sofort</string>
+    <string name="departure_time_in_n_minutes">in %1$d Minuten</string>
 </resources>

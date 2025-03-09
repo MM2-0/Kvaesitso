@@ -448,17 +448,20 @@ fun LocationItem(
                                                 )
                                             }
 
-                                            val formattedTime = remember(time) {
-                                                val timeLeft = Duration.between(
+                                            val (resId, nMinutes) = remember(time) {
+                                                val minutesLeft = Duration.between(
                                                     java.time.LocalTime.now(),
                                                     nextDeparture.time + (nextDeparture.delay
                                                         ?: Duration.ZERO)
                                                 ).toMinutes()
-                                                if (timeLeft < 1) "now" else "in $timeLeft min"
+                                                if (minutesLeft < 1)
+                                                    R.string.departure_time_now to null
+                                                else
+                                                    R.string.departure_time_in_n_minutes to minutesLeft
                                             }
 
                                             Text(
-                                                text = formattedTime,
+                                                text = stringResource(resId).let { if (nMinutes != null) it.format(nMinutes) else it },
                                                 style = MaterialTheme.typography.labelSmall,
                                                 modifier = Modifier.padding(end = 12.dp)
                                             )
