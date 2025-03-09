@@ -1012,7 +1012,6 @@ fun LineTypeIcon(
     modifier = modifier,
 )
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun LineFilterChip(
     lineName: String,
