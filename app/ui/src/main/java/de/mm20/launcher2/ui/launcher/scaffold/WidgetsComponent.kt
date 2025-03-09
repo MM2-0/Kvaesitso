@@ -31,7 +31,7 @@ class WidgetsComponent : ScaffoldComponent {
             modifier = modifier
                 .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f * progress))
                 .verticalScroll(rememberScrollState())
-                .padding(12.dp),
+                .padding(8.dp),
         ) {
             WidgetColumn(
                 modifier = Modifier.padding(insets),

@@ -20,10 +20,10 @@ interface ScaffoldComponent {
     /**
      * Called when the component is mounted, after the animation is completed.
      */
-    fun onMount(): Unit = Unit
+    suspend fun onMount(): Unit = Unit
 
     /**
      * Called when the component is unmounted, after the animation is completed, when the component is no longer visible.
      */
-    fun onUnmount(): Unit = Unit
+    suspend fun onUnmount(): Unit = Unit
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.gestures.draggable2D
 import androidx.compose.foundation.gestures.rememberDraggable2DState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +28,9 @@ import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import kotlinx.coroutines.launch
 
 class SearchComponent : ScaffoldComponent {
+
+    val lazyListState = LazyListState()
+
     override val content: ComponentContent = @Composable { modifier, insets, progress ->
         Column(
             modifier = modifier
@@ -34,7 +38,13 @@ class SearchComponent : ScaffoldComponent {
         ) {
             SearchColumn(
                 paddingValues = insets,
+                state = lazyListState
             )
         }
+    }
+
+    override suspend fun onUnmount() {
+        super.onUnmount()
+        lazyListState.scrollToItem(0)
     }
 }

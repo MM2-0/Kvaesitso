@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
@@ -27,9 +28,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
@@ -172,24 +175,25 @@ private class LauncherScaffoldState(
     }
 
     private fun performRubberbandDrag(direction: SwipeDirection, offset: Offset, delta: Offset) {
+        val threshold = rubberbandThreshold * 1.5f
         currentOffset = when (direction) {
             SwipeDirection.Up -> Offset(
                 0f,
-                (offset.y + delta.y).coerceIn(-rubberbandThreshold, rubberbandThreshold)
+                (offset.y + delta.y).coerceIn(-threshold, threshold)
             )
 
             SwipeDirection.Down -> Offset(
                 0f,
-                (offset.y + delta.y).coerceIn(-rubberbandThreshold, rubberbandThreshold)
+                (offset.y + delta.y).coerceIn(-threshold, threshold)
             )
 
             SwipeDirection.Left -> Offset(
-                (offset.x + delta.x).coerceIn(-rubberbandThreshold, rubberbandThreshold),
+                (offset.x + delta.x).coerceIn(-threshold, threshold),
                 0f
             )
 
             SwipeDirection.Right -> Offset(
-                (offset.x + delta.x).coerceIn(-rubberbandThreshold, rubberbandThreshold),
+                (offset.x + delta.x).coerceIn(-threshold, threshold),
                 0f
             )
         }
@@ -346,6 +350,8 @@ private class LauncherScaffoldState(
             lowerPage + size.width
         }
 
+        Log.d("LauncherScaffold", "performPushFling: $velocity, $minFlingVelocity")
+
         val threshold = (upperPage + lowerPage) / 2f
 
         val targetOffset = if (direction.orientation == Orientation.Vertical) {
@@ -420,6 +426,13 @@ fun LauncherScaffold(
                 )
             }
 
+        val hapticFeedback = LocalHapticFeedback.current
+        LaunchedEffect(state.currentProgress >= 0.5f, state.currentProgress <= 0.5f) {
+            if (state.currentProgress >= 0f &&  state.currentProgress <= 1f) {
+                hapticFeedback.performHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
+            }
+        }
+
         val scope = rememberCoroutineScope()
 
         val draggableState = rememberDraggable2DState {
@@ -444,7 +457,6 @@ fun LauncherScaffold(
                     available: Offset,
                     source: NestedScrollSource
                 ): Offset {
-                    Log.d("MM20", "onPostScroll $consumed $available $source")
                     if (source == NestedScrollSource.UserInput) {
                         draggableState.dispatchRawDelta(available)
                         return available
@@ -456,7 +468,7 @@ fun LauncherScaffold(
                     consumed: Velocity,
                     available: Velocity
                 ): Velocity {
-                    state.onDragStopped(available)
+                    state.onDragStopped(available / 25f)
                     return available
                 }
             }

@@ -11,14 +11,4 @@ class ClockWidgetComponent : ScaffoldComponent {
             fillScreenHeight = true,
         )
     }
-
-    override fun onMount() {
-        super.onMount()
-        Log.d("MM20", "ClockWidgetComponent onMount")
-    }
-
-    override fun onUnmount() {
-        super.onUnmount()
-        Log.d("MM20", "ClockWidgetComponent onUnmount")
-    }
 }
