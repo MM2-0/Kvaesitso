@@ -65,6 +65,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -1008,8 +1009,8 @@ fun LineTypeIcon(
         null -> Icons.Rounded.Commute
     },
     contentDescription = lineType?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
-    tint = foreground,
     modifier = modifier,
+    tint = foreground
 )
 
 @Composable
@@ -1021,24 +1022,18 @@ fun LineFilterChip(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val (bg, fg) = materializedLineColors(lineColor)
+    val (primary, secondary) = materializedLineColors(lineColor)
     FilterChip(
         selected,
         onClick,
-        label = { LineMarqueeText(lineName, fg, MaterialTheme.typography.labelMedium) },
-        leadingIcon = { LineTypeIcon(lineType, fg) },
+        label = { LineMarqueeText(lineName, LocalContentColor.current, MaterialTheme.typography.labelMedium) },
+        leadingIcon = { LineTypeIcon(lineType, LocalContentColor.current) },
         colors = FilterChipDefaults.filterChipColors(
-            containerColor = bg,
-            selectedContainerColor = bg,
-            labelColor = fg,
-            selectedLabelColor = fg,
-        ),
-        border = FilterChipDefaults.filterChipBorder(
-            enabled = true, selected = selected,
-            borderWidth = 0.dp,
-            selectedBorderWidth = 2.5.dp,
-            borderColor = Color.Transparent,
-            selectedBorderColor = MaterialTheme.colorScheme.outlineVariant
+            labelColor = primary,
+            iconColor = primary,
+            selectedLabelColor = secondary,
+            selectedLeadingIconColor = secondary,
+            selectedContainerColor = primary
         ),
         modifier = modifier
     )
