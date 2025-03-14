@@ -509,11 +509,7 @@ fun LocationItem(
                                                 }
                                             } else {
                                                 Column {
-                                                    var selectedLine by remember(lines) {
-                                                        mutableStateOf(
-                                                            lines.first()
-                                                        )
-                                                    }
+                                                    var selectedLine by remember { mutableStateOf(nextDeparture.line) }
                                                     val selectedDepartures =
                                                         remember(selectedLine) { groupedDepartures[selectedLine] }
                                                     val listState = rememberLazyListState()
