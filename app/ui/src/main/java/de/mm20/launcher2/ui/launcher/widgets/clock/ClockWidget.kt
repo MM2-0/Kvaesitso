@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
 
-import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -62,7 +61,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -370,6 +374,9 @@ fun InfinitePager (
     content: @Composable (page: Int) -> Unit
 ) {
     val pagerState = rememberPagerState { Int.MAX_VALUE / 2 }
+    val brush = Brush.horizontalGradient(
+        0f to Color.Transparent, 0.07f to Color.Black,
+        0.93f to Color.Black, 1f to Color.Transparent)
 
     LaunchedEffect(partProvider.size) {
         pagerState.scrollToPage(
@@ -378,12 +385,15 @@ fun InfinitePager (
     }
 
     HorizontalPager(
-        modifier = modifier.animateContentSize(),
+        modifier = modifier.animateContentSize()
+            .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
+            .drawWithContent {
+                drawContent()
+                drawRect(brush = brush, blendMode = BlendMode.DstIn)
+            },
         state = pagerState,
         verticalAlignment = Alignment.CenterVertically,
-    ) { page ->
-        content(page % partProvider.size)
-    }
+    ) { content(it % partProvider.size) }
 }
 
 @Composable
