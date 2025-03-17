@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
 
+import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -197,13 +198,7 @@ fun ClockWidget(
                                     Clock(clockStyle, false, darkColors)
                                 }
 
-                                val pagerState = rememberPagerState { partProvider.size }
-
-                                HorizontalPager(
-                                    modifier = Modifier.animateContentSize(),
-                                    state = pagerState,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) { page ->
+                                InfinitePager(partProvider = partProvider) { page ->
                                     DynamicZone(
                                         modifier = Modifier.padding(bottom = 8.dp).fillMaxWidth(),
                                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -221,12 +216,9 @@ fun ClockWidget(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                val pagerState = rememberPagerState { partProvider.size }
-                                HorizontalPager(
-                                    modifier = Modifier.animateContentSize()
-                                        .weight(1f),
-                                    state = pagerState,
-                                    verticalAlignment = Alignment.CenterVertically,
+                                InfinitePager(
+                                    modifier = Modifier.weight(1f),
+                                    partProvider = partProvider
                                 ) { page ->
                                     DynamicZone(
                                         horizontalAlignment = Alignment.Start,
@@ -368,6 +360,29 @@ fun DynamicZone(
         verticalArrangement = Arrangement.Center
     ) {
         provider?.Component(compact)
+    }
+}
+
+@Composable
+fun InfinitePager (
+    modifier: Modifier = Modifier,
+    partProvider: List<PartProvider>,
+    content: @Composable (page: Int) -> Unit
+) {
+    val pagerState = rememberPagerState { Int.MAX_VALUE / 2 }
+
+    LaunchedEffect(partProvider.size) {
+        pagerState.scrollToPage(
+            Int.MAX_VALUE / 4 / partProvider.size * partProvider.size
+        )
+    }
+
+    HorizontalPager(
+        modifier = modifier.animateContentSize(),
+        state = pagerState,
+        verticalAlignment = Alignment.CenterVertically,
+    ) { page ->
+        content(page % partProvider.size)
     }
 }
 
