@@ -53,6 +53,7 @@ fun HomescreenSettingsScreen() {
     val context = LocalContext.current
 
     val dock by viewModel.dock.collectAsStateWithLifecycle(null)
+    val rowsInDock by viewModel.rowsInDock.collectAsStateWithLifecycle()
     val fixedRotation by viewModel.fixedRotation.collectAsStateWithLifecycle(null)
     val editButton by viewModel.widgetEditButton.collectAsStateWithLifecycle(null)
     val searchBarStyle by viewModel.searchBarStyle.collectAsStateWithLifecycle(null)
@@ -90,6 +91,19 @@ fun HomescreenSettingsScreen() {
                     onValueChanged = {
                         viewModel.setDock(it)
                     },
+                )
+            }
+
+            AnimatedVisibility(dock == true) {
+                SliderPreference(
+                    title = "Rows",
+                    value = rowsInDock,
+                    onValueChanged = {
+                        viewModel.setRowsInDock(it)
+                    },
+                    min = 1,
+                    max = 5,
+                    step = 1,
                 )
             }
         }

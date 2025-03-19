@@ -1,7 +1,6 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
-import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.SearchFilters
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -45,6 +44,8 @@ data class LauncherSettingsData internal constructor(
 
     val homeScreenDock: Boolean = false,
 
+    val rowsInDock: Int = 5,
+
     val favoritesEnabled: Boolean = true,
     val favoritesFrequentlyUsed: Boolean = true,
     val favoritesFrequentlyUsedRows: Int = 1,
@@ -79,6 +80,7 @@ data class LauncherSettingsData internal constructor(
     val badgesShortcuts: Boolean = true,
     val badgesPlugins: Boolean = true,
 
+    val gridRowCount: Int = 1,
     val gridColumnCount: Int = 5,
     val gridIconSize: Int = 48,
     val gridLabels: Boolean = true,
