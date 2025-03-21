@@ -56,7 +56,6 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
         }.collectAsState(emptyList())
 
 
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
