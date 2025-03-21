@@ -96,7 +96,7 @@ fun HomescreenSettingsScreen() {
 
             AnimatedVisibility(dock == true) {
                 SliderPreference(
-                    title = "Rows",
+                    title = stringResource(R.string.preference_clockwidget_favorites_row_count_summary),
                     value = rowsInDock,
                     onValueChanged = {
                         viewModel.setRowsInDock(it)
