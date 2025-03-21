@@ -2,13 +2,22 @@ package de.mm20.launcher2.ui.settings.clockwidget
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.icons.IconService
+import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
+import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.searchable.SavableSearchableRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
@@ -16,6 +25,9 @@ import org.koin.core.component.inject
 
 class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     private val settings: ClockWidgetSettings by inject()
+    private val searchableRepository: SavableSearchableRepository by inject()
+    private val iconService: IconService by inject()
+
     val compact = settings.compact
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setCompact(compact: Boolean) {
@@ -75,6 +87,26 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setFillHeight(fillHeight)
     }
 
+    val tapAction = settings.tapAction
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    fun setTapAction(action: GestureAction) {
+        settings.setTapAction(action)
+    }
+
+    val tapApp: Flow<SavableSearchable?> = tapAction
+        .flatMapLatest {
+            if (it !is GestureAction.Launch || it.key == null) flowOf(null)
+            else searchableRepository.getByKeys(listOf(it.key!!)).map {
+                it.firstOrNull()
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
+
+    fun setTapApp(searchable: SavableSearchable?) {
+        searchable?.let { searchableRepository.insert(it) } ?: return
+        setTapAction(GestureAction.Launch(searchable.key))
+    }
+
     val parts = settings.parts
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
@@ -99,5 +131,10 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setAlignment(alignment: ClockWidgetAlignment) {
         settings.setAlignment(alignment)
+    }
+
+    fun getIcon(searchable: SavableSearchable?, size: Int): Flow<LauncherIcon?> {
+        if (searchable == null) return emptyFlow()
+        return iconService.getIcon(searchable, size)
     }
 }
