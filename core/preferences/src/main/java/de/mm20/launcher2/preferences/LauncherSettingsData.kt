@@ -44,7 +44,7 @@ data class LauncherSettingsData internal constructor(
 
     val homeScreenDock: Boolean = false,
 
-    val rowsInDock: Int = 5,
+    val rowsInDock: Int = 1,
 
     val favoritesEnabled: Boolean = true,
     val favoritesFrequentlyUsed: Boolean = true,
