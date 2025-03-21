@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class FavoritesPartProvider: PartProvider, KoinComponent {
+class FavoritesPartProvider : PartProvider, KoinComponent {
 
     private val favoritesService: FavoritesService by inject()
     private val widgetRepository: WidgetRepository by inject()
@@ -54,7 +54,6 @@ class FavoritesPartProvider: PartProvider, KoinComponent {
                 limit = rows * columns
             )
         }.collectAsState(emptyList())
-
 
 
         Column(
