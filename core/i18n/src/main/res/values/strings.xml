@@ -1014,4 +1014,6 @@
     <string name="weather_forecast_humidity">Humidity</string>
     <string name="weather_forecast_wind">Wind</string>
     <string name="weather_forecast_precipitation">Precipitation</string>
+    <string name="departure_time_now">now</string>
+    <string name="departure_time_in_n_minutes">in %1$d minutes</string>
 </resources>
