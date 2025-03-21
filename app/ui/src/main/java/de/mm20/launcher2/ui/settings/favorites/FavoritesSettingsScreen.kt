@@ -102,6 +102,15 @@ fun FavoritesSettingsScreen() {
                         viewModel.setCompactTags(it)
                     },
                 )
+                val tagsPosition by viewModel.tagsPosition.collectAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_tags_position),
+                    summary = stringResource(R.string.preference_tags_position_summary),
+                    value = tagsPosition == true,
+                    onValueChanged = {
+                        viewModel.setTagsPosition(it)
+                    },
+                )
             }
         }
     }
