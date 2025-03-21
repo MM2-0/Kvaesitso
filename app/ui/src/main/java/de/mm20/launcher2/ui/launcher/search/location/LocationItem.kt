@@ -34,6 +34,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
@@ -60,7 +61,11 @@ import androidx.compose.material.icons.rounded.Tram
 import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -114,6 +119,7 @@ import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
+import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
@@ -168,7 +174,6 @@ fun LocationItem(
     val imperialUnits by viewModel.imperialUnits.collectAsState()
 
     val showMap by viewModel.showMap.collectAsState()
-    val isUpToDate by viewModel.isUpToDate.collectAsState()
 
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
 
@@ -465,32 +470,107 @@ fun LocationItem(
                                             Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
                                         }
                                     } else {
-                                        val longestLine = remember(departures) {
-                                            departures.maxOfOrNull { it.line.length }
+                                        val (lines, groupedDepartures) = remember(departures) {
+                                            val dict = departures.groupBy { it.line }
+                                            dict.keys.toList().sortedByDescending { dict[it]!!.size } to dict
                                         }
-                                        LazyColumn(
-                                            state = listState,
+
+                                        Box(
                                             modifier = modifier
                                                 .heightIn(max = 192.dp)
-                                                .padding(12.dp)
+                                                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
                                                 .fillMaxWidth()
-                                                .pointerInput(Unit) { detectDragGestures { _, _ -> } },
-                                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                                                .pointerInput(Unit) { detectDragGestures { _, _ -> } }
                                         ) {
-                                            itemsIndexed(
-                                                departures,
-                                                key = { idx, _ -> idx }) { idx, it ->
-                                                it.LazyColumnPart(
-                                                    lineWidth = longestLine,
-                                                    Modifier
-                                                        .fillMaxWidth()
-                                                        .graphicsLayer {
-                                                            alpha =
-                                                                listState.layoutInfo.blendIntoViewScale(
-                                                                    idx
-                                                                )
+                                            val departureModifier = { idx: Int ->
+                                                Modifier
+                                                    .fillMaxWidth()
+                                                    .graphicsLayer {
+                                                        alpha = listState.layoutInfo
+                                                            .blendIntoViewScale(idx)
+                                                    }
+                                            }
+
+                                            if (lines.size < 2) {
+                                                LazyColumn(
+                                                    state = listState,
+                                                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                                                ) {
+                                                    itemsIndexed(
+                                                        departures,
+                                                        key = { idx, _ -> idx }
+                                                    ) { idx, it ->
+                                                        it.LazyColumnPart(
+                                                            lineWidth = remember(departures) {
+                                                                departures.maxOfOrNull { it.line.length }
+                                                            },
+                                                            withIcon = true,
+                                                            modifier = departureModifier(idx)
+                                                        )
+                                                    }
+
+                                                }
+                                            } else {
+                                                Column {
+                                                    var selectedLine by remember { mutableStateOf(nextDeparture.line) }
+                                                    val selectedDepartures =
+                                                        remember(selectedLine) { groupedDepartures[selectedLine] }
+                                                    val listState = rememberLazyListState()
+                                                    LazyRow(
+                                                        state = listState
+                                                    ) {
+                                                        itemsIndexed(
+                                                            lines,
+                                                            key = { idx, _ -> idx }
+                                                        ) { idx, it ->
+                                                            groupedDepartures[it]?.first()
+                                                                ?.let { someDeparture ->
+                                                                    LineFilterChip(
+                                                                        it,
+                                                                        lineColor = someDeparture.lineColor,
+                                                                        someDeparture.type,
+                                                                        selected = selectedLine == it,
+                                                                        onClick = {
+                                                                            selectedLine = it
+                                                                        },
+                                                                        modifier = Modifier
+                                                                            .graphicsLayer {
+                                                                                alpha =
+                                                                                    listState.layoutInfo
+                                                                                        .blendIntoViewScale(
+                                                                                            idx,
+                                                                                            0.5f
+                                                                                        )
+                                                                            }
+                                                                            .scale(
+                                                                                0.875f,
+                                                                                TransformOrigin.Center
+                                                                            )
+                                                                    )
+                                                                }
                                                         }
-                                                )
+                                                    }
+                                                    if (selectedDepartures != null) {
+                                                        LazyColumn {
+                                                            itemsIndexed(
+                                                                selectedDepartures,
+                                                                key = { idx, _ -> idx }
+                                                            ) { idx, it ->
+                                                                it.LazyColumnPart(
+                                                                    lineWidth = remember(
+                                                                        selectedDepartures
+                                                                    ) {
+                                                                        selectedDepartures.maxOfOrNull { it.line.length }
+                                                                    },
+                                                                    withIcon = false,
+                                                                    modifier = departureModifier(idx)
+                                                                )
+                                                                if (idx < selectedDepartures.size - 1)
+                                                                    HorizontalDivider()
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -751,11 +831,12 @@ fun LocationItem(
                     val lifecycleOwner = LocalLifecycleOwner.current
                     val snackbarHostState = LocalSnackbarHostState.current
 
-                    toolbarActions.add(DefaultToolbarAction(
-                        label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Tune,
-                        action = { sheetManager.showCustomizeSearchableModal(location) }
-                    ))
+                    toolbarActions.add(
+                        DefaultToolbarAction(
+                            label = stringResource(R.string.menu_customize),
+                            icon = Icons.Rounded.Tune,
+                            action = { sheetManager.showCustomizeSearchableModal(location) }
+                        ))
 
                     location.fixMeUrl?.let {
                         toolbarActions += DefaultToolbarAction(
@@ -772,12 +853,13 @@ fun LocationItem(
 
                     Toolbar(
                         modifier = Modifier.fillMaxWidth(),
-                        leftActions = listOf(DefaultToolbarAction(
-                            label = stringResource(id = R.string.menu_back),
-                            icon = Icons.AutoMirrored.Rounded.ArrowBack
-                        ) {
-                            onBack()
-                        }),
+                        leftActions = listOf(
+                            DefaultToolbarAction(
+                                label = stringResource(id = R.string.menu_back),
+                                icon = Icons.AutoMirrored.Rounded.ArrowBack
+                            ) {
+                                onBack()
+                            }),
                         rightActions = toolbarActions,
                     )
                 }
@@ -889,26 +971,102 @@ private fun OpeningSchedule.Hours.getNextOpeningHours(): OpeningHours {
 }
 
 @Composable
-fun Departure.LineIcon(
-    modifier: Modifier
-) {
-    val harmonizeArgb = MaterialTheme.colorScheme.primary.toArgb()
-    var (lineBg, lineFg) = if (lineColor != null) {
-        val bg = Color(
-            harmonize(lineColor!!.toArgb(), harmonizeArgb)
-        )
-        val fg = Color(
-            harmonize(
-                if (0.5f < bg.luminance()) Color.Black.toArgb() else Color.White.toArgb(),
-                harmonizeArgb
-            )
-        )
-        bg to fg
-    } else {
-        MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
-    }
+fun LineMarqueeText(
+    lineName: String,
+    lineForeground: Color,
+    style: androidx.compose.ui.text.TextStyle,
+    modifier: Modifier = Modifier
+) = MarqueeText(
+    text = lineName,
+    style = style,
+    color = lineForeground,
+    textAlign = TextAlign.Center,
+    fadeLeft = 2.5.dp,
+    fadeRight = 2.5.dp,
+    iterations = Int.MAX_VALUE,
+    repeatDelayMillis = 0,
+    spacing = MarqueeSpacing(10.dp),
+    velocity = 20.dp,
+    modifier = modifier
+)
 
-    val hasDeparted = ZonedDateTime.now().isAfter(time + (delay ?: Duration.ZERO))
+@Composable
+fun LineTypeIcon(
+    lineType: LineType?,
+    foreground: Color,
+    modifier: Modifier = Modifier
+) = Icon(
+    imageVector = when (lineType) {
+        LineType.Bus -> Icons.Rounded.DirectionsBus
+        LineType.Tram -> Icons.Rounded.Tram
+        LineType.Subway -> Icons.Rounded.Subway
+        LineType.Monorail -> Icons.Rounded.DirectionsTransit
+        LineType.CommuterTrain -> Icons.Rounded.DirectionsRailway
+        LineType.Train, LineType.RegionalTrain, LineType.HighSpeedTrain -> Icons.Rounded.Train
+        LineType.Boat -> Icons.Rounded.DirectionsBoat
+        LineType.CableCar -> Icons.Rounded.CableCar
+        LineType.Airplane -> Icons.Rounded.AirplanemodeActive
+        null -> Icons.Rounded.Commute
+    },
+    contentDescription = lineType?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
+    modifier = modifier,
+    tint = foreground
+)
+
+@Composable
+fun LineFilterChip(
+    lineName: String,
+    lineColor: android.graphics.Color?,
+    lineType: LineType?,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val (primary, secondary) = materializedLineColors(lineColor)
+    FilterChip(
+        selected,
+        onClick,
+        label = { LineMarqueeText(lineName, LocalContentColor.current, MaterialTheme.typography.labelMedium) },
+        leadingIcon = { LineTypeIcon(lineType, LocalContentColor.current) },
+        colors = FilterChipDefaults.filterChipColors(
+            labelColor = primary,
+            iconColor = primary,
+            selectedLabelColor = secondary,
+            selectedLeadingIconColor = secondary,
+            selectedContainerColor = primary
+        ),
+        modifier = modifier
+    )
+}
+
+@Composable
+fun materializedLineColors(
+    lineColor: android.graphics.Color?,
+) = if (lineColor != null) {
+    val harmonizeArgb = MaterialTheme.colorScheme.primary.toArgb()
+    val bg = Color(
+        harmonize(lineColor.toArgb(), harmonizeArgb)
+    )
+    val fg = Color(
+        harmonize(
+            if (0.5f < bg.luminance()) Color.Black.toArgb() else Color.White.toArgb(),
+            harmonizeArgb
+        )
+    )
+    bg to fg
+} else {
+    MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
+}
+
+@Composable
+fun LineIcon(
+    lineName: String,
+    lineType: LineType?,
+    lineColor: android.graphics.Color?,
+    hasDeparted: Boolean,
+    modifier: Modifier = Modifier
+) {
+    var (lineBg, lineFg) = materializedLineColors(lineColor)
 
     if (hasDeparted) {
         val hsv = FloatArray(3)
@@ -927,36 +1085,17 @@ fun Departure.LineIcon(
             .padding(top = 4.dp, bottom = 4.dp, start = 4.dp, end = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(
-            imageVector = when (type) {
-                LineType.Bus -> Icons.Rounded.DirectionsBus
-                LineType.Tram -> Icons.Rounded.Tram
-                LineType.Subway -> Icons.Rounded.Subway
-                LineType.Monorail -> Icons.Rounded.DirectionsTransit
-                LineType.CommuterTrain -> Icons.Rounded.DirectionsRailway
-                LineType.Train, LineType.RegionalTrain, LineType.HighSpeedTrain -> Icons.Rounded.Train
-                LineType.Boat -> Icons.Rounded.DirectionsBoat
-                LineType.CableCar -> Icons.Rounded.CableCar
-                LineType.Airplane -> Icons.Rounded.AirplanemodeActive
-                null -> Icons.Rounded.Commute
-            },
-            contentDescription = type?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
-            tint = lineFg,
-            modifier = Modifier
+        LineTypeIcon(
+            lineType,
+            lineFg,
+            Modifier
                 .padding(end = 2.dp)
-                .size(16.dp),
+                .size(16.dp)
         )
-        MarqueeText(
-            text = line,
-            style = MaterialTheme.typography.labelSmall,
-            color = lineFg,
-            textAlign = TextAlign.Center,
-            fadeLeft = 2.5.dp,
-            fadeRight = 2.5.dp,
-            iterations = Int.MAX_VALUE,
-            repeatDelayMillis = 0,
-            spacing = MarqueeSpacing(10.dp),
-            velocity = 20.dp,
+        LineMarqueeText(
+            lineName,
+            lineFg,
+            MaterialTheme.typography.labelSmall,
             modifier = Modifier
                 .wrapContentSize()
                 .widthIn(max = 34.dp)
@@ -965,28 +1104,43 @@ fun Departure.LineIcon(
 }
 
 @Composable
+fun Departure.LineIcon(
+    modifier: Modifier
+) = LineIcon(
+    line,
+    type,
+    lineColor,
+    ZonedDateTime.now().isAfter(time + (delay ?: Duration.ZERO)),
+    modifier
+)
+
+
+@Composable
 fun Departure.LazyColumnPart(
     lineWidth: Int?,
+    withIcon: Boolean,
     modifier: Modifier
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
-            LineIcon(
-                Modifier
-                    .padding(end = 8.dp)
-                    .widthIn(
-                        min = if (lineWidth == null) 0.dp
-                        else max(64.dp, lineWidth * 8.dp)
-                    )
-            )
+            if (withIcon) {
+                LineIcon(
+                    Modifier
+                        .padding(end = 8.dp)
+                        .widthIn(
+                            min = if (lineWidth == null) 0.dp
+                            else max(64.dp, lineWidth * 8.dp)
+                        )
+                )
+            }
             if (lastStop != null) {
                 MarqueeText(
                     text = lastStop!!,

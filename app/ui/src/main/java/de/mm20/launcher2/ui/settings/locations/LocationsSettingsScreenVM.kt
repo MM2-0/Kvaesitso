@@ -6,7 +6,6 @@ import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
