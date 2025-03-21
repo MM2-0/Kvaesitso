@@ -391,15 +391,19 @@ fun InfinitePager (
         }
     }
 
-    HorizontalPager(
-        modifier = modifier.graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
-            .drawWithContent {
-                drawContent()
-                drawRect(brush = brush, blendMode = BlendMode.DstIn)
-            },
-        state = pagerState,
-        verticalAlignment = verticalAlignment,
-    ) { content(it % partProvider.size) }
+    if (partProvider.size > 1) {
+        HorizontalPager(
+            modifier = modifier.graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
+                .drawWithContent {
+                    drawContent()
+                    drawRect(brush = brush, blendMode = BlendMode.DstIn)
+                },
+            state = pagerState,
+            verticalAlignment = verticalAlignment,
+        ) { content(it % partProvider.size) }
+    } else {
+        content(0)
+    }
 }
 
 @Composable
