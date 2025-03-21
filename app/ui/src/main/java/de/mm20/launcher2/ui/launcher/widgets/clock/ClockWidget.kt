@@ -202,7 +202,10 @@ fun ClockWidget(
                                     Clock(clockStyle, false, darkColors)
                                 }
 
-                                InfinitePager(partProvider = partProvider) { page ->
+                                InfinitePager(
+                                    modifier = Modifier.animateContentSize(),
+                                    partProvider = partProvider
+                                ) { page ->
                                     DynamicZone(
                                         modifier = Modifier.padding(bottom = 8.dp).fillMaxWidth(),
                                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -217,11 +220,12 @@ fun ClockWidget(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(end = 8.dp, bottom = 16.dp),
-                                verticalAlignment = Alignment.CenterVertically,
+                                verticalAlignment = Alignment.Bottom,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 InfinitePager(
                                     modifier = Modifier.weight(1f),
+                                    verticalAlignment = Alignment.Bottom,
                                     partProvider = partProvider
                                 ) { page ->
                                     DynamicZone(
@@ -370,6 +374,7 @@ fun DynamicZone(
 @Composable
 fun InfinitePager (
     modifier: Modifier = Modifier,
+    verticalAlignment: Alignment.Vertical = Alignment.Top,
     partProvider: List<PartProvider>,
     content: @Composable (page: Int) -> Unit
 ) {
@@ -385,14 +390,13 @@ fun InfinitePager (
     }
 
     HorizontalPager(
-        modifier = modifier.animateContentSize()
-            .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
+        modifier = modifier.graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
             .drawWithContent {
                 drawContent()
                 drawRect(brush = brush, blendMode = BlendMode.DstIn)
             },
         state = pagerState,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = verticalAlignment,
     ) { content(it % partProvider.size) }
 }
 
