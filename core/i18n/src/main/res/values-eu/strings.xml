@@ -261,7 +261,7 @@
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Erakutsi uneko data</string>
     <string name="preference_clockwidget_favorites_part">Gogokoak</string>
-    <string name="preference_clockwidget_favorites_part_summary">Erakutsi ainguratutako elementuen lehen ilara</string>
+    <string name="preference_clockwidget_favorites_part_summary">Erakutsi ainguratutako elementuak</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
     <string name="preference_clockwidget_alarm_part">Alarmak</string>
     <string name="preference_clockwidget_alarm_part_summary">Erakutsi hurrengo 8 orduetan joko duten alarmak</string>

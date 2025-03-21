@@ -239,7 +239,7 @@
     <string name="close">Zamknij</string>
     <string name="weather_condition_heavysleetshowersandthunder">Ciężkie przelotne opady śniegu z deszczem i piorunami</string>
     <string name="edit_favorites_dialog_unpinned">Nie przypięte - często używane</string>
-    <string name="preference_clockwidget_favorites_part_summary">Pokaż pierwszy rząd przypiętych rzeczy</string>
+    <string name="preference_clockwidget_favorites_part_summary">Pokaż przypięte elementy</string>
     <string name="weather_condition_snowandthunder">Śnieg z piorunami</string>
     <string name="owncloud_login_2fa_hint">Jeśli posiadasz uwierzytelnianie dwuskładowe, musisz podać hasło aplikacji tutaj.</string>
     <string name="preference_clockwidget_music_part">Media</string>

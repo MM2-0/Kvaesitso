@@ -401,7 +401,7 @@
     <string name="missing_permission_location_search">Yakınındaki konumlarda arama yapabilmek için konum erişimine izin ver.</string>
     <string name="missing_permission_files_search">Cihazındaki fotoğraf, medya ve dosyaları arayabilmek için depolama erişimine izin ver.</string>
     <string name="missing_permission_contact_search">Kişilerinde arama yapabilmek için Kişiler erişimine izin ver.</string>
-    <string name="preference_clockwidget_favorites_part_summary">Sabitlenmiş ögelerin ilk satırını göster</string>
+    <string name="preference_clockwidget_favorites_part_summary">Sabitlenmiş öğeleri göster</string>
     <string name="missing_permission_appshortcuts_search">Uygulama kısayolu arayabilmek için varsayılan ana ekran uygulaması olarak %1$s seçin.</string>
     <string name="preference_colors_default">Varsayılan</string>
     <string name="preference_colors_bw">Siyah Beyaz</string>

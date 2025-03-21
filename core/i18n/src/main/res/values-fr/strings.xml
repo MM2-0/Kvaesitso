@@ -362,7 +362,7 @@
     <string name="preference_search_appshortcuts">Raccourcis d\'applications</string>
     <string name="preference_search_appshortcuts_summary">Rechercher les raccourcis d\'applications</string>
     <string name="restore_different_minor_version">Cette sauvegarde a été créée depuis une version différente de %1$s. Certaines données pourraient ne pas être restaurées correctement.</string>
-    <string name="preference_clockwidget_favorites_part_summary">Afficher la première ligne d\'éléments épinglés</string>
+    <string name="preference_clockwidget_favorites_part_summary">Afficher les éléments épinglés</string>
     <string name="restore_invalid_file">Le fichier sélectionné semble ne pas être un fichier de sauvegarde. Êtes-vous sûr d\'avoir sélectionné le bon fichier ?</string>
     <string name="restore_incompatible_file">Cette sauvegarde a été créée avec une version différente de %1$s et ne peut donc pas être restaurée sur cette version.</string>
     <string name="restore_complete">La sauvegarde a bien été restaurée.</string>

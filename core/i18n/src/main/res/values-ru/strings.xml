@@ -443,7 +443,7 @@
     <string name="favorites_empty">Закрепленные и часто используемые элементы будут находиться здесь</string>
     <string name="widget_config_weather_compact">Компактный вид</string>
     <string name="preference_clock_widget_fill_height">Заполнить по высоте</string>
-    <string name="preference_clockwidget_favorites_part_summary">Показывать первую строку избранных</string>
+    <string name="preference_clockwidget_favorites_part_summary">Показать закрепленные элементы</string>
     <string name="preference_crash_reporter_summary">Отчёты об ошибках и вылетах</string>
     <string name="search_action_call">Позвонить</string>
     <string name="open_search_pull_down">Свайп вниз</string>

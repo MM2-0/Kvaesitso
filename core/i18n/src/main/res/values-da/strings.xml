@@ -418,7 +418,7 @@
     <string name="preference_screen_backup">Sikkerhedskopiér &amp; Gendan</string>
     <string name="preference_mdy_color_source_system">System</string>
     <string name="widget_config_weather_compact">Kompakt tilstand</string>
-    <string name="preference_clockwidget_favorites_part_summary">Vis den første række af fastgjorte elementer</string>
+    <string name="preference_clockwidget_favorites_part_summary">Vis fastgjorte elementer</string>
     <string name="preference_version">Version</string>
     <string name="preference_imperial_units_summary">Brug Fahrenheit-grader og miles i timen</string>
     <string name="preference_google">Google</string>

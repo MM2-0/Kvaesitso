@@ -366,7 +366,7 @@
     <string name="preference_clock_widget_alignment">Alinhamento</string>
     <string name="preference_clock_widget_alignment_top">Cima</string>
     <string name="preference_clock_widget_alignment_center">Centro</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostrar primeira linha dos itens afixados</string>
+    <string name="preference_clockwidget_favorites_part_summary">Mostrar itens fixados</string>
     <string name="preference_clockwidget_music_part_summary">Mostrar controlos multimédia se existir uma sessão ativa</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostrar alarmes que serão ativados nas próximas 8 horas</string>
     <string name="preference_screen_backup">Backup e restauro</string>
