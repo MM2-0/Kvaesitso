@@ -195,7 +195,7 @@
     <string name="preference_grid_labels">라벨 표시</string>
     <string name="preference_grid_labels_summary">아이콘 밑에 앱 이름 표시</string>
     <string name="preference_category_widgets">위젯</string>
-    <string name="preference_clockwidget_favorites_part_summary">고정된 항목 표시</string>
+    <string name="preference_clockwidget_favorites_part_summary">고정된 항목의 첫째 줄 표시</string>
     <string name="preference_clockwidget_music_part">미디어</string>
     <string name="preference_clockwidget_battery_part_summary">배터리 수준이 낮거나 충전 중이면 현재 배터리 수준 표시</string>
     <string name="preference_screen_appearance">외관</string>

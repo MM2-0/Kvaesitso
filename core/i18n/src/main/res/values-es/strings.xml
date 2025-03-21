@@ -286,7 +286,7 @@
     <string name="preference_screen_weatherwidget">Tiempo</string>
     <string name="preference_screen_clockwidget">Reloj</string>
     <string name="preference_clockwidget_favorites_part">Barra</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostrar elementos fijados</string>
+    <string name="preference_clockwidget_favorites_part_summary">Mostrar la primera fila de items fijados</string>
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_music_part_summary">Mostrar controles multimedia cuando haya una sesión multimedia activa</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostrar alarmas que suenen en los próximos 15 minutos</string>

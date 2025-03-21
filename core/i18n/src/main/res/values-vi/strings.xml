@@ -419,7 +419,7 @@
     <string name="preference_clock_widget_alignment_center">Trung tâm</string>
     <string name="preference_clock_widget_alignment_bottom">Dưới cùng</string>
     <string name="preference_clockwidget_dynamic_zone">Vùng động</string>
-    <string name="preference_clockwidget_favorites_part_summary">Hiển thị các mục đã ghim</string>
+    <string name="preference_clockwidget_favorites_part_summary">Hiển thị hàng đầu tiên của các mục được ghim</string>
     <string name="preference_clockwidget_music_part">Phương tiện</string>
     <string name="preference_clockwidget_music_part_summary">Hiển thị các điều khiển phương tiện khi có phiên phương tiện đang hoạt động</string>
     <string name="preference_clockwidget_battery_part">Pin</string>

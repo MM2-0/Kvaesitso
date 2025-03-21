@@ -342,7 +342,7 @@
     <string name="preference_grid_labels_summary">Mostra o nome do aplicativo abaixo do ícone</string>
     <string name="preference_clock_widget_fill_height">Preencher altura da tela</string>
     <string name="preference_clockwidget_battery_part_summary">Mostra o nível atual da bateria quando a bateria está fraca ou carregando</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostrar itens fixados</string>
+    <string name="preference_clockwidget_favorites_part_summary">Mostra a primeira linha de itens fixados</string>
     <string name="preference_clockwidget_music_part_summary">Mostra controles de mídia quando houver uma sessão de mídia ativa</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra alarmes que tocarão nas próximas 8 horas</string>
     <string name="preference_screen_backup">Backup e Restauração</string>

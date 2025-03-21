@@ -474,7 +474,7 @@
     <string name="preference_screen_clockwidget_summary">ปรับแต่งรูปแบบนาฬิกาและส่วนประกอบ</string>
     <string name="weather_condition_snowshowersandthunder">หิมะตกเป็นหย่อมๆและท้องฟ้าคำราม</string>
     <string name="preference_clockwidget_layout_vertical">ค่าเริ่มต้น</string>
-    <string name="preference_clockwidget_favorites_part_summary">แสดงรายการที่ปักหมุด</string>
+    <string name="preference_clockwidget_favorites_part_summary">แสดงแถวแรกของรายการที่ปักหมุดไว้</string>
     <string name="weather_no_data">ไม่มีข้อมูลสภาพอากาศ</string>
     <string name="preference_clockwidget_battery_part_summary">แสดงระดับแบตเตอรี่ปัจจุบันเมื่อแบตเตอรี่เหลือน้อยหรือกำลังถูกชาร์จอยู่</string>
     <string name="weather_widget_set_location">กำหนดตำแหน่ง</string>

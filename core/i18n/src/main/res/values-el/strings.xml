@@ -213,7 +213,7 @@
     <string name="preference_clockwidget_layout_horizontal">Συμπαγής</string>
     <string name="preference_clockwidget_date_part">Ημερομηνία</string>
     <string name="preference_clockwidget_favorites_part">Αγαπημένα</string>
-    <string name="preference_clockwidget_favorites_part_summary">Εμφάνιση καρφιτσωμένων στοιχείων</string>
+    <string name="preference_clockwidget_favorites_part_summary">Εμφάνιση της πρώτης σειράς καρφιτσωμένων στοιχείων</string>
     <string name="preference_clockwidget_music_part">Πολυμέσα</string>
     <string name="preference_clockwidget_battery_part">Μπαταρία</string>
     <string name="preference_clockwidget_battery_part_summary">Εμφάνιση του τρέχοντος επιπέδου μπαταρίας όταν είναι χαμηλή ή φορτίζει</string>
