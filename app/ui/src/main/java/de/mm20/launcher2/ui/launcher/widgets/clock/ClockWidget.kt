@@ -384,9 +384,11 @@ fun InfinitePager (
         0.93f to Color.Black, 1f to Color.Transparent)
 
     LaunchedEffect(partProvider.size) {
-        pagerState.scrollToPage(
-            Int.MAX_VALUE / 4 / partProvider.size * partProvider.size
-        )
+        if (partProvider.isNotEmpty()) {
+            pagerState.scrollToPage(
+                Int.MAX_VALUE / 4 / partProvider.size * partProvider.size
+            )
+        }
     }
 
     HorizontalPager(
