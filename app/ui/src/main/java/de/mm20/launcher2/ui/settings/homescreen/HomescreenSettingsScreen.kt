@@ -100,8 +100,6 @@ fun HomescreenSettingsScreen() {
                     value = rowsInDock,
                     onValueChanged = {
                         viewModel.setRowsInDock(it)
-                        viewModel.setDock(false)
-                        viewModel.setDock(true)
                     },
                     min = 1,
                     max = 5,

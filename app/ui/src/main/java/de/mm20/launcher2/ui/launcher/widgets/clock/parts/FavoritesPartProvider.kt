@@ -40,18 +40,19 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                 it.columnCount
             }
         }.collectAsState(0)
-        val excludeCalendar by remember { widgetRepository.exists(CalendarWidget.Type) }
-            .collectAsState(true)
 
         val rows by remember {
             clockWidgetSettings.rowsInDock
         }.collectAsState(1)
 
-        val favorites by remember(columns, excludeCalendar) {
+        val excludeCalendar by remember { widgetRepository.exists(CalendarWidget.Type) }
+            .collectAsState(true)
+
+        val favorites by remember(columns, rows, excludeCalendar) {
             favoritesService.getFavorites(
                 excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
                 minPinnedLevel = PinnedLevel.FrequentlyUsed,
-                limit = rows * columns
+                limit = columns * rows
             )
         }.collectAsState(emptyList())
 
