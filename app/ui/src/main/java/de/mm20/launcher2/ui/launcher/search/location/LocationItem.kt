@@ -70,6 +70,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -119,7 +120,6 @@ import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
-import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
@@ -128,6 +128,7 @@ import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import java.time.Duration
 import java.time.LocalDateTime
@@ -220,7 +221,7 @@ fun LocationItem(
                                 when {
                                     category != null && formattedDistance != null -> "$category • $formattedDistance"
 
-                                    category != null -> category.toString()
+                                    category != null -> category
                                     formattedDistance != null -> formattedDistance
                                     else -> ""
                                 },
@@ -471,8 +472,16 @@ fun LocationItem(
                                         }
                                     } else {
                                         val (lines, groupedDepartures) = remember(departures) {
-                                            val dict = departures.groupBy { it.line }
-                                            dict.keys.toList().sortedByDescending { dict[it]!!.size } to dict
+                                            val dict = departures.groupBy { it.line to it.type }
+                                            dict.keys.toList().sortedWith(
+                                                compareBy(
+                                                    // first by line type
+                                                    { (_, type) -> type?.ordinal ?: Int.MAX_VALUE },
+                                                    // then by name, skipping any prefixed letters
+                                                    // as "U" or "S" may be used to indicate type
+                                                    { (line, _) -> line.trimStart { it.isLetter() } }
+                                                )
+                                            ) to dict
                                         }
 
                                         Box(
@@ -512,21 +521,26 @@ fun LocationItem(
                                                 }
                                             } else {
                                                 Column {
-                                                    var selectedLine by remember { mutableStateOf(nextDeparture.line) }
+                                                    val filterChipListState = rememberLazyListState()
+                                                    var selectedLine by remember { mutableStateOf(nextDeparture.line to nextDeparture.type) }
                                                     val selectedDepartures =
                                                         remember(selectedLine) { groupedDepartures[selectedLine] }
-                                                    val listState = rememberLazyListState()
+                                                    LaunchedEffect(Unit) {
+                                                        delay(500)
+                                                        filterChipListState.animateScrollToItem(lines.indexOf(selectedLine))
+                                                    }
                                                     LazyRow(
-                                                        state = listState
+                                                        state = filterChipListState
                                                     ) {
                                                         itemsIndexed(
                                                             lines,
                                                             key = { idx, _ -> idx }
                                                         ) { idx, it ->
+                                                            val (lineName, _) = it
                                                             groupedDepartures[it]?.first()
                                                                 ?.let { someDeparture ->
                                                                     LineFilterChip(
-                                                                        it,
+                                                                        lineName,
                                                                         lineColor = someDeparture.lineColor,
                                                                         someDeparture.type,
                                                                         selected = selectedLine == it,
@@ -536,7 +550,7 @@ fun LocationItem(
                                                                         modifier = Modifier
                                                                             .graphicsLayer {
                                                                                 alpha =
-                                                                                    listState.layoutInfo
+                                                                                    filterChipListState.layoutInfo
                                                                                         .blendIntoViewScale(
                                                                                             idx,
                                                                                             0.5f
