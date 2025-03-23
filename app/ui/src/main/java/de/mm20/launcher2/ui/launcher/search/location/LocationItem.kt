@@ -457,7 +457,7 @@ fun LocationItem(
                                                 if (timeLeft < 1)
                                                     context.getString(R.string.departure_time_now)
                                                 else
-                                                    context.resources.getQuantityString(R.plurals.departure_time_in, timeLeft)
+                                                    context.resources.getQuantityString(R.plurals.departure_time_in, timeLeft, timeLeft)
                                             }
 
                                             Text(
