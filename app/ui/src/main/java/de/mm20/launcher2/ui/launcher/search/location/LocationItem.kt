@@ -448,20 +448,20 @@ fun LocationItem(
                                                 )
                                             }
 
-                                            val (resId, nMinutes) = remember(time) {
-                                                val minutesLeft = Duration.between(
+                                            val formattedTime = remember(time) {
+                                                val timeLeft = Duration.between(
                                                     java.time.LocalTime.now(),
                                                     nextDeparture.time + (nextDeparture.delay
                                                         ?: Duration.ZERO)
-                                                ).toMinutes()
-                                                if (minutesLeft < 1)
-                                                    R.string.departure_time_now to null
+                                                ).toMinutes().toInt()
+                                                if (timeLeft < 1)
+                                                    context.getString(R.string.departure_time_now)
                                                 else
-                                                    R.string.departure_time_in_n_minutes to minutesLeft
+                                                    context.resources.getQuantityString(R.plurals.departure_time_in, timeLeft)
                                             }
 
                                             Text(
-                                                text = stringResource(resId).let { if (nMinutes != null) it.format(nMinutes) else it },
+                                                text = formattedTime,
                                                 style = MaterialTheme.typography.labelSmall,
                                                 modifier = Modifier.padding(end = 12.dp)
                                             )
