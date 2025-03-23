@@ -459,8 +459,11 @@ fun LocationItem(
                                                     java.time.LocalTime.now(),
                                                     nextDeparture.time + (nextDeparture.delay
                                                         ?: Duration.ZERO)
-                                                ).toMinutes()
-                                                if (timeLeft < 1) "now" else "in $timeLeft min"
+                                                ).toMinutes().toInt()
+                                                if (timeLeft < 1)
+                                                    context.getString(R.string.departure_time_now)
+                                                else
+                                                    context.resources.getQuantityString(R.plurals.departure_time_in, timeLeft, timeLeft)
                                             }
 
                                             Text(
