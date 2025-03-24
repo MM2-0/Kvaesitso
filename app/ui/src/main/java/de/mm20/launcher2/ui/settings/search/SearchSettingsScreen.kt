@@ -25,6 +25,7 @@ import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material.icons.rounded.Work
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +50,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.icons.Wikipedia
+import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
 import de.mm20.launcher2.ui.locals.LocalNavController
 
@@ -64,6 +66,11 @@ fun SearchSettingsScreen() {
     var showFilterEditor by remember {
         mutableStateOf(false)
     }
+
+    val plugins by viewModel.plugins.collectAsStateWithLifecycle(emptyList())
+
+    val hasCalendarPlugins by remember { derivedStateOf { plugins.any { it.plugin.type == PluginType.Calendar } } }
+    val hasLocationPlugins by remember { derivedStateOf { plugins.any { it.plugin.type == PluginType.LocationSearch } } }
 
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_search)) {
@@ -116,14 +123,43 @@ fun SearchSettingsScreen() {
                     enabled = hasContactsPermission == true
                 )
 
-                Preference(
-                    title = stringResource(R.string.preference_search_calendar),
-                    summary = stringResource(R.string.preference_search_calendar_summary),
-                    icon = Icons.Rounded.Today,
-                    onClick = {
-                        navController?.navigate("settings/search/calendar")
-                    },
-                )
+                if (hasCalendarPlugins) {
+                    Preference(
+                        title = stringResource(R.string.preference_search_calendar),
+                        summary = stringResource(R.string.preference_search_calendar_summary),
+                        icon = Icons.Rounded.Today,
+                        onClick = {
+                            navController?.navigate("settings/search/calendar")
+                        },
+                    )
+                } else {
+                    val hasCalendarPermission by viewModel.hasCalendarPermission.collectAsStateWithLifecycle(
+                        null
+                    )
+                    val calendar by viewModel.calendarSearch.collectAsStateWithLifecycle(null)
+                    AnimatedVisibility(hasCalendarPermission == false) {
+                        MissingPermissionBanner(
+                            text = stringResource(R.string.missing_permission_calendar_search_settings),
+                            onClick = {
+                                viewModel.requestCalendarPermission(context as AppCompatActivity)
+                            },
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                    PreferenceWithSwitch(
+                        title = stringResource(R.string.preference_search_calendar),
+                        summary = stringResource(R.string.preference_search_calendar_summary),
+                        switchValue = calendar == true,
+                        onSwitchChanged = {
+                            viewModel.setCalendarSearch(it)
+                        },
+                        icon = Icons.Rounded.Today,
+                        enabled = hasCalendarPermission == true,
+                        onClick = {
+                            navController?.navigate("settings/search/calendar/local")
+                        }
+                    )
+                }
 
                 val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.collectAsStateWithLifecycle(
                     null

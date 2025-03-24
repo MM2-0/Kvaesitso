@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.preferences.search.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
@@ -32,6 +33,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val calculatorSearchSettings: CalculatorSearchSettings by inject()
     private val searchFilterSettings: SearchFilterSettings by inject()
 
+    private val pluginService: PluginService by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
 
@@ -42,6 +44,14 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         searchUiSettings.setFavorites(favorites)
     }
 
+    val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val calendarSearch = calendarSearchSettings.isProviderEnabled("local")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    fun setCalendarSearch(enabled: Boolean) {
+        calendarSearchSettings.setProviderEnabled("local", enabled)
+    }
 
     val hasContactsPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -50,6 +60,10 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setContacts(contacts: Boolean) {
         contactSearchSettings.setEnabled(contacts)
+    }
+
+    fun requestCalendarPermission(activity: AppCompatActivity) {
+        permissionsManager.requestPermission(activity, PermissionGroup.Calendar)
     }
 
     fun requestContactsPermission(activity: AppCompatActivity) {
@@ -130,4 +144,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     fun setSearchFilters(searchFilters: SearchFilters) {
         searchFilterSettings.setDefaultFilter(searchFilters)
     }
+
+    val plugins = pluginService.getPluginsWithState(enabled = true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 }
