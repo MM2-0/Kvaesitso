@@ -92,16 +92,18 @@ class SettingsActivity : BaseActivity() {
             val navController = rememberNavController()
 
             LaunchedEffect(route) {
-                try {
-                    navController.navigate(route ?: "settings") {
-                        popUpTo("settings") {
-                            inclusive = true
+                if (route != null) {
+                    try {
+                        navController.navigate(route ?: "settings") {
+                            popUpTo("settings") {
+                                inclusive = true
+                            }
                         }
-                    }
-                } catch (e: IllegalArgumentException) {
-                    navController.navigate("settings") {
-                        popUpTo("settings") {
-                            inclusive = true
+                    } catch (e: IllegalArgumentException) {
+                        navController.navigate("settings") {
+                            popUpTo("settings") {
+                                inclusive = true
+                            }
                         }
                     }
                 }
