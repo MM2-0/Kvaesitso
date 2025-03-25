@@ -144,7 +144,7 @@ fun PluginSettingsScreen(pluginId: String) {
                 navigationIcon = {
                     IconButton(onClick = {
                         if (navController?.navigateUp() != true) {
-                            activity.onBackPressed()
+                            activity?.onBackPressed()
                         }
                     }) {
                         Icon(
@@ -157,7 +157,7 @@ fun PluginSettingsScreen(pluginId: String) {
                     if (pluginPackage?.settings != null) {
                         IconButton(onClick = {
                             pluginPackage?.settings?.let {
-                                activity.startActivity(it)
+                                activity?.startActivity(it)
                             }
                         }) {
                             Icon(
