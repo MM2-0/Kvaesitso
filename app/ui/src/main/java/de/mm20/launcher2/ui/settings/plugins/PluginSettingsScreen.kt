@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.settings.plugins
 import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.InsertDriveFile
@@ -77,7 +79,7 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 @Composable
 fun PluginSettingsScreen(pluginId: String) {
     val navController = LocalNavController.current
-    val activity = LocalContext.current as AppCompatActivity
+    val activity = LocalActivity.current
     val context = LocalContext.current
     val viewModel: PluginSettingsScreenVM = viewModel()
     LaunchedEffect(pluginId) {
@@ -322,7 +324,9 @@ fun PluginSettingsScreen(pluginId: String) {
                 )
             }
             AnimatedVisibility(pluginPackage?.enabled == true && hasPermission == true) {
-                Column {
+                Column(
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                ) {
                     if (filePlugins.isNotEmpty()) {
                         PreferenceCategory(
                             stringResource(R.string.plugin_type_filesearch),
