@@ -837,4 +837,5 @@
         <item quantity="few">za %1$d minuty</item>
         <item quantity="other">za %1$d minut</item>
     </plurals>
+    <string name="preference_search_local_calendar_summary">Hledat kalendáře na tomto zařízení</string>
 </resources>
