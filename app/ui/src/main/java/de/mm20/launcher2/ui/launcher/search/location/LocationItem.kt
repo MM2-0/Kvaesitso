@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.location
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.AnimatedContent
@@ -18,7 +19,7 @@ import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -73,6 +74,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -88,6 +90,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -138,6 +141,7 @@ import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
 import kotlin.math.pow
+import androidx.core.net.toUri
 
 @Composable
 fun LocationItem(
@@ -201,7 +205,7 @@ fun LocationItem(
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = 8.dp),
-                        verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center,
+                        verticalArrangement = Arrangement.Center,
                     ) {
                         Text(
                             text = location.labelOverride ?: location.label,
@@ -396,7 +400,7 @@ fun LocationItem(
                                             context.tryStartActivity(
                                                 Intent(
                                                     Intent.ACTION_VIEW,
-                                                    Uri.parse(attribution.url)
+                                                    attribution.url!!.toUri()
                                                 )
                                             )
                                         }
@@ -411,22 +415,20 @@ fun LocationItem(
                             ?.sortedBy { it.time }
                     }
                     if (departures != null) {
-                        val time = LocalTime.current
-                        val nextDeparture = remember(time) {
+                        val nextDeparture = key(LocalTime.current) {
                             departures.firstOrNull {
                                 it.time.plus(it.delay ?: Duration.ZERO).isAfter(ZonedDateTime.now())
                             }
                         }
+                        var animateFilterChipsOnce by remember { mutableStateOf(true) }
                         if (nextDeparture != null) {
-                            var showDepartureList by remember(departures) {
-                                mutableStateOf(false)
-                            }
+                            var showDepartureList by remember { mutableStateOf(false) }
                             OutlinedCard(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(start = 12.dp, end = 12.dp, top = 12.dp),
                                 shape = MaterialTheme.shapes.small,
-                                onClick = { showDepartureList = !showDepartureList }
+                                onClick = { showDepartureList = true }
                             ) {
                                 val listState = rememberLazyListState()
 
@@ -454,20 +456,10 @@ fun LocationItem(
                                                 )
                                             }
 
-                                            val formattedTime = remember(time) {
-                                                val timeLeft = Duration.between(
-                                                    java.time.LocalTime.now(),
-                                                    nextDeparture.time + (nextDeparture.delay
-                                                        ?: Duration.ZERO)
-                                                ).toMinutes().toInt()
-                                                if (timeLeft < 1)
-                                                    context.getString(R.string.departure_time_now)
-                                                else
-                                                    context.resources.getQuantityString(R.plurals.departure_time_in, timeLeft, timeLeft)
-                                            }
-
                                             Text(
-                                                text = formattedTime,
+                                                text = key(LocalTime.current) {
+                                                    context.departureInMinutes(nextDeparture)
+                                                },
                                                 style = MaterialTheme.typography.labelSmall,
                                                 modifier = Modifier.padding(end = 12.dp)
                                             )
@@ -487,12 +479,19 @@ fun LocationItem(
                                             ) to dict
                                         }
 
+                                        var showMinutes by remember { mutableStateOf(false) }
+
                                         Box(
                                             modifier = modifier
                                                 .heightIn(max = 192.dp)
                                                 .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
                                                 .fillMaxWidth()
-                                                .pointerInput(Unit) { detectDragGestures { _, _ -> } }
+                                                .pointerInput(Unit) {
+                                                    detectTapGestures(
+                                                        onTap = { showMinutes = !showMinutes },
+                                                        onLongPress = { showDepartureList = false }
+                                                    )
+                                                }
                                         ) {
                                             val departureModifier = { idx: Int ->
                                                 Modifier
@@ -503,7 +502,7 @@ fun LocationItem(
                                                     }
                                             }
 
-                                            if (lines.size < 2) {
+                                            if (lines.size < 3) {
                                                 LazyColumn(
                                                     state = listState,
                                                     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -517,6 +516,7 @@ fun LocationItem(
                                                                 departures.maxOfOrNull { it.line.length }
                                                             },
                                                             withIcon = true,
+                                                            minutesInsteadOfTime = showMinutes,
                                                             modifier = departureModifier(idx)
                                                         )
                                                     }
@@ -524,13 +524,25 @@ fun LocationItem(
                                                 }
                                             } else {
                                                 Column {
-                                                    val filterChipListState = rememberLazyListState()
-                                                    var selectedLine by remember { mutableStateOf(nextDeparture.line to nextDeparture.type) }
+                                                    val filterChipListState =
+                                                        rememberLazyListState()
+                                                    var selectedLine by remember {
+                                                        mutableStateOf(
+                                                            nextDeparture.line to nextDeparture.type
+                                                        )
+                                                    }
                                                     val selectedDepartures =
                                                         remember(selectedLine) { groupedDepartures[selectedLine] }
                                                     LaunchedEffect(Unit) {
-                                                        delay(500)
-                                                        filterChipListState.animateScrollToItem(lines.indexOf(selectedLine))
+                                                        val itemIdx = lines.indexOf(selectedLine)
+                                                        if (itemIdx != -1) {
+                                                            if (animateFilterChipsOnce) {
+                                                                delay(500)
+                                                                filterChipListState.animateScrollToItem(itemIdx)
+                                                                animateFilterChipsOnce = false
+                                                            } else
+                                                                filterChipListState.scrollToItem(itemIdx)
+                                                        }
                                                     }
                                                     LazyRow(
                                                         state = filterChipListState
@@ -580,6 +592,7 @@ fun LocationItem(
                                                                         selectedDepartures.maxOfOrNull { it.line.length }
                                                                     },
                                                                     withIcon = false,
+                                                                    minutesInsteadOfTime = showMinutes,
                                                                     modifier = departureModifier(idx)
                                                                 )
                                                                 if (idx < selectedDepartures.size - 1)
@@ -1043,7 +1056,13 @@ fun LineFilterChip(
     FilterChip(
         selected,
         onClick,
-        label = { LineMarqueeText(lineName, LocalContentColor.current, MaterialTheme.typography.labelMedium) },
+        label = {
+            LineMarqueeText(
+                lineName,
+                LocalContentColor.current,
+                MaterialTheme.typography.labelMedium
+            )
+        },
         leadingIcon = { LineTypeIcon(lineType, LocalContentColor.current) },
         colors = FilterChipDefaults.filterChipColors(
             labelColor = primary,
@@ -1136,8 +1155,10 @@ fun Departure.LineIcon(
 fun Departure.LazyColumnPart(
     lineWidth: Int?,
     withIcon: Boolean,
+    minutesInsteadOfTime: Boolean,
     modifier: Modifier
 ) {
+    val context = LocalContext.current
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -1146,7 +1167,9 @@ fun Departure.LazyColumnPart(
         Row(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth(0.8f)
+            // HACK: the extents of this row should be properly calculated.
+            // but how?
+            modifier = Modifier.fillMaxWidth(0.66f)
         ) {
             if (withIcon) {
                 LineIcon(
@@ -1175,23 +1198,29 @@ fun Departure.LazyColumnPart(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = time.format(
-                    DateTimeFormatter.ofPattern(
-                        "HH:mm",
-                        Locale.getDefault()
+                text = if (minutesInsteadOfTime) {
+                    key(LocalTime.current) { context.departureInMinutes(this@LazyColumnPart) }
+                } else {
+                    time.format(
+                        DateTimeFormatter.ofPattern(
+                            "HH:mm",
+                            Locale.getDefault()
+                        )
                     )
-                ),
+                },
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier.padding(end = 2.dp)
             )
-            val delayMinutes = delay?.toMinutes()
-            if (null != delayMinutes && 0L < delayMinutes) {
-                Text(
-                    text = "+$delayMinutes",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.error,
-                    fontSize = TextUnit(2f, TextUnitType.Em),
-                )
+            if (!minutesInsteadOfTime) {
+                val delayMinutes = delay?.toMinutes()
+                if (null != delayMinutes && 0L < delayMinutes) {
+                    Text(
+                        text = "+$delayMinutes",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.error,
+                        fontSize = TextUnit(2f, TextUnitType.Em),
+                    )
+                }
             }
         }
     }
@@ -1233,4 +1262,26 @@ private fun Attribution(
             )
         }
     }
+}
+
+private fun Context.departureInMinutes(departure: Departure): String {
+    val delayedDepartureTime =
+        departure.time + (departure.delay
+            ?: Duration.ZERO)
+    val now = ZonedDateTime.now()
+
+    if (delayedDepartureTime < now)
+        return getString(R.string.departure_time_departed)
+
+    val timeLeft =
+        Duration.between(now, delayedDepartureTime)
+            .toMinutes().toInt()
+    return if (timeLeft < 1)
+        getString(R.string.departure_time_now)
+    else
+        resources.getQuantityString(
+            R.plurals.departure_time_in,
+            timeLeft,
+            timeLeft
+        )
 }

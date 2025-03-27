@@ -818,4 +818,5 @@
         <item quantity="one">in einer Minute</item>
         <item quantity="other">in %1$d Minuten</item>
     </plurals>
+    <string name="departure_time_departed">abgefahren</string>
 </resources>
