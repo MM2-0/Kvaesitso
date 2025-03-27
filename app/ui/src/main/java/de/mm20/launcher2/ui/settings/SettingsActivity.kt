@@ -38,6 +38,7 @@ import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
@@ -91,16 +92,18 @@ class SettingsActivity : BaseActivity() {
             val navController = rememberNavController()
 
             LaunchedEffect(route) {
-                try {
-                    navController.navigate(route ?: "settings") {
-                        popUpTo("settings") {
-                            inclusive = true
+                if (route != null) {
+                    try {
+                        navController.navigate(route ?: "settings") {
+                            popUpTo("settings") {
+                                inclusive = true
+                            }
                         }
-                    }
-                } catch (e: IllegalArgumentException) {
-                    navController.navigate("settings") {
-                        popUpTo("settings") {
-                            inclusive = true
+                    } catch (e: IllegalArgumentException) {
+                        navController.navigate("settings") {
+                            popUpTo("settings") {
+                                inclusive = true
+                            }
                         }
                     }
                 }
@@ -197,6 +200,11 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/search/calendar") {
                                     CalendarSearchSettingsScreen()
+                                }
+                                composable("settings/search/calendar/{providerId}") {
+                                    CalendarProviderSettingsScreen(
+                                        it.arguments?.getString("providerId") ?: return@composable
+                                    )
                                 }
                                 composable("settings/search/searchactions") {
                                     SearchActionsSettingsScreen()
