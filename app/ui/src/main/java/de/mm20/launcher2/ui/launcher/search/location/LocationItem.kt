@@ -1067,6 +1067,7 @@ fun LineFilterChip(
         colors = FilterChipDefaults.filterChipColors(
             labelColor = primary,
             iconColor = primary,
+            containerColor = secondary,
             selectedLabelColor = secondary,
             selectedLeadingIconColor = secondary,
             selectedContainerColor = primary
