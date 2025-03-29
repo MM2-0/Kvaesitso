@@ -216,16 +216,15 @@ fun LocationItem(
                                     this@AnimatedContent
                                 )
                         )
-                        val category = location.category
-                        val formattedDistance = distance?.metersToLocalizedString(
-                            context, imperialUnits
-                        )
+                        val formattedDistance = distance?.metersToLocalizedString(context, imperialUnits)
                         val isOpenString = location.openingSchedule?.isOpen()?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
-                        if (category != null || formattedDistance != null || isOpenString != null) {
+                        val sublabel = listOf(location.category, formattedDistance, isOpenString)
+                            .fastFilterNotNull()
+                            .joinToString(" • ")
+
+                        if (sublabel.isNotBlank()) {
                             Text(
-                                listOf(category, formattedDistance, isOpenString)
-                                    .fastFilterNotNull()
-                                    .joinToString(" • "),
+                                sublabel,
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.secondary,
                                 modifier = Modifier
