@@ -15,6 +15,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 
@@ -30,25 +31,27 @@ fun ContactsSettingsScreen() {
         title = stringResource(R.string.preference_search_contacts)
     ) {
         item {
-            AnimatedVisibility(hasCallPermission == false) {
-                MissingPermissionBanner(
-                    text = stringResource(R.string.missing_permission_call_contacts_settings),
-                    onClick = {
-                        viewModel.requestCallPermission(context as AppCompatActivity)
+            PreferenceCategory {
+                AnimatedVisibility(hasCallPermission == false) {
+                    MissingPermissionBanner(
+                        text = stringResource(R.string.missing_permission_call_contacts_settings),
+                        onClick = {
+                            viewModel.requestCallPermission(context as AppCompatActivity)
+                        },
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                SwitchPreference(
+                    title = stringResource(R.string.preference_contacts_call_on_tap),
+                    summary = stringResource(R.string.preference_contacts_call_on_tap_summary),
+                    icon = Icons.Rounded.Call,
+                    value = callOnTap == true && hasCallPermission == true,
+                    onValueChanged = {
+                        viewModel.setCallOnTap(it)
                     },
-                    modifier = Modifier.padding(16.dp)
+                    enabled = hasCallPermission == true
                 )
             }
-            SwitchPreference(
-                title = stringResource(R.string.preference_contacts_call_on_tap),
-                summary = stringResource(R.string.preference_contacts_call_on_tap_summary),
-                icon = Icons.Rounded.Call,
-                value = callOnTap == true && hasCallPermission == true,
-                onValueChanged = {
-                    viewModel.setCallOnTap(it)
-                },
-                enabled = hasCallPermission == true
-            )
         }
     }
 
