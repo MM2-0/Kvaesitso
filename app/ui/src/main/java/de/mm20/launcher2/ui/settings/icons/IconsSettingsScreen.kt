@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.settings.icons
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -108,6 +107,22 @@ fun IconsSettingsScreen() {
                     value = grid.showLabels,
                     onValueChanged = {
                         viewModel.setShowLabels(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_grid_list_style),
+                    summary = stringResource(R.string.preference_grid_list_style_summary),
+                    value = grid.showList,
+                    onValueChanged = {
+                        viewModel.setShowList(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_grid_list_icons),
+                    summary = stringResource(R.string.preference_grid_list_icons_summary),
+                    value = grid.showListIcons,
+                    onValueChanged = {
+                        viewModel.setShowListIcons(it)
                     }
                 )
                 SliderPreference(
