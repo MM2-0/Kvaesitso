@@ -112,13 +112,16 @@ fun SearchSettingsScreen() {
                     )
                 }
                 val contacts by viewModel.contacts.collectAsStateWithLifecycle(null)
-                SwitchPreference(
+                PreferenceWithSwitch(
                     title = stringResource(R.string.preference_search_contacts),
                     summary = stringResource(R.string.preference_search_contacts_summary),
                     icon = Icons.Rounded.Person,
-                    value = contacts == true && hasContactsPermission == true,
-                    onValueChanged = {
+                    switchValue = contacts == true && hasContactsPermission == true,
+                    onSwitchChanged = {
                         viewModel.setContacts(it)
+                    },
+                    onClick = {
+                        navController?.navigate("settings/contacts")
                     },
                     enabled = hasContactsPermission == true
                 )
