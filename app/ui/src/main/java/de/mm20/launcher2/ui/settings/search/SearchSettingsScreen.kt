@@ -121,7 +121,7 @@ fun SearchSettingsScreen() {
                         viewModel.setContacts(it)
                     },
                     onClick = {
-                        navController?.navigate("settings/contacts")
+                        navController?.navigate("settings/search/contacts")
                     },
                     enabled = hasContactsPermission == true
                 )

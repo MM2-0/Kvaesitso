@@ -228,7 +228,7 @@ class SettingsActivity : BaseActivity() {
                                 composable("settings/favorites") {
                                     FavoritesSettingsScreen()
                                 }
-                                composable("settings/contacts") {
+                                composable("settings/search/contacts") {
                                     ContactsSettingsScreen()
                                 }
                                 composable("settings/integrations") {
