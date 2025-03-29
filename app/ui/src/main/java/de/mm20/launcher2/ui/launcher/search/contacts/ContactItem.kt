@@ -163,6 +163,7 @@ fun ContactItem(
                                     .fillMaxWidth(),
                                 secondaryAction = {
                                     IconButton(onClick = {
+                                        viewModel.reportUsage(contact)
                                         context.tryStartActivity(
                                             Intent(Intent.ACTION_SENDTO).apply {
                                                 data = Uri.parse("smsto:${it.number}")
@@ -180,6 +181,7 @@ fun ContactItem(
                                     expandedSection = if (it) 0 else -1
                                 },
                                 onContact = {
+                                    viewModel.reportUsage(contact)
                                     context.tryStartActivity(
                                         Intent(Intent.ACTION_DIAL).apply {
                                             data = Uri.parse("tel:${it.number}")
@@ -208,6 +210,7 @@ fun ContactItem(
                                     expandedSection = if (it) 1 else -1
                                 },
                                 onContact = {
+                                    viewModel.reportUsage(contact)
                                     context.tryStartActivity(
                                         Intent(Intent.ACTION_SENDTO).apply {
                                             data = Uri.parse("mailto:${it.address}")
@@ -231,6 +234,7 @@ fun ContactItem(
                                 secondaryAction = if (canNavigate) {
                                     {
                                         IconButton(onClick = {
+                                            viewModel.reportUsage(contact)
                                             context.tryStartActivity(
                                                 Intent(Intent.ACTION_VIEW).apply {
                                                     data =
@@ -254,6 +258,7 @@ fun ContactItem(
                                     expandedSection = if (it) 2 else -1
                                 },
                                 onContact = {
+                                    viewModel.reportUsage(contact)
                                     context.tryStartActivity(
                                         Intent(Intent.ACTION_VIEW).apply {
                                             data = Uri.parse("geo:0,0?q=${it.address}")
@@ -309,6 +314,7 @@ fun ContactItem(
                                     expandedSection = if (it) 3 + i else -1
                                 },
                                 onContact = {
+                                    viewModel.reportUsage(contact)
                                     context.tryStartActivity(
                                         Intent(Intent.ACTION_VIEW).apply {
                                             setDataAndType(

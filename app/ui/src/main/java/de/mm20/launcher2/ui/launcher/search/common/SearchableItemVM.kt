@@ -138,7 +138,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         }
         val bundle = options.toBundle()
         if (searchable.launch(context, bundle)) {
-            favoritesService.reportLaunch(searchable)
+            reportUsage(searchable)
             return true
         } else if (searchable is Application || searchable is AppShortcut) {
             favoritesService.reset(searchable)
@@ -168,7 +168,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     fun launchChild(context: Context, child: SavableSearchable) {
         if (child.launch(context, null)) {
-            favoritesService.reportLaunch(child)
+            reportUsage(child)
         }
     }
 
@@ -246,4 +246,8 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     val mapTileServerUrl = locationSearchSettings.tileServer
         .map { it ?: LocationSearchSettings.DefaultTileServerUrl }
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
+
+    fun reportUsage(searchable: SavableSearchable) {
+        favoritesService.reportLaunch(searchable)
+    }
 }
