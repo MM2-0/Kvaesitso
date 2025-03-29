@@ -32,16 +32,17 @@ data class Departure(
     val lineColor: Color?,
 )
 
+// implicit ordering by ordinal
 enum class LineType {
-    Bus,
-    Tram,
-    Subway,
-    CommuterTrain,
-    RegionalTrain,
-    Train,
-    HighSpeedTrain,
+    Airplane,
     Boat,
+    HighSpeedTrain,
+    Train,
+    RegionalTrain,
+    CommuterTrain,
+    Subway,
     Monorail,
     CableCar,
-    Airplane,
+    Tram,
+    Bus,
 }

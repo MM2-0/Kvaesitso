@@ -820,4 +820,5 @@
     </plurals>
     <string name="preference_contacts_call_on_tap">Zum Anruf Tippen</string>
     <string name="preference_contacts_call_on_tap_summary">Beim Tippen auf eine Telefonnummer diese direkt Anrufen</string>
+    <string name="departure_time_departed">abgefahren</string>
 </resources>
