@@ -390,6 +390,8 @@
     <string name="missing_permission_music_widget">Notification access is required to control media playback</string>
     <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">Contact permission is required to search contacts</string>
+    <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">Call permission is required to start calls</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
@@ -608,6 +610,7 @@
     <string name="preference_search_contacts_summary">Search contacts on this device</string>
     <string name="preference_search_calendar">Calendar</string>
     <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
+    <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
     <string name="preference_search_appshortcuts">App shortcuts</string>
     <string name="preference_search_appshortcuts_summary">Search app shortcuts</string>
     <string name="preference_search_calculator">Calculator</string>
@@ -667,6 +670,8 @@
     <string name="preference_category_accounts">Accounts</string>
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
+    <string name="preference_contacts_call_on_tap">Call on tap</string>
+    <string name="preference_contacts_call_on_tap_summary">Directly start calls when tapping phone numbers</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -1014,4 +1019,9 @@
     <string name="weather_forecast_humidity">Humidity</string>
     <string name="weather_forecast_wind">Wind</string>
     <string name="weather_forecast_precipitation">Precipitation</string>
+    <string name="departure_time_now">now</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">in one minute</item>
+        <item quantity="other">in %1$d minutes</item>
+    </plurals>
 </resources>

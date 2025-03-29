@@ -831,4 +831,11 @@
     <string name="preference_clock_widget_time_format_24h">24hodinový</string>
     <string name="preference_clock_widget_time_format_12h">12hodinový</string>
     <string name="preference_clock_widget_time_format_system">Podle systému</string>
+    <string name="departure_time_now">nyní</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">za minutu</item>
+        <item quantity="few">za %1$d minuty</item>
+        <item quantity="other">za %1$d minut</item>
+    </plurals>
+    <string name="preference_search_local_calendar_summary">Hledat kalendáře na tomto zařízení</string>
 </resources>
