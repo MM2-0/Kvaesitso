@@ -822,4 +822,10 @@
     <string name="preference_clock_widget_time_format">Időformátum</string>
     <string name="preference_clock_widget_time_format_24h">24 órás</string>
     <string name="preference_clock_widget_time_format_12h">12 órás</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">1 perc múlva indúl</item>
+        <item quantity="other">%1$d perc múlva indúl</item>
+    </plurals>
+    <string name="departure_time_now">most</string>
+    <string name="preference_search_local_calendar_summary">Naptárak keresése ezen az eszközön</string>
 </resources>

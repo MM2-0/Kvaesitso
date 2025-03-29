@@ -31,11 +31,11 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val websiteSearchSettings: WebsiteSearchSettings by inject()
     private val unitConverterSettings: UnitConverterSettings by inject()
     private val calculatorSearchSettings: CalculatorSearchSettings by inject()
+    private val locationSearchSettings: LocationSearchSettings by inject()
     private val searchFilterSettings: SearchFilterSettings by inject()
 
     private val pluginService: PluginService by inject()
     private val permissionsManager: PermissionsManager by inject()
-    private val locationSearchSettings: LocationSearchSettings by inject()
 
     val favorites = searchUiSettings.favorites
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -60,6 +60,18 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setContacts(contacts: Boolean) {
         contactSearchSettings.setEnabled(contacts)
+    }
+
+    val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val placesSearch = locationSearchSettings.osmLocations
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    fun setPlacesSearch(enabled: Boolean) {
+        locationSearchSettings.setOsmLocations(enabled)
+    }
+
+    fun requestLocationPermission(activity: AppCompatActivity) {
+        permissionsManager.requestPermission(activity, PermissionGroup.Location)
     }
 
     fun requestCalendarPermission(activity: AppCompatActivity) {
