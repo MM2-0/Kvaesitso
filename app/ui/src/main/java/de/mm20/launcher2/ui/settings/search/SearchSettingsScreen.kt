@@ -119,13 +119,16 @@ fun SearchSettingsScreen() {
                         modifier = Modifier.padding(16.dp)
                     )
                 }
-                SwitchPreference(
+                PreferenceWithSwitch(
                     title = stringResource(R.string.preference_search_contacts),
                     summary = stringResource(R.string.preference_search_contacts_summary),
                     icon = Icons.Rounded.Person,
-                    value = contacts == true && hasContactsPermission == true,
-                    onValueChanged = {
+                    switchValue = contacts == true && hasContactsPermission == true,
+                    onSwitchChanged = {
                         viewModel.setContacts(it)
+                    },
+                    onClick = {
+                        navController?.navigate("settings/search/contacts")
                     },
                     enabled = hasContactsPermission == true
                 )

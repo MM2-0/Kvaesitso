@@ -83,6 +83,8 @@ import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import androidx.core.net.toUri
+import de.mm20.launcher2.ktx.checkPermission
 
 @Composable
 fun ContactItem(
@@ -101,6 +103,7 @@ fun ContactItem(
     }
 
     val icon by viewModel.icon.collectAsStateWithLifecycle()
+    val callOnTap by viewModel.callOnTap.collectAsStateWithLifecycle(false)
     val badge by viewModel.badge.collectAsState(null)
 
     SharedTransitionLayout {
@@ -183,9 +186,12 @@ fun ContactItem(
                                 onContact = {
                                     viewModel.reportUsage(contact)
                                     context.tryStartActivity(
-                                        Intent(Intent.ACTION_DIAL).apply {
-                                            data = Uri.parse("tel:${it.number}")
-                                        }
+                                        Intent(
+                                            if (callOnTap)
+                                                Intent.ACTION_CALL
+                                            else
+                                                Intent.ACTION_DIAL
+                                        ).setData("tel:${it.number}".toUri())
                                     )
                                 },
                                 copyText = { it.number },
@@ -300,11 +306,22 @@ fun ContactItem(
                                     app.key
                                 }
                             }
+                            val itemsWithPermission = remember(app) {
+                                app.value.filter {
+                                    // exclude activities we have no permission for
+                                    val resolvedActivityInfo = context.packageManager.resolveActivity(
+                                        Intent(Intent.ACTION_VIEW).setDataAndType(it.uri, it.mimeType),
+                                        0
+                                    )?.activityInfo ?: return@filter false
+
+                                    resolvedActivityInfo.permission == null || context.checkPermission(resolvedActivityInfo.permission)
+                                }
+                            }
                             ContactInfo(
                                 icon = Icons.AutoMirrored.Rounded.OpenInNew,
                                 customIcon = appIcon,
                                 label = label,
-                                items = app.value,
+                                items = itemsWithPermission,
                                 itemLabel = { it.label },
                                 expanded = expandedSection == 3 + i,
                                 modifier = Modifier
