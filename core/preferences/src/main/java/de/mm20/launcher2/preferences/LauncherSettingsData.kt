@@ -54,6 +54,7 @@ data class LauncherSettingsData internal constructor(
     val fileSearchProviders: Set<String> = setOf("local"),
 
     val contactSearchEnabled: Boolean = true,
+    val contactSearchCallOnTap: Boolean = false,
 
     @Deprecated("Use calendarSearchProviders `local` instead")
     val calendarSearchEnabled: Boolean = true,

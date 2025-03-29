@@ -831,4 +831,11 @@
     <string name="preference_clock_widget_time_format_24h">24 ore</string>
     <string name="preference_clock_widget_time_format_12h">12 ore</string>
     <string name="preference_clock_widget_time_format_system">Predefinito del sistema</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">tra un minuto</item>
+        <item quantity="many">tra %1$d minuti</item>
+        <item quantity="other">tra %1$d minuti</item>
+    </plurals>
+    <string name="departure_time_now">adesso</string>
+    <string name="preference_search_local_calendar_summary">Cerca calendari su questo dispositivo</string>
 </resources>

@@ -43,6 +43,7 @@ import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemesSettingsScreen
+import de.mm20.launcher2.ui.settings.contacts.ContactsSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
@@ -226,6 +227,9 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/favorites") {
                                     FavoritesSettingsScreen()
+                                }
+                                composable("settings/search/contacts") {
+                                    ContactsSettingsScreen()
                                 }
                                 composable("settings/integrations") {
                                     IntegrationsSettingsScreen()
