@@ -22,7 +22,6 @@ import de.mm20.launcher2.preferences.ui.UiSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
@@ -125,6 +124,13 @@ class HomescreenSettingsScreenVM(
 
     fun setDock(dock: Boolean) {
         clockWidgetSettings.setDock(dock)
+    }
+
+    val rowsInDock = clockWidgetSettings.rowsInDock
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+
+    fun setRowsInDock(rowsInDock: Int) {
+        clockWidgetSettings.setRowsInDock(rowsInDock)
     }
 
     val fixedRotation = uiSettings.orientation.map { it != ScreenOrientation.Auto }
