@@ -17,14 +17,13 @@ fun <T> List<T>?.ifNullOrEmpty(block: () -> List<T>): List<T> {
 }
 
 fun <T> List<T>.distinctByEquality(equalityPredicate: (T, T) -> Boolean): List<T> {
-    if (size < 2)
-        return this
+    if (size < 2) return this
 
     val ret = mutableListOf<T>()
 
-    for (item in this)
-        if (ret.none { equalityPredicate(it, item) })
-            ret.add(item)
+    for (item in this) {
+        if (ret.none { equalityPredicate(it, item) }) ret.add(item)
+    }
 
     return ret
 }

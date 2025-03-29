@@ -176,10 +176,11 @@ internal class ContactRepository(
                 phoneNumbers = phoneNumbers.sortedByDescending {
                     it.number.count { !PhoneNumberUtils.isReallyDialable(it) }
                 }.distinctByEquality { a, b ->
-                    if (Build.VERSION.SDK_INT < 31)
+                    if (Build.VERSION.SDK_INT < 31) {
                         PhoneNumberUtils.compare(context, a.number, b.number)
-                    else
+                    } else {
                         PhoneNumberUtils.areSamePhoneNumber(a.number, b.number, mainLocaleISO3)
+                    }
                 }.map {
                     it.copy(number = PhoneNumberUtils.formatNumber(it.number, mainLocaleISO3))
                 },
