@@ -343,7 +343,7 @@ fun LocationItem(
                                     location.userRating!!,
                                     modifier = Modifier
                                         .padding(top = 6.dp)
-                                        .offset(-2.dp)
+                                        .offset((-2).dp)
                                 )
                             }
 
@@ -1081,16 +1081,15 @@ fun materializedLineColors(
     lineColor: android.graphics.Color?,
 ) = if (lineColor != null) {
     val harmonizeArgb = MaterialTheme.colorScheme.primary.toArgb()
-    val bg = Color(
+    val primary = Color(
         harmonize(lineColor.toArgb(), harmonizeArgb)
     )
-    val fg = Color(
-        harmonize(
-            if (0.5f < bg.luminance()) Color.Black.toArgb() else Color.White.toArgb(),
-            harmonizeArgb
-        )
-    )
-    bg to fg
+    val secondary = if (0.5f < primary.luminance())
+        MaterialTheme.colorScheme.surfaceDim
+    else
+        MaterialTheme.colorScheme.surfaceBright
+
+    primary to secondary
 } else {
     MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
 }
