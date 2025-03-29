@@ -92,6 +92,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.times
+import androidx.compose.ui.util.fastFilterNotNull
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import blend.Blend.harmonize
@@ -210,15 +211,12 @@ fun LocationItem(
                         val formattedDistance = distance?.metersToLocalizedString(
                             context, imperialUnits
                         )
-                        if (category != null || formattedDistance != null) {
+                        val isOpenString = location.openingSchedule?.isOpen()?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
+                        if (category != null || formattedDistance != null || isOpenString != null) {
                             Text(
-                                when {
-                                    category != null && formattedDistance != null -> "$category • $formattedDistance"
-
-                                    category != null -> category.toString()
-                                    formattedDistance != null -> formattedDistance
-                                    else -> ""
-                                },
+                                listOf(category, formattedDistance, isOpenString)
+                                    .fastFilterNotNull()
+                                    .joinToString(" • "),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.secondary,
                                 modifier = Modifier
@@ -314,7 +312,7 @@ fun LocationItem(
                                     when {
                                         category != null && formattedDistance != null -> "$category • $formattedDistance"
 
-                                        category != null -> category.toString()
+                                        category != null -> category
                                         formattedDistance != null -> formattedDistance
                                         else -> ""
                                     },
