@@ -2,10 +2,12 @@ package de.mm20.launcher2.contacts
 
 import android.content.ContentUris
 import android.content.Context
+import android.os.Build
 import android.provider.ContactsContract
+import android.telephony.PhoneNumberUtils
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
-import de.mm20.launcher2.ktx.toInt
+import de.mm20.launcher2.ktx.distinctByEquality
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
@@ -137,11 +139,10 @@ internal class ContactRepository(
                     }
 
                     else -> {
-                        val mimeType = dataCursor.getStringOrNull(mimeTypeColumn) ?: continue
                         contactApps += ContactApp(
                             label = dataCursor.getStringOrNull(data3Column) ?: continue,
                             packageName = dataCursor.getStringOrNull(accountTypeColumn) ?: continue,
-                            mimeType = mimeType,
+                            mimeType = dataCursor.getStringOrNull(mimeTypeColumn) ?: continue,
                             uri = ContentUris.withAppendedId(
                                 ContactsContract.Data.CONTENT_URI,
                                 dataCursor.getLongOrNull(idColumn) ?: continue
@@ -165,29 +166,29 @@ internal class ContactRepository(
             }
             lookupKeyCursor.close()
 
+            val mainLocaleISO3 = context.resources.configuration.locales[0].isO3Country
+
             return@withContext AndroidContact(
                 id = id,
                 firstName = firstName,
                 lastName = lastName,
                 displayName = displayName,
-                phoneNumbers = phoneNumbers.groupBy { it.type }.mapValues { (_, numbers) ->
-                    // group numbers by semantic type (mobile, work, ...)
-                    // to then make them distinct, by numbers only
-                    // but prefer "beauty numbers" in the end result
-                    numbers.sortedByDescending {
-                        it.number.any { it.isWhitespace() }.toInt() + it.number.count { it in specialPhoneNumberChars }
-                    }.distinctBy {
-                        it.number.filterNot { it.isWhitespace() || it in specialPhoneNumberChars }
-                    }
-                }.values.flatten(),
+                phoneNumbers = phoneNumbers.sortedByDescending {
+                    it.number.count { !PhoneNumberUtils.isReallyDialable(it) }
+                }.distinctByEquality { a, b ->
+                    if (Build.VERSION.SDK_INT < 31)
+                        PhoneNumberUtils.compare(context, a.number, b.number)
+                    else
+                        PhoneNumberUtils.areSamePhoneNumber(a.number, b.number, mainLocaleISO3)
+                }.map {
+                    it.copy(number = PhoneNumberUtils.formatNumber(it.number, mainLocaleISO3))
+                },
                 emailAddresses = emailAddresses.distinct(),
                 postalAddresses = postalAddresses.distinct(),
                 contactApps = contactApps.distinct(),
                 lookupKey = lookUpKey
             )
         }
-
-    private val specialPhoneNumberChars = listOf('+', '(', ')', '-', '.', ',')
 
     override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Contact>> {
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
