@@ -5,6 +5,7 @@ import android.content.Context
 import android.provider.ContactsContract
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
+import de.mm20.launcher2.ktx.toInt
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
@@ -169,13 +170,24 @@ internal class ContactRepository(
                 firstName = firstName,
                 lastName = lastName,
                 displayName = displayName,
-                phoneNumbers = phoneNumbers.distinct(),
+                phoneNumbers = phoneNumbers.groupBy { it.type }.mapValues { (_, numbers) ->
+                    // group numbers by semantic type (mobile, work, ...)
+                    // to then make them distinct, by numbers only
+                    // but prefer "beauty numbers" in the end result
+                    numbers.sortedByDescending {
+                        it.number.any { it.isWhitespace() }.toInt() + it.number.count { it in specialPhoneNumberChars }
+                    }.distinctBy {
+                        it.number.filterNot { it.isWhitespace() || it in specialPhoneNumberChars }
+                    }
+                }.values.flatten(),
                 emailAddresses = emailAddresses.distinct(),
                 postalAddresses = postalAddresses.distinct(),
                 contactApps = contactApps.distinct(),
                 lookupKey = lookUpKey
             )
         }
+
+    private val specialPhoneNumberChars = listOf('+', '(', ')', '-', '.', ',')
 
     override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Contact>> {
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
