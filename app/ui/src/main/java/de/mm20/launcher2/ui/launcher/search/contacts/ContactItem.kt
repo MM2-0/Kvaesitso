@@ -304,10 +304,10 @@ fun ContactItem(
                             val itemsWithPermission = remember(app) {
                                 app.value.filter {
                                     // exclude activities we have no permission for
-                                    val resolvedActivityInfo = context.packageManager.queryIntentActivities(
+                                    val resolvedActivityInfo = context.packageManager.resolveActivity(
                                         Intent(Intent.ACTION_VIEW).setDataAndType(it.uri, it.mimeType),
                                         0
-                                    ).firstOrNull()?.activityInfo ?: return@filter false
+                                    )?.activityInfo ?: return@filter false
 
                                     resolvedActivityInfo.permission == null || context.checkPermission(resolvedActivityInfo.permission)
                                 }
