@@ -818,4 +818,6 @@
         <item quantity="one">in einer Minute</item>
         <item quantity="other">in %1$d Minuten</item>
     </plurals>
+    <string name="preference_contacts_call_on_tap">Zum Anruf Tippen</string>
+    <string name="preference_contacts_call_on_tap_summary">Beim Tippen auf eine Telefonnummer diese direkt Anrufen</string>
 </resources>
