@@ -15,11 +15,11 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +29,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
@@ -38,7 +37,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -668,8 +666,6 @@ private fun Departures(
                                     nextDeparture.line to nextDeparture.type
                                 )
                             }
-                            val selectedDepartures =
-                                remember(selectedLine) { groupedDepartures[selectedLine] }
                             LaunchedEffect(Unit) {
                                 val itemIdx = lines.indexOf(selectedLine)
                                 if (itemIdx != -1) {
@@ -697,7 +693,8 @@ private fun Departures(
                                     val firstDeparture =
                                         groupedDepartures[it]?.first()
                                     if (firstDeparture != null) {
-                                        val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+                                        val isRtl =
+                                            LocalLayoutDirection.current == LayoutDirection.Rtl
                                         LineFilterChip(
                                             lineName = lineName,
                                             lineColor = firstDeparture.lineColor?.toComposeColor(),
@@ -726,26 +723,37 @@ private fun Departures(
                                     }
                                 }
                             }
-                            if (selectedDepartures != null) {
-                                Column(
-                                    modifier = Modifier.padding(horizontal = 12.dp)
-                                ) {
-                                    for (i in 0..<selectedDepartures.size.coerceAtMost(8)) {
-                                        if (i > 0) {
-                                            HorizontalDivider()
+                            AnimatedContent(
+                                selectedLine,
+                                transitionSpec = {
+                                    fadeIn(animationSpec = tween(220, delayMillis = 90))
+                                        .togetherWith(fadeOut(animationSpec = tween(90)))
+                                }
+                            ) { line ->
+
+                                val selectedDepartures = groupedDepartures[line]
+
+                                if (selectedDepartures != null) {
+                                    Column(
+                                        modifier = Modifier.padding(horizontal = 12.dp)
+                                    ) {
+                                        for (i in 0..<selectedDepartures.size.coerceAtMost(8)) {
+                                            if (i > 0) {
+                                                HorizontalDivider()
+                                            }
+                                            val dep = selectedDepartures[i]
+                                            DepartureRow(
+                                                departure = dep,
+                                                lineWidth = remember(
+                                                    selectedDepartures
+                                                ) {
+                                                    selectedDepartures.maxOfOrNull { it.line.length }
+                                                },
+                                                withIcon = false,
+                                                minutesInsteadOfTime = showMinutes,
+                                                modifier = Modifier.fillMaxWidth(),
+                                            )
                                         }
-                                        val dep = selectedDepartures[i]
-                                        DepartureRow(
-                                            departure = dep,
-                                            lineWidth = remember(
-                                                selectedDepartures
-                                            ) {
-                                                selectedDepartures.maxOfOrNull { it.line.length }
-                                            },
-                                            withIcon = false,
-                                            minutesInsteadOfTime = showMinutes,
-                                            modifier = Modifier.fillMaxWidth(),
-                                        )
                                     }
                                 }
                             }
