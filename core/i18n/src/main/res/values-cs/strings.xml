@@ -838,4 +838,7 @@
         <item quantity="other">za %1$d minut</item>
     </plurals>
     <string name="preference_search_local_calendar_summary">Hledat kalendáře na tomto zařízení</string>
+    <string name="missing_permission_call_contacts_settings">Pro provádění hovorů je vyžadováno oprávnění k telefonu</string>
+    <string name="preference_contacts_call_on_tap">Zavolat po klepnutí</string>
+    <string name="preference_contacts_call_on_tap_summary">Rovnou zahájit hovor po klepnutí na telefonní číslo</string>
 </resources>
