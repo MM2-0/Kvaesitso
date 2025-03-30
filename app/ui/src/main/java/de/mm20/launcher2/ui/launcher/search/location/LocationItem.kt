@@ -88,14 +88,12 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
@@ -667,109 +665,86 @@ private fun Departures(
                                 }
                         }
 
-                        if (lines.size < 3) {
-                            LazyColumn(
-                                state = listState,
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                        Column {
+                            val filterChipListState =
+                                rememberLazyListState()
+                            var selectedLine by remember {
+                                mutableStateOf(
+                                    nextDeparture.line to nextDeparture.type
+                                )
+                            }
+                            val selectedDepartures =
+                                remember(selectedLine) { groupedDepartures[selectedLine] }
+                            LaunchedEffect(Unit) {
+                                val itemIdx = lines.indexOf(selectedLine)
+                                if (itemIdx != -1) {
+                                    if (animateFilterChipsOnce) {
+                                        delay(500)
+                                        filterChipListState.animateScrollToItem(
+                                            itemIdx
+                                        )
+                                        animateFilterChipsOnce = false
+                                    } else
+                                        filterChipListState.scrollToItem(
+                                            itemIdx
+                                        )
+                                }
+                            }
+                            LazyRow(
+                                state = filterChipListState
                             ) {
                                 itemsIndexed(
-                                    departures,
+                                    lines,
                                     key = { idx, _ -> idx }
                                 ) { idx, it ->
-                                    DepartureRow(
-                                        departure = it,
-                                        lineWidth = remember(departures) {
-                                            departures.maxOfOrNull { it.line.length }
-                                        },
-                                        withIcon = true,
-                                        minutesInsteadOfTime = showMinutes,
-                                        modifier = departureModifier(idx)
-                                    )
-                                }
-
-                            }
-                        } else {
-                            Column {
-                                val filterChipListState =
-                                    rememberLazyListState()
-                                var selectedLine by remember {
-                                    mutableStateOf(
-                                        nextDeparture.line to nextDeparture.type
-                                    )
-                                }
-                                val selectedDepartures =
-                                    remember(selectedLine) { groupedDepartures[selectedLine] }
-                                LaunchedEffect(Unit) {
-                                    val itemIdx = lines.indexOf(selectedLine)
-                                    if (itemIdx != -1) {
-                                        if (animateFilterChipsOnce) {
-                                            delay(500)
-                                            filterChipListState.animateScrollToItem(
-                                                itemIdx
-                                            )
-                                            animateFilterChipsOnce = false
-                                        } else
-                                            filterChipListState.scrollToItem(
-                                                itemIdx
-                                            )
+                                    val (lineName, _) = it
+                                    val firstDeparture =
+                                        groupedDepartures[it]?.first()
+                                    if (firstDeparture != null) {
+                                        LineFilterChip(
+                                            lineName = lineName,
+                                            lineColor = firstDeparture.lineColor?.toComposeColor(),
+                                            lineType = firstDeparture.type,
+                                            selected = selectedLine == it,
+                                            onClick = {
+                                                selectedLine = it
+                                            },
+                                            modifier = Modifier
+                                                .graphicsLayer {
+                                                    alpha =
+                                                        filterChipListState.layoutInfo
+                                                            .blendIntoViewScale(
+                                                                idx,
+                                                                0.5f
+                                                            )
+                                                }
+                                                .scale(
+                                                    0.875f,
+                                                    TransformOrigin.Center
+                                                )
+                                        )
                                     }
                                 }
-                                LazyRow(
-                                    state = filterChipListState
-                                ) {
+                            }
+                            if (selectedDepartures != null) {
+                                LazyColumn {
                                     itemsIndexed(
-                                        lines,
+                                        selectedDepartures,
                                         key = { idx, _ -> idx }
                                     ) { idx, it ->
-                                        val (lineName, _) = it
-                                        val firstDeparture =
-                                            groupedDepartures[it]?.first()
-                                        if (firstDeparture != null) {
-                                            LineFilterChip(
-                                                lineName = lineName,
-                                                lineColor = firstDeparture.lineColor?.toComposeColor(),
-                                                lineType = firstDeparture.type,
-                                                selected = selectedLine == it,
-                                                onClick = {
-                                                    selectedLine = it
-                                                },
-                                                modifier = Modifier
-                                                    .graphicsLayer {
-                                                        alpha =
-                                                            filterChipListState.layoutInfo
-                                                                .blendIntoViewScale(
-                                                                    idx,
-                                                                    0.5f
-                                                                )
-                                                    }
-                                                    .scale(
-                                                        0.875f,
-                                                        TransformOrigin.Center
-                                                    )
-                                            )
-                                        }
-                                    }
-                                }
-                                if (selectedDepartures != null) {
-                                    LazyColumn {
-                                        itemsIndexed(
-                                            selectedDepartures,
-                                            key = { idx, _ -> idx }
-                                        ) { idx, it ->
-                                            DepartureRow(
-                                                departure = it,
-                                                lineWidth = remember(
-                                                    selectedDepartures
-                                                ) {
-                                                    selectedDepartures.maxOfOrNull { it.line.length }
-                                                },
-                                                withIcon = false,
-                                                minutesInsteadOfTime = showMinutes,
-                                                modifier = departureModifier(idx)
-                                            )
-                                            if (idx < selectedDepartures.size - 1)
-                                                HorizontalDivider()
-                                        }
+                                        DepartureRow(
+                                            departure = it,
+                                            lineWidth = remember(
+                                                selectedDepartures
+                                            ) {
+                                                selectedDepartures.maxOfOrNull { it.line.length }
+                                            },
+                                            withIcon = false,
+                                            minutesInsteadOfTime = showMinutes,
+                                            modifier = departureModifier(idx)
+                                        )
+                                        if (idx < selectedDepartures.size - 1)
+                                            HorizontalDivider()
                                     }
                                 }
                             }
@@ -1127,24 +1102,6 @@ fun LineFilterChip(
 }
 
 @Composable
-fun materializedLineColor(
-    lineColor: Color?,
-) = if (lineColor != null) {
-    val sourceColor = MaterialTheme.colorScheme.primary.toArgb()
-    val harmonizedColor = Color(
-        harmonize(lineColor.toArgb(), sourceColor)
-    )
-    val secondary = if (0.5f < harmonizedColor.luminance())
-        MaterialTheme.colorScheme.surfaceDim
-    else
-        MaterialTheme.colorScheme.surfaceBright
-
-    harmonizedColor to secondary
-} else {
-    MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
-}
-
-@Composable
 fun LineIcon(
     lineName: String,
     lineType: LineType?,
@@ -1191,11 +1148,11 @@ fun LineIcon(
     departure: Departure,
     modifier: Modifier = Modifier,
 ) = LineIcon(
-    departure.line,
-    departure.type,
-    departure.lineColor,
-    ZonedDateTime.now().isAfter(departure.time + (departure.delay ?: Duration.ZERO)),
-    modifier
+    lineName = departure.line,
+    lineType = departure.type,
+    lineColor = departure.lineColor,
+    hasDeparted = ZonedDateTime.now().isAfter(departure.time + (departure.delay ?: Duration.ZERO)),
+    modifier = modifier
 )
 
 
