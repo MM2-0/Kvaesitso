@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
@@ -40,6 +41,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.NavigateNext
@@ -63,11 +65,11 @@ import androidx.compose.material.icons.rounded.Tram
 import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.InputChip
+import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -91,7 +93,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
@@ -124,11 +128,14 @@ import de.mm20.launcher2.ui.component.RatingBar
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
+import de.mm20.launcher2.ui.ktx.atTone
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
+import de.mm20.launcher2.ui.ktx.toComposeColor
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
@@ -139,9 +146,9 @@ import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import java.time.format.TextStyle
 import java.util.Locale
 import kotlin.math.pow
+import java.time.format.TextStyle as JavaTextStyle
 
 @Composable
 fun LocationItem(
@@ -720,7 +727,7 @@ private fun Departures(
                                         if (firstDeparture != null) {
                                             LineFilterChip(
                                                 lineName = lineName,
-                                                lineColor = firstDeparture.lineColor,
+                                                lineColor = firstDeparture.lineColor?.toComposeColor(),
                                                 lineType = firstDeparture.type,
                                                 selected = selectedLine == it,
                                                 onClick = {
@@ -828,7 +835,7 @@ private fun OpeningSchedule(
                                     } else {
                                         val dow =
                                             currentOpeningTime.dayOfWeek.getDisplayName(
-                                                TextStyle.SHORT,
+                                                JavaTextStyle.SHORT,
                                                 Locale.getDefault()
                                             )
                                         context.getString(
@@ -853,7 +860,7 @@ private fun OpeningSchedule(
                                     } else {
                                         val dow =
                                             nextOpeningTime.dayOfWeek.getDisplayName(
-                                                TextStyle.SHORT,
+                                                JavaTextStyle.SHORT,
                                                 Locale.getDefault()
                                             )
                                         context.getString(
@@ -896,7 +903,7 @@ private fun OpeningSchedule(
                             Text(
                                 modifier = Modifier.weight(1f),
                                 text = group.key.getDisplayName(
-                                    TextStyle.FULL,
+                                    JavaTextStyle.FULL,
                                     Locale.getDefault()
                                 ),
                                 style = MaterialTheme.typography.bodySmall,
@@ -1034,7 +1041,7 @@ private fun OpeningSchedule.Hours.getNextOpeningHours(): OpeningHours {
 fun LineMarqueeText(
     lineName: String,
     lineForeground: Color,
-    style: androidx.compose.ui.text.TextStyle,
+    style: TextStyle,
     modifier: Modifier = Modifier
 ) = MarqueeText(
     text = lineName,
@@ -1053,7 +1060,7 @@ fun LineMarqueeText(
 @Composable
 fun LineTypeIcon(
     lineType: LineType?,
-    foreground: Color,
+    tint: Color,
     modifier: Modifier = Modifier
 ) = Icon(
     imageVector = when (lineType) {
@@ -1070,56 +1077,69 @@ fun LineTypeIcon(
     },
     contentDescription = lineType?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
     modifier = modifier,
-    tint = foreground
+    tint = tint
 )
 
 @Composable
 fun LineFilterChip(
     lineName: String,
-    lineColor: android.graphics.Color?,
+    lineColor: Color?,
     lineType: LineType?,
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val (primary, secondary) = materializedLineColors(lineColor)
-    FilterChip(
-        selected,
-        onClick,
+    val dark = LocalDarkTheme.current
+    val color =
+        if (lineColor == null) MaterialTheme.colorScheme.primary
+        else Color(harmonize(lineColor.toArgb(), MaterialTheme.colorScheme.primary.toArgb()))
+
+    InputChip(
+        selected = selected,
+        onClick = onClick,
         label = {
             Text(lineName)
         },
-        leadingIcon = {
-            LineTypeIcon(
-                lineType = lineType,
-                foreground = LocalContentColor.current,
-                modifier = Modifier.requiredSize(FilterChipDefaults.IconSize)
-            )
+        avatar = {
+            Box(
+                modifier = Modifier
+                    .background(color.atTone(if (dark) 80 else 40))
+                    .clip(CircleShape)
+                    .requiredSize(
+                        InputChipDefaults.AvatarSize
+                    )
+            ) {
+                LineTypeIcon(
+                    lineType = lineType,
+                    tint = color.atTone(if (dark) 20 else 100),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(4.dp)
+                )
+            }
         },
         colors = FilterChipDefaults.filterChipColors(
-            iconColor = primary,
-            selectedLabelColor = secondary,
-            selectedLeadingIconColor = secondary,
-            selectedContainerColor = primary
+            selectedLabelColor = color.atTone(if (dark) 90 else 30),
+            selectedContainerColor = color.atTone(if (dark) 30 else 90),
         ),
         modifier = modifier
     )
 }
 
 @Composable
-fun materializedLineColors(
-    lineColor: android.graphics.Color?,
+fun materializedLineColor(
+    lineColor: Color?,
 ) = if (lineColor != null) {
-    val harmonizeArgb = MaterialTheme.colorScheme.primary.toArgb()
-    val primary = Color(
-        harmonize(lineColor.toArgb(), harmonizeArgb)
+    val sourceColor = MaterialTheme.colorScheme.primary.toArgb()
+    val harmonizedColor = Color(
+        harmonize(lineColor.toArgb(), sourceColor)
     )
-    val secondary = if (0.5f < primary.luminance())
+    val secondary = if (0.5f < harmonizedColor.luminance())
         MaterialTheme.colorScheme.surfaceDim
     else
         MaterialTheme.colorScheme.surfaceBright
 
-    primary to secondary
+    harmonizedColor to secondary
 } else {
     MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
 }
@@ -1132,36 +1152,33 @@ fun LineIcon(
     hasDeparted: Boolean,
     modifier: Modifier = Modifier
 ) {
-    var (lineBg, lineFg) = materializedLineColors(lineColor)
-
-    if (hasDeparted) {
-        val hsv = FloatArray(3)
-        android.graphics.Color.colorToHSV(lineBg.toArgb(), hsv)
-        val (h, s, v) = hsv
-        lineBg = Color.hsv(h, s / 2f, v, lineBg.alpha)
-    }
+    val dark = LocalDarkTheme.current
+    val color =
+        if (lineColor == null) MaterialTheme.colorScheme.primary
+        else Color(harmonize(lineColor.toArgb(), MaterialTheme.colorScheme.primary.toArgb()))
 
     Row(
         modifier = modifier
             .wrapContentWidth(Alignment.Start)
             .background(
-                lineBg,
+                color.atTone(if (dark) 80 else 40),
                 MaterialTheme.shapes.small
             )
             .padding(top = 4.dp, bottom = 4.dp, start = 4.dp, end = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        val foregroundColor = color.atTone(if (dark) 20 else 100)
         LineTypeIcon(
             lineType,
-            lineFg,
+            foregroundColor,
             Modifier
                 .padding(end = 2.dp)
                 .size(16.dp)
         )
         LineMarqueeText(
             lineName,
-            lineFg,
-            MaterialTheme.typography.labelSmall,
+            foregroundColor,
+            style = MaterialTheme.typography.labelSmall,
             modifier = Modifier
                 .wrapContentSize()
                 .widthIn(max = 34.dp)
