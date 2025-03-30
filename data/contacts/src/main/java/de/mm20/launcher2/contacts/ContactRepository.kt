@@ -181,8 +181,9 @@ internal class ContactRepository(
                     } else {
                         PhoneNumberUtils.areSamePhoneNumber(a.number, b.number, mainLocaleISO3)
                     }
-                }.map {
-                    it.copy(number = PhoneNumberUtils.formatNumber(it.number, mainLocaleISO3))
+                }.mapNotNull {
+                    val formattedNumber = PhoneNumberUtils.formatNumber(it.number, mainLocaleISO3) ?: return@mapNotNull null
+                    it.copy(number = formattedNumber)
                 },
                 emailAddresses = emailAddresses.distinct(),
                 postalAddresses = postalAddresses.distinct(),
