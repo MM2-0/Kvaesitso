@@ -437,7 +437,7 @@ fun LocationItem(
                                             horizontalArrangement = Arrangement.SpaceBetween,
                                             verticalAlignment = Alignment.CenterVertically
                                         ) {
-                                            nextDeparture.LineIcon(Modifier.padding(end = 8.dp))
+                                            LineIcon(departure = nextDeparture, Modifier.padding(end = 8.dp))
                                             val lastStop = nextDeparture.lastStop
                                             if (lastStop != null) {
                                                 MarqueeText(
@@ -454,7 +454,7 @@ fun LocationItem(
 
                                             Text(
                                                 text = key(LocalTime.current) {
-                                                    context.departureInMinutes(nextDeparture)
+                                                    departureInMinutes(context, nextDeparture)
                                                 },
                                                 style = MaterialTheme.typography.labelSmall,
                                                 modifier = Modifier.padding(end = 12.dp)
@@ -507,7 +507,8 @@ fun LocationItem(
                                                         departures,
                                                         key = { idx, _ -> idx }
                                                     ) { idx, it ->
-                                                        it.LazyColumnPart(
+                                                        DepartureRow(
+                                                            departure = it,
                                                             lineWidth = remember(departures) {
                                                                 departures.maxOfOrNull { it.line.length }
                                                             },
@@ -551,9 +552,9 @@ fun LocationItem(
                                                             groupedDepartures[it]?.first()
                                                                 ?.let { someDeparture ->
                                                                     LineFilterChip(
-                                                                        lineName,
+                                                                        lineName = lineName,
                                                                         lineColor = someDeparture.lineColor,
-                                                                        someDeparture.type,
+                                                                        lineType = someDeparture.type,
                                                                         selected = selectedLine == it,
                                                                         onClick = {
                                                                             selectedLine = it
@@ -581,7 +582,8 @@ fun LocationItem(
                                                                 selectedDepartures,
                                                                 key = { idx, _ -> idx }
                                                             ) { idx, it ->
-                                                                it.LazyColumnPart(
+                                                                DepartureRow(
+                                                                    departure = it,
                                                                     lineWidth = remember(
                                                                         selectedDepartures
                                                                     ) {
@@ -1136,19 +1138,21 @@ fun LineIcon(
 }
 
 @Composable
-fun Departure.LineIcon(
-    modifier: Modifier
+fun LineIcon(
+    departure: Departure,
+    modifier: Modifier = Modifier,
 ) = LineIcon(
-    line,
-    type,
-    lineColor,
-    ZonedDateTime.now().isAfter(time + (delay ?: Duration.ZERO)),
+    departure.line,
+    departure.type,
+    departure.lineColor,
+    ZonedDateTime.now().isAfter(departure.time + (departure.delay ?: Duration.ZERO)),
     modifier
 )
 
 
 @Composable
-fun Departure.LazyColumnPart(
+fun DepartureRow(
+    departure: Departure,
     lineWidth: Int?,
     withIcon: Boolean,
     minutesInsteadOfTime: Boolean,
@@ -1169,6 +1173,7 @@ fun Departure.LazyColumnPart(
         ) {
             if (withIcon) {
                 LineIcon(
+                    departure = departure,
                     Modifier
                         .padding(end = 8.dp)
                         .widthIn(
@@ -1177,9 +1182,9 @@ fun Departure.LazyColumnPart(
                         )
                 )
             }
-            if (lastStop != null) {
+            if (departure.lastStop != null) {
                 MarqueeText(
-                    text = lastStop!!,
+                    text = departure.lastStop!!,
                     style = MaterialTheme.typography.labelMedium,
                     iterations = Int.MAX_VALUE,
                     repeatDelayMillis = 0,
@@ -1195,9 +1200,9 @@ fun Departure.LazyColumnPart(
         ) {
             Text(
                 text = if (minutesInsteadOfTime) {
-                    key(LocalTime.current) { context.departureInMinutes(this@LazyColumnPart) }
+                    key(LocalTime.current) { departureInMinutes(context, departure) }
                 } else {
-                    time.format(
+                    departure.time.format(
                         DateTimeFormatter.ofPattern(
                             "HH:mm",
                             Locale.getDefault()
@@ -1208,7 +1213,7 @@ fun Departure.LazyColumnPart(
                 modifier = Modifier.padding(end = 2.dp)
             )
             if (!minutesInsteadOfTime) {
-                val delayMinutes = delay?.toMinutes()
+                val delayMinutes = departure.delay?.toMinutes()
                 if (null != delayMinutes && 0L < delayMinutes) {
                     Text(
                         text = "+$delayMinutes",
@@ -1260,24 +1265,25 @@ private fun Attribution(
     }
 }
 
-private fun Context.departureInMinutes(departure: Departure): String {
+private fun departureInMinutes(context: Context, departure: Departure): String {
     val delayedDepartureTime =
         departure.time + (departure.delay
             ?: Duration.ZERO)
     val now = ZonedDateTime.now()
 
     if (delayedDepartureTime < now)
-        return getString(R.string.departure_time_departed)
+        return context.getString(R.string.departure_time_departed)
 
     val timeLeft =
         Duration.between(now, delayedDepartureTime)
             .toMinutes().toInt()
-    return if (timeLeft < 1)
-        getString(R.string.departure_time_now)
-    else
-        resources.getQuantityString(
+    return if (timeLeft < 1) {
+        context.getString(R.string.departure_time_now)
+    } else {
+        context.resources.getQuantityString(
             R.plurals.departure_time_in,
             timeLeft,
             timeLeft
         )
+    }
 }
