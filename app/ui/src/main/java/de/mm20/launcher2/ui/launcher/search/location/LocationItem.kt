@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
@@ -101,7 +102,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.times
 import androidx.compose.ui.util.fastFilterNotNull
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import blend.Blend.harmonize
 import coil.compose.AsyncImage
@@ -115,6 +116,7 @@ import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.isNotEmpty
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.MarqueeText
@@ -129,7 +131,6 @@ import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
@@ -141,7 +142,6 @@ import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
 import kotlin.math.pow
-import androidx.core.net.toUri
 
 @Composable
 fun LocationItem(
@@ -216,8 +216,10 @@ fun LocationItem(
                                     this@AnimatedContent
                                 )
                         )
-                        val formattedDistance = distance?.metersToLocalizedString(context, imperialUnits)
-                        val isOpenString = location.openingSchedule?.isOpen()?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
+                        val formattedDistance =
+                            distance?.metersToLocalizedString(context, imperialUnits)
+                        val isOpenString = location.openingSchedule?.isOpen()
+                            ?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
                         val sublabel = listOf(location.category, formattedDistance, isOpenString)
                             .fastFilterNotNull()
                             .joinToString(" • ")
@@ -407,355 +409,23 @@ fun LocationItem(
 
                     val openingSchedule = location.openingSchedule
                     val departures = remember(location.departures) {
-                        location.departures
-                            ?.sortedBy { it.time }
+                        location.departures?.sortedBy { it.time }
                     }
                     if (departures != null) {
-                        val nextDeparture = key(LocalTime.current) {
-                            departures.firstOrNull {
-                                it.time.plus(it.delay ?: Duration.ZERO).isAfter(ZonedDateTime.now())
-                            }
-                        }
-                        var animateFilterChipsOnce by remember { mutableStateOf(true) }
-                        if (nextDeparture != null) {
-                            var showDepartureList by remember { mutableStateOf(false) }
-                            OutlinedCard(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(start = 12.dp, end = 12.dp, top = 12.dp),
-                                shape = MaterialTheme.shapes.small,
-                                onClick = { showDepartureList = true }
-                            ) {
-                                val listState = rememberLazyListState()
-
-                                AnimatedContent(showDepartureList) { showList ->
-                                    if (!showList) {
-                                        Row(
-                                            Modifier
-                                                .padding(12.dp)
-                                                .fillMaxWidth(),
-                                            horizontalArrangement = Arrangement.SpaceBetween,
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            LineIcon(departure = nextDeparture, Modifier.padding(end = 8.dp))
-                                            val lastStop = nextDeparture.lastStop
-                                            if (lastStop != null) {
-                                                MarqueeText(
-                                                    modifier = Modifier.weight(1f),
-                                                    text = lastStop,
-                                                    style = MaterialTheme.typography.labelMedium,
-                                                    iterations = Int.MAX_VALUE,
-                                                    repeatDelayMillis = 0,
-                                                    velocity = 20.dp,
-                                                    fadeLeft = 5.dp,
-                                                    fadeRight = 5.dp,
-                                                )
-                                            }
-
-                                            Text(
-                                                text = key(LocalTime.current) {
-                                                    departureInMinutes(context, nextDeparture)
-                                                },
-                                                style = MaterialTheme.typography.labelSmall,
-                                                modifier = Modifier.padding(end = 12.dp)
-                                            )
-                                            Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
-                                        }
-                                    } else {
-                                        val (lines, groupedDepartures) = remember(departures) {
-                                            val dict = departures.groupBy { it.line to it.type }
-                                            dict.keys.toList().sortedWith(
-                                                compareBy(
-                                                    // first by line type
-                                                    { (_, type) -> type?.ordinal ?: Int.MAX_VALUE },
-                                                    // then by name, skipping any prefixed letters
-                                                    // as "U" or "S" may be used to indicate type
-                                                    { (line, _) -> line.trimStart { it.isLetter() } }
-                                                )
-                                            ) to dict
-                                        }
-
-                                        var showMinutes by remember { mutableStateOf(false) }
-
-                                        Box(
-                                            modifier = modifier
-                                                .heightIn(max = 192.dp)
-                                                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
-                                                .fillMaxWidth()
-                                                .pointerInput(Unit) {
-                                                    detectTapGestures(
-                                                        onTap = { showMinutes = !showMinutes },
-                                                        onLongPress = { showDepartureList = false }
-                                                    )
-                                                }
-                                        ) {
-                                            val departureModifier = { idx: Int ->
-                                                Modifier
-                                                    .fillMaxWidth()
-                                                    .graphicsLayer {
-                                                        alpha = listState.layoutInfo
-                                                            .blendIntoViewScale(idx)
-                                                    }
-                                            }
-
-                                            if (lines.size < 3) {
-                                                LazyColumn(
-                                                    state = listState,
-                                                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                                                ) {
-                                                    itemsIndexed(
-                                                        departures,
-                                                        key = { idx, _ -> idx }
-                                                    ) { idx, it ->
-                                                        DepartureRow(
-                                                            departure = it,
-                                                            lineWidth = remember(departures) {
-                                                                departures.maxOfOrNull { it.line.length }
-                                                            },
-                                                            withIcon = true,
-                                                            minutesInsteadOfTime = showMinutes,
-                                                            modifier = departureModifier(idx)
-                                                        )
-                                                    }
-
-                                                }
-                                            } else {
-                                                Column {
-                                                    val filterChipListState =
-                                                        rememberLazyListState()
-                                                    var selectedLine by remember {
-                                                        mutableStateOf(
-                                                            nextDeparture.line to nextDeparture.type
-                                                        )
-                                                    }
-                                                    val selectedDepartures =
-                                                        remember(selectedLine) { groupedDepartures[selectedLine] }
-                                                    LaunchedEffect(Unit) {
-                                                        val itemIdx = lines.indexOf(selectedLine)
-                                                        if (itemIdx != -1) {
-                                                            if (animateFilterChipsOnce) {
-                                                                delay(500)
-                                                                filterChipListState.animateScrollToItem(itemIdx)
-                                                                animateFilterChipsOnce = false
-                                                            } else
-                                                                filterChipListState.scrollToItem(itemIdx)
-                                                        }
-                                                    }
-                                                    LazyRow(
-                                                        state = filterChipListState
-                                                    ) {
-                                                        itemsIndexed(
-                                                            lines,
-                                                            key = { idx, _ -> idx }
-                                                        ) { idx, it ->
-                                                            val (lineName, _) = it
-                                                            groupedDepartures[it]?.first()
-                                                                ?.let { someDeparture ->
-                                                                    LineFilterChip(
-                                                                        lineName = lineName,
-                                                                        lineColor = someDeparture.lineColor,
-                                                                        lineType = someDeparture.type,
-                                                                        selected = selectedLine == it,
-                                                                        onClick = {
-                                                                            selectedLine = it
-                                                                        },
-                                                                        modifier = Modifier
-                                                                            .graphicsLayer {
-                                                                                alpha =
-                                                                                    filterChipListState.layoutInfo
-                                                                                        .blendIntoViewScale(
-                                                                                            idx,
-                                                                                            0.5f
-                                                                                        )
-                                                                            }
-                                                                            .scale(
-                                                                                0.875f,
-                                                                                TransformOrigin.Center
-                                                                            )
-                                                                    )
-                                                                }
-                                                        }
-                                                    }
-                                                    if (selectedDepartures != null) {
-                                                        LazyColumn {
-                                                            itemsIndexed(
-                                                                selectedDepartures,
-                                                                key = { idx, _ -> idx }
-                                                            ) { idx, it ->
-                                                                DepartureRow(
-                                                                    departure = it,
-                                                                    lineWidth = remember(
-                                                                        selectedDepartures
-                                                                    ) {
-                                                                        selectedDepartures.maxOfOrNull { it.line.length }
-                                                                    },
-                                                                    withIcon = false,
-                                                                    minutesInsteadOfTime = showMinutes,
-                                                                    modifier = departureModifier(idx)
-                                                                )
-                                                                if (idx < selectedDepartures.size - 1)
-                                                                    HorizontalDivider()
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        Departures(
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(start = 12.dp, end = 12.dp, top = 12.dp),
+                            departures = departures,
+                        )
                     }
-                    if (openingSchedule is OpeningSchedule.TwentyFourSeven || (openingSchedule is OpeningSchedule.Hours && openingSchedule.openingHours.isNotEmpty())) {
-                        var showOpeningSchedule by remember(openingSchedule) {
-                            mutableStateOf(false)
-                        }
-                        OutlinedCard(
+                    if (openingSchedule?.isNotEmpty() == true) {
+                        OpeningSchedule(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(start = 12.dp, end = 12.dp, top = 12.dp),
-                            shape = MaterialTheme.shapes.small,
-                            onClick = {
-                                if (openingSchedule !is OpeningSchedule.TwentyFourSeven) {
-                                    showOpeningSchedule = !showOpeningSchedule
-                                }
-                            }
-                        ) {
-                            AnimatedContent(showOpeningSchedule) { showSchedule ->
-                                if (!showSchedule) {
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(12.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        when (openingSchedule) {
-                                            is OpeningSchedule.TwentyFourSeven -> {
-                                                Text(
-                                                    text = stringResource(R.string.location_open_24_7),
-                                                    style = MaterialTheme.typography.labelMedium,
-                                                )
-                                            }
-
-                                            is OpeningSchedule.Hours -> {
-                                                val text = remember(openingSchedule) {
-                                                    val currentOpeningTime =
-                                                        openingSchedule.getCurrentOpeningHours()
-                                                    val timeFormat =
-                                                        DateTimeFormatter.ofLocalizedTime(
-                                                            FormatStyle.SHORT
-                                                        )
-                                                    return@remember if (currentOpeningTime != null) {
-                                                        val isSameDay =
-                                                            currentOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
-                                                        val formattedTime =
-                                                            timeFormat.format(currentOpeningTime.startTime + currentOpeningTime.duration)
-                                                        val closingTime = if (isSameDay) {
-                                                            context.getString(
-                                                                R.string.location_closes,
-                                                                formattedTime
-                                                            )
-                                                        } else {
-                                                            val dow =
-                                                                currentOpeningTime.dayOfWeek.getDisplayName(
-                                                                    TextStyle.SHORT,
-                                                                    Locale.getDefault()
-                                                                )
-                                                            context.getString(
-                                                                R.string.location_closes_other_day,
-                                                                dow,
-                                                                formattedTime
-                                                            )
-                                                        }
-                                                        "${context.getString(R.string.location_open)} • $closingTime"
-                                                    } else {
-                                                        val nextOpeningTime =
-                                                            openingSchedule.getNextOpeningHours()
-                                                        val isSameDay =
-                                                            nextOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
-                                                        val formattedTime =
-                                                            timeFormat.format(nextOpeningTime.startTime)
-                                                        val openingTime = if (isSameDay) {
-                                                            context.getString(
-                                                                R.string.location_opens,
-                                                                formattedTime
-                                                            )
-                                                        } else {
-                                                            val dow =
-                                                                nextOpeningTime.dayOfWeek.getDisplayName(
-                                                                    TextStyle.SHORT,
-                                                                    Locale.getDefault()
-                                                                )
-                                                            context.getString(
-                                                                R.string.location_opens_other_day,
-                                                                dow,
-                                                                formattedTime
-                                                            )
-                                                        }
-                                                        "${context.getString(R.string.location_closed)} • $openingTime"
-                                                    }
-                                                }
-
-                                                Text(
-                                                    text = text,
-                                                    style = MaterialTheme.typography.labelMedium,
-                                                    modifier = Modifier.weight(1f)
-                                                )
-
-                                                Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
-                                            }
-                                        }
-                                    }
-                                } else if (openingSchedule is OpeningSchedule.Hours) {
-                                    Column(
-                                        modifier = Modifier.padding(vertical = 6.dp)
-                                    ) {
-                                        val groups = remember(openingSchedule) {
-                                            openingSchedule.openingHours
-                                                .groupBy { it.dayOfWeek }.entries
-                                                .sortedBy { it.key }
-                                        }
-
-                                        for (group in groups) {
-                                            Row(
-                                                modifier = Modifier.padding(
-                                                    vertical = 2.dp,
-                                                    horizontal = 12.dp
-                                                ),
-                                            ) {
-                                                Text(
-                                                    modifier = Modifier.weight(1f),
-                                                    text = group.key.getDisplayName(
-                                                        TextStyle.FULL,
-                                                        Locale.getDefault()
-                                                    ),
-                                                    style = MaterialTheme.typography.bodySmall,
-                                                )
-                                                val times = remember(group.value) {
-                                                    val dateFormatter =
-                                                        DateTimeFormatter.ofLocalizedTime(
-                                                            FormatStyle.SHORT
-                                                        )
-                                                    group.value.sortedBy { it.startTime }
-                                                        .joinToString(separator = ", ") {
-                                                            "${it.startTime.format(dateFormatter)}–${
-                                                                it.startTime.plus(
-                                                                    it.duration
-                                                                ).format(dateFormatter)
-                                                            }"
-                                                        }
-                                                }
-                                                Text(
-                                                    text = times,
-                                                    style = MaterialTheme.typography.labelMedium,
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
+                            openingSchedule = openingSchedule,
+                        )
                     }
 
                     Row(
@@ -765,7 +435,7 @@ fun LocationItem(
                     ) {
                         val navigationIntent = Intent(
                             Intent.ACTION_VIEW,
-                            Uri.parse("google.navigation:q=${location.latitude},${location.longitude}")
+                            "google.navigation:q=${location.latitude},${location.longitude}".toUri()
                         )
                         val canResolveNavigationIntent = remember {
                             null != context.packageManager.resolveActivity(navigationIntent, 0)
@@ -783,13 +453,14 @@ fun LocationItem(
                                 }
                             )
                         }
-                        location.phoneNumber?.let {
+                        if (location.phoneNumber != null) {
                             AssistChip(
                                 modifier = Modifier.padding(end = 12.dp),
                                 onClick = {
                                     context.tryStartActivity(
                                         Intent(
-                                            Intent.ACTION_DIAL, Uri.parse("tel:$it")
+                                            Intent.ACTION_DIAL,
+                                            "tel:${location.phoneNumber}".toUri()
                                         )
                                     )
                                 },
@@ -803,13 +474,13 @@ fun LocationItem(
                             )
                         }
 
-                        location.websiteUrl?.let {
+                        if (location.websiteUrl != null) {
                             AssistChip(
                                 modifier = Modifier.padding(end = 12.dp),
                                 onClick = {
                                     context.tryStartActivity(
                                         Intent(
-                                            Intent.ACTION_VIEW, Uri.parse(it)
+                                            Intent.ACTION_VIEW, location.websiteUrl!!.toUri()
                                         )
                                     )
                                 },
@@ -856,8 +527,6 @@ fun LocationItem(
                     }
 
                     val sheetManager = LocalBottomSheetManager.current
-                    val lifecycleOwner = LocalLifecycleOwner.current
-                    val snackbarHostState = LocalSnackbarHostState.current
 
                     toolbarActions.add(
                         DefaultToolbarAction(
@@ -866,14 +535,14 @@ fun LocationItem(
                             action = { sheetManager.showCustomizeSearchableModal(location) }
                         ))
 
-                    location.fixMeUrl?.let {
+                    if (location.fixMeUrl != null) {
                         toolbarActions += DefaultToolbarAction(
                             label = stringResource(id = R.string.menu_bugreport),
                             icon = Icons.Rounded.BugReport,
                         ) {
                             context.tryStartActivity(
                                 Intent(
-                                    Intent.ACTION_VIEW, Uri.parse(location.fixMeUrl)
+                                    Intent.ACTION_VIEW, location.fixMeUrl!!.toUri()
                                 )
                             )
                         }
@@ -897,7 +566,370 @@ fun LocationItem(
 }
 
 @Composable
-fun Compass(
+private fun Departures(
+    modifier: Modifier = Modifier,
+    departures: List<Departure>,
+) {
+    val context = LocalContext.current
+
+    val nextDeparture = key(LocalTime.current) {
+        departures.firstOrNull {
+            it.time.plus(it.delay ?: Duration.ZERO).isAfter(ZonedDateTime.now())
+        }
+    }
+    var animateFilterChipsOnce by remember { mutableStateOf(true) }
+    if (nextDeparture != null) {
+        var showDepartureList by remember { mutableStateOf(false) }
+        OutlinedCard(
+            modifier = modifier,
+            shape = MaterialTheme.shapes.small,
+            onClick = { showDepartureList = true }
+        ) {
+            val listState = rememberLazyListState()
+
+            AnimatedContent(showDepartureList) { showList ->
+                if (!showList) {
+                    Row(
+                        Modifier
+                            .padding(12.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        LineIcon(
+                            departure = nextDeparture,
+                            Modifier.padding(end = 8.dp)
+                        )
+                        val lastStop = nextDeparture.lastStop
+                        if (lastStop != null) {
+                            MarqueeText(
+                                modifier = Modifier.weight(1f),
+                                text = lastStop,
+                                style = MaterialTheme.typography.labelMedium,
+                                iterations = Int.MAX_VALUE,
+                                repeatDelayMillis = 0,
+                                velocity = 20.dp,
+                                fadeLeft = 5.dp,
+                                fadeRight = 5.dp,
+                            )
+                        }
+
+                        Text(
+                            text = key(LocalTime.current) {
+                                departureInMinutes(context, nextDeparture)
+                            },
+                            style = MaterialTheme.typography.labelSmall,
+                            modifier = Modifier.padding(end = 12.dp)
+                        )
+                        Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                    }
+                } else {
+                    val (lines, groupedDepartures) = remember(departures) {
+                        val dict = departures.groupBy { it.line to it.type }
+                        dict.keys.toList().sortedWith(
+                            compareBy(
+                                // first by line type
+                                { (_, type) -> type?.ordinal ?: Int.MAX_VALUE },
+                                // then by name, skipping any prefixed letters
+                                // as "U" or "S" may be used to indicate type
+                                { (line, _) -> line.trimStart { it.isLetter() } }
+                            )
+                        ) to dict
+                    }
+
+                    var showMinutes by remember { mutableStateOf(false) }
+
+                    Box(
+                        modifier = Modifier
+                            .heightIn(max = 192.dp)
+                            .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+                            .fillMaxWidth()
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onTap = { showMinutes = !showMinutes },
+                                    onLongPress = { showDepartureList = false }
+                                )
+                            }
+                    ) {
+                        val departureModifier = { idx: Int ->
+                            Modifier
+                                .fillMaxWidth()
+                                .graphicsLayer {
+                                    alpha = listState.layoutInfo
+                                        .blendIntoViewScale(idx)
+                                }
+                        }
+
+                        if (lines.size < 3) {
+                            LazyColumn(
+                                state = listState,
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                            ) {
+                                itemsIndexed(
+                                    departures,
+                                    key = { idx, _ -> idx }
+                                ) { idx, it ->
+                                    DepartureRow(
+                                        departure = it,
+                                        lineWidth = remember(departures) {
+                                            departures.maxOfOrNull { it.line.length }
+                                        },
+                                        withIcon = true,
+                                        minutesInsteadOfTime = showMinutes,
+                                        modifier = departureModifier(idx)
+                                    )
+                                }
+
+                            }
+                        } else {
+                            Column {
+                                val filterChipListState =
+                                    rememberLazyListState()
+                                var selectedLine by remember {
+                                    mutableStateOf(
+                                        nextDeparture.line to nextDeparture.type
+                                    )
+                                }
+                                val selectedDepartures =
+                                    remember(selectedLine) { groupedDepartures[selectedLine] }
+                                LaunchedEffect(Unit) {
+                                    val itemIdx = lines.indexOf(selectedLine)
+                                    if (itemIdx != -1) {
+                                        if (animateFilterChipsOnce) {
+                                            delay(500)
+                                            filterChipListState.animateScrollToItem(
+                                                itemIdx
+                                            )
+                                            animateFilterChipsOnce = false
+                                        } else
+                                            filterChipListState.scrollToItem(
+                                                itemIdx
+                                            )
+                                    }
+                                }
+                                LazyRow(
+                                    state = filterChipListState
+                                ) {
+                                    itemsIndexed(
+                                        lines,
+                                        key = { idx, _ -> idx }
+                                    ) { idx, it ->
+                                        val (lineName, _) = it
+                                        val firstDeparture =
+                                            groupedDepartures[it]?.first()
+                                        if (firstDeparture != null) {
+                                            LineFilterChip(
+                                                lineName = lineName,
+                                                lineColor = firstDeparture.lineColor,
+                                                lineType = firstDeparture.type,
+                                                selected = selectedLine == it,
+                                                onClick = {
+                                                    selectedLine = it
+                                                },
+                                                modifier = Modifier
+                                                    .graphicsLayer {
+                                                        alpha =
+                                                            filterChipListState.layoutInfo
+                                                                .blendIntoViewScale(
+                                                                    idx,
+                                                                    0.5f
+                                                                )
+                                                    }
+                                                    .scale(
+                                                        0.875f,
+                                                        TransformOrigin.Center
+                                                    )
+                                            )
+                                        }
+                                    }
+                                }
+                                if (selectedDepartures != null) {
+                                    LazyColumn {
+                                        itemsIndexed(
+                                            selectedDepartures,
+                                            key = { idx, _ -> idx }
+                                        ) { idx, it ->
+                                            DepartureRow(
+                                                departure = it,
+                                                lineWidth = remember(
+                                                    selectedDepartures
+                                                ) {
+                                                    selectedDepartures.maxOfOrNull { it.line.length }
+                                                },
+                                                withIcon = false,
+                                                minutesInsteadOfTime = showMinutes,
+                                                modifier = departureModifier(idx)
+                                            )
+                                            if (idx < selectedDepartures.size - 1)
+                                                HorizontalDivider()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun OpeningSchedule(
+    modifier: Modifier = Modifier,
+    openingSchedule: OpeningSchedule,
+) {
+    val context = LocalContext.current
+
+    var showOpeningSchedule by remember(openingSchedule) { mutableStateOf(false) }
+    OutlinedCard(
+        modifier = modifier,
+        shape = MaterialTheme.shapes.small,
+        onClick = {
+            if (openingSchedule !is OpeningSchedule.TwentyFourSeven) {
+                showOpeningSchedule = !showOpeningSchedule
+            }
+        }
+    ) {
+        AnimatedContent(showOpeningSchedule) { showSchedule ->
+            if (!showSchedule) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    when (openingSchedule) {
+                        is OpeningSchedule.TwentyFourSeven -> {
+                            Text(
+                                text = stringResource(R.string.location_open_24_7),
+                                style = MaterialTheme.typography.labelMedium,
+                            )
+                        }
+
+                        is OpeningSchedule.Hours -> {
+                            val text = remember(openingSchedule) {
+                                val currentOpeningTime =
+                                    openingSchedule.getCurrentOpeningHours()
+                                val timeFormat =
+                                    DateTimeFormatter.ofLocalizedTime(
+                                        FormatStyle.SHORT
+                                    )
+                                return@remember if (currentOpeningTime != null) {
+                                    val isSameDay =
+                                        currentOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
+                                    val formattedTime =
+                                        timeFormat.format(currentOpeningTime.startTime + currentOpeningTime.duration)
+                                    val closingTime = if (isSameDay) {
+                                        context.getString(
+                                            R.string.location_closes,
+                                            formattedTime
+                                        )
+                                    } else {
+                                        val dow =
+                                            currentOpeningTime.dayOfWeek.getDisplayName(
+                                                TextStyle.SHORT,
+                                                Locale.getDefault()
+                                            )
+                                        context.getString(
+                                            R.string.location_closes_other_day,
+                                            dow,
+                                            formattedTime
+                                        )
+                                    }
+                                    "${context.getString(R.string.location_open)} • $closingTime"
+                                } else {
+                                    val nextOpeningTime =
+                                        openingSchedule.getNextOpeningHours()
+                                    val isSameDay =
+                                        nextOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
+                                    val formattedTime =
+                                        timeFormat.format(nextOpeningTime.startTime)
+                                    val openingTime = if (isSameDay) {
+                                        context.getString(
+                                            R.string.location_opens,
+                                            formattedTime
+                                        )
+                                    } else {
+                                        val dow =
+                                            nextOpeningTime.dayOfWeek.getDisplayName(
+                                                TextStyle.SHORT,
+                                                Locale.getDefault()
+                                            )
+                                        context.getString(
+                                            R.string.location_opens_other_day,
+                                            dow,
+                                            formattedTime
+                                        )
+                                    }
+                                    "${context.getString(R.string.location_closed)} • $openingTime"
+                                }
+                            }
+
+                            Text(
+                                text = text,
+                                style = MaterialTheme.typography.labelMedium,
+                                modifier = Modifier.weight(1f)
+                            )
+
+                            Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                        }
+                    }
+                }
+            } else if (openingSchedule is OpeningSchedule.Hours) {
+                Column(
+                    modifier = Modifier.padding(vertical = 6.dp)
+                ) {
+                    val groups = remember(openingSchedule) {
+                        openingSchedule.openingHours
+                            .groupBy { it.dayOfWeek }.entries
+                            .sortedBy { it.key }
+                    }
+
+                    for (group in groups) {
+                        Row(
+                            modifier = Modifier.padding(
+                                vertical = 2.dp,
+                                horizontal = 12.dp
+                            ),
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = group.key.getDisplayName(
+                                    TextStyle.FULL,
+                                    Locale.getDefault()
+                                ),
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                            val times = remember(group.value) {
+                                val dateFormatter =
+                                    DateTimeFormatter.ofLocalizedTime(
+                                        FormatStyle.SHORT
+                                    )
+                                group.value.sortedBy { it.startTime }
+                                    .joinToString(separator = ", ") {
+                                        "${it.startTime.format(dateFormatter)}–${
+                                            it.startTime.plus(
+                                                it.duration
+                                            ).format(dateFormatter)
+                                        }"
+                                    }
+                            }
+                            Text(
+                                text = times,
+                                style = MaterialTheme.typography.labelMedium,
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+@Composable
+private fun Compass(
     targetHeading: Float?,
     modifier: Modifier = Modifier,
     size: Dp = 48.dp
@@ -1055,17 +1087,17 @@ fun LineFilterChip(
         selected,
         onClick,
         label = {
-            LineMarqueeText(
-                lineName,
-                LocalContentColor.current,
-                MaterialTheme.typography.labelMedium
+            Text(lineName)
+        },
+        leadingIcon = {
+            LineTypeIcon(
+                lineType = lineType,
+                foreground = LocalContentColor.current,
+                modifier = Modifier.requiredSize(FilterChipDefaults.IconSize)
             )
         },
-        leadingIcon = { LineTypeIcon(lineType, LocalContentColor.current) },
         colors = FilterChipDefaults.filterChipColors(
-            labelColor = primary,
             iconColor = primary,
-            containerColor = secondary,
             selectedLabelColor = secondary,
             selectedLeadingIconColor = secondary,
             selectedContainerColor = primary
