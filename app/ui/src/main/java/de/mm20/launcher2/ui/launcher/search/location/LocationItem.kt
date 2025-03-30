@@ -19,6 +19,7 @@ import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -646,7 +647,6 @@ private fun Departures(
 
                     Box(
                         modifier = Modifier
-                            .heightIn(max = 192.dp)
                             .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
                             .fillMaxWidth()
                             .pointerInput(Unit) {
@@ -656,14 +656,6 @@ private fun Departures(
                                 )
                             }
                     ) {
-                        val departureModifier = { idx: Int ->
-                            Modifier
-                                .fillMaxWidth()
-                                .graphicsLayer {
-                                    alpha = listState.layoutInfo
-                                        .blendIntoViewScale(idx)
-                                }
-                        }
 
                         Column {
                             val filterChipListState =
@@ -727,13 +719,11 @@ private fun Departures(
                                 }
                             }
                             if (selectedDepartures != null) {
-                                LazyColumn {
-                                    itemsIndexed(
-                                        selectedDepartures,
-                                        key = { idx, _ -> idx }
-                                    ) { idx, it ->
+                                Column {
+                                    for (i in 0..<selectedDepartures.size.coerceAtMost(8)) {
+                                        val dep = selectedDepartures[i]
                                         DepartureRow(
-                                            departure = it,
+                                            departure = dep,
                                             lineWidth = remember(
                                                 selectedDepartures
                                             ) {
@@ -741,10 +731,11 @@ private fun Departures(
                                             },
                                             withIcon = false,
                                             minutesInsteadOfTime = showMinutes,
-                                            modifier = departureModifier(idx)
+                                            modifier = Modifier.fillMaxWidth(),
                                         )
-                                        if (idx < selectedDepartures.size - 1)
+                                        if (i < selectedDepartures.size - 1) {
                                             HorizontalDivider()
+                                        }
                                     }
                                 }
                             }
@@ -1162,7 +1153,7 @@ fun DepartureRow(
     lineWidth: Int?,
     withIcon: Boolean,
     minutesInsteadOfTime: Boolean,
-    modifier: Modifier
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     Row(
