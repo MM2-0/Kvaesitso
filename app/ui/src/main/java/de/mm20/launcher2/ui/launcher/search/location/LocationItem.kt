@@ -25,6 +25,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -92,6 +93,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -99,6 +101,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
@@ -647,7 +650,7 @@ private fun Departures(
 
                     Box(
                         modifier = Modifier
-                            .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+                            .padding(bottom = 8.dp)
                             .fillMaxWidth()
                             .pointerInput(Unit) {
                                 detectTapGestures(
@@ -683,7 +686,8 @@ private fun Departures(
                                 }
                             }
                             LazyRow(
-                                state = filterChipListState
+                                state = filterChipListState,
+                                contentPadding = PaddingValues(horizontal = 12.dp)
                             ) {
                                 itemsIndexed(
                                     lines,
@@ -693,6 +697,7 @@ private fun Departures(
                                     val firstDeparture =
                                         groupedDepartures[it]?.first()
                                     if (firstDeparture != null) {
+                                        val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
                                         LineFilterChip(
                                             lineName = lineName,
                                             lineColor = firstDeparture.lineColor?.toComposeColor(),
@@ -712,15 +717,23 @@ private fun Departures(
                                                 }
                                                 .scale(
                                                     0.875f,
-                                                    TransformOrigin.Center
+                                                    TransformOrigin(
+                                                        pivotFractionX = if (isRtl) 1f else 0f,
+                                                        pivotFractionY = 0.5f
+                                                    )
                                                 )
                                         )
                                     }
                                 }
                             }
                             if (selectedDepartures != null) {
-                                Column {
+                                Column(
+                                    modifier = Modifier.padding(horizontal = 12.dp)
+                                ) {
                                     for (i in 0..<selectedDepartures.size.coerceAtMost(8)) {
+                                        if (i > 0) {
+                                            HorizontalDivider()
+                                        }
                                         val dep = selectedDepartures[i]
                                         DepartureRow(
                                             departure = dep,
@@ -733,9 +746,6 @@ private fun Departures(
                                             minutesInsteadOfTime = showMinutes,
                                             modifier = Modifier.fillMaxWidth(),
                                         )
-                                        if (i < selectedDepartures.size - 1) {
-                                            HorizontalDivider()
-                                        }
                                     }
                                 }
                             }
