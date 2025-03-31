@@ -117,6 +117,7 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.isOpen
 import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.LineNameComparator
 import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
@@ -633,15 +634,10 @@ private fun Departures(
                 } else {
                     val (lines, groupedDepartures) = remember(departures) {
                         val dict = departures.groupBy { it.line to it.type }
-                        dict.keys.toList().sortedWith(
-                            compareBy(
-                                // first by line type
-                                { (_, type) -> type?.ordinal ?: Int.MAX_VALUE },
-                                // then by name, skipping any prefixed letters
-                                // as "U" or "S" may be used to indicate type
-                                { (line, _) -> line.trimStart { it.isLetter() } }
-                            )
-                        ) to dict
+                        dict.keys.toList().sortedWith { (line1, type1), (line2, type2) ->
+                            if (type1 != type2) compareValues(type1?.ordinal, type2?.ordinal)
+                            else LineNameComparator.compare(line1, line2)
+                        } to dict
                     }
 
                     var showMinutes by remember { mutableStateOf(false) }
