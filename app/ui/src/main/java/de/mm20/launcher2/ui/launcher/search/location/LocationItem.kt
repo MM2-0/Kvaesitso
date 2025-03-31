@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
@@ -679,7 +680,7 @@ private fun Departures(
                             }
                             LazyRow(
                                 state = filterChipListState,
-                                contentPadding = PaddingValues(horizontal = 12.dp)
+                                contentPadding = PaddingValues(horizontal = 8.dp)
                             ) {
                                 itemsIndexed(
                                     lines,
@@ -689,8 +690,6 @@ private fun Departures(
                                     val firstDeparture =
                                         groupedDepartures[it]?.first()
                                     if (firstDeparture != null) {
-                                        val isRtl =
-                                            LocalLayoutDirection.current == LayoutDirection.Rtl
                                         LineFilterChip(
                                             lineName = lineName,
                                             lineColor = firstDeparture.lineColor?.toComposeColor(),
@@ -700,6 +699,12 @@ private fun Departures(
                                                 selectedLine = it
                                             },
                                             modifier = Modifier
+                                                .padding(
+                                                    top = 12.dp,
+                                                    bottom = 12.dp,
+                                                    start = 4.dp,
+                                                    end = 4.dp,
+                                                )
                                                 .graphicsLayer {
                                                     alpha =
                                                         filterChipListState.layoutInfo
@@ -708,13 +713,6 @@ private fun Departures(
                                                                 0.5f
                                                             )
                                                 }
-                                                .scale(
-                                                    0.875f,
-                                                    TransformOrigin(
-                                                        pivotFractionX = if (isRtl) 1f else 0f,
-                                                        pivotFractionY = 0.5f
-                                                    )
-                                                )
                                         )
                                     }
                                 }
@@ -1069,6 +1067,8 @@ fun LineFilterChip(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val scale = 0.875f
+
     val dark = LocalDarkTheme.current
     val color =
         if (lineColor == null) MaterialTheme.colorScheme.primary
@@ -1078,7 +1078,7 @@ fun LineFilterChip(
         selected = selected,
         onClick = onClick,
         label = {
-            Text(lineName)
+            Text(lineName, style = MaterialTheme.typography.labelMedium)
         },
         avatar = {
             Box(
@@ -1086,7 +1086,7 @@ fun LineFilterChip(
                     .background(color.atTone(if (dark) 80 else 40))
                     .clip(CircleShape)
                     .requiredSize(
-                        InputChipDefaults.AvatarSize
+                        InputChipDefaults.AvatarSize * scale
                     )
             ) {
                 LineTypeIcon(
@@ -1102,7 +1102,7 @@ fun LineFilterChip(
             selectedLabelColor = color.atTone(if (dark) 90 else 30),
             selectedContainerColor = color.atTone(if (dark) 30 else 90),
         ),
-        modifier = modifier
+        modifier = modifier.height(FilterChipDefaults.Height * scale)
     )
 }
 
