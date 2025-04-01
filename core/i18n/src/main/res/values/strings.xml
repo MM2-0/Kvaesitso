@@ -1024,4 +1024,5 @@
         <item quantity="one">in one minute</item>
         <item quantity="other">in %1$d minutes</item>
     </plurals>
+    <string name="departure_time_departed">departed</string>
 </resources>
