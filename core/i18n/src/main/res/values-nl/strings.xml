@@ -813,4 +813,13 @@
     <string name="reset_icon">Pictogram herstellen</string>
     <string name="preference_compact_tags_summary">Labels of pictogrammen verbergen om de ruimte die door labels wordt ingenomen te verkleinen</string>
     <string name="preference_compact_tags">Compacte labels</string>
+    <string name="weather_forecast_humidity">Vochtigheid</string>
+    <string name="weather_forecast_wind">Wind</string>
+    <string name="weather_forecast_precipitation">Neerslag</string>
+    <string name="tag_empty_name">Een label kan niet bestaan zonder een naam. Als je doorgaat, wordt het label verwijderd.</string>
+    <string name="widget_removed">Widget verwijderd</string>
+    <string name="preference_clock_widget_time_format">Tijdformaat</string>
+    <string name="preference_clock_widget_time_format_24h">24-uur</string>
+    <string name="preference_clock_widget_time_format_12h">12-uur</string>
+    <string name="preference_clock_widget_time_format_system">Systeemstandaard</string>
 </resources>

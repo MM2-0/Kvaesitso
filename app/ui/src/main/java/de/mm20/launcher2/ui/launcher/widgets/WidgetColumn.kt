@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets
 
-import android.appwidget.AppWidgetHost
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
@@ -11,6 +10,8 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -35,17 +35,15 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.ktx.animateTo
-import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
+import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.widgets.AppWidget
-import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.launch
 
 @Composable
@@ -55,11 +53,12 @@ fun WidgetColumn(
     onEditModeChange: (Boolean) -> Unit,
 ) {
 
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val viewModel: WidgetsVM = viewModel()
-    val bottomSheetManager = LocalBottomSheetManager.current
+    val snackbarHostState = LocalSnackbarHostState.current
 
     var addNewWidget by rememberSaveable { mutableStateOf(false) }
-
 
 
     Column(
@@ -90,10 +89,21 @@ fun WidgetColumn(
                             viewModel.addWidget(widget, i + offset)
                         },
                         onWidgetRemove = {
-                            if (widget is AppWidget) {
-                                widgetHost.deleteAppWidgetId(widget.config.widgetId)
+                            lifecycleOwner.lifecycleScope.launch {
+                                viewModel.removeWidget(widget)
+                                val result = snackbarHostState.showSnackbar(
+                                    message = context.getString(R.string.widget_removed),
+                                    actionLabel = context.getString(R.string.action_undo),
+                                    duration = SnackbarDuration.Short,
+                                )
+                                if (result == SnackbarResult.ActionPerformed) {
+                                    viewModel.addWidget(widget, i)
+                                } else {
+                                    if (widget is AppWidget) {
+                                        widgetHost.deleteAppWidgetId(widget.config.widgetId)
+                                    }
+                                }
                             }
-                            viewModel.removeWidget(widget)
                         },
                         onWidgetUpdate = {
                             viewModel.updateWidget(it)

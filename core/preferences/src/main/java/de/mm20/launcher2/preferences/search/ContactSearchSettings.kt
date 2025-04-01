@@ -12,4 +12,11 @@ class ContactSearchSettings internal constructor(private val dataStore: Launcher
     fun setEnabled(enabled: Boolean) {
         dataStore.update { it.copy(contactSearchEnabled = enabled) }
     }
+
+    val callOnTap: Flow<Boolean>
+        get() = dataStore.data.map { it.contactSearchCallOnTap }.distinctUntilChanged()
+
+    fun setCallOnTap(callOnTap: Boolean) {
+        dataStore.update { it.copy(contactSearchCallOnTap = callOnTap) }
+    }
 }

@@ -378,4 +378,15 @@
         <item quantity="other">Decymetrów</item>
     </plurals>
     <string name="unit_decimeter_symbol">dm</string>
+    <string name="dimension_length">Długość</string>
+    <string name="dimension_velocity">Prędkość</string>
+    <string name="dimension_volume">Głośność</string>
+    <string name="dimension_area">Obszar</string>
+    <string name="dimension_currency">Waluta</string>
+    <string name="dimension_data">Dane</string>
+    <string name="dimension_bitrate">Bitrate</string>
+    <string name="dimension_energy">Energia</string>
+    <string name="dimension_frequency">Częstotliwość</string>
+    <string name="dimension_temperature">Temperatura</string>
+    <string name="dimension_time">Czas</string>
 </resources>

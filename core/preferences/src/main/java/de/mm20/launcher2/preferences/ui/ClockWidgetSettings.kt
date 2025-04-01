@@ -5,6 +5,7 @@ import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.preferences.ClockWidgetStyleEnum
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.TimeFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -134,6 +135,15 @@ class ClockWidgetSettings internal constructor(
     fun setShowSeconds(enabled: Boolean) {
         launcherDataStore.update {
             it.copy(clockWidgetShowSeconds = enabled)
+        }
+    }
+
+    val timeFormat
+        get() = launcherDataStore.data.map { it.clockWidgetTimeFormat }
+
+    fun setTimeFormat(timeFormat: TimeFormat) {
+        launcherDataStore.update {
+            it.copy(clockWidgetTimeFormat = timeFormat)
         }
     }
 

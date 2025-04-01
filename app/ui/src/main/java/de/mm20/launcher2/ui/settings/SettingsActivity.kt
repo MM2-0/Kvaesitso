@@ -11,6 +11,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
@@ -36,10 +38,12 @@ import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemesSettingsScreen
+import de.mm20.launcher2.ui.settings.contacts.ContactsSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
@@ -48,7 +52,6 @@ import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.filterbar.FilterBarSettingsScreen
 import de.mm20.launcher2.ui.settings.gestures.GestureSettingsScreen
-import de.mm20.launcher2.ui.settings.google.GoogleSettingsScreen
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
 import de.mm20.launcher2.ui.settings.homescreen.HomescreenSettingsScreen
 import de.mm20.launcher2.ui.settings.icons.IconsSettingsScreen
@@ -90,16 +93,18 @@ class SettingsActivity : BaseActivity() {
             val navController = rememberNavController()
 
             LaunchedEffect(route) {
-                try {
-                    navController.navigate(route ?: "settings") {
-                        popUpTo("settings") {
-                            inclusive = true
+                if (route != null) {
+                    try {
+                        navController.navigate(route ?: "settings") {
+                            popUpTo("settings") {
+                                inclusive = true
+                            }
                         }
-                    }
-                } catch (e: IllegalArgumentException) {
-                    navController.navigate("settings") {
-                        popUpTo("settings") {
-                            inclusive = true
+                    } catch (e: IllegalArgumentException) {
+                        navController.navigate("settings") {
+                            popUpTo("settings") {
+                                inclusive = true
+                            }
                         }
                     }
                 }
@@ -125,6 +130,7 @@ class SettingsActivity : BaseActivity() {
                         }
                         OverlayHost {
                             NavHost(
+                                modifier = Modifier.fillMaxSize(),
                                 navController = navController,
                                 startDestination = "settings",
                                 exitTransition = {
@@ -196,6 +202,11 @@ class SettingsActivity : BaseActivity() {
                                 composable("settings/search/calendar") {
                                     CalendarSearchSettingsScreen()
                                 }
+                                composable("settings/search/calendar/{providerId}") {
+                                    CalendarProviderSettingsScreen(
+                                        it.arguments?.getString("providerId") ?: return@composable
+                                    )
+                                }
                                 composable("settings/search/searchactions") {
                                     SearchActionsSettingsScreen()
                                 }
@@ -217,6 +228,9 @@ class SettingsActivity : BaseActivity() {
                                 composable("settings/favorites") {
                                     FavoritesSettingsScreen()
                                 }
+                                composable("settings/search/contacts") {
+                                    ContactsSettingsScreen()
+                                }
                                 composable("settings/integrations") {
                                     IntegrationsSettingsScreen()
                                 }
@@ -225,9 +239,6 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/integrations/owncloud") {
                                     OwncloudSettingsScreen()
-                                }
-                                composable("settings/integrations/google") {
-                                    GoogleSettingsScreen()
                                 }
                                 composable("settings/plugins") {
                                     PluginsSettingsScreen()

@@ -7,14 +7,30 @@ import retrofit2.Retrofit
 import retrofit2.http.Body
 import retrofit2.http.POST
 import java.lang.reflect.Type
+import kotlin.math.cos
 
+/**
+ * Overpass API query builder
+ * Searches for nodes and ways that at least:
+ * - match the query string in their name or brand tag
+ * - match one of the given tag groups
+ */
 data class OverpassFuzzyRadiusQuery(
-    val tag: String = "name",
+    /**
+     * Free text query to search for.
+     */
     val query: String,
+    /**
+     * Tags groups to search for. Each item represents a group of tags, separated by commas.
+     * The query matches if all tags in a group are present in the element.
+     * For example:
+     * ["amenity=restaurant,cuisine=italian", "amenity=cafe"]
+     * This query will match elements that are either a restaurant with italian cuisine or a cafe.
+     */
+    val tagGroups: List<String>,
     val radius: Int,
     val latitude: Double,
     val longitude: Double,
-    val caseInvariant: Boolean = true,
 )
 
 data class OverpassIdQuery(
@@ -49,12 +65,7 @@ interface OverpassApi {
 
 class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, RequestBody> {
     override fun convert(value: OverpassFuzzyRadiusQuery): RequestBody {
-
-        // allow other characters in between query words, if there are multiple
-        // https://dev.overpass-api.de/overpass-doc/en/criteria/per_tag.html#regex
-        val escapedQueryName = value
-            .query
-            .split(' ')
+        val encodedQuery = value.query.split(' ')
             .joinToString(
                 separator = ".*",
                 prefix = "\"",
@@ -62,10 +73,25 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
             ) { Regex.escapeReplacement(it) }
 
         val overpassQlBuilder = StringBuilder()
-        overpassQlBuilder.append("[out:json];")
-        // nw: node or way
-        overpassQlBuilder.append("nw(around:", value.radius, ',', value.latitude, ',', value.longitude, ')')
-        overpassQlBuilder.append('[', value.tag, '~', escapedQueryName, if (value.caseInvariant) ",i];" else "];")
+        val latDegreeChange = value.radius * 0.00001 / 1.11
+        val lonDegreeChange = latDegreeChange / cos(Math.toRadians(value.latitude))
+        val boundingBox = arrayOf(
+            value.latitude - latDegreeChange, value.longitude - lonDegreeChange,
+            value.latitude + latDegreeChange, value.longitude + lonDegreeChange
+        )
+        overpassQlBuilder.append("[out:json][timeout:10][bbox:" + boundingBox.joinToString(",") + "];")
+
+        overpassQlBuilder.append("(")
+        overpassQlBuilder.append("nw[name~$encodedQuery,i];")
+        overpassQlBuilder.append("nw[brand~$encodedQuery,i];")
+        for (tag in value.tagGroups) {
+            val tags = tag.split(',')
+
+            if (tags.isEmpty()) continue
+
+            overpassQlBuilder.append("nw[${tags.joinToString("][")}];")
+        }
+        overpassQlBuilder.append(");")
         // center to add the center coordinate of a way to the result, if applicable
         overpassQlBuilder.append("out center;")
 

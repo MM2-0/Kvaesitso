@@ -84,11 +84,6 @@ android {
             }
         }
     }
-    configurations.all {
-        //Fixes Error: Duplicate class: com.google.common.util.concurrent.ListenableFuture
-        exclude(group = "com.google.guava", module = "listenablefuture")
-        exclude(group = "org.apache.httpcomponents", module = "httpclient")
-    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -143,7 +138,6 @@ dependencies {
     implementation(project(":data:plugins"))
     implementation(project(":data:themes"))
     implementation(project(":data:files"))
-    implementation(project(":libs:g-services"))
     implementation(project(":core:i18n"))
     implementation(project(":services:icons"))
     implementation(project(":core:ktx"))

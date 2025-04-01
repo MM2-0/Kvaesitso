@@ -166,9 +166,9 @@ class IconService(
         }
     }
 
-    fun resolveCustomIcon(searchable: SavableSearchable, size: Int, customIcon: CustomIcon?): Flow<LauncherIcon> {
+    fun resolveCustomIcon(searchable: SavableSearchable, size: Int, customIcon: CustomIcon?): Flow<LauncherIcon?> {
         return combine(iconProviders, transformations) { providers, transformations ->
-            var icon = cache.get(searchable.key + customIcon.hashCode() + providers.hashCode() + transformations.hashCode())
+            var icon: LauncherIcon? = cache.get(searchable.key + customIcon.hashCode() + providers.hashCode() + transformations.hashCode())
             if (icon != null) {
                 return@combine icon
             }

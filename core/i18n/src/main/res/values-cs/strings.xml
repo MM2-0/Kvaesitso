@@ -822,4 +822,23 @@
     <string name="reset_icon">Resetovat ikonu</string>
     <string name="preference_compact_tags">Kompaktní štítky</string>
     <string name="preference_compact_tags_summary">Skrýt popisky nebo ikony štítků, aby se zmenšilo místo jimi zabrané</string>
+    <string name="weather_forecast_wind">Vítr</string>
+    <string name="weather_forecast_precipitation">Srážky</string>
+    <string name="weather_forecast_humidity">Vlhkost</string>
+    <string name="tag_empty_name">Štítek nemůže existovat bez názvu. Pokud budete pokračovat, bude štítek odstraněn.</string>
+    <string name="widget_removed">Widget odstraněn</string>
+    <string name="preference_clock_widget_time_format">Formát času</string>
+    <string name="preference_clock_widget_time_format_24h">24hodinový</string>
+    <string name="preference_clock_widget_time_format_12h">12hodinový</string>
+    <string name="preference_clock_widget_time_format_system">Podle systému</string>
+    <string name="departure_time_now">nyní</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">za minutu</item>
+        <item quantity="few">za %1$d minuty</item>
+        <item quantity="other">za %1$d minut</item>
+    </plurals>
+    <string name="preference_search_local_calendar_summary">Hledat kalendáře na tomto zařízení</string>
+    <string name="missing_permission_call_contacts_settings">Pro provádění hovorů je vyžadováno oprávnění k telefonu</string>
+    <string name="preference_contacts_call_on_tap">Zavolat po klepnutí</string>
+    <string name="preference_contacts_call_on_tap_summary">Rovnou zahájit hovor po klepnutí na telefonní číslo</string>
 </resources>

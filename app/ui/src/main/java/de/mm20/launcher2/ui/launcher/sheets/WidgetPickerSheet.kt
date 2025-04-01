@@ -19,6 +19,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -64,9 +65,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
-import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
+import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
@@ -277,10 +278,8 @@ fun WidgetPickerSheet(
     val query by viewModel.searchQuery.collectAsState("")
 
     BottomSheetDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(title)
-        }) {
+        onDismissRequest = onDismiss
+    ) {
         val builtIn by viewModel.builtInWidgets.collectAsState(emptyList())
         LazyColumn(
             modifier = Modifier
@@ -299,6 +298,7 @@ fun WidgetPickerSheet(
                             )
                         }
                         .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+                    windowInsets = WindowInsets(0.dp),
                     query = query,
                     onQueryChange = { viewModel.search(it) },
                     onSearch = {},

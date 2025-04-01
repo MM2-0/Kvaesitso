@@ -822,4 +822,20 @@
     <string name="reset_icon">Reimposta icona</string>
     <string name="preference_compact_tags">Tag compatti</string>
     <string name="preference_compact_tags_summary">Nascondi le etichette o le icone dei tag per ridurre lo spazio occupato dai tag</string>
+    <string name="weather_forecast_humidity">Umidità</string>
+    <string name="weather_forecast_precipitation">Precipitazione</string>
+    <string name="weather_forecast_wind">Vento</string>
+    <string name="widget_removed">Widget rimosso</string>
+    <string name="tag_empty_name">Un tag non può esistere senza un nome. Se continui, il tag verrà eliminato.</string>
+    <string name="preference_clock_widget_time_format">Formato ora</string>
+    <string name="preference_clock_widget_time_format_24h">24 ore</string>
+    <string name="preference_clock_widget_time_format_12h">12 ore</string>
+    <string name="preference_clock_widget_time_format_system">Predefinito del sistema</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">tra un minuto</item>
+        <item quantity="many">tra %1$d minuti</item>
+        <item quantity="other">tra %1$d minuti</item>
+    </plurals>
+    <string name="departure_time_now">adesso</string>
+    <string name="preference_search_local_calendar_summary">Cerca calendari su questo dispositivo</string>
 </resources>
