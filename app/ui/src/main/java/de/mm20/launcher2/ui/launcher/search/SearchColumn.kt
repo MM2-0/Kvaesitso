@@ -94,6 +94,7 @@ fun SearchColumn(
 
     val bestMatch by viewModel.bestMatch
 
+    val query by viewModel.searchQuery
     val isSearchEmpty by viewModel.isSearchEmpty
 
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
@@ -112,14 +113,14 @@ fun SearchColumn(
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
     var selectedAppProfileIndex: Int by remember(isSearchEmpty) { mutableIntStateOf(0) }
-    var selectedAppIndex: Int by remember(website) { mutableIntStateOf(-1) }
-    var selectedContactIndex: Int by remember(contacts) { mutableIntStateOf(-1) }
-    var selectedFileIndex: Int by remember(files) { mutableIntStateOf(-1) }
-    var selectedCalendarIndex: Int by remember(events) { mutableIntStateOf(-1) }
-    var selectedLocationIndex: Int by remember(locations) { mutableIntStateOf(-1) }
-    var selectedShortcutIndex: Int by remember(appShortcuts) { mutableIntStateOf(-1) }
-    var selectedArticleIndex: Int by remember(wikipedia) { mutableIntStateOf(-1) }
-    var selectedWebsiteIndex: Int by remember(website) { mutableIntStateOf(-1) }
+    var selectedAppIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedContactIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedFileIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedCalendarIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedLocationIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedShortcutIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedArticleIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedWebsiteIndex: Int by remember(query) { mutableIntStateOf(-1) }
 
     val showFilters by viewModel.showFilters
 
