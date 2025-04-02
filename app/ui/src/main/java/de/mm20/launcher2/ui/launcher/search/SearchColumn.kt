@@ -112,6 +112,7 @@ fun SearchColumn(
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
     var selectedAppProfileIndex: Int by remember(isSearchEmpty) { mutableIntStateOf(0) }
+    var selectedAppIndex: Int by remember(website) { mutableIntStateOf(-1) }
     var selectedContactIndex: Int by remember(contacts) { mutableIntStateOf(-1) }
     var selectedFileIndex: Int by remember(files) { mutableIntStateOf(-1) }
     var selectedCalendarIndex: Int by remember(events) { mutableIntStateOf(-1) }
@@ -195,6 +196,8 @@ fun SearchColumn(
                         reverse = reverse,
                         showProfileLockControls = hasProfilesPermission,
                         showList = showList,
+                        selectedIndex = selectedAppIndex,
+                        onSelect = { selectedAppIndex = it },
                     )
                 } else {
                     AppResults(
@@ -206,6 +209,8 @@ fun SearchColumn(
                         columns = columns,
                         reverse = reverse,
                         showList = showList,
+                        selectedIndex = selectedAppIndex,
+                        onSelect = { selectedAppIndex = it },
                     )
                 }
 

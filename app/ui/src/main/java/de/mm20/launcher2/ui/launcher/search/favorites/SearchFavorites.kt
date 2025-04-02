@@ -54,7 +54,7 @@ fun LazyListScope.SearchFavorites(
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
             ) {
                 if (favorites.isNotEmpty()) {
-                    SearchResultGrid(favorites, transitionKey = selectedTag, reverse = reverse, showList = false)
+                    SearchResultGrid(favorites, transitionKey = selectedTag, reverse = reverse)
                 } else {
                     Banner(
                         modifier = Modifier.padding(16.dp),

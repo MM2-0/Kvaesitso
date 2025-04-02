@@ -86,8 +86,6 @@ fun GridItem(
     modifier: Modifier = Modifier,
     item: SavableSearchable,
     showLabels: Boolean = true,
-    showList: Boolean = false,
-    showListIcons: Boolean = true,
     labelMaxLines: Int = 1,
     highlight: Boolean = false
 ) {
@@ -112,7 +110,7 @@ fun GridItem(
 
     Column(
         modifier = modifier
-            .padding(if (showList) 0.dp else 4.dp)
+            .padding(4.dp)
             .combinedClickable(
                 onClick = {
                     if (!launchOnPress || !viewModel.launch(context, bounds)) {
@@ -157,95 +155,48 @@ fun GridItem(
 
         val iconShape = LocalIconShape.current
 
-        if (!showList) {
-            Box(
-                modifier = if (highlight) {
-                    Modifier
-                        .background(
-                            MaterialTheme.colorScheme.surfaceVariant,
-                            iconShape
-                        )
-                } else Modifier then if (showLabels) Modifier else Modifier
-                    .semantics {
-                        contentDescription = item.label
-                    },
-            ) {
-                ShapedLauncherIcon(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .onGloballyPositioned {
-                            bounds = it
-                                .boundsInWindow()
-                                .roundToIntRect()
-                        } then
-                            if (highlight) Modifier.background(
-                                MaterialTheme.colorScheme.surface,
-                                iconShape
-                            )
-                            else Modifier,
-                    size = LocalGridSettings.current.iconSize.dp,
-                    badge = { badge },
-                    icon = { icon },
-                )
-            }
-            if (showLabels) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    text = item.labelOverride ?: item.label,
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodySmall,
-                    maxLines = labelMaxLines,
-                    overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-            }
-        } else {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
+        Box(
+            modifier = if (highlight) {
+                Modifier
+                    .background(
+                        MaterialTheme.colorScheme.surfaceVariant,
+                        iconShape
+                    )
+            } else Modifier then if (showLabels) Modifier else Modifier
+                .semantics {
+                    contentDescription = item.label
+                },
+        ) {
+            ShapedLauncherIcon(
                 modifier = Modifier
-                    .padding(start = 8.dp, end = 8.dp, bottom = 4.dp)
-                    .semantics { contentDescription = item.label }
+                    .padding(4.dp)
                     .onGloballyPositioned {
                         bounds = it
                             .boundsInWindow()
                             .roundToIntRect()
-                    } then if (highlight) {
-                    Modifier
-                        .background(
-                            MaterialTheme.colorScheme.surfaceVariant,
-                            MaterialTheme.shapes.small
+                    } then
+                        if (highlight) Modifier.background(
+                            MaterialTheme.colorScheme.surface,
+                            iconShape
                         )
-                } else Modifier
-            ) {
-                if (showListIcons) {
-                    ShapedLauncherIcon(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .onGloballyPositioned {
-                                bounds = it
-                                    .boundsInWindow()
-                                    .roundToIntRect()
-                            },
-                        size = LocalGridSettings.current.iconSize.dp - 2.dp,
-                        badge = { badge },
-                        icon = { icon },
-                    )
-                }
-
-                Text(
-                    modifier = Modifier
-                        .padding(vertical = 4.dp, horizontal = 6.dp)
-                        .fillMaxWidth(),
-                    text = item.labelOverride ?: item.label,
-                    textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.headlineLarge,
-                    maxLines = labelMaxLines,
-                    overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-            }
+                        else Modifier,
+                size = LocalGridSettings.current.iconSize.dp,
+                badge = { badge },
+                icon = { icon },
+            )
+        }
+        if (showLabels) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                text = item.labelOverride ?: item.label,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall,
+                maxLines = labelMaxLines,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
         }
     }
 
