@@ -205,7 +205,7 @@ fun LazyListScope.AppResults(
     } else null
   
     val filteredApps = if (selectedProfileIndex == -1) apps
-                       else apps.filter { it.user == profiles[selectedProfileIndex].userHandle },
+                       else apps.filter { it.user == profiles[selectedProfileIndex].userHandle }
     if (showList) {
         ListResults(
             key = "apps",
