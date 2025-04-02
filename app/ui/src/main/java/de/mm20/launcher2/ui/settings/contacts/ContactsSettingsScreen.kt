@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Call
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -24,6 +25,8 @@ fun ContactsSettingsScreen() {
     val viewModel: ContactsSettingsScreenVM = viewModel()
     val context = LocalContext.current
 
+    val localContacts by viewModel.localContacts.collectAsStateWithLifecycle(null)
+    val hasContactsPermission by viewModel.hasContactsPermission.collectAsStateWithLifecycle(null)
     val hasCallPermission by viewModel.hasCallPermission.collectAsStateWithLifecycle(null)
     val callOnTap by viewModel.callOnTap.collectAsStateWithLifecycle(null)
 
@@ -31,6 +34,26 @@ fun ContactsSettingsScreen() {
         title = stringResource(R.string.preference_search_contacts)
     ) {
         item {
+            PreferenceCategory {
+                AnimatedVisibility(hasContactsPermission == false) {
+                    MissingPermissionBanner(
+                        text = stringResource(R.string.missing_permission_contact_search_settings),
+                        onClick = {
+                            viewModel.requestContactsPermission(context as AppCompatActivity)
+                        },
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_contacts),
+                    summary = stringResource(R.string.preference_search_contacts_summary),
+                    icon = Icons.Rounded.Person,
+                    value = localContacts == true,
+                    onValueChanged = {
+                        viewModel.setLocalContacts(it)
+                    }
+                )
+            }
             PreferenceCategory {
                 AnimatedVisibility(hasCallPermission == false) {
                     MissingPermissionBanner(

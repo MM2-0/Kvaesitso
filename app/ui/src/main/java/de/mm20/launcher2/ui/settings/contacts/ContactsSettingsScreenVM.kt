@@ -27,4 +27,17 @@ class ContactsSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setCallOnTap(callOnTap: Boolean) =
         settings.setCallOnTap(callOnTap)
+
+    val hasContactsPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    fun requestContactsPermission(activity: AppCompatActivity) {
+        permissionsManager.requestPermission(activity, PermissionGroup.Contacts)
+    }
+
+    val localContacts = settings.enabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setLocalContacts(enabled: Boolean) {
+        settings.setEnabled(enabled)
+    }
 }
