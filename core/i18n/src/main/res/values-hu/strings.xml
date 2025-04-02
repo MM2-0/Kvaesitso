@@ -748,7 +748,6 @@
     <string name="poi_category_baseball">Baseballpálya</string>
     <string name="poi_category_swimming">Úszómedence</string>
     <string name="poi_category_townhall">Városháza</string>
-    <string name="preference_search_locations_radius_large_radius_warning">A nagy keresési sugarak jelentősen lelassíthatják a keresést.</string>
     <string name="plugin_type_locationsearch">Helyszínek keresése</string>
     <string name="customize_item_label">Név szerkesztése</string>
     <string name="customize_item_tags">Címkék</string>
