@@ -769,7 +769,6 @@
         <item quantity="many">%1$s notificações</item>
         <item quantity="other">%1$s notificações</item>
     </plurals>
-    <string name="preference_search_locations_radius_large_radius_warning">Um grande raio de pesquisa pode afetar o desempenho da pesquisa.</string>
     <string name="customize_item_tags">Etiquetas</string>
     <string name="customize_item_visibility">Mostrar em</string>
     <plurals name="contact_phone_numbers">

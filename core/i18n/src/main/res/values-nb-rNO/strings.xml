@@ -574,7 +574,6 @@
     <string name="poi_category_american_football">Amerikansk fotballbane</string>
     <string name="poi_category_golf">Golfbane</string>
     <string name="poi_category_ice_hockey">Ishockeybane</string>
-    <string name="preference_search_locations_radius_large_radius_warning">Stor søkeradius kan gjøre søket tregt.</string>
     <string name="widget_config_appwidget_resize">Endre størrelse</string>
     <string name="note_widget_action_unlink_file">Fjern lenke</string>
     <string name="poi_category_skiing">Ski</string>

@@ -721,7 +721,6 @@
     <string name="poi_category_gymnastics">สนามยิมนาสติก</string>
     <string name="poi_category_courthouse">ศาล</string>
     <string name="customize_item_tags">แท็ก</string>
-    <string name="preference_search_locations_radius_large_radius_warning">พื้นที่การค้นหาที่กว้างจะทำให้การค้นหาช้าลง</string>
     <string name="item_visibility_app_default">ลิ้นชักรวมแอปและผลการค้นหา</string>
     <string name="item_visibility_calendar_default">วิดเจ็ตปฏิทินและผลการค้นหา</string>
     <string name="customize_item_label">ป้าย</string>

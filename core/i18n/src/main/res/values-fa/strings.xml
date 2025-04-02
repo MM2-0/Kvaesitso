@@ -531,7 +531,6 @@
     <string name="poi_category_fuel">پمپ بنزین</string>
     <string name="filter_settings_network_warning">پالایش کنونی به شیوه پیش‌گزیده یافته‌های برخط را روشن می‌کند. جستجوی شما شاید ناخواسته به خدمات وب خارجی فرستاده شوند. به دلایل حریم خصوصی، این کار توصیه نمی‌شود.</string>
     <string name="preference_search_osm_locations_summary">جستجوی اوپن‌استریت‌مپ برای فروشگاه‌ها و مکان‌های دیگر در ناحیه بومی</string>
-    <string name="preference_search_locations_radius_large_radius_warning">شعاع جستجوی بزرگ می‌تواند به شکل قابل توجهی سرعت جستجو را کاهش دهد.</string>
     <string name="calendar_widget_open_calendar">بازکردن برنامه تقویم</string>
     <string name="profile_work_profile_state_locked">برنامه‌های کاری متوقف شده‌اند.</string>
     <string name="profile_work_profile_action_unlock">بازگشایی</string>

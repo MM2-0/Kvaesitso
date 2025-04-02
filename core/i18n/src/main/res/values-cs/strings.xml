@@ -738,7 +738,6 @@
     <string name="poi_category_golf">Golfové hřiště</string>
     <string name="poi_category_courthouse">Soud</string>
     <string name="poi_category_townhall">Radnice</string>
-    <string name="preference_search_locations_radius_large_radius_warning">Velká oblast hledání jej může výrazně zpomalit.</string>
     <string name="plugin_type_locationsearch">Vyhledávání míst</string>
     <string name="poi_category_synagogue">Synagoga</string>
     <string name="poi_category_concert_hall">Koncertní sál</string>
