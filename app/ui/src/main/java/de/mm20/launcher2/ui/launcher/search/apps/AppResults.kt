@@ -205,7 +205,7 @@ fun LazyListScope.AppResults(
     if (showList) {
         ListResults(
             key = "apps",
-            items = apps.filter { it.user == profiles[selectedProfileIndex].userHandle },
+            items = if (isProfileLocked) emptyList() else apps,
             before = before?.let { { it() } },
             selectedIndex = selectedIndex,
             itemContent = { app, showDetails, index ->
@@ -223,7 +223,7 @@ fun LazyListScope.AppResults(
     } else {
         GridResults(
             key = "apps",
-            items = apps.filter { it.user == profiles[selectedProfileIndex].userHandle },
+            items = if (isProfileLocked) emptyList() else apps,
             before = before,
             itemContent = {
                 GridItem(
