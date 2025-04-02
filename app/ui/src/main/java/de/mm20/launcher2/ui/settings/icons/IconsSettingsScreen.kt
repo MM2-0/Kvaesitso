@@ -110,6 +110,26 @@ fun IconsSettingsScreen() {
                         viewModel.setShowLabels(it)
                     }
                 )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_grid_list_style),
+                    summary = stringResource(R.string.preference_grid_list_style_summary),
+                    value = grid.showList,
+                    onValueChanged = {
+                        viewModel.setShowList(it)
+                    }
+                )
+                AnimatedVisibility(
+                    grid.showList
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_grid_list_icons),
+                        summary = stringResource(R.string.preference_grid_list_icons_summary),
+                        value = grid.showListIcons,
+                        onValueChanged = {
+                            viewModel.setShowListIcons(it)
+                        }
+                    )
+                }
                 SliderPreference(
                     title = stringResource(R.string.preference_grid_column_count),
                     value = grid.columnCount,

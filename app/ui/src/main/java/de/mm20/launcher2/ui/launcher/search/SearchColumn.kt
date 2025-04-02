@@ -64,6 +64,7 @@ fun SearchColumn(
 ) {
 
     val columns = LocalGridSettings.current.columnCount
+    val showList = LocalGridSettings.current.showList
     val context = LocalContext.current
 
     val viewModel: SearchVM = viewModel()
@@ -111,6 +112,7 @@ fun SearchColumn(
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
     var selectedAppProfileIndex: Int by remember(isSearchEmpty) { mutableIntStateOf(0) }
+    var selectedAppIndex: Int by remember(website) { mutableIntStateOf(-1) }
     var selectedContactIndex: Int by remember(contacts) { mutableIntStateOf(-1) }
     var selectedFileIndex: Int by remember(files) { mutableIntStateOf(-1) }
     var selectedCalendarIndex: Int by remember(events) { mutableIntStateOf(-1) }
@@ -193,6 +195,9 @@ fun SearchColumn(
                         columns = columns,
                         reverse = reverse,
                         showProfileLockControls = hasProfilesPermission,
+                        showList = showList,
+                        selectedIndex = selectedAppIndex,
+                        onSelect = { selectedAppIndex = it },
                     )
                 } else {
                     AppResults(
@@ -202,7 +207,10 @@ fun SearchColumn(
                             selectedAppProfileIndex = it
                         },
                         columns = columns,
-                        reverse = reverse
+                        reverse = reverse,
+                        showList = showList,
+                        selectedIndex = selectedAppIndex,
+                        onSelect = { selectedAppIndex = it },
                     )
                 }
 
