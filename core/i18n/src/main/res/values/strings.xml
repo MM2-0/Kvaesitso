@@ -557,11 +557,11 @@
     <string name="preference_category_grid">Grid</string>
     <string name="preference_grid_icon_size">Icon size</string>
     <string name="preference_grid_column_count">Number of columns</string>
-    <string name="preference_grid_list_style">Show app results in a list</string>
+    <string name="preference_grid_list_style">Show apps in a list</string>
     <string name="preference_grid_list_icons">Show app icons in list</string>
     <string name="preference_grid_labels">Show labels</string>
     <string name="preference_grid_labels_summary">Show the app name below the icon</string>
-    <string name="preference_grid_list_style_summary">Show applications in a list view instead of grid</string>
+    <string name="preference_grid_list_style_summary">Show applications in a list instead of a grid</string>
     <string name="preference_grid_list_icons_summary">Show icons in the list view</string>
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Troubleshooting tools</string>
@@ -674,8 +674,8 @@
     <string name="preference_category_accounts">Accounts</string>
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
-    <string name="preference_contacts_call_on_tap">Call on tap</string>
-    <string name="preference_contacts_call_on_tap_summary">Directly start calls when tapping phone numbers</string>
+    <string name="preference_contacts_call_on_tap">Tap to call</string>
+    <string name="preference_contacts_call_on_tap_summary">Immediately start a call when tapping a phone number</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
