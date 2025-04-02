@@ -1,14 +1,13 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
-import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.SearchFilters
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 2,
+    val schemaVersion: Int = 3,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     val uiTheme: ThemeDescriptor = ThemeDescriptor.Default,
@@ -34,6 +33,7 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetCustom: ClockWidgetStyle.Custom = ClockWidgetStyle.Custom(),
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
     val clockWidgetShowSeconds: Boolean = false,
+    val clockWidgetTimeFormat: TimeFormat = TimeFormat.System,
     val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
     val clockWidgetBatteryPart: Boolean = true,
@@ -53,6 +53,7 @@ data class LauncherSettingsData internal constructor(
     val fileSearchProviders: Set<String> = setOf("local"),
 
     val contactSearchEnabled: Boolean = true,
+    val contactSearchCallOnTap: Boolean = false,
 
     @Deprecated("Use calendarSearchProviders `local` instead")
     val calendarSearchEnabled: Boolean = true,
@@ -81,6 +82,8 @@ data class LauncherSettingsData internal constructor(
     val gridColumnCount: Int = 5,
     val gridIconSize: Int = 48,
     val gridLabels: Boolean = true,
+    val gridList: Boolean = false,
+    val gridListIcons: Boolean = true,
 
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Transparent,
     val searchBarColors: SearchBarColors = SearchBarColors.Auto,
@@ -408,4 +411,11 @@ enum class KeyboardFilterBarItem {
     @SerialName("events") Events,
     @SerialName("tools") Tools,
     @SerialName("hidden") HiddenResults,
+}
+
+@Serializable
+enum class TimeFormat {
+    @SerialName("system") System,
+    @SerialName("12h") TwelveHour,
+    @SerialName("24h") TwentyFourHour
 }

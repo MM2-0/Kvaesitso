@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absoluteOffset
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -38,7 +37,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,6 +49,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
@@ -75,6 +77,7 @@ import de.mm20.launcher2.ui.ktx.contrast
 import de.mm20.launcher2.ui.ktx.hue
 import de.mm20.launcher2.ui.ktx.hueRotate
 import de.mm20.launcher2.ui.ktx.invert
+import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
@@ -166,18 +169,19 @@ fun MapTiles(
                         fadeOut() + scaleOut(targetScale = scale)
             }
         ) { (start, stop, zoom) ->
-            val sideLength = stop.x - start.x + 1
-            Column(modifier = Modifier.fillMaxWidth()) {
+            var tileWidth by remember { mutableIntStateOf(0) }
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                // Needed to force all tiles to be the _exact_ same size. With weight(1f) we get rounding errors and gaps.
+                .onSizeChanged { tileWidth = it.width / (stop.x - start.x + 1) }
+            ) {
                 for (y in start.y..stop.y) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
+                    Row(modifier = Modifier.fillMaxWidth()) {
                         for (x in start.x..stop.x) {
                             AsyncImage(
                                 modifier = Modifier
-                                    .weight(1f / sideLength)
-                                    .aspectRatio(1f)
+                                    .width(tileWidth.toDp())
+                                    .height(tileWidth.toDp())
                                     .background(MaterialTheme.colorScheme.secondaryContainer),
                                 imageLoader = MapTileLoader.loader,
                                 model = MapTileLoader.getTileRequest(tileServerUrl, x, y, zoom),

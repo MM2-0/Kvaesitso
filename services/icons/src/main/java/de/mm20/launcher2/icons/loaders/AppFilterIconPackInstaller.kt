@@ -277,15 +277,19 @@ class AppFilterIconPackInstaller(
     override fun getInstalledIconPacks(): List<IconPack> {
         val packs = mutableListOf<IconPack>()
         val pm = context.packageManager
-        var intent = Intent("app.lawnchair.icons.THEMED_ICON")
-        val themedPacks = pm.queryIntentActivities(intent, 0)
-        packs.addAll(themedPacks.map { IconPack(context, it, true) })
-        intent = Intent("org.adw.ActivityStarter.THEMES")
-        val adwPacks = pm.queryIntentActivities(intent, 0)
-        packs.addAll(adwPacks.map { IconPack(context, it, false) })
-        intent = Intent("com.novalauncher.THEME")
-        val novaPacks = pm.queryIntentActivities(intent, 0)
-        packs.addAll(novaPacks.map { IconPack(context, it, false) })
+
+        val intents = listOf(
+            Intent("app.lawnchair.icons.THEMED_ICON"),
+            Intent("org.adw.ActivityStarter.THEMES"),
+            Intent("com.novalauncher.THEME"),
+            Intent("org.adw.launcher.THEMES")
+        )
+
+        for (intent in intents) {
+            packs.addAll(
+                pm.queryIntentActivities(intent, 0).map { IconPack(context, it, true) }
+            )
+        }
         return packs.distinctBy { it.packageName }
     }
 }

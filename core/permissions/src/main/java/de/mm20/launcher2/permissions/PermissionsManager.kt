@@ -65,6 +65,7 @@ enum class PermissionGroup {
     AppShortcuts,
     Accessibility,
     ManageProfiles,
+    Call,
 }
 
 internal class PermissionsManagerImpl(
@@ -92,6 +93,9 @@ internal class PermissionsManagerImpl(
     )
     private val manageProfilesPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.ManageProfiles)
+    )
+    private val callPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.Call)
     )
 
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
@@ -167,6 +171,14 @@ internal class PermissionsManagerImpl(
                     CrashReporter.logException(e)
                 }
             }
+
+            PermissionGroup.Call -> {
+                ActivityCompat.requestPermissions(
+                    context,
+                    callPermissions,
+                    permissionGroup.ordinal
+                )
+            }
         }
     }
 
@@ -209,6 +221,10 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Accessibility -> {
                 accessibilityPermissionState.value
             }
+
+            PermissionGroup.Call -> {
+                callPermissions.all { context.checkPermission(it) }
+            }
         }
     }
 
@@ -222,6 +238,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState
             PermissionGroup.Accessibility -> accessibilityPermissionState
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState
+            PermissionGroup.Call -> callPermissionState
         }
     }
 
@@ -241,6 +258,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState.value = granted
             PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState.value = granted
+            PermissionGroup.Call -> callPermissionState.value = granted
         }
     }
 
@@ -269,5 +287,6 @@ internal class PermissionsManagerImpl(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
+        private val callPermissions = arrayOf(Manifest.permission.CALL_PHONE)
     }
 }

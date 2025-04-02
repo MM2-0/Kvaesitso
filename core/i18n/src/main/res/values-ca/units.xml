@@ -324,4 +324,17 @@
         <item quantity="many">decímetres</item>
         <item quantity="other">decímetres</item>
     </plurals>
+    <string name="dimension_length">Longitud</string>
+    <string name="dimension_mass">Massa</string>
+    <string name="dimension_velocity">Velocitat</string>
+    <string name="dimension_volume">Volum</string>
+    <string name="dimension_area">Àrea</string>
+    <string name="dimension_currency">Moneda</string>
+    <string name="dimension_data">Dades</string>
+    <string name="dimension_bitrate">Taxa de bits</string>
+    <string name="dimension_pressure">Pressió</string>
+    <string name="dimension_energy">Energia</string>
+    <string name="dimension_frequency">Freqüència</string>
+    <string name="dimension_temperature">Temperatura</string>
+    <string name="dimension_time">Hora</string>
 </resources>
