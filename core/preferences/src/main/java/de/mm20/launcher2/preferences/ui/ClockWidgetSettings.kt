@@ -138,6 +138,15 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
+    val analogShowTicks
+        get() = launcherDataStore.data.map { it.clockWidgetAnalogShowTicks }
+
+    fun setAnalogShowTicks(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(clockWidgetAnalogShowTicks = enabled)
+        }
+    }
+
     val timeFormat
         get() = launcherDataStore.data.map { it.clockWidgetTimeFormat }
 

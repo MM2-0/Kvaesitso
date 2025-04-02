@@ -24,6 +24,7 @@ import androidx.compose.material.icons.rounded.AlignVerticalBottom
 import androidx.compose.material.icons.rounded.AlignVerticalCenter
 import androidx.compose.material.icons.rounded.AlignVerticalTop
 import androidx.compose.material.icons.rounded.AutoAwesome
+import androidx.compose.material.icons.rounded.AvTimer
 import androidx.compose.material.icons.rounded.BatteryFull
 import androidx.compose.material.icons.rounded.ColorLens
 import androidx.compose.material.icons.rounded.DarkMode
@@ -274,6 +275,7 @@ fun Clock(
     val showSeconds by clockSettings.showSeconds.collectAsState(initial = false)
     val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = false)
     val timeFormat by clockSettings.timeFormat.collectAsState(null)
+    val analogShowTicks by clockSettings.analogShowTicks.collectAsState(false)
 
     if (timeFormat == null) return
 
@@ -312,7 +314,8 @@ fun Clock(
             compact,
             showSeconds,
             useThemeColor,
-            darkColors
+            darkColors,
+            analogShowTicks
         )
 
         is ClockWidgetStyle.Orbit -> OrbitClock(
@@ -363,6 +366,7 @@ fun ConfigureClockWidgetSheet(
     val fillHeight by viewModel.fillHeight.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
     val showSeconds by viewModel.showSeconds.collectAsState()
+    val analogShowTicks by viewModel.analogShowTicks.collectAsState()
     val timeFormat by viewModel.timeFormat.collectAsState()
     val useAccentColor by viewModel.useThemeColor.collectAsState()
     val parts by viewModel.parts.collectAsState()
@@ -508,6 +512,18 @@ fun ConfigureClockWidgetSheet(
                             onValueChanged = {
                                 viewModel.setShowSeconds(it)
                             }
+                        )
+                    }
+                    AnimatedVisibility(
+                        style is ClockWidgetStyle.Analog
+                    ) {
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_clock_widget_analog_show_ticks),
+                            icon = Icons.Rounded.AvTimer,
+                            onValueChanged = {
+                                viewModel.setAnalogShowTicks(it)
+                            },
+                            value = analogShowTicks
                         )
                     }
                     AnimatedVisibility(

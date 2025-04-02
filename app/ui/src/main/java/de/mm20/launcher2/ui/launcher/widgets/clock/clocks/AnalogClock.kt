@@ -23,6 +23,7 @@ fun AnalogClock(
     showSeconds: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
+    showTicks: Boolean,
 ) {
     val verticalLayout = !compact
     val date = Calendar.getInstance()
@@ -66,6 +67,19 @@ fun AnalogClock(
         .padding(top = if (verticalLayout) 8.dp else 0.dp,
             bottom = if (verticalLayout) 8.dp else 0.dp)
         .size(size)) {
+        if (showTicks) {
+            for (hour in 0.. 11) {
+                rotate(hour.toFloat() / 12f * 360f, this.size.center) {
+                    drawLine(
+                        secondaryColor,
+                        this.size.center.copy(y = this.size.height * 0.95f),
+                        this.size.center.copy(y = this.size.height),
+                        strokeWidth = (strokeWidth * 0.75f).toPx(),
+                        cap = StrokeCap.Round
+                    )
+                }
+            }
+        }
         rotate(hour.toFloat() / 12f * 360f + ((minute.toFloat() / 60f) * 30f) + (second.toFloat() / 120f), this.size.center) {
             drawLine(
                 color,

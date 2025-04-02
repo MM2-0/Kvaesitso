@@ -55,6 +55,13 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setShowSeconds(showSeconds)
     }
 
+    val analogShowTicks = settings.analogShowTicks
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setAnalogShowTicks(analogShowTicks: Boolean) {
+        settings.setAnalogShowTicks(analogShowTicks)
+    }
+
     val timeFormat = settings.timeFormat
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), TimeFormat.System)
 

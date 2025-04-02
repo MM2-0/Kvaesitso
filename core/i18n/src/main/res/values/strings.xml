@@ -569,6 +569,7 @@
     <string name="preference_clockwidget_layout_vertical">Default</string>
     <string name="preference_clockwidget_layout_horizontal">Compact</string>
     <string name="preference_clock_widget_show_seconds">Show seconds</string>
+    <string name="preference_clock_widget_analog_show_ticks">Show tick marks</string>
     <string name="preference_clock_widget_time_format">Time format</string>
     <string name="preference_clock_widget_time_format_24h">24-hour</string>
     <string name="preference_clock_widget_time_format_12h">12-hour</string>
