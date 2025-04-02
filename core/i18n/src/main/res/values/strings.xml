@@ -390,6 +390,8 @@
     <string name="missing_permission_music_widget">Notification access is required to control media playback</string>
     <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">Contact permission is required to search contacts</string>
+    <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">Call permission is required to start calls</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
@@ -555,8 +557,12 @@
     <string name="preference_category_grid">Grid</string>
     <string name="preference_grid_icon_size">Icon size</string>
     <string name="preference_grid_column_count">Number of columns</string>
+    <string name="preference_grid_list_style">Show app results in a list</string>
+    <string name="preference_grid_list_icons">Show app icons in list</string>
     <string name="preference_grid_labels">Show labels</string>
     <string name="preference_grid_labels_summary">Show the app name below the icon</string>
+    <string name="preference_grid_list_style_summary">Show applications in a list view instead of grid</string>
+    <string name="preference_grid_list_icons_summary">Show icons in the list view</string>
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Troubleshooting tools</string>
     <string name="preference_category_widgets">Widgets</string>
@@ -567,6 +573,10 @@
     <string name="preference_clockwidget_layout_vertical">Default</string>
     <string name="preference_clockwidget_layout_horizontal">Compact</string>
     <string name="preference_clock_widget_show_seconds">Show seconds</string>
+    <string name="preference_clock_widget_time_format">Time format</string>
+    <string name="preference_clock_widget_time_format_24h">24-hour</string>
+    <string name="preference_clock_widget_time_format_12h">12-hour</string>
+    <string name="preference_clock_widget_time_format_system">System default</string>
     <string name="widget_use_theme_colors">Use theme color</string>
     <string name="preference_clock_widget_fill_height">Fill screen height</string>
     <string name="preference_clock_widget_alignment">Alignment</string>
@@ -604,6 +614,7 @@
     <string name="preference_search_contacts_summary">Search contacts on this device</string>
     <string name="preference_search_calendar">Calendar</string>
     <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
+    <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
     <string name="preference_search_appshortcuts">App shortcuts</string>
     <string name="preference_search_appshortcuts_summary">Search app shortcuts</string>
     <string name="preference_search_calculator">Calculator</string>
@@ -663,6 +674,8 @@
     <string name="preference_category_accounts">Accounts</string>
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
+    <string name="preference_contacts_call_on_tap">Call on tap</string>
+    <string name="preference_contacts_call_on_tap_summary">Directly start calls when tapping phone numbers</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -1010,4 +1023,10 @@
     <string name="weather_forecast_humidity">Humidity</string>
     <string name="weather_forecast_wind">Wind</string>
     <string name="weather_forecast_precipitation">Precipitation</string>
+    <string name="departure_time_now">now</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">in one minute</item>
+        <item quantity="other">in %1$d minutes</item>
+    </plurals>
+    <string name="departure_time_departed">departed</string>
 </resources>

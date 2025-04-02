@@ -494,19 +494,19 @@
     <string name="preference_search_contacts">รายชื่อผู้ติดต่อ</string>
     <string name="preference_screen_homescreen">หน้าจอหลัก</string>
     <string name="missing_permission_notification_badges">คุณต้องอนุญาตให้แอปเข้าถึงการแจ้งเตือนเพื่อการแสดงป้ายการแจ้งเตือน</string>
-    <string name="preference_search_contacts_summary">ค้นหารายชื่อผู้ติดต่อบนอุปกรณ์เครื่องนี้</string>
+    <string name="preference_search_contacts_summary">ค้นหารายชื่อผู้ติดต่อบนอุปกรณ์นี้</string>
     <string name="preference_screen_homescreen_summary">นาฬิกา แถบค้นหา ภาพพื้นหลัง แถบระบบ</string>
     <string name="missing_permission_calendar_search">คุณต้องอนุญาตให้แอปเข้าถึงปฏิทินเพื่อค้นหาในปฏิทินของคุณ</string>
     <string name="preference_search_calendar_summary">ค้นหานัดหมายและกิจกรรมที่กำลังมาถึง</string>
     <string name="preference_weather_integration">สภาพอากาศ</string>
-    <string name="missing_permission_files_search">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลเพื่อค้นหารูปภาพ สื่อและเอกสารบนอุปกรณ์เครื่องนี้</string>
+    <string name="missing_permission_files_search">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลเพื่อค้นหารูปภาพ สื่อและเอกสารบนอุปกรณ์นี้</string>
     <string name="preference_search_calculator_summary">คำนวณและดำเนินการทางคณิตศาสตร์</string>
     <string name="missing_permission_appshortcuts_create">กำหนดให้แอป %1$s เป็นตัวใช้งานเริ่มต้นเพื่อสร้างทางลัด</string>
     <string name="preference_search_currencyconverter_summary">ดาวน์โหลดอัตราแรกเปลี่ยนเพื่อแปลงสกุลเงินเป็นระยะๆ</string>
     <string name="preference_search_websites_summary">แสดงตัวอย่างของเว็บไซต์ถ้าคำค้นหาเป็นลิงก์</string>
     <string name="preference_media_integration">ตัวควบคุมสื่อ</string>
     <string name="preference_theme">ธีม</string>
-    <string name="preference_search_localfiles_summary">ค้นหาเอกสาร รูปภาพและไฟล์อื่นๆที่เก็บบนอุปกรณ์เครื่องนี้</string>
+    <string name="preference_search_localfiles_summary">ค้นหาเอกสาร รูปภาพและไฟล์อื่นๆที่เก็บบนอุปกรณ์นี้</string>
     <string name="preference_theme_light">สว่าง</string>
     <string name="no_account_owncloud">คุณยังไม่ได้เชื่อมต่อกับบัญชี Owncloud</string>
     <string name="preference_colors_bw">ขาว-ดำ</string>
@@ -808,4 +808,14 @@
     <string name="weather_forecast_humidity">ความชื้น</string>
     <string name="weather_forecast_wind">ลม</string>
     <string name="tag_empty_name">ไม่สามารถตั้งแท็กที่ไม่มีชื่อได้ หากคุณดำเนินการต่อ แท็กจะถูกลบ</string>
+    <string name="preference_clock_widget_time_format">รูปแบบเวลา</string>
+    <string name="preference_clock_widget_time_format_24h">24 ชั่วโมง</string>
+    <string name="widget_removed">ลบวิดเจ็ตแล้ว</string>
+    <string name="preference_clock_widget_time_format_12h">12 ชั่วโมง</string>
+    <string name="preference_clock_widget_time_format_system">ค่าเริ่มต้นของระบบ</string>
+    <plurals name="departure_time_in">
+        <item quantity="other">ในอีก %1$d นาที</item>
+    </plurals>
+    <string name="departure_time_now">ตอนนี้</string>
+    <string name="preference_search_local_calendar_summary">ค้นหาปฏิทินบนอุปกรณ์นี้</string>
 </resources>

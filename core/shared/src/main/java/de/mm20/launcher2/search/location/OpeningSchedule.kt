@@ -28,3 +28,13 @@ sealed interface OpeningSchedule {
     @Serializable
     data class Hours(@Serializable val openingHours: List<OpeningHours>) : OpeningSchedule
 }
+
+/**
+ * Checks whether the [OpeningSchedule] has at least one opening hour.
+ */
+fun OpeningSchedule.isNotEmpty(): Boolean {
+    return when (this) {
+        is OpeningSchedule.Hours -> openingHours.isNotEmpty()
+        OpeningSchedule.TwentyFourSeven -> true
+    }
+}

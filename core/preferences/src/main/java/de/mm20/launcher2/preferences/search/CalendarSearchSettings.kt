@@ -12,6 +12,8 @@ class CalendarSearchSettings internal constructor(
     val enabledProviders
         get() = dataStore.data.map { it.calendarSearchProviders }
 
+    fun isProviderEnabled(provider: String) = dataStore.data.map { it.calendarSearchProviders.contains(provider) }
+
     fun setProviderEnabled(provider: String, enabled: Boolean) {
         dataStore.update {
             if (enabled) {

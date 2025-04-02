@@ -31,6 +31,7 @@ import androidx.compose.material.icons.rounded.Height
 import androidx.compose.material.icons.rounded.HorizontalSplit
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.MusicNote
+import androidx.compose.material.icons.rounded.Timer
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material.icons.rounded.VerticalSplit
@@ -67,6 +68,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
@@ -83,6 +85,7 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.SegmentClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreenVM
+import de.mm20.launcher2.ui.utils.isTwentyFourHours
 import org.koin.androidx.compose.inject
 
 @Composable
@@ -164,7 +167,8 @@ fun ClockWidget(
                 Box(
                     modifier = Modifier
                         .then(if (fillScreenHeight) Modifier.weight(1f) else Modifier)
-                        .fillMaxWidth().padding(horizontal = if (compact == true) 0.dp else 24.dp),
+                        .fillMaxWidth()
+                        .padding(horizontal = if (compact == true) 0.dp else 24.dp),
                     contentAlignment = when (alignment) {
                         ClockWidgetAlignment.Center -> Alignment.Center
                         ClockWidgetAlignment.Top -> Alignment.TopCenter
@@ -265,34 +269,42 @@ fun Clock(
     darkColors: Boolean = false
 ) {
     val time = LocalTime.current
+    val context = LocalContext.current
     val clockSettings: ClockWidgetSettings by inject()
     val showSeconds by clockSettings.showSeconds.collectAsState(initial = false)
     val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = false)
+    val timeFormat by clockSettings.timeFormat.collectAsState(null)
+
+    if (timeFormat == null) return
+
+    val isTwentyFourHours = timeFormat!!.isTwentyFourHours(context)
 
     when (style) {
         is ClockWidgetStyle.Digital1 -> DigitalClock1(
-            time,
-            style,
-            compact,
-            showSeconds,
-            useThemeColor,
-            darkColors
+            time = time,
+            compact = compact,
+            showSeconds = showSeconds,
+            twentyFourHours = isTwentyFourHours,
+            useThemeColor = useThemeColor,
+            darkColors = darkColors,
         )
 
         is ClockWidgetStyle.Digital2 -> DigitalClock2(
-            time,
-            compact,
-            showSeconds,
-            useThemeColor,
-            darkColors
+            time = time,
+            compact = compact,
+            showSeconds = showSeconds,
+            twentyFourHours = isTwentyFourHours,
+            useThemeColor = useThemeColor,
+            darkColors = darkColors,
         )
 
         is ClockWidgetStyle.Binary -> BinaryClock(
-            time,
-            compact,
-            showSeconds,
-            useThemeColor,
-            darkColors
+            time = time,
+            compact = compact,
+            showSeconds = showSeconds,
+            twentyFourHours = isTwentyFourHours,
+            useThemeColor = useThemeColor,
+            darkColors = darkColors,
         )
 
         is ClockWidgetStyle.Analog -> AnalogClock(
@@ -304,19 +316,21 @@ fun Clock(
         )
 
         is ClockWidgetStyle.Orbit -> OrbitClock(
-            time,
-            compact,
-            showSeconds,
-            useThemeColor,
-            darkColors
+            time = time,
+            compact = compact,
+            showSeconds = showSeconds,
+            twentyFourHours = isTwentyFourHours,
+            useThemeColor = useThemeColor,
+            darkColors = darkColors,
         )
 
         is ClockWidgetStyle.Segment -> SegmentClock(
-            time,
-            compact,
-            showSeconds,
-            useThemeColor,
-            darkColors
+            time = time,
+            compact = compact,
+            showSeconds = showSeconds,
+            twentyFourHours = isTwentyFourHours,
+            useThemeColor = useThemeColor,
+            darkColors = darkColors,
         )
 
         is ClockWidgetStyle.Custom -> CustomClock(style, compact, useThemeColor, darkColors)
@@ -349,6 +363,7 @@ fun ConfigureClockWidgetSheet(
     val fillHeight by viewModel.fillHeight.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
     val showSeconds by viewModel.showSeconds.collectAsState()
+    val timeFormat by viewModel.timeFormat.collectAsState()
     val useAccentColor by viewModel.useThemeColor.collectAsState()
     val parts by viewModel.parts.collectAsState()
 
@@ -488,12 +503,62 @@ fun ConfigureClockWidgetSheet(
                     AnimatedVisibility(compact == false && style !is ClockWidgetStyle.Custom) {
                         SwitchPreference(
                             title = stringResource(R.string.preference_clock_widget_show_seconds),
-                            icon = Icons.Rounded.AccessTime,
+                            icon = Icons.Rounded.Timer,
                             value = showSeconds,
                             onValueChanged = {
                                 viewModel.setShowSeconds(it)
                             }
                         )
+                    }
+                    AnimatedVisibility(
+                        style !is ClockWidgetStyle.Analog &&
+                                style !is ClockWidgetStyle.Custom &&
+                                style !is ClockWidgetStyle.Empty
+                    ) {
+                        var showDropdown by remember { mutableStateOf(false) }
+                        Preference(
+                            title = stringResource(R.string.preference_clock_widget_time_format),
+                            summary = when (timeFormat) {
+                                TimeFormat.TwelveHour -> stringResource(R.string.preference_clock_widget_time_format_12h)
+                                TimeFormat.TwentyFourHour -> stringResource(R.string.preference_clock_widget_time_format_24h)
+                                TimeFormat.System -> stringResource(R.string.preference_clock_widget_time_format_system)
+                            },
+                            icon = Icons.Rounded.AccessTime,
+                            onClick = {
+                                showDropdown = true
+                            }
+                        )
+                        DropdownMenu(
+                            expanded = showDropdown,
+                            onDismissRequest = { showDropdown = false }) {
+                            DropdownMenuItem(
+                                text = {
+                                    Text(stringResource(R.string.preference_clock_widget_time_format_system))
+                                },
+                                onClick = {
+                                    viewModel.setTimeFormat(TimeFormat.System)
+                                    showDropdown = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = {
+                                    Text(stringResource(R.string.preference_clock_widget_time_format_24h))
+                                },
+                                onClick = {
+                                    viewModel.setTimeFormat(TimeFormat.TwentyFourHour)
+                                    showDropdown = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = {
+                                    Text(stringResource(R.string.preference_clock_widget_time_format_12h))
+                                },
+                                onClick = {
+                                    viewModel.setTimeFormat(TimeFormat.TwelveHour)
+                                    showDropdown = false
+                                }
+                            )
+                        }
                     }
                 }
             }
