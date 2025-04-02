@@ -50,7 +50,8 @@ As of now, the following plugins are available:
 - **Foursquare plugin**: weather data, places, and departure times from
   Foursquare [[Github]](https://github.com/Kvaesitso/Plugin-Foursquare) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.foursquare)
 - **Public transport plugin**: public transport data from several sources, based on
-  [schildbach/public-transport-enabler](https://github.com/schildbach/public-transport-enabler) [[Github]](https://github.com/Sir-Photch/KvaesitsoPlugin-PublicTransport) [[Download]](https://github.com/Sir-Photch/KvaesitsoPlugin-PublicTransport/releases)
+  [schildbach/public-transport-enabler](https://github.com/schildbach/public-transport-enabler) [[Github]](https://github.com/shtrophic/KvaesitsoPlugin-PublicTransport) [[Download]](https://github.com/shtrophic/KvaesitsoPlugin-PublicTransport/releases)
+- **Meteo.lt**: weather data from [meteo.lt](https://meteo.lt), for Lithuania [[Github]](https://github.com/leekleak/KvaesitsoMeteoLT) [[Download]](https://github.com/leekleak/KvaesitsoMeteoLT/releases)
 
 ## Plugin development
 
