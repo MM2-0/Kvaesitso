@@ -780,7 +780,7 @@
     <string name="apps_profile_private">Vertraulich</string>
     <string name="action_done">Fertig</string>
     <string name="action_more_actions">Weitere Aktionen</string>
-    <string name="action_clear">Löschen</string>
+    <string name="action_clear">Leeren</string>
     <string name="menu_show_filters">Filter anzeigen</string>
     <string name="menu_hide_filters">Filter ausblenden</string>
     <string name="music_widget_previous_track">Vorheriger Titel</string>
