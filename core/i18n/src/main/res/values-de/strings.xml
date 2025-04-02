@@ -818,22 +818,22 @@
         <item quantity="one">in einer Minute</item>
         <item quantity="other">in %1$d Minuten</item>
     </plurals>
-    <string name="preference_contacts_call_on_tap">Zum Anruf Tippen</string>
-    <string name="preference_contacts_call_on_tap_summary">Beim Tippen auf eine Telefonnummer diese direkt Anrufen</string>
+    <string name="preference_contacts_call_on_tap">Zum Anrufen tippen</string>
+    <string name="preference_contacts_call_on_tap_summary">Beim Antippen einer Telefonnummer sofort einen Anruf starten</string>
     <string name="departure_time_departed">abgefahren</string>
     <string name="preference_search_local_calendar_summary">Kalender auf diesem Gerät durchsuchen</string>
     <string name="weather_forecast_wind">Wind</string>
     <string name="weather_forecast_humidity">Luftfeuchtigkeit</string>
-    <string name="preference_grid_list_style">App-Ergebnisse als Liste anzeigen</string>
+    <string name="preference_grid_list_style">Apps als Liste anzeigen</string>
     <string name="preference_grid_list_icons">App-Icons in Liste anzeigen</string>
-    <string name="preference_grid_list_style_summary">Liste mit App-Suchergebnissen anstelle eines Rasters anzeigen</string>
-    <string name="preference_grid_list_icons_summary">In der App-Ergebnisliste zusätzlich App-Icons anzeigen</string>
+    <string name="preference_grid_list_style_summary">Apps als Liste statt als Raster darstellen</string>
+    <string name="preference_grid_list_icons_summary">Icons in der App-Liste anzeigen</string>
     <string name="weather_forecast_precipitation">Niederschlag</string>
-    <string name="tag_empty_name">Unbenannte Tags werden nicht unterstützt. Beim Fortfahren wird der Tag gelöscht.</string>
+    <string name="tag_empty_name">Unbenannte Tags werden nicht unterstützt. Wenn Sie fortfahren, wird der Tag gelöscht.</string>
     <string name="preference_clock_widget_time_format">Zeitformat</string>
     <string name="preference_clock_widget_time_format_24h">24-Stunden</string>
     <string name="preference_clock_widget_time_format_12h">12-Stunden</string>
-    <string name="preference_clock_widget_time_format_system">Systemvoreinstellung</string>
+    <string name="preference_clock_widget_time_format_system">Systemstandard</string>
     <string name="widget_removed">Widget entfernt</string>
-    <string name="missing_permission_call_contacts_settings">Telefonzugriff wird benötigt, um Anrufe zu starten</string>
+    <string name="missing_permission_call_contacts_settings">Telefonberechtigung wird benötigt, um Anrufe zu starten</string>
 </resources>
