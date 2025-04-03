@@ -800,7 +800,6 @@
     <string name="calendar_widget_previous_day">前一日</string>
     <string name="calendar_widget_next_day">後一日</string>
     <string name="calendar_widget_create_event">建立新事件</string>
-    <string name="preference_search_locations_radius_large_radius_warning">大的搜索半徑將會明顯減慢搜尋速度。</string>
     <string name="music_widget_previous_track">上一首</string>
     <string name="music_widget_next_track">下一首</string>
     <plurals name="calendar_search_enabled_lists">

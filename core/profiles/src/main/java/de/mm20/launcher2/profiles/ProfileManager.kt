@@ -42,20 +42,28 @@ class ProfileManager(
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
-    private val profileStates: MutableStateFlow<List<ProfileWithState>> =
-        MutableStateFlow(emptyList())
+    /**
+     * An array of exactly 3 profiles with their states.
+     * - Index 0: Personal profile
+     * - Index 1: Work profile
+     * - Index 2: Private profile
+     *
+     * Profiles that don't exist are null.
+     */
+    private val profileStates: MutableStateFlow<Array<ProfileWithState?>> =
+        MutableStateFlow(arrayOf(null, null, null))
 
     /**
      * List of profiles that are active and unlocked.
      */
     val activeProfiles: Flow<List<Profile>> = profileStates.map {
         it.mapNotNull {
-            if (it.state.locked) null else it.profile
+            if (it?.state?.locked != false) null else it.profile
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
 
     val profiles: Flow<List<Profile>> = profileStates.map {
-        it.map { it.profile }
+        it.mapNotNull { it?.profile }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
 
     init {
@@ -94,21 +102,32 @@ class ProfileManager(
             }
         }
     }
+
     private suspend fun refreshProfiles() {
         mutex.withLock {
-            val profiles = mutableListOf<ProfileWithState>()
+            val profiles = arrayOf<ProfileWithState?>(null, null, null)
 
             for (userHandle in launcherApps.profiles) {
-                profiles.add(
-                    ProfileWithState(
+                val serial = userManager.getSerialNumberForUser(userHandle)
+                if (android.os.Build.MANUFACTURER == "samsung" && serial == 150L) continue // Hide Samsung Secure Folder
+
+                val type = getProfileType(userHandle)
+                val index = when (type) {
+                    Profile.Type.Personal -> 0
+                    Profile.Type.Work -> 1
+                    Profile.Type.Private -> 2
+                }
+
+                if (profiles[index] == null) {
+                    profiles[index] = ProfileWithState(
                         Profile(
                             type = getProfileType(userHandle),
                             userHandle = userHandle,
-                            serial = userManager.getSerialNumberForUser(userHandle),
+                            serial = serial,
                         ),
                         getProfileState(userHandle),
                     )
-                )
+                }
             }
             profileStates.value = profiles
         }
@@ -116,13 +135,13 @@ class ProfileManager(
 
     fun getProfile(userHandle: UserHandle): Flow<Profile?> {
         return profileStates.map {
-            it.find { it.profile.userHandle == userHandle }?.profile
+            it.find { it?.profile?.userHandle == userHandle }?.profile
         }
     }
 
     fun getProfileState(profile: Profile?): Flow<Profile.State?> {
         return profileStates.map { profiles ->
-            profiles.find { it.profile == profile }?.state
+            profiles.find { it?.profile == profile }?.state
         }
     }
 

@@ -1,2 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="unit_gibibyte_symbol">گیبی‌بایت</string>
+    <string name="unit_tebibyte_symbol">تیبی‌بایت</string>
+    <string name="dimension_length">طول</string>
+    <string name="dimension_mass">جرم</string>
+    <string name="dimension_velocity">سرعت</string>
+    <string name="dimension_volume">حجم</string>
+    <string name="dimension_area">مساحت</string>
+    <string name="dimension_currency">ارز</string>
+    <string name="dimension_data">داده</string>
+    <string name="dimension_bitrate">نرخ بیت</string>
+    <string name="dimension_pressure">فشار</string>
+    <string name="dimension_energy">انرژی</string>
+    <string name="unit_kilometer_symbol">کیلومتر</string>
+    <string name="unit_centimeter_symbol">سانتی‌متر</string>
+    <string name="unit_millimeter_symbol">میلی‌متر</string>
+    <string name="unit_inch_symbol">اینچ</string>
+    <string name="unit_foot_symbol">پا</string>
+    <string name="unit_yard_symbol">یارد</string>
+    <string name="unit_mile_symbol">مایل</string>
+    <string name="unit_hectare_symbol">هکتار</string>
+    <string name="unit_acre_symbol">جریب</string>
+    <string name="unit_second_symbol">ثانیه</string>
+    <string name="unit_minute_symbol">دقیقه</string>
+    <string name="unit_day_symbol">روز</string>
+    <string name="unit_millisecond_symbol">میلی‌ثانیه</string>
+    <string name="unit_hour_symbol">ساعت</string>
+    <string name="unit_year_symbol">سال</string>
+    <string name="unit_kilobyte_symbol">کیلوبایت</string>
+    <string name="unit_knot_symbol">گره</string>
+    <string name="unit_kilogram_symbol">کیلوگرم</string>
+    <string name="unit_gram_symbol">گرم</string>
+    <string name="unit_metric_ton_symbol">تن متریک</string>
+    <string name="unit_pound_symbol">پوند</string>
+    <string name="unit_ounce_symbol">اونس</string>
+    <string name="unit_stone_symbol">استون</string>
+    <string name="unit_kelvin_symbol">کلوین</string>
+    <string name="unit_short_ton_symbol">تن کوتاه</string>
+    <string name="unit_meter_symbol">متر</string>
+    <string name="unit_megabyte_symbol">مگابایت</string>
+    <string name="unit_gigabyte_symbol">گیگابایت</string>
+    <string name="unit_kibibyte_symbol">کیبی‌بایت</string>
+    <string name="unit_mebibyte_symbol">میبی‌بایت</string>
+    <string name="unit_bit_symbol">بیت</string>
+    <string name="unit_long_ton_symbol">تن بلند</string>
+</resources>

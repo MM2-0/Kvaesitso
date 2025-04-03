@@ -717,7 +717,6 @@
     <string name="poi_category_park">منتزه</string>
     <string name="contact_info_home">المنزل</string>
     <string name="poi_category_government_building">مبنى حكومي</string>
-    <string name="preference_search_locations_radius_large_radius_warning">يمكن أن يؤدي نصف قطر البحث الكبير إلى إبطاء البحث بشكل كبير.</string>
     <string name="customize_item_tags">العلامات</string>
     <string name="customize_item_visibility">إظهار في</string>
     <string name="item_visibility_calendar_default">أداة التقويم ونتائج البحث</string>

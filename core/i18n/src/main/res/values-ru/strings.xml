@@ -774,7 +774,6 @@
     <string name="poi_category_shopping">Торговый магазин</string>
     <string name="plugin_type_locationsearch">Поиск мест</string>
     <string name="poi_category_pet">Зоомагазин</string>
-    <string name="preference_search_locations_radius_large_radius_warning">Большие радиусы поиска могут существенно замедлить процесс.</string>
     <string name="item_visibility_app_default">В списке приложений и результатах поиска</string>
     <string name="item_visibility_calendar_default">В календарном виджете и результатах поиска</string>
     <string name="customize_item_label">Название</string>

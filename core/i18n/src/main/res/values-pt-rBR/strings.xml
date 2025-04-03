@@ -595,7 +595,6 @@
     <string name="plugin_type_filesearch">Busca de arquivos</string>
     <string name="plugin_action_setup">Configurar</string>
     <string name="apps_profile_private">Privado</string>
-    <string name="preference_search_locations_radius_large_radius_warning">Um raio de pesquisa grande pode significativamente desacelerar a pesquisa.</string>
     <string name="preference_compact_tags">Tags compactas</string>
     <string name="preference_compact_tags_summary">Esconde etiquetas ou ícones para reduzir o espaço ocupado pelas tags</string>
     <string name="plugin_type_locationsearch">Pesquisa de lugares</string>

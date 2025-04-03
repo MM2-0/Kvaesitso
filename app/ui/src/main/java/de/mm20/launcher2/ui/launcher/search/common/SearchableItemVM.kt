@@ -16,6 +16,7 @@ import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
@@ -53,6 +54,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val appShortcutRepository: AppShortcutRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
+    private val contactSearchSettings: ContactSearchSettings by inject()
 
     val isUpToDate = MutableStateFlow(true)
 
@@ -138,7 +140,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         }
         val bundle = options.toBundle()
         if (searchable.launch(context, bundle)) {
-            favoritesService.reportLaunch(searchable)
+            reportUsage(searchable)
             return true
         } else if (searchable is Application || searchable is AppShortcut) {
             favoritesService.reset(searchable)
@@ -168,7 +170,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     fun launchChild(context: Context, child: SavableSearchable) {
         if (child.launch(context, null)) {
-            favoritesService.reportLaunch(child)
+            reportUsage(child)
         }
     }
 
@@ -246,4 +248,11 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     val mapTileServerUrl = locationSearchSettings.tileServer
         .map { it ?: LocationSearchSettings.DefaultTileServerUrl }
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
+
+    val callOnTap = contactSearchSettings.callOnTap
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
+    fun reportUsage(searchable: SavableSearchable) {
+        favoritesService.reportLaunch(searchable)
+    }
 }
