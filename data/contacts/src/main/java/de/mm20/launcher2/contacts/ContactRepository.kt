@@ -179,11 +179,8 @@ internal class ContactRepository(
                     if (Build.VERSION.SDK_INT < 31) {
                         PhoneNumberUtils.compare(context, a.number, b.number)
                     } else {
-                        PhoneNumberUtils.areSamePhoneNumber(a.number, b.number, mainLocaleISO3)
+                        !PhoneNumberUtils.areSamePhoneNumber(a.number, b.number, mainLocaleISO3)
                     }
-                }.mapNotNull {
-                    val formattedNumber = PhoneNumberUtils.formatNumber(it.number, mainLocaleISO3) ?: return@mapNotNull null
-                    it.copy(number = formattedNumber)
                 },
                 emailAddresses = emailAddresses.distinct(),
                 postalAddresses = postalAddresses.distinct(),
