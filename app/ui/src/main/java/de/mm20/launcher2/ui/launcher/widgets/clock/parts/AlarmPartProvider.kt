@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.provider.AlarmClock
-import android.text.format.DateUtils
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -74,9 +73,9 @@ class AlarmPartProvider : PartProvider {
         val hours = diff / (1000 * 60 * 60)
 
         return if (hours > 0) {
-            "in $hours hr $minutes min"
+            "in $hours hr${if (hours > 1) "s" else ""} $minutes min${if (minutes != 1L) "s" else ""}"
         } else {
-            "in $minutes min"
+            "in $minutes min${if (minutes != 1L) "s" else ""}"
         }
     }
 
