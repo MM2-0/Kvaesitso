@@ -1,13 +1,14 @@
 package de.mm20.launcher2.ktx
 
-import android.location.Location
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.nanoseconds
+
+import android.location.Location as AndroidLocation
 
 /* https://github.com/streetcomplete/StreetComplete/blob/master/app/src/main/java/de/westnordost/streetcomplete/util/location/LocationUtils.kt
  * GPLv3
  */
-fun Location.isBetterThan(previous: Location?): Boolean {
+fun AndroidLocation.isBetterThan(previous: AndroidLocation?): Boolean {
     if (longitude.isNaN() || latitude.isNaN()) return false
     if (previous == null) return true
 
