@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import java.util.Calendar
 
@@ -23,7 +24,7 @@ fun AnalogClock(
     showSeconds: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
-    showTicks: Boolean,
+    style: ClockWidgetStyle.Analog,
 ) {
     val verticalLayout = !compact
     val date = Calendar.getInstance()
@@ -67,7 +68,7 @@ fun AnalogClock(
         .padding(top = if (verticalLayout) 8.dp else 0.dp,
             bottom = if (verticalLayout) 8.dp else 0.dp)
         .size(size)) {
-        if (showTicks) {
+        if (style.showTicks) {
             for (hour in 0.. 11) {
                 rotate(hour.toFloat() / 12f * 360f, this.size.center) {
                     drawLine(

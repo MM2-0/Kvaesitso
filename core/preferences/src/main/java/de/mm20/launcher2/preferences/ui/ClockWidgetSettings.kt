@@ -96,7 +96,7 @@ class ClockWidgetSettings internal constructor(
                 ClockWidgetStyleEnum.Digital1 -> it.clockWidgetDigital1
                 ClockWidgetStyleEnum.Digital2 -> ClockWidgetStyle.Digital2
                 ClockWidgetStyleEnum.Orbit -> ClockWidgetStyle.Orbit
-                ClockWidgetStyleEnum.Analog -> ClockWidgetStyle.Analog
+                ClockWidgetStyleEnum.Analog -> it.clockWidgetAnalog
                 ClockWidgetStyleEnum.Binary -> ClockWidgetStyle.Binary
                 ClockWidgetStyleEnum.Segment -> ClockWidgetStyle.Segment
                 ClockWidgetStyleEnum.Empty -> ClockWidgetStyle.Empty
@@ -107,6 +107,9 @@ class ClockWidgetSettings internal constructor(
     val digital1: Flow<ClockWidgetStyle.Digital1>
         get() = launcherDataStore.data.map { it.clockWidgetDigital1 }
 
+    val analog: Flow<ClockWidgetStyle.Analog>
+        get() = launcherDataStore.data.map { it.clockWidgetAnalog }
+
     val custom: Flow<ClockWidgetStyle.Custom>
         get() = launcherDataStore.data.map { it.clockWidgetCustom }
 
@@ -114,8 +117,9 @@ class ClockWidgetSettings internal constructor(
         launcherDataStore.update {
             it.copy(
                 clockWidgetStyle = clockStyle.enumValue,
-                clockWidgetDigital1 = if (clockStyle is ClockWidgetStyle.Digital1) clockStyle else it.clockWidgetDigital1,
-                clockWidgetCustom = if (clockStyle is ClockWidgetStyle.Custom) clockStyle else it.clockWidgetCustom,
+                clockWidgetDigital1 = clockStyle as? ClockWidgetStyle.Digital1 ?: it.clockWidgetDigital1,
+                clockWidgetAnalog = clockStyle as? ClockWidgetStyle.Analog ?: it.clockWidgetAnalog,
+                clockWidgetCustom = clockStyle as? ClockWidgetStyle.Custom ?: it.clockWidgetCustom,
             )
         }
     }
@@ -135,15 +139,6 @@ class ClockWidgetSettings internal constructor(
     fun setShowSeconds(enabled: Boolean) {
         launcherDataStore.update {
             it.copy(clockWidgetShowSeconds = enabled)
-        }
-    }
-
-    val analogShowTicks
-        get() = launcherDataStore.data.map { it.clockWidgetAnalogShowTicks }
-
-    fun setAnalogShowTicks(enabled: Boolean) {
-        launcherDataStore.update {
-            it.copy(clockWidgetAnalogShowTicks = enabled)
         }
     }
 

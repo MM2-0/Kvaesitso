@@ -22,11 +22,11 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setCompact(compact)
     }
 
-    val availableClockStyles = combine(settings.digital1, settings.custom) { digital1, custom ->
+    val availableClockStyles = combine(settings.digital1, settings.analog, settings.custom) { digital1, analog, custom ->
         listOf(
             digital1,
             ClockWidgetStyle.Digital2,
-            ClockWidgetStyle.Analog,
+            analog,
             ClockWidgetStyle.Orbit,
             ClockWidgetStyle.Segment,
             ClockWidgetStyle.Binary,
@@ -53,13 +53,6 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setShowSeconds(showSeconds: Boolean) {
         settings.setShowSeconds(showSeconds)
-    }
-
-    val analogShowTicks = settings.analogShowTicks
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-
-    fun setAnalogShowTicks(analogShowTicks: Boolean) {
-        settings.setAnalogShowTicks(analogShowTicks)
     }
 
     val timeFormat = settings.timeFormat

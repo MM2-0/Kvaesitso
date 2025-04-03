@@ -275,7 +275,6 @@ fun Clock(
     val showSeconds by clockSettings.showSeconds.collectAsState(initial = false)
     val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = false)
     val timeFormat by clockSettings.timeFormat.collectAsState(null)
-    val analogShowTicks by clockSettings.analogShowTicks.collectAsState(false)
 
     if (timeFormat == null) return
 
@@ -315,7 +314,7 @@ fun Clock(
             showSeconds,
             useThemeColor,
             darkColors,
-            analogShowTicks
+            style
         )
 
         is ClockWidgetStyle.Orbit -> OrbitClock(
@@ -366,7 +365,6 @@ fun ConfigureClockWidgetSheet(
     val fillHeight by viewModel.fillHeight.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
     val showSeconds by viewModel.showSeconds.collectAsState()
-    val analogShowTicks by viewModel.analogShowTicks.collectAsState()
     val timeFormat by viewModel.timeFormat.collectAsState()
     val useAccentColor by viewModel.useThemeColor.collectAsState()
     val parts by viewModel.parts.collectAsState()
@@ -512,18 +510,6 @@ fun ConfigureClockWidgetSheet(
                             onValueChanged = {
                                 viewModel.setShowSeconds(it)
                             }
-                        )
-                    }
-                    AnimatedVisibility(
-                        style is ClockWidgetStyle.Analog
-                    ) {
-                        SwitchPreference(
-                            title = stringResource(R.string.preference_clock_widget_analog_show_ticks),
-                            icon = Icons.Rounded.AvTimer,
-                            onValueChanged = {
-                                viewModel.setAnalogShowTicks(it)
-                            },
-                            value = analogShowTicks
                         )
                     }
                     AnimatedVisibility(
