@@ -68,6 +68,18 @@ class AlarmPartProvider : PartProvider {
             context.unregisterReceiver(receiver)
         }
     }
+    private fun formatRemainingTime(alarmTime: Long, currentTime: Long): String {
+        val diff = alarmTime - currentTime
+        val minutes = (diff / (1000 * 60)) % 60
+        val hours = diff / (1000 * 60 * 60)
+
+        return if (hours > 0) {
+            "in $hours hr $minutes min"
+        } else {
+            "in $minutes min"
+        }
+    }
+
 
     @Composable
     override fun Component(compactLayout: Boolean) {
@@ -94,12 +106,7 @@ class AlarmPartProvider : PartProvider {
                     )
                     Text(
                         modifier = Modifier.padding(start = 12.dp),
-                        text = DateUtils.getRelativeTimeSpanString(
-                            it,
-                            time,
-                            DateUtils.MINUTE_IN_MILLIS
-                        )
-                            .toString(),
+                        text = formatRemainingTime(it, time),
                     )
                 }
             } else {
@@ -118,12 +125,7 @@ class AlarmPartProvider : PartProvider {
                     )
                     Text(
                         modifier = Modifier.padding(start = 12.dp),
-                        text = DateUtils.getRelativeTimeSpanString(
-                            it,
-                            time,
-                            DateUtils.MINUTE_IN_MILLIS
-                        )
-                            .toString(),
+                        text = formatRemainingTime(it, time),
                         style = MaterialTheme.typography.titleMedium
                     )
                 }
