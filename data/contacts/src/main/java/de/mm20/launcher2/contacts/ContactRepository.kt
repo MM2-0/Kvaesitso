@@ -166,7 +166,7 @@ internal class ContactRepository(
             }
             lookupKeyCursor.close()
 
-            val mainLocaleISO3 = context.resources.configuration.locales[0].isO3Country
+            val defaultCountryIso = context.resources.configuration.locales[0].country
 
             return@withContext AndroidContact(
                 id = id,
@@ -175,15 +175,17 @@ internal class ContactRepository(
                 displayName = displayName,
                 phoneNumbers = phoneNumbers.sortedByDescending {
                     it.number.count { !PhoneNumberUtils.isReallyDialable(it) }
+                }.map {
+                    val formattedNumber =
+                        PhoneNumberUtils.formatNumber(it.number, defaultCountryIso)
+                            ?: return@map it
+                    it.copy(number = formattedNumber)
                 }.distinctByEquality { a, b ->
                     if (Build.VERSION.SDK_INT < 31) {
                         PhoneNumberUtils.compare(context, a.number, b.number)
                     } else {
-                        PhoneNumberUtils.areSamePhoneNumber(a.number, b.number, mainLocaleISO3)
+                        PhoneNumberUtils.areSamePhoneNumber(a.number, b.number, defaultCountryIso)
                     }
-                }.mapNotNull {
-                    val formattedNumber = PhoneNumberUtils.formatNumber(it.number, mainLocaleISO3) ?: return@mapNotNull null
-                    it.copy(number = formattedNumber)
                 },
                 emailAddresses = emailAddresses.distinct(),
                 postalAddresses = postalAddresses.distinct(),
