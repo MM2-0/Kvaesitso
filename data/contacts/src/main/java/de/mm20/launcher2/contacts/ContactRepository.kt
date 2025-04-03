@@ -65,9 +65,9 @@ internal class ContactRepository(
                 ContactsContract.Data.CONTENT_URI,
                 null, s, null, null
             ) ?: return@withContext null
-            var firstName = ""
-            var lastName = ""
-            var displayName = ""
+            var firstName: String? = null
+            var lastName: String? = null
+            var displayName: String? = null
             val phoneNumbers = mutableListOf<PhoneNumber>()
             val emailAddresses = mutableListOf<EmailAddress>()
             val postalAddresses = mutableListOf<PostalAddress>()
@@ -133,9 +133,9 @@ internal class ContactRepository(
                         }
 
                     ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE -> {
-                        firstName = dataCursor.getStringOrNull(givenNameColumn) ?: ""
-                        lastName = dataCursor.getStringOrNull(familyNameColumn) ?: ""
-                        displayName = dataCursor.getStringOrNull(displayNameColumn) ?: ""
+                        firstName = dataCursor.getStringOrNull(givenNameColumn)
+                        lastName = dataCursor.getStringOrNull(familyNameColumn)
+                        displayName = dataCursor.getStringOrNull(displayNameColumn)
                     }
 
                     else -> {
@@ -170,9 +170,9 @@ internal class ContactRepository(
 
             return@withContext AndroidContact(
                 id = id,
-                firstName = firstName,
-                lastName = lastName,
-                displayName = displayName,
+                name = displayName
+                    ?: listOfNotNull(firstName, lastName).joinToString(" ").takeIf { it.isNotBlank() }
+                            ?: return@withContext null,
                 phoneNumbers = phoneNumbers.sortedByDescending {
                     it.number.count { !PhoneNumberUtils.isReallyDialable(it) }
                 }.map {
