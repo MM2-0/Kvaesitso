@@ -827,4 +827,12 @@
     </plurals>
     <string name="departure_time_now">most</string>
     <string name="preference_search_local_calendar_summary">Naptárak keresése ezen az eszközön</string>
+    <string name="departure_time_departed">elindult</string>
+    <string name="preference_grid_list_style">Alkalmazások megjelenítése listában</string>
+    <string name="preference_grid_list_icons">Alkalmazások ikonjainak megjelenítése listában</string>
+    <string name="preference_grid_list_style_summary">Alkalmazások listában történő megjelenítése rács helyett</string>
+    <string name="preference_grid_list_icons_summary">Ikonok megjelenítése listanézetben</string>
+    <string name="preference_contacts_call_on_tap">Koppintson a híváshoz</string>
+    <string name="preference_contacts_call_on_tap_summary">Hívás azonnali indítása egy telefonszámra való koppintáskor</string>
+    <string name="missing_permission_call_contacts_settings">A hívások indításához hívásengedélyre van szükség</string>
 </resources>
