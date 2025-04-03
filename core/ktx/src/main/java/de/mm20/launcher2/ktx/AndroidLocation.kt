@@ -6,7 +6,7 @@ import kotlin.time.Duration.Companion.nanoseconds
 import android.location.Location as AndroidLocation
 
 /* https://github.com/streetcomplete/StreetComplete/blob/master/app/src/main/java/de/westnordost/streetcomplete/util/location/LocationUtils.kt
- * GPLv3
+ * GPL-3.0-or-later
  */
 fun AndroidLocation.isBetterThan(previous: AndroidLocation?): Boolean {
     if (longitude.isNaN() || latitude.isNaN()) return false
