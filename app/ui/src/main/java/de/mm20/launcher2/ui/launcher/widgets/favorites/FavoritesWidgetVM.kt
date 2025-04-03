@@ -22,6 +22,7 @@ class FavoritesWidgetVM : FavoritesVM() {
     private val widget = MutableStateFlow<FavoritesWidget?>(null)
     override val tagsExpanded = widget.map { it?.config?.tagsMultiline == true }
     override val compactTags: Flow<Boolean> = widget.map { it?.config?.compactTags == true }
+    override val tagsPosition: Flow<Boolean> = widget.map { it?.config?.tagsPosition == true }
 
     private val isTopWidget = widgetsService.isFavoritesWidgetFirst()
     private val clockWidgetFavSlots =

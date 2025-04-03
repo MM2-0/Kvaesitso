@@ -33,6 +33,7 @@ fun FavoritesWidget(widget: FavoritesWidget) {
     val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)
     val compactTags by viewModel.compactTags.collectAsState(false)
+    val tagsPosition by viewModel.tagsPosition.collectAsState(false)
     val favoritesEditButton = widget.config.editButton
 
     val tagsExpanded by viewModel.tagsExpanded.collectAsState(false)
@@ -42,6 +43,19 @@ fun FavoritesWidget(widget: FavoritesWidget) {
     }
 
     Column {
+        if (tagsPosition && (pinnedTags.isNotEmpty() || favoritesEditButton)) {
+            FavoritesTagSelector(
+                tags = pinnedTags,
+                selectedTag = selectedTag,
+                editButton = favoritesEditButton,
+                reverse = false,
+                onSelectTag = { viewModel.selectTag(it) },
+                scrollState = rememberScrollState(),
+                expanded = tagsExpanded,
+                compact = compactTags,
+                onExpand = { viewModel.setTagsExpanded(it) }
+            )
+        }
         if (favorites.isNotEmpty()) {
             SearchResultGrid(favorites, transitionKey = selectedTag)
         } else {
@@ -53,7 +67,7 @@ fun FavoritesWidget(widget: FavoritesWidget) {
                 icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
             )
         }
-        if (pinnedTags.isNotEmpty() || favoritesEditButton) {
+        if (!tagsPosition && (pinnedTags.isNotEmpty() || favoritesEditButton)) {
             FavoritesTagSelector(
                 tags = pinnedTags,
                 selectedTag = selectedTag,
