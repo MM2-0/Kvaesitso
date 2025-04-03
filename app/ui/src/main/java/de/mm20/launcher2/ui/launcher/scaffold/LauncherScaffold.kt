@@ -350,8 +350,6 @@ private class LauncherScaffoldState(
             lowerPage + size.width
         }
 
-        Log.d("LauncherScaffold", "performPushFling: $velocity, $minFlingVelocity")
-
         val threshold = (upperPage + lowerPage) / 2f
 
         val targetOffset = if (direction.orientation == Orientation.Vertical) {
