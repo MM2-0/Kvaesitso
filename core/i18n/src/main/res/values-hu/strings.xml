@@ -206,7 +206,7 @@
     <string name="missing_permission_calendar_widget_settings">Ehhez a modulhoz naptár-engedély szükséges</string>
     <string name="missing_permission_appshortcuts_search_settings">A(z) %1$s alkalmazást alapértelmezett indítóként kell beállítani az telepített alkalmazások kereséséhez</string>
     <string name="missing_permission_notification_badges">Az értesítési jelvények megjelenítéséhez értesítési hozzáférés szükséges</string>
-    <string name="preference_category_licenses">Nyílt forráskódú megállapodások</string>
+    <string name="preference_category_licenses">Nyílt forráskódú licencek</string>
     <string name="preference_icon_shape_hexagon">Hatszög</string>
     <string name="preference_category_searchbar">Keresősáv</string>
     <string name="missing_permission_file_search_settings">A helyi fájlok kereséséhez, tárhely engedélyre van szükség</string>
@@ -238,7 +238,7 @@
     <string name="preference_debug_reinstall_iconpacks_summary">Az ikoncsomag gyorsítótárának törlése és újraépítése</string>
     <string name="preference_themed_icons_summary">Ikonok színezése az alkalmazás színösszeállításával</string>
     <string name="open_webpage">Weboldal megnyitása</string>
-    <string name="preference_screen_about_summary">Alkalmazás- és megállapodás információk</string>
+    <string name="preference_screen_about_summary">Alkalmazás- és licencinformációk</string>
     <string name="preference_screen_appearance_summary">A megjelenés testreszabása</string>
     <string name="preference_weather_provider">Szolgáltató</string>
     <string name="preference_screen_integrations">Integrációk</string>
@@ -287,7 +287,7 @@
     <string name="preference_icon_shape_teardrop">Könnycsepp</string>
     <string name="preference_icon_shape_pebble">Kavics</string>
     <string name="preference_screen_plugins">Bővítmények</string>
-    <string name="preference_screen_plugins_summary">Telepített kiterjesztések kezelése</string>
+    <string name="preference_screen_plugins_summary">Telepített bővítmények kezelése</string>
     <string name="no_plugins_installed">Nincsenek telepített bővítmények</string>
     <string name="preference_theme_system">Kövesse a rendszer beállításait</string>
     <string name="preference_themed_icons">Témának megfelelő ikonok</string>
@@ -318,7 +318,7 @@
     <string name="favorites_empty_tag">Nincsenek elemek ilyen címkével</string>
     <string name="preference_layout_open_search">Keresés / alkalmazásfiók</string>
     <string name="preference_category_media_apps">Médiaalkalmazások</string>
-    <string name="preference_search_unitconverter_summary">Használat: 1.5 kg, vagy 4 cm &gt;&gt; in</string>
+    <string name="preference_search_unitconverter_summary">Használat: 1,5 kg, vagy 4 cm &gt;&gt; in</string>
     <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyors műveletre, ha megérinti az „Enter” gombot</string>
     <string name="preference_hidden_items">Rejtett keresési eredmények</string>
     <string name="icon_picker_filter_all_packs">Minden ikoncsomag</string>
@@ -494,7 +494,7 @@
     <string name="preference_owncloud_signin">Bejelentkezés az Owncloudba</string>
     <string name="preference_owncloud_signin_summary">Az Owncloud kiszolgálón való kereséshez be kell jelentkezni</string>
     <string name="preference_enforce_icon_shape_summary">Alkalmazza az alakzatot az összes ikonra, beleértve azokat is, amelyek általában nem támogatnák</string>
-    <string name="preference_category_license">Megállapodás</string>
+    <string name="preference_category_license">Licence</string>
     <string name="preference_about_license">Ez az alkalmazás egy ingyenes szoftver.</string>
     <string name="preference_grid_icon_size">Ikon méret</string>
     <string name="preference_grid_labels">Alkalmazások neveinek megjelenítése</string>
