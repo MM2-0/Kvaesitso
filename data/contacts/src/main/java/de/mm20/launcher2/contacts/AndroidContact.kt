@@ -13,11 +13,11 @@ import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.ktx.asBitmap
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Contact
-import de.mm20.launcher2.search.ContactApp
-import de.mm20.launcher2.search.EmailAddress
-import de.mm20.launcher2.search.PhoneNumber
-import de.mm20.launcher2.search.PostalAddress
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.contact.CustomContactChannel
+import de.mm20.launcher2.search.contact.EmailAddress
+import de.mm20.launcher2.search.contact.PhoneNumber
+import de.mm20.launcher2.search.contact.PostalAddress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -27,8 +27,7 @@ internal data class AndroidContact(
     override val phoneNumbers: List<PhoneNumber>,
     override val emailAddresses: List<EmailAddress>,
     override val postalAddresses: List<PostalAddress>,
-    override val contactApps: List<ContactApp>,
-    internal val lookupKey: String,
+    override val contactChannels: List<CustomContactChannel>,    internal val lookupKey: String,
     override val labelOverride: String? = null,
 ) : Contact {
 

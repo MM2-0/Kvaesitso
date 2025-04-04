@@ -12,12 +12,12 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.search.Contact
-import de.mm20.launcher2.search.ContactApp
-import de.mm20.launcher2.search.ContactInfoType
-import de.mm20.launcher2.search.EmailAddress
-import de.mm20.launcher2.search.PhoneNumber
-import de.mm20.launcher2.search.PostalAddress
 import de.mm20.launcher2.search.SearchableRepository
+import de.mm20.launcher2.search.contact.ContactInfoType
+import de.mm20.launcher2.search.contact.CustomContactChannel
+import de.mm20.launcher2.search.contact.EmailAddress
+import de.mm20.launcher2.search.contact.PhoneNumber
+import de.mm20.launcher2.search.contact.PostalAddress
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -71,7 +71,7 @@ internal class ContactRepository(
             val phoneNumbers = mutableListOf<PhoneNumber>()
             val emailAddresses = mutableListOf<EmailAddress>()
             val postalAddresses = mutableListOf<PostalAddress>()
-            val contactApps = mutableListOf<ContactApp>()
+            val contactChannels = mutableListOf<CustomContactChannel>()
 
             val mimeTypeColumn = dataCursor.getColumnIndex(ContactsContract.Data.MIMETYPE)
             val typeColumn =
@@ -139,7 +139,7 @@ internal class ContactRepository(
                     }
 
                     else -> {
-                        contactApps += ContactApp(
+                        contactChannels += CustomContactChannel(
                             label = dataCursor.getStringOrNull(data3Column) ?: continue,
                             packageName = dataCursor.getStringOrNull(accountTypeColumn) ?: continue,
                             mimeType = dataCursor.getStringOrNull(mimeTypeColumn) ?: continue,
@@ -189,7 +189,7 @@ internal class ContactRepository(
                 },
                 emailAddresses = emailAddresses.distinct(),
                 postalAddresses = postalAddresses.distinct(),
-                contactApps = contactApps.distinct(),
+                contactChannels = contactChannels.distinct(),
                 lookupKey = lookUpKey
             )
         }
