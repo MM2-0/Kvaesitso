@@ -10,9 +10,7 @@ import android.hardware.SensorManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.PI
 import kotlinx.coroutines.channels.awaitClose
@@ -20,6 +18,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.channelFlow
 import de.mm20.launcher2.ktx.checkPermission
+import de.mm20.launcher2.ktx.foldOrNull
+import de.mm20.launcher2.ktx.isBetterThan
 import kotlinx.coroutines.flow.combine
 
 class DevicePoseProvider internal constructor(
@@ -39,10 +39,16 @@ class DevicePoseProvider internal constructor(
     }
 
     fun getLocation(minTimeMs: Long = 1000, minDistanceM: Float = 1f) = channelFlow {
+        fun updateLocation(update: Location?) {
+            if (update == null) return
+            if (!update.isBetterThan(lastLocation)) return
+            lastLocation = update
+            updateDeclination(update)
+            trySend(update)
+        }
+
         val locationCallback = LocationListener {
-            lastLocation = it
-            updateDeclination(it)
-            trySend(it)
+            updateLocation(it)
         }
 
         context.getSystemService<LocationManager>()
@@ -52,18 +58,14 @@ class DevicePoseProvider internal constructor(
                 val hasCoarseAccess =
                     context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-                val location =
-                    (if (hasFineAccess) this@runCatching.getLastKnownLocation(LocationManager.GPS_PROVIDER) else null)
-                        ?: if (hasCoarseAccess) this@runCatching.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) else null
+                val previousLocation =
+                    hasFineAccess.foldOrNull { getLastKnownLocation(LocationManager.GPS_PROVIDER) } ?:
+                    hasCoarseAccess.foldOrNull { getLastKnownLocation(LocationManager.NETWORK_PROVIDER) }
 
-                if (location != null) {
-                    lastLocation = location
-                    updateDeclination(location)
-                    trySend(location)
-                }
+                updateLocation(previousLocation)
 
                 if (hasFineAccess) {
-                    this@runCatching.requestLocationUpdates(
+                    requestLocationUpdates(
                         LocationManager.GPS_PROVIDER,
                         minTimeMs,
                         minDistanceM,
@@ -71,7 +73,7 @@ class DevicePoseProvider internal constructor(
                     )
                 }
                 if (hasCoarseAccess) {
-                    this@runCatching.requestLocationUpdates(
+                    requestLocationUpdates(
                         LocationManager.NETWORK_PROVIDER,
                         minTimeMs,
                         minDistanceM,
