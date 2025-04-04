@@ -50,7 +50,8 @@ fun LazyListScope.SearchFavorites(
                             LocalCardStyle.current.opacity
                         ),
                         MaterialTheme.shapes.medium
-                    ),
+                    )
+                    .padding(vertical = 4.dp),
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
             ) {
                 if (favorites.isNotEmpty()) {
