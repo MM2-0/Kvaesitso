@@ -1,4 +1,4 @@
-package de.mm20.launcher2.contacts
+package de.mm20.launcher2.contacts.providers
 
 import android.content.ContentUris
 import android.content.Context
@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import androidx.core.graphics.drawable.toDrawable
+import de.mm20.launcher2.contacts.ContactSerializer
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.StaticIconLayer
@@ -14,7 +15,7 @@ import de.mm20.launcher2.ktx.asBitmap
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.contact.CustomContactChannel
+import de.mm20.launcher2.search.contact.CustomContactAction
 import de.mm20.launcher2.search.contact.EmailAddress
 import de.mm20.launcher2.search.contact.PhoneNumber
 import de.mm20.launcher2.search.contact.PostalAddress
@@ -27,7 +28,7 @@ internal data class AndroidContact(
     override val phoneNumbers: List<PhoneNumber>,
     override val emailAddresses: List<EmailAddress>,
     override val postalAddresses: List<PostalAddress>,
-    override val contactChannels: List<CustomContactChannel>,    internal val lookupKey: String,
+    override val customActions: List<CustomContactAction>, internal val lookupKey: String,
     override val labelOverride: String? = null,
 ) : Contact {
 

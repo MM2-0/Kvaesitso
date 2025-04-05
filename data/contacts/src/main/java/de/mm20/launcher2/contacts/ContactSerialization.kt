@@ -1,5 +1,8 @@
 package de.mm20.launcher2.contacts
 
+import android.content.Context
+import de.mm20.launcher2.contacts.providers.AndroidContact
+import de.mm20.launcher2.contacts.providers.AndroidContactProvider
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -22,7 +25,7 @@ internal class ContactSerializer : SearchableSerializer {
 }
 
 internal class ContactDeserializer(
-    private val contactRepository: ContactRepository,
+    private val context: Context,
     private val permissionsManager: PermissionsManager
 ) : SearchableDeserializer {
 
@@ -30,6 +33,8 @@ internal class ContactDeserializer(
         if (!permissionsManager.checkPermissionOnce(PermissionGroup.Contacts)) return null
         val id = JSONObject(serialized).getLong("id")
 
-        return contactRepository.get(id).first()
+        val androidContactProvider = AndroidContactProvider(context)
+
+        return androidContactProvider.get(id)
     }
 }

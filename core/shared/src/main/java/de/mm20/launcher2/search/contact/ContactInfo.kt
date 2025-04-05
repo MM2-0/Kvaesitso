@@ -26,7 +26,7 @@ data class PostalAddress(
  * Custom contact channel, for example, WhatsApp message, Telegram video call, etc.
  */
 @Serializable
-data class CustomContactChannel(
+data class CustomContactAction(
     val label: String,
     /**
      * The data URI that is passed to the Intent.

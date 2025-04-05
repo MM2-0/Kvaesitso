@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.launcher.search.contacts
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.compose.animation.AnimatedContent
@@ -78,9 +77,6 @@ import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import androidx.core.net.toUri
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.getApplicationIconOrNull
@@ -276,7 +272,7 @@ fun ContactItem(
                             )
                         }
                         val apps = remember(contact) {
-                            contact.contactChannels.groupBy { it.packageName }
+                            contact.customActions.groupBy { it.packageName }
                         }
                         for ((i, app) in apps.entries.withIndex()) {
                             val packageName = app.key

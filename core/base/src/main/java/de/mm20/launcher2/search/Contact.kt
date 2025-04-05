@@ -1,14 +1,13 @@
 package de.mm20.launcher2.search
 
 import android.content.Context
-import android.net.Uri
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Person
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
 import de.mm20.launcher2.icons.VectorLayer
-import de.mm20.launcher2.search.contact.CustomContactChannel
+import de.mm20.launcher2.search.contact.CustomContactAction
 import de.mm20.launcher2.search.contact.EmailAddress
 import de.mm20.launcher2.search.contact.PhoneNumber
 import de.mm20.launcher2.search.contact.PostalAddress
@@ -18,7 +17,7 @@ interface Contact : SavableSearchable {
     val phoneNumbers: List<PhoneNumber>
     val emailAddresses: List<EmailAddress>
     val postalAddresses: List<PostalAddress>
-    val contactChannels: List<CustomContactChannel>
+    val customActions: List<CustomContactAction>
 
     val summary: String
         get() {

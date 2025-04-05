@@ -1,6 +1,6 @@
 package de.mm20.launcher2.plugin.contracts
 
-import de.mm20.launcher2.search.contact.CustomContactChannel
+import de.mm20.launcher2.search.contact.CustomContactAction
 import de.mm20.launcher2.search.contact.EmailAddress
 import de.mm20.launcher2.search.contact.PhoneNumber
 import de.mm20.launcher2.search.contact.PostalAddress
@@ -21,7 +21,7 @@ abstract class ContactPluginContract {
         val PhoneNumbers = column<List<PhoneNumber>>("phone_numbers")
         val EmailAddresses = column<List<EmailAddress>>("email_addresses")
         val PostalAddresses = column<List<PostalAddress>>("postal_addresses")
-        val ContactChannels = column<List<CustomContactChannel>>("contact_channels")
+        val CustomActions = column<List<CustomContactAction>>("custom_actions")
 
         val PhotoUri = column<String>("photo_uri")
     }

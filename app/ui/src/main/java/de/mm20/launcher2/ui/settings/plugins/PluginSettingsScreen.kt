@@ -194,6 +194,7 @@ fun PluginSettingsScreen(pluginId: String) {
         ) {
             Surface(
                 modifier = Modifier.fillMaxWidth()
+                    .padding(bottom = 16.dp)
             ) {
                 Column {
                     Row(
@@ -247,47 +248,6 @@ fun PluginSettingsScreen(pluginId: String) {
                                 ),
                             style = MaterialTheme.typography.bodyMedium,
                         )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .horizontalScroll(rememberScrollState())
-                            .padding(bottom = 24.dp, start = 12.dp, end = 12.dp, top = 24.dp)
-                    ) {
-                        for (type in types) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .padding(end = 4.dp)
-                                    .background(
-                                        MaterialTheme.colorScheme.tertiaryContainer,
-                                        shape = MaterialTheme.shapes.medium,
-                                    )
-                                    .padding(4.dp)
-                            ) {
-                                Icon(
-                                    when (type) {
-                                        PluginType.FileSearch -> Icons.AutoMirrored.Rounded.InsertDriveFile
-                                        PluginType.Weather -> Icons.Rounded.LightMode
-                                        PluginType.LocationSearch -> Icons.Rounded.Place
-                                        PluginType.Calendar -> Icons.Rounded.Today
-                                    },
-                                    null,
-                                    modifier = Modifier.size(16.dp),
-                                    tint = MaterialTheme.colorScheme.onTertiaryContainer,
-                                )
-                                Text(
-                                    when (type) {
-                                        PluginType.FileSearch -> stringResource(R.string.plugin_type_filesearch)
-                                        PluginType.Weather -> stringResource(R.string.plugin_type_weather)
-                                        PluginType.LocationSearch -> stringResource(R.string.plugin_type_locationsearch)
-                                        PluginType.Calendar -> stringResource(R.string.plugin_type_calendar)
-                                    },
-                                    modifier = Modifier.padding(horizontal = 4.dp),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = MaterialTheme.colorScheme.onTertiaryContainer,
-                                )
-                            }
-                        }
                     }
                 }
 

@@ -34,10 +34,10 @@ class ContactsSettingsScreenVM : ViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.Contacts)
     }
 
-    val localContacts = settings.enabled
+    val localContacts = settings.isProviderEnabled("local")
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setLocalContacts(enabled: Boolean) {
-        settings.setEnabled(enabled)
+        settings.setProviderEnabled("local", enabled)
     }
 }
