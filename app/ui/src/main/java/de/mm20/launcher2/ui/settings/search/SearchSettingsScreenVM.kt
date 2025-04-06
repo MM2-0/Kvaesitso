@@ -158,5 +158,5 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val plugins = pluginService.getPluginsWithState(enabled = true)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 }

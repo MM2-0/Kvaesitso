@@ -6,7 +6,7 @@ minSdk = "26"
 compileSdk = "35"
 targetSdk = "35"
 
-pluginSdk = "2.1.2"
+pluginSdk = "2.2.0-SNAPSHOT"
 
 gradle = "8.1.2"
 android-gradle-plugin = "8.6.0"

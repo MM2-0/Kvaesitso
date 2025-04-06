@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -15,6 +17,7 @@ class ContactsSettingsScreenVM : ViewModel(), KoinComponent {
 
     private val settings: ContactSearchSettings by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val pluginService: PluginService by inject()
 
     val hasCallPermission = permissionsManager.hasPermission(PermissionGroup.Call)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -34,10 +37,14 @@ class ContactsSettingsScreenVM : ViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.Contacts)
     }
 
-    val localContacts = settings.isProviderEnabled("local")
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val availablePlugins = pluginService.getPluginsWithState(
+        type = PluginType.ContactSearch,
+        enabled = true,
+    )
 
-    fun setLocalContacts(enabled: Boolean) {
-        settings.setProviderEnabled("local", enabled)
+    val enabledProviders = settings.enabledProviders
+
+    fun setProviderEnabled(providerId: String, enabled: Boolean) {
+        settings.setProviderEnabled(providerId, enabled)
     }
 }

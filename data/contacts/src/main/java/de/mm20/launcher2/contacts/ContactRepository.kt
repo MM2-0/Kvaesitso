@@ -2,6 +2,7 @@ package de.mm20.launcher2.contacts
 
 import android.content.Context
 import de.mm20.launcher2.contacts.providers.AndroidContactProvider
+import de.mm20.launcher2.contacts.providers.PluginContactProvider
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
@@ -36,7 +37,7 @@ internal class ContactRepository(
             val providers = providerIds.mapNotNull {
                 when (it) {
                     "local" -> if (perm) AndroidContactProvider(context) else null
-                    else -> null
+                    else -> PluginContactProvider(context, it)
                 }
             }
 
