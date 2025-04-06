@@ -11,6 +11,11 @@ data class Contact(
      * A unique and stable identifier for this contact.
      */
     val id: String,
+
+    /**
+     * The URI to view this contact.
+     */
+    val uri: Uri,
     /**
      * The display name for this contact.
      * First name + last name, if applicable.

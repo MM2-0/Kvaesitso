@@ -7,7 +7,6 @@ import android.provider.ContactsContract
 import android.telephony.PhoneNumberUtils
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
-import de.mm20.launcher2.contacts.providers.AndroidContact
 import de.mm20.launcher2.ktx.distinctByEquality
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.contact.ContactInfoType
@@ -21,7 +20,7 @@ import kotlinx.coroutines.withContext
 /**
  * A contact provider that uses the Android ContactsContract API to search for contacts.
  */
-class AndroidContactProvider(
+internal class AndroidContactProvider(
     private val context: Context,
 ) : ContactProvider {
     override suspend fun search(

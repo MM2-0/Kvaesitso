@@ -6,7 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import androidx.core.graphics.drawable.toDrawable
-import de.mm20.launcher2.contacts.ContactSerializer
+import de.mm20.launcher2.contacts.AndroidContactSerializer
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.StaticIconLayer
@@ -36,7 +36,6 @@ internal data class AndroidContact(
     override val domain: String = Domain
     override val key: String
         get() = "$Domain://$id"
-    override val label: String = name
 
     override val summary: String
         get() {
@@ -76,7 +75,7 @@ internal data class AndroidContact(
     }
 
     override fun getSerializer(): SearchableSerializer {
-        return ContactSerializer()
+        return AndroidContactSerializer()
     }
 
     companion object {

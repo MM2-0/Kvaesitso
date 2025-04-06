@@ -19,6 +19,9 @@ interface Contact : SavableSearchable {
     val postalAddresses: List<PostalAddress>
     val customActions: List<CustomContactAction>
 
+    override val label: String
+        get() = name
+
     val summary: String
         get() {
             return (phoneNumbers.map { it.number } + emailAddresses.map { it.address })

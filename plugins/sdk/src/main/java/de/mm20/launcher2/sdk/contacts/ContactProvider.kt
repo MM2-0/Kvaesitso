@@ -22,6 +22,7 @@ abstract class ContactProvider(
     override fun List<Contact>.toCursor(): Cursor {
         return buildCursor(ContactColumns, this) {
             put(ContactColumns.Id, it.id)
+            put(ContactColumns.Uri, it.uri.toString())
             put(ContactColumns.Name, it.name)
             put(ContactColumns.PhoneNumbers, it.phoneNumbers)
             put(ContactColumns.EmailAddresses, it.emailAddresses)
@@ -35,6 +36,7 @@ abstract class ContactProvider(
         return Contact(
             id = get(ContactColumns.Id) ?: return null,
             name = get(ContactColumns.Name) ?: return null,
+            uri = Uri.parse(get(ContactColumns.Uri) ?: return null),
             phoneNumbers = get(ContactColumns.PhoneNumbers) ?: emptyList(),
             emailAddresses = get(ContactColumns.EmailAddresses) ?: emptyList(),
             postalAddresses = get(ContactColumns.PostalAddresses) ?: emptyList(),
