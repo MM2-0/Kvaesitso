@@ -838,7 +838,11 @@
     </plurals>
     <string name="preference_search_local_calendar_summary">Hledat kalendáře na tomto zařízení</string>
     <string name="missing_permission_call_contacts_settings">Pro provádění hovorů je vyžadováno oprávnění k telefonu</string>
-    <string name="preference_contacts_call_on_tap">Zavolat po klepnutí</string>
-    <string name="preference_contacts_call_on_tap_summary">Rovnou zahájit hovor po klepnutí na telefonní číslo</string>
+    <string name="preference_contacts_call_on_tap">Klepněte pro vytočení</string>
+    <string name="preference_contacts_call_on_tap_summary">Po klepnutí na telefonní číslo okamžitě zahájit hovor</string>
     <string name="departure_time_departed">odjel</string>
+    <string name="preference_grid_list_style">Zobrazit aplikace v seznamu</string>
+    <string name="preference_grid_list_icons">Zobrazit ikony aplikací v seznamu</string>
+    <string name="preference_grid_list_style_summary">Zobrazit aplikace v seznamu namísto mřížky</string>
+    <string name="preference_grid_list_icons_summary">Zobrazit ikony v zobrazení seznamu</string>
 </resources>
