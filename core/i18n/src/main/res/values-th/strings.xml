@@ -629,7 +629,7 @@
     <string name="missing_permission_location_search">คุณต้องอนุญาตให้แอปเข้าถึงตำแหน่งเพื่อค้นหาสถานที่ใกล้เคียง</string>
     <string name="metric">หน่วยวัดแบบเมตริก</string>
     <string name="plugin_action_setup">ติดตั้ง</string>
-    <string name="plugin_type_filesearch">ค้นหาไฟล์</string>
+    <string name="plugin_type_filesearch">ไฟล์</string>
     <string name="plugin_type_weather">ผู้ให้บริการสภาพอากาศ</string>
     <string name="plugin_weather_provider_enable">ตั้งเป็นผู้ให้บริการสภาพอากาศ</string>
     <string name="search_action_share">แชร์</string>
@@ -817,4 +817,13 @@
     </plurals>
     <string name="departure_time_now">ตอนนี้</string>
     <string name="preference_search_local_calendar_summary">ค้นหาปฏิทินบนอุปกรณ์นี้</string>
+    <string name="departure_time_departed">เวลาออกเดินทาง</string>
+    <string name="plugin_type_contacts">ผู้ติดต่อ</string>
+    <string name="preference_grid_list_icons">แสดงไอคอนแอปในรายการ</string>
+    <string name="preference_grid_list_style_summary">แสดงแอปแบบเรียงรายการ แทนการแสดงแอปแบบเรียงเป็นตาราง</string>
+    <string name="preference_grid_list_icons_summary">แสดงไอคอนในรายการแอป</string>
+    <string name="preference_contacts_call_on_tap">แตะเพื่อโทรฯ</string>
+    <string name="preference_contacts_call_on_tap_summary">เริ่มการโทรฯทันทีที่แตะเบอร์โทรศัพท์</string>
+    <string name="preference_grid_list_style">แสดงแอปแบบเรียงรายการ</string>
+    <string name="missing_permission_call_contacts_settings">คุณต้องอนุญาตให้แอปเข้าถึงโทรศัพท์เพื่อเริ่มการโทรฯ</string>
 </resources>
