@@ -22,6 +22,8 @@ class FavoritesWidgetVM : FavoritesVM() {
     private val widget = MutableStateFlow<FavoritesWidget?>(null)
     override val tagsExpanded = widget.map { it?.config?.tagsMultiline == true }
     override val compactTags: Flow<Boolean> = widget.map { it?.config?.compactTags == true }
+    val singleTag: Flow<Boolean> = widget.map { it?.config?.singleTag == true }
+    val singleTagValue: Flow<String> = widget.map { it?.config?.singleTagValue.toString() }
 
     private val isTopWidget = widgetsService.isFavoritesWidgetFirst()
     private val clockWidgetFavSlots =
@@ -36,6 +38,7 @@ class FavoritesWidgetVM : FavoritesVM() {
         }
 
     override val favorites = super.favorites.combine(clockWidgetFavSlots) { favs, slots ->
+
         if (selectedTag.value == null) {
             if (favs.lastIndex < slots) emptyList()
             else favs.subList(slots, favs.size)
