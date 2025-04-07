@@ -10,7 +10,7 @@
     <string name="dimension_volume">Volume</string>
     <string name="dimension_area">Area</string>
     <string name="dimension_currency">Currency</string>
-    <string name="dimension_data" translatable="false">Data</string>
+    <string name="dimension_data">Data</string>
     <string name="dimension_bitrate">Bitrate</string>
     <string name="dimension_pressure">Pressure</string>
     <string name="dimension_energy">Energy</string>
