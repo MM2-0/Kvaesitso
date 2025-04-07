@@ -1030,6 +1030,5 @@
     </plurals>
     <string name="departure_time_departed">departed</string>
     <string name="preference_single_tag">Set Single Tag</string>
-    <string name="preference_single_tag_summary">Show Single Tag Only</string>
     <string name="preference_screen_select_tag">Select Tag</string>
 </resources>
