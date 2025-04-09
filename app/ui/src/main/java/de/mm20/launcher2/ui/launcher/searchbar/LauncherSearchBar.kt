@@ -8,8 +8,10 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.imeAnimationTarget
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -18,10 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Badge
-import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.FilledTonalIconToggleButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -57,6 +56,7 @@ fun LauncherSearchBar(
     onFocusChange: (Boolean) -> Unit,
     actions: List<SearchAction>,
     highlightedAction: SearchAction?,
+    hideNav: Boolean = false,
     isSearchOpen: Boolean = false,
     darkColors: Boolean = false,
     bottomSearchBar: Boolean = false,
@@ -81,11 +81,15 @@ fun LauncherSearchBar(
 
     val _value = value()
 
+    var insetSides = WindowInsetsSides.Start + WindowInsetsSides.Top + WindowInsetsSides.End
+    if (!hideNav || isSearchOpen)
+        insetSides += WindowInsetsSides.Bottom
+
     Box(modifier = modifier) {
         SearchBar(
             modifier = Modifier
                 .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
-                .windowInsetsPadding(WindowInsets.safeDrawing)
+                .windowInsetsPadding(WindowInsets.safeDrawing.only(insetSides))
                 .padding(8.dp)
                 .offset { IntOffset(0, searchBarOffset()) },
             style = style, level = level(), value = _value, onValueChange = {
