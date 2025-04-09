@@ -81,6 +81,9 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         .map { it != ScreenOrientation.Auto }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
+    val resetSearchOnResume = uiSettings.resetSearchOnResume
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
     val isSearchOpen = mutableStateOf(false)
     val isWidgetEditMode = mutableStateOf(false)
 
