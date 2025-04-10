@@ -11,6 +11,7 @@ import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.util.Size
@@ -189,7 +190,7 @@ internal data class LocalFile(
             return true
 
         // startsWith allows path to end with a slash
-        if (isDirectory && path.startsWith("/storage/emulated/0/Download")) {
+        if (isDirectory && path == Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path) {
             val aospViewDownloadsIntent = Intent()
                 .setComponent(ComponentName("com.android.documentsui", "com.android.documentsui.ViewDownloadsActivity"))
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
