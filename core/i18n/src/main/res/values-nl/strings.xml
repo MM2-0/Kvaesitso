@@ -662,7 +662,7 @@
     <string name="plugin_state_error">Deze plug-in werkt niet correct</string>
     <string name="plugin_state_setup_required">Je moet deze plug-in eerst instellen</string>
     <string name="plugin_action_setup">Instellen</string>
-    <string name="plugin_type_filesearch">Bestanden zoeken</string>
+    <string name="plugin_type_filesearch">Bestanden</string>
     <string name="plugin_type_weather">Aanbieder van weergegevens</string>
     <string name="plugin_weather_provider_enable">Instellen als aanbieder van weer</string>
     <string name="plugin_weather_provider_enabled">Momenteel ingesteld als aanbieder van weer</string>
@@ -821,4 +821,19 @@
     <string name="preference_clock_widget_time_format_24h">24-uur</string>
     <string name="preference_clock_widget_time_format_12h">12-uur</string>
     <string name="preference_clock_widget_time_format_system">Systeemstandaard</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">in een minuut</item>
+        <item quantity="other">in %1$d minuten</item>
+    </plurals>
+    <string name="departure_time_now">nu</string>
+    <string name="departure_time_departed">overleden</string>
+    <string name="plugin_type_contacts">Contactpersonen</string>
+    <string name="preference_search_local_calendar_summary">Agenda\'s zoeken op dit apparaat</string>
+    <string name="preference_grid_list_style">Apps in een lijst weergeven</string>
+    <string name="preference_grid_list_icons">App-pictogrammen in lijst weergeven</string>
+    <string name="preference_grid_list_style_summary">Apps weergeven in een lijst in plaats van in een raster</string>
+    <string name="preference_grid_list_icons_summary">Pictogrammen weergeven in de lijstweergave</string>
+    <string name="preference_contacts_call_on_tap">Tik om te bellen</string>
+    <string name="preference_contacts_call_on_tap_summary">Start direct een gesprek bij het tikken op een telefoonnummer</string>
+    <string name="missing_permission_call_contacts_settings">Telefonierechten zijn vereist om oproepen te starten</string>
 </resources>
