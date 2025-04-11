@@ -383,7 +383,7 @@
     <string name="preference_screen_debug_summary">Hibaelhárító eszközök</string>
     <string name="preference_category_widgets">Modulok</string>
     <string name="preference_clockwidget_music_part_summary">Médiavezérlők megjelenítése, ha aktív médiamunkamenet van</string>
-    <string name="plugin_type_filesearch">Fájlkeresés</string>
+    <string name="plugin_type_filesearch">Fájlok</string>
     <string name="preference_crash_reporter_summary">Hiba- és összeomlási jelentések</string>
     <string name="preference_search_result_ordering_weight_factor_high">Változtatható</string>
     <string name="preference_search_currencyconverter">Valutaváltó</string>
@@ -835,4 +835,5 @@
     <string name="preference_contacts_call_on_tap">Koppintson a híváshoz</string>
     <string name="preference_contacts_call_on_tap_summary">Hívás azonnali indítása egy telefonszámra való koppintáskor</string>
     <string name="missing_permission_call_contacts_settings">A hívások indításához hívásengedélyre van szükség</string>
+    <string name="plugin_type_contacts">Névjegyek</string>
 </resources>
