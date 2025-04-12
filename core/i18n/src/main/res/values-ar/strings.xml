@@ -792,7 +792,7 @@
     <string name="preference_search_result_ordering">ترتيب لنتائج البحث</string>
     <string name="widget_config_appwidget_borderless">بدون حدود</string>
     <string name="location_open_24_7">مفتوح 24/7</string>
-    <string name="plugin_type_filesearch">البحث عن الملفات</string>
+    <string name="plugin_type_filesearch">الملفات</string>
     <string name="plugin_weather_provider_enabled">تم تعيينه حاليًا كموفر للطقس</string>
     <string name="clock_style_segment">7-قطع</string>
     <string name="poi_category_laundry">مغسلة</string>
@@ -852,4 +852,28 @@
     <string name="weather_forecast_humidity">رطوبة</string>
     <string name="weather_forecast_wind">رياح</string>
     <string name="weather_forecast_precipitation">هطول الأمطار</string>
+    <string name="plugin_type_contacts">جهات الاتصال</string>
+    <string name="departure_time_now">الآن</string>
+    <string name="preference_search_local_calendar_summary">البحث في التقويمات على هذا الجهاز</string>
+    <string name="preference_grid_list_style">عرض التطبيقات في قائمة</string>
+    <string name="preference_grid_list_icons">إظهار أيقونات التطبيقات في القائمة</string>
+    <string name="preference_grid_list_style_summary">عرض التطبيقات في قائمة بدلاً من شبكة</string>
+    <string name="preference_grid_list_icons_summary">إظهار الأيقونات في عرض القائمة</string>
+    <string name="preference_contacts_call_on_tap_summary">بدء مكالمة فورًا عند النقر على رقم هاتف</string>
+    <plurals name="departure_time_in">
+        <item quantity="zero">خلال أقل من دقيقة</item>
+        <item quantity="one">خلال دقيقة</item>
+        <item quantity="two">خلال دقيقتين</item>
+        <item quantity="few">خلال %1$d دقائق</item>
+        <item quantity="many">خلال %1$d دقيقة</item>
+        <item quantity="other">خلال %1$d دقيقة</item>
+    </plurals>
+    <string name="departure_time_departed">مضت</string>
+    <string name="widget_removed">تمت إزالة عنصر واجهة المستخدم</string>
+    <string name="preference_clock_widget_time_format">تنسيق الوقت</string>
+    <string name="preference_clock_widget_time_format_24h">24-ساعة</string>
+    <string name="preference_clock_widget_time_format_12h">12-ساعة</string>
+    <string name="preference_clock_widget_time_format_system">النظام الافتراضي</string>
+    <string name="missing_permission_call_contacts_settings">إذن الاتصال مطلوب لبدء المكالمات</string>
+    <string name="preference_contacts_call_on_tap">انقر للاتصال</string>
 </resources>
