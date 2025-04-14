@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.util.Log
 import android.view.HapticFeedbackConstants
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -10,7 +9,6 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -28,7 +26,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -48,7 +45,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -387,6 +383,7 @@ fun PullDownScaffold(
         }
     }
 
+    val hideNav by viewModel.hideNavBar.collectAsState(false)
     val insets = WindowInsets.safeDrawing.asPaddingValues()
     val colorSurfaceContainer = MaterialTheme.colorScheme.surfaceContainer
     val cardStyle = LocalCardStyle.current
@@ -434,16 +431,15 @@ fun PullDownScaffold(
                         0 -> {
                             val clockPadding by animateDpAsState(
                                 if (isWidgetsAtStart && fillClockHeight)
-                                    insets.calculateBottomPadding() + if (bottomSearchBar) 64.dp else 0.dp
+                                    (if (hideNav) 0.dp else insets.calculateBottomPadding()) + if (bottomSearchBar) 64.dp else 0.dp
                                 else 0.dp
-
                             )
                             val editModePadding by animateDpAsState(if (isWidgetEditMode && bottomSearchBar) 56.dp else 0.dp)
 
                             val clockHeight by remember {
                                 derivedStateOf {
                                     if (fillClockHeight) {
-                                        height - (insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding + 56.dp)
+                                        height - (insets.calculateTopPadding() + (if (hideNav) 0.dp else insets.calculateBottomPadding()) - clockPadding + 56.dp)
                                     } else {
                                         null
                                     }
@@ -539,7 +535,7 @@ fun PullDownScaffold(
                                     ),
                                 paddingValues = PaddingValues(
                                     top = windowInsets.calculateTopPadding() + if (!bottomSearchBar) 64.dp + webSearchPadding else 8.dp,
-                                    bottom = windowInsets.calculateBottomPadding() +
+                                    bottom = (if (hideNav) 0.dp else windowInsets.calculateBottomPadding()) +
                                             keyboardFilterBarPadding +
                                             if (bottomSearchBar) 64.dp + webSearchPadding else 8.dp
                                 ),
@@ -621,6 +617,7 @@ fun PullDownScaffold(
                                 .roundToInt()
                         }
             },
+            hideNav = hideNav,
             onKeyboardActionGo = if (launchOnEnter) {
                 { searchVM.launchBestMatchOrAction(context) }
             } else null
