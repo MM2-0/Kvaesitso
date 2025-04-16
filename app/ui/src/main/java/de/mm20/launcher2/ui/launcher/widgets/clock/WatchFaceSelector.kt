@@ -147,7 +147,9 @@ fun WatchFaceSelector(
 
                 Box {
                     androidx.compose.animation.AnimatedVisibility(
-                        selected is ClockWidgetStyle.Digital1 || (selected is ClockWidgetStyle.Custom && selected.widgetId != null),
+                        selected is ClockWidgetStyle.Digital1 ||
+                                selected is ClockWidgetStyle.Analog ||
+                                (selected is ClockWidgetStyle.Custom && selected.widgetId != null),
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .zIndex(1f),
@@ -176,6 +178,21 @@ fun WatchFaceSelector(
                                         },
                                         onClick = {
                                             onSelect(selected.copy(outlined = !selected.outlined))
+                                        }
+                                    )
+                                }
+                                if (selected is ClockWidgetStyle.Analog) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.clock_variant_analog_ticks)) },
+                                        leadingIcon = {
+                                            Icon(
+                                                if (selected.showTicks) Icons.Rounded.CheckCircle
+                                                else Icons.Rounded.RadioButtonUnchecked,
+                                                null
+                                            )
+                                        },
+                                        onClick = {
+                                            onSelect(selected.copy(showTicks = !selected.showTicks))
                                         }
                                     )
                                 }
