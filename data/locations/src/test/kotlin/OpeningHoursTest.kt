@@ -2,6 +2,7 @@ import de.mm20.launcher2.locations.providers.openstreetmaps.parseOpeningSchedule
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import org.junit.Assert
+import org.junit.Ignore
 import org.junit.Test
 import java.time.DayOfWeek
 import java.time.LocalTime
@@ -11,16 +12,8 @@ import java.time.Month
 
 class OpeningHoursTest {
 
-    private infix fun OpeningSchedule?.assertEqualTo(actual: OpeningSchedule?) = when (this) {
-        is OpeningSchedule.TwentyFourSeven -> Assert.assertTrue(actual is OpeningSchedule.TwentyFourSeven)
-        is OpeningSchedule.Hours -> {
-            actual as OpeningSchedule.Hours
-            Assert.assertEquals(openingHours.size, actual.openingHours.size)
-            val diff = openingHours.toSet() - actual.openingHours.toSet()
-            Assert.assertTrue("Set difference not empty: $diff", diff.isEmpty())
-        }
-
-        null -> Assert.assertNull(actual)
+    private infix fun OpeningSchedule?.assertEqualTo(actual: OpeningSchedule?)  {
+        Assert.assertEquals(this, actual)
     }
 
     private fun scheduleAt(
@@ -45,14 +38,14 @@ class OpeningHoursTest {
             OpeningHours(
                 it, LocalTime.of(8, 0), Duration.ofHours(11)
             )
-        }
+        }.toSet()
     ) assertEqualTo parseOpeningSchedule(
         "08:00-19:00"
     )
 
     @Test
     fun testDayOfWeek() = OpeningSchedule.Hours(
-        listOf(
+        setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(17, 0), Duration.ofHours(5)),
             OpeningHours(DayOfWeek.WEDNESDAY, LocalTime.of(17, 0), Duration.ofHours(5)),
             OpeningHours(DayOfWeek.THURSDAY, LocalTime.of(17, 0), Duration.ofHours(5)),
@@ -66,7 +59,7 @@ class OpeningHoursTest {
 
     @Test
     fun testMultipleRanges() = OpeningSchedule.Hours(
-        listOf(
+        setOf(
             OpeningHours(DayOfWeek.TUESDAY, LocalTime.of(11, 0), Duration.ofHours(4)),
             OpeningHours(DayOfWeek.WEDNESDAY, LocalTime.of(11, 0), Duration.ofHours(4)),
             OpeningHours(DayOfWeek.THURSDAY, LocalTime.of(11, 0), Duration.ofHours(4)),
@@ -89,7 +82,7 @@ class OpeningHoursTest {
 
     @Test
     fun testComment() = OpeningSchedule.Hours(
-        listOf(
+        setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(11, 0), Duration.ofHours(7)),
             OpeningHours(DayOfWeek.TUESDAY, LocalTime.of(11, 0), Duration.ofHours(7)),
             OpeningHours(DayOfWeek.WEDNESDAY, LocalTime.of(11, 0), Duration.ofHours(7)),
@@ -104,10 +97,10 @@ class OpeningHoursTest {
 
     @Test
     fun testMonthException() {
-        val expectedNoDecember = listOf(
+        val expectedNoDecember = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8, 0), Duration.ofHours(8))
         )
-        val expectedDecember = emptyList<OpeningHours>()
+        val expectedDecember = emptySet<OpeningHours>()
 
         for (month in Month.entries) {
             OpeningSchedule.Hours(
@@ -125,9 +118,9 @@ class OpeningHoursTest {
     @Test
     fun testMonthWeekdayException() {
         val expectedDecember =
-            listOf(OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8, 0), Duration.ofHours(4)))
+            setOf(OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8, 0), Duration.ofHours(4)))
         val expectedNoDecember =
-            listOf(OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8, 0), Duration.ofHours(8)))
+            setOf(OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8, 0), Duration.ofHours(8)))
 
         for (month in Month.entries) {
             OpeningSchedule.Hours(
@@ -144,10 +137,10 @@ class OpeningHoursTest {
 
     @Test
     fun testMonthSpanException() {
-        val expectedInRange = listOf(
+        val expectedInRange = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8, 0), Duration.ofHours(4))
         )
-        val expectedOutOfRange = listOf(
+        val expectedOutOfRange = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8, 0), Duration.ofHours(8))
         )
 
@@ -166,7 +159,7 @@ class OpeningHoursTest {
 
     @Test
     fun testSundayOff() = OpeningSchedule.Hours(
-        listOf(
+        setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(11, 0), Duration.ofHours(10)),
             OpeningHours(DayOfWeek.TUESDAY, LocalTime.of(11, 0), Duration.ofHours(10)),
             OpeningHours(DayOfWeek.WEDNESDAY, LocalTime.of(11, 0), Duration.ofHours(10)),
@@ -180,10 +173,10 @@ class OpeningHoursTest {
 
     @Test
     fun testNthWeekday() {
-        val usualWeek = listOf(
+        val usualWeek = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8))
         )
-        val specialMondayWeek = listOf(
+        val specialMondayWeek = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(4))
         )
 
@@ -202,10 +195,10 @@ class OpeningHoursTest {
 
     @Test
     fun testLastNthWeekday() {
-        val usualWeek = listOf(
+        val usualWeek = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8))
         )
-        val specialMondayWeek = listOf(
+        val specialMondayWeek = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(4))
         )
 
@@ -224,11 +217,11 @@ class OpeningHoursTest {
 
     @Test
     fun testMondayOnDecember() {
-        val december = listOf(
+        val december = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(4)),
             OpeningHours(DayOfWeek.FRIDAY, LocalTime.of(8,0), Duration.ofHours(2))
         )
-        val notDecember = listOf(
+        val notDecember = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8)),
             OpeningHours(DayOfWeek.FRIDAY, LocalTime.of(8,0), Duration.ofHours(2))
         )
@@ -247,24 +240,24 @@ class OpeningHoursTest {
 
     @Test
     fun testAllTogether() {
-        val dec = listOf(
+        val dec = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8))
-        ) + listOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.SATURDAY).map {
+        ) + setOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.SATURDAY).map {
             OpeningHours(it, LocalTime.of(17,0), Duration.ofHours(8))
         }
-        val janMar = listOf(
+        val janMar = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(6,0), Duration.ofHours(6))
-        ) + listOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY).map {
+        ) + setOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY).map {
             OpeningHours(it, LocalTime.of(17,0), Duration.ofHours(8))
         }
-        val aug = listOf(
+        val aug = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(0,30), Duration.ofMinutes(45))
         ) + listOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY).map {
             OpeningHours(it, LocalTime.of(17,0), Duration.ofHours(8))
         }
-        val elze = listOf(
+        val elze = setOf(
             OpeningHours(DayOfWeek.MONDAY, LocalTime.of(8,0), Duration.ofHours(8))
-        ) + listOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY).map {
+        ) + setOf(DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY).map {
             OpeningHours(it, LocalTime.of(17,0), Duration.ofHours(8))
         }
 
@@ -279,5 +272,34 @@ class OpeningHoursTest {
                 month = month
             )
         }
+    }
+
+    @Test
+    fun testSunriseSunset() {
+        // Not supported, but make sure it doesn't crash
+        OpeningSchedule.Hours(emptySet()) assertEqualTo parseOpeningSchedule("sunrise-sunset")
+    }
+
+    @Test
+    @Ignore("Expected to fail with the current implementation")
+    // TODO: Fix parseOpeningSchedule to pass this test
+    fun testEvenOddWeeks() {
+        OpeningSchedule.Hours(
+            setOf(
+                OpeningHours(dayOfWeek = DayOfWeek.WEDNESDAY, startTime = LocalTime.of(9, 0), duration = Duration.ofHours(3)),
+            )
+        ) assertEqualTo parseOpeningSchedule(
+            "week 1-53/2 Fr 09:00-12:00; week 2-52/2 We 09:00-12:00",
+            LocalDateTime.of(2025, Month.APRIL, 18, 0, 0)
+        )
+
+        OpeningSchedule.Hours(
+            setOf(
+                OpeningHours(dayOfWeek = DayOfWeek.FRIDAY, startTime = LocalTime.of(9, 0), duration = Duration.ofHours(3)),
+            )
+        ) assertEqualTo parseOpeningSchedule(
+            "week 1-53/2 Fr 09:00-12:00; week 2-52/2 We 09:00-12:00",
+            LocalDateTime.of(2025, Month.APRIL, 10, 0, 0)
+        )
     }
 }
