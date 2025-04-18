@@ -46,7 +46,7 @@
     </plurals>
     <string name="menu_share">Condividi</string>
     <string name="file_meta_path">Percorso: %1$s</string>
-    <string name="menu_share_apk_file">File pacchetto</string>
+    <string name="menu_share_apk_file">File APK</string>
     <string name="menu_uninstall">Disinstalla</string>
     <string name="menu_favorites_pin">Aggiungi ai preferiti</string>
     <string name="menu_favorites_unpin">Rimuovi</string>
@@ -595,7 +595,7 @@
     <string name="plugin_type_weather">Provider meteo</string>
     <string name="plugin_weather_provider_enabled">Attualmente impostato come provider meteo</string>
     <string name="plugin_state_error">Questo plugin non funziona correttamente</string>
-    <string name="plugin_type_filesearch">Ricerca file</string>
+    <string name="plugin_type_filesearch">File</string>
     <string name="plugin_weather_provider_enable">Imposta come provider meteo</string>
     <string name="preference_category_advanced">Avanzate</string>
     <string name="preference_plugin_enable">Abilita plugin</string>
@@ -698,9 +698,9 @@
     <string name="poi_category_university">Università</string>
     <string name="poi_category_toilets">Servizi igienici</string>
     <string name="location_closes">chiude alle %1$s</string>
-    <string name="location_closes_other_day">chiude %1$s, %2$s</string>
+    <string name="location_closes_other_day">chiude %1$s alle %2$s</string>
     <string name="location_opens">apre alle %1$s</string>
-    <string name="location_opens_other_day">apre %1$s, %2$s</string>
+    <string name="location_opens_other_day">apre %1$s alle %2$s</string>
     <string name="preference_customize_filter_bar">Personalizza barra dei filtri</string>
     <string name="preference_customize_filter_bar_summary">Personalizza quali elementi includere nella barra dei filtri</string>
     <string name="weather_condition_thunderstorm">Temporale</string>
@@ -837,4 +837,13 @@
     </plurals>
     <string name="departure_time_now">adesso</string>
     <string name="preference_search_local_calendar_summary">Cerca calendari su questo dispositivo</string>
+    <string name="plugin_type_contacts">Contatti</string>
+    <string name="departure_time_departed">Partito</string>
+    <string name="preference_grid_list_style">Mostra le app come lista</string>
+    <string name="preference_grid_list_style_summary">Sotituisci la griglia delle app con una lista</string>
+    <string name="preference_grid_list_icons">Mostra le icone delle app nella lista</string>
+    <string name="preference_grid_list_icons_summary">Mostra le icone delle app nella lista</string>
+    <string name="preference_contacts_call_on_tap">Clicca per chiamare</string>
+    <string name="preference_contacts_call_on_tap_summary">Fai partire la chiamata appena viene cliccato un numero di telefono invece di aprire la schermata del telefono</string>
+    <string name="missing_permission_call_contacts_settings">Il permesso alle chiamate è necessario per effettuare la chiamata</string>
 </resources>

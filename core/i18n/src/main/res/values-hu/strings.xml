@@ -187,8 +187,8 @@
     <string name="preference_debug_dump_heap_summary">Pillanatfelvétel készítése a memóriahasználat elemzéséhez. Az alkalmazás lefagy, amíg ez a folyamat be nem fejeződik.</string>
     <string name="preference_debug_cleanup_database_summary">Hibás- és nem használt bejegyzések eltávolítása az indító adatbázisából</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d bejegyzés el lett távolítva.</item>
-        <item quantity="other">%1$d bejegyzés el lett távolítva.</item>
+        <item quantity="one">%1$d bejegyzés eltávolítva.</item>
+        <item quantity="other">%1$d bejegyzés eltávolítva.</item>
     </plurals>
     <string name="preference_screen_integrations_summary">Fiókok és szolgáltatások kezelése</string>
     <string name="missing_permission_calendar_widget">Adjon engedélyt a naptárnak a közelgő találkozók és események megjelenítéséhez.</string>
@@ -370,7 +370,7 @@
     <string name="preference_notification_badges">Értesítési jelvények</string>
     <string name="preference_grid_column_count">Oszlopok száma</string>
     <string name="preference_screen_weatherwidget">Időjárás</string>
-    <string name="preference_shortcut_badges">Parancsikon jelvények</string>
+    <string name="preference_shortcut_badges">Parancsikonjelvények</string>
     <string name="preference_grid_labels_summary">Az alkalmazás nevének megjelenítése az ikon alatt</string>
     <string name="preference_screen_clockwidget_summary">Az óra stílusának és összetevőinek beállítása</string>
     <string name="preference_blur_wallpaper_summary">Használjon elmosódást a háttérképen</string>
@@ -383,7 +383,7 @@
     <string name="preference_screen_debug_summary">Hibaelhárító eszközök</string>
     <string name="preference_category_widgets">Modulok</string>
     <string name="preference_clockwidget_music_part_summary">Médiavezérlők megjelenítése, ha aktív médiamunkamenet van</string>
-    <string name="plugin_type_filesearch">Fájlkeresés</string>
+    <string name="plugin_type_filesearch">Fájlok</string>
     <string name="preference_crash_reporter_summary">Hiba- és összeomlási jelentések</string>
     <string name="preference_search_result_ordering_weight_factor_high">Változtatható</string>
     <string name="preference_search_currencyconverter">Valutaváltó</string>
@@ -432,7 +432,7 @@
     <string name="preference_gesture_swipe_down">Lefelé húzás</string>
     <string name="gesture_action_power_menu">Kikapcsolási menü megjelenítése</string>
     <string name="preference_search_result_ordering">A keresési eredmények sorrendje</string>
-    <string name="preference_notification_badges_summary">Az olvasatlan értesítésekkel rendelkező alkalmazások jelvényének megjelenítése</string>
+    <string name="preference_notification_badges_summary">Az olvasatlan értesítésekkel rendelkező alkalmazások jelvényeinek megjelenítése</string>
     <string name="create_search_action_type_web">Keresés egy weboldalon</string>
     <string name="create_search_action_type_app">Keresés egy alkalmazásban</string>
     <string name="create_search_action_type_intent">Egyéni intent</string>
@@ -443,7 +443,7 @@
     <string name="search_action_websearch_url">Webcím sablon</string>
     <string name="experimental_feature">Kísérleti</string>
     <string name="create_tag_title">Új címke</string>
-    <string name="preference_plugin_badges">Bővítmény jelvények</string>
+    <string name="preference_plugin_badges">Bővítményjelvények</string>
     <string name="preference_plugin_badges_summary">Jelezze, hogy a keresési eredményt melyik bővítmény hozta létre</string>
     <string name="preference_about_telegram">Telegram csoport</string>
     <string name="preference_about_fdroid">F-Droid tároló</string>
@@ -485,8 +485,8 @@
     <string name="preference_blur_wallpaper_radius">Elmosás sugara</string>
     <string name="preference_suspended_badges_summary">A felfüggesztett alkalmazások jelvényeinek megjelenítése</string>
     <string name="preference_suspended_badges">Felfüggesztett alkalmazások</string>
-    <string name="preference_cloud_badges">Felhő jelvények</string>
-    <string name="preference_cloud_badges_summary">A felhőben tárolt fájlok jelvényének megjelenítése</string>
+    <string name="preference_cloud_badges">Felhőjelvények</string>
+    <string name="preference_cloud_badges_summary">A felhőben tárolt fájlok jelvényeinek megjelenítése</string>
     <string name="preference_nextcloud_signin">Bejelentkezés a Nextcloudba</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_category_badges">Jelvények</string>
@@ -835,4 +835,5 @@
     <string name="preference_contacts_call_on_tap">Koppintson a híváshoz</string>
     <string name="preference_contacts_call_on_tap_summary">Hívás azonnali indítása egy telefonszámra való koppintáskor</string>
     <string name="missing_permission_call_contacts_settings">A hívások indításához hívásengedélyre van szükség</string>
+    <string name="plugin_type_contacts">Névjegyek</string>
 </resources>
