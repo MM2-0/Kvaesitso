@@ -1,11 +1,9 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import android.content.Context
-import de.mm20.launcher2.ktx.flatMapNotNull
 import de.mm20.launcher2.ktx.ifNullOrEmpty
 import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
-import de.mm20.launcher2.ktx.toMultiMap
 import de.mm20.launcher2.locations.OsmLocationSerializer
 import de.mm20.launcher2.openstreetmaps.R
 import de.mm20.launcher2.search.Location
@@ -332,10 +330,10 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
 }
 
 internal fun parseOpeningSchedule(
-    it: String?,
+    openingHours: String?,
     localTime: LocalDateTime = LocalDateTime.now()
 ): OpeningSchedule? {
-    val parsed = it?.toOpeningHoursOrNull(lenient = true) ?: return null
+    val parsed = openingHours?.toOpeningHoursOrNull(lenient = true) ?: return null
 
     if (parsed.rules.singleOrNull()?.selector is TwentyFourSeven) {
         return OpeningSchedule.TwentyFourSeven
@@ -386,7 +384,7 @@ internal fun parseOpeningSchedule(
             .singleOrNull()
     }
 
-    val hours = mutableListOf<OpeningHours>()
+    val hours = mutableSetOf<OpeningHours>()
 
     for (range in applicableRules) {
 
