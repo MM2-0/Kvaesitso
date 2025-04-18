@@ -34,8 +34,12 @@ import androidx.compose.material.icons.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.LinkOff
 import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -59,6 +63,7 @@ import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
@@ -71,7 +76,10 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.search.calendar.CalendarListType
+import de.mm20.launcher2.searchable.PinnedLevel
+import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.themes.atTone
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
@@ -82,6 +90,7 @@ import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.ktx.splitLeadingEmoji
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.widgets.external.AppWidgetHost
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
@@ -94,6 +103,7 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
 import java.time.ZonedDateTime
@@ -184,7 +194,24 @@ fun ColumnScope.ConfigureFavoritesWidget(
     widget: FavoritesWidget,
     onWidgetUpdated: (FavoritesWidget) -> Unit,
 ) {
+    val favoritesService: FavoritesService = get()
+
+    val pinnedTags by remember {
+        favoritesService.getFavorites(
+            includeTypes = listOf("tag"),
+            minPinnedLevel = PinnedLevel.AutomaticallySorted,
+        ) as Flow<List<Tag>>
+    }.collectAsState(emptyList())
+
     val bottomSheetManager = LocalBottomSheetManager.current
+    var selectedTag = remember(widget.config) {
+        widget.config.singleTagValue
+    }
+    var showAddMenu by remember { mutableStateOf(false) }
+    val showTagMenu = remember(widget.config) {
+        widget.config.singleTag
+    }
+
     OutlinedCard {
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -205,6 +232,51 @@ fun ColumnScope.ConfigureFavoritesWidget(
                     onWidgetUpdated(widget.copy(config = widget.config.copy(compactTags = it)))
                 }
             )
+            SwitchPreference(
+                title = stringResource(R.string.preference_single_tag),
+                iconPadding = false,
+                value = widget.config.singleTag,
+                onValueChanged = {
+                    onWidgetUpdated(widget.copy(config = widget.config.copy(singleTag = it)))
+                }
+            )
+            AnimatedVisibility(showTagMenu) {
+                Preference(
+                    title = stringResource(R.string.preference_screen_select_tag),
+                    summary = selectedTag,
+                    icon = Icons.Rounded.Tag,
+                    onClick = {
+                        showAddMenu = true
+                    }
+                )
+                DropdownMenu(
+                    expanded = showAddMenu,
+                    onDismissRequest = { showAddMenu = false }) {
+                    for (tag in pinnedTags) {
+                        val (emoji, tagName) = remember(tag) {
+                            tag.tag.splitLeadingEmoji()
+                        }
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                if (emoji != null) {
+                                    Text(
+                                        emoji,
+                                        modifier = Modifier.width(FilterChipDefaults.IconSize),
+                                        textAlign = TextAlign.Center,
+                                    )
+                                } else {
+                                    Icon(Icons.Rounded.Tag, null)
+                                }
+                            },
+                            text = { Text(tagName ?: "") },
+                            onClick = {
+                                selectedTag = tag.tag
+                                onWidgetUpdated(widget.copy(config = widget.config.copy(singleTagValue = selectedTag)))
+                                showAddMenu = false
+                            })
+                    }
+                }
+            }
         }
     }
     TextButton(
