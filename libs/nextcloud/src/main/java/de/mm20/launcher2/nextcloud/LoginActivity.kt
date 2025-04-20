@@ -1,14 +1,12 @@
 package de.mm20.launcher2.nextcloud
 
-import android.app.Activity
 import android.os.Bundle
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.util.Log
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -40,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
@@ -118,8 +117,9 @@ class LoginActivity : AppCompatActivity() {
                                 if (!(url.startsWith("http://") || url.startsWith("https://"))) {
                                     url = "https://$url"
                                 }
-                                if (nextcloudClient.checkNextcloudInstallation(url)) {
-                                    openLoginPage(url)
+                                val flow = nextcloudClient.startLoginFlow(url)
+                                if (flow != null) {
+                                    openLoginPage(flow)
                                 } else {
                                     error = getString(R.string.nextcloud_server_invalid_url)
                                 }
@@ -135,49 +135,24 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun openLoginPage(url: String) {
-        val webView = WebView(this)
-        webView.settings.userAgentString = getString(R.string.app_name)
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean {
-                if (request?.url?.scheme == "nc") {
-                    val path = request.url?.path?.trim('/') ?: run {
-                        setResult(0)
-                        finish()
-                        return false
-                    }
-                    val segments = path.split('&')
-                    var username: String? = null
-                    var token: String? = null
-                    var server: String? = null
-                    for (segment in segments) {
-                        when {
-                            segment.startsWith("server") -> server = segment.substringAfter(":")
-                            segment.startsWith("user") -> username = segment.substringAfter(":")
-                            segment.startsWith("password") -> token = segment.substringAfter(":")
-                        }
-                    }
-                    if (username != null && server != null && token != null) {
-                        nextcloudClient.setServer(server, username, token)
-                    }
-                    setResult(Activity.RESULT_OK)
-                    finish()
-                    return true
-                }
-                webView.loadUrl(request?.url?.toString() ?: "")
-                return false
+    private var currentLoginFlow: LoginFlowResponse? = null
+    private fun openLoginPage(flow: LoginFlowResponse) {
+        currentLoginFlow = flow
+        val customTabIntent = CustomTabsIntent.Builder().build()
+        customTabIntent.launchUrl(this, flow.login.toUri())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val flow = currentLoginFlow ?: return
+        lifecycleScope.launch {
+            val result = nextcloudClient.pollLoginFlow(flow)
+            if (result != null) {
+                nextcloudClient.setServer(result.server, result.loginName, result.appPassword)
+                currentLoginFlow = null
+                finish()
             }
         }
-        webView.settings.javaScriptEnabled = true
-        setContentView(webView)
-        val headers = mapOf(
-            "OCS-APIREQUEST" to "true"
-        )
-        webView.loadUrl("$url/index.php/login/flow", headers)
-
     }
 
     private val nextcloudLight: ColorScheme
