@@ -7,9 +7,6 @@
     <string name="menu_back">กลับ</string>
     <string name="menu_launch">เปิดใช้</string>
     <string name="menu_customize">ปรับแต่งเอง</string>
-    <string name="menu_hide">ซ่อน</string>
-    <string name="menu_unhide">เลิกซ่อน</string>
-    <string name="msg_item_hidden">%1$s ถูกซ่อนแล้ว</string>
     <string name="action_undo">เลิกทำ</string>
     <string name="menu_delete">ลบ</string>
     <string name="menu_remove">ลบ</string>
@@ -85,7 +82,6 @@
     <string name="owncloud_server_url">ลิงก์เซิร์ฟเวอร์ Owncloud</string>
     <string name="owncloud_username">ชื่อผู้ใช้</string>
     <string name="owncloud_login_failed">การลงชื่อเข้าใช้ไม่สำเร็จ เพราะชื่อผู้ใช้หรือรหัสผ่านผิด</string>
-    <string name="owncloud_username_empty">ชื่อผู้ใช้ปล่อยว่างไม่ได้</string>
     <string name="login_flow_continue">ไปต่อ</string>
     <string name="disclaimer">ข้อจำกัดความรับผิดชอบ</string>
     <string name="show_all">แสดงทั้งหมด</string>
@@ -176,7 +172,6 @@
     <string name="preference_icon_shape_pentagon">ห้าเหลี่ยม</string>
     <string name="preference_hide_status_bar">ซ่อนแถบสถานะ</string>
     <string name="preference_hide_nav_bar">ซ่อนแถบนำทาง</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">ลงชื่อเข้าใช้เป็น %1$s</string>
     <string name="preference_summary_not_logged_in">คุณยังไม่ได้ลงชื่อเข้าใช้</string>
     <string name="preference_category_wallpaper">ภาพพื้นหลัง</string>
@@ -236,11 +231,8 @@
     <string name="preference_search_wikipedia_summary">ค้นหาในสารานุกรมเสรี</string>
     <string name="preference_search_websites">เว็บไซต์</string>
     <string name="preference_search_localfiles">ไฟล์บนเครื่อง</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">ค้นหาไฟล์ของ %1$s บน Google Drive</string>
     <string name="preference_search_cloud_summary">ค้นหาไฟล์ของ %1$s</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">ลงชื่อเข้าใช้กับ Google</string>
     <string name="preference_calendar_calendars">ปฏิทิน</string>
     <string name="preference_screen_buildinfo">ข้อมูลบิลด์</string>
     <string name="preference_search_bar_style">รูปแบบ</string>
@@ -257,7 +249,6 @@
     <string name="preference_category_favorites_frequently_used">ใช้บ่อย</string>
     <string name="preference_favorites_frequently_used_summary">แสดงสิ่งที่ถูกใช้บ่อยๆในรายการโปรด</string>
     <string name="preference_edit_button">แก้ไขปุ่ม</string>
-    <string name="preference_category_accounts">บัญชี</string>
     <string name="no_account_nextcloud">คุณยังไม่ได้เชื่อมต่อกับบัญชี Nextcloud</string>
     <string name="connect_account">เชื่อมต่อบัญชี</string>
     <string name="battery_part_charging">กำลังชาร์จ</string>
@@ -266,7 +257,6 @@
     </plurals>
     <string name="restore_meta">สร้างเมื่อ %1$s บนอุปกรณ์ %2$s ด้วยแอป %3$s</string>
     <string name="restore_complete">กู้คืนข้อมูลสำรองสำเร็จ</string>
-    <string name="icon_picker_title">เลือกไอคอน</string>
     <string name="icon_picker_default_icon">ค่าเริ่มต้น</string>
     <string name="icon_picker_suggestions">คำแนะนำ</string>
     <string name="icon_picker_filter_all_packs">ชุดไอคอนทั้งหมด</string>
@@ -283,15 +273,11 @@
     <string name="search_action_open_url">เปิดเว็บไซต์</string>
     <string name="create_search_action_type_web">ค้นหาบนเว็บไซต์</string>
     <string name="create_search_action_type_app">ค้นหาในแอป</string>
-    <string name="create_search_action_title">ควิกแอ็กชั่นใหม่</string>
-    <string name="edit_search_action_title">แก้ไขควิกแอ็กชั่น</string>
     <string name="create_search_action_website_url">ป้อนลิงก์ของเว็บไซต์:</string>
     <string name="search_action_label">ชื่อ</string>
     <string name="search_action_app">แอป</string>
     <string name="more_information">ข้อมูลเพิ่มเติม</string>
     <string name="experimental_feature">ฟีเจอร์ทดลองใช้</string>
-    <string name="create_tag_title">แท็กใหม่</string>
-    <string name="edit_tag_title">แก้ไขแท็ก</string>
     <string name="tag_no_items_message">ไม่มีสิ่งใดใช้แท็กนี้ ถ้าคุณไปต่อ แท็กนี้จะถูกลบ</string>
     <plurals name="tag_selected_items">
         <item quantity="other">เลือกแล้ว %1$d อย่าง</item>
@@ -315,8 +301,6 @@
     <string name="gesture_action_lock_screen">ปิดหน้าจอ</string>
     <string name="gesture_action_power_menu">แสดงเมนูเปิดปิดเครื่อง</string>
     <string name="gesture_action_recents">เปิดแอปที่เพิ่งถูกใช้</string>
-    <string name="preference_search_result_ordering_alphabetic">ตามตัวอักษร</string>
-    <string name="preference_search_result_ordering_weighted">ตามการใช้งาน</string>
     <string name="preference_search_result_ordering_weight_factor_low">เปลี่ยนช้า</string>
     <string name="preference_search_result_ordering_weight_factor_default">เปลี่ยนปานกลาง</string>
     <string name="preference_search_result_ordering_weight_factor_high">เปลี่ยนเร็ว</string>
@@ -347,7 +331,6 @@
     <string name="wind_north_west">ตะวันตกเฉียงเหนือ</string>
     <string name="preference_screen_icons_summary">ลิ้นชักแอป ขนาดไอคอน ชุดไอคอน ป้าย</string>
     <string name="icon_picker_search_icon">ค้นหาในชุดไอคอน</string>
-    <string name="icon_picker_no_packs_installed">ไม่ได้ติดตั้งชุดไอคอนใด</string>
     <string name="wikipedia_url">https://th.wikipedia.org</string>
     <string name="websearch_dialog_replace_icon">แทนที่ไอคอน</string>
     <string name="file_meta_title">เพลง: %1$s</string>
@@ -424,7 +407,6 @@
         <item quantity="other">+อีก %1$d กิจกรรมที่ยังไม่สิ้นสุดจากวันก่อนๆ</item>
     </plurals>
     <string name="preference_screen_about_summary">ข้อมูลแอปและใบอนุญาต</string>
-    <string name="nextcloud_server_url_empty">ลิงก์เซิร์ฟเวอร์ปล่อยว่างไม่ได้</string>
     <string name="calendar_event_allday">ทั้งวัน</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="owncloud_server_invalid_url">ลิงก์นี้ไม่ได้ชี้ไปที่เซิร์ฟเวอร์ Owncloud ที่ถูกต้อง</string>
@@ -436,7 +418,6 @@
     <string name="owncloud_login_2fa_hint">ถ้าคุณได้เปิดใช้งานการยืนยันตัวตนโดยใช้หลายปัจจัย คุณต้องใส่รหัสผ่านแอปที่นี่</string>
     <string name="weather_condition_heavysleet">ฝนน้ำแข็งตกหนัก</string>
     <string name="widget_config_weather_compact">โหมดกะทัดรัด</string>
-    <string name="owncloud_password_empty">รหัสผ่านปล่อยว่างไม่ได้</string>
     <string name="weather_condition_heavyrain">ฝนตกหนัก</string>
     <string name="login_flow_login">ลงชื่อเข้าใช้</string>
     <string name="preference_debug_dump_heap">สแนปช็อตเมมโมรี่</string>
@@ -511,9 +492,6 @@
     <string name="no_account_owncloud">คุณยังไม่ได้เชื่อมต่อกับบัญชี Owncloud</string>
     <string name="preference_colors_bw">ขาว-ดำ</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="no_account_google">คุณยังไม่ได้เชื่อมต่อกับบัญชี Google</string>
-    <string name="preference_google_signin_summary">ลงชื่อเข้าใช้เพื่อค้นหาใน Google Drive</string>
-    <string name="preference_calendar_hide_allday">ซ่อนกิจกรรมที่ทำตลอดวัน</string>
     <string name="backup_complete">การสำรองข้อมูลเสร็จสิ้น</string>
     <string name="preference_screen_buildinfo_summary">ข้อมูลเพิ่มเติมเกี่ยวกับบิลด์นี้ของแอป</string>
     <string name="restore_invalid_file">ไฟล์ที่ถูกเลือกไม่ใช่ไฟล์ข้อมูลสำรอง คุณแน่ใจหรือไม่ว่าคุณเลือกถูกไฟล์\?</string>
@@ -525,9 +503,7 @@
     <string name="favorites">รายการโปรด</string>
     <string name="preference_hidden_items_reveal_button">แสดงปุ่มเลิกซ่อน</string>
     <string name="favorites_empty">สิ่งที่ถูกปักหมุดไว้และสิ่งที่ถูกใช้บ่อยจะถูกแสดงที่นี่</string>
-    <string name="create_app_shortcut">สร้างทางลัด</string>
     <string name="frequently_used_show_in_favorites">แสดงในรายการโปรด</string>
-    <string name="customize_tags_placeholder">แท็ก</string>
     <string name="preference_search_search_actions_summary">ปรับแต่งควิกแอ็กชั่น</string>
     <string name="search_action_alarm">ตั้งปลุก</string>
     <string name="search_action_timer">เริ่มจับเวลา</string>
@@ -554,7 +530,6 @@
     <string name="gesture_action_notifications">เปิดแผงการแจ้งเตือน</string>
     <string name="gesture_action_quick_settings">เปิดการตั้งค่าลัด</string>
     <string name="gesture_failed_message">คุณได้ทำท่าทางการสัมผัสแบบ \"%1$s\" ซึ่งถูกกำหนดไว้ว่าให้ทำ \"%2$s\" แต่ไม่สามารถดำเนินการได้เพราะเหตุผลต่อไปนี้:</string>
-    <string name="preference_search_result_ordering">ลำดับของผลการค้นหา</string>
     <string name="preference_search_result_ordering_weight_factor">ความเร็วในการเปลี่ยนแปลงลำดับ</string>
     <string name="widget_config_appwidget_background">การ์ดพื้นหลัง</string>
     <string name="widget_config_weather_integration_settings">การตั้งค่าการเชื่อมต่อกับวิดเจ็ตสภาพอากาศ</string>
@@ -661,7 +636,6 @@
     </plurals>
     <string name="hint_drag_and_drop_reorder">แตะค้างไว้และลากเพื่อจัดเรียงสิ่งต่างๆ</string>
     <string name="clock_style_digital2">เรียบง่าย</string>
-    <string name="preference_search_bar_separate_work_profile">แยกแอปในโปรไฟล์งานออก</string>
     <string name="clock_style_empty">ไม่แสดงนาฬิกา</string>
     <string name="clock_style_custom">วิดเจ็ตแบบกำหนดเอง</string>
     <string name="menu_show_filters">แสดงตัวกรอง</string>
@@ -704,7 +678,6 @@
     <string name="poi_category_atm">ตู้ ATM</string>
     <string name="poi_category_museum">พิพิธภัณฑ์</string>
     <string name="preference_search_supportedunits">หน่วยที่รองรับ</string>
-    <string name="preference_search_bar_separate_work_profile_summary">แยกแอปในโปรไฟล์งานออกไปในแท็บต่างหาก</string>
     <string name="search_filter_apps">แอป</string>
     <string name="preference_filter_bar">แสดงแผงตัวกรอง</string>
     <string name="poi_category_church">โบสถ์คริสต์</string>
@@ -802,7 +775,6 @@
     <string name="calendar_widget_create_event">สร้างกิจกรรมใหม่</string>
     <string name="preference_compact_tags">แท็กขนาดกะทัดรัด</string>
     <string name="preference_compact_tags_summary">ซ่อนชื่อหรือไอคอนของแท็กเพื่อทำให้แท็กใช้พื้นที่น้อยลง</string>
-    <string name="reset_icon">รีเซ็ตไอคอน</string>
     <string name="weather_forecast_precipitation">หยาดน้ำฟ้า</string>
     <string name="weather_forecast_humidity">ความชื้น</string>
     <string name="weather_forecast_wind">ลม</string>

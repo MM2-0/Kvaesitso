@@ -3,8 +3,6 @@
     <string name="menu_favorites_pin">Adaugă la favorite</string>
     <string name="menu_app_info">Info Aplicație</string>
     <string name="menu_launch">Lansează</string>
-    <string name="menu_hide">Ascunde</string>
-    <string name="menu_unhide">Nu ascunde</string>
     <string name="menu_favorites_unpin">Înlătură</string>
     <string name="action_undo">Anulează</string>
     <string name="menu_delete">Șterge</string>
@@ -74,7 +72,6 @@
     <string name="menu_share_store_link">link %1$s</string>
     <string name="menu_open_file">Deschide</string>
     <string name="default_websearch_3_name">Google Play</string>
-    <string name="msg_item_hidden">%1$s a fost ascuns</string>
     <string name="widget_name_weather">Vreme</string>
     <string name="wind_north">Nord</string>
     <string name="close">Închide</string>
@@ -105,14 +102,11 @@
     <string name="edit_favorites_dialog_pinned_unsorted">Fixate – sortate automat</string>
     <string name="edit_favorites_dialog_pinned_sorted">Fixate - sortate manual</string>
     <string name="nextcloud_server_url">Adresa URL a serverului Nextcloud</string>
-    <string name="nextcloud_server_url_empty">URL-ul serverului nu trebuie să fie gol</string>
     <string name="nextcloud_server_invalid_url">Această adresă URL nu indică spre o instalare Nextcloud validă</string>
     <string name="owncloud_server_url">Adresa URL a serverului Owncloud</string>
     <string name="owncloud_server_invalid_url">Această adresă URL nu indică spre o instalare Owncloud validă</string>
     <string name="owncloud_login_2fa_hint">Dacă aveți activată autentificarea cu doi factori, trebuie să utilizați o parolă de aplicație aici.</string>
     <string name="owncloud_login_failed">Autentificarea nu a reușit: nume de utilizator sau parolă incorectă.</string>
-    <string name="owncloud_username_empty">Numele de utilizator nu trebuie să fie gol</string>
-    <string name="owncloud_password_empty">Parola nu trebuie să fie goală</string>
     <string name="disclaimer">Atenționare</string>
     <string name="show_all">Afișați toate</string>
     <string name="calendar_widget_pinned_events">Viitoare</string>
@@ -215,7 +209,6 @@
     <string name="preference_category_system_bars">Bare de sistem</string>
     <string name="preference_hide_status_bar">Ascunde bara de stare</string>
     <string name="preference_hide_nav_bar">Ascunde bara de navigare</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Conectat ca %1$s</string>
     <string name="preference_summary_not_logged_in">În prezent, nu sunteți conectat</string>
     <string name="preference_icon_shape_pentagon">Pentagon</string>
@@ -275,13 +268,10 @@
     <string name="preference_search_websites">Site-uri web</string>
     <string name="preference_search_websites_summary">Afișează previzualizarea unui site web dacă interogarea de căutare este o adresă URL</string>
     <string name="preference_search_localfiles_summary">Căutați documente, fotografii și alte fișiere stocate pe acest dispozitiv</string>
-    <string name="preference_search_gdrive">Google Drive</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Căutați fișiere %1$s</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">Conectează-te cu Google</string>
     <string name="preference_calendar_calendars">Calendare</string>
-    <string name="preference_calendar_hide_allday">Ascundeți evenimentele din întreaga zi</string>
     <string name="preference_screen_buildinfo">Informații subversiune</string>
     <string name="preference_screen_buildinfo_summary">Mai multe informații despre această subversiune a aplicației</string>
     <string name="preference_search_bar_style">Stil</string>
@@ -292,7 +282,6 @@
     <string name="preference_hidden_items_summary">Gestionarea aplicațiilor ascunse și a rezultatelor căutării</string>
     <string name="preference_wikipedia_customurl">Url-ul Wikipedia</string>
     <string name="no_account_owncloud">Nu ați conectat încă un cont Owncloud</string>
-    <string name="no_account_google">Nu ați conectat încă un cont Google</string>
     <string name="connect_account">Conectați contul</string>
     <string name="battery_part_charging">Încărcare</string>
     <plurals name="battery_part_remaining_charge_time">
@@ -331,9 +320,7 @@
     <string name="preference_nextcloud_signin_summary">Conectează-te pentru a căuta în serverul tău Nextcloud</string>
     <string name="preference_about_license_summary">Licențiat sub Licența Publică Generală GNU 3.0</string>
     <string name="preference_search_files_summary">Căutați fișiere locale și cloud</string>
-    <string name="preference_search_gdrive_summary">Căutați fișiere %1$s pe Google Drive</string>
     <string name="preference_search_contacts_summary">Caută contactele de pe acest dispozitiv</string>
-    <string name="preference_google_signin_summary">Conectează-te pentru a căuta în Google Drive</string>
     <string name="preference_clockwidget_date_part">Dată</string>
     <string name="preference_search_unitconverter_summary">Utilizare: 1.5 kg sau 4 cm &gt;&gt; in</string>
     <string name="no_account_nextcloud">Nu ai conectat încă un cont Nextcloud</string>

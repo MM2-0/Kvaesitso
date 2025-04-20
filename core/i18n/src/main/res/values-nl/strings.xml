@@ -8,8 +8,6 @@
     <string name="menu_app_info">App-info</string>
     <string name="menu_launch">Starten</string>
     <string name="menu_customize">Aanpassen</string>
-    <string name="menu_hide">Verbergen</string>
-    <string name="menu_unhide">Niet verbergen</string>
     <string name="action_undo">Ongedaan maken</string>
     <string name="menu_delete">Verwijderen</string>
     <string name="menu_contacts_open_externally">Openen in contacten-app</string>
@@ -84,21 +82,17 @@
     <string name="menu_item_edit_favs">Favorieten bewerken</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Vastgezet - automatisch gesorteerd</string>
     <string name="nextcloud_server_url">URL van Nextcloud server</string>
-    <string name="nextcloud_server_url_empty">URL van server mag niet leeg zijn</string>
     <string name="nextcloud_server_invalid_url">Deze URL verwijst niet naar een geldige Nextcloud installatie</string>
     <string name="owncloud_server_invalid_url">Deze URL verwijst niet naar een geldige Owncloud installatie</string>
     <string name="owncloud_password">Wachtwoord</string>
     <string name="owncloud_username">Gebruikersnaam</string>
     <string name="owncloud_login_failed">Fout bij inloggen: ongeldige gebruikersnaam of wachtwoord.</string>
-    <string name="owncloud_username_empty">Gebruikersnaam mag niet leeg zijn</string>
-    <string name="owncloud_password_empty">Wachtwoord mag niet leeg zijn</string>
     <string name="login_flow_continue">Doorgaan</string>
     <string name="disclaimer">Disclaimer</string>
     <string name="menu_share">Delen</string>
     <string name="menu_share_apk_file">Installatiebestand</string>
     <string name="alert_delete_directory">De map %1$s en al haar inhoud worden definitief verwijderd. Doorgaan\?</string>
     <string name="menu_open_file">Openen</string>
-    <string name="msg_item_hidden">%1$s is verborgen.</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="wind_north_east">Noordoost</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
@@ -269,7 +263,6 @@
     <string name="preference_icon_pack_summary_empty">Geen pictogrammenpakketten geïnstalleerd</string>
     <string name="preference_hide_nav_bar">Navigatiebalk verbergen</string>
     <string name="preference_screen_integrations_summary">Verbonden accounts en diensten beheren</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Ingelogd als %1$s</string>
     <string name="preference_dim_wallpaper">Achtergrond dimmen</string>
     <string name="preference_dim_wallpaper_summary">Dim de achtergrond bij donkere thema\'s</string>
@@ -347,7 +340,6 @@
     <string name="preference_search_calendar">Kalender</string>
     <string name="websearch_dialog_advanced">Geavanceerd</string>
     <string name="frequently_used_show_in_favorites">In favorieten tonen</string>
-    <string name="customize_tags_placeholder">Labels</string>
     <string name="preference_edit_favorites_summary">Volgorde van de vastgezette items aanpassen</string>
     <string name="preference_category_favorites_frequently_used">Vaak gebruikt</string>
     <string name="preference_favorites_frequently_used_summary">Vaak gebruikte items tonen in de favorieten</string>
@@ -370,7 +362,6 @@
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
     <string name="no_account_nextcloud">Je bent nog niet ingelogd bij Nextcloud</string>
     <string name="preference_widgets_edit_button_summary">Knop tonen om widgets toe te voegen, te verwijderen of te verplaatsen</string>
-    <string name="no_account_google">Je bent nog niet ingelogd bij Google</string>
     <string name="connect_account">Account verbinden</string>
     <string name="restore_different_minor_version">De back-up is gemaakt met een andere versie van %1$s. Bepaalde gegevens kunnen mogelijk niet correct teruggezet worden.</string>
     <string name="restore_meta">Gemaakt op %1$s op %2$s met %3$s.</string>
@@ -382,18 +373,13 @@
     <string name="preference_search_currencyconverter">Munteenhedenconversie</string>
     <string name="preference_search_calculator_summary">Wiskundige uitdrukkingen evalueren</string>
     <string name="preference_search_unitconverter">Eenhedenconversie</string>
-    <string name="preference_search_gdrive_summary">Bestanden van %1$s op Google Drive doorzoeken</string>
     <string name="preference_search_localfiles">Lokale bestanden</string>
     <string name="preference_search_localfiles_summary">Documenten, foto\'s en andere bestanden op dit apparaat doorzoeken</string>
-    <string name="preference_search_gdrive">Google Drive</string>
     <string name="preference_search_cloud_summary">Bestanden van %1$s doorzoeken</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_search_bar_auto_focus_summary">Altijd het toetsenbord tonen wanneer applicatielijst geopend wordt</string>
     <string name="apps_profile_main">Persoonlijk</string>
-    <string name="preference_google_signin">Inloggen met Google</string>
-    <string name="preference_google_signin_summary">Inloggen bij Google Drive</string>
     <string name="preference_calendar_calendars">Kalenders</string>
-    <string name="preference_calendar_hide_allday">Hele-dag afspraken verbergen</string>
     <string name="restore_complete">De back-up is teruggezet.</string>
     <string name="preference_search_unitconverter_summary">Gebruik: 1.5 kg of 4cm &gt;&gt; in</string>
     <plurals name="battery_part_remaining_charge_time">
@@ -403,13 +389,11 @@
     <string name="no_account_owncloud">Je bent nog niet ingelogd bij Owncloud</string>
     <string name="backup_complete">De back-up is afgerond.</string>
     <string name="restore_invalid_file">Het geselecteerde bestand wordt niet herkend als een back-up. Ben je zeker dat je het juiste bestand heb gekozen\?</string>
-    <string name="icon_picker_title">Pictogram kiezen</string>
     <string name="icon_picker_search_icon">Pictogrammenpaketten doorzoeken</string>
     <string name="apps_profile_work">Werk</string>
     <string name="favorites">Favorieten</string>
     <string name="favorites_empty">Vastgezette en vaak gebruikte items zullen hier verschijnen</string>
     <string name="favorites_empty_tag">Er zijn geen items met dit label</string>
-    <string name="create_app_shortcut">Snelkoppeling maken</string>
     <string name="preference_search_appshortcuts_summary">Applicatiesnelkoppelingen doorzoeken</string>
     <string name="preference_icon_shape_pebble">Kiezelsteen</string>
     <string name="preference_status_bar_icons">Statusbalkpictogrammen</string>
@@ -434,8 +418,6 @@
     <string name="create_search_action_type_web">Zoeken op website</string>
     <string name="create_search_action_type_app">Zoeken in applicatie</string>
     <string name="create_search_action_type_intent">Aangepaste indent</string>
-    <string name="create_search_action_title">Nieuwe snelle actie</string>
-    <string name="edit_search_action_title">Snelle actie bewerken</string>
     <string name="create_search_action_pick_app">Kies een zoekapplicatie:</string>
     <string name="create_search_action_website_url">Adres van de website:</string>
     <string name="create_search_action_website_invalid_url">De opgegeven website kan niet automatisch worden geïmporteerd als een websearch. Je kunt een andere website proberen of de vereiste gegevens handmatig invoeren in de volgende stap.</string>
@@ -449,8 +431,6 @@
     <string name="skip">Overslaan</string>
     <string name="preference_screen_tags">Labels</string>
     <string name="preference_screen_tags_summary">Beheer tags en getagde items</string>
-    <string name="create_tag_title">Nieuwe tag</string>
-    <string name="edit_tag_title">Label bewerken</string>
     <string name="tag_exists_error">Er bestaat al een tag met deze naam.</string>
     <string name="tag_exists_message">Er bestaat al een tag met deze naam. Als je doorgaat worden de twee tags samengevoegd.</string>
     <string name="tag_no_items_message">Deze tag bevat geen items. Als je doorgaat wordt de tag verwijderd.</string>
@@ -497,15 +477,11 @@
     <string name="preference_search_bar_launch_on_enter">Uitvoeren bij enter</string>
     <string name="preference_search_bar_launch_on_enter_summary">De gemarkeerde app of snelle actie uitvoeren bij tikken op enter</string>
     <string name="gesture_action_launch_app">Applicatie starten</string>
-    <string name="icon_picker_no_packs_installed">Geen pictogrammenpakketten geïnstalleerd</string>
     <string name="icon_picker_filter_all_packs">Alle pictogrammenpakketten</string>
     <string name="preference_search_result_ordering_weight_factor">Flexibiliteit sortering</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabiel</string>
     <string name="preference_search_result_ordering_weight_factor_default">Gebalanceerd</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variabel</string>
-    <string name="preference_search_result_ordering_weighted">Gebruik</string>
-    <string name="preference_search_result_ordering">Volgorde van de zoekresultaten</string>
-    <string name="preference_search_result_ordering_alphabetic">Alfabetisch</string>
     <string name="app_widget_loading_failed">Applicatiewidget kon niet geladen worden.</string>
     <string name="widget_config_calendar_no_calendars">Geen kalenders gevonden</string>
     <string name="preference_screen_icons">Raster &amp; pictogrammen</string>
@@ -515,7 +491,6 @@
     <string name="preference_screen_homescreen">Thuisscherm</string>
     <string name="preference_screen_homescreen_summary">Klok, zoekbalk, achtergrond, systeembalken</string>
     <string name="preference_screen_icons_summary">Raster, pictogramgrootte, pictogrampaketten, badges</string>
-    <string name="preference_category_accounts">Accounts</string>
     <string name="preference_weather_integration">Weer</string>
     <string name="preference_media_integration">Mediabeheer</string>
     <string name="widget_config_appwidget_borderless">Randloos</string>
@@ -586,7 +561,6 @@
     <string name="preference_screen_plugins">Plug-ins</string>
     <string name="preference_plugin_badges">Pluginbadges</string>
     <string name="preference_plugin_badges_summary">Aangeven welke plugin een zoekresultaat heeft teruggegeven</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Apps in het werkprofiel in een aparte tab tonen</string>
     <string name="clock_style_digital1">Vet</string>
     <string name="location_closed">Gesloten</string>
     <string name="poi_category_fast_food">Fast food</string>
@@ -630,7 +604,6 @@
     <string name="poi_category_fitness_center">Fitnesscentrum</string>
     <string name="location_open">Open</string>
     <string name="location_opens">Gaat open om %1$s</string>
-    <string name="preference_search_bar_separate_work_profile">Apps in het werkprofiel scheiden</string>
     <string name="preference_search_locations">Plaatsen</string>
     <string name="preference_mdy_color_source">Kleuren om vanaf Android 12 te gebruiken voor Material You kleurenschema\'s: wat het systeem voorstelt of de eigen kleurextractie uit de achtergrond van Kvaesitso</string>
     <string name="preference_mdy_color_source_system">Material You kleuren van het OS gebruiken</string>
@@ -809,7 +782,6 @@
     <string name="app_label_locked_profile">Vergrendeld</string>
     <string name="profile_private_profile_action_lock">Privégedeelte vergrendelen</string>
     <string name="profile_private_profile_state_locked">Privégedeelte is vergrendeld.</string>
-    <string name="reset_icon">Pictogram herstellen</string>
     <string name="preference_compact_tags_summary">Labels of pictogrammen verbergen om de ruimte die door labels wordt ingenomen te verkleinen</string>
     <string name="preference_compact_tags">Compacte labels</string>
     <string name="weather_forecast_humidity">Vochtigheid</string>

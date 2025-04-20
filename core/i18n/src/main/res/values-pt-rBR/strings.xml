@@ -2,8 +2,6 @@
 <resources>
     <string name="menu_share">Compartilhar</string>
     <string name="menu_back">Voltar</string>
-    <string name="menu_unhide">Não ocultar</string>
-    <string name="menu_hide">Ocultar</string>
     <string name="menu_delete">Excluir</string>
     <string name="menu_contacts_open_externally">Abrir no aplicativo de contatos</string>
     <string name="menu_calendar_open_externally">Abrir no aplicativo de calendário</string>
@@ -80,7 +78,6 @@
     <string name="menu_item_edit_favs">Editar favoritos</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Fixado - organizado automaticamente</string>
     <string name="edit_favorites_dialog_pinned_sorted">Fixado - organizado manualmente</string>
-    <string name="nextcloud_server_url_empty">A URL do servidor não pode esta vazia</string>
     <string name="owncloud_server_url">URL do servidor Owncloud</string>
     <string name="owncloud_password">Senha</string>
     <string name="owncloud_username">Usuário</string>
@@ -119,8 +116,6 @@
     <string name="weather_widget_set_location">Definir localização</string>
     <string name="widget_name_favorites">Favoritos</string>
     <string name="owncloud_login_failed">Falha no login: nome de usuário ou senha incorretos.</string>
-    <string name="owncloud_username_empty">Nome de usuário não deve estar vazio</string>
-    <string name="owncloud_password_empty">A senha não pode ser vazia</string>
     <string name="login_flow_continue">Continuar</string>
     <string name="login_flow_login">Conectar</string>
     <string name="disclaimer">Isenção de responsabilidade</string>
@@ -160,7 +155,6 @@
     <string name="preference_search_localfiles">Arquivos locais</string>
     <string name="weather_condition_heavyrainandthunder">Chuva intensa e trovões</string>
     <string name="weather_condition_wind">Vento</string>
-    <string name="preference_search_gdrive">Google Drive</string>
     <string name="weather_condition_snowshowers">Neve pouco intensa</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="missing_permission_music_widget">O acesso às notificações é necessário para controlar a reprodução de mídia</string>
@@ -248,7 +242,6 @@
     <string name="preference_hide_status_bar">Ocultar a barra de status</string>
     <string name="preference_hide_nav_bar">Ocultar a barra de navegação</string>
     <string name="preference_screen_integrations_summary">Gerenciar as contas e serviços conectados</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Autenticado como %1$s</string>
     <string name="preference_summary_not_logged_in">Você não está logado</string>
     <string name="preference_icon_shape_pentagon">Pentágono</string>
@@ -280,7 +273,6 @@
     <string name="missing_permission_appshortcuts_search">Defina %1$s como aplicativo de tela inicial padrão para pesquisar atalhos de aplicativos.</string>
     <string name="duplicate">Duplicar</string>
     <string name="action_next">Próximo</string>
-    <string name="msg_item_hidden">%1$s foi ocultado.</string>
     <string name="action_undo">Desfazer</string>
     <string name="calendar_widget_next_events">Próximo evento</string>
     <string name="missing_permission_calendar_search">Conceda permissão de calendário para pesquisar o seu calendário.</string>
@@ -364,11 +356,7 @@
     <string name="preference_search_websites_summary">Mostra uma visualização de um site se a consulta de pesquisa for um URL</string>
     <string name="preference_search_localfiles_summary">Pesquisa documentos, fotos e outros arquivos armazenados neste dispositivo</string>
     <string name="preference_search_cloud_summary">Pesquisar arquivos de %1$s</string>
-    <string name="preference_search_gdrive_summary">Pesquisar arquivos de %1$s no Google Drive</string>
-    <string name="preference_google_signin">Faça login no Google</string>
-    <string name="preference_google_signin_summary">Faça login para pesquisar no Google Drive</string>
     <string name="preference_calendar_calendars">Calendários</string>
-    <string name="preference_calendar_hide_allday">Ocultar eventos de dia inteiro</string>
     <string name="preference_screen_buildinfo_summary">Mais informações sobre esta compilação deste aplicativo</string>
     <string name="preference_screen_buildinfo">informações de compilação</string>
     <string name="preference_search_bar_style_summary">Personalize a aparência da barra de pesquisa</string>
@@ -400,7 +388,6 @@
     </plurals>
     <string name="preference_logs">Logs</string>
     <string name="search_action_event">Agendar evento</string>
-    <string name="create_search_action_title">Nova ação rápida</string>
     <string name="create_search_action_website_invalid_url">O site fornecido não pode ser importado automaticamente como uma pesquisa na web. Você pode tentar um site diferente ou inserir os dados necessários manualmente na próxima etapa.</string>
     <string name="tag_exists_message">Já existe uma etiqueta com este nome. Se você continuar, as duas etiquetas serão mescladas.</string>
     <string name="preference_layout_fixed_search_bar_summary">Não rola a barra de pesquisa para fora da visão</string>
@@ -423,7 +410,6 @@
     <string name="preference_wikipedia_customurl">URL da Wikipédia</string>
     <string name="no_account_nextcloud">Você ainda não conectou uma conta Nextcloud</string>
     <string name="no_account_owncloud">Você ainda não conectou uma conta Owncloud</string>
-    <string name="no_account_google">Você ainda não conectou uma conta Google</string>
     <string name="connect_account">Conectar conta</string>
     <string name="backup_complete">O backup foi concluído.</string>
     <string name="restore_invalid_file">O arquivo selecionado não parece ser um backup. Tem certeza de que selecionou o arquivo correto\?</string>
@@ -432,7 +418,6 @@
     <string name="restore_different_minor_version">Este backup foi criado com uma versão diferente de %1$s. Alguns dados podem não ser restaurados corretamente.</string>
     <string name="restore_meta">Criado %1$s em %2$s com %3$s.</string>
     <string name="restore_complete">O backup foi restaurado.</string>
-    <string name="icon_picker_title">Escolher ícone</string>
     <string name="apps_profile_main">Pessoal</string>
     <string name="favorites">Favoritos</string>
     <string name="search_action_email">Email</string>
@@ -458,14 +443,11 @@
     <string name="gesture_action_launch_app">Iniciar aplicativo</string>
     <string name="gesture_action_lock_screen">Desligar a tela</string>
     <string name="gesture_action_quick_settings">Abrir as configurações rápidas</string>
-    <string name="icon_picker_no_packs_installed">Nenhum pacote de ícones instalado</string>
     <string name="icon_picker_filter_all_packs">Todos os pacotes de ícones</string>
     <string name="favorites_empty">Os itens fixados e usados com frequência aparecerão aqui</string>
     <string name="favorites_empty_tag">Não há itens com esta etiqueta</string>
-    <string name="create_app_shortcut">Criar atalho</string>
     <string name="frequently_used_show_in_favorites">Mostrar nos favoritos</string>
     <string name="frequently_used_rows">Numero de linhas</string>
-    <string name="customize_tags_placeholder">Tags</string>
     <string name="preference_screen_search_actions">Ações rápidas</string>
     <string name="search_action_alarm">Programar alarme</string>
     <string name="search_action_timer">Iniciar cronômetro</string>
@@ -475,13 +457,10 @@
     <string name="create_search_action_type_web">Pesquisar em um site</string>
     <string name="create_search_action_type_app">Pesquisar em um aplicativo</string>
     <string name="create_search_action_type_intent">Intenção personalizada</string>
-    <string name="edit_search_action_title">Editar ação rápida</string>
     <string name="create_search_action_pick_app">Escolha um aplicativo para pesquisar:</string>
     <string name="search_action_websearch_url_hint">O modelo de URL é usado para construir o URL de pesquisa na web. Use \'${1}\' como espaço reservado para o termo de pesquisa real, por exemplo https://google.com/search\?q=${1}.</string>
     <string name="more_information">Mais Informações</string>
     <string name="experimental_feature">Experimental</string>
-    <string name="create_tag_title">Nova etiqueta</string>
-    <string name="edit_tag_title">Editar etiqueta</string>
     <string name="tag_no_items_message">Nenhum item foi atribuído a essa etiqueta. Se você continuar, ela será excluída.</string>
     <string name="tag_select_items">Selecione itens:</string>
     <string name="tag_name">Nome da etiqueta</string>
@@ -501,16 +480,12 @@
     <string name="gesture_action_none">Não fazer nada</string>
     <string name="gesture_action_open_search">Abrir a pesquisa</string>
     <string name="gesture_action_notifications">Descer a barra de notificaçōes</string>
-    <string name="preference_search_result_ordering">Ordem dos resultados da pesquisa</string>
-    <string name="preference_search_result_ordering_alphabetic">Alfabética</string>
     <string name="preference_search_result_ordering_weight_factor_low">Estável</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variável</string>
-    <string name="preference_search_result_ordering_weighted">Uso</string>
     <string name="preference_search_result_ordering_weight_factor">Flexibilidade da classificação</string>
     <string name="preference_search_result_ordering_weight_factor_default">Balanceada</string>
     <string name="app_widget_loading_failed">Falha no carregamento do widget da aplicação.</string>
     <string name="widget_config_calendar_no_calendars">Nenhum calendário encontrado</string>
-    <string name="preference_category_accounts">Contas</string>
     <string name="preference_screen_integrations">Integrações</string>
     <string name="preference_screen_homescreen">Tela inicial</string>
     <string name="preference_screen_homescreen_summary">Relógio, barra de pesquisa, papel de parede,barras de sistema</string>
@@ -591,7 +566,6 @@
     <string name="preference_location_managed">Gerenciado por extensão</string>
     <string name="preference_location_managed_summary">A localização para esse provedor é gerenciada pelo aplicativo de extensão</string>
     <string name="customize_item_label">Etiqueta</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Mostrar apps de trabalho em uma seção separada</string>
     <string name="plugin_type_filesearch">Busca de arquivos</string>
     <string name="plugin_action_setup">Configurar</string>
     <string name="apps_profile_private">Privado</string>
@@ -699,7 +673,6 @@
     <string name="plugin_weather_provider_enable">Definir como provedor de clima</string>
     <string name="plugin_weather_provider_enabled">Definido como o provedor de clima</string>
     <string name="unavailable_searchable">Esse item não existe mais.</string>
-    <string name="preference_search_bar_separate_work_profile">Separar apps de trabalho</string>
     <string name="clock_style_digital1">Negrito</string>
     <string name="clock_style_digital2">Simples</string>
     <string name="clock_style_orbit">Órbita</string>

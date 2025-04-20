@@ -12,8 +12,6 @@
     <string name="menu_uninstall">Desinstalar</string>
     <string name="menu_back">Volver</string>
     <string name="menu_launch">Iniciar</string>
-    <string name="menu_hide">Ocultar</string>
-    <string name="menu_unhide">No ocultar</string>
     <string name="menu_delete">Eliminar</string>
     <string name="menu_contacts_open_externally">Abrir en la aplicación de contactos</string>
     <string name="search_bar_placeholder">Buscar</string>
@@ -82,8 +80,6 @@
     <string name="widget_action_remove">Eliminar</string>
     <string name="menu_item_edit_favs">Editar favoritos</string>
     <string name="owncloud_username">Nombre de usuario</string>
-    <string name="owncloud_username_empty">El nombre de usuario no debe estar vacío</string>
-    <string name="owncloud_password_empty">La contraseña no debe estar vacía</string>
     <string name="login_flow_continue">Continuar</string>
     <string name="login_flow_login">Iniciar sesión</string>
     <string name="show_all">Mostrar todo</string>
@@ -104,7 +100,6 @@
     <string name="preference_cards_summary">Personalizar la apariencia de la tarjeta</string>
     <string name="alert_delete_file">El archivo %1$s se eliminará de forma permanente. ¿Continuar\?</string>
     <string name="nextcloud_server_url">URL del servidor Nextcloud</string>
-    <string name="nextcloud_server_url_empty">La URL del servidor no debe estar vacía</string>
     <string name="owncloud_server_url">URL del servidor Owncloud</string>
     <string name="music_widget_default_title">%1$s está reproduciendo música</string>
     <string name="music_widget_no_data">Aún no se ha reproducido música</string>
@@ -196,7 +191,6 @@
     <string name="websearch_dialog_query_encoding">Codificación de consulta</string>
     <string name="websearch_dialog_query_encoding_url">Codificación-percentil</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
-    <string name="customize_tags_placeholder">Etiquetas…</string>
     <string name="preference_edit_favorites_summary">Cambiar el orden de los elementos fijados</string>
     <string name="preference_category_grid">Cuadrícula</string>
     <string name="preference_force_themed_icons_summary">Aplicar esquema de color de la aplicación a todos los iconos, incluyendo los no soportados (no recomendado)</string>
@@ -217,7 +211,6 @@
     <string name="search_action_alarm">Crear alarma</string>
     <string name="create_search_action_type_web">Buscar en internet</string>
     <string name="search_action_app">Aplicación</string>
-    <string name="icon_picker_title">Elija icono</string>
     <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Registrarse a Owncloud</string>
     <string name="preference_owncloud_signin_summary">Regístrate para buscar en tu server Owncloud</string>
@@ -225,10 +218,8 @@
     <string name="preference_enforce_icon_shape">Forzar forma</string>
     <string name="preference_themed_icons_summary">Iconos con esquema de color de la aplicación</string>
     <string name="preference_category_system_bars">Barras de sistema</string>
-    <string name="preference_google">Google</string>
     <string name="preference_icon_shape_pentagon">Pentágono</string>
     <string name="preference_clockwidget_layout_horizontal">Compacto</string>
-    <string name="create_app_shortcut">Crear atajo</string>
     <string name="preference_backup">Copia de seguridad</string>
     <string name="restore_complete">La copia de seguridad ha sido restaurada.</string>
     <string name="preference_clockwidget_date_part">Fecha</string>
@@ -303,13 +294,9 @@
     <string name="preference_search_wikipedia_summary">Busca en la enciclopedia libre</string>
     <string name="preference_search_websites_summary">Mostrar vista previa de la página web si la consulta de búsqueda es una URL</string>
     <string name="preference_search_localfiles">Archivos locales</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">Buscar %1$s archivos en Google Drive</string>
     <string name="preference_search_cloud_summary">Buscar %1$s archivos</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">Registrarse con Google</string>
     <string name="preference_calendar_calendars">Calendarios</string>
-    <string name="preference_calendar_hide_allday">Ocultar eventos que duren todo el día</string>
     <string name="preference_screen_buildinfo">Información de versión de aplicación</string>
     <string name="preference_search_bar_style">Estilo</string>
     <string name="preference_search_bar_style_summary">Personalizar apariencia de barra de búsqueda</string>
@@ -339,15 +326,11 @@
     <string name="search_action_event">Programar evento</string>
     <string name="create_search_action_type_app">Buscar en aplicación</string>
     <string name="create_search_action_type_intent">Intent personalizado</string>
-    <string name="create_search_action_title">Nueva acción rápida</string>
-    <string name="edit_search_action_title">Editar acción rápida</string>
     <string name="create_search_action_pick_app">Elige una aplicación para buscar:</string>
     <string name="create_search_action_website_url">Introduce la dirección de la página web:</string>
     <string name="create_search_action_website_invalid_url">La página introducida no se puede importar automáticamente como una búsqueda web. Puedes intentar introducir otra página web o introducir los datos necesarios en el siguiente paso.</string>
     <string name="search_action_websearch_url_hint">La plantilla de URL que se usa para construir la búsqueda web. Usa ‘${1}’ en el sitio del término de búsqueda que se vaya a introducir, p.ej. https://google.com/search\?q=${1}.</string>
     <string name="more_information">Información adicional</string>
-    <string name="create_tag_title">Nueva etiqueta</string>
-    <string name="edit_tag_title">Editar etiqueta</string>
     <string name="tag_exists_error">Ya existe una etiqueta con este nombre.</string>
     <string name="tag_exists_message">Ya existe una etiqueta con este nombre. Si continuas, se combinarán las dos etiquetas.</string>
     <string name="tag_no_items_message">No hay ningún elemento asociado a esta etiqueta. Si continuas, se eliminará la etiqueta.</string>
@@ -365,7 +348,6 @@
     <string name="preference_nextcloud_signin_summary">Regístrate para buscar en tu servidor NextCloud</string>
     <string name="no_account_owncloud">Aun no te has conectado a una cuenta de Owncloud</string>
     <string name="preference_about_license">Esta aplicación es software libre.</string>
-    <string name="no_account_google">Aun no te has conectado a una cuenta de Google</string>
     <string name="preference_screen_debug_summary">Herramientas de solución de problemas</string>
     <string name="preference_clockwidget_layout_vertical">Por defecto</string>
     <string name="restore_incompatible_file">Esta copia de seguridad se ha creado con una diferente versión de %1$s y no se puede restaurar con esta versión.</string>
@@ -420,12 +402,10 @@
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_layout_fixed_search_bar">Barra de búsqueda fija</string>
     <string name="preference_layout_fixed_search_bar_summary">No desplazar la barra de búsqueda fuera de vista</string>
-    <string name="preference_google_signin_summary">Regístrate para buscar en Google Drive</string>
     <string name="preference_screen_buildinfo_summary">Más información sobre esta versión de aplicación</string>
     <string name="websearch_dialog_query_encoding_none">Ninguna</string>
     <string name="save">Guardar</string>
     <string name="weather_condition_snowshowers">Chubascos de nieve</string>
-    <string name="msg_item_hidden">%1$s se ha ocultado.</string>
     <string name="action_undo">Deshacer</string>
     <string name="file_type_launcherbackup">%1$s copia de seguridad</string>
     <string name="preference_icon_shape_square">Cuadrado</string>
@@ -516,7 +496,6 @@
     <string name="widget_config_appwidget_configure">Configurar widget</string>
     <string name="preference_search_bar_launch_on_enter">Iniciar al entrar</string>
     <string name="preference_search_bar_launch_on_enter_summary">Inicie la coincidencia destacada o una acción rápida al pulsar ir</string>
-    <string name="preference_search_result_ordering_weighted">Por uso</string>
     <string name="widget_config_appwidget_background">Tarjetas de fondo</string>
     <string name="preference_screen_clockwidget_summary">Configurar el estilo y componentes del reloj</string>
     <string name="preference_media_integration">Control de medios</string>
@@ -532,11 +511,9 @@
     <string name="note_widget_link_file_summary">Sincronizar el contenido de este widget con un archivo externo</string>
     <string name="preference_hidden_items_reveal_button_summary">Mostrar un botón para revelar los resultados de búsqueda ocultos</string>
     <string name="widget_config_calendar_no_calendars">Calendarios no encontrados</string>
-    <string name="preference_search_result_ordering">Orden de resultados de búsqueda</string>
     <string name="app_widget_loading_failed">El widget de la aplicación ha fallado en cargar.</string>
     <string name="note_widget_conflict_description">El archivo vinculado no está vacío y su contenido no coincide con la última versión guardada de esta nota. ¿Qué versión desea conservar\?</string>
     <string name="note_widget_file_read_error_description">No se ha podido leer el archivo vinculado. Posiblemente, haya sido movido o borrado. Se ha restaurado una copia desde el almacenamiento interno del lanzador. Si editas la nota, posiblemente se sobrescribirá el archivo vinculado.</string>
-    <string name="preference_category_accounts">Cuentas</string>
     <string name="widget_config_appwidget_borderless">Sin bordes</string>
     <string name="preference_screen_homescreen">Pantalla de inicio</string>
     <string name="preference_screen_homescreen_summary">Reloj, barra de búsqueda, fondo de pantalla, barras del sistema</string>
@@ -544,10 +521,8 @@
     <string name="preference_screen_icons_summary">Cuadrícula, tamaño de íconos, paquete de íconos, insignias</string>
     <string name="widget_config_music_integration_settings">Configuración de integración para control multimedia</string>
     <string name="gesture_action_launch_app">Iniciar aplicación</string>
-    <string name="icon_picker_no_packs_installed">No hay paquetes de iconos instalados</string>
     <string name="icon_picker_filter_all_packs">Todos los paquetes de íconos</string>
     <string name="preference_gesture_home_button">Botón de inicio/gestos</string>
-    <string name="preference_search_result_ordering_alphabetic">Alfabético</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variable</string>
     <string name="widget_config_weather_integration_settings">Configuración de la integración meteorológica</string>
     <string name="note_widget_conflict_action_resolve">Solucionar</string>
@@ -608,8 +583,6 @@
     <string name="preference_search_locations_theme_map_summary">Aplicar el esquema de colores del lanzador al mapa</string>
     <string name="clock_style_segment">7 segmentos</string>
     <string name="clock_variant_outlined">Contorneado</string>
-    <string name="preference_search_bar_separate_work_profile">Separar apps del perfil de trabajo</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Mostrar apps del perfil de trabajo en una pestaña separada</string>
     <string name="preference_clock_widget_show_seconds">Mostrar segundos</string>
     <string name="widget_use_theme_colors">Usar color del tema</string>
     <string name="preference_search_locations_radius">Radio de búsqueda</string>
