@@ -29,6 +29,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,9 +54,9 @@ class LoginActivity : AppCompatActivity() {
             MaterialTheme(
                 colorScheme = if (isSystemInDarkTheme()) nextcloudDark else nextcloudLight
             ) {
-                var nextcloudUrl by remember { mutableStateOf("") }
-                var error by remember { mutableStateOf<String?>(null) }
-                var loading by remember { mutableStateOf(false) }
+                var nextcloudUrl by rememberSaveable { mutableStateOf("") }
+                var error by rememberSaveable { mutableStateOf<String?>(null) }
+                var loading by rememberSaveable { mutableStateOf(false) }
 
                 val dark = isSystemInDarkTheme()
 
