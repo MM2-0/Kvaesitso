@@ -10,9 +10,6 @@
     <string name="menu_launch">فتح</string>
     <string name="menu_customize">تخصيص</string>
     <string name="menu_open_file">افتح</string>
-    <string name="menu_hide">إخفاء</string>
-    <string name="menu_unhide">لا تخفي</string>
-    <string name="msg_item_hidden">تم إخفاء %1$s.</string>
     <string name="action_undo">تراجع</string>
     <string name="menu_delete">حذف</string>
     <string name="menu_remove">أزِل</string>
@@ -125,7 +122,6 @@
     <string name="owncloud_username">اسم المستخدم</string>
     <string name="owncloud_login_2fa_hint">إذا قمت بتمكين المصادقة الثنائية، فيجب عليك استخدام كلمة مرور التطبيق هنا.</string>
     <string name="owncloud_login_failed">فشل تسجيل الدخول: اسم المستخدم أو كلمة المرور غير صحيحة.</string>
-    <string name="owncloud_username_empty">يجب ألا يكون اسم المستخدم فارغا</string>
     <string name="date_tomorrow">غدا</string>
     <string name="calendar_widget_pinned_events">القادمة</string>
     <string name="calendar_widget_next_events">الحدث القادم</string>
@@ -144,14 +140,12 @@
     <string name="edit_favorites_dialog_empty_section">اسحب العناصر الى هنا</string>
     <string name="nextcloud_server_url">عنوان URL لخادم Nextcloud</string>
     <string name="edit_favorites_dialog_tag_section_empty">ستظهر العلامات المثبتة هنا</string>
-    <string name="nextcloud_server_url_empty">يجب ألا يكون عنوان URL للخادم فارغا</string>
     <string name="edit_favorites_dialog_new_tag">إنشاء علامة…</string>
     <string name="owncloud_server_invalid_url">لا يشير عنوان URL هذا إلى تثبيت Owncloud صالح</string>
     <string name="nextcloud_server_invalid_url">لا يشير عنوان URL هذا إلى تثبيت Nextcloud صالح</string>
     <string name="owncloud_server_url">عنوان URL لخادم Owncloud</string>
     <string name="login_flow_login">تسجيل الدخول</string>
     <string name="date_today">اليوم</string>
-    <string name="owncloud_password_empty">يجب ألا تكون كلمة المرور فارغة</string>
     <string name="login_flow_continue">متابعة</string>
     <string name="disclaimer">اخلاء المسؤولية</string>
     <string name="show_all">عرض الكل</string>
@@ -345,11 +339,8 @@
     <string name="preference_search_appshortcuts">اختصارات التطبيقات</string>
     <string name="preference_search_calculator">الآلة الحاسبة</string>
     <string name="preference_search_websites">مواقع الويب</string>
-    <string name="preference_search_gdrive">جوجل درايف</string>
-    <string name="preference_category_accounts">الحسابات</string>
     <string name="preference_weather_integration">الطقس</string>
     <string name="preference_media_integration">التحكم في الوسائط</string>
-    <string name="icon_picker_title">اختيار الرمز</string>
     <string name="favorites_empty">ستظهر العناصر المثبتة والمستخدمة بشكل متكرر هنا</string>
     <string name="favorites_empty_tag">لا توجد عناصر بهذه العلامة</string>
     <string name="preference_search_search_actions_summary">تكوين الإجراءات السريعة واختصارات البحث</string>
@@ -369,7 +360,6 @@
     <string name="missing_permission_accessibility_gesture_settings">يتطلب هذا الإجراء تمكين خدمة إمكانية الوصول الخاصة بالمشغل.</string>
     <string name="note_widget_conflict_keep_selected">الاحتفاظ بالمحدد</string>
     <string name="note_widget_conflict_file_version">المحتوى الحالي للملف:</string>
-    <string name="preference_search_bar_separate_work_profile">فصل تطبيقات ملف تعريف العمل</string>
     <string name="search_filter_tools">أدوات</string>
     <string name="search_filter_online">النتائج عبر الإنترنت</string>
     <string name="preference_search_osm_locations">OpenStreetMap</string>
@@ -409,7 +399,6 @@
     <string name="preference_hide_status_bar">إخفاء شريط الحالة</string>
     <string name="preference_hide_nav_bar">إخفاء شريط التنقل</string>
     <string name="preference_screen_integrations_summary">إدارة الحسابات والخدمات المتصلة</string>
-    <string name="preference_google">جوجل</string>
     <string name="preference_signin_user">تم تسجيل الدخول باسم %1$s</string>
     <string name="preference_notification_badges_summary">إظهار شارة للتطبيقات التي تحتوي على إشعارات غير مقراءة</string>
     <string name="preference_shortcut_badges">شارات الاختصارات</string>
@@ -433,7 +422,6 @@
     <string name="preference_search_contacts">جهات الاتصال</string>
     <string name="preference_search_appshortcuts_summary">البحث عن اختصارات التطبيقات</string>
     <string name="preference_search_supportedunits">الوحدات المدعومة</string>
-    <string name="preference_google_signin_summary">سجّل الدخول للبحث في جوجل درايف</string>
     <string name="preference_calendar_calendars">التقويمات</string>
     <string name="preference_calendar_hide_completed">إخفاء المهام المكتملة</string>
     <string name="preference_search_bar_launch_on_enter_summary">تشغيل التطابق المميز أو الإجراء السريع عند النقر فوق انتقال</string>
@@ -445,7 +433,6 @@
     <string name="preference_screen_icons_summary">الشبكة، حجم الرمز، حزم الرموز، الشارات</string>
     <string name="no_account_nextcloud">لم تقم بتوصيل حساب Nextcloud حتى الآن</string>
     <string name="no_account_owncloud">لم تقم بتوصيل حساب Owncloud حتى الآن</string>
-    <string name="no_account_google">لم تقم بتوصيل حساب جوجل حتى الآن</string>
     <string name="connect_account">توصيل الحساب</string>
     <string name="battery_part_charging">جاري الشحن</string>
     <string name="backup_complete">اكتمل النسخ الاحتياطي.</string>
@@ -458,25 +445,20 @@
     <string name="apps_profile_work">عمل</string>
     <string name="apps_profile_private">خاص</string>
     <string name="favorites">المفضلة</string>
-    <string name="create_app_shortcut">إنشاء اختصار</string>
     <string name="frequently_used_show_in_favorites">إظهار في المفضلة</string>
     <string name="frequently_used_rows">عدد الصفوف</string>
-    <string name="customize_tags_placeholder">العلامات</string>
     <string name="preference_screen_search_actions">إجراءات سريعة</string>
     <string name="search_action_call">اتصال</string>
     <string name="search_action_message">رسالة</string>
     <string name="search_action_share">مشاركة</string>
     <string name="search_action_contact">إضافة إلى جهات الاتصال</string>
     <string name="search_action_open_url">عرض موقع الويب</string>
-    <string name="create_search_action_title">إجراء سريع جديد</string>
-    <string name="edit_search_action_title">تحرير إجراء سريع</string>
     <string name="search_action_websearch_url_hint">قالب عنوان URL المستخدم لإنشاء عنوان URL للبحث على الويب. استخدم \'${1}\' كعنصر نائب لمصطلح البحث الفعلي، على سبيل المثال https://google.com/search?q=${1}.</string>
     <string name="tag_exists_error">توجد علامة بهذا الاسم بالفعل.</string>
     <string name="preference_layout_open_search">البحث / درج التطبيقات</string>
     <string name="open_search_pull_down">السحب لأسفل</string>
     <string name="preference_screen_gestures_summary">الإيماءات وإجراءات الإيماءات</string>
     <string name="missing_permission_accessibility_gesture_failed">يجب تمكين خدمة إمكانية الوصول الخاصة بالمشغل لتنفيذ هذا الإجراء.</string>
-    <string name="preference_search_result_ordering_weighted">الاستخدام</string>
     <string name="preference_search_result_ordering_weight_factor">مرونة الترتيب</string>
     <string name="preference_search_result_ordering_weight_factor_default">متوازن</string>
     <string name="widget_config_appwidget_background">بطاقة الخلفية</string>
@@ -563,7 +545,6 @@
     <string name="preference_search_unitconverter">محول الوحدات</string>
     <string name="preference_search_unitconverter_summary">الاستخدام: 1.5 كجم أو 4 سم &gt;&gt; بوصة</string>
     <string name="preference_search_wikipedia">ويكيبيديا</string>
-    <string name="preference_calendar_hide_allday">إخفاء أحداث طوال اليوم</string>
     <string name="preference_screen_buildinfo_summary">مزيد من المعلومات حول هذا الإصدار من هذا التطبيق</string>
     <string name="preference_search_bar_style">النمط</string>
     <string name="preference_hidden_items">نتائج البحث المخفية</string>
@@ -579,7 +560,6 @@
     <string name="preference_layout_fixed_rotation">تدوير الشاشة الثابت</string>
     <string name="preference_screen_gestures">الإيماءات</string>
     <string name="preference_gesture_swipe_left">السحب لليسار</string>
-    <string name="preference_search_result_ordering_alphabetic">أبجدي</string>
     <string name="widget_config_weather_integration_settings">إعدادات تكامل الطقس</string>
     <string name="clock_style_digital1">عريض</string>
     <string name="poi_category_restaurant">مطعم</string>
@@ -636,7 +616,6 @@
     <string name="preference_widgets_edit_button_summary">إظهار زر لإضافة وإزالة وإعادة ترتيب الأدوات</string>
     <string name="preference_screen_homescreen">الشاشة الرئيسية</string>
     <string name="icon_picker_search_icon">البحث في حزم الرموز</string>
-    <string name="icon_picker_no_packs_installed">لم يتم تثبيت حزم رموز</string>
     <string name="search_action_email">بريد إلكتروني</string>
     <string name="search_action_alarm">ضبط المنبه</string>
     <string name="search_action_timer">بدء المؤقت</string>
@@ -650,14 +629,12 @@
     <string name="note_widget_conflict_local_version">الإصدار الأخير المحفوظ:</string>
     <string name="preference_search_locations_show_map_summary">إظهار معاينة للخريطة للأماكن</string>
     <string name="preference_suspended_badges">تطبيقات معلقة</string>
-    <string name="reset_icon">إعادة تعيين الرمز</string>
     <string name="preference_cloud_badges_summary">إظهار شارة للملفات المخزنة في سحابة</string>
     <string name="preference_clockwidget_alarm_part_summary">إظهار التنبيهات التي سترن في غضون 8 ساعات القادمة</string>
     <string name="preference_search_locations_radius">نصف قطر البحث</string>
     <string name="preference_search_locations_summary">البحث في المنطقة المحلية عن المتاجر والأماكن الأخرى</string>
     <string name="preference_search_localfiles">الملفات المحلية</string>
     <string name="preference_search_localfiles_summary">البحث عن المستندات والصور والملفات الأخرى المخزنة على هذا الجهاز</string>
-    <string name="preference_search_gdrive_summary">البحث في ملفات %1$s على جوجل درايف</string>
     <string name="preference_search_bar_auto_focus_summary">إظهار لوحة المفاتيح تلقائيًا عند فتح درج التطبيقات</string>
     <string name="preference_category_favorites_frequently_used">مستخدم بشكل متكرر</string>
     <string name="apps_profile_main">شخصي</string>
@@ -667,8 +644,6 @@
     <string name="create_search_action_type_app">البحث في تطبيق</string>
     <string name="create_search_action_type_intent">غرض مخصص</string>
     <string name="search_action_websearch_url">قالب عنوان URL</string>
-    <string name="create_tag_title">علامة جديدة</string>
-    <string name="edit_tag_title">تحرير العلامة</string>
     <string name="tag_name">اسم العلامة</string>
     <string name="preference_layout_search_results">ترتيب نتائج البحث</string>
     <string name="preference_layout_fixed_search_bar">شريط بحث ثابت</string>
@@ -785,11 +760,9 @@
     <string name="profile_work_profile_state_locked">تطبيقات العمل متوقفة مؤقتًا.</string>
     <string name="profile_work_profile_action_unlock">إلغاء الإيقاف المؤقت</string>
     <string name="preference_search_websites_summary">إظهار معاينة لموقع ويب إذا كان استعلام البحث عبارة عن عنوان URL</string>
-    <string name="preference_google_signin">تسجيل الدخول باستخدام جوجل</string>
     <string name="gesture_action_power_menu">إظهار قائمة الطاقة</string>
     <string name="preference_search_result_ordering_weight_factor_low">مستقر</string>
     <string name="preference_search_result_ordering_weight_factor_high">متغير</string>
-    <string name="preference_search_result_ordering">ترتيب لنتائج البحث</string>
     <string name="widget_config_appwidget_borderless">بدون حدود</string>
     <string name="location_open_24_7">مفتوح 24/7</string>
     <string name="plugin_type_filesearch">الملفات</string>
@@ -838,7 +811,6 @@
     <string name="metric">متري</string>
     <string name="preference_search_locations_hide_uncategorized_summary">إظهار النتائج ذات الفئات المحددة جيدًا فقط، مثل المقاهي أو المطاعم</string>
     <string name="preference_search_locations_show_map">الخريطة</string>
-    <string name="preference_search_bar_separate_work_profile_summary">إظهار تطبيقات ملف تعريف العمل في علامة تبويب منفصلة</string>
     <string name="clock_style_digital2">بسيط</string>
     <string name="plugin_type_locationsearch">البحث عن الأماكن</string>
     <string name="poi_category_fast_food">وجبات سريعة</string>
