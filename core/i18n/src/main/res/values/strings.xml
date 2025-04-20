@@ -29,12 +29,9 @@
     <string name="menu_customize">Customize</string>
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Open</string>
-    <string name="menu_hide">Hide</string>
     <string name="menu_map">View on map</string>
     <string name="menu_website">Open website</string>
-    <string name="menu_unhide">Don\'t hide</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
-    <string name="msg_item_hidden">%1$s has been hidden.</string>
     <string name="action_undo">Undo</string>
     <string name="action_import">Import</string>
     <string name="action_done">Done</string>
@@ -275,7 +272,6 @@
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud server URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
-    <string name="nextcloud_server_url_empty">Server URL must not be empty</string>
     <!-- Nextcloud login flow, error invalid URL-->
     <string name="nextcloud_server_invalid_url">This URL does not point to a valid Nextcloud installation</string>
     <!-- Owncloud login flow, UR-->
@@ -291,9 +287,7 @@
     <!-- Owncloud login flow, login failed -->
     <string name="owncloud_login_failed">Login failed: incorrect username or password.</string>
     <!-- Owncloud login flow, error: username empty -->
-    <string name="owncloud_username_empty">User name must not be empty</string>
     <!-- Owncloud login flow, error: password empty -->
-    <string name="owncloud_password_empty">Password must not be empty</string>
     <!-- Nextcloud/Owncloud login flow, continue button -->
     <string name="login_flow_continue">Continue</string>
     <!-- Nextcloud/Owncloud login flow, login button -->
@@ -517,7 +511,6 @@
     <string name="preference_hide_status_bar">Hide status bar</string>
     <string name="preference_hide_nav_bar">Hide navigation bar</string>
     <string name="preference_screen_integrations_summary">Manage connected accounts and services</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Signed in as %1$s</string>
     <string name="preference_signout">Sign out</string>
     <string name="preference_summary_not_logged_in">You are currently not logged in</string>
@@ -633,15 +626,10 @@
     <string name="preference_search_locations_summary">Search the local area for shops and other places</string>
     <string name="preference_search_localfiles">Local files</string>
     <string name="preference_search_localfiles_summary">Search documents, photos and other files stored on this device</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">Search %1$s\'s files on Google Drive</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Search %1$s\'s files</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">Sign in with Google</string>
-    <string name="preference_google_signin_summary">Sign in to search Google Drive</string>
     <string name="preference_calendar_calendars">Calendars</string>
-    <string name="preference_calendar_hide_allday">Hide all-day events</string>
     <string name="preference_calendar_hide_completed">Hide completed tasks</string>
     <string name="preference_screen_buildinfo">Build information</string>
     <string name="preference_screen_buildinfo_summary">More information about this build of this app</string>
@@ -671,7 +659,6 @@
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
     <string name="preference_screen_icons">Grid &amp; icons</string>
     <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
-    <string name="preference_category_accounts">Accounts</string>
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
     <string name="preference_contacts_call_on_tap">Tap to call</string>
@@ -681,7 +668,6 @@
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
     <string name="no_account_owncloud">You haven\'t connected an Owncloud account yet</string>
     <!-- Used in an info banner if a specific feature requires a Google account -->
-    <string name="no_account_google">You haven\'t connected a Google account yet</string>
     <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
     <string name="connect_account">Connect account</string>
     <string name="battery_part_charging">Charging</string>
@@ -698,11 +684,9 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">Created %1$s on %2$s with %3$s.</string>
     <string name="restore_complete">The backup has been restored.</string>
-    <string name="icon_picker_title">Pick icon</string>
     <string name="icon_picker_default_icon">Default</string>
     <string name="icon_picker_suggestions">Suggestions</string>
     <string name="icon_picker_search_icon">Search in icon packs</string>
-    <string name="icon_picker_no_packs_installed">No icon packs installed</string>
     <string name="icon_picker_filter_all_packs">All icon packs</string>
     <string name="apps_profile_main">Personal</string>
     <string name="apps_profile_work">Work</string>
@@ -710,10 +694,8 @@
     <string name="favorites">Favorites</string>
     <string name="favorites_empty">Pinned and frequently used items will appear here</string>
     <string name="favorites_empty_tag">There are no items with this tag</string>
-    <string name="create_app_shortcut">Create shortcut</string>
     <string name="frequently_used_show_in_favorites">Show in favorites</string>
     <string name="frequently_used_rows">Number of rows</string>
-    <string name="customize_tags_placeholder">Tags</string>
     <string name="preference_screen_search_actions">Quick actions</string>
     <string name="preference_search_search_actions_summary">Configure quick actions and search shortcuts</string>
     <string name="search_action_call">Call</string>
@@ -730,8 +712,6 @@
     <string name="create_search_action_type_web">Search on a website</string>
     <string name="create_search_action_type_app">Search in an app</string>
     <string name="create_search_action_type_intent">Custom intent</string>
-    <string name="create_search_action_title">New quick action</string>
-    <string name="edit_search_action_title">Edit quick action</string>
     <string name="create_search_action_pick_app">Pick an app to search:</string>
     <string name="create_search_action_website_url">Enter the address of the website:</string>
     <string name="create_search_action_website_invalid_url">The given website cannot automatically be imported as a web search. You can try a different website or enter the required data manually in the next step.</string>
@@ -741,8 +721,6 @@
     <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term, e.g. https://google.com/search?q=${1}.</string>
     <string name="more_information">More information</string>
     <string name="experimental_feature">Experimental</string>
-    <string name="create_tag_title">New tag</string>
-    <string name="edit_tag_title">Edit tag</string>
     <string name="tag_exists_error">A tag with this name already exists.</string>
     <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged.</string>
     <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted.</string>
@@ -786,9 +764,6 @@
     <string name="gesture_failed_message">You have performed a \"%1$s\" gesture. This gesture is currently set to trigger a \"%2$s\" action. However, the action could not be performed for the following reason:</string>
     <string name="missing_permission_accessibility_gesture_failed">The launcher\'s accessibility service needs to be enabled to perform this action.</string>
     <string name="missing_permission_accessibility_gesture_settings">This action requires the launcher\'s accessibility service to be enabled.</string>
-    <string name="preference_search_result_ordering">Order of search results</string>
-    <string name="preference_search_result_ordering_alphabetic">Alphabetic</string>
-    <string name="preference_search_result_ordering_weighted">Usage</string>
     <string name="preference_search_result_ordering_weight_factor">Ranking flexibility</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stable</string>
     <string name="preference_search_result_ordering_weight_factor_default">Balanced</string>
@@ -855,8 +830,6 @@
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
     <string name="unavailable_searchable">This item does not exist anymore.</string>
-    <string name="preference_search_bar_separate_work_profile">Separate work profile apps</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Shows work profile apps in a separate tab</string>
     <string name="clock_style_digital1">Bold</string>
     <string name="clock_style_digital2">Simple</string>
     <string name="clock_style_orbit">Orbit</string>
@@ -1019,7 +992,6 @@
         <item quantity="one">%1$s list selected</item>
         <item quantity="other">%1$s lists selected</item>
     </plurals>
-    <string name="reset_icon">Reset icon</string>
     <string name="weather_forecast_humidity">Humidity</string>
     <string name="weather_forecast_wind">Wind</string>
     <string name="weather_forecast_precipitation">Precipitation</string>

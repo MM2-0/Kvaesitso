@@ -48,12 +48,10 @@ osmOpeningHours = "0.1.0"
 
 [libraries]
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradle-plugin" }
 
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jacksonCore" }
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jacksonDataformatYaml" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
-kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-immutable" }
@@ -79,7 +77,6 @@ androidx-lifecycle-viewmodelcompose = { group = "androidx.lifecycle", name = "li
 androidx-lifecycle-runtimecompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 
 
-androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "androidx-activity" }
 androidx-activitycompose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
 
 androidx-room = { group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
@@ -99,7 +96,6 @@ accompanist-pagerindicators = { group = "com.google.accompanist", name = "accomp
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
 accompanist-navigationanimation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
 
-androidx-constraintlayout-views = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.1" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "androidx-constraint-layout" }
 androidx-transition = { group = "androidx.transition", name = "transition", version = "1.5.1" }
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version = "1.4.0" }
@@ -108,7 +104,6 @@ androidx-datastore = { group = "androidx.datastore", name = "datastore", version
 androidx-emojipicker = { group = "androidx.emoji2", name = "emoji2-emojipicker", version.ref = "androidx-emojipicker" }
 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.0-beta01" }
-materialcomponents-core = { group = "com.google.android.material", name = "material", version = "1.12.0" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version = "4.12.0" }
 
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
