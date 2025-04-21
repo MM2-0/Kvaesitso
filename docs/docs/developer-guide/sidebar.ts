@@ -72,6 +72,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
             link: '/docs/developer-guide/plugins/plugin-types/file-search',
           },
           {
+            text: 'Contact Search Provider',
+            link: '/docs/developer-guide/plugins/plugin-types/contact-search',
+          },
+          {
             text: 'Places Search Provider',
             link: '/docs/developer-guide/plugins/plugin-types/places-search',
           },
