@@ -40,18 +40,19 @@ settings are available on the plugin's settings page.
 As of now, the following plugins are available:
 
 - **OneDrive plugin**: adds OneDrive file
-  search [[Github]](https://github.com/Kvaesitso/Plugin-OneDrive) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.onedrive)
+  search [[GitHub]](https://github.com/Kvaesitso/Plugin-OneDrive) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.onedrive)
 - **OpenWeatherMap plugin**: adds OpenWeatherMap weather
-  provider [[Github]](https://github.com/Kvaesitso/Plugin-OpenWeatherMap) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.openweathermap)
+  provider [[GitHub]](https://github.com/Kvaesitso/Plugin-OpenWeatherMap) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.openweathermap)
 - **Breezy Weather plugin**: forwards weather data from Breezy Weather to
-  Kvaesitso [[Github]](https://github.com/Kvaesitso/Plugin-BreezyWeather) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.breezyweather)
+  Kvaesitso [[GitHub]](https://github.com/Kvaesitso/Plugin-BreezyWeather) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.breezyweather)
 - **HERE plugin**: weather data, places, and departure times from
-  HERE [[Github]](https://github.com/Kvaesitso/Plugin-HERE) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.here)
+  HERE [[GitHub]](https://github.com/Kvaesitso/Plugin-HERE) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.here)
 - **Foursquare plugin**: weather data, places, and departure times from
-  Foursquare [[Github]](https://github.com/Kvaesitso/Plugin-Foursquare) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.foursquare)
+  Foursquare [[GitHub]](https://github.com/Kvaesitso/Plugin-Foursquare) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.foursquare)
+- **Tasks.org plugin**: tasks from the Tasks.org app [[GitHub]](https://github.com/Kvaesitso/Plugin-TasksOrg) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.tasks)
 - **Public transport plugin**: public transport data from several sources, based on
-  [schildbach/public-transport-enabler](https://github.com/schildbach/public-transport-enabler) [[Github]](https://github.com/shtrophic/KvaesitsoPlugin-PublicTransport) [[Download]](https://github.com/shtrophic/KvaesitsoPlugin-PublicTransport/releases)
-- **Meteo.lt**: weather data from [meteo.lt](https://meteo.lt), for Lithuania [[Github]](https://github.com/leekleak/KvaesitsoMeteoLT) [[Download]](https://github.com/leekleak/KvaesitsoMeteoLT/releases)
+  [schildbach/public-transport-enabler](https://github.com/schildbach/public-transport-enabler) [[GitHub]](https://github.com/shtrophic/KvaesitsoPlugin-PublicTransport) [[Download]](https://github.com/shtrophic/KvaesitsoPlugin-PublicTransport/releases)
+- **Meteo.lt**: weather data from [meteo.lt](https://meteo.lt), for Lithuania [[GitHub]](https://github.com/leekleak/KvaesitsoMeteoLT) [[Download]](https://github.com/leekleak/KvaesitsoMeteoLT/releases)
 
 ## Plugin development
 
