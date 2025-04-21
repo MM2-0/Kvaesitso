@@ -765,7 +765,7 @@
         <item quantity="other">%1$s уведомлений</item>
     </plurals>
     <string name="poi_category_car_wash">Мойка</string>
-    <string name="apps_profile_private">Private space</string>
+    <string name="apps_profile_private">Личное пространство</string>
     <string name="music_widget_previous_track">Предыдущий трек</string>
     <string name="calendar_widget_next_day">Следующий день</string>
     <string name="calendar_widget_create_event">Создать новое событие</string>
