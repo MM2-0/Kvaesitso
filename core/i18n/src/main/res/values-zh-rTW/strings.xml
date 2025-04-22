@@ -429,7 +429,7 @@
     <string name="search_action_label">名稱</string>
     <string name="search_action_app">應用程式</string>
     <string name="search_action_websearch_url">URL 範本</string>
-    <string name="search_action_websearch_url_hint">URL 範本用於建構搜尋引擎的 URL。使用 ‘${1}’ 作為實際搜尋字詞的預留位置，例如 https://google.com/search?q=${1}</string>
+    <string name="search_action_websearch_url_hint">URL 範本用於建構搜尋引擎的 URL。使用 ‘${1}’ 作為實際搜尋字詞的預留位置，例如 https://google.com/search?q=${1}。</string>
     <string name="more_information">更多資訊</string>
     <string name="experimental_feature">實驗性的</string>
     <string name="tag_exists_error">以此命名的標籤已經存在。</string>
@@ -532,7 +532,7 @@
     <string name="theme_color_scheme_autogenerate">從原色開始</string>
     <string name="preference_mdy_color_source">動態色彩來源</string>
     <string name="preference_debug_dump_heap_in_progress">正在擷取快照…</string>
-    <string name="plugin_type_filesearch">當暗搜尋</string>
+    <string name="plugin_type_filesearch">檔案</string>
     <string name="poi_category_mobile_phone">手機店</string>
     <string name="preference_search_locations_radius">搜尋半徑</string>
     <string name="theme_color_scheme_system_default">使用系統預設</string>
@@ -782,4 +782,18 @@
     <string name="preference_clock_widget_time_format_system">系統預設</string>
     <string name="preference_clock_widget_time_format">時間格式</string>
     <string name="widget_removed">小工具已移除</string>
+    <string name="preference_contacts_call_on_tap">輕觸以撥打</string>
+    <string name="preference_contacts_call_on_tap_summary">當輕觸電話號碼時立即開始撥號</string>
+    <string name="departure_time_now">現在</string>
+    <plurals name="departure_time_in">
+        <item quantity="other">在 %1$d 分鐘內</item>
+    </plurals>
+    <string name="departure_time_departed">已離開</string>
+    <string name="plugin_type_contacts">聯絡人</string>
+    <string name="preference_grid_list_icons">在列表中顯示應用程式圖示</string>
+    <string name="preference_grid_list_style_summary">以列表而不是網格顯示應用程式</string>
+    <string name="preference_grid_list_icons_summary">在列表檢視中顯示圖示</string>
+    <string name="preference_search_local_calendar_summary">在此裝置上搜尋日曆</string>
+    <string name="preference_grid_list_style">在列表中顯示應用程式</string>
+    <string name="missing_permission_call_contacts_settings">需要撥號權限以開始撥號</string>
 </resources>
