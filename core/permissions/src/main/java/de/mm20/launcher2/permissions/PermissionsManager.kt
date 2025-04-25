@@ -20,6 +20,7 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.tryStartActivity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import androidx.core.net.toUri
 
 interface PermissionsManager {
     fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup)
@@ -58,6 +59,7 @@ interface PermissionsManager {
 
 enum class PermissionGroup {
     Calendar,
+    Tasks,
     Location,
     Contacts,
     ExternalStorage,
@@ -76,6 +78,9 @@ internal class PermissionsManagerImpl(
 
     private val calendarPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Calendar)
+    )
+    private val tasksPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.Tasks)
     )
     private val contactsPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Contacts)
@@ -108,6 +113,14 @@ internal class PermissionsManagerImpl(
                 )
             }
 
+            PermissionGroup.Tasks -> {
+                ActivityCompat.requestPermissions(
+                    context,
+                    taskPermissions,
+                    permissionGroup.ordinal
+                )
+            }
+
             PermissionGroup.Location -> {
                 ActivityCompat.requestPermissions(
                     context,
@@ -128,7 +141,7 @@ internal class PermissionsManagerImpl(
                 if (isAtLeastApiLevel(Build.VERSION_CODES.R)) {
                     val intent =
                         Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
-                            it.data = Uri.parse("package:${context.packageName}")
+                            it.data = "package:${context.packageName}".toUri()
                         }
                     context.tryStartActivity(intent)
                     pendingPermissionRequests.add(PermissionGroup.ExternalStorage)
@@ -188,6 +201,10 @@ internal class PermissionsManagerImpl(
                 calendarPermissions.all { context.checkPermission(it) }
             }
 
+            PermissionGroup.Tasks -> {
+                taskPermissions.all { context.checkPermission(it) }
+            }
+
             PermissionGroup.Location -> {
                 locationPermissions.any { context.checkPermission(it) }
             }
@@ -231,6 +248,7 @@ internal class PermissionsManagerImpl(
     override fun hasPermission(permissionGroup: PermissionGroup): Flow<Boolean> {
         return when (permissionGroup) {
             PermissionGroup.Calendar -> calendarPermissionState
+            PermissionGroup.Tasks -> tasksPermissionState
             PermissionGroup.Location -> locationPermissionState
             PermissionGroup.Contacts -> contactsPermissionState
             PermissionGroup.ExternalStorage -> externalStoragePermissionState
@@ -251,6 +269,7 @@ internal class PermissionsManagerImpl(
         val granted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
         when (permissionGroup) {
             PermissionGroup.Calendar -> calendarPermissionState.value = granted
+            PermissionGroup.Tasks -> tasksPermissionState.value = granted
             PermissionGroup.Location -> locationPermissionState.value = granted
             PermissionGroup.Contacts -> contactsPermissionState.value = granted
             PermissionGroup.ExternalStorage -> externalStoragePermissionState.value = granted
@@ -278,6 +297,7 @@ internal class PermissionsManagerImpl(
 
     companion object {
         private val calendarPermissions = arrayOf(Manifest.permission.READ_CALENDAR)
+        private val taskPermissions = arrayOf("org.tasks.permission.READ_TASKS")
         private val locationPermissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
