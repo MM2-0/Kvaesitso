@@ -36,7 +36,6 @@ android {
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.appcompat)
-    implementation(libs.materialcomponents.core)
 
 
     implementation(project(":core:base"))

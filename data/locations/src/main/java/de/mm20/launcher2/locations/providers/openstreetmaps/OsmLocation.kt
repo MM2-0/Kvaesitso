@@ -1,11 +1,9 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import android.content.Context
-import de.mm20.launcher2.ktx.flatMapNotNull
 import de.mm20.launcher2.ktx.ifNullOrEmpty
 import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
-import de.mm20.launcher2.ktx.toMultiMap
 import de.mm20.launcher2.locations.OsmLocationSerializer
 import de.mm20.launcher2.openstreetmaps.R
 import de.mm20.launcher2.search.Location
@@ -332,48 +330,66 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
 }
 
 internal fun parseOpeningSchedule(
-    it: String?,
+    openingHours: String?,
     localTime: LocalDateTime = LocalDateTime.now()
 ): OpeningSchedule? {
-    val parsed = it?.toOpeningHoursOrNull(lenient = true) ?: return null
+    val parsed = openingHours?.toOpeningHoursOrNull(lenient = true) ?: return null
 
-    if (parsed.rules.singleOrNull()?.selector is TwentyFourSeven)
+    if (parsed.rules.singleOrNull()?.selector is TwentyFourSeven) {
         return OpeningSchedule.TwentyFourSeven
+    }
 
     val rangeRules = parsed.rules.mapNotNull { it.selector as? Range }
 
-    val applicableRules = rangeRules
-        .flatMapNotNull { range ->
-            with(range) {
-                when {
-                    weekdays != null -> weekdays!!.flatMap {
-                        when (it) {
-                            is Weekday -> listOf(it to range)
-                            is WeekdayRange -> (it.start.ordinal..it.end.ordinal).map { Weekday.entries[it] to range }
-                            is SpecificWeekdays -> listOf(it.weekday to range)
+    // Group rules by the weekdays they apply to. Rules can apply to multiple weekdays.
+    val rulesMap = mutableMapOf<Weekday, MutableList<Range>>(
+        Weekday.Monday to mutableListOf(),
+        Weekday.Tuesday to mutableListOf(),
+        Weekday.Wednesday to mutableListOf(),
+        Weekday.Thursday to mutableListOf(),
+        Weekday.Friday to mutableListOf(),
+        Weekday.Saturday to mutableListOf(),
+        Weekday.Sunday to mutableListOf()
+    )
+
+    for (rule in rangeRules) {
+        if (rule.weekdays != null) {
+            for (selector in rule.weekdays!!) {
+                when (selector) {
+                    is Weekday -> rulesMap[selector]!!.add(rule)
+                    is WeekdayRange -> {
+                        for (weekday in selector.start.ordinal..selector.end.ordinal) {
+                            rulesMap[Weekday.entries[weekday]]!!.add(rule)
                         }
                     }
-
-                    times.isNullOrEmpty().not() || months.isNullOrEmpty().not() ->
-                        Weekday.entries.map { it to range }
-
-                    else -> null
+                    is SpecificWeekdays -> {
+                        rulesMap[selector.weekday]!!.add(rule)
+                    }
                 }
             }
-        }.toMultiMap().mapNotNull { (day, rules) ->
-            rules.filterYears(localTime)
-                .filterMonths(localTime)
-                .filterNthDays(localTime)
-                .map { it.copy(weekdays = listOf(day)) }
-                .singleOrNull()
+        } else if (!rule.times.isNullOrEmpty() || !rule.months.isNullOrEmpty()) {
+            rulesMap.forEach { _, it ->
+                it.add(rule)
+            }
         }
+    }
 
-    val hours = mutableListOf<OpeningHours>()
+    // Filter out rules that are not valid for the current year, month, and week. Hopefully,
+    // there is only one rule left per weekday. If not, skip that weekday.
+    val applicableRules = rulesMap.mapNotNull { (day, rules) ->
+        rules.filterYears(localTime)
+            .filterMonths(localTime)
+            .filterNthDays(localTime)
+            .map { it.copy(weekdays = listOf(day)) }
+            .singleOrNull()
+    }
+
+    val hours = mutableSetOf<OpeningHours>()
 
     for (range in applicableRules) {
 
         val localTimesWithDuration =
-            range.times?.flatMap { it.toLocalTimeWithDuration() } ?: continue
+            range.times?.mapNotNull { it.toLocalTimeWithDuration() } ?: continue
         val daysOfWeek = range.weekdays
             .ifNullOrEmpty { Weekday.entries.toList() }
             .flatMap { it.toDaysOfWeek() }
@@ -389,27 +405,35 @@ internal fun parseOpeningSchedule(
     return OpeningSchedule.Hours(hours)
 }
 
-private fun List<Range>.filterYears(localTime: LocalDateTime): List<Range> = when {
-    none { it.years.isNullOrEmpty().not() } -> this
-    else -> filter {
-        (it.years ?: return@filter false).any {
+/**
+ * Returns only the rules that are valid for the given year.
+ */
+private fun List<Range>.filterYears(localTime: LocalDateTime): List<Range> {
+    if (all { it.years.isNullOrEmpty() }) return this
+
+    val thisYear = filter {
+        it.years?.any {
             when (it) {
                 is Year -> it.year == localTime.year
                 is StartingAtYear -> it.start <= localTime.year
                 is YearRange -> localTime.year in it.start..it.end step (it.step ?: 1)
             }
-        }
-    }.ifEmpty {
-        filter {
-            it.years.isNullOrEmpty()
-        }
+        } == true
     }
+
+    if (!thisYear.isEmpty()) return thisYear
+
+    return filter { it.years.isNullOrEmpty() }
 }
 
-private fun List<Range>.filterMonths(localTime: LocalDateTime): List<Range> = when {
-    none { it.months.isNullOrEmpty().not() } -> this
-    else -> filter {
-        (it.months ?: return@filter false).any {
+/**
+ * Returns only the rules that are valid for the given month.
+ */
+private fun List<Range>.filterMonths(localTime: LocalDateTime): List<Range> {
+    if (all { it.months.isNullOrEmpty() }) return this
+
+    val thisMonth = filter {
+        it.months?.any {
             when (it) {
                 is MonthRange -> (it.year?.let { it == localTime.year } != false) && localTime.month.ordinal in it.start.ordinal..it.end.ordinal
 
@@ -417,94 +441,117 @@ private fun List<Range>.filterMonths(localTime: LocalDateTime): List<Range> = wh
 
                 else -> false
             }
-        }
-    }.ifEmpty {
-        filter {
-            it.months.isNullOrEmpty()
-        }
+        } == true
     }
+
+    if (!thisMonth.isEmpty()) return thisMonth
+
+    return filter { it.months.isNullOrEmpty() }
 }
 
-private fun List<Range>.filterNthDays(localTime: LocalDateTime): List<Range> = when {
-    none { it.weekdays?.any { it is SpecificWeekdays } == true } -> this
-    else -> localTime.getNthWeekdaysOfCurrentWeek().let { currentWeek ->
+/**
+ * Returns only the rules that are valid for the given week.
+ * (i.e. if the given week is the 2nd week of the month, it will return only the rules that are
+ * valid for the 2nd week of the month)
+ */
+private fun List<Range>.filterNthDays(localTime: LocalDateTime): List<Range> {
+    if (none { it.weekdays?.any { it is SpecificWeekdays } == true }) return this
 
-        val specific = mapNotNull { range ->
-            (range.weekdays?.singleOrNull() as? SpecificWeekdays)?.let {
-                range to it
-            }
+    val currentWeek = localTime.getNthWeekdaysOfCurrentWeek()
+
+    val specific = mapNotNull { range ->
+        (range.weekdays?.singleOrNull() as? SpecificWeekdays)?.let {
+            range to it
         }
-        val unspecific = single { it.weekdays?.singleOrNull() !is SpecificWeekdays }
+    }
 
-        specific.firstOrNull { (_, specific) ->
-            currentWeek.any { (dow, nthFwd, nthBwd) ->
-                specific.weekday.ordinal == dow.ordinal && specific.nths.any {
-                    when (it) {
-                        is Nth -> it.nth == nthFwd
-                        is NthRange -> nthFwd in it.start..it.end
-                        is LastNth -> it.nth == nthBwd
-                    }
+    val rule = specific.firstOrNull { (_, specific) ->
+        currentWeek.any { (dow, nthFwd, nthBwd) ->
+            specific.weekday.ordinal == dow.ordinal && specific.nths.any {
+                when (it) {
+                    is Nth -> it.nth == nthFwd
+                    is NthRange -> nthFwd in it.start..it.end
+                    is LastNth -> it.nth == nthBwd
                 }
             }
-        }?.let {
-            (rule, _) -> listOf(rule)
-        } ?: listOf(unspecific)
-    }
-}
-
-private fun WeekdaysSelector.toDaysOfWeek(): List<DayOfWeek> = when (this) {
-    is Weekday -> listOf(
-        when (this) {
-            Weekday.Monday -> DayOfWeek.MONDAY
-            Weekday.Tuesday -> DayOfWeek.TUESDAY
-            Weekday.Wednesday -> DayOfWeek.WEDNESDAY
-            Weekday.Thursday -> DayOfWeek.THURSDAY
-            Weekday.Friday -> DayOfWeek.FRIDAY
-            Weekday.Saturday -> DayOfWeek.SATURDAY
-            Weekday.Sunday -> DayOfWeek.SUNDAY
         }
+    }
+
+    if (rule != null) return listOf(rule.first)
+
+    return listOfNotNull(
+        singleOrNull { it.weekdays?.singleOrNull() !is SpecificWeekdays }
     )
-
-    is WeekdayRange -> (start to end).map { it.toDaysOfWeek().single().value }
-        .into { start, end -> (start..end).map { DayOfWeek.of(it) } }
-
-    is SpecificWeekdays -> weekday.toDaysOfWeek()
 }
 
-
-private fun TimesSelector.toLocalTimeWithDuration(): List<Pair<LocalTime, Duration>> {
+private fun WeekdaysSelector.toDaysOfWeek(): List<DayOfWeek> {
     return when (this) {
-        is TimeSpan -> {
-            val start = start as? ClockTime ?: return emptyList()
-            val end = end as? ExtendedClockTime ?: return emptyList()
+        is Weekday -> listOf(
+            when (this) {
+                Weekday.Monday -> DayOfWeek.MONDAY
+                Weekday.Tuesday -> DayOfWeek.TUESDAY
+                Weekday.Wednesday -> DayOfWeek.WEDNESDAY
+                Weekday.Thursday -> DayOfWeek.THURSDAY
+                Weekday.Friday -> DayOfWeek.FRIDAY
+                Weekday.Saturday -> DayOfWeek.SATURDAY
+                Weekday.Sunday -> DayOfWeek.SUNDAY
+            }
+        )
 
-            listOf(
-                LocalTime.of(
-                    start.hour,
-                    start.minutes
-                ) to Duration.ofMinutes((Math.floorMod(end.hour - start.hour, 24) * 60 + end.minutes - start.minutes).toLong())
-            )
-        }
+        is WeekdayRange -> (start to end).map { it.toDaysOfWeek().single().value }
+            .into { start, end -> (start..end).map { DayOfWeek.of(it) } }
 
-        else -> return emptyList()
+        is SpecificWeekdays -> weekday.toDaysOfWeek()
     }
 }
 
+
+private fun TimesSelector.toLocalTimeWithDuration(): Pair<LocalTime, Duration>? {
+    if (this !is TimeSpan) return null
+
+    val start = start as? ClockTime ?: return null
+    val end = end as? ExtendedClockTime ?: return null
+
+    return LocalTime.of(
+        start.hour,
+        start.minutes
+    ) to Duration.ofMinutes(
+        (Math.floorMod(
+            end.hour - start.hour,
+            24
+        ) * 60 + end.minutes - start.minutes).toLong()
+    )
+}
+
+/**
+ * Calculates the ordinal position of each day of the current week (Monday to Sunday) within the month.
+ *
+ * @receiver LocalDateTime The current date and time.
+ * @return A list of triples, where each triple contains:
+ * - The `DayOfWeek` (e.g., Monday, Tuesday, etc.).
+ * - The forward ordinal position of the day in the month (e.g., 1st Monday, 2nd Tuesday, etc.).
+ * - The backward ordinal position of the day in the month (e.g., last Monday, 2nd last Tuesday, etc.).
+ *
+ * Example:
+ * If today is the 15th of a month (Wednesday), the function will return:
+ * - For Monday: `(DayOfWeek.MONDAY, 3, 2)` (3rd Monday of the month, 2nd last Monday of the month).
+ * - For Wednesday: `(DayOfWeek.WEDNESDAY, 3, 2)` (3rd Wednesday of the month, 2nd last Wednesday of the month).
+ */
 private fun LocalDateTime.getNthWeekdaysOfCurrentWeek(): List<Triple<DayOfWeek, Int, Int>> {
     val monday = with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
     return (0 until 7).map { i ->
         val (nth, nthLast) = monday.plusDays(i.toLong()).let { weekday ->
             (
-                ChronoUnit.WEEKS.between(
-                    with(TemporalAdjusters.firstInMonth(weekday.dayOfWeek)),
-                    weekday
-                ).toInt() + 1
-            ) to (
-                ChronoUnit.WEEKS.between(
-                    weekday,
-                    with(TemporalAdjusters.lastInMonth(weekday.dayOfWeek))
-                ).toInt() + 1
-            )
+                    ChronoUnit.WEEKS.between(
+                        with(TemporalAdjusters.firstInMonth(weekday.dayOfWeek)),
+                        weekday
+                    ).toInt() + 1
+                    ) to (
+                    ChronoUnit.WEEKS.between(
+                        weekday,
+                        with(TemporalAdjusters.lastInMonth(weekday.dayOfWeek))
+                    ).toInt() + 1
+                    )
         }
         Triple(DayOfWeek.entries[i], nth, nthLast)
     }

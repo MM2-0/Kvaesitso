@@ -59,9 +59,10 @@ fun SearchSettingsScreen() {
 
     var showFilterEditor by remember { mutableStateOf(false) }
 
-    val plugins by viewModel.plugins.collectAsStateWithLifecycle(emptyList())
-    val hasCalendarPlugins by remember { derivedStateOf { plugins.any { it.plugin.type == PluginType.Calendar } } }
-    val hasLocationPlugins by remember { derivedStateOf { plugins.any { it.plugin.type == PluginType.LocationSearch } } }
+    val plugins by viewModel.plugins.collectAsStateWithLifecycle(null)
+    val hasCalendarPlugins by remember { derivedStateOf { plugins?.any { it.plugin.type == PluginType.Calendar } } }
+    val hasLocationPlugins by remember { derivedStateOf { plugins?.any { it.plugin.type == PluginType.LocationSearch } } }
+    val hasContactPlugins by remember { derivedStateOf { plugins?.any { it.plugin.type == PluginType.ContactSearch } } }
 
 
     val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.collectAsStateWithLifecycle(null)
@@ -110,30 +111,41 @@ fun SearchSettingsScreen() {
                     }
                 )
 
-                AnimatedVisibility(hasContactsPermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_contact_search_settings),
+                if (hasLocationPlugins != false) {
+                    Preference(
+                        title = stringResource(R.string.preference_search_contacts),
+                        summary = stringResource(R.string.preference_search_contacts_summary),
+                        icon = Icons.Rounded.Person,
                         onClick = {
-                            viewModel.requestContactsPermission(context as AppCompatActivity)
+                            navController?.navigate("settings/search/contacts")
                         },
-                        modifier = Modifier.padding(16.dp)
+                    )
+                } else {
+                    AnimatedVisibility(hasContactsPermission == false) {
+                        MissingPermissionBanner(
+                            text = stringResource(R.string.missing_permission_contact_search_settings),
+                            onClick = {
+                                viewModel.requestContactsPermission(context as AppCompatActivity)
+                            },
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                    PreferenceWithSwitch(
+                        title = stringResource(R.string.preference_search_contacts),
+                        summary = stringResource(R.string.preference_search_contacts_summary),
+                        icon = Icons.Rounded.Person,
+                        switchValue = contacts == true && hasContactsPermission == true,
+                        onSwitchChanged = {
+                            viewModel.setContacts(it)
+                        },
+                        onClick = {
+                            navController?.navigate("settings/search/contacts")
+                        },
+                        enabled = hasContactsPermission == true
                     )
                 }
-                PreferenceWithSwitch(
-                    title = stringResource(R.string.preference_search_contacts),
-                    summary = stringResource(R.string.preference_search_contacts_summary),
-                    icon = Icons.Rounded.Person,
-                    switchValue = contacts == true && hasContactsPermission == true,
-                    onSwitchChanged = {
-                        viewModel.setContacts(it)
-                    },
-                    onClick = {
-                        navController?.navigate("settings/search/contacts")
-                    },
-                    enabled = hasContactsPermission == true
-                )
 
-                if (hasCalendarPlugins) {
+                if (hasCalendarPlugins != false) {
                     Preference(
                         title = stringResource(R.string.preference_search_calendar),
                         summary = stringResource(R.string.preference_search_calendar_summary),
@@ -247,7 +259,7 @@ fun SearchSettingsScreen() {
                     )
                 }
 
-                if (hasLocationPlugins) {
+                if (hasLocationPlugins != false) {
                     Preference(
                         title = stringResource(R.string.preference_search_locations),
                         summary = stringResource(R.string.preference_search_locations_summary),

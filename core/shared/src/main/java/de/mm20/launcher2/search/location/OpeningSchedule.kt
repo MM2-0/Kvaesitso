@@ -26,7 +26,10 @@ data class OpeningHours(
 sealed interface OpeningSchedule {
     data object TwentyFourSeven : OpeningSchedule
     @Serializable
-    data class Hours(@Serializable val openingHours: List<OpeningHours>) : OpeningSchedule
+    data class Hours(@Serializable val openingHours: Set<OpeningHours>) : OpeningSchedule {
+        @Deprecated("Use the constructor with Set<OpeningHours> instead.")
+        constructor(openingHours: List<OpeningHours>) : this(openingHours.toSet())
+    }
 }
 
 /**

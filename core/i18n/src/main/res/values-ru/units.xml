@@ -261,7 +261,7 @@
     <string name="unit_kilogram_symbol">кг</string>
     <string name="unit_gram_symbol">г</string>
     <string name="unit_metric_ton_symbol">т</string>
-    <string name="unit_long_ton_symbol">длин. т</string>
+    <string name="unit_long_ton_symbol">длин. т.</string>
     <string name="unit_stone_symbol">ст.</string>
     <plurals name="unit_stone">
         <item quantity="one">стоун</item>
@@ -284,7 +284,7 @@
         <item quantity="other">унций</item>
     </plurals>
     <string name="unit_degree_fahrenheit_symbol">℉</string>
-    <string name="unit_short_ton_symbol">кор. т</string>
+    <string name="unit_short_ton_symbol">кор. т.</string>
     <plurals name="unit_short_ton">
         <item quantity="one">короткая тонна</item>
         <item quantity="few">коротких тонны</item>
@@ -378,4 +378,17 @@
         <item quantity="many">дециметров</item>
         <item quantity="other">дециметров</item>
     </plurals>
+    <string name="dimension_length">Длина</string>
+    <string name="dimension_mass">Масса</string>
+    <string name="dimension_velocity">Скорость</string>
+    <string name="dimension_volume">Объем</string>
+    <string name="dimension_area">Область</string>
+    <string name="dimension_currency">Валюта</string>
+    <string name="dimension_data">Данные</string>
+    <string name="dimension_bitrate">Битрейт</string>
+    <string name="dimension_pressure">Давление</string>
+    <string name="dimension_energy">Энергия</string>
+    <string name="dimension_frequency">Частота</string>
+    <string name="dimension_temperature">Температура</string>
+    <string name="dimension_time">Время</string>
 </resources>

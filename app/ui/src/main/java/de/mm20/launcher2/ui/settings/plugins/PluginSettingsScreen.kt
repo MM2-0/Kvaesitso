@@ -6,11 +6,8 @@ import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,15 +20,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.InsertDriveFile
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
@@ -64,7 +57,6 @@ import coil.compose.AsyncImage
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
-import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.themes.atTone
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
@@ -109,6 +101,11 @@ fun PluginSettingsScreen(pluginId: String) {
         minActiveState = Lifecycle.State.RESUMED
     )
 
+    val contactPlugins by viewModel.contactPlugins.collectAsStateWithLifecycle(
+        emptyList(),
+        minActiveState = Lifecycle.State.RESUMED
+    )
+
     val weatherPlugins by viewModel.weatherPlugins.collectAsStateWithLifecycle(
         emptyList(),
         minActiveState = Lifecycle.State.RESUMED
@@ -122,6 +119,10 @@ fun PluginSettingsScreen(pluginId: String) {
         }
 
     val enabledFileSearchPlugins by viewModel.enabledFileSearchPlugins.collectAsStateWithLifecycle(
+        null
+    )
+
+    val enabledContactPlugins by viewModel.enabledContactPlugins.collectAsStateWithLifecycle(
         null
     )
 
@@ -194,6 +195,7 @@ fun PluginSettingsScreen(pluginId: String) {
         ) {
             Surface(
                 modifier = Modifier.fillMaxWidth()
+                    .padding(bottom = 16.dp)
             ) {
                 Column {
                     Row(
@@ -247,47 +249,6 @@ fun PluginSettingsScreen(pluginId: String) {
                                 ),
                             style = MaterialTheme.typography.bodyMedium,
                         )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .horizontalScroll(rememberScrollState())
-                            .padding(bottom = 24.dp, start = 12.dp, end = 12.dp, top = 24.dp)
-                    ) {
-                        for (type in types) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .padding(end = 4.dp)
-                                    .background(
-                                        MaterialTheme.colorScheme.tertiaryContainer,
-                                        shape = MaterialTheme.shapes.medium,
-                                    )
-                                    .padding(4.dp)
-                            ) {
-                                Icon(
-                                    when (type) {
-                                        PluginType.FileSearch -> Icons.AutoMirrored.Rounded.InsertDriveFile
-                                        PluginType.Weather -> Icons.Rounded.LightMode
-                                        PluginType.LocationSearch -> Icons.Rounded.Place
-                                        PluginType.Calendar -> Icons.Rounded.Today
-                                    },
-                                    null,
-                                    modifier = Modifier.size(16.dp),
-                                    tint = MaterialTheme.colorScheme.onTertiaryContainer,
-                                )
-                                Text(
-                                    when (type) {
-                                        PluginType.FileSearch -> stringResource(R.string.plugin_type_filesearch)
-                                        PluginType.Weather -> stringResource(R.string.plugin_type_weather)
-                                        PluginType.LocationSearch -> stringResource(R.string.plugin_type_locationsearch)
-                                        PluginType.Calendar -> stringResource(R.string.plugin_type_calendar)
-                                    },
-                                    modifier = Modifier.padding(horizontal = 4.dp),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = MaterialTheme.colorScheme.onTertiaryContainer,
-                                )
-                            }
-                        }
                     }
                 }
 
@@ -371,6 +332,59 @@ fun PluginSettingsScreen(pluginId: String) {
                                     value = enabledFileSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
                                     onValueChanged = {
                                         viewModel.setFileSearchPluginEnabled(
+                                            plugin.plugin.authority,
+                                            it
+                                        )
+                                    },
+                                    iconPadding = false,
+                                )
+                            }
+                        }
+                    }
+                    if (contactPlugins.isNotEmpty()) {
+                        PreferenceCategory(
+                            stringResource(R.string.plugin_type_contacts),
+                            iconPadding = false,
+                        ) {
+                            for (plugin in contactPlugins) {
+                                val state = plugin.state
+                                if (state is PluginState.SetupRequired) {
+                                    Banner(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = state.message
+                                            ?: stringResource(R.string.plugin_state_setup_required),
+                                        icon = Icons.Rounded.Info,
+                                        primaryAction = {
+                                            TextButton(onClick = {
+                                                try {
+                                                    state.setupActivity.sendWithBackgroundPermission(
+                                                        context
+                                                    )
+                                                } catch (e: PendingIntent.CanceledException) {
+                                                    CrashReporter.logException(e)
+                                                }
+                                            }) {
+                                                Text(stringResource(R.string.plugin_action_setup))
+                                            }
+                                        }
+                                    )
+                                } else if (state is PluginState.Error) {
+                                    Banner(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = stringResource(R.string.plugin_state_error),
+                                        icon = Icons.Rounded.Error,
+                                        color = MaterialTheme.colorScheme.errorContainer,
+                                    )
+                                }
+                                SwitchPreference(
+                                    title = plugin.plugin.label,
+                                    enabled = enabledContactPlugins != null && state is PluginState.Ready,
+                                    summary = (state as? PluginState.Ready)?.text
+                                        ?: (state as? PluginState.SetupRequired)?.message
+                                        ?: plugin.plugin.description,
+                                    value = enabledContactPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                                    onValueChanged = {
+                                        viewModel.setContactPluginEnabled(
                                             plugin.plugin.authority,
                                             it
                                         )

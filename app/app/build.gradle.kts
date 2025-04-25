@@ -31,8 +31,8 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2025040300
-        versionName = "1.35.1"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2025042101
+        versionName = "1.35.4"
         signingConfig = signingConfigs.getByName("debug")
     }
 
@@ -105,20 +105,10 @@ dependencies {
 
     //Android Jetpack
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.browser)
-    implementation(libs.androidx.palette)
     implementation(libs.androidx.core)
-    implementation(libs.androidx.exifinterface)
-    implementation(libs.materialcomponents.core)
-    implementation(libs.androidx.constraintlayout.views)
-
-    implementation(libs.bundles.androidx.lifecycle)
-
-    implementation(libs.androidx.work)
 
     implementation(libs.coil.core)
     implementation(libs.coil.svg)
-
 
     implementation(libs.koin.android)
 
@@ -165,6 +155,6 @@ dependencies {
     implementation(project(":services:plugins"))
     implementation(project(":core:devicepose"))
 
-    // Uncomment this if you want annoying notifications in your debug builds yelling at you how terrible your code is
+    // Uncomment this if you want annoying notifications in your debug builds
     //debugImplementation(libs.leakcanary)
 }

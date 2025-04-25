@@ -114,19 +114,14 @@
     <string name="menu_launch">Starten</string>
     <string name="menu_open_file">Öffnen</string>
     <string name="preference_screen_integrations_summary">Verbundene Accounts und Dienste verwalten</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Angemeldet als %1$s</string>
     <string name="file_type_drawing">Zeichnung</string>
     <string name="file_type_ebook">E-Book</string>
     <string name="file_type_form">Formular</string>
-    <string name="menu_hide">Ausblenden</string>
     <string name="menu_delete">Löschen</string>
-    <string name="menu_unhide">Nicht ausblenden</string>
     <string name="menu_calendar_open_externally">In Kalender-App anzeigen</string>
     <string name="preference_icon_shape_hexagon">Sechseck</string>
     <string name="preference_icon_shape_triangle">Reuleaux-Dreieck</string>
-    <string name="preference_google_signin">Über Google anmelden</string>
-    <string name="preference_google_signin_summary">Anmelden, um Google Drive durchsuchen zu können</string>
     <string name="shortcut_summary">Von %1$s</string>
     <string name="provider_metno">MET Norway</string>
     <string name="weather_condition_sleetshowers">Schneeregenschauer</string>
@@ -211,7 +206,6 @@
     <string name="edit_favorites_dialog_pinned_sorted">Angeheftet – manuell sortiert</string>
     <string name="login_flow_continue">Weiter</string>
     <string name="nextcloud_server_url">Nextcloud-Server-URL</string>
-    <string name="nextcloud_server_url_empty">Server-URL darf nicht leer sein</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="nextcloud_server_invalid_url">Diese URL verweist auf keine gültige Nextcloud-Installation</string>
     <string name="login_flow_login">Anmelden</string>
@@ -224,8 +218,6 @@
     <string name="owncloud_login_failed">Anmeldung fehlgeschlagen: Passwort oder Benutzername ist ungültig.</string>
     <string name="preference_owncloud_signin">Bei Owncloud anmelden</string>
     <string name="preference_owncloud_signin_summary">Anmelden, um Ihren Owncloud-Server durchsuchen zu können</string>
-    <string name="owncloud_username_empty">Nutzername darf nicht leer sein</string>
-    <string name="owncloud_password_empty">Passwort darf nicht leer sein</string>
     <string name="preference_cards_summary">Erscheinungsbild von Karten anpassen</string>
     <string name="preference_cards">Karten</string>
     <string name="preference_cards_corner_radius">Eckradius</string>
@@ -271,7 +263,6 @@
     <string name="preference_crash_reporter">Crash-Reporter</string>
     <string name="preference_crash_reporter_summary">Fehler- und Absturzberichte</string>
     <string name="preference_calendar_calendars">Kalender</string>
-    <string name="preference_calendar_hide_allday">Ganztägige Termine ausblenden</string>
     <string name="preference_screen_search">Suche</string>
     <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Elemente</string>
     <string name="preference_search_favorites">Favoriten</string>
@@ -297,9 +288,7 @@
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">%1$ss Dateien durchsuchen</string>
-    <string name="preference_search_gdrive">Google Drive</string>
     <string name="preference_summary_not_logged_in">Sie sind im Moment nicht angemeldet</string>
-    <string name="preference_search_gdrive_summary">%1$ss Dateien auf Google Drive durchsuchen</string>
     <string name="preference_search_bar_style">Stil</string>
     <string name="preference_search_bar_style_summary">Erscheinungsbild der Suchleiste anpassen</string>
     <string name="preference_search_bar_auto_focus">Tastatur öffnen</string>
@@ -315,7 +304,6 @@
     <string name="missing_permission_notification_badges">Benachrichtigungszugriff wird benötigt um Benachrichtigungsplaketten anzuzeigen</string>
     <string name="no_account_nextcloud">Sie haben noch kein Nextcloud-Konto verbunden</string>
     <string name="no_account_owncloud">Sie haben noch kein Owncloud-Konto verbunden</string>
-    <string name="no_account_google">Sie haben noch kein Google-Konto verbunden</string>
     <string name="connect_account">Konto verbinden</string>
     <string name="turn_off">Deaktivieren</string>
     <string name="battery_part_charging">Wird geladen</string>
@@ -341,7 +329,6 @@
     <string name="preference_grid_icon_size">Symbolgröße</string>
     <string name="preference_search_currencyconverter">Währungsumrechner</string>
     <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen um Währungen umzurechnen</string>
-    <string name="msg_item_hidden">%1$s wurde ausgeblendet.</string>
     <string name="action_undo">Rückgängig</string>
     <string name="calendar_widget_next_events">Nächstes Ereignis</string>
     <string name="preference_hidden_items">Ausgeblendete Suchergebnisse</string>
@@ -373,7 +360,6 @@
     <string name="preference_blur_wallpaper_unsupported">Auf diesem Gerät nicht unterstützt</string>
     <string name="preference_force_themed_icons">Eingefärbte Symbole erzwingen</string>
     <string name="preference_force_themed_icons_summary">Das Anwendungsfarbschema auf alle Symbole anwenden, einschließlich nicht unterstützter (nicht empfohlen)</string>
-    <string name="icon_picker_title">Icon wählen</string>
     <string name="icon_picker_default_icon">Vorgabe</string>
     <string name="icon_picker_suggestions">Vorschläge</string>
     <string name="icon_picker_search_icon">In Symbolpaketen suchen</string>
@@ -387,7 +373,6 @@
     <string name="preference_icon_shape_teardrop">Teardrop</string>
     <string name="favorites">Favoriten</string>
     <string name="missing_permission_appshortcuts_create">%1$s muss als Standard-Start-App gesetzt sein, um App-Shortcuts erstellen zu können.</string>
-    <string name="create_app_shortcut">Shortcut erstellen</string>
     <string name="edit_favorites_dialog_empty_section">Elemente hierhin ziehen</string>
     <string name="preference_category_debug_tools">Werkzeuge</string>
     <string name="preference_debug_cleanup_database">Datenbank aufräumen</string>
@@ -399,7 +384,6 @@
     <string name="frequently_used_rows">Anzahl Zeilen</string>
     <string name="frequently_used_show_in_favorites">In Favoriten anzeigen</string>
     <string name="menu_remove">Entfernen</string>
-    <string name="customize_tags_placeholder">Tags</string>
     <string name="edit_favorites_dialog_tags">Tags</string>
     <string name="favorites_empty_tag">Es gibt keine Elemente mit diesem Tag</string>
     <string name="edit_favorites_dialog_tag_section_empty">Angeheftete Tags werden hier angezeigt</string>
@@ -441,8 +425,6 @@
     <string name="create_search_action_type">Welche Art von Aktion möchten Sie erstellen\?</string>
     <string name="create_search_action_type_web">Auf einer Webseite suchen</string>
     <string name="create_search_action_type_app">In einer App suchen</string>
-    <string name="create_search_action_title">Neue Schnellaktion</string>
-    <string name="edit_search_action_title">Schnellaktion bearbeiten</string>
     <string name="create_search_action_pick_app">App zum Durchsuchen auswählen:</string>
     <string name="create_search_action_website_url">Adresse der Webseite eingeben:</string>
     <string name="search_action_label">Name</string>
@@ -456,8 +438,6 @@
     <string name="preference_screen_tags_summary">Tags und getaggte Elemente verwalten</string>
     <string name="duplicate">Duplizieren</string>
     <string name="action_next">Weiter</string>
-    <string name="create_tag_title">Neuer Tag</string>
-    <string name="edit_tag_title">Tag bearbeiten</string>
     <string name="tag_exists_error">Ein Tag mit diesem Namen existiert bereits.</string>
     <string name="tag_exists_message">Ein Tag mit diesem Namen existiert bereits. Wenn Sie fortfahren, werden die beiden Tags zusammengeführt.</string>
     <string name="tag_no_items_message">Diesem Tag sind keine Elemente zugeordnet. Wenn Sie fortfahren, wird der Tag gelöscht.</string>
@@ -498,14 +478,10 @@
     <string name="preference_layout_fixed_search_bar_summary">Suchleiste nicht aus dem Sichtbereich herausscrollen</string>
     <string name="preference_layout_fixed_rotation">Feste Bildschirmausrichtung</string>
     <string name="preference_layout_fixed_rotation_summary">Porträtmodus erzwingen</string>
-    <string name="preference_search_result_ordering">Sortierung der Suchergebnisse</string>
-    <string name="preference_search_result_ordering_alphabetic">Alphabetisch</string>
-    <string name="preference_search_result_ordering_weighted">Nutzung</string>
     <string name="preference_search_result_ordering_weight_factor">Ranking-Flexibilität</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
     <string name="preference_search_result_ordering_weight_factor_default">Ausgewogen</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variabel</string>
-    <string name="icon_picker_no_packs_installed">Keine Symbolpakete installiert</string>
     <string name="gesture_action_launch_app">App starten</string>
     <string name="icon_picker_filter_all_packs">Alle Symbolpakete</string>
     <string name="preference_screen_clockwidget_summary">Uhrenstil und -Komponenten konfigurieren</string>
@@ -513,7 +489,6 @@
     <string name="preference_screen_homescreen_summary">Uhr, Suchleiste, Hintergrundbild, Systemleisten</string>
     <string name="preference_screen_icons">Raster &amp; Symbole</string>
     <string name="preference_screen_icons_summary">Raster, Symbolgröße, Symbolpakete, Plaketten</string>
-    <string name="preference_category_accounts">Konten</string>
     <string name="preference_weather_integration">Wetter</string>
     <string name="preference_media_integration">Mediensteuerung</string>
     <string name="widget_config_calendar_no_calendars">Keine Kalender gefunden</string>
@@ -620,8 +595,6 @@
     <string name="preference_search_locations_show_map">Karte</string>
     <string name="preference_search_locations_hide_uncategorized">Unkategorisierte Orte ausblenden</string>
     <string name="location_open_24_7">24/7 geöffnet</string>
-    <string name="preference_search_bar_separate_work_profile">Arbeitsprofil-Apps trennen</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Apps im Arbeitsprofil in einem separaten Tab anzeigen</string>
     <string name="unavailable_searchable">Dieses Element existiert nicht mehr.</string>
     <string name="preference_clock_widget_show_seconds">Sekunden anzeigen</string>
     <string name="widget_use_theme_colors">Design-Farbe verwenden</string>
@@ -809,7 +782,6 @@
         <item quantity="one">%1$s Liste ausgewählt</item>
         <item quantity="other">%1$s Listen ausgewählt</item>
     </plurals>
-    <string name="reset_icon">Symbol zurücksetzen</string>
     <string name="preference_compact_tags">Kompakte Tags</string>
     <string name="preference_compact_tags_summary">Beschriftungen oder Symbole von Tags ausblenden um den von Tags eingenommenen Platz zu reduzieren</string>
     <string name="departure_time_now">jetzt</string>

@@ -16,8 +16,6 @@
     <string name="menu_open_file">بازکردن پرونده</string>
     <string name="menu_map">مشاهده در نقشه</string>
     <string name="menu_website">بازکردن وبگاه</string>
-    <string name="menu_hide">پنهان کردن</string>
-    <string name="msg_item_hidden">%1$s پنهان شده.</string>
     <string name="action_undo">واگرد</string>
     <string name="action_import">وارد کردن</string>
     <string name="menu_delete">پاک‌کردن</string>
@@ -112,14 +110,11 @@
     <string name="edit_favorites_dialog_empty_section">موارد را به اینجا بکشید</string>
     <string name="edit_favorites_dialog_new_tag">ایجاد برچسب…</string>
     <string name="nextcloud_server_url">نشانی کارساز Nextcloud</string>
-    <string name="nextcloud_server_url_empty">نشانی نمیتواند خالی باشد</string>
     <string name="nextcloud_server_invalid_url">این نشانی به یه کارساز معتبر اشاره نمیکند</string>
     <string name="owncloud_server_url">نشانی کارساز Owncloud</string>
     <string name="owncloud_password">گذرواژه</string>
     <string name="owncloud_username">نام کاربری</string>
     <string name="owncloud_login_failed">ورود ناموفق: نام کاربری یا گذرواژه نادرست.</string>
-    <string name="owncloud_username_empty">نام کاربری نمیتواند خالی باشد</string>
-    <string name="owncloud_password_empty">گذرواژه نمیتواند خالی باشد</string>
     <string name="login_flow_continue">ادامه</string>
     <string name="disclaimer">بیانیه انکار</string>
     <string name="show_all">نمایش همه</string>
@@ -153,7 +148,6 @@
     <string name="file_meta_app_pkgname">نام بسته: %1$s</string>
     <string name="edit">ویرایش</string>
     <string name="turn_off">خاموش کردن</string>
-    <string name="menu_unhide">پنهان نکن</string>
     <string name="wind_east_south_east">شرق جنوب شرقی</string>
     <string name="easter_egg_1">در اینجا هیچ شگفتانه ای وجود ندارد، دنبال نخود سیاه نگردید.</string>
     <string name="login_flow_login">ورود</string>
@@ -204,7 +198,6 @@
     <string name="preference_owncloud_signin_summary">ورود به Owncloud برای جستجوی کارساز خود</string>
     <string name="preference_about_telegram">گروه تلگرام</string>
     <string name="preference_clockwidget_layout_vertical">پیش‌گزیده</string>
-    <string name="edit_search_action_title">ویرایش اقدام سریع</string>
     <string name="create_search_action_pick_app">انتخاب یک برنامه برای جستجو:</string>
     <string name="create_search_action_website_url">نشانی وبگاه را وارد کنید:</string>
     <string name="preference_icon_pack_summary_empty">هیچ بسته نمادی نصب نشده است</string>
@@ -223,10 +216,8 @@
     <string name="preference_force_themed_icons">اجباری کردن نماد‌های پوسته‌دار</string>
     <string name="departure_time_now">اینک</string>
     <string name="preference_force_themed_icons_summary">به‌کارگیری طرح رنگی برنامه برای کل نماد‌ها، شامل آن‌هایی که پشتیبانی نمی‌شوند (توصیه نمی‌شود)</string>
-    <string name="preference_search_gdrive_summary">جستجوی فایل‌های %1$s در گوگل درایو</string>
     <string name="preference_search_bar_auto_focus">بازکردن صفحه‌کلید</string>
     <string name="icon_picker_search_icon">جستجو در بسته‌های نماد</string>
-    <string name="icon_picker_no_packs_installed">هیچ بسته نمادی نصب نشده است</string>
     <string name="grant_permission">اجازه دادن</string>
     <string name="preference_screen_appearance">ظاهر</string>
     <string name="preference_theme_light">روشن</string>
@@ -272,7 +263,6 @@
     <string name="preference_system_bar_icons_light">روشن</string>
     <string name="preference_system_bar_icons_dark">تیره</string>
     <string name="preference_hide_status_bar">مخفی کردن نوار وضعیت</string>
-    <string name="preference_google">گوگل</string>
     <string name="preference_hide_nav_bar">پنهان کردن نوار ناوبری</string>
     <string name="weather_condition_heavyrainshowersandthunder">بارش دوره‌ای سنگین باران و رعد</string>
     <string name="preference_blur_wallpaper">محو کردن پس‌زمینه</string>
@@ -328,11 +318,9 @@
     <string name="weather_forecast_humidity">رطوبت</string>
     <string name="disclaimer_currency_converter">نرخ ارز منتشر شده روزانه توسط بانک مرکزی اروپا. تمامی داده‌ها «به همان صورت» ارائه شده و بدون هیچ گونه ضمانتی است. مسئولیتی در قبال این اطلاعات پذیرفته نمی‌شود.\n\nآخرین به‌روزرسانی: %1$s</string>
     <string name="preference_search_local_calendar_summary">جستجوی تقویم‌ها روی این دستگاه</string>
-    <string name="preference_google_signin">ورود با گوگل</string>
     <string name="preference_search_bar_auto_focus_summary">به شیوه خودکار هنگام بازکردن کشوی برنامه‌ها، صفحه‌کلید نمایش داده شود</string>
     <string name="preference_screen_icons">شبکه و نمادها</string>
     <string name="preference_screen_icons_summary">شبکه، اندازه نماد، بسته‌های نماد، نشان‌ها</string>
-    <string name="preference_category_accounts">حساب‌ها</string>
     <string name="restore_different_minor_version">این پشتیبان با نسخه متفاوتی از %1$s ایجاد شده است. ممکن است برخی از داده‌ها به درستی بازیابی نشوند.</string>
     <string name="restore_incompatible_file">این پشتیبان با نگارشی ناهمسان با %1$s ساخته شده و نمی‌تواند با این نگارش بازیابی شود.</string>
     <string name="search_action_label">نام</string>
@@ -344,8 +332,6 @@
     <string name="search_bar_position_bottom">پایین</string>
     <string name="preference_search_result_ordering_weight_factor_low">پایدار</string>
     <string name="preference_search_result_ordering_weight_factor_default">متوازن</string>
-    <string name="preference_search_result_ordering_alphabetic">الفبایی</string>
-    <string name="preference_search_result_ordering_weighted">بر اساس استفاده</string>
     <string name="preference_search_result_ordering_weight_factor">انعطاف‌پذیری رتبه‌بندی</string>
     <string name="widget_config_appwidget_configure">تنظیم ابزارک</string>
     <string name="widget_config_appwidget_resize">تغییر اندازه</string>
@@ -411,7 +397,6 @@
     <string name="music_widget_pause">ایست</string>
     <string name="music_widget_open_player">بازکردن پخش‌کننده</string>
     <string name="calendar_widget_previous_day">روز پیشین</string>
-    <string name="reset_icon">بازنشانی نماد</string>
     <string name="calendar_widget_next_day">روز پسین</string>
     <string name="calendar_widget_create_event">ایجاد رویداد جدید</string>
     <string name="profile_private_profile_action_unlock">بازکردن</string>
@@ -504,7 +489,6 @@
     <string name="gesture_action_power_menu">نمایش گزینه‌های نیرو</string>
     <string name="gesture_action_recents">بازکردن برنامه‌های اخیر</string>
     <string name="gesture_failed_message">شما یک حرکت \"%1$s\" انجام داده‌اید. این حرکت هم برای اجرای کنش \"%2$s\" تنظیم شده است. با این حال، کنش دلخواه به دلیل زیر قابل اجرا نبود:</string>
-    <string name="preference_search_result_ordering">ترتیب یافته‌های جستجو</string>
     <string name="missing_permission_accessibility_gesture_failed">خدمات دسترسی برنامه راه‌انداز باید روشن باشد تا این کار انجام شود.</string>
     <string name="note_widget_action_relink_file">بازپیوندی</string>
     <string name="note_widget_conflict">ناسازگاری</string>
@@ -546,8 +530,6 @@
     <string name="plugin_state_error">این افزونه به‌درستی کار نمی‌کند</string>
     <string name="plugin_state_setup_required">در آغاز باید این افزونه را تنظیم کنید</string>
     <string name="unavailable_searchable">این مورد دیگر وجود ندارد.</string>
-    <string name="preference_search_bar_separate_work_profile">جدا کردن برنامه‌های پروپرونده کاری</string>
-    <string name="preference_search_bar_separate_work_profile_summary">نمایش برنامه‌های پروپرونده کاری در یک برگه جدا</string>
     <string name="clock_style_digital1">برجسته</string>
     <string name="clock_style_digital2">ساده</string>
     <string name="poi_category_fast_food">فست‌فود</string>
@@ -598,11 +580,9 @@
     <string name="backup_complete">پشتیبان‌گیری تکمیل شد.</string>
     <string name="icon_picker_default_icon">پیش‌گزیده</string>
     <string name="restore_complete">پشتیبان بازیابی شد.</string>
-    <string name="icon_picker_title">انتخاب نماد</string>
     <string name="apps_profile_work">کار</string>
     <string name="icon_picker_filter_all_packs">همه بسته‌های نماد</string>
     <string name="apps_profile_main">شخصی</string>
-    <string name="create_app_shortcut">ساخت میانبر</string>
     <string name="frequently_used_rows">تعداد ردیف‌ها</string>
     <string name="search_action_call">تماس</string>
     <string name="action_done">انجام شده</string>
@@ -698,10 +678,7 @@
     <string name="preference_search_websites_summary">اگر متن جستجو شده بک آدرس وب باشد، پیش‌نمایشی از وبگاه نمایش دهید</string>
     <string name="preference_search_locations_summary">جستجوی منطقه محلی برای فروشگاه‌ها و سایر مکان‌ها</string>
     <string name="preference_search_localfiles">فایل‌های محلی</string>
-    <string name="preference_search_gdrive">گوگل درایو</string>
-    <string name="preference_google_signin_summary">ورود برای جستجوی گوگل درایو</string>
     <string name="preference_calendar_calendars">تقویم‌ها</string>
-    <string name="preference_calendar_hide_allday">پنهان کردن رویدادهای کل-روز</string>
     <string name="preference_search_bar_color">رنگ</string>
     <string name="preference_screen_buildinfo">درباره ساخت</string>
     <string name="preference_screen_buildinfo_summary">داده‌های بیشتر درباره این نگارش از برنامه</string>
@@ -726,7 +703,6 @@
     <string name="preference_media_integration">هدایت رسانه</string>
     <string name="connect_account">اتصال حساب</string>
     <string name="no_account_owncloud">هنوز حساب اون‌کلود را متصل نکرده‌اید</string>
-    <string name="no_account_google">هنوز حساب گوگل را متصل نکرده‌اید</string>
     <string name="battery_part_charging">در حال شارژ</string>
     <string name="favorites_empty_tag">هیچ موردی با این برچسب نیست</string>
     <string name="favorites_empty">موارد سنجاق شده و بیشتر استفاده شده اینجا نمایش داده خواهند شد</string>
@@ -734,14 +710,11 @@
     <string name="search_action_email">رایانامه</string>
     <string name="search_action_alarm">تنظیم هشدار</string>
     <string name="frequently_used_show_in_favorites">نمایش در موارد دلخواه</string>
-    <string name="customize_tags_placeholder">برچسب‌ها</string>
     <string name="preference_screen_search_actions">کنش‌های سریع</string>
     <string name="preference_search_search_actions_summary">پیکربندی کنش‌های سریع و میانبرهای جستجو</string>
-    <string name="edit_tag_title">ویرایش برچسب</string>
     <string name="tag_exists_error">برچسبی با این نام از پیش دارید.</string>
     <string name="more_information">داده‌های بیشتر</string>
     <string name="experimental_feature">آزمایشی</string>
-    <string name="create_tag_title">برچسب جدید</string>
     <string name="tag_exists_message">برچسبی با این نام از پیش دارید. اگر ادامه دهید، دو برچسب یکی خواهند شد.</string>
     <string name="gesture_action_quick_settings">بازکردن تنظیمات سریع</string>
     <string name="search_results_order_bottom_up">از پایین به بالا</string>
@@ -814,7 +787,6 @@
     <string name="create_search_action_type_web">جستجو در یک وبگاه</string>
     <string name="create_search_action_type_app">جستجو در یک برنامه</string>
     <string name="create_search_action_type_intent">intent سفارشی</string>
-    <string name="create_search_action_title">اقدام سریع جدید</string>
     <string name="poi_category_gallery">نگارخانه</string>
     <string name="poi_category_japanese_restaurant">رستوران ژاپنی</string>
     <string name="poi_category_ramen_restaurant">رستوران رامن</string>

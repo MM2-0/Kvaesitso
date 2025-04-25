@@ -55,11 +55,11 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     val hasContactsPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val contacts = contactSearchSettings.enabled
+    val contacts = contactSearchSettings.isProviderEnabled("local")
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setContacts(contacts: Boolean) {
-        contactSearchSettings.setEnabled(contacts)
+        contactSearchSettings.setProviderEnabled("local", contacts)
     }
 
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
@@ -158,5 +158,5 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val plugins = pluginService.getPluginsWithState(enabled = true)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 }
