@@ -43,7 +43,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     val calendarEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
     val pinnedCalendarEvents =
         favoritesService.getFavorites(
-            includeTypes = listOf("calendar", "plugin.calendar"),
+            includeTypes = listOf("calendar", "tasks.org", "plugin.calendar"),
             minPinnedLevel = PinnedLevel.AutomaticallySorted,
         ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
     val nextEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
@@ -172,7 +172,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
                 excludeCalendars = config.excludedCalendarIds ?: config.legacyExcludedCalendarIds?.map { "local:$it" } ?: emptyList(),
             ).collectLatest { events ->
                 searchableRepository.getKeys(
-                    includeTypes = listOf("calendar", "plugin.calendar"),
+                    includeTypes = listOf("calendar", "tasks.org", "plugin.calendar"),
                     maxVisibility = VisibilityLevel.SearchOnly,
                     limit = 9999,
                 ).collectLatest { hidden ->

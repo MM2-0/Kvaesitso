@@ -111,7 +111,7 @@ fun SearchSettingsScreen() {
                     }
                 )
 
-                if (hasLocationPlugins != false) {
+                if (hasContactPlugins != false) {
                     Preference(
                         title = stringResource(R.string.preference_search_contacts),
                         summary = stringResource(R.string.preference_search_contacts_summary),

@@ -388,6 +388,7 @@
     <string name="missing_permission_call_contacts_settings">Call permission is required to start calls</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
+    <string name="missing_permission_tasks_search_settings">Tasks permission is required to search tasks</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">This widget requires calendar permission</string>
     <string name="widget_config_calendar_missing_calendars_hint">Can\'t find your calendars?</string>
@@ -608,6 +609,8 @@
     <string name="preference_search_calendar">Calendar</string>
     <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
     <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
+    <string name="preference_search_tasks">Tasks</string>
+    <string name="preference_search_tasks_summary">Search tasks in the Tasks.org app</string>
     <string name="preference_search_appshortcuts">App shortcuts</string>
     <string name="preference_search_appshortcuts_summary">Search app shortcuts</string>
     <string name="preference_search_calculator">Calculator</string>
@@ -630,6 +633,7 @@
     <string name="preference_search_cloud_summary">Search %1$s\'s files</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Calendars</string>
+    <string name="preference_calendar_tasks">Tasks</string>
     <string name="preference_calendar_hide_completed">Hide completed tasks</string>
     <string name="preference_screen_buildinfo">Build information</string>
     <string name="preference_screen_buildinfo_summary">More information about this build of this app</string>

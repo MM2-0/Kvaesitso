@@ -1,9 +1,13 @@
 package de.mm20.launcher2.search
 
 import android.content.Context
+import android.content.Intent
+import androidx.core.net.toUri
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
+import de.mm20.launcher2.ktx.tryStartActivity
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 
 interface CalendarEvent : SavableSearchable {
@@ -34,5 +38,19 @@ interface CalendarEvent : SavableSearchable {
         )
     }
 
-    fun openLocation(context: Context) {}
+    fun openLocation(context: Context) {
+        if (location == null) return
+        context.tryStartActivity(
+            Intent(Intent.ACTION_VIEW)
+                .setData(
+                    "geo:0,0?q=${
+                        URLEncoder.encode(
+                            location,
+                            "utf8"
+                        )
+                    }".toUri()
+                )
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+    }
 }
