@@ -670,6 +670,7 @@
     <!-- %1$s: app name (Kvaesitso) -->
     <string name="preference_tasks_integration_description">Tasks is a free and open source to-do list and reminders app. If installed, %1$s can display and search your tasks from the Tasks app.</string>
     <string name="preference_tasks_integration_ready">Tasks integration is fully set up and ready to use.</string>
+    <string name="preference_launch_tasks_app">Open Tasks app</string>
     <string name="preference_contacts_call_on_tap">Tap to call</string>
     <string name="preference_contacts_call_on_tap_summary">Immediately start a call when tapping a phone number</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->

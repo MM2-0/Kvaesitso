@@ -91,7 +91,7 @@ fun TasksIntegrationSettingsScreen() {
                         }
                     )
                     Preference(
-                        title = "Open Tasks app",
+                        title = stringResource(R.string.preference_launch_tasks_app),
                         icon = Icons.AutoMirrored.Rounded.OpenInNew,
                         onClick = {
                             viewModel.launchTasksApp(activity as AppCompatActivity)
