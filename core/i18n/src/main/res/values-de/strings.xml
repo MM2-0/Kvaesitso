@@ -807,4 +807,7 @@
     <string name="preference_clock_widget_time_format_system">Systemstandard</string>
     <string name="widget_removed">Widget entfernt</string>
     <string name="missing_permission_call_contacts_settings">Telefonberechtigung wird benötigt, um Anrufe zu starten</string>
+    <string name="action_install">Installieren</string>
+    <string name="missing_permission_tasks_integration">Aufgaben-Berechtigung wird benötigt, um die Tasks-Integration zu verwenden</string>
+    <string name="preference_search_tasks">Aufgaben</string>
 </resources>
