@@ -563,7 +563,7 @@
     <string name="preference_plugin_badges">Plugin-Plaketten</string>
     <string name="preference_plugin_badges_summary">Anzeigen, von welchem Plugin ein Suchergebnis stammt</string>
     <string name="plugin_action_setup">Einrichten</string>
-    <string name="plugin_type_filesearch">Dateisuche</string>
+    <string name="plugin_type_filesearch">Dateien</string>
     <string name="plugin_type_weather">Wetterdienst</string>
     <string name="plugin_weather_provider_enabled">Als Wetterdienst gesetzt</string>
     <string name="plugin_state_error">Dieses Plugin funktioniert nicht wie erwartet</string>
@@ -810,4 +810,10 @@
     <string name="action_install">Installieren</string>
     <string name="missing_permission_tasks_integration">Aufgaben-Berechtigung wird benötigt, um die Tasks-Integration zu verwenden</string>
     <string name="preference_search_tasks">Aufgaben</string>
+    <string name="missing_permission_tasks_search_settings">Aufgabenberechtigung ist erforderlich, um Aufgaben durchsuchen zu können</string>
+    <string name="preference_search_tasks_summary">Aufgaben in der Tasks-App durchsuchen</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <string name="plugin_type_contacts">Kontakte</string>
+    <string name="preference_tasks_integration_ready">Die Tasks-Integration ist fertig eingerichtet und bereit zur Verwendung.</string>
+    <string name="preference_tasks_integration_description">Tasks ist eine freie und quelloffene ToDo-Listen- und Erinnerungs-App. Wenn installiert kann %1$s Ihre Aufgaben aus der Tasks-App anzeigen und durchsuchen.</string>
 </resources>
