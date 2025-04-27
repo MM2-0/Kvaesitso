@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings.integrations
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.PlayCircleOutline
 import androidx.compose.runtime.Composable
@@ -47,6 +48,13 @@ fun IntegrationsSettingsScreen() {
                 icon = Icons.Rounded.Owncloud,
                 onClick = {
                     navController?.navigate("settings/integrations/owncloud")
+                }
+            )
+            Preference(
+                title = stringResource(R.string.preference_tasks_integration),
+                icon = Icons.Default.Check,
+                onClick = {
+                    navController?.navigate("settings/integrations/tasks")
                 }
             )
         }

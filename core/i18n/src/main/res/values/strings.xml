@@ -37,6 +37,7 @@
     <string name="action_done">Done</string>
     <string name="action_more_actions">More actions</string>
     <string name="action_clear">Clear</string>
+    <string name="action_install">Install</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
     <string name="menu_remove">Remove</string>
@@ -389,6 +390,7 @@
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
     <string name="missing_permission_tasks_search_settings">Tasks permission is required to search tasks</string>
+    <string name="missing_permission_tasks_integration">Tasks permission is required to use the Tasks integration</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">This widget requires calendar permission</string>
     <string name="widget_config_calendar_missing_calendars_hint">Can\'t find your calendars?</string>
@@ -610,7 +612,7 @@
     <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
     <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
     <string name="preference_search_tasks">Tasks</string>
-    <string name="preference_search_tasks_summary">Search tasks in the Tasks.org app</string>
+    <string name="preference_search_tasks_summary">Search tasks in the Tasks app</string>
     <string name="preference_search_appshortcuts">App shortcuts</string>
     <string name="preference_search_appshortcuts_summary">Search app shortcuts</string>
     <string name="preference_search_calculator">Calculator</string>
@@ -665,6 +667,10 @@
     <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <!-- %1$s: app name (Kvaesitso) -->
+    <string name="preference_tasks_integration_description">Tasks is a free and open source to-do list and reminders app. If installed, %1$s can display and search your tasks from the Tasks app.</string>
+    <string name="preference_tasks_integration_ready">Tasks integration is fully set up and ready to use.</string>
     <string name="preference_contacts_call_on_tap">Tap to call</string>
     <string name="preference_contacts_call_on_tap_summary">Immediately start a call when tapping a phone number</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
