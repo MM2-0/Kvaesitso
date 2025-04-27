@@ -611,7 +611,7 @@
     <string name="preference_search_calendar">Calendar</string>
     <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
     <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
-    <string name="preference_search_tasks">@string/preference_calendar_tasks</string>
+    <string name="preference_search_tasks">Tasks</string>
     <string name="preference_search_tasks_summary">Search tasks in the Tasks app</string>
     <string name="preference_search_appshortcuts">App shortcuts</string>
     <string name="preference_search_appshortcuts_summary">Search app shortcuts</string>
@@ -635,7 +635,6 @@
     <string name="preference_search_cloud_summary">Search %1$s\'s files</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Calendars</string>
-    <string name="preference_calendar_tasks">Tasks</string>
     <string name="preference_calendar_hide_completed">Hide completed tasks</string>
     <string name="preference_screen_buildinfo">Build information</string>
     <string name="preference_screen_buildinfo_summary">More information about this build of this app</string>
