@@ -818,4 +818,13 @@
     <string name="preference_grid_list_style_summary">Zobrazit aplikace v seznamu namísto mřížky</string>
     <string name="preference_grid_list_icons_summary">Zobrazit ikony v zobrazení seznamu</string>
     <string name="plugin_type_contacts">Kontakty</string>
+    <string name="action_install">Instalovat</string>
+    <string name="missing_permission_tasks_search_settings">Pro prohledávání úkolů je vyžadován přístup k úkolům</string>
+    <string name="missing_permission_tasks_integration">Pro použití integrace Tasks je vyžadován přístup k úkolům</string>
+    <string name="preference_search_tasks">Úkoly</string>
+    <string name="preference_search_tasks_summary">Hledat úkoly v aplikaci Tasks</string>
+    <string name="preference_tasks_integration_ready">Integrace Tasks je plně nastavena a připravena k použití.</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <string name="preference_tasks_integration_description">Tasks je bezplatná a otevřená aplikace pro seznam úkolů připomínky. Pokud je nainstalována, %1$s může zobrazovat a vyhledávat vaše úkoly.</string>
+    <string name="preference_launch_tasks_app">Otevřít aplikaci Tasks</string>
 </resources>
