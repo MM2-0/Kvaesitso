@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.time.Duration.Companion.days
 
 class BreezyWeatherProvider(
     private val context: Context,
@@ -38,7 +39,7 @@ class BreezyWeatherProvider(
 
     override suspend fun getUpdateInterval(): Long {
         // Updates are pushed, no need to pull
-        return Long.MAX_VALUE
+        return 365.days.inWholeMilliseconds
     }
 
     internal suspend fun pushWeatherData(data: BreezyWeatherData) {
