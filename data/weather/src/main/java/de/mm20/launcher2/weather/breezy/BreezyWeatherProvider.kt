@@ -59,7 +59,6 @@ class BreezyWeatherProvider(
             windSpeed = data.windSpeed?.toDouble()?.div(3.6),
             precipProbability = data.precipProbability,
             windDirection = data.windDirection?.toDouble(),
-            providerUrl = "de.mm20.launcher.plugin.breezyweather://-",
             night = isNight(
                 data.timestamp.times(1000L),
                 data.sunRise?.times(1000L),
@@ -107,7 +106,6 @@ class BreezyWeatherProvider(
                 precipProbability = hourly.precipProbability,
                 windDirection = hourly.windDirection?.toDouble(),
                 updateTime = lastUpdate,
-                providerUrl = "de.mm20.launcher.plugin.breezyweather://-",
                 night = isNight
             )
         }
