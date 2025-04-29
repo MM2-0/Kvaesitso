@@ -257,7 +257,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                     ).toBundle()
                 )
             },
-            interactionSource = MutableInteractionSource(),
+            interactionSource = remember { MutableInteractionSource() },
             indication = LocalIndication.current,
         )
     ) {
