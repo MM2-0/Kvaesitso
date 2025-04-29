@@ -318,6 +318,10 @@
         <item quantity="one">+%1$d running event from past days</item>
         <item quantity="other">+%1$d running events from past days</item>
     </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d unfinished task</item>
+        <item quantity="other">+%1$d unfinished tasks</item>
+    </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">all-day</string>
     <string name="task_due_time">Due at %1$s</string>

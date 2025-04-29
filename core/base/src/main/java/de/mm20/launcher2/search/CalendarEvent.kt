@@ -22,6 +22,9 @@ interface CalendarEvent : SavableSearchable {
     val isCompleted: Boolean?
         get() = null
 
+    val isTask: Boolean
+        get() = isCompleted != null
+
 
     override val preferDetailsOverLaunch: Boolean
         get() = true

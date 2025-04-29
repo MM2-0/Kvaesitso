@@ -24,8 +24,8 @@ internal class TasksCalendarProvider(
         return withContext(Dispatchers.IO) {
             queryTasks(
                 selection = buildList {
-                    add("dueDate >= $from")
-                    add("dueDate <= $to")
+                    add("($to >= hideUntil OR hideUntil IS NULL)")
+                    add("$from <= dueDate")
                     if (excludedCalendars.isNotEmpty()) {
                         add("cdl_id NOT IN (${excludedCalendars.joinToString()})")
                     }
@@ -82,6 +82,7 @@ internal class TasksCalendarProvider(
         cursor?.use {
             val idIndex = cursor.getColumnIndex("_id")
             val titleIndex = cursor.getColumnIndex("title")
+            val startIndex = cursor.getColumnIndex("hideUntil")
             val dueIndex = cursor.getColumnIndex("dueDate")
             val completedIndex = cursor.getColumnIndex("completed")
             val notesIndex = cursor.getColumnIndex("notes")
@@ -99,7 +100,7 @@ internal class TasksCalendarProvider(
                     description = cursor.getStringOrNull(notesIndex),
                     color = cursor.getIntOrNull(colorIndex),
                     calendarName = cursor.getStringOrNull(calendarNameIndex),
-                    startTime = null,
+                    startTime = cursor.getLongOrNull(startIndex)?.takeIf { it > 0L },
                     endTime = dueDate,
                     allDay = dueDate % 60000 <= 0, // https://github.com/tasks/tasks/blob/13d4c029e855fd32ec91e4d4ec5f740ec506136e/data/src/commonMain/kotlin/org/tasks/data/entity/Task.kt#L345
                     isCompleted = (cursor.getLongOrNull(completedIndex) ?: 0L) != 0L,
