@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings.weather
 
 import android.app.PendingIntent
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
@@ -26,6 +28,7 @@ import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
 import de.mm20.launcher2.weather.WeatherProviderInfo
+import de.mm20.launcher2.weather.breezy.BreezyWeatherProvider
 
 @Composable
 fun WeatherIntegrationSettingsScreen() {
@@ -93,7 +96,16 @@ fun WeatherIntegrationSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_location)) {
-                if (selectedProviderInfo?.managedLocation == true) {
+                if (selectedProviderInfo?.id == BreezyWeatherProvider.Id) {
+                    Preference(
+                        title = stringResource(R.string.preference_location),
+                        summary = stringResource(R.string.preference_location_breezy),
+                        onClick = {
+                            val intent = context.packageManager.getLaunchIntentForPackage("org.breezyweather") ?: return@Preference
+                            context.tryStartActivity(intent)
+                        }
+                    )
+                } else if (selectedProviderInfo?.managedLocation == true) {
                     Preference(
                         title = stringResource(R.string.preference_location_managed),
                         summary = stringResource(R.string.preference_location_managed_summary),

@@ -563,7 +563,7 @@
     <string name="preference_plugin_badges">Plugin-Plaketten</string>
     <string name="preference_plugin_badges_summary">Anzeigen, von welchem Plugin ein Suchergebnis stammt</string>
     <string name="plugin_action_setup">Einrichten</string>
-    <string name="plugin_type_filesearch">Dateisuche</string>
+    <string name="plugin_type_filesearch">Dateien</string>
     <string name="plugin_type_weather">Wetterdienst</string>
     <string name="plugin_weather_provider_enabled">Als Wetterdienst gesetzt</string>
     <string name="plugin_state_error">Dieses Plugin funktioniert nicht wie erwartet</string>
@@ -807,4 +807,21 @@
     <string name="preference_clock_widget_time_format_system">Systemstandard</string>
     <string name="widget_removed">Widget entfernt</string>
     <string name="missing_permission_call_contacts_settings">Telefonberechtigung wird benötigt, um Anrufe zu starten</string>
+    <string name="action_install">Installieren</string>
+    <string name="missing_permission_tasks_integration">Aufgaben-Berechtigung wird benötigt, um die Tasks-Integration zu verwenden</string>
+    <string name="preference_search_tasks">Aufgaben</string>
+    <string name="missing_permission_tasks_search_settings">Aufgabenberechtigung ist erforderlich, um Aufgaben durchsuchen zu können</string>
+    <string name="preference_search_tasks_summary">Aufgaben in der Tasks-App durchsuchen</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <string name="plugin_type_contacts">Kontakte</string>
+    <string name="preference_tasks_integration_ready">Die Tasks-Integration ist fertig eingerichtet und bereit zur Verwendung.</string>
+    <string name="preference_tasks_integration_description">Tasks ist eine freie und quelloffene ToDo-Listen- und Erinnerungs-App. Wenn installiert kann %1$s Ihre Aufgaben aus der Tasks-App anzeigen und durchsuchen.</string>
+    <string name="weather_condition_haze">Dunst</string>
+    <string name="weather_condition_thunder">Gewitter</string>
+    <string name="preference_location_breezy">Standort in Breezy Weather verwalten</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather ist eine freie und quelloffene Wetterapp. Wenn installiert, kann %1$s Breezy Weather als Datenquelle für Wetterdaten verwenden.</string>
+    <string name="preference_launch_breezyweather_app">Breezy Weather öffnen</string>
+    <string name="preference_breezyweather_integration_instructions">Um Breezy Weather als Wetterdienst zu nutzen:\n\n1. Öffnen Sie Breezy Weather &gt; Einstellungen &gt; Widgets &amp; Live-Hintergrund &gt; Wetterdaten an Gadgetbridge senden &gt; %1$s aktivieren\n\n2. Wählen Sie Breezy Weather in %1$s als Wetterdienst aus</string>
+    <string name="preference_launch_tasks_app">Tasks-App öffnen</string>
 </resources>

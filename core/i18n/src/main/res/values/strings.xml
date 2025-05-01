@@ -37,6 +37,7 @@
     <string name="action_done">Done</string>
     <string name="action_more_actions">More actions</string>
     <string name="action_clear">Clear</string>
+    <string name="action_install">Install</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
     <string name="menu_remove">Remove</string>
@@ -317,6 +318,10 @@
         <item quantity="one">+%1$d running event from past days</item>
         <item quantity="other">+%1$d running events from past days</item>
     </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d unfinished task</item>
+        <item quantity="other">+%1$d unfinished tasks</item>
+    </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">all-day</string>
     <string name="task_due_time">Due at %1$s</string>
@@ -344,6 +349,7 @@
     <string name="weather_condition_snow">Snow</string>
     <string name="weather_condition_hail">Hail</string>
     <string name="weather_condition_thunderstorm">Thunderstorm</string>
+    <string name="weather_condition_thunder">Thunder</string>
     <string name="weather_condition_heavysnowshowers">Heavy snow showers</string>
     <string name="weather_condition_heavyrainshowers">Heavy rain showers</string>
     <string name="weather_condition_rainshowersandthunder">Rain showers and thunder</string>
@@ -355,6 +361,7 @@
     <string name="weather_condition_heavyrainshowersandthunder">Heavy rain showers and thunder</string>
     <string name="weather_condition_fair">Fair</string>
     <string name="weather_condition_fog">Fog</string>
+    <string name="weather_condition_haze">Haze</string>
     <string name="weather_condition_sleetshowersandthunder">Sleet showers and thunder</string>
     <string name="weather_condition_rainandthunder">Rain and thunder</string>
     <string name="weather_condition_lightsleet">Light sleet</string>
@@ -388,6 +395,8 @@
     <string name="missing_permission_call_contacts_settings">Call permission is required to start calls</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
+    <string name="missing_permission_tasks_search_settings">Tasks permission is required to search tasks</string>
+    <string name="missing_permission_tasks_integration">Tasks permission is required to use the Tasks integration</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">This widget requires calendar permission</string>
     <string name="widget_config_calendar_missing_calendars_hint">Can\'t find your calendars?</string>
@@ -445,12 +454,14 @@
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (Germany only)</string>
     <string name="provider_here">HERE</string>
+    <string name="provider_breezy">Breezy Weather</string>
     <string name="preference_category_location">Location</string>
     <string name="preference_automatic_location">Automatic location</string>
     <string name="preference_automatic_location_summary">Use GPS and location services to determine location automatically</string>
     <string name="preference_location_managed">Managed by plugin</string>
     <string name="preference_location_managed_summary">The location for this provider is managed by the plugin app</string>
     <string name="preference_location">Location</string>
+    <string name="preference_location_breezy">Manage location in Breezy Weather</string>
     <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
     <string name="preference_imperial_units">Imperial units</string>
     <string name="widget_config_weather_compact">Compact mode</string>
@@ -608,6 +619,8 @@
     <string name="preference_search_calendar">Calendar</string>
     <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
     <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
+    <string name="preference_search_tasks">Tasks</string>
+    <string name="preference_search_tasks_summary">Search tasks in the Tasks app</string>
     <string name="preference_search_appshortcuts">App shortcuts</string>
     <string name="preference_search_appshortcuts_summary">Search app shortcuts</string>
     <string name="preference_search_calculator">Calculator</string>
@@ -661,6 +674,15 @@
     <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <!-- %1$s: app name (Kvaesitso) -->
+    <string name="preference_tasks_integration_description">Tasks is a free and open source to-do list and reminders app. If installed, %1$s can display and search your tasks from the Tasks app.</string>
+    <string name="preference_tasks_integration_ready">Tasks integration is fully set up and ready to use.</string>
+    <string name="preference_launch_tasks_app">Open Tasks app</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather is a free and open source weather app. If installed, %1$s can use Breezy Weather as a data source for weather data.</string>
+    <string name="preference_breezyweather_integration_instructions">To use Breezy Weather as weather provider:\n\n1. Go to Breezy Weather &gt; Settings &gt; Widgets &amp; Live wallpaper &gt; Send Gadgetbridge data &gt; Enable %1$s\n\n2. In %1$s, select Breezy Weather as weather provider</string>
+    <string name="preference_launch_breezyweather_app">Open Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">Tap to call</string>
     <string name="preference_contacts_call_on_tap_summary">Immediately start a call when tapping a phone number</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->

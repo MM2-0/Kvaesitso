@@ -63,7 +63,7 @@ fun SearchSettingsScreen() {
     val hasCalendarPlugins by remember { derivedStateOf { plugins?.any { it.plugin.type == PluginType.Calendar } } }
     val hasLocationPlugins by remember { derivedStateOf { plugins?.any { it.plugin.type == PluginType.LocationSearch } } }
     val hasContactPlugins by remember { derivedStateOf { plugins?.any { it.plugin.type == PluginType.ContactSearch } } }
-
+    val isTasksAppInstalled by viewModel.isTasksAppInstalled.collectAsStateWithLifecycle()
 
     val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.collectAsStateWithLifecycle(null)
     val hasContactsPermission by viewModel.hasContactsPermission.collectAsStateWithLifecycle(null)
@@ -111,7 +111,7 @@ fun SearchSettingsScreen() {
                     }
                 )
 
-                if (hasLocationPlugins != false) {
+                if (hasContactPlugins != false) {
                     Preference(
                         title = stringResource(R.string.preference_search_contacts),
                         summary = stringResource(R.string.preference_search_contacts_summary),
@@ -145,7 +145,7 @@ fun SearchSettingsScreen() {
                     )
                 }
 
-                if (hasCalendarPlugins != false) {
+                if (hasCalendarPlugins != false || isTasksAppInstalled != false) {
                     Preference(
                         title = stringResource(R.string.preference_search_calendar),
                         summary = stringResource(R.string.preference_search_calendar_summary),

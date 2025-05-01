@@ -11,6 +11,7 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.SearchableSerializer
 import java.net.URLEncoder
+import androidx.core.net.toUri
 
 internal data class AndroidCalendarEvent(
     override val label: String,
@@ -42,24 +43,6 @@ internal data class AndroidCalendarEvent(
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         return context.tryStartActivity(getLaunchIntent(), options)
-    }
-
-    override fun openLocation(context: Context) {
-        if (location == null) return
-        context.tryStartActivity(
-            Intent(Intent.ACTION_VIEW)
-                .setData(
-                    Uri.parse(
-                        "geo:0,0?q=${
-                            URLEncoder.encode(
-                                location,
-                                "utf8"
-                            )
-                        }"
-                    )
-                )
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
     }
 
     override fun getSerializer(): SearchableSerializer {
