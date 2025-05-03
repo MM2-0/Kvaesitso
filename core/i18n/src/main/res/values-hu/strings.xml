@@ -808,4 +808,21 @@
     <string name="preference_contacts_call_on_tap_summary">Hívás azonnali indítása egy telefonszámra való koppintáskor</string>
     <string name="missing_permission_call_contacts_settings">A hívások indításához hívásengedélyre van szükség</string>
     <string name="plugin_type_contacts">Névjegyek</string>
+    <string name="weather_condition_thunder">Mennydörgés</string>
+    <string name="weather_condition_haze">Száraz légköri homály</string>
+    <string name="provider_breezy">Breezy Weather</string>
+    <string name="preference_location_breezy">Helyszín kezelése ezzel: Breezy Weather</string>
+    <string name="preference_search_tasks">Feladatok</string>
+    <string name="preference_search_tasks_summary">Feladatok keresése a „Feladatok” alkalmazásban</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_launch_breezyweather_app">A Breezy Weather megnyitása</string>
+    <string name="action_install">Telepítés</string>
+    <string name="missing_permission_tasks_integration">A feladatok-integráció használatához hozzáférési engedélyre van szükség a feladatokhoz</string>
+    <string name="missing_permission_tasks_search_settings">A feladatok kereséséhez hozzáférési engedélyre van szükség a feladatokhoz</string>
+    <string name="preference_tasks_integration_ready">A feladatok-integráció teljesen be van állítva és használatra kész.</string>
+    <string name="preference_tasks_integration">Feladatok</string>
+    <string name="preference_tasks_integration_description">A „Feladatok” egy ingyenes és nyílt forráskódú feladatlista- és emlékeztető alkalmazás. Ha telepítve van, akkor a(z) %1$s megjelenítheti és keresheti a feladatait a „Feladatok” alkalmazásból.</string>
+    <string name="preference_breezyweather_integration_description">A Breezy Weather egy ingyenes és nyílt forráskódú időjárás-alkalmazás. Ha telepítve van, akkor a(z) %1$s az időjárásadatok adatforrásaként használhatja a Breezy Weathert.</string>
+    <string name="preference_breezyweather_integration_instructions">A Breezy Weather időjárásszolgáltatóként való használatához:\n\n1. Menjen a Breezy Weather &gt; Beállítások &gt; Modulok és élő háttérképek &gt; Gadgetbridge adatok küldése &gt; %1$s engedélyezése\n\n2. A(z) %1$s mezőben válassza ki a Breezy Weathert időjárásszolgáltatóként</string>
+    <string name="preference_launch_tasks_app">A „Feladatok” alkalmazás megnyitása</string>
 </resources>
