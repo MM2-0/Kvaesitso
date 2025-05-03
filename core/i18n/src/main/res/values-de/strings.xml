@@ -825,4 +825,8 @@
     <string name="preference_breezyweather_integration_instructions">Um Breezy Weather als Wetterdienst zu nutzen:\n\n1. Öffnen Sie Breezy Weather &gt; Einstellungen &gt; Widgets &amp; Live-Hintergrund &gt; Wetterdaten an Gadgetbridge senden &gt; %1$s aktivieren\n\n2. Wählen Sie Breezy Weather in %1$s als Wetterdienst aus</string>
     <string name="preference_launch_tasks_app">Tasks-App öffnen</string>
     <string name="provider_breezy">Breezy Weather</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d unerledigte Aufgabe</item>
+        <item quantity="other">+%1$d unerledigte Aufgaben</item>
+    </plurals>
 </resources>
