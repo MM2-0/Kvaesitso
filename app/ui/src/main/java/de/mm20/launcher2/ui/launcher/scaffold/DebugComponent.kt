@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.scaffold
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,8 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-class DebugComponent : ScaffoldComponent {
-    override val content: ComponentContent = @Composable { modifier, insets, progress ->
+internal object DebugComponent : ScaffoldComponent {
+    @Composable
+    override fun Component(
+        modifier: Modifier,
+        insets: PaddingValues,
+        state: LauncherScaffoldState
+    ) {
         Box(
             modifier = modifier
                 .background(Color.Blue)

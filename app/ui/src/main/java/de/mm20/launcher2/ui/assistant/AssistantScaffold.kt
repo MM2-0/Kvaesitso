@@ -183,8 +183,6 @@ fun AssistantScaffold(
             state = searchState
         )
 
-        val value by searchVM.searchQuery
-
         val searchBarColor by viewModel.searchBarColor.collectAsState()
         val searchBarStyle by viewModel.searchBarStyle.collectAsState()
 
@@ -195,7 +193,6 @@ fun AssistantScaffold(
                 .fillMaxSize(),
             style = searchBarStyle,
             level = { searchBarLevel },
-            value = { value },
             focused = searchBarFocused,
             onFocusChange = {
                 if (it) viewModel.openSearch()

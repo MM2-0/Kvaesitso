@@ -52,11 +52,10 @@ fun LauncherSearchBar(
     modifier: Modifier = Modifier,
     style: SearchBarStyle,
     level: () -> SearchBarLevel,
-    value: () -> String,
     focused: Boolean,
     onFocusChange: (Boolean) -> Unit,
     actions: List<SearchAction>,
-    highlightedAction: SearchAction?,
+    highlightedAction: SearchAction? = null,
     isSearchOpen: Boolean = false,
     darkColors: Boolean = false,
     bottomSearchBar: Boolean = false,
@@ -79,7 +78,7 @@ fun LauncherSearchBar(
 
     val filterBar by searchVM.filterBar.collectAsState(false)
 
-    val _value = value()
+    val value by searchVM.searchQuery
 
     Box(modifier = modifier) {
         SearchBar(
@@ -88,7 +87,7 @@ fun LauncherSearchBar(
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(8.dp)
                 .offset { IntOffset(0, searchBarOffset()) },
-            style = style, level = level(), value = _value, onValueChange = {
+            style = style, level = level(), value = value, onValueChange = {
                 searchVM.search(it)
             },
             reverse = bottomSearchBar,
@@ -136,7 +135,7 @@ fun LauncherSearchBar(
                         }
                     }
                 }
-                SearchBarMenu(searchBarValue = _value, onInputClear = {
+                SearchBarMenu(searchBarValue = value, onInputClear = {
                     searchVM.reset()
                 })
             },

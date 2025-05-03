@@ -615,8 +615,6 @@ fun PagerScaffold(
             (if (isWidgetEditMode) 128.dp else 0.dp) * (if (bottomSearchBar) 1 else -1)
         )
 
-        val value by searchVM.searchQuery
-
         val searchBarColor by viewModel.searchBarColor.collectAsState()
         val searchBarStyle by viewModel.searchBarStyle.collectAsState()
 
@@ -627,7 +625,6 @@ fun PagerScaffold(
                 .fillMaxSize(),
             style = searchBarStyle,
             level = { searchBarLevel },
-            value = { value },
             focused = focusSearchBar,
             onFocusChange = {
                 if (it) viewModel.openSearch()

@@ -133,7 +133,7 @@ fun DebugSettingsScreen() {
                 val ngScaffold = viewModel.ngScaffoldEnabled.collectAsState(false)
                 PreferenceCategory("Experimental") {
                     SwitchPreference(
-                        title = "NG Scaffold",
+                        title = "Unified Scaffold",
                         value = ngScaffold.value,
                         onValueChanged = {
                             viewModel.setNgScaffold(it)

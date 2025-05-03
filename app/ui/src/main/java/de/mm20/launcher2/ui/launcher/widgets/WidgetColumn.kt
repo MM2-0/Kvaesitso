@@ -114,7 +114,7 @@ fun WidgetColumn(
                                 swapThresholds[i][0] = it.positionInParent().y
                                 swapThresholds[i][1] = it.positionInParent().y + it.size.height
                             }
-                            .padding(top = 8.dp)
+                            .padding(top = if (i > 0) 8.dp else 0.dp)
                             .offset {
                                 IntOffset(0, offsetY.value.toInt())
                             },
