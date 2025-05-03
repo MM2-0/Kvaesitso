@@ -827,4 +827,12 @@
     <string name="preference_tasks_integration">Tasks</string>
     <string name="preference_tasks_integration_description">Tasks je bezplatná a otevřená aplikace pro seznam úkolů připomínky. Pokud je nainstalována, %1$s může zobrazovat a vyhledávat vaše úkoly.</string>
     <string name="preference_launch_tasks_app">Otevřít aplikaci Tasks</string>
+    <string name="weather_condition_thunder">Hřmění</string>
+    <string name="weather_condition_haze">Opar</string>
+    <string name="provider_breezy">Breezy Weather</string>
+    <string name="preference_location_breezy">Spravovat polohu v aplikaci Breezy Weather</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather je bezplatná a otevřená aplikace pro počasí. Pokud je nainstalována, může %1$s používat Breezy Weather jako zdroj dat o počasí.</string>
+    <string name="preference_breezyweather_integration_instructions">Pro použití Breezy Weather jako poskytovatele počasí:\n\n1. Přejděte do Breezy Weather &gt; Nastavení &gt; Widgety a živá tapeta &gt; Posílat data o počasí do Gadgetbridge &gt; Povolte %1$s\n\n2. V aplikaci %1$s zvolte Breezy Weather jako poskytovatele počasí</string>
+    <string name="preference_launch_breezyweather_app">Otevřít Breezy Weather</string>
 </resources>
