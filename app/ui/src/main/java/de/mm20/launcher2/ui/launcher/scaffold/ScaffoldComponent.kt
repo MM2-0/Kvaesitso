@@ -34,6 +34,12 @@ internal interface ScaffoldComponent {
     val drawBackground: Boolean
         get() = true
 
+    /**
+     * Whether haptic feedback should be used when the component is activated / dismissed.
+     */
+    val hapticFeedback: Boolean
+        get() = true
+
     //val content: ComponentContent
 
     @Composable fun Component(

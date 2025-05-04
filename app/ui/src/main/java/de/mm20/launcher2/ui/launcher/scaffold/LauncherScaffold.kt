@@ -1,9 +1,14 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
+import android.view.animation.PathInterpolator
+import androidx.activity.compose.PredictiveBackHandler
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.AnimationVector2D
 import androidx.compose.animation.core.VectorConverter
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable2D
 import androidx.compose.foundation.gestures.rememberDraggable2DState
@@ -16,13 +21,14 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -48,7 +54,9 @@ import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -66,6 +74,7 @@ sealed interface ScaffoldAction {
 enum class ScaffoldAnimation {
     Rubberband,
     Push,
+    ZoomIn,
 }
 
 internal data class ScaffoldGesture(
@@ -87,30 +96,34 @@ internal data class ScaffoldConfiguration(
     val doubleTap: ScaffoldGesture? = null,
     val longPress: ScaffoldGesture? = null,
     val searchBarPosition: SearchBarPosition = SearchBarPosition.Top,
-)
+) {
+    val searchBarTap = ScaffoldGesture(
+        component = SearchComponent,
+        animation = ScaffoldAnimation.ZoomIn,
+    )
+}
 
-private operator fun ScaffoldConfiguration.get(direction: SwipeDirection): ScaffoldGesture? {
-    return when (direction) {
-        SwipeDirection.Up -> swipeUp
-        SwipeDirection.Down -> swipeDown
-        SwipeDirection.Left -> swipeLeft
-        SwipeDirection.Right -> swipeRight
+private operator fun ScaffoldConfiguration.get(gesture: Gesture): ScaffoldGesture? {
+    return when (gesture) {
+        Gesture.SwipeUp -> swipeUp
+        Gesture.SwipeDown -> swipeDown
+        Gesture.SwipeLeft -> swipeLeft
+        Gesture.SwipeRight -> swipeRight
+        Gesture.DoubleTap -> doubleTap
+        Gesture.LongPress -> longPress
+        Gesture.TapSearchBar -> searchBarTap
     }
 }
 
-enum class SwipeDirection(val orientation: Orientation) {
-    Up(Orientation.Vertical),
-    Down(Orientation.Vertical),
-    Left(Orientation.Horizontal),
-    Right(Orientation.Horizontal),
+enum class Gesture(val orientation: Orientation?) {
+    SwipeUp(Orientation.Vertical),
+    SwipeDown(Orientation.Vertical),
+    SwipeLeft(Orientation.Horizontal),
+    SwipeRight(Orientation.Horizontal),
+    DoubleTap(null),
+    LongPress(null),
+    TapSearchBar(null),
 }
-
-private val ScaffoldGesture?.maxDragFactor: Float
-    get() {
-        if (this == null) return 0f
-        if (this.animation == ScaffoldAnimation.Rubberband) return 2f
-        return 1f
-    }
 
 internal class LauncherScaffoldState(
     private val config: ScaffoldConfiguration,
@@ -118,10 +131,13 @@ internal class LauncherScaffoldState(
     private val touchSlop: Float,
     private val rubberbandThreshold: Float,
     private val minFlingVelocity: Float,
+    private val onHapticFeedback: (HapticFeedbackType) -> Unit,
 ) {
     var currentOffset by mutableStateOf(Offset.Zero)
         private set
-    var currentDragDirection by mutableStateOf<SwipeDirection?>(null)
+    var currentZOffset by mutableFloatStateOf(0f)
+        private set
+    var currentGesture by mutableStateOf<Gesture?>(null)
         private set
 
     /**
@@ -136,8 +152,12 @@ internal class LauncherScaffoldState(
      * 1: any other page
      */
     val currentProgress by derivedStateOf {
-        val dir = currentDragDirection ?: return@derivedStateOf 0f
+        val dir = currentGesture ?: return@derivedStateOf 0f
         val gesture = config[dir] ?: return@derivedStateOf 0f
+
+        if (dir.orientation == null) {
+            return@derivedStateOf currentZOffset
+        }
 
         if (gesture.animation == ScaffoldAnimation.Rubberband) {
             val offset =
@@ -157,30 +177,34 @@ internal class LauncherScaffoldState(
     }
 
     val currentAnimation by derivedStateOf {
-        val dir = currentDragDirection ?: return@derivedStateOf null
+        val dir = currentGesture ?: return@derivedStateOf null
         config[dir]?.animation
     }
 
     val currentComponent by derivedStateOf {
-        val dir = currentDragDirection ?: return@derivedStateOf null
+        val dir = currentGesture ?: return@derivedStateOf null
         config[dir]?.component
     }
 
-    private val animatable =
-        Animatable<Offset, AnimationVector2D>(Offset.Zero, Offset.VectorConverter)
+    private val vectorAnimatable =
+        Animatable(Offset.Zero, Offset.VectorConverter)
+
+    private val floatAnimatable =
+        Animatable(0f, Float.VectorConverter)
 
     suspend fun onDragStarted() {
         if (locked) return
-        animatable.stop()
+        vectorAnimatable.stop()
+        floatAnimatable.stop()
     }
 
     fun onDrag(offset: Offset) {
         if (locked) return
-        if (currentDragDirection == null || (!isSettledOnSecondaryPage && currentOffset.x.absoluteValue <= touchSlop && currentOffset.y.absoluteValue <= touchSlop)) {
-            currentDragDirection = getSwipeDirection(config, offset)
+        if (currentGesture == null || (!isSettledOnSecondaryPage && currentOffset.x.absoluteValue <= touchSlop && currentOffset.y.absoluteValue <= touchSlop)) {
+            currentGesture = getSwipeDirection(config, offset)
         }
 
-        val direction = currentDragDirection ?: return
+        val direction = currentGesture ?: return
 
         val gesture = config[direction] ?: return
 
@@ -191,28 +215,40 @@ internal class LauncherScaffoldState(
         }
     }
 
-    private fun performRubberbandDrag(direction: SwipeDirection, offset: Offset, delta: Offset) {
+    private fun performRubberbandDrag(direction: Gesture, offset: Offset, delta: Offset) {
+        val wasOverThreshold = currentOffset.x.absoluteValue > rubberbandThreshold ||
+            currentOffset.y.absoluteValue > rubberbandThreshold
+
         val threshold = rubberbandThreshold * 1.5f
         currentOffset = when (direction) {
-            SwipeDirection.Up -> Offset(
+            Gesture.SwipeUp -> Offset(
                 0f,
                 (offset.y + delta.y).coerceIn(-threshold, threshold)
             )
 
-            SwipeDirection.Down -> Offset(
+            Gesture.SwipeDown -> Offset(
                 0f,
                 (offset.y + delta.y).coerceIn(-threshold, threshold)
             )
 
-            SwipeDirection.Left -> Offset(
+            Gesture.SwipeLeft -> Offset(
                 (offset.x + delta.x).coerceIn(-threshold, threshold),
                 0f
             )
 
-            SwipeDirection.Right -> Offset(
+            Gesture.SwipeRight -> Offset(
                 (offset.x + delta.x).coerceIn(-threshold, threshold),
                 0f
             )
+
+            else -> Offset.Zero
+        }
+
+        val isOverThreshold = currentOffset.x.absoluteValue > rubberbandThreshold ||
+                currentOffset.y.absoluteValue > rubberbandThreshold
+
+        if (wasOverThreshold != isOverThreshold) {
+            onHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
         }
     }
 
@@ -221,38 +257,52 @@ internal class LauncherScaffoldState(
      * @param offset The total offset of the drag (currentOffset)
      * @param delta The delta of the drag (offset)
      */
-    private fun performPushDrag(direction: SwipeDirection, offset: Offset, delta: Offset) {
+    private fun performPushDrag(direction: Gesture, offset: Offset, delta: Offset) {
+        val wasOverThreshold =
+            currentOffset.x.absoluteValue > size.width * 0.5f ||
+                currentOffset.y.absoluteValue > size.height * 0.5f
+
         currentOffset = when (direction) {
-            SwipeDirection.Up -> Offset(
+            Gesture.SwipeUp -> Offset(
                 0f,
                 (offset.y + delta.y).coerceIn(-size.height, 0f)
             )
 
-            SwipeDirection.Down -> Offset(
+            Gesture.SwipeDown -> Offset(
                 0f,
                 (offset.y + delta.y).coerceIn(0f, size.height)
             )
 
-            SwipeDirection.Left -> Offset(
+            Gesture.SwipeLeft -> Offset(
                 (offset.x + delta.x).coerceIn(-size.width, 0f),
                 0f
             )
 
-            SwipeDirection.Right -> Offset(
+            Gesture.SwipeRight -> Offset(
                 (offset.x + delta.x).coerceIn(0f, size.width),
                 0f
             )
 
+            else -> Offset.Zero
+
+        }
+
+        val isOverThreshold =
+            currentOffset.x.absoluteValue > size.width * 0.5f ||
+                    currentOffset.y.absoluteValue > size.height * 0.5f
+
+        if (wasOverThreshold != isOverThreshold) {
+            onHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
         }
     }
 
-    private fun getSwipeDirection(config: ScaffoldConfiguration, offset: Offset): SwipeDirection? {
+    private fun getSwipeDirection(config: ScaffoldConfiguration, offset: Offset): Gesture? {
         when {
             (offset.x > 0 && offset.y > 0) -> {
                 return if (offset.x > offset.y && config.swipeRight != null) {
-                    SwipeDirection.Right
+                    Gesture.SwipeRight
                 } else if (config.swipeDown != null) {
-                    SwipeDirection.Down
+                    Gesture.SwipeDown
                 } else {
                     null
                 }
@@ -260,9 +310,9 @@ internal class LauncherScaffoldState(
 
             (offset.x < 0 && offset.y < 0) -> {
                 return if (offset.x < offset.y && config.swipeLeft != null) {
-                    SwipeDirection.Left
+                    Gesture.SwipeLeft
                 } else if (config.swipeUp != null) {
-                    SwipeDirection.Up
+                    Gesture.SwipeUp
                 } else {
                     null
                 }
@@ -270,9 +320,9 @@ internal class LauncherScaffoldState(
 
             (offset.x > 0 && offset.y < 0) -> {
                 return if (offset.x > -offset.y && config.swipeRight != null) {
-                    SwipeDirection.Right
+                    Gesture.SwipeRight
                 } else if (config.swipeUp != null) {
-                    SwipeDirection.Up
+                    Gesture.SwipeUp
                 } else {
                     null
                 }
@@ -280,9 +330,9 @@ internal class LauncherScaffoldState(
 
             (offset.x < 0 && offset.y > 0) -> {
                 return if (offset.x < -offset.y && config.swipeLeft != null) {
-                    SwipeDirection.Left
+                    Gesture.SwipeLeft
                 } else if (config.swipeDown != null) {
-                    SwipeDirection.Down
+                    Gesture.SwipeDown
                 } else {
                     null
                 }
@@ -293,10 +343,10 @@ internal class LauncherScaffoldState(
 
     suspend fun onDragStopped(velocity: Velocity) {
         if (locked) return
-        if (currentDragDirection == null) {
+        if (currentGesture == null) {
             currentOffset = Offset.Zero
         }
-        val direction = currentDragDirection ?: return
+        val direction = currentGesture ?: return
         val offset = currentOffset
         val wasPageOpen = isSettledOnSecondaryPage
 
@@ -323,14 +373,15 @@ internal class LauncherScaffoldState(
             isSettledOnSecondaryPage = false
             currentOffset = Offset.Zero
         }
-        if (!isSettledOnSecondaryPage) currentDragDirection = null
+        if (!isSettledOnSecondaryPage) currentGesture = null
     }
 
     private suspend fun performRubberbandFling(
-        direction: SwipeDirection,
+        direction: Gesture,
         offset: Offset,
         velocity: Velocity
     ) {
+        val wasSettledOnSecondaryPage = isSettledOnSecondaryPage
 
         if (offset.x <= -rubberbandThreshold || offset.x < 0f && velocity.x < -minFlingVelocity) {
             isSettledOnSecondaryPage = !isSettledOnSecondaryPage
@@ -342,8 +393,12 @@ internal class LauncherScaffoldState(
             isSettledOnSecondaryPage = !isSettledOnSecondaryPage
         }
 
-        animatable.snapTo(currentOffset)
-        animatable.animateTo(
+        if (wasSettledOnSecondaryPage != isSettledOnSecondaryPage) {
+            onHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
+        }
+
+        vectorAnimatable.snapTo(currentOffset)
+        vectorAnimatable.animateTo(
             Offset.Zero,
             initialVelocity = Offset(velocity.x, velocity.y),
         ) {
@@ -352,15 +407,20 @@ internal class LauncherScaffoldState(
     }
 
     private suspend fun performPushFling(
-        direction: SwipeDirection,
+        direction: Gesture,
         offset: Offset,
         velocity: Velocity
     ) {
+        val wasOverThreshold =
+            currentOffset.x.absoluteValue > size.width * 0.5f ||
+                    currentOffset.y.absoluteValue > size.height * 0.5f
+
         val lowerPage = when (direction) {
-            SwipeDirection.Up -> -size.height
-            SwipeDirection.Down -> 0f
-            SwipeDirection.Left -> -size.width
-            SwipeDirection.Right -> 0f
+            Gesture.SwipeUp -> -size.height
+            Gesture.SwipeDown -> 0f
+            Gesture.SwipeLeft -> -size.width
+            Gesture.SwipeRight -> 0f
+            else -> return
         }
 
         val upperPage = if (direction.orientation == Orientation.Vertical) {
@@ -387,12 +447,201 @@ internal class LauncherScaffoldState(
 
         isSettledOnSecondaryPage = targetOffset != Offset.Zero
 
-        animatable.snapTo(currentOffset)
-        animatable.animateTo(
+        val isOverThreshold =
+            targetOffset.x.absoluteValue > size.width * 0.5f ||
+                    targetOffset.y.absoluteValue > size.height * 0.5f
+
+        if (wasOverThreshold != isOverThreshold) {
+            onHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
+        }
+
+        vectorAnimatable.snapTo(currentOffset)
+        vectorAnimatable.animateTo(
             targetOffset,
             initialVelocity = Offset(velocity.x, velocity.y),
         ) {
             currentOffset = this.value
+        }
+    }
+
+    suspend fun onDoubleTap() {
+        performTapGesture(Gesture.DoubleTap)
+    }
+
+    suspend fun onLongPress() {
+        performTapGesture(Gesture.LongPress)
+    }
+
+    suspend fun onSearchBarTap() {
+        if (isSettledOnSecondaryPage) return
+        openSearch()
+    }
+
+    private val backInterpolation = PathInterpolator(0f, 0f, 0f, 1f)
+    fun onPredictiveBack(progress: Float) {
+        val gesture = currentGesture ?: return
+        val anim = currentAnimation ?: return
+
+        val progress = backInterpolation.getInterpolation(progress)
+
+        when (gesture) {
+            Gesture.TapSearchBar, Gesture.DoubleTap, Gesture.LongPress -> {
+                currentZOffset = 1f - progress
+            }
+
+            else -> {
+                val x = when (gesture) {
+                    Gesture.SwipeLeft -> -1f
+                    Gesture.SwipeRight -> 1f
+                    else -> 0f
+                }
+                val y = when (gesture) {
+                    Gesture.SwipeUp -> -1f
+                    Gesture.SwipeDown -> 1f
+                    else -> 0f
+                }
+
+                currentOffset = if (anim == ScaffoldAnimation.Push) {
+                    Offset(
+                        x * size.width * (1f - progress * 0.1f),
+                        y * size.height * (1f - progress * 0.1f)
+                    )
+                } else {
+                    Offset(
+                        x * rubberbandThreshold * progress,
+                        y * rubberbandThreshold * progress
+                    )
+                }
+
+            }
+        }
+    }
+
+    suspend fun onPredictiveBackCancel() {
+        val gesture = currentGesture ?: return
+        val anim = currentAnimation ?: return
+
+        if (gesture.orientation == null) {
+            floatAnimatable.snapTo(currentZOffset)
+            floatAnimatable.animateTo(1f, animationSpec = tween(100)) {
+                currentZOffset = this.value
+            }
+        } else {
+            val targetOffset = if (anim == ScaffoldAnimation.Rubberband) {
+                Offset.Zero
+            } else {
+                when (gesture) {
+                    Gesture.SwipeLeft -> Offset(-size.width, 0f)
+                    Gesture.SwipeRight -> Offset(size.width, 0f)
+                    Gesture.SwipeUp -> Offset(0f, -size.height)
+                    Gesture.SwipeDown -> Offset(0f, size.height)
+                    else -> Offset.Zero
+                }
+            }
+
+            vectorAnimatable.snapTo(currentOffset)
+            vectorAnimatable.animateTo(targetOffset) {
+                currentOffset = this.value
+            }
+        }
+    }
+
+    suspend fun onPredictiveBackEnd() {
+        val gesture = currentGesture ?: return
+
+        unlock()
+        isSettledOnSecondaryPage = false
+
+        if (gesture.orientation == null) {
+            floatAnimatable.snapTo(currentZOffset)
+            floatAnimatable.animateTo(0f, animationSpec = tween(100)) {
+                currentZOffset = this.value
+            }
+        } else {
+            vectorAnimatable.snapTo(currentOffset)
+            vectorAnimatable.animateTo(Offset.Zero) {
+                currentOffset = this.value
+            }
+        }
+        currentGesture = null
+        config.homeComponent.onMount()
+        config[gesture]?.component?.onUnmount()
+    }
+
+    private suspend fun performTapGesture(gesture: Gesture) {
+        val component = config[gesture]?.component ?: return
+
+        if (component.hapticFeedback) onHapticFeedback(HapticFeedbackType.LongPress)
+
+        if (component is SearchComponent && gesture != Gesture.TapSearchBar) {
+            openSearch()
+            return
+        }
+        lock()
+        currentGesture = gesture
+
+        floatAnimatable.snapTo(0f)
+        floatAnimatable.animateTo(1f, animationSpec = tween(300)) {
+            currentZOffset = this.value
+        }
+        component.onMount()
+        config.homeComponent.onUnmount()
+        if (!component.permanent) {
+            delay(component.resetDelay)
+            isSettledOnSecondaryPage = false
+            currentZOffset = 0f
+            currentGesture = null
+            unlock()
+        } else {
+            isSettledOnSecondaryPage = true
+        }
+    }
+
+    private suspend fun openSearch() {
+
+        // If there is any swipe gesture that is a SearchComponent, this takes precedence over the tap
+        // This allows to close the search with a reversed swipe
+        val gestures =
+            listOf(Gesture.SwipeDown, Gesture.SwipeUp, Gesture.SwipeLeft, Gesture.SwipeRight)
+        val gesture = gestures.find { config[it]?.component is SearchComponent }
+
+        if (gesture == null) {
+            performTapGesture(Gesture.TapSearchBar)
+            return
+        }
+        currentGesture = gesture
+        val anim = config[gesture]?.animation ?: return
+
+        if (anim == ScaffoldAnimation.Rubberband) {
+            val targetOffset = when (gesture) {
+                Gesture.SwipeLeft -> Offset(-rubberbandThreshold, 0f)
+                Gesture.SwipeRight -> Offset(rubberbandThreshold, 0f)
+                Gesture.SwipeUp -> Offset(0f, -rubberbandThreshold)
+                Gesture.SwipeDown -> Offset(0f, rubberbandThreshold)
+                else -> Offset.Zero
+            }
+
+            vectorAnimatable.snapTo(currentOffset)
+            vectorAnimatable.animateTo(targetOffset) {
+                currentOffset = this.value
+            }
+            isSettledOnSecondaryPage = true
+            vectorAnimatable.animateTo(Offset.Zero) {
+                currentOffset = this.value
+            }
+        } else {
+            val targetOffset = when (gesture) {
+                Gesture.SwipeLeft -> Offset(-size.width, 0f)
+                Gesture.SwipeRight -> Offset(size.width, 0f)
+                Gesture.SwipeUp -> Offset(0f, -size.height)
+                Gesture.SwipeDown -> Offset(0f, size.height)
+                else -> Offset.Zero
+            }
+            vectorAnimatable.snapTo(currentOffset)
+            vectorAnimatable.animateTo(targetOffset) {
+                currentOffset = this.value
+            }
+            isSettledOnSecondaryPage = true
         }
     }
 
@@ -404,6 +653,7 @@ internal class LauncherScaffoldState(
     fun lock() {
         locked = true
     }
+
     /**
      * Re-enables all gestures.
      */
@@ -432,10 +682,23 @@ internal fun LauncherScaffold(
             swipeUp = ScaffoldGesture(
                 component = WidgetsComponent,
                 animation = ScaffoldAnimation.Push,
-            )
+            ),
+            longPress = ScaffoldGesture(
+                component = SearchComponent,
+                animation = ScaffoldAnimation.Push,
+            ),
+            doubleTap = ScaffoldGesture(
+                component = ScreenOffComponent,
+                animation = ScaffoldAnimation.Push,
+            ),
         )
     }
 ) {
+    val scope = rememberCoroutineScope()
+
+    var searchBarFocused by remember {
+        mutableStateOf(false)
+    }
 
     val searchBarHeight by remember {
         derivedStateOf {
@@ -453,6 +716,8 @@ internal fun LauncherScaffold(
         val minFlingVelocity = 125.dp.toPixels()
         val rubberbandThreshold = 64.dp.toPixels()
 
+        val hapticFeedback = LocalHapticFeedback.current
+
         val state =
             remember(widthPx, heightPx, touchSlop, rubberbandThreshold, minFlingVelocity, config) {
                 LauncherScaffoldState(
@@ -461,17 +726,35 @@ internal fun LauncherScaffold(
                     touchSlop = touchSlop,
                     rubberbandThreshold = rubberbandThreshold,
                     minFlingVelocity = minFlingVelocity,
+                    onHapticFeedback = {
+                        hapticFeedback.performHapticFeedback(it)
+                    }
                 )
             }
 
-        val hapticFeedback = LocalHapticFeedback.current
-        LaunchedEffect(state.currentProgress >= 0.5f, state.currentProgress <= 0.5f) {
-            if (state.currentProgress >= 0f && state.currentProgress <= 1f) {
-                hapticFeedback.performHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
+        LaunchedEffect(state.isSettledOnSecondaryPage) {
+            if (state.isSettledOnSecondaryPage && state.currentComponent is SearchComponent) {
+                searchBarFocused = true
+            } else {
+                searchBarFocused = false
             }
         }
 
-        val scope = rememberCoroutineScope()
+        val wallpaperBlur by animateIntAsState(
+            if (state.currentProgress >= 0.5f) 8.dp.toPixels().toInt() else 0
+        )
+        WallpaperBlur { wallpaperBlur }
+
+        PredictiveBackHandler {
+            try {
+                it.collect {
+                    state.onPredictiveBack(it.progress)
+                }
+                scope.launch { state.onPredictiveBackEnd() }
+            } catch (_: CancellationException) {
+                scope.launch { state.onPredictiveBackCancel() }
+            }
+        }
 
         val draggableState = rememberDraggable2DState {
             state.onDrag(it)
@@ -531,7 +814,7 @@ internal fun LauncherScaffold(
                     }
                 )
         ) {
-            val insets = WindowInsets.systemBars.asPaddingValues().let {
+            val insets = WindowInsets.safeDrawing.asPaddingValues().let {
                 PaddingValues(
                     start = it.calculateStartPadding(LocalLayoutDirection.current),
                     end = it.calculateEndPadding(LocalLayoutDirection.current),
@@ -543,6 +826,19 @@ internal fun LauncherScaffold(
             config.homeComponent.Component(
                 Modifier
                     .fillMaxSize()
+                    .combinedClickable(
+                        enabled = config.longPress != null || config.doubleTap != null,
+                        onClick = {},
+                        onLongClick = if (config.longPress != null) {
+                            { scope.launch { state.onLongPress() } }
+                        } else null,
+                        onDoubleClick = if (config.doubleTap != null) {
+                            { scope.launch { state.onDoubleTap() } }
+                        } else null,
+                        hapticFeedbackEnabled = false,
+                        indication = null,
+                        interactionSource = null,
+                    )
                     .homePageAnimation(state),
                 insets,
                 state
@@ -557,15 +853,22 @@ internal fun LauncherScaffold(
             )
 
             Box(
-                modifier = Modifier.fillMaxSize().searchBarAnimation(state)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .searchBarAnimation(state)
             ) {
                 LauncherSearchBar(
                     modifier = Modifier.align(if (config.searchBarPosition == SearchBarPosition.Top) Alignment.TopCenter else Alignment.BottomCenter),
                     style = SearchBarStyle.Solid,
-                    focused = false,
+                    focused = searchBarFocused,
                     actions = emptyList(),
                     level = { SearchBarLevel.Raised },
-                    onFocusChange = {},
+                    onFocusChange = {
+                        if (it) {
+                            scope.launch { state.onSearchBarTap() }
+                        }
+                        searchBarFocused = it
+                    },
                 )
             }
         }
@@ -631,7 +934,7 @@ private fun SecondaryPage(
 private fun Modifier.homePageAnimation(
     state: LauncherScaffoldState,
 ): Modifier {
-    val dir = state.currentDragDirection ?: return this
+    val dir = state.currentGesture ?: return this
     val component = state.currentComponent ?: return this
 
     if (state.currentAnimation == ScaffoldAnimation.Rubberband) {
@@ -658,11 +961,11 @@ private fun Modifier.secondaryPageAnimation(
     state: LauncherScaffoldState,
     backgroundColor: Color,
 ): Modifier {
-    val dir = state.currentDragDirection ?: return this
+    val dir = state.currentGesture ?: return this
     val component = state.currentComponent ?: return this
 
     val background =
-        if (component.drawBackground == true) backgroundColor.copy(alpha = 0.85f * state.currentProgress) else Color.Transparent
+        if (component.drawBackground) backgroundColor.copy(alpha = 0.85f * state.currentProgress) else Color.Transparent
 
     if (state.currentAnimation == ScaffoldAnimation.Rubberband) {
         return this then Modifier
@@ -682,20 +985,30 @@ private fun Modifier.secondaryPageAnimation(
             }
 
     }
+    if (state.currentAnimation == ScaffoldAnimation.ZoomIn) {
+        return this then Modifier
+            .background(background)
+            .graphicsLayer {
+                scaleX = 1f - ((1f - state.currentProgress) * 0.03f)
+                scaleY = 1f - ((1f - state.currentProgress) * 0.03f)
+                alpha = (state.currentProgress).coerceAtMost(1f)
+            }
+    }
+
     return this then Modifier
         .offset {
-            when (state.currentDragDirection) {
-                SwipeDirection.Up -> IntOffset(0, state.size.height.toInt())
-                SwipeDirection.Down -> IntOffset(0, -state.size.height.toInt())
-                SwipeDirection.Left -> IntOffset(state.size.width.toInt(), 0)
-                SwipeDirection.Right -> IntOffset(-state.size.width.toInt(), 0)
-                null -> IntOffset.Zero
+            when (state.currentGesture) {
+                Gesture.SwipeUp -> IntOffset(0, state.size.height.toInt())
+                Gesture.SwipeDown -> IntOffset(0, -state.size.height.toInt())
+                Gesture.SwipeLeft -> IntOffset(state.size.width.toInt(), 0)
+                Gesture.SwipeRight -> IntOffset(-state.size.width.toInt(), 0)
+                else -> IntOffset.Zero
             }
         }
         .offset {
             IntOffset(
-                x = if (state.currentDragDirection?.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
-                y = if (state.currentDragDirection?.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
+                x = if (state.currentGesture?.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
+                y = if (state.currentGesture?.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
             )
         }
         .background(background)
@@ -705,14 +1018,12 @@ private fun Modifier.searchBarAnimation(
     state: LauncherScaffoldState,
 ): Modifier {
     val component = state.currentComponent ?: return this
-    val dir = state.currentDragDirection ?: return this
+    val dir = state.currentGesture ?: return this
 
     if (state.currentAnimation == ScaffoldAnimation.Rubberband) {
         return this then component.searchBarModifier(
             state,
             Modifier.graphicsLayer {
-                translationX =
-                    if (dir.orientation == Orientation.Horizontal) state.currentOffset.x * 0.5f else 0f
                 translationY =
                     if (dir.orientation == Orientation.Vertical) state.currentOffset.y * 0.5f else 0f
             }

@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.globalactions.GlobalActionsService
@@ -46,7 +47,8 @@ internal object QuickSettingsComponent : ScaffoldComponent, KoinComponent {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .zIndex(99f),
+                .zIndex(99f)
+                .pointerInput(Unit) {},
             contentAlignment = Alignment.TopCenter
         ) {
             Box(

@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -53,7 +54,11 @@ internal object ScreenOffComponent : ScaffoldComponent, KoinComponent {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        Box(modifier = modifier.zIndex(10f), contentAlignment = Alignment.Center) {
+        Box(
+            modifier = modifier.zIndex(10f)
+                .pointerInput(Unit) {},
+            contentAlignment = Alignment.Center
+        ) {
             val hasPermission by remember { permissionsManager.hasPermission(PermissionGroup.Accessibility) }.collectAsStateWithLifecycle(
                 null
             )
