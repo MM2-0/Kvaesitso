@@ -4,6 +4,7 @@ import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.preferences.ClockWidgetStyleEnum
+import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.TimeFormat
 import kotlinx.coroutines.flow.Flow
@@ -69,6 +70,15 @@ class ClockWidgetSettings internal constructor(
     fun setFillHeight(fillHeight: Boolean) {
         launcherDataStore.update {
             it.copy(clockWidgetFillHeight = fillHeight)
+        }
+    }
+
+    val tapAction: Flow<GestureAction> = launcherDataStore.data.map { it.clockTapAction }
+        .distinctUntilChanged()
+
+    fun setTapAction(action: GestureAction) {
+        launcherDataStore.update {
+            it.copy(clockTapAction = action)
         }
     }
 
