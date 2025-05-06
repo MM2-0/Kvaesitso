@@ -75,6 +75,7 @@ import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.PaymentMethod
 import de.mm20.launcher2.ui.ktx.DegreesConverter
 import de.mm20.launcher2.ui.ktx.contrast
 import de.mm20.launcher2.ui.ktx.hue
@@ -504,6 +505,9 @@ private object MockLocation : Location {
 
     override val openingSchedule: OpeningSchedule =
         OpeningSchedule.TwentyFourSeven
+
+    override val acceptedPaymentMethods: Set<PaymentMethod>?
+        get() = setOf(PaymentMethod.Debit, PaymentMethod.Cash)
 
     override val websiteUrl: String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
 

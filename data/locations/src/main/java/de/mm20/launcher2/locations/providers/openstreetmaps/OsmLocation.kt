@@ -1,6 +1,7 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import android.content.Context
+import de.mm20.launcher2.ktx.foldOrNull
 import de.mm20.launcher2.ktx.ifNullOrEmpty
 import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
@@ -16,6 +17,7 @@ import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.PaymentMethod
 import de.westnordost.osm_opening_hours.model.ClockTime
 import de.westnordost.osm_opening_hours.model.ExtendedClockTime
 import de.westnordost.osm_opening_hours.model.LastNth
@@ -62,7 +64,8 @@ internal data class OsmLocation(
     override val labelOverride: String? = null,
     override val timestamp: Long,
     override var updatedSelf: (suspend (SavableSearchable) -> UpdateResult<Location>)? = null,
-    override val userRating: Float?
+    override val userRating: Float?,
+    override val acceptedPaymentMethods: Set<PaymentMethod>?
 ) : Location, UpdatableSearchable<Location> {
 
     override val domain: String
@@ -115,7 +118,14 @@ internal data class OsmLocation(
                 emailAddress = it.tags["email"] ?: it.tags["contact:email"],
                 timestamp = System.currentTimeMillis(),
                 userRating = it.tags["stars"]?.runCatching { this.toInt() }?.getOrNull()
-                    ?.let { min(it, 5) / 5.0f }
+                    ?.let { min(it, 5) / 5.0f },
+                acceptedPaymentMethods = mapOf(
+                    "payment:credit_card" to PaymentMethod.Credit,
+                    "payment:debit_card" to PaymentMethod.Debit,
+                    "payment:cash" to PaymentMethod.Cash
+                ).mapNotNull { (key, value) ->
+                    (it.tags[key] == "yes").foldOrNull { value }
+                }.toSet().takeIf { it.isNotEmpty() }
             )
         }
     }
