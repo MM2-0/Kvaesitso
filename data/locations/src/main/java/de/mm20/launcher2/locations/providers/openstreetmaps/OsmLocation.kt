@@ -1,10 +1,10 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import android.content.Context
-import de.mm20.launcher2.ktx.foldOrNull
 import de.mm20.launcher2.ktx.ifNullOrEmpty
 import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
+import de.mm20.launcher2.ktx.stripStartOrNull
 import de.mm20.launcher2.locations.OsmLocationSerializer
 import de.mm20.launcher2.openstreetmaps.R
 import de.mm20.launcher2.search.Location
@@ -119,17 +119,24 @@ internal data class OsmLocation(
                 timestamp = System.currentTimeMillis(),
                 userRating = it.tags["stars"]?.runCatching { this.toInt() }?.getOrNull()
                     ?.let { min(it, 5) / 5.0f },
-                acceptedPaymentMethods = mapOf(
-                    "credit_cards" to PaymentMethod.Card,
-                    "debit_cards" to PaymentMethod.Card,
-                    "cards" to PaymentMethod.Card,
-                    "cash" to PaymentMethod.Cash,
-                ).mapNotNull { (method, value) ->
-                    val key = "payment:$method"
-                    if (key in it.tags) {
-                        value to (it.tags[key] in listOf("yes", "only"))
-                    } else null
-                }.toMap()
+                acceptedPaymentMethods = with(
+                    it.tags.mapNotNull { (key, value) ->
+                        (key.stripStartOrNull("payment:") ?: return@mapNotNull null) to value
+                    }.toMap()
+                ) {
+                    // best-effort way to take any method payment as it being available,
+                    // otherwise as being unavailable, or undefined
+                    mapOf(
+                        PaymentMethod.Card to listOf("credit_cards", "debit_cards", "cards"),
+                        PaymentMethod.Cash to listOf("cash")
+                    ).mapNotNull { (method, values) ->
+                        when {
+                            values.any { this[it] in listOf("yes", "only") } -> method to true
+                            values.any { this[it] == "no" } -> method to false
+                            else -> null
+                        }
+                    }.toMap()
+                }
             )
         }
     }
