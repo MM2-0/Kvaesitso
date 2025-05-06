@@ -65,7 +65,7 @@ internal data class OsmLocation(
     override val timestamp: Long,
     override var updatedSelf: (suspend (SavableSearchable) -> UpdateResult<Location>)? = null,
     override val userRating: Float?,
-    override val acceptedPaymentMethods: Set<PaymentMethod>?
+    override val acceptedPaymentMethods: Map<PaymentMethod, Boolean>?
 ) : Location, UpdatableSearchable<Location> {
 
     override val domain: String
@@ -124,8 +124,10 @@ internal data class OsmLocation(
                     "payment:debit_card" to PaymentMethod.Debit,
                     "payment:cash" to PaymentMethod.Cash
                 ).mapNotNull { (key, value) ->
-                    (it.tags[key] == "yes").foldOrNull { value }
-                }.toSet().takeIf { it.isNotEmpty() }
+                    if (key in it.tags) {
+                        value to (it.tags[key] in listOf("yes", "only"))
+                    } else null
+                }.toMap()
             )
         }
     }

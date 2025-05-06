@@ -41,7 +41,7 @@ internal data class SerializedLocation(
     val departures: List<Departure>? = null,
     val fixMeUrl: String? = null,
     val attribution: Attribution? = null,
-    val acceptedPaymentMethods: Set<PaymentMethod>? = null,
+    val acceptedPaymentMethods: Map<PaymentMethod, Boolean>? = null,
     val authority: String? = null,
     val storageStrategy: StorageStrategy? = null,
 )

@@ -35,7 +35,7 @@ data class PluginLocation(
     override val label: String,
     override val timestamp: Long,
     override val attribution: Attribution?,
-    override val acceptedPaymentMethods: Set<PaymentMethod>?,
+    override val acceptedPaymentMethods: Map<PaymentMethod, Boolean>?,
     override val updatedSelf: (suspend (SavableSearchable) -> UpdateResult<Location>)?,
     override val labelOverride: String? = null,
     val authority: String,

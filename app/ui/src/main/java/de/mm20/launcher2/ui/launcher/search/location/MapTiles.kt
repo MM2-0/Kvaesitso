@@ -506,8 +506,8 @@ private object MockLocation : Location {
     override val openingSchedule: OpeningSchedule =
         OpeningSchedule.TwentyFourSeven
 
-    override val acceptedPaymentMethods: Set<PaymentMethod>?
-        get() = setOf(PaymentMethod.Debit, PaymentMethod.Cash)
+    override val acceptedPaymentMethods: Map<PaymentMethod, Boolean>?
+        get() = mapOf(PaymentMethod.Debit to true, PaymentMethod.Cash to false)
 
     override val websiteUrl: String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
 

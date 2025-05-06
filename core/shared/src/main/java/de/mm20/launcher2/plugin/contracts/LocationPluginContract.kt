@@ -145,6 +145,6 @@ abstract class LocationPluginContract {
          * Accepted payment methods at this location, encoded as JSON.
          * Type: String? (JSON)
          */
-        val AcceptedPaymentMethods = column<Set<PaymentMethod>>("accepted_payment_methods")
+        val AcceptedPaymentMethods = column<Map<PaymentMethod, Boolean>>("accepted_payment_methods")
     }
 }

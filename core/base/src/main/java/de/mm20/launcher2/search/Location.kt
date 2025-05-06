@@ -155,7 +155,7 @@ interface Location : SavableSearchable {
     val openingSchedule: OpeningSchedule?
     val departures: List<Departure>?
 
-    val acceptedPaymentMethods: Set<PaymentMethod>?
+    val acceptedPaymentMethods: Map<PaymentMethod, Boolean>?
 
     val attribution: Attribution?
         get() = null
