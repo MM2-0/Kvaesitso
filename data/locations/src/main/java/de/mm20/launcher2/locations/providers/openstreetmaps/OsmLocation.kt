@@ -120,10 +120,12 @@ internal data class OsmLocation(
                 userRating = it.tags["stars"]?.runCatching { this.toInt() }?.getOrNull()
                     ?.let { min(it, 5) / 5.0f },
                 acceptedPaymentMethods = mapOf(
-                    "payment:credit_card" to PaymentMethod.Credit,
-                    "payment:debit_card" to PaymentMethod.Debit,
-                    "payment:cash" to PaymentMethod.Cash
-                ).mapNotNull { (key, value) ->
+                    "credit_cards" to PaymentMethod.Card,
+                    "debit_cards" to PaymentMethod.Card,
+                    "cards" to PaymentMethod.Card,
+                    "cash" to PaymentMethod.Cash,
+                ).mapNotNull { (method, value) ->
+                    val key = "payment:$method"
                     if (key in it.tags) {
                         value to (it.tags[key] in listOf("yes", "only"))
                     } else null
