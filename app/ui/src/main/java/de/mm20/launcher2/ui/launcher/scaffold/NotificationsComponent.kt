@@ -37,6 +37,8 @@ internal object NotificationsComponent : ScaffoldComponent, KoinComponent {
     override val permanent: Boolean
         get() = !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)
 
+    override val showSearchBar: Boolean = false
+
     @Composable
     override fun Component(
         modifier: Modifier,
@@ -82,7 +84,7 @@ internal object NotificationsComponent : ScaffoldComponent, KoinComponent {
         state: LauncherScaffoldState,
         defaultModifier: Modifier
     ): Modifier {
-        return Modifier.composed {
+        return defaultModifier.composed {
             val color = MaterialTheme.colorScheme.scrim
             Modifier.drawWithContent {
                 drawContent()

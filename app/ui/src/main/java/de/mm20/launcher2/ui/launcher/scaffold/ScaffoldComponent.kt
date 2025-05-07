@@ -35,6 +35,13 @@ internal interface ScaffoldComponent {
         get() = true
 
     /**
+     * Show the search bar on this component, if search bar style is hidden.
+     * For other styles, the search bar is always shown.
+     */
+    val showSearchBar: Boolean
+        get() = true
+
+    /**
      * Whether haptic feedback should be used when the component is activated / dismissed.
      */
     val hapticFeedback: Boolean

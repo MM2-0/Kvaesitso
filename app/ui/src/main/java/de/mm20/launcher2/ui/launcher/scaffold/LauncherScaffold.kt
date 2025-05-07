@@ -3,9 +3,12 @@ package de.mm20.launcher2.ui.launcher.scaffold
 import android.view.animation.PathInterpolator
 import androidx.activity.compose.PredictiveBackHandler
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Easing
+import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -22,6 +25,7 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlurEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -47,9 +52,11 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalViewConfiguration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.component.SearchBarLevel
@@ -60,6 +67,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
+import kotlin.math.pow
 
 sealed interface ScaffoldAction {
     data object Search : ScaffoldAction
@@ -96,6 +104,8 @@ internal data class ScaffoldConfiguration(
     val doubleTap: ScaffoldGesture? = null,
     val longPress: ScaffoldGesture? = null,
     val searchBarPosition: SearchBarPosition = SearchBarPosition.Top,
+    val searchBarStyle: SearchBarStyle = SearchBarStyle.Hidden,
+    val wallpaperBlurRadius: Dp = 32.dp,
 ) {
     val searchBarTap = ScaffoldGesture(
         component = SearchComponent,
@@ -473,7 +483,7 @@ internal class LauncherScaffoldState(
     }
 
     suspend fun onSearchBarTap() {
-        if (isSettledOnSecondaryPage) return
+        if (currentComponent is SearchComponent) return
         openSearch()
     }
 
@@ -546,7 +556,11 @@ internal class LauncherScaffoldState(
         }
     }
 
-    suspend fun onPredictiveBackEnd() {
+    /**
+     * End the predictive back gesture and return to the home page.
+     * @param fast use a faster animation
+     */
+    suspend fun onPredictiveBackEnd(fast: Boolean = false) {
         val gesture = currentGesture ?: return
 
         unlock()
@@ -559,7 +573,10 @@ internal class LauncherScaffoldState(
             }
         } else {
             vectorAnimatable.snapTo(currentOffset)
-            vectorAnimatable.animateTo(Offset.Zero) {
+            vectorAnimatable.animateTo(
+                Offset.Zero,
+                animationSpec = if (fast) tween(150) else spring()
+            ) {
                 currentOffset = this.value
             }
         }
@@ -598,6 +615,9 @@ internal class LauncherScaffoldState(
     }
 
     private suspend fun openSearch() {
+        if (currentComponent != null && currentComponent !is SearchComponent) {
+            onPredictiveBackEnd(fast = true)
+        }
 
         // If there is any swipe gesture that is a SearchComponent, this takes precedence over the tap
         // This allows to close the search with a reversed swipe
@@ -691,6 +711,7 @@ internal fun LauncherScaffold(
                 component = ScreenOffComponent,
                 animation = ScaffoldAnimation.Push,
             ),
+            searchBarStyle = SearchBarStyle.Hidden,
         )
     }
 ) {
@@ -733,17 +754,15 @@ internal fun LauncherScaffold(
             }
 
         LaunchedEffect(state.isSettledOnSecondaryPage) {
-            if (state.isSettledOnSecondaryPage && state.currentComponent is SearchComponent) {
-                searchBarFocused = true
-            } else {
-                searchBarFocused = false
-            }
+            searchBarFocused = state.isSettledOnSecondaryPage && state.currentComponent is SearchComponent
         }
 
+        if (config.wallpaperBlurRadius > 0.dp) {
         val wallpaperBlur by animateIntAsState(
             if (state.currentProgress >= 0.5f) 8.dp.toPixels().toInt() else 0
         )
         WallpaperBlur { wallpaperBlur }
+            }
 
         PredictiveBackHandler {
             try {
@@ -814,7 +833,8 @@ internal fun LauncherScaffold(
                     }
                 )
         ) {
-            val insets = WindowInsets.safeDrawing.asPaddingValues().let {
+            val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
+            val insets = windowInsets.let {
                 PaddingValues(
                     start = it.calculateStartPadding(LocalLayoutDirection.current),
                     end = it.calculateEndPadding(LocalLayoutDirection.current),
@@ -840,7 +860,7 @@ internal fun LauncherScaffold(
                         interactionSource = null,
                     )
                     .homePageAnimation(state),
-                insets,
+                if (config.searchBarStyle == SearchBarStyle.Hidden) windowInsets else insets,
                 state
             )
 
@@ -855,7 +875,7 @@ internal fun LauncherScaffold(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .searchBarAnimation(state)
+                    .searchBarAnimation(state, config, windowInsets)
             ) {
                 LauncherSearchBar(
                     modifier = Modifier.align(if (config.searchBarPosition == SearchBarPosition.Top) Alignment.TopCenter else Alignment.BottomCenter),
@@ -1016,11 +1036,29 @@ private fun Modifier.secondaryPageAnimation(
 
 private fun Modifier.searchBarAnimation(
     state: LauncherScaffoldState,
+    config: ScaffoldConfiguration,
+    insets: PaddingValues,
 ): Modifier {
-    val component = state.currentComponent ?: return this
-    val dir = state.currentGesture ?: return this
+    val offsetFactor = if (config.searchBarPosition == SearchBarPosition.Top) -1f else 1f
 
-    if (state.currentAnimation == ScaffoldAnimation.Rubberband) {
+    val component = state.currentComponent
+    val anim = state.currentAnimation
+
+    val progress = if (anim == ScaffoldAnimation.Rubberband) {
+        (state.currentProgress * 2f).coerceAtMost(1f)
+    } else {
+        state.currentProgress
+    }
+
+    val systemBarInset = if (config.searchBarPosition == SearchBarPosition.Top) insets.calculateTopPadding() else insets.calculateBottomPadding()
+
+    val offset = if (config.searchBarStyle == SearchBarStyle.Hidden) {
+        offsetFactor * (1 - progress).pow(2) * (128.dp + systemBarInset)
+    } else {
+        0.dp
+    }
+
+    /*if (state.currentAnimation == ScaffoldAnimation.Rubberband) {
         return this then component.searchBarModifier(
             state,
             Modifier.graphicsLayer {
@@ -1028,7 +1066,13 @@ private fun Modifier.searchBarAnimation(
                     if (dir.orientation == Orientation.Vertical) state.currentOffset.y * 0.5f else 0f
             }
         )
+    }*/
+
+    val modifier = if (component?.showSearchBar == false && config.searchBarStyle == SearchBarStyle.Hidden) {
+        Modifier.alpha(0f)
+    } else {
+        Modifier.offset(y = offset)
     }
 
-    return this then component.searchBarModifier(state, Modifier)
+    return this then (component?.searchBarModifier(state, modifier) ?: modifier)
 }

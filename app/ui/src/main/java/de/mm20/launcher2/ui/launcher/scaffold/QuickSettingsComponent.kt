@@ -21,12 +21,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.ui.ktx.toPixels
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -37,6 +39,8 @@ internal object QuickSettingsComponent : ScaffoldComponent, KoinComponent {
 
     override val permanent: Boolean
         get() = !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)
+
+    override val showSearchBar: Boolean = false
 
     @Composable
     override fun Component(
@@ -83,7 +87,7 @@ internal object QuickSettingsComponent : ScaffoldComponent, KoinComponent {
         state: LauncherScaffoldState,
         defaultModifier: Modifier
     ): Modifier {
-        return Modifier.composed {
+        return defaultModifier.composed {
             val color = MaterialTheme.colorScheme.scrim
             Modifier.drawWithContent {
                 drawContent()

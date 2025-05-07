@@ -44,6 +44,8 @@ internal object ScreenOffComponent : ScaffoldComponent, KoinComponent {
     override val permanent: Boolean
         get() = !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)
 
+    override val showSearchBar: Boolean = false
+
     override val resetDelay: Long = 1000L
 
     override val drawBackground: Boolean = false
@@ -128,7 +130,7 @@ internal object ScreenOffComponent : ScaffoldComponent, KoinComponent {
             }
             .scale(1f - (state.currentProgress * 0.1f))
             .blur(12.dp * state.currentProgress)
-            .alpha(1f - (state.currentProgress * 0.1f))
+            .alpha(1f - (state.currentProgress * 0.1f)) then defaultModifier
     }
 
     override suspend fun onMount() {
