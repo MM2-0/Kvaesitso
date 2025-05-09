@@ -352,7 +352,7 @@ fun LocationItem(
                                             )
                                     )
                                 }
-                                if (acceptedPaymentMethods != null) {
+                                if (!acceptedPaymentMethods.isNullOrEmpty()) {
                                     Text(
                                         " • ",
                                         style = MaterialTheme.typography.bodySmall,

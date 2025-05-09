@@ -135,7 +135,7 @@ internal data class OsmLocation(
                             values.any { this[it] == "no" } -> method to false
                             else -> null
                         }
-                    }.toMap()
+                    }.toMap().takeUnless { it.isEmpty() }
                 }
             )
         }
