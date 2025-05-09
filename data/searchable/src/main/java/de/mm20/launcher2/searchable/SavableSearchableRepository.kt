@@ -28,7 +28,7 @@ import org.json.JSONException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.error.InstanceCreationException
-import org.koin.core.error.NoBeanDefFoundException
+import org.koin.core.error.NoDefinitionFoundException
 import org.koin.core.qualifier.named
 import java.io.File
 
@@ -404,7 +404,7 @@ internal class SavableSearchableRepositoryImpl(
     private suspend fun fromDatabaseEntity(entity: SavedSearchableEntity): SavedSearchable {
         val deserializer: SearchableDeserializer? = try {
             get(named(entity.type))
-        } catch (e: NoBeanDefFoundException) {
+        } catch (e: NoDefinitionFoundException) {
             CrashReporter.logException(e)
             null
         } catch (e: InstanceCreationException) {

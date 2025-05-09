@@ -835,4 +835,9 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather je bezplatná a otevřená aplikace pro počasí. Pokud je nainstalována, může %1$s používat Breezy Weather jako zdroj dat o počasí.</string>
     <string name="preference_breezyweather_integration_instructions">Pro použití Breezy Weather jako poskytovatele počasí:\n\n1. Přejděte do Breezy Weather &gt; Nastavení &gt; Widgety a živá tapeta &gt; Posílat data o počasí do Gadgetbridge &gt; Povolte %1$s\n\n2. V aplikaci %1$s zvolte Breezy Weather jako poskytovatele počasí</string>
     <string name="preference_launch_breezyweather_app">Otevřít Breezy Weather</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d nedokončený úkol</item>
+        <item quantity="few">+%1$d nedokončené úkoly</item>
+        <item quantity="other">+%1$d nedokončených úkolů</item>
+    </plurals>
 </resources>

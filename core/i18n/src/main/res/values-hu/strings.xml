@@ -319,7 +319,7 @@
     <string name="plugin_state_setup_required">Először be kell állítani ezt a bővítményt</string>
     <string name="plugin_action_setup">Beállítás</string>
     <string name="plugin_type_weather">Időjárás-előrejelzés szolgáltató</string>
-    <string name="plugin_weather_provider_enable">Beállítás időjárás-előrejelzés szolgáltatónak</string>
+    <string name="plugin_weather_provider_enable">Beállítás időjárás-előrejelzési szolgáltatónak</string>
     <string name="preference_clock_widget_alignment_bottom">Alulra</string>
     <string name="preference_clockwidget_battery_part_summary">Az akkumulátor jelenlegi töltöttségi szintjének megjelenítése, amikor az akkumulátor lemerült vagy töltődik</string>
     <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 8 órán belül megszólalnak</string>
@@ -825,4 +825,8 @@
     <string name="preference_breezyweather_integration_description">A Breezy Weather egy ingyenes és nyílt forráskódú időjárás-alkalmazás. Ha telepítve van, akkor a(z) %1$s az időjárásadatok adatforrásaként használhatja a Breezy Weathert.</string>
     <string name="preference_breezyweather_integration_instructions">A Breezy Weather időjárásszolgáltatóként való használatához:\n\n1. Menjen a Breezy Weather &gt; Beállítások &gt; Modulok és élő háttérképek &gt; Gadgetbridge adatok küldése &gt; %1$s engedélyezése\n\n2. A(z) %1$s mezőben válassza ki a Breezy Weathert időjárásszolgáltatóként</string>
     <string name="preference_launch_tasks_app">A „Feladatok” alkalmazás megnyitása</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d befejezetlen feladat</item>
+        <item quantity="other">+%1$d befejezetlen feladat</item>
+    </plurals>
 </resources>

@@ -279,7 +279,7 @@
     <string name="preference_category_system_bars">Системные панели</string>
     <string name="websearch_dialog_query_encoding">Кодировка запроса</string>
     <string name="alert_delete_shortcut">Ярлык %1$s будет удален навсегда. Продолжить\?</string>
-    <string name="menu_customize">Настроить</string>
+    <string name="menu_customize">Персонализировать</string>
     <string name="menu_remove">Удалить</string>
     <string name="websearch_dialog_advanced">Расширенный</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
@@ -550,7 +550,7 @@
     <string name="plugin_type_weather">Провайдер погоды</string>
     <string name="plugin_weather_provider_enabled">В настоящее время назначен провайдером погоды</string>
     <string name="plugin_state_setup_required">Сначала вам нужно настроить этот плагин</string>
-    <string name="plugin_action_setup">Установить</string>
+    <string name="plugin_action_setup">Настроить</string>
     <string name="preference_clock_widget_alignment_top">Вверху</string>
     <string name="plugin_type_filesearch">Файлы</string>
     <string name="preference_clock_widget_alignment_center">По центру</string>
@@ -675,7 +675,7 @@
     <string name="preference_search_locations_theme_map">Изменить внешний вид карты</string>
     <string name="preference_search_locations_theme_map_summary">Применить цветовую схему лаунчера к карте</string>
     <string name="menu_navigation">Навигация</string>
-    <string name="preference_search_location_custom_tile_server_url">Tileserver URL</string>
+    <string name="preference_search_location_custom_tile_server_url">URL-адрес сервера плитки</string>
     <string name="preference_location_managed_summary">Местоположение этого провайдера управляется приложением плагина</string>
     <string name="customize_item_visibility">Показывать</string>
     <string name="item_visibility_hidden">Нигде</string>
@@ -828,4 +828,27 @@
     <string name="preference_clock_widget_time_format_24h">24-часовой</string>
     <string name="preference_clock_widget_time_format_12h">12-часовой</string>
     <string name="preference_clock_widget_time_format_system">Системные настройки по умолчанию</string>
+    <string name="weather_condition_thunder">Гром</string>
+    <string name="weather_condition_haze">Дымка</string>
+    <string name="missing_permission_tasks_search_settings">Для поиска в задачах требуется соответствующее разрешение</string>
+    <string name="missing_permission_tasks_integration">Для использования интеграции с задачами требуется соответствующее разрешение</string>
+    <string name="provider_breezy">Breezy Weather</string>
+    <string name="preference_location_breezy">Управлять местоположением в Breezy Weather</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather — это бесплатное и открытое приложение для прогноза погоды. Если установлено, %1$s сможет использовать Breezy Weather в качестве источника данных о погоде.</string>
+    <string name="preference_launch_breezyweather_app">Открыть Breezy Weather</string>
+    <string name="action_install">Установить</string>
+    <string name="preference_search_tasks_summary">Поиск задач в приложении Tasks</string>
+    <string name="preference_tasks_integration_ready">Tasks интеграция полностью настроена и готова к использованию.</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d незавершённая задача</item>
+        <item quantity="few">+%1$d незавершённые задачи</item>
+        <item quantity="many">+%1$d незавершённых задач</item>
+        <item quantity="other">+%1$d незавершённых задач</item>
+    </plurals>
+    <string name="preference_search_tasks">Задачи</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_breezyweather_integration_instructions">Использовать Breezy Weather в качестве поставщика погоды:\n\n1. Перейти к Breezy Weather &gt; Настройки &gt; Виджеты и живые обои &gt; Отправлять данные о погоде в Gadgetbridge &gt; Включить %1$s\n\n2. В %1$s назначьте Breezy Weather провайдером погоды</string>
+    <string name="preference_tasks_integration_description">Tasks — бесплатное приложение с открытым исходным кодом для напоминаний о списках дел. Если установлено, %1$s сможет отображать и искать ваши задачи.</string>
+    <string name="preference_launch_tasks_app">Открыть приложение Tasks</string>
 </resources>

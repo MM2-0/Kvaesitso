@@ -96,6 +96,7 @@ import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
@@ -501,9 +502,9 @@ fun ColumnScope.ConfigureCalendarWidget(
     widget: CalendarWidget,
     onWidgetUpdated: (CalendarWidget) -> Unit
 ) {
-    val calendarRepository: CalendarRepository = get()
-    val permissionsManager: PermissionsManager = get()
-    val pluginRepository: PluginRepository = get()
+    val calendarRepository: CalendarRepository = koinInject()
+    val permissionsManager: PermissionsManager = koinInject()
+    val pluginRepository: PluginRepository = koinInject()
     val calendars by remember {
         calendarRepository.getCalendars().map {
             it.sortedBy { it.name }
