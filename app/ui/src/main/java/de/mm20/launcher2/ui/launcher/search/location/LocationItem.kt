@@ -230,24 +230,33 @@ fun LocationItem(
                         )
                         val formattedDistance =
                             distance?.metersToLocalizedString(context, imperialUnits)
-                        val isOpenString = location.openingSchedule?.isOpen()
-                            ?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
-                        val sublabel = listOf(location.category, formattedDistance, isOpenString)
+                        val sublabel = listOf(location.category, formattedDistance)
                             .fastFilterNotNull()
                             .joinToString(" • ")
+                        val isOpenString = location.openingSchedule?.isOpen()
+                            ?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
 
-                        if (sublabel.isNotBlank()) {
-                            Text(
-                                sublabel,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.secondary,
-                                modifier = Modifier
-                                    .padding(top = 2.dp)
-                                    .sharedElement(
-                                        rememberSharedContentState("sublabel"),
-                                        this@AnimatedContent
-                                    )
-                            )
+                        Row(modifier = Modifier.padding(top = 2.dp)) {
+                            if (sublabel.isNotBlank()) {
+                                Text(
+                                    sublabel,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier
+                                        .sharedElement(
+                                            rememberSharedContentState("sublabel"),
+                                            this@AnimatedContent
+                                        )
+                                )
+                            }
+                            if (!isOpenString.isNullOrBlank()) {
+                                Text(
+                                    " • $isOpenString",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier.animateEnterExit()
+                                )
+                            }
                         }
                     }
                     Compass(
@@ -356,7 +365,8 @@ fun LocationItem(
                                     Text(
                                         " • ",
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.secondary
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        modifier = Modifier.animateEnterExit()
                                     )
                                     for ((method, available) in acceptedPaymentMethods) {
                                         Icon(
@@ -369,6 +379,7 @@ fun LocationItem(
                                             modifier = Modifier
                                                 .size(14.5.dp)
                                                 .padding(end = 2.dp)
+                                                .animateEnterExit()
                                         )
                                     }
                                 }
