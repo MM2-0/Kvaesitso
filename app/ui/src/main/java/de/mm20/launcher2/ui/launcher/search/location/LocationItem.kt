@@ -48,10 +48,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.NavigateNext
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.outlined.AttachMoney
 import androidx.compose.material.icons.outlined.CreditCardOff
 import androidx.compose.material.icons.outlined.CreditScore
-import androidx.compose.material.icons.outlined.MoneyOff
+import androidx.compose.material.icons.outlined.Toll
 import androidx.compose.material.icons.rounded.AirplanemodeActive
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Commute
@@ -115,6 +114,7 @@ import blend.Blend.harmonize
 import coil.compose.AsyncImage
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.icons.CableCar
+import de.mm20.launcher2.icons.TollOff
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.isOpen
@@ -361,7 +361,7 @@ fun LocationItem(
                                     for ((method, available) in acceptedPaymentMethods) {
                                         Icon(
                                             when (method) {
-                                                PaymentMethod.Cash -> if (available) Icons.Outlined.AttachMoney else Icons.Outlined.MoneyOff
+                                                PaymentMethod.Cash -> if (available) Icons.Outlined.Toll else Icons.Outlined.TollOff
                                                 PaymentMethod.Card -> if (available) Icons.Outlined.CreditScore else Icons.Outlined.CreditCardOff
                                             },
                                             contentDescription = null,
