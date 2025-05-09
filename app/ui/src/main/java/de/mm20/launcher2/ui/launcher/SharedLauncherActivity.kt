@@ -44,6 +44,7 @@ import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.gestures.GestureDetector
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
@@ -233,8 +234,11 @@ abstract class SharedLauncherActivity(
                             SnackbarHost(
                                 snackbarHostState,
                                 modifier = Modifier
-                                    .navigationBarsPadding()
                                     .imePadding()
+                                    .conditional(
+                                        !hideNav,
+                                        Modifier.navigationBarsPadding()
+                                    )
                             )
                             enterTransition?.let {
                                 if (it.startBounds == null || it.targetBounds == null) return@let
