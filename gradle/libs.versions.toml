@@ -1,7 +1,7 @@
 [versions]
-mustache = "0.9.7"
-jacksonCore = "2.12.7"
-jacksonDataformatYaml = "2.12.7"
+mustache = "0.9.14"
+jacksonCore = "2.19.0"
+jacksonDataformatYaml = "2.19.0"
 minSdk = "26"
 compileSdk = "36"
 targetSdk = "36"
@@ -9,20 +9,20 @@ targetSdk = "36"
 pluginSdk = "2.2.0"
 
 gradle = "8.1.2"
-android-gradle-plugin = "8.6.1"
+android-gradle-plugin = "8.10.0"
 ksp-gradle-plugin = "2.1.20-2.0.0"
 
 kotlin = "2.1.20"
-kotlinx-coroutines = "1.9.0"
-kotlinx-immutable = "0.3.5"
-kotlinx-serialization = "1.8.0"
+kotlinx-coroutines = "1.10.2"
+kotlinx-immutable = "0.3.8"
+kotlinx-serialization = "1.8.1"
 
 jetbrains-markdown = "0.7.3"
 
-androidx-compose = "1.8.0-rc03"
-androidx-compose-material3 = "1.4.0-alpha12"
+androidx-compose = "1.9.0-alpha02"
+androidx-compose-material3 = "1.4.0-alpha14"
 androidx-compose-materialicons = "1.7.8"
-androidx-lifecycle = "2.8.7"
+androidx-lifecycle = "2.9.0"
 androidx-core = "1.16.0"
 androidx-appcompat = "1.7.0"
 androidx-activity = "1.10.1"
@@ -32,19 +32,19 @@ androidx-work = "2.9.0"
 androidx-browser = "1.8.0"
 androidx-palette = "1.0.0"
 androidx-media2 = "1.3.0"
-androidx-room = "2.7.0"
+androidx-room = "2.7.1"
 androidx-constraint-layout = "1.1.1"
 androidx-emojipicker = "1.5.0"
 
-accompanist = "0.33.2-alpha"
-coil = "2.3.0"
-koin = "3.2.0"
-retrofit = "2.9.0"
+accompanist = "0.36.0"
+coil = "2.7.0"
+koin = "4.0.4"
+retrofit = "2.11.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
 
-osmOpeningHours = "0.1.0"
+osmOpeningHours = "0.2.0"
 
 [libraries]
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
@@ -97,13 +97,13 @@ accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist
 accompanist-navigationanimation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
 
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "androidx-constraint-layout" }
-androidx-transition = { group = "androidx.transition", name = "transition", version = "1.5.1" }
-androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version = "1.4.0" }
+androidx-transition = { group = "androidx.transition", name = "transition", version = "1.6.0" }
+androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version = "1.4.1" }
 androidx-securitycrypto = { group = "androidx.security", name = "security-crypto", version = "1.1.0-alpha07" }
-androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.1.4" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.1.6" }
 androidx-emojipicker = { group = "androidx.emoji2", name = "emoji2-emojipicker", version.ref = "androidx-emojipicker" }
 
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.0-beta01" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.0" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version = "4.12.0" }
 
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -114,9 +114,9 @@ coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary", version = "2.10" }
-suncalc = { group = "org.shredzone.commons", name = "commons-suncalc", version = "3.7" }
-jsoup = { group = "org.jsoup", name = "jsoup", version = "1.16.1" }
-commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.10.0" }
+suncalc = { group = "org.shredzone.commons", name = "commons-suncalc", version = "3.11" }
+jsoup = { group = "org.jsoup", name = "jsoup", version = "1.20.1" }
+commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.13.1" }
 stringsimilarity = { group = "com.aallam.similarity", name = "string-similarity-kotlin", version = "0.1.0" }
 
 # 4.4.2 is the last GPL compatible version, don't update to 5.x
@@ -126,7 +126,7 @@ koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = 
 koin-androidxcompose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
 tinypinyin = { group = "com.github.promeg", name = "tinypinyin", version = "2.0.3" }
-emoji4j = { group = "com.sigpwned", name = "emoji4j-core", version = "15.0.1" }
+emoji4j = { group = "com.sigpwned", name = "emoji4j-core", version = "16.0.0" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

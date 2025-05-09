@@ -20,7 +20,7 @@ import de.mm20.launcher2.themes.Theme
 import de.mm20.launcher2.themes.get
 import de.mm20.launcher2.themes.merge
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
-import org.koin.androidx.compose.inject
+import org.koin.compose.koinInject
 
 @Composable
 fun lightColorSchemeOf(theme: Theme): ColorScheme {
@@ -80,7 +80,7 @@ fun colorSchemeOf(colorScheme: FullColorScheme, corePalette: PartialCorePalette)
 
 @Composable
 fun systemCorePalette(): CorePalette<Int> {
-    val uiSettings: UiSettings by inject()
+    val uiSettings: UiSettings = koinInject()
     val compatModeColors by remember {
         uiSettings.compatModeColors
     }.collectAsState(false)
