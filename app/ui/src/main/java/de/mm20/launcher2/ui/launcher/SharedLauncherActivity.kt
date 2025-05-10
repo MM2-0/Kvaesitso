@@ -24,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
@@ -59,6 +58,9 @@ import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 import kotlin.math.pow
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 
 abstract class SharedLauncherActivity(
@@ -270,16 +272,27 @@ abstract class SharedLauncherActivity(
         }
     }
 
-    private var pauseTime = 0L
+    private var pauseTime = Duration.ZERO
+    private val durationSinceLastPause
+        get() = System.currentTimeMillis().milliseconds - pauseTime
+
+    private val resetSearchOnResume
+        get() = viewModel.resetSearchOnResume.value
+
     override fun onPause() {
         super.onPause()
-        pauseTime = System.currentTimeMillis()
+        pauseTime = System.currentTimeMillis().milliseconds
     }
 
     override fun onResume() {
         super.onResume()
-        if (System.currentTimeMillis() - pauseTime > 20000) {
-            viewModel.closeSearchWithoutAnimation()
+        val twentySeconds = durationSinceLastPause > 20.seconds
+        if (twentySeconds || resetSearchOnResume) {
+            if (resetSearchOnResume && !twentySeconds)
+                viewModel.closeSearch()
+            else
+                viewModel.closeSearchWithoutAnimation()
+
             searchVM.reset()
         }
     }

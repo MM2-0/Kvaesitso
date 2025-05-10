@@ -67,6 +67,7 @@ fun HomescreenSettingsScreen() {
     val hideStatusBar by viewModel.hideStatusBar.collectAsStateWithLifecycle(null)
     val hideNavBar by viewModel.hideNavBar.collectAsStateWithLifecycle(null)
     val chargingAnimation by viewModel.chargingAnimation.collectAsStateWithLifecycle(null)
+    val resetSearchOnResume by viewModel.resetSearchOnResume.collectAsStateWithLifecycle(null)
 
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_homescreen)) {
         item {
@@ -78,6 +79,14 @@ fun HomescreenSettingsScreen() {
                     onValueChanged = {
                         viewModel.setFixedRotation(it)
                     },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_reset_search_on_resume),
+                    summary = stringResource(R.string.preference_reset_search_on_resume_summary),
+                    value = resetSearchOnResume == true,
+                    onValueChanged = {
+                        viewModel.setResetSearchOnResume(it)
+                    }
                 )
             }
         }
