@@ -33,12 +33,18 @@ fun FavoritesWidget(widget: FavoritesWidget) {
     val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)
     val compactTags by viewModel.compactTags.collectAsState(false)
+    val singleTag by viewModel.singleTag.collectAsState(false)
+    val singleTagValue by viewModel.singleTagValue.collectAsState("")
     val favoritesEditButton = widget.config.editButton
 
     val tagsExpanded by viewModel.tagsExpanded.collectAsState(false)
 
     LaunchedEffect(widget) {
         viewModel.updateWidget(widget)
+    }
+
+    if(singleTag) {
+        viewModel.selectTag(singleTagValue);
     }
 
     Column(
@@ -56,17 +62,19 @@ fun FavoritesWidget(widget: FavoritesWidget) {
             )
         }
         if (pinnedTags.isNotEmpty() || favoritesEditButton) {
-            FavoritesTagSelector(
-                tags = pinnedTags,
-                selectedTag = selectedTag,
-                editButton = favoritesEditButton,
-                reverse = false,
-                onSelectTag = { viewModel.selectTag(it) },
-                scrollState = rememberScrollState(),
-                expanded = tagsExpanded,
-                compact = compactTags,
-                onExpand = { viewModel.setTagsExpanded(it) }
-            )
+            if(!singleTag) {
+                FavoritesTagSelector(
+                    tags = pinnedTags,
+                    selectedTag = selectedTag,
+                    editButton = favoritesEditButton,
+                    reverse = false,
+                    onSelectTag = { viewModel.selectTag(it) },
+                    scrollState = rememberScrollState(),
+                    expanded = tagsExpanded,
+                    compact = compactTags,
+                    onExpand = { viewModel.setTagsExpanded(it) },
+                )
+            }
         }
     }
 }
