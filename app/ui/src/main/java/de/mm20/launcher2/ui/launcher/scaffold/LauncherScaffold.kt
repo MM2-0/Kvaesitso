@@ -3,10 +3,7 @@ package de.mm20.launcher2.ui.launcher.scaffold
 import android.view.animation.PathInterpolator
 import androidx.activity.compose.PredictiveBackHandler
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.Easing
-import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.VectorConverter
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -25,7 +22,6 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,7 +38,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.BlurEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -139,8 +134,16 @@ internal class LauncherScaffoldState(
     private val config: ScaffoldConfiguration,
     val size: Size,
     private val touchSlop: Float,
+    /**
+     * The threshold (in px) where a rubberband gesture is considered to be over the threshold
+     * (releasing it would snap to the next page)
+     */
     private val rubberbandThreshold: Float,
-    private val minFlingVelocity: Float,
+    /**
+     * The minimum velocity (in px/s) where a fling will snap to the next page, regardless of the
+     * current offset.
+     */
+    private val velocityThreshold: Float,
     private val onHapticFeedback: (HapticFeedbackType) -> Unit,
 ) {
     var currentOffset by mutableStateOf(Offset.Zero)
@@ -227,7 +230,7 @@ internal class LauncherScaffoldState(
 
     private fun performRubberbandDrag(direction: Gesture, offset: Offset, delta: Offset) {
         val wasOverThreshold = currentOffset.x.absoluteValue > rubberbandThreshold ||
-            currentOffset.y.absoluteValue > rubberbandThreshold
+                currentOffset.y.absoluteValue > rubberbandThreshold
 
         val threshold = rubberbandThreshold * 1.5f
         currentOffset = when (direction) {
@@ -270,7 +273,7 @@ internal class LauncherScaffoldState(
     private fun performPushDrag(direction: Gesture, offset: Offset, delta: Offset) {
         val wasOverThreshold =
             currentOffset.x.absoluteValue > size.width * 0.5f ||
-                currentOffset.y.absoluteValue > size.height * 0.5f
+                    currentOffset.y.absoluteValue > size.height * 0.5f
 
         currentOffset = when (direction) {
             Gesture.SwipeUp -> Offset(
@@ -393,13 +396,13 @@ internal class LauncherScaffoldState(
     ) {
         val wasSettledOnSecondaryPage = isSettledOnSecondaryPage
 
-        if (offset.x <= -rubberbandThreshold || offset.x < 0f && velocity.x < -minFlingVelocity) {
+        if (offset.x <= -rubberbandThreshold || offset.x < 0f && velocity.x < -velocityThreshold) {
             isSettledOnSecondaryPage = !isSettledOnSecondaryPage
-        } else if (offset.x >= rubberbandThreshold || offset.x > 0f && velocity.x > minFlingVelocity) {
+        } else if (offset.x >= rubberbandThreshold || offset.x > 0f && velocity.x > velocityThreshold) {
             isSettledOnSecondaryPage = !isSettledOnSecondaryPage
-        } else if (offset.y <= -rubberbandThreshold || offset.y < 0f && velocity.y < -minFlingVelocity) {
+        } else if (offset.y <= -rubberbandThreshold || offset.y < 0f && velocity.y < -velocityThreshold) {
             isSettledOnSecondaryPage = !isSettledOnSecondaryPage
-        } else if (offset.y >= rubberbandThreshold || offset.y > 0f && velocity.y > minFlingVelocity) {
+        } else if (offset.y >= rubberbandThreshold || offset.y > 0f && velocity.y > velocityThreshold) {
             isSettledOnSecondaryPage = !isSettledOnSecondaryPage
         }
 
@@ -442,13 +445,13 @@ internal class LauncherScaffoldState(
         val threshold = (upperPage + lowerPage) / 2f
 
         val targetOffset = if (direction.orientation == Orientation.Vertical) {
-            if (offset.y > threshold && velocity.y > -minFlingVelocity || velocity.y > minFlingVelocity) Offset(
+            if (offset.y > threshold && velocity.y > -velocityThreshold || velocity.y > velocityThreshold) Offset(
                 0f,
                 upperPage
             )
             else Offset(0f, lowerPage)
         } else {
-            if (offset.x > threshold && velocity.x > -minFlingVelocity || velocity.x > minFlingVelocity) Offset(
+            if (offset.x > threshold && velocity.x > -velocityThreshold || velocity.x > velocityThreshold) Offset(
                 upperPage,
                 0f
             )
@@ -746,7 +749,7 @@ internal fun LauncherScaffold(
                     size = Size(widthPx, heightPx),
                     touchSlop = touchSlop,
                     rubberbandThreshold = rubberbandThreshold,
-                    minFlingVelocity = minFlingVelocity,
+                    velocityThreshold = minFlingVelocity,
                     onHapticFeedback = {
                         hapticFeedback.performHapticFeedback(it)
                     }
@@ -754,15 +757,16 @@ internal fun LauncherScaffold(
             }
 
         LaunchedEffect(state.isSettledOnSecondaryPage) {
-            searchBarFocused = state.isSettledOnSecondaryPage && state.currentComponent is SearchComponent
+            searchBarFocused =
+                state.isSettledOnSecondaryPage && state.currentComponent is SearchComponent
         }
 
         if (config.wallpaperBlurRadius > 0.dp) {
-        val wallpaperBlur by animateIntAsState(
-            if (state.currentProgress >= 0.5f) 8.dp.toPixels().toInt() else 0
-        )
-        WallpaperBlur { wallpaperBlur }
-            }
+            val wallpaperBlur by animateIntAsState(
+                if (state.currentProgress >= 0.5f) 8.dp.toPixels().toInt() else 0
+            )
+            WallpaperBlur { wallpaperBlur }
+        }
 
         PredictiveBackHandler {
             try {
@@ -808,7 +812,13 @@ internal fun LauncherScaffold(
                     consumed: Velocity,
                     available: Velocity
                 ): Velocity {
-                    state.onDragStopped(available / 25f)
+                    // Threshold for nested scroll flings is 15 times higher to avoid accidental
+                    // page changes
+                    if (available.x.absoluteValue > minFlingVelocity * 15f || available.y.absoluteValue > minFlingVelocity * 15f) {
+                        state.onDragStopped(available)
+                    } else {
+                        state.onDragStopped(Velocity.Zero)
+                    }
                     return available
                 }
             }
@@ -1050,7 +1060,8 @@ private fun Modifier.searchBarAnimation(
         state.currentProgress
     }
 
-    val systemBarInset = if (config.searchBarPosition == SearchBarPosition.Top) insets.calculateTopPadding() else insets.calculateBottomPadding()
+    val systemBarInset =
+        if (config.searchBarPosition == SearchBarPosition.Top) insets.calculateTopPadding() else insets.calculateBottomPadding()
 
     val offset = if (config.searchBarStyle == SearchBarStyle.Hidden) {
         offsetFactor * (1 - progress).pow(2) * (128.dp + systemBarInset)
@@ -1068,11 +1079,12 @@ private fun Modifier.searchBarAnimation(
         )
     }*/
 
-    val modifier = if (component?.showSearchBar == false && config.searchBarStyle == SearchBarStyle.Hidden) {
-        Modifier.alpha(0f)
-    } else {
-        Modifier.offset(y = offset)
-    }
+    val modifier =
+        if (component?.showSearchBar == false && config.searchBarStyle == SearchBarStyle.Hidden) {
+            Modifier.alpha(0f)
+        } else {
+            Modifier.offset(y = offset)
+        }
 
     return this then (component?.searchBarModifier(state, modifier) ?: modifier)
 }
