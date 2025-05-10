@@ -38,7 +38,7 @@ data class TasksCalendarEvent(
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         val uri = ContentUris.withAppendedId("content://org.tasks/tasks".toUri(), id)
-        val intent = Intent(Intent.ACTION_VIEW).setData(uri).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val intent = Intent(Intent.ACTION_VIEW).setData(uri).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).setPackage("org.tasks")
 
         return context.tryStartActivity(intent, options)
     }
