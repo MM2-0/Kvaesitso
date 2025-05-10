@@ -44,6 +44,8 @@ data class LauncherSettingsData internal constructor(
 
     val homeScreenDock: Boolean = false,
 
+    val rowsInDock: Int = 1,
+
     val favoritesEnabled: Boolean = true,
     val favoritesFrequentlyUsed: Boolean = true,
     val favoritesFrequentlyUsedRows: Int = 1,
@@ -81,6 +83,7 @@ data class LauncherSettingsData internal constructor(
     val badgesShortcuts: Boolean = true,
     val badgesPlugins: Boolean = true,
 
+    val gridRowCount: Int = 1,
     val gridColumnCount: Int = 5,
     val gridIconSize: Int = 48,
     val gridLabels: Boolean = true,
