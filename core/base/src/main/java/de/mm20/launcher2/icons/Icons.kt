@@ -1682,3 +1682,62 @@ private val _PrivateSpace = materialIcon("Icons.Rounded.PrivateSpace") {
 
 val Icons.Rounded.PrivateSpace
     get() = _PrivateSpace
+
+private val _BreezyWeather = materialIcon("Icons.Rounded.BreezyWeather") {
+    materialPath {
+        moveTo(11.51596f, 15.483644f)
+        curveToRelative(-0.270954f, 0.445157f, -0.619347f, 0.870954f, -1.006439f, 1.258046f)
+        curveToRelative(-0.5806338f, 0.580637f, -1.1999812f, 1.02579f, -1.8967447f, 1.354821f)
+        curveToRelative(0.8709544f, 0.483862f, 1.8580387f, 0.793534f, 2.9031837f, 0.851599f)
+        close()
+        moveTo(8.5160015f, 11.51596f)
+        curveTo(8.0708487f, 11.245006f, 7.6450471f, 10.896616f, 7.2579555f, 10.509525f)
+        curveTo(6.6966767f, 9.9482422f, 6.2515202f, 9.3288948f, 5.9224934f, 8.6514863f)
+        curveTo(5.4386307f, 9.5224406f, 5.1483101f, 10.49017f, 5.070894f, 11.535315f)
+        horizontalLineToRelative(3.4451075f)
+        close()
+        moveToRelative(6.9676425f, 0.967729f)
+        curveToRelative(0.445153f, 0.270955f, 0.870954f, 0.619344f, 1.258046f, 1.006436f)
+        curveToRelative(0.580634f, 0.580637f, 1.02579f, 1.199984f, 1.354817f, 1.877393f)
+        curveToRelative(0.483863f, -0.870954f, 0.774184f, -1.858038f, 0.8516f, -2.903184f)
+        horizontalLineTo(15.483644f)
+        close()
+        moveTo(12.483685f, 8.5160053f)
+        curveTo(12.75464f, 8.0708488f, 13.103033f, 7.6450509f, 13.490125f, 7.2579593f)
+        curveTo(14.051407f, 6.6966767f, 14.670751f, 6.251524f, 15.348159f, 5.9224934f)
+        curveTo(14.49656f, 5.4579857f, 13.509479f, 5.1483139f, 12.483685f, 5.090249f)
+        close()
+        moveTo(5.7483025f, 17.76748f)
+        curveToRelative(1.6064278f, 0f, 2.9225387f, -0.561279f, 4.0644549f, -1.703199f)
+        curveToRelative(1.0257906f, -1.02579f, 1.5677176f, -2.20642f, 1.6838476f, -3.580592f)
+        horizontalLineTo(0f)
+        curveToRelative(0.096756f, 1.393527f, 0.6580535f, 2.554802f, 1.6838476f, 3.580592f)
+        curveToRelative(1.1419162f, 1.14192f, 2.4580271f, 1.703199f, 4.0644549f, 1.703199f)
+        close()
+        moveTo(7.9353678f, 9.8127613f)
+        curveTo(8.961158f, 10.838552f, 10.141784f, 11.380479f, 11.51596f, 11.496605f)
+        verticalLineTo(0f)
+        curveTo(10.122429f, 0.096756f, 8.961158f, 0.6580573f, 7.9353678f, 1.6838476f)
+        curveTo(6.7934477f, 2.8257677f, 6.2321652f, 4.1612297f, 6.2321652f, 5.7483025f)
+        curveToRelative(0f, 1.5870766f, 0.5612825f, 2.9225387f, 1.7032026f, 4.0644588f)
+        close()
+        moveToRelative(4.5483172f, 2.6902827f)
+        verticalLineToRelative(11.51596f)
+        curveToRelative(1.393531f, -0.09676f, 2.593512f, -0.677412f, 3.580593f, -1.683848f)
+        curveToRelative(1.14192f, -1.14192f, 1.703202f, -2.477382f, 1.703202f, -4.083809f)
+        curveToRelative(0f, -1.606428f, -0.561282f, -2.922539f, -1.703202f, -4.064459f)
+        curveToRelative(-1.025791f, -1.02579f, -2.206417f, -1.587073f, -3.580593f, -1.683844f)
+        close()
+        moveToRelative(5.767658f, -6.270875f)
+        curveToRelative(-1.606428f, 0f, -2.922539f, 0.5612825f, -4.064455f, 1.7031988f)
+        curveTo(13.161098f, 8.9611581f, 12.61917f, 10.141788f, 12.50304f, 11.51596f)
+        horizontalLineTo(23.999646f)
+        curveTo(23.90289f, 10.122433f, 23.341592f, 8.9611581f, 22.315798f, 7.9353678f)
+        curveTo(21.173882f, 6.7934515f, 19.838416f, 6.232169f, 18.251343f, 6.232169f)
+        close()
+
+    }
+}
+
+val Icons.Rounded.BreezyWeather
+    get() = _BreezyWeather

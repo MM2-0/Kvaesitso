@@ -52,6 +52,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.Quadruple
+import de.mm20.launcher2.Quintuple
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -132,6 +133,7 @@ fun CalendarWidget(
         val events by viewModel.calendarEvents
         val nextEvents by viewModel.nextEvents
         val runningEvents by viewModel.hiddenPastEvents
+        val runningTasks by viewModel.hiddenRunningTasks
         val hasPermission by viewModel.hasPermission.collectAsState()
         Column {
             if (hasPermission == false) {
@@ -145,10 +147,11 @@ fun CalendarWidget(
                 )
             }
             AnimatedContent(
-                Quadruple(
+                Quintuple(
                     selectedDate,
                     events,
                     runningEvents,
+                    runningTasks,
                     nextEvents
                 ),
                 transitionSpec = {
@@ -185,7 +188,7 @@ fun CalendarWidget(
                         }
                     }
                 }
-            ) { (_, events, runningEvents, nextEvents) ->
+            ) { (_, events, runningEvents, runningTasks, nextEvents) ->
                 Column(
                     modifier = Modifier
                         .padding(horizontal = 12.dp)
@@ -208,6 +211,20 @@ fun CalendarWidget(
                             ),
                             onClick = {
                                 viewModel.showAllEvents()
+                            },
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+
+                    if (runningTasks > 0) {
+                        Info(
+                            text = pluralStringResource(
+                                R.plurals.calendar_widget_running_tasks,
+                                runningTasks,
+                                runningTasks
+                            ),
+                            onClick = {
+                                viewModel.showAllTasks()
                             },
                             modifier = Modifier.padding(top = 8.dp)
                         )
@@ -272,15 +289,10 @@ private fun Info(
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.small)
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.small)
+            .clickable(enabled = onClick != null, onClick = { onClick?.invoke() })
+            .padding(12.dp)
     ) {
-        Box(
-            contentAlignment = Alignment.CenterStart,
-            modifier = Modifier
-                .clickable(enabled = onClick != null, onClick = { onClick?.invoke() })
-                .padding(12.dp)
-        ) {
-            Text(text, style = MaterialTheme.typography.bodySmall)
-        }
+        Text(text, style = MaterialTheme.typography.bodySmall)
     }
 }
 

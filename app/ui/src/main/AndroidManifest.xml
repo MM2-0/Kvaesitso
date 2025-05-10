@@ -54,8 +54,7 @@
             android:label="@string/settings"
             android:launchMode="singleTop"
             android:parentActivityName=".launcher.LauncherActivity"
-            android:taskAffinity="de.mm20.launcher2.settings"
-            android:theme="@style/SettingsTheme.NoActionBar"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:enableOnBackInvokedCallback="true"
             >
             <intent-filter>

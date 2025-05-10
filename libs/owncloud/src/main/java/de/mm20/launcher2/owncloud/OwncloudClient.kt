@@ -66,7 +66,7 @@ class OwncloudClient(val context: Context) {
     }
 
 
-    suspend fun checkOwncloudInstallation(url: String): Boolean {
+    internal suspend fun checkOwncloudInstallation(url: String): Boolean {
         var url = url
         if (!url.startsWith("http://") && !url.startsWith("https://")) {
             url = "https://$url"
@@ -81,6 +81,30 @@ class OwncloudClient(val context: Context) {
         }.getOrNull() ?: return false
         return response.code == 200 || response.code == 401
     }
+
+    internal suspend fun checkOwncloudCredentials(server: String, username: String, password: String): Boolean {
+        val request = Request.Builder()
+            .addHeader("authorization", Credentials.basic(username, password))
+            .url("$server/ocs/v1.php/cloud/user?format=json")
+            .build()
+
+        val response = try {
+            withContext(Dispatchers.IO) {
+                httpClient.newCall(request).execute()
+            }
+        } catch (e: IOException) {
+            Log.e("OwncloudClient", "HTTP error", e)
+            return false
+        }
+
+        if (response.code != 200) {
+            Log.e("OwncloudClient", "HTTP error: ${response.code}")
+            return false
+        }
+
+        return true
+    }
+
 
     suspend fun getLoggedInUser(): OcUser? {
         val server = getServer()
@@ -150,10 +174,6 @@ class OwncloudClient(val context: Context) {
         return preferences.getString("username", null)
     }
 
-    fun getUserDisplayName(): String? {
-        return preferences.getString("displayname", getUserName())
-    }
-
     private fun getToken(): String? {
         return preferences.getString("token", null)
     }
@@ -173,18 +193,6 @@ class OwncloudClient(val context: Context) {
             putString("token", null)
             putString("displayname", null)
         }
-    }
-
-    suspend fun tryLogin(url: String, username: String, pw: String): Boolean {
-
-        setServer(url, username, pw)
-
-        val displayName = getDisplayName()
-        preferences.edit {
-            putString("displayname", displayName)
-        }
-
-        return displayName != null
     }
 
     val files by lazy {

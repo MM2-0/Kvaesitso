@@ -1,11 +1,11 @@
 package de.mm20.launcher2.calendar
 
 import android.content.Context
-import android.util.Log
 import de.mm20.launcher2.calendar.providers.AndroidCalendarProvider
 import de.mm20.launcher2.calendar.providers.CalendarList
 import de.mm20.launcher2.calendar.providers.CalendarProvider
 import de.mm20.launcher2.calendar.providers.PluginCalendarProvider
+import de.mm20.launcher2.calendar.providers.TasksCalendarProvider
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginRepository
@@ -21,10 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.flow.update
@@ -57,14 +54,21 @@ internal class CalendarRepositoryImpl(
             }
         }
 
-        val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+        val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+        val hasTasksPermission = permissionsManager.hasPermission(PermissionGroup.Tasks)
         val providerIds = settings.providers
         val excludedCalendars = settings.excludedCalendars
 
-        return combineTransform(hasPermission, providerIds, excludedCalendars) { perm, providerIds, excludedCalendars ->
+        return combineTransform(
+            hasCalendarPermission,
+            hasTasksPermission,
+            providerIds,
+            excludedCalendars
+        ) { calPerm, taskPerm, providerIds, excludedCalendars ->
             val providers = providerIds.mapNotNull {
                 when (it) {
-                    "local" -> if (perm) AndroidCalendarProvider(context) else null
+                    "local" -> if (calPerm) AndroidCalendarProvider(context) else null
+                    "tasks.org" -> if (taskPerm) TasksCalendarProvider(context) else null
                     else -> PluginCalendarProvider(context, it)
                 }
             }
@@ -90,14 +94,16 @@ internal class CalendarRepositoryImpl(
         excludeCalendars: List<String>,
         excludeAllDayEvents: Boolean,
     ): Flow<ImmutableList<CalendarEvent>> {
-        val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+        val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+        val hasTasksPermission = permissionsManager.hasPermission(PermissionGroup.Tasks)
         val plugins = pluginRepository.findMany(
             type = PluginType.Calendar,
             enabled = true,
         )
-        return combineTransform(hasPermission, plugins) { perm, plugins ->
+        return combineTransform(hasCalendarPermission, hasTasksPermission, plugins) { calPerm, taskPerm, plugins ->
             val providers = buildList {
-                if (perm) add(AndroidCalendarProvider(context)) else null
+                if (calPerm) add(AndroidCalendarProvider(context)) else null
+                if (taskPerm) add(TasksCalendarProvider(context)) else null
                 addAll(
                     plugins.map {
                         PluginCalendarProvider(context, it.authority)
@@ -119,7 +125,7 @@ internal class CalendarRepositoryImpl(
         }
     }
 
-    private suspend fun queryCalendarEvents(
+    private fun queryCalendarEvents(
         query: String?,
         intervalStart: Long,
         intervalEnd: Long,
@@ -154,21 +160,42 @@ internal class CalendarRepositoryImpl(
     }
 
     override fun getCalendars(providerId: String?): Flow<List<CalendarList>> {
-        val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+        val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+        val hasTaskPermission = permissionsManager.hasPermission(PermissionGroup.Tasks)
 
         val providers: Flow<List<CalendarProvider>> = if (providerId != null) {
-            when(providerId) {
-                "local" -> hasPermission.map { if (it) listOf(AndroidCalendarProvider(context)) else emptyList() }
-                else -> pluginRepository.get(providerId).map { if (it?.enabled == true) listOf(PluginCalendarProvider(context, providerId)) else emptyList() }
+            when (providerId) {
+                "local" -> hasCalendarPermission.map {
+                    if (it) listOf(
+                        AndroidCalendarProvider(
+                            context
+                        )
+                    ) else emptyList()
+                }
+
+                "tasks.org" -> hasTaskPermission.map { if (it) listOf(TasksCalendarProvider(context)) else emptyList() }
+                else -> pluginRepository.get(providerId).map {
+                    if (it?.enabled == true) listOf(
+                        PluginCalendarProvider(
+                            context,
+                            providerId
+                        )
+                    ) else emptyList()
+                }
             }
         } else {
             val plugins = pluginRepository.findMany(
                 type = PluginType.Calendar,
                 enabled = true,
             )
-            combine(hasPermission, plugins) { perm, plugins ->
+            combine(
+                hasCalendarPermission,
+                hasTaskPermission,
+                plugins
+            ) { calPerm, tasksPerm, plugins ->
                 buildList {
-                    if (perm) add(AndroidCalendarProvider(context))
+                    if (calPerm) add(AndroidCalendarProvider(context))
+                    if (tasksPerm) add(TasksCalendarProvider(context))
                     addAll(plugins.map { PluginCalendarProvider(context, it.authority) })
                 }
             }

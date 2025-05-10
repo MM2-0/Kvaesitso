@@ -17,8 +17,8 @@ import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.jsoup.Jsoup
-import org.jsoup.UncheckedIOException
 import java.io.IOException
+import java.io.UncheckedIOException
 import java.net.MalformedURLException
 import java.net.URISyntaxException
 import java.net.URL

@@ -11,9 +11,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -39,7 +36,12 @@ fun CalendarSearchSettingsScreen() {
     val navController = LocalNavController.current
 
     val hasCalendarPermission by viewModel.hasCalendarPermission.collectAsState(null)
-    val plugins by viewModel.availablePlugins.collectAsStateWithLifecycle(emptyList(), minActiveState = Lifecycle.State.RESUMED)
+    val hasTasksPermission by viewModel.hasTasksPermission.collectAsState(null)
+    val isTasksAppInstalled by viewModel.isTasksAppInstalled.collectAsStateWithLifecycle(false)
+    val plugins by viewModel.availablePlugins.collectAsStateWithLifecycle(
+        emptyList(),
+        minActiveState = Lifecycle.State.RESUMED
+    )
     val enabledProviders by viewModel.enabledProviders.collectAsState(emptySet())
 
     PreferenceScreen(title = stringResource(R.string.preference_search_calendar)) {
@@ -66,6 +68,29 @@ fun CalendarSearchSettingsScreen() {
                         navController?.navigate("settings/search/calendar/local")
                     }
                 )
+                if (isTasksAppInstalled) {
+                    AnimatedVisibility(hasTasksPermission == false) {
+                        MissingPermissionBanner(
+                            text = stringResource(R.string.missing_permission_tasks_search_settings),
+                            onClick = {
+                                viewModel.requestTasksPermission(context as AppCompatActivity)
+                            },
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                    PreferenceWithSwitch(
+                        title = stringResource(R.string.preference_search_tasks),
+                        summary = stringResource(R.string.preference_search_tasks_summary),
+                        switchValue = enabledProviders.contains("tasks.org") && hasTasksPermission == true,
+                        onSwitchChanged = {
+                            viewModel.setProviderEnabled("tasks.org", it)
+                        },
+                        enabled = hasTasksPermission == true,
+                        onClick = {
+                            navController?.navigate("settings/search/calendar/tasks.org")
+                        }
+                    )
+                }
                 for (plugin in plugins) {
                     val state = plugin.state
                     if (state is PluginState.SetupRequired) {

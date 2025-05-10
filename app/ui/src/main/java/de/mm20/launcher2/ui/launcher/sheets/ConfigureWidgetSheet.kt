@@ -106,6 +106,7 @@ import de.mm20.launcher2.widgets.Widget
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
@@ -573,9 +574,9 @@ fun ColumnScope.ConfigureCalendarWidget(
     widget: CalendarWidget,
     onWidgetUpdated: (CalendarWidget) -> Unit
 ) {
-    val calendarRepository: CalendarRepository = get()
-    val permissionsManager: PermissionsManager = get()
-    val pluginRepository: PluginRepository = get()
+    val calendarRepository: CalendarRepository = koinInject()
+    val permissionsManager: PermissionsManager = koinInject()
+    val pluginRepository: PluginRepository = koinInject()
     val calendars by remember {
         calendarRepository.getCalendars().map {
             it.sortedBy { it.name }
@@ -626,6 +627,7 @@ fun ColumnScope.ConfigureCalendarWidget(
         for (group in groups) {
             val pluginName = remember(plugins, group.key) {
                 if (group.key == "local") context.getString(R.string.preference_calendar_calendars)
+                else if (group.key == "tasks.org") context.getString(R.string.preference_search_tasks)
                 else plugins.find { it.authority == group.key }?.label
             }
             if (pluginName != null) {

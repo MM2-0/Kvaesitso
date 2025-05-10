@@ -37,6 +37,7 @@ import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
+import de.mm20.launcher2.ui.settings.breezyweather.BreezyWeatherSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsScreen
@@ -69,6 +70,7 @@ import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
+import de.mm20.launcher2.ui.settings.tasks.TasksIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterHelpSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
 import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
@@ -239,6 +241,12 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/integrations/owncloud") {
                                     OwncloudSettingsScreen()
+                                }
+                                composable("settings/integrations/tasks") {
+                                    TasksIntegrationSettingsScreen()
+                                }
+                                composable("settings/integrations/breezyweather") {
+                                    BreezyWeatherSettingsScreen()
                                 }
                                 composable("settings/plugins") {
                                     PluginsSettingsScreen()

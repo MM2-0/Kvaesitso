@@ -17,14 +17,11 @@
     <string name="menu_launch">Запусціць</string>
     <string name="menu_customize">Дапасаваць</string>
     <string name="menu_open_file">Адкрыць</string>
-    <string name="menu_hide">Схаваць</string>
     <string name="menu_map">Праглядзець на мапе</string>
     <string name="menu_website">Адкрыць вэбсайт</string>
-    <string name="menu_unhide">Паказаць</string>
     <string name="action_undo">Скасаваць</string>
     <string name="menu_delete">Выдаліць</string>
     <string name="menu_favorites_unpin">Адмацаваць</string>
-    <string name="msg_item_hidden">%1$s было схавана.</string>
     <string name="menu_remove">Прыняць</string>
     <string name="menu_contacts_open_externally">Адкрыць у кантактах</string>
     <string name="menu_calendar_open_externally">Адкрыць у календары</string>
@@ -123,8 +120,6 @@
     <string name="owncloud_username">Імя карыстальніка</string>
     <string name="owncloud_login_2fa_hint">Калі ў вас уключана праверка сапраўднасці, вы павінны ўвесці пароль тут.</string>
     <string name="owncloud_login_failed">Не ўдалося ўвайсці: няверныя імя карыстальніка ці пароль.</string>
-    <string name="owncloud_username_empty">Імя карыстальніка не можа быць пустым</string>
-    <string name="owncloud_password_empty">Пароль не можа быць пустым</string>
     <string name="login_flow_continue">Працягнуць</string>
     <string name="websearch_dialog_query_encoding_none">Няма</string>
     <string name="widget_name_favorites">Абраныя</string>
@@ -151,7 +146,6 @@
     <string name="edit_favorites_dialog_tag_section_empty">Замацаваныя цэтлікі з\'явяцца тут</string>
     <string name="edit_favorites_dialog_new_tag">Стварыць цэтлік…</string>
     <string name="nextcloud_server_url">URL сервера Nextcloud</string>
-    <string name="nextcloud_server_url_empty">URL сервера не павінна быць пустым</string>
     <string name="login_flow_login">Увайсці</string>
     <string name="disclaimer_currency_converter">Курсы валют абнаўляюцца штодзень Еўрапейскім цэнтральным банкам. Уся інфармацыя дана \"як ёсць\", без аніякай гарантыі. На гэту інфармацыю не мяркуецца адказнасці. \n \nАпошняе абнаўленне: %1$s</string>
     <string name="date_tomorrow">Заўтра</string>
@@ -333,7 +327,6 @@
     <string name="preference_nav_bar_icons">Значкі панэлі навігацыі</string>
     <string name="preference_hide_nav_bar">Схаваць панэль навігацыі</string>
     <string name="preference_screen_integrations_summary">Кіраванне злучаннамі уліковымі запісамі і сэрвісамі</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Увайшлі як %1$s</string>
     <string name="preference_signout">Выйсці</string>
     <string name="preference_summary_not_logged_in">Зараз няма злучаннага ўліковага запісу</string>
@@ -436,12 +429,10 @@
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Календары</string>
     <string name="preference_search_cloud_summary">Шукаць файлы %1$s</string>
-    <string name="preference_google_signin">Увайсці праз Google</string>
     <string name="preference_search_bar_launch_on_enter">Запускаць пры пацвярджэнні</string>
     <string name="preference_hidden_items">Схаваныя рэзультаты пошуку</string>
     <string name="preference_hidden_items_summary">Кіраванне схаванымі праграмамі і рэзультатамі пошуку</string>
     <string name="preference_search_currencyconverter">Канвертар валют</string>
-    <string name="preference_google_signin_summary">Увайдзіце, каб шукаць файлы на Google Дыске</string>
     <string name="preference_calendar_hide_completed">Хаваць выкананыя задачы</string>
     <string name="preference_search_currencyconverter_summary">Своечасова спампоўваць курсы валют для пераўтварэння грошаў</string>
     <string name="preference_search_bar_auto_focus_summary">Аўтаматычна паказваць клавіятуру пры адкрыцці меню праграм</string>
@@ -450,9 +441,6 @@
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_bar_launch_on_enter_summary">Запускаць вылучаную прапанову або хуткае дзеянне пры націсканні кнопкі \"Увод\"</string>
     <string name="preference_search_localfiles">Файлы на прыладзе</string>
-    <string name="preference_search_gdrive">Google Дыск</string>
-    <string name="preference_search_gdrive_summary">Шукаць файлы %1$s на Google Дыске</string>
-    <string name="preference_calendar_hide_allday">Хаваць паздеі на ўвесь дзень</string>
     <string name="preference_screen_buildinfo">Інфармацыя аб зборцы</string>
     <string name="preference_screen_buildinfo_summary">Больш інфармацыі аб гэтай зборке гэтай праграмы</string>
     <string name="preference_search_bar_style">Стыль</string>
@@ -468,7 +456,6 @@
     <string name="preference_category_favorites_frequently_used">Нядаўна выкарыстаныя</string>
     <string name="preference_screen_icons">Сетка і значкі</string>
     <string name="preference_screen_icons_summary">Сетка, памер і пакеты значкоў, бэйджы</string>
-    <string name="preference_category_accounts">Уліковыя запісы</string>
     <string name="preference_widgets_edit_button_summary">Адлюстроўваць кнопку для дадавання, выдалення і змянення парадку віджэтаў</string>
     <string name="preference_screen_homescreen">Галоўны экран</string>
     <string name="preference_weather_integration">Надвор\'е</string>
@@ -484,7 +471,6 @@
     <string name="restore_invalid_file">Здаецца, выбраны файл не з\'яўляецца рэзервовай копіяй. Вы ўпэўнены, што выбралі пэўны файл?</string>
     <string name="preference_favorites_edit_button_summary">Паказваць кнопку рэдагавання абраных</string>
     <string name="restore_different_minor_version">Гэты бэкап быў створаны з іншай версіі %1$s. Некаторыя дадзеныя могуць не аднавіцца пэўна.</string>
-    <string name="no_account_google">Вы яшчэ не далучылі ўліковы запіс Google</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Зарадзіцца поўнасцю праз %1$s хвіліну</item>
         <item quantity="few">Зарадзіцца поўнасцю праз %1$s хвіліны</item>
@@ -494,12 +480,10 @@
     <string name="restore_incompatible_file">Гэта рэзервовая копія была створана з іншай версіяй %1$s і не можа быць адноўлены з гэтай версіяй.</string>
     <string name="preference_edit_button">Кнопка рэдагавання</string>
     <string name="restore_complete">Рэзервовая копія адноўлена.</string>
-    <string name="icon_picker_title">Выберыце значок</string>
     <string name="icon_picker_suggestions">Прапановы</string>
     <string name="icon_picker_search_icon">Пошук у пакетах значкоў</string>
     <string name="icon_picker_default_icon">Прадвызначаны</string>
     <string name="restore_meta">Створана %1$s на %2$s з %3$s.</string>
-    <string name="icon_picker_no_packs_installed">Пакетаў значкоў не ўсталявана</string>
     <string name="icon_picker_filter_all_packs">Усе пакеты значкоў</string>
     <string name="preference_screen_search_actions">Хуткіе дзеянні</string>
     <string name="preference_search_search_actions_summary">Кіраванне хуткімі дзеяннямі і ярлыкамі пошука</string>
@@ -520,26 +504,20 @@
     <string name="search_action_websearch_url_hint">Шаблон спасылкі, які выкарыстоўваецца для будавання спасылкі пошуку. Выкарыстоўвайце ‘${1}’ у якасці пошукавага запыта, напрыклад https://google.com/search?q=${1}.</string>
     <string name="apps_profile_main">Персанальны</string>
     <string name="apps_profile_work">Працоўны</string>
-    <string name="create_app_shortcut">Стварыць ярлык</string>
     <string name="frequently_used_show_in_favorites">Паказваць у абраных</string>
     <string name="frequently_used_rows">Колькасць радкоў</string>
-    <string name="customize_tags_placeholder">Цэтлікі</string>
     <string name="search_action_email">Напісаць на эл. пошту</string>
     <string name="search_action_timer">Запусціць таймер</string>
     <string name="search_action_share">Абагуліць</string>
     <string name="search_action_websearch">Шукаць у інтэрнэце</string>
     <string name="search_action_contact">Стварыць кантакт</string>
     <string name="create_search_action_type_intent">Наладжвальны намер</string>
-    <string name="create_search_action_title">Новае хуткае дзеянне</string>
-    <string name="edit_search_action_title">Рэдагаваць хуткае дзеянне</string>
     <string name="search_action_app">Праграма</string>
     <string name="apps_profile_private">Прыватны</string>
     <string name="favorites">Абраныя</string>
     <string name="favorites_empty">Замацаваныя ярлыкі і ярлыкі, якія часта выкарыстоўваюцца, будуць з\'яўляцца тут</string>
     <string name="favorites_empty_tag">Няма ярлыкоў з гэтым цэтлікам</string>
-    <string name="edit_tag_title">Адрэдагаваць цэтлік</string>
     <string name="tag_name">Назва цэтліка</string>
-    <string name="create_tag_title">Новы цэтлік</string>
     <string name="experimental_feature">Эксперыментальная</string>
     <string name="tag_select_items">Выберыце ярлыкі:</string>
     <string name="tag_exists_error">Тэг з такой назвай ужо існуе.</string>
@@ -573,8 +551,6 @@
     <string name="preference_gesture_home_button">Кнопка/жэст \"На галоўны экран\"</string>
     <string name="preference_gesture_double_tap">Падвойны націск</string>
     <string name="gesture_action_quick_settings">Адкрыць хуткія налады</string>
-    <string name="preference_search_result_ordering">Парадак пошукавых вынікаў</string>
-    <string name="preference_search_result_ordering_alphabetic">Алфавітны</string>
     <string name="missing_permission_accessibility_gesture_settings">Для гэтага дзеяння павінны быць уключаны сэрвіс спецыяльных магчымасцяў праграмы запуску.</string>
     <string name="widget_config_appwidget_borderless">Без краёў</string>
     <string name="preference_search_result_ordering_weight_factor_default">Збалансаваная</string>
@@ -590,7 +566,6 @@
     <string name="gesture_action_launch_app">Запусціць праграму</string>
     <string name="gesture_action_power_menu">Паказаць меню сілкавання</string>
     <string name="gesture_action_recents">Адкрыць нядаўнія</string>
-    <string name="preference_search_result_ordering_weighted">Выкарыстанне</string>
     <string name="preference_search_result_ordering_weight_factor">Адчувальнасць адзначвання</string>
     <string name="widget_config_appwidget_background">Фонавая картка</string>
     <string name="gesture_action_lock_screen">Выключыць экран</string>
@@ -642,7 +617,6 @@
     <string name="preference_search_locations_theme_map">Тэма для карты</string>
     <string name="plugin_action_setup">Наладзіць</string>
     <string name="unavailable_searchable">Гэты элемент болей не існуе.</string>
-    <string name="preference_search_bar_separate_work_profile">Аддзяліць праграмы з працоўнага профілю</string>
     <string name="location_open_24_7">Кругласутачна</string>
     <string name="plugin_state_error">Гэты плагін працуе некарэктна</string>
     <string name="plugin_state_setup_required">Спачатку вам трэба наладзіць гэты плагін</string>
@@ -654,7 +628,6 @@
     <string name="menu_navigation">Навігацыя</string>
     <string name="menu_bugreport">Справаздача аб памылцы</string>
     <string name="plugin_type_filesearch">Пошук файлаў</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Адлюстроўвае праграмы працоўнага профілю ў асобнай укладцы</string>
     <string name="clock_style_digital1">Тоўсты</string>
     <string name="clock_style_digital2">Звычайны</string>
     <string name="clock_style_orbit">Арбітальны</string>
@@ -803,7 +776,6 @@
     <string name="weather_forecast_wind">Вецер</string>
     <string name="customize_item_visibility">Адлюстроўваць у</string>
     <string name="tag_empty_name">Цэтлік не можа існаваць без назвы. Калі вы працягніце, цэтлік будзе выдалены.</string>
-    <string name="reset_icon">Значок скіду</string>
     <string name="item_visibility_app_default">Сетцы праграм і ў пошукавых выніках</string>
     <string name="music_widget_next_track">Наступны трэк</string>
     <string name="music_widget_play">Граць</string>

@@ -13,14 +13,14 @@ import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import org.koin.androidx.compose.inject
+import org.koin.compose.koinInject
 
 @Composable
 fun ProvideSettings(
     content: @Composable () -> Unit
 ) {
-    val settings: UiSettings by inject()
-    val widgetRepository: WidgetRepository by inject()
+    val settings: UiSettings = koinInject()
+    val widgetRepository: WidgetRepository = koinInject()
 
     val cardStyle by remember {
         settings.cardStyle.distinctUntilChanged()

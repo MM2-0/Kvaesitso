@@ -10,7 +10,6 @@
     <string name="menu_app_info">Informasi aplikasi</string>
     <string name="menu_launch">Luncurkan</string>
     <string name="menu_open_file">Buka</string>
-    <string name="menu_hide">Sembunyikan</string>
     <string name="menu_delete">Hapus</string>
     <string name="app_info_version">Versi %1$s</string>
     <string name="settings">Pengaturan</string>
@@ -64,10 +63,8 @@
     <string name="login_flow_continue">Lanjutkan</string>
     <string name="disclaimer">Peringatan</string>
     <string name="date_tomorrow">Besok</string>
-    <string name="menu_unhide">Jangan sembunyikan</string>
     <string name="skip">Lewati</string>
     <string name="action_next">Selanjutnya</string>
-    <string name="msg_item_hidden">%1$s telah disembunyikan.</string>
     <string name="turn_off">Matikan</string>
     <string name="wind_north">Utara</string>
     <string name="wind_north_north_east">Utara timur laut</string>
@@ -161,15 +158,12 @@
     <string name="edit_favorites_dialog_pinned_sorted">Disematkan – diurutkan secara manual</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Disematkan – diurutkan otomatis</string>
     <string name="edit_favorites_dialog_tags">Label</string>
-    <string name="nextcloud_server_url_empty">URL server tidak boleh kosong</string>
     <string name="nextcloud_server_invalid_url">URL ini tidak mengarah ke instalasi Nextcloud yang valid</string>
     <string name="edit_favorites_dialog_new_tag">Buat label…</string>
     <string name="nextcloud_server_url">URL server Nextcloud</string>
     <string name="owncloud_server_url">URL server Owncloud</string>
     <string name="owncloud_password">Kata sandi</string>
     <string name="owncloud_username">Nama pengguna</string>
-    <string name="owncloud_username_empty">Nama pengguna tidak boleh kosong</string>
-    <string name="owncloud_password_empty">Kata sandi tidak boleh kosong</string>
     <string name="owncloud_login_failed">Login gagal: nama pengguna atau kata sandi salah.</string>
     <string name="calendar_event_allday">seharian</string>
     <string name="weather_condition_partlycloudy">Sebagian berawan</string>
@@ -252,7 +246,6 @@
     <string name="preference_screen_integrations_summary">Mengelola akun dan layanan yang tesambung</string>
     <string name="preference_signin_user">Masuk sebagai %1$s</string>
     <string name="preference_summary_not_logged_in">Anda sedang tidak masuk</string>
-    <string name="preference_google">Google</string>
     <string name="preference_icon_shape_pentagon">Segi lima</string>
     <string name="preference_blur_wallpaper">Buramkan wallpaper</string>
     <string name="preference_category_wallpaper">Wallpaper</string>
@@ -316,12 +309,9 @@
     <string name="preference_search_wikipedia_summary">Cari ensiklopedia bebas</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_websites_summary">Tampilkan pratinjau sebuah laman web jika kueri pencarian adalah URL</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">Mencari berkas %1$s di Google Drive</string>
     <string name="preference_search_localfiles">Berkas lokal</string>
     <string name="preference_search_cloud_summary">Mencari berkas %1$s</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="preference_google_signin_summary">Masuk untuk mencari di Google Drive</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Kalender</string>
     <string name="preference_screen_buildinfo">Informasi build</string>
@@ -332,12 +322,10 @@
     <string name="preference_search_bar_auto_focus_summary">Otomatis tampilkan keyboard ketika membuka pencarian</string>
     <string name="preference_search_bar_launch_on_enter">Enter untuk membuka</string>
     <string name="preference_hidden_items">Sembunyikan hasil pencarian</string>
-    <string name="edit_tag_title">Edit label</string>
     <string name="tag_exists_error">Label dengan nama ini sudah ada.</string>
     <string name="search_action_label">Nama</string>
     <string name="search_action_app">Aplikasi</string>
     <string name="more_information">Informasi lebih</string>
-    <string name="create_tag_title">Label baru</string>
     <string name="open_search_pull_down">Geser ke bawah</string>
     <string name="open_search_swipe_left">Geser ke kiri</string>
     <string name="open_search_swipe_right">Geser ke kanan</string>
@@ -365,9 +353,7 @@
     <string name="preference_cloud_badges_summary">Tampilkan lencana untuk berkas yang disimpan di cloud</string>
     <string name="preference_font">Font</string>
     <string name="preference_owncloud_signin_summary">Masuk untuk mencari di server Owncloud anda</string>
-    <string name="preference_google_signin">Masuk ke akun Google</string>
     <string name="preference_debug_cleanup_database_summary">Bersihkan entri rusak dan yang tidak digunakan dari database launcher</string>
-    <string name="no_account_google">Anda belum tersambung ke akun Google</string>
     <string name="preference_hide_nav_bar">Sembunyikan bar navigasi</string>
     <string name="preference_enforce_icon_shape_summary">Paksa bentuk ke semua ikon, termasuk yang tidak didukung</string>
     <string name="tag_exists_message">Label dengan nama ini sudah ada. Jika anda melanjutkan, dua label akan digabungkan.</string>
@@ -436,7 +422,6 @@
     <string name="preference_screen_debug">DEBUG</string>
     <string name="preference_clock_widget_show_seconds">Tampilkan detik</string>
     <string name="restore_complete">Cadangan telah dipulihkan.</string>
-    <string name="icon_picker_title">Pilih ikon</string>
     <string name="restore_different_minor_version">Cadangan ini dibuat dengan versi %1$s yang berbeda. Beberapa data mungkin tidak dapat dipulihkan dengan benar.</string>
     <string name="restore_meta">Dibuat %1$s pada %2$s dengan %3$s.</string>
     <string name="action_done">Selesai</string>

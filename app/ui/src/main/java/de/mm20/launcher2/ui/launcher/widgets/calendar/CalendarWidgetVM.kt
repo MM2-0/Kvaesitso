@@ -43,7 +43,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     val calendarEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
     val pinnedCalendarEvents =
         favoritesService.getFavorites(
-            includeTypes = listOf("calendar", "plugin.calendar"),
+            includeTypes = listOf("calendar", "tasks.org", "plugin.calendar"),
             minPinnedLevel = PinnedLevel.AutomaticallySorted,
         ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
     val nextEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
@@ -54,7 +54,9 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     private var showRunningPastDayEvents = false
+    private var showRunningTasks = false
     val hiddenPastEvents = mutableStateOf(0)
+    val hiddenRunningTasks = mutableStateOf(0)
 
     val selectedDate = mutableStateOf(LocalDate.now())
 
@@ -102,6 +104,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     fun selectDate(date: LocalDate) {
         val dates = availableDates
         showRunningPastDayEvents = false
+        showRunningTasks = false
         if (dates.contains(date)) {
             selectedDate.value = date
             updateEvents()
@@ -110,6 +113,11 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
 
     fun showAllEvents() {
         showRunningPastDayEvents = true
+        updateEvents()
+    }
+
+    fun showAllTasks() {
+        showRunningTasks = true
         updateEvents()
     }
 
@@ -136,15 +144,23 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         val dayStart = max(now, date.atStartOfDay().toEpochSecond(offset) * 1000)
         val dayEnd = date.plusDays(1).atStartOfDay().toEpochSecond(offset) * 1000
         var events = upcomingEvents.filter {
-            it.endTime >= dayStart && (it.startTime ?: it.endTime) < dayEnd
+            if (it.isTask && it.isCompleted == true) {
+                it.endTime >= dayStart && it.endTime < dayEnd
+            } else {
+                it.endTime >= dayStart && (it.startTime ?: 0L) < dayEnd
+            }
         }
+
+        val startOfDay = date.atStartOfDay().toEpochSecond(offset) * 1000
+        val startOfNextDay = date.atStartOfDay().plusDays(1).toEpochSecond(offset) * 1000
 
         if (!showRunningPastDayEvents) {
             val totalCount = events.size
 
+
             events = events.filter {
-                (it.startTime != null && it.startTime!! >= date.atStartOfDay().toEpochSecond(offset) * 1000) ||
-                        it.endTime < date.atStartOfDay().plusDays(1).toEpochSecond(offset) * 1000
+                ((it.startTime != null && it.startTime!! >= startOfDay) ||
+                        it.endTime < startOfNextDay) || it.isTask
             }
 
             val hiddenCount = totalCount - events.size
@@ -152,11 +168,27 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         } else {
             hiddenPastEvents.value = 0
         }
+        if (!showRunningTasks) {
+            val totalCount = events.size
+
+            events = events.filter {
+                ((it.startTime != null && it.startTime!! >= startOfDay) ||
+                        it.endTime < startOfNextDay) || !it.isTask
+            }
+
+            val hiddenCount = totalCount - events.size
+            hiddenRunningTasks.value = hiddenCount
+        } else {
+            hiddenRunningTasks.value = 0
+        }
 
         calendarEvents.value = events
         val e = this.upcomingEvents
         if (events.isEmpty() && e.isNotEmpty()) {
-            nextEvents.value = listOf(e[0])
+            nextEvents.value = listOfNotNull(
+                e.sortedBy { if (it.isTask) it.endTime else (it.startTime ?: 0L) }
+                    .find { now < if (it.isTask) it.endTime else (it.startTime ?: 0L) }
+            )
         } else {
             nextEvents.value = emptyList()
         }
@@ -172,7 +204,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
                 excludeCalendars = config.excludedCalendarIds ?: config.legacyExcludedCalendarIds?.map { "local:$it" } ?: emptyList(),
             ).collectLatest { events ->
                 searchableRepository.getKeys(
-                    includeTypes = listOf("calendar", "plugin.calendar"),
+                    includeTypes = listOf("calendar", "tasks.org", "plugin.calendar"),
                     maxVisibility = VisibilityLevel.SearchOnly,
                     limit = 9999,
                 ).collectLatest { hidden ->
