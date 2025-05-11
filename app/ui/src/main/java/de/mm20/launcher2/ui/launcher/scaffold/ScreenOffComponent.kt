@@ -133,7 +133,7 @@ internal object ScreenOffComponent : ScaffoldComponent, KoinComponent {
             .alpha(1f - (state.currentProgress * 0.1f)) then defaultModifier
     }
 
-    override suspend fun onMount() {
+    override suspend fun onMount(state: LauncherScaffoldState) {
         globalActionService.lockScreen()
     }
 }

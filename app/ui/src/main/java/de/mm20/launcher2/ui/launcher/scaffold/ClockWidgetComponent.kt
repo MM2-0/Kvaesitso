@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -15,6 +16,7 @@ internal object ClockWidgetComponent : ScaffoldComponent {
     ) {
         ClockWidget(
             modifier = modifier
+                .padding(insets)
                 .pointerInput(Unit) {},
             fillScreenHeight = true,
         )

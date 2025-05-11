@@ -22,9 +22,9 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
@@ -44,6 +44,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalViewConfiguration
@@ -52,17 +53,20 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 import kotlin.math.pow
+import kotlin.math.roundToInt
 
 sealed interface ScaffoldAction {
     data object Search : ScaffoldAction
@@ -101,6 +105,8 @@ internal data class ScaffoldConfiguration(
     val searchBarPosition: SearchBarPosition = SearchBarPosition.Top,
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Hidden,
     val wallpaperBlurRadius: Dp = 32.dp,
+    val showNavBar: Boolean = true,
+    val showStatusBar: Boolean = true,
 ) {
     val searchBarTap = ScaffoldGesture(
         component = SearchComponent,
@@ -144,6 +150,7 @@ internal class LauncherScaffoldState(
      * current offset.
      */
     private val velocityThreshold: Float,
+    private val maxSearchBarOffset: Float,
     private val onHapticFeedback: (HapticFeedbackType) -> Unit,
 ) {
     var currentOffset by mutableStateOf(Offset.Zero)
@@ -152,6 +159,14 @@ internal class LauncherScaffoldState(
         private set
     var currentGesture by mutableStateOf<Gesture?>(null)
         private set
+
+    val currentSearchBarOffset by derivedStateOf {
+        homePageSearchBarOffset * (1 - currentProgress) + secondaryPageSearchBarOffset * currentProgress
+    }
+    private var homePageSearchBarOffset by mutableStateOf(0f)
+    private var secondaryPageSearchBarOffset by mutableStateOf(0f)
+
+    var isSearchBarFocused by mutableStateOf(config.homeComponent is SearchComponent)
 
     /**
      * True if any page is open, false if on home page.
@@ -206,13 +221,13 @@ internal class LauncherScaffoldState(
         Animatable(0f, Float.VectorConverter)
 
     suspend fun onDragStarted() {
-        if (locked) return
+        if (isLocked) return
         vectorAnimatable.stop()
         floatAnimatable.stop()
     }
 
     fun onDrag(offset: Offset) {
-        if (locked) return
+        if (isLocked) return
         if (currentGesture == null || (!isSettledOnSecondaryPage && currentOffset.x.absoluteValue <= touchSlop && currentOffset.y.absoluteValue <= touchSlop)) {
             currentGesture = getSwipeDirection(config, offset)
         }
@@ -355,7 +370,7 @@ internal class LauncherScaffoldState(
     }
 
     suspend fun onDragStopped(velocity: Velocity) {
-        if (locked) return
+        if (isLocked) return
         if (currentGesture == null) {
             currentOffset = Offset.Zero
         }
@@ -373,11 +388,13 @@ internal class LauncherScaffoldState(
 
         if (isSettledOnSecondaryPage != wasPageOpen) {
             if (wasPageOpen) {
-                config.homeComponent.onMount()
-                gesture.component.onUnmount()
+                config.homeComponent.onMount(this)
+                gesture.component.onUnmount(this)
+                secondaryPageSearchBarOffset = 0f
             } else {
-                gesture.component.onMount()
-                config.homeComponent.onUnmount()
+                gesture.component.onMount(this)
+                config.homeComponent.onUnmount(this)
+                homePageSearchBarOffset = 0f
             }
         }
 
@@ -490,6 +507,31 @@ internal class LauncherScaffoldState(
         openSearch()
     }
 
+    /**
+     * Called by components to notify the scaffold that a child component has been scrolled vertically.
+     * Used to update the search bar position and visibility.
+     * Note that we aren't interested in horizontal scroll events.
+     *
+     * @param delta The y delta of the scroll event, in pixels.
+     * @param isAtTop True if scrollable component is at the top of the scrollable area and cannot be scrolled further up.
+     * @param isAtBottom True if scrollable component is at the bottom of the scrollable area and cannot be scrolled further down.
+     */
+    fun onComponentScroll(delta: Float, isAtTop: Boolean, isAtBottom: Boolean) {
+        if (isSettledOnSecondaryPage) {
+            secondaryPageSearchBarOffset = if (config.searchBarPosition == SearchBarPosition.Top) {
+                (secondaryPageSearchBarOffset - delta).coerceIn(-maxSearchBarOffset, 0f)
+            } else {
+                (secondaryPageSearchBarOffset + delta).coerceIn(0f, maxSearchBarOffset)
+            }
+        } else {
+            homePageSearchBarOffset = if (config.searchBarPosition == SearchBarPosition.Top) {
+                (homePageSearchBarOffset - delta).coerceIn(-maxSearchBarOffset, 0f)
+            } else {
+                (homePageSearchBarOffset + delta).coerceIn(0f, maxSearchBarOffset)
+            }
+        }
+    }
+
     private val backInterpolation = PathInterpolator(0f, 0f, 0f, 1f)
     fun onPredictiveBack(progress: Float) {
         val gesture = currentGesture ?: return
@@ -566,7 +608,7 @@ internal class LauncherScaffoldState(
     suspend fun onPredictiveBackEnd(fast: Boolean = false) {
         val gesture = currentGesture ?: return
 
-        unlock()
+        isLocked = false
         isSettledOnSecondaryPage = false
 
         if (gesture.orientation == null) {
@@ -584,8 +626,9 @@ internal class LauncherScaffoldState(
             }
         }
         currentGesture = null
-        config.homeComponent.onMount()
-        config[gesture]?.component?.onUnmount()
+        config.homeComponent.onMount(this)
+        config[gesture]?.component?.onUnmount(this)
+        secondaryPageSearchBarOffset = 0f
     }
 
     private suspend fun performTapGesture(gesture: Gesture) {
@@ -597,21 +640,22 @@ internal class LauncherScaffoldState(
             openSearch()
             return
         }
-        lock()
+        isLocked = true
         currentGesture = gesture
 
         floatAnimatable.snapTo(0f)
         floatAnimatable.animateTo(1f, animationSpec = tween(300)) {
             currentZOffset = this.value
         }
-        component.onMount()
-        config.homeComponent.onUnmount()
+        component.onMount(this)
+        config.homeComponent.onUnmount(this)
+        homePageSearchBarOffset = 0f
         if (!component.permanent) {
             delay(component.resetDelay)
             isSettledOnSecondaryPage = false
             currentZOffset = 0f
             currentGesture = null
-            unlock()
+            isLocked = false
         } else {
             isSettledOnSecondaryPage = true
         }
@@ -668,21 +712,10 @@ internal class LauncherScaffoldState(
         }
     }
 
-    private var locked = false
-
     /**
-     * Disables all gestures.
+     * If true, all gestures are ignored.
      */
-    fun lock() {
-        locked = true
-    }
-
-    /**
-     * Re-enables all gestures.
-     */
-    fun unlock() {
-        locked = false
-    }
+    var isLocked = false
 }
 
 @Composable
@@ -714,19 +747,23 @@ internal fun LauncherScaffold(
                 component = ScreenOffComponent,
                 animation = ScaffoldAnimation.Push,
             ),
-            searchBarStyle = SearchBarStyle.Hidden,
+            searchBarStyle = SearchBarStyle.Transparent,
+            searchBarPosition = SearchBarPosition.Top,
         )
     }
 ) {
     val scope = rememberCoroutineScope()
 
-    var searchBarFocused by remember {
-        mutableStateOf(false)
-    }
+    val density = LocalDensity.current
+    val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
+    val systemBarInsets = WindowInsets.systemBars
+
+    val searchVM = viewModel<SearchVM>()
+    val searchActions = searchVM.searchActionResults
 
     val searchBarHeight by remember {
         derivedStateOf {
-            64.dp
+            if (searchActions.isEmpty()) 64.dp else 112.dp
         }
     }
 
@@ -739,6 +776,12 @@ internal fun LauncherScaffold(
         val touchSlop = LocalViewConfiguration.current.touchSlop
         val minFlingVelocity = 125.dp.toPixels()
         val rubberbandThreshold = 64.dp.toPixels()
+        val maxSearchBarOffset = (
+                if (config.searchBarPosition == SearchBarPosition.Top) systemBarInsets.getTop(
+                    density
+                )
+                else systemBarInsets.getBottom(density)
+                ) + 128.dp.toPixels()
 
         val hapticFeedback = LocalHapticFeedback.current
 
@@ -750,16 +793,12 @@ internal fun LauncherScaffold(
                     touchSlop = touchSlop,
                     rubberbandThreshold = rubberbandThreshold,
                     velocityThreshold = minFlingVelocity,
+                    maxSearchBarOffset = maxSearchBarOffset,
                     onHapticFeedback = {
                         hapticFeedback.performHapticFeedback(it)
                     }
                 )
             }
-
-        LaunchedEffect(state.isSettledOnSecondaryPage) {
-            searchBarFocused =
-                state.isSettledOnSecondaryPage && state.currentComponent is SearchComponent
-        }
 
         if (config.wallpaperBlurRadius > 0.dp) {
             val wallpaperBlur by animateIntAsState(
@@ -843,7 +882,6 @@ internal fun LauncherScaffold(
                     }
                 )
         ) {
-            val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
             val insets = windowInsets.let {
                 PaddingValues(
                     start = it.calculateStartPadding(LocalLayoutDirection.current),
@@ -888,16 +926,22 @@ internal fun LauncherScaffold(
                     .searchBarAnimation(state, config, windowInsets)
             ) {
                 LauncherSearchBar(
-                    modifier = Modifier.align(if (config.searchBarPosition == SearchBarPosition.Top) Alignment.TopCenter else Alignment.BottomCenter),
+                    modifier = Modifier
+                        .align(
+                            if (config.searchBarPosition == SearchBarPosition.Top) Alignment.TopCenter
+                            else Alignment.BottomCenter
+                        ),
+                    searchBarOffset = { state.currentSearchBarOffset.roundToInt() },
                     style = SearchBarStyle.Solid,
-                    focused = searchBarFocused,
-                    actions = emptyList(),
+                    focused = state.isSearchBarFocused,
+                    actions = searchActions,
                     level = { SearchBarLevel.Raised },
+                    bottomSearchBar = config.searchBarPosition == SearchBarPosition.Bottom,
                     onFocusChange = {
                         if (it) {
                             scope.launch { state.onSearchBarTap() }
                         }
-                        searchBarFocused = it
+                        state.isSearchBarFocused = it
                     },
                 )
             }

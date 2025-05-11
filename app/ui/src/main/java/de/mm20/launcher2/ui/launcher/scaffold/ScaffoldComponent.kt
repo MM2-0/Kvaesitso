@@ -47,8 +47,6 @@ internal interface ScaffoldComponent {
     val hapticFeedback: Boolean
         get() = true
 
-    //val content: ComponentContent
-
     @Composable fun Component(
         modifier: Modifier,
         insets: PaddingValues,
@@ -64,10 +62,10 @@ internal interface ScaffoldComponent {
     /**
      * Called when the component is mounted, after the animation is completed.
      */
-    suspend fun onMount(): Unit = Unit
+    suspend fun onMount(state: LauncherScaffoldState): Unit = Unit
 
     /**
      * Called when the component is unmounted, after the animation is completed, when the component is no longer visible.
      */
-    suspend fun onUnmount(): Unit = Unit
+    suspend fun onUnmount(state: LauncherScaffoldState): Unit = Unit
 }

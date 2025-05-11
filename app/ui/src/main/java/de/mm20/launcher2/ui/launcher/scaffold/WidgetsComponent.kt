@@ -1,8 +1,10 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
+import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -28,7 +30,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -37,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollDispatcher
@@ -51,18 +56,35 @@ import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import kotlinx.coroutines.launch
 
 internal object WidgetsComponent : ScaffoldComponent {
+
+    private var editMode by mutableStateOf(false)
+    private val scrollState = ScrollState(0)
+
     @Composable
     override fun Component(
         modifier: Modifier,
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        var editMode by rememberSaveable { mutableStateOf(false) }
-        val topPadding by animateDpAsState(if (editMode) 8.dp else 0.dp)
+        val topPadding by animateDpAsState(if (editMode) 80.dp else 0.dp)
+
+        val previousScroll = remember { mutableIntStateOf(scrollState.value) }
+
+        LaunchedEffect(scrollState.value, scrollState.canScrollForward, scrollState.canScrollBackward) {
+            val delta = scrollState.value - previousScroll.intValue
+            previousScroll.intValue = scrollState.value
+            if (!editMode) {
+                state.onComponentScroll(
+                    delta.toFloat(),
+                    scrollState.canScrollForward,
+                    scrollState.canScrollBackward
+                )
+            }
+        }
 
         Column(
             modifier = modifier
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .padding(horizontal = 8.dp)
                 .padding(top = topPadding)
                 .padding(insets),
@@ -71,7 +93,7 @@ internal object WidgetsComponent : ScaffoldComponent {
                 modifier = Modifier,
                 editMode = editMode,
                 onEditModeChange = {
-                    if (it) state.lock() else state.unlock()
+                    state.isLocked = it
                     editMode = it
                 },
             )
@@ -79,7 +101,7 @@ internal object WidgetsComponent : ScaffoldComponent {
         if (editMode) {
             BackHandler {
                 editMode = false
-                state.unlock()
+                state.isLocked = false
             }
         }
         AnimatedVisibility(
@@ -94,7 +116,7 @@ internal object WidgetsComponent : ScaffoldComponent {
                     IconButton(
                         onClick = {
                             editMode = false
-                            state.unlock()
+                            state.isLocked = false
                         }
                     ) {
                         Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.action_done))
@@ -104,6 +126,24 @@ internal object WidgetsComponent : ScaffoldComponent {
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
                 )
             )
+        }
+    }
+
+    override suspend fun onUnmount(state: LauncherScaffoldState) {
+        super.onUnmount(state)
+        scrollState.scrollTo(0)
+    }
+
+    @SuppressLint("ModifierFactoryExtensionFunction")
+    override fun searchBarModifier(
+        state: LauncherScaffoldState,
+        defaultModifier: Modifier
+    ): Modifier = defaultModifier.composed {
+        val alpha by animateFloatAsState(if (editMode) 0f else 1f)
+        if (alpha > 0f) {
+            Modifier.alpha(alpha)
+        } else {
+            Modifier.alpha(alpha).zIndex(-1f)
         }
     }
 }

@@ -69,8 +69,8 @@ internal object QuickSettingsComponent : ScaffoldComponent, KoinComponent {
         }
     }
 
-    override suspend fun onMount() {
-        super.onMount()
+    override suspend fun onMount(state: LauncherScaffoldState) {
+        super.onMount(state)
         globalActionService.openQuickSettings()
     }
 
