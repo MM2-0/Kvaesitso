@@ -16,38 +16,54 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Build
+import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.HelpOutline
+import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.LinkOff
 import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -64,11 +80,13 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -78,15 +96,17 @@ import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.search.calendar.CalendarListType
-import de.mm20.launcher2.searchable.PinnedLevel
-import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.themes.atTone
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
+import de.mm20.launcher2.ui.common.TagChip
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
+import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropRow
+import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -103,9 +123,7 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import org.koin.androidx.compose.get
 import org.koin.compose.koinInject
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -195,28 +213,78 @@ fun ColumnScope.ConfigureFavoritesWidget(
     widget: FavoritesWidget,
     onWidgetUpdated: (FavoritesWidget) -> Unit,
 ) {
-    val favoritesService: FavoritesService = get()
+    val viewModel: ConfigureWidgetSheetVM = viewModel()
 
-    val pinnedTags by remember {
-        favoritesService.getFavorites(
-            includeTypes = listOf("tag"),
-            minPinnedLevel = PinnedLevel.AutomaticallySorted,
-        ) as Flow<List<Tag>>
-    }.collectAsState(emptyList())
+    LaunchedEffect(null) {
+        viewModel.reload(widget)
+    }
+
+    val availableTags by viewModel.availableTags
+    val tagsListState = rememberLazyListState()
 
     val bottomSheetManager = LocalBottomSheetManager.current
-    var selectedTag = remember(widget.config) {
-        widget.config.singleTagValue
-    }
-    var showAddMenu by remember { mutableStateOf(false) }
-    val showTagMenu = remember(widget.config) {
-        widget.config.singleTag
-    }
+
+    val selectedTags by viewModel.selectedTags
+
+    var createTag by remember { mutableStateOf(false) }
 
     OutlinedCard {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
+            MultiChoiceSegmentedButtonRow(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp),
+            ) {
+                SegmentedButton(
+                    checked = widget.config.showFavorites,
+                    onCheckedChange = {
+                        if(it || widget.config.showTags)
+                        {
+                            onWidgetUpdated(widget.copy(config = widget.config.copy(showFavorites = it)))
+                        }
+
+                    },
+                    shape = SegmentedButtonDefaults.itemShape(index = 0, count = 3),
+                ) {
+                    Row(horizontalArrangement = Arrangement.SpaceBetween) {
+                        Icon(
+                            imageVector = Icons.Rounded.Star,
+                            contentDescription = null,
+                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                        )
+                        Text(text = stringResource(R.string.favorites))
+                    }
+                }
+                SegmentedButton(
+                    checked = widget.config.showTags,
+                    onCheckedChange = {
+                        if(it || widget.config.showFavorites) {
+                            var tagList = selectedTags
+                            if(!it)
+                            {
+                                tagList = emptyList()
+                                viewModel.clearAllTags();
+                            }
+
+                            onWidgetUpdated(
+                                widget.copy(
+                                    config = widget.config.copy(showTags = it, tagList = tagList)
+                                )
+                            )
+                        }
+                    },
+                    shape = SegmentedButtonDefaults.itemShape(index = 2, count = 3),
+                ) {
+                    Row(horizontalArrangement = Arrangement.SpaceBetween) {
+                        Icon(
+                            imageVector = Icons.Rounded.Tag,
+                            contentDescription = null,
+                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                        )
+                        Text(text = stringResource(R.string.preference_screen_tags))
+                    }
+                }
+            }
             SwitchPreference(
                 title = stringResource(R.string.preference_edit_button),
                 iconPadding = false,
@@ -225,56 +293,153 @@ fun ColumnScope.ConfigureFavoritesWidget(
                     onWidgetUpdated(widget.copy(config = widget.config.copy(editButton = it)))
                 }
             )
-            SwitchPreference(
-                title = stringResource(R.string.preference_compact_tags),
-                iconPadding = false,
-                value = widget.config.compactTags,
-                onValueChanged = {
-                    onWidgetUpdated(widget.copy(config = widget.config.copy(compactTags = it)))
-                }
-            )
-            SwitchPreference(
-                title = stringResource(R.string.preference_single_tag),
-                iconPadding = false,
-                value = widget.config.singleTag,
-                onValueChanged = {
-                    onWidgetUpdated(widget.copy(config = widget.config.copy(singleTag = it)))
-                }
-            )
-            AnimatedVisibility(showTagMenu) {
-                Preference(
-                    title = stringResource(R.string.preference_screen_select_tag),
-                    summary = selectedTag,
-                    icon = Icons.Rounded.Tag,
-                    onClick = {
-                        showAddMenu = true
+            if(widget.config.showTags) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_compact_tags),
+                    iconPadding = false,
+                    value = widget.config.compactTags,
+                    onValueChanged = {
+                        onWidgetUpdated(widget.copy(config = widget.config.copy(compactTags = it)))
                     }
                 )
-                DropdownMenu(
-                    expanded = showAddMenu,
-                    onDismissRequest = { showAddMenu = false }) {
-                    for (tag in pinnedTags) {
-                        val (emoji, tagName) = remember(tag) {
-                            tag.tag.splitLeadingEmoji()
-                        }
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                if (emoji != null) {
-                                    Text(
-                                        emoji,
-                                        modifier = Modifier.width(FilterChipDefaults.IconSize),
-                                        textAlign = TextAlign.Center,
-                                    )
-                                } else {
-                                    Icon(Icons.Rounded.Tag, null)
+            }
+            if(widget.config.showTags) {
+                var showAddMenu by remember { mutableStateOf(false) }
+                Column {
+                    Row(
+                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 16.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            text = stringResource(R.string.edit_favorites_dialog_tags),
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                        Box() {
+                            FilledTonalIconButton(
+                                modifier = Modifier.offset(x = 4.dp),
+                                onClick = {
+                                    showAddMenu = true
+                                }) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Add,
+                                    contentDescription = null
+                                )
+                            }
+                            DropdownMenu(
+                                expanded = showAddMenu,
+                                onDismissRequest = { showAddMenu = false }) {
+                                for (tag in availableTags) {
+                                    val (emoji, tagName) = remember(tag.tag) {
+                                        tag.tag.splitLeadingEmoji()
+                                    }
+                                    DropdownMenuItem(
+                                        leadingIcon = {
+                                            if (emoji != null) {
+                                                Text(
+                                                    emoji,
+                                                    modifier = Modifier.width(FilterChipDefaults.IconSize),
+                                                    textAlign = TextAlign.Center,
+                                                )
+                                            } else {
+                                                Icon(Icons.Rounded.Tag, null)
+                                            }
+                                        },
+                                        text = { Text(tagName ?: "") },
+                                        onClick = {
+                                            onWidgetUpdated(
+                                                widget.copy(
+                                                    config = widget.config.copy(
+                                                        tagList = selectedTags + tag.tag
+                                                    )
+                                                )
+                                            )
+                                            viewModel.addTag(tag)
+                                            showAddMenu = false
+                                        })
                                 }
+                                if (availableTags.isNotEmpty()) {
+                                    HorizontalDivider()
+                                }
+                                DropdownMenuItem(
+                                    leadingIcon = {
+                                        Icon(Icons.Rounded.Add, null)
+                                    },
+                                    text = {
+                                        Text(
+                                            stringResource(R.string.edit_favorites_dialog_new_tag),
+                                        )
+                                    },
+                                    onClick = {
+                                        createTag = true;
+                                        showAddMenu = false
+                                    }
+                                )
+                            }
+                        }
+
+                    }
+                    if (selectedTags.isNotEmpty()) {
+                        val rowState = rememberLazyDragAndDropListState(
+                            listState = tagsListState,
+                            onDragEnd = {
+                                onWidgetUpdated(
+                                    widget.copy(
+                                        config = widget.config.copy(
+                                            tagList = viewModel.selectedTags.value
+                                        )
+                                    )
+                                )
                             },
-                            text = { Text(tagName ?: "") },
-                            onClick = {
-                                selectedTag = tag.tag
-                                onWidgetUpdated(widget.copy(config = widget.config.copy(singleTagValue = selectedTag)))
-                                showAddMenu = false
-                            })
+                            onItemMove = { from, to ->
+                                viewModel.moveItem(from, to)
+                            }
+                        )
+                        LazyDragAndDropRow(
+                            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp),
+                            state = rowState
+                        ) {
+                            items(
+                                selectedTags,
+                                key = { it }
+                            ) { tag ->
+                                DraggableItem(state = rowState, key = tag) { dragged ->
+                                    val tagVal = Tag(tag)
+                                    TagChip(
+                                        modifier = Modifier
+                                            .padding(end = 12.dp)
+                                            .pointerInput(null) {
+                                            },
+                                        tag = tagVal,
+                                        dragged = dragged,
+                                        clearable = true,
+                                        onClear = {
+                                            onWidgetUpdated(
+                                                widget.copy(
+                                                    config = widget.config.copy(
+                                                        tagList = selectedTags - tag
+                                                    )
+                                                )
+                                            )
+                                            viewModel.clearTag(tagVal)
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    } else {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp, horizontal = 16.dp),
+                            text = stringResource(R.string.shortcuts_widget_tag_section_empty),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.outline
+                        )
                     }
                 }
             }
@@ -299,6 +464,19 @@ fun ColumnScope.ConfigureFavoritesWidget(
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
             imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+        )
+    }
+
+    if (createTag) {
+        EditTagSheet(
+            tag = null,
+            onTagSaved = { tag ->
+                val newTag = Tag(tag)
+                viewModel.addAvailableTag(newTag)
+            },
+            onDismiss = {
+                createTag = false
+            }
         )
     }
 }

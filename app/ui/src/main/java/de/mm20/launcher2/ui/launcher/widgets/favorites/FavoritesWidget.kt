@@ -33,18 +33,15 @@ fun FavoritesWidget(widget: FavoritesWidget) {
     val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)
     val compactTags by viewModel.compactTags.collectAsState(false)
-    val singleTag by viewModel.singleTag.collectAsState(false)
-    val singleTagValue by viewModel.singleTagValue.collectAsState("")
+    val showFavorites by viewModel.showFavorites.collectAsState(false)
+    val showTags by viewModel.showTags.collectAsState(false)
+    val selectedTags by remember { viewModel.selectedTags }.collectAsState(emptyList())
     val favoritesEditButton = widget.config.editButton
 
     val tagsExpanded by viewModel.tagsExpanded.collectAsState(false)
 
     LaunchedEffect(widget) {
         viewModel.updateWidget(widget)
-    }
-
-    if(singleTag) {
-        viewModel.selectTag(singleTagValue);
     }
 
     Column(
@@ -61,20 +58,19 @@ fun FavoritesWidget(widget: FavoritesWidget) {
                 icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
             )
         }
-        if (pinnedTags.isNotEmpty() || favoritesEditButton) {
-            if(!singleTag) {
-                FavoritesTagSelector(
-                    tags = pinnedTags,
-                    selectedTag = selectedTag,
-                    editButton = favoritesEditButton,
-                    reverse = false,
-                    onSelectTag = { viewModel.selectTag(it) },
-                    scrollState = rememberScrollState(),
-                    expanded = tagsExpanded,
-                    compact = compactTags,
-                    onExpand = { viewModel.setTagsExpanded(it) },
-                )
-            }
+        if(favoritesEditButton || (showTags && (showFavorites || selectedTags.size > 1))) {
+            FavoritesTagSelector(
+                tags = selectedTags.ifEmpty { pinnedTags },
+                selectedTag = selectedTag,
+                editButton = favoritesEditButton,
+                reverse = false,
+                onSelectTag = { viewModel.selectTag(it) },
+                scrollState = rememberScrollState(),
+                expanded = tagsExpanded,
+                compact = compactTags,
+                onExpand = { viewModel.setTagsExpanded(it) },
+                showFavorites = showFavorites
+            )
         }
     }
 }

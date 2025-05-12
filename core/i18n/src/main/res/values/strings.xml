@@ -1024,5 +1024,6 @@
     </plurals>
     <string name="departure_time_departed">departed</string>
     <string name="preference_single_tag">Set Single Tag</string>
-    <string name="preference_screen_select_tag">Select Tag</string>
+    <string name="preference_screen_select_tag">Select Tags</string>
+    <string name="shortcuts_widget_tag_section_empty">Add tags here. Pinned tags will be shown if none are selected</string>
 </resources>

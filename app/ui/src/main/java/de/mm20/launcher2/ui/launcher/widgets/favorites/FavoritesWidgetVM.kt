@@ -1,14 +1,21 @@
 package de.mm20.launcher2.ui.launcher.widgets.favorites
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
+import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.services.widgets.WidgetsService
 import de.mm20.launcher2.ui.common.FavoritesVM
+import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.widgets.FavoritesWidget
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.inject
@@ -22,8 +29,18 @@ class FavoritesWidgetVM : FavoritesVM() {
     private val widget = MutableStateFlow<FavoritesWidget?>(null)
     override val tagsExpanded = widget.map { it?.config?.tagsMultiline == true }
     override val compactTags: Flow<Boolean> = widget.map { it?.config?.compactTags == true }
-    val singleTag: Flow<Boolean> = widget.map { it?.config?.singleTag == true }
-    val singleTagValue: Flow<String> = widget.map { it?.config?.singleTagValue.toString() }
+    val showFavorites: Flow<Boolean> = widget.map { it?.config?.showFavorites == true }
+    val showTags: Flow<Boolean> = widget.map { it?.config?.showTags == true }
+    val selectedTags: Flow<List<Tag>> = widget.map { tagStr ->
+        val tags = mutableListOf<Tag>()
+        val tagList = tagStr?.config?.tagList
+        if(!tagList.isNullOrEmpty()) {
+            tagList.map {
+                tags.add(Tag(it))
+            }
+        }
+        tags
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     private val isTopWidget = widgetsService.isFavoritesWidgetFirst()
     private val clockWidgetFavSlots =
@@ -56,7 +73,16 @@ class FavoritesWidgetVM : FavoritesVM() {
     }
 
     fun updateWidget(widget: FavoritesWidget) {
+
+        selectTag(null)
+
+        if(!widget.config.showFavorites
+            && widget.config.showTags && widget.config.tagList.isNotEmpty())
+        {
+            val firstTag = widget.config.tagList[0];
+            selectTag(firstTag)
+        }
+
         this.widget.value = widget
     }
-
 }
