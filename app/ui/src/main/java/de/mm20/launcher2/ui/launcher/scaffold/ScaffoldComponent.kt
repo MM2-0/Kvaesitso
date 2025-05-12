@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 
 typealias ComponentContent = @Composable (
@@ -13,59 +16,60 @@ typealias ComponentContent = @Composable (
     animationProgress: Float
 ) -> Unit
 
-internal interface ScaffoldComponent {
+internal abstract class ScaffoldComponent {
     /**
      * If true, the component stays open. I.e. widgets, search.
      * If false, the component is immediately dismissed after running its onMount function,
      *  returning to the home screen. I.e. turn off screen, launch app.
      */
-    val permanent: Boolean
-        get() = true
+    open val permanent: Boolean = true
 
     /**
      * For non-permanent components, this is the delay before the component is dismissed.
      */
-    val resetDelay: Long
-        get() = 0L
+    open val resetDelay: Long = 0L
 
     /**
      * If true, a semi-transparent background is drawn behind the page.
      */
-    val drawBackground: Boolean
-        get() = true
+    open val drawBackground: Boolean = true
 
     /**
      * Show the search bar on this component, if search bar style is hidden.
      * For other styles, the search bar is always shown.
      */
-    val showSearchBar: Boolean
-        get() = true
+    open val showSearchBar: Boolean = true
 
     /**
      * Whether haptic feedback should be used when the component is activated / dismissed.
      */
-    val hapticFeedback: Boolean
-        get() = true
+    open val hapticFeedback: Boolean = true
 
-    @Composable fun Component(
+    @Composable abstract fun Component(
         modifier: Modifier,
         insets: PaddingValues,
         state: LauncherScaffoldState,
     )
 
     @SuppressLint("ModifierFactoryExtensionFunction")
-    fun homePageModifier(state: LauncherScaffoldState, defaultModifier: Modifier): Modifier = defaultModifier
+    open fun homePageModifier(state: LauncherScaffoldState, defaultModifier: Modifier): Modifier = defaultModifier
 
     @SuppressLint("ModifierFactoryExtensionFunction")
-    fun searchBarModifier(state: LauncherScaffoldState, defaultModifier: Modifier): Modifier = defaultModifier
+    open fun searchBarModifier(state: LauncherScaffoldState, defaultModifier: Modifier): Modifier = defaultModifier
+
+    protected var mounted by mutableStateOf(false)
 
     /**
      * Called when the component is mounted, after the animation is completed.
      */
-    suspend fun onMount(state: LauncherScaffoldState): Unit = Unit
+    open suspend fun onMount(state: LauncherScaffoldState) {
+        mounted = true
+    }
 
     /**
      * Called when the component is unmounted, after the animation is completed, when the component is no longer visible.
      */
-    suspend fun onUnmount(state: LauncherScaffoldState): Unit = Unit
+    open suspend fun onUnmount(state: LauncherScaffoldState) {
+        mounted = false
+    }
 }

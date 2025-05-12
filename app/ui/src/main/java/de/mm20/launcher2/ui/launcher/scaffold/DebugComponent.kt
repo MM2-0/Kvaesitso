@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-internal object DebugComponent : ScaffoldComponent {
+internal object DebugComponent : ScaffoldComponent() {
     @Composable
     override fun Component(
         modifier: Modifier,

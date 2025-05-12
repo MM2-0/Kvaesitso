@@ -55,7 +55,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import kotlinx.coroutines.launch
 
-internal object WidgetsComponent : ScaffoldComponent {
+internal object WidgetsComponent : ScaffoldComponent() {
 
     private var editMode by mutableStateOf(false)
     private val scrollState = ScrollState(0)

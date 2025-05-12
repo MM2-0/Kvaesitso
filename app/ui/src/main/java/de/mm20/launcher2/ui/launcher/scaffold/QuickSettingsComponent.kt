@@ -11,28 +11,28 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-internal object QuickSettingsComponent : ScaffoldComponent, KoinComponent {
+internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val globalActionService: GlobalActionsService by inject()
@@ -48,6 +48,19 @@ internal object QuickSettingsComponent : ScaffoldComponent, KoinComponent {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
+        if (mounted) {
+            val bottomSheetManager = LocalBottomSheetManager.current
+            LaunchedEffect(Unit) {
+                val gesture = state.currentGesture ?: return@LaunchedEffect
+                if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
+                    bottomSheetManager.showFailedGestureSheet(
+                        gesture = gesture,
+                        action = GestureAction.QuickSettings,
+                    )
+                }
+            }
+        }
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -64,14 +77,22 @@ internal object QuickSettingsComponent : ScaffoldComponent, KoinComponent {
                     .background(MaterialTheme.colorScheme.secondaryContainer, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(Icons.Rounded.Settings, null, modifier = Modifier.padding(16.dp))
+                Icon(
+                    Icons.Rounded.Settings, null,
+                    modifier = Modifier.padding(16.dp),
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                )
             }
         }
     }
 
     override suspend fun onMount(state: LauncherScaffoldState) {
         super.onMount(state)
-        globalActionService.openQuickSettings()
+        if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
+            globalActionService.openQuickSettings()
+        } else {
+            state.onPredictiveBackEnd(true)
+        }
     }
 
     @SuppressLint("ModifierFactoryExtensionFunction")

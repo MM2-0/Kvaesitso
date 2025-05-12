@@ -15,6 +15,7 @@ import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -26,10 +27,12 @@ import androidx.compose.ui.zIndex
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-internal object NotificationsComponent : ScaffoldComponent, KoinComponent {
+internal object NotificationsComponent : ScaffoldComponent(), KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val globalActionService: GlobalActionsService by inject()
@@ -45,6 +48,18 @@ internal object NotificationsComponent : ScaffoldComponent, KoinComponent {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
+        if (mounted) {
+            val bottomSheetManager = LocalBottomSheetManager.current
+            LaunchedEffect(Unit) {
+                val gesture = state.currentGesture ?: return@LaunchedEffect
+                if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
+                    bottomSheetManager.showFailedGestureSheet(
+                        gesture = gesture,
+                        action = GestureAction.Notifications,
+                    )
+                }
+            }
+        }
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -61,14 +76,22 @@ internal object NotificationsComponent : ScaffoldComponent, KoinComponent {
                     .background(MaterialTheme.colorScheme.secondaryContainer, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(Icons.Rounded.Notifications, null, modifier = Modifier.padding(16.dp))
+                Icon(
+                    Icons.Rounded.Notifications, null,
+                    modifier = Modifier.padding(16.dp),
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                )
             }
         }
     }
 
     override suspend fun onMount(state: LauncherScaffoldState) {
         super.onMount(state)
-        globalActionService.openNotificationDrawer()
+        if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
+            globalActionService.openNotificationDrawer()
+        } else {
+            state.onPredictiveBackEnd(true)
+        }
     }
 
     @SuppressLint("ModifierFactoryExtensionFunction")

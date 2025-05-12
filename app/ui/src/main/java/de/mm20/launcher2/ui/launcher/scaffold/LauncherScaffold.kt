@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
+import android.util.Log
 import android.view.animation.PathInterpolator
 import androidx.activity.compose.PredictiveBackHandler
 import androidx.compose.animation.core.Animatable
@@ -25,6 +26,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
@@ -53,6 +55,9 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.search.SavableSearchable
@@ -95,21 +100,53 @@ enum class SearchBarPosition {
 }
 
 internal data class ScaffoldConfiguration(
+    /**
+     * The main component
+     */
     val homeComponent: ScaffoldComponent,
+    /**
+     * Search component that is activated when the search bar is tapped.
+     */
+    val searchComponent: SearchComponent,
     val swipeUp: ScaffoldGesture? = null,
     val swipeDown: ScaffoldGesture? = null,
     val swipeLeft: ScaffoldGesture? = null,
     val swipeRight: ScaffoldGesture? = null,
     val doubleTap: ScaffoldGesture? = null,
     val longPress: ScaffoldGesture? = null,
+    /**
+     * Position of the search bar
+     */
     val searchBarPosition: SearchBarPosition = SearchBarPosition.Top,
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Hidden,
+    /**
+     * If true, the search bar does not scroll out of view
+     */
+    val fixedSearchBar: Boolean = false,
+    /**
+     * Wallpaper blur radius. 0 to disable.
+     */
     val wallpaperBlurRadius: Dp = 32.dp,
+    /**
+     * Show the navigation bar
+     */
     val showNavBar: Boolean = true,
+    /**
+     * Show the status bar
+     */
     val showStatusBar: Boolean = true,
+    /**
+     * Finishes the activity when back is pressed while on home component.
+     * Used for assistant mode.
+     */
+    val finishOnBack: Boolean = false,
+    /**
+     * If true, the home page is drawn with a background (and blur, if enabled)
+     */
+    val showBackgroundOnHome: Boolean = false,
 ) {
     val searchBarTap = ScaffoldGesture(
-        component = SearchComponent,
+        component = searchComponent,
         animation = ScaffoldAnimation.ZoomIn,
     )
 }
@@ -161,10 +198,12 @@ internal class LauncherScaffoldState(
         private set
 
     val currentSearchBarOffset by derivedStateOf {
+        if (config.fixedSearchBar) return@derivedStateOf 0f
+        if (currentComponent?.showSearchBar == false) return@derivedStateOf homePageSearchBarOffset
         homePageSearchBarOffset * (1 - currentProgress) + secondaryPageSearchBarOffset * currentProgress
     }
-    private var homePageSearchBarOffset by mutableStateOf(0f)
-    private var secondaryPageSearchBarOffset by mutableStateOf(0f)
+    private var homePageSearchBarOffset by mutableFloatStateOf(0f)
+    private var secondaryPageSearchBarOffset by mutableFloatStateOf(0f)
 
     var isSearchBarFocused by mutableStateOf(config.homeComponent is SearchComponent)
 
@@ -326,10 +365,10 @@ internal class LauncherScaffoldState(
 
     private fun getSwipeDirection(config: ScaffoldConfiguration, offset: Offset): Gesture? {
         when {
-            (offset.x > 0 && offset.y > 0) -> {
+            (offset.x >= 0 && offset.y >= 0) -> {
                 return if (offset.x > offset.y && config.swipeRight != null) {
                     Gesture.SwipeRight
-                } else if (config.swipeDown != null) {
+                } else if (offset.x < offset.y && config.swipeDown != null) {
                     Gesture.SwipeDown
                 } else {
                     null
@@ -339,27 +378,27 @@ internal class LauncherScaffoldState(
             (offset.x < 0 && offset.y < 0) -> {
                 return if (offset.x < offset.y && config.swipeLeft != null) {
                     Gesture.SwipeLeft
-                } else if (config.swipeUp != null) {
+                } else if (offset.x > offset.y && config.swipeUp != null) {
                     Gesture.SwipeUp
                 } else {
                     null
                 }
             }
 
-            (offset.x > 0 && offset.y < 0) -> {
+            (offset.x >= 0 && offset.y < 0) -> {
                 return if (offset.x > -offset.y && config.swipeRight != null) {
                     Gesture.SwipeRight
-                } else if (config.swipeUp != null) {
+                } else if (offset.x < -offset.y && config.swipeUp != null) {
                     Gesture.SwipeUp
                 } else {
                     null
                 }
             }
 
-            (offset.x < 0 && offset.y > 0) -> {
+            (offset.x < 0 && offset.y >= 0) -> {
                 return if (offset.x < -offset.y && config.swipeLeft != null) {
                     Gesture.SwipeLeft
-                } else if (config.swipeDown != null) {
+                } else if (offset.x > -offset.y && config.swipeDown != null) {
                     Gesture.SwipeDown
                 } else {
                     null
@@ -388,22 +427,11 @@ internal class LauncherScaffoldState(
 
         if (isSettledOnSecondaryPage != wasPageOpen) {
             if (wasPageOpen) {
-                config.homeComponent.onMount(this)
-                gesture.component.onUnmount(this)
-                secondaryPageSearchBarOffset = 0f
+                deactivateSecondaryPage(gesture.component)
             } else {
-                gesture.component.onMount(this)
-                config.homeComponent.onUnmount(this)
-                homePageSearchBarOffset = 0f
+                activateSecondaryPage(gesture.component)
             }
         }
-
-        if (!gesture.component.permanent) {
-            delay(gesture.component.resetDelay)
-            isSettledOnSecondaryPage = false
-            currentOffset = Offset.Zero
-        }
-        if (!isSettledOnSecondaryPage) currentGesture = null
     }
 
     private suspend fun performRubberbandFling(
@@ -607,6 +635,7 @@ internal class LauncherScaffoldState(
      */
     suspend fun onPredictiveBackEnd(fast: Boolean = false) {
         val gesture = currentGesture ?: return
+        val component = currentComponent ?: return
 
         isLocked = false
         isSettledOnSecondaryPage = false
@@ -625,10 +654,7 @@ internal class LauncherScaffoldState(
                 currentOffset = this.value
             }
         }
-        currentGesture = null
-        config.homeComponent.onMount(this)
-        config[gesture]?.component?.onUnmount(this)
-        secondaryPageSearchBarOffset = 0f
+        deactivateSecondaryPage(component)
     }
 
     private suspend fun performTapGesture(gesture: Gesture) {
@@ -647,23 +673,48 @@ internal class LauncherScaffoldState(
         floatAnimatable.animateTo(1f, animationSpec = tween(300)) {
             currentZOffset = this.value
         }
+
+        activateSecondaryPage(component)
+    }
+
+    /**
+     * Unmounts the secondary page component and mounts the home page component.
+     * Must be called after the animation is completed.
+     */
+    private suspend fun deactivateSecondaryPage(component: ScaffoldComponent) {
+        config.homeComponent.onMount(this)
+        component.onUnmount(this)
+        currentGesture = null
+        secondaryPageSearchBarOffset = 0f
+    }
+
+    /**
+     * Mount the secondary page component and dismiss it again if not permanent.
+     * Must be called after the animation is completed.
+     */
+    private suspend fun activateSecondaryPage(component: ScaffoldComponent) {
         component.onMount(this)
-        config.homeComponent.onUnmount(this)
-        homePageSearchBarOffset = 0f
+
         if (!component.permanent) {
             delay(component.resetDelay)
             isSettledOnSecondaryPage = false
-            currentZOffset = 0f
+            currentOffset = Offset.Zero
+            component.onUnmount(this)
             currentGesture = null
             isLocked = false
         } else {
-            isSettledOnSecondaryPage = true
+            config.homeComponent.onUnmount(this)
+            homePageSearchBarOffset = 0f
         }
     }
 
     private suspend fun openSearch() {
         if (currentComponent != null && currentComponent !is SearchComponent) {
             onPredictiveBackEnd(fast = true)
+        }
+
+        if (config.homeComponent is SearchComponent) {
+            return
         }
 
         // If there is any swipe gesture that is a SearchComponent, this takes precedence over the tap
@@ -696,6 +747,7 @@ internal class LauncherScaffoldState(
             vectorAnimatable.animateTo(Offset.Zero) {
                 currentOffset = this.value
             }
+            activateSecondaryPage(config[gesture]!!.component)
         } else {
             val targetOffset = when (gesture) {
                 Gesture.SwipeLeft -> Offset(-size.width, 0f)
@@ -709,6 +761,18 @@ internal class LauncherScaffoldState(
                 currentOffset = this.value
             }
             isSettledOnSecondaryPage = true
+            activateSecondaryPage(config[gesture]!!.component)
+        }
+    }
+
+    suspend fun reset() {
+        isSearchBarFocused = false
+        currentOffset = Offset.Zero
+        isLocked = false
+        isSettledOnSecondaryPage = false
+
+        currentComponent?.let {
+            deactivateSecondaryPage(it)
         }
     }
 
@@ -720,39 +784,11 @@ internal class LauncherScaffoldState(
 
 @Composable
 internal fun LauncherScaffold(
-    config: ScaffoldConfiguration = remember {
-        ScaffoldConfiguration(
-            homeComponent = ClockWidgetComponent,
-            swipeDown = ScaffoldGesture(
-                component = SearchComponent,
-                animation = ScaffoldAnimation.Rubberband,
-            ),
-            swipeLeft = ScaffoldGesture(
-                component = ScreenOffComponent,
-                animation = ScaffoldAnimation.Push,
-            ),
-            swipeRight = ScaffoldGesture(
-                component = WidgetsComponent,
-                animation = ScaffoldAnimation.Push,
-            ),
-            swipeUp = ScaffoldGesture(
-                component = WidgetsComponent,
-                animation = ScaffoldAnimation.Push,
-            ),
-            longPress = ScaffoldGesture(
-                component = SearchComponent,
-                animation = ScaffoldAnimation.Push,
-            ),
-            doubleTap = ScaffoldGesture(
-                component = ScreenOffComponent,
-                animation = ScaffoldAnimation.Push,
-            ),
-            searchBarStyle = SearchBarStyle.Transparent,
-            searchBarPosition = SearchBarPosition.Top,
-        )
-    }
+    modifier: Modifier,
+    config: ScaffoldConfiguration,
 ) {
     val scope = rememberCoroutineScope()
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     val density = LocalDensity.current
     val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
@@ -767,7 +803,9 @@ internal fun LauncherScaffold(
         }
     }
 
-    BoxWithConstraints {
+    BoxWithConstraints(
+        modifier = modifier,
+    ) {
         val width = this.maxWidth
         val height = this.maxHeight
         val widthPx = width.toPixels()
@@ -800,21 +838,37 @@ internal fun LauncherScaffold(
                 )
             }
 
+        LaunchedEffect(state) {
+            var pauseTime = 0L
+            lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                try {
+                    if (pauseTime > 0L && System.currentTimeMillis() - pauseTime > 5000L) {
+                        state.reset()
+                        searchVM.reset()
+                    }
+                } finally {
+                    pauseTime = System.currentTimeMillis()
+                }
+            }
+        }
+
         if (config.wallpaperBlurRadius > 0.dp) {
             val wallpaperBlur by animateIntAsState(
-                if (state.currentProgress >= 0.5f) 8.dp.toPixels().toInt() else 0
+                if (state.currentProgress >= 0.5f || config.showBackgroundOnHome) 8.dp.toPixels().toInt() else 0
             )
             WallpaperBlur { wallpaperBlur }
         }
 
-        PredictiveBackHandler {
-            try {
-                it.collect {
-                    state.onPredictiveBack(it.progress)
+        if (!config.finishOnBack || state.currentProgress > 0) {
+            PredictiveBackHandler {
+                try {
+                    it.collect {
+                        state.onPredictiveBack(it.progress)
+                    }
+                    scope.launch { state.onPredictiveBackEnd() }
+                } catch (_: CancellationException) {
+                    scope.launch { state.onPredictiveBackCancel() }
                 }
-                scope.launch { state.onPredictiveBackEnd() }
-            } catch (_: CancellationException) {
-                scope.launch { state.onPredictiveBackCancel() }
             }
         }
 
@@ -822,7 +876,7 @@ internal fun LauncherScaffold(
             state.onDrag(it)
         }
 
-        val nestedScrollConnection = remember {
+        val nestedScrollConnection = remember(state) {
             object : NestedScrollConnection {
                 override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                     if (source != NestedScrollSource.UserInput) return Offset.Zero
@@ -847,10 +901,22 @@ internal fun LauncherScaffold(
                     return Offset.Zero
                 }
 
+                override suspend fun onPreFling(available: Velocity): Velocity {
+                    if (state.currentProgress != 0f && state.currentProgress != 1f) {
+                        state.onDragStopped(available)
+                        return available
+                    }
+                    return super.onPreFling(available)
+                }
+
                 override suspend fun onPostFling(
                     consumed: Velocity,
                     available: Velocity
                 ): Velocity {
+                    if (available == Velocity.Zero) {
+                        return available
+                    }
+
                     // Threshold for nested scroll flings is 15 times higher to avoid accidental
                     // page changes
                     if (available.x.absoluteValue > minFlingVelocity * 15f || available.y.absoluteValue > minFlingVelocity * 15f) {
@@ -894,6 +960,9 @@ internal fun LauncherScaffold(
             config.homeComponent.Component(
                 Modifier
                     .fillMaxSize()
+                    .background(
+                        if (config.showBackgroundOnHome) MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f)
+                        else Color.Transparent)
                     .combinedClickable(
                         enabled = config.longPress != null || config.doubleTap != null,
                         onClick = {},

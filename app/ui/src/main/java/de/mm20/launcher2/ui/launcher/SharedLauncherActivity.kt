@@ -18,7 +18,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,16 +33,30 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.mm20.launcher2.preferences.BaseLayout
+import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
-import de.mm20.launcher2.ui.assistant.AssistantScaffold
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.gestures.GestureDetector
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.launcher.scaffold.ClockWidgetComponent
+import de.mm20.launcher2.ui.launcher.scaffold.DismissComponent
+import de.mm20.launcher2.ui.launcher.scaffold.Gesture
+import de.mm20.launcher2.ui.launcher.scaffold.LaunchComponent
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffold
+import de.mm20.launcher2.ui.launcher.scaffold.NotificationsComponent
+import de.mm20.launcher2.ui.launcher.scaffold.QuickSettingsComponent
+import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldAnimation
+import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldConfiguration
+import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldGesture
+import de.mm20.launcher2.ui.launcher.scaffold.ScreenOffComponent
+import de.mm20.launcher2.ui.launcher.scaffold.SearchBarPosition
+import de.mm20.launcher2.ui.launcher.scaffold.SearchComponent
+import de.mm20.launcher2.ui.launcher.scaffold.WidgetsComponent
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
@@ -118,6 +131,7 @@ abstract class SharedLauncherActivity(
                         val bottomSearchBar by viewModel.bottomSearchBar.collectAsState()
                         val reverseSearchResults by viewModel.reverseSearchResults.collectAsState()
                         val fixedSearchBar by viewModel.fixedSearchBar.collectAsState()
+                        val gestures by viewModel.gestureState.collectAsState()
 
                         val fixedRotation by viewModel.fixedRotation.collectAsState()
 
@@ -169,70 +183,134 @@ abstract class SharedLauncherActivity(
                             if (chargingAnimation == true) {
                                 NavBarEffects(modifier = Modifier.fillMaxSize())
                             }
-                            if (mode == LauncherActivityMode.Assistant) {
-                                key(bottomSearchBar, reverseSearchResults) {
-                                    AssistantScaffold(
-                                        modifier = Modifier
-                                            .fillMaxSize(),
-                                        darkStatusBarIcons = lightStatus,
-                                        darkNavBarIcons = lightNav,
-                                        bottomSearchBar = bottomSearchBar,
-                                        reverseSearchResults = reverseSearchResults,
-                                        fixedSearchBar = fixedSearchBar,
+
+                            val config = remember(
+                                mode,
+                                reverseSearchResults,
+                                layout,
+                                bottomSearchBar,
+                                fixedSearchBar,
+                                gestures,
+                            ) {
+                                if (mode == LauncherActivityMode.Assistant) {
+                                    val searchComponent = SearchComponent(
+                                        reverse = reverseSearchResults,
                                     )
-                                }
-                            } else {
-                                when (layout) {
-                                    BaseLayout.PullDown -> {
-                                        key(bottomSearchBar, reverseSearchResults) {
-                                            PullDownScaffold(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
-                                                    .graphicsLayer {
-                                                        scaleX =
-                                                            0.5f + enterTransitionProgress.value * 0.5f
-                                                        scaleY =
-                                                            0.5f + enterTransitionProgress.value * 0.5f
-                                                        alpha = enterTransitionProgress.value
-                                                    },
-                                                darkStatusBarIcons = lightStatus,
-                                                darkNavBarIcons = lightNav,
-                                                bottomSearchBar = bottomSearchBar,
-                                                reverseSearchResults = reverseSearchResults,
-                                                fixedSearchBar = fixedSearchBar,
+                                    val dismissComponent =
+                                        DismissComponent(this@SharedLauncherActivity)
+                                    ScaffoldConfiguration(
+                                        homeComponent = searchComponent,
+                                        searchComponent = searchComponent,
+                                        swipeDown = ScaffoldGesture(
+                                            component = dismissComponent,
+                                            animation = ScaffoldAnimation.Push
+                                        ),
+                                        swipeUp = ScaffoldGesture(
+                                            component = dismissComponent,
+                                            animation = ScaffoldAnimation.Push
+                                        ),
+                                        fixedSearchBar = fixedSearchBar,
+                                        searchBarStyle = SearchBarStyle.Solid,
+                                        searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
+                                        finishOnBack = true,
+                                        showBackgroundOnHome = true,
+                                    )
+                                } else {
+                                    val searchComponent = SearchComponent(
+                                        reverse = reverseSearchResults,
+                                    )
+                                    val widgetComponent by lazy { WidgetsComponent }
+
+                                    fun getScaffoldGesture(
+                                        action: GestureAction?,
+                                        searchable: SavableSearchable?,
+                                        gesture: Gesture
+                                    ): ScaffoldGesture? {
+                                        return when (action) {
+                                            is GestureAction.Search -> ScaffoldGesture(
+                                                component = searchComponent,
+                                                animation =
+                                                    if (gesture == Gesture.SwipeDown) ScaffoldAnimation.Rubberband
+                                                    else ScaffoldAnimation.Push
                                             )
+
+                                            is GestureAction.Notifications -> ScaffoldGesture(
+                                                component = NotificationsComponent,
+                                                animation = ScaffoldAnimation.Push
+                                            )
+
+                                            is GestureAction.QuickSettings -> ScaffoldGesture(
+                                                component = QuickSettingsComponent,
+                                                animation = ScaffoldAnimation.Push
+                                            )
+
+                                            is GestureAction.ScreenLock -> ScaffoldGesture(
+                                                component = ScreenOffComponent,
+                                                animation = ScaffoldAnimation.Push
+                                            )
+
+                                            is GestureAction.Launch if (searchable != null) -> ScaffoldGesture(
+                                                component = LaunchComponent(this@SharedLauncherActivity, searchable),
+                                                animation = ScaffoldAnimation.Push,
+                                            )
+
+                                            else -> null
                                         }
                                     }
 
-                                    BaseLayout.Pager,
-                                    BaseLayout.PagerReversed -> {
-                                        key(bottomSearchBar, reverseSearchResults) {
-                                            PagerScaffold(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
-                                                    .graphicsLayer {
-                                                        scaleX =
-                                                            0.5f + enterTransitionProgress.value * 0.5f
-                                                        scaleY =
-                                                            0.5f + enterTransitionProgress.value * 0.5f
-                                                        alpha = enterTransitionProgress.value
-                                                    },
-                                                darkStatusBarIcons = lightStatus,
-                                                darkNavBarIcons = lightNav,
-                                                reverse = layout == BaseLayout.PagerReversed,
-                                                bottomSearchBar = bottomSearchBar,
-                                                reverseSearchResults = reverseSearchResults,
-                                                fixedSearchBar = fixedSearchBar,
-                                            )
-                                        }
-                                    }
-                                    BaseLayout.Ng -> {
-                                        LauncherScaffold()
-                                    }
+                                    ScaffoldConfiguration(
+                                        homeComponent = ClockWidgetComponent,
+                                        searchComponent = searchComponent,
+                                        swipeUp = ScaffoldGesture(
+                                            component = widgetComponent,
+                                            animation = ScaffoldAnimation.Push
+                                        ),
+                                        swipeDown = getScaffoldGesture(
+                                            gestures.swipeDownAction,
+                                            gestures.swipeDownApp,
+                                            Gesture.SwipeDown,
+                                        ),
+                                        swipeLeft = getScaffoldGesture(
+                                            gestures.swipeLeftAction,
+                                            gestures.swipeLeftApp,
+                                            Gesture.SwipeLeft,
+                                        ),
+                                        swipeRight = getScaffoldGesture(
+                                            gestures.swipeRightAction,
+                                            gestures.swipeRightApp,
+                                            Gesture.SwipeRight,
+                                        ),
+                                        doubleTap = getScaffoldGesture(
+                                            gestures.doubleTapAction,
+                                            gestures.doubleTapApp,
+                                            Gesture.DoubleTap,
+                                        ),
+                                        longPress = getScaffoldGesture(
+                                            gestures.longPressAction,
+                                            gestures.longPressApp,
+                                            Gesture.LongPress,
+                                        ),
+                                        fixedSearchBar = fixedSearchBar,
+                                        searchBarStyle = SearchBarStyle.Transparent,
+                                        searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
 
-                                    else -> {}
+                                        )
                                 }
                             }
+
+                            LauncherScaffold(
+                                config = config,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .graphicsLayer {
+                                        scaleX =
+                                            0.5f + enterTransitionProgress.value * 0.5f
+                                        scaleY =
+                                            0.5f + enterTransitionProgress.value * 0.5f
+                                        alpha = enterTransitionProgress.value
+                                    }
+                            )
+
                             SnackbarHost(
                                 snackbarHostState,
                                 modifier = Modifier
@@ -282,8 +360,7 @@ abstract class SharedLauncherActivity(
     override fun onResume() {
         super.onResume()
         if (System.currentTimeMillis() - pauseTime > 20000) {
-            viewModel.closeSearchWithoutAnimation()
-            searchVM.reset()
+                searchVM.reset()
         }
     }
 

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,12 +32,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-internal object ScreenOffComponent : ScaffoldComponent, KoinComponent {
+internal object ScreenOffComponent : ScaffoldComponent(), KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val globalActionService: GlobalActionsService by inject()
@@ -56,54 +59,24 @@ internal object ScreenOffComponent : ScaffoldComponent, KoinComponent {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        Box(
-            modifier = modifier.zIndex(10f)
-                .pointerInput(Unit) {},
-            contentAlignment = Alignment.Center
-        ) {
-            val hasPermission by remember { permissionsManager.hasPermission(PermissionGroup.Accessibility) }.collectAsStateWithLifecycle(
-                null
-            )
-
-            if (hasPermission == false) {
-                val activity = LocalActivity.current as AppCompatActivity
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(12.dp)
-                        .scale(1f - ((1f - state.currentProgress) * 0.1f))
-                        .alpha((state.currentProgress * 2f - 1f).coerceAtMost(1f)),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        stringResource(R.string.gesture_action_lock_screen),
-                        modifier = Modifier.fillMaxWidth(),
-                        style = MaterialTheme.typography.headlineSmall,
-                        textAlign = TextAlign.Center,
-                        color = Color.White,
-                    )
-                    Text(
-                        stringResource(
-                            R.string.gesture_failed_message,
-                            stringResource(R.string.gesture_action_lock_screen),
-                            stringResource(R.string.gesture_action_lock_screen),
-                        ),
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(top = 16.dp, bottom = 24.dp),
-                        textAlign = TextAlign.Center,
-                        color = Color.White,
-                    )
-                    MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_accessibility_gesture_failed),
-                        onClick = {
-                            permissionsManager.requestPermission(
-                                activity,
-                                PermissionGroup.Accessibility
-                            )
-                        }
+        if (mounted) {
+            val bottomSheetManager = LocalBottomSheetManager.current
+            LaunchedEffect(Unit) {
+                val gesture = state.currentGesture ?: return@LaunchedEffect
+                if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
+                    bottomSheetManager.showFailedGestureSheet(
+                        gesture = gesture,
+                        action = GestureAction.ScreenLock,
                     )
                 }
             }
+        }
+        Box(
+            modifier = modifier
+                .zIndex(10f)
+                .pointerInput(Unit) {},
+            contentAlignment = Alignment.Center
+        ) {
         }
     }
 
@@ -134,6 +107,11 @@ internal object ScreenOffComponent : ScaffoldComponent, KoinComponent {
     }
 
     override suspend fun onMount(state: LauncherScaffoldState) {
-        globalActionService.lockScreen()
+        super.onMount(state)
+        if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
+            globalActionService.lockScreen()
+        } else {
+            state.onPredictiveBackEnd()
+        }
     }
 }

@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 
-internal object ClockWidgetComponent : ScaffoldComponent {
+internal object ClockWidgetComponent : ScaffoldComponent() {
     @Composable
     override fun Component(
         modifier: Modifier,

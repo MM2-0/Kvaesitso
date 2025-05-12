@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -17,7 +16,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 
-internal object SearchComponent : ScaffoldComponent {
+internal class SearchComponent(
+    private val reverse: Boolean = false,
+) : ScaffoldComponent() {
 
     private val lazyListState = LazyListState()
 
@@ -40,16 +41,16 @@ internal object SearchComponent : ScaffoldComponent {
             state.isSearchBarFocused = isActive
         }
 
-        val scrollConnection = remember {
+        val scrollConnection = remember(state) {
             object : NestedScrollConnection {
                 override fun onPostScroll(
                     consumed: Offset,
                     available: Offset,
-                    source: NestedScrollSource
+                    source: NestedScrollSource,
                 ): Offset {
                     state.isSearchBarFocused = false
                     state.onComponentScroll(
-                        -consumed.y,
+                        if (reverse) consumed.y else -consumed.y,
                         lazyListState.canScrollForward,
                         lazyListState.canScrollBackward
                     )
@@ -58,14 +59,12 @@ internal object SearchComponent : ScaffoldComponent {
             }
         }
 
-        Column(
-            modifier = modifier.nestedScroll(scrollConnection),
-        ) {
-            SearchColumn(
-                paddingValues = insets,
-                state = lazyListState
-            )
-        }
+        SearchColumn(
+            modifier.nestedScroll(scrollConnection),
+            paddingValues = insets,
+            state = lazyListState,
+            reverse = reverse,
+        )
     }
 
     override suspend fun onMount(state: LauncherScaffoldState) {
