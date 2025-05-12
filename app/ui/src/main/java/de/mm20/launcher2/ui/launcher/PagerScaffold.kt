@@ -386,6 +386,8 @@ fun PagerScaffold(
         }
     }
 
+    val hideNav by viewModel.hideNavBar.collectAsState(false)
+
     val insets = WindowInsets.safeDrawing.asPaddingValues()
 
     Box(
@@ -461,7 +463,7 @@ fun PagerScaffold(
                             val clockHeight by remember {
                                 derivedStateOf {
                                     if (fillClockHeight) {
-                                        height - (64.dp + insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
+                                        height - (64.dp + insets.calculateTopPadding() + (if (hideNav) 0.dp else insets.calculateBottomPadding()) - clockPadding)
                                     } else {
                                         null
                                     }
@@ -637,6 +639,7 @@ fun PagerScaffold(
             highlightedAction = searchVM.bestMatch.value as? SearchAction,
             isSearchOpen = isSearchOpen,
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
+            hideNav = hideNav,
             bottomSearchBar = bottomSearchBar,
             searchBarOffset = {
                 (if (focusSearchBar || fixedSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1) +
