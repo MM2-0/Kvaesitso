@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.widgets.favorites
 
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.search.SavableSearchable
@@ -10,6 +11,7 @@ import de.mm20.launcher2.services.widgets.WidgetsService
 import de.mm20.launcher2.ui.common.FavoritesVM
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.widgets.FavoritesWidget
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,7 +20,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
 import org.koin.core.component.inject
 
 class FavoritesWidgetVM : FavoritesVM() {
@@ -32,7 +36,7 @@ class FavoritesWidgetVM : FavoritesVM() {
     override val compactTags: Flow<Boolean> = widget.map { it?.config?.compactTags == true }
     val showFavorites: Flow<Boolean> = widget.map { it?.config?.showFavorites == true }
     val showTags: Flow<Boolean> = widget.map { it?.config?.showTags == true }
-    val selectedTags: Flow<List<Tag>> = widget.map { tagStr ->
+    private val selectedTags: Flow<List<Tag>> = widget.map { tagStr ->
         val tags = mutableListOf<Tag>()
         val tagList = tagStr?.config?.tagList
         if(!tagList.isNullOrEmpty()) {
@@ -42,6 +46,11 @@ class FavoritesWidgetVM : FavoritesVM() {
         }
         tags
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+    val combinedTags = selectedTags
+        .combine(pinnedTags) { selectedTags, pinnedTags ->
+            selectedTags.ifEmpty { pinnedTags }
+        }.shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
     private val isTopWidget = widgetsService.isFavoritesWidgetFirst()
     private val clockWidgetFavSlots =
@@ -73,21 +82,19 @@ class FavoritesWidgetVM : FavoritesVM() {
         )
     }
 
-    fun updateWidget(widget: FavoritesWidget) {
-
+    suspend fun updateWidget(widget: FavoritesWidget) {
         selectTag(null)
 
         if(!widget.config.showFavorites
             && widget.config.showTags)
         {
-            if(widget.config.tagList.isNotEmpty()) {
-                val firstTag = widget.config.tagList[0];
-                selectTag(firstTag)
+            combinedTags.collect { combined ->
+                if(combined.isNotEmpty()) {
+                    val firstTag = combined[0];
+                    selectTag(firstTag.tag)
+                }
             }
-            else if(pinnedTags.value.isNotEmpty()) {
-                val firstTag = pinnedTags.value[0]
-                selectTag(firstTag.tag)
-            }
+
         }
 
         this.widget.value = widget

@@ -30,17 +30,16 @@ import de.mm20.launcher2.widgets.FavoritesWidget
 fun FavoritesWidget(widget: FavoritesWidget) {
     val viewModel: FavoritesWidgetVM = viewModel(key = "favorites-widget-${widget.id}")
     val favorites by remember { viewModel.favorites }.collectAsState(emptyList())
-    val pinnedTags by remember { viewModel.pinnedTags}.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)
     val compactTags by viewModel.compactTags.collectAsState(false)
     val showFavorites by viewModel.showFavorites.collectAsState(false)
     val showTags by viewModel.showTags.collectAsState(false)
-    val selectedTags by remember { viewModel.selectedTags }.collectAsState(emptyList())
+    val combinedTags by remember { viewModel.combinedTags }.collectAsState(emptyList())
     val favoritesEditButton = widget.config.editButton
 
     val tagsExpanded by viewModel.tagsExpanded.collectAsState(false)
 
-    LaunchedEffect(widget, pinnedTags) {
+    LaunchedEffect(widget) {
         viewModel.updateWidget(widget)
     }
 
@@ -59,10 +58,9 @@ fun FavoritesWidget(widget: FavoritesWidget) {
             )
         }
         if(favoritesEditButton || (showTags && (showFavorites ||
-                    ((selectedTags.isNotEmpty() && selectedTags.size > 1)
-                            || selectedTags.isEmpty())))) {
+                    (combinedTags.isNotEmpty() && combinedTags.size > 1)))) {
             FavoritesTagSelector(
-                tags = selectedTags.ifEmpty { pinnedTags },
+                tags = combinedTags,
                 selectedTag = selectedTag,
                 editButton = favoritesEditButton,
                 reverse = false,
