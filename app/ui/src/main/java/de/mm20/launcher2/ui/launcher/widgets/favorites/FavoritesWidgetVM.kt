@@ -83,8 +83,7 @@ class FavoritesWidgetVM : FavoritesVM() {
         )
     }
 
-    fun updateWidget(widget: FavoritesWidget,combined: List<Tag>) {
-
+    fun updateWidget(widget: FavoritesWidget, combined: List<Tag>) {
         selectTag(null)
         if(!widget.config.showFavorites
             && widget.config.showTags)

@@ -39,6 +39,8 @@ fun FavoritesWidget(widget: FavoritesWidget) {
 
     val tagsExpanded by viewModel.tagsExpanded.collectAsState(false)
 
+    // there's probably a better way to do this instead of sending combinedTags
+    // back to the viewmodel
     LaunchedEffect(widget, combinedTags) {
         viewModel.updateWidget(widget, combinedTags)
     }
