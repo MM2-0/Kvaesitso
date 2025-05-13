@@ -58,7 +58,9 @@ fun FavoritesWidget(widget: FavoritesWidget) {
                 icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
             )
         }
-        if(favoritesEditButton || (showTags && (showFavorites || selectedTags.size > 1))) {
+        if(favoritesEditButton || (showTags && (showFavorites ||
+                    ((selectedTags.isNotEmpty() && selectedTags.size > 1)
+                            || selectedTags.isEmpty())))) {
             FavoritesTagSelector(
                 tags = selectedTags.ifEmpty { pinnedTags },
                 selectedTag = selectedTag,
