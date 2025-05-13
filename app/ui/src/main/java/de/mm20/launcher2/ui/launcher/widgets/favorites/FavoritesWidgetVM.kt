@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -77,10 +78,16 @@ class FavoritesWidgetVM : FavoritesVM() {
         selectTag(null)
 
         if(!widget.config.showFavorites
-            && widget.config.showTags && widget.config.tagList.isNotEmpty())
+            && widget.config.showTags)
         {
-            val firstTag = widget.config.tagList[0];
-            selectTag(firstTag)
+            if(widget.config.tagList.isNotEmpty()) {
+                val firstTag = widget.config.tagList[0];
+                selectTag(firstTag)
+            }
+            else if(pinnedTags.value.isNotEmpty()) {
+                val firstTag = pinnedTags.value[0]
+                selectTag(firstTag.tag)
+            }
         }
 
         this.widget.value = widget
