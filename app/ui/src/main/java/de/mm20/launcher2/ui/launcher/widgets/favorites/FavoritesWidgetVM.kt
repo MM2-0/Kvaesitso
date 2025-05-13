@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.inject
 
@@ -82,19 +83,16 @@ class FavoritesWidgetVM : FavoritesVM() {
         )
     }
 
-    suspend fun updateWidget(widget: FavoritesWidget) {
-        selectTag(null)
+    fun updateWidget(widget: FavoritesWidget,combined: List<Tag>) {
 
+        selectTag(null)
         if(!widget.config.showFavorites
             && widget.config.showTags)
         {
-            combinedTags.collect { combined ->
-                if(combined.isNotEmpty()) {
-                    val firstTag = combined[0];
-                    selectTag(firstTag.tag)
-                }
+            if(combined.isNotEmpty()) {
+                val firstTag = combined[0];
+                selectTag(firstTag.tag)
             }
-
         }
 
         this.widget.value = widget

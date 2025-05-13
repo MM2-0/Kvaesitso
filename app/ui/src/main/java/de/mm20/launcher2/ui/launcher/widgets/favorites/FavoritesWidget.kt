@@ -39,8 +39,8 @@ fun FavoritesWidget(widget: FavoritesWidget) {
 
     val tagsExpanded by viewModel.tagsExpanded.collectAsState(false)
 
-    LaunchedEffect(widget) {
-        viewModel.updateWidget(widget)
+    LaunchedEffect(widget, combinedTags) {
+        viewModel.updateWidget(widget, combinedTags)
     }
 
     Column(
