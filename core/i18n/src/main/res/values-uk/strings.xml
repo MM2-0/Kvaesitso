@@ -53,4 +53,5 @@
     <string name="file_type_presentation">Презентація</string>
     <string name="file_type_compressed">Стиснутий файл</string>
     <string name="file_type_text">Текстовий файл</string>
+    <string name="action_import">Імпорт</string>
 </resources>
