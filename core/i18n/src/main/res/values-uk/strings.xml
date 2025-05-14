@@ -42,4 +42,15 @@
     <string name="file_meta_artist">Виконавець: %1$s</string>
     <string name="file_meta_album">Альбом: %1$s</string>
     <string name="file_meta_app_min_sdk">Мін. версія SDK: %1$s</string>
+    <string name="file_type_image">Зображення</string>
+    <string name="file_type_ebook">Файл електронної книги</string>
+    <string name="file_type_document">Документ</string>
+    <string name="file_type_video">Відео файл</string>
+    <string name="file_type_none">Файл</string>
+    <string name="file_type_music">Аудіо файл</string>
+    <string name="menu_map">Показати на мапі</string>
+    <string name="menu_website">Відкрити веб-сторінку</string>
+    <string name="file_type_presentation">Презентація</string>
+    <string name="file_type_compressed">Стиснутий файл</string>
+    <string name="file_type_text">Текстовий файл</string>
 </resources>
