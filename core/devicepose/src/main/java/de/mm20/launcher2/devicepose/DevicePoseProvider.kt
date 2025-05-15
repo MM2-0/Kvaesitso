@@ -8,18 +8,16 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
+import androidx.core.location.LocationListenerCompat
 import de.mm20.launcher2.ktx.PI
+import de.mm20.launcher2.ktx.checkPermission
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.channelFlow
-import de.mm20.launcher2.ktx.checkPermission
 import kotlinx.coroutines.flow.combine
 
 class DevicePoseProvider internal constructor(
@@ -39,7 +37,7 @@ class DevicePoseProvider internal constructor(
     }
 
     fun getLocation(minTimeMs: Long = 1000, minDistanceM: Float = 1f) = channelFlow {
-        val locationCallback = LocationListener {
+        val locationCallback = LocationListenerCompat {
             lastLocation = it
             updateDeclination(it)
             trySend(it)
@@ -54,7 +52,9 @@ class DevicePoseProvider internal constructor(
 
                 val location =
                     (if (hasFineAccess) this@runCatching.getLastKnownLocation(LocationManager.GPS_PROVIDER) else null)
-                        ?: if (hasCoarseAccess) this@runCatching.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) else null
+                        ?: if (hasCoarseAccess) this@runCatching.getLastKnownLocation(
+                            LocationManager.NETWORK_PROVIDER
+                        ) else null
 
                 if (location != null) {
                     lastLocation = location
@@ -87,42 +87,46 @@ class DevicePoseProvider internal constructor(
         }
     }
 
-    fun getAzimuthDegrees(samplingPeriodUs: Int = SensorManager.SENSOR_DELAY_UI): Flow<Float> = callbackFlow {
-        val azimuthCallback = object : SensorEventListener {
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
-            override fun onSensorChanged(event: SensorEvent?) {
-                if (event?.sensor?.type != Sensor.TYPE_ROTATION_VECTOR)
-                    return
+    fun getAzimuthDegrees(samplingPeriodUs: Int = SensorManager.SENSOR_DELAY_UI): Flow<Float> =
+        callbackFlow {
+            val azimuthCallback = object : SensorEventListener {
+                override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+                override fun onSensorChanged(event: SensorEvent?) {
+                    if (event?.sensor?.type != Sensor.TYPE_ROTATION_VECTOR)
+                        return
 
-                val rotationMatrix = FloatArray(9)
-                val orientationAngles = FloatArray(3)
+                    val rotationMatrix = FloatArray(9)
+                    val orientationAngles = FloatArray(3)
 
-                SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
-                SensorManager.getOrientation(rotationMatrix, orientationAngles)
+                    SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+                    SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                trySend(orientationAngles[0] * 180f / Float.PI + (declination ?: 0f))
+                    trySend(orientationAngles[0] * 180f / Float.PI + (declination ?: 0f))
+                }
+            }
+
+            context
+                .getSystemService<SensorManager>()
+                ?.runCatching {
+                    this@runCatching.registerListener(
+                        azimuthCallback,
+                        this@runCatching.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+                            ?: return@runCatching,
+                        samplingPeriodUs
+                    )
+                }?.onFailure {
+                    Log.e("DevicePoseProvider", "Failed to register ROTATION_VECTOR listener", it)
+                }
+
+            awaitClose {
+                context.getSystemService<SensorManager>()?.unregisterListener(azimuthCallback)
             }
         }
 
-        context
-            .getSystemService<SensorManager>()
-            ?.runCatching {
-                this@runCatching.registerListener(
-                    azimuthCallback,
-                    this@runCatching.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
-                        ?: return@runCatching,
-                    samplingPeriodUs
-                )
-            }?.onFailure {
-                Log.e("DevicePoseProvider", "Failed to register ROTATION_VECTOR listener", it)
-            }
-
-        awaitClose {
-            context.getSystemService<SensorManager>()?.unregisterListener(azimuthCallback)
-        }
-    }
-
-    fun getHeadingToDegrees(headingEastwardDegrees: Float, samplingPeriodUs: Int = SensorManager.SENSOR_DELAY_UI): Flow<Float> = combine(
+    fun getHeadingToDegrees(
+        headingEastwardDegrees: Float,
+        samplingPeriodUs: Int = SensorManager.SENSOR_DELAY_UI
+    ): Flow<Float> = combine(
         getAzimuthDegrees(samplingPeriodUs),
         callbackFlow {
             val upsideDownCallback = object : SensorEventListener {
