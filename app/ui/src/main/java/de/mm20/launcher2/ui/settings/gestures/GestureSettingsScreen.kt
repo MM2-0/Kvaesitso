@@ -257,6 +257,7 @@ fun GesturePreference(
                 enabled = !isOpenSearch,
                 items = options,
                 value = if (isOpenSearch) GestureAction.Search else value,
+                summary = options.find { value?.javaClass == it.second.javaClass }?.first,
                 onValueChanged = { if (it != null) onValueChanged(it) }
             )
         }

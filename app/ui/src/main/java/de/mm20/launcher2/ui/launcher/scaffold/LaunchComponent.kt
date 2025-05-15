@@ -17,9 +17,7 @@ internal class LaunchComponent(
     private val searchable: SavableSearchable,
 ): ScaffoldComponent() {
     override val permanent: Boolean = false
-
     override val resetDelay: Long = 500L
-
     override val showSearchBar = false
 
     @Composable
@@ -61,7 +59,7 @@ internal class LaunchComponent(
         state: LauncherScaffoldState,
         defaultModifier: Modifier
     ): Modifier {
-        return Modifier.alpha(1f - state.currentProgress)
+        return defaultModifier.alpha(1f - state.currentProgress)
     }
 
 }

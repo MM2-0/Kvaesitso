@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
-import android.util.Log
 import android.view.animation.PathInterpolator
 import androidx.activity.compose.PredictiveBackHandler
 import androidx.compose.animation.core.Animatable
@@ -131,10 +130,12 @@ internal data class ScaffoldConfiguration(
      * Show the navigation bar
      */
     val showNavBar: Boolean = true,
+    val darkNavBarIcons: Boolean = false,
     /**
      * Show the status bar
      */
     val showStatusBar: Boolean = true,
+    val darkStatusBarIcons: Boolean = false,
     /**
      * Finishes the activity when back is pressed while on home component.
      * Used for assistant mode.
@@ -149,6 +150,22 @@ internal data class ScaffoldConfiguration(
         component = searchComponent,
         animation = ScaffoldAnimation.ZoomIn,
     )
+
+    /**
+     * Returns true if the given config prevents the user from accessing search or settings,
+     * so that the user is locked out and the launcher is soft-bricked
+     */
+    fun isUseless(): Boolean {
+        return searchBarStyle == SearchBarStyle.Hidden &&
+                listOfNotNull(
+                    swipeUp,
+                    swipeDown,
+                    swipeLeft,
+                    swipeRight,
+                    doubleTap,
+                    longPress,
+                ).none { it.component.showSearchBar }
+    }
 }
 
 private operator fun ScaffoldConfiguration.get(gesture: Gesture): ScaffoldGesture? {
@@ -206,6 +223,10 @@ internal class LauncherScaffoldState(
     private var secondaryPageSearchBarOffset by mutableFloatStateOf(0f)
 
     var isSearchBarFocused by mutableStateOf(config.homeComponent is SearchComponent)
+
+    val darkStatusBarIcons by derivedStateOf {
+        config.darkStatusBarIcons && !(currentProgress == 1f && currentComponent?.drawBackground)
+    }
 
     /**
      * True if any page is open, false if on home page.
@@ -674,6 +695,8 @@ internal class LauncherScaffoldState(
             currentZOffset = this.value
         }
 
+        isSettledOnSecondaryPage = true
+
         activateSecondaryPage(component)
     }
 
@@ -686,6 +709,7 @@ internal class LauncherScaffoldState(
         component.onUnmount(this)
         currentGesture = null
         secondaryPageSearchBarOffset = 0f
+        isSearchBarFocused = false
     }
 
     /**
@@ -1033,6 +1057,7 @@ private fun SecondaryPage(
             config.swipeRight?.component,
             config.doubleTap?.component,
             config.longPress?.component,
+            config.searchComponent,
         )
     }
 

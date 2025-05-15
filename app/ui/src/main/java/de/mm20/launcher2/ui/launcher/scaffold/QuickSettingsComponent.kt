@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.annotation.SuppressLint
+import android.view.animation.PathInterpolator
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,10 +18,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
@@ -29,6 +33,7 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import de.mm20.launcher2.ui.modifier.scale
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -41,6 +46,8 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
         get() = !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)
 
     override val showSearchBar: Boolean = false
+
+    private val interpolator = PathInterpolator(0f, 0f, 0f, 1f)
 
     @Composable
     override fun Component(
@@ -61,6 +68,10 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
             }
         }
 
+        val scale by animateFloatAsState(
+            if (state.currentProgress >= 0.5f) 1.2f else 1f
+        )
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -71,8 +82,10 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
             Box(
                 modifier = Modifier
                     .systemBarsPadding()
+                    .padding(16.dp)
                     .size(64.dp)
-                    .offset(y = -128.dp * (1f - state.currentProgress * 2f).coerceAtLeast(0f))
+                    .offset(y = -134.dp * interpolator.getInterpolation(1f - state.currentProgress * 2f).coerceAtLeast(0f))
+                    .scale(scale)
                     .shadow(4.dp, CircleShape)
                     .background(MaterialTheme.colorScheme.secondaryContainer, CircleShape),
                 contentAlignment = Alignment.Center
