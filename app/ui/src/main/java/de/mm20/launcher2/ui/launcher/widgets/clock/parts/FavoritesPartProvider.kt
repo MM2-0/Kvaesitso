@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.searchable.PinnedLevel
 import de.mm20.launcher2.services.favorites.FavoritesService
@@ -26,6 +27,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
     private val favoritesService: FavoritesService by inject()
     private val widgetRepository: WidgetRepository by inject()
     private val uiSettings: UiSettings by inject()
+    private val clockWidgetSettings: ClockWidgetSettings by inject()
 
     override fun getRanking(context: Context): Flow<Int> = flow {
         emit(Int.MAX_VALUE)
@@ -38,15 +40,19 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                 it.columnCount
             }
         }.collectAsState(0)
-        val excludeCalendar by remember { widgetRepository.exists(CalendarWidget.Type) }.collectAsState(
-            true
-        )
 
-        val favorites by remember(columns, excludeCalendar) {
+        val rows by remember {
+            clockWidgetSettings.rowsInDock
+        }.collectAsState(1)
+
+        val excludeCalendar by remember { widgetRepository.exists(CalendarWidget.Type) }
+            .collectAsState(true)
+
+        val favorites by remember(columns, rows, excludeCalendar) {
             favoritesService.getFavorites(
                 excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
                 minPinnedLevel = PinnedLevel.FrequentlyUsed,
-                limit = columns
+                limit = columns * rows
             )
         }.collectAsState(emptyList())
 
