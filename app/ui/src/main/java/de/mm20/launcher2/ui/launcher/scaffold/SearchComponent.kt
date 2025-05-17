@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -21,6 +22,14 @@ internal class SearchComponent(
 ) : ScaffoldComponent() {
 
     private val lazyListState = LazyListState()
+
+    override var isAtTop: State<Boolean?> = derivedStateOf {
+        !lazyListState.canScrollForward && reverse || !lazyListState.canScrollBackward && !reverse
+    }
+
+    override var isAtBottom: State<Boolean?> = derivedStateOf {
+        !lazyListState.canScrollForward && !reverse || !lazyListState.canScrollBackward && reverse
+    }
 
     @Composable
     override fun Component(
@@ -51,8 +60,6 @@ internal class SearchComponent(
                     state.isSearchBarFocused = false
                     state.onComponentScroll(
                         if (reverse) consumed.y else -consumed.y,
-                        lazyListState.canScrollForward,
-                        lazyListState.canScrollBackward
                     )
                     return super.onPostScroll(consumed, available, source)
                 }

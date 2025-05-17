@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.CompositionLocalProvider
@@ -138,6 +139,8 @@ abstract class SharedLauncherActivity(
 
                         val fixedRotation by viewModel.fixedRotation.collectAsState()
 
+                        val backgroundColor = MaterialTheme.colorScheme.surfaceContainer
+
                         LaunchedEffect(fixedRotation) {
                             requestedOrientation = if (fixedRotation) {
                                 ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -195,6 +198,7 @@ abstract class SharedLauncherActivity(
                                 fixedSearchBar,
                                 gestures,
                                 searchBarStyle,
+                                backgroundColor,
                             ) {
                                 if (mode == LauncherActivityMode.Assistant) {
                                     val searchComponent = SearchComponent(
@@ -217,7 +221,8 @@ abstract class SharedLauncherActivity(
                                         searchBarStyle = searchBarStyle,
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
                                         finishOnBack = true,
-                                        showBackgroundOnHome = true,
+                                        drawBackgroundOnHome = true,
+                                        backgroundColor = backgroundColor,
                                     )
                                 } else {
                                     val searchComponent = SearchComponent(
@@ -315,6 +320,7 @@ abstract class SharedLauncherActivity(
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
                                         darkStatusBarIcons = lightStatus,
                                         darkNavBarIcons = lightNav,
+                                        backgroundColor = backgroundColor,
                                     )
 
                                     if (config.isUseless()) config.copy(homeComponent = SecretComponent) else config

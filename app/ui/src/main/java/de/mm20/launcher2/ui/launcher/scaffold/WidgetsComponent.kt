@@ -31,6 +31,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -60,6 +62,14 @@ internal object WidgetsComponent : ScaffoldComponent() {
     private var editMode by mutableStateOf(false)
     private val scrollState = ScrollState(0)
 
+    override var isAtTop: State<Boolean?> = derivedStateOf {
+        !scrollState.canScrollBackward
+    }
+
+    override var isAtBottom: State<Boolean?> = derivedStateOf {
+        !scrollState.canScrollForward
+    }
+
     @Composable
     override fun Component(
         modifier: Modifier,
@@ -74,11 +84,7 @@ internal object WidgetsComponent : ScaffoldComponent() {
             val delta = scrollState.value - previousScroll.intValue
             previousScroll.intValue = scrollState.value
             if (!editMode) {
-                state.onComponentScroll(
-                    delta.toFloat(),
-                    scrollState.canScrollForward,
-                    scrollState.canScrollBackward
-                )
+                state.onComponentScroll(delta.toFloat())
             }
         }
 
@@ -146,60 +152,4 @@ internal object WidgetsComponent : ScaffoldComponent() {
             Modifier.alpha(alpha).zIndex(-1f)
         }
     }
-}
-
-fun Modifier.betterVerticalScroll(
-    state: ScrollState,
-): Modifier = composed {
-    val flingBehavior = ScrollableDefaults.flingBehavior()
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-
-        }
-    }
-    val nestedScrollDispatcher = remember { NestedScrollDispatcher() }
-
-    val draggableState = rememberDraggable2DState {
-        var available = it
-        var consumed = Offset.Zero
-        nestedScrollDispatcher.dispatchPreScroll(available, NestedScrollSource.UserInput).also {
-            consumed += it
-            available -= it
-        }
-        state.dispatchRawDelta(-available.y).also {
-            available -= Offset(0f, -it)
-            consumed += Offset(0f, -it)
-        }
-        nestedScrollDispatcher.dispatchPostScroll(consumed, available, NestedScrollSource.UserInput)
-    }
-
-    val scope = rememberCoroutineScope()
-
-
-
-    return@composed Modifier
-        .nestedScroll(nestedScrollConnection, nestedScrollDispatcher)
-        .draggable2D(
-            draggableState,
-            onDragStopped = {
-                scope.launch {
-                    state.scroll {
-                        var available = it
-                        var consumed = Velocity.Zero
-                        nestedScrollDispatcher.dispatchPreFling(available).also {
-                            consumed += it
-                            available -= it
-                        }
-                        with(flingBehavior) {
-                            performFling(-available.y).also {
-                                consumed += Velocity(0f, -it)
-                                available -= Velocity(0f, -it)
-                            }
-                        }
-                        nestedScrollDispatcher.dispatchPostFling(consumed, available)
-                    }
-                }
-            }
-        )
-        .verticalScroll(state, enabled = false)
 }

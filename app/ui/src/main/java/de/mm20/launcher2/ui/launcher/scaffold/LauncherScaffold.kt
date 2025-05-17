@@ -1,12 +1,19 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.view.animation.PathInterpolator
+import androidx.activity.SystemBarStyle
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.PredictiveBackHandler
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.Orientation
@@ -20,12 +27,14 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
@@ -41,6 +50,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -64,6 +74,7 @@ import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchVM
+import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
@@ -123,6 +134,10 @@ internal data class ScaffoldConfiguration(
      */
     val fixedSearchBar: Boolean = false,
     /**
+     * The color that is used as background for secondary pages.
+     */
+    val backgroundColor: Color,
+    /**
      * Wallpaper blur radius. 0 to disable.
      */
     val wallpaperBlurRadius: Dp = 32.dp,
@@ -144,7 +159,7 @@ internal data class ScaffoldConfiguration(
     /**
      * If true, the home page is drawn with a background (and blur, if enabled)
      */
-    val showBackgroundOnHome: Boolean = false,
+    val drawBackgroundOnHome: Boolean = false,
 ) {
     val searchBarTap = ScaffoldGesture(
         component = searchComponent,
@@ -225,7 +240,78 @@ internal class LauncherScaffoldState(
     var isSearchBarFocused by mutableStateOf(config.homeComponent is SearchComponent)
 
     val darkStatusBarIcons by derivedStateOf {
-        config.darkStatusBarIcons && !(currentProgress == 1f && currentComponent?.drawBackground)
+        val isLightBackground = config.backgroundColor.luminance() > 0.5f
+        when {
+            currentProgress <= 0.5f && !config.drawBackgroundOnHome ||
+                    currentComponent?.drawBackground == false -> {
+                config.darkStatusBarIcons
+            }
+
+            currentProgress > 0.5f -> {
+                isLightBackground
+            }
+
+            else -> false
+        }
+    }
+    val darkNavBarIcons by derivedStateOf {
+        val isLightBackground = config.backgroundColor.luminance() > 0.5f
+        when {
+            currentProgress < 1f && !config.drawBackgroundOnHome ||
+                    currentComponent?.drawBackground == false -> {
+                config.darkNavBarIcons
+            }
+
+            currentProgress == 1f -> {
+                isLightBackground
+            }
+
+            else -> false
+        }
+    }
+
+    val searchBarLevel by derivedStateOf {
+        val component = currentComponent
+
+        val homeLevel = if (config.searchBarPosition == SearchBarPosition.Top) {
+            when(config.homeComponent.isAtTop.value) {
+                true if (config.drawBackgroundOnHome && config.homeComponent.drawBackground) -> SearchBarLevel.Active
+                true -> SearchBarLevel.Resting
+                false -> SearchBarLevel.Raised
+                null -> null
+            }
+        } else {
+            when(config.homeComponent.isAtBottom.value) {
+                true if (config.drawBackgroundOnHome && config.homeComponent.drawBackground) -> SearchBarLevel.Active
+                true -> SearchBarLevel.Resting
+                false -> SearchBarLevel.Raised
+                null -> null
+            }
+        }
+
+        val secondaryLevel = if (config.searchBarPosition == SearchBarPosition.Top) {
+            when(component?.isAtTop?.value) {
+                true if (component.drawBackground) -> SearchBarLevel.Active
+                true -> SearchBarLevel.Resting
+                false -> SearchBarLevel.Raised
+                null -> null
+            }
+        } else {
+            when(component?.isAtBottom?.value) {
+                true if (component.drawBackground) -> SearchBarLevel.Active
+                true -> SearchBarLevel.Resting
+                false -> SearchBarLevel.Raised
+                null -> null
+            }
+        }
+
+        when(currentProgress) {
+            0f -> homeLevel ?: SearchBarLevel.Active
+            1f -> secondaryLevel ?: homeLevel ?: SearchBarLevel.Active
+            else if homeLevel != null && secondaryLevel != null -> maxOf(homeLevel, secondaryLevel)
+            else if homeLevel != null -> homeLevel
+            else -> SearchBarLevel.Active
+        }
     }
 
     /**
@@ -562,10 +648,8 @@ internal class LauncherScaffoldState(
      * Note that we aren't interested in horizontal scroll events.
      *
      * @param delta The y delta of the scroll event, in pixels.
-     * @param isAtTop True if scrollable component is at the top of the scrollable area and cannot be scrolled further up.
-     * @param isAtBottom True if scrollable component is at the bottom of the scrollable area and cannot be scrolled further down.
      */
-    fun onComponentScroll(delta: Float, isAtTop: Boolean, isAtBottom: Boolean) {
+    fun onComponentScroll(delta: Float) {
         if (isSettledOnSecondaryPage) {
             secondaryPageSearchBarOffset = if (config.searchBarPosition == SearchBarPosition.Top) {
                 (secondaryPageSearchBarOffset - delta).coerceIn(-maxSearchBarOffset, 0f)
@@ -813,6 +897,7 @@ internal fun LauncherScaffold(
 ) {
     val scope = rememberCoroutineScope()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val activity = LocalActivity.current as AppCompatActivity
 
     val density = LocalDensity.current
     val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
@@ -820,6 +905,9 @@ internal fun LauncherScaffold(
 
     val searchVM = viewModel<SearchVM>()
     val searchActions = searchVM.searchActionResults
+    val filters by searchVM.filters
+    val filterBar by searchVM.filterBar.collectAsState(false)
+    val filterBarItems by searchVM.filterBarItems.collectAsState(emptyList())
 
     val searchBarHeight by remember {
         derivedStateOf {
@@ -862,6 +950,11 @@ internal fun LauncherScaffold(
                 )
             }
 
+        val isFilterBarVisible =
+            state.currentComponent is SearchComponent && filterBar && WindowInsets.isImeVisible
+
+        val filterBarHeight = if (isFilterBarVisible) 50.dp else 0.dp
+
         LaunchedEffect(state) {
             var pauseTime = 0L
             lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -876,9 +969,28 @@ internal fun LauncherScaffold(
             }
         }
 
+        LaunchedEffect(
+            state.darkStatusBarIcons,
+            state.darkNavBarIcons,
+        ) {
+            activity.enableEdgeToEdge(
+                statusBarStyle = if (state.darkStatusBarIcons) {
+                    SystemBarStyle.light(0, 0)
+                } else {
+                    SystemBarStyle.dark(0)
+                },
+                navigationBarStyle = if (state.darkStatusBarIcons) {
+                    SystemBarStyle.light(0, 0)
+                } else {
+                    SystemBarStyle.dark(0)
+                },
+            )
+        }
+
         if (config.wallpaperBlurRadius > 0.dp) {
             val wallpaperBlur by animateIntAsState(
-                if (state.currentProgress >= 0.5f || config.showBackgroundOnHome) 8.dp.toPixels().toInt() else 0
+                if (state.currentProgress >= 0.5f || config.drawBackgroundOnHome) 8.dp.toPixels()
+                    .toInt() else 0
             )
             WallpaperBlur { wallpaperBlur }
         }
@@ -976,8 +1088,10 @@ internal fun LauncherScaffold(
                 PaddingValues(
                     start = it.calculateStartPadding(LocalLayoutDirection.current),
                     end = it.calculateEndPadding(LocalLayoutDirection.current),
-                    top = it.calculateTopPadding() + if (config.searchBarPosition == SearchBarPosition.Top) searchBarHeight else 0.dp,
-                    bottom = it.calculateBottomPadding() + if (config.searchBarPosition == SearchBarPosition.Bottom) searchBarHeight else 0.dp
+                    top = it.calculateTopPadding() + if (config.searchBarPosition == SearchBarPosition.Top) searchBarHeight else 8.dp,
+                    bottom = it.calculateBottomPadding() +
+                            (if (config.searchBarPosition == SearchBarPosition.Bottom) searchBarHeight else 8.dp) +
+                            filterBarHeight
                 )
             }
 
@@ -985,8 +1099,9 @@ internal fun LauncherScaffold(
                 Modifier
                     .fillMaxSize()
                     .background(
-                        if (config.showBackgroundOnHome) MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f)
-                        else Color.Transparent)
+                        if (config.drawBackgroundOnHome) config.backgroundColor.copy(alpha = 0.85f)
+                        else Color.Transparent
+                    )
                     .combinedClickable(
                         enabled = config.longPress != null || config.doubleTap != null,
                         onClick = {},
@@ -1025,10 +1140,10 @@ internal fun LauncherScaffold(
                             else Alignment.BottomCenter
                         ),
                     searchBarOffset = { state.currentSearchBarOffset.roundToInt() },
-                    style = SearchBarStyle.Solid,
+                    style = config.searchBarStyle,
                     focused = state.isSearchBarFocused,
                     actions = searchActions,
-                    level = { SearchBarLevel.Raised },
+                    level = { state.searchBarLevel },
                     bottomSearchBar = config.searchBarPosition == SearchBarPosition.Bottom,
                     onFocusChange = {
                         if (it) {
@@ -1037,6 +1152,24 @@ internal fun LauncherScaffold(
                         state.isSearchBarFocused = it
                     },
                 )
+            }
+            AnimatedVisibility(
+                isFilterBarVisible,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .safeDrawingPadding(),
+                    contentAlignment = Alignment.BottomCenter,
+                ) {
+                    KeyboardFilterBar(
+                        filters = filters,
+                        onFiltersChange = { searchVM.setFilters(it) },
+                        items = filterBarItems
+                    )
+                }
             }
         }
     }
@@ -1079,7 +1212,7 @@ private fun SecondaryPage(
 
         val mod = modifier
             .fillMaxSize()
-            .secondaryPageAnimation(state, MaterialTheme.colorScheme.surfaceContainer)
+            .secondaryPageAnimation(state, config.backgroundColor)
         val composable = composables[component]
 
         composable?.invoke(mod, insets, state)

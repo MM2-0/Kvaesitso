@@ -72,7 +72,7 @@ fun WidgetItem(
     var configure by rememberSaveable { mutableStateOf(false) }
 
     var isDragged by remember { mutableStateOf(false) }
-    val elevation by animateDpAsState(if (isDragged) 8.dp else 2.dp)
+    val elevation by animateDpAsState(if (isDragged) 8.dp else 0.dp)
 
     val appWidget = if (widget is AppWidget) remember(widget.config.widgetId) {
         AppWidgetManager.getInstance(context).getAppWidgetInfo(widget.config.widgetId)

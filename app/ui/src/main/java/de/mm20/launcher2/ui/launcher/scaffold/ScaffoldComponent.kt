@@ -2,19 +2,13 @@ package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 
-typealias ComponentContent = @Composable (
-    modifier: Modifier,
-    insets: PaddingValues,
-    animationStyle: ScaffoldAnimation?,
-    animationProgress: Float
-) -> Unit
 
 internal abstract class ScaffoldComponent {
     /**
@@ -44,6 +38,18 @@ internal abstract class ScaffoldComponent {
      * Whether haptic feedback should be used when the component is activated / dismissed.
      */
     open val hapticFeedback: Boolean = true
+
+    /**
+     * Whether the component is scrolled all the way up
+     * null, if the component does not provide content
+     */
+    open var isAtTop: State<Boolean?> = mutableStateOf(null)
+
+    /**
+     * Whether the component is scrolled all the way down
+     * null, if the component does not provide content
+     */
+    open var isAtBottom: State<Boolean?> = mutableStateOf(null)
 
     @Composable abstract fun Component(
         modifier: Modifier,
