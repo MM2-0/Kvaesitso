@@ -335,6 +335,7 @@ enum class BaseLayout {
     PullDown,
     Pager,
     PagerReversed,
+    Ng,
 }
 
 @Serializable

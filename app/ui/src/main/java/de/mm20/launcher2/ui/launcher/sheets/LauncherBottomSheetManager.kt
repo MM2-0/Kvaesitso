@@ -8,7 +8,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryOwner
+import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.ui.launcher.scaffold.Gesture
 
 class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
     SavedStateRegistry.SavedStateProvider {
@@ -16,6 +18,7 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
     val editFavoritesSheetShown = mutableStateOf(false)
     val hiddenItemsSheetShown = mutableStateOf(false)
     val editTagSheetShown = mutableStateOf<String?>(null)
+    val failedGestureSheetShown = mutableStateOf<FailedGesture?>(null)
 
     init {
         registryOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
@@ -71,6 +74,13 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
 
     fun dismissEditTagSheet() {
         editTagSheetShown.value = null
+    }
+
+    fun showFailedGestureSheet(gesture: Gesture, action: GestureAction) {
+        failedGestureSheetShown.value = FailedGesture(gesture, action)
+    }
+    fun dismissFailedGestureSheet() {
+        failedGestureSheetShown.value = null
     }
 
     companion object {

@@ -18,8 +18,9 @@ import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
-import de.mm20.launcher2.ui.gestures.Gesture
-import de.mm20.launcher2.ui.launcher.FailedGesture
+import de.mm20.launcher2.ui.launcher.scaffold.Gesture
+
+data class FailedGesture(val gesture: Gesture, val action: GestureAction)
 
 @Composable
 fun FailedGestureSheet(
@@ -43,7 +44,9 @@ fun FailedGestureSheet(
         Gesture.SwipeDown -> R.string.preference_gesture_swipe_down
         Gesture.SwipeLeft -> R.string.preference_gesture_swipe_left
         Gesture.SwipeRight -> R.string.preference_gesture_swipe_right
-        Gesture.HomeButton -> R.string.preference_gesture_home_button
+        Gesture.SwipeUp -> R.string.preference_gesture_swipe_up
+        else -> throw IllegalArgumentException("Unknown gesture: ${failedGesture.gesture}")
+        //Gesture.HomeButton -> R.string.preference_gesture_home_button
     })
 
     BottomSheetDialog(

@@ -51,6 +51,7 @@ android {
             "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
             "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
             "-opt-in=androidx.compose.animation.ExperimentalSharedTransitionApi",
+            "-Xwhen-guards",
         )
     }
 
