@@ -33,7 +33,6 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
-import de.mm20.launcher2.ui.modifier.scale
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -55,7 +54,7 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        if (mounted) {
+        if (isMounted) {
             val bottomSheetManager = LocalBottomSheetManager.current
             LaunchedEffect(Unit) {
                 val gesture = state.currentGesture ?: return@LaunchedEffect

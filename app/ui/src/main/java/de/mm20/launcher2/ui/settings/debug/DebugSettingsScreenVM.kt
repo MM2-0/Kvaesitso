@@ -27,10 +27,4 @@ class DebugSettingsScreenVM: ViewModel(), KoinComponent {
     fun reinstallIconPacks() {
         iconService.reinstallAllIconPacks()
     }
-
-    val ngScaffoldEnabled = uiSettings.baseLayout.map { it == BaseLayout.Ng }
-    fun setNgScaffold(enabled: Boolean) {
-        if (enabled) uiSettings.setBaseLayout(BaseLayout.Ng)
-        else uiSettings.setBaseLayout(BaseLayout.PullDown)
-    }
 }

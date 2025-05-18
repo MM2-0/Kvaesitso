@@ -128,19 +128,5 @@ fun DebugSettingsScreen() {
                     })
             }
         }
-        if (BuildConfig.DEBUG) {
-            item {
-                val ngScaffold = viewModel.ngScaffoldEnabled.collectAsState(false)
-                PreferenceCategory("Experimental") {
-                    SwitchPreference(
-                        title = "Unified Scaffold",
-                        value = ngScaffold.value,
-                        onValueChanged = {
-                            viewModel.setNgScaffold(it)
-                        }
-                    )
-                }
-            }
-        }
     }
 }

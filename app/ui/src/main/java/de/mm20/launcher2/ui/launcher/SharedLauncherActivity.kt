@@ -130,7 +130,6 @@ abstract class SharedLauncherActivity(
 
                         val hideStatus by viewModel.hideStatusBar.collectAsState()
                         val hideNav by viewModel.hideNavBar.collectAsState()
-                        val layout by viewModel.baseLayout.collectAsState(null)
                         val bottomSearchBar by viewModel.bottomSearchBar.collectAsState()
                         val reverseSearchResults by viewModel.reverseSearchResults.collectAsState()
                         val fixedSearchBar by viewModel.fixedSearchBar.collectAsState()
@@ -193,7 +192,6 @@ abstract class SharedLauncherActivity(
                             val config = remember(
                                 mode,
                                 reverseSearchResults,
-                                layout,
                                 bottomSearchBar,
                                 fixedSearchBar,
                                 gestures,
@@ -246,6 +244,11 @@ abstract class SharedLauncherActivity(
                                                 },
                                             )
 
+                                            is GestureAction.Widgets -> ScaffoldGesture(
+                                                component = widgetComponent,
+                                                animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                            )
+
                                             is GestureAction.Notifications -> ScaffoldGesture(
                                                 component = NotificationsComponent,
                                                 animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
@@ -286,9 +289,10 @@ abstract class SharedLauncherActivity(
                                     val config = ScaffoldConfiguration(
                                         homeComponent = ClockWidgetComponent,
                                         searchComponent = searchComponent,
-                                        swipeUp = ScaffoldGesture(
-                                            component = widgetComponent,
-                                            animation = ScaffoldAnimation.Push
+                                        swipeUp = getScaffoldGesture(
+                                            gestures.swipeUpAction,
+                                            gestures.swipeUpApp,
+                                            Gesture.SwipeUp,
                                         ),
                                         swipeDown = getScaffoldGesture(
                                             gestures.swipeDownAction,
@@ -323,7 +327,7 @@ abstract class SharedLauncherActivity(
                                         backgroundColor = backgroundColor,
                                     )
 
-                                    if (config.isUseless()) config.copy(homeComponent = SecretComponent) else config
+                                    if (config.isUseless()) config.copy(homeComponent = SecretComponent, drawBackgroundOnHome = true) else config
                                 }
                             }
 

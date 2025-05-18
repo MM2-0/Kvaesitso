@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
+import android.util.Log
 import android.view.animation.PathInterpolator
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.VectorConverter
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -17,21 +19,32 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.draggable2D
 import androidx.compose.foundation.gestures.rememberDraggable2DState
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imeAnimationSource
+import androidx.compose.foundation.layout.imeAnimationTarget
 import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -68,14 +81,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -242,46 +260,60 @@ internal class LauncherScaffoldState(
     val darkStatusBarIcons by derivedStateOf {
         val isLightBackground = config.backgroundColor.luminance() > 0.5f
         when {
-            currentProgress <= 0.5f && !config.drawBackgroundOnHome ||
-                    currentComponent?.drawBackground == false -> {
+            currentProgress < 0.5f && (!config.drawBackgroundOnHome ||
+                    !config.homeComponent.drawBackground) -> {
                 config.darkStatusBarIcons
             }
 
-            currentProgress > 0.5f -> {
+            else -> {
                 isLightBackground
             }
-
-            else -> false
         }
     }
     val darkNavBarIcons by derivedStateOf {
         val isLightBackground = config.backgroundColor.luminance() > 0.5f
         when {
-            currentProgress < 1f && !config.drawBackgroundOnHome ||
-                    currentComponent?.drawBackground == false -> {
+            currentProgress < 0.5f && (!config.drawBackgroundOnHome ||
+                    !config.homeComponent.drawBackground) -> {
                 config.darkNavBarIcons
             }
 
-            currentProgress == 1f -> {
+            else -> {
                 isLightBackground
             }
-
-            else -> false
         }
+    }
+
+    val isAtTop by derivedStateOf {
+        val component = if (currentProgress < 0.5f) null else currentComponent
+        (component?.isAtTop?.value ?: config.homeComponent.isAtTop.value) != false
+    }
+
+    val isAtBottom by derivedStateOf {
+        val component = if (currentProgress < 0.5f) null else currentComponent
+        (component?.isAtBottom?.value ?: config.homeComponent.isAtBottom.value) != false
+    }
+
+    val statusBarScrim by derivedStateOf {
+        !isAtTop
+    }
+
+    val navBarScrim by derivedStateOf {
+        !isAtBottom
     }
 
     val searchBarLevel by derivedStateOf {
         val component = currentComponent
 
         val homeLevel = if (config.searchBarPosition == SearchBarPosition.Top) {
-            when(config.homeComponent.isAtTop.value) {
+            when (config.homeComponent.isAtTop.value) {
                 true if (config.drawBackgroundOnHome && config.homeComponent.drawBackground) -> SearchBarLevel.Active
                 true -> SearchBarLevel.Resting
                 false -> SearchBarLevel.Raised
                 null -> null
             }
         } else {
-            when(config.homeComponent.isAtBottom.value) {
+            when (config.homeComponent.isAtBottom.value) {
                 true if (config.drawBackgroundOnHome && config.homeComponent.drawBackground) -> SearchBarLevel.Active
                 true -> SearchBarLevel.Resting
                 false -> SearchBarLevel.Raised
@@ -290,14 +322,14 @@ internal class LauncherScaffoldState(
         }
 
         val secondaryLevel = if (config.searchBarPosition == SearchBarPosition.Top) {
-            when(component?.isAtTop?.value) {
+            when (component?.isAtTop?.value) {
                 true if (component.drawBackground) -> SearchBarLevel.Active
                 true -> SearchBarLevel.Resting
                 false -> SearchBarLevel.Raised
                 null -> null
             }
         } else {
-            when(component?.isAtBottom?.value) {
+            when (component?.isAtBottom?.value) {
                 true if (component.drawBackground) -> SearchBarLevel.Active
                 true -> SearchBarLevel.Resting
                 false -> SearchBarLevel.Raised
@@ -305,7 +337,7 @@ internal class LauncherScaffoldState(
             }
         }
 
-        when(currentProgress) {
+        when (currentProgress) {
             0f -> homeLevel ?: SearchBarLevel.Active
             1f -> secondaryLevel ?: homeLevel ?: SearchBarLevel.Active
             else if homeLevel != null && secondaryLevel != null -> maxOf(homeLevel, secondaryLevel)
@@ -366,11 +398,16 @@ internal class LauncherScaffoldState(
     private val floatAnimatable =
         Animatable(0f, Float.VectorConverter)
 
+    var isDragged by mutableStateOf(false)
+        private set
+
     suspend fun onDragStarted() {
         if (isLocked) return
+        isDragged = true
         vectorAnimatable.stop()
         floatAnimatable.stop()
     }
+
 
     fun onDrag(offset: Offset) {
         if (isLocked) return
@@ -515,8 +552,21 @@ internal class LauncherScaffoldState(
         return null
     }
 
-    suspend fun onDragStopped(velocity: Velocity) {
+    /**
+     * Called when the drag gesture is stopped.
+     * This will perform the fling animation and snap to the next page if needed.
+     * @param velocity The velocity at the end of the drag gesture.
+     * @param disallowPageChange If true, the page will not change even if the velocity is over the threshold.
+     */
+    suspend fun onDragStopped(velocity: Velocity, disallowPageChange: Boolean = false) {
+        isDragged = false
         if (isLocked) return
+        val velocity = when {
+            !isAtTop && !isAtBottom -> velocity.copy(y = 0f)
+            !isAtTop -> velocity.copy(y = velocity.y.coerceAtMost(0f))
+            !isAtBottom -> velocity.copy(y = velocity.y.coerceAtLeast(0f))
+            else -> velocity
+        }
         if (currentGesture == null) {
             currentOffset = Offset.Zero
         }
@@ -527,9 +577,9 @@ internal class LauncherScaffoldState(
         val gesture = config[direction] ?: return
 
         if (gesture.animation == ScaffoldAnimation.Rubberband) {
-            performRubberbandFling(direction, offset, velocity)
+            performRubberbandFling(direction, offset, velocity, disallowPageChange)
         } else if (gesture.animation == ScaffoldAnimation.Push) {
-            performPushFling(direction, offset, velocity)
+            performPushFling(direction, offset, velocity, disallowPageChange)
         }
 
         if (isSettledOnSecondaryPage != wasPageOpen) {
@@ -539,23 +589,28 @@ internal class LauncherScaffoldState(
                 activateSecondaryPage(gesture.component)
             }
         }
+
+        if (!isSettledOnSecondaryPage) currentGesture = null
     }
 
     private suspend fun performRubberbandFling(
         direction: Gesture,
         offset: Offset,
-        velocity: Velocity
+        velocity: Velocity,
+        disallowPageChange: Boolean,
     ) {
         val wasSettledOnSecondaryPage = isSettledOnSecondaryPage
 
-        if (offset.x <= -rubberbandThreshold || offset.x < 0f && velocity.x < -velocityThreshold) {
-            isSettledOnSecondaryPage = !isSettledOnSecondaryPage
-        } else if (offset.x >= rubberbandThreshold || offset.x > 0f && velocity.x > velocityThreshold) {
-            isSettledOnSecondaryPage = !isSettledOnSecondaryPage
-        } else if (offset.y <= -rubberbandThreshold || offset.y < 0f && velocity.y < -velocityThreshold) {
-            isSettledOnSecondaryPage = !isSettledOnSecondaryPage
-        } else if (offset.y >= rubberbandThreshold || offset.y > 0f && velocity.y > velocityThreshold) {
-            isSettledOnSecondaryPage = !isSettledOnSecondaryPage
+        if (!disallowPageChange) {
+            if (offset.x <= -rubberbandThreshold || offset.x < 0f && velocity.x < -velocityThreshold) {
+                isSettledOnSecondaryPage = !isSettledOnSecondaryPage
+            } else if (offset.x >= rubberbandThreshold || offset.x > 0f && velocity.x > velocityThreshold) {
+                isSettledOnSecondaryPage = !isSettledOnSecondaryPage
+            } else if (offset.y <= -rubberbandThreshold || offset.y < 0f && velocity.y < -velocityThreshold) {
+                isSettledOnSecondaryPage = !isSettledOnSecondaryPage
+            } else if (offset.y >= rubberbandThreshold || offset.y > 0f && velocity.y > velocityThreshold) {
+                isSettledOnSecondaryPage = !isSettledOnSecondaryPage
+            }
         }
 
         if (wasSettledOnSecondaryPage != isSettledOnSecondaryPage) {
@@ -574,7 +629,8 @@ internal class LauncherScaffoldState(
     private suspend fun performPushFling(
         direction: Gesture,
         offset: Offset,
-        velocity: Velocity
+        velocity: Velocity,
+        disallowPageChange: Boolean,
     ) {
         val wasOverThreshold =
             currentOffset.x.absoluteValue > size.width * 0.5f ||
@@ -597,17 +653,25 @@ internal class LauncherScaffoldState(
         val threshold = (upperPage + lowerPage) / 2f
 
         val targetOffset = if (direction.orientation == Orientation.Vertical) {
-            if (offset.y > threshold && velocity.y > -velocityThreshold || velocity.y > velocityThreshold) Offset(
-                0f,
-                upperPage
-            )
-            else Offset(0f, lowerPage)
+            if (!disallowPageChange) {
+                if (offset.y > threshold && velocity.y > -velocityThreshold || velocity.y > velocityThreshold) {
+                    Offset(0f, upperPage)
+                } else {
+                    Offset(0f, lowerPage)
+                }
+            } else {
+                if (offset.y > threshold) Offset(0f, upperPage) else Offset(0f, lowerPage)
+            }
         } else {
-            if (offset.x > threshold && velocity.x > -velocityThreshold || velocity.x > velocityThreshold) Offset(
-                upperPage,
-                0f
-            )
-            else Offset(lowerPage, 0f)
+            if (!disallowPageChange) {
+                if (offset.x > threshold && velocity.x > -velocityThreshold || velocity.x > velocityThreshold) {
+                    Offset(upperPage, 0f)
+                } else {
+                    Offset(lowerPage, 0f)
+                }
+            } else {
+                if (offset.x > threshold) Offset(upperPage, 0f) else Offset(lowerPage, 0f)
+            }
         }
 
         isSettledOnSecondaryPage = targetOffset != Offset.Zero
@@ -905,9 +969,13 @@ internal fun LauncherScaffold(
 
     val searchVM = viewModel<SearchVM>()
     val searchActions = searchVM.searchActionResults
+    val highlightedResult by searchVM.bestMatch
     val filters by searchVM.filters
     val filterBar by searchVM.filterBar.collectAsState(false)
     val filterBarItems by searchVM.filterBarItems.collectAsState(emptyList())
+    val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
+
+    val hazeState = rememberHazeState(blurEnabled = isAtLeastApiLevel(33))
 
     val searchBarHeight by remember {
         derivedStateOf {
@@ -951,9 +1019,19 @@ internal fun LauncherScaffold(
             }
 
         val isFilterBarVisible =
-            state.currentComponent is SearchComponent && filterBar && WindowInsets.isImeVisible
+            (state.currentProgress == 1f && state.currentComponent is SearchComponent ||
+                    state.currentProgress == 0f && config.homeComponent is SearchComponent) &&
+                    filterBar && WindowInsets.isImeVisible
 
-        val filterBarHeight = if (isFilterBarVisible) 50.dp else 0.dp
+
+        val imeCurrent = WindowInsets.ime.getBottom(LocalDensity.current).toFloat()
+        val imeSource = WindowInsets.imeAnimationSource.getBottom(LocalDensity.current).toFloat()
+        val imeTarget = WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current).toFloat()
+        val imeProgress = (imeCurrent /
+                (imeSource - imeTarget).absoluteValue.coerceAtLeast(imeCurrent))
+            .coerceIn(0f, 1f)
+
+        val filterBarHeight by animateDpAsState(if (isFilterBarVisible) imeProgress * 50.dp else 0.dp)
 
         LaunchedEffect(state) {
             var pauseTime = 0L
@@ -1008,17 +1086,13 @@ internal fun LauncherScaffold(
             }
         }
 
-        val draggableState = rememberDraggable2DState {
-            state.onDrag(it)
-        }
-
         val nestedScrollConnection = remember(state) {
             object : NestedScrollConnection {
                 override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                     if (source != NestedScrollSource.UserInput) return Offset.Zero
 
                     if (state.currentProgress != 0f && state.currentProgress != 1f) {
-                        draggableState.dispatchRawDelta(available)
+                        state.onDrag(available)
                         return available
                     }
 
@@ -1031,7 +1105,7 @@ internal fun LauncherScaffold(
                     source: NestedScrollSource
                 ): Offset {
                     if (source == NestedScrollSource.UserInput) {
-                        draggableState.dispatchRawDelta(available)
+                        state.onDrag(available)
                         return available
                     }
                     return Offset.Zero
@@ -1052,16 +1126,21 @@ internal fun LauncherScaffold(
                     if (available == Velocity.Zero) {
                         return available
                     }
-
-                    // Threshold for nested scroll flings is 15 times higher to avoid accidental
-                    // page changes
-                    if (available.x.absoluteValue > minFlingVelocity * 15f || available.y.absoluteValue > minFlingVelocity * 15f) {
-                        state.onDragStopped(available)
-                    } else {
-                        state.onDragStopped(Velocity.Zero)
-                    }
+                    state.onDragStopped(available, disallowPageChange = true)
                     return available
                 }
+            }
+        }
+
+        var draggableOrientation by remember {
+            mutableStateOf(state.currentGesture?.orientation)
+        }
+
+        LaunchedEffect(state.isSettledOnSecondaryPage) {
+            if (!state.isSettledOnSecondaryPage) {
+                draggableOrientation = null
+            } else {
+                draggableOrientation = state.currentGesture?.orientation
             }
         }
 
@@ -1069,9 +1148,13 @@ internal fun LauncherScaffold(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .hazeSource(hazeState)
                 .nestedScroll(nestedScrollConnection)
                 .draggable2D(
-                    state = draggableState,
+                    state = rememberDraggable2DState {
+                        state.onDrag(it)
+                    },
+                    enabled = draggableOrientation == null,
                     onDragStarted = {
                         scope.launch {
                             state.onDragStarted()
@@ -1080,6 +1163,40 @@ internal fun LauncherScaffold(
                     onDragStopped = { velocity ->
                         scope.launch {
                             state.onDragStopped(velocity)
+                        }
+                    }
+                )
+                .draggable(
+                    state = rememberDraggableState {
+                        state.onDrag(Offset(0f, it))
+                    },
+                    orientation = Orientation.Vertical,
+                    enabled = draggableOrientation == Orientation.Vertical,
+                    onDragStarted = {
+                        scope.launch {
+                            state.onDragStarted()
+                        }
+                    },
+                    onDragStopped = { velocity ->
+                        scope.launch {
+                            state.onDragStopped(Velocity(0f, velocity))
+                        }
+                    },
+                )
+                .draggable(
+                    state = rememberDraggableState {
+                        state.onDrag(Offset(it, 0f))
+                    },
+                    orientation = Orientation.Horizontal,
+                    enabled = draggableOrientation == Orientation.Horizontal,
+                    onDragStarted = {
+                        scope.launch {
+                            state.onDragStarted()
+                        }
+                    },
+                    onDragStopped = { velocity ->
+                        scope.launch {
+                            state.onDragStopped(Velocity(velocity, 0f))
                         }
                     }
                 )
@@ -1132,6 +1249,7 @@ internal fun LauncherScaffold(
                 modifier = Modifier
                     .fillMaxSize()
                     .searchBarAnimation(state, config, windowInsets)
+                    .padding(bottom = filterBarHeight)
             ) {
                 LauncherSearchBar(
                     modifier = Modifier
@@ -1151,17 +1269,19 @@ internal fun LauncherScaffold(
                         }
                         state.isSearchBarFocused = it
                     },
+                    onKeyboardActionGo = if (launchOnEnter) {
+                        { searchVM.launchBestMatchOrAction(activity) }
+                    } else null,
+                    highlightedAction = highlightedResult as? SearchAction,
                 )
             }
-            AnimatedVisibility(
-                isFilterBarVisible,
-                enter = fadeIn(),
-                exit = fadeOut(),
-            ) {
+            if (isFilterBarVisible) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .safeDrawingPadding(),
+                        .safeDrawingPadding()
+                        .offset(y = (1f - imeProgress) * 50.dp)
+                        .alpha(imeProgress),
                     contentAlignment = Alignment.BottomCenter,
                 ) {
                     KeyboardFilterBar(
@@ -1171,6 +1291,44 @@ internal fun LauncherScaffold(
                     )
                 }
             }
+        }
+
+
+        AnimatedVisibility(
+            state.statusBarScrim,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .hazeEffect(hazeState) {
+                        blurRadius = 4.dp
+                    }
+                    .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f))
+                    .statusBarsPadding()
+            )
+        }
+        AnimatedVisibility(
+            state.navBarScrim,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .hazeEffect(hazeState) {
+                        blurRadius = 4.dp
+                    }
+                    .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f))
+                    .navigationBarsPadding()
+            )
         }
     }
 }
@@ -1242,15 +1400,22 @@ private fun Modifier.homePageAnimation(
         return this then component.homePageModifier(
             state,
             Modifier
-                .offset {
-                    IntOffset(
-                        x = if (dir.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
-                        y = if (dir.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
-                    )
+                .graphicsLayer {
+                    translationX =
+                        if (dir.orientation == Orientation.Horizontal) state.currentOffset.x else 0f
+                    translationY =
+                        if (dir.orientation == Orientation.Vertical) state.currentOffset.y else 0f
+                    if (!state.isSettledOnSecondaryPage) {
+                        alpha = (1f - state.currentProgress).coerceAtMost(1f)
+                        scaleX = 1f - (state.currentProgress * 0.03f)
+                        scaleY = 1f - (state.currentProgress * 0.03f)
+                    } else {
+                        alpha = ((1f - state.currentProgress) * 2f - 1f).coerceAtLeast(0f)
+                    }
                 }
-                .alpha(1f - state.currentProgress))
+        )
     }
-    return this then component.homePageModifier(state, Modifier.offset {
+    return this then component.homePageModifier(state, Modifier.absoluteOffset {
         IntOffset(
             x = if (dir.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
             y = if (dir.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
@@ -1297,7 +1462,7 @@ private fun Modifier.secondaryPageAnimation(
     }
 
     return this then Modifier
-        .offset {
+        .absoluteOffset {
             when (state.currentGesture) {
                 Gesture.SwipeUp -> IntOffset(0, state.size.height.toInt())
                 Gesture.SwipeDown -> IntOffset(0, -state.size.height.toInt())
@@ -1306,7 +1471,7 @@ private fun Modifier.secondaryPageAnimation(
                 else -> IntOffset.Zero
             }
         }
-        .offset {
+        .absoluteOffset {
             IntOffset(
                 x = if (state.currentGesture?.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
                 y = if (state.currentGesture?.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
@@ -1339,16 +1504,6 @@ private fun Modifier.searchBarAnimation(
     } else {
         0.dp
     }
-
-    /*if (state.currentAnimation == ScaffoldAnimation.Rubberband) {
-        return this then component.searchBarModifier(
-            state,
-            Modifier.graphicsLayer {
-                translationY =
-                    if (dir.orientation == Orientation.Vertical) state.currentOffset.y * 0.5f else 0f
-            }
-        )
-    }*/
 
     val modifier =
         if (component?.showSearchBar == false && config.searchBarStyle == SearchBarStyle.Hidden) {

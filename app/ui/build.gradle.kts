@@ -96,6 +96,8 @@ dependencies {
     implementation(libs.accompanist.flowlayout)
     implementation(libs.accompanist.navigationanimation)
 
+    implementation(libs.haze)
+
     implementation(libs.androidx.core)
     implementation(libs.androidx.activitycompose)
     implementation(libs.bundles.androidx.lifecycle)

@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.content.Intent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,18 +14,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.settings.SettingsActivity
 
 internal object SecretComponent : ScaffoldComponent() {
+    override var isAtTop: State<Boolean?> = mutableStateOf(true)
+    override var isAtBottom: State<Boolean?> = mutableStateOf(true)
+
     @Composable
     override fun Component(
         modifier: Modifier,
@@ -36,7 +38,6 @@ internal object SecretComponent : ScaffoldComponent() {
         val context = LocalContext.current
         Column(
             modifier = modifier
-                .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f))
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -50,7 +51,7 @@ internal object SecretComponent : ScaffoldComponent() {
             )
 
             Text(
-                "Congratulations, you've locked yourself out!",
+                stringResource(R.string.bad_configuration_title),
                 color = color,
                 modifier = Modifier.padding(vertical = 16.dp),
                 style = MaterialTheme.typography.headlineSmall,
@@ -58,7 +59,7 @@ internal object SecretComponent : ScaffoldComponent() {
             )
 
             Text(
-                "You've discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher.",
+                stringResource(R.string.bad_configuration_summary),
                 color = color,
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center

@@ -46,8 +46,13 @@ internal class SearchComponent(
         }
 
         LaunchedEffect(isActive) {
-            if (!isActive) searchVM.reset()
             state.isSearchBarFocused = isActive
+        }
+
+        LaunchedEffect(isMounted) {
+            if (!isMounted) {
+                searchVM.reset()
+            }
         }
 
         val scrollConnection = remember(state) {
@@ -57,6 +62,7 @@ internal class SearchComponent(
                     available: Offset,
                     source: NestedScrollSource,
                 ): Offset {
+                    searchVM.bestMatch.value = null
                     state.isSearchBarFocused = false
                     state.onComponentScroll(
                         if (reverse) consumed.y else -consumed.y,
