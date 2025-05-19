@@ -35,6 +35,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.search.SavableSearchable
@@ -86,6 +87,10 @@ abstract class SharedLauncherActivity(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
+        if (isAtLeastApiLevel(29)) {
+            window.isNavigationBarContrastEnforced = false
+            window.isStatusBarContrastEnforced = false
+        }
         super.onCreate(savedInstanceState)
 
         val wallpaperManager = WallpaperManager.getInstance(this)
@@ -185,6 +190,10 @@ abstract class SharedLauncherActivity(
                                 gestures,
                                 searchBarStyle,
                                 backgroundColor,
+                                lightStatus,
+                                lightNav,
+                                hideStatus,
+                                hideNav,
                             ) {
                                 if (mode == LauncherActivityMode.Assistant) {
                                     val searchComponent = SearchComponent(

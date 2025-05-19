@@ -43,6 +43,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
+import androidx.compose.foundation.layout.waterfall
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -976,15 +977,10 @@ internal fun LauncherScaffold(
     val view = LocalView.current
 
     val density = LocalDensity.current
-    val systemBarInsets = when {
-        config.showStatusBar && config.showNavBar -> {
-            WindowInsets.systemBars
-        }
-
-        config.showStatusBar -> WindowInsets.statusBars
-        config.showNavBar -> WindowInsets.navigationBars
-        else -> WindowInsets.displayCutout
-    }
+    val systemBarInsets = WindowInsets.displayCutout
+        .union(WindowInsets.waterfall)
+        .let { if (config.showStatusBar) it.union(WindowInsets.statusBars) else it }
+        .let { if (config.showNavBar) it.union(WindowInsets.navigationBars) else it }
 
     val searchVM = viewModel<SearchVM>()
     val searchActions = searchVM.searchActionResults
@@ -1293,8 +1289,8 @@ internal fun LauncherScaffold(
                         state,
                         config,
                         systemBarInsets
+                            .union(WindowInsets.ime)
                             .add(filterBarInsets)
-                            .add(WindowInsets.ime)
                             .asPaddingValues()
                     )
             ) {
