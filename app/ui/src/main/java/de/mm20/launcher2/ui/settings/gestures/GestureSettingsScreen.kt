@@ -9,8 +9,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Adjust
+import androidx.compose.material.icons.rounded.Circle
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.SwipeDownAlt
+import androidx.compose.material.icons.rounded.SwipeLeftAlt
+import androidx.compose.material.icons.rounded.SwipeRightAlt
+import androidx.compose.material.icons.rounded.SwipeUpAlt
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,7 +35,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.BaseLayout
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
@@ -78,6 +85,7 @@ fun GestureSettingsScreen() {
                 }.collectAsState(null)
                 GesturePreference(
                     title = stringResource(R.string.preference_gesture_swipe_down),
+                    icon = Icons.Rounded.SwipeDownAlt,
                     value = swipeDown,
                     onValueChanged = { viewModel.setSwipeDown(it) },
                     options = options,
@@ -100,6 +108,7 @@ fun GestureSettingsScreen() {
                 }.collectAsState(null)
                 GesturePreference(
                     title = stringResource(R.string.preference_gesture_swipe_left),
+                    icon = Icons.Rounded.SwipeLeftAlt,
                     value = swipeLeft,
                     onValueChanged = { viewModel.setSwipeLeft(it) },
                     options = options,
@@ -122,6 +131,7 @@ fun GestureSettingsScreen() {
                 }.collectAsState(null)
                 GesturePreference(
                     title = stringResource(R.string.preference_gesture_swipe_right),
+                    icon = Icons.Rounded.SwipeRightAlt,
                     value = swipeRight,
                     onValueChanged = { viewModel.setSwipeRight(it) },
                     options = options,
@@ -144,6 +154,7 @@ fun GestureSettingsScreen() {
                 }.collectAsState(null)
                 GesturePreference(
                     title = stringResource(R.string.preference_gesture_swipe_up),
+                    icon = Icons.Rounded.SwipeUpAlt,
                     value = swipeUp,
                     onValueChanged = { viewModel.setSwipeUp(it) },
                     options = options,
@@ -166,6 +177,7 @@ fun GestureSettingsScreen() {
                 }.collectAsState(null)
                 GesturePreference(
                     title = stringResource(R.string.preference_gesture_double_tap),
+                    icon = Icons.Rounded.Adjust,
                     value = doubleTap,
                     onValueChanged = { viewModel.setDoubleTap(it) },
                     options = options,
@@ -188,6 +200,7 @@ fun GestureSettingsScreen() {
                 }.collectAsState(null)
                 GesturePreference(
                     title = stringResource(R.string.preference_gesture_long_press),
+                    icon = Icons.Rounded.Circle,
                     value = longPress,
                     onValueChanged = { viewModel.setLongPress(it) },
                     options = options,
@@ -210,6 +223,7 @@ fun GestureSettingsScreen() {
                 }.collectAsState(null)
                 GesturePreference(
                     title = stringResource(R.string.preference_gesture_home_button),
+                    icon = Icons.Rounded.Home,
                     value = homeButton,
                     onValueChanged = { viewModel.setHomeButton(it) },
                     options = options,
@@ -229,6 +243,7 @@ fun requiresAccessibilityService(action: GestureAction?): Boolean {
         is GestureAction.QuickSettings,
         is GestureAction.Recents,
         is GestureAction.PowerMenu -> true
+
         else -> false
     }
 }
@@ -236,6 +251,7 @@ fun requiresAccessibilityService(action: GestureAction?): Boolean {
 @Composable
 fun GesturePreference(
     title: String,
+    icon: ImageVector,
     value: GestureAction?,
     onValueChanged: (GestureAction) -> Unit,
     options: List<Pair<String, GestureAction>>,
@@ -252,6 +268,7 @@ fun GesturePreference(
         ) {
             ListPreference(
                 title = title,
+                icon = icon,
                 items = options,
                 value = value,
                 summary = options.find { value?.javaClass == it.second.javaClass }?.first,
@@ -267,9 +284,10 @@ fun GesturePreference(
                     .alpha(0.38f)
                     .background(LocalContentColor.current)
             )
-            Box(modifier = Modifier
-                .clickable { showAppPicker = true }
-                .padding(12.dp)) {
+            Box(
+                modifier = Modifier
+                    .clickable { showAppPicker = true }
+                    .padding(12.dp)) {
                 ShapedLauncherIcon(size = 32.dp, icon = { appIcon })
             }
         }
