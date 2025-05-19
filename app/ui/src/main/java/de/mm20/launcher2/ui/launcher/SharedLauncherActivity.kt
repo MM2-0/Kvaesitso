@@ -1,10 +1,12 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.app.Activity
 import android.app.WallpaperManager
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -30,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.IntOffset
+import androidx.core.content.getSystemService
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
@@ -67,6 +70,7 @@ import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionManager
 import de.mm20.launcher2.ui.launcher.transitions.LocalEnterHomeTransitionManager
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
@@ -151,6 +155,24 @@ abstract class SharedLauncherActivity(
                             }
                         }
 
+                        val darkTheme = LocalDarkTheme.current
+
+                        LaunchedEffect(dimBackground && darkTheme) {
+                            if (dimBackground && darkTheme) {
+                                val windowAttributes = window.attributes
+                                windowAttributes.flags =
+                                    windowAttributes.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+                                window.attributes = windowAttributes
+                                window.setDimAmount(0.3f)
+                            } else {
+                                val windowAttributes = window.attributes
+                                windowAttributes.flags =
+                                    windowAttributes.flags and WindowManager.LayoutParams.FLAG_DIM_BEHIND.inv()
+                                window.attributes = windowAttributes
+                                window.setDimAmount(0f)
+                            }
+                        }
+
                         val enterTransitionProgress = remember { mutableStateOf(1f) }
                         var enterTransition by remember {
                             mutableStateOf<EnterHomeTransition?>(
@@ -174,8 +196,7 @@ abstract class SharedLauncherActivity(
 
                         OverlayHost(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
+                                .fillMaxSize(),
                             contentAlignment = Alignment.BottomCenter
                         ) {
                             if (chargingAnimation == true) {
