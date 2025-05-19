@@ -430,6 +430,13 @@ internal class LauncherScaffoldState(
         val wasOverThreshold = currentOffset.x.absoluteValue > rubberbandThreshold ||
                 currentOffset.y.absoluteValue > rubberbandThreshold
 
+        val delta = when {
+            !isAtTop && !isAtBottom -> delta.copy(y = 0f)
+            !isAtTop -> delta.copy(y = delta.y.coerceAtMost(-offset.y))
+            !isAtBottom -> delta.copy(y = delta.y.coerceAtLeast(-offset.y))
+            else -> delta
+        }
+
         val threshold = rubberbandThreshold * 1.5f
         currentOffset = when (direction) {
             Gesture.SwipeUp -> Offset(
