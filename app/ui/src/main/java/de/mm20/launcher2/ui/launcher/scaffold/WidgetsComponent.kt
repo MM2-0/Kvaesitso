@@ -70,6 +70,9 @@ internal object WidgetsComponent : ScaffoldComponent() {
         !scrollState.canScrollForward
     }
 
+    // In note widget
+    override val hasIme: Boolean = true
+
     @Composable
     override fun Component(
         modifier: Modifier,

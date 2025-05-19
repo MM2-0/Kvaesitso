@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -84,6 +85,7 @@ abstract class SharedLauncherActivity(
     internal val enterHomeTransitionManager = EnterHomeTransitionManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         val wallpaperManager = WallpaperManager.getInstance(this)
@@ -144,9 +146,6 @@ abstract class SharedLauncherActivity(
                             }
                         }
 
-
-                        val systemUiController = rememberSystemUiController()
-
                         val enterTransitionProgress = remember { mutableStateOf(1f) }
                         var enterTransition by remember {
                             mutableStateOf<EnterHomeTransition?>(
@@ -166,13 +165,6 @@ abstract class SharedLauncherActivity(
                                         enterTransition = null
                                     }
                                 }
-                        }
-
-                        LaunchedEffect(hideStatus) {
-                            systemUiController.isStatusBarVisible = !hideStatus
-                        }
-                        LaunchedEffect(hideNav) {
-                            systemUiController.isNavigationBarVisible = !hideNav
                         }
 
                         OverlayHost(
@@ -328,6 +320,8 @@ abstract class SharedLauncherActivity(
                                         darkStatusBarIcons = lightStatus,
                                         darkNavBarIcons = lightNav,
                                         backgroundColor = backgroundColor,
+                                        showStatusBar = !hideStatus,
+                                        showNavBar = !hideNav,
                                     )
 
                                     if (config.isUseless()) config.copy(

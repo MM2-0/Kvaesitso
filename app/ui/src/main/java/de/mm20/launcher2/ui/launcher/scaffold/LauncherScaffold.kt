@@ -1,10 +1,8 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.view.animation.PathInterpolator
-import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.PredictiveBackHandler
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
@@ -27,22 +25,24 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.absoluteOffset
+import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imeAnimationSource
 import androidx.compose.foundation.layout.imeAnimationTarget
 import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.union
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -69,20 +69,21 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.SearchBarStyle
-import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -100,16 +101,6 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 import kotlin.math.roundToInt
-
-sealed interface ScaffoldAction {
-    data object Search : ScaffoldAction
-    data object Widgets : ScaffoldAction
-    data class Shortcut(val searchable: SavableSearchable) : ScaffoldAction
-    data object ScreenOff : ScaffoldAction
-    data object Notifications : ScaffoldAction
-    data object QuickSettings : ScaffoldAction
-    data object Recents : ScaffoldAction
-}
 
 enum class ScaffoldAnimation {
     Rubberband,
@@ -982,10 +973,18 @@ internal fun LauncherScaffold(
     val scope = rememberCoroutineScope()
     val lifecycleOwner = LocalLifecycleOwner.current
     val activity = LocalActivity.current as AppCompatActivity
+    val view = LocalView.current
 
     val density = LocalDensity.current
-    val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
-    val systemBarInsets = WindowInsets.systemBars
+    val systemBarInsets = when {
+        config.showStatusBar && config.showNavBar -> {
+            WindowInsets.systemBars
+        }
+
+        config.showStatusBar -> WindowInsets.statusBars
+        config.showNavBar -> WindowInsets.navigationBars
+        else -> WindowInsets.displayCutout
+    }
 
     val searchVM = viewModel<SearchVM>()
     val searchActions = searchVM.searchActionResults
@@ -1080,22 +1079,25 @@ internal fun LauncherScaffold(
             }
         }
 
+
         LaunchedEffect(
+            config, activity, view,
             state.darkStatusBarIcons,
             state.darkNavBarIcons,
         ) {
-            activity.enableEdgeToEdge(
-                statusBarStyle = if (state.darkStatusBarIcons) {
-                    SystemBarStyle.light(0, 0)
-                } else {
-                    SystemBarStyle.dark(0)
-                },
-                navigationBarStyle = if (state.darkStatusBarIcons) {
-                    SystemBarStyle.light(0, 0)
-                } else {
-                    SystemBarStyle.dark(0)
-                },
-            )
+            val insetsController = WindowInsetsControllerCompat(activity.window, view)
+            insetsController.isAppearanceLightStatusBars = state.darkStatusBarIcons
+            insetsController.isAppearanceLightNavigationBars = state.darkNavBarIcons
+            if (config.showStatusBar) {
+                insetsController.show(WindowInsetsCompat.Type.statusBars())
+            } else {
+                insetsController.hide(WindowInsetsCompat.Type.statusBars())
+            }
+            if (config.showNavBar) {
+                insetsController.show(WindowInsetsCompat.Type.navigationBars())
+            } else {
+                insetsController.hide(WindowInsetsCompat.Type.navigationBars())
+            }
         }
 
         if (config.wallpaperBlurRadius > 0.dp) {
@@ -1234,16 +1236,17 @@ internal fun LauncherScaffold(
                     }
                 )
         ) {
-            val insets = windowInsets.let {
-                PaddingValues(
-                    start = it.calculateStartPadding(LocalLayoutDirection.current),
-                    end = it.calculateEndPadding(LocalLayoutDirection.current),
-                    top = it.calculateTopPadding() + if (config.searchBarPosition == SearchBarPosition.Top) searchBarHeight else 8.dp,
-                    bottom = it.calculateBottomPadding() +
-                            (if (config.searchBarPosition == SearchBarPosition.Bottom) searchBarHeight else 8.dp) +
-                            filterBarHeight
-                )
-            }
+            val searchBarInsets = WindowInsets(
+                top = if (config.searchBarPosition == SearchBarPosition.Top) searchBarHeight else 8.dp,
+                bottom = (if (config.searchBarPosition == SearchBarPosition.Bottom) searchBarHeight else 8.dp) +
+                        filterBarHeight
+            )
+
+            val filterBarInsets = WindowInsets(
+                bottom = filterBarHeight
+            )
+
+            val insets = systemBarInsets.add(searchBarInsets).add(filterBarInsets)
 
             config.homeComponent.Component(
                 Modifier
@@ -1266,7 +1269,10 @@ internal fun LauncherScaffold(
                         interactionSource = null,
                     )
                     .homePageAnimation(state),
-                if (config.searchBarStyle == SearchBarStyle.Hidden) windowInsets else insets,
+                insets = systemBarInsets
+                    .let { if (config.searchBarStyle == SearchBarStyle.Hidden) it else it.add(searchBarInsets) }
+                    .let { if (config.homeComponent.hasIme) it.union(WindowInsets.ime) else it }
+                    .asPaddingValues(),
                 state
             )
 
@@ -1275,14 +1281,22 @@ internal fun LauncherScaffold(
                 config = config,
                 modifier = Modifier
                     .fillMaxSize(),
-                insets = insets,
+                insets = insets
+                    .let { if (state.currentComponent?.hasIme == true) it.union(WindowInsets.ime) else it }
+                    .asPaddingValues(),
             )
 
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .searchBarAnimation(state, config, windowInsets)
-                    .padding(bottom = filterBarHeight)
+                    .searchBarAnimation(
+                        state,
+                        config,
+                        systemBarInsets
+                            .add(filterBarInsets)
+                            .add(WindowInsets.ime)
+                            .asPaddingValues()
+                    )
             ) {
                 LauncherSearchBar(
                     modifier = Modifier
@@ -1555,5 +1569,5 @@ private fun Modifier.searchBarAnimation(
             Modifier.offset(y = offset)
         }
 
-    return this then (component?.searchBarModifier(state, modifier) ?: modifier)
+    return this.padding(insets) then (component?.searchBarModifier(state, modifier) ?: modifier)
 }

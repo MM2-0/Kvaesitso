@@ -31,6 +31,9 @@ internal class SearchComponent(
         !lazyListState.canScrollForward && !reverse || !lazyListState.canScrollBackward && reverse
     }
 
+    override val hasIme: Boolean = true
+
+
     @Composable
     override fun Component(
         modifier: Modifier,

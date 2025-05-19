@@ -81,7 +81,6 @@ fun LauncherSearchBar(
         SearchBar(
             modifier = Modifier
                 .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
-                .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(8.dp)
                 .offset { IntOffset(0, searchBarOffset()) },
             style = style, level = level(), value = value, onValueChange = {

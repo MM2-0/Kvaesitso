@@ -40,6 +40,13 @@ internal abstract class ScaffoldComponent {
     open val hapticFeedback: Boolean = true
 
     /**
+     * Whether this component can be interacted with the IME.
+     * If true, IME insets will be passed to the component.
+     * If false, IME insets will be ignored, to avoid unnecessary animations.
+     */
+    open val hasIme: Boolean = false
+
+    /**
      * Whether the component is scrolled all the way up
      * null, if the component does not provide content
      */
