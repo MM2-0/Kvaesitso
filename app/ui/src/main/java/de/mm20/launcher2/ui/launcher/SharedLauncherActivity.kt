@@ -40,8 +40,6 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.component.NavBarEffects
-import de.mm20.launcher2.ui.gestures.GestureDetector
-import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.scaffold.ClockWidgetComponent
 import de.mm20.launcher2.ui.launcher.scaffold.DismissComponent
@@ -82,11 +80,8 @@ abstract class SharedLauncherActivity(
 ) : BaseActivity() {
 
     private val viewModel: LauncherScaffoldVM by viewModels()
-    private val searchVM: SearchVM by viewModels()
 
     internal val enterHomeTransitionManager = EnterHomeTransitionManager()
-
-    internal val gestureDetector = GestureDetector()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,7 +109,6 @@ abstract class SharedLauncherActivity(
                 LocalWallpaperColors provides wallpaperColors,
                 LocalPreferDarkContentOverWallpaper provides (!dimBackground && wallpaperColors.supportsDarkText),
                 LocalBottomSheetManager provides bottomSheetManager,
-                LocalGestureDetector provides gestureDetector,
             ) {
                 LauncherTheme {
                     ProvideCompositionLocals {
@@ -139,6 +133,8 @@ abstract class SharedLauncherActivity(
                         val fixedRotation by viewModel.fixedRotation.collectAsState()
 
                         val backgroundColor = MaterialTheme.colorScheme.surfaceContainer
+
+                        if (gestures == null) return@ProvideCompositionLocals
 
                         LaunchedEffect(fixedRotation) {
                             requestedOrientation = if (fixedRotation) {
@@ -286,6 +282,8 @@ abstract class SharedLauncherActivity(
                                         }
                                     }
 
+                                    val gestures = gestures!!
+
                                     val config = ScaffoldConfiguration(
                                         homeComponent = ClockWidgetComponent,
                                         searchComponent = searchComponent,
@@ -319,6 +317,11 @@ abstract class SharedLauncherActivity(
                                             gestures.longPressApp,
                                             Gesture.LongPress,
                                         ),
+                                        homeButton = getScaffoldGesture(
+                                            gestures.homeButtonAction,
+                                            gestures.homeButtonApp,
+                                            Gesture.HomeButton,
+                                        ),
                                         fixedSearchBar = fixedSearchBar,
                                         searchBarStyle = searchBarStyle,
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
@@ -327,7 +330,10 @@ abstract class SharedLauncherActivity(
                                         backgroundColor = backgroundColor,
                                     )
 
-                                    if (config.isUseless()) config.copy(homeComponent = SecretComponent, drawBackgroundOnHome = true) else config
+                                    if (config.isUseless()) config.copy(
+                                        homeComponent = SecretComponent,
+                                        drawBackgroundOnHome = true
+                                    ) else config
                                 }
                             }
 
@@ -381,19 +387,6 @@ abstract class SharedLauncherActivity(
                     }
                 }
             }
-        }
-    }
-
-    private var pauseTime = 0L
-    override fun onPause() {
-        super.onPause()
-        pauseTime = System.currentTimeMillis()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (System.currentTimeMillis() - pauseTime > 20000) {
-            searchVM.reset()
         }
     }
 

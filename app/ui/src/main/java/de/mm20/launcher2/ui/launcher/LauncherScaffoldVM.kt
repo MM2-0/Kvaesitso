@@ -92,7 +92,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val searchBarStyle = uiSettings.searchBarStyle
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchBarStyle.Transparent)
 
-    val gestureState: StateFlow<GestureState> = gestureSettings.map { settings ->
+    val gestureState: StateFlow<GestureState?> = gestureSettings.map { settings ->
             val swipeLeftAction = settings.swipeLeft
             val swipeRightAction = settings.swipeRight
             val swipeDownAction = settings.swipeDown
@@ -134,7 +134,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 doubleTapApp = apps.find { it.key == doubleTapAppKey },
                 homeButtonApp = apps.find { it.key == homeButtonAppKey },
             )
-        }.stateIn(viewModelScope, SharingStarted.Eagerly, GestureState())
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 }
 
 data class GestureState(

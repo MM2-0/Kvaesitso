@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
-import android.util.Log
 import android.view.animation.PathInterpolator
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
@@ -95,6 +94,7 @@ import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -142,6 +142,7 @@ internal data class ScaffoldConfiguration(
     val swipeRight: ScaffoldGesture? = null,
     val doubleTap: ScaffoldGesture? = null,
     val longPress: ScaffoldGesture? = null,
+    val homeButton: ScaffoldGesture? = null,
     /**
      * Position of the search bar
      */
@@ -197,6 +198,7 @@ internal data class ScaffoldConfiguration(
                     swipeRight,
                     doubleTap,
                     longPress,
+                    homeButton,
                 ).none { it.component.showSearchBar }
     }
 }
@@ -209,6 +211,7 @@ private operator fun ScaffoldConfiguration.get(gesture: Gesture): ScaffoldGestur
         Gesture.SwipeRight -> swipeRight
         Gesture.DoubleTap -> doubleTap
         Gesture.LongPress -> longPress
+        Gesture.HomeButton -> homeButton
         Gesture.TapSearchBar -> searchBarTap
     }
 }
@@ -221,6 +224,7 @@ enum class Gesture(val orientation: Orientation?) {
     DoubleTap(null),
     LongPress(null),
     TapSearchBar(null),
+    HomeButton(null),
 }
 
 internal class LauncherScaffoldState(
@@ -708,6 +712,11 @@ internal class LauncherScaffoldState(
         performTapGesture(Gesture.LongPress)
     }
 
+    suspend fun onHomeButtonPress() {
+        performTapGesture(Gesture.HomeButton)
+
+    }
+
     suspend fun onSearchBarTap() {
         if (currentComponent is SearchComponent) return
         openSearch()
@@ -906,6 +915,10 @@ internal class LauncherScaffoldState(
             performTapGesture(Gesture.TapSearchBar)
             return
         }
+        openPage(gesture)
+    }
+
+    suspend fun openPage(gesture: Gesture) {
         currentGesture = gesture
         val anim = config[gesture]?.animation ?: return
 
@@ -1044,10 +1057,23 @@ internal fun LauncherScaffold(
             var pauseTime = 0L
             lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 try {
-                    if (pauseTime > 0L && System.currentTimeMillis() - pauseTime > 5000L) {
-                        state.reset()
-                        searchVM.reset()
+                    if (pauseTime > 0L && System.currentTimeMillis() - pauseTime < 50L) {
+                        if (!state.isLocked) {
+                            if (state.currentProgress > 0f) {
+                                state.onPredictiveBackEnd()
+                            } else {
+                                state.onHomeButtonPress()
+                            }
+                        } else {
+                            activity.onBackPressedDispatcher.onBackPressed()
+                        }
+                    } else if (pauseTime > 0L && System.currentTimeMillis() - pauseTime > 5000L) {
+                        if (!state.isLocked) {
+                            state.reset()
+                            searchVM.reset()
+                        }
                     }
+                    awaitCancellation()
                 } finally {
                     pauseTime = System.currentTimeMillis()
                 }
@@ -1422,6 +1448,16 @@ private fun Modifier.homePageAnimation(
                 }
         )
     }
+
+    if (state.currentAnimation == ScaffoldAnimation.ZoomIn) {
+        return this then Modifier
+            .graphicsLayer {
+                scaleX = 1f - (state.currentProgress * 0.03f)
+                scaleY = 1f - (state.currentProgress * 0.03f)
+                alpha = (1f - state.currentProgress).coerceIn(0f, 1f)
+            }
+    }
+
     return this then component.homePageModifier(state, Modifier.absoluteOffset {
         IntOffset(
             x = if (dir.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
