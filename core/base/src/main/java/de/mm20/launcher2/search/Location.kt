@@ -129,6 +129,7 @@ import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.PaymentMethod
 import java.time.LocalDateTime
 import java.time.temporal.TemporalAdjusters
 import android.location.Location as AndroidLocation
@@ -153,6 +154,8 @@ interface Location : SavableSearchable {
 
     val openingSchedule: OpeningSchedule?
     val departures: List<Departure>?
+
+    val acceptedPaymentMethods: Map<PaymentMethod, Boolean>?
 
     val attribution: Attribution?
         get() = null

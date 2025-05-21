@@ -5,6 +5,7 @@ import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.PaymentMethod
 
 abstract class LocationPluginContract {
     object Paths {
@@ -139,5 +140,11 @@ abstract class LocationPluginContract {
          * Type: String? (JSON)
          */
         val Attribution = column<Attribution>("attribution")
+
+        /**
+         * Accepted payment methods at this location, encoded as JSON.
+         * Type: String? (JSON)
+         */
+        val AcceptedPaymentMethods = column<Map<PaymentMethod, Boolean>>("accepted_payment_methods")
     }
 }

@@ -84,6 +84,7 @@ internal class PluginLocationProvider(
                         userRatingCount = cursor[LocationColumns.UserRatingCount],
                         departures = cursor[LocationColumns.Departures],
                         attribution = cursor[LocationColumns.Attribution],
+                        acceptedPaymentMethods = cursor[LocationColumns.AcceptedPaymentMethods],
                         authority = pluginAuthority,
                         updatedSelf = {
                             if (it !is PluginLocation) UpdateResult.TemporarilyUnavailable()
@@ -117,6 +118,7 @@ internal class PluginLocationProvider(
             set(LocationColumns.UserRatingCount, userRatingCount)
             set(LocationColumns.Departures, departures)
             set(LocationColumns.Attribution, attribution)
+            set(LocationColumns.AcceptedPaymentMethods, acceptedPaymentMethods)
         }
     }
 }
