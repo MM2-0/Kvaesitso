@@ -357,4 +357,15 @@ class UiSettings internal constructor(
             it.copy(widgetsEditButton = editButton)
         }
     }
+
+    val resetSearchOnResume
+        get() = launcherDataStore.data.map {
+            it.resetSearchOnResume
+        }.distinctUntilChanged()
+
+    fun setResetSearchOnResume(resetSearchOnResume: Boolean) {
+        launcherDataStore.update {
+            it.copy(resetSearchOnResume = resetSearchOnResume)
+        }
+    }
 }
