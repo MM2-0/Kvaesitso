@@ -302,4 +302,43 @@ class OpeningHoursTest {
             LocalDateTime.of(2025, Month.APRIL, 10, 0, 0)
         )
     }
+
+    @Test
+    fun regressTest0() {
+        OpeningSchedule.Hours(
+            setOf(
+                OpeningHours(dayOfWeek = DayOfWeek.MONDAY, startTime = LocalTime.of(8,30), duration = Duration.ofHours(3) + Duration.ofMinutes(30)),
+                OpeningHours(dayOfWeek = DayOfWeek.TUESDAY, startTime = LocalTime.of(8,30), duration = Duration.ofHours(3) + Duration.ofMinutes(30)),
+                OpeningHours(dayOfWeek = DayOfWeek.WEDNESDAY, startTime = LocalTime.of(8,30), duration = Duration.ofHours(3) + Duration.ofMinutes(30)),
+                OpeningHours(dayOfWeek = DayOfWeek.THURSDAY, startTime = LocalTime.of(8,30), duration = Duration.ofHours(3) + Duration.ofMinutes(30)),
+                OpeningHours(dayOfWeek = DayOfWeek.FRIDAY, startTime = LocalTime.of(8,30), duration = Duration.ofHours(3) + Duration.ofMinutes(30)),
+
+                OpeningHours(dayOfWeek = DayOfWeek.MONDAY, startTime = LocalTime.of(14,0), duration = Duration.ofHours(2)),
+                OpeningHours(dayOfWeek = DayOfWeek.TUESDAY, startTime = LocalTime.of(14,0), duration = Duration.ofHours(2)),
+                OpeningHours(dayOfWeek = DayOfWeek.FRIDAY, startTime = LocalTime.of(14,0), duration = Duration.ofHours(2)),
+
+                OpeningHours(dayOfWeek = DayOfWeek.THURSDAY, startTime = LocalTime.of(17,0), duration = Duration.ofHours(2)),
+            )
+        ) assertEqualTo parseOpeningSchedule(
+            "Mo-Fr 08:30-12:00; Mo,Tu,Fr 14:00-16:00; Th 17:00-19:00"
+        )
+    }
+
+    @Test
+    fun regressTest1() {
+        OpeningSchedule.Hours(
+            setOf(
+                OpeningHours(dayOfWeek = DayOfWeek.TUESDAY, startTime = LocalTime.of(11,45), duration = Duration.ofHours(10) + Duration.ofMinutes(45)),
+                OpeningHours(dayOfWeek = DayOfWeek.WEDNESDAY, startTime = LocalTime.of(11,45), duration = Duration.ofHours(10) + Duration.ofMinutes(45)),
+                OpeningHours(dayOfWeek = DayOfWeek.THURSDAY, startTime = LocalTime.of(11,45), duration = Duration.ofHours(10) + Duration.ofMinutes(45)),
+                OpeningHours(dayOfWeek = DayOfWeek.FRIDAY, startTime = LocalTime.of(11,45), duration = Duration.ofHours(10) + Duration.ofMinutes(45)),
+                OpeningHours(dayOfWeek = DayOfWeek.SATURDAY, startTime = LocalTime.of(11,45), duration = Duration.ofHours(10) + Duration.ofMinutes(45)),
+
+                OpeningHours(dayOfWeek = DayOfWeek.SUNDAY, startTime = LocalTime.of(11,30), duration = Duration.ofHours(11)),
+                // We don't track public holidays. Otherwise, we'd probably go mad!
+            )
+        ) assertEqualTo parseOpeningSchedule(
+            "Tu-Sa 11:45-22:30; Su 11:30-22:30; PH 11:30-22:30"
+        )
+    }
 }
