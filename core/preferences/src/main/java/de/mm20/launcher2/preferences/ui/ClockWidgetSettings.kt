@@ -81,6 +81,15 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
+    val rowsInDock
+        get() = launcherDataStore.data.map { it.rowsInDock }
+
+    fun setRowsInDock(rowsInDock: Int) {
+        launcherDataStore.update {
+            it.copy(rowsInDock = rowsInDock)
+        }
+    }
+
     val alignment
         get() = launcherDataStore.data.map { it.clockWidgetAlignment }
 
