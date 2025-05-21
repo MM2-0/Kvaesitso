@@ -52,6 +52,7 @@ fun FavoritesTagSelector(
     compact: Boolean,
     expanded: Boolean,
     onExpand: (Boolean) -> Unit,
+    showFavorites: Boolean
 ) {
     val sheetManager = LocalBottomSheetManager.current
 
@@ -77,32 +78,34 @@ fun FavoritesTagSelector(
                         .horizontalScroll(scrollState)
                         .padding(end = 12.dp),
                 ) {
-                    FilterChip(
-                        modifier = Modifier
-                            .padding(start = 16.dp),
-                        selected = selectedTag == null,
-                        onClick = { onSelectTag(null) },
-                        leadingIcon = if (compact) null else {
-                            {
-                                Icon(
-                                    imageVector = Icons.Rounded.Star,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                )
+                    if(showFavorites) {
+                        FilterChip(
+                            modifier = Modifier
+                                .padding(start = 16.dp),
+                            selected = selectedTag == null,
+                            onClick = { onSelectTag(null) },
+                            leadingIcon = if (compact) null else {
+                                {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Star,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                    )
+                                }
+                            },
+                            label = {
+                                if (compact) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Star,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                    )
+                                } else {
+                                    Text(stringResource(R.string.favorites))
+                                }
                             }
-                        },
-                        label = {
-                            if (compact) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Star,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                )
-                            } else {
-                                Text(stringResource(R.string.favorites))
-                            }
-                        }
-                    )
+                        )
+                    }
                     for (tag in tags) {
                         TagChip(
                             modifier = Modifier
@@ -134,7 +137,7 @@ fun FavoritesTagSelector(
                         }
                     }
 
-                    }
+                }
 
                 if (editButton) {
                     SmallFloatingActionButton(
