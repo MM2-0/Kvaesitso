@@ -165,9 +165,9 @@ fun SearchBar(
                                 color = contentColor
                             )
                         }
-                        LaunchedEffect(level) {
+                        /*LaunchedEffect(level) {
                             if (level == SearchBarLevel.Resting) onUnfocus()
-                        }
+                        }*/
                         BasicTextField(
                             modifier = Modifier
                                 .onFocusChanged {

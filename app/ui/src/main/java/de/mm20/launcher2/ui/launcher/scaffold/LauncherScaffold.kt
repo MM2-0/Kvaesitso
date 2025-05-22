@@ -64,7 +64,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -246,10 +245,17 @@ internal class LauncherScaffoldState(
     var currentGesture by mutableStateOf<Gesture?>(null)
         private set
 
+    /**
+     * True if the search is animating to open after tapping the search bar or performing a tap gesture.
+     */
+    private var isOpeningSearch by mutableStateOf(false)
     val currentSearchBarOffset by derivedStateOf {
-        if (config.fixedSearchBar) return@derivedStateOf 0f
-        if (currentComponent?.showSearchBar == false) return@derivedStateOf homePageSearchBarOffset
-        homePageSearchBarOffset * (1 - currentProgress) + secondaryPageSearchBarOffset * currentProgress
+        val base = when {
+            config.fixedSearchBar -> 0f
+            currentComponent?.showSearchBar == false -> homePageSearchBarOffset
+            else -> homePageSearchBarOffset * (1 - currentProgress) + secondaryPageSearchBarOffset * currentProgress
+        }
+        base + if (currentAnimation == ScaffoldAnimation.Rubberband && !isOpeningSearch) currentOffset.y else 0f
     }
     private var homePageSearchBarOffset by mutableFloatStateOf(0f)
     private var secondaryPageSearchBarOffset by mutableFloatStateOf(0f)
@@ -621,6 +627,11 @@ internal class LauncherScaffoldState(
 
         if (wasSettledOnSecondaryPage != isSettledOnSecondaryPage) {
             onHapticFeedback(HapticFeedbackType.SegmentFrequentTick)
+            if (isSettledOnSecondaryPage) {
+                prepareSecondaryPage()
+            } else {
+                prepareHomePage()
+            }
         }
 
         vectorAnimatable.snapTo(currentOffset)
@@ -641,6 +652,8 @@ internal class LauncherScaffoldState(
         val wasOverThreshold =
             currentOffset.x.absoluteValue > size.width * 0.5f ||
                     currentOffset.y.absoluteValue > size.height * 0.5f
+
+        val wasSettledOnSecondaryPage = isSettledOnSecondaryPage
 
         val lowerPage = when (direction) {
             Gesture.SwipeUp -> -size.height
@@ -688,6 +701,14 @@ internal class LauncherScaffoldState(
 
         if (wasOverThreshold != isOverThreshold) {
             onHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
+        }
+
+        if (wasSettledOnSecondaryPage != isSettledOnSecondaryPage) {
+            if (isSettledOnSecondaryPage) {
+                prepareSecondaryPage()
+            } else {
+                prepareHomePage()
+            }
         }
 
         vectorAnimatable.snapTo(currentOffset)
@@ -813,12 +834,18 @@ internal class LauncherScaffoldState(
      * End the predictive back gesture and return to the home page.
      * @param fast use a faster animation
      */
-    suspend fun onPredictiveBackEnd(fast: Boolean = false) {
+    suspend fun onPredictiveBackEnd() {
+        navigateBack()
+    }
+
+    suspend fun navigateBack(fast: Boolean = false) {
         val gesture = currentGesture ?: return
         val component = currentComponent ?: return
 
         isLocked = false
         isSettledOnSecondaryPage = false
+
+        prepareHomePage()
 
         if (gesture.orientation == null) {
             floatAnimatable.snapTo(currentZOffset)
@@ -856,7 +883,18 @@ internal class LauncherScaffoldState(
 
         isSettledOnSecondaryPage = true
 
+        prepareSecondaryPage()
         activateSecondaryPage(component)
+    }
+
+    private suspend fun prepareSecondaryPage() {
+        config.homeComponent.onPreDismiss(this)
+        currentComponent?.onPreActivate(this)
+    }
+
+    private suspend fun prepareHomePage() {
+        currentComponent?.onPreDismiss(this)
+        config.homeComponent.onPreActivate(this)
     }
 
     /**
@@ -864,11 +902,10 @@ internal class LauncherScaffoldState(
      * Must be called after the animation is completed.
      */
     private suspend fun deactivateSecondaryPage(component: ScaffoldComponent) {
-        config.homeComponent.onMount(this)
-        component.onUnmount(this)
+        config.homeComponent.onActivate(this)
+        component.onDismiss(this)
         currentGesture = null
         secondaryPageSearchBarOffset = 0f
-        isSearchBarFocused = false
     }
 
     /**
@@ -876,24 +913,24 @@ internal class LauncherScaffoldState(
      * Must be called after the animation is completed.
      */
     private suspend fun activateSecondaryPage(component: ScaffoldComponent) {
-        component.onMount(this)
+        component.onActivate(this)
 
         if (!component.permanent) {
             delay(component.resetDelay)
             isSettledOnSecondaryPage = false
             currentOffset = Offset.Zero
-            component.onUnmount(this)
+            component.onDismiss(this)
             currentGesture = null
             isLocked = false
         } else {
-            config.homeComponent.onUnmount(this)
+            config.homeComponent.onDismiss(this)
             homePageSearchBarOffset = 0f
         }
     }
 
     private suspend fun openSearch() {
         if (currentComponent != null && currentComponent !is SearchComponent) {
-            onPredictiveBackEnd(fast = true)
+            navigateBack(fast = true)
         }
 
         if (config.homeComponent is SearchComponent) {
@@ -910,12 +947,16 @@ internal class LauncherScaffoldState(
             performTapGesture(Gesture.TapSearchBar)
             return
         }
-        openPage(gesture)
+        isOpeningSearch = true
+        navigateToPage(gesture)
+        isOpeningSearch = false
     }
 
-    suspend fun openPage(gesture: Gesture) {
+    suspend fun navigateToPage(gesture: Gesture) {
         currentGesture = gesture
         val anim = config[gesture]?.animation ?: return
+
+        prepareSecondaryPage()
 
         if (anim == ScaffoldAnimation.Rubberband) {
             val targetOffset = when (gesture) {
@@ -934,7 +975,6 @@ internal class LauncherScaffoldState(
             vectorAnimatable.animateTo(Offset.Zero) {
                 currentOffset = this.value
             }
-            activateSecondaryPage(config[gesture]!!.component)
         } else {
             val targetOffset = when (gesture) {
                 Gesture.SwipeLeft -> Offset(-size.width, 0f)
@@ -948,8 +988,8 @@ internal class LauncherScaffoldState(
                 currentOffset = this.value
             }
             isSettledOnSecondaryPage = true
-            activateSecondaryPage(config[gesture]!!.component)
         }
+        activateSecondaryPage(config[gesture]!!.component)
     }
 
     suspend fun reset() {
@@ -959,6 +999,8 @@ internal class LauncherScaffoldState(
         isSettledOnSecondaryPage = false
 
         currentComponent?.let {
+            it.onPreDismiss(this)
+            config.homeComponent.onPreActivate(this)
             deactivateSecondaryPage(it)
         }
     }
@@ -1052,6 +1094,9 @@ internal fun LauncherScaffold(
         val filterBarHeight by animateDpAsState(if (isFilterBarVisible) imeProgress * 50.dp else 0.dp)
 
         LaunchedEffect(state) {
+            config.homeComponent.onPreActivate(state)
+            config.homeComponent.onActivate(state)
+
             var pauseTime = 0L
             lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 try {

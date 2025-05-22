@@ -80,7 +80,7 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
             }
         }
 
-        if (isMounted) {
+        if (isActive) {
             val bottomSheetManager = LocalBottomSheetManager.current
             LaunchedEffect(Unit) {
                 val gesture = state.currentGesture ?: return@LaunchedEffect
@@ -163,12 +163,12 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
         }
     }
 
-    override suspend fun onMount(state: LauncherScaffoldState) {
-        super.onMount(state)
+    override suspend fun onActivate(state: LauncherScaffoldState) {
+        super.onActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.openPowerDialog()
         } else {
-            state.onPredictiveBackEnd(true)
+            state.navigateBack(true)
         }
     }
 

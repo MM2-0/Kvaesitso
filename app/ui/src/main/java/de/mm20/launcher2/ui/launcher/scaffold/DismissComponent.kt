@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
-import de.mm20.launcher2.ui.modifier.scale
 
 /**
  * A scaffold component that finishes the activity when activated.
@@ -28,8 +27,8 @@ internal class DismissComponent(private val activity: Activity): ScaffoldCompone
         return defaultModifier then Modifier.scale(1f - (state.currentProgress * 0.25f)).alpha(1f - state.currentProgress)
     }
 
-    override suspend fun onMount(state: LauncherScaffoldState) {
-        super.onMount(state)
+    override suspend fun onActivate(state: LauncherScaffoldState) {
+        super.onActivate(state)
         activity.finish()
     }
 }

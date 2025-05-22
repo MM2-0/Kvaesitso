@@ -48,7 +48,7 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        if (isMounted) {
+        if (isActive) {
             val bottomSheetManager = LocalBottomSheetManager.current
             LaunchedEffect(Unit) {
                 val gesture = state.currentGesture ?: return@LaunchedEffect
@@ -62,14 +62,14 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
         }
     }
 
-    override suspend fun onMount(state: LauncherScaffoldState) {
-        super.onMount(state)
+    override suspend fun onActivate(state: LauncherScaffoldState) {
+        super.onActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.openRecents()
             delay(50L)
-            state.onPredictiveBackEnd(true)
+            state.navigateBack(true)
         } else {
-            state.onPredictiveBackEnd(true)
+            state.navigateBack(true)
         }
     }
 

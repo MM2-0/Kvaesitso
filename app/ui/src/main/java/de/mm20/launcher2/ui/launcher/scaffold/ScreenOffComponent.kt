@@ -43,7 +43,7 @@ internal object ScreenOffComponent : ScaffoldComponent(), KoinComponent {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        if (isMounted) {
+        if (isActive) {
             val bottomSheetManager = LocalBottomSheetManager.current
             LaunchedEffect(Unit) {
                 val gesture = state.currentGesture ?: return@LaunchedEffect
@@ -90,8 +90,8 @@ internal object ScreenOffComponent : ScaffoldComponent(), KoinComponent {
             .alpha(1f - (state.currentProgress * 0.1f)) then defaultModifier
     }
 
-    override suspend fun onMount(state: LauncherScaffoldState) {
-        super.onMount(state)
+    override suspend fun onActivate(state: LauncherScaffoldState) {
+        super.onActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.lockScreen()
         } else {

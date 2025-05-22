@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -42,18 +41,8 @@ internal class SearchComponent(
     ) {
         val searchVM = viewModel<SearchVM>()
 
-        val isActive by remember {
-            derivedStateOf {
-                state.currentComponent == this && state.currentProgress > 0.5f
-            }
-        }
-
         LaunchedEffect(isActive) {
-            state.isSearchBarFocused = isActive
-        }
-
-        LaunchedEffect(isMounted) {
-            if (!isMounted) {
+            if (!isActive) {
                 searchVM.reset()
             }
         }
@@ -80,15 +69,22 @@ internal class SearchComponent(
             paddingValues = insets,
             state = lazyListState,
             reverse = reverse,
+            userScrollEnabled = !state.isDragged,
         )
     }
 
-    override suspend fun onMount(state: LauncherScaffoldState) {
-        super.onMount(state)
+    override suspend fun onDismiss(state: LauncherScaffoldState) {
+        super.onDismiss(state)
+        lazyListState.scrollToItem(0, 0)
     }
 
-    override suspend fun onUnmount(state: LauncherScaffoldState) {
-        super.onUnmount(state)
-        lazyListState.scrollToItem(0, 0)
+    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+        super.onPreActivate(state)
+        state.isSearchBarFocused = true
+    }
+
+    override suspend fun onPreDismiss(state: LauncherScaffoldState) {
+        super.onPreDismiss(state)
+        state.isSearchBarFocused = false
     }
 }

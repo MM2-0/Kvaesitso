@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,8 +31,8 @@ internal class LaunchComponent(
         )
     }
 
-    override suspend fun onMount(state: LauncherScaffoldState) {
-        super.onMount(state)
+    override suspend fun onActivate(state: LauncherScaffoldState) {
+        super.onActivate(state)
         val view = activity.window.decorView
         val options = ActivityOptionsCompat.makeClipRevealAnimation(
             view,

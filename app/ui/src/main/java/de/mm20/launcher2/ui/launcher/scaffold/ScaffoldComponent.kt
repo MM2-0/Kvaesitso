@@ -70,19 +70,34 @@ internal abstract class ScaffoldComponent {
     @SuppressLint("ModifierFactoryExtensionFunction")
     open fun searchBarModifier(state: LauncherScaffoldState, defaultModifier: Modifier): Modifier = defaultModifier
 
-    protected var isMounted by mutableStateOf(false)
+    protected var isActive by mutableStateOf(false)
 
     /**
-     * Called when the component is mounted, after the animation is completed.
+     * Called when the component is about to be activated, but before the animation is completed.
      */
-    open suspend fun onMount(state: LauncherScaffoldState) {
-        isMounted = true
+    open suspend fun onPreActivate(state: LauncherScaffoldState) {
+
     }
 
     /**
-     * Called when the component is unmounted, after the animation is completed, when the component is no longer visible.
+     * Called when the component is activated, after the animation is completed.
      */
-    open suspend fun onUnmount(state: LauncherScaffoldState) {
-        isMounted = false
+    open suspend fun onActivate(state: LauncherScaffoldState) {
+        isActive = true
+    }
+
+
+    /**
+     * Called when the component is about to be dismissed, but before the animation is completed.
+     */
+    open suspend fun onPreDismiss(state: LauncherScaffoldState) {
+
+    }
+
+    /**
+     * Called when the component is dismissed, after the animation is completed, when the component is no longer visible.
+     */
+    open suspend fun onDismiss(state: LauncherScaffoldState) {
+        isActive = false
     }
 }
