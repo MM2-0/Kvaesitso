@@ -41,9 +41,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.waterfall
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -58,10 +59,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -617,7 +620,7 @@ internal class LauncherScaffoldState(
         }
 
         if (wasSettledOnSecondaryPage != isSettledOnSecondaryPage) {
-            onHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
+            onHapticFeedback(HapticFeedbackType.SegmentFrequentTick)
         }
 
         vectorAnimatable.snapTo(currentOffset)
@@ -1266,7 +1269,11 @@ internal fun LauncherScaffold(
                     )
                     .homePageAnimation(state),
                 insets = systemBarInsets
-                    .let { if (config.searchBarStyle == SearchBarStyle.Hidden) it else it.add(searchBarInsets) }
+                    .let {
+                        if (config.searchBarStyle == SearchBarStyle.Hidden) it else it.add(
+                            searchBarInsets
+                        )
+                    }
                     .let { if (config.homeComponent.hasIme) it.union(WindowInsets.ime) else it }
                     .asPaddingValues(),
                 state
@@ -1413,7 +1420,10 @@ private fun SecondaryPage(
 
         val mod = modifier
             .fillMaxSize()
-            .secondaryPageAnimation(state, config.backgroundColor)
+            .secondaryPageAnimation(
+                state,
+                config.backgroundColor,
+            )
         val composable = composables[component]
 
         composable?.invoke(mod, insets, state)
@@ -1529,8 +1539,33 @@ private fun Modifier.secondaryPageAnimation(
                 x = if (state.currentGesture?.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
                 y = if (state.currentGesture?.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
             )
+        }.composed {
+            val shape = MaterialTheme.shapes.extraLarge.let {
+                if (state.currentProgress < 0.95f) {
+                    it
+                } else {
+                    val density = LocalDensity.current
+                    val p = 1f - ((state.currentProgress - 0.95f) * 20f).coerceIn(0f, 1f)
+                    if (it is CutCornerShape) {
+                        CutCornerShape(
+                            topStart = it.topStart.toPx(state.size, density) * p,
+                            topEnd = it.topEnd.toPx(state.size, density) * p,
+                            bottomEnd = it.bottomEnd.toPx(state.size, density) * p,
+                            bottomStart = it.bottomStart.toPx(state.size, density) * p,
+                        )
+                    } else {
+                        RoundedCornerShape(
+                            topStart = it.topStart.toPx(state.size, density) * p,
+                            topEnd = it.topEnd.toPx(state.size, density) * p,
+                            bottomEnd = it.bottomEnd.toPx(state.size, density) * p,
+                            bottomStart = it.bottomStart.toPx(state.size, density) * p,
+                        )
+                    }
+                }
+            }
+
+            Modifier.background(background, shape)
         }
-        .background(background)
 }
 
 private fun Modifier.searchBarAnimation(
@@ -1565,5 +1600,6 @@ private fun Modifier.searchBarAnimation(
             Modifier.offset(y = offset)
         }
 
-    return this.padding(insets) then (component?.searchBarModifier(state, modifier) ?: modifier)
+    return this then (component?.searchBarModifier(state, modifier)
+        ?: modifier) then Modifier.padding(insets)
 }

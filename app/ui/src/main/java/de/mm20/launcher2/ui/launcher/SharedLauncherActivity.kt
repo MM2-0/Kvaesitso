@@ -40,6 +40,7 @@ import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.base.BaseActivity
@@ -225,16 +226,16 @@ abstract class SharedLauncherActivity(
                                     ScaffoldConfiguration(
                                         homeComponent = searchComponent,
                                         searchComponent = searchComponent,
-                                        swipeDown = ScaffoldGesture(
+                                        /*swipeDown = ScaffoldGesture(
                                             component = dismissComponent,
                                             animation = ScaffoldAnimation.Push
                                         ),
                                         swipeUp = ScaffoldGesture(
                                             component = dismissComponent,
                                             animation = ScaffoldAnimation.Push
-                                        ),
+                                        ),*/
                                         fixedSearchBar = fixedSearchBar,
-                                        searchBarStyle = searchBarStyle,
+                                        searchBarStyle = SearchBarStyle.Solid,
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
                                         finishOnBack = true,
                                         drawBackgroundOnHome = true,
