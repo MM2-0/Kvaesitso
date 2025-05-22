@@ -225,17 +225,6 @@ class UiSettings internal constructor(
         }
     }
 
-    val baseLayout
-        get() = launcherDataStore.data.map {
-            it.uiBaseLayout
-        }.distinctUntilChanged()
-
-    fun setBaseLayout(baseLayout: BaseLayout) {
-        launcherDataStore.update {
-            it.copy(uiBaseLayout = baseLayout)
-        }
-    }
-
     val clockFillScreen
         get() = launcherDataStore.data.map {
             it.clockWidgetFillHeight

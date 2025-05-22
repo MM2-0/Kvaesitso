@@ -2,13 +2,11 @@ package de.mm20.launcher2.ui.launcher.sheets
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.ui.GestureSettings
-import de.mm20.launcher2.ui.gestures.Gesture
-import kotlinx.coroutines.launch
+import de.mm20.launcher2.ui.launcher.scaffold.Gesture
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -27,7 +25,8 @@ class FailedGestureSheetVM : ViewModel(), KoinComponent {
             Gesture.SwipeDown -> gestureSettings.setSwipeDown(GestureAction.NoAction)
             Gesture.SwipeLeft -> gestureSettings.setSwipeLeft(GestureAction.NoAction)
             Gesture.SwipeRight -> gestureSettings.setSwipeRight(GestureAction.NoAction)
-            Gesture.HomeButton -> gestureSettings.setHomeButton(GestureAction.NoAction)
+            //Gesture.HomeButton -> gestureSettings.setHomeButton(GestureAction.NoAction)
+            else -> {}
         }
     }
 }

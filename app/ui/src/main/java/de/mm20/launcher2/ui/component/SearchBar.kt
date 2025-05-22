@@ -165,9 +165,9 @@ fun SearchBar(
                                 color = contentColor
                             )
                         }
-                        LaunchedEffect(level) {
+                        /*LaunchedEffect(level) {
                             if (level == SearchBarLevel.Resting) onUnfocus()
-                        }
+                        }*/
                         BasicTextField(
                             modifier = Modifier
                                 .onFocusChanged {
@@ -207,7 +207,7 @@ fun SearchBar(
     }
 }
 
-enum class SearchBarLevel {
+enum class SearchBarLevel: Comparable<SearchBarLevel> {
     /**
      * The default, "hidden" state, when the launcher is in its initial state (scroll position is 0
      * and search is closed)

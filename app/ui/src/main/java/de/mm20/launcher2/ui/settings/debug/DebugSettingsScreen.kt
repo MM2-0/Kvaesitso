@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,10 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

@@ -18,10 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Badge
-import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.FilledTonalIconToggleButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -52,11 +49,10 @@ fun LauncherSearchBar(
     modifier: Modifier = Modifier,
     style: SearchBarStyle,
     level: () -> SearchBarLevel,
-    value: () -> String,
     focused: Boolean,
     onFocusChange: (Boolean) -> Unit,
     actions: List<SearchAction>,
-    highlightedAction: SearchAction?,
+    highlightedAction: SearchAction? = null,
     isSearchOpen: Boolean = false,
     darkColors: Boolean = false,
     bottomSearchBar: Boolean = false,
@@ -79,16 +75,15 @@ fun LauncherSearchBar(
 
     val filterBar by searchVM.filterBar.collectAsState(false)
 
-    val _value = value()
+    val value by searchVM.searchQuery
 
     Box(modifier = modifier) {
         SearchBar(
             modifier = Modifier
                 .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
-                .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(8.dp)
                 .offset { IntOffset(0, searchBarOffset()) },
-            style = style, level = level(), value = _value, onValueChange = {
+            style = style, level = level(), value = value, onValueChange = {
                 searchVM.search(it)
             },
             reverse = bottomSearchBar,
@@ -136,7 +131,7 @@ fun LauncherSearchBar(
                         }
                     }
                 }
-                SearchBarMenu(searchBarValue = _value, onInputClear = {
+                SearchBarMenu(searchBarValue = value, onInputClear = {
                     searchVM.reset()
                 })
             },

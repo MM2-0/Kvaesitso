@@ -9,6 +9,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Power
+import androidx.compose.material.icons.rounded.Science
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.SettingsBackupRestore
 import androidx.compose.runtime.Composable

@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.search.SearchFilters
+import de.mm20.launcher2.ui.modifier.consumeAllScrolling
 
 @Composable
 fun KeyboardFilterBar(
@@ -43,6 +44,7 @@ fun KeyboardFilterBar(
         HorizontalDivider()
         Row(
             modifier = Modifier
+                .consumeAllScrolling()
                 .horizontalScroll(rememberScrollState())
                 .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
