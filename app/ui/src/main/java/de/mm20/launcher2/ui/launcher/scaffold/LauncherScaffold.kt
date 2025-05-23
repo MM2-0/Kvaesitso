@@ -172,7 +172,7 @@ internal data class ScaffoldConfiguration(
     /**
      * If true, the home page is drawn with a background (and blur, if enabled)
      */
-    val drawBackgroundOnHome: Boolean = false,
+    //val drawBackgroundOnHome: Boolean = false,
 ) {
     val searchBarTap = ScaffoldGesture(
         component = searchComponent,
@@ -265,11 +265,12 @@ internal class LauncherScaffoldState(
     val darkStatusBarIcons by derivedStateOf {
         val isLightBackground = config.backgroundColor.luminance() > 0.5f
         when {
-            currentProgress < 0.5f && (!config.drawBackgroundOnHome ||
-                    !config.homeComponent.drawBackground) -> {
+            currentProgress < 0.5f && !config.homeComponent.drawBackground -> {
                 config.darkStatusBarIcons
             }
-
+            currentProgress >= 0.5f && currentComponent?.drawBackground == false -> {
+                config.darkStatusBarIcons
+            }
             else -> {
                 isLightBackground
             }
@@ -278,11 +279,12 @@ internal class LauncherScaffoldState(
     val darkNavBarIcons by derivedStateOf {
         val isLightBackground = config.backgroundColor.luminance() > 0.5f
         when {
-            currentProgress < 0.5f && (!config.drawBackgroundOnHome ||
-                    !config.homeComponent.drawBackground) -> {
+            currentProgress < 0.5f && !config.homeComponent.drawBackground -> {
                 config.darkNavBarIcons
             }
-
+            currentProgress >= 0.5f && currentComponent?.drawBackground == false -> {
+                config.darkNavBarIcons
+            }
             else -> {
                 isLightBackground
             }
@@ -312,14 +314,14 @@ internal class LauncherScaffoldState(
 
         val homeLevel = if (config.searchBarPosition == SearchBarPosition.Top) {
             when (config.homeComponent.isAtTop.value) {
-                true if (config.drawBackgroundOnHome && config.homeComponent.drawBackground) -> SearchBarLevel.Active
+                true if config.homeComponent.drawBackground -> SearchBarLevel.Active
                 true -> SearchBarLevel.Resting
                 false -> SearchBarLevel.Raised
                 null -> null
             }
         } else {
             when (config.homeComponent.isAtBottom.value) {
-                true if (config.drawBackgroundOnHome && config.homeComponent.drawBackground) -> SearchBarLevel.Active
+                true if config.homeComponent.drawBackground -> SearchBarLevel.Active
                 true -> SearchBarLevel.Resting
                 false -> SearchBarLevel.Raised
                 null -> null
@@ -1146,7 +1148,7 @@ internal fun LauncherScaffold(
 
         if (config.wallpaperBlurRadius > 0.dp) {
             val wallpaperBlur by animateIntAsState(
-                if (state.currentProgress >= 0.5f || config.drawBackgroundOnHome) 8.dp.toPixels()
+                if (state.currentProgress >= 0.5f || config.homeComponent.drawBackground) 8.dp.toPixels()
                     .toInt() else 0
             )
             WallpaperBlur { wallpaperBlur }
@@ -1296,7 +1298,7 @@ internal fun LauncherScaffold(
                 Modifier
                     .fillMaxSize()
                     .background(
-                        if (config.drawBackgroundOnHome) config.backgroundColor.copy(alpha = 0.85f)
+                        if (config.homeComponent.drawBackground) config.backgroundColor.copy(alpha = 0.85f)
                         else Color.Transparent
                     )
                     .combinedClickable(

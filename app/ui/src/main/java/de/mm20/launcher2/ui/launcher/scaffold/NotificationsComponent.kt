@@ -46,6 +46,8 @@ internal object NotificationsComponent : ScaffoldComponent(), KoinComponent {
 
     override val showSearchBar: Boolean = false
 
+    override val drawBackground: Boolean = false
+
     private val interpolator = PathInterpolator(0f, 0f, 0f, 1f)
 
     @Composable

@@ -46,11 +46,11 @@ internal object WidgetsComponent : ScaffoldComponent() {
     private var editMode by mutableStateOf(false)
     private val scrollState = ScrollState(0)
 
-    override var isAtTop: State<Boolean?> = derivedStateOf {
+    override val isAtTop: State<Boolean?> = derivedStateOf {
         !scrollState.canScrollBackward
     }
 
-    override var isAtBottom: State<Boolean?> = derivedStateOf {
+    override val isAtBottom: State<Boolean?> = derivedStateOf {
         !scrollState.canScrollForward
     }
 

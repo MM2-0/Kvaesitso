@@ -50,13 +50,13 @@ internal abstract class ScaffoldComponent {
      * Whether the component is scrolled all the way up
      * null, if the component does not provide content
      */
-    open var isAtTop: State<Boolean?> = mutableStateOf(null)
+    open val isAtTop: State<Boolean?> = mutableStateOf(null)
 
     /**
      * Whether the component is scrolled all the way down
      * null, if the component does not provide content
      */
-    open var isAtBottom: State<Boolean?> = mutableStateOf(null)
+    open val isAtBottom: State<Boolean?> = mutableStateOf(null)
 
     @Composable abstract fun Component(
         modifier: Modifier,

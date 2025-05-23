@@ -42,6 +42,8 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
 
     override val showSearchBar: Boolean = false
 
+    override val drawBackground: Boolean = false
+
     @Composable
     override fun Component(
         modifier: Modifier,

@@ -238,7 +238,6 @@ abstract class SharedLauncherActivity(
                                         searchBarStyle = SearchBarStyle.Solid,
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
                                         finishOnBack = true,
-                                        drawBackgroundOnHome = true,
                                         backgroundColor = backgroundColor,
                                     )
                                 } else {
@@ -357,7 +356,6 @@ abstract class SharedLauncherActivity(
 
                                     if (config.isUseless()) config.copy(
                                         homeComponent = SecretComponent,
-                                        drawBackgroundOnHome = true
                                     ) else config
                                 }
                             }
