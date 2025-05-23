@@ -37,6 +37,11 @@ internal class TimeConverter(context: Context) : SimpleFactorConverter() {
                     1.0 / (60 * 60 * 24 * 365),
                     context.getString(R.string.unit_year_symbol),
                     R.plurals.unit_year
+            ),
+            MeasureUnitWithFactor(
+                    5.391247e-44,
+                    context.getString(R.string.unit_planck_time_symbol),
+                    R.plurals.unit_planck_time
             )
     )
 
