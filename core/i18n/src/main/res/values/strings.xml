@@ -668,6 +668,8 @@
     <string name="preference_compact_tags">Compact tags</string>
     <string name="preference_compact_tags_summary">Hide tag labels or icons to reduce the space occupied by tags</string>
     <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
+    <string name="preference_widgets_on_home_screen">Widgets on home screen</string>
+    <string name="preference_widgets_on_home_screen_summary">Show widgets on the home screen instead of an extra page</string>
     <string name="preference_screen_homescreen">Home screen</string>
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
     <string name="preference_screen_icons">Grid &amp; icons</string>

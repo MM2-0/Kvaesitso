@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 
-internal object ClockWidgetComponent : ScaffoldComponent() {
+internal object ClockHomeComponent : ScaffoldComponent() {
 
     override val drawBackground: Boolean = false
 

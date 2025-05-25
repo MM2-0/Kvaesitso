@@ -7,6 +7,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
@@ -43,6 +45,9 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
     override val showSearchBar: Boolean = false
 
     override val drawBackground: Boolean = false
+
+    override val isAtTop: State<Boolean?> = mutableStateOf(true)
+    override val isAtBottom: State<Boolean?> = mutableStateOf(true)
 
     @Composable
     override fun Component(

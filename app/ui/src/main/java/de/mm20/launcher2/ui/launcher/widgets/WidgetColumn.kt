@@ -8,7 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
@@ -156,31 +160,28 @@ fun WidgetColumn(
             )
             val icon =
                 AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_edit_add)
-            ExtendedFloatingActionButton(
-                modifier = Modifier
-                    .semantics {
-                        role = Role.Button
-                        contentDescription = title
-                    }
-                    .padding(16.dp)
-                    .align(Alignment.CenterHorizontally),
-                icon = {
-                    Icon(
-                        painter = rememberAnimatedVectorPainter(
-                            animatedImageVector = icon,
-                            atEnd = !editMode
-                        ), contentDescription = null
-                    )
-                },
-                text = {
-                    Text(title)
-                }, onClick = {
+
+            Button(
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 8.dp),
+                contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                onClick = {
                     if (!editMode) {
                         onEditModeChange(true)
                     } else {
                         addNewWidget = true
                     }
-                })
+                }
+            ) {
+                Icon(
+                    modifier = Modifier.padding(end = ButtonDefaults.IconSpacing)
+                        .size(ButtonDefaults.IconSize),
+                    painter = rememberAnimatedVectorPainter(
+                        animatedImageVector = icon,
+                        atEnd = !editMode
+                    ), contentDescription = null
+                )
+                Text(title)
+            }
 
         }
     }

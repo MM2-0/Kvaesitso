@@ -147,22 +147,5 @@ fun LauncherSearchBar(
             onUnfocus = { onFocusChange(false) },
             onKeyboardActionGo = onKeyboardActionGo
         )
-
-        AnimatedVisibility (filterBar && isSearchOpen && !searchVM.showFilters.value
-                // Use imeAnimationTarget instead of isImeVisible to animate the filter bar at the same time as the keyboard
-                && WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current) > 0,
-            enter = fadeIn(),
-            exit = fadeOut(),
-            modifier = Modifier.align(Alignment.BottomCenter)
-        ) {
-            val items by searchVM.filterBarItems.collectAsState(emptyList())
-            KeyboardFilterBar(
-                filters = searchVM.filters.value,
-                onFiltersChange = {
-                    searchVM.setFilters(it)
-                },
-                items = items
-            )
-        }
     }
 }

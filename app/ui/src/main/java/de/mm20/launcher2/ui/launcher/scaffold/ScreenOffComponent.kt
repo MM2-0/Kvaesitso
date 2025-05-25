@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -36,6 +38,9 @@ internal object ScreenOffComponent : ScaffoldComponent(), KoinComponent {
     override val resetDelay: Long = 1000L
 
     override val drawBackground: Boolean = false
+
+    override val isAtTop: State<Boolean?> = mutableStateOf(true)
+    override val isAtBottom: State<Boolean?> = mutableStateOf(true)
 
     @Composable
     override fun Component(

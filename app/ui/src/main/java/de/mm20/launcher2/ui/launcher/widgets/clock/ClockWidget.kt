@@ -27,7 +27,6 @@ import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.BatteryFull
 import androidx.compose.material.icons.rounded.ColorLens
 import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.Height
 import androidx.compose.material.icons.rounded.HorizontalSplit
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.MusicNote
@@ -361,7 +360,7 @@ fun ConfigureClockWidgetSheet(
     val compact by viewModel.compact.collectAsState()
     val color by viewModel.color.collectAsState()
     val style by viewModel.clockStyle.collectAsState()
-    val fillHeight by viewModel.fillHeight.collectAsState()
+    val widgetsOnHome by viewModel.widgetsOnHome.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
     val showSeconds by viewModel.showSeconds.collectAsState()
     val timeFormat by viewModel.timeFormat.collectAsState()
@@ -563,21 +562,13 @@ fun ConfigureClockWidgetSheet(
                     }
                 }
             }
-            OutlinedCard(
-                modifier = Modifier.padding(top = 16.dp),
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
+            if(widgetsOnHome == false) {
+                OutlinedCard(
+                    modifier = Modifier.padding(top = 16.dp),
                 ) {
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_clock_widget_fill_height),
-                        icon = Icons.Rounded.Height,
-                        value = fillHeight == true,
-                        onValueChanged = {
-                            viewModel.setFillHeight(it)
-                        }
-                    )
-                    AnimatedVisibility(fillHeight == true) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         var showDropdown by remember { mutableStateOf(false) }
                         Preference(
                             title = stringResource(R.string.preference_clock_widget_alignment),

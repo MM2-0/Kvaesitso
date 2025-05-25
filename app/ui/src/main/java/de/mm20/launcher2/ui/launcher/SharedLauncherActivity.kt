@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.app.Activity
 import android.app.WallpaperManager
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
@@ -10,7 +9,6 @@ import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -28,16 +26,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.IntOffset
-import androidx.core.content.getSystemService
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.SearchBarStyle
@@ -47,7 +42,8 @@ import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.ktx.animateTo
-import de.mm20.launcher2.ui.launcher.scaffold.ClockWidgetComponent
+import de.mm20.launcher2.ui.launcher.scaffold.ClockAndWidgetsHomeComponent
+import de.mm20.launcher2.ui.launcher.scaffold.ClockHomeComponent
 import de.mm20.launcher2.ui.launcher.scaffold.DismissComponent
 import de.mm20.launcher2.ui.launcher.scaffold.Gesture
 import de.mm20.launcher2.ui.launcher.scaffold.LaunchComponent
@@ -64,7 +60,6 @@ import de.mm20.launcher2.ui.launcher.scaffold.SearchBarPosition
 import de.mm20.launcher2.ui.launcher.scaffold.SearchComponent
 import de.mm20.launcher2.ui.launcher.scaffold.SecretComponent
 import de.mm20.launcher2.ui.launcher.scaffold.WidgetsComponent
-import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
@@ -141,12 +136,13 @@ abstract class SharedLauncherActivity(
                         val fixedSearchBar by viewModel.fixedSearchBar.collectAsState()
                         val gestures by viewModel.gestureState.collectAsState()
                         val searchBarStyle by viewModel.searchBarStyle.collectAsState()
+                        val widgetsOnHomeScreen by viewModel.widgetsOnHomeScreen.collectAsState()
 
                         val fixedRotation by viewModel.fixedRotation.collectAsState()
 
                         val backgroundColor = MaterialTheme.colorScheme.surfaceContainer
 
-                        if (gestures == null) return@ProvideCompositionLocals
+                        if (gestures == null || widgetsOnHomeScreen == null) return@ProvideCompositionLocals
 
                         LaunchedEffect(fixedRotation) {
                             requestedOrientation = if (fixedRotation) {
@@ -216,6 +212,7 @@ abstract class SharedLauncherActivity(
                                 lightNav,
                                 hideStatus,
                                 hideNav,
+                                widgetsOnHomeScreen,
                             ) {
                                 if (mode == LauncherActivityMode.Assistant) {
                                     val searchComponent = SearchComponent(
@@ -307,7 +304,11 @@ abstract class SharedLauncherActivity(
                                     val gestures = gestures!!
 
                                     val config = ScaffoldConfiguration(
-                                        homeComponent = ClockWidgetComponent,
+                                        homeComponent = if (widgetsOnHomeScreen == true) {
+                                            ClockAndWidgetsHomeComponent
+                                        } else {
+                                            ClockHomeComponent
+                                        },
                                         searchComponent = searchComponent,
                                         swipeUp = getScaffoldGesture(
                                             gestures.swipeUpAction,

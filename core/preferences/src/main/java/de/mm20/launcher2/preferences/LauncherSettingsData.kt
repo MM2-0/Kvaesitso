@@ -4,6 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.search.SearchFilters
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class LauncherSettingsData internal constructor(
@@ -40,10 +41,12 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetBatteryPart: Boolean = true,
     val clockWidgetMusicPart: Boolean = true,
     val clockWidgetDatePart: Boolean = true,
+    @Deprecated("Use homeScreenWidgets")
     val clockWidgetFillHeight: Boolean = true,
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
 
     val homeScreenDock: Boolean = false,
+    val homeScreenWidgets: Boolean = false,
 
     val favoritesEnabled: Boolean = true,
     val favoritesFrequentlyUsed: Boolean = true,

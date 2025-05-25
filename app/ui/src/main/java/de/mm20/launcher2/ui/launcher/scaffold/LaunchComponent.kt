@@ -3,13 +3,17 @@ package de.mm20.launcher2.ui.launcher.scaffold
 import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.zIndex
 import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.component.FakeSplashScreen
+import de.mm20.launcher2.ui.ktx.toIntOffset
 
 internal class LaunchComponent(
     private val activity: Activity,
@@ -19,6 +23,9 @@ internal class LaunchComponent(
     override val resetDelay: Long = 500L
     override val showSearchBar = false
 
+    override val isAtTop: State<Boolean?> = mutableStateOf(true)
+    override val isAtBottom: State<Boolean?> = mutableStateOf(true)
+
     @Composable
     override fun Component(
         modifier: Modifier,
@@ -26,7 +33,7 @@ internal class LaunchComponent(
         state: LauncherScaffoldState
     ) {
         FakeSplashScreen(
-            modifier = modifier.zIndex(10f),
+            modifier = modifier.zIndex(10f).alpha((state.currentProgress * 2f).coerceAtMost(1f)),
             searchable = searchable,
         )
     }
@@ -45,12 +52,11 @@ internal class LaunchComponent(
         searchable.launch(activity, options.toBundle())
     }
 
-    @SuppressLint("ModifierFactoryExtensionFunction")
     override fun homePageModifier(
         state: LauncherScaffoldState,
         defaultModifier: Modifier
     ): Modifier {
-        return Modifier.alpha(1f - state.currentProgress)
+        return defaultModifier.alpha(1f - state.currentProgress)
     }
 
     @SuppressLint("ModifierFactoryExtensionFunction")
@@ -58,7 +64,7 @@ internal class LaunchComponent(
         state: LauncherScaffoldState,
         defaultModifier: Modifier
     ): Modifier {
-        return defaultModifier.alpha(1f - state.currentProgress)
+        return defaultModifier.offset{ state.currentOffset.toIntOffset() }.alpha(1f - state.currentProgress)
     }
 
 }

@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.searchable.SavableSearchableRepository
-import de.mm20.launcher2.preferences.BaseLayout
 import de.mm20.launcher2.preferences.ColorScheme
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.ScreenOrientation
@@ -67,17 +66,10 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         .map { it != ScreenOrientation.Auto }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-    val isSearchOpen = mutableStateOf(false)
-    val isWidgetEditMode = mutableStateOf(false)
-
-    val searchBarFocused = mutableStateOf(false)
+    val widgetsOnHomeScreen = uiSettings.homeScreenWidgets
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val autoFocusSearch = uiSettings.openKeyboardOnSearch
-
-    fun setWidgetEditMode(editMode: Boolean) {
-        isSearchOpen.value = false
-        isWidgetEditMode.value = editMode
-    }
 
     val wallpaperBlur = uiSettings.blurWallpaper
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)

@@ -9,7 +9,6 @@ import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -69,11 +68,8 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setUseThemeColor(boolean)
     }
 
-    val fillHeight = settings.fillHeight
+    val widgetsOnHome = settings.fillHeight
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    fun setFillHeight(fillHeight: Boolean) {
-        settings.setFillHeight(fillHeight)
-    }
 
     val parts = settings.parts
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)

@@ -19,8 +19,8 @@ kotlinx-serialization = "1.8.1"
 
 jetbrains-markdown = "0.7.3"
 
-androidx-compose = "1.9.0-alpha02"
-androidx-compose-material3 = "1.4.0-alpha14"
+androidx-compose = "1.9.0-alpha03"
+androidx-compose-material3 = "1.4.0-alpha15"
 androidx-compose-materialicons = "1.7.8"
 androidx-lifecycle = "2.9.0"
 androidx-core = "1.16.0"

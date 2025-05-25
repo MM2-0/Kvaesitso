@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -41,10 +42,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
+import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import kotlinx.coroutines.launch
 
-internal object WidgetsComponent : ScaffoldComponent() {
-
+internal object ClockAndWidgetsHomeComponent: ScaffoldComponent() {
+    private var editMode by mutableStateOf(false)
     private val scrollState = ScrollState(0)
 
     override val isAtTop: State<Boolean?> = derivedStateOf {
@@ -55,8 +57,12 @@ internal object WidgetsComponent : ScaffoldComponent() {
         !scrollState.canScrollForward
     }
 
+    override val drawBackground: Boolean = false
+
     // In note widget
     override val hasIme: Boolean = true
+
+    override val showSearchBar: Boolean = false
 
     @Composable
     override fun Component(
@@ -64,9 +70,9 @@ internal object WidgetsComponent : ScaffoldComponent() {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        val editMode = state.isLocked
         val scope = rememberCoroutineScope()
-        val topPadding by animateDpAsState(if (editMode) 64.dp else 0.dp)
+
+        val topPadding by animateDpAsState(if (editMode) 80.dp else 0.dp)
 
         val previousScroll = remember { mutableIntStateOf(scrollState.value) }
 
@@ -80,21 +86,28 @@ internal object WidgetsComponent : ScaffoldComponent() {
 
         Column(
             modifier = modifier
-                .verticalScroll(scrollState)
+                .verticalScroll(scrollState, enabled = !state.isDragged)
                 .padding(horizontal = 8.dp)
                 .padding(top = topPadding)
                 .padding(insets),
         ) {
+            ClockWidget(
+                editMode = editMode,
+                fillScreenHeight = false,
+            )
             WidgetColumn(
-                modifier = Modifier,
+                modifier = Modifier
+                    .padding(top = 16.dp),
                 editMode = editMode,
                 onEditModeChange = {
                     scope.launch { state.lock(hideSearchBar = true) }
+                    editMode = it
                 },
             )
         }
         if (editMode) {
             BackHandler {
+                editMode = false
                 scope.launch { state.unlock() }
             }
         }
@@ -109,6 +122,7 @@ internal object WidgetsComponent : ScaffoldComponent() {
                 navigationIcon = {
                     IconButton(
                         onClick = {
+                            editMode = false
                             scope.launch { state.unlock() }
                         }
                     ) {
