@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,6 +44,7 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.union
+import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -1091,9 +1093,10 @@ internal fun LauncherScaffold(
     val view = LocalView.current
 
     val density = LocalDensity.current
-    val systemBarInsets = WindowInsets.safeDrawing
-        .let { if (!config.showStatusBar) it.exclude(WindowInsets.statusBars) else it }
-        .let { if (!config.showNavBar) it.exclude(WindowInsets.navigationBars) else it }
+    val systemBarInsets = WindowInsets.displayCutout
+        .union(WindowInsets.waterfall)
+        .let { if (config.showStatusBar) it.union(WindowInsets.statusBars) else it }
+        .let { if (config.showNavBar) it.union(WindowInsets.navigationBars) else it }
 
     val searchVM = viewModel<SearchVM>()
     val searchActions = searchVM.searchActionResults
