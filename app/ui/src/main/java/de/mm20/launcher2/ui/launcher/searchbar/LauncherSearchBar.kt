@@ -73,8 +73,6 @@ fun LauncherSearchBar(
         else focusManager.clearFocus()
     }
 
-    val filterBar by searchVM.filterBar.collectAsState(false)
-
     val value by searchVM.searchQuery
 
     Box(modifier = modifier) {

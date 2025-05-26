@@ -31,6 +31,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,7 +65,8 @@ internal object WidgetsComponent : ScaffoldComponent() {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        val editMode = state.isLocked
+        var editMode by rememberSaveable { mutableStateOf(false) }
+
         val scope = rememberCoroutineScope()
         val topPadding by animateDpAsState(if (editMode) 64.dp else 0.dp)
 
@@ -90,11 +92,13 @@ internal object WidgetsComponent : ScaffoldComponent() {
                 editMode = editMode,
                 onEditModeChange = {
                     scope.launch { state.lock(hideSearchBar = true) }
+                    editMode = it
                 },
             )
         }
         if (editMode) {
             BackHandler {
+                editMode = false
                 scope.launch { state.unlock() }
             }
         }
@@ -109,6 +113,7 @@ internal object WidgetsComponent : ScaffoldComponent() {
                 navigationIcon = {
                     IconButton(
                         onClick = {
+                            editMode = false
                             scope.launch { state.unlock() }
                         }
                     ) {

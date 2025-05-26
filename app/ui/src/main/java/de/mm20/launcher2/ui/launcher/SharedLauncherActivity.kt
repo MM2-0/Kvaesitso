@@ -35,6 +35,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.search.SavableSearchable
@@ -136,6 +137,7 @@ abstract class SharedLauncherActivity(
                         val fixedSearchBar by viewModel.fixedSearchBar.collectAsState()
                         val gestures by viewModel.gestureState.collectAsState()
                         val searchBarStyle by viewModel.searchBarStyle.collectAsState()
+                        val searchBarColor by viewModel.searchBarColor.collectAsState()
                         val widgetsOnHomeScreen by viewModel.widgetsOnHomeScreen.collectAsState()
 
                         val fixedRotation by viewModel.fixedRotation.collectAsState()
@@ -153,6 +155,8 @@ abstract class SharedLauncherActivity(
                         }
 
                         val darkTheme = LocalDarkTheme.current
+                        val darkSearchBar = LocalPreferDarkContentOverWallpaper.current
+                                && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark
 
                         LaunchedEffect(dimBackground && darkTheme) {
                             if (dimBackground && darkTheme) {
@@ -207,6 +211,7 @@ abstract class SharedLauncherActivity(
                                 fixedSearchBar,
                                 gestures,
                                 searchBarStyle,
+                                darkSearchBar,
                                 backgroundColor,
                                 lightStatus,
                                 lightNav,
@@ -223,14 +228,14 @@ abstract class SharedLauncherActivity(
                                     ScaffoldConfiguration(
                                         homeComponent = searchComponent,
                                         searchComponent = searchComponent,
-                                        /*swipeDown = ScaffoldGesture(
+                                        swipeDown = ScaffoldGesture(
                                             component = dismissComponent,
                                             animation = ScaffoldAnimation.Push
                                         ),
                                         swipeUp = ScaffoldGesture(
                                             component = dismissComponent,
                                             animation = ScaffoldAnimation.Push
-                                        ),*/
+                                        ),
                                         fixedSearchBar = fixedSearchBar,
                                         searchBarStyle = SearchBarStyle.Solid,
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
@@ -353,6 +358,7 @@ abstract class SharedLauncherActivity(
                                         backgroundColor = backgroundColor,
                                         showStatusBar = !hideStatus,
                                         showNavBar = !hideNav,
+                                        darkSearchBar = darkSearchBar,
                                     )
 
                                     if (config.isUseless()) config.copy(

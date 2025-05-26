@@ -27,7 +27,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,7 +43,6 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.union
-import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -58,6 +56,8 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -172,10 +172,7 @@ internal data class ScaffoldConfiguration(
      * Used for assistant mode.
      */
     val finishOnBack: Boolean = false,
-    /**
-     * If true, the home page is drawn with a background (and blur, if enabled)
-     */
-    //val drawBackgroundOnHome: Boolean = false,
+    val darkSearchBar: Boolean = false,
 ) {
     val searchBarTap = ScaffoldGesture(
         component = searchComponent,
@@ -240,12 +237,24 @@ internal class LauncherScaffoldState(
     private val velocityThreshold: Float,
     private val maxSearchBarOffset: Float,
     private val onHapticFeedback: (HapticFeedbackType) -> Unit,
+    initialGesture: Gesture? = null,
+    initialIsLocked: Boolean = false,
+    initialIsSearchBarHidden: Boolean = false,
 ) {
-    var currentOffset by mutableStateOf(Offset.Zero)
+    var currentOffset by mutableStateOf(when {
+        initialGesture == null || initialGesture.orientation == null || config[initialGesture]?.animation == ScaffoldAnimation.Rubberband -> Offset.Zero
+        initialGesture == Gesture.SwipeRight -> Offset(-size.width, 0f)
+        initialGesture == Gesture.SwipeLeft -> Offset(size.width, 0f)
+        initialGesture == Gesture.SwipeUp -> Offset(0f, -size.height)
+        initialGesture == Gesture.SwipeDown -> Offset(0f, size.height)
+        else -> Offset.Zero
+    })
         private set
-    var currentZOffset by mutableFloatStateOf(0f)
+    var currentZOffset by mutableFloatStateOf(
+        if (initialGesture != null && initialGesture.orientation == null) 1f else 0f
+    )
         private set
-    var currentGesture by mutableStateOf<Gesture?>(null)
+    var currentGesture by mutableStateOf<Gesture?>(initialGesture)
         private set
 
     /**
@@ -364,7 +373,7 @@ internal class LauncherScaffoldState(
     /**
      * True if any page is open, false if on home page.
      */
-    var isSettledOnSecondaryPage by mutableStateOf(false)
+    var isSettledOnSecondaryPage by mutableStateOf(initialGesture != null)
         private set
 
     /**
@@ -1023,9 +1032,9 @@ internal class LauncherScaffoldState(
     /**
      * If true, all gestures are ignored.
      */
-    var isLocked by mutableStateOf(false)
+    var isLocked by mutableStateOf(initialIsLocked)
         private set
-    var isSearchBarHidden by mutableStateOf(false)
+    var isSearchBarHidden by mutableStateOf(initialIsSearchBarHidden)
         private set
 
     /**
@@ -1115,7 +1124,34 @@ internal fun LauncherScaffold(
         val hapticFeedback = LocalHapticFeedback.current
 
         val state =
-            remember(widthPx, heightPx, touchSlop, rubberbandThreshold, minFlingVelocity, config) {
+            rememberSaveable(
+                widthPx, heightPx, touchSlop, rubberbandThreshold, minFlingVelocity, config,
+                saver = listSaver(
+                    save = {
+                        listOf(
+                            it.currentGesture,
+                            it.isSearchBarHidden,
+                            it.isLocked,
+                        )
+                    },
+                    restore = {
+                        LauncherScaffoldState(
+                            config = config,
+                            size = Size(widthPx, heightPx),
+                            touchSlop = touchSlop,
+                            rubberbandThreshold = rubberbandThreshold,
+                            velocityThreshold = minFlingVelocity,
+                            maxSearchBarOffset = maxSearchBarOffset,
+                            onHapticFeedback = {
+                                hapticFeedback.performHapticFeedback(it)
+                            },
+                            initialGesture = it[0] as Gesture?,
+                            initialIsSearchBarHidden = it[1] as Boolean,
+                            initialIsLocked = it[2] as Boolean,
+                        )
+                    }
+                )
+            ) {
                 LauncherScaffoldState(
                     config = config,
                     size = Size(widthPx, heightPx),
@@ -1203,8 +1239,12 @@ internal fun LauncherScaffold(
 
         if (config.wallpaperBlurRadius > 0.dp) {
             val wallpaperBlur by animateIntAsState(
-                if (state.currentProgress >= 0.5f || config.homeComponent.drawBackground) 8.dp.toPixels()
-                    .toInt() else 0
+                if (state.currentProgress >= 0.5f && (state.currentComponent?.drawBackground ?: config.homeComponent.drawBackground)
+                    || state.currentProgress < 0.5f && config.homeComponent.drawBackground) {
+                    8.dp.toPixels().toInt()
+                } else {
+                    0
+                }
             )
             WallpaperBlur { wallpaperBlur }
         }
@@ -1354,10 +1394,6 @@ internal fun LauncherScaffold(
             config.homeComponent.Component(
                 Modifier
                     .fillMaxSize()
-                    .background(
-                        if (config.homeComponent.drawBackground) config.backgroundColor.copy(alpha = 0.85f)
-                        else Color.Transparent
-                    )
                     .combinedClickable(
                         enabled = config.longPress != null || config.doubleTap != null,
                         onClick = {},
@@ -1371,7 +1407,11 @@ internal fun LauncherScaffold(
                         indication = null,
                         interactionSource = null,
                     )
-                    .homePageAnimation(state),
+                    .homePageAnimation(
+                        state,
+                        if (config.homeComponent.drawBackground) config.backgroundColor.copy(alpha = 0.85f)
+                        else Color.Transparent
+                    ),
                 insets = systemBarInsets
                     .let {
                         if (config.searchBarStyle == SearchBarStyle.Hidden) it else it.add(
@@ -1427,6 +1467,7 @@ internal fun LauncherScaffold(
                         { searchVM.launchBestMatchOrAction(activity) }
                     } else null,
                     highlightedAction = highlightedResult as? SearchAction,
+                    darkColors = config.darkSearchBar,
                 )
             }
             if (isFilterBarVisible) {
@@ -1549,14 +1590,16 @@ private fun SecondaryPage(
 
 private fun Modifier.homePageAnimation(
     state: LauncherScaffoldState,
+    backgroundColor: Color,
 ): Modifier {
-    val dir = state.currentGesture ?: return this
-    val component = state.currentComponent ?: return this
+    val dir = state.currentGesture ?: return this.background(backgroundColor)
+    val component = state.currentComponent ?: return this.background(backgroundColor)
 
     if (state.currentAnimation == ScaffoldAnimation.Rubberband) {
         return this then component.homePageModifier(
             state,
             Modifier
+                .background(backgroundColor)
                 .graphicsLayer {
                     translationX =
                         if (dir.orientation == Orientation.Horizontal) state.currentOffset.x else 0f
@@ -1580,9 +1623,10 @@ private fun Modifier.homePageAnimation(
                 scaleY = 1f - (state.currentProgress * 0.03f)
                 alpha = (1f - state.currentProgress).coerceIn(0f, 1f)
             }
+            .background(backgroundColor)
     }
 
-    return this then component.homePageModifier(state, Modifier.absoluteOffset {
+    return this then component.homePageModifier(state, Modifier.background(backgroundColor).absoluteOffset {
         IntOffset(
             x = if (dir.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
             y = if (dir.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
