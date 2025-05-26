@@ -97,6 +97,7 @@ import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
@@ -786,6 +787,7 @@ internal class LauncherScaffoldState(
 
     private val backInterpolation = PathInterpolator(0f, 0f, 0f, 1f)
     fun onPredictiveBack(progress: Float) {
+        if (!isSettledOnSecondaryPage) return
         val gesture = currentGesture ?: return
         val anim = currentAnimation ?: return
 
@@ -1252,12 +1254,15 @@ internal fun LauncherScaffold(
         if (!config.finishOnBack || state.currentProgress > 0) {
             PredictiveBackHandler {
                 try {
+                    state.lock()
                     it.collect {
                         state.onPredictiveBack(it.progress)
                     }
                     scope.launch { state.onPredictiveBackEnd() }
                 } catch (_: CancellationException) {
                     scope.launch { state.onPredictiveBackCancel() }
+                } finally {
+                    state.unlock()
                 }
             }
         }
@@ -1409,8 +1414,11 @@ internal fun LauncherScaffold(
                     )
                     .homePageAnimation(
                         state,
-                        if (config.homeComponent.drawBackground) config.backgroundColor.copy(alpha = 0.85f)
-                        else Color.Transparent
+                        if (config.homeComponent.drawBackground) {
+                            config.backgroundColor.copy(alpha = LocalTransparencyScheme.current.background)
+                        } else {
+                            Color.Transparent
+                        }
                     ),
                 insets = systemBarInsets
                     .let {
@@ -1503,7 +1511,9 @@ internal fun LauncherScaffold(
                     .hazeEffect(hazeState) {
                         blurRadius = 4.dp
                     }
-                    .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f))
+                    .background(
+                        MaterialTheme.colorScheme.surfaceContainer.copy(alpha = LocalTransparencyScheme.current.background)
+                    )
                     .statusBarsPadding()
             )
         }
@@ -1521,7 +1531,9 @@ internal fun LauncherScaffold(
                     .hazeEffect(hazeState) {
                         blurRadius = 4.dp
                     }
-                    .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f))
+                    .background(
+                        MaterialTheme.colorScheme.surfaceContainer.copy(alpha = LocalTransparencyScheme.current.background)
+                    )
                     .navigationBarsPadding()
             )
         }
@@ -1567,7 +1579,7 @@ private fun SecondaryPage(
             .fillMaxSize()
             .secondaryPageAnimation(
                 state,
-                config.backgroundColor,
+                config.backgroundColor.copy(alpha = LocalTransparencyScheme.current.background),
             )
         val composable = composables[component]
 
@@ -1642,7 +1654,7 @@ private fun Modifier.secondaryPageAnimation(
     val component = state.currentComponent ?: return this
 
     val background =
-        if (component.drawBackground) backgroundColor.copy(alpha = 0.85f * state.currentProgress) else Color.Transparent
+        if (component.drawBackground) backgroundColor.copy(alpha = backgroundColor.alpha * state.currentProgress) else Color.Transparent
 
     if (state.currentAnimation == ScaffoldAnimation.Rubberband) {
         return this then Modifier

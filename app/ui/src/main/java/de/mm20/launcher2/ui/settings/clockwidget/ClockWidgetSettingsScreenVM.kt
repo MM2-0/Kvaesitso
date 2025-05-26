@@ -68,7 +68,7 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setUseThemeColor(boolean)
     }
 
-    val widgetsOnHome = settings.fillHeight
+    val fillHeight = settings.fillHeight
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val parts = settings.parts

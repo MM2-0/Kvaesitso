@@ -360,7 +360,7 @@ fun ConfigureClockWidgetSheet(
     val compact by viewModel.compact.collectAsState()
     val color by viewModel.color.collectAsState()
     val style by viewModel.clockStyle.collectAsState()
-    val widgetsOnHome by viewModel.widgetsOnHome.collectAsState()
+    val fillHeight by viewModel.fillHeight.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
     val showSeconds by viewModel.showSeconds.collectAsState()
     val timeFormat by viewModel.timeFormat.collectAsState()
@@ -562,7 +562,7 @@ fun ConfigureClockWidgetSheet(
                     }
                 }
             }
-            if(widgetsOnHome == false) {
+            if (fillHeight == true) {
                 OutlinedCard(
                     modifier = Modifier.padding(top = 16.dp),
                 ) {
