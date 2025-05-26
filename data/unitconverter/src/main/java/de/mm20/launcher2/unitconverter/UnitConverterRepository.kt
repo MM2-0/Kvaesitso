@@ -78,6 +78,7 @@ internal class UnitConverterRepositoryImpl(
         if (!query.matches(Regex("[0-9,.:]+ [^\\s]+")) &&
             !query.matches(Regex("[0-9,.:]+ [^\\s]+ >> [^\\s]+")) &&
             !query.matches(Regex("[0-9,.:]+ [^\\s]+ > [^\\s]+")) &&
+            !query.matches(Regex("[0-9,.:]+ [^\\s]+ to [^\\s]+")) &&
             !query.matches(Regex("[0-9,.:]+ [^\\s]+ - [^\\s]+"))) return null
         val valueStr: String
         val unitStr: String
