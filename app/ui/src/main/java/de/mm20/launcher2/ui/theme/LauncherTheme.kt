@@ -20,7 +20,7 @@ import de.mm20.launcher2.ui.theme.typography.DefaultTypography
 import de.mm20.launcher2.ui.theme.typography.getDeviceDefaultTypography
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import org.koin.androidx.compose.inject
+import org.koin.compose.koinInject
 import de.mm20.launcher2.preferences.ColorScheme as ColorSchemePref
 
 
@@ -30,8 +30,8 @@ fun LauncherTheme(
 ) {
 
     val context = LocalContext.current
-    val uiSettings: UiSettings by inject()
-    val themeRepository: ThemeRepository by inject()
+    val uiSettings: UiSettings = koinInject()
+    val themeRepository: ThemeRepository = koinInject()
 
     val theme by remember {
         uiSettings.theme.flatMapLatest {

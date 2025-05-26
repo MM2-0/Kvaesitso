@@ -824,4 +824,14 @@
     <string name="weather_forecast_precipitation">Précipitations</string>
     <string name="weather_forecast_humidity">Humidité</string>
     <string name="tag_empty_name">Une étiquette ne peut exister sans nom. Si vous continuez, l\'étiquette sera supprimée.</string>
+    <string name="weather_condition_thunder">Tonnerre</string>
+    <string name="weather_condition_haze">Brume</string>
+    <string name="provider_breezy">Breezy Weather</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather est une application de météo gratuite et open-source. Si installée, %1$s peut utiliser Breezy Weather comme source pour les données météo.</string>
+    <string name="action_install">Installer</string>
+    <string name="preference_clock_widget_time_format_12h">12-heures</string>
+    <string name="preference_clock_widget_time_format_24h">24-heures</string>
+    <string name="missing_permission_call_contacts_settings">La permission d\'accès au téléphone est nécessaire pour démarrer un appel</string>
+    <string name="widget_removed">Widget retiré</string>
 </resources>
