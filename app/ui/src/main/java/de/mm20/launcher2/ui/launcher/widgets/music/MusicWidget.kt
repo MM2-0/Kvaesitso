@@ -86,8 +86,8 @@ import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
 import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
-import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalWindowSize
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 import de.mm20.launcher2.widgets.MusicWidget
 import kotlin.math.min
 
@@ -352,7 +352,7 @@ fun MusicWidget(widget: MusicWidget) {
             ) {
                 FilledTonalIconButton(
                     colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalTransparencyScheme.current.surface),
                     ),
                     onClick = { viewModel.togglePause() },
                 ) {

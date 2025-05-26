@@ -54,6 +54,7 @@ fun HomescreenSettingsScreen() {
 
     val dock by viewModel.dock.collectAsStateWithLifecycle(null)
     val fixedRotation by viewModel.fixedRotation.collectAsStateWithLifecycle(null)
+    val widgetsOnHomeScreen by viewModel.widgetsOnHomeScreen.collectAsStateWithLifecycle(null)
     val editButton by viewModel.widgetEditButton.collectAsStateWithLifecycle(null)
     val searchBarStyle by viewModel.searchBarStyle.collectAsStateWithLifecycle(null)
     val searchBarColor by viewModel.searchBarColor.collectAsStateWithLifecycle(null)
@@ -82,18 +83,6 @@ fun HomescreenSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.preference_clockwidget_favorites_part)) {
-                SwitchPreference(
-                    title = stringResource(R.string.preference_clockwidget_favorites_part),
-                    summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
-                    value = dock == true,
-                    onValueChanged = {
-                        viewModel.setDock(it)
-                    },
-                )
-            }
-        }
-        item {
             PreferenceCategory(
                 title = stringResource(id = R.string.preference_category_widgets)
             ) {
@@ -104,6 +93,21 @@ fun HomescreenSettingsScreen() {
                         viewModel.showClockWidgetSheet = true
                     }
                 )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_clockwidget_favorites_part),
+                    summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
+                    value = dock == true,
+                    onValueChanged = {
+                        viewModel.setDock(it)
+                    },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_widgets_on_home_screen),
+                    summary = stringResource(R.string.preference_widgets_on_home_screen_summary),
+                    value = widgetsOnHomeScreen == true,
+                    onValueChanged = {
+                        viewModel.setWidgetsOnHomeScreen(it)
+                    })
                 SwitchPreference(
                     title = stringResource(id = R.string.preference_edit_button),
                     summary = stringResource(id = R.string.preference_widgets_edit_button_summary),

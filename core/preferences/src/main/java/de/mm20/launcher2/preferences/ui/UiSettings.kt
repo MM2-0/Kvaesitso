@@ -1,6 +1,5 @@
 package de.mm20.launcher2.preferences.ui
 
-import de.mm20.launcher2.preferences.BaseLayout
 import de.mm20.launcher2.preferences.ColorScheme
 import de.mm20.launcher2.preferences.Font
 import de.mm20.launcher2.preferences.IconShape
@@ -225,20 +224,9 @@ class UiSettings internal constructor(
         }
     }
 
-    val baseLayout
-        get() = launcherDataStore.data.map {
-            it.uiBaseLayout
-        }.distinctUntilChanged()
-
-    fun setBaseLayout(baseLayout: BaseLayout) {
-        launcherDataStore.update {
-            it.copy(uiBaseLayout = baseLayout)
-        }
-    }
-
     val clockFillScreen
         get() = launcherDataStore.data.map {
-            it.clockWidgetFillHeight
+            it.homeScreenWidgets
         }.distinctUntilChanged()
 
     val searchBarStyle
@@ -346,6 +334,23 @@ class UiSettings internal constructor(
         get() = launcherDataStore.data.map {
             it.homeScreenDock
         }.distinctUntilChanged()
+
+    fun setDock(dock: Boolean) {
+        launcherDataStore.update {
+            it.copy(homeScreenDock = dock)
+        }
+    }
+
+    val homeScreenWidgets
+        get() = launcherDataStore.data.map {
+            it.homeScreenWidgets
+        }.distinctUntilChanged()
+
+    fun setHomeScreenWidgets(widgets: Boolean) {
+        launcherDataStore.update {
+            it.copy(homeScreenWidgets = widgets)
+        }
+    }
 
     val widgetEditButton
         get() = launcherDataStore.data.map {

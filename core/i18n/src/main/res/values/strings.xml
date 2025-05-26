@@ -668,6 +668,8 @@
     <string name="preference_compact_tags">Compact tags</string>
     <string name="preference_compact_tags_summary">Hide tag labels or icons to reduce the space occupied by tags</string>
     <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
+    <string name="preference_widgets_on_home_screen">Widgets on home screen</string>
+    <string name="preference_widgets_on_home_screen_summary">Show widgets on the home screen instead of an extra page</string>
     <string name="preference_screen_homescreen">Home screen</string>
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
     <string name="preference_screen_icons">Grid &amp; icons</string>
@@ -772,11 +774,13 @@
     <string name="preference_gesture_swipe_down">Swipe down</string>
     <string name="preference_gesture_swipe_left">Swipe left</string>
     <string name="preference_gesture_swipe_right">Swipe right</string>
+    <string name="preference_gesture_swipe_up">Swipe up</string>
     <string name="preference_gesture_double_tap">Double tap</string>
     <string name="preference_gesture_long_press">Long press</string>
     <string name="preference_gesture_home_button">Home button/gesture</string>
     <string name="gesture_action_none">Do nothing</string>
     <string name="gesture_action_open_search">Open search</string>
+    <string name="gesture_action_widgets">Widgets</string>
     <string name="gesture_action_launch_app">Launch app</string>
     <string name="gesture_action_notifications">Open notification drawer</string>
     <string name="gesture_action_lock_screen">Turn off screen</string>
@@ -1023,4 +1027,6 @@
         <item quantity="other">in %1$d minutes</item>
     </plurals>
     <string name="departure_time_departed">departed</string>
+    <string name="bad_configuration_title">Congratulations, you\'ve locked yourself out!</string>
+    <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher.</string>
 </resources>

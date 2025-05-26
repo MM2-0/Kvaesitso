@@ -25,12 +25,13 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.locals.LocalCardStyle
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 
 @Composable
 fun LauncherCard(
     modifier: Modifier = Modifier,
     elevation: Dp = 2.dp,
-    backgroundOpacity: Float = LocalCardStyle.current.opacity,
+    backgroundOpacity: Float = LocalTransparencyScheme.current.surface,
     shape: Shape = MaterialTheme.shapes.medium,
     color: Color = MaterialTheme.colorScheme.surface.copy(alpha = backgroundOpacity.coerceIn(0f, 1f)),
     border: BorderStroke? = LocalCardStyle.current.borderWidth.takeIf { it > 0 }
@@ -55,7 +56,7 @@ fun PartialLauncherCard(
     isTop: Boolean = false,
     isBottom: Boolean = false,
     elevation: Dp = 2.dp,
-    backgroundOpacity: Float = LocalCardStyle.current.opacity,
+    backgroundOpacity: Float = LocalTransparencyScheme.current.surface,
     content: @Composable () -> Unit
 ) {
 
@@ -79,7 +80,7 @@ fun PartialLauncherCard(
 private fun CardMiddlePiece(
     modifier: Modifier,
     elevation: Dp,
-    backgroundOpacity: Float = LocalCardStyle.current.opacity,
+    backgroundOpacity: Float = LocalTransparencyScheme.current.surface,
     content: @Composable () -> Unit
 ) {
     val borderWidth = LocalCardStyle.current.borderWidth.dp

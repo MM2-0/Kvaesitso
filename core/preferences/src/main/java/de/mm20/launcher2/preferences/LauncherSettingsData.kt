@@ -4,15 +4,17 @@ import android.content.Context
 import de.mm20.launcher2.search.SearchFilters
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 3,
+    val schemaVersion: Int = 5,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     val uiTheme: ThemeDescriptor = ThemeDescriptor.Default,
     val uiCompatModeColors: Boolean = false,
     val uiFont: Font = Font.Outfit,
+    @Deprecated("No longer in use, only used for migration")
     val uiBaseLayout: BaseLayout = BaseLayout.PullDown,
     val uiOrientation: ScreenOrientation = ScreenOrientation.Auto,
 
@@ -39,10 +41,12 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetBatteryPart: Boolean = true,
     val clockWidgetMusicPart: Boolean = true,
     val clockWidgetDatePart: Boolean = true,
+    @Deprecated("Use homeScreenWidgets")
     val clockWidgetFillHeight: Boolean = true,
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
 
     val homeScreenDock: Boolean = false,
+    val homeScreenWidgets: Boolean = false,
 
     val favoritesEnabled: Boolean = true,
     val favoritesFrequentlyUsed: Boolean = true,
@@ -123,9 +127,10 @@ data class LauncherSettingsData internal constructor(
 
     val widgetsEditButton: Boolean = true,
 
-    val gesturesSwipeDown: GestureAction = GestureAction.Notifications,
+    val gesturesSwipeDown: GestureAction = GestureAction.Search,
     val gesturesSwipeLeft: GestureAction = GestureAction.NoAction,
     val gesturesSwipeRight: GestureAction = GestureAction.NoAction,
+    val gesturesSwipeUp: GestureAction = GestureAction.Widgets,
     val gesturesDoubleTap: GestureAction = GestureAction.ScreenLock,
     val gesturesLongPress: GestureAction = GestureAction.NoAction,
     val gesturesHomeButton: GestureAction = GestureAction.NoAction,
@@ -365,6 +370,10 @@ sealed interface GestureAction {
     @Serializable
     @SerialName("search")
     data object Search : GestureAction
+
+    @Serializable
+    @SerialName("widgets")
+    data object Widgets : GestureAction
 
     @Serializable
     @SerialName("power_menu")

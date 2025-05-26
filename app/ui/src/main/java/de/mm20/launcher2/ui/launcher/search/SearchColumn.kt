@@ -53,6 +53,7 @@ import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 
 @Composable
 fun SearchColumn(
@@ -369,7 +370,7 @@ fun LazyListScope.SingleResult(
                     vertical = 4.dp,
                 ),
             color = if (highlight) MaterialTheme.colorScheme.secondaryContainer
-            else MaterialTheme.colorScheme.surface.copy(LocalCardStyle.current.opacity)
+            else MaterialTheme.colorScheme.surface.copy(LocalTransparencyScheme.current.surface)
         ) {
             content()
         }

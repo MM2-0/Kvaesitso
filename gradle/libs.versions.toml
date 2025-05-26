@@ -19,8 +19,8 @@ kotlinx-serialization = "1.8.1"
 
 jetbrains-markdown = "0.7.3"
 
-androidx-compose = "1.9.0-alpha02"
-androidx-compose-material3 = "1.4.0-alpha14"
+androidx-compose = "1.9.0-alpha03"
+androidx-compose-material3 = "1.4.0-alpha15"
 androidx-compose-materialicons = "1.7.8"
 androidx-lifecycle = "2.9.0"
 androidx-core = "1.16.0"
@@ -37,6 +37,7 @@ androidx-constraint-layout = "1.1.1"
 androidx-emojipicker = "1.5.0"
 
 accompanist = "0.36.0"
+haze = "1.6.0"
 coil = "2.7.0"
 koin = "4.0.4"
 retrofit = "2.11.0"
@@ -95,6 +96,7 @@ accompanist-pager = { group = "com.google.accompanist", name = "accompanist-page
 accompanist-pagerindicators = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanist" }
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
 accompanist-navigationanimation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
+haze = {group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
 
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "androidx-constraint-layout" }
 androidx-transition = { group = "androidx.transition", name = "transition", version = "1.6.0" }
