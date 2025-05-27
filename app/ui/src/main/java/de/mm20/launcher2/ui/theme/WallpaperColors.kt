@@ -48,8 +48,8 @@ fun wallpaperColorsAsState(): State<WallpaperColors> {
     if (isAtLeastApiLevel(27)) {
         DisposableEffect(null) {
             val wallpaperManager = WallpaperManager.getInstance(context)
-            val callback = callback@{ colors: android.app.WallpaperColors?, which: Int ->
-                if (which and WallpaperManager.FLAG_SYSTEM == 0) return@callback
+            val callback = WallpaperManager.OnColorsChangedListener { colors, which ->
+                if (which and WallpaperManager.FLAG_SYSTEM == 0) return@OnColorsChangedListener
                 if (colors != null) {
                     state.value = WallpaperColors.fromPlatformType(colors)
                 } else {

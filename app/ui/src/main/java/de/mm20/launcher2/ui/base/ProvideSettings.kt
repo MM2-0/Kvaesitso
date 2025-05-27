@@ -9,6 +9,8 @@ import de.mm20.launcher2.ui.component.ProvideIconShape
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.TransparencyScheme
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.combine
@@ -46,6 +48,10 @@ fun ProvideSettings(
         LocalCardStyle provides cardStyle,
         LocalFavoritesEnabled provides favoritesEnabled,
         LocalGridSettings provides gridSettings,
+        LocalTransparencyScheme provides TransparencyScheme(
+            background = cardStyle.opacity * 0.85f,
+            surface = cardStyle.opacity,
+        )
     ) {
         ProvideIconShape(iconShape) {
             content()

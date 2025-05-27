@@ -51,6 +51,7 @@ android {
             "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
             "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
             "-opt-in=androidx.compose.animation.ExperimentalSharedTransitionApi",
+            "-Xwhen-guards",
         )
     }
 
@@ -94,6 +95,8 @@ dependencies {
     implementation(libs.accompanist.pagerindicators)
     implementation(libs.accompanist.flowlayout)
     implementation(libs.accompanist.navigationanimation)
+
+    implementation(libs.haze)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.activitycompose)

@@ -16,4 +16,7 @@ fun LauncherBottomSheets() {
     bottomSheetManager.editTagSheetShown.value?.let {
         EditTagSheet(tag = it, onDismiss = { bottomSheetManager.dismissEditTagSheet() })
     }
+    bottomSheetManager.failedGestureSheetShown.value?.let {
+        FailedGestureSheet(it, onDismiss = { bottomSheetManager.dismissFailedGestureSheet() })
+    }
 }
