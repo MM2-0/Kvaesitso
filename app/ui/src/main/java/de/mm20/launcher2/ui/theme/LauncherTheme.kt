@@ -77,7 +77,7 @@ fun LauncherTheme(
     CompositionLocalProvider(
         LocalDarkTheme provides darkTheme
     ) {
-        MaterialTheme(
+        MaterialExpressiveTheme(
             colorScheme = colorScheme,
             typography = typography,
             shapes = Shapes(
