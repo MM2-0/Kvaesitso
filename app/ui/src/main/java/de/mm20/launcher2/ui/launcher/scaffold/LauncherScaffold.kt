@@ -1389,15 +1389,12 @@ internal fun LauncherScaffold(
         ) {
             val searchBarInsets = WindowInsets(
                 top = if (config.searchBarPosition == SearchBarPosition.Top) searchBarHeight + 8.dp else 8.dp,
-                bottom = (if (config.searchBarPosition == SearchBarPosition.Bottom) searchBarHeight + 8.dp else 8.dp) +
-                        filterBarHeight
+                bottom = if (config.searchBarPosition == SearchBarPosition.Bottom) searchBarHeight + 8.dp else 8.dp
             )
 
             val filterBarInsets = WindowInsets(
                 bottom = filterBarHeight
             )
-
-            val insets = systemBarInsets.add(searchBarInsets).add(filterBarInsets)
 
             config.homeComponent.Component(
                 Modifier
@@ -1424,12 +1421,12 @@ internal fun LauncherScaffold(
                         }
                     ),
                 insets = systemBarInsets
+                    .let { if (config.homeComponent.hasIme) it.union(WindowInsets.ime) else it }
                     .let {
                         if (config.searchBarStyle == SearchBarStyle.Hidden) it else it.add(
                             searchBarInsets
                         )
                     }
-                    .let { if (config.homeComponent.hasIme) it.union(WindowInsets.ime) else it }
                     .asPaddingValues(),
                 state
             )
@@ -1439,8 +1436,9 @@ internal fun LauncherScaffold(
                 config = config,
                 modifier = Modifier
                     .fillMaxSize(),
-                insets = insets
+                insets = systemBarInsets
                     .let { if (state.currentComponent?.hasIme == true) it.union(WindowInsets.ime) else it }
+                    .add(searchBarInsets).add(filterBarInsets)
                     .asPaddingValues(),
             )
 
