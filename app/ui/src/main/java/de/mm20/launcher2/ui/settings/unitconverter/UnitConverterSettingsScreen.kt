@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings.unitconverter
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Accessible
 import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,6 +13,7 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.component.preferences.TextPreference
 import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
@@ -44,6 +46,17 @@ fun UnitConverterSettingsScreen() {
                         viewModel.setCurrencyConverter(it)
                     }
                 )
+                val customVerbConverter by viewModel.customVerb.collectAsState()
+                TextPreference(
+                    title = stringResource(R.string.preference_search_unitscustomverb),
+                    summary = stringResource(R.string.preference_search_unitcustomverb_summary),
+                    enabled = unitConverter != false,
+                    placeholder = stringResource(id = R.string.preference_search_unitsplaceholder),
+                    value = customVerbConverter,
+                    onValueChanged = {
+                        viewModel.setCustomVerb(it)
+                    }
+                )
             }
             PreferenceCategory {
                 Preference(
@@ -54,6 +67,8 @@ fun UnitConverterSettingsScreen() {
                     }
                 )
             }
+
+
         }
 
     }
