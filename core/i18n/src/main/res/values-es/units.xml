@@ -325,4 +325,13 @@
         <item quantity="other">decímetros</item>
     </plurals>
     <string name="dimension_velocity">Velocidad</string>
+    <string name="dimension_area">Área</string>
+    <string name="dimension_currency">Divisa</string>
+    <string name="dimension_mass">Masa</string>
+    <string name="dimension_volume">Volúmen</string>
+    <string name="dimension_pressure">Presión</string>
+    <string name="dimension_frequency">Frecuencia</string>
+    <string name="dimension_energy">Energía</string>
+    <string name="dimension_temperature">Temperatura</string>
+    <string name="dimension_time">Tiempo</string>
 </resources>
