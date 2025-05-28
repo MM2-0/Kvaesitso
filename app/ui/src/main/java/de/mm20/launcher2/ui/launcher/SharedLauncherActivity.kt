@@ -345,11 +345,6 @@ abstract class SharedLauncherActivity(
                                             gestures.longPressApp,
                                             Gesture.LongPress,
                                         ),
-                                        homeButton = getScaffoldGesture(
-                                            gestures.homeButtonAction,
-                                            gestures.homeButtonApp,
-                                            Gesture.HomeButton,
-                                        ),
                                         fixedSearchBar = fixedSearchBar,
                                         searchBarStyle = searchBarStyle,
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,

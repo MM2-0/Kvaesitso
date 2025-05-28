@@ -142,7 +142,6 @@ internal data class ScaffoldConfiguration(
     val swipeRight: ScaffoldGesture? = null,
     val doubleTap: ScaffoldGesture? = null,
     val longPress: ScaffoldGesture? = null,
-    val homeButton: ScaffoldGesture? = null,
     /**
      * Position of the search bar
      */
@@ -208,7 +207,6 @@ private operator fun ScaffoldConfiguration.get(gesture: Gesture): ScaffoldGestur
         Gesture.SwipeRight -> swipeRight
         Gesture.DoubleTap -> doubleTap
         Gesture.LongPress -> longPress
-        Gesture.HomeButton -> homeButton
         Gesture.TapSearchBar -> searchBarTap
     }
 }
@@ -221,7 +219,6 @@ enum class Gesture(val orientation: Orientation?) {
     DoubleTap(null),
     LongPress(null),
     TapSearchBar(null),
-    HomeButton(null),
 }
 
 internal class LauncherScaffoldState(
@@ -753,11 +750,6 @@ internal class LauncherScaffoldState(
         performTapGesture(Gesture.LongPress)
     }
 
-    suspend fun onHomeButtonPress() {
-        performTapGesture(Gesture.HomeButton)
-
-    }
-
     suspend fun onSearchBarTap() {
         if (currentComponent is SearchComponent) return
         openSearch()
@@ -1198,17 +1190,7 @@ internal fun LauncherScaffold(
             var pauseTime = 0L
             lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 try {
-                    if (pauseTime > 0L && System.currentTimeMillis() - pauseTime < 50L) {
-                        if (!state.isLocked) {
-                            if (state.currentProgress > 0f) {
-                                state.onPredictiveBackEnd()
-                            } else {
-                                state.onHomeButtonPress()
-                            }
-                        } else {
-                            activity.onBackPressedDispatcher.onBackPressed()
-                        }
-                    } else if (pauseTime > 0L && System.currentTimeMillis() - pauseTime > 5000L) {
+                    if (pauseTime > 0L && System.currentTimeMillis() - pauseTime > 5000L) {
                         if (!state.isLocked) {
                             state.reset()
                             searchVM.reset()
