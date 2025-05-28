@@ -840,4 +840,10 @@
         <item quantity="few">+%1$d nedokončené úkoly</item>
         <item quantity="other">+%1$d nedokončených úkolů</item>
     </plurals>
+    <string name="preference_widgets_on_home_screen">Widgety na domovské obrazovce</string>
+    <string name="preference_widgets_on_home_screen_summary">Zobrazit widgety na domovské stránce namísto další stránky</string>
+    <string name="preference_gesture_swipe_up">Posun nahoru</string>
+    <string name="gesture_action_widgets">Widgety</string>
+    <string name="bad_configuration_title">Gratulujeme, uzamkli jste se!</string>
+    <string name="bad_configuration_summary">Objevili jste kombinaci nastavení, kvůli které není dostupné ani vyhledávání, ani nastavení, čímž jste se prakticky uzamkli z launcheru.</string>
 </resources>
