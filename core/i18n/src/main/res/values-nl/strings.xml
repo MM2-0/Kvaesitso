@@ -808,4 +808,31 @@
     <string name="preference_contacts_call_on_tap">Tik om te bellen</string>
     <string name="preference_contacts_call_on_tap_summary">Start direct een gesprek bij het tikken op een telefoonnummer</string>
     <string name="missing_permission_call_contacts_settings">Telefonierechten zijn vereist om oproepen te starten</string>
+    <string name="weather_condition_thunder">Onweer</string>
+    <string name="weather_condition_haze">Nevel</string>
+    <string name="provider_breezy">Breezy Weather</string>
+    <string name="preference_location_breezy">Locatie beheren in Breezy Weather</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather is een gratis en open-source weer-app. Indien geïnstalleerd, kan %1$s Breezy Weather gebruiken als gegevensbron voor weergegevens.</string>
+    <string name="preference_launch_breezyweather_app">Breezy Weather openen</string>
+    <string name="preference_breezyweather_integration_instructions">Om Breezy Weather te gebruiken als leverancier van weergegevens:\n\n1. Ga naar Breezy Weather &gt; Settings &gt; Widgets &amp; Live wallpaper &gt; Send Gadgetbridge data &gt; Enable %1$s\n\n2. Selecteer in %1$s Breezy Weather als leverancier van weergegevens</string>
+    <string name="action_install">Installeren</string>
+    <string name="missing_permission_tasks_search_settings">Toestemming voor taken is vereist om taken te zoeken</string>
+    <string name="missing_permission_tasks_integration">Toestemming voor taken is vereist om de takenintegratie te gebruiken</string>
+    <string name="preference_search_tasks">Taken</string>
+    <string name="preference_search_tasks_summary">Taken zoeken in de Tasks app</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <string name="preference_tasks_integration_description">Tasks is een gratis en open-source to-do-lijst en herinneringen-app. Indien geïnstalleerd, kan %1$s je taken vanuit de Tasks-app weergeven en doorzoeken.</string>
+    <string name="preference_tasks_integration_ready">Integratie met Tasks is volledig ingesteld en klaar voor gebruik.</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d onvoltooide taak</item>
+        <item quantity="other">+%1$d onvoltooide taken</item>
+    </plurals>
+    <string name="preference_launch_tasks_app">Tasks app openen</string>
+    <string name="preference_widgets_on_home_screen_summary">Toon widgets op het thuisscherm in plaats van op een extra pagina</string>
+    <string name="preference_gesture_swipe_up">Naar boven vegen</string>
+    <string name="gesture_action_widgets">Widgets</string>
+    <string name="preference_widgets_on_home_screen">Widgets op het thuisscherm</string>
+    <string name="bad_configuration_title">Proficiat, je hebt jezelf buiten gesloten!</string>
+    <string name="bad_configuration_summary">Je hebt een combinatie van instellingen ontdekt die zowel zoeken als de instellingen onbereikbaar maakt - je bent nu volledig uit de startschermapp gesloten.</string>
 </resources>

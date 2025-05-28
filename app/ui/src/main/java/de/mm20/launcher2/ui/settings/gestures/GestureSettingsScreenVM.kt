@@ -7,7 +7,6 @@ import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.BaseLayout
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
@@ -20,7 +19,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -34,25 +32,17 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val baseLayout = uiSettings.baseLayout
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setBaseLayout(baseLayout: BaseLayout) {
-        uiSettings.setBaseLayout(baseLayout)
-    }
-
-
     val swipeDown = gestureSettings.swipeDown
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val swipeLeft = gestureSettings.swipeLeft
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val swipeRight = gestureSettings.swipeRight
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val swipeUp = gestureSettings.swipeUp
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val doubleTap = gestureSettings.doubleTap
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val longPress = gestureSettings.longPress
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val homeButton = gestureSettings.homeButton
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setSwipeDown(action: GestureAction) {
@@ -67,16 +57,16 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
         gestureSettings.setSwipeRight(action)
     }
 
+    fun setSwipeUp(action: GestureAction) {
+        gestureSettings.setSwipeUp(action)
+    }
+
     fun setDoubleTap(action: GestureAction) {
         gestureSettings.setDoubleTap(action)
     }
 
     fun setLongPress(action: GestureAction) {
         gestureSettings.setLongPress(action)
-    }
-
-    fun setHomeButton(action: GestureAction) {
-        gestureSettings.setHomeButton(action)
     }
 
     val swipeLeftApp: Flow<SavableSearchable?> = swipeLeft
@@ -121,6 +111,20 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
         setSwipeDown(GestureAction.Launch(searchable.key))
     }
 
+    val swipeUpApp: Flow<SavableSearchable?> = swipeUp
+        .flatMapLatest {
+            if (it !is GestureAction.Launch || it.key == null) flowOf(null)
+            else searchableRepository.getByKeys(listOf(it.key!!)).map {
+                it.firstOrNull()
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
+
+    fun setSwipeUpApp(searchable: SavableSearchable?) {
+        searchable?.let { searchableRepository.insert(it) } ?: return
+        setSwipeUp(GestureAction.Launch(searchable.key))
+    }
+
     val longPressApp: Flow<SavableSearchable?> = longPress
         .flatMapLatest {
             if (it !is GestureAction.Launch || it.key == null) flowOf(null)
@@ -148,21 +152,6 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
         searchable?.let { searchableRepository.insert(it) } ?: return
         setDoubleTap(GestureAction.Launch(searchable.key))
     }
-
-    val homeButtonApp: Flow<SavableSearchable?> = homeButton
-        .flatMapLatest {
-            if (it !is GestureAction.Launch || it.key == null) flowOf(null)
-            else searchableRepository.getByKeys(listOf(it.key!!)).map {
-                it.firstOrNull()
-            }
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
-
-    fun setHomeButtonApp(searchable: SavableSearchable?) {
-        searchable?.let { searchableRepository.insert(it) } ?: return
-        setHomeButton(GestureAction.Launch(searchable.key))
-    }
-
 
     fun requestPermission(context: AppCompatActivity) {
         permissionsManager.requestPermission(context, PermissionGroup.Accessibility)

@@ -22,7 +22,7 @@ import de.mm20.launcher2.ui.common.FavoritesTagSelector
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 import de.mm20.launcher2.ui.layout.BottomReversed
-import de.mm20.launcher2.ui.locals.LocalCardStyle
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 
 fun LazyListScope.SearchFavorites(
     favorites: List<SavableSearchable>,
@@ -47,7 +47,7 @@ fun LazyListScope.SearchFavorites(
                     )
                     .background(
                         MaterialTheme.colorScheme.surface.copy(
-                            LocalCardStyle.current.opacity
+                            LocalTransparencyScheme.current.surface
                         ),
                         MaterialTheme.shapes.medium
                     )

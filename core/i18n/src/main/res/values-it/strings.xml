@@ -840,4 +840,10 @@
         <item quantity="other">+%1$d attività non completate</item>
     </plurals>
     <string name="preference_launch_tasks_app">Apri app Tasks</string>
+    <string name="preference_widgets_on_home_screen_summary">Mostra i widget nella schermata home invece che in una pagina aggiuntiva</string>
+    <string name="preference_widgets_on_home_screen">Widget nella schermata home</string>
+    <string name="preference_gesture_swipe_up">Scorri su</string>
+    <string name="gesture_action_widgets">Widget</string>
+    <string name="bad_configuration_title">Congratulazioni, ti sei chiuso fuori!</string>
+    <string name="bad_configuration_summary">Hai scoperto una combinazione di impostazioni che rende inaccessibili sia la ricerca sia le impostazioni, impedendoti di fatto di accedere al launcher.</string>
 </resources>

@@ -5,13 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.format.DateUtils
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -81,8 +79,7 @@ import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
-import de.mm20.launcher2.ui.locals.LocalCardStyle
-import de.mm20.launcher2.ui.modifier.consumeAllScrolling
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -121,7 +118,9 @@ fun WeatherWidget(widget: WeatherWidget) {
     Column {
         if (!isProviderAvailable) {
             Banner(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 text = stringResource(R.string.weather_widget_no_provider),
                 icon = Icons.Rounded.ErrorOutline,
                 primaryAction = {
@@ -134,7 +133,9 @@ fun WeatherWidget(widget: WeatherWidget) {
                         Icon(
                             Icons.AutoMirrored.Rounded.OpenInNew,
                             null,
-                            modifier = Modifier.padding(end = ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
+                            modifier = Modifier
+                                .padding(end = ButtonDefaults.IconSpacing)
+                                .size(ButtonDefaults.IconSize)
                         )
                         Text(stringResource(R.string.settings))
                     }
@@ -179,7 +180,7 @@ fun WeatherWidget(widget: WeatherWidget) {
             val currentDayForecasts by viewModel.currentDayForecasts
 
             Surface(
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = LocalCardStyle.current.opacity),
+                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = LocalTransparencyScheme.current.surface),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
@@ -240,26 +241,26 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 )
             }
             .clickable(
-            enabled = weatherApp != null,
-            onClick = {
-                context.tryStartActivity(
-                    Intent().also {
-                        it.component = weatherApp?.activityInfo?.let {
-                            ComponentName(it.packageName, it.name)
-                        }
-                    },
-                    ActivityOptionsCompat.makeClipRevealAnimation(
-                        view,
-                        bounds.left.toInt(),
-                        bounds.top.toInt(),
-                        bounds.width.toInt(),
-                        bounds.height.toInt()
-                    ).toBundle()
-                )
-            },
-            interactionSource = remember { MutableInteractionSource() },
-            indication = LocalIndication.current,
-        )
+                enabled = weatherApp != null,
+                onClick = {
+                    context.tryStartActivity(
+                        Intent().also {
+                            it.component = weatherApp?.activityInfo?.let {
+                                ComponentName(it.packageName, it.name)
+                            }
+                        },
+                        ActivityOptionsCompat.makeClipRevealAnimation(
+                            view,
+                            bounds.left.toInt(),
+                            bounds.top.toInt(),
+                            bounds.width.toInt(),
+                            bounds.height.toInt()
+                        ).toBundle()
+                    )
+                },
+                interactionSource = remember { MutableInteractionSource() },
+                indication = LocalIndication.current,
+            )
     ) {
 
         Column(
@@ -296,7 +297,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                             topEnd = CornerSize(0),
                             bottomEnd = CornerSize(0)
                         ),
-                        color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
+                        color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalTransparencyScheme.current.surface),
                     ) {
                         Text(
                             text = "${forecast.provider} (${
@@ -451,8 +452,7 @@ fun WeatherTimeSelector(
     LazyRow(
         state = listState,
         modifier = modifier
-            .fillMaxWidth()
-            .consumeAllScrolling(),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -476,7 +476,8 @@ fun WeatherTimeSelector(
                     verticalArrangement = Arrangement.SpaceEvenly
                 ) {
                     WeatherIcon(
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
                             .semantics {
                                 contentDescription = fc.condition
                             },
@@ -515,8 +516,7 @@ fun WeatherDaySelector(
     LazyRow(
         state = listState,
         modifier = modifier
-            .fillMaxWidth()
-            .consumeAllScrolling(),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp),

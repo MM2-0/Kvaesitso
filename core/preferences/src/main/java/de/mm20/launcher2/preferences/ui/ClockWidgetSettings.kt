@@ -64,22 +64,10 @@ class ClockWidgetSettings internal constructor(
     }
 
     val fillHeight
-        get() = launcherDataStore.data.map { it.clockWidgetFillHeight }
-
-    fun setFillHeight(fillHeight: Boolean) {
-        launcherDataStore.update {
-            it.copy(clockWidgetFillHeight = fillHeight)
-        }
-    }
+        get() = launcherDataStore.data.map { !it.homeScreenWidgets }
 
     val dock
         get() = launcherDataStore.data.map { it.homeScreenDock }
-
-    fun setDock(dock: Boolean) {
-        launcherDataStore.update {
-            it.copy(homeScreenDock = dock)
-        }
-    }
 
     val alignment
         get() = launcherDataStore.data.map { it.clockWidgetAlignment }

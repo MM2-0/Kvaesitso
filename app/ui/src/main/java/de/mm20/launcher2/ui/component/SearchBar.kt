@@ -47,6 +47,7 @@ import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalCardStyle
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 
 @Composable
 fun SearchBar(
@@ -102,7 +103,7 @@ fun SearchBar(
             }
         }) {
         when {
-            it == SearchBarLevel.Active -> LocalCardStyle.current.opacity
+            it == SearchBarLevel.Active -> LocalTransparencyScheme.current.surface
             style != SearchBarStyle.Transparent -> 1f
             it == SearchBarLevel.Resting -> 0f
             else -> 1f
@@ -165,9 +166,6 @@ fun SearchBar(
                                 color = contentColor
                             )
                         }
-                        LaunchedEffect(level) {
-                            if (level == SearchBarLevel.Resting) onUnfocus()
-                        }
                         BasicTextField(
                             modifier = Modifier
                                 .onFocusChanged {
@@ -207,7 +205,7 @@ fun SearchBar(
     }
 }
 
-enum class SearchBarLevel {
+enum class SearchBarLevel: Comparable<SearchBarLevel> {
     /**
      * The default, "hidden" state, when the launcher is in its initial state (scroll position is 0
      * and search is closed)

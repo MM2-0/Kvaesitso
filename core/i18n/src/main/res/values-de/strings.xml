@@ -829,4 +829,10 @@
         <item quantity="one">+%1$d unerledigte Aufgabe</item>
         <item quantity="other">+%1$d unerledigte Aufgaben</item>
     </plurals>
+    <string name="preference_widgets_on_home_screen_summary">Widgets auf dem Startbildschirm anstatt auf einer eigenen Seite anzeigen</string>
+    <string name="preference_widgets_on_home_screen">Widgets auf Startbildschirm</string>
+    <string name="preference_gesture_swipe_up">Nach oben wischen</string>
+    <string name="gesture_action_widgets">Widgets</string>
+    <string name="bad_configuration_title">Herzlichen Glückwunsch, Sie haben sich ausgesperrt!</string>
+    <string name="bad_configuration_summary">Sie haben eine Kombination von Einstellungen entdeckt, durch die sowohl die Suche, als auch die Einstellungen unerreichbar sind, wodurch Sie sich praktisch ausgesperrt haben.</string>
 </resources>
