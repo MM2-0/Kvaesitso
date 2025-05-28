@@ -681,4 +681,8 @@
     <string name="clock_style_empty">Sem relógio</string>
     <string name="clock_variant_outlined">Contornado</string>
     <string name="menu_show_filters">Mostrar filtros</string>
+    <string name="weather_condition_thunder">Trovões</string>
+    <string name="weather_condition_haze">Neblina</string>
+    <string name="widget_removed">Widget removido</string>
+    <string name="action_install">Instalar</string>
 </resources>

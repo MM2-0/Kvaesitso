@@ -829,4 +829,10 @@
         <item quantity="other">+%1$d onvoltooide taken</item>
     </plurals>
     <string name="preference_launch_tasks_app">Tasks app openen</string>
+    <string name="preference_widgets_on_home_screen_summary">Toon widgets op het thuisscherm in plaats van op een extra pagina</string>
+    <string name="preference_gesture_swipe_up">Naar boven vegen</string>
+    <string name="gesture_action_widgets">Widgets</string>
+    <string name="preference_widgets_on_home_screen">Widgets op het thuisscherm</string>
+    <string name="bad_configuration_title">Proficiat, je hebt jezelf buiten gesloten!</string>
+    <string name="bad_configuration_summary">Je hebt een combinatie van instellingen ontdekt die zowel zoeken als de instellingen onbereikbaar maakt - je bent nu volledig uit de startschermapp gesloten.</string>
 </resources>
