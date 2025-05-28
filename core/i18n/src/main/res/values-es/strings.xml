@@ -706,4 +706,5 @@
     <string name="preference_contacts_call_on_tap">Toca para llamar</string>
     <string name="widget_removed">Widget eliminado</string>
     <string name="preference_launch_tasks_app">Abrir aplicación Tasks</string>
+    <string name="action_done">Hecho</string>
 </resources>
