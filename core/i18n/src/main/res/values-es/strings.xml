@@ -845,4 +845,5 @@
     <string name="preference_widgets_on_home_screen_summary">Mostrar widgets en la pantalla principal en lugar de en una página extra</string>
     <string name="preference_gesture_swipe_up">Deslizar arriba</string>
     <string name="gesture_action_widgets">Widgets</string>
+    <string name="bad_configuration_summary">Has descubierto una combinación de configuraciones que hace que no se pueda acceder a la búsqueda ni a las configuraciones — haciendo que te quedes fuera del lanzador.</string>
 </resources>
