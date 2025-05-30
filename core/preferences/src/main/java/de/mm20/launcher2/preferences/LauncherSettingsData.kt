@@ -72,6 +72,7 @@ data class LauncherSettingsData internal constructor(
 
     val unitConverterEnabled: Boolean = true,
     val unitConverterCurrencies: Boolean = true,
+    val unitCustomVerb: String = "to",
 
     val wikipediaSearchEnabled: Boolean = true,
     val wikipediaSearchImages: Boolean = true,

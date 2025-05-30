@@ -1,20 +1,13 @@
 package de.mm20.launcher2.ui.settings.unitconverter
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.search.UnitConverterSettings
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
-import de.mm20.launcher2.unitconverter.converters.Converter
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -42,4 +35,10 @@ class UnitConverterSettingsScreenVM: ViewModel(), KoinComponent {
     val availableUnits = availableConverters.map {
         it.map { converter -> converter.getSupportedUnits() }
     }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(100), 1)
+
+    val customVerb = settings.customVerb
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "para")
+    fun setCustomVerb(customVerb: String) {
+        settings.setCustomVerb(customVerb)
+    }
 }

@@ -15,6 +15,7 @@ You can also specify a target unit like this:
 
 - `14 ft >> m`
 - `14 ft > m`
+- `14 ft to m`
 - `14 ft - m`
 
 If you don't specify a target unit, all supported units in the dimension of the input unit are returned.
