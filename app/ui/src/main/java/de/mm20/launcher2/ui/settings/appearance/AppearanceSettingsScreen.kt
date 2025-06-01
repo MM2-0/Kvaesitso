@@ -4,7 +4,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CropSquare
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.TextFields
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,7 +30,8 @@ fun AppearanceSettingsScreen() {
     val viewModel: AppearanceSettingsScreenVM = viewModel()
     val context = LocalContext.current
     val navController = LocalNavController.current
-    val themeName by viewModel.themeName.collectAsStateWithLifecycle(null)
+    val colorThemeName by viewModel.colorThemeName.collectAsStateWithLifecycle(null)
+    val shapeThemeName by viewModel.shapeThemeName.collectAsStateWithLifecycle(null)
     val compatModeColors by viewModel.compatModeColors.collectAsState()
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
@@ -56,7 +56,7 @@ fun AppearanceSettingsScreen() {
             PreferenceCategory {
                 Preference(
                     title = stringResource(id = R.string.preference_screen_colors),
-                    summary = themeName,
+                    summary = colorThemeName,
                     onClick = {
                         navController?.navigate("settings/appearance/colors")
                     },
@@ -83,7 +83,7 @@ fun AppearanceSettingsScreen() {
                 )
                 Preference(
                     title = stringResource(id = R.string.preference_screen_shapes),
-                    summary = themeName,
+                    summary = shapeThemeName,
                     onClick = {
                         navController?.navigate("settings/appearance/shapes")
                     },

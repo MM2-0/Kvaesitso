@@ -25,11 +25,18 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         uiSettings.setColorScheme(colorScheme)
     }
 
-    val themeName = uiSettings.colors.flatMapLatest {
+    val colorThemeName = uiSettings.colors.flatMapLatest {
             themeRepository.getColorsOrDefault(it)
         }.map {
             it.name
         }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val shapeThemeName = uiSettings.shapes.flatMapLatest {
+        themeRepository.getShapesOrDefault(it)
+    }.map {
+        it.name
+    }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val compatModeColors = uiSettings.compatModeColors
