@@ -16,6 +16,7 @@ import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.theme.colorscheme.*
+import de.mm20.launcher2.ui.theme.shapes.shapesOf
 import de.mm20.launcher2.ui.theme.typography.DefaultTypography
 import de.mm20.launcher2.ui.theme.typography.getDeviceDefaultTypography
 import kotlinx.coroutines.flow.flatMapLatest
@@ -33,11 +34,17 @@ fun LauncherTheme(
     val uiSettings: UiSettings = koinInject()
     val themeRepository: ThemeRepository = koinInject()
 
-    val theme by remember {
-        uiSettings.theme.flatMapLatest {
-            themeRepository.getThemeOrDefault(it)
+    val themeColors by remember {
+        uiSettings.colors.flatMapLatest {
+            themeRepository.getColorsOrDefault(it)
         }
-    }.collectAsState(themeRepository.getDefaultTheme())
+    }.collectAsState(null)
+
+    val themeShapes by remember {
+        uiSettings.shapes.flatMapLatest {
+            themeRepository.getShapesOrDefault(it)
+        }
+    }.collectAsState(null)
 
     val colorSchemePref by remember { uiSettings.colorScheme }.collectAsState(
         ColorSchemePref.System
@@ -45,26 +52,19 @@ fun LauncherTheme(
     val darkTheme =
         colorSchemePref == ColorSchemePref.Dark || colorSchemePref == ColorSchemePref.System && isSystemInDarkTheme()
 
-    val cornerRadius by remember {
-        uiSettings.cardStyle.map {
-            it.cornerRadius.dp
-        }
-    }.collectAsState(8.dp)
-
-    val baseShape by remember {
-        uiSettings.cardStyle.map {
-            when (it.shape) {
-                SurfaceShape.Cut -> CutCornerShape(0f)
-                else -> RoundedCornerShape(0f)
-            }
-        }
-    }.collectAsState(RoundedCornerShape(0f))
+    if (themeColors == null || themeShapes == null) {
+        return
+    }
 
     val colorScheme = if (darkTheme) {
-        darkColorSchemeOf(theme)
+        darkColorSchemeOf(themeColors!!)
     } else {
-        lightColorSchemeOf(theme)
+        lightColorSchemeOf(themeColors!!)
     }
+
+    val shapes = shapesOf(themeShapes!!)
+
+
 
     val font by remember { uiSettings.font }.collectAsState(
         Font.Outfit
@@ -80,13 +80,7 @@ fun LauncherTheme(
         MaterialExpressiveTheme(
             colorScheme = colorScheme,
             typography = typography,
-            shapes = Shapes(
-                extraSmall = baseShape.copy(CornerSize(cornerRadius / 3f)),
-                small = baseShape.copy(CornerSize(cornerRadius / 3f * 2f)),
-                medium = baseShape.copy(CornerSize(cornerRadius)),
-                large = baseShape.copy(CornerSize((cornerRadius / 3f * 4f).coerceAtMost(16.dp))),
-                extraLarge = baseShape.copy(CornerSize((cornerRadius / 3f * 7f).coerceAtMost(28.dp))),
-            ),
+            shapes = shapes,
             content = content
         )
     }

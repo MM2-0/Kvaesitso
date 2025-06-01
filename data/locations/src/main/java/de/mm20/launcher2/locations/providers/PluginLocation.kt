@@ -14,6 +14,7 @@ import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.PaymentMethod
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -34,6 +35,7 @@ data class PluginLocation(
     override val label: String,
     override val timestamp: Long,
     override val attribution: Attribution?,
+    override val acceptedPaymentMethods: Map<PaymentMethod, Boolean>?,
     override val updatedSelf: (suspend (SavableSearchable) -> UpdateResult<Location>)?,
     override val labelOverride: String? = null,
     val authority: String,

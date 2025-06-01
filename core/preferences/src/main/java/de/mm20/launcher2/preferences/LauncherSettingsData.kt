@@ -11,7 +11,10 @@ data class LauncherSettingsData internal constructor(
     val schemaVersion: Int = 5,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
-    val uiTheme: ThemeDescriptor = ThemeDescriptor.Default,
+    @JsonNames("uiTheme")
+    val uiColors: ColorsDescriptor = ColorsDescriptor.Default,
+    val uiShapes: ShapesDescriptor = ShapesDescriptor.Default,
+
     val uiCompatModeColors: Boolean = false,
     val uiFont: Font = Font.Outfit,
     @Deprecated("No longer in use, only used for migration")
@@ -121,8 +124,10 @@ data class LauncherSettingsData internal constructor(
     val systemBarsNavColors: SystemBarColors = SystemBarColors.Auto,
 
     val surfacesOpacity: Float = 1f,
+    @Deprecated("Replaces with shape schemes")
     val surfacesRadius: Int = 24,
     val surfacesBorderWidth: Int = 0,
+    @Deprecated("Replaces with shape schemes")
     val surfacesShape: SurfaceShape = SurfaceShape.Rounded,
 
     val widgetsEditButton: Boolean = true,
@@ -201,20 +206,45 @@ enum class Font {
 
 
 @Serializable
-sealed interface ThemeDescriptor {
+sealed interface ColorsDescriptor {
     @Serializable
     @SerialName("default")
-    data object Default : ThemeDescriptor
+    data object Default : ColorsDescriptor
 
     @Serializable
     @SerialName("bw")
-    data object BlackAndWhite : ThemeDescriptor
+    data object BlackAndWhite : ColorsDescriptor
 
     @Serializable
     @SerialName("custom")
     data class Custom(
         val id: String,
-    ) : ThemeDescriptor
+    ) : ColorsDescriptor
+}
+
+@Serializable
+sealed interface ShapesDescriptor {
+    @Serializable
+    @SerialName("default")
+    data object Default : ShapesDescriptor
+
+    @Serializable
+    @SerialName("cut")
+    data object Cut : ShapesDescriptor
+
+    @Serializable
+    @SerialName("extra_round")
+    data object ExtraRound : ShapesDescriptor
+
+    @Serializable
+    @SerialName("rect")
+    data object Rect : ShapesDescriptor
+
+    @Serializable
+    @SerialName("custom")
+    data class Custom(
+        val id: String,
+    ) : ShapesDescriptor
 }
 
 internal enum class ClockWidgetStyleEnum {

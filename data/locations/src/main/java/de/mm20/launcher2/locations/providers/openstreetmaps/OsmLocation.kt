@@ -4,6 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.ktx.ifNullOrEmpty
 import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
+import de.mm20.launcher2.ktx.stripStartOrNull
 import de.mm20.launcher2.locations.OsmLocationSerializer
 import de.mm20.launcher2.openstreetmaps.R
 import de.mm20.launcher2.search.Location
@@ -16,6 +17,7 @@ import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.PaymentMethod
 import de.westnordost.osm_opening_hours.model.ClockTime
 import de.westnordost.osm_opening_hours.model.ExtendedClockTime
 import de.westnordost.osm_opening_hours.model.LastNth
@@ -62,7 +64,8 @@ internal data class OsmLocation(
     override val labelOverride: String? = null,
     override val timestamp: Long,
     override var updatedSelf: (suspend (SavableSearchable) -> UpdateResult<Location>)? = null,
-    override val userRating: Float?
+    override val userRating: Float?,
+    override val acceptedPaymentMethods: Map<PaymentMethod, Boolean>?
 ) : Location, UpdatableSearchable<Location> {
 
     override val domain: String
@@ -115,7 +118,25 @@ internal data class OsmLocation(
                 emailAddress = it.tags["email"] ?: it.tags["contact:email"],
                 timestamp = System.currentTimeMillis(),
                 userRating = it.tags["stars"]?.runCatching { this.toInt() }?.getOrNull()
-                    ?.let { min(it, 5) / 5.0f }
+                    ?.let { min(it, 5) / 5.0f },
+                acceptedPaymentMethods = with(
+                    it.tags.mapNotNull { (key, value) ->
+                        (key.stripStartOrNull("payment:") ?: return@mapNotNull null) to value
+                    }.toMap()
+                ) {
+                    // best-effort way to take any method payment as it being available,
+                    // otherwise as being unavailable, or undefined
+                    mapOf(
+                        PaymentMethod.Card to listOf("credit_cards", "debit_cards", "cards"),
+                        PaymentMethod.Cash to listOf("cash")
+                    ).mapNotNull { (method, values) ->
+                        when {
+                            values.any { this[it] in listOf("yes", "only") } -> method to true
+                            values.any { this[it] == "no" } -> method to false
+                            else -> null
+                        }
+                    }.toMap().takeUnless { it.isEmpty() }
+                }
             )
         }
     }

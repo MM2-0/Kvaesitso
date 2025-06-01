@@ -1741,3 +1741,97 @@ private val _BreezyWeather = materialIcon("Icons.Rounded.BreezyWeather") {
 
 val Icons.Rounded.BreezyWeather
     get() = _BreezyWeather
+
+private val _TollOff = materialIcon("Icons.Rounded.TollOff") {
+    materialPath {
+        moveTo(2.8066406f, 3.2207031f)
+        curveToRelative(-0.2556191f, 0f, -0.5111625f, 0.099053f, -0.7070312f, 0.2949219f)
+        curveToRelative(-0.3917371f, 0.3917372f, -0.3917371f, 1.0223253f, 0f, 1.4140625f)
+        lineToRelative(1.3339844f, 1.3320312f)
+        verticalLineToRelative(0.00195f)
+        curveTo(1.933574f, 7.7156369f, 0.99999996f, 9.7483802f, 1f, 12f)
+        curveToRelative(3e-7f, 3.23f, 1.9196876f, 6.009532f, 4.6796875f, 7.269531f)
+        curveTo(6.2896876f, 19.549531f, 7.0000003f, 19.129219f, 7f, 18.449219f)
+        verticalLineToRelative(-0.179688f)
+        curveToRelative(-3e-7f, -0.37f, -0.2303127f, -0.689609f, -0.5703125f, -0.849609f)
+        curveTo(4.399687f, 16.459922f, 2.9999999f, 14.39f, 3f, 12f)
+        curveToRelative(-2e-7f, -1.698485f, 0.7060878f, -3.2344795f, 1.84375f, -4.3261719f)
+        lineToRelative(2.3925781f, 2.3906249f)
+        verticalLineToRelative(0.002f)
+        curveTo(7.0825208f, 10.685478f, 6.9999996f, 11.333026f, 7f, 12f)
+        curveToRelative(0f, 4.42f, 3.58f, 8f, 8f, 8f)
+        curveToRelative(0.666973f, 0f, 1.314475f, -0.08252f, 1.933594f, -0.236328f)
+        horizontalLineToRelative(0.002f)
+        lineToRelative(2.134765f, 2.136719f)
+        curveToRelative(0.391737f, 0.391737f, 1.022326f, 0.391737f, 1.414063f, 0f)
+        curveToRelative(0.391737f, -0.391738f, 0.391737f, -1.024279f, 0f, -1.416016f)
+        lineTo(18.955078f, 18.955078f)
+        lineTo(17.46875f, 17.46875f)
+        lineTo(9.53125f, 9.53125f)
+        lineTo(8.0449219f, 8.0449219f)
+        lineTo(6.5273437f, 6.5273437f)
+        lineTo(5.0507812f, 5.0507812f)
+        lineTo(3.515625f, 3.515625f)
+        curveTo(3.3197565f, 3.3197565f, 3.0622597f, 3.2207031f, 2.8066406f, 3.2207031f)
+        close()
+        moveTo(15f, 4f)
+        curveToRelative(-2.25366f, 2e-7f, -4.288489f, 0.9314658f, -5.7421875f, 2.4296875f)
+        lineTo(10.673828f, 7.8457031f)
+        curveTo(11.766133f, 6.7086818f, 13.30143f, 6.0000002f, 15f, 6f)
+        curveToRelative(3.31f, 4e-7f, 6f, 2.6899997f, 6f, 6f)
+        curveToRelative(0f, 1.69857f, -0.708682f, 3.233867f, -1.845703f, 4.326172f)
+        lineToRelative(1.416015f, 1.416015f)
+        curveTo(22.068533f, 16.288488f, 23f, 14.25366f, 23f, 12f)
+        curveTo(23f, 7.5799994f, 19.42f, 3.9999997f, 15f, 4f)
+        close()
+        moveToRelative(-5.9980469f, 7.832031f)
+        lineToRelative(6.1660159f, 6.166016f)
+        curveTo(15.112392f, 17.999575f, 15.055942f, 18f, 15f, 18f)
+        curveTo(11.69f, 18f, 9.0000004f, 15.31f, 9f, 12f)
+        curveToRelative(2e-7f, -0.05594f, 0.0004292f, -0.112391f, 0.00195f, -0.167969f)
+        close()
+    }
+}
+
+val Icons.Outlined.TollOff
+    get() = _TollOff
+
+val _CutCorner = materialIcon("Icons.Rounded.CutCorner") {
+    materialPath {
+        moveTo(2f, 3f)
+        verticalLineTo(22f)
+        horizontalLineTo(21f)
+        verticalLineTo(11.585938f)
+        lineTo(12.414063f, 3f)
+        close()
+        moveToRelative(2f, 2f)
+        horizontalLineToRelative(7.585938f)
+        lineTo(19f, 12.414063f)
+        verticalLineTo(20f)
+        horizontalLineTo(4f)
+        close()
+    }
+}
+
+val Icons.Rounded.CutCorner
+    get() = _CutCorner
+
+val _RoundedCornerAlt = materialIcon("Icons.Rounded.RoundedCornerAlt") {
+    materialPath {
+        moveTo(2f, 3f)
+        verticalLineTo(22f)
+        horizontalLineTo(21f)
+        verticalLineTo(12f)
+        curveTo(21f, 7.0412819f, 16.958718f, 3f, 12f, 3f)
+        close()
+        moveToRelative(2f, 2f)
+        horizontalLineToRelative(8f)
+        curveToRelative(3.877838f, 0f, 7f, 3.1221621f, 7f, 7f)
+        verticalLineToRelative(8f)
+        horizontalLineTo(4f)
+        close()
+    }
+}
+
+val Icons.Rounded.RoundedCornerAlt
+    get() = _RoundedCornerAlt
