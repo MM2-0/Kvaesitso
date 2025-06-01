@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.displayCutout
-import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
@@ -39,7 +38,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -48,6 +46,7 @@ import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MotionScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -224,6 +223,7 @@ enum class Gesture(val orientation: Orientation?) {
 internal class LauncherScaffoldState(
     private val config: ScaffoldConfiguration,
     val size: Size,
+    val motionScheme: MotionScheme,
     private val touchSlop: Float,
     /**
      * The threshold (in px) where a rubberband gesture is considered to be over the threshold
@@ -241,14 +241,16 @@ internal class LauncherScaffoldState(
     initialIsLocked: Boolean = false,
     initialIsSearchBarHidden: Boolean = false,
 ) {
-    var currentOffset by mutableStateOf(when {
-        initialGesture == null || initialGesture.orientation == null || config[initialGesture]?.animation == ScaffoldAnimation.Rubberband -> Offset.Zero
-        initialGesture == Gesture.SwipeRight -> Offset(-size.width, 0f)
-        initialGesture == Gesture.SwipeLeft -> Offset(size.width, 0f)
-        initialGesture == Gesture.SwipeUp -> Offset(0f, -size.height)
-        initialGesture == Gesture.SwipeDown -> Offset(0f, size.height)
-        else -> Offset.Zero
-    })
+    var currentOffset by mutableStateOf(
+        when {
+            initialGesture == null || initialGesture.orientation == null || config[initialGesture]?.animation == ScaffoldAnimation.Rubberband -> Offset.Zero
+            initialGesture == Gesture.SwipeRight -> Offset(-size.width, 0f)
+            initialGesture == Gesture.SwipeLeft -> Offset(size.width, 0f)
+            initialGesture == Gesture.SwipeUp -> Offset(0f, -size.height)
+            initialGesture == Gesture.SwipeDown -> Offset(0f, size.height)
+            else -> Offset.Zero
+        }
+    )
         private set
     var currentZOffset by mutableFloatStateOf(
         if (initialGesture != null && initialGesture.orientation == null) 1f else 0f
@@ -660,6 +662,7 @@ internal class LauncherScaffoldState(
         offsetAnimatable.animateTo(
             Offset.Zero,
             initialVelocity = Offset(velocity.x, velocity.y),
+            animationSpec = motionScheme.defaultSpatialSpec(),
         ) {
             currentOffset = this.value
         }
@@ -737,6 +740,7 @@ internal class LauncherScaffoldState(
         offsetAnimatable.animateTo(
             targetOffset,
             initialVelocity = Offset(velocity.x, velocity.y),
+            animationSpec = motionScheme.defaultSpatialSpec(),
         ) {
             currentOffset = this.value
         }
@@ -826,7 +830,10 @@ internal class LauncherScaffoldState(
 
         if (gesture.orientation == null) {
             zAnimatable.snapTo(currentZOffset)
-            zAnimatable.animateTo(1f, animationSpec = tween(100)) {
+            zAnimatable.animateTo(
+                1f,
+                animationSpec = motionScheme.defaultSpatialSpec(),
+            ) {
                 currentZOffset = this.value
             }
         } else {
@@ -843,7 +850,10 @@ internal class LauncherScaffoldState(
             }
 
             offsetAnimatable.snapTo(currentOffset)
-            offsetAnimatable.animateTo(targetOffset) {
+            offsetAnimatable.animateTo(
+                targetOffset,
+                animationSpec = motionScheme.defaultSpatialSpec(),
+            ) {
                 currentOffset = this.value
             }
         }
@@ -868,14 +878,17 @@ internal class LauncherScaffoldState(
 
         if (gesture.orientation == null) {
             zAnimatable.snapTo(currentZOffset)
-            zAnimatable.animateTo(0f, animationSpec = tween(100)) {
+            zAnimatable.animateTo(
+                0f,
+                animationSpec = motionScheme.defaultSpatialSpec()
+            ) {
                 currentZOffset = this.value
             }
         } else {
             offsetAnimatable.snapTo(currentOffset)
             offsetAnimatable.animateTo(
                 Offset.Zero,
-                animationSpec = if (fast) tween(150) else spring()
+                animationSpec = if (fast) tween(150) else motionScheme.defaultSpatialSpec()
             ) {
                 currentOffset = this.value
             }
@@ -988,11 +1001,17 @@ internal class LauncherScaffoldState(
             }
 
             offsetAnimatable.snapTo(currentOffset)
-            offsetAnimatable.animateTo(targetOffset) {
+            offsetAnimatable.animateTo(
+                targetOffset,
+                animationSpec = motionScheme.defaultSpatialSpec(),
+            ) {
                 currentOffset = this.value
             }
             isSettledOnSecondaryPage = true
-            offsetAnimatable.animateTo(Offset.Zero) {
+            offsetAnimatable.animateTo(
+                Offset.Zero,
+                animationSpec = motionScheme.defaultSpatialSpec(),
+            ) {
                 currentOffset = this.value
             }
         } else {
@@ -1004,7 +1023,10 @@ internal class LauncherScaffoldState(
                 else -> Offset.Zero
             }
             offsetAnimatable.snapTo(currentOffset)
-            offsetAnimatable.animateTo(targetOffset) {
+            offsetAnimatable.animateTo(
+                targetOffset,
+                animationSpec = motionScheme.defaultSpatialSpec(),
+            ) {
                 currentOffset = this.value
             }
             isSettledOnSecondaryPage = true
@@ -1044,7 +1066,7 @@ internal class LauncherScaffoldState(
             searchBarAnimatable.snapTo(currentSearchBarOffset)
             searchBarAnimatable.animateTo(
                 if (config.searchBarPosition == SearchBarPosition.Bottom) maxSearchBarOffset else -maxSearchBarOffset,
-                tween(500)
+                animationSpec = motionScheme.defaultSpatialSpec(),
             ) {
                 if (isSettledOnSecondaryPage) {
                     secondaryPageSearchBarOffset = this.value
@@ -1062,7 +1084,7 @@ internal class LauncherScaffoldState(
             searchBarAnimatable.snapTo(currentSearchBarOffset)
             searchBarAnimatable.animateTo(
                 0f,
-                tween(500)
+                animationSpec = motionScheme.defaultSpatialSpec(),
             ) {
                 if (isSettledOnSecondaryPage) {
                     secondaryPageSearchBarOffset = this.value
@@ -1119,10 +1141,17 @@ internal fun LauncherScaffold(
                 ) + 128.dp.toPixels()
 
         val hapticFeedback = LocalHapticFeedback.current
+        val motionScheme = MaterialTheme.motionScheme
 
         val state =
             rememberSaveable(
-                widthPx, heightPx, touchSlop, rubberbandThreshold, minFlingVelocity, config,
+                widthPx,
+                heightPx,
+                touchSlop,
+                rubberbandThreshold,
+                minFlingVelocity,
+                config,
+                motionScheme,
                 saver = listSaver(
                     save = {
                         listOf(
@@ -1133,6 +1162,7 @@ internal fun LauncherScaffold(
                     },
                     restore = {
                         LauncherScaffoldState(
+                            motionScheme = motionScheme,
                             config = config,
                             size = Size(widthPx, heightPx),
                             touchSlop = touchSlop,
@@ -1152,6 +1182,7 @@ internal fun LauncherScaffold(
                 LauncherScaffoldState(
                     config = config,
                     size = Size(widthPx, heightPx),
+                    motionScheme = motionScheme,
                     touchSlop = touchSlop,
                     rubberbandThreshold = rubberbandThreshold,
                     velocityThreshold = minFlingVelocity,
@@ -1226,8 +1257,10 @@ internal fun LauncherScaffold(
 
         if (config.wallpaperBlurRadius > 0.dp) {
             val wallpaperBlur by animateIntAsState(
-                if (state.currentProgress >= 0.5f && (state.currentComponent?.drawBackground ?: config.homeComponent.drawBackground)
-                    || state.currentProgress < 0.5f && config.homeComponent.drawBackground) {
+                if (state.currentProgress >= 0.5f && (state.currentComponent?.drawBackground
+                        ?: config.homeComponent.drawBackground)
+                    || state.currentProgress < 0.5f && config.homeComponent.drawBackground
+                ) {
                     8.dp.toPixels().toInt()
                 } else {
                     0
@@ -1621,12 +1654,16 @@ private fun Modifier.homePageAnimation(
             .background(backgroundColor)
     }
 
-    return this then component.homePageModifier(state, Modifier.background(backgroundColor).absoluteOffset {
-        IntOffset(
-            x = if (dir.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
-            y = if (dir.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
-        )
-    })
+    return this then component.homePageModifier(
+        state,
+        Modifier
+            .background(backgroundColor)
+            .absoluteOffset {
+                IntOffset(
+                    x = if (dir.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
+                    y = if (dir.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
+                )
+            })
 }
 
 private fun Modifier.secondaryPageAnimation(
