@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import java.util.UUID
 
 @Entity(tableName = "Theme")
-data class ThemeEntity(
+data class ColorsEntity(
     @PrimaryKey val id: UUID,
     val name: String,
 

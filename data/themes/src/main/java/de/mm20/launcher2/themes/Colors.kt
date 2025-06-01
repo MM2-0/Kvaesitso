@@ -1,138 +1,13 @@
 package de.mm20.launcher2.themes
 
-import de.mm20.launcher2.database.entities.ThemeEntity
+import de.mm20.launcher2.database.entities.ColorsEntity
 import hct.Hct
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import java.util.UUID
 
-enum class CorePaletteColor {
-    Primary,
-    Secondary,
-    Tertiary,
-    Neutral,
-    NeutralVariant,
-    Error;
-
-    override fun toString(): String {
-        return when (this) {
-            Primary -> "p"
-            Secondary -> "s"
-            Tertiary -> "t"
-            Neutral -> "n"
-            NeutralVariant -> "nv"
-            Error -> "e"
-        }
-    }
-}
-
-fun CorePaletteColor(color: String): CorePaletteColor? {
-    return when (color) {
-        "p" -> CorePaletteColor.Primary
-        "s" -> CorePaletteColor.Secondary
-        "t" -> CorePaletteColor.Tertiary
-        "n" -> CorePaletteColor.Neutral
-        "nv" -> CorePaletteColor.NeutralVariant
-        "e" -> CorePaletteColor.Error
-        else -> null
-    }
-}
-
-sealed interface Color
-
-internal fun Color(string: String?): Color? {
-    if (string == null) return null
-    if (string.startsWith("#")) {
-        return StaticColor(string.substring(1).toLongOrNull(16)?.toInt() ?: return null)
-    }
-    if (string.startsWith("$")) {
-        val parts = string.substring(1).split(".").takeIf { it.size == 2 } ?: return null
-        val color = CorePaletteColor(parts[0]) ?: return null
-        return ColorRef(
-            color = color,
-            tone = parts[1].toIntOrNull() ?: return null,
-        )
-    }
-    return null
-}
-
-data class ColorRef(
-    val color: CorePaletteColor,
-    val tone: Int,
-) : Color {
-    override fun toString(): String {
-        return "\$$color.$tone"
-    }
-}
-
-@JvmInline
-value class StaticColor(val color: Int) : Color {
-    override fun toString(): String {
-        return "#${color.toUInt().toString(16).padStart(8, '0')}"
-    }
-}
-
 @Serializable
-data class CorePalette<out T : Int?>(
-    val primary: T,
-    val secondary: T,
-    val tertiary: T,
-    val neutral: T,
-    val neutralVariant: T,
-    val error: T,
-)
-
-val EmptyCorePalette = CorePalette<Int?>(null, null, null, null, null, null)
-
-typealias FullCorePalette = CorePalette<Int>
-typealias PartialCorePalette = CorePalette<Int?>
-
-@Serializable
-data class ColorScheme<out T : Color?>(
-    val primary: T,
-    val onPrimary: T,
-    val primaryContainer: T,
-    val onPrimaryContainer: T,
-    val secondary: T,
-    val onSecondary: T,
-    val secondaryContainer: T,
-    val onSecondaryContainer: T,
-    val tertiary: T,
-    val onTertiary: T,
-    val tertiaryContainer: T,
-    val onTertiaryContainer: T,
-    val error: T,
-    val onError: T,
-    val errorContainer: T,
-    val onErrorContainer: T,
-    val surface: T,
-    val onSurface: T,
-    val onSurfaceVariant: T,
-    val outline: T,
-    val outlineVariant: T,
-    val inverseSurface: T,
-    val inverseOnSurface: T,
-    val inversePrimary: T,
-    val surfaceDim: T,
-    val surfaceBright: T,
-    val surfaceContainerLowest: T,
-    val surfaceContainerLow: T,
-    val surfaceContainer: T,
-    val surfaceContainerHigh: T,
-    val surfaceContainerHighest: T,
-
-    val background: T,
-    val onBackground: T,
-    val surfaceTint: T,
-    val scrim: T,
-    val surfaceVariant: T,
-)
-
-typealias FullColorScheme = ColorScheme<Color>
-typealias PartialColorScheme = ColorScheme<Color?>
-
-@Serializable
-data class Theme(
+data class Colors(
     @Transient val id: UUID = UUID.randomUUID(),
     val builtIn: Boolean = false,
     val name: String,
@@ -141,7 +16,7 @@ data class Theme(
     val darkColorScheme: PartialColorScheme = DefaultDarkColorScheme,
 ) {
 
-    constructor(entity: ThemeEntity) : this(
+    constructor(entity: ColorsEntity) : this(
         id = entity.id,
         builtIn = false,
         name = entity.name,
@@ -154,86 +29,86 @@ data class Theme(
             error = entity.corePaletteE,
         ),
         lightColorScheme = ColorScheme(
-            primary = Color(entity.lightPrimary),
-            onPrimary = Color(entity.lightOnPrimary),
-            primaryContainer = Color(entity.lightPrimaryContainer),
-            onPrimaryContainer = Color(entity.lightOnPrimaryContainer),
-            secondary = Color(entity.lightSecondary),
-            onSecondary = Color(entity.lightOnSecondary),
-            secondaryContainer = Color(entity.lightSecondaryContainer),
-            onSecondaryContainer = Color(entity.lightOnSecondaryContainer),
-            tertiary = Color(entity.lightTertiary),
-            onTertiary = Color(entity.lightOnTertiary),
-            tertiaryContainer = Color(entity.lightTertiaryContainer),
-            onTertiaryContainer = Color(entity.lightOnTertiaryContainer),
-            error = Color(entity.lightError),
-            onError = Color(entity.lightOnError),
-            errorContainer = Color(entity.lightErrorContainer),
-            onErrorContainer = Color(entity.lightOnErrorContainer),
-            surface = Color(entity.lightSurface),
-            onSurface = Color(entity.lightOnSurface),
-            onSurfaceVariant = Color(entity.lightOnSurfaceVariant),
-            outline = Color(entity.lightOutline),
-            outlineVariant = Color(entity.lightOutlineVariant),
-            inverseSurface = Color(entity.lightInverseSurface),
-            inverseOnSurface = Color(entity.lightInverseOnSurface),
-            inversePrimary = Color(entity.lightInversePrimary),
-            surfaceDim = Color(entity.lightSurfaceDim),
-            surfaceBright = Color(entity.lightSurfaceBright),
-            surfaceContainerLowest = Color(entity.lightSurfaceContainerLowest),
-            surfaceContainerLow = Color(entity.lightSurfaceContainerLow),
-            surfaceContainer = Color(entity.lightSurfaceContainer),
-            surfaceContainerHigh = Color(entity.lightSurfaceContainerHigh),
-            surfaceContainerHighest = Color(entity.lightSurfaceContainerHighest),
-            background = Color(entity.lightBackground),
-            onBackground = Color(entity.lightOnBackground),
-            surfaceTint = Color(entity.lightSurfaceTint),
-            scrim = Color(entity.lightScrim),
-            surfaceVariant = Color(entity.lightSurfaceVariant),
+            primary = Color.fromString(entity.lightPrimary),
+            onPrimary = Color.fromString(entity.lightOnPrimary),
+            primaryContainer = Color.fromString(entity.lightPrimaryContainer),
+            onPrimaryContainer = Color.fromString(entity.lightOnPrimaryContainer),
+            secondary = Color.fromString(entity.lightSecondary),
+            onSecondary = Color.fromString(entity.lightOnSecondary),
+            secondaryContainer = Color.fromString(entity.lightSecondaryContainer),
+            onSecondaryContainer = Color.fromString(entity.lightOnSecondaryContainer),
+            tertiary = Color.fromString(entity.lightTertiary),
+            onTertiary = Color.fromString(entity.lightOnTertiary),
+            tertiaryContainer = Color.fromString(entity.lightTertiaryContainer),
+            onTertiaryContainer = Color.fromString(entity.lightOnTertiaryContainer),
+            error = Color.fromString(entity.lightError),
+            onError = Color.fromString(entity.lightOnError),
+            errorContainer = Color.fromString(entity.lightErrorContainer),
+            onErrorContainer = Color.fromString(entity.lightOnErrorContainer),
+            surface = Color.fromString(entity.lightSurface),
+            onSurface = Color.fromString(entity.lightOnSurface),
+            onSurfaceVariant = Color.fromString(entity.lightOnSurfaceVariant),
+            outline = Color.fromString(entity.lightOutline),
+            outlineVariant = Color.fromString(entity.lightOutlineVariant),
+            inverseSurface = Color.fromString(entity.lightInverseSurface),
+            inverseOnSurface = Color.fromString(entity.lightInverseOnSurface),
+            inversePrimary = Color.fromString(entity.lightInversePrimary),
+            surfaceDim = Color.fromString(entity.lightSurfaceDim),
+            surfaceBright = Color.fromString(entity.lightSurfaceBright),
+            surfaceContainerLowest = Color.fromString(entity.lightSurfaceContainerLowest),
+            surfaceContainerLow = Color.fromString(entity.lightSurfaceContainerLow),
+            surfaceContainer = Color.fromString(entity.lightSurfaceContainer),
+            surfaceContainerHigh = Color.fromString(entity.lightSurfaceContainerHigh),
+            surfaceContainerHighest = Color.fromString(entity.lightSurfaceContainerHighest),
+            background = Color.fromString(entity.lightBackground),
+            onBackground = Color.fromString(entity.lightOnBackground),
+            surfaceTint = Color.fromString(entity.lightSurfaceTint),
+            scrim = Color.fromString(entity.lightScrim),
+            surfaceVariant = Color.fromString(entity.lightSurfaceVariant),
         ),
         darkColorScheme = ColorScheme(
-            primary = Color(entity.darkPrimary),
-            onPrimary = Color(entity.darkOnPrimary),
-            primaryContainer = Color(entity.darkPrimaryContainer),
-            onPrimaryContainer = Color(entity.darkOnPrimaryContainer),
-            secondary = Color(entity.darkSecondary),
-            onSecondary = Color(entity.darkOnSecondary),
-            secondaryContainer = Color(entity.darkSecondaryContainer),
-            onSecondaryContainer = Color(entity.darkOnSecondaryContainer),
-            tertiary = Color(entity.darkTertiary),
-            onTertiary = Color(entity.darkOnTertiary),
-            tertiaryContainer = Color(entity.darkTertiaryContainer),
-            onTertiaryContainer = Color(entity.darkOnTertiaryContainer),
-            error = Color(entity.darkError),
-            onError = Color(entity.darkOnError),
-            errorContainer = Color(entity.darkErrorContainer),
-            onErrorContainer = Color(entity.darkOnErrorContainer),
-            surface = Color(entity.darkSurface),
-            onSurface = Color(entity.darkOnSurface),
-            onSurfaceVariant = Color(entity.darkOnSurfaceVariant),
-            outline = Color(entity.darkOutline),
-            outlineVariant = Color(entity.darkOutlineVariant),
-            inverseSurface = Color(entity.darkInverseSurface),
-            inverseOnSurface = Color(entity.darkInverseOnSurface),
-            inversePrimary = Color(entity.darkInversePrimary),
-            surfaceDim = Color(entity.darkSurfaceDim),
-            surfaceBright = Color(entity.darkSurfaceBright),
-            surfaceContainerLowest = Color(entity.darkSurfaceContainerLowest),
-            surfaceContainerLow = Color(entity.darkSurfaceContainerLow),
-            surfaceContainer = Color(entity.darkSurfaceContainer),
-            surfaceContainerHigh = Color(entity.darkSurfaceContainerHigh),
-            surfaceContainerHighest = Color(entity.darkSurfaceContainerHighest),
-            background = Color(entity.darkBackground),
-            onBackground = Color(entity.darkOnBackground),
-            surfaceTint = Color(entity.darkSurfaceTint),
-            scrim = Color(entity.darkScrim),
-            surfaceVariant = Color(entity.darkSurfaceVariant),
+            primary = Color.fromString(entity.darkPrimary),
+            onPrimary = Color.fromString(entity.darkOnPrimary),
+            primaryContainer = Color.fromString(entity.darkPrimaryContainer),
+            onPrimaryContainer = Color.fromString(entity.darkOnPrimaryContainer),
+            secondary = Color.fromString(entity.darkSecondary),
+            onSecondary = Color.fromString(entity.darkOnSecondary),
+            secondaryContainer = Color.fromString(entity.darkSecondaryContainer),
+            onSecondaryContainer = Color.fromString(entity.darkOnSecondaryContainer),
+            tertiary = Color.fromString(entity.darkTertiary),
+            onTertiary = Color.fromString(entity.darkOnTertiary),
+            tertiaryContainer = Color.fromString(entity.darkTertiaryContainer),
+            onTertiaryContainer = Color.fromString(entity.darkOnTertiaryContainer),
+            error = Color.fromString(entity.darkError),
+            onError = Color.fromString(entity.darkOnError),
+            errorContainer = Color.fromString(entity.darkErrorContainer),
+            onErrorContainer = Color.fromString(entity.darkOnErrorContainer),
+            surface = Color.fromString(entity.darkSurface),
+            onSurface = Color.fromString(entity.darkOnSurface),
+            onSurfaceVariant = Color.fromString(entity.darkOnSurfaceVariant),
+            outline = Color.fromString(entity.darkOutline),
+            outlineVariant = Color.fromString(entity.darkOutlineVariant),
+            inverseSurface = Color.fromString(entity.darkInverseSurface),
+            inverseOnSurface = Color.fromString(entity.darkInverseOnSurface),
+            inversePrimary = Color.fromString(entity.darkInversePrimary),
+            surfaceDim = Color.fromString(entity.darkSurfaceDim),
+            surfaceBright = Color.fromString(entity.darkSurfaceBright),
+            surfaceContainerLowest = Color.fromString(entity.darkSurfaceContainerLowest),
+            surfaceContainerLow = Color.fromString(entity.darkSurfaceContainerLow),
+            surfaceContainer = Color.fromString(entity.darkSurfaceContainer),
+            surfaceContainerHigh = Color.fromString(entity.darkSurfaceContainerHigh),
+            surfaceContainerHighest = Color.fromString(entity.darkSurfaceContainerHighest),
+            background = Color.fromString(entity.darkBackground),
+            onBackground = Color.fromString(entity.darkOnBackground),
+            surfaceTint = Color.fromString(entity.darkSurfaceTint),
+            scrim = Color.fromString(entity.darkScrim),
+            surfaceVariant = Color.fromString(entity.darkSurfaceVariant),
         ),
     )
 
 
-    internal fun toEntity(): ThemeEntity {
-        return ThemeEntity(
+    internal fun toEntity(): ColorsEntity {
+        return ColorsEntity(
             id = id,
             name = name,
             corePaletteA1 = corePalette.primary,
@@ -319,6 +194,137 @@ data class Theme(
         )
     }
 }
+
+enum class CorePaletteColor {
+    Primary,
+    Secondary,
+    Tertiary,
+    Neutral,
+    NeutralVariant,
+    Error;
+
+    override fun toString(): String {
+        return when (this) {
+            Primary -> "p"
+            Secondary -> "s"
+            Tertiary -> "t"
+            Neutral -> "n"
+            NeutralVariant -> "nv"
+            Error -> "e"
+        }
+    }
+
+    companion object {
+        fun fromString(string: String): CorePaletteColor? {
+            return when (string) {
+                "p" -> Primary
+                "s" -> Secondary
+                "t" -> Tertiary
+                "n" -> Neutral
+                "nv" -> NeutralVariant
+                "e" -> Error
+                else -> null
+            }
+        }
+    }
+}
+
+@Serializable(with = ColorSerializer::class)
+sealed interface Color {
+    companion object {
+        fun fromString(string: String?): Color? {
+
+            if (string == null) return null
+            if (string.startsWith("#")) {
+                return StaticColor(string.substring(1).toLongOrNull(16)?.toInt() ?: return null)
+            }
+            if (string.startsWith("$")) {
+                val parts = string.substring(1).split(".").takeIf { it.size == 2 } ?: return null
+                val color = CorePaletteColor.fromString(parts[0]) ?: return null
+                return ColorRef(
+                    color = color,
+                    tone = parts[1].toIntOrNull() ?: return null,
+                )
+            }
+            return null
+        }
+    }
+}
+
+data class ColorRef(
+    val color: CorePaletteColor,
+    val tone: Int,
+) : Color {
+    override fun toString(): String {
+        return "$$color.$tone"
+    }
+}
+
+@JvmInline
+value class StaticColor(val color: Int) : Color {
+    override fun toString(): String {
+        return "#${color.toUInt().toString(16).padStart(8, '0')}"
+    }
+}
+
+@Serializable
+data class CorePalette<out T : Int?>(
+    val primary: T,
+    val secondary: T,
+    val tertiary: T,
+    val neutral: T,
+    val neutralVariant: T,
+    val error: T,
+)
+
+val EmptyCorePalette = CorePalette<Int?>(null, null, null, null, null, null)
+
+typealias FullCorePalette = CorePalette<Int>
+typealias PartialCorePalette = CorePalette<Int?>
+
+@Serializable
+data class ColorScheme<out T : Color?>(
+    val primary: T,
+    val onPrimary: T,
+    val primaryContainer: T,
+    val onPrimaryContainer: T,
+    val secondary: T,
+    val onSecondary: T,
+    val secondaryContainer: T,
+    val onSecondaryContainer: T,
+    val tertiary: T,
+    val onTertiary: T,
+    val tertiaryContainer: T,
+    val onTertiaryContainer: T,
+    val error: T,
+    val onError: T,
+    val errorContainer: T,
+    val onErrorContainer: T,
+    val surface: T,
+    val onSurface: T,
+    val onSurfaceVariant: T,
+    val outline: T,
+    val outlineVariant: T,
+    val inverseSurface: T,
+    val inverseOnSurface: T,
+    val inversePrimary: T,
+    val surfaceDim: T,
+    val surfaceBright: T,
+    val surfaceContainerLowest: T,
+    val surfaceContainerLow: T,
+    val surfaceContainer: T,
+    val surfaceContainerHigh: T,
+    val surfaceContainerHighest: T,
+
+    val background: T,
+    val onBackground: T,
+    val surfaceTint: T,
+    val scrim: T,
+    val surfaceVariant: T,
+)
+
+typealias FullColorScheme = ColorScheme<Color>
+typealias PartialColorScheme = ColorScheme<Color?>
 
 fun <T : Int?> CorePalette<T>.get(color: CorePaletteColor): T {
     return when (color) {

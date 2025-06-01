@@ -42,8 +42,8 @@ import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
-import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
-import de.mm20.launcher2.ui.settings.colorscheme.ThemesSettingsScreen
+import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemeSettingsScreen
+import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemesSettingsScreen
 import de.mm20.launcher2.ui.settings.contacts.ContactsSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
@@ -69,6 +69,8 @@ import de.mm20.launcher2.ui.settings.plugins.PluginSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
+import de.mm20.launcher2.ui.settings.shapes.ShapeSchemeSettingsScreen
+import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
 import de.mm20.launcher2.ui.settings.tasks.TasksIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterHelpSettingsScreen
@@ -160,11 +162,11 @@ class SettingsActivity : BaseActivity() {
                                 composable("settings/icons") {
                                     IconsSettingsScreen()
                                 }
-                                composable("settings/appearance/themes") {
-                                    ThemesSettingsScreen()
+                                composable("settings/appearance/colors") {
+                                    ColorSchemesSettingsScreen()
                                 }
                                 composable(
-                                    "settings/appearance/themes/{id}",
+                                    "settings/appearance/colors/{id}",
                                     arguments = listOf(navArgument("id") {
                                         nullable = false
                                     })
@@ -172,7 +174,21 @@ class SettingsActivity : BaseActivity() {
                                     val id = it.arguments?.getString("id")?.let {
                                         UUID.fromString(it)
                                     } ?: return@composable
-                                    ThemeSettingsScreen(id)
+                                    ColorSchemeSettingsScreen(id)
+                                }
+                                composable("settings/appearance/shapes") {
+                                    ShapeSchemesSettingsScreen()
+                                }
+                                composable(
+                                    "settings/appearance/shapes/{id}",
+                                    arguments = listOf(navArgument("id") {
+                                        nullable = false
+                                    })
+                                ) {
+                                    val id = it.arguments?.getString("id")?.let {
+                                        UUID.fromString(it)
+                                    } ?: return@composable
+                                    ShapeSchemeSettingsScreen(id)
                                 }
                                 composable("settings/appearance/cards") {
                                     CardsSettingsScreen()

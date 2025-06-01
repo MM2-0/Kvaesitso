@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.settings.appearance
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.preferences.ColorScheme
 import de.mm20.launcher2.preferences.Font
 import de.mm20.launcher2.preferences.ui.UiSettings
@@ -26,8 +25,8 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         uiSettings.setColorScheme(colorScheme)
     }
 
-    val themeName = uiSettings.theme.flatMapLatest {
-            themeRepository.getThemeOrDefault(it)
+    val themeName = uiSettings.colors.flatMapLatest {
+            themeRepository.getColorsOrDefault(it)
         }.map {
             it.name
         }

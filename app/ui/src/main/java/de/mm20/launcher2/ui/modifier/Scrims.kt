@@ -27,7 +27,7 @@ fun Modifier.verticalScrims(
     if (!enabled) return this
     if (top == 0.dp && bottom == 0.dp) return this
 
-    return this then drawWithCache {
+    return drawWithCache {
         onDrawWithContent {
             val topColors = if (top > 0.dp) createColors(
                 1f - amount,

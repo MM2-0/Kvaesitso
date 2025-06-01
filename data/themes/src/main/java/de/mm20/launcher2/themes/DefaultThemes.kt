@@ -4,6 +4,10 @@ import java.util.UUID
 
 
 val DefaultThemeId = UUID(0L, 0L)
+val BlackAndWhiteThemeId = UUID(0L, 1L)
+val ExtraRoundShapesId = UUID(0L, 1L)
+val CutShapesId = UUID(0L, 2L)
+val RectShapesId = UUID(0L, 3L)
 
 val DefaultLightColorScheme = ColorScheme<Color>(
     primary = ColorRef(CorePaletteColor.Primary, 40),
@@ -83,7 +87,6 @@ val DefaultDarkColorScheme = ColorScheme<Color>(
     scrim = ColorRef(CorePaletteColor.Neutral, 0),
 )
 
-val BlackAndWhiteThemeId = UUID(0L, 1L)
 
 val BlackAndWhiteLightColorScheme = ColorScheme<Color?>(
     primary = StaticColor(0xFF000000.toInt()),

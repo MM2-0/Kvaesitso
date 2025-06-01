@@ -438,6 +438,11 @@
     <string name="preference_mdy_color_source">Source for dynamic colors</string>
     <string name="preference_mdy_color_source_system">System</string>
     <string name="preference_mdy_color_source_wallpaper">Wallpaper</string>
+    <string name="preference_screen_shapes">Shapes</string>
+    <string name="preference_shapes_default">Default</string>
+    <string name="preference_shapes_extra_round">Extra round</string>
+    <string name="preference_shapes_rect">Rectangualar</string>
+    <string name="preference_shapes_base">Base shape</string>
     <string name="preference_font">Font</string>
     <string name="preference_font_system">System default</string>
     <string name="preference_screen_about">About</string>
@@ -819,7 +824,9 @@
     <string name="note_widget_file_write_error">Error saving note</string>
     <string name="note_widget_file_write_error_description">The note could not be written to the linked file. Possibly, it has been moved or deleted. A copy has been saved to the launcher\'s internal storage.</string>
     <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s\?</string>
+    <string name="confirmation_delete_shapes_scheme">Do you really want to delete the shapes scheme %1$s\?</string>
     <string name="new_color_scheme_name">New color scheme</string>
+    <string name="new_shapes_name">New shapes</string>
     <string name="theme_color_scheme_system_default">Use system default</string>
     <string name="theme_color_scheme_autogenerate">From primary color</string>
     <string name="theme_color_scheme_palette_color">Palette</string>
