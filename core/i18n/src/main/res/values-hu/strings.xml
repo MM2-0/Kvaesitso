@@ -318,8 +318,8 @@
     <string name="search_action_websearch">Internetes keresés</string>
     <string name="plugin_state_setup_required">Először be kell állítani ezt a bővítményt</string>
     <string name="plugin_action_setup">Beállítás</string>
-    <string name="plugin_type_weather">Időjárás-előrejelzés szolgáltató</string>
-    <string name="plugin_weather_provider_enable">Beállítás időjárás-előrejelzési szolgáltatónak</string>
+    <string name="plugin_type_weather">Időjáráselőrejelzési szolgáltató</string>
+    <string name="plugin_weather_provider_enable">Beállítás időjáráselőrejelzési szolgáltatónak</string>
     <string name="preference_clock_widget_alignment_bottom">Alulra</string>
     <string name="preference_clockwidget_battery_part_summary">Az akkumulátor jelenlegi töltöttségi szintjének megjelenítése, amikor az akkumulátor lemerült vagy töltődik</string>
     <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 8 órán belül megszólalnak</string>
@@ -379,7 +379,7 @@
     <string name="preference_search_currencyconverter">Valutaváltó</string>
     <string name="preference_search_bar_auto_focus_summary">A billentyűzet automatikus megjelenítése az alkalmazásfiók megnyitásakor</string>
     <string name="note_widget_link_file_summary">Szinkronizálja a modul tartalmát egy külső fájllal</string>
-    <string name="plugin_weather_provider_enabled">Jelenleg időjárás-előrejelzés szolgáltatóként van beállítva</string>
+    <string name="plugin_weather_provider_enabled">Jelenleg időjáráselőrejelzési szolgáltatóként van beállítva</string>
     <string name="preference_search_websites">Weboldalak</string>
     <string name="preference_search_websites_summary">Egy weboldal előnézetének megjelenítése, ha a keresési lekérdezés egy webcím</string>
     <string name="preference_edit_favorites_summary">A kitűzött elemek sorrendjének módosítása</string>
@@ -835,4 +835,11 @@
     <string name="gesture_action_widgets">Modulok</string>
     <string name="bad_configuration_title">Gratulálunk, kizárta saját magát!</string>
     <string name="bad_configuration_summary">Felfedezte a beállítások olyan kombinációját, amely a keresést és a beállításokat is elérhetetlenné teszi — gyakorlatilag kizárja Önt az indítóból.</string>
+    <string name="preference_screen_shapes">Alakzatok</string>
+    <string name="preference_shapes_default">Alapértelmezett</string>
+    <string name="preference_shapes_extra_round">További lekerekítés</string>
+    <string name="preference_shapes_rect">Négyszögletes</string>
+    <string name="preference_shapes_base">Alap alakzat</string>
+    <string name="confirmation_delete_shapes_scheme">Biztosan törölni szeretné a(z) %1$s nevű alakzatsémát?</string>
+    <string name="new_shapes_name">Új alakzatok</string>
 </resources>
