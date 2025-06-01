@@ -138,6 +138,7 @@ abstract class SharedLauncherActivity(
                         val gestures by viewModel.gestureState.collectAsState()
                         val searchBarStyle by viewModel.searchBarStyle.collectAsState()
                         val searchBarColor by viewModel.searchBarColor.collectAsState()
+                        val searchBarAutofocus by viewModel.autoFocusSearch.collectAsState(false)
                         val widgetsOnHomeScreen by viewModel.widgetsOnHomeScreen.collectAsState()
 
                         val fixedRotation by viewModel.fixedRotation.collectAsState()
@@ -218,10 +219,12 @@ abstract class SharedLauncherActivity(
                                 hideStatus,
                                 hideNav,
                                 widgetsOnHomeScreen,
+                                searchBarAutofocus,
                             ) {
                                 if (mode == LauncherActivityMode.Assistant) {
                                     val searchComponent = SearchComponent(
                                         reverse = reverseSearchResults,
+                                        openKeyboard = searchBarAutofocus,
                                     )
                                     val dismissComponent =
                                         DismissComponent(this@SharedLauncherActivity)
@@ -245,6 +248,7 @@ abstract class SharedLauncherActivity(
                                 } else {
                                     val searchComponent = SearchComponent(
                                         reverse = reverseSearchResults,
+                                        openKeyboard = searchBarAutofocus,
                                     )
                                     val widgetComponent by lazy { WidgetsComponent }
 

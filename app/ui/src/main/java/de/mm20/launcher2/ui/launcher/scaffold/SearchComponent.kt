@@ -21,6 +21,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 
 internal class SearchComponent(
     private val reverse: Boolean = false,
+    private val openKeyboard: Boolean = true,
 ) : ScaffoldComponent() {
 
     override val isAtTop: MutableState<Boolean?> = mutableStateOf(true)
@@ -84,7 +85,9 @@ internal class SearchComponent(
 
     override suspend fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
-        state.isSearchBarFocused = true
+        if (openKeyboard) {
+            state.isSearchBarFocused = true
+        }
     }
 
     override suspend fun onPreDismiss(state: LauncherScaffoldState) {
