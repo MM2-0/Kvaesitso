@@ -835,4 +835,11 @@
     <string name="gesture_action_widgets">Widgets</string>
     <string name="bad_configuration_title">Herzlichen Glückwunsch, Sie haben sich ausgesperrt!</string>
     <string name="bad_configuration_summary">Sie haben eine Kombination von Einstellungen entdeckt, durch die sowohl die Suche, als auch die Einstellungen unerreichbar sind, wodurch Sie sich praktisch ausgesperrt haben.</string>
+    <string name="preference_screen_shapes">Formen</string>
+    <string name="preference_shapes_default">Standard</string>
+    <string name="preference_shapes_extra_round">Extrarund</string>
+    <string name="preference_shapes_rect">Rechteckig</string>
+    <string name="preference_shapes_base">Grundform</string>
+    <string name="confirmation_delete_shapes_scheme">Möchten Sie das Formschema %1$s wirklich löschen?</string>
+    <string name="new_shapes_name">Neue Formen</string>
 </resources>
