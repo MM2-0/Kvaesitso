@@ -388,6 +388,8 @@ internal fun parseOpeningSchedule(
                     }
                 }
             }
+        } else if (!rule.holidays.isNullOrEmpty()) {
+            continue // skip PH and SH entries
         } else if (!rule.times.isNullOrEmpty() || !rule.months.isNullOrEmpty()) {
             rulesMap.forEach { _, it ->
                 it.add(rule)
@@ -395,14 +397,12 @@ internal fun parseOpeningSchedule(
         }
     }
 
-    // Filter out rules that are not valid for the current year, month, and week. Hopefully,
-    // there is only one rule left per weekday. If not, skip that weekday.
-    val applicableRules = rulesMap.mapNotNull { (day, rules) ->
+    // Filter out rules that are not valid for the current year, month, and week.
+    val applicableRules = rulesMap.flatMap { (day, rules) ->
         rules.filterYears(localTime)
             .filterMonths(localTime)
             .filterNthDays(localTime)
             .map { it.copy(weekdays = listOf(day)) }
-            .singleOrNull()
     }
 
     val hours = mutableSetOf<OpeningHours>()
