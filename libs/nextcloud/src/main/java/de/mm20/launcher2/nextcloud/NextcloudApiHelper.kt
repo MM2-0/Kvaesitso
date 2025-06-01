@@ -4,14 +4,25 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import de.mm20.launcher2.serialization.Json
 import de.mm20.launcher2.webdav.WebDavApi
 import de.mm20.launcher2.webdav.WebDavFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.*
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.decodeFromStream
+import okhttp3.Authenticator
+import okhttp3.Credentials
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.Route
+import okhttp3.internal.EMPTY_REQUEST
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
@@ -65,20 +76,61 @@ class NextcloudApiHelper(val context: Context) {
     }
 
 
-    suspend fun checkNextcloudInstallation(url: String): Boolean {
-        var url = url
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            url = "https://$url"
-        }
+    /**
+     * Perform a POST request to the /index.php/login/v2 endpoint of the given Nextcloud server
+     * and return the response. Returns null if an error occurs.
+     */
+    internal suspend fun startLoginFlow(serverUrl: String): LoginFlowResponse? {
         val request = Request.Builder()
-            .url("$url/remote.php/dav")
+            .url("$serverUrl/index.php/login/v2")
+            .method("POST", EMPTY_REQUEST)
+            .header("user-agent", context.getString(R.string.app_name))
             .build()
-        val response = runCatching {
+        val response = try {
             withContext(Dispatchers.IO) {
                 httpClient.newCall(request).execute()
             }
-        }.getOrNull() ?: return false
-        return response.code == 200 || response.code == 401
+        } catch (e: IOException) {
+            Log.e("NextcloudApiHelper", "HTTP error", e)
+            null
+        }
+        if (response?.code != 200 || response.body == null) {
+            Log.e("NextcloudApiHelper", "Invalid response: ${response?.code} ${response?.message}")
+            return null
+        }
+
+        return try {
+            Json.Lenient.decodeFromStream<LoginFlowResponse>(response.body!!.byteStream())
+        } catch (e: SerializationException) {
+            Log.e("NextcloudApiHelper", "Invalid response body", e)
+            null
+        }
+    }
+
+    internal suspend fun pollLoginFlow(loginFlow: LoginFlowResponse): LoginPollResponse? {
+        val request = Request.Builder()
+            .url(loginFlow.poll.endpoint)
+            .method("POST", FormBody.Builder().add("token", loginFlow.poll.token).build())
+            .build()
+        val response = try {
+            withContext(Dispatchers.IO) {
+                httpClient.newCall(request).execute()
+            }
+        } catch (e: IOException) {
+            Log.e("NextcloudApiHelper", "HTTP error", e)
+            null
+        }
+        if (response?.code != 200 || response.body == null) {
+            Log.e("NextcloudApiHelper", "Invalid response: ${response?.code} ${response?.message}")
+            return null
+        }
+
+        return try {
+            Json.Lenient.decodeFromStream<LoginPollResponse>(response.body!!.byteStream())
+        } catch (e: SerializationException) {
+            Log.e("NextcloudApiHelper", "Invalid response body", e)
+            null
+        }
     }
 
     suspend fun getLoggedInUser(): NcUser? {

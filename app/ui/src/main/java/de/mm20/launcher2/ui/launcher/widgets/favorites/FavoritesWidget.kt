@@ -41,7 +41,9 @@ fun FavoritesWidget(widget: FavoritesWidget) {
         viewModel.updateWidget(widget)
     }
 
-    Column {
+    Column(
+        modifier = Modifier.padding(vertical = 4.dp)
+    ) {
         if (favorites.isNotEmpty()) {
             SearchResultGrid(favorites, transitionKey = selectedTag)
         } else {

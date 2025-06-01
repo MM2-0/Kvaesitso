@@ -70,11 +70,12 @@ data class PluginFile(
         if (thumbnailUri != null) {
             val request = ImageRequest.Builder(context)
                 .data(thumbnailUri)
+                .size(size)
                 .build()
             val result = context.imageLoader.execute(request)
             val drawable = result.drawable ?: return null
             return StaticLauncherIcon(
-                foregroundLayer = StaticIconLayer(icon = drawable, scale = 1.5f),
+                foregroundLayer = StaticIconLayer(icon = drawable),
                 backgroundLayer = ColorLayer(),
             )
         }

@@ -1,62 +1,68 @@
 package de.mm20.launcher2.ui.component
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
-import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.flowlayout.MainAxisAlignment
 
 @Composable
 fun Banner(
     modifier: Modifier = Modifier,
     text: String,
     icon: ImageVector,
-    color: Color = MaterialTheme.colorScheme.surfaceVariant,
+    color: Color = MaterialTheme.colorScheme.surfaceContainer,
     primaryAction: (@Composable () -> Unit)? = null,
     secondaryAction: (@Composable () -> Unit)? = null,
 ) {
-    Card(
+    OutlinedCard(
         modifier = modifier,
-        colors = CardDefaults.cardColors(
+        colors = CardDefaults.outlinedCardColors(
             containerColor = color,
+            contentColor = MaterialTheme.colorScheme.secondary,
         ),
         shape = MaterialTheme.shapes.small,
     ) {
         Column {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(end = 16.dp),
                     imageVector = icon,
                     contentDescription = null
                 )
                 Text(
                     text = text,
                     modifier = Modifier
-                        .weight(1f)
-                        .padding(vertical = 16.dp)
-                        .padding(end = 16.dp),
-                    style = MaterialTheme.typography.labelMedium
+                        .weight(1f),
+                    style = MaterialTheme.typography.bodySmallEmphasized
                 )
             }
             if (secondaryAction != null || primaryAction != null) {
                 FlowRow(
                     Modifier
                         .align(Alignment.End)
-                        .padding(8.dp),
-                    crossAxisSpacing = 8.dp,
-                    crossAxisAlignment = FlowCrossAxisAlignment.End,
-                    mainAxisAlignment = MainAxisAlignment.End
+                        .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+                    horizontalArrangement = Arrangement.End,
+                    verticalArrangement = Arrangement.Bottom,
+                    itemVerticalAlignment = Alignment.CenterVertically,
                 ) {
                     Box {
                         secondaryAction?.invoke()

@@ -47,28 +47,6 @@ fun CardsSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                ListPreference(
-                    icon = Icons.Rounded.Rectangle,
-                    title = stringResource(R.string.preference_cards_shape),
-                    items = listOf(
-                        stringResource(R.string.preference_cards_shape_rounded) to SurfaceShape.Rounded,
-                        stringResource(R.string.preference_cards_shape_cut) to SurfaceShape.Cut,
-                    ),
-                    value = cardStyle.shape,
-                    onValueChanged = {
-                        viewModel.setShape(it)
-                    })
-                SliderPreference(
-                    title = stringResource(R.string.preference_cards_corner_radius),
-                    icon = Icons.Rounded.RoundedCorner,
-                    value = cardStyle.cornerRadius,
-                    min = 0,
-                    max = 24,
-                    step = 1,
-                    onValueChanged = {
-                        viewModel.setRadius(it)
-                    }
-                )
                 SliderPreference(
                     title = stringResource(R.string.preference_cards_opacity),
                     icon = Icons.Rounded.Opacity,

@@ -40,6 +40,7 @@ dependencies {
 
 
     implementation(libs.koin.android)
+    implementation(libs.coil.core)
 
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))

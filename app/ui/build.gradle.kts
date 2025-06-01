@@ -46,10 +46,12 @@ android {
             "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
             "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
             "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3ExpressiveApi",
             "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
             "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
             "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
             "-opt-in=androidx.compose.animation.ExperimentalSharedTransitionApi",
+            "-Xwhen-guards",
         )
     }
 
@@ -93,6 +95,8 @@ dependencies {
     implementation(libs.accompanist.pagerindicators)
     implementation(libs.accompanist.flowlayout)
     implementation(libs.accompanist.navigationanimation)
+
+    implementation(libs.haze)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.activitycompose)

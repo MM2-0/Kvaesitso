@@ -77,22 +77,6 @@ fun RowScope.SearchBarMenu(
                 Icon(imageVector = Icons.Rounded.Wallpaper, contentDescription = null)
             }
         )
-        val editButton by widgetsVM.editButton.collectAsState()
-        val searchOpen by launcherVM.isSearchOpen
-        if (!searchOpen && editButton == false) {
-            DropdownMenuItem(
-                onClick = {
-                    launcherVM.setWidgetEditMode(editMode = true)
-                    showOverflowMenu = false
-                },
-                text = {
-                    Text(stringResource(R.string.menu_edit_widgets))
-                },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
-                }
-            )
-        }
         DropdownMenuItem(
             onClick = {
                 context.startActivity(Intent(context, SettingsActivity::class.java))
