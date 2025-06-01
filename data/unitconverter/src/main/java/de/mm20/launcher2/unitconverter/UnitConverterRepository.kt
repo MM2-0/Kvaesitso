@@ -75,8 +75,7 @@ internal class UnitConverterRepositoryImpl(
             includeCurrencies: Boolean
     ): UnitConverter? {
         val customSearchSeparator = settings.customVerb.first().ifBlank { "\\s+" }
-        if (!query.matches(Regex("""[0-9,.:]+[^\\s]+ (-|>>|>|to|a|en|$customSearchSeparator) [^\\s]+"""))
-        )
+        if (!query.matches(Regex("""[0-9,.:]+[^\\s]+ (-|>>|>|to|a|en|$customSearchSeparator) [^\\s]+""")))
                 return null
 
 
