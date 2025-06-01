@@ -79,12 +79,13 @@ internal class UnitConverterRepositoryImpl(
                 return null
 
 
-        val result = query.replace(Regex("""([0-9,.:])([a-zA-Z])"""), "$1 $2")
+        // 12cm -> 12 cm so computer sees correct number of tokens
+        val parseableQuery = query.replace(Regex("""([0-9,.:])([a-zA-Z])"""), "$1 $2")
         val valueStr: String
         val unitStr: String
         val targetUnitStr: String?
 
-        result.split(" ").also {
+        parseableQuery.split(" ").also {
             valueStr = it.get(0)
             unitStr = it.get(1)
             targetUnitStr = it.getOrNull(3)
