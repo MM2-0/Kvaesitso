@@ -288,4 +288,5 @@
     <string name="dimension_frequency">Frequenz</string>
     <string name="dimension_temperature">Temperatur</string>
     <string name="dimension_time">Zeit</string>
+    <string name="dimension_data">Daten</string>
 </resources>
