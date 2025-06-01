@@ -220,5 +220,13 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_mit,
         url = "https://github.com/westnordost/osm-opening-hours",
         copyrightNote = "Copyright (c) 2024 Tobias Zwick",
+    ),
+    OpenSourceLibrary(
+        name = "Haze",
+        description = "Haze is a library providing a 'glassmorphism' style blur for Compose.",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://chrisbanes.github.io/haze",
+        copyrightNote = "Copyright 2024 Chris Banes",
     )
 )

@@ -1,16 +1,11 @@
 package de.mm20.launcher2.ui.settings.colorscheme
 
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.FlowRowScope
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.DarkMode
@@ -31,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ThemePreferenceCategory(
+fun ColorSchemePreferenceCategory(
     title: String,
     previewColorScheme: ColorScheme,
     darkMode: Boolean,
@@ -95,15 +90,8 @@ fun ThemePreferenceCategory(
             }
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
-                .padding(16.dp)
-        ) {
-            colorPreferences()
-        }
-        HorizontalDivider()
+        colorPreferences()
+        HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
     }
 
 }

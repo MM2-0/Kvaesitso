@@ -1795,3 +1795,43 @@ private val _TollOff = materialIcon("Icons.Rounded.TollOff") {
 
 val Icons.Outlined.TollOff
     get() = _TollOff
+
+val _CutCorner = materialIcon("Icons.Rounded.CutCorner") {
+    materialPath {
+        moveTo(2f, 3f)
+        verticalLineTo(22f)
+        horizontalLineTo(21f)
+        verticalLineTo(11.585938f)
+        lineTo(12.414063f, 3f)
+        close()
+        moveToRelative(2f, 2f)
+        horizontalLineToRelative(7.585938f)
+        lineTo(19f, 12.414063f)
+        verticalLineTo(20f)
+        horizontalLineTo(4f)
+        close()
+    }
+}
+
+val Icons.Rounded.CutCorner
+    get() = _CutCorner
+
+val _RoundedCornerAlt = materialIcon("Icons.Rounded.RoundedCornerAlt") {
+    materialPath {
+        moveTo(2f, 3f)
+        verticalLineTo(22f)
+        horizontalLineTo(21f)
+        verticalLineTo(12f)
+        curveTo(21f, 7.0412819f, 16.958718f, 3f, 12f, 3f)
+        close()
+        moveToRelative(2f, 2f)
+        horizontalLineToRelative(8f)
+        curveToRelative(3.877838f, 0f, 7f, 3.1221621f, 7f, 7f)
+        verticalLineToRelative(8f)
+        horizontalLineTo(4f)
+        close()
+    }
+}
+
+val Icons.Rounded.RoundedCornerAlt
+    get() = _RoundedCornerAlt

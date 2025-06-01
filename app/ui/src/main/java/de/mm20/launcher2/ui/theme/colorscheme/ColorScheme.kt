@@ -16,20 +16,20 @@ import de.mm20.launcher2.themes.DefaultDarkColorScheme
 import de.mm20.launcher2.themes.DefaultLightColorScheme
 import de.mm20.launcher2.themes.FullColorScheme
 import de.mm20.launcher2.themes.PartialCorePalette
-import de.mm20.launcher2.themes.Theme
+import de.mm20.launcher2.themes.Colors as ThemeColors
 import de.mm20.launcher2.themes.get
 import de.mm20.launcher2.themes.merge
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import org.koin.compose.koinInject
 
 @Composable
-fun lightColorSchemeOf(theme: Theme): ColorScheme {
-    return colorSchemeOf(theme.lightColorScheme.merge(DefaultLightColorScheme), theme.corePalette)
+fun lightColorSchemeOf(colors: ThemeColors): ColorScheme {
+    return colorSchemeOf(colors.lightColorScheme.merge(DefaultLightColorScheme), colors.corePalette)
 }
 
 @Composable
-fun darkColorSchemeOf(theme: Theme): ColorScheme {
-    return colorSchemeOf(theme.darkColorScheme.merge(DefaultDarkColorScheme), theme.corePalette)
+fun darkColorSchemeOf(colors: ThemeColors): ColorScheme {
+    return colorSchemeOf(colors.darkColorScheme.merge(DefaultDarkColorScheme), colors.corePalette)
 }
 
 @Composable

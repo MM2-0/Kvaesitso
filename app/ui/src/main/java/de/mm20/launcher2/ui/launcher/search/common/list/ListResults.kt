@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.ktx.animateCorners
 import de.mm20.launcher2.ui.layout.BottomReversed
-import de.mm20.launcher2.ui.locals.LocalCardStyle
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 
 fun <T : SavableSearchable> LazyListScope.ListResults(
     key: String,
@@ -104,7 +104,7 @@ fun LazyItemScope.ListItemSurface(
         if (it) 2.dp else 0.dp
     }
     val backgroundAlpha by transition.animateFloat {
-        if (it) 1f else LocalCardStyle.current.opacity
+        if (it) 1f else LocalTransparencyScheme.current.surface
     }
 
     val padding by transition.animateDp {

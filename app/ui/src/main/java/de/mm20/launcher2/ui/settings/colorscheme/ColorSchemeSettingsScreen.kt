@@ -1,20 +1,16 @@
 package de.mm20.launcher2.ui.settings.colorscheme
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.OpenInNew
@@ -60,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
@@ -78,8 +75,8 @@ import palettes.CorePalette
 import java.util.UUID
 
 @Composable
-fun ThemeSettingsScreen(themeId: UUID) {
-    val viewModel: ThemesSettingsScreenVM = viewModel()
+fun ColorSchemeSettingsScreen(themeId: UUID) {
+    val viewModel: ColorSchemesSettingsScreenVM = viewModel()
 
     val context = LocalContext.current
     val dark = LocalDarkTheme.current
@@ -107,7 +104,13 @@ fun ThemeSettingsScreen(themeId: UUID) {
         var name by remember(theme) { mutableStateOf(theme?.name ?: "") }
         AlertDialog(
             onDismissRequest = { editName = false },
-            text = { OutlinedTextField(value = name, onValueChange = { name = it }, singleLine = true) },
+            text = {
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    singleLine = true
+                )
+            },
             confirmButton = {
                 Button(
                     onClick = {
@@ -146,135 +149,129 @@ fun ThemeSettingsScreen(themeId: UUID) {
                     stringResource(R.string.preference_custom_colors_corepalette),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Row(
-                    modifier = Modifier
-                        .horizontalScroll(rememberScrollState())
-                        .padding(16.dp)
-                ) {
-                    CorePaletteColorPreference(
-                        title = "Primary",
-                        value = theme?.corePalette?.primary,
-                        onValueChange = {
-                            viewModel.updateTheme(
-                                theme!!.copy(
-                                    corePalette = theme!!.corePalette.copy(
-                                        primary = it
-                                    )
+                CorePaletteColorPreference(
+                    title = "Primary",
+                    value = theme?.corePalette?.primary,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    primary = it
                                 )
                             )
-                        },
-                        defaultValue = systemPalette.primary,
-                        modifier = Modifier.padding(end = 12.dp),
-                    )
-                    CorePaletteColorPreference(
-                        title = "Secondary",
-                        value = theme?.corePalette?.secondary,
-                        onValueChange = {
-                            viewModel.updateTheme(
-                                theme!!.copy(
-                                    corePalette = theme!!.corePalette.copy(
-                                        secondary = it
-                                    )
+                        )
+                    },
+                    defaultValue = systemPalette.primary,
+                    modifier = Modifier.padding(end = 12.dp),
+                )
+                CorePaletteColorPreference(
+                    title = "Secondary",
+                    value = theme?.corePalette?.secondary,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    secondary = it
                                 )
                             )
-                        },
-                        defaultValue = systemPalette.secondary,
-                        modifier = Modifier.padding(end = 12.dp),
-                        autoGenerate = {
-                            theme!!.corePalette.primary?.let {
-                                CorePalette.of(it).a2.keyColor.toInt()
-                            }
-                        },
-                    )
-                    CorePaletteColorPreference(
-                        title = "Tertiary",
-                        value = theme?.corePalette?.tertiary,
-                        onValueChange = {
-                            viewModel.updateTheme(
-                                theme!!.copy(
-                                    corePalette = theme!!.corePalette.copy(
-                                        tertiary = it
-                                    )
+                        )
+                    },
+                    defaultValue = systemPalette.secondary,
+                    modifier = Modifier.padding(end = 12.dp),
+                    autoGenerate = {
+                        theme!!.corePalette.primary?.let {
+                            CorePalette.of(it).a2.keyColor.toInt()
+                        }
+                    },
+                )
+                CorePaletteColorPreference(
+                    title = "Tertiary",
+                    value = theme?.corePalette?.tertiary,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    tertiary = it
                                 )
                             )
-                        },
-                        defaultValue = systemPalette.tertiary,
-                        modifier = Modifier.padding(end = 12.dp),
-                        autoGenerate = {
-                            theme!!.corePalette.primary?.let {
-                                CorePalette.of(it).a3.keyColor.toInt()
-                            }
-                        },
-                    )
-                    CorePaletteColorPreference(
-                        title = "Neutral",
-                        value = theme?.corePalette?.neutral,
-                        onValueChange = {
-                            viewModel.updateTheme(
-                                theme!!.copy(
-                                    corePalette = theme!!.corePalette.copy(
-                                        neutral = it
-                                    )
+                        )
+                    },
+                    defaultValue = systemPalette.tertiary,
+                    modifier = Modifier.padding(end = 12.dp),
+                    autoGenerate = {
+                        theme!!.corePalette.primary?.let {
+                            CorePalette.of(it).a3.keyColor.toInt()
+                        }
+                    },
+                )
+                CorePaletteColorPreference(
+                    title = "Neutral",
+                    value = theme?.corePalette?.neutral,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    neutral = it
                                 )
                             )
-                        },
-                        defaultValue = systemPalette.neutral,
-                        modifier = Modifier.padding(end = 12.dp),
-                        autoGenerate = {
-                            theme!!.corePalette.primary?.let {
-                                CorePalette.of(it).n1.keyColor.toInt()
-                            }
-                        },
-                    )
-                    CorePaletteColorPreference(
-                        title = "Neutral Variant",
-                        value = theme?.corePalette?.neutralVariant,
-                        onValueChange = {
-                            viewModel.updateTheme(
-                                theme!!.copy(
-                                    corePalette = theme!!.corePalette.copy(
-                                        neutralVariant = it
-                                    )
+                        )
+                    },
+                    defaultValue = systemPalette.neutral,
+                    modifier = Modifier.padding(end = 12.dp),
+                    autoGenerate = {
+                        theme!!.corePalette.primary?.let {
+                            CorePalette.of(it).n1.keyColor.toInt()
+                        }
+                    },
+                )
+                CorePaletteColorPreference(
+                    title = "Neutral Variant",
+                    value = theme?.corePalette?.neutralVariant,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    neutralVariant = it
                                 )
                             )
-                        },
-                        defaultValue = systemPalette.neutralVariant,
-                        modifier = Modifier.padding(end = 12.dp),
-                        autoGenerate = {
-                            theme!!.corePalette.primary?.let {
-                                CorePalette.of(it).n2.keyColor.toInt()
-                            }
-                        },
-                    )
-                    CorePaletteColorPreference(
-                        title = "Error",
-                        value = theme?.corePalette?.error,
-                        onValueChange = {
-                            viewModel.updateTheme(
-                                theme!!.copy(
-                                    corePalette = theme!!.corePalette.copy(
-                                        error = it
-                                    )
+                        )
+                    },
+                    defaultValue = systemPalette.neutralVariant,
+                    modifier = Modifier.padding(end = 12.dp),
+                    autoGenerate = {
+                        theme!!.corePalette.primary?.let {
+                            CorePalette.of(it).n2.keyColor.toInt()
+                        }
+                    },
+                )
+                CorePaletteColorPreference(
+                    title = "Error",
+                    value = theme?.corePalette?.error,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    error = it
                                 )
                             )
-                        },
-                        defaultValue = systemPalette.error,
-                        autoGenerate = {
-                            theme!!.corePalette.primary?.let {
-                                CorePalette.of(it).error.keyColor.toInt()
-                            }
-                        },
-                    )
-                }
-                HorizontalDivider()
+                        )
+                    },
+                    defaultValue = systemPalette.error,
+                    autoGenerate = {
+                        theme!!.corePalette.primary?.let {
+                            CorePalette.of(it).error.keyColor.toInt()
+                        }
+                    },
+                )
+                HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
             }
         }
         item {
-            ThemePreferenceCategory(
+            ColorSchemePreferenceCategory(
                 title = "Primary colors",
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
@@ -302,7 +299,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.primary,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "On Primary",
@@ -326,7 +322,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onPrimary,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Primary Container",
@@ -350,7 +345,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.primaryContainer,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "On Primary Container",
@@ -374,7 +368,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onPrimaryContainer,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
 
                 },
@@ -419,7 +412,7 @@ fun ThemeSettingsScreen(themeId: UUID) {
             }
         }
         item {
-            ThemePreferenceCategory(
+            ColorSchemePreferenceCategory(
                 title = "Secondary colors",
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
@@ -447,7 +440,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.secondary,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "On Secondary",
@@ -471,7 +463,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onSecondary,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Secondary Container",
@@ -495,7 +486,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.secondaryContainer,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "On Secondary Container",
@@ -519,7 +509,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onSecondaryContainer,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                 },
             ) {
@@ -557,7 +546,7 @@ fun ThemeSettingsScreen(themeId: UUID) {
             }
         }
         item {
-            ThemePreferenceCategory(
+            ColorSchemePreferenceCategory(
                 title = "Tertiary colors",
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
@@ -585,7 +574,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.tertiary,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "On Tertiary",
@@ -609,7 +597,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onTertiary,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Tertiary Container",
@@ -633,7 +620,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.tertiaryContainer,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "On Tertiary Container",
@@ -657,14 +643,17 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onTertiaryContainer,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                 },
             ) {
+                ShapedLauncherIcon(
+                    badge = { Badge() },
+                    size = 48.dp,
+                )
             }
         }
         item {
-            ThemePreferenceCategory(
+            ColorSchemePreferenceCategory(
                 title = "Surface colors",
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
@@ -716,7 +705,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.surface,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Surface Bright",
@@ -740,7 +728,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.surfaceBright,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Surface Tint",
@@ -764,7 +751,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.surfaceTint,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                 },
             ) {
@@ -824,7 +810,7 @@ fun ThemeSettingsScreen(themeId: UUID) {
             }
         }
         item {
-            ThemePreferenceCategory(
+            ColorSchemePreferenceCategory(
                 title = "Surface container colors",
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
@@ -852,7 +838,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.surfaceContainerLowest,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Surface Container Low",
@@ -876,7 +861,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.surfaceContainerLow,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Surface Container",
@@ -900,7 +884,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.surfaceContainer,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Surface Container High",
@@ -924,7 +907,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.surfaceContainerHigh,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Surface Container Highest",
@@ -948,7 +930,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.surfaceContainerHighest,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Surface Variant",
@@ -972,7 +953,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.surfaceVariant,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                 },
             ) {
@@ -994,7 +974,7 @@ fun ThemeSettingsScreen(themeId: UUID) {
             }
         }
         item {
-            ThemePreferenceCategory(
+            ColorSchemePreferenceCategory(
                 title = "Content colors",
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
@@ -1022,7 +1002,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onSurface,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
 
 
@@ -1048,7 +1027,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
 
                     ThemeColorPreference(
@@ -1073,7 +1051,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                 },
             ) {
@@ -1126,7 +1103,7 @@ fun ThemeSettingsScreen(themeId: UUID) {
                 }
 
                 Surface(
-                    color = MaterialTheme.colorScheme.surface,
+                    color = MaterialTheme.colorScheme.surfaceContainer,
                     shape = MaterialTheme.shapes.extraSmall,
                     tonalElevation = 3.dp,
                     shadowElevation = 3.dp,
@@ -1148,7 +1125,7 @@ fun ThemeSettingsScreen(themeId: UUID) {
             }
         }
         item {
-            ThemePreferenceCategory(
+            ColorSchemePreferenceCategory(
                 title = "Outline colors",
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
@@ -1176,7 +1153,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.outline,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Outline Variant",
@@ -1200,7 +1176,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.outlineVariant,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                 },
             ) {
@@ -1240,7 +1215,7 @@ fun ThemeSettingsScreen(themeId: UUID) {
             }
         }
         item {
-            ThemePreferenceCategory(
+            ColorSchemePreferenceCategory(
                 title = "Error colors",
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
@@ -1268,7 +1243,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.error,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "On Error",
@@ -1292,7 +1266,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onError,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Error Container",
@@ -1316,7 +1289,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.errorContainer,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "On Error Container",
@@ -1340,7 +1312,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.onErrorContainer,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                 },
             ) {
@@ -1354,7 +1325,7 @@ fun ThemeSettingsScreen(themeId: UUID) {
             }
         }
         item {
-            ThemePreferenceCategory(
+            ColorSchemePreferenceCategory(
                 title = "Inverse colors",
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
@@ -1382,7 +1353,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.inverseSurface,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Inverse Surface",
@@ -1406,7 +1376,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.inverseOnSurface,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Inverse Primary",
@@ -1430,7 +1399,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.inversePrimary,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                 },
             ) {

@@ -438,6 +438,11 @@
     <string name="preference_mdy_color_source">Source for dynamic colors</string>
     <string name="preference_mdy_color_source_system">System</string>
     <string name="preference_mdy_color_source_wallpaper">Wallpaper</string>
+    <string name="preference_screen_shapes">Shapes</string>
+    <string name="preference_shapes_default">Default</string>
+    <string name="preference_shapes_extra_round">Extra round</string>
+    <string name="preference_shapes_rect">Rectangualar</string>
+    <string name="preference_shapes_base">Base shape</string>
     <string name="preference_font">Font</string>
     <string name="preference_font_system">System default</string>
     <string name="preference_screen_about">About</string>
@@ -668,6 +673,8 @@
     <string name="preference_compact_tags">Compact tags</string>
     <string name="preference_compact_tags_summary">Hide tag labels or icons to reduce the space occupied by tags</string>
     <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
+    <string name="preference_widgets_on_home_screen">Widgets on home screen</string>
+    <string name="preference_widgets_on_home_screen_summary">Show widgets on the home screen instead of an extra page</string>
     <string name="preference_screen_homescreen">Home screen</string>
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
     <string name="preference_screen_icons">Grid &amp; icons</string>
@@ -772,11 +779,13 @@
     <string name="preference_gesture_swipe_down">Swipe down</string>
     <string name="preference_gesture_swipe_left">Swipe left</string>
     <string name="preference_gesture_swipe_right">Swipe right</string>
+    <string name="preference_gesture_swipe_up">Swipe up</string>
     <string name="preference_gesture_double_tap">Double tap</string>
     <string name="preference_gesture_long_press">Long press</string>
     <string name="preference_gesture_home_button">Home button/gesture</string>
     <string name="gesture_action_none">Do nothing</string>
     <string name="gesture_action_open_search">Open search</string>
+    <string name="gesture_action_widgets">Widgets</string>
     <string name="gesture_action_launch_app">Launch app</string>
     <string name="gesture_action_notifications">Open notification drawer</string>
     <string name="gesture_action_lock_screen">Turn off screen</string>
@@ -815,7 +824,9 @@
     <string name="note_widget_file_write_error">Error saving note</string>
     <string name="note_widget_file_write_error_description">The note could not be written to the linked file. Possibly, it has been moved or deleted. A copy has been saved to the launcher\'s internal storage.</string>
     <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s\?</string>
+    <string name="confirmation_delete_shapes_scheme">Do you really want to delete the shapes scheme %1$s\?</string>
     <string name="new_color_scheme_name">New color scheme</string>
+    <string name="new_shapes_name">New shapes</string>
     <string name="theme_color_scheme_system_default">Use system default</string>
     <string name="theme_color_scheme_autogenerate">From primary color</string>
     <string name="theme_color_scheme_palette_color">Palette</string>
@@ -1023,4 +1034,6 @@
         <item quantity="other">in %1$d minutes</item>
     </plurals>
     <string name="departure_time_departed">departed</string>
+    <string name="bad_configuration_title">Congratulations, you\'ve locked yourself out!</string>
+    <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher.</string>
 </resources>
