@@ -80,10 +80,12 @@ fun ThemeColorPreference(
 
     Row(
         modifier = modifier.fillMaxWidth()
+            .clip(MaterialTheme.shapes.extraSmall)
             .clickable(
                 onClick = { showDialog = true },
             )
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         ColorSwatch(

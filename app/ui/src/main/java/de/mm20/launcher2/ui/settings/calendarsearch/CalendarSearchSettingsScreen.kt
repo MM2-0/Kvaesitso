@@ -6,8 +6,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,8 +20,8 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
@@ -47,85 +45,81 @@ fun CalendarSearchSettingsScreen() {
     PreferenceScreen(title = stringResource(R.string.preference_search_calendar)) {
         item {
             PreferenceCategory {
-                AnimatedVisibility(hasCalendarPermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_calendar_search_settings),
-                        onClick = {
-                            viewModel.requestCalendarPermission(context as AppCompatActivity)
-                        },
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-                PreferenceWithSwitch(
-                    title = stringResource(R.string.preference_search_calendar),
-                    summary = stringResource(R.string.preference_search_local_calendar_summary),
-                    switchValue = enabledProviders.contains("local") && hasCalendarPermission == true,
-                    onSwitchChanged = {
-                        viewModel.setProviderEnabled("local", it)
+                GuardedPreference(
+                    locked = hasCalendarPermission == false,
+                    onUnlock = {
+                        viewModel.requestCalendarPermission(context as AppCompatActivity)
                     },
-                    enabled = hasCalendarPermission == true,
-                    onClick = {
-                        navController?.navigate("settings/search/calendar/local")
-                    }
-                )
-                if (isTasksAppInstalled) {
-                    AnimatedVisibility(hasTasksPermission == false) {
-                        MissingPermissionBanner(
-                            text = stringResource(R.string.missing_permission_tasks_search_settings),
-                            onClick = {
-                                viewModel.requestTasksPermission(context as AppCompatActivity)
-                            },
-                            modifier = Modifier.padding(16.dp)
-                        )
-                    }
+                    description = stringResource(R.string.missing_permission_calendar_search_settings),
+                ) {
                     PreferenceWithSwitch(
-                        title = stringResource(R.string.preference_search_tasks),
-                        summary = stringResource(R.string.preference_search_tasks_summary),
-                        switchValue = enabledProviders.contains("tasks.org") && hasTasksPermission == true,
+                        title = stringResource(R.string.preference_search_calendar),
+                        summary = stringResource(R.string.preference_search_local_calendar_summary),
+                        switchValue = enabledProviders.contains("local") && hasCalendarPermission == true,
                         onSwitchChanged = {
-                            viewModel.setProviderEnabled("tasks.org", it)
+                            viewModel.setProviderEnabled("local", it)
                         },
-                        enabled = hasTasksPermission == true,
+                        enabled = hasCalendarPermission == true,
                         onClick = {
-                            navController?.navigate("settings/search/calendar/tasks.org")
+                            navController?.navigate("settings/search/calendar/local")
                         }
                     )
                 }
-                for (plugin in plugins) {
-                    val state = plugin.state
-                    if (state is PluginState.SetupRequired) {
-                        Banner(
-                            modifier = Modifier.padding(16.dp),
-                            text = state.message
-                                ?: stringResource(id = R.string.plugin_state_setup_required),
-                            icon = Icons.Rounded.ErrorOutline,
-                            primaryAction = {
-                                TextButton(onClick = {
-                                    try {
-                                        state.setupActivity.sendWithBackgroundPermission(context)
-                                    } catch (e: PendingIntent.CanceledException) {
-                                        CrashReporter.logException(e)
-                                    }
-                                }) {
-                                    Text(stringResource(id = R.string.plugin_action_setup))
-                                }
+                if (isTasksAppInstalled) {
+                    GuardedPreference(
+                        locked = hasTasksPermission == false,
+                        onUnlock = {
+                            viewModel.requestTasksPermission(context as AppCompatActivity)
+                        },
+                        description = stringResource(R.string.missing_permission_tasks_search_settings),
+                    ) {
+                        PreferenceWithSwitch(
+                            title = stringResource(R.string.preference_search_tasks),
+                            summary = stringResource(R.string.preference_search_tasks_summary),
+                            switchValue = enabledProviders.contains("tasks.org") && hasTasksPermission == true,
+                            onSwitchChanged = {
+                                viewModel.setProviderEnabled("tasks.org", it)
+                            },
+                            enabled = hasTasksPermission == true,
+                            onClick = {
+                                navController?.navigate("settings/search/calendar/tasks.org")
                             }
                         )
                     }
-                    PreferenceWithSwitch(
-                        title = plugin.plugin.label,
-                        enabled = state is PluginState.Ready,
-                        summary = (state as? PluginState.SetupRequired)?.message
-                            ?: (state as? PluginState.Ready)?.text
-                            ?: plugin.plugin.description,
-                        switchValue = enabledProviders.contains(plugin.plugin.authority) && state is PluginState.Ready,
-                        onSwitchChanged = {
-                            viewModel.setProviderEnabled(plugin.plugin.authority, it)
+                }
+                for (plugin in plugins) {
+                    val state = plugin.state
+                    GuardedPreference(
+                        locked = state is PluginState.SetupRequired,
+                        onUnlock = {
+                            try {
+                                (state as PluginState.SetupRequired).setupActivity.sendWithBackgroundPermission(
+                                    context
+                                )
+                            } catch (e: PendingIntent.CanceledException) {
+                                CrashReporter.logException(e)
+                            }
                         },
-                        onClick = {
-                            navController?.navigate("settings/search/calendar/${plugin.plugin.authority}")
-                        }
-                    )
+                        description = (state as? PluginState.SetupRequired)?.message
+                            ?: stringResource(id = R.string.plugin_state_setup_required),
+                        icon = Icons.Rounded.ErrorOutline,
+                        unlockLabel = stringResource(id = R.string.plugin_action_setup),
+                    ) {
+                        PreferenceWithSwitch(
+                            title = plugin.plugin.label,
+                            enabled = state is PluginState.Ready,
+                            summary = (state as? PluginState.SetupRequired)?.message
+                                ?: (state as? PluginState.Ready)?.text
+                                ?: plugin.plugin.description,
+                            switchValue = enabledProviders.contains(plugin.plugin.authority) && state is PluginState.Ready,
+                            onSwitchChanged = {
+                                viewModel.setProviderEnabled(plugin.plugin.authority, it)
+                            },
+                            onClick = {
+                                navController?.navigate("settings/search/calendar/${plugin.plugin.authority}")
+                            }
+                        )
+                    }
                 }
             }
         }

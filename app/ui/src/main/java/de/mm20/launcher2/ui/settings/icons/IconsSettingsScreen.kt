@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.settings.icons
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -144,24 +143,20 @@ fun IconsSettingsScreen() {
         item {
             PreferenceCategory(stringResource(R.string.preference_category_icons)) {
                 if (previewIcons.value.isNotEmpty()) {
-                    Surface(
+                    Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        shape = MaterialTheme.shapes.medium,
-                        color = MaterialTheme.colorScheme.surfaceContainer,
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                            .background(
+                                MaterialTheme.colorScheme.surfaceContainerLowest,
+                                MaterialTheme.shapes.extraSmall
+                            )
+                            .padding(vertical = 24.dp, horizontal = 8.dp)
                     ) {
-                        Row(
-                            modifier = Modifier.padding(vertical = 24.dp, horizontal = 8.dp)
-                        ) {
-                            for (icon in previewIcons.value) {
-                                Box(
-                                    modifier = Modifier.weight(1f),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    ShapedLauncherIcon(size = grid.iconSize.dp, icon = { icon })
-                                }
+                        for (icon in previewIcons.value) {
+                            Box(
+                                modifier = Modifier.weight(1f),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ShapedLauncherIcon(size = grid.iconSize.dp, icon = { icon })
                             }
                         }
                     }
@@ -445,7 +440,8 @@ fun IconShapePreference(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Box(
-                                    modifier = Modifier.clip(getShape(it))
+                                    modifier = Modifier
+                                        .clip(getShape(it))
                                         .size(48.dp)
                                         .background(MaterialTheme.colorScheme.primary)
                                         .clickable {

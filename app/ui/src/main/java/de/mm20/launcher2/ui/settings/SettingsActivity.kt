@@ -11,6 +11,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
@@ -132,7 +133,9 @@ class SettingsActivity : BaseActivity() {
                                 )
                             )
                         }
-                        OverlayHost {
+                        OverlayHost(
+                            modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainer)
+                        ) {
                             NavHost(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = navController,
