@@ -21,7 +21,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -49,6 +48,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.NavigateNext
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.outlined.CreditCardOff
+import androidx.compose.material.icons.outlined.CreditScore
+import androidx.compose.material.icons.outlined.Toll
 import androidx.compose.material.icons.rounded.AirplanemodeActive
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Commute
@@ -92,9 +94,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -102,7 +102,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
@@ -115,6 +114,7 @@ import blend.Blend.harmonize
 import coil.compose.AsyncImage
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.icons.CableCar
+import de.mm20.launcher2.icons.TollOff
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.isOpen
@@ -124,6 +124,7 @@ import de.mm20.launcher2.search.location.LineNameComparator
 import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.PaymentMethod
 import de.mm20.launcher2.search.location.isNotEmpty
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -229,24 +230,33 @@ fun LocationItem(
                         )
                         val formattedDistance =
                             distance?.metersToLocalizedString(context, imperialUnits)
-                        val isOpenString = location.openingSchedule?.isOpen()
-                            ?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
-                        val sublabel = listOf(location.category, formattedDistance, isOpenString)
+                        val sublabel = listOf(location.category, formattedDistance)
                             .fastFilterNotNull()
                             .joinToString(" • ")
+                        val isOpenString = location.openingSchedule?.isOpen()
+                            ?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
 
-                        if (sublabel.isNotBlank()) {
-                            Text(
-                                sublabel,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.secondary,
-                                modifier = Modifier
-                                    .padding(top = 2.dp)
-                                    .sharedElement(
-                                        rememberSharedContentState("sublabel"),
-                                        this@AnimatedContent
-                                    )
-                            )
+                        Row(modifier = Modifier.padding(top = 2.dp)) {
+                            if (sublabel.isNotBlank()) {
+                                Text(
+                                    sublabel,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier
+                                        .sharedElement(
+                                            rememberSharedContentState("sublabel"),
+                                            this@AnimatedContent
+                                        )
+                                )
+                            }
+                            if (!isOpenString.isNullOrBlank()) {
+                                Text(
+                                    " • $isOpenString",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier.animateEnterExit()
+                                )
+                            }
                         }
                     }
                     Compass(
@@ -324,28 +334,55 @@ fun LocationItem(
                                         this@AnimatedContent
                                     )
                             )
-                            val category = location.category
-                            val formattedDistance = distance?.metersToLocalizedString(
-                                context, imperialUnits
-                            )
-                            if (category != null || formattedDistance != null) {
-                                Text(
-                                    when {
-                                        category != null && formattedDistance != null -> "$category • $formattedDistance"
-
-                                        category != null -> category
-                                        formattedDistance != null -> formattedDistance
-                                        else -> ""
-                                    },
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.secondary,
-                                    modifier = Modifier
-                                        .padding(top = 2.dp)
-                                        .sharedElement(
-                                            rememberSharedContentState("sublabel"),
-                                            this@AnimatedContent
-                                        )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.padding(top = 2.dp)
+                            ) {
+                                val category = location.category
+                                val acceptedPaymentMethods = location.acceptedPaymentMethods
+                                val formattedDistance = distance?.metersToLocalizedString(
+                                    context, imperialUnits
                                 )
+                                if (category != null || formattedDistance != null) {
+                                    Text(
+                                        when {
+                                            category != null && formattedDistance != null -> "$category • $formattedDistance"
+
+                                            category != null -> category
+                                            formattedDistance != null -> formattedDistance
+                                            else -> ""
+                                        },
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        modifier = Modifier
+                                            .sharedElement(
+                                                rememberSharedContentState("sublabel"),
+                                                this@AnimatedContent
+                                            )
+                                    )
+                                }
+                                if (!acceptedPaymentMethods.isNullOrEmpty()) {
+                                    Text(
+                                        " • ",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        modifier = Modifier.animateEnterExit()
+                                    )
+                                    for ((method, available) in acceptedPaymentMethods) {
+                                        Icon(
+                                            when (method) {
+                                                PaymentMethod.Cash -> if (available) Icons.Outlined.Toll else Icons.Outlined.TollOff
+                                                PaymentMethod.Card -> if (available) Icons.Outlined.CreditScore else Icons.Outlined.CreditCardOff
+                                            },
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.secondary,
+                                            modifier = Modifier
+                                                .size(14.5.dp)
+                                                .padding(end = 2.dp)
+                                                .animateEnterExit()
+                                        )
+                                    }
+                                }
                             }
                             if (location.userRating != null) {
                                 RatingBar(

@@ -11,8 +11,6 @@
     <string name="menu_launch">Запустити</string>
     <string name="menu_customize">Редагувати</string>
     <string name="menu_open_file">Відкрити</string>
-    <string name="menu_hide">Сховати</string>
-    <string name="menu_unhide">Не приховувати</string>
     <string name="action_undo">Скасувати</string>
     <string name="menu_delete">Видалити</string>
     <string name="menu_remove">Прибрати</string>
@@ -38,11 +36,22 @@
     <string name="file_meta_owner">Власник: %1$s</string>
     <string name="file_meta_location">Розташування: %1$s</string>
     <string name="file_type_directory">Шлях</string>
-    <string name="msg_item_hidden">%1$s заховано.</string>
     <string name="wikipedia_url">https://uk.wikipedia.org</string>
     <string name="wikipedia_source">З Вікіпедії</string>
     <string name="file_meta_title">Назва: %1$s</string>
     <string name="file_meta_artist">Виконавець: %1$s</string>
     <string name="file_meta_album">Альбом: %1$s</string>
     <string name="file_meta_app_min_sdk">Мін. версія SDK: %1$s</string>
+    <string name="file_type_image">Зображення</string>
+    <string name="file_type_ebook">Файл електронної книги</string>
+    <string name="file_type_document">Документ</string>
+    <string name="file_type_video">Відео файл</string>
+    <string name="file_type_none">Файл</string>
+    <string name="file_type_music">Аудіо файл</string>
+    <string name="menu_map">Показати на мапі</string>
+    <string name="menu_website">Відкрити веб-сторінку</string>
+    <string name="file_type_presentation">Презентація</string>
+    <string name="file_type_compressed">Стиснутий файл</string>
+    <string name="file_type_text">Текстовий файл</string>
+    <string name="action_import">Імпорт</string>
 </resources>

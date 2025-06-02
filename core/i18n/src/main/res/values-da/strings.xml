@@ -50,8 +50,6 @@
     <string name="menu_share">Del</string>
     <string name="menu_back">Tilbage</string>
     <string name="menu_open_file">Åbn</string>
-    <string name="menu_hide">Skjul</string>
-    <string name="msg_item_hidden">%1$s er blevet skjult.</string>
     <string name="action_undo">Fortryd</string>
     <string name="menu_delete">Slet</string>
     <string name="menu_remove">Fjern</string>
@@ -161,7 +159,6 @@
     <string name="websearch_dialog_url_error">Pladsholderen \'${1}\' mangler i denne URL</string>
     <string name="websearch_dialog_custom_icon">Tilpasset ikon</string>
     <string name="edit_favorites_dialog_new_tag">Opret tag…</string>
-    <string name="nextcloud_server_url_empty">Server-URL må ikke være tom</string>
     <string name="owncloud_server_url">Owncloud server-URL</string>
     <string name="owncloud_server_invalid_url">Denne URL henviser ikke til en gyldig Owncloud-installation</string>
     <string name="owncloud_login_failed">Login mislykkedes: forkert brugernavn eller adgangskode.</string>
@@ -201,7 +198,6 @@
     <string name="menu_app_info">Appinfo</string>
     <string name="menu_launch">Start</string>
     <string name="menu_customize">Tilpas</string>
-    <string name="menu_unhide">Skjul ikke</string>
     <string name="menu_calendar_open_externally">Åbn i kalender-app</string>
     <string name="app_info_version">Version %1$s</string>
     <string name="file_meta_path">Sti: %1$s</string>
@@ -238,8 +234,6 @@
     <string name="widget_name_notes">Note</string>
     <string name="shortcut_summary">Af %1$s</string>
     <string name="nextcloud_server_url">Nextcloud server-URL</string>
-    <string name="owncloud_password_empty">Adgangskode må ikke være tom</string>
-    <string name="owncloud_username_empty">Brugernavn må ikke være tomt</string>
     <string name="disclaimer">Advarsel</string>
     <string name="weather_condition_hail">Hagl</string>
     <string name="weather_condition_partlycloudy">Delvist overskyet</string>
@@ -326,14 +320,9 @@
     <string name="preference_search_websites_summary">Vis en forhåndsvisning af en hjemmeside, hvis søgeforespørgslen er en URL</string>
     <string name="preference_search_localfiles">Lokale filer</string>
     <string name="preference_search_localfiles_summary">Søg i dokumenter, fotos og andre filer gemt på denne enhed</string>
-    <string name="preference_search_gdrive">Google Drev</string>
-    <string name="preference_search_gdrive_summary">Søg i %1$s\'s filer på Google Drev</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Søg i %1$s\'s filer</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">Log ind med Google</string>
-    <string name="preference_google_signin_summary">Log ind for at søge i Google Drev</string>
-    <string name="preference_calendar_hide_allday">Skjul heldagsbegivenheder</string>
     <string name="preference_search_bar_style">Stil</string>
     <string name="preference_search_bar_style_summary">Tilpas søgefeltets udseende</string>
     <string name="preference_search_bar_color">Farve</string>
@@ -351,10 +340,8 @@
     <string name="preference_screen_homescreen">Hjemmeskærm</string>
     <string name="preference_screen_icons">Gitter &amp; ikoner</string>
     <string name="preference_screen_icons_summary">Gitter, ikonstørrelse, ikonpakker, badges</string>
-    <string name="preference_category_accounts">Konti</string>
     <string name="preference_weather_integration">Vejr</string>
     <string name="preference_media_integration">Mediekontrol</string>
-    <string name="no_account_google">Du har ikke tilknyttet en Google-konto endnu</string>
     <string name="connect_account">Tilknyt konto</string>
     <string name="battery_part_charging">Oplader</string>
     <plurals name="battery_part_remaining_charge_time">
@@ -421,7 +408,6 @@
     <string name="preference_clockwidget_favorites_part_summary">Vis den første række af fastgjorte elementer</string>
     <string name="preference_version">Version</string>
     <string name="preference_imperial_units_summary">Brug Fahrenheit-grader og miles i timen</string>
-    <string name="preference_google">Google</string>
     <string name="preference_blur_wallpaper_unsupported">Understøttes ikke på denne enhed</string>
     <string name="preference_plugin_badges_summary">Vis hvilken udvidelse et søgeresultat blev oprettet af</string>
     <string name="preference_nextcloud_signin">Log ind på Nextcloud</string>
@@ -458,16 +444,13 @@
     <string name="restore_invalid_file">Den valgte fil ser ikke ud til at være en sikkerhedskopi. Er du sikker på, at du har valgt den rigtige fil?</string>
     <string name="restore_incompatible_file">Denne sikkerhedskopi blev oprettet med en anden version af %1$s og kan ikke gendannes med denne version.</string>
     <string name="restore_meta">Oprettet %1$s på %2$s med %3$s.</string>
-    <string name="icon_picker_title">Vælg ikon</string>
     <string name="icon_picker_suggestions">Forslag</string>
-    <string name="icon_picker_no_packs_installed">Ingen ikonpakker installeret</string>
     <string name="icon_picker_filter_all_packs">Alle ikonpakker</string>
     <string name="apps_profile_main">Personlig</string>
     <string name="favorites">Favoritter</string>
     <string name="favorites_empty_tag">Der er ingen elementer med dette tag</string>
     <string name="frequently_used_show_in_favorites">Vis i favoritter</string>
     <string name="frequently_used_rows">Antal rækker</string>
-    <string name="customize_tags_placeholder">Tags</string>
     <string name="preference_search_search_actions_summary">Konfigurér hurtige handlinger og søgegenveje</string>
     <string name="search_action_call">Ring</string>
     <string name="search_action_email">E-mail</string>
@@ -475,14 +458,11 @@
     <string name="search_action_timer">Start timer</string>
     <string name="create_search_action_type_web">Søg på en hjemmeside</string>
     <string name="create_search_action_type_intent">Tilpasset intent</string>
-    <string name="edit_search_action_title">Redigér hurtig handling</string>
     <string name="create_search_action_website_url">Indtast adressen på hjemmesiden:</string>
     <string name="search_action_label">Navn</string>
     <string name="search_action_app">App</string>
     <string name="search_action_websearch_url_hint">URL-skabelonet, der bruges til at konstruere websøgnings-URL\'en. Brug ‘${1}’ som pladsholder for det faktiske søgeudtryk, f.eks. https://google.dk/search?q=${1}.</string>
     <string name="experimental_feature">Eksperimentel</string>
-    <string name="create_tag_title">Nyt tag</string>
-    <string name="edit_tag_title">Redigér tag</string>
     <string name="preference_layout_open_search">Søg / app-skuffe</string>
     <string name="tag_exists_error">Der findes allerede et tag med dette navn.</string>
     <string name="tag_no_items_message">Ingen elementer er tildelt dette tag. Hvis du fortsætter, bliver tagget slettet.</string>
@@ -517,9 +497,6 @@
     <string name="gesture_action_lock_screen">Sluk skærm</string>
     <string name="gesture_action_power_menu">Vis slukkemenu</string>
     <string name="gesture_action_recents">Åbn seneste</string>
-    <string name="preference_search_result_ordering">Rækkefølge af søgeresultater</string>
-    <string name="preference_search_result_ordering_alphabetic">Alfabetisk</string>
-    <string name="preference_search_result_ordering_weighted">Brug</string>
     <string name="preference_search_result_ordering_weight_factor">Rangeringsfleksibilitet</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
     <string name="preference_search_result_ordering_weight_factor_default">Balanceret</string>
@@ -566,7 +543,6 @@
     <string name="search_action_event">Planlæg begivenhed</string>
     <string name="create_search_action_type">Hvilken slags handling vil du oprette?</string>
     <string name="create_search_action_type_app">Søg i en app</string>
-    <string name="create_search_action_title">Ny hurtig handling</string>
     <string name="create_search_action_pick_app">Vælg en app at søge i:</string>
     <string name="create_search_action_website_invalid_url">Den givne hjemmeside kan ikke importeres automatisk som en websøgning. Du kan prøve en anden hjemmeside eller indtaste de nødvendige data manuelt i næste trin.</string>
     <string name="search_action_websearch_url">URL-skabelon</string>
@@ -586,7 +562,6 @@
     <string name="import_theme_apply">Anvend tema</string>
     <string name="shortcut_label_unavailable">Utilgængelig</string>
     <string name="icon_picker_default_icon">Standard</string>
-    <string name="create_app_shortcut">Opret genvej</string>
     <string name="search_action_contact">Føj til kontakter</string>
     <string name="import_theme_error">Den valgte fil kunne ikke læses. Sørg venligst for, at du har valgt en gyldig temafil (*.kvtheme), og at filen ikke er beskadiget.</string>
     <string name="plugin_type_filesearch">Filsøgning</string>
@@ -724,7 +699,6 @@
     <string name="profile_private_profile_action_unlock">Oplås</string>
     <string name="preference_signout">Log ud</string>
     <string name="poi_category_baseball">Baseballbane</string>
-    <string name="reset_icon">Nulstil ikon</string>
     <string name="tag_empty_name">Et tag kan ikke eksistere uden et navn. Hvis du fortsætter, slettes tagget.</string>
     <string name="poi_category_tennis">Tennisbane</string>
     <string name="poi_category_chinese_restaurant">Kinesisk restaurant</string>

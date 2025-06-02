@@ -5,7 +5,7 @@ the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.files/-file-provider/i
 class:
 
 ```kt
-class MyFileSearchPlugin : FileProvider(
+class MyFileSearchPlugin() : FileProvider(
     QueryPluginConfig()
 )
 

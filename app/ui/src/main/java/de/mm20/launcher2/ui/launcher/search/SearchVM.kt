@@ -347,7 +347,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val missingContactsPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Contacts),
-        contactSearchSettings.enabled
+        contactSearchSettings.isProviderEnabled("local")
     ) { perm, enabled -> !perm && enabled }
 
     fun requestContactsPermission(context: AppCompatActivity) {
@@ -355,7 +355,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun disableContactsSearch() {
-        contactSearchSettings.setEnabled(false)
+        contactSearchSettings.setProviderEnabled("local", false)
     }
 
     val missingLocationPermission = combine(

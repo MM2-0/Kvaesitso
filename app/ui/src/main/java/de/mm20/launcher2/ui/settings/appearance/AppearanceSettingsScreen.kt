@@ -1,5 +1,9 @@
 package de.mm20.launcher2.ui.settings.appearance
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CropSquare
+import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.rounded.TextFields
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,7 +30,8 @@ fun AppearanceSettingsScreen() {
     val viewModel: AppearanceSettingsScreenVM = viewModel()
     val context = LocalContext.current
     val navController = LocalNavController.current
-    val themeName by viewModel.themeName.collectAsStateWithLifecycle(null)
+    val colorThemeName by viewModel.colorThemeName.collectAsStateWithLifecycle(null)
+    val shapeThemeName by viewModel.shapeThemeName.collectAsStateWithLifecycle(null)
     val compatModeColors by viewModel.compatModeColors.collectAsState()
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
@@ -45,12 +50,17 @@ fun AppearanceSettingsScreen() {
                         viewModel.setColorScheme(newValue)
                     }
                 )
+            }
+        }
+        item {
+            PreferenceCategory {
                 Preference(
                     title = stringResource(id = R.string.preference_screen_colors),
-                    summary = themeName,
+                    summary = colorThemeName,
                     onClick = {
-                        navController?.navigate("settings/appearance/themes")
-                    }
+                        navController?.navigate("settings/appearance/colors")
+                    },
+                    icon = Icons.Rounded.Palette,
                 )
                 val font by viewModel.font.collectAsState()
                 ListPreference(
@@ -68,7 +78,16 @@ fun AppearanceSettingsScreen() {
                             getTypography(context, it.value)
                         }
                         Text(it.first, style = typography.titleMedium)
-                    }
+                    },
+                    icon = Icons.Rounded.TextFields,
+                )
+                Preference(
+                    title = stringResource(id = R.string.preference_screen_shapes),
+                    summary = shapeThemeName,
+                    onClick = {
+                        navController?.navigate("settings/appearance/shapes")
+                    },
+                    icon = Icons.Rounded.CropSquare,
                 )
 
                 Preference(

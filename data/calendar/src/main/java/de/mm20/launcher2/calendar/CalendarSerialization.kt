@@ -10,6 +10,8 @@ import de.mm20.launcher2.calendar.providers.AndroidCalendarEvent
 import de.mm20.launcher2.calendar.providers.AndroidCalendarProvider
 import de.mm20.launcher2.calendar.providers.PluginCalendarEvent
 import de.mm20.launcher2.calendar.providers.PluginCalendarProvider
+import de.mm20.launcher2.calendar.providers.TasksCalendarEvent
+import de.mm20.launcher2.calendar.providers.TasksCalendarProvider
 import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.search.SavableSearchable
@@ -44,8 +46,30 @@ class AndroidCalendarEventDeserializer(val context: Context): SearchableDeserial
         val id = json.getLong("id")
         return AndroidCalendarProvider(context).get(id)
     }
-
 }
+
+class TasksCalendarEventSerializer: SearchableSerializer {
+    override fun serialize(searchable: SavableSearchable): String {
+        searchable as TasksCalendarEvent
+        val json = JSONObject()
+        json.put("id", searchable.id)
+        return json.toString()
+    }
+
+    override val typePrefix: String
+        get() = TasksCalendarEvent.Domain
+}
+
+class TasksCalendarEventDeserializer(val context: Context): SearchableDeserializer {
+    override suspend fun deserialize(serialized: String): SavableSearchable? {
+        if (ContextCompat.checkSelfPermission(context, "org.tasks.permission.READ_TASKS") != PackageManager.PERMISSION_GRANTED) return null
+        val json = JSONObject(serialized)
+        val id = json.getLong("id")
+        return TasksCalendarProvider(context).get(id)
+    }
+}
+
+
 
 @Serializable
 internal data class SerializedCalendarEvent(

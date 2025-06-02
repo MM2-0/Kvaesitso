@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="msg_item_hidden">%1$s byl skryt.</string>
     <string name="wikipedia_url">https://cs.wikipedia.org</string>
     <string name="file_type_image">Obrázek</string>
     <string name="edit_favorites_dialog_unpinned">Není připnuto – často používáno</string>
@@ -64,8 +63,6 @@
     <string name="menu_app_info">Informace o aplikaci</string>
     <string name="menu_launch">Spustit</string>
     <string name="menu_open_file">Otevřít</string>
-    <string name="menu_hide">Skrýt</string>
-    <string name="menu_unhide">Neskrývat</string>
     <string name="action_undo">Zrušit</string>
     <string name="menu_delete">Odstranit</string>
     <string name="menu_contacts_open_externally">Otevřít v kontaktech</string>
@@ -149,15 +146,12 @@
     <string name="edit_favorites_dialog_pinned_unsorted">Připnuto – automaticky seřazeno</string>
     <string name="edit_favorites_dialog_pinned_sorted">Připnuto – ručně seřazeno</string>
     <string name="nextcloud_server_url">URL serveru Nextcloud</string>
-    <string name="nextcloud_server_url_empty">URL serveru nemůže být prázdná</string>
     <string name="nextcloud_server_invalid_url">Tato adresa URL neodkazuje na platnou instalaci Nextcloud</string>
     <string name="owncloud_server_url">URL serveru Owncloud</string>
     <string name="owncloud_password">Heslo</string>
     <string name="owncloud_username">Uživatelské jméno</string>
     <string name="owncloud_login_2fa_hint">Pokud máte povolené dvoufaktorové ověřování, musíte sem zadat aplikační heslo.</string>
     <string name="owncloud_login_failed">Přihlášení selhalo: nesprávné uživatelské jméno nebo heslo.</string>
-    <string name="owncloud_username_empty">Uživatelské jméno nesmí být prázdné</string>
-    <string name="owncloud_password_empty">Heslo nesmí být prázdné</string>
     <string name="login_flow_continue">Pokračovat</string>
     <string name="login_flow_login">Přihlásit se</string>
     <string name="disclaimer">Odmítnutí odpovědnosti</string>
@@ -270,7 +264,6 @@
     <string name="preference_hide_status_bar">Skrýt stavovou lištu</string>
     <string name="preference_hide_nav_bar">Skrýt navigační lištu</string>
     <string name="preference_screen_integrations_summary">Spravovat připojené účty a služby</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Přihlášen jako %1$s</string>
     <string name="preference_icon_shape_pentagon">Pentagon</string>
     <string name="preference_category_wallpaper">Pozadí</string>
@@ -341,15 +334,10 @@
     <string name="preference_search_websites">Weby</string>
     <string name="preference_search_websites_summary">Zobrazit náhled webu, když je vyhledávací dotaz URL</string>
     <string name="preference_search_localfiles">Místní soubory</string>
-    <string name="preference_search_gdrive">Disk Google</string>
-    <string name="preference_search_gdrive_summary">Prohledávat soubory uživatele %1$s na Disku Google</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Prohledávat soubory uživatele %1$s</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">Přihlásit se pomocí Google</string>
-    <string name="preference_google_signin_summary">Přihlaste se pro prohledání Disku Google</string>
     <string name="preference_calendar_calendars">Kalendáře</string>
-    <string name="preference_calendar_hide_allday">Skrýt celodenní události</string>
     <string name="preference_screen_buildinfo">Informace o sestavení</string>
     <string name="preference_screen_buildinfo_summary">Více informací o tomto sestavení této aplikace</string>
     <string name="preference_search_bar_style">Styl</string>
@@ -361,7 +349,6 @@
     <string name="preference_wikipedia_customurl">URL Wikipedie</string>
     <string name="no_account_nextcloud">Zatím jste nepřipojili svůj účet Nextcloud</string>
     <string name="no_account_owncloud">Zatím jste nepřipojili svůj účet Owncloud</string>
-    <string name="no_account_google">Zatím jste nepřipojili svůj účet Google</string>
     <string name="connect_account">Připojit účet</string>
     <string name="battery_part_charging">Nabíjení</string>
     <string name="backup_complete">Záloha byla dokončena.</string>
@@ -394,7 +381,6 @@
     <string name="search_action_alarm">Nastavit budík</string>
     <string name="search_action_timer">Spustit časovač</string>
     <string name="favorites">Oblíbené</string>
-    <string name="edit_search_action_title">Upravit rychlou akci</string>
     <string name="duplicate">Duplikovat</string>
     <string name="skip">Přeskočit</string>
     <string name="action_next">Další</string>
@@ -413,8 +399,6 @@
     <string name="favorites_empty">Zde se zobrazí připnuté a často používané položky</string>
     <string name="frequently_used_show_in_favorites">Zobrazit v oblíbených</string>
     <string name="frequently_used_rows">Počet řádků</string>
-    <string name="customize_tags_placeholder">Štítky</string>
-    <string name="create_app_shortcut">Vytvořit zkratku</string>
     <string name="search_action_email">E-mail</string>
     <string name="search_action_contact">Přidat do kontaktů</string>
     <string name="search_action_open_url">Zobrazit web</string>
@@ -423,15 +407,12 @@
     <string name="create_search_action_type_web">Vyhledat na webu</string>
     <string name="create_search_action_type_app">Vyhledat v aplikaci</string>
     <string name="create_search_action_type_intent">Vlastní intent</string>
-    <string name="create_search_action_title">Nová rychlá akce</string>
     <string name="create_search_action_pick_app">Vyberte aplikaci k hledání:</string>
     <string name="search_action_websearch_url">Šablona URL</string>
     <string name="search_action_websearch_url_hint">Šablona adresy URL použitá k vytvoření adresy vyhledávání. Použijte ‚${1}‘ jako proměnnou vyhledávaného termínu, např. https://google.cz/search\?q=${1}.</string>
     <string name="more_information">Další informace</string>
     <string name="alert_delete_shortcut">Zkratka %1$s bude nenávratně odstraněna. Pokračovat\?</string>
     <string name="experimental_feature">Experimentální</string>
-    <string name="create_tag_title">Nový štítek</string>
-    <string name="edit_tag_title">Upravit štítek</string>
     <string name="tag_exists_error">Štítek s tímto názvem již existuje.</string>
     <string name="tag_exists_message">Štítek s tímto názvem již existuje. Pokud budete pokračovat, budou oba štítky spojeny.</string>
     <string name="tag_no_items_message">K tomuto štítku nejsou přiřazeny žádné položky. Pokud budete pokračovat, štítek bude odstraněn.</string>
@@ -460,7 +441,6 @@
     <string name="preference_category_debug_tools">Nástroje</string>
     <string name="preference_debug_cleanup_database">Vymazat databázi</string>
     <string name="preference_debug_cleanup_database_summary">Odebrat rozbité a nepoužité položky z databáze spouštěče</string>
-    <string name="icon_picker_title">Vyberte ikonu</string>
     <string name="websearch_dialog_query_encoding_none">Žádné</string>
     <string name="preference_layout_open_search">Vyhledávání / šuplík s aplikacemi</string>
     <string name="open_search_pull_down">Posunutí dolů</string>
@@ -501,14 +481,10 @@
     <string name="preference_search_bar_launch_on_enter">Spustit při vstupu</string>
     <string name="preference_search_bar_launch_on_enter_summary">Spustit zvýrazněnou shodu nebo rychlou akci při klepnutí na Přejít</string>
     <string name="gesture_action_launch_app">Spustit aplikaci</string>
-    <string name="icon_picker_no_packs_installed">Nejsou nainstalovány žádné balíčky ikon</string>
     <string name="icon_picker_filter_all_packs">Všechny balíčky ikon</string>
-    <string name="preference_search_result_ordering_alphabetic">Abecedně</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabilní</string>
     <string name="preference_search_result_ordering_weight_factor_default">Vyvážené</string>
     <string name="preference_search_result_ordering_weight_factor_high">Různé</string>
-    <string name="preference_search_result_ordering">Pořadí výsledků vyhledávání</string>
-    <string name="preference_search_result_ordering_weighted">Využití</string>
     <string name="preference_search_result_ordering_weight_factor">Flexibilita hodnocení</string>
     <string name="preference_screen_integrations">Integrace</string>
     <string name="preference_screen_clockwidget_summary">Nastavení stylu hodin a komponent</string>
@@ -516,7 +492,6 @@
     <string name="preference_screen_homescreen_summary">Hodiny, vyhledávací lišta, pozadí, systémové lišty</string>
     <string name="preference_screen_icons">Mřížka a ikony</string>
     <string name="preference_screen_icons_summary">Mřížka, velikost ikon, balíčky ikon, odznaky</string>
-    <string name="preference_category_accounts">Účty</string>
     <string name="preference_weather_integration">Počasí</string>
     <string name="preference_media_integration">Ovládání médií</string>
     <string name="widget_config_calendar_no_calendars">Nenalezeny žádné kalendáře</string>
@@ -592,7 +567,7 @@
     <string name="preference_plugin_badges_summary">Zobrazit, který doplněk vytvořil výsledek vyhledávání</string>
     <string name="plugin_state_setup_required">Nejprve musíte nastavit tento doplněk</string>
     <string name="plugin_action_setup">Nastavit</string>
-    <string name="plugin_type_filesearch">Vyhledávání souborů</string>
+    <string name="plugin_type_filesearch">Soubory</string>
     <string name="plugin_type_weather">Poskytovatel počasí</string>
     <string name="plugin_weather_provider_enable">Nastavit jako poskytovatele počasí</string>
     <string name="plugin_weather_provider_enabled">Momentálně nastaven jako poskytovatel počasí</string>
@@ -625,8 +600,6 @@
     <string name="menu_map">Zobrazit na mapě</string>
     <string name="menu_website">Otevřít web</string>
     <string name="location_open_24_7">Otevřeno 24/7</string>
-    <string name="preference_search_bar_separate_work_profile">Oddělit aplikace pracovního profilu</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Zobrazit aplikace pracovního profilu v oddělené kartě</string>
     <string name="preference_clock_widget_show_seconds">Zobrazit sekundy</string>
     <string name="widget_use_theme_colors">Použít barvu motivu</string>
     <string name="clock_style_digital1">Tučné</string>
@@ -818,7 +791,6 @@
     <string name="task_due_date">Dokončit do %1$s</string>
     <string name="task_due_today">Dokončit dnes</string>
     <string name="preference_calendar_hide_completed">Skrýt dokončené úkoly</string>
-    <string name="reset_icon">Resetovat ikonu</string>
     <string name="preference_compact_tags">Kompaktní štítky</string>
     <string name="preference_compact_tags_summary">Skrýt popisky nebo ikony štítků, aby se zmenšilo místo jimi zabrané</string>
     <string name="weather_forecast_wind">Vítr</string>
@@ -838,7 +810,40 @@
     </plurals>
     <string name="preference_search_local_calendar_summary">Hledat kalendáře na tomto zařízení</string>
     <string name="missing_permission_call_contacts_settings">Pro provádění hovorů je vyžadováno oprávnění k telefonu</string>
-    <string name="preference_contacts_call_on_tap">Zavolat po klepnutí</string>
-    <string name="preference_contacts_call_on_tap_summary">Rovnou zahájit hovor po klepnutí na telefonní číslo</string>
+    <string name="preference_contacts_call_on_tap">Klepněte pro vytočení</string>
+    <string name="preference_contacts_call_on_tap_summary">Po klepnutí na telefonní číslo okamžitě zahájit hovor</string>
     <string name="departure_time_departed">odjel</string>
+    <string name="preference_grid_list_style">Zobrazit aplikace v seznamu</string>
+    <string name="preference_grid_list_icons">Zobrazit ikony aplikací v seznamu</string>
+    <string name="preference_grid_list_style_summary">Zobrazit aplikace v seznamu namísto mřížky</string>
+    <string name="preference_grid_list_icons_summary">Zobrazit ikony v zobrazení seznamu</string>
+    <string name="plugin_type_contacts">Kontakty</string>
+    <string name="action_install">Instalovat</string>
+    <string name="missing_permission_tasks_search_settings">Pro prohledávání úkolů je vyžadován přístup k úkolům</string>
+    <string name="missing_permission_tasks_integration">Pro použití integrace Tasks je vyžadován přístup k úkolům</string>
+    <string name="preference_search_tasks">Úkoly</string>
+    <string name="preference_search_tasks_summary">Hledat úkoly v aplikaci Tasks</string>
+    <string name="preference_tasks_integration_ready">Integrace Tasks je plně nastavena a připravena k použití.</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <string name="preference_tasks_integration_description">Tasks je bezplatná a otevřená aplikace pro seznam úkolů připomínky. Pokud je nainstalována, %1$s může zobrazovat a vyhledávat vaše úkoly.</string>
+    <string name="preference_launch_tasks_app">Otevřít aplikaci Tasks</string>
+    <string name="weather_condition_thunder">Hřmění</string>
+    <string name="weather_condition_haze">Opar</string>
+    <string name="provider_breezy">Breezy Weather</string>
+    <string name="preference_location_breezy">Spravovat polohu v aplikaci Breezy Weather</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather je bezplatná a otevřená aplikace pro počasí. Pokud je nainstalována, může %1$s používat Breezy Weather jako zdroj dat o počasí.</string>
+    <string name="preference_breezyweather_integration_instructions">Pro použití Breezy Weather jako poskytovatele počasí:\n\n1. Přejděte do Breezy Weather &gt; Nastavení &gt; Widgety a živá tapeta &gt; Posílat data o počasí do Gadgetbridge &gt; Povolte %1$s\n\n2. V aplikaci %1$s zvolte Breezy Weather jako poskytovatele počasí</string>
+    <string name="preference_launch_breezyweather_app">Otevřít Breezy Weather</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d nedokončený úkol</item>
+        <item quantity="few">+%1$d nedokončené úkoly</item>
+        <item quantity="other">+%1$d nedokončených úkolů</item>
+    </plurals>
+    <string name="preference_widgets_on_home_screen">Widgety na domovské obrazovce</string>
+    <string name="preference_widgets_on_home_screen_summary">Zobrazit widgety na domovské stránce namísto další stránky</string>
+    <string name="preference_gesture_swipe_up">Posun nahoru</string>
+    <string name="gesture_action_widgets">Widgety</string>
+    <string name="bad_configuration_title">Gratulujeme, uzamkli jste se!</string>
+    <string name="bad_configuration_summary">Objevili jste kombinaci nastavení, kvůli které není dostupné ani vyhledávání, ani nastavení, čímž jste se prakticky uzamkli z launcheru.</string>
 </resources>

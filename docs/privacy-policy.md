@@ -81,9 +81,6 @@ functionality:
   plugin), your current location may be shared with that plugin (only if you have granted location
   permissions).
 
-- **First-Party Plugins:** Developed by the Kvaesitso team.
-- **Third-Party Plugins:** Developed by external developers.
-
 ### Data Stored by Kvaesitso
 
 Kvaesitso may store copies of the data it receives from plugins locally in its own local storage
@@ -112,10 +109,6 @@ and subject to the **GitHub Privacy Policy**.
 - **Data Access:** All data resides on your device, ensuring you retain full control.
 - **Data Deletion:** Uninstalling the app or clearing its data removes all stored information.
 - **Opt-Out:** Optional integrations and plugins can be enabled or disabled at any time.
-
-## 8. Contact Us
-
-For questions or concerns about this privacy policy, please contact us at [support email].
 
 ## Appendix A: Plugin Policies
 

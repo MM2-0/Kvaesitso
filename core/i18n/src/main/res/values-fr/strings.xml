@@ -142,18 +142,13 @@
     <string name="menu_back">Retour</string>
     <string name="menu_app_info">Infos sur l\'appli</string>
     <string name="preference_screen_integrations_summary">Gérer les comptes et les services</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Connecté en tant que %1$s</string>
     <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté</string>
     <string name="file_type_ebook">E-book</string>
     <string name="file_type_drawing">Dessin</string>
     <string name="file_type_form">Formulaire</string>
-    <string name="menu_hide">Cacher</string>
-    <string name="menu_unhide">Ne pas cacher</string>
     <string name="menu_delete">Supprimer</string>
     <string name="menu_calendar_open_externally">Ouvrir dans l\'application de calendrier</string>
-    <string name="preference_google_signin">Se connecter avec Google</string>
-    <string name="preference_google_signin_summary">Se connecter pour rechercher dans Google Drive</string>
     <string name="preference_icon_shape_hexagon">Hexagone</string>
     <string name="shortcut_summary">Par %1$s</string>
     <!-- Easter egg preference toasts -->
@@ -193,7 +188,6 @@
     <string name="edit_favorites_dialog_pinned_sorted">Épinglé – trié manuellement</string>
     <string name="login_flow_continue">Suivant</string>
     <string name="nextcloud_server_url">URL du serveur Nextcloud</string>
-    <string name="nextcloud_server_url_empty">L\'URL ne peut pas être vide</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="nextcloud_server_invalid_url">Cette URL ne dirige pas vers une installation Nextcloud valide</string>
     <string name="owncloud_server_url">URL du serveur Owncloud</string>
@@ -206,8 +200,6 @@
     <string name="owncloud_login_failed">La connexion a échoué : nom d\'utilisateur ou mot de passe incorrect.</string>
     <string name="preference_owncloud_signin">Se connecter avec Owncloud</string>
     <string name="preference_owncloud_signin_summary">Se connecter pour rechercher dans votre serveur Owncloud</string>
-    <string name="owncloud_username_empty">Le nom d\'utilisateur ne peut pas être vide</string>
-    <string name="owncloud_password_empty">Le mot de passe ne peut pas être vide</string>
     <string name="preference_cards_summary">Modifier l\'apparence des cartes</string>
     <string name="preference_cards">Cartes</string>
     <string name="preference_cards_corner_radius">Rayon d\'angle</string>
@@ -316,13 +308,10 @@
     <string name="preference_search_websites_summary">Afficher un aperçu du site Internet si la recherche est une URL</string>
     <string name="preference_search_localfiles">Fichiers locaux</string>
     <string name="preference_search_localfiles_summary">Rechercher dans les documents, les images et les autres fichiers stockés sur cet appareil</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">Rechercher dans les fichiers de %1$s sur Google Drive</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Rechercher dans les fichiers de %1$s</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Calendriers</string>
-    <string name="preference_calendar_hide_allday">Cacher les évènements qui durent toute la journée</string>
     <string name="preference_screen_buildinfo">Informations sur la version</string>
     <string name="preference_screen_buildinfo_summary">Plus d\'informations à propos de la version de cette application</string>
     <string name="preference_search_bar_style">Style</string>
@@ -332,7 +321,6 @@
     <string name="music_widget_no_data">Aucun média n\'a encore été joué</string>
     <string name="no_account_nextcloud">Vous n\'avez pas connecté de compte Nextcloud pour le moment</string>
     <string name="no_account_owncloud">Vous n\'avez pas connecté de compte Owncloud pour le moment</string>
-    <string name="no_account_google">Vous n\'avez pas connecté de compte Google pour le moment</string>
     <string name="connect_account">Connecter un compte</string>
     <string name="turn_off">Désactiver</string>
     <string name="file_meta_artist">Artiste : %1$s</string>
@@ -379,7 +367,6 @@
     <string name="preference_grid_icon_size">Taille d\'icône</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="widget_name_favorites">Favoris</string>
-    <string name="msg_item_hidden">%1$s a été caché.</string>
     <string name="action_undo">Annuler</string>
     <string name="preference_restore_summary">Importer une ancienne sauvegarde</string>
     <string name="preference_backup">Sauvegarder</string>
@@ -398,7 +385,6 @@
     <string name="preference_blur_wallpaper_summary">Ajouter un effet de flou sur le fond d\'écran</string>
     <string name="preference_blur_wallpaper_unsupported">Non supporté sur cet appareil</string>
     <string name="preference_force_themed_icons">Forcer les icônes avec thème</string>
-    <string name="icon_picker_title">Choisir une icône</string>
     <string name="icon_picker_suggestions">Suggestions</string>
     <string name="icon_picker_default_icon">Défault</string>
     <string name="preference_force_themed_icons_summary">Appliquer le schéma de couleur de l\'application sur toutes les icônes, même celles non supportées (non recommandé)</string>
@@ -421,9 +407,7 @@
     <string name="preference_edit_button">Bouton d\'édition</string>
     <string name="preference_favorites_edit_button_summary">Afficher un bouton pour réordonner les favoris</string>
     <string name="favorites_empty_tag">Il n\'y a pas d\'élément avec cette étiquette</string>
-    <string name="create_app_shortcut">Créer un raccourci</string>
     <string name="frequently_used_rows">Nombre de colonnes</string>
-    <string name="customize_tags_placeholder">Étiquettes</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">%1$d entrée a été supprimée.</item>
         <item quantity="many">%1$d entrées ont été supprimées.</item>
@@ -463,7 +447,6 @@
     <string name="search_action_label">Nom</string>
     <string name="duplicate">Dupliquer</string>
     <string name="action_next">Suivant</string>
-    <string name="create_search_action_title">Nouvelle action rapide</string>
     <string name="preference_screen_tags">Étiquettes</string>
     <string name="preference_screen_tags_summary">Gérer les étiquettes et les éléments étiquetés</string>
     <string name="tag_exists_message">Une étiquette avec ce nom existe déjà. Si vous continuez, les deux étiquettes seront fusionnées.</string>
@@ -481,10 +464,7 @@
     <string name="create_search_action_type_app">Rechercher dans une application</string>
     <string name="create_search_action_type_intent">Intent personnalisé</string>
     <string name="search_action_websearch_url">Modèle d\'URL</string>
-    <string name="create_tag_title">Nouvelle étiquette</string>
-    <string name="edit_tag_title">Éditer l\'étiquette</string>
     <string name="tag_exists_error">Une étiquette avec ce nom existe déjà.</string>
-    <string name="edit_search_action_title">Éditer l\'action rapide</string>
     <string name="tag_no_items_message">Aucun élément n\'est assigné à cette étiquette. Si vous continuez, l\'étiquette sera supprimée.</string>
     <string name="tag_select_items">Éléments sélectionnés :</string>
     <string name="tag_name">Nom de l\'étiquette</string>
@@ -499,7 +479,6 @@
     <string name="widget_config_calendar_no_calendars">Aucun calendrier trouvé</string>
     <string name="preference_screen_integrations">Intégrations</string>
     <string name="preference_screen_homescreen">Écran d\'accueil</string>
-    <string name="preference_category_accounts">Comptes</string>
     <string name="preference_screen_icons_summary">Grille, taille d\'icônes, packs d\'icônes, badges</string>
     <string name="search_bar_position_top">Haut</string>
     <string name="search_bar_position_bottom">Bas</string>
@@ -509,9 +488,6 @@
     <string name="gesture_action_power_menu">Afficher le menu d\'extinction</string>
     <string name="app_widget_loading_failed">Échec du chargement du widget d\'application.</string>
     <string name="widget_config_music_integration_settings">Paramètres de l\'intégration du contrôle multimédias</string>
-    <string name="preference_search_result_ordering">Ordre des résultats de recherche</string>
-    <string name="preference_search_result_ordering_alphabetic">Alphabétique</string>
-    <string name="preference_search_result_ordering_weighted">Utilisation</string>
     <string name="preference_search_bar_launch_on_enter_summary">Lancer le résultat mis en avant ou une action rapide en appuyant sur entrer</string>
     <string name="preference_gesture_double_tap">Tapoter deux fois</string>
     <string name="gesture_action_recents">Afficher les applications récentes</string>
@@ -545,7 +521,6 @@
     <string name="missing_permission_accessibility_gesture_settings">Cette action nécessite l\'activation du service d\'accessibilité du lanceur.</string>
     <string name="widget_config_weather_integration_settings">Paramètres de l\'intégration météo</string>
     <string name="gesture_action_launch_app">Lancer une application</string>
-    <string name="icon_picker_no_packs_installed">Aucun pack d\'icônes installé</string>
     <string name="gesture_action_lock_screen">Éteindre l\'écran</string>
     <string name="preference_hidden_items_reveal_button">Afficher le bouton Révéler</string>
     <string name="preference_hidden_items_reveal_button_summary">Afficher un bouton pour révéler les résultats de recherche masqués</string>
@@ -619,7 +594,7 @@
     <string name="preference_blur_wallpaper_radius">Rayon de floutage</string>
     <string name="plugin_state_setup_required">Vous devez d\'abord configurer ce plugin</string>
     <string name="plugin_action_setup">Configuration</string>
-    <string name="plugin_type_filesearch">Recherche de fichier</string>
+    <string name="plugin_type_filesearch">Fichiers</string>
     <string name="plugin_type_weather">Fournisseur de services météo</string>
     <string name="plugin_weather_provider_enable">Définir en tant que fournisseur de services météo</string>
     <string name="plugin_weather_provider_enabled">Actuellement défini en tant que fournisseur de services météo</string>
@@ -633,8 +608,6 @@
     <string name="preference_mdy_color_source">Source pour les couleurs dynamiques</string>
     <string name="menu_map">Afficher sur la carte</string>
     <string name="menu_website">Ouvrir le site web</string>
-    <string name="preference_search_bar_separate_work_profile">Séparer les applications du profil professionnel</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Afficher les applications du profil professionnel dans un onglet séparé</string>
     <string name="widget_pick_widget">Choisir un widget</string>
     <string name="poi_category_cafe">Café</string>
     <string name="poi_category_hotel">Hôtel</string>
@@ -812,7 +785,6 @@
         <item quantity="many">%1$s adresses postales</item>
         <item quantity="other">%1$s adresses postales</item>
     </plurals>
-    <string name="reset_icon">Icône de réinitialisation</string>
     <string name="task_due_time">Échéance à %1$s</string>
     <string name="task_due_date">Échéance le %1$s</string>
     <string name="item_visibility_calendar_default">Widget calendrier et résultats de recherche</string>
@@ -852,4 +824,54 @@
     <string name="weather_forecast_precipitation">Précipitations</string>
     <string name="weather_forecast_humidity">Humidité</string>
     <string name="tag_empty_name">Une étiquette ne peut exister sans nom. Si vous continuez, l\'étiquette sera supprimée.</string>
+    <string name="weather_condition_thunder">Tonnerre</string>
+    <string name="weather_condition_haze">Brume</string>
+    <string name="provider_breezy">Breezy Weather</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather est une application de météo gratuite et open-source. Si installée, %1$s peut utiliser Breezy Weather comme source pour les données météo.</string>
+    <string name="action_install">Installer</string>
+    <string name="preference_clock_widget_time_format_12h">12 heures</string>
+    <string name="preference_clock_widget_time_format_24h">24 heures</string>
+    <string name="missing_permission_call_contacts_settings">La permission d\'accès au téléphone est nécessaire pour démarrer un appel</string>
+    <string name="widget_removed">Widget supprimé</string>
+    <string name="departure_time_now">maintenant</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">dans une minute</item>
+        <item quantity="many">dans %1$d minutes</item>
+        <item quantity="other">dans %1$d minutes</item>
+    </plurals>
+    <string name="plugin_type_contacts">Contacts</string>
+    <string name="preference_location_breezy">Gestion de l\'emplacement dans Breezy Weather</string>
+    <string name="preference_search_tasks">Tâches</string>
+    <string name="preference_search_tasks_summary">Rechercher des tâches dans l\'application Tasks</string>
+    <string name="preference_launch_breezyweather_app">Ouvrir Breezy Weather</string>
+    <string name="missing_permission_tasks_integration">L\'autorisation Tâches est nécessaire pour utiliser l\'intégration avec Tasks</string>
+    <string name="missing_permission_tasks_search_settings">L\'autorisation Tâches est nécessaire pour rechercher des tâches</string>
+    <string name="preference_clock_widget_time_format">Format de l\'heure</string>
+    <string name="preference_grid_list_icons_summary">Afficher les icônes pour l\'affichage en liste</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <string name="preference_tasks_integration_description">Tasks est application libre et gratuite de liste de tâches et rappels. Si elle est installée, %1$s peut afficher et rechercher vos tâches dans l\'application Tasks.</string>
+    <string name="preference_search_local_calendar_summary">Rechercher des agendas sur l\'appareil</string>
+    <string name="preference_grid_list_style">Afficher les applications en tant que liste</string>
+    <string name="preference_grid_list_icons">Afficher les icônes d\'applications dans la liste</string>
+    <string name="preference_contacts_call_on_tap_summary">Démarrer immédiatement un appel lors d\'un appui sur un numéro de téléphone</string>
+    <string name="profile_work_profile_action_lock">Mettre en pause les applications professionnelles</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d tâche non terminée</item>
+        <item quantity="many"></item>
+        <item quantity="other">+%1$d tâches non terminées</item>
+    </plurals>
+    <string name="preference_grid_list_style_summary">Afficher les applications en tant que liste plutôt que grille</string>
+    <string name="preference_breezyweather_integration_instructions">Pour ouvrir Breezy Weather comme fournisseur météo :\n\n1. Se rendre dans Breezy Weather &gt; Paramètres &gt; Widgets &amp; Fond d\'écran animé &gt; Envoyer des données Gadgetbridge &gt; Activer %1$s\n\n2. Dans %1$s, sélectionner Breezy Weather comme fournisseur météo</string>
+    <string name="profile_work_profile_state_locked">Les applications professionnelles sont en pause.</string>
+    <string name="preference_clock_widget_time_format_system">Défini par le système</string>
+    <string name="preference_tasks_integration_ready">L\'intégration avec Tasks est entièrement configurée et est prête à l\'usage.</string>
+    <string name="preference_contacts_call_on_tap">Appuyer pour appeler</string>
+    <string name="preference_widgets_on_home_screen">Widgets sur l\'écran d\'accueil</string>
+    <string name="preference_widgets_on_home_screen_summary">Afficher les widgets sur l\'écran d\'accueil plutôt que sur une page supplémentaire</string>
+    <string name="preference_gesture_swipe_up">Glisser vers le haut</string>
+    <string name="gesture_action_widgets">Widgets</string>
+    <string name="bad_configuration_title">Félicitations, ça s\'appelle se faire enfermer dehors !</string>
+    <string name="bad_configuration_summary">Vous avez découvert une combinaison de paramètres qui rendent à la fois la recherche et les paramètres inaccessibles — ce qui vous enferme efficacement à l\'extérieur du lanceur.</string>
+    <string name="preference_launch_tasks_app">Ouvrir l\'application Tasks</string>
 </resources>

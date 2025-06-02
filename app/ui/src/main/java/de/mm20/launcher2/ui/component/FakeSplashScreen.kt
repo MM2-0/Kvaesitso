@@ -51,7 +51,6 @@ fun FakeSplashScreen(
     Surface(
         modifier = modifier
             .fillMaxSize(),
-        shadowElevation = 4.dp,
         color = animatedBackgroundColor,
     ) {
         Box(

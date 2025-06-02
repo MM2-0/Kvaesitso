@@ -3,8 +3,10 @@ package de.mm20.launcher2.ui.settings.colorscheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,6 +18,7 @@ import androidx.compose.material.icons.rounded.SettingsSuggest
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -28,7 +31,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.themes.get
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.Tooltip
@@ -47,19 +54,25 @@ fun CorePaletteColorPreference(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    Tooltip(
-        tooltipText = title
+    Row(
+        modifier = modifier.fillMaxWidth()
+            .clickable(
+                onClick = { showDialog = true },
+            )
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         ColorSwatch(
             color = Color(value ?: defaultValue),
-            modifier = modifier
-                .size(48.dp)
-                .combinedClickable(
-                    onClick = { showDialog = true },
-                    onLongClick = {
-                        onValueChange(null)
-                    }
-                ),
+            modifier = Modifier.padding(end = 20.dp).size(48.dp),
+        )
+
+        Text(
+            title,
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Center,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1,
         )
     }
 

@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchActionIcon
+import de.mm20.launcher2.ui.modifier.consumeAllScrolling
 import de.mm20.launcher2.ui.settings.SettingsActivity
 
 @Composable
@@ -37,6 +38,7 @@ fun ColumnScope.SearchBarActions(
     AnimatedVisibility(actions.isNotEmpty()) {
         LazyRow(
             modifier = Modifier
+                .consumeAllScrolling()
                 .height(48.dp)
                 .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp),
             verticalAlignment = Alignment.CenterVertically,

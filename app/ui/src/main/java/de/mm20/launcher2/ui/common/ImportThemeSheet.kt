@@ -40,7 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.themes.Theme
+import de.mm20.launcher2.themes.Colors
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.LargeMessage
@@ -63,7 +63,7 @@ fun ImportThemeSheet(
         viewModel.readTheme(context, uri)
     }
 
-    val theme by viewModel.theme
+    val theme by viewModel.colors
     val error by viewModel.error
     var apply by viewModel.apply
 
@@ -132,13 +132,13 @@ fun ImportThemeSheet(
 
 @Composable
 fun ThemePreview(
-    theme: Theme,
+    colors: Colors,
     modifier: Modifier = Modifier,
 ) {
     val darkMode = LocalDarkTheme.current
     var darkTheme by remember { mutableStateOf(darkMode) }
 
-    val colorScheme = if (darkTheme) darkColorSchemeOf(theme) else lightColorSchemeOf(theme)
+    val colorScheme = if (darkTheme) darkColorSchemeOf(colors) else lightColorSchemeOf(colors)
 
     Column(modifier = modifier) {
         Row(
@@ -146,7 +146,7 @@ fun ThemePreview(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = theme.name,
+                text = colors.name,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f),
                 color = MaterialTheme.colorScheme.onSurfaceVariant

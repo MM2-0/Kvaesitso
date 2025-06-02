@@ -27,7 +27,6 @@ import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.BatteryFull
 import androidx.compose.material.icons.rounded.ColorLens
 import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.Height
 import androidx.compose.material.icons.rounded.HorizontalSplit
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.MusicNote
@@ -86,7 +85,7 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreenVM
 import de.mm20.launcher2.ui.utils.isTwentyFourHours
-import org.koin.androidx.compose.inject
+import org.koin.compose.koinInject
 
 @Composable
 fun ClockWidget(
@@ -270,7 +269,7 @@ fun Clock(
 ) {
     val time = LocalTime.current
     val context = LocalContext.current
-    val clockSettings: ClockWidgetSettings by inject()
+    val clockSettings: ClockWidgetSettings = koinInject()
     val showSeconds by clockSettings.showSeconds.collectAsState(initial = false)
     val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = false)
     val timeFormat by clockSettings.timeFormat.collectAsState(null)
@@ -563,21 +562,13 @@ fun ConfigureClockWidgetSheet(
                     }
                 }
             }
-            OutlinedCard(
-                modifier = Modifier.padding(top = 16.dp),
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
+            if (fillHeight == true) {
+                OutlinedCard(
+                    modifier = Modifier.padding(top = 16.dp),
                 ) {
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_clock_widget_fill_height),
-                        icon = Icons.Rounded.Height,
-                        value = fillHeight == true,
-                        onValueChanged = {
-                            viewModel.setFillHeight(it)
-                        }
-                    )
-                    AnimatedVisibility(fillHeight == true) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         var showDropdown by remember { mutableStateOf(false) }
                         Preference(
                             title = stringResource(R.string.preference_clock_widget_alignment),

@@ -1,0 +1,4 @@
+- Crash fixes
+- Fix weather not updating
+- Migrate Nextcloud login to use standard browser; should fix WebAuthn issues
+- Add support for contact plugins

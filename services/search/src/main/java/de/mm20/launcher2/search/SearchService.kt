@@ -70,6 +70,7 @@ internal class SearchServiceImpl(
                         unitConverters = if (filters.tools) it.unitConverters else null,
                         websites = if (filters.websites) it.websites else null,
                         wikipedia = if (filters.articles) it.wikipedia else null,
+                        locations = if (filters.places) it.locations else null,
                     )
                 }
                     ?: SearchResults())

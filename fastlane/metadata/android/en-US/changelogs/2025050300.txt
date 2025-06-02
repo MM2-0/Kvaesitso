@@ -1,0 +1,4 @@
+- Add Tasks integration
+  - The plugin is now deprecated
+- Add Breezy Weather integration
+  - The plugin is now deprecated

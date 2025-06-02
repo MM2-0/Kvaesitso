@@ -11,9 +11,6 @@
     <string name="menu_launch">Buka</string>
     <string name="menu_customize">Ubahsuai</string>
     <string name="menu_open_file">Buka</string>
-    <string name="menu_hide">Sorok</string>
-    <string name="menu_unhide">Paparkan</string>
-    <string name="msg_item_hidden">%1$s telah disorokkan.</string>
     <string name="action_undo">Kembali</string>
     <string name="action_import">Import</string>
     <string name="menu_delete">Padam</string>

@@ -172,6 +172,17 @@ private fun VisibilityDropdown(
     onValueChanged: (VisibilityLevel) -> Unit,
 ) {
     DropdownMenu(expanded = expanded, onDismissRequest = onDismissRequest) {
+        Text(
+            text = stringResource(R.string.customize_item_visibility),
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier.padding(
+                start = 48.dp,
+                top = 12.dp,
+                bottom = 8.dp,
+                end = 12.dp,
+            )
+        )
         DropdownMenuItem(
             leadingIcon = {
                 Icon(

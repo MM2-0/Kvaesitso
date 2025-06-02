@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="LauncherTheme.IconStyle">
-        <item name="android:alpha">1</item>
-        <item name="android:tint">@color/icon_color</item>
-        <item name="android:foreground">?selectableItemBackgroundBorderless</item>
-    </style>
-</resources>
