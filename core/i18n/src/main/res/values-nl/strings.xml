@@ -835,4 +835,11 @@
     <string name="preference_widgets_on_home_screen">Widgets op het thuisscherm</string>
     <string name="bad_configuration_title">Proficiat, je hebt jezelf buiten gesloten!</string>
     <string name="bad_configuration_summary">Je hebt een combinatie van instellingen ontdekt die zowel zoeken als de instellingen onbereikbaar maakt - je bent nu volledig uit de startschermapp gesloten.</string>
+    <string name="preference_screen_shapes">Vormen</string>
+    <string name="preference_shapes_default">Standaard</string>
+    <string name="preference_shapes_extra_round">Extra rond</string>
+    <string name="preference_shapes_rect">Rechthoekig</string>
+    <string name="preference_shapes_base">Basisvorm</string>
+    <string name="confirmation_delete_shapes_scheme">Weet je zeker dat je de vorm %1$s wil verwijderen?</string>
+    <string name="new_shapes_name">Nieuwe vormen</string>
 </resources>

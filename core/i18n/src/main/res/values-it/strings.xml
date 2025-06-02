@@ -846,4 +846,11 @@
     <string name="gesture_action_widgets">Widget</string>
     <string name="bad_configuration_title">Congratulazioni, ti sei chiuso fuori!</string>
     <string name="bad_configuration_summary">Hai scoperto una combinazione di impostazioni che rende inaccessibili sia la ricerca sia le impostazioni, impedendoti di fatto di accedere al launcher.</string>
+    <string name="preference_shapes_default">Predefinito</string>
+    <string name="preference_screen_shapes">Forme</string>
+    <string name="preference_shapes_extra_round">Arrotondamento extra</string>
+    <string name="preference_shapes_rect">Rettangolare</string>
+    <string name="preference_shapes_base">Forma di base</string>
+    <string name="confirmation_delete_shapes_scheme">Vuoi davvero eliminare lo schema di forme %1$s?</string>
+    <string name="new_shapes_name">Nuove forme</string>
 </resources>
