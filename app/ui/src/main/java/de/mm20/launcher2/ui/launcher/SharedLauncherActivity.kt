@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher
 
 import android.app.WallpaperManager
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -349,6 +350,11 @@ abstract class SharedLauncherActivity(
                                             gestures.longPressApp,
                                             Gesture.LongPress,
                                         ),
+                                        homeButton = getScaffoldGesture(
+                                            gestures.homeButtonAction,
+                                            gestures.homeButtonApp,
+                                            Gesture.HomeButton,
+                                        ),
                                         fixedSearchBar = fixedSearchBar,
                                         searchBarStyle = searchBarStyle,
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
@@ -417,6 +423,17 @@ abstract class SharedLauncherActivity(
                 }
             }
         }
+    }
+
+    var isNewIntent = false
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        isNewIntent = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isNewIntent = false
     }
 
     override fun onAttachedToWindow() {

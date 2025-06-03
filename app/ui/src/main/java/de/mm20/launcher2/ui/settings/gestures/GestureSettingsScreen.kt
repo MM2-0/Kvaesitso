@@ -204,6 +204,27 @@ fun GestureSettingsScreen() {
                         onAppChanged = { viewModel.setLongPressApp(it) }
                     )
                 }
+                val homeButton by viewModel.homeButton.collectAsStateWithLifecycle(null)
+                val homeButtonApp by viewModel.homeButtonApp.collectAsState(null)
+                val homeButtonAppIcon by remember(homeButtonApp?.key) {
+                    viewModel.getIcon(homeButtonApp, appIconSize.toInt())
+                }.collectAsState(null)
+                GuardedPreference(
+                    locked = hasPermission == false && requiresAccessibilityService(homeButton),
+                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                ) {
+                    GesturePreference(
+                        title = stringResource(R.string.preference_gesture_home_button),
+                        icon = Icons.Rounded.Home,
+                        value = homeButton,
+                        onValueChanged = { viewModel.setHomeButton(it) },
+                        options = options,
+                        app = homeButtonApp,
+                        appIcon = homeButtonAppIcon,
+                        onAppChanged = { viewModel.setHomeButtonApp(it) }
+                    )
+                }
             }
         }
     }
