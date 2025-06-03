@@ -632,9 +632,12 @@
     <string name="preference_search_calculator_summary">Evaluate mathematical terms</string>
     <string name="preference_search_unitconverter">Unit converter</string>
     <string name="preference_search_unitconverter_summary">Usage: 1.5 kg or 4 cm &gt;&gt; in</string>
+    <string name="preference_search_unitcustomverb_summary">Usage: 1.5 kg or 4 cm &gt;&gt; in</string>
     <string name="preference_search_currencyconverter">Currency converter</string>
     <string name="preference_search_currencyconverter_summary">Periodically download exchange rates to convert currencies</string>
     <string name="preference_search_supportedunits">Supported units</string>
+    <string name="preference_search_unitscustomverb">Custom Verb</string>
+    <string name="preference_search_unitsplaceholder">Defaults to \"to\"</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Search the free encyclopedia</string>
     <string name="preference_search_websites">Websites</string>
