@@ -239,13 +239,6 @@
     <string name="notes_widget_dismissed">Note dismissed.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">By %1$s</string>
-    <!-- Progress of the installation of another app. %1$s: the formatted percentage of the installation progress -->
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_1">There are no easter eggs here, unless you brought them with you.</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_2">Please, stop it, you are wasting your time</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_3">I won\'t say it again: there are absolutely no easter eggs hidden here</string>
     <!-- Wait, we have easter eggs? No way! -->
     <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it\?</string>
     <!-- Close a dialog -->
