@@ -846,4 +846,11 @@
     <string name="gesture_action_widgets">Widgety</string>
     <string name="bad_configuration_title">Gratulujeme, uzamkli jste se!</string>
     <string name="bad_configuration_summary">Objevili jste kombinaci nastavení, kvůli které není dostupné ani vyhledávání, ani nastavení, čímž jste se prakticky uzamkli z launcheru.</string>
+    <string name="preference_screen_shapes">Tvary</string>
+    <string name="preference_shapes_default">Výchozí</string>
+    <string name="preference_shapes_extra_round">Extra zaoblený</string>
+    <string name="preference_shapes_rect">Obdélníkový</string>
+    <string name="preference_shapes_base">Základní tvar</string>
+    <string name="confirmation_delete_shapes_scheme">Opravdu chcete odstranit schéma tvaru %1$s?</string>
+    <string name="new_shapes_name">Nové tvary</string>
 </resources>
