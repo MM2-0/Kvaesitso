@@ -18,7 +18,6 @@ import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,7 +42,6 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalNavController
-import de.mm20.launcher2.ui.theme.shapes.shapesOf
 
 @Composable
 fun ShapeSchemesSettingsScreen() {
@@ -58,11 +56,11 @@ fun ShapeSchemesSettingsScreen() {
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_shapes),
-        floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.createNew(context) }) {
+        topBarActions = {
+            IconButton(onClick = { viewModel.createNew(context) }) {
                 Icon(Icons.Rounded.Add, null)
             }
-        }
+        },
     ) {
         item {
             PreferenceCategory {

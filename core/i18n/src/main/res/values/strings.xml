@@ -243,7 +243,9 @@
     <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it\?</string>
     <!-- Close a dialog -->
     <string name="close">Close</string>
+    <string name="no_selection">No selection</string>
     <string name="save">Save</string>
+    <string name="save_as_file">Save as file</string>
     <string name="duplicate">Duplicate</string>
     <string name="edit">Edit</string>
     <string name="skip">Skip</string>
@@ -1029,4 +1031,7 @@
     <string name="departure_time_departed">departed</string>
     <string name="bad_configuration_title">Congratulations, you\'ve locked yourself out!</string>
     <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher.</string>
+    <string name="theme_export_title">Export theme</string>
+    <string name="theme_bundle_name">Name</string>
+    <string name="theme_bundle_author">Author</string>
 </resources>

@@ -37,6 +37,7 @@ import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
+import de.mm20.launcher2.ui.settings.appearance.ExportThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.breezyweather.BreezyWeatherSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
@@ -158,6 +159,9 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/appearance") {
                                     AppearanceSettingsScreen()
+                                }
+                                composable("settings/appearance/export") {
+                                    ExportThemeSettingsScreen()
                                 }
                                 composable("settings/homescreen") {
                                     HomescreenSettingsScreen()

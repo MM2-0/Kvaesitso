@@ -159,7 +159,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         )
                     },
                     defaultValue = systemPalette.primary,
-                    modifier = Modifier.padding(end = 12.dp),
                 )
                 CorePaletteColorPreference(
                     title = "Secondary",
@@ -174,7 +173,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         )
                     },
                     defaultValue = systemPalette.secondary,
-                    modifier = Modifier.padding(end = 12.dp),
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
                             CorePalette.of(it).a2.keyColor.toInt()
@@ -194,7 +192,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         )
                     },
                     defaultValue = systemPalette.tertiary,
-                    modifier = Modifier.padding(end = 12.dp),
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
                             CorePalette.of(it).a3.keyColor.toInt()
@@ -214,7 +211,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         )
                     },
                     defaultValue = systemPalette.neutral,
-                    modifier = Modifier.padding(end = 12.dp),
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
                             CorePalette.of(it).n1.keyColor.toInt()
@@ -234,7 +230,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         )
                     },
                     defaultValue = systemPalette.neutralVariant,
-                    modifier = Modifier.padding(end = 12.dp),
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
                             CorePalette.of(it).n2.keyColor.toInt()

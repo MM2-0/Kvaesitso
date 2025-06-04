@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.settings.appearance
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowCircleDown
+import androidx.compose.material.icons.rounded.ArrowCircleUp
 import androidx.compose.material.icons.rounded.CropSquare
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.TextFields
@@ -95,6 +97,22 @@ fun AppearanceSettingsScreen() {
                     summary = stringResource(R.string.preference_cards_summary),
                     onClick = {
                         navController?.navigate("settings/appearance/cards")
+                    }
+                )
+            }
+        }
+
+        item {
+            PreferenceCategory {
+                Preference(
+                    title = "Import",
+                    icon = Icons.Rounded.ArrowCircleDown,
+                )
+                Preference(
+                    title = "Export",
+                    icon = Icons.Rounded.ArrowCircleUp,
+                    onClick = {
+                        navController?.navigate("settings/appearance/export")
                     }
                 )
             }
