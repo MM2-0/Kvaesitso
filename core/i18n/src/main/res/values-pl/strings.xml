@@ -61,8 +61,6 @@
     <string name="widget_name_music">Muzyka</string>
     <string name="widget_name_favorites">Ulubione</string>
     <string name="widget_add_widget">Dodaj widżet</string>
-    <string name="easter_egg_1">Tutaj nie ma żadnych easter egg\'ów, chyba że je przyniosłeś ze sobą.</string>
-    <string name="easter_egg_3">Nie będę tego powtarzał: tutaj jest absolutnie zero ukrytych easter egg\'ów</string>
     <string name="turn_off">Wyłącz</string>
     <string name="widget_action_remove">Usuń</string>
     <string name="menu_item_edit_favs">Edytuj ulubione</string>
@@ -251,7 +249,6 @@
     <string name="nextcloud_server_url">Adres URL serwera Nextcloud</string>
     <string name="weather_widget_set_location">Ustaw lokalizację</string>
     <string name="grant_permission">Przyznaj</string>
-    <string name="easter_egg_2">Proszę przestań, marnujesz tylko swój czas</string>
     <string name="easter_egg_text">No cóż, zostałem odnaleziony. Gratulacje. Warto było\?</string>
     <string name="disclaimer_currency_converter">Kurs walut, taki jak udostępniany codziennie przez Centralny Bank Europejski. Wszystkie informacje są dostarczane \"takie jakie są\" bez jakiejkolwiek gwarancji. Nie ponosimy odpowiedzialności za podane informacje.
 \n

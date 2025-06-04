@@ -71,9 +71,6 @@
     <string name="widget_name_music">Música</string>
     <string name="widget_add_widget">Añadir widget</string>
     <string name="shortcut_summary">De %1$s</string>
-    <string name="easter_egg_1">No hay easter eggs aquí, a no ser que los hayas traído contigo.</string>
-    <string name="easter_egg_2">Por favor, para, estás perdiendo el tiempo</string>
-    <string name="easter_egg_3">No lo volveré a repetir: no hay absolutamente ningún easter egg escondido aquí</string>
     <string name="easter_egg_text">Bueno, me encontraste. Felicidades. ¿Valió la pena\?</string>
     <string name="close">Cerrar</string>
     <string name="turn_off">Desactivar</string>

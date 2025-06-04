@@ -112,9 +112,6 @@
     <string name="websearch_dialog_query_encoding_none">Hiçbiri</string>
     <string name="widget_name_unknown">Bilinmeyen uygulama widget\'ı</string>
     <string name="shortcut_summary">%1$s tarafından</string>
-    <string name="easter_egg_1">Yanınızda getirmediğiniz sürece burada paskalya yumurtası yok.</string>
-    <string name="easter_egg_2">Lütfen, kesin şunu, zamanınızı boşa harcıyorsunuz</string>
-    <string name="easter_egg_3">Tekrar söylemeyeceğim: burada kesinlikle hiçbir paskalya yumurtası saklı değil</string>
     <string name="easter_egg_text">Beni buldun. Tebrik ederim. Buna değdi mi\?</string>
     <string name="edit_favorites_dialog_unpinned">Sabitlenmemiş - sık kullanılan</string>
     <string name="file_type_launchertheme">%1$s teması</string>

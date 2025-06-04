@@ -134,9 +134,6 @@
     <string name="widget_name_favorites">Oblíbené</string>
     <string name="widget_add_widget">Přidat widget</string>
     <string name="shortcut_summary">Od %1$s</string>
-    <string name="easter_egg_1">Tady nejsou žádná velikonoční vajíčka, pokud jste si s sebou tedy nějaké nevzali.</string>
-    <string name="easter_egg_2">Prosím, nechte toho, plýtváte svým časem</string>
-    <string name="easter_egg_3">Nebudu to říkat znovu: nejsou tu žádná velikonoční vajíčka</string>
     <string name="easter_egg_text">Super, našli jste mě. Gratuluju. Stálo to za to\?</string>
     <string name="close">Zavřít</string>
     <string name="save">Uložit</string>

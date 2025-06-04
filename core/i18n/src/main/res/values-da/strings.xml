@@ -100,9 +100,6 @@
     <string name="notes_widget_action_dismiss">Afvis</string>
     <string name="notes_widget_dismissed">Note afvist.</string>
     <string name="websearch_dialog_advanced">Avanceret</string>
-    <string name="easter_egg_1">Ingen påskeæg her, medmindre du selv har taget dem med.</string>
-    <string name="easter_egg_2">Ej, lad vær, du spilder din tid</string>
-    <string name="easter_egg_3">Jeg siger det ikke igen: der er absolut ingen påskeæg gemt her</string>
     <string name="preference_screen_colors">Farveskema</string>
     <string name="preference_grid_icon_size">Ikonstørrelse</string>
     <string name="preference_grid_labels">Vis mærkater</string>

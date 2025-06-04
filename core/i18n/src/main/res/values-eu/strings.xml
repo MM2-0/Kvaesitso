@@ -109,9 +109,6 @@
     <string name="widget_name_notes">Oharrak</string>
     <string name="notes_widget_export_filename">Oharra_%1$s</string>
     <string name="websearch_dialog_query_encoding_url">Ehuneko-kodeketa</string>
-    <string name="easter_egg_1">Hemen ez dago Pazko arrautzarik, zuk ekarri ez badituzu behintzat.</string>
-    <string name="easter_egg_2">Mesedez, gelditu, denbora galtzen ari zara</string>
-    <string name="easter_egg_3">Ez dut berriro esango: hemen ez dago Pazko arrautzarik ezkutatuta</string>
     <string name="easter_egg_text">Tira, aurkitu nauzu. Zorionak. Merezi izan du\?</string>
     <string name="login_flow_continue">Jarraitu</string>
     <string name="date_today">Gaur</string>
@@ -619,7 +616,7 @@
     <string name="preference_search_supportedunits">Onartutako unitateak</string>
     <string name="provider_breezy">Breezy Weather</string>
     <string name="preference_location_breezy">Breezy Weather-en kokapena kudeatu</string>
-    <string name="preference_breezyweather_integration"></string>
+    <string name="preference_breezyweather_integration"/>
     <string name="preference_breezyweather_integration_instructions">Breezy Weather eguraldi hornitzaile gisa erabiltzeko:\n\n1. Joan hona: Breezy Weather &gt; Ezarpenak &gt; Trepetak eta horma-papera animatua &gt; Bidali eguraldi datuak Gadgetbridge-ra &gt; Gaitu %1$s\n\n2. %1$s-n, hautatu Breezy Weather eguraldi hornitzaile gisa</string>
     <string name="preference_launch_breezyweather_app">Ireki Breezy Weather</string>
     <string name="action_install">Instalatu</string>

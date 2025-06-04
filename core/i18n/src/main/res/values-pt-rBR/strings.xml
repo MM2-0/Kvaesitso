@@ -70,7 +70,6 @@
     <string name="widget_name_music">Música</string>
     <string name="widget_add_widget">Adicionar widget</string>
     <string name="shortcut_summary">De %1$s</string>
-    <string name="easter_egg_1">Não há \"easter eggs\" aqui, a menos que você tenha trazido.</string>
     <string name="easter_egg_text">Bem, você me achou. Parabéns. Valeu a pena?</string>
     <string name="close">Fechar</string>
     <string name="turn_off">Desligar</string>
@@ -93,8 +92,6 @@
     <string name="file_meta_app_min_sdk">Versão mínima do SDK : %1$s</string>
     <string name="alert_delete_directory">O diretório %1$s e todo seu conteúdo será deletado permanentemente. Proceder?</string>
     <string name="websearch_dialog_url_error">O atributo \'${1}\' está faltando na URL</string>
-    <string name="easter_egg_2">Por favor, pare, você está perdendo tempo</string>
-    <string name="easter_egg_3">Não vou avisar de novo: não há absolutamente nenhum \"easter egg\" escondido aqui</string>
     <string name="edit_favorites_dialog_unpinned">Não fixado - frequentemente usado</string>
     <string name="nextcloud_server_url">URL de servidor Nextcloud</string>
     <string name="nextcloud_server_invalid_url">Esta URL não aponta para uma instalação válida do Nextcloud</string>
@@ -795,7 +792,7 @@
     <string name="poi_category_optician">Oftalmologista</string>
     <string name="poi_category_hindu_temple">Templo hindu</string>
     <string name="poi_category_atm">Caixa eletrônico</string>
-    <string name="poi_category_shopping"></string>
+    <string name="poi_category_shopping"/>
     <string name="poi_category_swimming">Piscina</string>
     <string name="poi_category_soup_restaurant">Soparia</string>
     <string name="poi_category_discount_store">Loja de descontos</string>

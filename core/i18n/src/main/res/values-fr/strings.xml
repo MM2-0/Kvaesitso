@@ -151,10 +151,6 @@
     <string name="menu_calendar_open_externally">Ouvrir dans l\'application de calendrier</string>
     <string name="preference_icon_shape_hexagon">Hexagone</string>
     <string name="shortcut_summary">Par %1$s</string>
-    <!-- Easter egg preference toasts -->
-    <string name="easter_egg_1">Il n\'y a pas d\'easter egg ici, à moins que vous ne l\'ayez amené avec vous.</string>
-    <string name="easter_egg_2">Par pitié, arrêtez, vous perdez votre temps</string>
-    <string name="easter_egg_3">C\'est la dernière fois que je le dis : il n\'y a absolument aucun easter egg caché ici</string>
     <string name="easter_egg_text">Bien, vous m\'avez trouvé. Bravo. Cela en valait-il la peine ?</string>
     <string name="missing_permission_calendar_widget">Accorder la permission d\'accès au calendrier pour afficher les évènements à venir ici.</string>
     <string name="missing_permission_calendar_search">Accorder la permission de rechercher dans le calendrier.</string>
@@ -858,7 +854,7 @@
     <string name="profile_work_profile_action_lock">Mettre en pause les applications professionnelles</string>
     <plurals name="calendar_widget_running_tasks">
         <item quantity="one">+%1$d tâche non terminée</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">+%1$d tâches non terminées</item>
     </plurals>
     <string name="preference_grid_list_style_summary">Afficher les applications en tant que liste plutôt que grille</string>
