@@ -777,4 +777,11 @@
     <string name="weather_condition_heavysleetandthunder">Yoğun karla karışık yağmur ve gök gürültüsü</string>
     <string name="weather_condition_rainshowers">Sağanak yağmur</string>
     <string name="weather_condition_lightsleetandthunder">Hafif sulu kar ve gök gürültüsü</string>
+    <string name="no_selection">Seçim yok</string>
+    <string name="save_as_file">Dosya olarak kaydet</string>
+    <string name="action_install">Yükle</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d tamamlanmamış görev</item>
+        <item quantity="other">+%1$d tamamlanmamış görev</item>
+    </plurals>
 </resources>
