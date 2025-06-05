@@ -839,4 +839,9 @@
     <string name="preference_shapes_base">Basisvorm</string>
     <string name="confirmation_delete_shapes_scheme">Weet je zeker dat je de vorm %1$s wil verwijderen?</string>
     <string name="new_shapes_name">Nieuwe vormen</string>
+    <string name="save_as_file">Opslaan als bestand</string>
+    <string name="theme_export_title">Thema exporteren</string>
+    <string name="theme_bundle_name">Naam</string>
+    <string name="theme_bundle_author">Auteur</string>
+    <string name="no_selection">Geen selectie</string>
 </resources>
