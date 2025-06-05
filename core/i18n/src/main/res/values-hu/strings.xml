@@ -839,4 +839,9 @@
     <string name="preference_shapes_base">Alap alakzat</string>
     <string name="confirmation_delete_shapes_scheme">Biztosan törölni szeretné a(z) %1$s nevű alakzatsémát?</string>
     <string name="new_shapes_name">Új alakzatok</string>
+    <string name="no_selection">Nincs kiválasztva semmi</string>
+    <string name="save_as_file">Mentés fájlként</string>
+    <string name="theme_export_title">Téma exportálása</string>
+    <string name="theme_bundle_name">Név</string>
+    <string name="theme_bundle_author">Szerző</string>
 </resources>
