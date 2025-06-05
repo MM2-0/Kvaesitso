@@ -850,4 +850,9 @@
     <string name="preference_shapes_base">Forma di base</string>
     <string name="confirmation_delete_shapes_scheme">Vuoi davvero eliminare lo schema di forme %1$s?</string>
     <string name="new_shapes_name">Nuove forme</string>
+    <string name="no_selection">Nessuna selezione</string>
+    <string name="save_as_file">Salva come file</string>
+    <string name="theme_export_title">Esporta tema</string>
+    <string name="theme_bundle_name">Nome</string>
+    <string name="theme_bundle_author">Autore</string>
 </resources>
