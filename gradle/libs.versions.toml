@@ -9,22 +9,22 @@ targetSdk = "36"
 pluginSdk = "2.2.0"
 
 gradle = "8.1.2"
-android-gradle-plugin = "8.10.0"
-ksp-gradle-plugin = "2.1.20-2.0.0"
+android-gradle-plugin = "8.10.1"
+ksp-gradle-plugin = "2.1.21-2.0.1"
 
-kotlin = "2.1.20"
+kotlin = "2.1.21"
 kotlinx-coroutines = "1.10.2"
-kotlinx-immutable = "0.3.8"
+kotlinx-immutable = "0.4.0"
 kotlinx-serialization = "1.8.1"
 
 jetbrains-markdown = "0.7.3"
 
-androidx-compose = "1.9.0-alpha03"
+androidx-compose = "1.9.0-alpha04"
 androidx-compose-material3 = "1.4.0-alpha15"
 androidx-compose-materialicons = "1.7.8"
-androidx-lifecycle = "2.9.0"
+androidx-lifecycle = "2.9.1"
 androidx-core = "1.16.0"
-androidx-appcompat = "1.7.0"
+androidx-appcompat = "1.7.1"
 androidx-activity = "1.10.1"
 
 # Careful, 2.10.0 seems to require some fixes, or jobs aren't executed
@@ -37,7 +37,7 @@ androidx-constraint-layout = "1.1.1"
 androidx-emojipicker = "1.5.0"
 
 accompanist = "0.36.0"
-haze = "1.6.0"
+haze = "1.6.3"
 coil = "2.7.0"
 koin = "4.0.4"
 retrofit = "2.11.0"
