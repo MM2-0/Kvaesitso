@@ -24,6 +24,7 @@ import androidx.compose.material.icons.rounded.AlignVerticalBottom
 import androidx.compose.material.icons.rounded.AlignVerticalCenter
 import androidx.compose.material.icons.rounded.AlignVerticalTop
 import androidx.compose.material.icons.rounded.AutoAwesome
+import androidx.compose.material.icons.rounded.AvTimer
 import androidx.compose.material.icons.rounded.BatteryFull
 import androidx.compose.material.icons.rounded.ColorLens
 import androidx.compose.material.icons.rounded.DarkMode
@@ -312,7 +313,8 @@ fun Clock(
             compact,
             showSeconds,
             useThemeColor,
-            darkColors
+            darkColors,
+            style
         )
 
         is ClockWidgetStyle.Orbit -> OrbitClock(
