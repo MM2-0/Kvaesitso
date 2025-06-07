@@ -97,7 +97,8 @@ fun CorePaletteColorPreference(
                     value = currentValue == null,
                     onValueChanged = {
                         currentValue = if (it) null else defaultValue
-                    }
+                    },
+                    containerColor = Color.Transparent,
                 )
                 AnimatedVisibility(
                     currentValue != null,

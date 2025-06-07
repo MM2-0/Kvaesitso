@@ -1,13 +1,13 @@
 package de.mm20.launcher2.themes
 
 import de.mm20.launcher2.database.entities.ShapesEntity
+import de.mm20.launcher2.serialization.UUIDSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import java.util.UUID
 
 @Serializable
 data class Shapes(
-    @Transient val id: UUID = UUID.randomUUID(),
+    @Serializable(with = UUIDSerializer::class) val id: UUID = UUID.randomUUID(),
     val builtIn: Boolean = false,
     val name: String,
     val baseShape: Shape = Shape(

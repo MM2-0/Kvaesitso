@@ -25,7 +25,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -46,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.layout.BottomReversed
-import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 
 @Composable
@@ -61,6 +59,7 @@ fun SearchBar(
     onUnfocus: () -> Unit = {},
     reverse: Boolean = false,
     darkColors: Boolean = false,
+    readOnly: Boolean = false,
     menu: @Composable RowScope.() -> Unit = {},
     actions: @Composable ColumnScope.() -> Unit = {},
     onKeyboardActionGo: (KeyboardActionScope.() -> Unit)? = null
@@ -190,7 +189,8 @@ fun SearchBar(
                             ),
                             keyboardActions = KeyboardActions(
                                 onGo = onKeyboardActionGo,
-                            )
+                            ),
+                            readOnly = readOnly,
                         )
                     }
                     Row(

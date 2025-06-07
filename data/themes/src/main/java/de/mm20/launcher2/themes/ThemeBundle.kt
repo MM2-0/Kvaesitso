@@ -1,5 +1,6 @@
 package de.mm20.launcher2.themes
 
+import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.serialization.Json
 import kotlinx.coroutines.Dispatchers
@@ -7,10 +8,13 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonObject
+import java.util.UUID
 
 @Serializable
 data class ThemeBundle(
@@ -24,21 +28,23 @@ data class ThemeBundle(
     val version: Int = 2,
 ) {
     fun toJson(): String {
-        return Json.Lenient.encodeToString(this)
+        return ThemeJson.encodeToString(this)
     }
 
     companion object {
         fun fromJson(jsonString: String): ThemeBundle? {
             try {
-                val jsonElement = Json.Lenient.parseToJsonElement(jsonString).jsonObject
+                val jsonElement = ThemeJson.parseToJsonElement(jsonString).jsonObject
 
-                val version = (jsonElement.get("version") as? JsonPrimitive)?.intOrNull
+                val version = (jsonElement["version"] as? JsonPrimitive)?.intOrNull
 
                 if (version != 2) {
                     return fromLegacyJson(jsonElement)
                 }
 
-                return Json.Lenient.decodeFromJsonElement(jsonElement)
+                return ThemeJson.decodeFromJsonElement<ThemeBundle>(jsonElement).also {
+                    Log.d("MM20", "$it")
+                }
 
             } catch (e: SerializationException) {
                 CrashReporter.logException(e)
@@ -49,9 +55,26 @@ data class ThemeBundle(
             }
         }
 
-        private fun fromLegacyJson(jsonElement: JsonElement): ThemeBundle? {
+        private fun fromLegacyJson(jsonElement: JsonObject): ThemeBundle? {
             try {
-                val colorScheme: Colors = LegacyThemeJson.decodeFromJsonElement(jsonElement)
+                val name = (jsonElement["name"] as? JsonPrimitive)?.contentOrNull ?: return null
+                val corePalette = (jsonElement["corePalette"] as? JsonObject)?.let {
+                    LegacyThemeJson.decodeFromJsonElement<CorePalette<Int?>>(it)
+                }
+                val lightColorScheme = (jsonElement["lightColorScheme"] as? JsonObject)?.let {
+                    LegacyThemeJson.decodeFromJsonElement<ColorScheme<Color?>>(it)
+                }
+                val darkColorScheme = (jsonElement["darkColorScheme"] as? JsonObject)?.let {
+                    LegacyThemeJson.decodeFromJsonElement<ColorScheme<Color?>>(it)
+                }
+
+                val colorScheme = Colors(
+                    id = UUID.randomUUID(),
+                    name = name,
+                    corePalette = corePalette ?: EmptyCorePalette,
+                    lightColorScheme = lightColorScheme ?: DefaultLightColorScheme,
+                    darkColorScheme = darkColorScheme ?: DefaultDarkColorScheme,
+                )
                 return ThemeBundle(
                     name = colorScheme.name,
                     author = "",
