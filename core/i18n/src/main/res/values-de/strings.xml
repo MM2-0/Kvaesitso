@@ -839,4 +839,11 @@
     <string name="preference_shapes_base">Grundform</string>
     <string name="confirmation_delete_shapes_scheme">Möchten Sie das Formschema %1$s wirklich löschen?</string>
     <string name="new_shapes_name">Neue Formen</string>
+    <string name="import_theme_exists">Design existiert bereits und wird aktualisiert</string>
+    <string name="no_selection">Keine Auswahl</string>
+    <string name="save_as_file">Als Datei speichern</string>
+    <string name="theme_export_title">Design exportieren</string>
+    <string name="theme_import_title">Design importieren</string>
+    <string name="theme_bundle_name">Name</string>
+    <string name="theme_bundle_author">Autor</string>
 </resources>
