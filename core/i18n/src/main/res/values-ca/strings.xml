@@ -84,9 +84,6 @@
     <string name="notes_widget_action_dismiss">Elimina</string>
     <string name="notes_widget_dismissed">Nota eliminada.</string>
     <string name="shortcut_summary">De %1$s</string>
-    <string name="easter_egg_1">Aquí no hi ha ous de pasqua, si no és que els porteu vosaltres.</string>
-    <string name="easter_egg_2">Si us plau, descansa, estàs malgastant el teu temps</string>
-    <string name="easter_egg_3">No t\'ho diré una altra vegada: aquí no hi ha ous de pasqua</string>
     <string name="close">Tanca</string>
     <string name="save">Guarda</string>
     <string name="duplicate">Duplica</string>

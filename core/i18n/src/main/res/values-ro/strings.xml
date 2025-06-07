@@ -92,10 +92,7 @@
     <string name="websearch_dialog_custom_icon">Pictogramă personalizată</string>
     <string name="menu_edit_widgets">Editează widget-uri</string>
     <string name="widget_add_widget">Adaugă widget</string>
-    <string name="easter_egg_1">Nu există easter eggs aici, dacă nu le-ai adus cu tine.</string>
-    <string name="easter_egg_2">Te rog, oprește-te, pierzi timpul</string>
     <string name="shortcut_summary">al %1$s</string>
-    <string name="easter_egg_3">Nu o voi mai spune: nu există absolut nici un easter egg ascuns aici</string>
     <string name="turn_off">Opreşte</string>
     <string name="menu_item_edit_favs">Editează favoritele</string>
     <string name="edit_favorites_dialog_unpinned">Nefixate - frecvent utilizate</string>

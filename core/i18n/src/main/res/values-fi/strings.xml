@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="websearch_dialog_url_error">Korvattava termi \'${1}\' puuttuu osoitteesta</string>
-    <string name="easter_egg_3">Viimeinen varoitus: tänne ei todella ole piilotettu yhtään mitään</string>
     <string name="widget_action_replace">Korvaa</string>
     <string name="edit_favorites_dialog_empty_section">Vedä kohteita tähän</string>
     <string name="edit_favorites_dialog_tags">Avainsanat</string>
@@ -56,7 +55,6 @@
     <string name="notes_widget_action_dismiss">Hylkää</string>
     <string name="notes_widget_dismissed">Muistiinpano hylätty.</string>
     <string name="shortcut_summary">sovelluksesta %1$s</string>
-    <string name="easter_egg_1">Täällä ei ole yllätyksiä, ellet tuonut niitä mukanasi.</string>
     <string name="close">Sulje</string>
     <string name="nextcloud_server_invalid_url">Tämä URL ei osoita kelvolliseen Nextcloud-asennukseen</string>
     <string name="owncloud_server_url">Owncloud-palvelimen URL</string>
@@ -119,7 +117,6 @@
     <string name="notes_widget_placeholder">Kirjoita muistiinpano…</string>
     <string name="notes_widget_action_new">Uusi muistiinpano</string>
     <string name="notes_widget_export_filename">Muistiinpano_%1$s</string>
-    <string name="easter_egg_2">Lopeta, kiitos. Tuhlaat aikaasi.</string>
     <string name="easter_egg_text">Nojoo, löysit minut. Onnea. Oliko sen arvoista\?</string>
     <string name="save">Tallenna</string>
     <string name="duplicate">Monista</string>

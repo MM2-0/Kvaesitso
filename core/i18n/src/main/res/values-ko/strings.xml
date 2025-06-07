@@ -287,7 +287,6 @@
     <string name="preference_screen_tags">태그</string>
     <string name="preference_edit_button">버튼 편집</string>
     <string name="preference_favorites_edit_button_summary">즐겨찾기를 정렬할 수 있는 버튼 표시</string>
-    <string name="easter_egg_3">마지막으로 말씀드릴게요. 진짜 이스터 에그 없어요.</string>
     <string name="easter_egg_text">와, 찾아내셨군요. 축하드려요. 찾아낼 만 하셨나요\?</string>
     <string name="weather_condition_heavysnow">많은 눈</string>
     <string name="weather_condition_lightrainshowers">소나기 조금</string>
@@ -303,8 +302,6 @@
     <string name="frequently_used_rows">줄 수</string>
     <string name="search_action_event">일정 추가</string>
     <string name="search_action_open_url">웹사이트 보기</string>
-    <string name="easter_egg_1">직접 가져오지 않는 이상 이스터 에그는 없어요.</string>
-    <string name="easter_egg_2">없다니까요. 시간 낭비하지 마세요.</string>
     <string name="preference_crash_reporter">충돌 보고 도구</string>
     <string name="preference_search_calculator">계산기</string>
     <string name="preference_search_nextcloud">Nextcloud</string>

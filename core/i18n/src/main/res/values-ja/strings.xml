@@ -173,7 +173,6 @@
     <string name="weather_condition_wind">風</string>
     <string name="weather_condition_unknown">不明</string>
     <string name="weather_widget_set_location">場所を設定</string>
-    <string name="easter_egg_2">やめて！時間の無駄だよ！</string>
     <string name="widget_name_notes">メモ</string>
     <string name="weather_condition_snow">雪</string>
     <string name="weather_condition_cloudy">曇り</string>
@@ -188,8 +187,6 @@
     <string name="widget_name_unknown">不明なアプリウィジェット</string>
     <string name="notes_widget_action_dismiss">閉じる</string>
     <string name="notes_widget_dismissed">メモは閉じられました。</string>
-    <string name="easter_egg_1">おっと！イースターエッグはここにはありません。</string>
-    <string name="easter_egg_3">もう言わないよ。ここには絶対にイースターエッグなんて隠してないよ！</string>
     <string name="easter_egg_text">さて、見つけたようだね。おめでとう。見つけられてよかった？</string>
     <string name="widget_action_replace">置き換え</string>
     <string name="weather_condition_rain">雨</string>

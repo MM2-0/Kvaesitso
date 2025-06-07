@@ -72,8 +72,6 @@
     <string name="notes_widget_export_filename">Nota_%1$s</string>
     <string name="notes_widget_action_dismiss">Rejeitar</string>
     <string name="notes_widget_dismissed">Nota rejeitada</string>
-    <string name="easter_egg_2">Por favor, pare. Está a perder tempo...</string>
-    <string name="easter_egg_3">Não volto a dizer: aqui não existem quaisquer presentes ocultos</string>
     <string name="close">Fechar</string>
     <string name="save">Guardar</string>
     <string name="duplicate">Duplicar</string>
@@ -125,7 +123,6 @@
     <string name="owncloud_server_invalid_url">Este URL aponta para uma instalação Owncloud inválida</string>
     <string name="alert_delete_shortcut">O atalho %1$s será eliminado permanentemente. Continuar?</string>
     <string name="notes_widget_action_save">Guardar</string>
-    <string name="easter_egg_1">Aqui não existem presentes... a menos que tenha trazido um consigo :-)</string>
     <string name="nextcloud_server_url">URL do servidor Nextcloud</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="owncloud_password">Palavra-passe</string>

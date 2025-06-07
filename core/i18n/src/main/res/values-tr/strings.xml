@@ -112,9 +112,6 @@
     <string name="websearch_dialog_query_encoding_none">Hiçbiri</string>
     <string name="widget_name_unknown">Bilinmeyen uygulama widget\'ı</string>
     <string name="shortcut_summary">%1$s tarafından</string>
-    <string name="easter_egg_1">Yanınızda getirmediğiniz sürece burada paskalya yumurtası yok.</string>
-    <string name="easter_egg_2">Lütfen, kesin şunu, zamanınızı boşa harcıyorsunuz</string>
-    <string name="easter_egg_3">Tekrar söylemeyeceğim: burada kesinlikle hiçbir paskalya yumurtası saklı değil</string>
     <string name="easter_egg_text">Beni buldun. Tebrik ederim. Buna değdi mi\?</string>
     <string name="edit_favorites_dialog_unpinned">Sabitlenmemiş - sık kullanılan</string>
     <string name="file_type_launchertheme">%1$s teması</string>
@@ -780,4 +777,11 @@
     <string name="weather_condition_heavysleetandthunder">Yoğun karla karışık yağmur ve gök gürültüsü</string>
     <string name="weather_condition_rainshowers">Sağanak yağmur</string>
     <string name="weather_condition_lightsleetandthunder">Hafif sulu kar ve gök gürültüsü</string>
+    <string name="no_selection">Seçim yok</string>
+    <string name="save_as_file">Dosya olarak kaydet</string>
+    <string name="action_install">Yükle</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d tamamlanmamış görev</item>
+        <item quantity="other">+%1$d tamamlanmamış görev</item>
+    </plurals>
 </resources>

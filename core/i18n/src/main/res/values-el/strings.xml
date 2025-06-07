@@ -68,7 +68,6 @@
     <string name="websearch_dialog_query_encoding">Κωδικοποίηση ερωτήματος</string>
     <string name="websearch_dialog_query_encoding_url">Κωδικοποίηση URL</string>
     <string name="websearch_dialog_query_encoding_none">Κανένα</string>
-    <string name="easter_egg_1">Δεν υπάρχουν πασχαλινά αυγά εδώ, εκτός αν τα έφερες μαζί σου.</string>
     <string name="easter_egg_text">Λοιπόν, με βρήκες. Συγχαρητήρια. Άξιζε τον κόπο;</string>
     <string name="close">Κλείσιμο</string>
     <string name="menu_item_edit_favs">Επεξεργασία αγαπημένων</string>
@@ -269,10 +268,8 @@
     <string name="widget_add_widget">Προσθήκη γραφικού στοιχείου</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Καρφιτσωμένο - αυτόματα ταξινομημένο</string>
     <string name="search_bar_placeholder">Αναζήτηση</string>
-    <string name="easter_egg_2">Σταμάτα σε παρακαλώ, χάνεις τον χρόνο σου</string>
     <string name="edit_favorites_dialog_pinned_sorted">Καρφιτσωμένο - χειροκίνητα ταξινομημένο</string>
     <string name="settings">Ρυθμίσεις</string>
-    <string name="easter_egg_3">Δεν θα το ξαναπώ: εδώ δεν κρύβεται απολύτως κανένα πασχαλινό αυγό</string>
     <string name="wallpaper">Φόντο</string>
     <string name="nextcloud_server_invalid_url">Αυτή η διεύθυνση URL δεν οδηγεί σε έγκυρη εγκατάσταση Nextcloud</string>
     <string name="wind_north_east">Βορειοανατολικός</string>

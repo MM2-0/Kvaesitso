@@ -117,14 +117,11 @@
     <string name="widget_name_music">Musica</string>
     <string name="widget_add_widget">Aggiungi widget</string>
     <string name="shortcut_summary">Da %1$s</string>
-    <string name="easter_egg_2">Per favore, smettila, stai perdendo il tuo tempo</string>
-    <string name="easter_egg_3">Non lo ripeto più: non ci sono assolutamente Easter egg nascosti qui</string>
     <string name="easter_egg_text">Bene, mi hai trovato. Congratulazioni. Ne valeva la pena\?</string>
     <string name="close">Chiudi</string>
     <string name="turn_off">Disabilita</string>
     <string name="widget_action_remove">Rimuovi</string>
     <string name="menu_item_edit_favs">Modifica preferiti</string>
-    <string name="easter_egg_1">Non ci sono Easter egg qui, a meno che non te ne sia portato dietro tu qualcuno.</string>
     <string name="nextcloud_server_url">URL server Nextcloud</string>
     <string name="nextcloud_server_invalid_url">Questo URL non punta a un\'installazione Nextcloud valida</string>
     <string name="owncloud_server_url">URL server Owncloud</string>
@@ -853,4 +850,9 @@
     <string name="preference_shapes_base">Forma di base</string>
     <string name="confirmation_delete_shapes_scheme">Vuoi davvero eliminare lo schema di forme %1$s?</string>
     <string name="new_shapes_name">Nuove forme</string>
+    <string name="no_selection">Nessuna selezione</string>
+    <string name="save_as_file">Salva come file</string>
+    <string name="theme_export_title">Esporta tema</string>
+    <string name="theme_bundle_name">Nome</string>
+    <string name="theme_bundle_author">Autore</string>
 </resources>

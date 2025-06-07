@@ -100,7 +100,6 @@
     <string name="websearch_dialog_query_encoding_url">Працэнтнае кадзіраванне</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="websearch_dialog_url_error">У запаўніцеля \'${1}\' адсутнічае гэта спасылка</string>
-    <string name="easter_egg_3">Я не буду гэта паўтараць: тут няма ніякіх пасхалак</string>
     <string name="easter_egg_text">Файна, ты знайшоў мяне. Віншую. Але гэта варта было рабіць?</string>
     <string name="close">Закрыць</string>
     <string name="save">Захаваць</string>
@@ -135,8 +134,6 @@
     <string name="notes_widget_action_dismiss">Адхіліць</string>
     <string name="notes_widget_dismissed">Нататка адхілена.</string>
     <string name="shortcut_summary">Ад %1$s</string>
-    <string name="easter_egg_1">Тут няма пасхалак, або яек, калі, канешне, вы іх самі не прынеслі.</string>
-    <string name="easter_egg_2">Калі ласка, спыніся, ты марнуеш свой час</string>
     <string name="widget_name_notes">Нататка</string>
     <string name="widget_name_unknown">Віджэт невядомай праграмы</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Замацаваныя – адсартаваныя аўтаматычна</string>
