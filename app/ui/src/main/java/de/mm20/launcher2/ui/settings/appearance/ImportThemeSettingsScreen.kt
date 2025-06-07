@@ -20,9 +20,7 @@ import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.PublishedWithChanges
 import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.Upgrade
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChip
@@ -127,7 +125,7 @@ fun ImportThemeSettingsScreen(
                 }
             }
             item {
-                PreferenceCategory {
+                PreferenceCategory(stringResource(R.string.import_theme_contents)) {
                     if (themeBundle.colors != null) {
                         Preference(
                             icon = Icons.Rounded.Palette,
@@ -135,7 +133,10 @@ fun ImportThemeSettingsScreen(
                             summary = themeBundle.colors?.name,
                             controls = if (viewModel.colorsExists) {
                                 {
-                                    Icon(Icons.Rounded.ChangeCircle, null)
+                                    Icon(
+                                        Icons.Rounded.ChangeCircle,
+                                        stringResource(R.string.import_theme_exists)
+                                    )
                                 }
                             } else null,
                         )
@@ -147,7 +148,10 @@ fun ImportThemeSettingsScreen(
                             summary = themeBundle.shapes?.name,
                             controls = if (viewModel.shapesExists) {
                                 {
-                                    Icon(Icons.Rounded.ChangeCircle, null)
+                                    Icon(
+                                        Icons.Rounded.ChangeCircle,
+                                        stringResource(R.string.import_theme_exists)
+                                    )
                                 }
                             } else null,
                         )

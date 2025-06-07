@@ -827,6 +827,7 @@
     <string name="theme_color_scheme_palette_color">Palette</string>
     <string name="theme_color_scheme_custom_color">Custom</string>
     <string name="preference_restore_default">Restore default</string>
+    <string name="import_theme_contents">Contents</string>
     <string name="import_theme_apply">Apply theme</string>
     <string name="import_theme_exists">Theme already exists and will be updated</string>
     <string name="import_theme_error">The selected file could not be read. Please make sure that you selected a valid theme file (*.kvtheme), and that the file is not corrupt.</string>
