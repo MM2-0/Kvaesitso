@@ -1478,6 +1478,8 @@ internal fun LauncherScaffold(
                     } else null,
                     highlightedAction = highlightedResult as? SearchAction,
                     darkColors = config.darkSearchBar,
+                    isSearchOpen = state.currentComponent is SearchComponent && state.isSettledOnSecondaryPage ||
+                                config.homeComponent is SearchComponent && !state.isSettledOnSecondaryPage,
                 )
             }
             if (isFilterBarVisible) {
