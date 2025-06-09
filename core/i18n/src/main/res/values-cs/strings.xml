@@ -850,4 +850,11 @@
     <string name="preference_shapes_base">Základní tvar</string>
     <string name="confirmation_delete_shapes_scheme">Opravdu chcete odstranit schéma tvaru %1$s?</string>
     <string name="new_shapes_name">Nové tvary</string>
+    <string name="no_selection">Žádný výběr</string>
+    <string name="save_as_file">Uložit jako soubor</string>
+    <string name="theme_export_title">Exportovat motiv</string>
+    <string name="theme_bundle_name">Název</string>
+    <string name="theme_bundle_author">Autor</string>
+    <string name="import_theme_exists">Motiv již existuje a bude aktualizován</string>
+    <string name="theme_import_title">Importovat motiv</string>
 </resources>
