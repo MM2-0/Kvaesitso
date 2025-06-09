@@ -857,4 +857,5 @@
     <string name="theme_bundle_author">Autor</string>
     <string name="import_theme_exists">Motiv již existuje a bude aktualizován</string>
     <string name="theme_import_title">Importovat motiv</string>
+    <string name="import_theme_contents">Obsah</string>
 </resources>
