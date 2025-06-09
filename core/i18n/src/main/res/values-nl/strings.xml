@@ -844,4 +844,6 @@
     <string name="theme_bundle_name">Naam</string>
     <string name="theme_bundle_author">Auteur</string>
     <string name="no_selection">Geen selectie</string>
+    <string name="theme_import_title">Thema importeren</string>
+    <string name="import_theme_exists">Thema bestaat al en wordt geüpdatet</string>
 </resources>
