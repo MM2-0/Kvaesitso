@@ -303,7 +303,7 @@
     <string name="weather_condition_heavysleetandthunder">Heves havas eső és mennydörgés</string>
     <string name="missing_permission_files_search">A fényképek, média és dokumentumok kereséséhez tárhely engedélyre van szükség ezen az eszközön.</string>
     <string name="missing_permission_appshortcuts_create">Állítsa be a(z) %1$s alkalmazást alapértelmezett indítóként a parancsikonok létrehozásához.</string>
-    <string name="import_theme_error">A kiválasztott fájlt nem lehetett beolvasni. Győződjön meg róla, hogy érvényes témát (*.kvtheme) választott ki és hogy a fájl nem sérült-e.</string>
+    <string name="import_theme_error">A kiválasztott fájlt nem lehetett beolvasni. Győződjön meg arról, hogy érvényes témát (*.kvtheme) választott ki és hogy a fájl nem-e sérült.</string>
     <string name="preference_hidden_items_reveal_button">Kibontásgomb megjelenítése</string>
     <string name="favorites_empty_tag">Nincsenek elemek ilyen címkével</string>
     <string name="preference_layout_open_search">Keresés / alkalmazásfiók</string>
@@ -844,4 +844,6 @@
     <string name="theme_export_title">Téma exportálása</string>
     <string name="theme_bundle_name">Név</string>
     <string name="theme_bundle_author">Szerző</string>
+    <string name="import_theme_exists">A téma már létezik, ezért frissítve lesz</string>
+    <string name="theme_import_title">Téma importálása</string>
 </resources>
