@@ -870,4 +870,19 @@
     <string name="bad_configuration_title">Félicitations, ça s\'appelle se faire enfermer dehors !</string>
     <string name="bad_configuration_summary">Vous avez découvert une combinaison de paramètres qui rendent à la fois la recherche et les paramètres inaccessibles — ce qui vous enferme efficacement à l\'extérieur du lanceur.</string>
     <string name="preference_launch_tasks_app">Ouvrir l\'application Tasks</string>
+    <string name="import_theme_contents">Contenus</string>
+    <string name="preference_shapes_default">Par défaut</string>
+    <string name="preference_screen_shapes">Formes</string>
+    <string name="preference_shapes_extra_round">Très arrondi</string>
+    <string name="preference_shapes_base">Forme de base</string>
+    <string name="preference_shapes_rect">Rectangulaire</string>
+    <string name="confirmation_delete_shapes_scheme">Voulez-vous réellement supprimer le schéma de forme %1$s ?</string>
+    <string name="new_shapes_name">Nouvelles formes</string>
+    <string name="save_as_file">Enregistrer comme fichier</string>
+    <string name="no_selection">Aucune sélection</string>
+    <string name="theme_export_title">Exporter le thème</string>
+    <string name="theme_bundle_name">Nom</string>
+    <string name="import_theme_exists">Le thème existe déjà et sera mis à jour</string>
+    <string name="theme_bundle_author">Créé par</string>
+    <string name="theme_import_title">Importer le thème</string>
 </resources>
