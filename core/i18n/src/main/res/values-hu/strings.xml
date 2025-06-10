@@ -846,4 +846,5 @@
     <string name="theme_bundle_author">Szerző</string>
     <string name="import_theme_exists">A téma már létezik, ezért frissítve lesz</string>
     <string name="theme_import_title">Téma importálása</string>
+    <string name="import_theme_contents">Tartalom</string>
 </resources>
