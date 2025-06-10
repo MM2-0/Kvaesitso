@@ -66,10 +66,8 @@ fun CrashReporterScreen() {
                 }
             }
             items(it) {
-                OutlinedCard(
-                    modifier = Modifier
-                        .padding(vertical = 4.dp, horizontal = 8.dp)
-                    ,
+                Surface(
+                    shape = MaterialTheme.shapes.medium,
                 ) {
                     Column(
                         modifier = Modifier

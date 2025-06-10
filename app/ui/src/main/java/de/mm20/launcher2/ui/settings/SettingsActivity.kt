@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -11,6 +12,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
@@ -21,11 +23,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.core.net.toUri
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
 import de.mm20.launcher2.ui.base.BaseActivity
@@ -36,6 +40,9 @@ import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
+import de.mm20.launcher2.ui.settings.appearance.ExportThemeSettingsScreen
+import de.mm20.launcher2.ui.settings.appearance.ImportThemeSettingsRoute
+import de.mm20.launcher2.ui.settings.appearance.ImportThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.breezyweather.BreezyWeatherSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
@@ -132,7 +139,9 @@ class SettingsActivity : BaseActivity() {
                                 )
                             )
                         }
-                        OverlayHost {
+                        OverlayHost(
+                            modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainer)
+                        ) {
                             NavHost(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = navController,
@@ -155,6 +164,13 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/appearance") {
                                     AppearanceSettingsScreen()
+                                }
+                                composable("settings/appearance/export") {
+                                    ExportThemeSettingsScreen()
+                                }
+                                composable<ImportThemeSettingsRoute> {
+                                    val route: ImportThemeSettingsRoute = it.toRoute() ?: return@composable
+                                    ImportThemeSettingsScreen(route.fromUri.toUri())
                                 }
                                 composable("settings/homescreen") {
                                     HomescreenSettingsScreen()

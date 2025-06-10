@@ -29,8 +29,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
@@ -53,6 +51,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -222,6 +221,8 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 )
             }
+        }
+        item {
             PreferenceCategory {
                 ShapePreview(
                     previewShapes = previewShapes,
@@ -246,6 +247,8 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 )
             }
+        }
+        item {
             PreferenceCategory {
                 ShapePreview(
                     previewShapes = previewShapes,
@@ -279,7 +282,9 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 )
             }
-            PreferenceCategory {
+        }
+        item {
+            PreferenceCategory(title = "Large") {
                 ShapePreview(
                     previewShapes = previewShapes,
                 ) {
@@ -299,6 +304,8 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 )
             }
+        }
+        item {
             PreferenceCategory {
                 ShapePreference(
                     title = "Large increased",
@@ -312,6 +319,8 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 )
             }
+        }
+        item {
             PreferenceCategory {
                 ShapePreview(
                     previewShapes = previewShapes,
@@ -344,6 +353,8 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 )
             }
+        }
+        item {
             PreferenceCategory {
                 ShapePreference(
                     title = "Extra large increased",
@@ -357,6 +368,8 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 )
             }
+        }
+        item {
             PreferenceCategory {
                 ShapePreference(
                     title = "Extra extra large",
@@ -398,11 +411,12 @@ fun ShapePreference(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
+            .clip(MaterialTheme.shapes.extraSmall)
+            .background(MaterialTheme.colorScheme.surface)
             .clickable(
                 onClick = { showDialog = true },
             )
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
@@ -706,28 +720,20 @@ private fun ShapePreview(
     previewShapes: Shapes,
     content: @Composable () -> Unit,
 ) {
-    MaterialTheme(
-        shapes = previewShapes
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.extraSmall)
+            .background(MaterialTheme.colorScheme.surfaceContainerLowest)
+            .horizontalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceContainer
-            )
+        MaterialTheme(
+            shapes = previewShapes
         ) {
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState())
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                content()
-            }
+            content()
         }
     }
 }

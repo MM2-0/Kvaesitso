@@ -67,24 +67,13 @@ fun ColorSchemesSettingsScreen() {
 
     var deleteColors by remember { mutableStateOf<Colors?>(null) }
 
-    var importThemeUri by remember { mutableStateOf<Uri?>(null) }
-
-    val importIntentLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
-        importThemeUri = it
-    }
-
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_colors),
         topBarActions = {
-            IconButton(onClick = { importIntentLauncher.launch(arrayOf("*/*")) }) {
-                Icon(Icons.Rounded.Download, null)
-            }
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.createNew(context) }) {
+            IconButton(onClick = { viewModel.createNew(context) }) {
                 Icon(Icons.Rounded.Add, null)
             }
-        }
+        },
     ) {
         item {
             PreferenceCategory {
@@ -191,10 +180,6 @@ fun ColorSchemesSettingsScreen() {
                 }
             }
         )
-    }
-
-    if (importThemeUri != null) {
-        ImportThemeSheet(uri = importThemeUri!!, onDismiss = { importThemeUri = null })
     }
 }
 

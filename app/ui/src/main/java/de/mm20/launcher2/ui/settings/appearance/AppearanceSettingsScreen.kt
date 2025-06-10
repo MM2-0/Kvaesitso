@@ -1,6 +1,10 @@
 package de.mm20.launcher2.ui.settings.appearance
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowCircleDown
+import androidx.compose.material.icons.rounded.ArrowCircleUp
 import androidx.compose.material.icons.rounded.CropSquare
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.TextFields
@@ -33,6 +37,14 @@ fun AppearanceSettingsScreen() {
     val colorThemeName by viewModel.colorThemeName.collectAsStateWithLifecycle(null)
     val shapeThemeName by viewModel.shapeThemeName.collectAsStateWithLifecycle(null)
     val compatModeColors by viewModel.compatModeColors.collectAsState()
+
+    val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
+        if (it == null) {
+            return@rememberLauncherForActivityResult
+        }
+        navController?.navigate(ImportThemeSettingsRoute(it.toString()))
+    }
+
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {
@@ -95,6 +107,25 @@ fun AppearanceSettingsScreen() {
                     summary = stringResource(R.string.preference_cards_summary),
                     onClick = {
                         navController?.navigate("settings/appearance/cards")
+                    }
+                )
+            }
+        }
+
+        item {
+            PreferenceCategory {
+                Preference(
+                    title = stringResource(R.string.theme_import_title),
+                    icon = Icons.Rounded.ArrowCircleDown,
+                    onClick = {
+                        importLauncher.launch(arrayOf("*/*"))
+                    }
+                )
+                Preference(
+                    title = stringResource(R.string.theme_export_title),
+                    icon = Icons.Rounded.ArrowCircleUp,
+                    onClick = {
+                        navController?.navigate("settings/appearance/export")
                     }
                 )
             }

@@ -134,9 +134,6 @@
     <string name="widget_name_favorites">Oblíbené</string>
     <string name="widget_add_widget">Přidat widget</string>
     <string name="shortcut_summary">Od %1$s</string>
-    <string name="easter_egg_1">Tady nejsou žádná velikonoční vajíčka, pokud jste si s sebou tedy nějaké nevzali.</string>
-    <string name="easter_egg_2">Prosím, nechte toho, plýtváte svým časem</string>
-    <string name="easter_egg_3">Nebudu to říkat znovu: nejsou tu žádná velikonoční vajíčka</string>
     <string name="easter_egg_text">Super, našli jste mě. Gratuluju. Stálo to za to\?</string>
     <string name="close">Zavřít</string>
     <string name="save">Uložit</string>
@@ -846,4 +843,18 @@
     <string name="gesture_action_widgets">Widgety</string>
     <string name="bad_configuration_title">Gratulujeme, uzamkli jste se!</string>
     <string name="bad_configuration_summary">Objevili jste kombinaci nastavení, kvůli které není dostupné ani vyhledávání, ani nastavení, čímž jste se prakticky uzamkli z launcheru.</string>
+    <string name="preference_screen_shapes">Tvary</string>
+    <string name="preference_shapes_default">Výchozí</string>
+    <string name="preference_shapes_extra_round">Extra zaoblený</string>
+    <string name="preference_shapes_rect">Obdélníkový</string>
+    <string name="preference_shapes_base">Základní tvar</string>
+    <string name="confirmation_delete_shapes_scheme">Opravdu chcete odstranit schéma tvaru %1$s?</string>
+    <string name="new_shapes_name">Nové tvary</string>
+    <string name="no_selection">Žádný výběr</string>
+    <string name="save_as_file">Uložit jako soubor</string>
+    <string name="theme_export_title">Exportovat motiv</string>
+    <string name="theme_bundle_name">Název</string>
+    <string name="theme_bundle_author">Autor</string>
+    <string name="import_theme_exists">Motiv již existuje a bude aktualizován</string>
+    <string name="theme_import_title">Importovat motiv</string>
 </resources>

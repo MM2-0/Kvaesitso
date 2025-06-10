@@ -72,8 +72,6 @@
     <string name="widget_name_favorites">Favorieten</string>
     <string name="widget_add_widget">Widget toevoegen</string>
     <string name="shortcut_summary">Via %1$s</string>
-    <string name="easter_egg_1">Er zijn hier geen paaseieren, tenzij je ze zelf hebt meegebracht.</string>
-    <string name="easter_egg_3">Ik ga het niet meer herhalen: hier zijn geen paaseieren verstopt</string>
     <string name="easter_egg_text">Nu, je hebt me gevonden. Proficiat. Was het het waard?</string>
     <string name="close">Sluiten</string>
     <string name="save">Opslaan</string>
@@ -103,7 +101,6 @@
     <string name="file_meta_size">Grootte: %1$s</string>
     <string name="file_meta_app_version">Versie: %1$s</string>
     <string name="file_meta_app_pkgname">Pakketnaam: %1$s</string>
-    <string name="easter_egg_2">Stop alsjeblieft, dit is tijdverspilling</string>
     <string name="file_type_source_code">Broncodebestand</string>
     <string name="edit_favorites_dialog_unpinned">Niet vastgezet - regelmatig gebruikt</string>
     <string name="file_type_drawing">Tekening</string>
@@ -835,4 +832,18 @@
     <string name="preference_widgets_on_home_screen">Widgets op het thuisscherm</string>
     <string name="bad_configuration_title">Proficiat, je hebt jezelf buiten gesloten!</string>
     <string name="bad_configuration_summary">Je hebt een combinatie van instellingen ontdekt die zowel zoeken als de instellingen onbereikbaar maakt - je bent nu volledig uit de startschermapp gesloten.</string>
+    <string name="preference_screen_shapes">Vormen</string>
+    <string name="preference_shapes_default">Standaard</string>
+    <string name="preference_shapes_extra_round">Extra rond</string>
+    <string name="preference_shapes_rect">Rechthoekig</string>
+    <string name="preference_shapes_base">Basisvorm</string>
+    <string name="confirmation_delete_shapes_scheme">Weet je zeker dat je de vorm %1$s wil verwijderen?</string>
+    <string name="new_shapes_name">Nieuwe vormen</string>
+    <string name="save_as_file">Opslaan als bestand</string>
+    <string name="theme_export_title">Thema exporteren</string>
+    <string name="theme_bundle_name">Naam</string>
+    <string name="theme_bundle_author">Auteur</string>
+    <string name="no_selection">Geen selectie</string>
+    <string name="theme_import_title">Thema importeren</string>
+    <string name="import_theme_exists">Thema bestaat al en wordt geüpdatet</string>
 </resources>

@@ -21,30 +21,32 @@ fun BuildInfoSettingsScreen() {
     val buildFeatures by viewModel.buildFeatures.collectAsState(emptyMap())
     PreferenceScreen(title = stringResource(R.string.preference_screen_buildinfo)) {
         item {
-            Preference(title = "Build type", summary = BuildConfig.BUILD_TYPE)
-            var buildSignature by remember { mutableStateOf<String?>(null) }
-            LaunchedEffect(null) {
-                val signature = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    val pi = context.packageManager.getPackageInfo(
-                        context.packageName,
-                        PackageManager.GET_SIGNING_CERTIFICATES
-                    )
-                    pi.signingInfo?.apkContentsSigners?.firstOrNull()
-                } else {
-                    val pi = context.packageManager.getPackageInfo(
-                        context.packageName,
-                        PackageManager.GET_SIGNATURES
-                    )
-                    pi.signatures?.firstOrNull()
+            PreferenceCategory {
+                Preference(title = "Build type", summary = BuildConfig.BUILD_TYPE)
+                var buildSignature by remember { mutableStateOf<String?>(null) }
+                LaunchedEffect(null) {
+                    val signature = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        val pi = context.packageManager.getPackageInfo(
+                            context.packageName,
+                            PackageManager.GET_SIGNING_CERTIFICATES
+                        )
+                        pi.signingInfo?.apkContentsSigners?.firstOrNull()
+                    } else {
+                        val pi = context.packageManager.getPackageInfo(
+                            context.packageName,
+                            PackageManager.GET_SIGNATURES
+                        )
+                        pi.signatures?.firstOrNull()
+                    }
+                    val signatureHash = if (signature != null) {
+                        val digest = MessageDigest.getInstance("SHA")
+                        digest.update(signature.toByteArray())
+                        Base64.encodeToString(digest.digest(), Base64.NO_WRAP)
+                    } else "null"
+                    buildSignature = signatureHash
                 }
-                val signatureHash = if (signature != null) {
-                    val digest = MessageDigest.getInstance("SHA")
-                    digest.update(signature.toByteArray())
-                    Base64.encodeToString(digest.digest(), Base64.NO_WRAP)
-                } else "null"
-                buildSignature = signatureHash
+                Preference(title = "Signature hash", summary = buildSignature)
             }
-            Preference(title = "Signature hash", summary = buildSignature)
         }
         item {
             PreferenceCategory(title = "Features") {

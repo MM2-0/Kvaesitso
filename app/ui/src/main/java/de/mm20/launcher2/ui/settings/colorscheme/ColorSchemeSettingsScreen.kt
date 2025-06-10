@@ -66,6 +66,7 @@ import de.mm20.launcher2.themes.merge
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
@@ -142,17 +143,9 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
             if (previewDarkTheme) DefaultDarkColorScheme else DefaultLightColorScheme
         item {
 
-            Column(
-                modifier = Modifier
+            PreferenceCategory(
+                title = stringResource(R.string.preference_custom_colors_corepalette),
             ) {
-                Text(
-                    stringResource(R.string.preference_custom_colors_corepalette),
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
                 CorePaletteColorPreference(
                     title = "Primary",
                     value = theme?.corePalette?.primary,
@@ -166,7 +159,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         )
                     },
                     defaultValue = systemPalette.primary,
-                    modifier = Modifier.padding(end = 12.dp),
                 )
                 CorePaletteColorPreference(
                     title = "Secondary",
@@ -181,7 +173,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         )
                     },
                     defaultValue = systemPalette.secondary,
-                    modifier = Modifier.padding(end = 12.dp),
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
                             CorePalette.of(it).a2.keyColor.toInt()
@@ -201,7 +192,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         )
                     },
                     defaultValue = systemPalette.tertiary,
-                    modifier = Modifier.padding(end = 12.dp),
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
                             CorePalette.of(it).a3.keyColor.toInt()
@@ -221,7 +211,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         )
                     },
                     defaultValue = systemPalette.neutral,
-                    modifier = Modifier.padding(end = 12.dp),
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
                             CorePalette.of(it).n1.keyColor.toInt()
@@ -241,7 +230,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         )
                     },
                     defaultValue = systemPalette.neutralVariant,
-                    modifier = Modifier.padding(end = 12.dp),
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
                             CorePalette.of(it).n2.keyColor.toInt()
@@ -267,7 +255,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         }
                     },
                 )
-                HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
             }
         }
         item {
@@ -681,7 +668,6 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                             )
                         },
                         defaultValue = selectedDefaultScheme.surfaceDim,
-                        modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
                         title = "Surface",

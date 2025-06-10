@@ -142,27 +142,24 @@ fun LogScreen() {
         items(lines) {
             if (it is RawLogcatLine) {
                 Text(
-                    modifier = Modifier.padding(16.dp),
-                    text = it.line ?: "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface, MaterialTheme.shapes.medium)
+                        .padding(16.dp),
+                    text = it.line,
                     style = MaterialTheme.typography.bodySmall
                 )
             } else if (it is FormattedLogcatLine) {
                 val contentColor = when (it.level) {
-                    "E" -> MaterialTheme.colorScheme.onErrorContainer
-                    "W" -> MaterialTheme.colorScheme.onPrimaryContainer
+                    "E" -> MaterialTheme.colorScheme.error
+                    "W" -> MaterialTheme.colorScheme.primary
                     "D" -> MaterialTheme.colorScheme.onSurfaceVariant
                     else -> MaterialTheme.colorScheme.onSurface
-                }
-                val bgColor = when (it.level) {
-                    "E" -> MaterialTheme.colorScheme.errorContainer
-                    "W" -> MaterialTheme.colorScheme.primaryContainer
-                    "D" -> MaterialTheme.colorScheme.surfaceVariant
-                    else -> MaterialTheme.colorScheme.surface
                 }
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(bgColor)
+                        .background(MaterialTheme.colorScheme.surface, MaterialTheme.shapes.medium)
                         .padding(16.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -187,7 +184,7 @@ fun LogScreen() {
                         modifier = Modifier.padding(top = 8.dp),
                         text = it.message,
                         style = MaterialTheme.typography.bodySmall,
-                        color = contentColor
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
             }

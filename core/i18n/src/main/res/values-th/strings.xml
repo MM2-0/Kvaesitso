@@ -386,11 +386,8 @@
     <string name="menu_contacts_open_externally">เปิดในแอปรายชื่อผู้ติดต่อ</string>
     <string name="search_bar_placeholder">ค้นหา</string>
     <string name="settings">การตั้งค่า</string>
-    <string name="easter_egg_1">แถวนี้ไม่มีไข่อีสเตอร์หรอก นอกเสียจากว่าคุณเป็นคนเอามันมาเอง</string>
     <string name="wind_north">เหนือ</string>
-    <string name="easter_egg_2">ขอร้องล่ะ หยุดเถอะ เสียเวลาเปล่าๆ</string>
     <string name="wind_north_north_east">เหนือค่อนไปทางตะวันออก</string>
-    <string name="easter_egg_3">พูดเป็นครั้งสุดท้ายแล้วนะ แถวนี้ไม่มีไข่อีสเตอร์ซ่อนอยู่จริงๆ</string>
     <string name="disclaimer_currency_converter">ธนาคารกลางยุโรปทำการประกาศอัตราแรกเปลี่ยนวันละครั้ง ข้อมูลทั้งหมดนี้มีให้ \"ตามสภาพ\" โดยไม่มีการรับประกันใดๆ จะไม่มีความรับผิดชอบใดๆต่อความเสียหายจากข้อมูลเหล่านี้
 \n
 \nอัพเดตครั้งล่าสุด: %1$s</string>

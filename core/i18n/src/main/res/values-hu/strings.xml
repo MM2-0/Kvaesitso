@@ -82,7 +82,6 @@
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="default_websearch_3_name">Google Play</string>
     <string name="widget_name_weather">Időjárás</string>
-    <string name="easter_egg_1">Itt nincsenek Easter Eggek, hacsak nem hozott magával.</string>
     <string name="close">Bezárás</string>
     <string name="wind_north_north_east">Észak-északkelet</string>
     <string name="wind_south_south_east">Dél-délkelet</string>
@@ -109,7 +108,6 @@
     <string name="music_widget_default_title">A(z) %1$s médiát játszik le</string>
     <string name="weather_condition_lightsnowshowers">Enyhe hó záporok</string>
     <string name="widget_name_notes">Jegyzet</string>
-    <string name="easter_egg_2">Hagyja abba, csak az idejét vesztegeti</string>
     <string name="edit_favorites_dialog_pinned_sorted">Kitűzött - kézzel rendezett</string>
     <string name="edit_favorites_dialog_new_tag">Címke készítése…</string>
     <string name="nextcloud_server_url">Nextcloud kiszolgáló webcíme</string>
@@ -133,7 +131,6 @@
     <string name="notes_widget_dismissed">Jegyzet elvetve.</string>
     <string name="nextcloud_server_invalid_url">Ez a webcím nem egy érvényes Nextcloud telepítésre mutat</string>
     <string name="widget_name_unknown">Ismeretlen alkalmazásmodul</string>
-    <string name="easter_egg_3">Nem mondom még egyszer: itt egyáltalán nincsenek elrejtett Easter Eggek</string>
     <string name="widget_action_replace">Csere</string>
     <string name="disclaimer">Jogi nyilatkozat</string>
     <string name="edit_favorites_dialog_tags">Címkék</string>
@@ -306,7 +303,7 @@
     <string name="weather_condition_heavysleetandthunder">Heves havas eső és mennydörgés</string>
     <string name="missing_permission_files_search">A fényképek, média és dokumentumok kereséséhez tárhely engedélyre van szükség ezen az eszközön.</string>
     <string name="missing_permission_appshortcuts_create">Állítsa be a(z) %1$s alkalmazást alapértelmezett indítóként a parancsikonok létrehozásához.</string>
-    <string name="import_theme_error">A kiválasztott fájlt nem lehetett beolvasni. Győződjön meg róla, hogy érvényes témát (*.kvtheme) választott ki és hogy a fájl nem sérült-e.</string>
+    <string name="import_theme_error">A kiválasztott fájlt nem lehetett beolvasni. Győződjön meg arról, hogy érvényes témát (*.kvtheme) választott ki és hogy a fájl nem-e sérült.</string>
     <string name="preference_hidden_items_reveal_button">Kibontásgomb megjelenítése</string>
     <string name="favorites_empty_tag">Nincsenek elemek ilyen címkével</string>
     <string name="preference_layout_open_search">Keresés / alkalmazásfiók</string>
@@ -318,8 +315,8 @@
     <string name="search_action_websearch">Internetes keresés</string>
     <string name="plugin_state_setup_required">Először be kell állítani ezt a bővítményt</string>
     <string name="plugin_action_setup">Beállítás</string>
-    <string name="plugin_type_weather">Időjárás-előrejelzés szolgáltató</string>
-    <string name="plugin_weather_provider_enable">Beállítás időjárás-előrejelzési szolgáltatónak</string>
+    <string name="plugin_type_weather">Időjáráselőrejelzési szolgáltató</string>
+    <string name="plugin_weather_provider_enable">Beállítás időjáráselőrejelzési szolgáltatónak</string>
     <string name="preference_clock_widget_alignment_bottom">Alulra</string>
     <string name="preference_clockwidget_battery_part_summary">Az akkumulátor jelenlegi töltöttségi szintjének megjelenítése, amikor az akkumulátor lemerült vagy töltődik</string>
     <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 8 órán belül megszólalnak</string>
@@ -379,7 +376,7 @@
     <string name="preference_search_currencyconverter">Valutaváltó</string>
     <string name="preference_search_bar_auto_focus_summary">A billentyűzet automatikus megjelenítése az alkalmazásfiók megnyitásakor</string>
     <string name="note_widget_link_file_summary">Szinkronizálja a modul tartalmát egy külső fájllal</string>
-    <string name="plugin_weather_provider_enabled">Jelenleg időjárás-előrejelzés szolgáltatóként van beállítva</string>
+    <string name="plugin_weather_provider_enabled">Jelenleg időjáráselőrejelzési szolgáltatóként van beállítva</string>
     <string name="preference_search_websites">Weboldalak</string>
     <string name="preference_search_websites_summary">Egy weboldal előnézetének megjelenítése, ha a keresési lekérdezés egy webcím</string>
     <string name="preference_edit_favorites_summary">A kitűzött elemek sorrendjének módosítása</string>
@@ -835,4 +832,18 @@
     <string name="gesture_action_widgets">Modulok</string>
     <string name="bad_configuration_title">Gratulálunk, kizárta saját magát!</string>
     <string name="bad_configuration_summary">Felfedezte a beállítások olyan kombinációját, amely a keresést és a beállításokat is elérhetetlenné teszi — gyakorlatilag kizárja Önt az indítóból.</string>
+    <string name="preference_screen_shapes">Alakzatok</string>
+    <string name="preference_shapes_default">Alapértelmezett</string>
+    <string name="preference_shapes_extra_round">További lekerekítés</string>
+    <string name="preference_shapes_rect">Négyszögletes</string>
+    <string name="preference_shapes_base">Alap alakzat</string>
+    <string name="confirmation_delete_shapes_scheme">Biztosan törölni szeretné a(z) %1$s nevű alakzatsémát?</string>
+    <string name="new_shapes_name">Új alakzatok</string>
+    <string name="no_selection">Nincs kiválasztva semmi</string>
+    <string name="save_as_file">Mentés fájlként</string>
+    <string name="theme_export_title">Téma exportálása</string>
+    <string name="theme_bundle_name">Név</string>
+    <string name="theme_bundle_author">Szerző</string>
+    <string name="import_theme_exists">A téma már létezik, ezért frissítve lesz</string>
+    <string name="theme_import_title">Téma importálása</string>
 </resources>

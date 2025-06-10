@@ -239,18 +239,13 @@
     <string name="notes_widget_dismissed">Note dismissed.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">By %1$s</string>
-    <!-- Progress of the installation of another app. %1$s: the formatted percentage of the installation progress -->
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_1">There are no easter eggs here, unless you brought them with you.</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_2">Please, stop it, you are wasting your time</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_3">I won\'t say it again: there are absolutely no easter eggs hidden here</string>
     <!-- Wait, we have easter eggs? No way! -->
     <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it\?</string>
     <!-- Close a dialog -->
     <string name="close">Close</string>
+    <string name="no_selection">No selection</string>
     <string name="save">Save</string>
+    <string name="save_as_file">Save as file</string>
     <string name="duplicate">Duplicate</string>
     <string name="edit">Edit</string>
     <string name="skip">Skip</string>
@@ -832,7 +827,9 @@
     <string name="theme_color_scheme_palette_color">Palette</string>
     <string name="theme_color_scheme_custom_color">Custom</string>
     <string name="preference_restore_default">Restore default</string>
+    <string name="import_theme_contents">Contents</string>
     <string name="import_theme_apply">Apply theme</string>
+    <string name="import_theme_exists">Theme already exists and will be updated</string>
     <string name="import_theme_error">The selected file could not be read. Please make sure that you selected a valid theme file (*.kvtheme), and that the file is not corrupt.</string>
     <string name="shortcut_label_unavailable">Unavailable</string>
     <string name="app_label_locked_profile">Locked</string>
@@ -1036,4 +1033,8 @@
     <string name="departure_time_departed">departed</string>
     <string name="bad_configuration_title">Congratulations, you\'ve locked yourself out!</string>
     <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher.</string>
+    <string name="theme_export_title">Export theme</string>
+    <string name="theme_import_title">Import theme</string>
+    <string name="theme_bundle_name">Name</string>
+    <string name="theme_bundle_author">Author</string>
 </resources>

@@ -94,8 +94,6 @@
     <string name="notes_widget_export_filename">یادداشت_%1$s</string>
     <string name="notes_widget_action_dismiss">نادیده گرفتن</string>
     <string name="notes_widget_dismissed">یادداشت نادیده گرفته شد.</string>
-    <string name="easter_egg_2">آقا بس کن برو به زندگیت برس</string>
-    <string name="easter_egg_3">واسه آخرین بار میگم: هیچ چیز عجیب غریبی اینجا قایم نکردم</string>
     <string name="easter_egg_text">تیتاب، من رو پیدا کردی. ارزشش رو داشت؟</string>
     <string name="close">بستن</string>
     <string name="save">نگه‌داشتن</string>
@@ -149,7 +147,6 @@
     <string name="edit">ویرایش</string>
     <string name="turn_off">خاموش کردن</string>
     <string name="wind_east_south_east">شرق جنوب شرقی</string>
-    <string name="easter_egg_1">در اینجا هیچ شگفتانه ای وجود ندارد، دنبال نخود سیاه نگردید.</string>
     <string name="login_flow_login">ورود</string>
     <string name="weather_location_search_no_result">مکان یافت نشد.</string>
     <string name="missing_permission_calendar_search_settings">دسترسی تقویم برای جستجو در تقویم لازم است</string>

@@ -72,9 +72,7 @@
     <string name="widget_name_music">Музыка</string>
     <string name="widget_add_widget">Добавить виджет</string>
     <string name="shortcut_summary">От %1$s</string>
-    <string name="easter_egg_1">Пасхальных яиц здесь нет, разве только вы не принесли их с собой.</string>
     <string name="easter_egg_text">Что ж, меня раскрыли. Поздравляю. Оно того стоило?</string>
-    <string name="easter_egg_2">Прошу, хватит, вы зря тратите время</string>
     <string name="close">Закрыть</string>
     <string name="turn_off">Выключить</string>
     <string name="widget_action_remove">Убрать</string>
@@ -183,7 +181,6 @@
     <string name="file_type_presentation">Презентация</string>
     <string name="alert_delete_directory">Каталог %1$s и всё его содержимое будут удалены навсегда. Продолжить?</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
-    <string name="easter_egg_3">Повторяться не буду: здесь совершенно точно нет никаких пасхалок</string>
     <string name="menu_item_edit_favs">Редактировать избранное</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Закреплены — отсортированы автоматически</string>
     <string name="owncloud_server_invalid_url">Этот адрес не ведёт к действующей сборке Owncloud</string>

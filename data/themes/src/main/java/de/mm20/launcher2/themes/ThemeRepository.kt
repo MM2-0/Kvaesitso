@@ -177,6 +177,9 @@ class ThemeRepository(
                 corners = CornerStyle.Rounded,
                 radii = intArrayOf(24, 24, 24, 24),
             ),
+            extraSmall = Shape(
+                radii = intArrayOf(4, 4, 4, 4),
+            ),
             extraLarge = Shape(
                 radii = intArrayOf(36, 36, 36, 36),
             ),

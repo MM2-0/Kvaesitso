@@ -1,14 +1,16 @@
 package de.mm20.launcher2.themes
 
 import de.mm20.launcher2.database.entities.ColorsEntity
+import de.mm20.launcher2.serialization.ColorIntAsHexSerializer
+import de.mm20.launcher2.serialization.UUIDSerializer
 import hct.Hct
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import java.util.UUID
 
 @Serializable
 data class Colors(
-    @Transient val id: UUID = UUID.randomUUID(),
+    @Serializable(with = UUIDSerializer::class) val id: UUID = UUID.randomUUID(),
     val builtIn: Boolean = false,
     val name: String,
     val corePalette: PartialCorePalette = EmptyCorePalette,
@@ -229,7 +231,6 @@ enum class CorePaletteColor {
     }
 }
 
-@Serializable(with = ColorSerializer::class)
 sealed interface Color {
     companion object {
         fun fromString(string: String?): Color? {
@@ -267,6 +268,8 @@ value class StaticColor(val color: Int) : Color {
     }
 }
 
+typealias CorePaletteColorValue = @Serializable(with = ColorIntAsHexSerializer::class) Int
+
 @Serializable
 data class CorePalette<out T : Int?>(
     val primary: T,
@@ -277,50 +280,50 @@ data class CorePalette<out T : Int?>(
     val error: T,
 )
 
-val EmptyCorePalette = CorePalette<Int?>(null, null, null, null, null, null)
+val EmptyCorePalette = CorePalette<CorePaletteColorValue?>(null, null, null, null, null, null)
 
-typealias FullCorePalette = CorePalette<Int>
-typealias PartialCorePalette = CorePalette<Int?>
+typealias FullCorePalette = CorePalette<CorePaletteColorValue>
+typealias PartialCorePalette = CorePalette<CorePaletteColorValue?>
 
 @Serializable
 data class ColorScheme<out T : Color?>(
-    val primary: T,
-    val onPrimary: T,
-    val primaryContainer: T,
-    val onPrimaryContainer: T,
-    val secondary: T,
-    val onSecondary: T,
-    val secondaryContainer: T,
-    val onSecondaryContainer: T,
-    val tertiary: T,
-    val onTertiary: T,
-    val tertiaryContainer: T,
-    val onTertiaryContainer: T,
-    val error: T,
-    val onError: T,
-    val errorContainer: T,
-    val onErrorContainer: T,
-    val surface: T,
-    val onSurface: T,
-    val onSurfaceVariant: T,
-    val outline: T,
-    val outlineVariant: T,
-    val inverseSurface: T,
-    val inverseOnSurface: T,
-    val inversePrimary: T,
-    val surfaceDim: T,
-    val surfaceBright: T,
-    val surfaceContainerLowest: T,
-    val surfaceContainerLow: T,
-    val surfaceContainer: T,
-    val surfaceContainerHigh: T,
-    val surfaceContainerHighest: T,
+    @Contextual val primary: T,
+    @Contextual val onPrimary: T,
+    @Contextual val primaryContainer: T,
+    @Contextual val onPrimaryContainer: T,
+    @Contextual val secondary: T,
+    @Contextual val onSecondary: T,
+    @Contextual val secondaryContainer: T,
+    @Contextual val onSecondaryContainer: T,
+    @Contextual val tertiary: T,
+    @Contextual val onTertiary: T,
+    @Contextual val tertiaryContainer: T,
+    @Contextual val onTertiaryContainer: T,
+    @Contextual val error: T,
+    @Contextual val onError: T,
+    @Contextual val errorContainer: T,
+    @Contextual val onErrorContainer: T,
+    @Contextual val surface: T,
+    @Contextual val onSurface: T,
+    @Contextual val onSurfaceVariant: T,
+    @Contextual val outline: T,
+    @Contextual val outlineVariant: T,
+    @Contextual val inverseSurface: T,
+    @Contextual val inverseOnSurface: T,
+    @Contextual val inversePrimary: T,
+    @Contextual val surfaceDim: T,
+    @Contextual val surfaceBright: T,
+    @Contextual val surfaceContainerLowest: T,
+    @Contextual val surfaceContainerLow: T,
+    @Contextual val surfaceContainer: T,
+    @Contextual val surfaceContainerHigh: T,
+    @Contextual val surfaceContainerHighest: T,
 
-    val background: T,
-    val onBackground: T,
-    val surfaceTint: T,
-    val scrim: T,
-    val surfaceVariant: T,
+    @Contextual val background: T,
+    @Contextual val onBackground: T,
+    @Contextual val surfaceTint: T,
+    @Contextual val scrim: T,
+    @Contextual val surfaceVariant: T,
 )
 
 typealias FullColorScheme = ColorScheme<Color>

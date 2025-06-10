@@ -168,9 +168,6 @@
     <string name="weather_condition_heavyrainandthunder">Starkregen und Gewitter</string>
     <string name="weather_condition_wind">Wind</string>
     <string name="weather_condition_unknown">Unbekannt</string>
-    <string name="easter_egg_1">Hier gibt es keine Easter Eggs, es sei denn Ihr hättet sie mitgebracht.</string>
-    <string name="easter_egg_2">Bitte, hör auf, du verschwendest deine Zeit</string>
-    <string name="easter_egg_3">Ich werde es nicht noch einmal sagen: hier sind definitiv keine Easter Eggs versteckt</string>
     <string name="easter_egg_text">Tja, da sind Sie. Herzlichen Glückwunsch. War es das wert\?</string>
     <string name="missing_permission_calendar_widget">Kalender-Berechtigung gewähren, um Ihre nächsten Termine hier anzuzeigen.</string>
     <string name="missing_permission_calendar_search">Kalender-Berechtigung gewähren, um Termine zu durchsuchen.</string>
@@ -842,4 +839,11 @@
     <string name="preference_shapes_base">Grundform</string>
     <string name="confirmation_delete_shapes_scheme">Möchten Sie das Formschema %1$s wirklich löschen?</string>
     <string name="new_shapes_name">Neue Formen</string>
+    <string name="import_theme_exists">Design existiert bereits und wird aktualisiert</string>
+    <string name="no_selection">Keine Auswahl</string>
+    <string name="save_as_file">Als Datei speichern</string>
+    <string name="theme_export_title">Design exportieren</string>
+    <string name="theme_import_title">Design importieren</string>
+    <string name="theme_bundle_name">Name</string>
+    <string name="theme_bundle_author">Autor</string>
 </resources>

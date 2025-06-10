@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.settings.colorscheme
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -10,10 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedButton
@@ -23,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -35,12 +35,13 @@ fun ColorSchemePreferenceCategory(
     preview: @Composable RowScope.() -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(top = 16.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp)
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(start = 16.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -66,21 +67,22 @@ fun ColorSchemePreferenceCategory(
                 }
             }
         }
-        MaterialTheme(
-            colorScheme = previewColorScheme
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.medium),
+            verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                )
+
+            MaterialTheme(
+                colorScheme = previewColorScheme
             ) {
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surfaceContainerLowest, MaterialTheme.shapes.extraSmall)
                         .horizontalScroll(rememberScrollState())
                         .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -88,10 +90,8 @@ fun ColorSchemePreferenceCategory(
                     preview()
                 }
             }
+            colorPreferences()
         }
-
-        colorPreferences()
-        HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
     }
 
 }

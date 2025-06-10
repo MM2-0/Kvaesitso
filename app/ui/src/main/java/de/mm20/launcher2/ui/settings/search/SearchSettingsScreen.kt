@@ -31,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.icons.Wikipedia
@@ -40,6 +39,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.SmallMessage
+import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -65,7 +65,9 @@ fun SearchSettingsScreen() {
     val hasContactPlugins by remember { derivedStateOf { plugins?.any { it.plugin.type == PluginType.ContactSearch } } }
     val isTasksAppInstalled by viewModel.isTasksAppInstalled.collectAsStateWithLifecycle()
 
-    val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.collectAsStateWithLifecycle(null)
+    val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.collectAsStateWithLifecycle(
+        null
+    )
     val hasContactsPermission by viewModel.hasContactsPermission.collectAsStateWithLifecycle(null)
     val hasCalendarPermission by viewModel.hasCalendarPermission.collectAsStateWithLifecycle(null)
     val hasLocationPermission by viewModel.hasLocationPermission.collectAsStateWithLifecycle(null)
@@ -121,28 +123,27 @@ fun SearchSettingsScreen() {
                         },
                     )
                 } else {
-                    AnimatedVisibility(hasContactsPermission == false) {
-                        MissingPermissionBanner(
-                            text = stringResource(R.string.missing_permission_contact_search_settings),
-                            onClick = {
-                                viewModel.requestContactsPermission(context as AppCompatActivity)
+                    GuardedPreference(
+                        locked = hasContactsPermission == false,
+                        onUnlock = {
+                            viewModel.requestContactsPermission(context as AppCompatActivity)
+                        },
+                        description = stringResource(R.string.missing_permission_contact_search_settings),
+                    ) {
+                        PreferenceWithSwitch(
+                            title = stringResource(R.string.preference_search_contacts),
+                            summary = stringResource(R.string.preference_search_contacts_summary),
+                            icon = Icons.Rounded.Person,
+                            switchValue = contacts == true && hasContactsPermission == true,
+                            onSwitchChanged = {
+                                viewModel.setContacts(it)
                             },
-                            modifier = Modifier.padding(16.dp)
+                            onClick = {
+                                navController?.navigate("settings/search/contacts")
+                            },
+                            enabled = hasContactsPermission == true
                         )
                     }
-                    PreferenceWithSwitch(
-                        title = stringResource(R.string.preference_search_contacts),
-                        summary = stringResource(R.string.preference_search_contacts_summary),
-                        icon = Icons.Rounded.Person,
-                        switchValue = contacts == true && hasContactsPermission == true,
-                        onSwitchChanged = {
-                            viewModel.setContacts(it)
-                        },
-                        onClick = {
-                            navController?.navigate("settings/search/contacts")
-                        },
-                        enabled = hasContactsPermission == true
-                    )
                 }
 
                 if (hasCalendarPlugins != false || isTasksAppInstalled != false) {
@@ -155,51 +156,50 @@ fun SearchSettingsScreen() {
                         },
                     )
                 } else {
-                    AnimatedVisibility(hasCalendarPermission == false) {
-                        MissingPermissionBanner(
-                            text = stringResource(R.string.missing_permission_calendar_search_settings),
-                            onClick = {
-                                viewModel.requestCalendarPermission(context as AppCompatActivity)
+
+                    GuardedPreference(
+                        locked = hasCalendarPermission == false,
+                        onUnlock = {
+                            viewModel.requestCalendarPermission(context as AppCompatActivity)
+                        },
+                        description = stringResource(R.string.missing_permission_calendar_search_settings),
+                    ) {
+                        PreferenceWithSwitch(
+                            title = stringResource(R.string.preference_search_calendar),
+                            summary = stringResource(R.string.preference_search_calendar_summary),
+                            switchValue = calendar == true,
+                            onSwitchChanged = {
+                                viewModel.setCalendarSearch(it)
                             },
-                            modifier = Modifier.padding(16.dp)
+                            icon = Icons.Rounded.Today,
+                            enabled = hasCalendarPermission == true,
+                            onClick = {
+                                navController?.navigate("settings/search/calendar/local")
+                            }
                         )
                     }
-                    PreferenceWithSwitch(
-                        title = stringResource(R.string.preference_search_calendar),
-                        summary = stringResource(R.string.preference_search_calendar_summary),
-                        switchValue = calendar == true,
-                        onSwitchChanged = {
-                            viewModel.setCalendarSearch(it)
-                        },
-                        icon = Icons.Rounded.Today,
-                        enabled = hasCalendarPermission == true,
-                        onClick = {
-                            navController?.navigate("settings/search/calendar/local")
-                        }
-                    )
                 }
-                AnimatedVisibility(hasAppShortcutsPermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(
-                            R.string.missing_permission_appshortcuts_search_settings,
-                            stringResource(R.string.app_name)
-                        ),
-                        onClick = {
-                            viewModel.requestAppShortcutsPermission(context as AppCompatActivity)
-                        },
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_appshortcuts),
-                    summary = stringResource(R.string.preference_search_appshortcuts_summary),
-                    icon = Icons.Rounded.AppShortcut,
-                    value = appShortcuts == true && hasAppShortcutsPermission == true,
-                    onValueChanged = {
-                        viewModel.setAppShortcuts(it)
+                GuardedPreference(
+                    locked = hasAppShortcutsPermission == false,
+                    onUnlock = {
+                        viewModel.requestAppShortcutsPermission(context as AppCompatActivity)
                     },
-                    enabled = hasAppShortcutsPermission == true
-                )
+                    description = stringResource(
+                        R.string.missing_permission_appshortcuts_search_settings,
+                        stringResource(R.string.app_name),
+                    ),
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_search_appshortcuts),
+                        summary = stringResource(R.string.preference_search_appshortcuts_summary),
+                        icon = Icons.Rounded.AppShortcut,
+                        value = appShortcuts == true && hasAppShortcutsPermission == true,
+                        onValueChanged = {
+                            viewModel.setAppShortcuts(it)
+                        },
+                        enabled = hasAppShortcutsPermission == true
+                    )
+                }
 
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_calculator),
@@ -246,43 +246,38 @@ fun SearchSettingsScreen() {
                         viewModel.setWebsites(it)
                     }
                 )
-
-                AnimatedVisibility(hasLocationPermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(
-                            R.string.missing_permission_location_search,
-                        ),
-                        onClick = {
-                            viewModel.requestLocationPermission(context as AppCompatActivity)
-                        },
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-
-                if (hasLocationPlugins != false) {
-                    Preference(
-                        title = stringResource(R.string.preference_search_locations),
-                        summary = stringResource(R.string.preference_search_locations_summary),
-                        icon = Icons.Rounded.Place,
-                        enabled = hasLocationPermission == true,
-                        onClick = {
-                            navController?.navigate("settings/search/locations")
-                        }
-                    )
-                } else {
-                    PreferenceWithSwitch(
-                        title = stringResource(R.string.preference_search_locations),
-                        summary = stringResource(R.string.preference_search_locations_summary),
-                        icon = Icons.Rounded.Place,
-                        onClick = {
-                            navController?.navigate("settings/search/locations")
-                        },
-                        switchValue = places == true,
-                        onSwitchChanged = {
-                            viewModel.setPlacesSearch(it)
-                        },
-                        enabled = hasLocationPermission == true,
-                    )
+                GuardedPreference(
+                    locked = hasLocationPermission == false,
+                    onUnlock = {
+                        viewModel.requestLocationPermission(context as AppCompatActivity)
+                    },
+                    description = stringResource(R.string.missing_permission_location_search),
+                ) {
+                    if (hasLocationPlugins != false) {
+                        Preference(
+                            title = stringResource(R.string.preference_search_locations),
+                            summary = stringResource(R.string.preference_search_locations_summary),
+                            icon = Icons.Rounded.Place,
+                            enabled = hasLocationPermission == true,
+                            onClick = {
+                                navController?.navigate("settings/search/locations")
+                            }
+                        )
+                    } else {
+                        PreferenceWithSwitch(
+                            title = stringResource(R.string.preference_search_locations),
+                            summary = stringResource(R.string.preference_search_locations_summary),
+                            icon = Icons.Rounded.Place,
+                            onClick = {
+                                navController?.navigate("settings/search/locations")
+                            },
+                            switchValue = places == true,
+                            onSwitchChanged = {
+                                viewModel.setPlacesSearch(it)
+                            },
+                            enabled = hasLocationPermission == true,
+                        )
+                    }
                 }
 
                 Preference(
@@ -327,6 +322,7 @@ fun SearchSettingsScreen() {
                 )
                 SwitchPreference(
                     title = stringResource(R.string.preference_filter_bar),
+                    iconPadding = true,
                     summary = stringResource(R.string.preference_filter_bar_summary),
                     value = filterBar == true,
                     onValueChanged = {
@@ -336,6 +332,7 @@ fun SearchSettingsScreen() {
                 AnimatedVisibility(filterBar == true) {
                     Preference(
                         title = stringResource(R.string.preference_customize_filter_bar),
+                        iconPadding = true,
                         summary = stringResource(R.string.preference_customize_filter_bar_summary),
                         onClick = {
                             navController?.navigate("settings/search/filterbar")
@@ -357,6 +354,7 @@ fun SearchSettingsScreen() {
                 )
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_bar_launch_on_enter),
+                    iconPadding = true,
                     summary = stringResource(R.string.preference_search_bar_launch_on_enter_summary),
                     value = launchOnEnter == true,
                     onValueChanged = {

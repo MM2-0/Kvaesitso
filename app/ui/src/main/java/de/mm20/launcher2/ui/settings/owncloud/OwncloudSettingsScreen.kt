@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.owncloud
 
+import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,6 +34,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalNavController
@@ -60,7 +62,7 @@ fun OwncloudSettingsScreen() {
             item {
                 Column(
                     modifier = Modifier
-                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .background(MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.shapes.medium)
                         .fillParentMaxWidth()
                         .padding(vertical = 64.dp)
                     ,
@@ -109,35 +111,36 @@ fun OwncloudSettingsScreen() {
                     }
                 }
             }
-            item {
-                HorizontalDivider()
-            }
 
             item {
-                SwitchPreference(
-                    title = stringResource(R.string.plugin_type_filesearch),
-                    summary = stringResource(R.string.preference_search_cloud_summary, owncloudUser!!.userName),
-                    value = searchFiles == true,
-                    onValueChanged = {
-                        viewModel.setSearchFiles(it)
-                    },
-                    iconPadding = false,
-                )
+                PreferenceCategory {
+                    SwitchPreference(
+                        title = stringResource(R.string.plugin_type_filesearch),
+                        summary = stringResource(
+                            R.string.preference_search_cloud_summary,
+                            owncloudUser!!.userName
+                        ),
+                        value = searchFiles == true,
+                        onValueChanged = {
+                            viewModel.setSearchFiles(it)
+                        },
+                        iconPadding = false,
+                    )
+                }
             }
         } else {
             item {
-                val activity = LocalContext.current as AppCompatActivity
-                Preference(
-                    title = stringResource(R.string.preference_owncloud_signin),
-                    summary = stringResource(R.string.preference_owncloud_signin_summary),
-                    icon = Icons.AutoMirrored.Rounded.Login,
-                    onClick = {
-                        viewModel.signIn(activity)
-                    }
-                )
-            }
-            item {
-                HorizontalDivider()
+                val activity = LocalActivity.current as AppCompatActivity
+                PreferenceCategory {
+                    Preference(
+                        title = stringResource(R.string.preference_owncloud_signin),
+                        summary = stringResource(R.string.preference_owncloud_signin_summary),
+                        icon = Icons.AutoMirrored.Rounded.Login,
+                        onClick = {
+                            viewModel.signIn(activity)
+                        }
+                    )
+                }
             }
         }
     }

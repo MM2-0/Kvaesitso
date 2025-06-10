@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 fun CheckboxPreference(
     title: String,
     icon: ImageVector? = null,
-    iconPadding: Boolean = true,
+    iconPadding: Boolean = icon != null,
     summary: String? = null,
     value: Boolean,
     onValueChanged: (Boolean) -> Unit,
