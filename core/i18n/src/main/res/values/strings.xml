@@ -428,6 +428,7 @@
     <string name="preference_theme_dark">Dark</string>
     <string name="preference_screen_colors">Color scheme</string>
     <string name="preference_colors_default">Default</string>
+    <string name="preference_colors_high_contrast">High contrast</string>
     <string name="preference_colors_bw">Black and White</string>
     <string name="preference_custom_colors_corepalette">Color palette</string>
     <string name="preference_mdy_color_source">Source for dynamic colors</string>

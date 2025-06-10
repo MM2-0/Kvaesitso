@@ -11,6 +11,7 @@ import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.BlackAndWhiteThemeId
 import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.Colors
+import de.mm20.launcher2.themes.HighContrastThemeId
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.toLegacyJson
 import de.mm20.launcher2.ui.R
@@ -32,6 +33,7 @@ class ColorSchemesSettingsScreenVM : ViewModel(), KoinComponent {
     val selectedColors = uiSettings.colors.map {
         when(it) {
             ColorsDescriptor.Default -> DefaultThemeId
+            ColorsDescriptor.HighContrast -> HighContrastThemeId
             ColorsDescriptor.BlackAndWhite -> BlackAndWhiteThemeId
             is ColorsDescriptor.Custom -> UUID.fromString(it.id)
         }
@@ -49,6 +51,7 @@ class ColorSchemesSettingsScreenVM : ViewModel(), KoinComponent {
     fun selectTheme(colors: Colors) {
         uiSettings.setColors(when(colors.id) {
             DefaultThemeId -> ColorsDescriptor.Default
+            HighContrastThemeId -> ColorsDescriptor.HighContrast
             BlackAndWhiteThemeId -> ColorsDescriptor.BlackAndWhite
             else -> ColorsDescriptor.Custom(colors.id.toString())
         })

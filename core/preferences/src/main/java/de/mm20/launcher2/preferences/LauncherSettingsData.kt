@@ -213,6 +213,10 @@ sealed interface ColorsDescriptor {
     data object Default : ColorsDescriptor
 
     @Serializable
+    @SerialName("high_contrast")
+    data object HighContrast : ColorsDescriptor
+
+    @Serializable
     @SerialName("bw")
     data object BlackAndWhite : ColorsDescriptor
 

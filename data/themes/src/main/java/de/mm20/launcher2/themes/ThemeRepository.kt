@@ -34,6 +34,7 @@ class ThemeRepository(
 
     fun getColors(id: UUID): Flow<Colors?> {
         if (id == DefaultThemeId) return flowOf(getDefaultColors())
+        if (id == HighContrastThemeId) return flowOf(getHighContrastColors())
         if (id == BlackAndWhiteThemeId) return flowOf(getBlackAndWhiteColors())
         return database.themeDao().getColors(id).map { it?.let { Colors(it) } }.flowOn(Dispatchers.Default)
     }
@@ -52,6 +53,7 @@ class ThemeRepository(
 
     fun getColorsOrDefault(theme: ColorsDescriptor?): Flow<Colors> {
         return when(theme) {
+            is ColorsDescriptor.HighContrast -> flowOf(getHighContrastColors())
             is ColorsDescriptor.BlackAndWhite -> flowOf(getBlackAndWhiteColors())
             is ColorsDescriptor.Custom -> {
                 val id = UUID.fromString(theme.id)
@@ -64,6 +66,7 @@ class ThemeRepository(
     private fun getBuiltInColors(): List<Colors> {
         return listOf(
             getDefaultColors(),
+            getHighContrastColors(),
             getBlackAndWhiteColors(),
         )
     }
@@ -76,6 +79,17 @@ class ThemeRepository(
             corePalette = EmptyCorePalette,
             lightColorScheme = DefaultLightColorScheme,
             darkColorScheme = DefaultDarkColorScheme,
+        )
+    }
+
+    private fun getHighContrastColors(): Colors {
+        return Colors(
+            id = HighContrastThemeId,
+            builtIn = true,
+            name = context.getString(R.string.preference_colors_high_contrast),
+            corePalette = EmptyCorePalette,
+            lightColorScheme = HighContrastLightColorScheme,
+            darkColorScheme = HighContrastDarkColorScheme,
         )
     }
 

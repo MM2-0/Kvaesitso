@@ -4,6 +4,7 @@ import java.util.UUID
 
 
 val DefaultThemeId = UUID(0L, 0L)
+val HighContrastThemeId = UUID(0L, 2L)
 val BlackAndWhiteThemeId = UUID(0L, 1L)
 val ExtraRoundShapesId = UUID(0L, 1L)
 val CutShapesId = UUID(0L, 2L)
@@ -87,6 +88,83 @@ val DefaultDarkColorScheme = ColorScheme<Color>(
     scrim = ColorRef(CorePaletteColor.Neutral, 0),
 )
 
+val HighContrastLightColorScheme = ColorScheme<Color>(
+    primary = ColorRef(CorePaletteColor.Primary, 20),
+    onPrimary = ColorRef(CorePaletteColor.Primary, 100),
+    primaryContainer = ColorRef(CorePaletteColor.Primary, 30),
+    onPrimaryContainer = ColorRef(CorePaletteColor.Primary, 100),
+    secondary = ColorRef(CorePaletteColor.Secondary, 20),
+    onSecondary = ColorRef(CorePaletteColor.Secondary, 100),
+    secondaryContainer = ColorRef(CorePaletteColor.Secondary, 30),
+    onSecondaryContainer = ColorRef(CorePaletteColor.Secondary, 100),
+    tertiary = ColorRef(CorePaletteColor.Tertiary, 20),
+    onTertiary = ColorRef(CorePaletteColor.Tertiary, 100),
+    tertiaryContainer = ColorRef(CorePaletteColor.Tertiary, 30),
+    onTertiaryContainer = ColorRef(CorePaletteColor.Tertiary, 100),
+    error = ColorRef(CorePaletteColor.Error, 20),
+    onError = ColorRef(CorePaletteColor.Error, 100),
+    errorContainer = ColorRef(CorePaletteColor.Error, 30),
+    onErrorContainer = ColorRef(CorePaletteColor.Error, 100),
+    surfaceDim = ColorRef(CorePaletteColor.Neutral, 87),
+    surface = ColorRef(CorePaletteColor.Neutral, 98),
+    surfaceBright = ColorRef(CorePaletteColor.Neutral, 98),
+    surfaceContainerLowest = ColorRef(CorePaletteColor.Neutral, 100),
+    surfaceContainerLow = ColorRef(CorePaletteColor.Neutral, 96),
+    surfaceContainer = ColorRef(CorePaletteColor.Neutral, 94),
+    surfaceContainerHigh = ColorRef(CorePaletteColor.Neutral, 92),
+    surfaceContainerHighest = ColorRef(CorePaletteColor.Neutral, 90),
+    onSurface = ColorRef(CorePaletteColor.Neutral, 0),
+    onSurfaceVariant = ColorRef(CorePaletteColor.NeutralVariant, 0),
+    outline = ColorRef(CorePaletteColor.NeutralVariant, 20),
+    outlineVariant = ColorRef(CorePaletteColor.NeutralVariant, 30),
+    inverseSurface = ColorRef(CorePaletteColor.Neutral, 20),
+    inverseOnSurface = ColorRef(CorePaletteColor.Neutral, 100),
+    inversePrimary = ColorRef(CorePaletteColor.Primary, 80),
+    surfaceVariant = ColorRef(CorePaletteColor.NeutralVariant, 90),
+    surfaceTint = ColorRef(CorePaletteColor.Primary, 20),
+    background = ColorRef(CorePaletteColor.Neutral, 98),
+    onBackground = ColorRef(CorePaletteColor.Neutral, 0),
+    scrim = ColorRef(CorePaletteColor.Neutral, 0),
+)
+
+val HighContrastDarkColorScheme = ColorScheme<Color>(
+    primary = ColorRef(CorePaletteColor.Primary, 95),
+    onPrimary = ColorRef(CorePaletteColor.Primary, 0),
+    primaryContainer = ColorRef(CorePaletteColor.Primary, 80),
+    onPrimaryContainer = ColorRef(CorePaletteColor.Primary, 0),
+    secondary = ColorRef(CorePaletteColor.Secondary, 95),
+    onSecondary = ColorRef(CorePaletteColor.Secondary, 0),
+    secondaryContainer = ColorRef(CorePaletteColor.Secondary, 80),
+    onSecondaryContainer = ColorRef(CorePaletteColor.Secondary, 0),
+    tertiary = ColorRef(CorePaletteColor.Tertiary, 95),
+    onTertiary = ColorRef(CorePaletteColor.Tertiary, 0),
+    tertiaryContainer = ColorRef(CorePaletteColor.Tertiary, 80),
+    onTertiaryContainer = ColorRef(CorePaletteColor.Tertiary, 0),
+    error = ColorRef(CorePaletteColor.Error, 95),
+    onError = ColorRef(CorePaletteColor.Error, 0),
+    errorContainer = ColorRef(CorePaletteColor.Error, 80),
+    onErrorContainer = ColorRef(CorePaletteColor.Error, 0),
+    surfaceDim = ColorRef(CorePaletteColor.Neutral, 6),
+    surface = ColorRef(CorePaletteColor.Neutral, 6),
+    surfaceBright = ColorRef(CorePaletteColor.Neutral, 24),
+    surfaceContainerLowest = ColorRef(CorePaletteColor.Neutral, 4),
+    surfaceContainerLow = ColorRef(CorePaletteColor.Neutral, 10),
+    surfaceContainer = ColorRef(CorePaletteColor.Neutral, 12),
+    surfaceContainerHigh = ColorRef(CorePaletteColor.Neutral, 17),
+    surfaceContainerHighest = ColorRef(CorePaletteColor.Neutral, 22),
+    onSurface = ColorRef(CorePaletteColor.Neutral, 100),
+    onSurfaceVariant = ColorRef(CorePaletteColor.NeutralVariant, 100),
+    outline = ColorRef(CorePaletteColor.NeutralVariant, 95),
+    outlineVariant = ColorRef(CorePaletteColor.NeutralVariant, 80),
+    inverseSurface = ColorRef(CorePaletteColor.Neutral, 90),
+    inverseOnSurface = ColorRef(CorePaletteColor.Neutral, 0),
+    inversePrimary = ColorRef(CorePaletteColor.Primary, 20),
+    surfaceVariant = ColorRef(CorePaletteColor.NeutralVariant, 30),
+    surfaceTint = ColorRef(CorePaletteColor.Primary, 95),
+    background = ColorRef(CorePaletteColor.Neutral, 6),
+    onBackground = ColorRef(CorePaletteColor.Neutral, 100),
+    scrim = ColorRef(CorePaletteColor.Neutral, 0),
+)
 
 val BlackAndWhiteLightColorScheme = ColorScheme<Color?>(
     primary = StaticColor(0xFF000000.toInt()),
