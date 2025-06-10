@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ktx
 
+import android.hardware.GeomagneticField
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.nanoseconds
 
@@ -8,7 +9,8 @@ import android.location.Location as AndroidLocation
 /* https://github.com/streetcomplete/StreetComplete/blob/master/app/src/main/java/de/westnordost/streetcomplete/util/location/LocationUtils.kt
  * GPL-3.0-or-later
  */
-fun AndroidLocation.isBetterThan(previous: AndroidLocation?): Boolean {
+fun AndroidLocation?.isBetterThan(previous: AndroidLocation?): Boolean {
+    if (this == null) return false
     if (longitude.isNaN() || latitude.isNaN()) return false
     if (previous == null) return true
 
@@ -35,3 +37,12 @@ fun AndroidLocation.isBetterThan(previous: AndroidLocation?): Boolean {
         else -> false
     }
 }
+
+val AndroidLocation.declination: Float
+    get() = GeomagneticField(
+        latitude.toFloat(),
+        longitude.toFloat(),
+        altitude.toFloat(),
+        time
+    ).declination
+

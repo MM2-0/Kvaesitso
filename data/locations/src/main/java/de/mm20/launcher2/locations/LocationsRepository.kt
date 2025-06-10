@@ -52,7 +52,6 @@ internal class LocationsRepository(
             }
 
             val userLocation = poseProvider.getLocation().firstOrNull()
-                ?: poseProvider.lastLocation
                 ?: return@combineTransform
 
             val providers = settingsData.providers.map {

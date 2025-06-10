@@ -2,7 +2,6 @@ package de.mm20.launcher2.devicepose
 
 import android.Manifest
 import android.content.Context
-import android.hardware.GeomagneticField
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -14,6 +13,7 @@ import androidx.core.content.getSystemService
 import androidx.core.location.LocationListenerCompat
 import de.mm20.launcher2.ktx.PI
 import de.mm20.launcher2.ktx.checkPermission
+import de.mm20.launcher2.ktx.declination
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -21,34 +21,41 @@ import kotlinx.coroutines.flow.channelFlow
 import de.mm20.launcher2.ktx.foldOrNull
 import de.mm20.launcher2.ktx.isBetterThan
 import kotlinx.coroutines.flow.combine
+import java.util.concurrent.locks.ReentrantReadWriteLock
+import kotlin.concurrent.read
+import kotlin.concurrent.write
 
 class DevicePoseProvider internal constructor(
     private val context: Context
 ) {
+    private val lastLocationLock = ReentrantReadWriteLock()
     var lastLocation: Location? = null
-        private set
-
-    private var declination: Float? = null
-    private fun updateDeclination(location: Location) {
-        declination = GeomagneticField(
-            location.latitude.toFloat(),
-            location.longitude.toFloat(),
-            location.altitude.toFloat(),
-            location.time
-        ).declination
-    }
+        get() { return lastLocationLock.read { field } }
+        private set(value) {
+            if (value == null) return
+            lastLocationLock.write {
+                if (value.isBetterThan(field)) {
+                    field = value
+                }
+            }
+        }
 
     fun getLocation(minTimeMs: Long = 1000, minDistanceM: Float = 1f) = channelFlow {
-        fun updateLocation(update: Location?) {
-            if (update == null) return
-            if (!update.isBetterThan(lastLocation)) return
-            lastLocation = update
-            updateDeclination(update)
+        // have a local copy to prevent race-conditions
+        var localLastLocation = lastLocation
+
+        fun updateLocation(update: Location) {
+            if (!update.isBetterThan(localLastLocation)) return
+            localLastLocation = update
             trySend(update)
         }
 
         val locationCallback = LocationListenerCompat {
             updateLocation(it)
+        }
+
+        if (localLastLocation != null) {
+            trySend(localLastLocation)
         }
 
         context.getSystemService<LocationManager>()
@@ -62,7 +69,9 @@ class DevicePoseProvider internal constructor(
                     hasFineAccess.foldOrNull { getLastKnownLocation(LocationManager.GPS_PROVIDER) } ?:
                     hasCoarseAccess.foldOrNull { getLastKnownLocation(LocationManager.NETWORK_PROVIDER) }
 
-                updateLocation(previousLocation)
+                if (previousLocation != null) {
+                    updateLocation(previousLocation)
+                }
 
                 if (hasFineAccess) {
                     requestLocationUpdates(
@@ -81,11 +90,12 @@ class DevicePoseProvider internal constructor(
                     )
                 }
             }?.onFailure {
-                Log.e("SearchableItemVM", "Failed to register location listener", it)
+                Log.e("DevicePoseProvider", "Failed to register location listener", it)
             }
 
         awaitClose {
             context.getSystemService<LocationManager>()?.removeUpdates(locationCallback)
+            lastLocation = localLastLocation
         }
     }
 
@@ -103,7 +113,7 @@ class DevicePoseProvider internal constructor(
                     SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                    trySend(orientationAngles[0] * 180f / Float.PI + (declination ?: 0f))
+                    trySend(orientationAngles[0] * 180f / Float.PI + (lastLocation?.declination ?: 0f))
                 }
             }
 
