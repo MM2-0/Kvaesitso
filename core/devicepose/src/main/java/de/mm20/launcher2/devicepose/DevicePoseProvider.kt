@@ -29,7 +29,7 @@ class DevicePoseProvider internal constructor(
     private val context: Context
 ) {
     private val lastLocationLock = ReentrantReadWriteLock()
-    var lastLocation: Location? = null
+    var lastCachedLocation: Location? = null
         get() { return lastLocationLock.read { field } }
         private set(value) {
             if (value == null) return
@@ -40,9 +40,9 @@ class DevicePoseProvider internal constructor(
             }
         }
 
-    fun getLocation(minTimeMs: Long = 1000, minDistanceM: Float = 1f) = channelFlow {
-        // have a local copy to prevent race-conditions
-        var localLastLocation = lastLocation
+    fun getLocation(minTimeMs: Long = 1000, minDistanceM: Float = 1f, skipCache: Boolean = false) = channelFlow {
+        // have a local copy to work with
+        var localLastLocation = lastCachedLocation
 
         fun updateLocation(update: Location) {
             if (!update.isBetterThan(localLastLocation)) return
@@ -54,7 +54,7 @@ class DevicePoseProvider internal constructor(
             updateLocation(it)
         }
 
-        if (localLastLocation != null) {
+        if (!skipCache && localLastLocation != null) {
             trySend(localLastLocation)
         }
 
@@ -95,7 +95,7 @@ class DevicePoseProvider internal constructor(
 
         awaitClose {
             context.getSystemService<LocationManager>()?.removeUpdates(locationCallback)
-            lastLocation = localLastLocation
+            lastCachedLocation = localLastLocation
         }
     }
 
@@ -113,7 +113,7 @@ class DevicePoseProvider internal constructor(
                     SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                    trySend(orientationAngles[0] * 180f / Float.PI + (lastLocation?.declination ?: 0f))
+                    trySend(orientationAngles[0] * 180f / Float.PI + (lastCachedLocation?.declination ?: 0f))
                 }
             }
 

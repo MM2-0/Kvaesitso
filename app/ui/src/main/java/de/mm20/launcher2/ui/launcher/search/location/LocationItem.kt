@@ -167,7 +167,7 @@ fun LocationItem(
 
     val userLocation by remember {
         viewModel.devicePoseProvider.getLocation()
-    }.collectAsStateWithLifecycle(viewModel.devicePoseProvider.lastLocation)
+    }.collectAsStateWithLifecycle(null)
 
     val targetHeading by remember(userLocation, location) {
         if (userLocation != null) {
