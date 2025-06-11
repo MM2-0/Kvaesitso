@@ -858,4 +858,5 @@
     <string name="import_theme_exists">Il tema esiste già e verrà aggiornato</string>
     <string name="theme_import_title">Importa tema</string>
     <string name="import_theme_contents">Contenuto</string>
+    <string name="preference_colors_high_contrast">Contrasto elevato</string>
 </resources>
