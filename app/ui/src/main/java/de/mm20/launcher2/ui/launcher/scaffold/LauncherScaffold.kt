@@ -1514,6 +1514,7 @@ internal fun LauncherScaffold(
                     .fillMaxWidth()
                     .hazeEffect(hazeState) {
                         blurRadius = 4.dp
+                        backgroundColor = config.backgroundColor
                     }
                     .background(
                         MaterialTheme.colorScheme.surfaceContainer.copy(alpha = LocalTransparencyScheme.current.background)
@@ -1534,6 +1535,7 @@ internal fun LauncherScaffold(
                     .fillMaxWidth()
                     .hazeEffect(hazeState) {
                         blurRadius = 4.dp
+                        backgroundColor = config.backgroundColor
                     }
                     .background(
                         MaterialTheme.colorScheme.surfaceContainer.copy(alpha = LocalTransparencyScheme.current.background)
