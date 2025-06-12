@@ -820,4 +820,11 @@
     <string name="poi_category_gallery">Galeria</string>
     <string name="weather_forecast_precipitation">Chuva</string>
     <string name="poi_category_charging_station">Estação de recarga</string>
+    <string name="preference_colors_high_contrast">Alto contraste</string>
+    <string name="preference_breezyweather_integration_instructions">Para usar o Breezy Weather como provedor de clima:\n\n1. Vá para Breezy Weather &gt; Configurações &gt; Widgets e papel de parede animado &gt; Enviar dados meteorológicos para Gadgetbridge &gt; Ativar %1$s\n\n2. No %1$s, selecione Breezy Weather como provedor de clima</string>
+    <string name="no_selection">Nenhuma seleção</string>
+    <string name="save_as_file">Salvar como arquivo</string>
+    <string name="provider_breezy"></string>
+    <string name="preference_clock_widget_time_format_system">Padrão do sistema</string>
+    <string name="gesture_action_widgets">Widgets</string>
 </resources>
