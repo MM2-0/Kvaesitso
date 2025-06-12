@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="websearch_dialog_url_error">Korvattava termi \'${1}\' puuttuu osoitteesta</string>
-    <string name="easter_egg_3">Viimeinen varoitus: tänne ei todella ole piilotettu yhtään mitään</string>
     <string name="widget_action_replace">Korvaa</string>
     <string name="edit_favorites_dialog_empty_section">Vedä kohteita tähän</string>
     <string name="edit_favorites_dialog_tags">Avainsanat</string>
@@ -21,9 +20,6 @@
     <string name="menu_launch">Käynnistä</string>
     <string name="menu_customize">Mukauta</string>
     <string name="menu_open_file">Avaa</string>
-    <string name="menu_hide">Piilota</string>
-    <string name="menu_unhide">Älä piilota</string>
-    <string name="msg_item_hidden">%1$s on piilotettu.</string>
     <string name="action_undo">Peru</string>
     <string name="menu_delete">Poista</string>
     <string name="wind_north">Pohjoinen</string>
@@ -59,9 +55,7 @@
     <string name="notes_widget_action_dismiss">Hylkää</string>
     <string name="notes_widget_dismissed">Muistiinpano hylätty.</string>
     <string name="shortcut_summary">sovelluksesta %1$s</string>
-    <string name="easter_egg_1">Täällä ei ole yllätyksiä, ellet tuonut niitä mukanasi.</string>
     <string name="close">Sulje</string>
-    <string name="nextcloud_server_url_empty">Palvelimen URL ei voi olla tyhjä</string>
     <string name="nextcloud_server_invalid_url">Tämä URL ei osoita kelvolliseen Nextcloud-asennukseen</string>
     <string name="owncloud_server_url">Owncloud-palvelimen URL</string>
     <string name="owncloud_server_invalid_url">Tämä URL ei osoita kelvolliseen Owncloud-asennukseen</string>
@@ -123,7 +117,6 @@
     <string name="notes_widget_placeholder">Kirjoita muistiinpano…</string>
     <string name="notes_widget_action_new">Uusi muistiinpano</string>
     <string name="notes_widget_export_filename">Muistiinpano_%1$s</string>
-    <string name="easter_egg_2">Lopeta, kiitos. Tuhlaat aikaasi.</string>
     <string name="easter_egg_text">Nojoo, löysit minut. Onnea. Oliko sen arvoista\?</string>
     <string name="save">Tallenna</string>
     <string name="duplicate">Monista</string>
@@ -138,8 +131,6 @@
     <string name="edit_favorites_dialog_pinned_sorted">Kiinnitetty - käsin järjestetty</string>
     <string name="owncloud_login_2fa_hint">Jos kaksivaiheinen tunnistautuminen on käytössä, käytä tässä sovellussalasanaa.</string>
     <string name="owncloud_login_failed">Kirjautuminen epäonnistui: virheellinen käyttäjänimi tai salasana.</string>
-    <string name="owncloud_username_empty">Käyttäjänimi ei voi olla tyhjä</string>
-    <string name="owncloud_password_empty">Salasana ei voi olla tyhjä</string>
     <string name="login_flow_continue">Jatka</string>
     <string name="login_flow_login">Kirjaudu sisään</string>
     <string name="disclaimer">Vastuuvapauslauseke</string>
@@ -223,7 +214,6 @@
     <string name="preference_edit_favorites_summary">Vaihda kiinnitettyjen kohteiden järjestystä</string>
     <string name="restore_incompatible_file">Tämä varmuuskopio on luotu sovelluksen %1$s toisella versiolla eikä sitä voida palauttaa tällä versiolla.</string>
     <string name="icon_picker_default_icon">Oletus</string>
-    <string name="icon_picker_title">Valitse kuvake</string>
     <string name="preference_search_files_summary">Hae tiedostoja laitteelta ja pilvestä</string>
     <string name="preference_search_files">Tiedostot</string>
     <string name="preference_search_contacts">Yhteystiedot</string>
@@ -237,13 +227,10 @@
     <string name="preference_search_websites_summary">Näytä esikatselu verkkosivusta jos hakutermi on verkko-osoite</string>
     <string name="preference_search_localfiles">Paikalliset tiedostot</string>
     <string name="preference_search_localfiles_summary">Hae asiakirjoja, kuvia ja muita tiedostoja tältä laitteelta</string>
-    <string name="preference_search_gdrive_summary">Hae käyttäjän %1$s tiedostoja Google Drivestä</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin_summary">Kirjaudu hakeaksesi Google Drivestä</string>
     <string name="preference_screen_buildinfo">Koontiversion tiedot</string>
     <string name="preference_calendar_calendars">Kalenterit</string>
-    <string name="preference_calendar_hide_allday">Piilota koko päivän tapahtumat</string>
     <string name="preference_search_bar_style">Tyyli</string>
     <string name="preference_search_bar_style_summary">Mukauta hakupalkin ulkoasua</string>
     <string name="preference_search_bar_auto_focus_summary">Näytä näppäimistö automaattisesti avattaessa sovelluslaatikko</string>
@@ -254,13 +241,11 @@
     <string name="preference_hidden_items_reveal_button">Näytä \"paljasta\"-painike</string>
     <string name="preference_hidden_items_reveal_button_summary">Näytä painike piilotettujen hakutulosten paljastamiseksi</string>
     <string name="preference_screen_tags">Avainsanat</string>
-    <string name="preference_category_accounts">Tilit</string>
     <string name="preference_weather_integration">Sää</string>
     <string name="preference_media_integration">Mediasäätimet</string>
     <string name="no_account_owncloud">Et ole liittänyt Owncloud-tiliä vielä</string>
     <string name="battery_part_charging">Ladataan</string>
     <string name="icon_picker_search_icon">Hae kuvakepaketeista</string>
-    <string name="icon_picker_no_packs_installed">Kuvakepaketteja ei ole asennettuna</string>
     <string name="icon_picker_filter_all_packs">Kaikki kuvakepaketit</string>
     <string name="apps_profile_main">Henkilökohtainen</string>
     <string name="search_action_call">Soita</string>
@@ -375,7 +360,6 @@
     <string name="preference_hide_status_bar">Piilota tilapalkki</string>
     <string name="preference_hide_nav_bar">Piilota ohjauspalkki</string>
     <string name="preference_screen_integrations_summary">Hallitse liitettyjä tilejä ja palveluja</string>
-    <string name="preference_google">Google</string>
     <string name="preference_icon_shape_hexagon">Kuusikulmio</string>
     <string name="preference_signin_user">Kirjauduttu sisään käyttäjänä %1$s</string>
     <string name="preference_summary_not_logged_in">Et ole kirjautuneena</string>
@@ -420,7 +404,6 @@
     <string name="preference_logs">Lokit</string>
     <string name="preference_search_calculator">Laskin</string>
     <string name="preference_search_cloud_summary">Hae %1$s:n tiedostoja</string>
-    <string name="preference_google_signin">Kirjaudu Google-tilillä</string>
     <string name="preference_screen_buildinfo_summary">Lisätietoja sovelluksen tästä koontiversiosta</string>
     <string name="preference_search_bar_auto_focus">Avaa näppäimistö</string>
     <string name="preference_screen_tags_summary">Hallitse avainsanoja ja merkittyjä kohteita</string>
@@ -430,7 +413,6 @@
     <string name="preference_screen_homescreen_summary">Kello, hakupalkki, taustakuva, järjestelmän palkit</string>
     <string name="preference_screen_icons">Ruudukko ja kuvakkeet</string>
     <string name="preference_screen_icons_summary">Ruudukko, kuvakkeiden koko, kuvakepaketit, pistemerkit</string>
-    <string name="no_account_google">Et ole liittänyt Google-tiliä vielä</string>
     <string name="connect_account">Liitä tili</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Täynnä %1$s minuutissa</item>
@@ -446,7 +428,6 @@
     <string name="favorites">Suosikit</string>
     <string name="favorites_empty">Kiinnitetyt ja usein käytetyt kohteet ilmestyvät tähän</string>
     <string name="favorites_empty_tag">Avainsana ei ole käytössä missään kohteessa</string>
-    <string name="create_app_shortcut">Luo oikotie</string>
     <string name="frequently_used_show_in_favorites">Näytä suosikeissa</string>
     <string name="preference_screen_search_actions">Pikatoiminnot</string>
     <string name="search_action_alarm">Aseta hälytys</string>
@@ -455,14 +436,11 @@
     <string name="search_action_contact">Luo yhteystieto</string>
     <string name="create_search_action_type_web">Hae verkkosivulta</string>
     <string name="create_search_action_type_intent">Oma intent</string>
-    <string name="edit_search_action_title">Muokkaa pikatoimintoa</string>
     <string name="create_search_action_pick_app">Valitse haettava sovellus:</string>
     <string name="create_search_action_website_url">Syötä verkkosivun osoite:</string>
     <string name="search_action_websearch_url">URL-pohja</string>
     <string name="more_information">Lisätietoja</string>
     <string name="experimental_feature">Kokeellinen</string>
-    <string name="create_tag_title">Uusi avainsana</string>
-    <string name="edit_tag_title">Muokkaa avainsanaa</string>
     <string name="tag_exists_error">Avainsana on jo olemassa.</string>
     <string name="preference_layout_open_search">Haku / sovelluslaatikko</string>
     <string name="preference_layout_search_results">Hakutulosten järjestys</string>
@@ -471,11 +449,8 @@
     <string name="preference_layout_fixed_rotation">Lukittu näytön kierto</string>
     <string name="preference_shortcut_badges">Oikoteiden merkit</string>
     <string name="preference_search_wikipedia_summary">Hae vapaasta tietosanakirjasta</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="customize_tags_placeholder">Avainsanat…</string>
     <string name="frequently_used_rows">Rivien määrä</string>
     <string name="search_action_message">Viesti</string>
-    <string name="create_search_action_title">Uusi pikatoiminto</string>
     <string name="search_action_app">Sovellus</string>
     <string name="date_today">Tänään</string>
     <string name="date_tomorrow">Huomenna</string>
@@ -530,7 +505,6 @@
     <string name="gesture_action_notifications">Avaa ilmoitusalue</string>
     <string name="gesture_action_lock_screen">Sammuta näyttö</string>
     <string name="gesture_action_quick_settings">Avaa pika-asetukset</string>
-    <string name="preference_search_result_ordering_weighted">Käyttö</string>
     <string name="widget_config_appwidget_borderless">Ei reunusta</string>
     <string name="widget_config_appwidget_background">Taustakortti</string>
     <string name="shortcut_label_unavailable">Ei saatavilla</string>
@@ -580,8 +554,6 @@
     <string name="gesture_failed_message">Teit eleen \"%1$s\". Elettä käytetään tällä hetkellä toimintoon \"%2$s\". Toimintoa ei voitu toteuttaa seuraavasta syystä:</string>
     <string name="missing_permission_accessibility_gesture_failed">Käynnistyssovelluksen esteettömyyspalvelu täytyy käynnistää toiminnon suorittamiseksi.</string>
     <string name="missing_permission_accessibility_gesture_settings">Tämä toiminto vaatii käynnistyssovelluksen esteettömyyspalvelun käynnistämisen.</string>
-    <string name="preference_search_result_ordering">Hakutulosten järjestys</string>
-    <string name="preference_search_result_ordering_alphabetic">Aakkosellinen</string>
     <string name="preference_search_result_ordering_weight_factor">Sijoittelun joustavuus</string>
     <string name="app_widget_loading_failed">Sovelluksen pienoisohjelmaa ei voitu ladata.</string>
     <string name="location_closes">Suljetaan %1$s</string>

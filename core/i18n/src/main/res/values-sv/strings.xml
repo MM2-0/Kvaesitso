@@ -8,8 +8,6 @@
     <string name="menu_back">Tillbaka</string>
     <string name="menu_app_info">App-info</string>
     <string name="menu_launch">Öppna</string>
-    <string name="menu_hide">Göm</string>
-    <string name="menu_unhide">Göm ej</string>
     <string name="menu_delete">Radera</string>
     <string name="menu_contacts_open_externally">Öppna i Kontakter</string>
     <string name="menu_calendar_open_externally">Öppna i Kalender</string>
@@ -74,7 +72,6 @@
     <string name="weather_condition_heavysnowshowersandthunder">Kraftigt snöfall och åska</string>
     <string name="file_meta_size">Storlek: %1$s</string>
     <string name="edit_favorites_dialog_pinned_sorted">Fästa – manuellt sorterade</string>
-    <string name="preference_google">Google</string>
     <string name="file_meta_dimensions">Dimensioner: %1$s</string>
     <string name="widget_name_music">Musik</string>
     <string name="websearch_dialog_replace_icon">Ersätt ikon</string>
@@ -83,7 +80,6 @@
     <string name="widget_name_weather">Väder</string>
     <string name="widget_name_calendar">Kalender</string>
     <string name="widget_add_widget">Lägg till widget</string>
-    <string name="easter_egg_1">Här finns inga påskägg, såvida du inte själv tog med dig dem.</string>
     <string name="close">Stäng</string>
     <string name="turn_off">Stäng av</string>
     <string name="file_type_compressed">Komprimerad fil</string>
@@ -92,8 +88,6 @@
     <string name="owncloud_password">Lösenord</string>
     <string name="owncloud_username">Användarnamn</string>
     <string name="owncloud_login_2fa_hint">Om du har aktiverat tvåstegsautentisering måste du använda ett applösenord här.</string>
-    <string name="owncloud_username_empty">Användarnamn får inte vara tomt</string>
-    <string name="owncloud_password_empty">Lösenord får inte vara tomt</string>
     <string name="login_flow_continue">Fortsätt</string>
     <string name="login_flow_login">Logga in</string>
     <string name="disclaimer">Disclaimer</string>
@@ -127,7 +121,6 @@
     <string name="weather_condition_lightrainandthunder">Lätt åskregn</string>
     <string name="alert_delete_directory">Katalogen %1$s och dess innehåll kommer raderas permanent. Vill du fortsätta\?</string>
     <string name="shortcut_summary">Från %1$s</string>
-    <string name="nextcloud_server_url_empty">Server-URL kan inte vara tom</string>
     <string name="preference_summary_not_logged_in">Du är för närvarande inte inloggad</string>
     <string name="preference_search_unitconverter_summary">Användning: 1.5 kg eller 4 cm &gt;&gt; in</string>
     <string name="weather_condition_hail">Hagel</string>
@@ -271,19 +264,13 @@
     <string name="preference_search_websites">Hemsidor</string>
     <string name="preference_search_websites_summary">Förhandsvisa hemsida om söktermen är en URL</string>
     <string name="preference_search_localfiles">Lokala filer</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">Sök bland %1$ss filer på Google Drive</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Sök bland %1$ss filer</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="easter_egg_2">Snälla, sluta, du slösar bort din tid</string>
     <string name="nextcloud_server_invalid_url">Denna URL hänvisar inte till en giltig Nextcloud-installation</string>
     <string name="preference_cloud_badges_summary">Visa en prick på filer som lagras i molnet</string>
     <string name="preference_search_localfiles_summary">Sök dokument, foton och andra filer lagrade på denna enhet</string>
-    <string name="preference_google_signin">Logga in med Google</string>
-    <string name="preference_google_signin_summary">Logga in för att söka i Google Drive</string>
     <string name="preference_calendar_calendars">Kalendrar</string>
-    <string name="preference_calendar_hide_allday">Göm heldagsaktiviteter</string>
     <string name="preference_screen_buildinfo">Build-information</string>
     <string name="preference_screen_buildinfo_summary">Mer information om denna build av appen</string>
     <string name="preference_search_bar_style">Stil</string>
@@ -293,14 +280,12 @@
     <string name="preference_wikipedia_customurl">Wikipedia-länk</string>
     <string name="no_account_nextcloud">Du har inte anslutit ett Nextcloud-konto ännu</string>
     <string name="no_account_owncloud">Du har inte anslutit ett Owncloud-konto ännu</string>
-    <string name="no_account_google">Du har inte anslutit ett Google-konto ännu</string>
     <string name="connect_account">Anslut konto</string>
     <string name="battery_part_charging">Laddar</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">%1$s minut till fullt</item>
         <item quantity="other">%1$s minuter till fullt</item>
     </plurals>
-    <string name="easter_egg_3">Jag säger det inte igen: här finns absolut inga påskägg gömda</string>
     <string name="owncloud_server_invalid_url">Denna URL hänvisar inte till en giltig Owncloud-installation</string>
     <string name="missing_permission_music_widget">Notifikationsåtkomst krävs för att styra uppspelning av media</string>
     <string name="preference_owncloud_signin_summary">Logga in för att söka i din Owncloud-server</string>

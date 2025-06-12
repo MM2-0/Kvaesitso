@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.ktx.withCorners
-import de.mm20.launcher2.ui.locals.LocalCardStyle
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 import kotlin.math.ceil
 
 fun <T : SavableSearchable> LazyListScope.GridResults(
@@ -39,7 +39,7 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                         bottom = if (!reverse && isBottom) 8.dp else 0.dp,
                     )
                     .background(
-                        MaterialTheme.colorScheme.surface.copy(alpha = LocalCardStyle.current.opacity),
+                        MaterialTheme.colorScheme.surface.copy(alpha = LocalTransparencyScheme.current.surface),
                         MaterialTheme.shapes.medium.withCorners(
                             topStart = isTop,
                             topEnd = isTop,
@@ -72,7 +72,7 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                     bottom = if (!reverse && isLast) 8.dp else 0.dp,
                 )
                 .background(
-                    MaterialTheme.colorScheme.surface.copy(alpha = LocalCardStyle.current.opacity),
+                    MaterialTheme.colorScheme.surface.copy(alpha = LocalTransparencyScheme.current.surface),
                     MaterialTheme.shapes.medium.withCorners(
                         topStart = isFirst && !reverse || isLast && reverse,
                         topEnd = isFirst && !reverse || isLast && reverse,
@@ -83,8 +83,8 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                 .padding(
                     top = if (it == 0) 8.dp else 0.dp,
                     bottom = if (it == rows - 1) 8.dp else 0.dp,
-                    start = 4.dp,
-                    end = 4.dp,
+                    start = if (columns == 1) 0.dp else 4.dp,
+                    end = if (columns == 1) 0.dp else 4.dp,
                 )
         ) {
             Row {
@@ -94,7 +94,6 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                         Box(
                             modifier = Modifier
                                 .weight(1f)
-                                .padding(4.dp)
                         ) {
                             itemContent(item)
                         }
@@ -121,7 +120,7 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                         bottom = if (!reverse) 8.dp else 0.dp,
                     )
                     .background(
-                        MaterialTheme.colorScheme.surface.copy(alpha = LocalCardStyle.current.opacity),
+                        MaterialTheme.colorScheme.surface.copy(alpha = LocalTransparencyScheme.current.surface),
                         MaterialTheme.shapes.medium.withCorners(
                             topStart = isTop,
                             topEnd = isTop,

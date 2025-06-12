@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.weather
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -7,20 +8,30 @@ import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
@@ -32,7 +43,6 @@ import androidx.compose.material.icons.rounded.MyLocation
 import androidx.compose.material.icons.rounded.North
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -47,14 +57,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -70,9 +86,7 @@ import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
-import de.mm20.launcher2.ui.ktx.blendIntoViewScale
-import de.mm20.launcher2.ui.locals.LocalCardStyle
-import de.mm20.launcher2.ui.modifier.consumeAllScrolling
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -111,7 +125,9 @@ fun WeatherWidget(widget: WeatherWidget) {
     Column {
         if (!isProviderAvailable) {
             Banner(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 text = stringResource(R.string.weather_widget_no_provider),
                 icon = Icons.Rounded.ErrorOutline,
                 primaryAction = {
@@ -124,7 +140,9 @@ fun WeatherWidget(widget: WeatherWidget) {
                         Icon(
                             Icons.AutoMirrored.Rounded.OpenInNew,
                             null,
-                            modifier = Modifier.padding(end = ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
+                            modifier = Modifier
+                                .padding(end = ButtonDefaults.IconSpacing)
+                                .size(ButtonDefaults.IconSize)
                         )
                         Text(stringResource(R.string.settings))
                     }
@@ -169,11 +187,11 @@ fun WeatherWidget(widget: WeatherWidget) {
             val currentDayForecasts by viewModel.currentDayForecasts
 
             Surface(
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = LocalCardStyle.current.opacity),
+                color = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = LocalTransparencyScheme.current.surface),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier.padding(top = 8.dp, bottom = 12.dp)
+                    modifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
                 ) {
                     WeatherTimeSelector(
                         forecasts = currentDayForecasts,
@@ -182,11 +200,7 @@ fun WeatherWidget(widget: WeatherWidget) {
                         onTimeSelected = {
                             viewModel.selectForecast(it)
                         },
-                        modifier = Modifier.padding(bottom = 8.dp)
-                    )
-                    Divider(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
+                        modifier = Modifier.padding(bottom = 12.dp)
                     )
                     selectedDayForecast?.let {
                         WeatherDaySelector(
@@ -196,7 +210,6 @@ fun WeatherWidget(widget: WeatherWidget) {
                                 viewModel.selectDay(it)
                             },
                             imperialUnits = imperialUnits,
-                            modifier = Modifier.padding(top = 8.dp)
                         )
                     }
                 }
@@ -208,173 +221,219 @@ fun WeatherWidget(widget: WeatherWidget) {
 @Composable
 fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
     val context = LocalContext.current
-    Column {
-        Row(
-            verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            val latLonRegexp =
-                remember { Regex("^\\d{1,2}°\\d{1,2}'[NS] \\d{1,3}°\\d{1,2}'[EW]\$") }
-            val isLatLon = latLonRegexp.matches(forecast.location)
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    imageVector = if (isLatLon) Icons.Rounded.MyLocation else Icons.Rounded.LocationCity,
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = forecast.location,
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-            Tooltip(
-                tooltipText = stringResource(R.string.preference_weather_provider)
-            ) {
-                Surface(
-                    shape = MaterialTheme.shapes.extraSmall.copy(
-                        topStart = CornerSize(0),
-                        topEnd = CornerSize(0),
-                        bottomEnd = CornerSize(0)
-                    ),
-                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
-                ) {
-                    Text(
-                        text = "${forecast.provider} (${
-                            formatTime(
-                                LocalContext.current,
-                                forecast.updateTime
-                            )
-                        })",
-                        style = MaterialTheme.typography.bodySmall.copy(fontSize = 8.sp),
-                        modifier = Modifier
-                            .clickable(onClick = {
-                                val intent = Intent(Intent.ACTION_VIEW).apply {
-                                    data = Uri.parse(forecast.providerUrl)
-                                        ?: return@clickable
-                                }
-                                context.tryStartActivity(intent)
-                            })
-                            .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 12.dp)
-                    )
-                }
-            }
-        }
-        Row(
-            modifier = Modifier.padding(start = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = convertTemperature(
-                    imperialUnits = imperialUnits,
-                    temp = forecast.temperature
-                ).toString() + "°",
-                style = MaterialTheme.typography.headlineMedium,
-            )
-            Text(
-                text = forecast.condition,
-                style = MaterialTheme.typography.labelMedium,
-            )
-            AnimatedWeatherIcon(
-                modifier = Modifier.padding(
-                    start = 8.dp,
-                    end = 8.dp
-                ),
-                icon = weatherIconById(forecast.icon),
-                night = forecast.night
-            )
-        }
+    val weatherApp = remember {
+        context.packageManager.resolveActivity(
+            Intent(Intent.ACTION_MAIN).also {
+                it.addCategory(Intent.CATEGORY_APP_WEATHER)
+            }, 0
+        )
     }
-
-    Row(
+    var bounds by remember { mutableStateOf(Rect.Zero) }
+    val view = LocalView.current
+    Column(
         modifier = Modifier
-            .padding(start = 16.dp, end = 16.dp, bottom = 12.dp, top = 8.dp)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+            .onPlaced {
+                val size = it.size
+                val offset = it.localToRoot(Offset.Zero)
+                bounds = Rect(
+                    offset.x,
+                    offset.y,
+                    offset.x + size.width,
+                    offset.y + size.height
+                )
+            }
+            .clickable(
+                enabled = weatherApp != null,
+                onClick = {
+                    context.tryStartActivity(
+                        Intent().also {
+                            it.component = weatherApp?.activityInfo?.let {
+                                ComponentName(it.packageName, it.name)
+                            }
+                        },
+                        ActivityOptionsCompat.makeClipRevealAnimation(
+                            view,
+                            bounds.left.toInt(),
+                            bounds.top.toInt(),
+                            bounds.width.toInt(),
+                            bounds.height.toInt()
+                        ).toBundle()
+                    )
+                },
+                interactionSource = remember { MutableInteractionSource() },
+                indication = LocalIndication.current,
+            )
     ) {
-        if (forecast.humidity != null) {
-            Tooltip(
-                tooltipText = stringResource(R.string.weather_forecast_humidity)
+
+        Column(
+        ) {
+            Row(
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
+                val latLonRegexp =
+                    remember { Regex("^\\d{1,2}°\\d{1,2}'[NS] \\d{1,3}°\\d{1,2}'[EW]\$") }
+                val isLatLon = latLonRegexp.matches(forecast.location)
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.HumidityPercentage,
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.secondary,
+                        imageVector = if (isLatLon) Icons.Rounded.MyLocation else Icons.Rounded.LocationCity,
                         contentDescription = null
                     )
-                    Spacer(modifier = Modifier.padding(3.dp))
+                    Spacer(modifier = Modifier.padding(4.dp))
                     Text(
-                        text = "${forecast.humidity!!.roundToInt()} %",
-                        style = MaterialTheme.typography.bodySmall,
+                        text = forecast.location,
+                        style = MaterialTheme.typography.titleMedium
                     )
                 }
-            }
-
-        }
-        if (forecast.windDirection != null || forecast.windSpeed != null) {
-            Tooltip(
-                tooltipText = stringResource(R.string.weather_forecast_wind)
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
+                Tooltip(
+                    tooltipText = stringResource(R.string.preference_weather_provider)
                 ) {
-                    if (forecast.windDirection != null) {
-                        // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
-                        val angle by animateFloatAsState(forecast.windDirection!!.toFloat() + 180f)
-                        Icon(
-                            imageVector = Icons.Rounded.North,
+                    Surface(
+                        shape = MaterialTheme.shapes.extraSmall.copy(
+                            topStart = CornerSize(0),
+                            topEnd = CornerSize(0),
+                            bottomEnd = CornerSize(0)
+                        ),
+                        color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalTransparencyScheme.current.surface),
+                    ) {
+                        Text(
+                            text = "${forecast.provider} (${
+                                formatTime(
+                                    LocalContext.current,
+                                    forecast.updateTime
+                                )
+                            })",
+                            style = MaterialTheme.typography.bodySmall.copy(fontSize = 8.sp),
                             modifier = Modifier
-                                .rotate(angle)
-                                .size(20.dp),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.secondary,
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Rounded.Air,
-                            contentDescription = null,
-                            modifier = Modifier.size(20.dp),
-                            tint = MaterialTheme.colorScheme.secondary,
+                                .clickable(onClick = {
+                                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                                        data = Uri.parse(forecast.providerUrl)
+                                            ?: return@clickable
+                                    }
+                                    context.tryStartActivity(intent)
+                                })
+                                .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 12.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.padding(3.dp))
-                    Text(
-                        text = if (forecast.windSpeed != null) {
-                            formatWindSpeed(imperialUnits, forecast)
-                        } else {
-                            windDirectionAsWord(forecast.windDirection!!)
-                        },
-                        style = MaterialTheme.typography.bodySmall,
-                    )
                 }
             }
-        }
-        if (forecast.precipitation != null) {
-            Tooltip(
-                tooltipText = stringResource(id = R.string.weather_forecast_precipitation)
+            Row(
+                modifier = Modifier.padding(start = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = convertTemperature(
+                        imperialUnits = imperialUnits,
+                        temp = forecast.temperature
+                    ).toString() + "°",
+                    style = MaterialTheme.typography.headlineMedium,
+                )
+                Text(
+                    text = forecast.condition,
+                    style = MaterialTheme.typography.labelMedium,
+                )
+                AnimatedWeatherIcon(
+                    modifier = Modifier.padding(
+                        start = 8.dp,
+                        end = 8.dp
+                    ),
+                    icon = weatherIconById(forecast.icon),
+                    night = forecast.night
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp, bottom = 12.dp, top = 8.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            if (forecast.humidity != null) {
+                Tooltip(
+                    tooltipText = stringResource(R.string.weather_forecast_humidity)
                 ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Rain,
-                        modifier = Modifier.size(20.dp),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.secondary,
-                    )
-                    Spacer(modifier = Modifier.padding(3.dp))
-                    Text(
-                        text = formatPrecipitation(imperialUnits, forecast),
-                        style = MaterialTheme.typography.bodySmall,
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.HumidityPercentage,
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.secondary,
+                            contentDescription = null
+                        )
+                        Spacer(modifier = Modifier.padding(3.dp))
+                        Text(
+                            text = "${forecast.humidity!!.roundToInt()} %",
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
+
+            }
+            if (forecast.windDirection != null || forecast.windSpeed != null) {
+                Tooltip(
+                    tooltipText = stringResource(R.string.weather_forecast_wind)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (forecast.windDirection != null) {
+                            // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
+                            val angle by animateFloatAsState(forecast.windDirection!!.toFloat() + 180f)
+                            Icon(
+                                imageVector = Icons.Rounded.North,
+                                modifier = Modifier
+                                    .rotate(angle)
+                                    .size(20.dp),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.secondary,
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Rounded.Air,
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp),
+                                tint = MaterialTheme.colorScheme.secondary,
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(3.dp))
+                        Text(
+                            text = if (forecast.windSpeed != null) {
+                                formatWindSpeed(imperialUnits, forecast)
+                            } else {
+                                windDirectionAsWord(forecast.windDirection!!)
+                            },
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
+            }
+            if (forecast.precipitation != null) {
+                Tooltip(
+                    tooltipText = stringResource(id = R.string.weather_forecast_precipitation)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Rain,
+                            modifier = Modifier.size(20.dp),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary,
+                        )
+                        Spacer(modifier = Modifier.padding(3.dp))
+                        Text(
+                            text = formatPrecipitation(imperialUnits, forecast),
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
                 }
             }
         }
@@ -395,50 +454,75 @@ fun WeatherTimeSelector(
     LazyRow(
         state = listState,
         modifier = modifier
-            .fillMaxWidth()
-            .consumeAllScrolling(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        contentPadding = PaddingValues(start = 12.dp, end = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         itemsIndexed(forecasts, key = { idx, _ -> idx }) { idx, fc ->
-            val backgroundAlpha = if (fc == selectedForecast) 0.2f else 0.0f
+            val selected = fc == selectedForecast
+            val sm = MaterialTheme.shapes.small
+            val xs = MaterialTheme.shapes.extraSmall
             Surface(
-                shape = MaterialTheme.shapes.extraSmall,
+                shape = when (idx) {
+                    0 -> xs.copy(
+                        topStart = sm.topStart,
+                        bottomStart = sm.bottomStart
+                    )
+
+                    forecasts.lastIndex -> xs.copy(
+                        topEnd = sm.topEnd,
+                        bottomEnd = sm.bottomEnd
+                    )
+
+                    else -> MaterialTheme.shapes.extraSmall
+                },
                 modifier = Modifier
-                    .widthIn(min = 56.dp)
-                    .graphicsLayer {
-                        alpha = listState.layoutInfo.blendIntoViewScale(idx, 2f)
-                    },
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(backgroundAlpha)
+                    .widthIn(min = 60.dp),
+                color = MaterialTheme.colorScheme.surface,
             ) {
                 Column(
                     modifier = Modifier
                         .clickable { onTimeSelected(idx) }
-                        .padding(4.dp),
+                        .padding(start = 4.dp, end = 4.dp, top = 8.dp, bottom = 4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceEvenly
                 ) {
                     WeatherIcon(
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
                             .semantics {
                                 contentDescription = fc.condition
-                            },
+                            }
+                            .padding(bottom = 4.dp),
                         icon = weatherIconById(fc.icon),
                         night = fc.night
                     )
                     Text(
                         text = dateFormat.format(fc.timestamp),
                         style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         softWrap = false,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
-                    Text(
-                        text = "${convertTemperature(imperialUnits, fc.temperature)}°",
-                        softWrap = false,
-                        style = MaterialTheme.typography.labelSmall,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
+                    Box(
+                        contentAlignment = Alignment.Center
+                    ) {
+                        val alpha by animateFloatAsState(if (selected) 0f else 1f)
+                        Text(
+                            modifier = Modifier
+                                .alpha(alpha),
+                            text = "${convertTemperature(imperialUnits, fc.temperature)}°",
+                            softWrap = false,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        Box(
+                            modifier = Modifier
+                                .alpha(1f - alpha)
+                                .requiredSize(8.dp)
+                                .background(MaterialTheme.colorScheme.primary, CircleShape)
+                        )
+                    }
                 }
             }
         }
@@ -459,46 +543,61 @@ fun WeatherDaySelector(
     LazyRow(
         state = listState,
         modifier = modifier
-            .fillMaxWidth()
-            .consumeAllScrolling(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
         verticalAlignment = Alignment.CenterVertically,
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
+        contentPadding = PaddingValues(start = 12.dp, end = 12.dp),
     ) {
         itemsIndexed(days, key = { idx, _ -> idx }) { idx, day ->
-            val backgroundAlpha = if (day == selectedDay) 0.2f else 0.0f
+            val selected = day == selectedDay
 
+            val sm = MaterialTheme.shapes.small
+            val xs = MaterialTheme.shapes.extraSmall
             Surface(
-                modifier = Modifier.graphicsLayer {
-                    alpha = listState.layoutInfo.blendIntoViewScale(idx, 0.5f)
+                shape = when (idx) {
+                    0 -> xs.copy(
+                        topStart = sm.topStart,
+                        bottomStart = sm.bottomStart
+                    )
+
+                    days.lastIndex -> xs.copy(
+                        topEnd = sm.topEnd,
+                        bottomEnd = sm.bottomEnd
+                    )
+
+                    else -> MaterialTheme.shapes.extraSmall
                 },
-                shape = MaterialTheme.shapes.extraSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(backgroundAlpha)
+                color = MaterialTheme.colorScheme.surface,
             ) {
                 Row(
                     modifier = Modifier
                         .clickable { onDaySelected(idx) }
-                        .padding(4.dp),
-                    horizontalArrangement = Arrangement.SpaceAround,
+                        .padding(top = 4.dp, bottom = 4.dp, start = 4.dp, end = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     WeatherIcon(icon = weatherIconById(day.icon))
                     Text(
-                        text = dateFormat.format(day.timestamp),
-                        style = MaterialTheme.typography.labelSmall,
-                        softWrap = false,
-                        modifier = Modifier.padding(start = 12.dp, end = 6.dp)
-                    )
-                    Text(
-                        text = "${
-                            convertTemperature(
-                                imperialUnits,
-                                day.minTemp
-                            )
-                        }° / ${convertTemperature(imperialUnits, day.maxTemp)}°",
+                        modifier = Modifier.padding(start = 8.dp),
+                        text = "${dateFormat.format(day.timestamp)} " +
+                                "${convertTemperature(imperialUnits, day.minTemp)}° / " +
+                                "${convertTemperature(imperialUnits, day.maxTemp)}°",
                         softWrap = false,
                         style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+                    val spec = MaterialTheme.motionScheme.fastSpatialSpec<IntSize>()
+                    AnimatedVisibility(
+                        selected,
+                        enter = fadeIn() + expandHorizontally(spec),
+                        exit = fadeOut() + shrinkHorizontally(spec),
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .size(8.dp)
+                                .background(MaterialTheme.colorScheme.primary, CircleShape)
+                        )
+                    }
                 }
             }
         }

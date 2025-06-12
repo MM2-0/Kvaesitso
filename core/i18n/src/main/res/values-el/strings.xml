@@ -9,10 +9,7 @@
     <string name="menu_launch">Εκκίνηση</string>
     <string name="menu_customize">Παραμετροποίηση</string>
     <string name="menu_open_file">Άνοιγμα</string>
-    <string name="menu_hide">Απόκρυψη</string>
-    <string name="menu_unhide">Εμφάνιση</string>
     <string name="menu_share_apk_file">Αρχείο εφαρμογής</string>
-    <string name="msg_item_hidden">%1$s αποκρύφτηκε.</string>
     <string name="action_undo">Αναίρεση</string>
     <string name="menu_delete">Διαγραφή</string>
     <string name="menu_remove">Αφαίρεση</string>
@@ -71,7 +68,6 @@
     <string name="websearch_dialog_query_encoding">Κωδικοποίηση ερωτήματος</string>
     <string name="websearch_dialog_query_encoding_url">Κωδικοποίηση URL</string>
     <string name="websearch_dialog_query_encoding_none">Κανένα</string>
-    <string name="easter_egg_1">Δεν υπάρχουν πασχαλινά αυγά εδώ, εκτός αν τα έφερες μαζί σου.</string>
     <string name="easter_egg_text">Λοιπόν, με βρήκες. Συγχαρητήρια. Άξιζε τον κόπο;</string>
     <string name="close">Κλείσιμο</string>
     <string name="menu_item_edit_favs">Επεξεργασία αγαπημένων</string>
@@ -84,7 +80,6 @@
     <string name="owncloud_password">Κωδικός πρόσβασης</string>
     <string name="owncloud_username">Όνομα χρήστη</string>
     <string name="owncloud_login_failed">Η σύνδεση απέτυχε: λανθασμένο όνομα χρήστη ή κωδικός πρόσβασης.</string>
-    <string name="owncloud_username_empty">Το όνομα χρήστη δεν πρέπει να είναι κενό</string>
     <string name="login_flow_continue">Συνέχεια</string>
     <string name="login_flow_login">Είσοδος</string>
     <string name="disclaimer">Αποποίηση ευθυνών</string>
@@ -185,7 +180,6 @@
     <string name="preference_system_bar_icons_dark">Σκοτεινό</string>
     <string name="preference_hide_nav_bar">Απόκρυψη γραμμής πλοήγησης</string>
     <string name="preference_screen_integrations_summary">Διαχείριση συνδεδεμένων λογαριασμών και υπηρεσιών</string>
-    <string name="preference_google">Google</string>
     <string name="preference_icon_shape_pentagon">Πεντάγωνο</string>
     <string name="preference_dim_wallpaper_summary">Σε σκούρα θέματα, σκοτείνιασμα ταπετσαρίας</string>
     <string name="preference_blur_wallpaper">Θάμπωμα ταπετσαρίας</string>
@@ -234,14 +228,10 @@
     <string name="preference_search_currencyconverter">Μετατροπέας νομίσματος</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_websites">Ιστοσελίδες</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">Αναζήτηση στα αρχεία του %1$s στο Google Drive</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Αναζήτηση στα αρχεία του %1$s</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">Σύνδεση με Google</string>
     <string name="preference_calendar_calendars">Ημερολόγια</string>
-    <string name="preference_calendar_hide_allday">Απόκρυψη ολοήμερων εκδηλώσεων</string>
     <string name="preference_search_bar_style">Στυλ</string>
     <string name="preference_screen_buildinfo">Πληροφορίες έκδοσης</string>
     <string name="preference_screen_buildinfo_summary">Περισσότερες πληροφορίες σχετικά με αυτή την έκδοση</string>
@@ -253,21 +243,17 @@
     <string name="preference_edit_button">Πλήκτρο επεξεργασίας</string>
     <string name="preference_widgets_edit_button_summary">Εμφάνιση ενός πλήκτρου για προσθήκη, αφαίρεση και αναδιάταξη γραφικών στοιχείων</string>
     <string name="no_account_owncloud">Δεν έχει συνδεθεί ακόμη λογαριασμός Owncloud</string>
-    <string name="no_account_google">Δεν έχει συνδεθεί ακόμη λογαριασμός Google</string>
     <string name="connect_account">Σύνδεση λογαριασμού</string>
     <string name="battery_part_charging">Φορτίζει</string>
     <string name="restore_different_minor_version">Αυτό το αντίγραφο ασφαλείας έχει δημιουργηθεί με διαφορετική έκδοση του %1$s. Κάποια δεδομένα μπορεί να μην έχουν επαναφερθεί σωστά.</string>
-    <string name="icon_picker_title">Επιλογή εικονιδίων</string>
     <string name="icon_picker_default_icon">Προεπιλογή</string>
     <string name="icon_picker_suggestions">Προτάσεις</string>
     <string name="apps_profile_main">Προσωπικό</string>
     <string name="apps_profile_work">Εργασίας</string>
     <string name="favorites">Αγαπημένα</string>
     <string name="favorites_empty_tag">Δεν υπάρχουν στοιχεία με αυτήν την ετικέτα</string>
-    <string name="create_app_shortcut">Δημιουργία συντόμευσης</string>
     <string name="frequently_used_show_in_favorites">Εμφάνιση στα αγαπημένα</string>
     <string name="frequently_used_rows">Αριθμός σειρών</string>
-    <string name="customize_tags_placeholder">Ετικέτες…</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="default_websearch_3_name">Google Play</string>
@@ -282,11 +268,8 @@
     <string name="widget_add_widget">Προσθήκη γραφικού στοιχείου</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Καρφιτσωμένο - αυτόματα ταξινομημένο</string>
     <string name="search_bar_placeholder">Αναζήτηση</string>
-    <string name="easter_egg_2">Σταμάτα σε παρακαλώ, χάνεις τον χρόνο σου</string>
     <string name="edit_favorites_dialog_pinned_sorted">Καρφιτσωμένο - χειροκίνητα ταξινομημένο</string>
     <string name="settings">Ρυθμίσεις</string>
-    <string name="easter_egg_3">Δεν θα το ξαναπώ: εδώ δεν κρύβεται απολύτως κανένα πασχαλινό αυγό</string>
-    <string name="nextcloud_server_url_empty">Η διεύθυνση URL του διακομιστή δεν πρέπει να είναι κενή</string>
     <string name="wallpaper">Φόντο</string>
     <string name="nextcloud_server_invalid_url">Αυτή η διεύθυνση URL δεν οδηγεί σε έγκυρη εγκατάσταση Nextcloud</string>
     <string name="wind_north_east">Βορειοανατολικός</string>
@@ -296,7 +279,6 @@
     <string name="wind_east_south_east">Ανατολικός νοτιοανατολικός</string>
     <string name="owncloud_login_2fa_hint">Εάν έχετε ενεργοποιημένο τον έλεγχο ταυτότητας δύο παραγόντων, πρέπει να χρησιμοποιήσετε εδώ έναν κωδικό πρόσβασης εφαρμογής.</string>
     <string name="wind_south_south_east">Νότιος νοτιοανατολικός</string>
-    <string name="owncloud_password_empty">Ο κωδικός πρόσβασης δεν πρέπει να είναι κενός</string>
     <string name="wind_south_south_west">Νότιος νοτιοδυτικός</string>
     <string name="wind_west_south_west">Δυτικός νοτιοδυτικός</string>
     <string name="wind_north_north_west">Βόρειος βορειοδυτικός</string>
@@ -415,7 +397,6 @@
     <string name="preference_search_websites_summary">Εμφάνιση προεπισκόπησης του ιστότοπου εάν το ερώτημα αναζήτησης είναι διεύθυνση URL</string>
     <string name="preference_search_localfiles">Τοπικά αρχεία</string>
     <string name="preference_search_localfiles_summary">Αναζήτηση εγγράφων, φωτογραφιών και άλλων αρχείων που είναι αποθηκευμένα σε αυτήν τη συσκευή</string>
-    <string name="preference_google_signin_summary">Σύνδεση για αναζήτηση στο Google Drive</string>
     <string name="preference_search_bar_style_summary">Παραμετροποίηση εμφάνισης γραμμής αναζήτησης</string>
     <string name="action_next">Επόμενο</string>
     <string name="duplicate">Διπλότυπο</string>
@@ -448,7 +429,6 @@
     <string name="preference_search_search_actions_summary">Διαμορφώστε τις γρήγορες ενέργειες και τις συντομεύσεις αναζήτησης</string>
     <string name="create_search_action_website_invalid_url">Ο συγκεκριμένος ιστότοπος δεν μπορεί να εισαχθεί αυτόματα ως αναζήτηση ιστού. Μπορείτε να δοκιμάσετε έναν διαφορετικό ιστότοπο ή να εισαγάγετε τα απαιτούμενα δεδομένα με μη αυτόματο τρόπο στο επόμενο βήμα.</string>
     <string name="search_action_app">Εφαρμογή</string>
-    <string name="edit_search_action_title">Επεξεργασία γρήγορης δράσης</string>
     <string name="create_search_action_website_url">Εισαγάγετε τη διεύθυνση του ιστότοπου:</string>
     <string name="search_action_websearch_url_hint">Το πρότυπο URL που χρησιμοποιείται για τη δημιουργία της διεύθυνσης URL αναζήτησης ιστού. Χρησιμοποιήστε το \"${1}\" ως σύμβολο κράτησης θέσης για τον πραγματικό όρο αναζήτησης, π.χ. https://google.com/search?q=${1}.</string>
     <string name="preference_plugin_badges">Σήματα προσθηκών</string>
@@ -476,14 +456,12 @@
     <string name="widget_action_replace">Αντικατάσταση</string>
     <string name="widget_config_calendar_missing_calendars_hint">Δεν μπορείτε να βρείτε τα ημερολόγια σας;</string>
     <string name="preference_screen_homescreen">Αρχική οθόνη</string>
-    <string name="preference_category_accounts">Λογαριασμοί</string>
     <string name="preference_weather_integration">Καιρός</string>
     <string name="preference_custom_colors_corepalette">Παλέτα χρωμάτων</string>
     <string name="preference_screen_tags">Ετικέτες</string>
     <string name="preference_screen_homescreen_summary">Ρολόι, γραμμή αναζήτησης, ταπετσαρία, γραμμές συστήματος</string>
     <string name="preference_screen_icons">Πλέγμα και εικονίδια</string>
     <string name="preference_media_integration">Έλεγχος πολυμέσων</string>
-    <string name="icon_picker_no_packs_installed">Δεν έχουν εγκατασταθεί πακέτα εικονιδίων</string>
     <string name="search_action_alarm">Βάζω ξυπνητήρι</string>
     <string name="search_action_websearch">Διαδικτυακή αναζήτηση</string>
     <string name="search_action_contact">Δημιουργία επαφής</string>
@@ -491,10 +469,8 @@
     <string name="create_search_action_type_web">Αναζήτηση σε έναν ιστότοπο</string>
     <string name="create_search_action_type_app">Αναζήτηση σε μία εφαρμογή</string>
     <string name="create_search_action_type_intent">Προσαρμοσμένη πρόθεση</string>
-    <string name="create_search_action_title">Νέα γρήγορη δράση</string>
     <string name="create_search_action_pick_app">Επιλέξτε μια εφαρμογή για αναζήτηση:</string>
     <string name="search_action_label">Όνομα</string>
     <string name="search_action_websearch_url">Πρότυπο URL</string>
     <string name="experimental_feature">Πειραματικό</string>
-    <string name="create_tag_title">Νέα ετικέτα</string>
 </resources>

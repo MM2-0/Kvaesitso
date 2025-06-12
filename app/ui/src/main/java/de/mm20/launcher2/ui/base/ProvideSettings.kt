@@ -9,19 +9,20 @@ import de.mm20.launcher2.ui.component.ProvideIconShape
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.TransparencyScheme
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import org.koin.androidx.compose.inject
+import org.koin.compose.koinInject
 
 @Composable
 fun ProvideSettings(
     content: @Composable () -> Unit
 ) {
-    val settings: UiSettings by inject()
-    val widgetRepository: WidgetRepository by inject()
+    val settings: UiSettings = koinInject()
+    val widgetRepository: WidgetRepository = koinInject()
 
     val cardStyle by remember {
         settings.cardStyle.distinctUntilChanged()
@@ -47,6 +48,10 @@ fun ProvideSettings(
         LocalCardStyle provides cardStyle,
         LocalFavoritesEnabled provides favoritesEnabled,
         LocalGridSettings provides gridSettings,
+        LocalTransparencyScheme provides TransparencyScheme(
+            background = cardStyle.opacity * 0.85f,
+            surface = cardStyle.opacity,
+        )
     ) {
         ProvideIconShape(iconShape) {
             content()

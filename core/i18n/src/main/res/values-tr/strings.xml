@@ -4,7 +4,6 @@
     <string name="menu_share_apk_file">Paket Dosyası</string>
     <string name="menu_share_store_link">%1$s linki</string>
     <string name="menu_favorites_pin">Favorilere sabitle</string>
-    <string name="msg_item_hidden">%1$s gizlendi.</string>
     <string name="menu_delete">Sil</string>
     <string name="action_undo">Geri al</string>
     <string name="menu_contacts_open_externally">Kişiler uygulamasında aç</string>
@@ -78,8 +77,6 @@
     <string name="menu_app_info">Uygulama bilgisi</string>
     <string name="menu_customize">Kişiselleştir</string>
     <string name="menu_open_file">Aç</string>
-    <string name="menu_hide">Gizle</string>
-    <string name="menu_unhide">Gizleme</string>
     <string name="wind_north_east">Kuzeydoğu</string>
     <string name="wind_north_north_east">Kuzey-Kuzeydoğu</string>
     <string name="websearch_dialog_query_encoding">Sorgu kodlama</string>
@@ -95,7 +92,6 @@
     <string name="edit_favorites_dialog_tags">Etiketler</string>
     <string name="edit_favorites_dialog_tag_section_empty">Sabitlenmiş etiketler burada görünecektir</string>
     <string name="nextcloud_server_url">Nextcloud sunucu URL\'si</string>
-    <string name="nextcloud_server_url_empty">Sunucu URL\'si boş olmamalı</string>
     <string name="duplicate">Çoğalt</string>
     <string name="action_next">Sonraki</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Sabitlenmiş - otomatik olarak sıralandı</string>
@@ -116,18 +112,13 @@
     <string name="websearch_dialog_query_encoding_none">Hiçbiri</string>
     <string name="widget_name_unknown">Bilinmeyen uygulama widget\'ı</string>
     <string name="shortcut_summary">%1$s tarafından</string>
-    <string name="easter_egg_1">Yanınızda getirmediğiniz sürece burada paskalya yumurtası yok.</string>
-    <string name="easter_egg_2">Lütfen, kesin şunu, zamanınızı boşa harcıyorsunuz</string>
-    <string name="easter_egg_3">Tekrar söylemeyeceğim: burada kesinlikle hiçbir paskalya yumurtası saklı değil</string>
     <string name="easter_egg_text">Beni buldun. Tebrik ederim. Buna değdi mi\?</string>
     <string name="edit_favorites_dialog_unpinned">Sabitlenmemiş - sık kullanılan</string>
     <string name="file_type_launchertheme">%1$s teması</string>
     <string name="login_flow_login">Giriş Yap</string>
     <string name="disclaimer">Sorumluluk reddi</string>
     <string name="owncloud_username">Kullanıcı adı</string>
-    <string name="owncloud_password_empty">Şifre boş bırakılamaz</string>
     <string name="login_flow_continue">Devam et</string>
-    <string name="owncloud_username_empty">Kullanıcı adı boş bırakılamaz</string>
     <string name="owncloud_server_url">Owncloud sunucu URL\'si</string>
     <string name="owncloud_login_2fa_hint">İki faktörlü kimlik doğrulamayı etkinleştirdiyseniz, burada bir uygulama parolası kullanmanız gerekir.</string>
     <string name="owncloud_login_failed">Giriş başarısız: kullanıcı adı ya da şifre hatalı.</string>
@@ -199,9 +190,7 @@
     <string name="preference_gesture_swipe_down">Aşağı kaydır</string>
     <string name="preference_clockwidget_favorites_part">Sabit panel</string>
     <string name="preference_logs">Kayıtlar</string>
-    <string name="preference_search_bar_separate_work_profile">İş profili uygulamalarını ayır</string>
     <string name="preference_screen_icons_summary">Düzen, simge boyutu, simge paketleri, rozetler</string>
-    <string name="preference_search_bar_separate_work_profile_summary">İş profili uygulamalarını ayrı bir sekmede gösterir</string>
     <string name="weather_no_data">Hava durumu bilgisi bulunmamaktadır.</string>
     <string name="missing_permission_calendar_widget_settings">Bu widget Takvim iznine ihtiyaç duyuyor</string>
     <string name="grant_permission">Erişime izin ver</string>
@@ -215,7 +204,6 @@
     <string name="preference_cards_summary">Kart görünümünü özelleştir</string>
     <string name="preference_cards">Kartlar</string>
     <string name="preference_search_result_ordering_weight_factor_low">Düşük</string>
-    <string name="preference_search_result_ordering_weighted">Kullanıma göre</string>
     <string name="preference_nextcloud_signin">Nextcloud\'a giriş yapın</string>
     <string name="preference_nextcloud_signin_summary">Nextcloud sunucunuzda arama yapmak için giriş yapın</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -234,7 +222,6 @@
         <item quantity="one">%1$s bildirim</item>
         <item quantity="other">%1$s bildirim</item>
     </plurals>
-    <string name="preference_search_result_ordering_alphabetic">Alfabetik</string>
     <string name="widget_config_appwidget_background">Kart Arkaplan</string>
     <string name="widget_config_appwidget_configure">Widgeti yapılandır</string>
     <string name="preference_search_bar_style">Stil</string>
@@ -260,12 +247,10 @@
     <string name="preference_icon_shape_rounded_square">Yuvarlatılmış Kare</string>
     <string name="preference_plugin_badges">Eklenti rozeti</string>
     <string name="preference_force_themed_icons">Temalı simgeleri zorla</string>
-    <string name="preference_search_gdrive">Google Drive</string>
     <string name="search_action_open_url">Websiteyi gör</string>
     <string name="preference_search_result_ordering_weight_factor_default">Dengeli</string>
     <string name="preference_owncloud_signin_summary">Owncloud sunucunuzda arama yapmak için giriş yapın</string>
     <string name="preference_enforce_icon_shape_summary">Desteklemeyen ikonlar dahil tüm ikonları seçili şekle zorla</string>
-    <string name="preference_search_gdrive_summary">Google Drive üzerinde %1$s kullanıcısının dosyalarını ara</string>
     <string name="gesture_action_none">Hiçbir şey yapma</string>
     <string name="preference_force_themed_icons_summary">Uygulamanın renk düzenini tüm simgelere uygula, desteklenmeyenler dahil (önerilmez)</string>
     <string name="preference_logs_summary">Uygulama kayıtlarını görüntüle ve dışarı aktar</string>
@@ -274,15 +259,12 @@
     <string name="preference_search_websites_summary">Arama sorgusu bir bağlantıysa websitesinin bir önizlemesini göster</string>
     <string name="preference_clockwidget_layout_horizontal">Daraltılmış</string>
     <string name="preference_calendar_calendars">Takvimler</string>
-    <string name="create_tag_title">Yeni etiket</string>
     <string name="filter_settings_network_warning">Mevcut filtre, varsayılan olarak çevrimiçi aramayı etkinleştiriyor. Arama sorgularınız çevrimiçi servislerle paylaşılabilir. Gizlilik nedeniyle bu önerilmez.</string>
     <string name="preference_edit_button">Düzenleme butonu</string>
     <string name="create_search_action_type_web">Bir websitesinde ara</string>
     <string name="create_search_action_type_app">Bir uygulamada ara</string>
     <string name="gesture_failed_message">\"%1$s\" hareketini kullandınız. Bu hareket \"%2$s\" eylemi için ayarlanmıştır ancak şu sebeple bu eylemi gerçekleştiremiyoruz:</string>
     <string name="missing_permission_accessibility_gesture_failed">Bu işlemi gerçekleştirebilmek için başlatıcının erişilebilirlik hizmetinin etkinleştirilmesi gerekir.</string>
-    <string name="create_search_action_title">Yeni hızlı eylem</string>
-    <string name="edit_search_action_title">Hızlı eylem düzenle</string>
     <string name="widget_config_appwidget_borderless">Kenarlıksız</string>
     <string name="poi_category_american_football">Amerikan futbolu sahası</string>
     <string name="create_search_action_type_intent">Özel \"intent\"</string>
@@ -290,7 +272,6 @@
     <string name="note_widget_file_read_error_description">Bağlanılan dosya okunamıyor. Silinmiş veya yer değiştirilmiş olabilir. Başlatıcının hafızasındaki kopya kullanıldı. Eğer bu notu düzenlerseniz bağlanılan dosyanın üstüne yazılacaktır.</string>
     <string name="poi_category_swimming">Yüzme havuzu</string>
     <string name="experimental_feature">Deneysel</string>
-    <string name="preference_search_locations_radius_large_radius_warning">Büyük arama alanı aramayı önemli ölçüde yavaşlatabilir.</string>
     <string name="music_widget_open_player">Oynatıcıyı aç</string>
     <string name="tag_name">Etiket ismi</string>
     <string name="preference_gesture_long_press">Uzun basma</string>
@@ -308,7 +289,6 @@
     <string name="widget_pick_widget">Widget seç</string>
     <string name="app_widget_loading_failed">Widget yüklemesi başarısız oldu.</string>
     <string name="widget_config_music_integration_settings">Medya kontrolleri ayarları</string>
-    <string name="icon_picker_no_packs_installed">Yüklü simge paketi yok</string>
     <string name="plugin_weather_provider_enabled">Şimdilik hava durumu sağlayıcısı olarak ayarla</string>
     <string name="clock_style_binary">İkili</string>
     <string name="clock_style_analog">İbreler</string>
@@ -370,7 +350,6 @@
     <string name="widget_config_calendar_missing_calendars_hint">Takviminizi bulamadınız mı?</string>
     <string name="preference_icon_pack_summary_empty">Yüklü simge paketi yok</string>
     <string name="preference_shortcut_badges">Kısayol rozeti</string>
-    <string name="customize_tags_placeholder">Etiketler</string>
     <string name="preference_system_bar_icons_light">Aydınlık</string>
     <string name="preference_system_bar_icons_dark">Karanlık</string>
     <string name="preference_hide_status_bar">Bildirim çubuğunu gizle</string>
@@ -431,7 +410,6 @@
     <string name="preference_icon_pack">Simge paketi</string>
     <string name="preference_nav_bar_icons">Navigasyon çubuğu ikonları</string>
     <string name="preference_system_bar_icons_auto">Otomatik</string>
-    <string name="preference_google">Google</string>
     <string name="preference_icon_shape_pentagon">Beşgen</string>
     <string name="preference_screen_search_summary">Arama, etiketler, gizli ögeler</string>
     <string name="preference_search_favorites">Favoriler</string>
@@ -450,7 +428,6 @@
     <string name="preference_charging_animation">Şarj animasyonu</string>
     <string name="preference_blur_wallpaper_unsupported">Bu cihazda desteklenmemekte</string>
     <string name="preference_search_localfiles_summary">Cihazdaki belgeleri, fotoğrafları ve diğer dosyaları ara</string>
-    <string name="preference_google_signin">Google ile Giriş Yap</string>
     <string name="preference_category_badges">Rozetler</string>
     <string name="preference_search_bar_color">Renk</string>
     <string name="preference_search_bar_auto_focus_summary">Uygulama menüsü açıldığı anda klavyeyi otomatik olarak göster</string>
@@ -486,14 +463,12 @@
     <string name="preference_search_locations">Yerler</string>
     <string name="preference_search_supportedunits">Desteklenen birimler</string>
     <string name="preference_search_locations_radius">Arama kapsamı</string>
-    <string name="preference_google_signin_summary">Google Drive\'da arama yapmak için giriş yapın</string>
     <string name="preference_screen_buildinfo">Derleme bilgisi</string>
     <string name="preference_search_bar_style_summary">Arama kutusunun görünümünü özelleştirin</string>
     <string name="preference_edit_favorites_summary">Sabitlenmiş ögelerin sıralamasını değiştir</string>
     <string name="preference_category_favorites_frequently_used">Sık kullanılan</string>
     <string name="preference_favorites_frequently_used_summary">Sık kullanılan ögeleri göster</string>
     <string name="preference_favorites_edit_button_summary">Favorileri yeniden düzenlemek için bir buton göster</string>
-    <string name="create_app_shortcut">Kısayol oluştur</string>
     <string name="search_bar_position_bottom">Alt</string>
     <string name="poi_category_books">Sahaf</string>
     <string name="poi_category_car_wash">Araba yıkama</string>
@@ -504,7 +479,6 @@
     <string name="preference_cards_stroke_width">Kenarlık kalınlığı</string>
     <string name="preference_icon_shape_square">Kare</string>
     <string name="preference_icon_shape_circle">Yuvarlak</string>
-    <string name="preference_calendar_hide_allday">Tüm gün süren etkinlikleri gizle</string>
     <string name="preference_screen_tags">Etiketler</string>
     <string name="preference_screen_tags_summary">Etiketleri ve etiketli ögeleri yönet</string>
     <string name="preference_screen_homescreen">Ana sayfa</string>
@@ -520,8 +494,6 @@
     <string name="preference_signout">Çıkış yap</string>
     <string name="preference_screen_homescreen_summary">Saat, arama kutusu, duvar kağıdı, sistem çubukları</string>
     <string name="preference_media_integration">Medya kontrolleri</string>
-    <string name="preference_category_accounts">Hesaplar</string>
-    <string name="icon_picker_title">Simge seç</string>
     <string name="icon_picker_default_icon">Varsayılan</string>
     <string name="icon_picker_suggestions">Öneriler</string>
     <string name="apps_profile_work">İş</string>
@@ -529,7 +501,6 @@
     <string name="preference_search_search_actions_summary">Hızlı eylemleri ve kısayolları düzenle</string>
     <string name="search_action_call">Çağrı</string>
     <string name="search_action_message">Mesaj</string>
-    <string name="edit_tag_title">Etiket düzenle</string>
     <string name="search_results_order_top_down">Yukarıdan aşağıya</string>
     <string name="preference_screen_gestures">Hareketler</string>
     <string name="theme_color_scheme_autogenerate">Ana rengi kullan</string>
@@ -615,7 +586,6 @@
     <string name="customize_item_visibility">Şurada göster</string>
     <string name="music_widget_play">Oynat</string>
     <string name="music_widget_pause">Durdur</string>
-    <string name="reset_icon">Simgeyi sıfırla</string>
     <string name="profile_work_profile_action_unlock">Devam ettir</string>
     <string name="profile_work_profile_action_lock">İş uygulamalarını durdur</string>
     <string name="profile_private_profile_state_locked">Özel alan kilitli.</string>
@@ -636,7 +606,6 @@
     <string name="missing_permission_file_search_settings_android10">Yerel dosyaları arayabilmek için depolama düzenleyebilme izni gereklidir</string>
     <string name="gesture_action_open_search">Aramayı aç</string>
     <string name="poi_category_pub">Pub</string>
-    <string name="preference_search_result_ordering">Arama sonuçları sıralaması</string>
     <string name="missing_permission_auto_location">Otomatik konum belirleyebilmek için konum erişimi gereklidir</string>
     <string name="missing_permission_file_search_settings">Yerel dosyaları arayabilmek için depolama erişimi izni gereklidir</string>
     <string name="item_visibility_hidden">Asla</string>
@@ -715,7 +684,6 @@
     <string name="no_account_nextcloud">Herhangi bir Nextcloud hesabı bağlamadınız</string>
     <string name="apps_profile_private">Gizli</string>
     <string name="no_account_owncloud">Herhangi bir Owncloud hesabı bağlamadınız</string>
-    <string name="no_account_google">Herhangi bir Google hesabı bağlamadınız</string>
     <string name="connect_account">Hesap bağla</string>
     <string name="backup_complete">Yedekleme tamamlandı.</string>
     <string name="restore_invalid_file">Seçilen dosya bir yedekleme dosyasına benzemiyor. Doğru dosyayı seçtiğinize emin misiniz?</string>
@@ -798,4 +766,22 @@
     </plurals>
     <string name="calendar_widget_open_calendar">Takvimi aç</string>
     <string name="hint_drag_and_drop_reorder">Ögeleri düzenlemek için basılı tutun ve sürükleyin</string>
+    <string name="weather_condition_sleetandthunder">Karla karışık yağmur ile gök gürültüsü</string>
+    <string name="weather_condition_partlycloudy">Parçalı bulutlu</string>
+    <string name="weather_condition_heavysnowandthunder">Şiddetli kar ve gök gürültüsü</string>
+    <string name="weather_condition_rainandthunder">Yağmur ve gök gürültüsü</string>
+    <string name="weather_condition_lightsleet">Hafif karla karışık yağmur</string>
+    <string name="widget_removed">Widget kaldırıldı</string>
+    <string name="weather_condition_sleet">Sulu kar</string>
+    <string name="weather_condition_thunderstorm">Fırtına</string>
+    <string name="weather_condition_heavysleetandthunder">Yoğun karla karışık yağmur ve gök gürültüsü</string>
+    <string name="weather_condition_rainshowers">Sağanak yağmur</string>
+    <string name="weather_condition_lightsleetandthunder">Hafif sulu kar ve gök gürültüsü</string>
+    <string name="no_selection">Seçim yok</string>
+    <string name="save_as_file">Dosya olarak kaydet</string>
+    <string name="action_install">Yükle</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d tamamlanmamış görev</item>
+        <item quantity="other">+%1$d tamamlanmamış görev</item>
+    </plurals>
 </resources>

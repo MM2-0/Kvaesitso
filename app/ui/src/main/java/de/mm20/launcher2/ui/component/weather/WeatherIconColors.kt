@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.component.weather
 
 import android.content.Context
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -10,6 +11,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import blend.Blend
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.ktx.atTone
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 
 
 data class WeatherIconColors(
@@ -38,31 +41,35 @@ object WeatherIconDefaults {
         val context = LocalContext.current
 
         val themeColor = MaterialTheme.colorScheme.primary
+        val darkTheme = LocalDarkTheme.current
+
+        val neutral1 = MaterialTheme.colorScheme.outline
+        val neutral2 = MaterialTheme.colorScheme.outline
 
         return remember(themeColor) {
             WeatherIconColors(
-                sun = harmonize(context, R.color.weather_sun, themeColor),
-                moon = harmonize(context, R.color.weather_moon, themeColor),
-                cloudDark1 = harmonize(context, R.color.weather_cloud_dark_1, themeColor),
-                cloudDark2 = harmonize(context, R.color.weather_cloud_dark_2, themeColor),
-                cloudMedium1 = harmonize(context, R.color.weather_cloud_medium_1, themeColor),
-                cloudMedium2 = harmonize(context, R.color.weather_cloud_medium_2, themeColor),
-                cloudLight1 = harmonize(context, R.color.weather_cloud_light_1, themeColor),
-                cloudLight2 = harmonize(context, R.color.weather_cloud_light_2, themeColor),
-                rain = harmonize(context, R.color.weather_rain, themeColor),
-                snow = harmonize(context, R.color.weather_snow, themeColor),
-                hail = harmonize(context, R.color.weather_hail, themeColor),
-                fog = harmonize(context, R.color.weather_fog, themeColor),
-                wind = harmonize(context, R.color.weather_wind, themeColor),
-                windDark = harmonize(context, R.color.weather_wind_dark, themeColor),
-                lightningBolt = harmonize(context, R.color.weather_lightning_bolt, themeColor),
-                hot = harmonize(context, R.color.weather_hot, themeColor),
-                cold = harmonize(context, R.color.weather_cold, themeColor),
+                sun = harmonize(context, 0xFFFFB300.toInt(), themeColor),
+                moon = harmonize(context, 0xFF9E9E9E.toInt(), themeColor),
+                cloudDark1 = harmonize(context, neutral1.atTone(if (darkTheme) 40 else 30).toArgb(), themeColor),
+                cloudDark2 = harmonize(context, neutral1.atTone(if (darkTheme) 30 else 20).toArgb(), themeColor),
+                cloudMedium1 = harmonize(context, neutral1.atTone(if (darkTheme) 60 else 50).toArgb(), themeColor),
+                cloudMedium2 = harmonize(context, neutral1.atTone(if (darkTheme) 50 else 40).toArgb(), themeColor),
+                cloudLight1 = harmonize(context, neutral1.atTone(if (darkTheme) 95 else 85).toArgb(), themeColor),
+                cloudLight2 = harmonize(context, neutral1.atTone(if (darkTheme) 85 else 75).toArgb(), themeColor),
+                rain = harmonize(context, if (darkTheme) 0xFF64B5F6.toInt() else 0xFF1E88E5.toInt(), themeColor),
+                snow = harmonize(context, if (darkTheme) 0xFFF5F5F5.toInt() else 0xFFE0E0E0.toInt(), themeColor),
+                hail = harmonize(context, if (darkTheme) 0xFFF5F5F5.toInt() else 0xFFE0E0E0.toInt(), themeColor),
+                fog = harmonize(context, neutral1.atTone(if (darkTheme) 95 else 85).toArgb(), themeColor),
+                wind = harmonize(context, neutral2.atTone(if (darkTheme) 70 else 75).toArgb(), themeColor),
+                windDark = harmonize(context, neutral2.atTone(if (darkTheme) 40 else 45).toArgb(), themeColor),
+                lightningBolt = harmonize(context, 0xFFFFB300.toInt(), themeColor),
+                hot = harmonize(context, if (darkTheme) 0xFFE57373.toInt() else 0xFFE53935.toInt(), themeColor),
+                cold = harmonize(context, if (darkTheme) 0xFF4FC3F7.toInt() else 0xFF039BE5.toInt(), themeColor),
             )
         }
     }
 }
 
-private fun harmonize(context: Context, @ColorRes baseColor: Int, themeColor: Color): Color {
-    return Color(Blend.harmonize(context.getColor(baseColor), themeColor.toArgb()))
+private fun harmonize(context: Context, @ColorInt baseColor: Int, themeColor: Color): Color {
+    return Color(Blend.harmonize(baseColor, themeColor.toArgb()))
 }

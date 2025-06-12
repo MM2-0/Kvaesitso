@@ -59,8 +59,8 @@ fun FavoritesTagSelector(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                top = if (reverse) 8.dp else 4.dp,
-                bottom = if (reverse) 4.dp else 8.dp,
+                top = 4.dp,
+                bottom = 4.dp,
                 end = if (editButton) 8.dp else 0.dp
             ),
         targetState = expanded,
@@ -73,7 +73,6 @@ fun FavoritesTagSelector(
                 Row(
                     modifier = Modifier
                         .weight(1f)
-                        .consumeAllScrolling()
                         .horizontalScroll(scrollState)
                         .padding(end = 12.dp),
                 ) {

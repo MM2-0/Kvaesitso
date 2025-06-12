@@ -14,6 +14,7 @@ import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.preferences.LatLon
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.preferences.weather.WeatherSettings
+import de.mm20.launcher2.weather.breezy.BreezyWeatherProvider
 import de.mm20.launcher2.weather.brightsky.BrightSkyProvider
 import de.mm20.launcher2.weather.here.HereProvider
 import de.mm20.launcher2.weather.metno.MetNoProvider
@@ -24,7 +25,9 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.time.Duration
 import java.util.*
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.toJavaDuration
 
 interface WeatherRepository {
     fun getActiveProvider(): Flow<WeatherProviderInfo?>
@@ -71,13 +74,6 @@ internal class WeatherRepositoryImpl(
     }
 
     init {
-        val weatherRequest =
-            PeriodicWorkRequestBuilder<WeatherUpdateWorker>(Duration.ofMinutes(60))
-                .build()
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            "weather",
-            ExistingPeriodicWorkPolicy.UPDATE, weatherRequest
-        )
 
         scope.launch {
             hasLocationPermission.collectLatest {
@@ -86,6 +82,14 @@ internal class WeatherRepositoryImpl(
         }
         scope.launch {
             settings.collectLatest {
+                val provider =  WeatherProvider.getInstance(it.provider)
+                val weatherRequest =
+                    PeriodicWorkRequestBuilder<WeatherUpdateWorker>(Duration.ofMillis(provider.getUpdateInterval()))
+                        .build()
+                WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+                    "weather",
+                    ExistingPeriodicWorkPolicy.UPDATE, weatherRequest
+                )
                 requestUpdate()
             }
         }
@@ -185,6 +189,15 @@ internal class WeatherRepositoryImpl(
                 WeatherProviderInfo(
                     HereProvider.Id,
                     context.getString(R.string.provider_here)
+                )
+            )
+        }
+        if (BreezyWeatherProvider.isAvailable(context)) {
+            providers.add(
+                WeatherProviderInfo(
+                    BreezyWeatherProvider.Id,
+                    context.getString(R.string.provider_breezy),
+                    managedLocation = true
                 )
             )
         }

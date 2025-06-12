@@ -37,13 +37,10 @@
     <string name="menu_launch">啟動</string>
     <string name="menu_customize">自訂</string>
     <string name="menu_open_file">開啟</string>
-    <string name="menu_hide">隱藏</string>
-    <string name="menu_unhide">禁止隱藏</string>
     <string name="menu_share">分享</string>
     <string name="menu_share_store_link">連結 %1$s</string>
     <string name="menu_share_apk_file">套件檔案</string>
     <string name="menu_uninstall">解除安裝</string>
-    <string name="msg_item_hidden">%1$s已被隱藏。</string>
     <string name="action_undo">復原動作</string>
     <string name="menu_delete">刪除</string>
     <string name="menu_remove">移除</string>
@@ -125,9 +122,6 @@
     <string name="widget_name_favorites">我的最愛</string>
     <string name="widget_add_widget">新增小工具</string>
     <string name="shortcut_summary">由 %1$s</string>
-    <string name="easter_egg_1">這裡沒有彩蛋，除非您自己新增。</string>
-    <string name="easter_egg_2">拜託，停下來，您在浪費您的時間</string>
-    <string name="easter_egg_3">我不會再說一次了：這裡絕對沒有彩蛋隱藏在這裡</string>
     <string name="easter_egg_text">好吧，您找到我了。恭喜。值得嗎？</string>
     <string name="close">關閉</string>
     <string name="save">儲存</string>
@@ -145,7 +139,6 @@
     <string name="edit_favorites_dialog_tag_section_empty">被釘選的標籤將出現在這裡</string>
     <string name="edit_favorites_dialog_new_tag">建立標籤…</string>
     <string name="nextcloud_server_url">Nextcloud 伺服器 URL</string>
-    <string name="nextcloud_server_url_empty">伺服器 URL 禁止為空</string>
     <string name="nextcloud_server_invalid_url">此 URL 不能指向一個有效的 Nextcloud 安裝器</string>
     <string name="owncloud_server_url">Owncloud 伺服器 URL</string>
     <string name="owncloud_server_invalid_url">此 URL 不能指向一個有效的 Owncloud 安裝器</string>
@@ -153,8 +146,6 @@
     <string name="owncloud_username">使用者名稱</string>
     <string name="owncloud_login_2fa_hint">如果您開啟了兩步驗證，您必須在此使用一個應用密碼。</string>
     <string name="owncloud_login_failed">登入失敗：不正確的使用者名稱或者密碼。</string>
-    <string name="owncloud_username_empty">使用者名稱禁止為空</string>
-    <string name="owncloud_password_empty">密碼禁止為空</string>
     <string name="login_flow_continue">繼續</string>
     <string name="disclaimer">宣告</string>
     <string name="disclaimer_currency_converter">歐洲中央銀行每日公佈一次的匯率。所有資訊均按「原樣」提供，不提供任何保證。對於這些資訊，我們不承擔任何責任。 \n \n最後更新：%1$s</string>
@@ -295,7 +286,6 @@
     <string name="preference_hide_status_bar">隱藏狀態列</string>
     <string name="preference_hide_nav_bar">隱藏導覽列</string>
     <string name="preference_screen_integrations_summary">管理已連線的帳戶與服務</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">以 %1$s 身份登入</string>
     <string name="preference_summary_not_logged_in">您當前未登入</string>
     <string name="preference_icon_shape_pentagon">五角形</string>
@@ -375,15 +365,10 @@
     <string name="preference_search_websites_summary">如果搜尋查詢是 URL，則顯示網站的預覽</string>
     <string name="preference_search_localfiles">本機檔案</string>
     <string name="preference_search_localfiles_summary">搜尋儲存在此裝置上的文件、照片與其它檔案</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">在 Google Drive 上搜尋 %1$s</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">搜尋%1$s的檔案</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">使用 Google 登入</string>
-    <string name="preference_google_signin_summary">登入以搜尋 Google Drive</string>
     <string name="preference_calendar_calendars">日曆</string>
-    <string name="preference_calendar_hide_allday">隱藏全天事件</string>
     <string name="preference_screen_buildinfo_summary">有關此版本應用程式的更多資訊</string>
     <string name="preference_search_bar_style">風格</string>
     <string name="preference_search_bar_style_summary">自訂搜尋欄外觀</string>
@@ -403,7 +388,6 @@
     <string name="preference_favorites_edit_button_summary">顯示一個按鈕以重新排列我的最愛</string>
     <string name="preference_widgets_edit_button_summary">顯示一個按鈕以新增、移除與重新排列小工具</string>
     <string name="no_account_nextcloud">您尚未連線 Nextcloud 帳戶</string>
-    <string name="no_account_google">您尚未連線 Google 帳戶</string>
     <string name="connect_account">連線帳戶</string>
     <string name="battery_part_charging">充電中</string>
     <string name="backup_complete">備份已完成。</string>
@@ -412,7 +396,6 @@
     <string name="restore_different_minor_version">此備份在不一致的版本 %1$s 下建立。一些資料可能不會被正確還原。</string>
     <string name="restore_meta">由 %3$s 於 %1$s 在 %2$s 中建立。</string>
     <string name="restore_complete">備份已還原。</string>
-    <string name="icon_picker_title">選擇器圖示</string>
     <string name="icon_picker_default_icon">預設</string>
     <string name="icon_picker_suggestions">建議</string>
     <string name="icon_picker_search_icon">搜尋圖示包</string>
@@ -421,10 +404,8 @@
     <string name="favorites">我的最愛</string>
     <string name="favorites_empty">被釘選的與常用的項目會出現在這裡</string>
     <string name="favorites_empty_tag">此標籤裡沒有項目</string>
-    <string name="create_app_shortcut">建立捷徑</string>
     <string name="frequently_used_show_in_favorites">顯示在我的最愛</string>
     <string name="frequently_used_rows">行數</string>
-    <string name="customize_tags_placeholder">標籤</string>
     <string name="preference_screen_search_actions">快捷操作</string>
     <string name="preference_search_search_actions_summary">組態快捷操作與搜尋欄捷徑</string>
     <string name="search_action_call">撥號</string>
@@ -439,19 +420,15 @@
     <string name="create_search_action_type_web">在網站上搜尋</string>
     <string name="create_search_action_type_app">在應用程式中搜尋</string>
     <string name="create_search_action_type_intent">Custom intent</string>
-    <string name="create_search_action_title">新建快捷操作</string>
-    <string name="edit_search_action_title">編輯快捷操作</string>
     <string name="create_search_action_pick_app">固定一個應用程式到搜尋欄：</string>
     <string name="create_search_action_website_url">輸入網站位址：</string>
     <string name="create_search_action_website_invalid_url">給定的網站不能自動匯入成搜尋引擎。您可以嘗試其它不同的網站或者在下一步手動輸入必填的資料。</string>
     <string name="search_action_label">名稱</string>
     <string name="search_action_app">應用程式</string>
     <string name="search_action_websearch_url">URL 範本</string>
-    <string name="search_action_websearch_url_hint">URL 範本用於建構搜尋引擎的 URL。使用 ‘${1}’ 作為實際搜尋字詞的預留位置，例如 https://google.com/search?q=${1}</string>
+    <string name="search_action_websearch_url_hint">URL 範本用於建構搜尋引擎的 URL。使用 ‘${1}’ 作為實際搜尋字詞的預留位置，例如 https://google.com/search?q=${1}。</string>
     <string name="more_information">更多資訊</string>
     <string name="experimental_feature">實驗性的</string>
-    <string name="create_tag_title">新標籤</string>
-    <string name="edit_tag_title">編輯標籤</string>
     <string name="tag_exists_error">以此命名的標籤已經存在。</string>
     <string name="tag_exists_message">以此命名的標籤已經存在。如果你執意而為，兩個標籤將會被合併。</string>
     <string name="tag_no_items_message">沒有項目被分配給此標籤。如果你執意而為，此標籤將會被刪除。</string>
@@ -476,7 +453,6 @@
     <string name="preference_gesture_swipe_down">下滑</string>
     <string name="preference_gesture_swipe_left">左滑</string>
     <string name="login_flow_login">登入</string>
-    <string name="icon_picker_no_packs_installed">未安裝任何圖示包</string>
     <plurals name="calendar_widget_running_events">
         <item quantity="other">從過去 %1$d 天運行的事件</item>
     </plurals>
@@ -493,9 +469,6 @@
     </plurals>
     <string name="gesture_action_launch_app">啟動應用程式</string>
     <string name="icon_picker_filter_all_packs">所有圖示包</string>
-    <string name="preference_search_result_ordering">搜尋結果排序</string>
-    <string name="preference_search_result_ordering_alphabetic">字母順序</string>
-    <string name="preference_search_result_ordering_weighted">依使用率排序</string>
     <string name="preference_search_result_ordering_weight_factor">排名靈活性</string>
     <string name="preference_search_result_ordering_weight_factor_low">穩定</string>
     <string name="preference_search_result_ordering_weight_factor_default">平衡</string>
@@ -519,7 +492,6 @@
     <string name="note_widget_file_read_error_description">無法讀取連結的檔案。可能是因為它已經被移動或刪除。已從啟動器的內部儲存還原了一份副本。如果您編輯註記，連結的檔案可能會被覆寫。</string>
     <string name="preference_category_media_apps">媒體應用程式</string>
     <string name="preference_screen_icons_summary">網格、圖示大小、圖示包、標記</string>
-    <string name="preference_category_accounts">帳戶</string>
     <string name="preference_weather_integration">天氣</string>
     <string name="preference_media_integration">媒體控制</string>
     <string name="preference_screen_icons">網格與圖示</string>
@@ -557,7 +529,7 @@
     <string name="theme_color_scheme_autogenerate">從原色開始</string>
     <string name="preference_mdy_color_source">動態色彩來源</string>
     <string name="preference_debug_dump_heap_in_progress">正在擷取快照…</string>
-    <string name="plugin_type_filesearch">當暗搜尋</string>
+    <string name="plugin_type_filesearch">檔案</string>
     <string name="poi_category_mobile_phone">手機店</string>
     <string name="preference_search_locations_radius">搜尋半徑</string>
     <string name="theme_color_scheme_system_default">使用系統預設</string>
@@ -589,7 +561,6 @@
     <string name="widget_pick_widget">選取小工具</string>
     <string name="preference_plugin_badges">外掛程式標記</string>
     <string name="plugin_weather_provider_enabled">目前設為天氣服務商</string>
-    <string name="preference_search_bar_separate_work_profile_summary">在單獨的分頁中顯示工作設定檔應用程式</string>
     <string name="preference_plugin_badges_summary">表明搜尋結果是由哪個外掛程式所建立</string>
     <string name="widget_use_theme_colors">使用主題色彩</string>
     <string name="poi_category_car_rental">汽車出租</string>
@@ -617,7 +588,6 @@
     <string name="weather_forecast_precipitation">降水</string>
     <string name="widget_config_appwidget_resize">調整大小</string>
     <string name="preference_debug_dump_heap">記憶體快照</string>
-    <string name="reset_icon">重置圖示</string>
     <string name="edit">編輯</string>
     <string name="preference_blur_wallpaper_radius">模糊半徑</string>
     <string name="action_clear">清除</string>
@@ -700,7 +670,6 @@
     <string name="poi_category_hospital">醫院</string>
     <string name="poi_category_supermarket">超市</string>
     <string name="clock_variant_outlined">輪廓</string>
-    <string name="preference_search_bar_separate_work_profile">單獨的工作設定檔應用程式</string>
     <string name="poi_category_ice_cream">冰淇淋店</string>
     <string name="poi_category_theater">劇院</string>
     <string name="poi_category_cinema">電影院</string>
@@ -800,7 +769,6 @@
     <string name="calendar_widget_previous_day">前一日</string>
     <string name="calendar_widget_next_day">後一日</string>
     <string name="calendar_widget_create_event">建立新事件</string>
-    <string name="preference_search_locations_radius_large_radius_warning">大的搜索半徑將會明顯減慢搜尋速度。</string>
     <string name="music_widget_previous_track">上一首</string>
     <string name="music_widget_next_track">下一首</string>
     <plurals name="calendar_search_enabled_lists">
@@ -811,4 +779,18 @@
     <string name="preference_clock_widget_time_format_system">系統預設</string>
     <string name="preference_clock_widget_time_format">時間格式</string>
     <string name="widget_removed">小工具已移除</string>
+    <string name="preference_contacts_call_on_tap">輕觸以撥打</string>
+    <string name="preference_contacts_call_on_tap_summary">當輕觸電話號碼時立即開始撥號</string>
+    <string name="departure_time_now">現在</string>
+    <plurals name="departure_time_in">
+        <item quantity="other">在 %1$d 分鐘內</item>
+    </plurals>
+    <string name="departure_time_departed">已離開</string>
+    <string name="plugin_type_contacts">聯絡人</string>
+    <string name="preference_grid_list_icons">在列表中顯示應用程式圖示</string>
+    <string name="preference_grid_list_style_summary">以列表而不是網格顯示應用程式</string>
+    <string name="preference_grid_list_icons_summary">在列表檢視中顯示圖示</string>
+    <string name="preference_search_local_calendar_summary">在此裝置上搜尋日曆</string>
+    <string name="preference_grid_list_style">在列表中顯示應用程式</string>
+    <string name="missing_permission_call_contacts_settings">需要撥號權限以開始撥號</string>
 </resources>

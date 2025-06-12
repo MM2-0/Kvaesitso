@@ -229,4 +229,33 @@
         <item quantity="other">tons</item>
     </plurals>
     <string name="unit_gigabyte_symbol">GB</string>
+    <plurals name="unit_acre">
+        <item quantity="one">hektar</item>
+        <item quantity="other">hektar</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">kvadratmeter</item>
+        <item quantity="other">kvadratmeter</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">knob</item>
+        <item quantity="other">knob</item>
+    </plurals>
+    <string name="dimension_length">Længde</string>
+    <string name="dimension_mass">Masse</string>
+    <string name="dimension_velocity">Hastighed</string>
+    <string name="dimension_volume">Volumen</string>
+    <string name="dimension_area">Område</string>
+    <string name="dimension_currency">Valuta</string>
+    <string name="dimension_data">Data</string>
+    <string name="dimension_bitrate">Bitrate</string>
+    <string name="dimension_pressure">Tryk</string>
+    <string name="dimension_energy">Energi</string>
+    <string name="dimension_frequency">Frekvens</string>
+    <string name="dimension_temperature">Temperatur</string>
+    <string name="dimension_time">Tid</string>
+    <plurals name="unit_megabyte">
+        <item quantity="one">megabyte</item>
+        <item quantity="other">megabytes</item>
+    </plurals>
 </resources>

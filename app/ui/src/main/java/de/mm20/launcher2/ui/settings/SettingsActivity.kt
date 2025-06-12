@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -11,6 +12,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
@@ -21,11 +23,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.core.net.toUri
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
 import de.mm20.launcher2.ui.base.BaseActivity
@@ -36,12 +40,18 @@ import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
+import de.mm20.launcher2.ui.settings.appearance.ExportThemeSettingsScreen
+import de.mm20.launcher2.ui.settings.appearance.ImportThemeSettingsRoute
+import de.mm20.launcher2.ui.settings.appearance.ImportThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
+import de.mm20.launcher2.ui.settings.breezyweather.BreezyWeatherSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
-import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
-import de.mm20.launcher2.ui.settings.colorscheme.ThemesSettingsScreen
+import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemeSettingsScreen
+import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemesSettingsScreen
+import de.mm20.launcher2.ui.settings.contacts.ContactsSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
@@ -66,7 +76,10 @@ import de.mm20.launcher2.ui.settings.plugins.PluginSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
+import de.mm20.launcher2.ui.settings.shapes.ShapeSchemeSettingsScreen
+import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
+import de.mm20.launcher2.ui.settings.tasks.TasksIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterHelpSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
 import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
@@ -91,16 +104,18 @@ class SettingsActivity : BaseActivity() {
             val navController = rememberNavController()
 
             LaunchedEffect(route) {
-                try {
-                    navController.navigate(route ?: "settings") {
-                        popUpTo("settings") {
-                            inclusive = true
+                if (route != null) {
+                    try {
+                        navController.navigate(route ?: "settings") {
+                            popUpTo("settings") {
+                                inclusive = true
+                            }
                         }
-                    }
-                } catch (e: IllegalArgumentException) {
-                    navController.navigate("settings") {
-                        popUpTo("settings") {
-                            inclusive = true
+                    } catch (e: IllegalArgumentException) {
+                        navController.navigate("settings") {
+                            popUpTo("settings") {
+                                inclusive = true
+                            }
                         }
                     }
                 }
@@ -124,7 +139,9 @@ class SettingsActivity : BaseActivity() {
                                 )
                             )
                         }
-                        OverlayHost {
+                        OverlayHost(
+                            modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainer)
+                        ) {
                             NavHost(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = navController,
@@ -148,17 +165,24 @@ class SettingsActivity : BaseActivity() {
                                 composable("settings/appearance") {
                                     AppearanceSettingsScreen()
                                 }
+                                composable("settings/appearance/export") {
+                                    ExportThemeSettingsScreen()
+                                }
+                                composable<ImportThemeSettingsRoute> {
+                                    val route: ImportThemeSettingsRoute = it.toRoute() ?: return@composable
+                                    ImportThemeSettingsScreen(route.fromUri.toUri())
+                                }
                                 composable("settings/homescreen") {
                                     HomescreenSettingsScreen()
                                 }
                                 composable("settings/icons") {
                                     IconsSettingsScreen()
                                 }
-                                composable("settings/appearance/themes") {
-                                    ThemesSettingsScreen()
+                                composable("settings/appearance/colors") {
+                                    ColorSchemesSettingsScreen()
                                 }
                                 composable(
-                                    "settings/appearance/themes/{id}",
+                                    "settings/appearance/colors/{id}",
                                     arguments = listOf(navArgument("id") {
                                         nullable = false
                                     })
@@ -166,7 +190,21 @@ class SettingsActivity : BaseActivity() {
                                     val id = it.arguments?.getString("id")?.let {
                                         UUID.fromString(it)
                                     } ?: return@composable
-                                    ThemeSettingsScreen(id)
+                                    ColorSchemeSettingsScreen(id)
+                                }
+                                composable("settings/appearance/shapes") {
+                                    ShapeSchemesSettingsScreen()
+                                }
+                                composable(
+                                    "settings/appearance/shapes/{id}",
+                                    arguments = listOf(navArgument("id") {
+                                        nullable = false
+                                    })
+                                ) {
+                                    val id = it.arguments?.getString("id")?.let {
+                                        UUID.fromString(it)
+                                    } ?: return@composable
+                                    ShapeSchemeSettingsScreen(id)
                                 }
                                 composable("settings/appearance/cards") {
                                     CardsSettingsScreen()
@@ -198,6 +236,11 @@ class SettingsActivity : BaseActivity() {
                                 composable("settings/search/calendar") {
                                     CalendarSearchSettingsScreen()
                                 }
+                                composable("settings/search/calendar/{providerId}") {
+                                    CalendarProviderSettingsScreen(
+                                        it.arguments?.getString("providerId") ?: return@composable
+                                    )
+                                }
                                 composable("settings/search/searchactions") {
                                     SearchActionsSettingsScreen()
                                 }
@@ -219,6 +262,9 @@ class SettingsActivity : BaseActivity() {
                                 composable("settings/favorites") {
                                     FavoritesSettingsScreen()
                                 }
+                                composable("settings/search/contacts") {
+                                    ContactsSettingsScreen()
+                                }
                                 composable("settings/integrations") {
                                     IntegrationsSettingsScreen()
                                 }
@@ -227,6 +273,12 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/integrations/owncloud") {
                                     OwncloudSettingsScreen()
+                                }
+                                composable("settings/integrations/tasks") {
+                                    TasksIntegrationSettingsScreen()
+                                }
+                                composable("settings/integrations/breezyweather") {
+                                    BreezyWeatherSettingsScreen()
                                 }
                                 composable("settings/plugins") {
                                     PluginsSettingsScreen()

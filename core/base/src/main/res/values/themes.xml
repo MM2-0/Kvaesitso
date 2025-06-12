@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="BaseTheme" parent="Theme.Material3.DayNight">
-        <item name="popupMenuStyle">@style/PopupMenu</item>
-    </style>
-
-
-    <style name="SettingsTheme.NoActionBar" parent="BaseTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">?colorSurface</item>
-    </style>
+    <style name="BaseTheme" parent="Theme.AppCompat.DayNight" />
 
     <style name="LauncherTheme" parent="BaseTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -26,6 +17,14 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
         <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="AssistantTheme" parent="LauncherTheme">
+        <item name="android:windowShowWallpaper">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/fade</item>
+        <item name="android:windowExitTransition">@android:transition/fade</item>
     </style>
 
     <style name="DialogTheme" parent="BaseTheme">

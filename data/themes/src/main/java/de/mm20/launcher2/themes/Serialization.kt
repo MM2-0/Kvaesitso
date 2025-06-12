@@ -1,62 +1,56 @@
 package de.mm20.launcher2.themes
 
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.contextual
 import kotlinx.serialization.modules.polymorphic
 
-internal class ColorRefSerializer: KSerializer<ColorRef> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("$", PrimitiveKind.STRING)
-
-    override fun deserialize(decoder: Decoder): ColorRef {
-        return Color(decoder.decodeString()) as ColorRef
-    }
-
-    override fun serialize(encoder: Encoder, value: ColorRef) {
-        encoder.encodeString(value.toString())
-    }
-}
-
-internal class StaticColorSerializer: KSerializer<StaticColor> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("#", PrimitiveKind.STRING)
-    override fun deserialize(decoder: Decoder): StaticColor {
-        return Color(decoder.decodeString()) as StaticColor
-    }
-
-    override fun serialize(encoder: Encoder, value: StaticColor) {
-        encoder.encodeString(value.toString())
-    }
-}
-
 internal val module = SerializersModule {
-    polymorphic(Color::class) {
-        subclass(ColorRef::class, ColorRefSerializer())
-        subclass(StaticColor::class, StaticColorSerializer())
-    }
+    contextual(Color::class, ColorSerializer)
 
 }
 
 val ThemeJson = Json {
     serializersModule = module
-    useArrayPolymorphism = true
+    encodeDefaults = true
+    ignoreUnknownKeys = true
+    explicitNulls = false
+    isLenient = true
+    coerceInputValues = true
 }
 
-fun Theme.toJson(): String {
-    return ThemeJson.encodeToString(this)
+internal object ColorSerializer: KSerializer<Color> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ColorSerializer", PrimitiveKind.STRING)
+
+    override fun serialize(
+        encoder: Encoder,
+        value: Color
+    ) {
+        encoder.encodeString(value.toString())
+    }
+
+    override fun deserialize(decoder: Decoder): Color {
+        val stringValue = decoder.decodeString()
+        return Color.fromString(stringValue) ?: StaticColor(0xFF000000.toInt())
+    }
 }
 
-fun Theme.Companion.fromJson(json: String): Theme {
-    return try {
-        ThemeJson.decodeFromString(json)
-    } catch (e: SerializationException) {
-        throw IllegalArgumentException(e)
+internal object ShapeSerializer: KSerializer<Shape> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ShapeSerializer", PrimitiveKind.STRING)
+
+    override fun serialize(
+        encoder: Encoder,
+        value: Shape
+    ) {
+        encoder.encodeString(value.toString())
+    }
+
+    override fun deserialize(decoder: Decoder): Shape {
+        return Shape.fromString(decoder.decodeString())!!
     }
 }

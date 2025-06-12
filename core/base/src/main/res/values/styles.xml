@@ -1,7 +1,0 @@
-<resources>
-
-    <style name="PopupMenu" parent="Widget.Material3.PopupMenu">
-        <item name="overlapAnchor">true</item>
-    </style>
-
-</resources>

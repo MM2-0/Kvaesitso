@@ -13,13 +13,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.ScreenOrientation
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
+import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -29,6 +32,7 @@ import org.koin.core.component.get
 class HomescreenSettingsScreenVM(
     private val uiSettings: UiSettings,
     private val clockWidgetSettings: ClockWidgetSettings,
+    private val gestureSettings: GestureSettings,
 ) : ViewModel() {
 
     var showClockWidgetSheet by mutableStateOf(false)
@@ -120,11 +124,11 @@ class HomescreenSettingsScreenVM(
         uiSettings.setBottomSearchBar(bottomSearchBar)
     }
 
-    val dock = clockWidgetSettings.dock
+    val dock = uiSettings.dock
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setDock(dock: Boolean) {
-        clockWidgetSettings.setDock(dock)
+        uiSettings.setDock(dock)
     }
 
     val fixedRotation = uiSettings.orientation.map { it != ScreenOrientation.Auto }
@@ -148,12 +152,52 @@ class HomescreenSettingsScreenVM(
         uiSettings.setChargingAnimation(chargingAnimation)
     }
 
+    val widgetsOnHomeScreen = uiSettings.homeScreenWidgets
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setWidgetsOnHomeScreen(widgetsOnHomeScreen: Boolean) {
+        uiSettings.setHomeScreenWidgets(widgetsOnHomeScreen)
+        viewModelScope.launch {
+            val gestures = gestureSettings.first()
+            if (widgetsOnHomeScreen) {
+                if (gestures.swipeUp is GestureAction.Widgets) {
+                    gestureSettings.setSwipeUp(GestureAction.NoAction)
+                } else if (gestures.swipeRight is GestureAction.Widgets) {
+                    gestureSettings.setSwipeUp(GestureAction.NoAction)
+                } else if (gestures.swipeLeft is GestureAction.Widgets) {
+                    gestureSettings.setSwipeUp(GestureAction.NoAction)
+                } else if (gestures.swipeDown is GestureAction.Widgets) {
+                    gestureSettings.setSwipeUp(GestureAction.NoAction)
+                } else if (gestures.longPress is GestureAction.Widgets) {
+                    gestureSettings.setLongPress(GestureAction.NoAction)
+                } else if (gestures.doubleTap is GestureAction.Widgets) {
+                    gestureSettings.setDoubleTap(GestureAction.NoAction)
+                }
+            } else {
+                if (gestures.swipeUp is GestureAction.NoAction || gestures.swipeUp is GestureAction.Widgets) {
+                    gestureSettings.setSwipeUp(GestureAction.Widgets)
+                } else if (gestures.swipeRight is GestureAction.NoAction || gestures.swipeRight is GestureAction.Widgets) {
+                    gestureSettings.setSwipeRight(GestureAction.Widgets)
+                } else if (gestures.swipeLeft is GestureAction.NoAction || gestures.swipeLeft is GestureAction.Widgets) {
+                    gestureSettings.setSwipeLeft(GestureAction.Widgets)
+                } else if (gestures.swipeDown is GestureAction.NoAction || gestures.swipeDown is GestureAction.Widgets) {
+                    gestureSettings.setSwipeDown(GestureAction.Widgets)
+                } else if (gestures.longPress is GestureAction.NoAction || gestures.longPress is GestureAction.Widgets) {
+                    gestureSettings.setLongPress(GestureAction.Widgets)
+                } else if (gestures.doubleTap is GestureAction.NoAction || gestures.doubleTap is GestureAction.Widgets) {
+                    gestureSettings.setDoubleTap(GestureAction.Widgets)
+                }
+            }
+        }
+    }
+
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {
                 HomescreenSettingsScreenVM(
                     uiSettings = get(),
                     clockWidgetSettings = get(),
+                    gestureSettings = get(),
                 )
             }
         }

@@ -5,7 +5,7 @@ the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-provi
 class:
 
 ```kt
-class MyWeatherProviderPlugin : WeatherProvider(
+class MyWeatherProviderPlugin() : WeatherProvider(
     WeatherPluginConfig()
 )
 
@@ -100,15 +100,15 @@ a `condition`, an `icon`, a `location` name, and a `provider` name.
 
   Similar helper functions are available to construct
 
-    - `Pressure` (`Double.hPa`, and `Double.mbar`), and
-    - `WindSpeed` values (`Double.m_s`, `Double.km_h`, and `Double.mph`)
+  - `Pressure` (`Double.hPa`, and `Double.mbar`), and
+  - `WindSpeed` values (`Double.m_s`, `Double.km_h`, and `Double.mph`)
 
 - `location` is the name of the location.
-    - In fixed location mode, you should read this value from the `location` parameter, to ensure
-      that the name in the weather widget matches the name that the user has set in preferences.
-    - In auto location mode, if your weather service does not give you a location name, you can use
-      the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-provider/get-location-name.html" target="_blank">`getLocationName`</a>
-      method to reverse geocode the location name using Android's Geocoder API.
+  - In fixed location mode, you should read this value from the `location` parameter, to ensure
+    that the name in the weather widget matches the name that the user has set in preferences.
+  - In auto location mode, if your weather service does not give you a location name, you can use
+    the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-provider/get-location-name.html" target="_blank">`getLocationName`</a>
+    method to reverse geocode the location name using Android's Geocoder API.
 
 ## Plugin state
 
@@ -118,3 +118,4 @@ a `condition`, an `icon`, a `location` name, and a `provider` name.
 
 - [OpenWeatherMap plugin](https://github.com/Kvaesitso/Plugin-OpenWeatherMap)
 - [Breezy Weather plugin](https://github.com/Kvaesitso/Plugin-BreezyWeather)
+- [HERE plugin](https://github.com/Kvaesitso/Plugin-HERE)

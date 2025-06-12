@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.common.grid
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.MutableTransitionState
@@ -13,6 +12,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -110,6 +110,7 @@ fun GridItem(
 
     Column(
         modifier = modifier
+            .padding(4.dp)
             .combinedClickable(
                 onClick = {
                     if (!launchOnPress || !viewModel.launch(context, bounds)) {
@@ -170,7 +171,9 @@ fun GridItem(
                 modifier = Modifier
                     .padding(4.dp)
                     .onGloballyPositioned {
-                        bounds = it.boundsInWindow().roundToIntRect()
+                        bounds = it
+                            .boundsInWindow()
+                            .roundToIntRect()
                     } then
                         if (highlight) Modifier.background(
                             MaterialTheme.colorScheme.surface,
@@ -195,10 +198,10 @@ fun GridItem(
                 color = MaterialTheme.colorScheme.onBackground,
             )
         }
+    }
 
-        if (showPopup) {
-            ItemPopup(origin = bounds, searchable = item, onDismissRequest = { showPopup = false })
-        }
+    if (showPopup) {
+        ItemPopup(origin = bounds, searchable = item, onDismissRequest = { showPopup = false })
     }
 }
 
@@ -398,7 +401,7 @@ private fun Modifier.placeOverlay(
                         constraints.maxHeight - placeable.height,
                     ),
                     animationProgress.pow(2)
-                ).toInt()
+                )
             )
         }
     }

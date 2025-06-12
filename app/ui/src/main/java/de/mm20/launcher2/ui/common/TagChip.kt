@@ -41,7 +41,7 @@ import de.mm20.launcher2.icons.VectorLayer
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
-import org.koin.androidx.compose.inject
+import org.koin.compose.koinInject
 
 @Composable
 fun TagChip(
@@ -92,7 +92,7 @@ fun TagChip(
         if (it >= 2) 8.dp else 0.dp
     }
 
-    val iconService by inject<IconService>()
+    val iconService: IconService = koinInject()
     val iconSize = InputChipDefaults.AvatarSize.toPixels()
 
     val icon by remember(tag, iconSize) {

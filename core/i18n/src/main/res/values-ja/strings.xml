@@ -25,19 +25,16 @@
     <string name="menu_favorites_pin">お気に入りにピン留め</string>
     <string name="menu_share_apk_file">APK ファイル</string>
     <string name="menu_share_store_link">%1$s リンク</string>
-    <string name="menu_hide">非表示</string>
     <string name="menu_customize">カスタマイズ</string>
     <string name="menu_launch">開く</string>
     <string name="menu_open_file">開く</string>
     <string name="menu_app_info">アプリ情報</string>
     <string name="menu_back">戻る</string>
     <string name="menu_favorites_unpin">ピン解除</string>
-    <string name="menu_unhide">表示</string>
     <string name="action_undo">元に戻す</string>
     <string name="menu_contacts_open_externally">連絡先アプリで開く</string>
     <string name="menu_calendar_open_externally">カレンダーアプリで開く</string>
     <string name="menu_remove">削除</string>
-    <string name="msg_item_hidden">%1$s は非表示になりました。</string>
     <string name="app_info_version">バージョン %1$s</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="disclaimer">免責事項</string>
@@ -57,12 +54,10 @@
     <string name="preference_grid_labels">ラベルの表示</string>
     <string name="preference_grid_icon_size">アイコンのサイズ</string>
     <string name="battery_part_charging">充電中</string>
-    <string name="customize_tags_placeholder">タグ…</string>
     <string name="search_action_email">メール</string>
     <string name="search_bar_placeholder">検索</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="default_websearch_3_name">Play ストア</string>
-    <string name="owncloud_password_empty">パスワードは空にできません</string>
     <string name="login_flow_continue">続行</string>
     <string name="disclaimer_currency_converter">ヨーロッパ中央銀行が1日1回公表する為替レートです。すべての情報は、いかなる保証もなく「そのまま」提供されます。これらの情報に対する責任は負いません。
 \n
@@ -113,7 +108,6 @@
     <string name="owncloud_username">ユーザー名</string>
     <string name="owncloud_login_2fa_hint">2要素認証を有効にしている場合は、ここでアプリパスワードを使用する必要があります。</string>
     <string name="owncloud_login_failed">ログイン失敗: ユーザー名またはパスワードが正しくありません。</string>
-    <string name="owncloud_username_empty">ユーザー名は空にできません</string>
     <string name="show_all">すべて表示</string>
     <string name="calendar_widget_no_events">今日はイベントがありません</string>
     <string name="calendar_widget_next_events">次のイベント</string>
@@ -143,7 +137,6 @@
     <string name="edit_favorites_dialog_tag_section_empty">ピン留めしたタグはここに表示されます</string>
     <string name="edit_favorites_dialog_new_tag">タグを作成…</string>
     <string name="nextcloud_server_url">Nextcloud サーバーの URL</string>
-    <string name="nextcloud_server_url_empty">サーバーの URL は空にできません</string>
     <string name="owncloud_server_invalid_url">この URL は、有効な ownCloud のインストールを指定していません</string>
     <string name="owncloud_password">パスワード</string>
     <string name="file_meta_album">アルバム: %1$s</string>
@@ -180,7 +173,6 @@
     <string name="weather_condition_wind">風</string>
     <string name="weather_condition_unknown">不明</string>
     <string name="weather_widget_set_location">場所を設定</string>
-    <string name="easter_egg_2">やめて！時間の無駄だよ！</string>
     <string name="widget_name_notes">メモ</string>
     <string name="weather_condition_snow">雪</string>
     <string name="weather_condition_cloudy">曇り</string>
@@ -195,8 +187,6 @@
     <string name="widget_name_unknown">不明なアプリウィジェット</string>
     <string name="notes_widget_action_dismiss">閉じる</string>
     <string name="notes_widget_dismissed">メモは閉じられました。</string>
-    <string name="easter_egg_1">おっと！イースターエッグはここにはありません。</string>
-    <string name="easter_egg_3">もう言わないよ。ここには絶対にイースターエッグなんて隠してないよ！</string>
     <string name="easter_egg_text">さて、見つけたようだね。おめでとう。見つけられてよかった？</string>
     <string name="widget_action_replace">置き換え</string>
     <string name="weather_condition_rain">雨</string>

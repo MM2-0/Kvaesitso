@@ -8,8 +8,6 @@
     <string name="menu_back">Wróć</string>
     <string name="menu_launch">Uruchom</string>
     <string name="menu_open_file">Otwórz</string>
-    <string name="menu_hide">Ukryj</string>
-    <string name="menu_unhide">Nie ukrywaj</string>
     <string name="menu_contacts_open_externally">Otwórz w kontaktach</string>
     <string name="menu_calendar_open_externally">Otwórz w kalendarzu</string>
     <string name="app_info_version">Wersja %1$s</string>
@@ -63,8 +61,6 @@
     <string name="widget_name_music">Muzyka</string>
     <string name="widget_name_favorites">Ulubione</string>
     <string name="widget_add_widget">Dodaj widżet</string>
-    <string name="easter_egg_1">Tutaj nie ma żadnych easter egg\'ów, chyba że je przyniosłeś ze sobą.</string>
-    <string name="easter_egg_3">Nie będę tego powtarzał: tutaj jest absolutnie zero ukrytych easter egg\'ów</string>
     <string name="turn_off">Wyłącz</string>
     <string name="widget_action_remove">Usuń</string>
     <string name="menu_item_edit_favs">Edytuj ulubione</string>
@@ -72,12 +68,9 @@
     <string name="edit_favorites_dialog_pinned_sorted">Przypięte - sortowane manualnie</string>
     <string name="owncloud_password">Hasło</string>
     <string name="owncloud_username">Nazwa użytkownika</string>
-    <string name="nextcloud_server_url_empty">Adres URL serwera nie może być pusty</string>
     <string name="nextcloud_server_invalid_url">Adres URL nie wskazuje na żadną właściwą instalacje Nextcloud</string>
     <string name="owncloud_server_url">Adres URL serwera Owncloud</string>
     <string name="owncloud_server_invalid_url">Adres URL nie wskazuje na żadną właściwą instalacje Owncloud</string>
-    <string name="owncloud_username_empty">Nazwa użytkownika nie może być pusta</string>
-    <string name="owncloud_password_empty">Hasło nie może być puste</string>
     <string name="login_flow_continue">Kontynuuj</string>
     <string name="login_flow_login">Zaloguj się</string>
     <string name="disclaimer">Ostrzeżenie</string>
@@ -153,7 +146,6 @@
     <string name="preference_icon_pack">Paczka ikon</string>
     <string name="preference_icon_pack_summary_empty">Brak zainstalowanych paczek ikon</string>
     <string name="preference_category_system_bars">Paski systemowe</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Zalogowany jako %1$s</string>
     <string name="preference_summary_not_logged_in">Nie jesteś zalogowany</string>
     <string name="preference_icon_shape_pentagon">Pięciokąt</string>
@@ -198,11 +190,8 @@
     <string name="preference_search_wikipedia_summary">Przeszukaj wolną encyklopedię</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="preference_search_gdrive">Dysk Google</string>
     <string name="preference_search_cloud_summary">Szukaj plików użytkownika %1$s</string>
-    <string name="preference_google_signin_summary">Zaloguj się, aby przeszukiwać Dysk Google</string>
     <string name="preference_calendar_calendars">Kalendarze</string>
-    <string name="preference_calendar_hide_allday">Ukryj wydarzenia trwające cały dzień</string>
     <string name="preference_search_bar_style">Styl</string>
     <string name="preference_search_bar_auto_focus">Pokaż klawiaturę</string>
     <string name="battery_part_charging">Ładowanie</string>
@@ -215,7 +204,6 @@
     </plurals>
     <string name="menu_app_info">Informacje o aplikacji</string>
     <string name="menu_delete">Usuń</string>
-    <string name="preference_google_signin">Zaloguj się przez Google</string>
     <string name="search_bar_placeholder">Szukaj</string>
     <string name="preference_screen_search">Wyszukiwanie</string>
     <string name="wind_east">Wschód</string>
@@ -229,7 +217,6 @@
     <string name="file_meta_path">Ścieżka: %1$s</string>
     <string name="file_meta_app_pkgname">Nazwa pakietu: %1$s</string>
     <string name="preference_search_localfiles_summary">Szukaj dokumentów, zdjęć oraz innych plików na twoim urządzeniu</string>
-    <string name="preference_search_gdrive_summary">Szukaj plików na Dysku Google użytkownika %1$s</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_category_license">Licencja</string>
@@ -254,7 +241,6 @@
     <string name="preference_clockwidget_alarm_part_summary">Pokaż alarmy które zadzwonią w ciągu 15 minut</string>
     <string name="weather_condition_heavysnowandthunder">Ciężki śnieg z piorunami</string>
     <string name="websearch_dialog_replace_icon">Zastąp ikonkę</string>
-    <string name="no_account_google">Konto Google nie zostało jeszcze połączone</string>
     <string name="weather_condition_snowshowersandthunder">Przelotne opady śniegu z piorunami</string>
     <string name="no_account_nextcloud">Konto Nextcloud nie zostało jeszcze połączone</string>
     <string name="no_account_owncloud">Konto Owncloud nie zostało jeszcze połączone</string>
@@ -263,7 +249,6 @@
     <string name="nextcloud_server_url">Adres URL serwera Nextcloud</string>
     <string name="weather_widget_set_location">Ustaw lokalizację</string>
     <string name="grant_permission">Przyznaj</string>
-    <string name="easter_egg_2">Proszę przestań, marnujesz tylko swój czas</string>
     <string name="easter_egg_text">No cóż, zostałem odnaleziony. Gratulacje. Warto było\?</string>
     <string name="disclaimer_currency_converter">Kurs walut, taki jak udostępniany codziennie przez Centralny Bank Europejski. Wszystkie informacje są dostarczane \"takie jakie są\" bez jakiejkolwiek gwarancji. Nie ponosimy odpowiedzialności za podane informacje.
 \n
@@ -283,7 +268,6 @@
     <string name="preference_wikipedia_customurl">Adres URL Wikipedii</string>
     <string name="preference_search_bar_auto_focus_summary">Automatyczne wyświetlanie klawiatury po otwarciu szuflady aplikacji</string>
     <string name="preference_search_bar_style_summary">Dostosuj wygląd paska wyszukiwania</string>
-    <string name="msg_item_hidden">%1$s został ukryty.</string>
     <string name="action_undo">Cofnij</string>
     <string name="preference_hidden_items_summary">Zarządzaj ukrytymi aplikacjami i wynikami wyszukiwania</string>
     <string name="preference_hidden_items">Ukryte elementy</string>
@@ -315,7 +299,6 @@
     <string name="missing_permission_contact_search_settings">Dostęp do kontaktów jest wymagany do wyszukiwania kontaktów</string>
     <string name="frequently_used_show_in_favorites">Pokaż w ulubionych</string>
     <string name="apps_profile_main">Osobisty</string>
-    <string name="customize_tags_placeholder">Tagi…</string>
     <string name="menu_customize">Dostosuj</string>
     <string name="action_next">Dalej</string>
     <string name="missing_permission_contact_search">Zezwól na przeszukiwanie kontaktów.</string>
@@ -334,11 +317,8 @@
     <string name="preference_shortcut_badges_summary">Pokaż plakietkę, która wskazuje do jakiej aplikacji należy dany skrót</string>
     <string name="preference_grid_labels_summary">Pokaż nazwę aplikacji pod ikoną</string>
     <string name="create_search_action_type_intent">Niestandardowy intent</string>
-    <string name="create_search_action_title">Nowa szybka akcja</string>
     <string name="create_search_action_type_app">Wyszukiwanie w aplikacji</string>
     <string name="preference_restore">Przywróć</string>
-    <string name="create_tag_title">Nowy tag</string>
-    <string name="edit_tag_title">Edytuj tag</string>
     <string name="tag_exists_error">Tag o tej nazwie już istnieje.</string>
     <string name="tag_exists_message">Tag o tej nazwie już istnieje. Jeśli będziesz kontynuować, oba tagi zostaną połączone.</string>
     <string name="tag_no_items_message">Do tego tagu nie są przypisane żadne elementy. Jeśli będziesz kontynuować, tag zostanie usunięty.</string>
@@ -403,7 +383,6 @@
     <string name="preference_icon_shape_pebble">Kamyk</string>
     <string name="preference_blur_wallpaper_summary">Użyj efektu rozmycia na tapecie</string>
     <string name="preference_blur_wallpaper_unsupported">Nieobsługiwane na tym urządzeniu</string>
-    <string name="icon_picker_title">Wybierz ikonę</string>
     <string name="icon_picker_search_icon">Wyszukiwanie w pakietach ikon</string>
     <string name="preference_icon_shape_teardrop">Łza</string>
     <string name="backup_complete">Tworzenie kopii zapasowej zostało zakończone.</string>
@@ -413,7 +392,6 @@
     <string name="preference_screen_tags">Tagi</string>
     <string name="preference_screen_tags_summary">Zarządzaj tagami i oznaczonymi elementami</string>
     <string name="restore_different_minor_version">Ta kopia zapasowa została utworzona przy użyciu innej wersji programu %1$s. Niektóre dane mogą nie zostać przywrócone prawidłowo.</string>
-    <string name="edit_search_action_title">Edytuj szybką akcję</string>
     <string name="preference_backup">Kopia zapasowa</string>
     <string name="preference_backup_summary">Eksportowanie preferencji i danych launchera</string>
     <string name="websearch_dialog_advanced">Zaawansowane</string>
@@ -465,7 +443,6 @@
     <string name="favorites">Ulubione</string>
     <string name="favorites_empty">Tutaj pojawią się przypięte i często używane elementy</string>
     <string name="favorites_empty_tag">Nie ma przedmiotów z tym tagiem</string>
-    <string name="create_app_shortcut">Utwórz skrót</string>
     <string name="frequently_used_rows">Liczba wierszy</string>
     <string name="preference_screen_search_actions">Szybkie akcje</string>
     <string name="search_action_email">Email</string>
@@ -509,10 +486,7 @@
     <string name="preference_mdy_color_source_system">System</string>
     <string name="preference_mdy_color_source">Źródło dynamicznych kolorów</string>
     <string name="preference_mdy_color_source_wallpaper">Tapeta</string>
-    <string name="preference_search_bar_separate_work_profile">Oddzielne aplikacje profilu pracy</string>
     <string name="preference_screen_icons">Siatka i ikony</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Wyświetlaj aplikacje profilu służbowego w osobnej karcie</string>
-    <string name="preference_search_result_ordering_weighted">Użycie</string>
     <string name="preference_category_media_apps">Aplikacje multimedialne</string>
     <string name="preference_weather_integration">Pogoda</string>
     <string name="preference_hidden_items_reveal_button">Pokaż przycisk ujawniania</string>
@@ -564,7 +538,6 @@
     <string name="widget_config_calendar_no_calendars">Brak kalendarza</string>
     <string name="missing_permission_location_search">Przyznaj uprawnienia lokalizacji, aby przeszukiwać pobliskie lokalizacje.</string>
     <string name="widget_config_calendar_missing_calendars_hint">Nie możesz znaleźć kalendarza?</string>
-    <string name="preference_search_result_ordering_alphabetic">Alfabetyczny</string>
     <string name="shortcut_unavailable_description">Ten skrót jest niedostępny, ponieważ %1$s nie jest domyślnym programem uruchamiającym</string>
     <string name="metric">Metryczne</string>
     <string name="preference_search_location_custom_overpass_url">Obejście URL</string>
@@ -642,7 +615,6 @@
     <string name="plugin_action_setup">Konfiguracja</string>
     <string name="plugin_type_filesearch">Szukaj pliku</string>
     <string name="plugin_type_weather">Dostawca pogody</string>
-    <string name="icon_picker_no_packs_installed">Nie zainstalowano pakietów ikon</string>
     <string name="search_filter_tools">Narzędzia</string>
     <string name="preference_debug_dump_heap_in_progress">Przechwytywanie migawki…</string>
     <string name="preference_plugin_badges_summary">Wskazuje, przez którą wtyczkę został utworzony wynik wyszukiwania</string>
@@ -682,11 +654,9 @@
     <string name="preference_search_bar_launch_on_enter">Uruchom na starcie</string>
     <string name="preference_search_bar_launch_on_enter_summary">Uruchamianie podświetlonego dopasowania lub szybkiej akcji po dotknięciu przycisku Go</string>
     <string name="preference_hidden_items_reveal_button_summary">Pokaż przycisk, aby ujawnić ukryte wyniki wyszukiwania</string>
-    <string name="preference_category_accounts">Konta</string>
     <string name="preference_media_integration">Sterowanie multimediami</string>
     <string name="icon_picker_filter_all_packs">Wszystkie pakiety ikon</string>
     <string name="search_action_websearch">Wyszukiwanie w sieci</string>
-    <string name="preference_search_result_ordering">Kolejność wyników wyszukiwania</string>
     <string name="preference_search_locations_show_map">Mapa</string>
     <string name="preference_search_locations_show_map_summary">Pokaż podgląd mapy dla miejsc</string>
     <string name="preference_search_locations_theme_map">Motyw mapy</string>

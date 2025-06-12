@@ -6,7 +6,6 @@
     <string name="menu_app_info">Programos info</string>
     <string name="menu_customize">Tinkinti</string>
     <string name="menu_open_file">Atidaryti</string>
-    <string name="menu_hide">Paslėpti</string>
     <string name="action_undo">Atstatyti</string>
     <string name="menu_delete">Pašalinti</string>
     <string name="menu_remove">Pašalinti</string>
@@ -71,9 +70,6 @@
     <string name="notes_widget_export_filename">Ūžrašas_%1$s</string>
     <string name="notes_widget_action_dismiss">Ignoruoti</string>
     <string name="shortcut_summary">Iš %1$s</string>
-    <string name="easter_egg_1">Čia nėra slaptų kiaušinių(easter egg) , nebent atsinešei.</string>
-    <string name="easter_egg_2">Prašau, baik ,tu švaistai laiką</string>
-    <string name="easter_egg_3">Nesakysiu dar kartą : čia visiškai nėra slaptų kiaušinių ypač čia</string>
     <string name="easter_egg_text">Nu ,manę suradai. Sveikinu .Ar buvo verta\?</string>
     <string name="close">Uždaryti</string>
     <string name="duplicate">Duplikuoti</string>
@@ -91,8 +87,6 @@
     <string name="owncloud_server_url">Owncloud serverio URL</string>
     <string name="owncloud_password">Slaptažodis</string>
     <string name="owncloud_username">Vartotojas</string>
-    <string name="owncloud_username_empty">Vartotojas negali būti tuščias</string>
-    <string name="owncloud_password_empty">Slaptažodis negali būti tuščias</string>
     <string name="login_flow_continue">Tęsti</string>
     <string name="login_flow_login">Prisijungti</string>
     <string name="show_all">Rodyti visus</string>
@@ -201,7 +195,6 @@
     <string name="preference_nav_bar_icons">Navigacinio lauko ikonos</string>
     <string name="preference_hide_nav_bar">Slėpti navigacinę juosta</string>
     <string name="preference_screen_integrations_summary">Tvarkyti prijungtas paskyras ir paslaugas</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Prisijungta kaip %1$s</string>
     <string name="preference_icon_shape_pentagon">Penkiakampis</string>
     <string name="preference_category_wallpaper">Fonas</string>
@@ -267,9 +260,7 @@
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="notes_widget_dismissed">Išmestas ūžrašas.</string>
     <string name="widget_add_widget">Pridėti valdiklį</string>
-    <string name="menu_unhide">Nepaslėpti</string>
     <string name="save">Išsaugoti</string>
-    <string name="msg_item_hidden">%1$s buvo paslėptas</string>
     <string name="turn_off">Išjungti</string>
     <string name="action_import">Importuoti</string>
     <string name="menu_item_edit_favs">Keisti mėgstamus</string>
@@ -278,7 +269,6 @@
     <string name="menu_calendar_open_externally">Atidaryti kalendoriuje</string>
     <string name="app_info_version">Versija %1$s</string>
     <string name="wind_north">Šiaurės</string>
-    <string name="nextcloud_server_url_empty">Serverio URL turi būti ne tuščias</string>
     <string name="wind_north_north_east">Šiaurės šiaurės vakarų</string>
     <string name="owncloud_server_invalid_url">Šis URL ne rodo į veikiančia Owncloud instaliacija</string>
     <string name="wind_east_north_east">Rytų šiaurės rytų</string>
@@ -408,15 +398,10 @@
     <string name="preference_search_websites">Puslapiai</string>
     <string name="preference_search_websites_summary">Rodyti peržiūra puslapio jei paieškos terminas yra URL</string>
     <string name="preference_search_localfiles">Vietiniai failai</string>
-    <string name="preference_search_gdrive">Google Diskas</string>
-    <string name="preference_search_gdrive_summary">Ieškoti %1$s failus Google Diske</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Ieškoti %1$s failus</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">Prisijungti su Google</string>
-    <string name="preference_google_signin_summary">Prisijunkite su Google Disku kad ieškoti</string>
     <string name="preference_calendar_calendars">Kalendoriai</string>
-    <string name="preference_calendar_hide_allday">Paslėpti visą dieną užimančius įvykius</string>
     <string name="preference_screen_buildinfo">Build informacija</string>
     <string name="preference_search_bar_style">Stilius</string>
     <string name="preference_search_bar_style_summary">Tinkinti paieškos lauko įšvaizda</string>
@@ -443,7 +428,6 @@
     <string name="restore_different_minor_version">Ši atsarginė kopija buvo sukurta %1$s versijoje. Kažkurie duomenys gali būti neteisingai atstatyti.</string>
     <string name="restore_meta">Sukurta %1$s prietaise %2$s su %3$s.</string>
     <string name="restore_complete">Atsarginė kopija buvo atstatyta.</string>
-    <string name="icon_picker_title">Pasirinkite ikoną</string>
     <string name="favorites">Mėgstami</string>
     <string name="favorites_empty">Prisegtos ir dažnai naudojamos programos bus čia</string>
     <string name="favorites_empty_tag">Čia nėra programų su šia žyma</string>
@@ -453,7 +437,6 @@
     <string name="create_search_action_website_invalid_url">Šis puslapis negali automatiškai būti importuotas kaip internetinė paieška. Galite bandyti kita puslapį ar įvesti reikalingus duomenis sekančiame žingsnyje.</string>
     <string name="search_action_label">Pavadinimas</string>
     <string name="search_action_app">Programa</string>
-    <string name="edit_tag_title">Keisti žyma</string>
     <string name="tag_exists_message">Žyma su šiuo pavadinimu jau yra. Jei tęsite ,dvi žymos bus sujungtos.</string>
     <string name="tag_exists_error">Žyma su šiuo pavadinimu jau egzistuoja.</string>
     <string name="tag_name">Žymos pavadinimas</string>
@@ -505,11 +488,9 @@
     <string name="preference_wikipedia_customurl">Vikipedija URL</string>
     <string name="preference_screen_icons">Išdėstymas ir ikonos</string>
     <string name="preference_screen_icons_summary">Išdėstymas ,ikonų dydis , ikonų paketai , ženkleliai</string>
-    <string name="preference_category_accounts">Paskyros</string>
     <string name="preference_media_integration">Medijos kontrolė</string>
     <string name="no_account_nextcloud">Jūs dar neprijungėte Nextcloud paskyros</string>
     <string name="no_account_owncloud">Jūs dar neprijungėtė Owncloud paskyros</string>
-    <string name="no_account_google">Jūs dar neprijungėtė Google paskyros</string>
     <string name="connect_account">Prijungti paskyra</string>
     <string name="battery_part_charging">Įkraunama</string>
     <string name="backup_complete">Išsaugojimas baigtas.</string>
@@ -517,14 +498,11 @@
     <string name="icon_picker_default_icon">Numatyta</string>
     <string name="icon_picker_suggestions">Pasiūlymai</string>
     <string name="icon_picker_search_icon">Ieškoti ikonų paketuose</string>
-    <string name="icon_picker_no_packs_installed">Nėra ikonų paketų</string>
     <string name="icon_picker_filter_all_packs">Visi paketai</string>
     <string name="apps_profile_main">Personalus</string>
     <string name="apps_profile_work">Darbo</string>
-    <string name="create_app_shortcut">Sukurti nuoroda</string>
     <string name="frequently_used_show_in_favorites">Rodyti mėgstamuose</string>
     <string name="frequently_used_rows">Eilučių skaičius</string>
-    <string name="customize_tags_placeholder">Žymos…</string>
     <string name="preference_screen_search_actions">Greiti veiksmai</string>
     <string name="preference_search_search_actions_summary">Konfigūruoti greitus veiksmus ir paieškos nuorodas</string>
     <string name="search_action_call">Skambinti</string>
@@ -538,13 +516,10 @@
     <string name="search_action_event">Planuoti įvykį</string>
     <string name="create_search_action_type">Kokį veiksmą norite sukurti\?</string>
     <string name="create_search_action_type_intent">Custom intent(techninis dalykas)</string>
-    <string name="create_search_action_title">Naujas greitas veiksmas</string>
-    <string name="edit_search_action_title">Keisti greita veiksma</string>
     <string name="create_search_action_pick_app">Parinkti porgramėle ieškojimui:</string>
     <string name="search_action_websearch_url">URL pavizdys</string>
     <string name="more_information">Daugiau informacijos</string>
     <string name="experimental_feature">Expermentinis</string>
-    <string name="create_tag_title">Nauja žyma</string>
     <string name="tag_no_items_message">Nėra dalykų pridėtų į šia žymą. Jei tęsite ši žyma bus ištrinta.</string>
     <string name="tag_select_items">Pasirinkite dalykus:</string>
     <string name="preference_layout_search_bar_position">Ieškos lauko pozicija</string>
@@ -565,9 +540,6 @@
     <string name="gesture_action_power_menu">Atidaryti išjungimo menių</string>
     <string name="gesture_action_recents">Atidaryti apžvalga</string>
     <string name="missing_permission_accessibility_gesture_failed">Paleidėjo neįgalumo paslauga turi būti įjungta šiam veiksmui.</string>
-    <string name="preference_search_result_ordering">Paieškos rezultatų išdėstymas</string>
-    <string name="preference_search_result_ordering_alphabetic">Abecėlės</string>
-    <string name="preference_search_result_ordering_weighted">Naudojamas</string>
     <string name="preference_search_result_ordering_weight_factor">Išdėstymo stabilumas</string>
     <string name="widget_config_appwidget_borderless">Be kraštis</string>
     <string name="widget_config_appwidget_background">Fono kortelė</string>

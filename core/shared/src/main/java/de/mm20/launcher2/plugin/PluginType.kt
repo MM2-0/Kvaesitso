@@ -5,4 +5,5 @@ enum class PluginType {
     Weather,
     LocationSearch,
     Calendar,
+    ContactSearch,
 }

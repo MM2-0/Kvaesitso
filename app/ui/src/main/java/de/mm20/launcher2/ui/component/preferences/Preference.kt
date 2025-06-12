@@ -1,15 +1,21 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
@@ -20,22 +26,28 @@ fun Preference(
     icon: @Composable (() -> Unit)? = null,
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .clip(MaterialTheme.shapes.extraSmall)
             .clickable(enabled = enabled, onClick = onClick)
-            .padding(horizontal = 16.dp)
+            .background(containerColor)
+            .padding(
+                start = if (icon != null) 8.dp else 16.dp,
+                end = 16.dp,
+            )
             .alpha(if (enabled) 1f else 0.38f),
     ) {
         if (icon != null) {
             Box(
                 modifier = Modifier
                     .width(56.dp)
-                    .padding(start = 4.dp),
-                contentAlignment = Alignment.CenterStart
+                    .padding(end = 8.dp),
+                contentAlignment = Alignment.Center
             ) {
                 icon()
             }
@@ -45,14 +57,16 @@ fun Preference(
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(vertical = 16.dp)
+                .padding(vertical = 16.dp),
         ) {
             ProvideTextStyle(value = MaterialTheme.typography.titleMedium) {
                 title()
             }
             if (summary != null) {
-                Spacer(modifier = Modifier.height(2.dp))
-                ProvideTextStyle(value = MaterialTheme.typography.bodyMedium) {
+                CompositionLocalProvider(
+                    LocalTextStyle provides MaterialTheme.typography.bodyMedium,
+                    LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant,
+                ) {
                     summary()
                 }
             }
@@ -75,7 +89,8 @@ fun Preference(
     summary: String? = null,
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
 ) {
     Preference(
         title = {
@@ -89,7 +104,8 @@ fun Preference(
         icon = if (iconPadding) icon else null,
         onClick = onClick,
         controls = controls,
-        enabled = enabled
+        enabled = enabled,
+        containerColor = containerColor,
     )
 
 }
@@ -98,11 +114,12 @@ fun Preference(
 fun Preference(
     title: String,
     icon: ImageVector? = null,
-    iconPadding: Boolean = true,
+    iconPadding: Boolean = icon != null,
     summary: String? = null,
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
 ) {
     Preference(
         title,
@@ -114,6 +131,6 @@ fun Preference(
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
-        }, iconPadding, summary, onClick, controls, enabled
+        }, iconPadding, summary, onClick, controls, enabled, containerColor,
     )
 }

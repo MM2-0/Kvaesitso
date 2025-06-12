@@ -45,6 +45,8 @@ fun UnitConverterSettingsScreen() {
                     }
                 )
             }
+        }
+        item {
             PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.preference_search_supportedunits),

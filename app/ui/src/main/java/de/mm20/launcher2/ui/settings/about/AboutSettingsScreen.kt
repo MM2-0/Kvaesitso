@@ -43,13 +43,8 @@ fun AboutSettingsScreen() {
                     title = stringResource(R.string.preference_version),
                     summary = appVersion,
                     onClick = {
-                        when(easterEggCounter) {
-                            3 -> Toast.makeText(context, context.getString(R.string.easter_egg_1), Toast.LENGTH_SHORT).show()
-                            7 -> Toast.makeText(context, context.getString(R.string.easter_egg_2), Toast.LENGTH_SHORT).show()
-                            11 -> Toast.makeText(context, context.getString(R.string.easter_egg_3), Toast.LENGTH_SHORT).show()
-                        }
                         easterEggCounter++
-                        if (easterEggCounter >= 14) {
+                        if (easterEggCounter >= 9) {
                             navController?.navigate("settings/about/easteregg")
                             easterEggCounter = 0
                         }

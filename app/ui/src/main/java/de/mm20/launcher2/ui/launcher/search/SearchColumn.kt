@@ -53,6 +53,7 @@ import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 
 @Composable
 fun SearchColumn(
@@ -64,6 +65,7 @@ fun SearchColumn(
 ) {
 
     val columns = LocalGridSettings.current.columnCount
+    val showList = LocalGridSettings.current.showList
     val context = LocalContext.current
 
     val viewModel: SearchVM = viewModel()
@@ -93,6 +95,7 @@ fun SearchColumn(
 
     val bestMatch by viewModel.bestMatch
 
+    val query by viewModel.searchQuery
     val isSearchEmpty by viewModel.isSearchEmpty
 
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
@@ -111,13 +114,14 @@ fun SearchColumn(
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
     var selectedAppProfileIndex: Int by remember(isSearchEmpty) { mutableIntStateOf(0) }
-    var selectedContactIndex: Int by remember(contacts) { mutableIntStateOf(-1) }
-    var selectedFileIndex: Int by remember(files) { mutableIntStateOf(-1) }
-    var selectedCalendarIndex: Int by remember(events) { mutableIntStateOf(-1) }
-    var selectedLocationIndex: Int by remember(locations) { mutableIntStateOf(-1) }
-    var selectedShortcutIndex: Int by remember(appShortcuts) { mutableIntStateOf(-1) }
-    var selectedArticleIndex: Int by remember(wikipedia) { mutableIntStateOf(-1) }
-    var selectedWebsiteIndex: Int by remember(website) { mutableIntStateOf(-1) }
+    var selectedAppIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedContactIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedFileIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedCalendarIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedLocationIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedShortcutIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedArticleIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedWebsiteIndex: Int by remember(query) { mutableIntStateOf(-1) }
 
     val showFilters by viewModel.showFilters
 
@@ -193,6 +197,9 @@ fun SearchColumn(
                         columns = columns,
                         reverse = reverse,
                         showProfileLockControls = hasProfilesPermission,
+                        showList = showList,
+                        selectedIndex = selectedAppIndex,
+                        onSelect = { selectedAppIndex = it },
                     )
                 } else {
                     AppResults(
@@ -202,7 +209,10 @@ fun SearchColumn(
                             selectedAppProfileIndex = it
                         },
                         columns = columns,
-                        reverse = reverse
+                        reverse = reverse,
+                        showList = showList,
+                        selectedIndex = selectedAppIndex,
+                        onSelect = { selectedAppIndex = it },
                     )
                 }
 
@@ -360,7 +370,7 @@ fun LazyListScope.SingleResult(
                     vertical = 4.dp,
                 ),
             color = if (highlight) MaterialTheme.colorScheme.secondaryContainer
-            else MaterialTheme.colorScheme.surface.copy(LocalCardStyle.current.opacity)
+            else MaterialTheme.colorScheme.surface.copy(LocalTransparencyScheme.current.surface)
         ) {
             content()
         }
