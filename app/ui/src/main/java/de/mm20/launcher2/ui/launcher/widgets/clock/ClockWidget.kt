@@ -401,8 +401,6 @@ fun InfinitePager (
             state = pagerState,
             verticalAlignment = verticalAlignment,
         ) { content(it % partProvider.size) }
-    } else {
-        content(0)
     }
 }
 
