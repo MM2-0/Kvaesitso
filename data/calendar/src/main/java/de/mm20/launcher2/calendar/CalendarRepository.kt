@@ -16,8 +16,6 @@ import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -137,9 +135,11 @@ internal class CalendarRepositoryImpl(
         providers: List<CalendarProvider>,
     ): Flow<ImmutableList<CalendarEvent>> = flow {
         supervisorScope {
-            val result = providers.map { provider ->
-                async {
-                    provider.search(
+            val result = MutableStateFlow(persistentListOf<CalendarEvent>())
+
+            for (provider in providers) {
+                launch {
+                    val r = provider.search(
                         query,
                         from = intervalStart,
                         to = intervalEnd,
@@ -150,10 +150,12 @@ internal class CalendarRepositoryImpl(
                         excludeAllDayEvents = excludeAllDayEvents,
                         allowNetwork = allowNetwork,
                     )
+                    result.update {
+                        (it + r).toPersistentList()
+                    }
                 }
             }
-
-            emit(result.awaitAll().flatten().toPersistentList())
+            emitAll(result)
         }
     }
 
