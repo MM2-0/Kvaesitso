@@ -844,4 +844,11 @@
     <string name="theme_import_title">Design importieren</string>
     <string name="theme_bundle_name">Name</string>
     <string name="theme_bundle_author">Autor</string>
+    <string name="import_theme_contents">Inhalte</string>
+    <string name="preference_colors_high_contrast">Hoher Kontrast</string>
+    <string name="preference_transparencies_default">Standard</string>
+    <string name="preference_screen_transparencies">Transparenz</string>
+    <string name="preference_transparencies_semi_transparent">Halbtransparent</string>
+    <string name="confirmation_delete_transparencies_scheme">Möchten Sie das Transparenzschema %1$s wirklich löschen?</string>
+    <string name="new_theme_name">(unbenannt)</string>
 </resources>
