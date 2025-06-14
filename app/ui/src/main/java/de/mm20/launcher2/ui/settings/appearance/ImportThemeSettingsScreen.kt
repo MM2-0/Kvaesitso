@@ -19,6 +19,7 @@ import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.Opacity
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Button
@@ -35,6 +36,7 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,9 +64,13 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import de.mm20.launcher2.ui.settings.transparencies.checkerboard
 import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
 import de.mm20.launcher2.ui.theme.colorscheme.lightColorSchemeOf
 import de.mm20.launcher2.ui.theme.shapes.shapesOf
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
+import de.mm20.launcher2.ui.theme.transparency.transparencySchemeOf
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
@@ -118,10 +124,15 @@ fun ImportThemeSettingsScreen(
                     } ?: MaterialTheme.colorScheme,
                     shapes = themeBundle.shapes?.let { shapesOf(it) } ?: MaterialTheme.shapes,
                 ) {
-                    ThemePreview(
-                        darkMode = darkModePreview,
-                        onDarkModeChanged = { darkModePreview = it }
-                    )
+                    val transparencies = themeBundle.transparencies?.let { transparencySchemeOf(it) } ?: MaterialTheme.transparency
+                    CompositionLocalProvider(
+                        LocalTransparencyScheme provides transparencies
+                    ) {
+                        ThemePreview(
+                            darkMode = darkModePreview,
+                            onDarkModeChanged = { darkModePreview = it }
+                        )
+                    }
                 }
             }
             item {
@@ -156,6 +167,21 @@ fun ImportThemeSettingsScreen(
                             } else null,
                         )
                     }
+                    if (themeBundle.transparencies != null) {
+                    Preference(
+                        icon = Icons.Rounded.Opacity,
+                        title = stringResource(R.string.preference_screen_transparencies),
+                        summary = themeBundle.transparencies?.name,
+                        controls = if (viewModel.transparenciesExists) {
+                            {
+                                Icon(
+                                    Icons.Rounded.ChangeCircle,
+                                    stringResource(R.string.import_theme_exists)
+                                )
+                            }
+                        } else null,
+                    )
+                }
                     if (viewModel.colorsExists || viewModel.shapesExists) {
                         Banner(
                             modifier = Modifier
@@ -211,8 +237,13 @@ private fun ThemePreview(
         modifier = Modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.medium)
+            .checkerboard(
+                MaterialTheme.colorScheme.primary,
+                MaterialTheme.colorScheme.onPrimaryContainer,
+                12.dp,
+            )
             .background(
-                MaterialTheme.colorScheme.surfaceContainer,
+                MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.background),
                 MaterialTheme.shapes.medium
             )
             .innerShadow(
@@ -225,7 +256,7 @@ private fun ThemePreview(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 12.dp, start = 12.dp, end = 12.dp),
-            level = SearchBarLevel.Active,
+            level = SearchBarLevel.Raised,
             value = "",
             onValueChange = {},
             readOnly = true,
@@ -239,7 +270,10 @@ private fun ThemePreview(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 12.dp, start = 12.dp, end = 12.dp)
-                .background(MaterialTheme.colorScheme.surface, MaterialTheme.shapes.medium)
+                .background(
+                    MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface),
+                    MaterialTheme.shapes.medium
+                )
                 .padding(12.dp)
         ) {
             Row(

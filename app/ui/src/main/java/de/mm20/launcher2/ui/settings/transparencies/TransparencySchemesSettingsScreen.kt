@@ -1,12 +1,11 @@
-package de.mm20.launcher2.ui.settings.shapes
+package de.mm20.launcher2.ui.settings.transparencies
 
-import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ContentCopy
@@ -21,8 +20,10 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,32 +31,44 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.themes.shapes.CornerStyle
-import de.mm20.launcher2.themes.shapes.Shapes
+import de.mm20.launcher2.themes.transparencies.Transparencies
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.theme.WallpaperColors
+import de.mm20.launcher2.ui.theme.transparency.transparencySchemeOf
+import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object TransparencySchemesSettingsRoute
 
 @Composable
-fun ShapeSchemesSettingsScreen() {
-    val viewModel: ShapeSchemesSettingsScreenVM = viewModel()
+fun TransparencySchemesSettingsScreen() {
+    val viewModel: TransparencySchemesSettingsScreenVM = viewModel()
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    val selectedTheme by viewModel.selectedShapesId.collectAsStateWithLifecycle(null)
-    val themes by viewModel.shapes.collectAsStateWithLifecycle(emptyList())
+    val selectedTheme by viewModel.selectedTransparencies.collectAsStateWithLifecycle(null)
+    val themes by viewModel.transparencies.collectAsStateWithLifecycle(emptyList())
 
-    var deleteShapes by remember { mutableStateOf<Shapes?>(null) }
+    var deleteTransparencies by remember { mutableStateOf<Transparencies?>(null) }
+
+    val wallpaperColors = wallpaperColorsAsState().value
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_shapes),
+        title = stringResource(R.string.preference_screen_transparencies),
         topBarActions = {
             IconButton(onClick = { viewModel.createNew(context) }) {
                 Icon(Icons.Rounded.Add, null)
@@ -73,7 +86,7 @@ fun ShapeSchemesSettingsScreen() {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
-                                ShapesPreview(theme)
+                                TransparenciesPreview(wallpaperColors, theme)
                                 IconButton(
                                     modifier = Modifier.padding(start = 12.dp),
                                     onClick = { showMenu = true }) {
@@ -90,7 +103,9 @@ fun ShapeSchemesSettingsScreen() {
                                             },
                                             text = { Text(stringResource(R.string.edit)) },
                                             onClick = {
-                                                navController?.navigate("settings/appearance/shapes/${theme.id}")
+                                                navController?.navigate(
+                                                    TransparencySchemeSettingsRoute(theme.id.toString())
+                                                )
                                                 showMenu = false
                                             }
                                         )
@@ -112,7 +127,7 @@ fun ShapeSchemesSettingsScreen() {
                                             },
                                             text = { Text(stringResource(R.string.menu_delete)) },
                                             onClick = {
-                                                deleteShapes = theme
+                                                deleteTransparencies = theme
                                                 showMenu = false
                                             }
                                         )
@@ -121,29 +136,29 @@ fun ShapeSchemesSettingsScreen() {
                             }
                         },
                         onClick = {
-                            viewModel.selectShapes(theme)
+                            viewModel.selectTransparencies(theme)
                         }
                     )
                 }
             }
         }
     }
-    if (deleteShapes != null) {
+    if (deleteTransparencies != null) {
         AlertDialog(
-            onDismissRequest = { deleteShapes = null },
+            onDismissRequest = { deleteTransparencies = null },
             text = {
                 Text(
                     stringResource(
-                        R.string.confirmation_delete_shapes_scheme,
-                        deleteShapes!!.name
+                        R.string.confirmation_delete_transparencies_scheme,
+                        deleteTransparencies!!.name
                     )
                 )
             },
             confirmButton = {
                 TextButton(
                     onClick = {
-                        viewModel.delete(deleteShapes!!)
-                        deleteShapes = null
+                        viewModel.delete(deleteTransparencies!!)
+                        deleteTransparencies = null
                     }
                 ) {
                     Text(stringResource(android.R.string.ok))
@@ -151,7 +166,7 @@ fun ShapeSchemesSettingsScreen() {
             },
             dismissButton = {
                 TextButton(
-                    onClick = { deleteShapes = null }
+                    onClick = { deleteTransparencies = null }
                 ) {
                     Text(stringResource(android.R.string.cancel))
                 }
@@ -161,42 +176,43 @@ fun ShapeSchemesSettingsScreen() {
 }
 
 @Composable
-private fun ShapesPreview(theme: Shapes) {
-    val shape = theme.medium
-    val baseShape = theme.baseShape
+private fun TransparenciesPreview(wallpaperColors: WallpaperColors, theme: Transparencies) {
+    val transparencies = transparencySchemeOf(theme)
 
-    val topStart =
-        (shape?.radii?.get(0)?.toFloat() ?: baseShape.radii?.get(0)?.toFloat() ?: 8f) / 3f * 2f
-    val topEnd =
-        (shape?.radii?.get(1)?.toFloat() ?: baseShape.radii?.get(1)?.toFloat() ?: 8f) / 3f * 2f
-    val bottomEnd =
-        (shape?.radii?.get(2)?.toFloat() ?: baseShape.radii?.get(2)?.toFloat() ?: 8f) / 3f * 2f
-    val bottomStart =
-        (shape?.radii?.get(3)?.toFloat() ?: baseShape.radii?.get(3)?.toFloat() ?: 8f) / 3f * 2f
     Box(
         modifier = Modifier
-            .size(32.dp)
-            .border(
-                2.dp,
+            .clip(MaterialTheme.shapes.extraSmall)
+            .checkerboard(
                 MaterialTheme.colorScheme.primary,
-                if ((theme.medium?.corners ?: theme.baseShape.corners
-                    ?: CornerStyle.Rounded) == CornerStyle.Cut
-                ) {
-                    CutCornerShape(
-                        topStart = topStart.dp,
-                        topEnd = topEnd.dp,
-                        bottomEnd = bottomEnd.dp,
-                        bottomStart = bottomStart.dp
-                    )
-                } else {
-                    RoundedCornerShape(
-                        topStart = topStart.dp,
-                        topEnd = topEnd.dp,
-                        bottomEnd = bottomEnd.dp,
-                        bottomStart = bottomStart.dp
-                    )
-                }
+                MaterialTheme.colorScheme.onPrimaryContainer,
+                12.dp,
             )
-    )
-
+            .height(40.dp)
+            .width(56.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = transparencies.background), MaterialTheme.shapes.extraSmall)
+                .height(40.dp)
+                .width(56.dp)
+        )
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface.copy(alpha = transparencies.surface), MaterialTheme.shapes.extraSmall)
+                .height(24.dp)
+                .width(48.dp)
+        )
+        Box(
+            modifier = Modifier
+                .height(32.dp)
+                .width(36.dp)
+                .shadow(
+                    if (transparencies.elevatedSurface < 1f) 0.dp else 8.dp,
+                    shape = MaterialTheme.shapes.extraSmall,
+                    clip = true,
+                )
+                .background(MaterialTheme.colorScheme.surfaceColorAtElevation(8.dp))
+        )
+    }
 }

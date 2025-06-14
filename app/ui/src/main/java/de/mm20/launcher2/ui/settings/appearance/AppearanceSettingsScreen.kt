@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowCircleDown
 import androidx.compose.material.icons.rounded.ArrowCircleUp
 import androidx.compose.material.icons.rounded.CropSquare
+import androidx.compose.material.icons.rounded.Opacity
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.TextFields
 import androidx.compose.material3.Text
@@ -27,6 +28,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.value
 import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemesSettingsRoute
 import de.mm20.launcher2.ui.theme.getTypography
 
 @Composable
@@ -36,6 +38,7 @@ fun AppearanceSettingsScreen() {
     val navController = LocalNavController.current
     val colorThemeName by viewModel.colorThemeName.collectAsStateWithLifecycle(null)
     val shapeThemeName by viewModel.shapeThemeName.collectAsStateWithLifecycle(null)
+    val transparencyThemeName by viewModel.transparencyThemeName.collectAsStateWithLifecycle(null)
     val compatModeColors by viewModel.compatModeColors.collectAsState()
 
     val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
@@ -100,6 +103,14 @@ fun AppearanceSettingsScreen() {
                         navController?.navigate("settings/appearance/shapes")
                     },
                     icon = Icons.Rounded.CropSquare,
+                )
+                Preference(
+                    title = stringResource(id = R.string.preference_screen_transparencies),
+                    summary = transparencyThemeName,
+                    onClick = {
+                        navController?.navigate(TransparencySchemesSettingsRoute)
+                    },
+                    icon = Icons.Rounded.Opacity,
                 )
 
                 Preference(

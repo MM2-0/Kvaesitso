@@ -48,16 +48,6 @@ fun CardsSettingsScreen() {
         item {
             PreferenceCategory {
                 SliderPreference(
-                    title = stringResource(R.string.preference_cards_opacity),
-                    icon = Icons.Rounded.Opacity,
-                    value = cardStyle.opacity,
-                    min = 0f,
-                    max = 1f,
-                    onValueChanged = {
-                        viewModel.setOpacity(it)
-                    }
-                )
-                SliderPreference(
                     title = stringResource(R.string.preference_cards_stroke_width),
                     icon = Icons.Rounded.LineWeight,
                     value = cardStyle.borderWidth,

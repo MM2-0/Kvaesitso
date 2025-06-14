@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CropSquare
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.Opacity
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Save
 import androidx.compose.material.icons.rounded.Share
@@ -50,10 +51,11 @@ fun ExportThemeSettingsScreen() {
 
     val colorSchemes by viewModel.colorSchemes.collectAsState(emptyList())
     val shapeThemes by viewModel.shapeSchemes.collectAsState(emptyList())
+    val transparencySchemes by viewModel.transparencySchemes.collectAsState(emptyList())
 
     val isValidSelection by remember {
         derivedStateOf {
-            viewModel.colorScheme != null || viewModel.shapeScheme != null
+            viewModel.colorScheme != null || viewModel.shapeScheme != null || viewModel.transparencyScheme != null
         }
     }
 
@@ -109,6 +111,17 @@ fun ExportThemeSettingsScreen() {
                     },
                     onValueChanged = { newValue ->
                         viewModel.setShapeScheme(newValue)
+                    }
+                )
+                ListPreference(
+                    stringResource(R.string.preference_screen_transparencies),
+                    icon = Icons.Rounded.Opacity,
+                    value = viewModel.transparencyScheme,
+                    items = listOf(stringResource(R.string.no_selection) to null) + transparencySchemes.map {
+                        it.name to it
+                    },
+                    onValueChanged = { newValue ->
+                        viewModel.setTransparencyScheme(newValue)
                     }
                 )
             }

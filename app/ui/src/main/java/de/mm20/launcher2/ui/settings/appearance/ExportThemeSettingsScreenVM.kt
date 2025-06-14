@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.settings.appearance
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,11 +10,11 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.themes.Colors
-import de.mm20.launcher2.themes.Shapes
+import de.mm20.launcher2.themes.colors.Colors
+import de.mm20.launcher2.themes.shapes.Shapes
 import de.mm20.launcher2.themes.ThemeBundle
 import de.mm20.launcher2.themes.ThemeRepository
-import de.mm20.launcher2.themes.toLegacyJson
+import de.mm20.launcher2.themes.transparencies.Transparencies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -28,8 +27,9 @@ class ExportThemeSettingsScreenVM: ViewModel(), KoinComponent {
 
     private val themeRepository: ThemeRepository by inject()
 
-    val colorSchemes = themeRepository.getAllColors().map { it.filter { !it.builtIn } }
-    val shapeSchemes = themeRepository.getAllShapes().map { it.filter { !it.builtIn } }
+    val colorSchemes = themeRepository.colors.getAll().map { it.filter { !it.builtIn } }
+    val shapeSchemes = themeRepository.shapes.getAll().map { it.filter { !it.builtIn } }
+    val transparencySchemes = themeRepository.transparencies.getAll().map { it.filter { !it.builtIn } }
 
     var themeName by mutableStateOf("")
     var themeAuthor by mutableStateOf("")
@@ -55,12 +55,21 @@ class ExportThemeSettingsScreenVM: ViewModel(), KoinComponent {
         shapeScheme = scheme
     }
 
+    var transparencyScheme by mutableStateOf<Transparencies?>(null)
+        @JvmName("_setTransparencyScheme")
+        private set
+    fun setTransparencyScheme(scheme: Transparencies?) {
+        if (themeName.isBlank() && scheme != null) themeName = scheme.name
+        transparencyScheme = scheme
+    }
+
     private fun getThemeBundle(): ThemeBundle {
         return ThemeBundle(
             name = themeName,
             author = themeAuthor.takeIf { it.isNotBlank() },
             colors = colorScheme,
             shapes = shapeScheme,
+            transparencies = transparencyScheme,
         )
     }
 

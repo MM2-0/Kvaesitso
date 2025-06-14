@@ -80,6 +80,10 @@ import de.mm20.launcher2.ui.settings.shapes.ShapeSchemeSettingsScreen
 import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
 import de.mm20.launcher2.ui.settings.tasks.TasksIntegrationSettingsScreen
+import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemeSettingsRoute
+import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemeSettingsScreen
+import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemesSettingsRoute
+import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemesSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterHelpSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
 import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
@@ -205,6 +209,14 @@ class SettingsActivity : BaseActivity() {
                                         UUID.fromString(it)
                                     } ?: return@composable
                                     ShapeSchemeSettingsScreen(id)
+                                }
+                                composable<TransparencySchemesSettingsRoute> {
+                                    TransparencySchemesSettingsScreen()
+                                }
+                                composable<TransparencySchemeSettingsRoute> {
+                                    val route: TransparencySchemeSettingsRoute = it.toRoute()
+                                        ?: return@composable
+                                    TransparencySchemeSettingsScreen(UUID.fromString(route.id))
                                 }
                                 composable("settings/appearance/cards") {
                                     CardsSettingsScreen()

@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -51,21 +49,20 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.themes.ColorRef
-import de.mm20.launcher2.themes.CorePaletteColor
-import de.mm20.launcher2.themes.FullCorePalette
-import de.mm20.launcher2.themes.StaticColor
-import de.mm20.launcher2.themes.atTone
-import de.mm20.launcher2.themes.get
+import de.mm20.launcher2.themes.colors.ColorRef
+import de.mm20.launcher2.themes.colors.CorePaletteColor
+import de.mm20.launcher2.themes.colors.FullCorePalette
+import de.mm20.launcher2.themes.colors.StaticColor
+import de.mm20.launcher2.themes.colors.atTone
+import de.mm20.launcher2.themes.colors.get
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
-import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.colorpicker.HctColorPicker
 import de.mm20.launcher2.ui.component.colorpicker.rememberHctColorPickerState
 import de.mm20.launcher2.ui.ktx.hct
 import hct.Hct
 import kotlin.math.roundToInt
-import de.mm20.launcher2.themes.Color as ThemeColor
+import de.mm20.launcher2.themes.colors.Color as ThemeColor
 
 @Composable
 fun ThemeColorPreference(

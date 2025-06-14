@@ -1,5 +1,8 @@
 package de.mm20.launcher2.themes
 
+import de.mm20.launcher2.themes.colors.Color
+import de.mm20.launcher2.themes.colors.StaticColor
+import de.mm20.launcher2.themes.shapes.Shape
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -8,7 +11,6 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
 
 internal val module = SerializersModule {
     contextual(Color::class, ColorSerializer)

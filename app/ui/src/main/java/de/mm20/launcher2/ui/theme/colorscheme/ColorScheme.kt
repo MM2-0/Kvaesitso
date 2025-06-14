@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.theme.colorscheme
 
+import android.R
 import android.os.Build
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
@@ -11,14 +12,14 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.preferences.ui.UiSettings
-import de.mm20.launcher2.themes.CorePalette
-import de.mm20.launcher2.themes.DefaultDarkColorScheme
-import de.mm20.launcher2.themes.DefaultLightColorScheme
-import de.mm20.launcher2.themes.FullColorScheme
-import de.mm20.launcher2.themes.PartialCorePalette
-import de.mm20.launcher2.themes.Colors as ThemeColors
-import de.mm20.launcher2.themes.get
-import de.mm20.launcher2.themes.merge
+import de.mm20.launcher2.themes.colors.CorePalette
+import de.mm20.launcher2.themes.colors.DefaultDarkColorScheme
+import de.mm20.launcher2.themes.colors.DefaultLightColorScheme
+import de.mm20.launcher2.themes.colors.FullColorScheme
+import de.mm20.launcher2.themes.colors.PartialCorePalette
+import de.mm20.launcher2.themes.colors.Colors as ThemeColors
+import de.mm20.launcher2.themes.colors.get
+import de.mm20.launcher2.themes.colors.merge
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import org.koin.compose.koinInject
 
@@ -88,11 +89,11 @@ fun systemCorePalette(): CorePalette<Int> {
     if (Build.VERSION.SDK_INT >= 31 && !compatModeColors) {
         val context = LocalContext.current
         return CorePalette(
-            primary = ContextCompat.getColor(context, android.R.color.system_accent1_500),
-            secondary = ContextCompat.getColor(context, android.R.color.system_accent2_500),
-            tertiary = ContextCompat.getColor(context, android.R.color.system_accent3_500),
-            neutral = ContextCompat.getColor(context, android.R.color.system_neutral1_500),
-            neutralVariant = ContextCompat.getColor(context, android.R.color.system_neutral2_500),
+            primary = ContextCompat.getColor(context, R.color.system_accent1_500),
+            secondary = ContextCompat.getColor(context, R.color.system_accent2_500),
+            tertiary = ContextCompat.getColor(context, R.color.system_accent3_500),
+            neutral = ContextCompat.getColor(context, R.color.system_neutral1_500),
+            neutralVariant = ContextCompat.getColor(context, R.color.system_neutral2_500),
             error = 0xFFB3261E.toInt(),
         )
     }

@@ -8,9 +8,9 @@ import androidx.compose.material3.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.themes.CornerStyle
-import de.mm20.launcher2.themes.Shape as ThemeShape
-import de.mm20.launcher2.themes.Shapes as ThemeShapes
+import de.mm20.launcher2.themes.shapes.CornerStyle
+import de.mm20.launcher2.themes.shapes.Shape as ThemeShape
+import de.mm20.launcher2.themes.shapes.Shapes as ThemeShapes
 
 @Composable
 fun shapesOf(shapes: ThemeShapes): Shapes {

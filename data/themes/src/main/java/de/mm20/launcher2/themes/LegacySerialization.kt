@@ -1,5 +1,9 @@
 package de.mm20.launcher2.themes
 
+import de.mm20.launcher2.themes.colors.Color
+import de.mm20.launcher2.themes.colors.ColorRef
+import de.mm20.launcher2.themes.colors.Colors
+import de.mm20.launcher2.themes.colors.StaticColor
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.PrimitiveKind

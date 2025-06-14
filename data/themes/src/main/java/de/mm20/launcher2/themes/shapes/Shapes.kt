@@ -1,7 +1,8 @@
-package de.mm20.launcher2.themes
+package de.mm20.launcher2.themes.shapes
 
 import de.mm20.launcher2.database.entities.ShapesEntity
 import de.mm20.launcher2.serialization.UUIDSerializer
+import de.mm20.launcher2.themes.ShapeSerializer
 import kotlinx.serialization.Serializable
 import java.util.UUID
 

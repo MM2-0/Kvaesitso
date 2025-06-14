@@ -25,15 +25,22 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         uiSettings.setColorScheme(colorScheme)
     }
 
-    val colorThemeName = uiSettings.colors.flatMapLatest {
-            themeRepository.getColorsOrDefault(it)
-        }.map {
-            it.name
-        }
+    val colorThemeName = uiSettings.colorsId.flatMapLatest {
+        themeRepository.colors.getOrDefault(it)
+    }.map {
+        it.name
+    }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val shapeThemeName = uiSettings.shapes.flatMapLatest {
-        themeRepository.getShapesOrDefault(it)
+    val shapeThemeName = uiSettings.shapesId.flatMapLatest {
+        themeRepository.shapes.getOrDefault(it)
+    }.map {
+        it.name
+    }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val transparencyThemeName = uiSettings.transparenciesId.flatMapLatest {
+        themeRepository.transparencies.getOrDefault(it)
     }.map {
         it.name
     }

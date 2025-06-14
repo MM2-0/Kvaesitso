@@ -66,7 +66,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.icons.CutCorner
 import de.mm20.launcher2.icons.RoundedCornerAlt
-import de.mm20.launcher2.themes.CornerStyle
+import de.mm20.launcher2.themes.shapes.CornerStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -76,7 +76,7 @@ import de.mm20.launcher2.ui.theme.shapes.shapesOf
 import java.util.UUID
 import kotlin.math.max
 import kotlin.math.min
-import de.mm20.launcher2.themes.Shape as ThemeShape
+import de.mm20.launcher2.themes.shapes.Shape as ThemeShape
 
 @Composable
 fun ShapeSchemeSettingsScreen(themeId: UUID) {
@@ -284,7 +284,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
             }
         }
         item {
-            PreferenceCategory(title = "Large") {
+            PreferenceCategory {
                 ShapePreview(
                     previewShapes = previewShapes,
                 ) {

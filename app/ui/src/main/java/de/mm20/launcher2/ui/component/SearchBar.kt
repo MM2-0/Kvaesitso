@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.layout.BottomReversed
-import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
 
 @Composable
 fun SearchBar(
@@ -102,7 +102,7 @@ fun SearchBar(
             }
         }) {
         when {
-            it == SearchBarLevel.Active -> LocalTransparencyScheme.current.surface
+            it == SearchBarLevel.Active -> MaterialTheme.transparency.surface
             style != SearchBarStyle.Transparent -> 1f
             it == SearchBarLevel.Resting -> 0f
             else -> 1f

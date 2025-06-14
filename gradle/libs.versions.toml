@@ -37,7 +37,7 @@ androidx-constraint-layout = "1.1.1"
 androidx-emojipicker = "1.5.0"
 
 accompanist = "0.36.0"
-haze = "1.6.3"
+haze = "1.6.4"
 coil = "2.7.0"
 koin = "4.0.4"
 retrofit = "2.11.0"

@@ -5,9 +5,8 @@ import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.preferences.ColorsDescriptor
 import de.mm20.launcher2.preferences.ui.UiSettings
-import de.mm20.launcher2.themes.Colors
+import de.mm20.launcher2.themes.colors.Colors
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.fromLegacyJson
 import kotlinx.coroutines.Dispatchers
@@ -58,9 +57,9 @@ class ImportThemeSheetVM : ViewModel(), KoinComponent {
     }
 
     private fun importTheme(colors: Colors, apply: Boolean) {
-        themeRepository.createColors(colors)
+        themeRepository.colors.create(colors)
         if (apply) {
-            uiSettings.setColors(ColorsDescriptor.Custom(colors.id.toString()))
+            uiSettings.setColorsId(colors.id)
         }
     }
 }

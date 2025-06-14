@@ -2,12 +2,17 @@ package de.mm20.launcher2.themes
 
 import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.serialization.Json
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import de.mm20.launcher2.themes.colors.Color
+import de.mm20.launcher2.themes.colors.ColorScheme
+import de.mm20.launcher2.themes.colors.Colors
+import de.mm20.launcher2.themes.colors.CorePalette
+import de.mm20.launcher2.themes.colors.DefaultDarkColorScheme
+import de.mm20.launcher2.themes.colors.DefaultLightColorScheme
+import de.mm20.launcher2.themes.colors.EmptyCorePalette
+import de.mm20.launcher2.themes.shapes.Shapes
+import de.mm20.launcher2.themes.transparencies.Transparencies
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.contentOrNull
@@ -22,6 +27,7 @@ data class ThemeBundle(
     val author: String? = null,
     val colors: Colors? = null,
     val shapes: Shapes? = null,
+    val transparencies: Transparencies? = null,
     /**
      * The file version, always 2 for the new theme format.
      */

@@ -86,7 +86,7 @@ import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
-import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -187,7 +187,7 @@ fun WeatherWidget(widget: WeatherWidget) {
             val currentDayForecasts by viewModel.currentDayForecasts
 
             Surface(
-                color = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = LocalTransparencyScheme.current.surface),
+                color = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.surface),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
@@ -299,7 +299,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                             topEnd = CornerSize(0),
                             bottomEnd = CornerSize(0)
                         ),
-                        color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalTransparencyScheme.current.surface),
+                        color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = MaterialTheme.transparency.surface),
                     ) {
                         Text(
                             text = "${forecast.provider} (${

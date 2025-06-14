@@ -2,18 +2,22 @@ package de.mm20.launcher2.preferences
 
 import android.content.Context
 import de.mm20.launcher2.search.SearchFilters
+import de.mm20.launcher2.serialization.UUIDSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonNames
+import java.util.UUID
 
 @Serializable
 data class LauncherSettingsData internal constructor(
     val schemaVersion: Int = 5,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
-    @JsonNames("uiTheme")
-    val uiColors: ColorsDescriptor = ColorsDescriptor.Default,
-    val uiShapes: ShapesDescriptor = ShapesDescriptor.Default,
+    @Serializable(with = UUIDSerializer::class)
+    val uiColorsId: UUID = UUID(0L, 0L),
+    @Serializable(with = UUIDSerializer::class)
+    val uiShapesId: UUID = UUID(0L, 0L),
+    @Serializable(with = UUIDSerializer::class)
+    val uiTransparenciesId: UUID = UUID(0L, 0L),
 
     val uiCompatModeColors: Boolean = false,
     val uiFont: Font = Font.Outfit,
@@ -203,53 +207,6 @@ enum class ColorScheme {
 enum class Font {
     Outfit,
     System,
-}
-
-
-@Serializable
-sealed interface ColorsDescriptor {
-    @Serializable
-    @SerialName("default")
-    data object Default : ColorsDescriptor
-
-    @Serializable
-    @SerialName("high_contrast")
-    data object HighContrast : ColorsDescriptor
-
-    @Serializable
-    @SerialName("bw")
-    data object BlackAndWhite : ColorsDescriptor
-
-    @Serializable
-    @SerialName("custom")
-    data class Custom(
-        val id: String,
-    ) : ColorsDescriptor
-}
-
-@Serializable
-sealed interface ShapesDescriptor {
-    @Serializable
-    @SerialName("default")
-    data object Default : ShapesDescriptor
-
-    @Serializable
-    @SerialName("cut")
-    data object Cut : ShapesDescriptor
-
-    @Serializable
-    @SerialName("extra_round")
-    data object ExtraRound : ShapesDescriptor
-
-    @Serializable
-    @SerialName("rect")
-    data object Rect : ShapesDescriptor
-
-    @Serializable
-    @SerialName("custom")
-    data class Custom(
-        val id: String,
-    ) : ShapesDescriptor
 }
 
 internal enum class ClockWidgetStyleEnum {

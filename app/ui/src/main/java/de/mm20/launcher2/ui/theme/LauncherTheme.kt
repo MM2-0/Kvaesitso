@@ -2,25 +2,20 @@ package de.mm20.launcher2.ui.theme
 
 import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.coerceAtMost
-import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.Font
-import de.mm20.launcher2.preferences.SurfaceShape
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.theme.colorscheme.*
 import de.mm20.launcher2.ui.theme.shapes.shapesOf
+import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparencySchemeOf
 import de.mm20.launcher2.ui.theme.typography.DefaultTypography
 import de.mm20.launcher2.ui.theme.typography.getDeviceDefaultTypography
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import org.koin.compose.koinInject
 import de.mm20.launcher2.preferences.ColorScheme as ColorSchemePref
 
@@ -35,14 +30,20 @@ fun LauncherTheme(
     val themeRepository: ThemeRepository = koinInject()
 
     val themeColors by remember {
-        uiSettings.colors.flatMapLatest {
-            themeRepository.getColorsOrDefault(it)
+        uiSettings.colorsId.flatMapLatest {
+            themeRepository.colors.getOrDefault(it)
         }
     }.collectAsState(null)
 
     val themeShapes by remember {
-        uiSettings.shapes.flatMapLatest {
-            themeRepository.getShapesOrDefault(it)
+        uiSettings.shapesId.flatMapLatest {
+            themeRepository.shapes.getOrDefault(it)
+        }
+    }.collectAsState(null)
+
+    val themeTransparencies by remember {
+        uiSettings.transparenciesId.flatMapLatest {
+            themeRepository.transparencies.getOrDefault(it)
         }
     }.collectAsState(null)
 
@@ -52,7 +53,7 @@ fun LauncherTheme(
     val darkTheme =
         colorSchemePref == ColorSchemePref.Dark || colorSchemePref == ColorSchemePref.System && isSystemInDarkTheme()
 
-    if (themeColors == null || themeShapes == null) {
+    if (themeColors == null || themeShapes == null || themeTransparencies == null) {
         return
     }
 
@@ -64,6 +65,7 @@ fun LauncherTheme(
 
     val shapes = shapesOf(themeShapes!!)
 
+    val transparencyScheme = transparencySchemeOf(themeTransparencies!!)
 
 
     val font by remember { uiSettings.font }.collectAsState(
@@ -75,7 +77,8 @@ fun LauncherTheme(
     }
 
     CompositionLocalProvider(
-        LocalDarkTheme provides darkTheme
+        LocalDarkTheme provides darkTheme,
+        LocalTransparencyScheme provides transparencyScheme,
     ) {
         MaterialExpressiveTheme(
             colorScheme = colorScheme,

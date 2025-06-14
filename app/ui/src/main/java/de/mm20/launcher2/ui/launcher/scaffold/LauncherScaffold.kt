@@ -100,7 +100,7 @@ import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
-import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
@@ -1416,7 +1416,7 @@ internal fun LauncherScaffold(
                     .homePageAnimation(
                         state,
                         if (config.homeComponent.drawBackground) {
-                            config.backgroundColor.copy(alpha = LocalTransparencyScheme.current.background)
+                            config.backgroundColor.copy(alpha = MaterialTheme.transparency.background)
                         } else {
                             Color.Transparent
                         }
@@ -1516,7 +1516,7 @@ internal fun LauncherScaffold(
                         blurRadius = 4.dp
                     }
                     .background(
-                        MaterialTheme.colorScheme.surfaceContainer.copy(alpha = LocalTransparencyScheme.current.background)
+                        MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.background)
                     )
                     .statusBarsPadding()
             )
@@ -1536,7 +1536,7 @@ internal fun LauncherScaffold(
                         blurRadius = 4.dp
                     }
                     .background(
-                        MaterialTheme.colorScheme.surfaceContainer.copy(alpha = LocalTransparencyScheme.current.background)
+                        MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.background)
                     )
                     .navigationBarsPadding()
             )
@@ -1583,7 +1583,7 @@ private fun SecondaryPage(
             .fillMaxSize()
             .secondaryPageAnimation(
                 state,
-                config.backgroundColor.copy(alpha = LocalTransparencyScheme.current.background),
+                config.backgroundColor.copy(alpha = MaterialTheme.transparency.background),
             )
         val composable = composables[component]
 

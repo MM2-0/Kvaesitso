@@ -6,11 +6,10 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.preferences.ColorsDescriptor
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.BlackAndWhiteThemeId
 import de.mm20.launcher2.themes.DefaultThemeId
-import de.mm20.launcher2.themes.Colors
+import de.mm20.launcher2.themes.colors.Colors
 import de.mm20.launcher2.themes.HighContrastThemeId
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.toLegacyJson
@@ -30,39 +29,27 @@ class ColorSchemesSettingsScreenVM : ViewModel(), KoinComponent {
     private val themeRepository: ThemeRepository by inject()
     private val uiSettings: UiSettings by inject()
 
-    val selectedColors = uiSettings.colors.map {
-        when(it) {
-            ColorsDescriptor.Default -> DefaultThemeId
-            ColorsDescriptor.HighContrast -> HighContrastThemeId
-            ColorsDescriptor.BlackAndWhite -> BlackAndWhiteThemeId
-            is ColorsDescriptor.Custom -> UUID.fromString(it.id)
-        }
-    }
-    val colors: Flow<List<Colors>> = themeRepository.getAllColors()
+    val selectedColors = uiSettings.colorsId
+    val colors: Flow<List<Colors>> = themeRepository.colors.getAll()
 
     fun getTheme(id: UUID): Flow<Colors?> {
-        return themeRepository.getColors(id)
+        return themeRepository.colors.get(id)
     }
 
     fun updateTheme(colors: Colors) {
-        themeRepository.updateColors(colors)
+        themeRepository.colors.update(colors)
     }
 
     fun selectTheme(colors: Colors) {
-        uiSettings.setColors(when(colors.id) {
-            DefaultThemeId -> ColorsDescriptor.Default
-            HighContrastThemeId -> ColorsDescriptor.HighContrast
-            BlackAndWhiteThemeId -> ColorsDescriptor.BlackAndWhite
-            else -> ColorsDescriptor.Custom(colors.id.toString())
-        })
+        uiSettings.setColorsId(colors.id)
     }
 
     fun duplicate(colors: Colors) {
-        themeRepository.createColors(colors.copy(id = UUID.randomUUID()))
+        themeRepository.colors.create(colors.copy(id = UUID.randomUUID()))
     }
 
     fun delete(colors: Colors) {
-        themeRepository.deleteColors(colors)
+        themeRepository.colors.delete(colors)
     }
 
     fun exportTheme(context: Context, colors: Colors) {
@@ -85,10 +72,10 @@ class ColorSchemesSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     fun createNew(context: Context) {
-        themeRepository.createColors(
+        themeRepository.colors.create(
             Colors(
                 id = UUID.randomUUID(),
-                name = context.getString(R.string.new_color_scheme_name)
+                name = context.getString(R.string.new_theme_name)
             )
         )
     }

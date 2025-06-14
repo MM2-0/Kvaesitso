@@ -8,10 +8,9 @@ import de.mm20.launcher2.preferences.ScreenOrientation
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
-import de.mm20.launcher2.preferences.ColorsDescriptor
-import de.mm20.launcher2.preferences.ShapesDescriptor
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import java.util.UUID
 
 data class CardStyle(
     val opacity: Float = 1f,
@@ -286,25 +285,36 @@ class UiSettings internal constructor(
     }
 
 
-    val colors
+    val colorsId
         get() = launcherDataStore.data.map {
-            it.uiColors
+            it.uiColorsId
         }.distinctUntilChanged()
 
-    fun setColors(colors: ColorsDescriptor) {
+    fun setColorsId(colorsId: UUID) {
         launcherDataStore.update {
-            it.copy(uiColors = colors)
+            it.copy(uiColorsId = colorsId)
         }
     }
 
-    val shapes
+    val shapesId
         get() = launcherDataStore.data.map {
-            it.uiShapes
+            it.uiShapesId
         }.distinctUntilChanged()
 
-    fun setShapes(shapes: ShapesDescriptor) {
+    fun setShapesId(shapesId: UUID) {
         launcherDataStore.update {
-            it.copy(uiShapes = shapes)
+            it.copy(uiShapesId = shapesId)
+        }
+    }
+
+    val transparenciesId
+        get() = launcherDataStore.data.map {
+            it.uiTransparenciesId
+        }.distinctUntilChanged()
+
+    fun setTransparenciesId(transparenciesId: UUID) {
+        launcherDataStore.update {
+            it.copy(uiTransparenciesId = transparenciesId)
         }
     }
 

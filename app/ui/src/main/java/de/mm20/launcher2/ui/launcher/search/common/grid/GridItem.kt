@@ -78,6 +78,7 @@ import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.overlays.Overlay
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlin.math.pow
 
 
@@ -266,7 +267,7 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
         ) {
             LauncherCard(
                 elevation = 8.dp * animationProgress.value,
-                backgroundOpacity = 1f,
+                backgroundOpacity = MaterialTheme.transparency.elevatedSurface,
                 modifier = Modifier
                     .placeOverlay(
                         origin.translate(

@@ -1,4 +1,4 @@
-package de.mm20.launcher2.themes
+package de.mm20.launcher2.themes.colors
 
 import de.mm20.launcher2.database.entities.ColorsEntity
 import de.mm20.launcher2.serialization.ColorIntAsHexSerializer
