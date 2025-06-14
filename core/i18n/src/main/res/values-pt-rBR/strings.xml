@@ -571,7 +571,6 @@
     <string name="preference_search_osm_locations_summary">Pesquise no OpenStreetMap por lojas e outros lugares na área</string>
     <string name="customize_item_tags">Tags</string>
     <string name="widget_pick_widget">Escolher widget</string>
-    <string name="new_color_scheme_name">Novo esquema de cor</string>
     <string name="clock_style_custom">Widget personalizado</string>
     <string name="poi_category_school">Escola</string>
     <string name="poi_category_pharmacy">Farmácia</string>
@@ -706,7 +705,6 @@
     <string name="preference_shapes_base">Forma base</string>
     <string name="preference_location_breezy">Gerenciar localização no Breezy Weather</string>
     <string name="confirmation_delete_shapes_scheme">Você tem certeza que quer apagar o esquema de forma %1$s?</string>
-    <string name="new_shapes_name">Novas formas</string>
     <string name="poi_category_fire_station">Corpo de bombeiros</string>
     <string name="contact_info_home">Residencial</string>
     <string name="profile_work_profile_action_lock">Pausar aplicativos de trabalho</string>
@@ -824,7 +822,7 @@
     <string name="preference_breezyweather_integration_instructions">Para usar o Breezy Weather como provedor de clima:\n\n1. Vá para Breezy Weather &gt; Configurações &gt; Widgets e papel de parede animado &gt; Enviar dados meteorológicos para Gadgetbridge &gt; Ativar %1$s\n\n2. No %1$s, selecione Breezy Weather como provedor de clima</string>
     <string name="no_selection">Nenhuma seleção</string>
     <string name="save_as_file">Salvar como arquivo</string>
-    <string name="provider_breezy"></string>
+    <string name="provider_breezy"/>
     <string name="preference_clock_widget_time_format_system">Padrão do sistema</string>
     <string name="gesture_action_widgets">Widgets</string>
 </resources>

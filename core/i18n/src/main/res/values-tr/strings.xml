@@ -548,7 +548,6 @@
     <string name="note_widget_conflict_file_version">Dosya içeriği:</string>
     <string name="note_widget_file_read_error">Not okunamadı</string>
     <string name="confirmation_delete_color_scheme">%1$s renk düzenini silmek istediğinize emin misiniz?</string>
-    <string name="new_color_scheme_name">Yeni renk düzeni</string>
     <string name="theme_color_scheme_custom_color">Özel</string>
     <string name="preference_restore_default">Varsayılanı geri yükle</string>
     <string name="preference_plugin_enable">Eklentiyi etkinleştir</string>

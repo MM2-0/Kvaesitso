@@ -538,7 +538,6 @@
     <string name="theme_color_scheme_custom_color">Personalitzat</string>
     <string name="edit">Edita</string>
     <string name="confirmation_delete_color_scheme">Realment voleu suprimir l\'esquema de colors %1$s\?</string>
-    <string name="new_color_scheme_name">Nou esquema de colors</string>
     <string name="preference_restore_default">Restaura el valor predeterminat</string>
     <string name="preference_category_animations">Animacions</string>
     <string name="preference_charging_animation">Animació de càrrega de la bateria</string>

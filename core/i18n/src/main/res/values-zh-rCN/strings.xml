@@ -610,7 +610,6 @@
     <string name="shortcut_label_unavailable">不可用</string>
     <string name="filter_settings_network_warning">当前过滤器默认启用在线结果。您的搜索查询可能会被无意发送到外部网络服务。出于隐私原因，不建议这样做。</string>
     <string name="note_widget_file_write_error_description">无法将注释写入链接文件。可能已被移动或删除。副本已保存到启动器的内部存储中。</string>
-    <string name="new_color_scheme_name">新的配色方案</string>
     <string name="preference_search_supportedunits">支持的单位</string>
     <string name="note_widget_conflict_description">链接的文件不为空，且其内容与此笔记的上次保存版本不匹配。您想保留哪个版本？</string>
     <string name="note_widget_file_read_error">错误读取注释</string>

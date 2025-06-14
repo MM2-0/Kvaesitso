@@ -316,7 +316,6 @@
     <string name="note_widget_conflict_file_version">เนื้อหาปัจจุบันของไฟล์:</string>
     <string name="note_widget_file_read_error">ไม่สามารถอ่านโน้ตได้</string>
     <string name="note_widget_file_write_error">ไม่สามารถบันทึกโน้ตได้</string>
-    <string name="new_color_scheme_name">โทนสีใหม่</string>
     <string name="theme_color_scheme_system_default">ใช้ค่าเริ่มต้นของระบบ</string>
     <string name="theme_color_scheme_autogenerate">ใช้สีหลัก</string>
     <string name="theme_color_scheme_palette_color">จานสี</string>
@@ -806,7 +805,6 @@
     <string name="preference_shapes_base">รูปร่างหลัก</string>
     <string name="preference_shapes_rect">สี่เหลี่ยม</string>
     <string name="confirmation_delete_shapes_scheme">คุณต้องการที่จะลบรูปร่าง %1$s ใช่หรือไม่?</string>
-    <string name="new_shapes_name">รูปร่างใหม่</string>
     <string name="bad_configuration_title">ยินดีด้วย คุณใช้งานแอปนี้ไม่ได้แล้ว!</string>
     <string name="bad_configuration_summary">คุณได้ค้นพบวิธีการตั้งค่าที่ทำให้ทั้งการค้นหาและการตั้งค่าของแอปใช้งานไม่ได้ ทำให้คุณไม่สามารถใช้งานแอปนี้ได้อีกต่อไป</string>
     <string name="weather_condition_thunder">ท้องฟ้าคำราม</string>

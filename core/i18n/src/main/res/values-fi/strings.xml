@@ -514,7 +514,6 @@
     <string name="note_widget_conflict_file_version">Tiedoston nykyinen sisältö:</string>
     <string name="note_widget_file_write_error_description">Muistiinpanoa ei voitu kirjoittaa yhdistettyyn tiedostoon. Se on saatettu siirtää tai poistaa. Kopio on tallennettu käynnistyssovelluksen omaan tallennustilaan.</string>
     <string name="confirmation_delete_color_scheme">Haluatko varmasti poistaa värikaavion %1$s\?</string>
-    <string name="new_color_scheme_name">Uusi värikaavio</string>
     <string name="widget_config_music_integration_settings">Mediaohjaimen integraatioiden asetukset</string>
     <string name="note_widget_conflict_local_version">Viimeisin tallennettu versio:</string>
     <string name="theme_color_scheme_system_default">Käytä järjestelmän oletusta</string>

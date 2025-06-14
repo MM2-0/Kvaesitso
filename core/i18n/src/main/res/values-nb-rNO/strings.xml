@@ -626,7 +626,6 @@
     <string name="preference_search_result_ordering_weight_factor">Rangeringsfleksibilitet</string>
     <string name="widget_config_weather_integration_settings">Innstillinger for værintegrasjon</string>
     <string name="note_widget_conflict_local_version">Seneste lagrede versjon:</string>
-    <string name="new_color_scheme_name">Nytt fargeskjema</string>
     <string name="theme_color_scheme_system_default">Bruk systemstandard</string>
     <string name="widget_config_music_integration_settings">Innstillinger for mediakontroll-integrasjon</string>
     <string name="theme_color_scheme_palette_color">Palett</string>

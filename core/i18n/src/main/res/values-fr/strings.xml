@@ -568,7 +568,6 @@
     <string name="theme_color_scheme_custom_color">Couleur personnalisée</string>
     <string name="preference_charging_animation">Animation de chargement</string>
     <string name="preference_restore_default">Rétablir la valeur par défaut</string>
-    <string name="new_color_scheme_name">Nouveau jeu de couleurs</string>
     <string name="theme_color_scheme_palette_color">Palette</string>
     <string name="preference_debug_dump_heap">Sauvegarde mémoire</string>
     <string name="search_action_websearch">Recherche web</string>
@@ -877,7 +876,6 @@
     <string name="preference_shapes_base">Forme de base</string>
     <string name="preference_shapes_rect">Rectangulaire</string>
     <string name="confirmation_delete_shapes_scheme">Voulez-vous réellement supprimer le schéma de forme %1$s ?</string>
-    <string name="new_shapes_name">Nouvelles formes</string>
     <string name="save_as_file">Enregistrer comme fichier</string>
     <string name="no_selection">Aucune sélection</string>
     <string name="theme_export_title">Exporter le thème</string>

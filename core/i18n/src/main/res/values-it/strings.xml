@@ -538,7 +538,6 @@
     <string name="theme_color_scheme_system_default">Predefinita del sistema</string>
     <string name="theme_color_scheme_palette_color">Tavolozza</string>
     <string name="theme_color_scheme_custom_color">Personalizza</string>
-    <string name="new_color_scheme_name">Nuova combinazione di colori</string>
     <string name="preference_category_animations">Animazioni</string>
     <string name="preference_charging_animation">Animazione ricarica</string>
     <string name="preference_charging_animation_summary">Riproduci animazione a bolle mentre il dispositivo è in carica</string>
@@ -849,7 +848,6 @@
     <string name="preference_shapes_rect">Rettangolare</string>
     <string name="preference_shapes_base">Forma di base</string>
     <string name="confirmation_delete_shapes_scheme">Vuoi davvero eliminare lo schema di forme %1$s?</string>
-    <string name="new_shapes_name">Nuove forme</string>
     <string name="no_selection">Nessuna selezione</string>
     <string name="save_as_file">Salva come file</string>
     <string name="theme_export_title">Esporta tema</string>

@@ -497,7 +497,6 @@
     <string name="preference_gesture_swipe_left">کشیدن به چپ</string>
     <string name="preference_gesture_swipe_right">کشیدن به راست</string>
     <string name="confirmation_delete_color_scheme">آیا واقعاً می‌خواهید طرح رنگی %1$s را پاک کنید؟</string>
-    <string name="new_color_scheme_name">طرح رنگی جدید</string>
     <string name="theme_color_scheme_system_default">به‌کار بردن پیش‌گزیده سامانه</string>
     <string name="gesture_action_open_search">بازکردن جستجو</string>
     <string name="gesture_action_launch_app">اجرای برنامه</string>
