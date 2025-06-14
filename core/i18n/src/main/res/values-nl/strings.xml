@@ -847,4 +847,5 @@
     <string name="theme_import_title">Thema importeren</string>
     <string name="import_theme_exists">Thema bestaat al en wordt geüpdatet</string>
     <string name="import_theme_contents">Inhoud</string>
+    <string name="preference_colors_high_contrast">Hoog contrast</string>
 </resources>
