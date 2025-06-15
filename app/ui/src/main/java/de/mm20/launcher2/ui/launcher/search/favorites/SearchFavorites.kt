@@ -76,6 +76,7 @@ fun LazyListScope.SearchFavorites(
                         expanded = tagsExpanded,
                         compact = compactTags,
                         onExpand = onExpandTags,
+                        showFavorites = true
                     )
                 }
             }
