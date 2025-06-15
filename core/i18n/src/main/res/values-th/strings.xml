@@ -66,7 +66,7 @@
     <string name="easter_egg_text">โดนหาเจอซะแล้วสิ ยินดีด้วย คิดว่าคุ้มมั้ย\?</string>
     <string name="close">ปิด</string>
     <string name="save">บันทึก</string>
-    <string name="duplicate">สำเนา</string>
+    <string name="duplicate">สร้างสำเนา</string>
     <string name="edit">แก้ไข</string>
     <string name="skip">ข้าม</string>
     <string name="action_next">ต่อไป</string>
@@ -535,7 +535,7 @@
     <string name="note_widget_action_relink_file">ลิงก์ใหม่</string>
     <string name="note_widget_conflict">มีความขัดแย้งของข้อมูล</string>
     <string name="note_widget_conflict_description">ไฟล์ที่ถูกลิงก์มีข้อมูลอยู่แต่เนื้อหาของไฟล์ไม่ตรงกับเวอร์ชั่นล่าสุดที่ถูกบันทึกในโน้ตนี้ คุณต้องการเก็บเวอร์ชั่นใดไว้\?</string>
-    <string name="confirmation_delete_color_scheme">คุณต้องการลบโทนสี %1$s จริงๆหรือไม่\?</string>
+    <string name="confirmation_delete_color_scheme">คุณต้องการลบชุดสี %1$s ใช่หรือไม่?</string>
     <string name="file_type_launchertheme">ธีม %1$s</string>
     <string name="import_theme_error">ไม่สามารถอ่านไฟล์ที่เลือกไว้ได้ กรุณาตรวจสอบว่าคุณได้เลือกไฟล์ธีมที่ถูกต้อง (*.kvtheme) และข้อมูลไฟล์ไม่เสียหาย</string>
     <string name="preference_blur_wallpaper_radius">ความมัว</string>
@@ -796,7 +796,7 @@
     <string name="missing_permission_call_contacts_settings">คุณต้องอนุญาตให้แอปเข้าถึงโทรศัพท์เพื่อเริ่มการโทรฯ</string>
     <string name="import_theme_exists">ธีมนี้ถูกติดตั้งไว้แล้วและจะถูกอัปเดต</string>
     <string name="import_theme_contents">รายการการปรับแต่ง</string>
-    <string name="preference_tasks_integration_description">Tasks คือแอปเสรีและโอเพนซอร์สำหรับการจดบันทึกและแจ้งเตือนรายการสิ่งที่ต้องทำ คุณสามารถติดตั้งแอป Tasks เพื่อให้ %1$s แสดงและค้นหางานของคุณได้</string>
+    <string name="preference_tasks_integration_description">Tasks คือแอปเสรีและโอเพนซอร์สสำหรับการจดบันทึกและแจ้งเตือนรายการสิ่งที่ต้องทำ คุณสามารถติดตั้งแอป Tasks เพื่อให้ %1$s แสดงและค้นหางานของคุณได้</string>
     <string name="preference_breezyweather_integration_instructions">ขั้นตอนการตั้งแอป Breezy Weather เป็นแหล่งข้อมูลสภาพอากาศ\n\n1. เปิดแอป Breezy Weather &gt; การตั้งค่า &gt; วิดเจ็ตและภาพพื้นหลังแบบเคลื่อนไหว &gt; ส่งข้อมูล Gadgetbridge &gt; เปิดใช้งาน %1$s \n\n2. เปิดการตั้งค่า %1$s และเลือก Breezy Weather เป็นผู้ให้บริการข้อมูลสภาพอากาศ</string>
     <string name="theme_import_title">นำเข้าธีม</string>
     <string name="preference_screen_shapes">รูปร่าง</string>
@@ -804,7 +804,7 @@
     <string name="preference_shapes_extra_round">มุมมน</string>
     <string name="preference_shapes_base">รูปร่างหลัก</string>
     <string name="preference_shapes_rect">สี่เหลี่ยม</string>
-    <string name="confirmation_delete_shapes_scheme">คุณต้องการที่จะลบรูปร่าง %1$s ใช่หรือไม่?</string>
+    <string name="confirmation_delete_shapes_scheme">คุณต้องการลบชุดรูปร่าง %1$s ใช่หรือไม่?</string>
     <string name="bad_configuration_title">ยินดีด้วย คุณใช้งานแอปนี้ไม่ได้แล้ว!</string>
     <string name="bad_configuration_summary">คุณได้ค้นพบวิธีการตั้งค่าที่ทำให้ทั้งการค้นหาและการตั้งค่าของแอปใช้งานไม่ได้ ทำให้คุณไม่สามารถใช้งานแอปนี้ได้อีกต่อไป</string>
     <string name="weather_condition_thunder">ท้องฟ้าคำราม</string>
@@ -812,7 +812,7 @@
     <string name="provider_breezy">Breezy Weather</string>
     <string name="preference_location_breezy">จัดการตำแหน่งที่อยู่ใน Breezy Weather</string>
     <string name="preference_launch_breezyweather_app">เปิด Breezy Weather</string>
-    <string name="preference_breezyweather_integration_description">Breezy Weather คือแอปเสรีและโอเพนซอร์สำหรับการติดตามสภาพอากาศ คุณสามารถติดตั้งแอป Breeze Weather เพื่อให้ %1$s ใช้ข้อมูลสภาพอากาศจาก Breezy Weather ได้</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather คือแอปเสรีและโอเพนซอร์สสำหรับการติดตามสภาพอากาศ คุณสามารถติดตั้งแอป Breeze Weather เพื่อให้ %1$s ใช้ข้อมูลสภาพอากาศจาก Breezy Weather ได้</string>
     <string name="no_selection">ยังไม่ได้เลือกสิ่งใด</string>
     <string name="save_as_file">บันทึกเป็นไฟล์</string>
     <string name="theme_export_title">ส่งออกธีม</string>
@@ -834,4 +834,10 @@
     <string name="gesture_action_widgets">วิดเจ็ต</string>
     <string name="preference_launch_tasks_app">เปิดแอป Tasks</string>
     <string name="weather_condition_haze">มีฝุ่นควัน</string>
+    <string name="preference_colors_high_contrast">คมชัดสูง</string>
+    <string name="preference_transparencies_default">ค่าเริ่มต้น</string>
+    <string name="preference_transparencies_semi_transparent">โปร่งแสง</string>
+    <string name="new_theme_name">(ไม่มีชื่อ)</string>
+    <string name="preference_screen_transparencies">ความโปร่งใส</string>
+    <string name="confirmation_delete_transparencies_scheme">คุณต้องการลบชุดความโปร่งใส %1$s ใช่หรือไม่?</string>
 </resources>
