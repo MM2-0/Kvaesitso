@@ -857,4 +857,9 @@
     <string name="theme_import_title">Importa tema</string>
     <string name="import_theme_contents">Contenuto</string>
     <string name="preference_colors_high_contrast">Contrasto elevato</string>
+    <string name="preference_screen_transparencies">Trasparenza</string>
+    <string name="preference_transparencies_semi_transparent">Semi-trasparente</string>
+    <string name="preference_transparencies_default">Predefinito</string>
+    <string name="confirmation_delete_transparencies_scheme">Vuoi davvero eliminare lo schema di trasparenza %1$s?</string>
+    <string name="new_theme_name">(senza titolo)</string>
 </resources>
