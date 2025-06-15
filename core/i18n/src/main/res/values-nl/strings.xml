@@ -846,4 +846,9 @@
     <string name="import_theme_exists">Thema bestaat al en wordt geüpdatet</string>
     <string name="import_theme_contents">Inhoud</string>
     <string name="preference_colors_high_contrast">Hoog contrast</string>
+    <string name="preference_screen_transparencies">Doorzichtigheid</string>
+    <string name="preference_transparencies_default">Standaard</string>
+    <string name="preference_transparencies_semi_transparent">Halfdoorzichtig</string>
+    <string name="confirmation_delete_transparencies_scheme">Ben je zeker dat je het doorzichtigheidsschema %1$s wil verwijderen?</string>
+    <string name="new_theme_name">(naamloos)</string>
 </resources>
