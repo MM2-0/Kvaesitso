@@ -159,6 +159,7 @@
     <string name="preference_search_bar_style">Estilo</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Completo em %1$s minuto</item>
+        <item quantity="many">Completo em %1$s minutos</item>
         <item quantity="other">Completo em %1$s minutos</item>
     </plurals>
     <string name="preference_theme">Tema</string>
@@ -380,7 +381,7 @@
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">%1$d entrada foi removida.</item>
         <item quantity="many">%1$d entradas foram removidas.</item>
-        <item quantity="other"/>
+        <item quantity="other">%1$d entradas foram removidas.</item>
     </plurals>
     <string name="preference_logs">Logs</string>
     <string name="search_action_event">Agendar evento</string>
@@ -431,7 +432,7 @@
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item selecionado</item>
         <item quantity="many">%1$d itens selecionados</item>
-        <item quantity="other"/>
+        <item quantity="other">%1$d itens selecionados</item>
     </plurals>
     <string name="tag_exists_error">Já existe uma etiqueta com este nome.</string>
     <string name="missing_permission_accessibility_gesture_failed">O serviço de acessibilidade do iniciador precisa estar ativado para executar esta ação.</string>
@@ -562,7 +563,7 @@
     <string name="preference_location_managed">Gerenciado por extensão</string>
     <string name="preference_location_managed_summary">A localização para esse provedor é gerenciada pelo aplicativo de extensão</string>
     <string name="customize_item_label">Etiqueta</string>
-    <string name="plugin_type_filesearch">Busca de arquivos</string>
+    <string name="plugin_type_filesearch">Arquivos</string>
     <string name="plugin_action_setup">Configurar</string>
     <string name="apps_profile_private">Privado</string>
     <string name="preference_compact_tags">Tags compactas</string>
@@ -790,7 +791,7 @@
     <string name="poi_category_optician">Oftalmologista</string>
     <string name="poi_category_hindu_temple">Templo hindu</string>
     <string name="poi_category_atm">Caixa eletrônico</string>
-    <string name="poi_category_shopping"/>
+    <string name="poi_category_shopping">Compras</string>
     <string name="poi_category_swimming">Piscina</string>
     <string name="poi_category_soup_restaurant">Soparia</string>
     <string name="poi_category_discount_store">Loja de descontos</string>
@@ -822,7 +823,41 @@
     <string name="preference_breezyweather_integration_instructions">Para usar o Breezy Weather como provedor de clima:\n\n1. Vá para Breezy Weather &gt; Configurações &gt; Widgets e papel de parede animado &gt; Enviar dados meteorológicos para Gadgetbridge &gt; Ativar %1$s\n\n2. No %1$s, selecione Breezy Weather como provedor de clima</string>
     <string name="no_selection">Nenhuma seleção</string>
     <string name="save_as_file">Salvar como arquivo</string>
-    <string name="provider_breezy"/>
+    <string name="provider_breezy">Breezy Weather</string>
     <string name="preference_clock_widget_time_format_system">Padrão do sistema</string>
     <string name="gesture_action_widgets">Widgets</string>
+    <string name="import_theme_exists">Tema já existe e será atualizado</string>
+    <string name="import_theme_contents">Conteúdos</string>
+    <string name="theme_export_title">Exportar tema</string>
+    <string name="theme_bundle_author">Autor</string>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s endereço de e-mail</item>
+        <item quantity="many">%1$s endereços de e-mail</item>
+        <item quantity="other">%1$s endereços de e-mail</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s notificação</item>
+        <item quantity="many">%1$s notificações</item>
+        <item quantity="other">%1$s notificações</item>
+    </plurals>
+    <string name="departure_time_departed">partiu</string>
+    <string name="theme_import_title">Importar tema</string>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s endereço postal</item>
+        <item quantity="many">%1$s endereços postais</item>
+        <item quantity="other">%1$s endereços postais</item>
+    </plurals>
+    <string name="preference_screen_transparencies">Transparência</string>
+    <string name="preference_transparencies_default">Padrão</string>
+    <string name="preference_transparencies_semi_transparent">Semi-transparente</string>
+    <string name="confirmation_delete_transparencies_scheme">Você tem certeza que deseja excluir o esquema de transparência %1$s?</string>
+    <string name="new_theme_name">(sem título)</string>
+    <string name="theme_bundle_name">Nome</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s número de telefone</item>
+        <item quantity="many">%1$s números de telefone</item>
+        <item quantity="other">%1$s números de telefone</item>
+    </plurals>
 </resources>
