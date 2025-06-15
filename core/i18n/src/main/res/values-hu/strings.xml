@@ -846,4 +846,9 @@
     <string name="theme_import_title">Téma importálása</string>
     <string name="import_theme_contents">Tartalom</string>
     <string name="preference_colors_high_contrast">Nagy kontraszt</string>
+    <string name="preference_transparencies_default">Alapértelmezett</string>
+    <string name="preference_screen_transparencies">Átlátszóság</string>
+    <string name="preference_transparencies_semi_transparent">Félig átlátszó</string>
+    <string name="confirmation_delete_transparencies_scheme">Valóban törölni akarja a(z) %1$s átlátszósági sémát?</string>
+    <string name="new_theme_name">(névtelen)</string>
 </resources>
