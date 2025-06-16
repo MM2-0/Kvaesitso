@@ -883,4 +883,10 @@
     <string name="import_theme_exists">Le thème existe déjà et sera mis à jour</string>
     <string name="theme_bundle_author">Créé par</string>
     <string name="theme_import_title">Importer le thème</string>
+    <string name="preference_colors_high_contrast">Contraste élevé</string>
+    <string name="preference_screen_transparencies">Transparence</string>
+    <string name="preference_transparencies_default">Par défaut</string>
+    <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
+    <string name="confirmation_delete_transparencies_scheme">Voulez-vous réellement supprimer le schéma de transparence %1$s ?</string>
+    <string name="new_theme_name">(sans titre)</string>
 </resources>
