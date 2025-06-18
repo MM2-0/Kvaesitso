@@ -84,6 +84,10 @@ import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemeSettingsRo
 import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemeSettingsScreen
 import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemesSettingsScreen
+import de.mm20.launcher2.ui.settings.typography.TypographiesSettingsRoute
+import de.mm20.launcher2.ui.settings.typography.TypographiesSettingsScreen
+import de.mm20.launcher2.ui.settings.typography.TypographySettingsRoute
+import de.mm20.launcher2.ui.settings.typography.TypographySettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterHelpSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
 import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
@@ -217,6 +221,14 @@ class SettingsActivity : BaseActivity() {
                                     val route: TransparencySchemeSettingsRoute = it.toRoute()
                                         ?: return@composable
                                     TransparencySchemeSettingsScreen(UUID.fromString(route.id))
+                                }
+                                composable<TypographiesSettingsRoute> {
+                                    TypographiesSettingsScreen()
+                                }
+                                composable<TypographySettingsRoute> {
+                                    val route: TypographySettingsRoute = it.toRoute()
+                                        ?: return@composable
+                                    TypographySettingsScreen(UUID.fromString(route.id))
                                 }
                                 composable("settings/appearance/cards") {
                                     CardsSettingsScreen()

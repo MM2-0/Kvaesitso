@@ -54,6 +54,8 @@ fun ShapeSchemesSettingsScreen() {
 
     var deleteShapes by remember { mutableStateOf<Shapes?>(null) }
 
+    val (builtin, user) = themes.partition { it.builtIn }
+
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_shapes),
         topBarActions = {
@@ -64,7 +66,7 @@ fun ShapeSchemesSettingsScreen() {
     ) {
         item {
             PreferenceCategory {
-                for (theme in themes) {
+                for (theme in builtin) {
                     var showMenu by remember { mutableStateOf(false) }
                     Preference(
                         icon = if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
@@ -83,18 +85,6 @@ fun ShapeSchemesSettingsScreen() {
                                     expanded = showMenu,
                                     onDismissRequest = { showMenu = false }
                                 ) {
-                                    if (!theme.builtIn) {
-                                        DropdownMenuItem(
-                                            leadingIcon = {
-                                                Icon(Icons.Rounded.Edit, null)
-                                            },
-                                            text = { Text(stringResource(R.string.edit)) },
-                                            onClick = {
-                                                navController?.navigate("settings/appearance/shapes/${theme.id}")
-                                                showMenu = false
-                                            }
-                                        )
-                                    }
                                     DropdownMenuItem(
                                         leadingIcon = {
                                             Icon(Icons.Rounded.ContentCopy, null)
@@ -105,7 +95,58 @@ fun ShapeSchemesSettingsScreen() {
                                             showMenu = false
                                         }
                                     )
-                                    if (!theme.builtIn) {
+                                }
+                            }
+                        },
+                        onClick = {
+                            viewModel.selectShapes(theme)
+                        }
+                    )
+                }
+            }
+        }
+        if (user.isNotEmpty()) {
+            item {
+                PreferenceCategory {
+                    for (theme in user) {
+                        var showMenu by remember { mutableStateOf(false) }
+                        Preference(
+                            icon = if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
+                            title = theme.name,
+                            controls = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    ShapesPreview(theme)
+                                    IconButton(
+                                        modifier = Modifier.padding(start = 12.dp),
+                                        onClick = { showMenu = true }) {
+                                        Icon(Icons.Rounded.MoreVert, null)
+                                    }
+                                    DropdownMenu(
+                                        expanded = showMenu,
+                                        onDismissRequest = { showMenu = false }
+                                    ) {
+                                        DropdownMenuItem(
+                                            leadingIcon = {
+                                                Icon(Icons.Rounded.Edit, null)
+                                            },
+                                            text = { Text(stringResource(R.string.edit)) },
+                                            onClick = {
+                                                navController?.navigate("settings/appearance/shapes/${theme.id}")
+                                                showMenu = false
+                                            }
+                                        )
+                                        DropdownMenuItem(
+                                            leadingIcon = {
+                                                Icon(Icons.Rounded.ContentCopy, null)
+                                            },
+                                            text = { Text(stringResource(R.string.duplicate)) },
+                                            onClick = {
+                                                viewModel.duplicate(theme)
+                                                showMenu = false
+                                            }
+                                        )
                                         DropdownMenuItem(
                                             leadingIcon = {
                                                 Icon(Icons.Rounded.Delete, null)
@@ -118,12 +159,12 @@ fun ShapeSchemesSettingsScreen() {
                                         )
                                     }
                                 }
+                            },
+                            onClick = {
+                                viewModel.selectShapes(theme)
                             }
-                        },
-                        onClick = {
-                            viewModel.selectShapes(theme)
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }

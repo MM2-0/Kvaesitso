@@ -439,6 +439,7 @@
     <string name="preference_shapes_extra_round">Extra round</string>
     <string name="preference_shapes_rect">Rectangular</string>
     <string name="preference_shapes_base">Base shape</string>
+    <string name="preference_screen_typography">Typography</string>
     <string name="preference_screen_transparencies">Transparency</string>
     <string name="preference_transparencies_default">Default</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
@@ -824,6 +825,7 @@
     <string name="note_widget_file_write_error_description">The note could not be written to the linked file. Possibly, it has been moved or deleted. A copy has been saved to the launcher\'s internal storage.</string>
     <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s\?</string>
     <string name="confirmation_delete_shapes_scheme">Do you really want to delete the shape scheme %1$s?</string>
+    <string name="confirmation_delete_typography_scheme">Do you really want to delete the typography scheme %1$s?</string>
     <string name="confirmation_delete_transparencies_scheme">Do you really want to delete the transparency scheme %1$s?</string>
     <string name="new_theme_name">(untitled)</string>
     <string name="theme_color_scheme_system_default">Use system default</string>

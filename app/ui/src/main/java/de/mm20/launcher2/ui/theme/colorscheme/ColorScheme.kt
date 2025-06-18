@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.theme.colorscheme
 
-import android.R
 import android.os.Build
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
@@ -89,11 +88,11 @@ fun systemCorePalette(): CorePalette<Int> {
     if (Build.VERSION.SDK_INT >= 31 && !compatModeColors) {
         val context = LocalContext.current
         return CorePalette(
-            primary = ContextCompat.getColor(context, R.color.system_accent1_500),
-            secondary = ContextCompat.getColor(context, R.color.system_accent2_500),
-            tertiary = ContextCompat.getColor(context, R.color.system_accent3_500),
-            neutral = ContextCompat.getColor(context, R.color.system_neutral1_500),
-            neutralVariant = ContextCompat.getColor(context, R.color.system_neutral2_500),
+            primary = ContextCompat.getColor(context, android.R.color.system_accent1_500),
+            secondary = ContextCompat.getColor(context, android.R.color.system_accent2_500),
+            tertiary = ContextCompat.getColor(context, android.R.color.system_accent3_500),
+            neutral = ContextCompat.getColor(context, android.R.color.system_neutral1_500),
+            neutralVariant = ContextCompat.getColor(context, android.R.color.system_neutral2_500),
             error = 0xFFB3261E.toInt(),
         )
     }

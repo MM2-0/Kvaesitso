@@ -1,11 +1,9 @@
-package de.mm20.launcher2.ui.settings.transparencies
+package de.mm20.launcher2.ui.settings.typography
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ContentCopy
@@ -22,7 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,44 +27,39 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.themes.transparencies.Transparencies
+import de.mm20.launcher2.themes.typography.Typography
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalNavController
-import de.mm20.launcher2.ui.theme.WallpaperColors
-import de.mm20.launcher2.ui.theme.transparency.transparencySchemeOf
-import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
+import de.mm20.launcher2.ui.theme.typography.typographyOf
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object TransparencySchemesSettingsRoute
+data object TypographiesSettingsRoute
 
 @Composable
-fun TransparencySchemesSettingsScreen() {
-    val viewModel: TransparencySchemesSettingsScreenVM = viewModel()
+fun TypographiesSettingsScreen() {
+    val viewModel: TypographySettingsScreenVM = viewModel()
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    val selectedTheme by viewModel.selectedTransparencies.collectAsStateWithLifecycle(null)
-    val themes by viewModel.transparencies.collectAsStateWithLifecycle(emptyList())
+    val selectedTheme by viewModel.selectedTypography.collectAsStateWithLifecycle(null)
+    val themes by viewModel.typography.collectAsStateWithLifecycle(emptyList())
 
-    var deleteTransparencies by remember { mutableStateOf<Transparencies?>(null) }
+    var deleteTypography by remember { mutableStateOf<Typography?>(null) }
 
     val (builtin, user) = themes.partition { it.builtIn }
 
-    val wallpaperColors = wallpaperColorsAsState().value
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_transparencies),
+        title = stringResource(R.string.preference_screen_typography),
         topBarActions = {
             IconButton(onClick = { viewModel.createNew(context) }) {
                 Icon(Icons.Rounded.Add, null)
@@ -78,14 +70,27 @@ fun TransparencySchemesSettingsScreen() {
             PreferenceCategory {
                 for (theme in builtin) {
                     var showMenu by remember { mutableStateOf(false) }
+                    val typo = typographyOf(theme)
                     Preference(
-                        icon = if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
-                        title = theme.name,
+                        icon = {
+                            Icon(
+                                if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        },
+                        title = {
+                            Text(
+                                text = theme.name,
+                                maxLines = 1,
+                                style = typo.titleMedium
+                            )
+                        },
                         controls = {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
-                                TransparenciesPreview(wallpaperColors, theme)
+                                TypographyPreview(typo)
                                 IconButton(
                                     modifier = Modifier.padding(start = 12.dp),
                                     onClick = { showMenu = true }) {
@@ -109,7 +114,7 @@ fun TransparencySchemesSettingsScreen() {
                             }
                         },
                         onClick = {
-                            viewModel.selectTransparencies(theme)
+                            viewModel.selectTypography(theme)
                         }
                     )
                 }
@@ -120,14 +125,27 @@ fun TransparencySchemesSettingsScreen() {
                 PreferenceCategory {
                     for (theme in user) {
                         var showMenu by remember { mutableStateOf(false) }
+                        val typo = typographyOf(theme)
                         Preference(
-                            icon = if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
-                            title = theme.name,
+                            icon = {
+                                Icon(
+                                    if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            },
+                            title = {
+                                Text(
+                                    text = theme.name,
+                                    maxLines = 1,
+                                    style = typo.titleMedium
+                                )
+                            },
                             controls = {
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    TransparenciesPreview(wallpaperColors, theme)
+                                    TypographyPreview(typo)
                                     IconButton(
                                         modifier = Modifier.padding(start = 12.dp),
                                         onClick = { showMenu = true }) {
@@ -144,7 +162,7 @@ fun TransparencySchemesSettingsScreen() {
                                             text = { Text(stringResource(R.string.edit)) },
                                             onClick = {
                                                 navController?.navigate(
-                                                    TransparencySchemeSettingsRoute(theme.id.toString())
+                                                    TypographySettingsRoute(theme.id.toString())
                                                 )
                                                 showMenu = false
                                             }
@@ -165,7 +183,7 @@ fun TransparencySchemesSettingsScreen() {
                                             },
                                             text = { Text(stringResource(R.string.menu_delete)) },
                                             onClick = {
-                                                deleteTransparencies = theme
+                                                deleteTypography = theme
                                                 showMenu = false
                                             }
                                         )
@@ -173,7 +191,7 @@ fun TransparencySchemesSettingsScreen() {
                                 }
                             },
                             onClick = {
-                                viewModel.selectTransparencies(theme)
+                                viewModel.selectTypography(theme)
                             }
                         )
                     }
@@ -181,22 +199,22 @@ fun TransparencySchemesSettingsScreen() {
             }
         }
     }
-    if (deleteTransparencies != null) {
+    if (deleteTypography != null) {
         AlertDialog(
-            onDismissRequest = { deleteTransparencies = null },
+            onDismissRequest = { deleteTypography = null },
             text = {
                 Text(
                     stringResource(
                         R.string.confirmation_delete_transparencies_scheme,
-                        deleteTransparencies!!.name
+                        deleteTypography!!.name
                     )
                 )
             },
             confirmButton = {
                 TextButton(
                     onClick = {
-                        viewModel.delete(deleteTransparencies!!)
-                        deleteTransparencies = null
+                        viewModel.delete(deleteTypography!!)
+                        deleteTypography = null
                     }
                 ) {
                     Text(stringResource(android.R.string.ok))
@@ -204,7 +222,7 @@ fun TransparencySchemesSettingsScreen() {
             },
             dismissButton = {
                 TextButton(
-                    onClick = { deleteTransparencies = null }
+                    onClick = { deleteTypography = null }
                 ) {
                     Text(stringResource(android.R.string.cancel))
                 }
@@ -214,49 +232,22 @@ fun TransparencySchemesSettingsScreen() {
 }
 
 @Composable
-private fun TransparenciesPreview(wallpaperColors: WallpaperColors, theme: Transparencies) {
-    val transparencies = transparencySchemeOf(theme)
+private fun TypographyPreview(typography: androidx.compose.material3.Typography) {
+    val previewTexts = PreviewTexts()
 
-    Box(
-        modifier = Modifier
-            .clip(MaterialTheme.shapes.extraSmall)
-            .checkerboard(
-                MaterialTheme.colorScheme.primary,
-                MaterialTheme.colorScheme.onPrimaryContainer,
-                12.dp,
-            )
-            .height(40.dp)
-            .width(56.dp),
-        contentAlignment = Alignment.Center
+    Column(
+        modifier = Modifier.padding(vertical = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Box(
-            modifier = Modifier
-                .background(
-                    MaterialTheme.colorScheme.surfaceContainer.copy(alpha = transparencies.background),
-                    MaterialTheme.shapes.extraSmall
-                )
-                .height(40.dp)
-                .width(56.dp)
+        Text(
+            text = previewTexts.Short1,
+            style = typography.titleSmall,
         )
-        Box(
-            modifier = Modifier
-                .background(
-                    MaterialTheme.colorScheme.surface.copy(alpha = transparencies.surface),
-                    MaterialTheme.shapes.extraSmall
-                )
-                .height(24.dp)
-                .width(48.dp)
-        )
-        Box(
-            modifier = Modifier
-                .height(32.dp)
-                .width(36.dp)
-                .shadow(
-                    if (transparencies.elevatedSurface < 1f) 0.dp else 8.dp,
-                    shape = MaterialTheme.shapes.extraSmall,
-                    clip = true,
-                )
-                .background(MaterialTheme.colorScheme.surfaceColorAtElevation(8.dp))
+        Text(
+            text = previewTexts.Short2,
+            style = typography.bodySmall,
+            color = MaterialTheme.colorScheme.secondary,
         )
     }
 }

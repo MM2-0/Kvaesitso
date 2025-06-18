@@ -18,7 +18,6 @@ import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.RadioButtonChecked
 import androidx.compose.material.icons.rounded.RadioButtonUnchecked
-import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -61,6 +60,8 @@ fun ColorSchemesSettingsScreen() {
 
     var deleteColors by remember { mutableStateOf<Colors?>(null) }
 
+    val (builtin, user) = themes.partition { it.builtIn }
+
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_colors),
         topBarActions = {
@@ -71,7 +72,7 @@ fun ColorSchemesSettingsScreen() {
     ) {
         item {
             PreferenceCategory {
-                for (theme in themes) {
+                for (theme in builtin) {
                     var showMenu by remember { mutableStateOf(false) }
                     Preference(
                         icon = if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
@@ -90,18 +91,6 @@ fun ColorSchemesSettingsScreen() {
                                     expanded = showMenu,
                                     onDismissRequest = { showMenu = false }
                                 ) {
-                                    if (!theme.builtIn) {
-                                        DropdownMenuItem(
-                                            leadingIcon = {
-                                                Icon(Icons.Rounded.Edit, null)
-                                            },
-                                            text = { Text(stringResource(R.string.edit)) },
-                                            onClick = {
-                                                navController?.navigate("settings/appearance/colors/${theme.id}")
-                                                showMenu = false
-                                            }
-                                        )
-                                    }
                                     DropdownMenuItem(
                                         leadingIcon = {
                                             Icon(Icons.Rounded.ContentCopy, null)
@@ -112,14 +101,56 @@ fun ColorSchemesSettingsScreen() {
                                             showMenu = false
                                         }
                                     )
-                                    if (!theme.builtIn) {
+
+                                }
+                            }
+                        },
+                        onClick = {
+                            viewModel.selectTheme(theme)
+                        }
+                    )
+                }
+            }
+        }
+        if (user.isNotEmpty()) {
+            item {
+                PreferenceCategory {
+                    for (theme in user) {
+                        var showMenu by remember { mutableStateOf(false) }
+                        Preference(
+                            icon = if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
+                            title = theme.name,
+                            controls = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    ColorSchemePreview(theme)
+                                    IconButton(
+                                        modifier = Modifier.padding(start = 12.dp),
+                                        onClick = { showMenu = true }) {
+                                        Icon(Icons.Rounded.MoreVert, null)
+                                    }
+                                    DropdownMenu(
+                                        expanded = showMenu,
+                                        onDismissRequest = { showMenu = false }
+                                    ) {
                                         DropdownMenuItem(
                                             leadingIcon = {
-                                                Icon(Icons.Rounded.Share, null)
+                                                Icon(Icons.Rounded.Edit, null)
                                             },
-                                            text = { Text(stringResource(R.string.menu_share)) },
+                                            text = { Text(stringResource(R.string.edit)) },
                                             onClick = {
-                                                viewModel.exportTheme(context, theme)
+                                                navController?.navigate("settings/appearance/colors/${theme.id}")
+                                                showMenu = false
+                                            }
+                                        )
+                                        DropdownMenuItem(
+                                            leadingIcon = {
+                                                Icon(Icons.Rounded.ContentCopy, null)
+                                            },
+                                            text = { Text(stringResource(R.string.duplicate)) },
+                                            onClick = {
+                                                viewModel.duplicate(theme)
                                                 showMenu = false
                                             }
                                         )
@@ -135,12 +166,12 @@ fun ColorSchemesSettingsScreen() {
                                         )
                                     }
                                 }
+                            },
+                            onClick = {
+                                viewModel.selectTheme(theme)
                             }
-                        },
-                        onClick = {
-                            viewModel.selectTheme(theme)
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }

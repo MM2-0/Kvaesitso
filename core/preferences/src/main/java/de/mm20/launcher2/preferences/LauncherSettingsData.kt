@@ -18,6 +18,8 @@ data class LauncherSettingsData internal constructor(
     val uiShapesId: UUID = UUID(0L, 0L),
     @Serializable(with = UUIDSerializer::class)
     val uiTransparenciesId: UUID = UUID(0L, 0L),
+    @Serializable(with = UUIDSerializer::class)
+    val uiTypographyId: UUID = UUID(0L, 0L),
 
     val uiCompatModeColors: Boolean = false,
     val uiFont: Font = Font.Outfit,

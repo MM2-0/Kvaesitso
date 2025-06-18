@@ -23,7 +23,7 @@ fun makeTypography(
         headlineSmallEmphasized = baseTypography.headlineSmall.copy(fontFamily = headlineFamily, fontWeight = FontWeight.Bold),
         titleLarge = baseTypography.titleLarge.copy(fontFamily = headlineFamily, fontWeight = FontWeight.SemiBold),
         titleLargeEmphasized = baseTypography.titleLargeEmphasized.copy(fontFamily = headlineFamily, fontWeight = FontWeight.Bold),
-        titleMedium = baseTypography.titleMedium.copy(fontFamily = headlineFamily),
+        titleMedium = baseTypography.titleMedium.copy(fontFamily = headlineFamily, fontWeight = FontWeight.SemiBold),
         titleMediumEmphasized = baseTypography.titleMediumEmphasized.copy(fontFamily = headlineFamily),
         titleSmall = baseTypography.titleSmall.copy(fontFamily = headlineFamily, fontWeight = FontWeight.SemiBold),
         titleSmallEmphasized = baseTypography.titleSmallEmphasized.copy(fontFamily = headlineFamily, fontWeight = FontWeight.Bold),

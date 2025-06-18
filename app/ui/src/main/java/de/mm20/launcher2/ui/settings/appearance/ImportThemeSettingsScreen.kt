@@ -65,6 +65,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.settings.transparencies.checkerboard
+import de.mm20.launcher2.ui.settings.typography.PreviewTexts
 import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
 import de.mm20.launcher2.ui.theme.colorscheme.lightColorSchemeOf
 import de.mm20.launcher2.ui.theme.shapes.shapesOf
@@ -233,6 +234,7 @@ private fun ThemePreview(
     darkMode: Boolean,
     onDarkModeChanged: (Boolean) -> Unit,
 ) {
+    val previewTexts = PreviewTexts()
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -291,17 +293,17 @@ private fun ThemePreview(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        "Title",
+                        previewTexts.Medium1,
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
-                        "Subtitle",
+                        previewTexts.Medium2,
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.secondary
                     )
                     Text(
-                        "Body",
+                        previewTexts.TwoLines,
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(top = 4.dp),
                         color = MaterialTheme.colorScheme.onSurface,
@@ -316,7 +318,7 @@ private fun ThemePreview(
             ) {
                 FilterChip(
                     selected = true,
-                    label = { Text("Chip") },
+                    label = { Text(previewTexts.Short1) },
                     leadingIcon = {
                         Icon(
                             Icons.Rounded.Star, null,
@@ -327,7 +329,7 @@ private fun ThemePreview(
                 )
                 FilterChip(
                     selected = false,
-                    label = { Text("Chip") },
+                    label = { Text(previewTexts.Short2) },
                     leadingIcon = {
                         Icon(
                             Icons.Rounded.Star, null,
@@ -348,8 +350,8 @@ private fun ThemePreview(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
             ) {
-                Button(onClick = {}) { Text("Button") }
-                OutlinedButton(onClick = {}) { Text("Button") }
+                Button(onClick = {}) { Text(previewTexts.Medium1) }
+                OutlinedButton(onClick = {}) { Text(previewTexts.Medium2) }
             }
         }
         Box(

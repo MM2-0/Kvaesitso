@@ -29,14 +29,15 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.value
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemesSettingsRoute
+import de.mm20.launcher2.ui.settings.typography.TypographiesSettingsRoute
 import de.mm20.launcher2.ui.theme.getTypography
 
 @Composable
 fun AppearanceSettingsScreen() {
     val viewModel: AppearanceSettingsScreenVM = viewModel()
-    val context = LocalContext.current
     val navController = LocalNavController.current
     val colorThemeName by viewModel.colorThemeName.collectAsStateWithLifecycle(null)
+    val typographyThemeName by viewModel.typographyThemeName.collectAsStateWithLifecycle(null)
     val shapeThemeName by viewModel.shapeThemeName.collectAsStateWithLifecycle(null)
     val transparencyThemeName by viewModel.transparencyThemeName.collectAsStateWithLifecycle(null)
     val compatModeColors by viewModel.compatModeColors.collectAsState()
@@ -77,22 +78,11 @@ fun AppearanceSettingsScreen() {
                     },
                     icon = Icons.Rounded.Palette,
                 )
-                val font by viewModel.font.collectAsState()
-                ListPreference(
-                    title = stringResource(R.string.preference_font),
-                    items = listOf(
-                        "Outfit" to Font.Outfit,
-                        stringResource(R.string.preference_font_system) to Font.System,
-                    ),
-                    value = font,
-                    onValueChanged = {
-                        if (it != null) viewModel.setFont(it)
-                    },
-                    itemLabel = {
-                        val typography = remember(it.value) {
-                            getTypography(context, it.value)
-                        }
-                        Text(it.first, style = typography.titleMedium)
+                Preference(
+                    title = stringResource(id = R.string.preference_screen_typography),
+                    summary = typographyThemeName,
+                    onClick = {
+                        navController?.navigate(TypographiesSettingsRoute)
                     },
                     icon = Icons.Rounded.TextFields,
                 )

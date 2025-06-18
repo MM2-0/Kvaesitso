@@ -15,6 +15,7 @@ import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 import de.mm20.launcher2.ui.theme.transparency.transparencySchemeOf
 import de.mm20.launcher2.ui.theme.typography.DefaultTypography
 import de.mm20.launcher2.ui.theme.typography.getDeviceDefaultTypography
+import de.mm20.launcher2.ui.theme.typography.typographyOf
 import kotlinx.coroutines.flow.flatMapLatest
 import org.koin.compose.koinInject
 import de.mm20.launcher2.preferences.ColorScheme as ColorSchemePref
@@ -24,8 +25,6 @@ import de.mm20.launcher2.preferences.ColorScheme as ColorSchemePref
 fun LauncherTheme(
     content: @Composable () -> Unit
 ) {
-
-    val context = LocalContext.current
     val uiSettings: UiSettings = koinInject()
     val themeRepository: ThemeRepository = koinInject()
 
@@ -41,6 +40,12 @@ fun LauncherTheme(
         }
     }.collectAsState(null)
 
+    val themeTypography by remember {
+        uiSettings.typographyId.flatMapLatest {
+            themeRepository.typographies.getOrDefault(it)
+        }
+    }.collectAsState(null)
+
     val themeTransparencies by remember {
         uiSettings.transparenciesId.flatMapLatest {
             themeRepository.transparencies.getOrDefault(it)
@@ -53,7 +58,7 @@ fun LauncherTheme(
     val darkTheme =
         colorSchemePref == ColorSchemePref.Dark || colorSchemePref == ColorSchemePref.System && isSystemInDarkTheme()
 
-    if (themeColors == null || themeShapes == null || themeTransparencies == null) {
+    if (themeColors == null || themeShapes == null || themeTransparencies == null || themeTypography == null) {
         return
     }
 
@@ -64,6 +69,7 @@ fun LauncherTheme(
     }
 
     val shapes = shapesOf(themeShapes!!)
+    val typography = typographyOf(themeTypography!!)
 
     val transparencyScheme = transparencySchemeOf(themeTransparencies!!)
 
@@ -71,10 +77,6 @@ fun LauncherTheme(
     val font by remember { uiSettings.font }.collectAsState(
         Font.Outfit
     )
-
-    val typography = remember(font) {
-        getTypography(context, font)
-    }
 
     CompositionLocalProvider(
         LocalDarkTheme provides darkTheme,

@@ -318,6 +318,17 @@ class UiSettings internal constructor(
         }
     }
 
+    val typographyId
+        get() = launcherDataStore.data.map {
+            it.uiTypographyId
+        }.distinctUntilChanged()
+
+    fun setTypographyId(typographyId: UUID) {
+        launcherDataStore.update {
+            it.copy(uiTypographyId = typographyId)
+        }
+    }
+
     val font
         get() = launcherDataStore.data.map {
             it.uiFont

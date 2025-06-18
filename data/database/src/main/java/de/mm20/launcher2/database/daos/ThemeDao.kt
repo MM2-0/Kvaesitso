@@ -7,6 +7,7 @@ import androidx.room.Update
 import de.mm20.launcher2.database.entities.ColorsEntity
 import de.mm20.launcher2.database.entities.ShapesEntity
 import de.mm20.launcher2.database.entities.TransparenciesEntity
+import de.mm20.launcher2.database.entities.TypographyEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
@@ -21,6 +22,9 @@ interface ThemeDao {
     @Query("SELECT * FROM Transparencies")
     fun getAllTransparencies(): Flow<List<TransparenciesEntity>>
 
+    @Query("SELECT * FROM Typography")
+    fun getAllTypographies(): Flow<List<TypographyEntity>>
+
     @Query("SELECT * FROM Theme WHERE id = :id LIMIT 1")
     fun getColors(id: UUID): Flow<ColorsEntity?>
 
@@ -29,6 +33,9 @@ interface ThemeDao {
 
     @Query("SELECT * FROM Transparencies WHERE id = :id LIMIT 1")
     fun getTransparencies(id: UUID): Flow<TransparenciesEntity?>
+
+    @Query("SELECT * FROM Typography WHERE id = :id LIMIT 1")
+    fun getTypography(id: UUID): Flow<TypographyEntity?>
 
     @Insert
     suspend fun insertColors(colors: ColorsEntity)
@@ -39,6 +46,9 @@ interface ThemeDao {
     @Insert
     suspend fun insertTransparencies(transparencies: TransparenciesEntity)
 
+    @Insert
+    suspend fun insertTypography(typography: TypographyEntity)
+
     @Update
     suspend fun updateColors(colors: ColorsEntity)
     
@@ -47,6 +57,9 @@ interface ThemeDao {
 
     @Update
     suspend fun updateTransparencies(transparencies: TransparenciesEntity)
+
+    @Update
+    suspend fun updateTypography(typography: TypographyEntity)
 
     @Query("DELETE FROM Theme WHERE id = :id")
     suspend fun deleteColors(id: UUID)
@@ -57,6 +70,9 @@ interface ThemeDao {
     @Query("DELETE FROM Transparencies WHERE id = :id")
     suspend fun deleteTransparencies(id: UUID)
 
+    @Query("DELETE FROM Typography WHERE id = :id")
+    suspend fun deleteTypography(id: UUID)
+
     @Query("DELETE FROM Theme")
     suspend fun deleteAllColors()
 
@@ -66,6 +82,9 @@ interface ThemeDao {
     @Query("DELETE FROM Transparencies")
     suspend fun deleteAllTransparencies()
 
+    @Query("DELETE FROM Typography")
+    suspend fun deleteAllTypographies()
+
     @Insert
     fun insertAllColors(colors: List<ColorsEntity>)
     
@@ -74,4 +93,7 @@ interface ThemeDao {
 
     @Insert
     fun insertAllTransparencies(transparencies: List<TransparenciesEntity>)
+
+    @Insert
+    fun insertAllTypographies(typography: List<TypographyEntity>)
 }
