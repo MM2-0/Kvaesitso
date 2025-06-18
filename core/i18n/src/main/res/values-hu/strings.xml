@@ -546,7 +546,6 @@
     <string name="note_widget_file_write_error">Hiba a jegyzet mentésekor</string>
     <string name="note_widget_file_write_error_description">A jegyzetet nem lehetett a kapcsolódó fájlba írni. Lehetséges, hogy áthelyezték vagy törölték. A másolat el lett mentve az indító alkalmazás belső tárolójába.</string>
     <string name="confirmation_delete_color_scheme">Biztosan törölni szeretné a(z) %1$s nevű színösszeállítást?</string>
-    <string name="new_color_scheme_name">Új színösszeállítás</string>
     <string name="theme_color_scheme_custom_color">Egyéni</string>
     <string name="theme_color_scheme_palette_color">Paletta</string>
     <string name="preference_restore_default">Alapértelmezett visszaállítása</string>
@@ -838,7 +837,6 @@
     <string name="preference_shapes_rect">Négyszögletes</string>
     <string name="preference_shapes_base">Alap alakzat</string>
     <string name="confirmation_delete_shapes_scheme">Biztosan törölni szeretné a(z) %1$s nevű alakzatsémát?</string>
-    <string name="new_shapes_name">Új alakzatok</string>
     <string name="no_selection">Nincs kiválasztva semmi</string>
     <string name="save_as_file">Mentés fájlként</string>
     <string name="theme_export_title">Téma exportálása</string>
@@ -848,4 +846,9 @@
     <string name="theme_import_title">Téma importálása</string>
     <string name="import_theme_contents">Tartalom</string>
     <string name="preference_colors_high_contrast">Nagy kontraszt</string>
+    <string name="preference_transparencies_default">Alapértelmezett</string>
+    <string name="preference_screen_transparencies">Átlátszóság</string>
+    <string name="preference_transparencies_semi_transparent">Félig átlátszó</string>
+    <string name="confirmation_delete_transparencies_scheme">Valóban törölni akarja a(z) %1$s átlátszósági sémát?</string>
+    <string name="new_theme_name">(névtelen)</string>
 </resources>

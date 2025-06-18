@@ -587,7 +587,6 @@
     <string name="note_widget_file_write_error">Lỗi lưu ghi chú</string>
     <string name="note_widget_file_write_error_description">Không thể ghi ghi chú vào tệp được liên kết. Có thể nó đã bị di chuyển hoặc bị xóa. Một bản sao đã được lưu vào bộ nhớ trong của trình khởi chạy.</string>
     <string name="confirmation_delete_color_scheme">Bạn có thực sự muốn xóa bảng màu %1$s?</string>
-    <string name="new_color_scheme_name">Bảng màu mới</string>
     <string name="theme_color_scheme_system_default">Sử dụng mặc định của hệ thống</string>
     <string name="theme_color_scheme_autogenerate">Từ màu cơ bản</string>
     <string name="theme_color_scheme_palette_color">Bảng màu</string>

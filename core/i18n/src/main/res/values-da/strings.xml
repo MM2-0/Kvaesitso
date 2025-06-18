@@ -515,7 +515,6 @@
     <string name="note_widget_conflict_file_version">Nuværende filindhold:</string>
     <string name="note_widget_file_read_error">Fejl ved læsning af note</string>
     <string name="note_widget_file_write_error">Fejl med at gemme note</string>
-    <string name="new_color_scheme_name">Nyt farveskema</string>
     <string name="theme_color_scheme_system_default">Brug systemstandard</string>
     <string name="theme_color_scheme_autogenerate">Fra primær farve</string>
     <string name="theme_color_scheme_palette_color">Palet</string>

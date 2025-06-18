@@ -539,7 +539,6 @@
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Vlastní</string>
     <string name="edit">Upravit</string>
-    <string name="new_color_scheme_name">Nové barevné schéma</string>
     <string name="preference_restore_default">Obnovit výchozí</string>
     <string name="preference_category_animations">Animace</string>
     <string name="preference_charging_animation">Animace nabíjení</string>
@@ -849,7 +848,6 @@
     <string name="preference_shapes_rect">Obdélníkový</string>
     <string name="preference_shapes_base">Základní tvar</string>
     <string name="confirmation_delete_shapes_scheme">Opravdu chcete odstranit schéma tvaru %1$s?</string>
-    <string name="new_shapes_name">Nové tvary</string>
     <string name="no_selection">Žádný výběr</string>
     <string name="save_as_file">Uložit jako soubor</string>
     <string name="theme_export_title">Exportovat motiv</string>

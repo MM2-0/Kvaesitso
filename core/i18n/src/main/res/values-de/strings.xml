@@ -536,7 +536,6 @@
     <string name="edit">Bearbeiten</string>
     <string name="search_action_websearch">Websuche</string>
     <string name="confirmation_delete_color_scheme">Möchten Sie das Farbschema %1$s wirklich löschen\?</string>
-    <string name="new_color_scheme_name">Neues Farbschema</string>
     <string name="preference_restore_default">Standard wiederherstellen</string>
     <string name="preference_category_animations">Animationen</string>
     <string name="preference_charging_animation">Ladeanimation</string>
@@ -838,7 +837,6 @@
     <string name="preference_shapes_rect">Rechteckig</string>
     <string name="preference_shapes_base">Grundform</string>
     <string name="confirmation_delete_shapes_scheme">Möchten Sie das Formschema %1$s wirklich löschen?</string>
-    <string name="new_shapes_name">Neue Formen</string>
     <string name="import_theme_exists">Design existiert bereits und wird aktualisiert</string>
     <string name="no_selection">Keine Auswahl</string>
     <string name="save_as_file">Als Datei speichern</string>
@@ -846,4 +844,11 @@
     <string name="theme_import_title">Design importieren</string>
     <string name="theme_bundle_name">Name</string>
     <string name="theme_bundle_author">Autor</string>
+    <string name="import_theme_contents">Inhalte</string>
+    <string name="preference_colors_high_contrast">Hoher Kontrast</string>
+    <string name="preference_transparencies_default">Standard</string>
+    <string name="preference_screen_transparencies">Transparenz</string>
+    <string name="preference_transparencies_semi_transparent">Halbtransparent</string>
+    <string name="confirmation_delete_transparencies_scheme">Möchten Sie das Transparenzschema %1$s wirklich löschen?</string>
+    <string name="new_theme_name">(unbenannt)</string>
 </resources>

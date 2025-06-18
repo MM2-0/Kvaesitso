@@ -556,7 +556,6 @@
     <string name="preference_restore_default">Вернуть умолчание</string>
     <string name="plugin_state_error">Этот плагин работает неправильно</string>
     <string name="action_import">Импорт</string>
-    <string name="new_color_scheme_name">Новая цветовая схема</string>
     <string name="confirmation_delete_color_scheme">Вы действительно хотите удалить цветовую схему «%1$s»?</string>
     <string name="preference_debug_dump_heap">Снимок памяти</string>
     <string name="preference_debug_dump_heap_in_progress">Создание снимка…</string>

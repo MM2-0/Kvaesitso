@@ -556,7 +556,6 @@
     <string name="theme_color_scheme_custom_color">Personalizado</string>
     <string name="action_import">Importar</string>
     <string name="preference_clock_widget_alignment_top">Superior</string>
-    <string name="new_color_scheme_name">Nuevo esquema de colores</string>
     <string name="theme_color_scheme_autogenerate">A partir de color primario</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="import_theme_apply">Aplicar tema</string>

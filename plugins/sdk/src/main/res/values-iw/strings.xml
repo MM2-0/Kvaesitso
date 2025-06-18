@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="request_permission_deny_button">דחה</string>
+    <string name="request_permission_message"><![CDATA[<b>%1$s</b> רוצה לגשת למידע מ-<b>%2$s</b>.]]></string>
+</resources>

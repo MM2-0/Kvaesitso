@@ -242,7 +242,6 @@
     <string name="backup_complete">バックアップが完了しました。</string>
     <string name="preference_screen_search_actions">クイックアクション</string>
     <string name="preference_restore_default">デフォルトに復元</string>
-    <string name="new_color_scheme_name">新しい配色</string>
     <string name="preference_screen_about">このアプリについて</string>
     <string name="preference_version">バージョン</string>
     <string name="weather_condition_heavysleetshowersandthunder">激しいみぞれと雷</string>

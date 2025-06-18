@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="location_closed">סגור</string>
+    <string name="location_open">פתוח</string>
+    <string name="location_closes">נסגר ב-%1$s</string>
+</resources>

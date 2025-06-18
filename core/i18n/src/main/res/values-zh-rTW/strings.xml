@@ -636,7 +636,6 @@
     <string name="profile_work_profile_state_locked">工作應用程式被暫停。</string>
     <string name="hint_drag_and_drop_reorder">按住並拖曳項目以重新排列它們</string>
     <string name="tag_empty_name">無法存在沒有名稱的標籤。假如您繼續，該標籤將會被刪除。</string>
-    <string name="new_color_scheme_name">新色彩方案</string>
     <string name="preference_restore_default">還原預設</string>
     <string name="shortcut_label_unavailable">不可用</string>
     <string name="shortcut_unavailable_description">此捷徑不可用，因為 %1$s 不是預設啟動器</string>

@@ -534,7 +534,6 @@
     <string name="theme_color_scheme_system_default">Systeemstandaard gebruiken</string>
     <string name="theme_color_scheme_autogenerate">Van primaire kleur</string>
     <string name="confirmation_delete_color_scheme">Ben je zeker dat je kleurenschema %1$s wil verwijderen\?</string>
-    <string name="new_color_scheme_name">Nieuw kleurenschema</string>
     <string name="preference_category_animations">Animaties</string>
     <string name="preference_charging_animation">Laadanimatie</string>
     <string name="preference_charging_animation_summary">Toon een bubbelanimatie wanneer het apparaat oplaadt</string>
@@ -838,7 +837,6 @@
     <string name="preference_shapes_rect">Rechthoekig</string>
     <string name="preference_shapes_base">Basisvorm</string>
     <string name="confirmation_delete_shapes_scheme">Weet je zeker dat je de vorm %1$s wil verwijderen?</string>
-    <string name="new_shapes_name">Nieuwe vormen</string>
     <string name="save_as_file">Opslaan als bestand</string>
     <string name="theme_export_title">Thema exporteren</string>
     <string name="theme_bundle_name">Naam</string>
@@ -848,4 +846,9 @@
     <string name="import_theme_exists">Thema bestaat al en wordt geüpdatet</string>
     <string name="import_theme_contents">Inhoud</string>
     <string name="preference_colors_high_contrast">Hoog contrast</string>
+    <string name="preference_screen_transparencies">Doorzichtigheid</string>
+    <string name="preference_transparencies_default">Standaard</string>
+    <string name="preference_transparencies_semi_transparent">Halfdoorzichtig</string>
+    <string name="confirmation_delete_transparencies_scheme">Ben je zeker dat je het doorzichtigheidsschema %1$s wil verwijderen?</string>
+    <string name="new_theme_name">(naamloos)</string>
 </resources>

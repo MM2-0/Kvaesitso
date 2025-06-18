@@ -493,7 +493,6 @@
     <string name="theme_color_scheme_system_default">Sistemaren lehenetsia erabili</string>
     <string name="confirmation_delete_color_scheme">Benetan %1$s kolore-eskema ezabatu nahi duzu\?</string>
     <string name="edit">Editatu</string>
-    <string name="new_color_scheme_name">Kolore eskema berria</string>
     <string name="preference_restore_default">Lehenetsia berrezarri</string>
     <string name="preference_category_animations">Animazioak</string>
     <string name="preference_charging_animation">Kargatze-animazioa</string>

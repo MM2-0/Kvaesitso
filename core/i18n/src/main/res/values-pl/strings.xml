@@ -575,7 +575,6 @@
     <string name="note_widget_conflict_local_version">Ostania zapisana wersja:</string>
     <string name="note_widget_file_write_error_description">Notatka nie mogła zostać zapisana w połączonym pliku. Możliwe, że została przeniesiona lub usunięta. Kopia została zapisana w pamięci wewnętrznej programu uruchamiającego.</string>
     <string name="confirmation_delete_color_scheme">Czy naprawdę chcesz usunąć schemat kolorów %1$s?</string>
-    <string name="new_color_scheme_name">Nowy schemat kolorów</string>
     <string name="theme_color_scheme_autogenerate">Z koloru podstawowego</string>
     <string name="preference_plugin_enable">Włącz wtyczkę</string>
     <string name="length_unit">Jednostka długości</string>

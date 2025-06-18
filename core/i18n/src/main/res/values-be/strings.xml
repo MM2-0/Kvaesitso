@@ -590,7 +590,6 @@
     <string name="app_label_locked_profile">Заблакіраваны</string>
     <string name="note_widget_file_write_error">Памылка пры захаванні нататкі</string>
     <string name="confirmation_delete_color_scheme">Вы сапраўды хочаце выдаліць колеравую схему %1$s?</string>
-    <string name="new_color_scheme_name">Новая колеравая схема</string>
     <string name="theme_color_scheme_system_default">Выкарыстоўваць прадвызначаныя колеры</string>
     <string name="theme_color_scheme_custom_color">Уласны</string>
     <string name="import_theme_apply">Прымяніць тэму</string>
