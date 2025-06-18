@@ -29,6 +29,9 @@ class ImportThemeSettingsScreenVM : ViewModel(), KoinComponent {
     var colorsExists by mutableStateOf(false)
         private set
 
+    var typographyExists by mutableStateOf(false)
+        private set
+
     var shapesExists by mutableStateOf(false)
         private set
 
@@ -56,12 +59,15 @@ class ImportThemeSettingsScreenVM : ViewModel(), KoinComponent {
                     if (theme != null) {
                         val colors =
                             theme.colors?.id?.let { themeRepository.colors.get(it) }?.first()
+                        val typography =
+                            theme.typography?.id?.let { themeRepository.typographies.get(it) }?.first()
                         val shapes =
                             theme.shapes?.id?.let { themeRepository.shapes.get(it) }?.first()
                         val transparencies =
                             theme.transparencies?.id?.let { themeRepository.transparencies.get(it) }?.first()
 
                         colorsExists = colors != null
+                        typographyExists = typography != null
                         shapesExists = shapes != null
                         transparenciesExists = transparencies != null
                         themeBundle = theme
@@ -81,6 +87,7 @@ class ImportThemeSettingsScreenVM : ViewModel(), KoinComponent {
         val themeBundle = this.themeBundle ?: return null
 
         val colors = themeBundle.colors
+        val typography = themeBundle.typography
         val shapes = themeBundle.shapes
         val transparencies = themeBundle.transparencies
 
@@ -98,6 +105,16 @@ class ImportThemeSettingsScreenVM : ViewModel(), KoinComponent {
                 }
                 if (applyTheme) {
                     uiSettings.setColorsId(colors.id)
+                }
+            }
+            if (typography != null) {
+                if (typographyExists) {
+                    themeRepository.typographies.update(typography)
+                } else {
+                    themeRepository.typographies.create(typography)
+                }
+                if (applyTheme) {
+                    uiSettings.setTypographyId(typography.id)
                 }
             }
             if (shapes != null) {

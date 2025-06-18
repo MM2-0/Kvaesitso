@@ -22,6 +22,7 @@ import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Opacity
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.TextFields
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChip
@@ -72,6 +73,7 @@ import de.mm20.launcher2.ui.theme.shapes.shapesOf
 import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.ui.theme.transparency.transparencySchemeOf
+import de.mm20.launcher2.ui.theme.typography.typographyOf
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
@@ -124,6 +126,7 @@ fun ImportThemeSettingsScreen(
                         if (darkModePreview) darkColorSchemeOf(it) else lightColorSchemeOf(it)
                     } ?: MaterialTheme.colorScheme,
                     shapes = themeBundle.shapes?.let { shapesOf(it) } ?: MaterialTheme.shapes,
+                    typography = themeBundle.typography?.let { typographyOf(it) } ?: MaterialTheme.typography,
                 ) {
                     val transparencies = themeBundle.transparencies?.let { transparencySchemeOf(it) } ?: MaterialTheme.transparency
                     CompositionLocalProvider(
@@ -144,6 +147,21 @@ fun ImportThemeSettingsScreen(
                             title = stringResource(R.string.preference_screen_colors),
                             summary = themeBundle.colors?.name,
                             controls = if (viewModel.colorsExists) {
+                                {
+                                    Icon(
+                                        Icons.Rounded.ChangeCircle,
+                                        stringResource(R.string.import_theme_exists)
+                                    )
+                                }
+                            } else null,
+                        )
+                    }
+                    if (themeBundle.typography != null) {
+                        Preference(
+                            icon = Icons.Rounded.TextFields,
+                            title = stringResource(R.string.preference_screen_typography),
+                            summary = themeBundle.typography?.name,
+                            controls = if (viewModel.typographyExists) {
                                 {
                                     Icon(
                                         Icons.Rounded.ChangeCircle,

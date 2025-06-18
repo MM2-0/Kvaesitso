@@ -15,6 +15,7 @@ import de.mm20.launcher2.themes.shapes.Shapes
 import de.mm20.launcher2.themes.ThemeBundle
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.transparencies.Transparencies
+import de.mm20.launcher2.themes.typography.Typography
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -28,6 +29,7 @@ class ExportThemeSettingsScreenVM: ViewModel(), KoinComponent {
     private val themeRepository: ThemeRepository by inject()
 
     val colorSchemes = themeRepository.colors.getAll().map { it.filter { !it.builtIn } }
+    val typographySchemes = themeRepository.typographies.getAll().map { it.filter { !it.builtIn } }
     val shapeSchemes = themeRepository.shapes.getAll().map { it.filter { !it.builtIn } }
     val transparencySchemes = themeRepository.transparencies.getAll().map { it.filter { !it.builtIn } }
 
@@ -45,6 +47,14 @@ class ExportThemeSettingsScreenVM: ViewModel(), KoinComponent {
     fun setColorScheme(scheme: Colors?) {
         if (themeName.isBlank() && scheme != null) themeName = scheme.name
         colorScheme = scheme
+    }
+
+    var typographyScheme by mutableStateOf<Typography?>(null)
+        @JvmName("_setTypographyScheme")
+        private set
+    fun setTypographyScheme(scheme: Typography?) {
+        if (themeName.isBlank() && scheme != null) themeName = scheme.name
+        typographyScheme = scheme
     }
 
     var shapeScheme by mutableStateOf<Shapes?>(null)
@@ -69,6 +79,7 @@ class ExportThemeSettingsScreenVM: ViewModel(), KoinComponent {
             author = themeAuthor.takeIf { it.isNotBlank() },
             colors = colorScheme,
             shapes = shapeScheme,
+            typography = typographyScheme,
             transparencies = transparencyScheme,
         )
     }

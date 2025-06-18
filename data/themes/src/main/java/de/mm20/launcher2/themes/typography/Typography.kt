@@ -216,6 +216,7 @@ sealed interface FontWeight {
      * Absolute font weight, e.g. 400 for normal, 700 for bold.
      */
     @JvmInline
+    @Serializable
     value class Absolute(val weight: Int) : FontWeight
 
     /**
@@ -224,5 +225,6 @@ sealed interface FontWeight {
      * the emphasized style with a relative weight of 100 will have a weight of 500,
      */
     @JvmInline
+    @Serializable
     value class Relative(val relativeWeight: Int) : FontWeight
 }

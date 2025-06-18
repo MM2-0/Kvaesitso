@@ -16,6 +16,7 @@ import androidx.compose.material.icons.rounded.Opacity
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Save
 import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.TextFields
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -50,12 +51,13 @@ fun ExportThemeSettingsScreen() {
     val context = LocalContext.current
 
     val colorSchemes by viewModel.colorSchemes.collectAsState(emptyList())
+    val typographyThemes by viewModel.typographySchemes.collectAsState(emptyList())
     val shapeThemes by viewModel.shapeSchemes.collectAsState(emptyList())
     val transparencySchemes by viewModel.transparencySchemes.collectAsState(emptyList())
 
     val isValidSelection by remember {
         derivedStateOf {
-            viewModel.colorScheme != null || viewModel.shapeScheme != null || viewModel.transparencyScheme != null
+            viewModel.colorScheme != null || viewModel.typographyScheme != null || viewModel.shapeScheme != null || viewModel.transparencyScheme != null
         }
     }
 
@@ -100,6 +102,17 @@ fun ExportThemeSettingsScreen() {
                     },
                     onValueChanged = { newValue ->
                         viewModel.setColorScheme(newValue)
+                    }
+                )
+                ListPreference(
+                    stringResource(R.string.preference_screen_typography),
+                    icon = Icons.Rounded.TextFields,
+                    value = viewModel.typographyScheme,
+                    items = listOf(stringResource(R.string.no_selection) to null) + typographyThemes.map {
+                        it.name to it
+                    },
+                    onValueChanged = { newValue ->
+                        viewModel.setTypographyScheme(newValue)
                     }
                 )
                 ListPreference(
