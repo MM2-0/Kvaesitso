@@ -129,4 +129,8 @@
     <string name="turn_off">כבה</string>
     <string name="widget_action_remove">הסר</string>
     <string name="default_websearch_2_name">יוטיוב</string>
+    <string name="widget_action_replace">החלף</string>
+    <string name="menu_item_edit_favs">ערוך מועדפים</string>
+    <string name="edit_favorites_dialog_unpinned">לא נעוץ – בשימוש נפוץ</string>
+    <string name="edit_favorites_dialog_pinned_unsorted">נעוץ – ממוין אוטומטית</string>
 </resources>
