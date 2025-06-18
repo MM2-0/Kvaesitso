@@ -134,4 +134,6 @@
     <string name="edit_favorites_dialog_unpinned">לא נעוץ – בשימוש נפוץ</string>
     <string name="edit_favorites_dialog_pinned_unsorted">נעוץ – ממוין אוטומטית</string>
     <string name="edit_favorites_dialog_pinned_sorted">נעוץ – ממוין ידנית</string>
+    <string name="edit_favorites_dialog_empty_section">גרור פריטים לכאן</string>
+    <string name="edit_favorites_dialog_tags">תגיות</string>
 </resources>
