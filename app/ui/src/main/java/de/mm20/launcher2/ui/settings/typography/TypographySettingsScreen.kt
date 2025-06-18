@@ -136,7 +136,7 @@ fun TypographySettingsScreen(themeId: UUID) {
         if (theme == null || previewTypography == null) return@PreferenceScreen
 
         item {
-            PreferenceCategory(title = "Fonts") {
+            PreferenceCategory(title = stringResource(R.string.preference_typography_fonts)) {
                 FontPreference(title = "Brand", theme!!.fonts["brand"], onValueChange = {
                     viewModel.updateTypography(
                         theme!!.copy(
@@ -692,23 +692,8 @@ private fun FontPreference(
                     item {
                         FontPickerCategory(
                             preview.ExtraShort,
-                            "Device default",
+                            stringResource(R.string.font_category_device_default),
                             fonts.deviceDefault,
-                            onFontClick = {
-                                scope.launch {
-                                    sheetState.hide()
-                                    onValueChange(it)
-                                    showDialog = false
-                                }
-                            })
-                    }
-                }
-                if (fonts.system.isNotEmpty()) {
-                    item {
-                        FontPickerCategory(
-                            preview.ExtraShort,
-                            "System",
-                            fonts.system,
                             onFontClick = {
                                 scope.launch {
                                     sheetState.hide()
@@ -722,7 +707,7 @@ private fun FontPreference(
                     item {
                         FontPickerCategory(
                             preview.ExtraShort,
-                            "Generic",
+                            stringResource(R.string.font_category_generic),
                             fonts.generic,
                             onFontClick = {
                                 scope.launch {
@@ -780,8 +765,8 @@ private fun FontPickerCategory(
 private fun getFontName(context: Context, fontFamily: ThemeFontFamily?): String {
     return when (fontFamily) {
         is ThemeFontFamily.LauncherDefault -> "Outfit"
-        is ThemeFontFamily.DeviceHeadline -> "Default headline font"
-        is ThemeFontFamily.DeviceBody -> "Default text font"
+        is ThemeFontFamily.DeviceHeadline -> context.getString(R.string.font_name_device_headline)
+        is ThemeFontFamily.DeviceBody -> context.getString(R.string.font_name_device_body)
         is ThemeFontFamily.System -> fontFamily.name
         is ThemeFontFamily.SansSerif -> "sans-serif"
         is ThemeFontFamily.Serif -> "serif"
