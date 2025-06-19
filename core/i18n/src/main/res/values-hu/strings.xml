@@ -851,4 +851,11 @@
     <string name="preference_transparencies_semi_transparent">Félig átlátszó</string>
     <string name="confirmation_delete_transparencies_scheme">Valóban törölni akarja a(z) %1$s átlátszósági sémát?</string>
     <string name="new_theme_name">(névtelen)</string>
+    <string name="preference_screen_typography">Tipográfia</string>
+    <string name="confirmation_delete_typography_scheme">Valóban el szeretné távolítani a(z) %1$s tipográfiai sémát?</string>
+    <string name="preference_typography_fonts">Betűtípusok</string>
+    <string name="font_category_device_default">Eszköz alapértelmezése</string>
+    <string name="font_name_device_headline">Címsor alapértelmezett betűtípusa</string>
+    <string name="font_name_device_body">Eszköz szövegének betűtípusa</string>
+    <string name="font_category_generic">Általános</string>
 </resources>
