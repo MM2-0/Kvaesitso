@@ -253,7 +253,7 @@ private fun textStyleOf(
         fontFamily = (style?.fontFamily ?: fallback.fontFamily)?.let { fonts[it] }
             ?: base.fontFamily,
         fontWeight = (style?.fontWeight?.weight
-            ?: fallback.fontWeight?.weight)?.let { FontWeight(it) } ?: base.fontWeight,
+            ?: fallback.fontWeight?.weight)?.let { FontWeight(it.coerceIn(100, 900)) } ?: base.fontWeight,
         fontSize = (style?.fontSize ?: fallback.fontSize)?.sp ?: base.fontSize,
         lineHeight = (style?.lineHeight ?: fallback.lineHeight)?.em ?: base.lineHeight,
         letterSpacing = (style?.letterSpacing ?: fallback.letterSpacing)?.em ?: base.letterSpacing,
@@ -272,9 +272,9 @@ private fun emphasizedTextStyleOf(
     val parentWeight = parent?.fontWeight ?: fallbackParent.fontWeight
 
     val fontWeight = when (weight) {
-        is ThemeFontWeight.Absolute -> FontWeight(weight.weight)
+        is ThemeFontWeight.Absolute -> FontWeight(weight.weight.coerceIn(100, 900))
         is ThemeFontWeight.Relative if (parentWeight != null) -> {
-            FontWeight(parentWeight.weight + weight.relativeWeight)
+            FontWeight((parentWeight.weight + weight.relativeWeight).coerceIn(100, 900))
         }
 
         else -> base.fontWeight
