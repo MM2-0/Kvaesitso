@@ -862,4 +862,11 @@
     <string name="preference_transparencies_default">Predefinito</string>
     <string name="confirmation_delete_transparencies_scheme">Vuoi davvero eliminare lo schema di trasparenza %1$s?</string>
     <string name="new_theme_name">(senza titolo)</string>
+    <string name="preference_screen_typography">Tipografia</string>
+    <string name="confirmation_delete_typography_scheme">Vuoi davvero eliminare lo schema tipografico %1$s?</string>
+    <string name="preference_typography_fonts">Font</string>
+    <string name="font_category_device_default">Dispositivo predefinito</string>
+    <string name="font_name_device_headline">Font predefinito per il titolo</string>
+    <string name="font_name_device_body">Font del testo del dispositivo</string>
+    <string name="font_category_generic">Generico</string>
 </resources>
