@@ -69,15 +69,16 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
         }
     }
 
-    override suspend fun onActivate(state: LauncherScaffoldState) {
-        super.onActivate(state)
+    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+        super.onPreActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.openRecents()
-            delay(50L)
-            state.navigateBack(true)
-        } else {
-            state.navigateBack(true)
         }
+    }
+
+    override suspend fun onActivate(state: LauncherScaffoldState) {
+        super.onActivate(state)
+        state.navigateBack(true)
     }
 
     @SuppressLint("ModifierFactoryExtensionFunction")
