@@ -840,4 +840,11 @@
     <string name="new_theme_name">(ไม่มีชื่อ)</string>
     <string name="preference_screen_transparencies">ความโปร่งใส</string>
     <string name="confirmation_delete_transparencies_scheme">คุณต้องการลบชุดความโปร่งใส %1$s ใช่หรือไม่?</string>
+    <string name="preference_screen_typography">การจัดตัวอักษร</string>
+    <string name="confirmation_delete_typography_scheme">คุณต้องการลบชุดการจัดตัวอักษร %1$s ใช่หรือไม่?</string>
+    <string name="preference_typography_fonts">ชุดแบบอักษร</string>
+    <string name="font_category_device_default">ค่าเริ่มต้นของอุปกรณ์</string>
+    <string name="font_name_device_body">ชุดแบบอักษรของอุปกรณ์</string>
+    <string name="font_name_device_headline">ชุดแบบอักษรเริ่มต้นสำหรับหัวเรื่อง</string>
+    <string name="font_category_generic">ทั่วไป</string>
 </resources>

@@ -851,4 +851,11 @@
     <string name="preference_transparencies_semi_transparent">Halbtransparent</string>
     <string name="confirmation_delete_transparencies_scheme">Möchten Sie das Transparenzschema %1$s wirklich löschen?</string>
     <string name="new_theme_name">(unbenannt)</string>
+    <string name="preference_screen_typography">Typografie</string>
+    <string name="confirmation_delete_typography_scheme">Möchten Sie das Typografie-Scheme %1$s wirklich löschen?</string>
+    <string name="preference_typography_fonts">Schriften</string>
+    <string name="font_category_device_default">Gerätestandard</string>
+    <string name="font_name_device_headline">Standard-Überschriften-Schrift</string>
+    <string name="font_name_device_body">Standard-Text-Schrift</string>
+    <string name="font_category_generic">Generisch</string>
 </resources>

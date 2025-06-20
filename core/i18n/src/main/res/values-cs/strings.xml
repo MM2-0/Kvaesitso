@@ -242,7 +242,7 @@
     <string name="preference_cards_summary">Přizpůsobit vzhled karet</string>
     <string name="preference_cards_corner_radius">Zakulacení rohů</string>
     <string name="preference_cards_stroke_width">Šířka zdvihu</string>
-    <string name="preference_cards_opacity">Průhlednost</string>
+    <string name="preference_cards_opacity">Neprůhlednost</string>
     <string name="preference_cards_shape">Tvar</string>
     <string name="preference_cards_shape_rounded">Zakulacený</string>
     <string name="preference_icon_shape">Tvar</string>
@@ -856,4 +856,17 @@
     <string name="import_theme_exists">Motiv již existuje a bude aktualizován</string>
     <string name="theme_import_title">Importovat motiv</string>
     <string name="import_theme_contents">Obsah</string>
+    <string name="preference_colors_high_contrast">Vysoký kontrast</string>
+    <string name="preference_screen_transparencies">Průhlednost</string>
+    <string name="preference_transparencies_default">Výchozí</string>
+    <string name="preference_transparencies_semi_transparent">Poloprůhledný</string>
+    <string name="new_theme_name">(nepojmenováno)</string>
+    <string name="confirmation_delete_transparencies_scheme">Opravdu chcete odstranit schéma průhlednosti %1$s?</string>
+    <string name="preference_screen_typography">Typografie</string>
+    <string name="confirmation_delete_typography_scheme">Opravdu chcete odstranit schéma typografie %1$s?</string>
+    <string name="preference_typography_fonts">Písma</string>
+    <string name="font_category_device_default">Podle zařízení</string>
+    <string name="font_name_device_headline">Výchozí písmo nadpisu</string>
+    <string name="font_name_device_body">Písmo textu zařízení</string>
+    <string name="font_category_generic">Obecné</string>
 </resources>
