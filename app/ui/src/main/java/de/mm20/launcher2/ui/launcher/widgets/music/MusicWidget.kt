@@ -530,9 +530,19 @@ fun NoData() {
     }
 }
 
+@Suppress("DefaultLocale")
 private fun formatTimestamp(timestamp: Long?): String {
     if (timestamp == null) return "--:--"
-    val minutes = timestamp / 1000 / 60
-    val seconds = timestamp / 1000 % 60
-    return String.format("%02d:%02d", minutes, seconds)
+
+    val totalSeconds = timestamp / 1000
+    val days = totalSeconds / 86_400
+    val hours = (totalSeconds % 86_400) / 3600
+    val minutes = (totalSeconds % 3600) / 60
+    val seconds = totalSeconds % 60
+
+    return when {
+        days > 0 -> String.format("%d:%02d:%02d:%02d", days, hours, minutes, seconds)
+        hours > 0 -> String.format("%d:%02d:%02d", hours, minutes, seconds)
+        else -> String.format("%02d:%02d", minutes, seconds)
+    }
 }
