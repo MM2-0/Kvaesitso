@@ -473,7 +473,7 @@
     <string name="preference_owncloud_signin_summary">Az Owncloud kiszolgálón való kereséshez be kell jelentkezni</string>
     <string name="preference_enforce_icon_shape_summary">Alkalmazza az alakzatot az összes ikonra, beleértve azokat is, amelyek általában nem támogatnák</string>
     <string name="preference_category_license">Licence</string>
-    <string name="preference_about_license">Ez az alkalmazás egy ingyenes szoftver.</string>
+    <string name="preference_about_license">Ez az alkalmazás egy szabad szoftver.</string>
     <string name="preference_grid_icon_size">Ikon méret</string>
     <string name="preference_grid_labels">Alkalmazások neveinek megjelenítése</string>
     <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>
@@ -817,8 +817,8 @@
     <string name="missing_permission_tasks_search_settings">A feladatok kereséséhez hozzáférési engedélyre van szükség a feladatokhoz</string>
     <string name="preference_tasks_integration_ready">A feladatok-integráció teljesen be van állítva és használatra kész.</string>
     <string name="preference_tasks_integration">Feladatok</string>
-    <string name="preference_tasks_integration_description">A „Feladatok” egy ingyenes és nyílt forráskódú feladatlista- és emlékeztető alkalmazás. Ha telepítve van, akkor a(z) %1$s megjelenítheti és keresheti a feladatait a „Feladatok” alkalmazásból.</string>
-    <string name="preference_breezyweather_integration_description">A Breezy Weather egy ingyenes és nyílt forráskódú időjárás-alkalmazás. Ha telepítve van, akkor a(z) %1$s az időjárásadatok adatforrásaként használhatja a Breezy Weathert.</string>
+    <string name="preference_tasks_integration_description">A „Feladatok” egy szabad és nyílt forráskódú feladatlista- és emlékeztető alkalmazás. Ha telepítve van, akkor a(z) %1$s megjelenítheti és keresheti a feladatait a „Feladatok” alkalmazásból.</string>
+    <string name="preference_breezyweather_integration_description">A Breezy Weather egy szabad és nyílt forráskódú időjárás-alkalmazás. Ha telepítve van, akkor a(z) %1$s az időjárásadatok adatforrásaként használhatja a Breezy Weathert.</string>
     <string name="preference_breezyweather_integration_instructions">A Breezy Weather időjárásszolgáltatóként való használatához:\n\n1. Menjen a Breezy Weather &gt; Beállítások &gt; Modulok és élő háttérképek &gt; Gadgetbridge adatok küldése &gt; %1$s engedélyezése\n\n2. A(z) %1$s mezőben válassza ki a Breezy Weathert időjárásszolgáltatóként</string>
     <string name="preference_launch_tasks_app">A „Feladatok” alkalmazás megnyitása</string>
     <plurals name="calendar_widget_running_tasks">
