@@ -601,7 +601,7 @@
     <string name="widget_config_appwidget_resize">Redimensionar</string>
     <string name="preference_plugin_badges">Emblemas do Plugin</string>
     <string name="preference_clockwidget_dynamic_zone">Zona dinâmica</string>
-    <string name="confirmation_delete_color_scheme">Você tem certeza que quer apagar o esquema de cor %1$s?</string>
+    <string name="confirmation_delete_color_scheme">Tem certeza que quer apagar o esquema de cor %1$s?</string>
     <string name="search_action_share">Compartilhar</string>
     <string name="preference_search_location_custom_overpass_url">URL do Overpass</string>
     <string name="preference_filter_bar_summary">Mostrar filtros rápidos sobre o teclado</string>
@@ -705,7 +705,7 @@
     <string name="preference_shapes_rect">Retangular</string>
     <string name="preference_shapes_base">Forma base</string>
     <string name="preference_location_breezy">Gerenciar localização no Breezy Weather</string>
-    <string name="confirmation_delete_shapes_scheme">Você tem certeza que quer apagar o esquema de forma %1$s?</string>
+    <string name="confirmation_delete_shapes_scheme">Tem certeza que quer apagar o esquema de forma %1$s?</string>
     <string name="poi_category_fire_station">Corpo de bombeiros</string>
     <string name="contact_info_home">Residencial</string>
     <string name="profile_work_profile_action_lock">Pausar aplicativos de trabalho</string>
@@ -850,7 +850,7 @@
     <string name="preference_screen_transparencies">Transparência</string>
     <string name="preference_transparencies_default">Padrão</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparente</string>
-    <string name="confirmation_delete_transparencies_scheme">Você tem certeza que deseja excluir o esquema de transparência %1$s?</string>
+    <string name="confirmation_delete_transparencies_scheme">Tem certeza que deseja excluir o esquema de transparência %1$s?</string>
     <string name="new_theme_name">(sem título)</string>
     <string name="theme_bundle_name">Nome</string>
     <string name="preference_breezyweather_integration">Breezy Weather</string>
@@ -860,4 +860,11 @@
         <item quantity="many">%1$s números de telefone</item>
         <item quantity="other">%1$s números de telefone</item>
     </plurals>
+    <string name="preference_screen_typography">Tipografia</string>
+    <string name="confirmation_delete_typography_scheme">Tem certeza que deseja excluir o esquema de tipografia %1$s?</string>
+    <string name="preference_typography_fonts">Fontes</string>
+    <string name="font_category_device_default">Padrão do dispositivo</string>
+    <string name="font_name_device_headline">Fonte padrão do título</string>
+    <string name="font_name_device_body">Fonte de texto do dispositivo</string>
+    <string name="font_category_generic">Genérico</string>
 </resources>
