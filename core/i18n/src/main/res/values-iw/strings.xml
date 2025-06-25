@@ -756,4 +756,16 @@
     <string name="font_name_device_headline">ברירת מחדל של גופן כותרת</string>
     <string name="font_name_device_body">גופן טקסט של המכשיר</string>
     <string name="font_category_generic">כללי</string>
+    <string name="theme_color_scheme_autogenerate">מצבע ראשי</string>
+    <string name="new_theme_name">(ללא כותרת)</string>
+    <string name="theme_color_scheme_palette_color">Palette</string>
+    <string name="theme_color_scheme_system_default">השתמש בברית המחדל של המערכת</string>
+    <string name="import_theme_apply">החל ערכת נושא</string>
+    <string name="import_theme_exists">ערכת הנושא כבר קיימת ותעודכן</string>
+    <string name="import_theme_error">לא ניתן היה לקרוא את הקובץ הנבחר. אנא וודאי שבחרת קובץ ערכת נושא תקין ‪(*.kvtheme)‬, ושהקובץ לא פגום.</string>
+    <string name="confirmation_delete_typography_scheme">האם אתה באמת רוצה למחוק את סכמת הטיפוגרפיה ‌%1$s?</string>
+    <string name="confirmation_delete_transparencies_scheme">האם אתה באמת רוצה למחוק את סכמת השקיפות %1$s?</string>
+    <string name="theme_color_scheme_custom_color">מותאם אישית</string>
+    <string name="preference_restore_default">שיחזור ברירת מחדל</string>
+    <string name="import_theme_contents">תוכן</string>
 </resources>
