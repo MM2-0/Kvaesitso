@@ -847,4 +847,23 @@
     <string name="preference_breezyweather_integration_instructions">Использовать Breezy Weather в качестве поставщика погоды:\n\n1. Перейти к Breezy Weather &gt; Настройки &gt; Виджеты и живые обои &gt; Отправлять данные о погоде в Gadgetbridge &gt; Включить %1$s\n\n2. В %1$s назначьте Breezy Weather провайдером погоды</string>
     <string name="preference_tasks_integration_description">Tasks — бесплатное приложение с открытым исходным кодом для напоминаний о списках дел. Если установлено, %1$s сможет отображать и искать ваши задачи.</string>
     <string name="preference_launch_tasks_app">Открыть приложение Tasks</string>
+    <string name="theme_import_title">Импортировать тему</string>
+    <string name="import_theme_contents">Содержание</string>
+    <string name="preference_colors_high_contrast">Высокая контрастность</string>
+    <string name="preference_shapes_default">По умолчанию</string>
+    <string name="gesture_action_widgets">Виджеты</string>
+    <string name="preference_transparencies_default">По умолчанию</string>
+    <string name="preference_transparencies_semi_transparent">Полупрозрачный</string>
+    <string name="preference_screen_transparencies">Прозрачный</string>
+    <string name="new_theme_name">(без названия)</string>
+    <string name="save_as_file">Сохранить как файл</string>
+    <string name="theme_bundle_name">Имя</string>
+    <string name="theme_bundle_author">Автор</string>
+    <string name="theme_export_title">Экспортировать тему</string>
+    <string name="preference_screen_typography">Типографика</string>
+    <string name="preference_typography_fonts">Шрифты</string>
+    <string name="font_category_device_default">Устройство по умолчанию</string>
+    <string name="font_name_device_headline">Шрифт заголовка по умолчанию</string>
+    <string name="font_name_device_body">Шрифт текста устройства</string>
+    <string name="preference_widgets_on_home_screen">Виджеты на главном экране</string>
 </resources>
