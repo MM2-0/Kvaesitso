@@ -47,6 +47,10 @@ internal class SearchComponent(
             }
         }
 
+        LaunchedEffect(searchVM.searchQuery.value, searchVM.filters.value) {
+            lazyListState.requestScrollToItem(0, 0)
+        }
+
         LaunchedEffect(lazyListState.canScrollForward, lazyListState.canScrollBackward) {
             isAtBottom.value = !lazyListState.canScrollForward && !reverse || !lazyListState.canScrollBackward && reverse
             isAtTop.value = !lazyListState.canScrollForward && reverse || !lazyListState.canScrollBackward && !reverse
