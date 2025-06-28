@@ -175,6 +175,10 @@ fun SearchColumn(
                         compactTags = compactTags,
                         editButton = favoritesEditButton
                     )
+                } else {
+                    // Empty item to maintain scroll position
+                    item(key = "favorites") {
+                    }
                 }
 
                 if (isSearchEmpty && profiles.size > 1) {
