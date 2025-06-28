@@ -1068,16 +1068,20 @@ internal class LauncherScaffoldState(
         isLocked = false
         if (isSearchBarHidden) {
             isSearchBarHidden = false
-            searchBarAnimatable.snapTo(currentSearchBarOffset)
-            searchBarAnimatable.animateTo(
-                0f,
-                tween(500)
-            ) {
-                if (isSettledOnSecondaryPage) {
-                    secondaryPageSearchBarOffset = this.value
-                } else {
-                    homePageSearchBarOffset = this.value
-                }
+            resetSearchBarOffset()
+        }
+    }
+
+    suspend fun resetSearchBarOffset() {
+        searchBarAnimatable.snapTo(currentSearchBarOffset)
+        searchBarAnimatable.animateTo(
+            0f,
+            tween(500)
+        ) {
+            if (isSettledOnSecondaryPage) {
+                secondaryPageSearchBarOffset = this.value
+            } else {
+                homePageSearchBarOffset = this.value
             }
         }
     }
@@ -1170,6 +1174,14 @@ internal fun LauncherScaffold(
                     }
                 )
             }
+
+        LaunchedEffect(state.isAtTop, state.isAtBottom) {
+            when(state.currentComponent?.reverseScrolling) {
+                true -> if (state.isAtBottom) state.resetSearchBarOffset()
+                false -> if (state.isAtTop) state.resetSearchBarOffset()
+                else -> {}
+            }
+        }
 
         val searchBarHeight by animateDpAsState(
             if (state.isSearchBarHidden) 0.dp

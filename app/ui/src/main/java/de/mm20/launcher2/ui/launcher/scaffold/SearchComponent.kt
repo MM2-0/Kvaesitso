@@ -1,13 +1,10 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -27,6 +24,8 @@ internal class SearchComponent(
     override val isAtTop: MutableState<Boolean?> = mutableStateOf(true)
 
     override val isAtBottom: MutableState<Boolean?> = mutableStateOf(true)
+
+    override val reverseScrolling: Boolean = reverse
 
     override val hasIme: Boolean = true
 
@@ -52,8 +51,10 @@ internal class SearchComponent(
         }
 
         LaunchedEffect(lazyListState.canScrollForward, lazyListState.canScrollBackward) {
-            isAtBottom.value = !lazyListState.canScrollForward && !reverse || !lazyListState.canScrollBackward && reverse
-            isAtTop.value = !lazyListState.canScrollForward && reverse || !lazyListState.canScrollBackward && !reverse
+            isAtBottom.value =
+                !lazyListState.canScrollForward && !reverse || !lazyListState.canScrollBackward && reverse
+            isAtTop.value =
+                !lazyListState.canScrollForward && reverse || !lazyListState.canScrollBackward && !reverse
         }
 
 
