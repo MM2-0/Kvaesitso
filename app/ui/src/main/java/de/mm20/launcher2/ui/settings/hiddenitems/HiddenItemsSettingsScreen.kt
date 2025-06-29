@@ -2,12 +2,14 @@ package de.mm20.launcher2.ui.settings.hiddenitems
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.rounded.Check
@@ -27,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -53,7 +56,10 @@ fun HiddenItemsSettingsScreen() {
 
     val showButton by viewModel.hiddenItemsButton.collectAsState()
 
-    PreferenceScreen(title = stringResource(R.string.preference_hidden_items)) {
+    PreferenceScreen(
+        title = stringResource(R.string.preference_hidden_items),
+        verticalArrangement = Arrangement.spacedBy(2.dp)
+    ) {
         item {
             PreferenceCategory {
                 SwitchPreference(
@@ -64,7 +70,14 @@ fun HiddenItemsSettingsScreen() {
                 )
             }
         }
-        items(apps, key = { it.key }) { searchable ->
+        item {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp)
+            )
+        }
+        itemsIndexed(apps, key = { i, it -> it.key }) { i, searchable ->
             val icon by remember(searchable.key) {
                 viewModel.getIcon(searchable, with(density) { 32.dp.roundToPx() })
             }.collectAsState(null)
@@ -75,7 +88,21 @@ fun HiddenItemsSettingsScreen() {
 
             var showDropdown by remember { mutableStateOf(false) }
 
-            Box {
+            val xs = MaterialTheme.shapes.extraSmall
+            val md = MaterialTheme.shapes.medium
+
+            Box(
+                modifier = Modifier
+                    .clip(
+                        xs.copy(
+                            topStart = if (i == 0) md.topStart else xs.topStart,
+                            topEnd = if (i == 0) md.topEnd else xs.topEnd,
+                            bottomStart = if (i == apps.lastIndex) md.bottomStart else xs.bottomStart,
+                            bottomEnd = if (i == apps.lastIndex) md.bottomEnd else xs.bottomEnd
+                        )
+                    )
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
                 HiddenItem(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -111,14 +138,11 @@ fun HiddenItemsSettingsScreen() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(0.5.dp)
-                    .background(
-                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
-                    )
+                    .height(8.dp)
             )
         }
 
-        items(other, key = { it.key }) { searchable ->
+        itemsIndexed(other, key = { i, it -> it.key }) { i, searchable ->
             val icon by remember(searchable.key) {
                 viewModel.getIcon(searchable, with(density) { 32.dp.roundToPx() })
             }.collectAsState(null)
@@ -129,7 +153,21 @@ fun HiddenItemsSettingsScreen() {
 
             var showDropdown by remember { mutableStateOf(false) }
 
-            Box {
+            val xs = MaterialTheme.shapes.extraSmall
+            val md = MaterialTheme.shapes.medium
+
+            Box(
+                modifier = Modifier
+                    .clip(
+                        xs.copy(
+                            topStart = if (i == 0) md.topStart else xs.topStart,
+                            topEnd = if (i == 0) md.topEnd else xs.topEnd,
+                            bottomStart = if (i == other.lastIndex) md.bottomStart else xs.bottomStart,
+                            bottomEnd = if (i == other.lastIndex) md.bottomEnd else xs.bottomEnd
+                        )
+                    )
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
                 HiddenItem(
                     modifier = Modifier
                         .fillMaxWidth()

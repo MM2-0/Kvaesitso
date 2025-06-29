@@ -2,11 +2,13 @@ package de.mm20.launcher2.ui.settings.breezyweather
 
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,36 +36,36 @@ fun BreezyWeatherSettingsScreen() {
     ) {
         if (isBreezyInstalled == false) {
             item {
-                Banner(
-                    text = stringResource(
-                        R.string.preference_breezyweather_integration_description,
-                        stringResource(R.string.app_name),
-                    ),
-                    icon = Icons.Rounded.Info,
-                    modifier = Modifier.padding(16.dp),
-                    primaryAction = {
-                        Button(onClick = {
-                            viewModel.downloadBreezyApp(activity)
-                        }) {
-                            Text(stringResource(R.string.action_install))
+                PreferenceCategory {
+                    Banner(
+                        text = stringResource(
+                            R.string.preference_breezyweather_integration_description,
+                            stringResource(R.string.app_name),
+                        ),
+                        icon = Icons.Rounded.Info,
+                        modifier = Modifier.background(MaterialTheme.colorScheme.surface).padding(16.dp),
+                        primaryAction = {
+                            Button(onClick = {
+                                viewModel.downloadBreezyApp(activity)
+                            }) {
+                                Text(stringResource(R.string.action_install))
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
         if (isBreezyInstalled == true) {
             item {
-                Banner(
-                    text = stringResource(
-                        R.string.preference_breezyweather_integration_instructions,
-                        stringResource(R.string.app_name),
-                    ),
-                    icon = Icons.Rounded.Info,
-                    modifier = Modifier.padding(16.dp),
-                )
-            }
-            item {
                 PreferenceCategory {
+                    Banner(
+                        text = stringResource(
+                            R.string.preference_breezyweather_integration_instructions,
+                            stringResource(R.string.app_name),
+                        ),
+                        icon = Icons.Rounded.Info,
+                        modifier = Modifier.background(MaterialTheme.colorScheme.surface).padding(16.dp),
+                    )
                     Preference(
                         title = stringResource(R.string.preference_breezyweather_integration),
                         summary = stringResource(

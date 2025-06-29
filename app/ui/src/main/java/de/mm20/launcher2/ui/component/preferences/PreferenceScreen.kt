@@ -54,6 +54,7 @@ fun PreferenceScreen(
     topBarActions: @Composable RowScope.() -> Unit = {},
     helpUrl: String? = null,
     lazyColumnState: LazyListState = rememberLazyListState(),
+    verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(12.dp),
     content: LazyListScope.() -> Unit,
 ) {
     PreferenceScreen(
@@ -69,6 +70,7 @@ fun PreferenceScreen(
         topBarActions = topBarActions,
         helpUrl = helpUrl,
         lazyColumnState = lazyColumnState,
+        verticalArrangement = verticalArrangement,
         content = content
     )
 }
@@ -80,6 +82,7 @@ fun PreferenceScreen(
     topBarActions: @Composable RowScope.() -> Unit = {},
     helpUrl: String? = null,
     lazyColumnState: LazyListState = rememberLazyListState(),
+    verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(12.dp),
     content: LazyListScope.() -> Unit,
 ) {
     val navController = LocalNavController.current
@@ -104,7 +107,7 @@ fun PreferenceScreen(
         }
     }
 
-    val scrollBehavior  = TopAppBarDefaults.pinnedScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     val activity = LocalActivity.current
     Scaffold(
@@ -168,7 +171,7 @@ fun PreferenceScreen(
                 .padding(it),
             state = lazyColumnState,
             content = content,
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = verticalArrangement,
             contentPadding = PaddingValues(
                 12.dp
             )
