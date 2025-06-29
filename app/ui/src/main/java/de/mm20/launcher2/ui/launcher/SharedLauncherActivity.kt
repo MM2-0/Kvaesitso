@@ -176,13 +176,14 @@ abstract class SharedLauncherActivity(
                             }
                         }
 
-                        val enterTransitionProgress = remember { mutableStateOf(1f) }
+                        val enterTransitionProgress = remember { mutableStateOf(100f) }
                         var enterTransition by remember {
                             mutableStateOf<EnterHomeTransition?>(
                                 null
                             )
                         }
 
+                        val animMotionSpec = MaterialTheme.motionScheme.defaultSpatialSpec<Float>()
                         LaunchedEffect(null) {
                             enterHomeTransitionManager
                                 .currentTransition
@@ -191,7 +192,7 @@ abstract class SharedLauncherActivity(
                                     if (it != null) {
                                         enterTransitionProgress.value = 0f
                                         enterTransition = it
-                                        enterTransitionProgress.animateTo(1f)
+                                        enterTransitionProgress.animateTo(100f, animationSpec = animMotionSpec)
                                         enterTransition = null
                                     }
                                 }
@@ -378,10 +379,10 @@ abstract class SharedLauncherActivity(
                                     .fillMaxSize()
                                     .graphicsLayer {
                                         scaleX =
-                                            0.5f + enterTransitionProgress.value * 0.5f
+                                            0.5f + enterTransitionProgress.value * 0.005f
                                         scaleY =
-                                            0.5f + enterTransitionProgress.value * 0.5f
-                                        alpha = enterTransitionProgress.value
+                                            0.5f + enterTransitionProgress.value * 0.005f
+                                        alpha = enterTransitionProgress.value * 0.01f
                                     }
                             )
 
@@ -401,11 +402,11 @@ abstract class SharedLauncherActivity(
                                     modifier = Modifier
                                         .align(Alignment.TopStart)
                                         .graphicsLayer {
-                                            val p = (enterTransitionProgress.value).pow(2f)
+                                            val p = (enterTransitionProgress.value * 0.01f)
                                             transformOrigin = TransformOrigin.Center
                                             translationX = it.targetBounds.left + dX * (1 - p)
                                             translationY = it.targetBounds.top + dY * (1 - p)
-                                            alpha = enterTransitionProgress.value
+                                            alpha = p
                                             scaleX = 1f + s * (1 - p)
                                             scaleY = 1f + s * (1 - p)
                                         }) {
@@ -414,7 +415,7 @@ abstract class SharedLauncherActivity(
                                             dX,
                                             dY
                                         )
-                                    ) { enterTransitionProgress.value }
+                                    ) { enterTransitionProgress.value * 0.01f }
                                 }
                             }
                             LauncherBottomSheets()
