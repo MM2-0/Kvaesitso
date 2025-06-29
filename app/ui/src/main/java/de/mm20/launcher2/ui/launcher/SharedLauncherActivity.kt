@@ -30,6 +30,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
@@ -141,6 +142,8 @@ abstract class SharedLauncherActivity(
                         val searchBarColor by viewModel.searchBarColor.collectAsState()
                         val searchBarAutofocus by viewModel.autoFocusSearch.collectAsState(false)
                         val widgetsOnHomeScreen by viewModel.widgetsOnHomeScreen.collectAsState()
+                        val wallpaperBlur by viewModel.wallpaperBlur.collectAsState()
+                        val wallpaperBlurRadius by viewModel.wallpaperBlurRadius.collectAsState()
 
                         val fixedRotation by viewModel.fixedRotation.collectAsState()
 
@@ -222,6 +225,8 @@ abstract class SharedLauncherActivity(
                                 hideNav,
                                 widgetsOnHomeScreen,
                                 searchBarAutofocus,
+                                wallpaperBlur,
+                                wallpaperBlurRadius,
                             ) {
                                 if (mode == LauncherActivityMode.Assistant) {
                                     val searchComponent = SearchComponent(
@@ -365,6 +370,7 @@ abstract class SharedLauncherActivity(
                                         showStatusBar = !hideStatus,
                                         showNavBar = !hideNav,
                                         darkSearchBar = darkSearchBar,
+                                        wallpaperBlurRadius = if (wallpaperBlur) wallpaperBlurRadius.dp else 0.dp,
                                     )
 
                                     if (config.isUseless()) config.copy(
