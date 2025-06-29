@@ -24,14 +24,11 @@ fun LauncherCard(
             1f
         )
     ),
-    border: BorderStroke? = LocalCardStyle.current.borderWidth.takeIf { it > 0 }
-        ?.let { BorderStroke(it.dp, MaterialTheme.colorScheme.surface) },
     content: @Composable () -> Unit = {}
 ) {
     Surface(
         modifier = modifier,
         shape = shape,
-        border = border,
         content = content,
         contentColor = MaterialTheme.colorScheme.onSurface,
         color = color,

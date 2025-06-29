@@ -26,11 +26,6 @@ fun ProvideSettings(
     val settings: UiSettings = koinInject()
     val widgetRepository: WidgetRepository = koinInject()
 
-    val cardStyle by remember {
-        settings.cardStyle.distinctUntilChanged()
-    }.collectAsState(
-        CardStyle()
-    )
     val iconShape by remember {
         settings.iconShape.distinctUntilChanged()
     }.collectAsState(IconShape.Circle)
@@ -47,7 +42,6 @@ fun ProvideSettings(
     }.collectAsState(GridSettings())
 
     CompositionLocalProvider(
-        LocalCardStyle provides cardStyle,
         LocalFavoritesEnabled provides favoritesEnabled,
         LocalGridSettings provides gridSettings,
     ) {

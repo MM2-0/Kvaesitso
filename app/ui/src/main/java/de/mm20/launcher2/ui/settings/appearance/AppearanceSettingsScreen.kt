@@ -102,14 +102,6 @@ fun AppearanceSettingsScreen() {
                     },
                     icon = Icons.Rounded.Opacity,
                 )
-
-                Preference(
-                    title = stringResource(R.string.preference_cards),
-                    summary = stringResource(R.string.preference_cards_summary),
-                    onClick = {
-                        navController?.navigate("settings/appearance/cards")
-                    }
-                )
             }
         }
 
