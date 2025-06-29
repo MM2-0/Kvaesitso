@@ -1176,6 +1176,9 @@ internal fun LauncherScaffold(
             }
 
         LaunchedEffect(state.isAtTop, state.isAtBottom) {
+            if (state.currentProgress > 0f && state.currentProgress < 1f){
+                return@LaunchedEffect
+            }
             when(state.currentComponent?.reverseScrolling) {
                 true -> if (state.isAtBottom) state.resetSearchBarOffset()
                 false -> if (state.isAtTop) state.resetSearchBarOffset()
