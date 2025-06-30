@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.displayCutout
-import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
@@ -39,7 +38,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -49,6 +47,7 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -245,14 +244,16 @@ internal class LauncherScaffoldState(
     initialIsLocked: Boolean = false,
     initialIsSearchBarHidden: Boolean = false,
 ) {
-    var currentOffset by mutableStateOf(when {
-        initialGesture == null || initialGesture.orientation == null || config[initialGesture]?.animation == ScaffoldAnimation.Rubberband -> Offset.Zero
-        initialGesture == Gesture.SwipeRight -> Offset(-size.width, 0f)
-        initialGesture == Gesture.SwipeLeft -> Offset(size.width, 0f)
-        initialGesture == Gesture.SwipeUp -> Offset(0f, -size.height)
-        initialGesture == Gesture.SwipeDown -> Offset(0f, size.height)
-        else -> Offset.Zero
-    })
+    var currentOffset by mutableStateOf(
+        when {
+            initialGesture == null || initialGesture.orientation == null || config[initialGesture]?.animation == ScaffoldAnimation.Rubberband -> Offset.Zero
+            initialGesture == Gesture.SwipeRight -> Offset(-size.width, 0f)
+            initialGesture == Gesture.SwipeLeft -> Offset(size.width, 0f)
+            initialGesture == Gesture.SwipeUp -> Offset(0f, -size.height)
+            initialGesture == Gesture.SwipeDown -> Offset(0f, size.height)
+            else -> Offset.Zero
+        }
+    )
         private set
     var currentZOffset by mutableFloatStateOf(
         if (initialGesture != null && initialGesture.orientation == null) 1f else 0f
@@ -1176,10 +1177,10 @@ internal fun LauncherScaffold(
             }
 
         LaunchedEffect(state.isAtTop, state.isAtBottom) {
-            if (state.currentProgress > 0f && state.currentProgress < 1f){
+            if (state.currentProgress > 0f && state.currentProgress < 1f) {
                 return@LaunchedEffect
             }
-            when(state.currentComponent?.reverseScrolling) {
+            when (state.currentComponent?.reverseScrolling) {
                 true -> if (state.isAtBottom) state.resetSearchBarOffset()
                 false -> if (state.isAtTop) state.resetSearchBarOffset()
                 else -> {}
@@ -1211,10 +1212,11 @@ internal fun LauncherScaffold(
             config.homeComponent.onPreActivate(state)
             config.homeComponent.onActivate(state)
 
-            var pauseTime = 0L
+            val activity = (activity as? SharedLauncherActivity) ?: return@LaunchedEffect
+
             lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 try {
-                    if (pauseTime > 0L && System.currentTimeMillis() - pauseTime < 50L && (activity as? SharedLauncherActivity)?.isNewIntent == true) {
+                    if (activity.pauseTime > 0L && System.currentTimeMillis() - activity.pauseTime < 50L && activity.isNewIntent) {
                         if (!state.isLocked) {
                             if (state.currentProgress > 0f) {
                                 state.onPredictiveBackEnd()
@@ -1224,7 +1226,7 @@ internal fun LauncherScaffold(
                         } else {
                             activity.onBackPressedDispatcher.onBackPressed()
                         }
-                    } else if (pauseTime > 0L && System.currentTimeMillis() - pauseTime > 5000L) {
+                    } else if (activity.pauseTime > 0L && System.currentTimeMillis() - activity.pauseTime > 5000L) {
                         if (!state.isLocked) {
                             state.reset()
                             searchVM.reset()
@@ -1232,7 +1234,8 @@ internal fun LauncherScaffold(
                     }
                     awaitCancellation()
                 } finally {
-                    pauseTime = System.currentTimeMillis()
+                    activity.pauseTime = System.currentTimeMillis()
+                    activity.pauseOnHome = !state.isSettledOnSecondaryPage
                 }
             }
         }
@@ -1260,8 +1263,10 @@ internal fun LauncherScaffold(
 
         if (config.wallpaperBlurRadius > 0.dp) {
             val wallpaperBlur by animateIntAsState(
-                if (state.currentProgress >= 0.5f && (state.currentComponent?.drawBackground ?: config.homeComponent.drawBackground)
-                    || state.currentProgress < 0.5f && config.homeComponent.drawBackground) {
+                if (state.currentProgress >= 0.5f && (state.currentComponent?.drawBackground
+                        ?: config.homeComponent.drawBackground)
+                    || state.currentProgress < 0.5f && config.homeComponent.drawBackground
+                ) {
                     8.dp.toPixels().toInt()
                 } else {
                     0
@@ -1412,40 +1417,44 @@ internal fun LauncherScaffold(
                 bottom = filterBarHeight
             )
 
-            config.homeComponent.Component(
-                Modifier
-                    .fillMaxSize()
-                    .combinedClickable(
-                        enabled = config.longPress != null || config.doubleTap != null,
-                        onClick = {},
-                        onLongClick = if (config.longPress != null) {
-                            { scope.launch { state.onLongPress() } }
-                        } else null,
-                        onDoubleClick = if (config.doubleTap != null) {
-                            { scope.launch { state.onDoubleTap() } }
-                        } else null,
-                        hapticFeedbackEnabled = false,
-                        indication = null,
-                        interactionSource = null,
-                    )
-                    .homePageAnimation(
-                        state,
-                        if (config.homeComponent.drawBackground) {
-                            config.backgroundColor.copy(alpha = MaterialTheme.transparency.background)
-                        } else {
-                            Color.Transparent
-                        }
-                    ),
-                insets = systemBarInsets
-                    .let { if (config.homeComponent.hasIme) it.union(WindowInsets.ime) else it }
-                    .let {
-                        if (config.searchBarStyle == SearchBarStyle.Hidden) it else it.add(
-                            searchBarInsets
+            CompositionLocalProvider(
+                LocalScaffoldPage provides ScaffoldPage.Home,
+            ) {
+                config.homeComponent.Component(
+                    Modifier
+                        .fillMaxSize()
+                        .combinedClickable(
+                            enabled = config.longPress != null || config.doubleTap != null,
+                            onClick = {},
+                            onLongClick = if (config.longPress != null) {
+                                { scope.launch { state.onLongPress() } }
+                            } else null,
+                            onDoubleClick = if (config.doubleTap != null) {
+                                { scope.launch { state.onDoubleTap() } }
+                            } else null,
+                            hapticFeedbackEnabled = false,
+                            indication = null,
+                            interactionSource = null,
                         )
-                    }
-                    .asPaddingValues(),
-                state
-            )
+                        .homePageAnimation(
+                            state,
+                            if (config.homeComponent.drawBackground) {
+                                config.backgroundColor.copy(alpha = MaterialTheme.transparency.background)
+                            } else {
+                                Color.Transparent
+                            }
+                        ),
+                    insets = systemBarInsets
+                        .let { if (config.homeComponent.hasIme) it.union(WindowInsets.ime) else it }
+                        .let {
+                            if (config.searchBarStyle == SearchBarStyle.Hidden) it else it.add(
+                                searchBarInsets
+                            )
+                        }
+                        .asPaddingValues(),
+                    state
+                )
+            }
 
             SecondaryPage(
                 state = state,
@@ -1494,7 +1503,7 @@ internal fun LauncherScaffold(
                     highlightedAction = highlightedResult as? SearchAction,
                     darkColors = config.darkSearchBar,
                     isSearchOpen = state.currentComponent is SearchComponent && state.isSettledOnSecondaryPage ||
-                                config.homeComponent is SearchComponent && !state.isSettledOnSecondaryPage,
+                            config.homeComponent is SearchComponent && !state.isSettledOnSecondaryPage,
                 )
             }
             if (isFilterBarVisible) {
@@ -1566,6 +1575,7 @@ private fun SecondaryPage(
     modifier: Modifier = Modifier,
     insets: PaddingValues,
 ) {
+
     val components = remember(config) {
         setOfNotNull(
             config.swipeUp?.component,
@@ -1602,7 +1612,11 @@ private fun SecondaryPage(
             )
         val composable = composables[component]
 
-        composable?.invoke(mod, insets, state)
+        CompositionLocalProvider(
+            LocalScaffoldPage provides ScaffoldPage.Secondary
+        ) {
+            composable?.invoke(mod, insets, state)
+        }
     }
 
     // Keep other components alive, but out of the viewport
@@ -1616,7 +1630,6 @@ private fun SecondaryPage(
             v.invoke(modifier, insets, state)
         }
     }
-
 }
 
 private fun Modifier.homePageAnimation(
@@ -1657,12 +1670,16 @@ private fun Modifier.homePageAnimation(
             .background(backgroundColor)
     }
 
-    return this then component.homePageModifier(state, Modifier.background(backgroundColor).absoluteOffset {
-        IntOffset(
-            x = if (dir.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
-            y = if (dir.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
-        )
-    })
+    return this then component.homePageModifier(
+        state,
+        Modifier
+            .background(backgroundColor)
+            .absoluteOffset {
+                IntOffset(
+                    x = if (dir.orientation == Orientation.Horizontal) state.currentOffset.x.toInt() else 0,
+                    y = if (dir.orientation == Orientation.Vertical) state.currentOffset.y.toInt() else 0
+                )
+            })
 }
 
 private fun Modifier.secondaryPageAnimation(

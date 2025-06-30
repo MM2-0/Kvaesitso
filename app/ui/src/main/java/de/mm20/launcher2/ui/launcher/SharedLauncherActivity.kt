@@ -432,6 +432,12 @@ abstract class SharedLauncherActivity(
         }
     }
 
+    var pauseTime = 0L
+
+    /**
+     * True if the scaffold was on home screen when the activity was paused.
+     */
+    var pauseOnHome = false
     var isNewIntent = false
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
