@@ -858,4 +858,7 @@
     <string name="font_name_device_headline">Standard-Überschriften-Schrift</string>
     <string name="font_name_device_body">Standard-Text-Schrift</string>
     <string name="font_category_generic">Generisch</string>
+    <string name="preference_search_bar_style_transparent">Transparent</string>
+    <string name="preference_search_bar_style_solid">Vollflächig</string>
+    <string name="preference_search_bar_style_hidden">Versteckt</string>
 </resources>
