@@ -854,7 +854,7 @@
     <string name="preference_screen_typography">Typografie</string>
     <string name="confirmation_delete_typography_scheme">Weet je zeker dat je het typografieschema %1$s wil verwijderen?</string>
     <string name="preference_typography_fonts">Lettertypes</string>
-    <string name="font_category_device_default">Systeemstandaard</string>
+    <string name="font_category_device_default">Apparaatstandaard</string>
     <string name="font_name_device_headline">Standaard koplettertype</string>
     <string name="font_name_device_body">Tekstlettertype van het systeem</string>
     <string name="font_category_generic">Generiek</string>
