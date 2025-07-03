@@ -858,4 +858,7 @@
     <string name="font_name_device_headline">Címsor alapértelmezett betűtípusa</string>
     <string name="font_name_device_body">Eszköz szövegének betűtípusa</string>
     <string name="font_category_generic">Általános</string>
+    <string name="preference_search_bar_style_transparent">Átlátszó</string>
+    <string name="preference_search_bar_style_hidden">Rejtett</string>
+    <string name="preference_search_bar_style_solid">Homogén</string>
 </resources>
