@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.combineTransform
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -120,7 +121,7 @@ internal class CalendarRepositoryImpl(
                     excludeCalendars = excludeCalendars,
                     providers = providers,
                     allowNetwork = false,
-                )
+                ).debounce(500)
             )
         }
     }
