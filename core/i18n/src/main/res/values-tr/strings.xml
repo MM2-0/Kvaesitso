@@ -603,7 +603,7 @@
     <string name="preference_clockwidget_battery_part_summary">Pil azaldığında veya şarj olurken mevcut pil seviyesini göster</string>
     <string name="preference_clockwidget_alarm_part">Alarmlar</string>
     <string name="preference_clockwidget_alarm_part_summary">Sonraki 8 saat içinde çalacak alarmları göster</string>
-    <string name="preference_screen_backup">Yedekle & Geri Yükle</string>
+    <string name="preference_screen_backup">Yedekle &amp; Geri Yükle</string>
     <string name="preference_screen_backup_summary">Başlatıcı verilerini dışa ve içe aktar</string>
     <string name="preference_backup">Yedekle</string>
     <string name="preference_backup_summary">Tercihleri ve başlatıcı verilerini dışa aktar</string>
@@ -677,7 +677,7 @@
     <string name="preference_widgets_on_home_screen_summary">Araçları ek bir sayfa yerine ana ekranda göster</string>
     <string name="preference_screen_homescreen">Ana ekran</string>
     <string name="preference_screen_homescreen_summary">Saat, arama çubuğu, duvar kağıdı, sistem çubukları</string>
-    <string name="preference_screen_icons">Izgara & simgeler</string>
+    <string name="preference_screen_icons">Izgara &amp; simgeler</string>
     <string name="preference_screen_icons_summary">Izgara, simge boyutu, simge paketleri, rozetler</string>
     <string name="preference_weather_integration">Hava Durumu</string>
     <string name="preference_media_integration">Medya kontrolü</string>
@@ -688,7 +688,7 @@
     <string name="preference_launch_tasks_app">Tasks uygulamasını aç</string>
     <string name="preference_breezyweather_integration">Breezy Weather</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather, ücretsiz ve açık kaynaklı bir hava durumu uygulamasıdır. Yüklüyse, %1$s Breezy Weather\'ı hava durumu verileri için bir veri kaynağı olarak kullanabilir.</string>
-    <string name="preference_breezyweather_integration_instructions">Breezy Weather\'ı hava durumu sağlayıcısı olarak kullanmak için:\n\n1. Breezy Weather > Ayarlar > Araçlar & Canlı duvar kağıdı > Gadgetbridge verisi gönder > %1$s\'i Etkinleştir\'e gidin\n\n2. %1$s\'te, hava durumu sağlayıcısı olarak Breezy Weather\'ı seçin</string>
+    <string name="preference_breezyweather_integration_instructions">Breezy Weather\'ı hava durumu sağlayıcısı olarak kullanmak için:\n\n1. Breezy Weather > Ayarlar > Araçlar &amp; Canlı duvar kağıdı > Gadgetbridge verisi gönder > %1$s\'i Etkinleştir\'e gidin\n\n2. %1$s\'te, hava durumu sağlayıcısı olarak Breezy Weather\'ı seçin</string>
     <string name="preference_launch_breezyweather_app">Breezy Weather\'ı aç</string>
     <string name="preference_contacts_call_on_tap">Aramak için dokun</string>
     <string name="preference_contacts_call_on_tap_summary">Bir telefon numarasına dokunduğunuzda hemen bir arama başlatın</string>
@@ -984,8 +984,8 @@
     <string name="customize_item_label">Etiket</string>
     <string name="customize_item_tags">Etiketler</string>
     <string name="customize_item_visibility">Gösterim yeri</string>
-    <string name="item_visibility_app_default">Uygulama ızgarası & arama sonuçları</string>
-    <string name="item_visibility_calendar_default">Takvim aracı & arama sonuçları</string>
+    <string name="item_visibility_app_default">Uygulama ızgarası &amp; arama sonuçları</string>
+    <string name="item_visibility_calendar_default">Takvim aracı &amp; arama sonuçları</string>
     <string name="item_visibility_search_only">Arama sonuçları</string>
     <string name="item_visibility_hidden">Asla</string>
     <string name="contact_info_home">Ev</string>
