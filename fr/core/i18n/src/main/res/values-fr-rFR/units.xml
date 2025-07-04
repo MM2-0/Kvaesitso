@@ -197,5 +197,25 @@
         <item quantity="one">livre</item>
         <item quantity="other">livres</item>
     </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">once</item>
+        <item quantity="other">onces</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">tonne courte</item>
+        <item quantity="other">tonnes courtes</item>
+    </plurals>
     <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">degré Celsius</item>
+        <item quantity="other">degrés Celsius</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">degré Fahrenheit</item>
+        <item quantity="other">degrés Fahrenheit</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="one">Kelvin</item>
+        <item quantity="other">Kelvins</item>
+    </plurals>
 </resources>
