@@ -387,4 +387,17 @@
         <item quantity="many">градусаў Цэльсія</item>
         <item quantity="other">градусаў Цэльсія</item>
     </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">градус Фарэнгейта</item>
+        <item quantity="few">градуса Фарэнгейта</item>
+        <item quantity="many">градусаў Фарэнгейта</item>
+        <item quantity="other">градусаў Фарэнгейта</item>
+    </plurals>
+    <string name="unit_kelvin_symbol">К</string>
+    <plurals name="unit_kelvin">
+        <item quantity="one">Кельвін</item>
+        <item quantity="few">Кельвіна</item>
+        <item quantity="many">Кельвінаў</item>
+        <item quantity="other">Кельвінаў</item>
+    </plurals>
 </resources>
