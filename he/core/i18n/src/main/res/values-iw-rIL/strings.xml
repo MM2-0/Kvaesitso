@@ -1,173 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="he">
-    <string name="location_open">Open</string>
-    <string name="location_closed">Closed</string>
+    <string name="location_open">פתוח</string>
+    <string name="location_closed">סגור</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
-    <string name="location_closes">closes at %1$s</string>
+    <string name="location_closes">נסגר ב-%1$s</string>
     <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
-    <string name="location_closes_other_day">closes %1$s, %2$s</string>
+    <string name="location_closes_other_day">נסגר ב%1$s, %2$s</string>
     <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
-    <string name="location_opens">opens at %1$s</string>
+    <string name="location_opens">נפתח ב‌‌%1$s</string>
     <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
-    <string name="location_opens_other_day">opens %1$s, %2$s</string>
+    <string name="location_opens_other_day">נפתח ב%1$s, %2$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
-    <string name="menu_share">Share</string>
+    <string name="menu_share">שתף</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store
      %1$s is the name of the app store (e.g. Google Play)-->
-    <string name="menu_share_store_link">%1$s link</string>
+    <string name="menu_share_store_link">קישור %1$s</string>
     <!-- Share an APK file, shown in the app detail share menu -->
-    <string name="menu_share_apk_file">Package file</string>
+    <string name="menu_share_apk_file">קובץ חבילה</string>
     <!-- Uninstall an application -->
-    <string name="menu_uninstall">Uninstall</string>
-    <string name="menu_favorites_pin">Pin to favorites</string>
-    <string name="menu_favorites_unpin">Unpin</string>
-    <string name="menu_back">Back</string>
-    <string name="menu_app_info">App info</string>
+    <string name="menu_uninstall">הסר התקנה</string>
+    <string name="menu_favorites_pin">נעץ למועדפים</string>
+    <string name="menu_favorites_unpin">הסר נעיצה</string>
+    <string name="menu_back">חזרה</string>
+    <string name="menu_app_info">מידע על היישומון</string>
     <!-- Launch an app -->
-    <string name="menu_launch">Launch</string>
-    <string name="menu_customize">Customize</string>
+    <string name="menu_launch">הפעל</string>
+    <string name="menu_customize">התאם אישית</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Open</string>
-    <string name="menu_map">View on map</string>
-    <string name="menu_website">Open website</string>
+    <string name="menu_open_file">פתוח</string>
+    <string name="menu_map">צפה על מפה</string>
+    <string name="menu_website">פתח אתר</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
-    <string name="action_undo">Undo</string>
-    <string name="action_import">Import</string>
-    <string name="action_done">Done</string>
-    <string name="action_more_actions">More actions</string>
-    <string name="action_clear">Clear</string>
-    <string name="action_install">Install</string>
+    <string name="action_undo">לבטל</string>
+    <string name="action_import">ייבא</string>
+    <string name="action_done">סיום</string>
+    <string name="action_more_actions">עוד פעולות</string>
+    <string name="action_clear">ניקוי</string>
+    <string name="action_install">התקן</string>
     <!-- Delete something (a file or a web search shortcut) -->
-    <string name="menu_delete">Delete</string>
-    <string name="menu_remove">Remove</string>
+    <string name="menu_delete">מחק</string>
+    <string name="menu_remove">הסר</string>
     <!-- Open a contact in the contacts app -->
-    <string name="menu_contacts_open_externally">Open in contacts app</string>
+    <string name="menu_contacts_open_externally">פתח ביישומון אנשי קשר</string>
     <!-- Open an event in the calendar app -->
-    <string name="menu_calendar_open_externally">Open in calendar app</string>
+    <string name="menu_calendar_open_externally">פתח ביישומון לוח שנה</string>
     <!-- Shown in the search bar when the search text field is empty -->
-    <string name="search_bar_placeholder">Search</string>
+    <string name="search_bar_placeholder">חיפוש</string>
     <!-- App version, used in application details %1$s is the version -->
-    <string name="app_info_version">Version %1$s</string>
+    <string name="app_info_version">גרסה %1$s</string>
     <!-- Menu entry for launcher settings -->
-    <string name="settings">Settings</string>
+    <string name="settings">הגדרות</string>
     <!-- Menu entry for launcher help -->
-    <string name="help">Help</string>
+    <string name="help">עזרה</string>
     <!-- Set the device's wallpaper -->
-    <string name="wallpaper">Wallpaper</string>
+    <string name="wallpaper">רקע</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north">North</string>
+    <string name="wind_north">צפון</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_east">North east</string>
+    <string name="wind_north_east">צפון-מזרח</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_east">North north east</string>
+    <string name="wind_north_north_east">צפון צפון-מזרח</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east_north_east">East north east</string>
+    <string name="wind_east_north_east">­מזרח צפון-מזרח</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east">East</string>
+    <string name="wind_east">מזרח</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east_south_east">East south east</string>
+    <string name="wind_east_south_east">מזרח דרום-מזרח</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_east">South east</string>
+    <string name="wind_south_east">דרום-מזרח</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_south_east">South south east</string>
+    <string name="wind_south_south_east">דרום דרום-מזרח</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south">South</string>
+    <string name="wind_south">דרום</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_south_west">South south west</string>
+    <string name="wind_south_south_west">דרום דרום-מערב</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_west">South west</string>
+    <string name="wind_south_west">דרום-מערב</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west_south_west">West south west</string>
+    <string name="wind_west_south_west">מערב דרום-מערב</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west">West</string>
+    <string name="wind_west">מערב</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west_north_west">West north west</string>
+    <string name="wind_west_north_west">מערב צפון-מערב</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_west">North west</string>
+    <string name="wind_north_west">צפון-מערב</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_west">North north west</string>
+    <string name="wind_north_north_west">צפון צפון-מערב</string>
     <!-- No rain or snow, used in weather widget -->
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
       a fallback that is suited best for most users of this language should be used
       (English in most cases) -->
-    <string name="wikipedia_url">https://en.wikipedia.org</string>
+    <string name="wikipedia_url">https://he.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
-    <string name="wikipedia_source">From Wikipedia</string>
+    <string name="wikipedia_source">מוויקיפדיה</string>
     <!-- File meta data, title of audio tracks -->
-    <string name="file_meta_title">Title: %1$s</string>
+    <string name="file_meta_title">כותרת: %1$s</string>
     <!-- File meta data, artist of audio tracks -->
-    <string name="file_meta_artist">Artist: %1$s</string>
+    <string name="file_meta_artist">אמן: %1$s</string>
     <!-- File meta data, album of audio tracks -->
-    <string name="file_meta_album">Album: %1$s</string>
+    <string name="file_meta_album">אלבום: %1$s</string>
     <!-- File meta data, duration of audio tracks -->
-    <string name="file_meta_duration">Duration: %1$s</string>
+    <string name="file_meta_duration">אורך: %1$s</string>
     <!-- File meta data, year of audio tracks -->
-    <string name="file_meta_year">Year: %1$s</string>
+    <string name="file_meta_year">שנה: %1$s</string>
     <!-- File size -->
-    <string name="file_meta_size">Size: %1$s</string>
+    <string name="file_meta_size">גודל: %1$s</string>
     <!-- File path -->
-    <string name="file_meta_path">Path: %1$s</string>
+    <string name="file_meta_path">נתיב: %1$s</string>
     <!-- File type (MIME type) -->
-    <string name="file_meta_type">Type: %1$s</string>
+    <string name="file_meta_type">סוג: %1$s</string>
     <!-- File meta, image/video dimensions -->
-    <string name="file_meta_dimensions">Dimensions: %1$s</string>
+    <string name="file_meta_dimensions">מידות: %1$s</string>
     <!-- File meta, app name of APK files -->
-    <string name="file_meta_app_name">App name: %1$s</string>
+    <string name="file_meta_app_name">שם יישומון: %1$s</string>
     <!-- File meta, version name of APK files -->
-    <string name="file_meta_app_version">Version: %1$s</string>
+    <string name="file_meta_app_version">גרסה: %1$s</string>
     <!-- File meta, package name of APK files -->
-    <string name="file_meta_app_pkgname">Package name: %1$s</string>
+    <string name="file_meta_app_pkgname">שם חבילה: %1$s</string>
     <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
-    <string name="file_meta_app_min_sdk">Min SDK version: %1$s</string>
+    <string name="file_meta_app_min_sdk">גרסת SDK מינימלית: ‍%1$s</string>
     <!-- File meta, owner (for files that are stored in a cloud) -->
-    <string name="file_meta_owner">Owner: %1$s</string>
+    <string name="file_meta_owner">בעלים: ‌%1$s</string>
     <!-- File meta, location (e.g. location where a photo has been taken) -->
-    <string name="file_meta_location">Location: %1$s</string>
-    <string name="file_type_directory">Directory</string>
+    <string name="file_meta_location">מיקום: %1$s</string>
+    <string name="file_type_directory">תיקייה</string>
     <!-- ZIP, TAR, … archive files  -->
-    <string name="file_type_archive">Archive file</string>
+    <string name="file_type_archive">קובץ ארכיון</string>
     <!-- APK file  -->
-    <string name="file_type_android">Android package file</string>
+    <string name="file_type_android">קובץ חבילת אנדרואיד</string>
     <!-- Code file (source code in a programming language) -->
-    <string name="file_type_source_code">Source code file</string>
+    <string name="file_type_source_code">קובץ קוד מקור</string>
     <!-- Word document -->
-    <string name="file_type_document">Document</string>
+    <string name="file_type_document">מסמך</string>
     <!-- Excel spreadsheet -->
-    <string name="file_type_spreadsheet">Spreadsheet</string>
+    <string name="file_type_spreadsheet">גיליון נתונים</string>
     <!-- Audio file -->
-    <string name="file_type_music">Music file</string>
+    <string name="file_type_music">­קובץ מוזיקה</string>
     <!-- Video file -->
-    <string name="file_type_video">Video</string>
+    <string name="file_type_video">וידאו</string>
     <!-- Picture file -->
-    <string name="file_type_image">Picture</string>
+    <string name="file_type_image">תמונה</string>
     <!-- Generic file without file extension -->
-    <string name="file_type_none">File</string>
+    <string name="file_type_none">קובץ</string>
     <!-- Powerpoint presentation -->
-    <string name="file_type_presentation">Presentation</string>
+    <string name="file_type_presentation">מצגת</string>
     <!-- BZIP, GZIP, … compressed file -->
-    <string name="file_type_compressed">Compressed file</string>
+    <string name="file_type_compressed">קובץ דחוס</string>
     <!-- Plain text (TXT) file -->
-    <string name="file_type_text">Text file</string>
+    <string name="file_type_text">קובץ טקסט</string>
     <!-- E-book file -->
-    <string name="file_type_ebook">E-book</string>
+    <string name="file_type_ebook">ספר אלקטרוני</string>
     <!-- Google Drawings file -->
-    <string name="file_type_drawing">Drawing</string>
+    <string name="file_type_drawing">ציור</string>
     <!-- Google Forms file -->
-    <string name="file_type_form">Form</string>
+    <string name="file_type_form">טופס</string>
     <!-- Launcher backup, %1$s: app name -->
-    <string name="file_type_launcherbackup">%1$s backup</string>
+    <string name="file_type_launcherbackup">גיבוי %1$s</string>
     <!-- Launcher theme, %1$s: app name -->
-    <string name="file_type_launchertheme">%1$s theme</string>
+    <string name="file_type_launchertheme">ערכת נושא %1$s</string>
     <!-- Generic file , %1$s is the file extension -->
-    <string name="file_type_generic">%1$s file</string>
+    <string name="file_type_generic">קובץ %1$s</string>
     <!-- Warning message that is shown when a user attempts to delete a directory -->
-    <string name="alert_delete_directory">The directory %1$s and all its content will be deleted permanently. Proceed\?</string>
+    <string name="alert_delete_directory">התיקייה %1$s וכל התוכן שלה יימחקו לצמיתות. האם להמשיך?</string>
     <!-- Warning message that is shown when a user attempts to delete a file -->
-    <string name="alert_delete_file">The file %1$s will be deleted permanently. Proceed\?</string>
+    <string name="alert_delete_file">הקובץ %1$s יימחק לצמיתות. האם להמשיך?</string>
     <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
-    <string name="alert_delete_shortcut">The shortcut %1$s will be removed permanently. Proceed\?</string>
+    <string name="alert_delete_shortcut">הקיצור %1$s יימחק לצמיתות. האם להמשיך?</string>
     <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
     could not be opened because there was no app installed that could handle the request  -->
     <!--
@@ -188,121 +188,119 @@
         Usually YouTube, but can be substituted with something else if YouTube is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_2_name">YouTube</string>
+    <string name="default_websearch_2_name">יוטיוב</string>
     <!--
         When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
         This is the URL of the second one. Must be in sync with [default_websearch_2_name].
         Usually YouTube, but can be substituted with something else if YouTube is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
+    <string name="default_websearch_2_url">‪https://www.youtube.com/results?search_query=${1}‬</string>
     <!--
         When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
         This is the name of the third one. Must be in sync with [default_websearch_3_url].
         Usually Google Play, but can be substituted with something else if Google Play is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_3_name">Google Play</string>
+    <string name="default_websearch_3_name">גוגל פליי</string>
     <!--
         When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
         This is the URL of the third one. Must be in sync with [default_websearch_3_name].
         Usually Google Play, but can be substituted with something else if Google Play is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="websearch_dialog_url_error">The placeholder \'${1}\' is missing in this URL</string>
-    <string name="websearch_dialog_replace_icon">Replace icon</string>
-    <string name="websearch_dialog_delete_icon">Delete icon</string>
-    <string name="websearch_dialog_custom_icon">Custom icon</string>
-    <string name="websearch_dialog_advanced">Advanced</string>
-    <string name="websearch_dialog_query_encoding">Query encoding</string>
-    <string name="websearch_dialog_query_encoding_url">Percent-encoding</string>
-    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
-    <string name="websearch_dialog_query_encoding_none">None</string>
-    <string name="menu_edit_widgets">Edit widgets</string>
-    <string name="widget_name_weather">Weather</string>
-    <string name="widget_name_calendar">Calendar</string>
-    <string name="widget_name_music">Music</string>
-    <string name="widget_name_favorites">Favorites</string>
-    <string name="widget_name_notes">Note</string>
-    <string name="widget_name_unknown">Unknown app widget</string>
-    <string name="widget_add_widget">Add widget</string>
-    <string name="widget_removed">Widget removed</string>
+    <string name="default_websearch_3_url">‪https://play.google.com/store/search?q=${1}‬</string>
+    <string name="websearch_dialog_url_error">מציין המיקום \'${1}\' חסר ב-URL זה</string>
+    <string name="websearch_dialog_replace_icon">החלף אייקון</string>
+    <string name="websearch_dialog_delete_icon">מחק אייקון</string>
+    <string name="websearch_dialog_custom_icon">אייקון מותאם אישית</string>
+    <string name="websearch_dialog_advanced">מתקדם</string>
+    <string name="websearch_dialog_query_encoding">קידוד שאילתה</string>
+    <string name="websearch_dialog_query_encoding_url">קידוד URL</string>
+    <string name="websearch_dialog_query_encoding_form">‪application/x-www-form-urlencoded‬</string>
+    <string name="websearch_dialog_query_encoding_none">ללא</string>
+    <string name="menu_edit_widgets">ערוך ווידג\'ט</string>
+    <string name="widget_name_weather">מזג אוויר</string>
+    <string name="widget_name_calendar">לוח שנה</string>
+    <string name="widget_name_music">מוזיקה</string>
+    <string name="widget_name_favorites">מועדפים</string>
+    <string name="widget_name_notes">פתק</string>
+    <string name="widget_name_unknown">ווידג\'ט יישומון לא ידוע</string>
+    <string name="widget_add_widget">הוסף ווידג\'ט</string>
+    <string name="widget_removed">ווידג\'ט הוסר</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Write a note…</string>
-    <string name="notes_widget_action_new">New note</string>
+    <string name="notes_widget_placeholder">כתוב פתק…</string>
+    <string name="notes_widget_action_new">פתק חדש</string>
     <!-- Save / export the current note content as markdown file -->
-    <string name="notes_widget_action_save">Save</string>
+    <string name="notes_widget_action_save">שמור</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
-    <string name="notes_widget_export_filename">Note_%1$s</string>
-    <string name="notes_widget_action_dismiss">Dismiss</string>
-    <string name="notes_widget_dismissed">Note dismissed.</string>
+    <string name="notes_widget_export_filename">פתק_%1$s</string>
+    <string name="notes_widget_action_dismiss">בטל</string>
+    <string name="notes_widget_dismissed">פתק בוטל.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
-    <string name="shortcut_summary">By %1$s</string>
+    <string name="shortcut_summary">מ%1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it\?</string>
+    <string name="easter_egg_text">ובכן, מצאת אותי. מזל טוב. האם זה היה שווה את זה?</string>
     <!-- Close a dialog -->
-    <string name="close">Close</string>
-    <string name="no_selection">No selection</string>
-    <string name="save">Save</string>
-    <string name="save_as_file">Save as file</string>
-    <string name="duplicate">Duplicate</string>
-    <string name="edit">Edit</string>
-    <string name="skip">Skip</string>
-    <string name="action_next">Next</string>
+    <string name="close">סגוֹר</string>
+    <string name="no_selection">ללא בחירה</string>
+    <string name="save">שמור</string>
+    <string name="save_as_file">שמוֹר כקובץ</string>
+    <string name="duplicate">שכפל</string>
+    <string name="edit">ערוֹך</string>
+    <string name="skip">דלג</string>
+    <string name="action_next">הבא</string>
     <!-- Turn something off / disable a functionality of the launcher -->
-    <string name="turn_off">Turn off</string>
-    <string name="widget_action_remove">Remove</string>
-    <string name="widget_action_replace">Replace</string>
-    <string name="menu_item_edit_favs">Edit favorites</string>
+    <string name="turn_off">כבה</string>
+    <string name="widget_action_remove">הסר</string>
+    <string name="widget_action_replace">החלף</string>
+    <string name="menu_item_edit_favs">ערוך מועדפים</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
-    <string name="edit_favorites_dialog_unpinned">Not pinned – frequently used</string>
+    <string name="edit_favorites_dialog_unpinned">לא נעוץ – בשימוש נפוץ</string>
     <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
-    <string name="edit_favorites_dialog_pinned_unsorted">Pinned – automatically sorted</string>
+    <string name="edit_favorites_dialog_pinned_unsorted">נעוץ – ממוין אוטומטית</string>
     <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
-    <string name="edit_favorites_dialog_pinned_sorted">Pinned – manually sorted</string>
-    <string name="edit_favorites_dialog_empty_section">Drag items here</string>
-    <string name="edit_favorites_dialog_tags">Tags</string>
-    <string name="edit_favorites_dialog_tag_section_empty">Pinned tags will appear here</string>
-    <string name="edit_favorites_dialog_new_tag">Create tag…</string>
+    <string name="edit_favorites_dialog_pinned_sorted">נעוץ – ממוין ידנית</string>
+    <string name="edit_favorites_dialog_empty_section">גרור פריטים לכאן</string>
+    <string name="edit_favorites_dialog_tags">תגיות</string>
+    <string name="edit_favorites_dialog_tag_section_empty">תגיות נעוצות יופיעו כאן</string>
+    <string name="edit_favorites_dialog_new_tag">צור תגית…</string>
     <!-- Nextcloud login flow, URL-->
-    <string name="nextcloud_server_url">Nextcloud server URL</string>
+    <string name="nextcloud_server_url">כתובת URL שרת Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
     <!-- Nextcloud login flow, error invalid URL-->
-    <string name="nextcloud_server_invalid_url">This URL does not point to a valid Nextcloud installation</string>
+    <string name="nextcloud_server_invalid_url">כתובת URL זו לא מצביעה על התקנה תקינה של Nextcloud</string>
     <!-- Owncloud login flow, UR-->
-    <string name="owncloud_server_url">Owncloud server URL</string>
+    <string name="owncloud_server_url">כתובת URL שרת Owncloud</string>
     <!-- Owncloud login flow, error invalid URL-->
-    <string name="owncloud_server_invalid_url">This URL does not point to a valid Owncloud installation</string>
+    <string name="owncloud_server_invalid_url">כתובת URL זו לא מצביעה על התקנה תקינה של Owncloud</string>
     <!-- Owncloud login flow, password-->
-    <string name="owncloud_password">Password</string>
+    <string name="owncloud_password">סיסמה</string>
     <!-- Owncloud login flow, user name-->
-    <string name="owncloud_username">User name</string>
+    <string name="owncloud_username">שם משתמש</string>
     <!-- Owncloud login flow -->
-    <string name="owncloud_login_2fa_hint">If you have two factor authentication enabled, you must use an app password here.</string>
+    <string name="owncloud_login_2fa_hint">אם הפעלת אימות דו-שלבי, עליך להשתמש בסיסמה ליישומון כאן.</string>
     <!-- Owncloud login flow, login failed -->
-    <string name="owncloud_login_failed">Login failed: incorrect username or password.</string>
+    <string name="owncloud_login_failed">הכניסה נכשלה: שם משתמש או סיסמה שגויים.</string>
     <!-- Owncloud login flow, error: username empty -->
     <!-- Owncloud login flow, error: password empty -->
     <!-- Nextcloud/Owncloud login flow, continue button -->
-    <string name="login_flow_continue">Continue</string>
+    <string name="login_flow_continue">המשך</string>
     <!-- Nextcloud/Owncloud login flow, login button -->
-    <string name="login_flow_login">Log in</string>
-    <string name="disclaimer">Disclaimer</string>
+    <string name="login_flow_login">כניסה</string>
+    <string name="disclaimer">הצהרת אחריות</string>
     <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
-    <string name="disclaimer_currency_converter">Exchange rates as published once per day by the European Central Bank. All information is provided \"as is\" without any kind of guarantee. No liability is assumed for these information.
-\n
-\nLast update: %1$s</string>
-    <string name="show_all">Show all</string>
+    <string name="disclaimer_currency_converter">יחסי המרה מפורסמים פעם ביום על ידי הבנק המרכזי האירופי. כל המידע מסופק \"כפי שהוא\" ללא כל אחריות. אין כל אחריות למידע זה. \n \nעדכון אחרון: %1$s</string>
+    <string name="show_all">הצג הכל</string>
     <!-- Used in calendar widget date selector. -->
-    <string name="date_today">Today</string>
+    <string name="date_today">היום</string>
     <!-- Used in calendar widget date selector. -->
-    <string name="date_tomorrow">Tomorrow</string>
+    <string name="date_tomorrow">מחר</string>
     <!-- Headline used in calendar widget for pinned events -->
-    <string name="calendar_widget_pinned_events">Upcoming</string>
+    <string name="calendar_widget_pinned_events">בקרוב</string>
     <!-- Headline used in calendar widget for the next event, if there is no event today -->
-    <string name="calendar_widget_next_events">Next event</string>
-    <string name="calendar_widget_no_events">No events today</string>
+    <string name="calendar_widget_next_events">אירוע הבא</string>
+    <string name="calendar_widget_no_events">אין אירועים היום</string>
     <!--
         In the calendar widget, only events that start or end at the selected date are shown.
         If an event runs for three days, it won't be listed if the second day is selected.
@@ -310,769 +308,769 @@
         running events that neither started nor will end on the selected day.
         -->
     <plurals name="calendar_widget_running_events">
-        <item quantity="one">+%1$d running event from past days</item>
-        <item quantity="two">+%1$d running events from past days</item>
-        <item quantity="many">+%1$d running events from past days</item>
-        <item quantity="other">+%1$d running events from past days</item>
+        <item quantity="one">+%1$d אירוע רץ מהימים האחרונים</item>
+        <item quantity="two">+%1$d אירועים רצים מהימים האחרונים</item>
+        <item quantity="many">+%1$d אירועים רצים מהימים האחרונים</item>
+        <item quantity="other">+%1$d אירועים רצים מהימים האחרונים</item>
     </plurals>
     <plurals name="calendar_widget_running_tasks">
-        <item quantity="one">+%1$d unfinished task</item>
-        <item quantity="two">+%1$d unfinished tasks</item>
-        <item quantity="many">+%1$d unfinished tasks</item>
-        <item quantity="other">+%1$d unfinished tasks</item>
+        <item quantity="one">+%1$d משימה שלא הושלמה</item>
+        <item quantity="two">+%1$d משימות שלא הושלמו</item>
+        <item quantity="many">+%1$d משימות שלא הושלמו</item>
+        <item quantity="other">+%1$d משימות שלא הושלמו</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">all-day</string>
-    <string name="task_due_time">Due at %1$s</string>
-    <string name="task_due_date">Due on %1$s</string>
-    <string name="task_due_today">Due today</string>
+    <string name="calendar_event_allday">כל היום</string>
+    <string name="task_due_time">לסיום עד %1$s</string>
+    <string name="task_due_date">לסיום ב-%1$s</string>
+    <string name="task_due_today">לסיום היום</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
-    <string name="music_widget_default_title">%1$s is playing media</string>
-    <string name="music_widget_no_data">No media has been played yet</string>
+    <string name="music_widget_default_title">%1$s מנגן מדיה</string>
+    <string name="music_widget_no_data">טרם נוגנה מדיה</string>
     <string name="music_widget_interactive_progress_bar">Interactive progress bar</string>
-    <string name="weather_condition_sleetshowers">Sleet showers</string>
-    <string name="weather_condition_heavysleet">Heavy sleet</string>
-    <string name="weather_condition_lightrainshowersandthunder">Light rain showers and thunder</string>
-    <string name="weather_condition_heavyrain">Heavy rain</string>
-    <string name="weather_condition_lightsnowandthunder">Light snow and thunder</string>
-    <string name="weather_condition_lightrain">Light rain</string>
-    <string name="weather_condition_lightrainshowers">Light rain showers</string>
-    <string name="weather_condition_lightsnow">Light snow</string>
-    <string name="weather_condition_heavysleetshowersandthunder">Heavy sleet showers and thunder</string>
-    <string name="weather_condition_lightsnowshowers">Light snow showers</string>
-    <string name="weather_condition_lightssleetshowersandthunder">Lights sleet showers and thunder</string>
-    <string name="weather_condition_snowandthunder">Snow and thunder</string>
-    <string name="weather_condition_heavysleetshowers">Heavy sleet showers</string>
-    <string name="weather_condition_heavysnow">Heavy snow</string>
-    <string name="weather_condition_cloudy">Cloudy</string>
-    <string name="weather_condition_lightrainandthunder">Light rain and thunder</string>
-    <string name="weather_condition_snow">Snow</string>
-    <string name="weather_condition_hail">Hail</string>
-    <string name="weather_condition_thunderstorm">Thunderstorm</string>
-    <string name="weather_condition_thunder">Thunder</string>
-    <string name="weather_condition_heavysnowshowers">Heavy snow showers</string>
-    <string name="weather_condition_heavyrainshowers">Heavy rain showers</string>
-    <string name="weather_condition_rainshowersandthunder">Rain showers and thunder</string>
-    <string name="weather_condition_clearsky">Clear sky</string>
-    <string name="weather_condition_sleet">Sleet</string>
-    <string name="weather_condition_rain">Rain</string>
-    <string name="weather_condition_sleetandthunder">Sleet and thunder</string>
-    <string name="weather_condition_lightssnowshowersandthunder">Lights snow showers and thunder</string>
-    <string name="weather_condition_heavyrainshowersandthunder">Heavy rain showers and thunder</string>
-    <string name="weather_condition_fair">Fair</string>
-    <string name="weather_condition_fog">Fog</string>
-    <string name="weather_condition_haze">Haze</string>
-    <string name="weather_condition_sleetshowersandthunder">Sleet showers and thunder</string>
-    <string name="weather_condition_rainandthunder">Rain and thunder</string>
-    <string name="weather_condition_lightsleet">Light sleet</string>
-    <string name="weather_condition_heavysleetandthunder">Heavy sleet and thunder</string>
-    <string name="weather_condition_partlycloudy">Partly cloudy</string>
-    <string name="weather_condition_heavysnowandthunder">Heavy snow and thunder</string>
-    <string name="weather_condition_rainshowers">Rain showers</string>
-    <string name="weather_condition_lightsleetandthunder">Light sleet and thunder</string>
-    <string name="weather_condition_heavysnowshowersandthunder">Heavy snow showers and thunder</string>
-    <string name="weather_condition_lightsleetshowers">Light sleet showers</string>
-    <string name="weather_condition_snowshowersandthunder">Snow showers and thunder</string>
-    <string name="weather_condition_snowshowers">Snow showers</string>
-    <string name="weather_condition_heavyrainandthunder">Heavy rain and thunder</string>
-    <string name="weather_condition_wind">Wind</string>
-    <string name="weather_condition_unknown">Unknown</string>
+    <string name="weather_condition_sleetshowers">ממטרי גשם קרחי</string>
+    <string name="weather_condition_heavysleet">גשם קרחי כבד</string>
+    <string name="weather_condition_lightrainshowersandthunder">ממטרי גשם קל ורעמים</string>
+    <string name="weather_condition_heavyrain">גשם כבד</string>
+    <string name="weather_condition_lightsnowandthunder">שלג קל ורעמים</string>
+    <string name="weather_condition_lightrain">גשם קל</string>
+    <string name="weather_condition_lightrainshowers">ממטרי גשם קל</string>
+    <string name="weather_condition_lightsnow">שלג קל</string>
+    <string name="weather_condition_heavysleetshowersandthunder">ממטרי גשם קרחי כבד ורעמים</string>
+    <string name="weather_condition_lightsnowshowers">ממטרי שלג קל</string>
+    <string name="weather_condition_lightssleetshowersandthunder">ממטרי גשם קרחי קל ורעמים</string>
+    <string name="weather_condition_snowandthunder">שלג ורעמים</string>
+    <string name="weather_condition_heavysleetshowers">ממטרי גשם קרחי כבד</string>
+    <string name="weather_condition_heavysnow">שלג כבד</string>
+    <string name="weather_condition_cloudy">מעונן</string>
+    <string name="weather_condition_lightrainandthunder">גשם קל ורעמים</string>
+    <string name="weather_condition_snow">שלג</string>
+    <string name="weather_condition_hail">ברד</string>
+    <string name="weather_condition_thunderstorm">סופת רעמים</string>
+    <string name="weather_condition_thunder">רעמים</string>
+    <string name="weather_condition_heavysnowshowers">ממטרי שלג כבד</string>
+    <string name="weather_condition_heavyrainshowers">ממטרי גשם כבד</string>
+    <string name="weather_condition_rainshowersandthunder">ממטרי גשם ורעמים</string>
+    <string name="weather_condition_clearsky">שמים בהירים</string>
+    <string name="weather_condition_sleet">גשם קרחי</string>
+    <string name="weather_condition_rain">גשם</string>
+    <string name="weather_condition_sleetandthunder">גשם קרחי ורעמים</string>
+    <string name="weather_condition_lightssnowshowersandthunder">ממטרי שלג קל ורעמים</string>
+    <string name="weather_condition_heavyrainshowersandthunder">ממטרי גשם כבד ורעמים</string>
+    <string name="weather_condition_fair">נוח</string>
+    <string name="weather_condition_fog">ערפל</string>
+    <string name="weather_condition_haze">אובך</string>
+    <string name="weather_condition_sleetshowersandthunder">ממטרי גשם קרחי ורעמים</string>
+    <string name="weather_condition_rainandthunder">גשם ורעמים</string>
+    <string name="weather_condition_lightsleet">גשם קרחי קל</string>
+    <string name="weather_condition_heavysleetandthunder">גשם קרחי כבד ורעמים</string>
+    <string name="weather_condition_partlycloudy">מעונן חלקית</string>
+    <string name="weather_condition_heavysnowandthunder">שלג כבד ורעמים</string>
+    <string name="weather_condition_rainshowers">ממטרי גשם</string>
+    <string name="weather_condition_lightsleetandthunder">גשם קרחי קל ורעמים</string>
+    <string name="weather_condition_heavysnowshowersandthunder">ממטרי שלג כבד ורעמים</string>
+    <string name="weather_condition_lightsleetshowers">ממטרי גשם קרחי קל</string>
+    <string name="weather_condition_snowshowersandthunder">ממטרי שלג ורעמים</string>
+    <string name="weather_condition_snowshowers">ממטרי שלג</string>
+    <string name="weather_condition_heavyrainandthunder">גשם כבד ורעמים</string>
+    <string name="weather_condition_wind">רוחות</string>
+    <string name="weather_condition_unknown">לא ידוע</string>
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">No weather data available.</string>
+    <string name="weather_no_data">אין נתוני מזג אוויר זמינים.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
-    <string name="weather_widget_set_location">Set location</string>
-    <string name="weather_location_search_no_result">Location not found.</string>
+    <string name="weather_widget_set_location">קבע מיקום</string>
+    <string name="weather_location_search_no_result">מיקום לא נמצא.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
-    <string name="missing_permission_auto_location">Location access is required to determine the location automatically</string>
+    <string name="missing_permission_auto_location">נדרשת גישה למיקום כדי לקבוע את המיקום באופן אוטומטי</string>
     <!-- Missing notification permission in music widget settings -->
-    <string name="missing_permission_music_widget">Notification access is required to control media playback</string>
+    <string name="missing_permission_music_widget">נדרשת גישה להתראות כדי לשלוט בהפעלת מדיה</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Contact permission is required to search contacts</string>
+    <string name="missing_permission_contact_search_settings">נדרשת הרשאת איש קשר כדי לחפש אנשי קשר</string>
     <!-- Missing call permission in contacts settings screen -->
-    <string name="missing_permission_call_contacts_settings">Call permission is required to start calls</string>
+    <string name="missing_permission_call_contacts_settings">נדרשת הרשאת שיחה כדי להתחיל שיחות</string>
     <!-- Missing calendar permission in search settings screen -->
-    <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
-    <string name="missing_permission_tasks_search_settings">Tasks permission is required to search tasks</string>
-    <string name="missing_permission_tasks_integration">Tasks permission is required to use the Tasks integration</string>
+    <string name="missing_permission_calendar_search_settings">נדרשת הרשאת לוח שנה כדי לחפש בלוח השנה</string>
+    <string name="missing_permission_tasks_search_settings">נדרשת הרשאת משימות כדי לחפש משימות</string>
+    <string name="missing_permission_tasks_integration">נדרשת הרשאת משימות כדי להשתמש באינטגרציית המשימות</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">This widget requires calendar permission</string>
-    <string name="widget_config_calendar_missing_calendars_hint">Can\'t find your calendars?</string>
+    <string name="missing_permission_calendar_widget_settings">ווידג\'ט זה דורש הרשאת לוח שנה</string>
+    <string name="widget_config_calendar_missing_calendars_hint">לא מצליח למצוא את לוח השנה שלך?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search_settings">%1$s must be set as default home app to search app shortcuts</string>
+    <string name="missing_permission_appshortcuts_search_settings">יש להגדיר את %1$s כיישומון בית המוגדר כברירת מחדל כדי לחפש קיצורי דרך ליישומונים</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">External storage permission is required to search local files</string>
+    <string name="missing_permission_file_search_settings">נדרשת הרשאת אחסון חיצוני כדי לחפש קבצים מקומיים</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Manage all files permission is required to search local files</string>
+    <string name="missing_permission_file_search_settings_android10">נדרשת הרשאת ניהול כל הקבצים כדי לחפש קבצים מקומיים</string>
     <!-- Missing notification permission, used in badge settings screen -->
-    <string name="missing_permission_notification_badges">Notification access is required to display notification badges</string>
+    <string name="missing_permission_notification_badges">נדרשת גישה להתראות כדי להציג תגי התראה</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Grant calendar permission to display upcoming appointments and events here.</string>
+    <string name="missing_permission_calendar_widget">הענק הרשאת לוח שנה כדי להציג כאן פגישות ואירועים קרובים.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Grant calendar permission to search your calendar.</string>
+    <string name="missing_permission_calendar_search">הענק הרשאת לוח שנה כדי לחפש בלוח השנה שלך.</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Grant location permission to search nearby locations.</string>
+    <string name="missing_permission_location_search">הענק הרשאת מיקום כדי לחפש מקומות קרובים.</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Grant storage permission to search photos, media and document on this device.</string>
+    <string name="missing_permission_files_search">הענק הרשאת אחסון כדי לחפש תמונות, מדיה וקבצים במכשיר זה.</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Grant contact permission to search your contact.</string>
+    <string name="missing_permission_contact_search">הענק הרשאת איש קשר כדי לחפש את איש הקשר שלך.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search">Set %1$s as default home app to search app shortcuts.</string>
+    <string name="missing_permission_appshortcuts_search">הגדר את %1$s כיישומון בית המוגדר כברירת מחדל כדי לחפש קיצורי דרך ליישומונים.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
-    <string name="missing_permission_appshortcuts_create">Set %1$s as default home app to create shortcuts.</string>
+    <string name="missing_permission_appshortcuts_create">הגדר את %1$s כיישומון בית המוגדר כברירת מחדל כדי ליצור קיצורי דרך.</string>
     <!-- Grant a permission, shown in permission banners -->
-    <string name="grant_permission">Grant</string>
+    <string name="grant_permission">הענק</string>
     <!-- Appearance preference title -->
-    <string name="preference_screen_appearance">Appearance</string>
-    <string name="preference_theme">Theme</string>
-    <string name="preference_theme_light">Light</string>
-    <string name="preference_theme_dark">Dark</string>
-    <string name="preference_screen_colors">Color scheme</string>
-    <string name="preference_colors_default">Default</string>
-    <string name="preference_colors_high_contrast">High contrast</string>
-    <string name="preference_colors_bw">Black and White</string>
-    <string name="preference_custom_colors_corepalette">Color palette</string>
-    <string name="preference_mdy_color_source">Source for dynamic colors</string>
-    <string name="preference_mdy_color_source_system">System</string>
-    <string name="preference_mdy_color_source_wallpaper">Wallpaper</string>
-    <string name="preference_screen_shapes">Shapes</string>
-    <string name="preference_shapes_default">Default</string>
-    <string name="preference_shapes_extra_round">Extra round</string>
-    <string name="preference_shapes_rect">Rectangular</string>
-    <string name="preference_shapes_base">Base shape</string>
-    <string name="preference_screen_typography">Typography</string>
-    <string name="preference_screen_transparencies">Transparency</string>
-    <string name="preference_transparencies_default">Default</string>
-    <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
-    <string name="preference_font">Font</string>
-    <string name="preference_font_system">System default</string>
-    <string name="preference_screen_about">About</string>
-    <string name="preference_version">Version</string>
-    <string name="preference_category_links">Links</string>
-    <string name="preference_category_licenses">Open source licenses</string>
-    <string name="preference_category_advanced">Advanced</string>
+    <string name="preference_screen_appearance">מראֶה</string>
+    <string name="preference_theme">ערכת נושא</string>
+    <string name="preference_theme_light">בהיר</string>
+    <string name="preference_theme_dark">כהה</string>
+    <string name="preference_screen_colors">ערכת צבעים</string>
+    <string name="preference_colors_default">ברירת מחדל</string>
+    <string name="preference_colors_high_contrast">ניגודיות גבוהה</string>
+    <string name="preference_colors_bw">שחור ולבן</string>
+    <string name="preference_custom_colors_corepalette">פלטת צבעים</string>
+    <string name="preference_mdy_color_source">מקור לצבעים דינמיים</string>
+    <string name="preference_mdy_color_source_system">מערכת</string>
+    <string name="preference_mdy_color_source_wallpaper">רקע</string>
+    <string name="preference_screen_shapes">צורות</string>
+    <string name="preference_shapes_default">ברירת מחדל</string>
+    <string name="preference_shapes_extra_round">עגול במיוחד</string>
+    <string name="preference_shapes_rect">מלבני</string>
+    <string name="preference_shapes_base">צורת בסיס</string>
+    <string name="preference_screen_typography">טיפוגרפיה</string>
+    <string name="preference_screen_transparencies">שקיפות</string>
+    <string name="preference_transparencies_default">ברירת מחדל</string>
+    <string name="preference_transparencies_semi_transparent">חצי שקוף</string>
+    <string name="preference_font">גופן</string>
+    <string name="preference_font_system">ברירת מחדל של המערכת</string>
+    <string name="preference_screen_about">אודות</string>
+    <string name="preference_version">גרסה</string>
+    <string name="preference_category_links">קישורים</string>
+    <string name="preference_category_licenses">רשיונות קוד פתוח</string>
+    <string name="preference_category_advanced">מתקדם</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Open website</string>
-    <string name="preference_screen_about_summary">App and license information</string>
-    <string name="preference_screen_appearance_summary">Customize the look-and-feel</string>
-    <string name="preference_weather_provider">Provider</string>
-    <string name="provider_metno">MET Norway</string>
-    <string name="provider_openweathermap">OpenWeatherMap</string>
-    <string name="provider_brightsky">Deutscher Wetterdienst (Germany only)</string>
-    <string name="provider_here">HERE</string>
+    <string name="open_webpage">פתח אתר</string>
+    <string name="preference_screen_about_summary">מידע על יישומון ורשיון</string>
+    <string name="preference_screen_appearance_summary">התאם אישית את המראה והתחושה</string>
+    <string name="preference_weather_provider">סַפָּק</string>
+    <string name="provider_metno">המכון המטאורולוגי הנורווגי</string>
+    <string name="provider_openweathermap">מפת מזג אוויר פתוחה (OpenWeatherMap)</string>
+    <string name="provider_brightsky">שירות מזג האוויר הגרמני (גרמניה בלבד)</string>
+    <string name="provider_here">כאן</string>
     <string name="provider_breezy">Breezy Weather</string>
-    <string name="preference_category_location">Location</string>
-    <string name="preference_automatic_location">Automatic location</string>
-    <string name="preference_automatic_location_summary">Use GPS and location services to determine location automatically</string>
-    <string name="preference_location_managed">Managed by plugin</string>
-    <string name="preference_location_managed_summary">The location for this provider is managed by the plugin app</string>
-    <string name="preference_location">Location</string>
-    <string name="preference_location_breezy">Manage location in Breezy Weather</string>
-    <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
-    <string name="preference_imperial_units">Imperial units</string>
-    <string name="widget_config_weather_compact">Compact mode</string>
-    <string name="preference_category_debug">Debug</string>
-    <string name="preference_category_debug_tools">Tools</string>
-    <string name="preference_debug_dump_heap">Memory snapshot</string>
-    <string name="preference_debug_dump_heap_summary">Capture a snapshot to analyze memory usage. The app will freeze until this process is completed.</string>
-    <string name="preference_debug_dump_heap_in_progress">Capturing snapshot…</string>
-    <string name="preference_debug_cleanup_database">Clean up database</string>
-    <string name="preference_debug_cleanup_database_summary">Remove broken and unused entries from the launcher database</string>
-    <string name="preference_debug_reinstall_iconpacks">Reinstall icon packs</string>
-    <string name="preference_debug_reinstall_iconpacks_summary">Clear and rebuild the icon pack cache</string>
+    <string name="preference_category_location">מיקום</string>
+    <string name="preference_automatic_location">מיקום אוטומטי</string>
+    <string name="preference_automatic_location_summary">השתמש ב-GPS ושירותי מיקום כדי לקבוע מיקום באופן אוטומטי</string>
+    <string name="preference_location_managed">מנוהל על ידי פלאגין</string>
+    <string name="preference_location_managed_summary">המיקום עבור ספק זה מנוהל על ידי יישומון הפלאגין</string>
+    <string name="preference_location">מיקום</string>
+    <string name="preference_location_breezy">נהל מיקום ב-Breezy Weather</string>
+    <string name="preference_imperial_units_summary">השתמש במעלות פרנהייט ומייל לשעה</string>
+    <string name="preference_imperial_units">יחידות אימפריאליות</string>
+    <string name="widget_config_weather_compact">מצב קומפקטי</string>
+    <string name="preference_category_debug">ניפוי שגיאות</string>
+    <string name="preference_category_debug_tools">כלים</string>
+    <string name="preference_debug_dump_heap">תמונת מצב של הזיכרון</string>
+    <string name="preference_debug_dump_heap_summary">צלם תמונת מצב כדי לנתח את ניצול הזיכרון. היישומון יקפא עד להשלמת תהליך זה.</string>
+    <string name="preference_debug_dump_heap_in_progress">מצלם תמונת מצב…</string>
+    <string name="preference_debug_cleanup_database">נקה מסד נתונים</string>
+    <string name="preference_debug_cleanup_database_summary">הסר ערכים שבורים ולא בשימוש ממסד הנתונים של הלאנצ\'ר</string>
+    <string name="preference_debug_reinstall_iconpacks">התקן מחדש חבילות אייקונים</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">נקה ובנה מחדש את מטמון חבילת האייקונים</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d entry has been removed.</item>
-        <item quantity="two">%1$d entries have been removed.</item>
-        <item quantity="many">%1$d entries have been removed.</item>
-        <item quantity="other">%1$d entries have been removed.</item>
+        <item quantity="one">%1$d ערך הוסר.</item>
+        <item quantity="two">%1$d ערכים הוסרו.</item>
+        <item quantity="many">%1$d ערכים הוסרו.</item>
+        <item quantity="other">%1$d ערכים הוסרו.</item>
     </plurals>
-    <string name="preference_category_icons">Icons</string>
-    <string name="preference_cards">Cards</string>
-    <string name="preference_cards_summary">Customize card appearance</string>
-    <string name="preference_cards_corner_radius">Corner radius</string>
-    <string name="preference_cards_stroke_width">Stroke width</string>
-    <string name="preference_cards_opacity">Opacity</string>
-    <string name="preference_cards_shape">Shape</string>
-    <string name="preference_cards_shape_rounded">Rounded</string>
-    <string name="preference_cards_shape_cut">Cut</string>
-    <string name="preference_icon_shape">Shape</string>
-    <string name="preference_icon_shape_platform">System default</string>
-    <string name="preference_icon_shape_square">Square</string>
-    <string name="preference_icon_shape_rounded_square">Rounded square</string>
-    <string name="preference_icon_shape_squircle">Squircle</string>
-    <string name="preference_icon_shape_triangle">Reuleaux triangle</string>
-    <string name="preference_icon_shape_circle">Circle</string>
-    <string name="preference_icon_shape_teardrop">Teardrop</string>
-    <string name="preference_icon_shape_pebble">Pebble</string>
-    <string name="preference_icon_shape_hexagon">Hexagon</string>
-    <string name="preference_category_searchbar">Search bar</string>
-    <string name="preference_screen_integrations">Integrations</string>
-    <string name="preference_screen_plugins">Plugins</string>
-    <string name="preference_screen_plugins_summary">Manage installed extensions</string>
-    <string name="no_plugins_installed">No plugins installed</string>
-    <string name="preference_theme_system">Follow system</string>
-    <string name="preference_themed_icons">Themed icons</string>
-    <string name="preference_themed_icons_summary">Color icons with the application\'s color scheme</string>
-    <string name="preference_force_themed_icons">Enforce themed icons</string>
-    <string name="preference_force_themed_icons_summary">Apply the application\'s color scheme to all icons, including unsupported ones (not recommended)</string>
-    <string name="preference_icon_pack">Icon pack</string>
-    <string name="preference_icon_pack_summary_empty">No icon packs installed</string>
+    <string name="preference_category_icons">אייקונים</string>
+    <string name="preference_cards">כרטיסים</string>
+    <string name="preference_cards_summary">התאם אישית מראה כרטיס</string>
+    <string name="preference_cards_corner_radius">רדיוס הפינה</string>
+    <string name="preference_cards_stroke_width">רוחב קו</string>
+    <string name="preference_cards_opacity">אטימות</string>
+    <string name="preference_cards_shape">צורה</string>
+    <string name="preference_cards_shape_rounded">מעוגל</string>
+    <string name="preference_cards_shape_cut">גזור</string>
+    <string name="preference_icon_shape">צורה</string>
+    <string name="preference_icon_shape_platform">ברירת מחדל של המערכת</string>
+    <string name="preference_icon_shape_square">ריבוע</string>
+    <string name="preference_icon_shape_rounded_square">ריבוע מעוגל</string>
+    <string name="preference_icon_shape_squircle">ריבוע עגול</string>
+    <string name="preference_icon_shape_triangle">משולש רולו</string>
+    <string name="preference_icon_shape_circle">עיגול</string>
+    <string name="preference_icon_shape_teardrop">דמעה</string>
+    <string name="preference_icon_shape_pebble">חלוק נחל</string>
+    <string name="preference_icon_shape_hexagon">משושה</string>
+    <string name="preference_category_searchbar">שורת חיפוש</string>
+    <string name="preference_screen_integrations">אינטגרציות</string>
+    <string name="preference_screen_plugins">פלאגינים</string>
+    <string name="preference_screen_plugins_summary">נהל תוספים מותקנים</string>
+    <string name="no_plugins_installed">לא מותקנים פלאגינים</string>
+    <string name="preference_theme_system">עקוב אחר המערכת</string>
+    <string name="preference_themed_icons">אייקונים בצבעי ערכת נושא</string>
+    <string name="preference_themed_icons_summary">צבע אייקונים לפי ערכת הצבעים של היישומון</string>
+    <string name="preference_force_themed_icons">אכוף אייקונים בצבעי ערכת נושא</string>
+    <string name="preference_force_themed_icons_summary">החל את ערכת הצבעים של היישומון על כל האייקונים, כולל אלה שאינם נתמכים (לא מומלץ)</string>
+    <string name="preference_icon_pack">חבילת אייקונים</string>
+    <string name="preference_icon_pack_summary_empty">לא מותקנות חבילות אייקונים</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
-    <string name="preference_category_animations">Animations</string>
-    <string name="preference_charging_animation">Charging animation</string>
-    <string name="preference_charging_animation_summary">Play a bubble animation while the device is charging</string>
-    <string name="preference_category_system_bars">System bars</string>
-    <string name="preference_status_bar_icons">Status bar icons</string>
-    <string name="preference_nav_bar_icons">Navigation bar icons</string>
-    <string name="preference_system_bar_icons_auto">Auto</string>
-    <string name="preference_system_bar_icons_light">Light</string>
-    <string name="preference_system_bar_icons_dark">Dark</string>
-    <string name="preference_hide_status_bar">Hide status bar</string>
-    <string name="preference_hide_nav_bar">Hide navigation bar</string>
-    <string name="preference_screen_integrations_summary">Manage connected accounts and services</string>
-    <string name="preference_signin_user">Signed in as %1$s</string>
-    <string name="preference_signout">Sign out</string>
-    <string name="preference_summary_not_logged_in">You are currently not logged in</string>
-    <string name="preference_icon_shape_pentagon">Pentagon</string>
-    <string name="preference_category_wallpaper">Wallpaper</string>
-    <string name="preference_dim_wallpaper">Dim wallpaper</string>
-    <string name="preference_dim_wallpaper_summary">In dark themes, darken wallpaper</string>
-    <string name="preference_blur_wallpaper">Blur wallpaper</string>
-    <string name="preference_blur_wallpaper_summary">Use a blur effect on the wallpaper</string>
-    <string name="preference_blur_wallpaper_unsupported">Not supported on this device</string>
-    <string name="preference_blur_wallpaper_radius">Blur radius</string>
-    <string name="preference_wallpaper_summary">Choose a wallpaper</string>
-    <string name="preference_category_badges">Badges</string>
-    <string name="preference_notification_badges">Notification badges</string>
-    <string name="preference_notification_badges_summary">Show a badge for applications with unread notifications</string>
-    <string name="preference_suspended_badges_summary">Show a badge for suspended applications</string>
-    <string name="preference_suspended_badges">Suspended apps</string>
-    <string name="preference_cloud_badges">Cloud badges</string>
-    <string name="preference_cloud_badges_summary">Show a badge for files that are stored in a cloud</string>
-    <string name="preference_shortcut_badges">Shortcut badges</string>
-    <string name="preference_shortcut_badges_summary">Show a badge which indicates to which app a shortcut belongs</string>
-    <string name="preference_plugin_badges">Plugin badges</string>
-    <string name="preference_plugin_badges_summary">Indicate by which plugin a search result was created</string>
-    <string name="preference_nextcloud_signin">Sign in to Nextcloud</string>
-    <string name="preference_nextcloud_signin_summary">Sign in to search your Nextcloud server</string>
+    <string name="preference_category_animations">אנימציות</string>
+    <string name="preference_charging_animation">אנימציית טעינה</string>
+    <string name="preference_charging_animation_summary">נגן אנימציית בעבוע כשהמכשיר נטען</string>
+    <string name="preference_category_system_bars">שורות מערכת</string>
+    <string name="preference_status_bar_icons">אייקוני שורת סטטוס</string>
+    <string name="preference_nav_bar_icons">אייקוני שורת ניווט</string>
+    <string name="preference_system_bar_icons_auto">אוטומטי</string>
+    <string name="preference_system_bar_icons_light">בהיר</string>
+    <string name="preference_system_bar_icons_dark">כהה</string>
+    <string name="preference_hide_status_bar">הסתר שורת סטטוס</string>
+    <string name="preference_hide_nav_bar">הסתר שורת ניווט</string>
+    <string name="preference_screen_integrations_summary">נהל חשבונות ושירותים מחוברים</string>
+    <string name="preference_signin_user">מחובר בתור %1$s</string>
+    <string name="preference_signout">יציאה</string>
+    <string name="preference_summary_not_logged_in">אינך מחובר כרגע</string>
+    <string name="preference_icon_shape_pentagon">מחומש</string>
+    <string name="preference_category_wallpaper">רקע</string>
+    <string name="preference_dim_wallpaper">עמעם רקע</string>
+    <string name="preference_dim_wallpaper_summary">בערכות נושא כהות, הכהה את הרקע</string>
+    <string name="preference_blur_wallpaper">טשטש רקע</string>
+    <string name="preference_blur_wallpaper_summary">השתמש באפקט טשטוש עבור הרקע</string>
+    <string name="preference_blur_wallpaper_unsupported">לא נתמך במכשיר זה</string>
+    <string name="preference_blur_wallpaper_radius">רדיוס טשטוש</string>
+    <string name="preference_wallpaper_summary">בחר רקע</string>
+    <string name="preference_category_badges">תגים</string>
+    <string name="preference_notification_badges">תגי התראה</string>
+    <string name="preference_notification_badges_summary">הצג תג עבור יישומונים עם התראות שלא נקראו</string>
+    <string name="preference_suspended_badges_summary">הצג תג עבור יישומונים מושעים</string>
+    <string name="preference_suspended_badges">יישומונים מושעים</string>
+    <string name="preference_cloud_badges">תגי ענן</string>
+    <string name="preference_cloud_badges_summary">הצג תג עבור קבצים ששמורים בענן</string>
+    <string name="preference_shortcut_badges">תגי קיצור דרך</string>
+    <string name="preference_shortcut_badges_summary">הצג תג המציין לאיזה יישומון שייך קיצור דרך</string>
+    <string name="preference_plugin_badges">תגי פלאגין</string>
+    <string name="preference_plugin_badges_summary">ציין באמצעות איזה פלאגין נוצרה תוצאת חיפוש</string>
+    <string name="preference_nextcloud_signin">התחבר ל-Nextcloud</string>
+    <string name="preference_nextcloud_signin_summary">התחבר כדי לחפש את שרת ה-Nextcloud שלך</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_owncloud">Owncloud</string>
-    <string name="preference_owncloud_signin">Sign in to Owncloud</string>
-    <string name="preference_owncloud_signin_summary">Sign in to search your Owncloud server</string>
-    <string name="preference_about_telegram">Telegram group</string>
-    <string name="preference_about_fdroid">F-Droid repository</string>
-    <string name="preference_enforce_icon_shape">Enforce shape</string>
-    <string name="preference_enforce_icon_shape_summary">Apply shape to all icons including those that would normally not support it</string>
-    <string name="preference_category_license">License</string>
-    <string name="preference_about_license">This app is free software.</string>
-    <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>
-    <string name="preference_category_grid">Grid</string>
-    <string name="preference_grid_icon_size">Icon size</string>
-    <string name="preference_grid_column_count">Number of columns</string>
-    <string name="preference_grid_list_style">Show apps in a list</string>
-    <string name="preference_grid_list_icons">Show app icons in list</string>
-    <string name="preference_grid_labels">Show labels</string>
-    <string name="preference_grid_labels_summary">Show the app name below the icon</string>
-    <string name="preference_grid_list_style_summary">Show applications in a list instead of a grid</string>
-    <string name="preference_grid_list_icons_summary">Show icons in the list view</string>
-    <string name="preference_screen_debug">Debug</string>
-    <string name="preference_screen_debug_summary">Troubleshooting tools</string>
-    <string name="preference_category_widgets">Widgets</string>
-    <string name="preference_screen_weatherwidget">Weather</string>
-    <string name="preference_category_media_apps">Media apps</string>
-    <string name="preference_screen_clockwidget">Clock</string>
-    <string name="preference_screen_clockwidget_summary">Configure clock style and components</string>
-    <string name="preference_clockwidget_layout_vertical">Default</string>
-    <string name="preference_clockwidget_layout_horizontal">Compact</string>
-    <string name="preference_clock_widget_show_seconds">Show seconds</string>
-    <string name="preference_clock_widget_time_format">Time format</string>
-    <string name="preference_clock_widget_time_format_24h">24-hour</string>
-    <string name="preference_clock_widget_time_format_12h">12-hour</string>
-    <string name="preference_clock_widget_time_format_system">System default</string>
-    <string name="widget_use_theme_colors">Use theme color</string>
-    <string name="preference_clock_widget_fill_height">Fill screen height</string>
-    <string name="preference_clock_widget_alignment">Alignment</string>
-    <string name="preference_clock_widget_alignment_top">Top</string>
-    <string name="preference_clock_widget_alignment_center">Center</string>
-    <string name="preference_clock_widget_alignment_bottom">Bottom</string>
-    <string name="preference_clockwidget_dynamic_zone">Dynamic zone</string>
-    <string name="preference_clockwidget_date_part">Date</string>
-    <string name="preference_clockwidget_date_part_summary">Show the current date</string>
-    <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Show the first row of pinned items</string>
-    <string name="preference_clockwidget_music_part">Media</string>
-    <string name="preference_clockwidget_music_part_summary">Show media controls when there is an active media session</string>
-    <string name="preference_clockwidget_battery_part">Battery</string>
-    <string name="preference_clockwidget_battery_part_summary">Show the current battery level when the battery is low or charging</string>
-    <string name="preference_clockwidget_alarm_part">Alarms</string>
-    <string name="preference_clockwidget_alarm_part_summary">Show alarms that will ring within the next 8 hours</string>
-    <string name="preference_screen_backup">Backup &amp; Restore</string>
-    <string name="preference_screen_backup_summary">Export and import launcher data</string>
-    <string name="preference_backup">Backup</string>
-    <string name="preference_backup_summary">Export preferences and launcher data</string>
-    <string name="preference_restore">Restore</string>
-    <string name="preference_restore_summary">Import a previously created backup</string>
-    <string name="preference_crash_reporter">Crash reporter</string>
-    <string name="preference_crash_reporter_summary">Error and crash reports</string>
-    <string name="preference_logs">Logs</string>
-    <string name="preference_logs_summary">View and export application logs</string>
-    <string name="preference_screen_search">Search</string>
-    <string name="preference_screen_search_summary">Search, tags, hidden items</string>
-    <string name="preference_search_favorites">Favorites</string>
-    <string name="preference_search_favorites_summary">Show pinned and frequently used items above app grid</string>
-    <string name="preference_search_files">Files</string>
-    <string name="preference_search_files_summary">Search local files and cloud files</string>
-    <string name="preference_search_contacts">Contacts</string>
-    <string name="preference_search_contacts_summary">Search contacts on this device</string>
-    <string name="preference_search_calendar">Calendar</string>
-    <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
-    <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
-    <string name="preference_search_tasks">Tasks</string>
-    <string name="preference_search_tasks_summary">Search tasks in the Tasks app</string>
-    <string name="preference_search_appshortcuts">App shortcuts</string>
-    <string name="preference_search_appshortcuts_summary">Search app shortcuts</string>
-    <string name="preference_search_calculator">Calculator</string>
-    <string name="preference_search_calculator_summary">Evaluate mathematical terms</string>
-    <string name="preference_search_unitconverter">Unit converter</string>
-    <string name="preference_search_unitconverter_summary">Usage: 1.5 kg or 4 cm &gt;&gt; in</string>
-    <string name="preference_search_currencyconverter">Currency converter</string>
-    <string name="preference_search_currencyconverter_summary">Periodically download exchange rates to convert currencies</string>
-    <string name="preference_search_supportedunits">Supported units</string>
-    <string name="preference_search_wikipedia">Wikipedia</string>
-    <string name="preference_search_wikipedia_summary">Search the free encyclopedia</string>
-    <string name="preference_search_websites">Websites</string>
-    <string name="preference_search_locations">Places</string>
-    <string name="preference_search_locations_radius">Search radius</string>
-    <string name="preference_search_websites_summary">Show a preview of a website if the search query is a URL</string>
-    <string name="preference_search_locations_summary">Search the local area for shops and other places</string>
-    <string name="preference_search_localfiles">Local files</string>
-    <string name="preference_search_localfiles_summary">Search documents, photos and other files stored on this device</string>
+    <string name="preference_owncloud_signin">התחבר ל-Owncloud</string>
+    <string name="preference_owncloud_signin_summary">התחבר כדי לחפש את שרת ה-Owncloud שלך</string>
+    <string name="preference_about_telegram">קבוצת טלגרם</string>
+    <string name="preference_about_fdroid">רפוזיטורי F-Droid</string>
+    <string name="preference_enforce_icon_shape">אכוף צורה</string>
+    <string name="preference_enforce_icon_shape_summary">החל צורה לכל האייקונים כולל אלו שבדרך כלל לא יתמכו בה</string>
+    <string name="preference_category_license">רישיון</string>
+    <string name="preference_about_license">יישומון זה הוא תוכנה חופשית.</string>
+    <string name="preference_about_license_summary">מורשה תחת הרישיון הציבורי הכללי של גנו 3.0</string>
+    <string name="preference_category_grid">רשת</string>
+    <string name="preference_grid_icon_size">גודל אייקון</string>
+    <string name="preference_grid_column_count">מספר עמודות</string>
+    <string name="preference_grid_list_style">הצג יישומונים ברשימה</string>
+    <string name="preference_grid_list_icons">הצג אייקוני יישומונים ברשימה</string>
+    <string name="preference_grid_labels">הצג תוויות</string>
+    <string name="preference_grid_labels_summary">הצג את שם היישומון מתחת לאייקון</string>
+    <string name="preference_grid_list_style_summary">הצג יישומונים ברשימה במקום ברשת</string>
+    <string name="preference_grid_list_icons_summary">הצג אייקונים בתצוגת רשימה</string>
+    <string name="preference_screen_debug">ניפוי שגיאות</string>
+    <string name="preference_screen_debug_summary">כלי פתרון בעיות</string>
+    <string name="preference_category_widgets">ווידג\'טים</string>
+    <string name="preference_screen_weatherwidget">מזג אוויר</string>
+    <string name="preference_category_media_apps">יישומוני מדיה</string>
+    <string name="preference_screen_clockwidget">שעון</string>
+    <string name="preference_screen_clockwidget_summary">הגדר עיצוב שעון ורכיבים</string>
+    <string name="preference_clockwidget_layout_vertical">ברירת מחדל</string>
+    <string name="preference_clockwidget_layout_horizontal">קומפקטי</string>
+    <string name="preference_clock_widget_show_seconds">הצג שניות</string>
+    <string name="preference_clock_widget_time_format">פורמט זמן</string>
+    <string name="preference_clock_widget_time_format_24h">24 שעות</string>
+    <string name="preference_clock_widget_time_format_12h">12 שעות</string>
+    <string name="preference_clock_widget_time_format_system">ברירת מחדל של המערכת</string>
+    <string name="widget_use_theme_colors">השתמש בצבע ערכת נושא</string>
+    <string name="preference_clock_widget_fill_height">מלא גובה מסך</string>
+    <string name="preference_clock_widget_alignment">יישור</string>
+    <string name="preference_clock_widget_alignment_top">עליון</string>
+    <string name="preference_clock_widget_alignment_center">מרכז</string>
+    <string name="preference_clock_widget_alignment_bottom">תחתון</string>
+    <string name="preference_clockwidget_dynamic_zone">אזור דינמי</string>
+    <string name="preference_clockwidget_date_part">תאריך</string>
+    <string name="preference_clockwidget_date_part_summary">הצג את התאריך הנוכחי</string>
+    <string name="preference_clockwidget_favorites_part">עגינה</string>
+    <string name="preference_clockwidget_favorites_part_summary">הצג את השורה הראשונה של הפריטים הנעוצים</string>
+    <string name="preference_clockwidget_music_part">מדיה</string>
+    <string name="preference_clockwidget_music_part_summary">הצג בקרות מדיה כאשר ישנה הפעלת מדיה פעילה</string>
+    <string name="preference_clockwidget_battery_part">סוללה</string>
+    <string name="preference_clockwidget_battery_part_summary">הצג רמת סוללה נוכחית כאשר הסוללה חלשה או בהטענה</string>
+    <string name="preference_clockwidget_alarm_part">שעונים מעוררים</string>
+    <string name="preference_clockwidget_alarm_part_summary">הצג שעונים מעוררים שיצלצלו ב-8 השעות הקרובות</string>
+    <string name="preference_screen_backup">גיבוי ושחזור</string>
+    <string name="preference_screen_backup_summary">ייצוא וייבוא של נתוני הלאנצ\'ר</string>
+    <string name="preference_backup">גיבוי</string>
+    <string name="preference_backup_summary">ייצוא העדפות ונתוני לאנצ\'ר</string>
+    <string name="preference_restore">שחזור</string>
+    <string name="preference_restore_summary">ייבוא גיבוי שנוצר בעבר</string>
+    <string name="preference_crash_reporter">מדווח קריסות</string>
+    <string name="preference_crash_reporter_summary">דיווחי שגיאה וקריסה</string>
+    <string name="preference_logs">לוגים</string>
+    <string name="preference_logs_summary">צפה וייצא לוגים של היישומון</string>
+    <string name="preference_screen_search">חיפוש</string>
+    <string name="preference_screen_search_summary">חיפוש, תגיות, פריטים מוסתרים</string>
+    <string name="preference_search_favorites">מועדפים</string>
+    <string name="preference_search_favorites_summary">הצג פריטים נעוצים ובשימוש נפוץ מעל רשת היישומונים</string>
+    <string name="preference_search_files">קבצים</string>
+    <string name="preference_search_files_summary">חפש קבצים מקומיים וקבצי ענן</string>
+    <string name="preference_search_contacts">אנשי קשר</string>
+    <string name="preference_search_contacts_summary">חפש אנשי קשר במכשיר זה</string>
+    <string name="preference_search_calendar">לוח שנה</string>
+    <string name="preference_search_calendar_summary">חפש פגישות ואירועים קרובים</string>
+    <string name="preference_search_local_calendar_summary">חפש לוחות שנה במכשיר זה</string>
+    <string name="preference_search_tasks">משימות</string>
+    <string name="preference_search_tasks_summary">חפש משימות ביישומון Tasks</string>
+    <string name="preference_search_appshortcuts">קיצורי דרך ליישומונים</string>
+    <string name="preference_search_appshortcuts_summary">חפש קיצורי דרך ליישומונים</string>
+    <string name="preference_search_calculator">מחשבון</string>
+    <string name="preference_search_calculator_summary">הערכת מונחים מתמטיים</string>
+    <string name="preference_search_unitconverter">ממיר יחידות</string>
+    <string name="preference_search_unitconverter_summary">שימוש: 1.5 ק\"ג או 4 ס\"מ &gt;&gt; אינץ\'</string>
+    <string name="preference_search_currencyconverter">ממיר מטבע</string>
+    <string name="preference_search_currencyconverter_summary">הורד מעת לעת שערי חליפין כדי להמיר מטבעות</string>
+    <string name="preference_search_supportedunits">יחידות נתמכות</string>
+    <string name="preference_search_wikipedia">ויקיפדיה</string>
+    <string name="preference_search_wikipedia_summary">חפש באינציקלופדיה החופשית</string>
+    <string name="preference_search_websites">אתרי אינטרנט</string>
+    <string name="preference_search_locations">מקומות</string>
+    <string name="preference_search_locations_radius">רדיוס חיפוש</string>
+    <string name="preference_search_websites_summary">הצג תצוגה מקדימה של אתר אינטרנט אם שאילתת החיפוש היא כתובת URL</string>
+    <string name="preference_search_locations_summary">חפש באזור המקומי חנויות ומקומות אחרים</string>
+    <string name="preference_search_localfiles">קבצים מקומיים</string>
+    <string name="preference_search_localfiles_summary">חפש מסמכים, תמונות וקבצים אחרים השמורים במכשיר זה</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="preference_search_cloud_summary">Search %1$s\'s files</string>
+    <string name="preference_search_cloud_summary">חפש הקצבים של %1$s</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_calendar_calendars">Calendars</string>
-    <string name="preference_calendar_hide_completed">Hide completed tasks</string>
-    <string name="preference_screen_buildinfo">Build information</string>
-    <string name="preference_screen_buildinfo_summary">More information about this build of this app</string>
-    <string name="preference_search_bar_style">Style</string>
-    <string name="preference_search_bar_style_summary">Customize search bar appearance</string>
+    <string name="preference_calendar_calendars">לוחות שנה</string>
+    <string name="preference_calendar_hide_completed">הסתר משימות שהושלמו</string>
+    <string name="preference_screen_buildinfo">מידע על בניית התוכנה</string>
+    <string name="preference_screen_buildinfo_summary">עוד מידע על בנייה זו של יישומון זה</string>
+    <string name="preference_search_bar_style">עיצוב</string>
+    <string name="preference_search_bar_style_summary">התאם אישית את מראה שורת החיפוש</string>
     <string name="preference_search_bar_style_transparent">Transparent</string>
     <string name="preference_search_bar_style_solid">Solid</string>
     <string name="preference_search_bar_style_hidden">Hidden</string>
-    <string name="preference_search_bar_color">Color</string>
-    <string name="preference_search_bar_auto_focus">Open keyboard</string>
-    <string name="preference_search_bar_auto_focus_summary">Automatically show the keyboard when opening the app drawer</string>
-    <string name="preference_search_bar_launch_on_enter">Launch on enter</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Launch highlighted match or quick action upon tapping go</string>
-    <string name="preference_hidden_items">Hidden search results</string>
-    <string name="preference_hidden_items_summary">Manage hidden apps and search results</string>
-    <string name="preference_hidden_items_reveal_button">Show reveal button</string>
-    <string name="preference_hidden_items_reveal_button_summary">Show a button to reveal hidden search results</string>
-    <string name="preference_screen_tags">Tags</string>
-    <string name="preference_screen_tags_summary">Manage tags and tagged items</string>
-    <string name="preference_wikipedia_customurl">Wikipedia URL</string>
-    <string name="preference_edit_favorites_summary">Change the order of pinned items</string>
-    <string name="preference_category_favorites_frequently_used">Frequently used</string>
-    <string name="preference_favorites_frequently_used_summary">Show frequently used items in favorites</string>
-    <string name="preference_edit_button">Edit button</string>
-    <string name="preference_favorites_edit_button_summary">Show a button to rearrange the favorites</string>
-    <string name="preference_compact_tags">Compact tags</string>
-    <string name="preference_compact_tags_summary">Hide tag labels or icons to reduce the space occupied by tags</string>
-    <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
-    <string name="preference_widgets_on_home_screen">Widgets on home screen</string>
-    <string name="preference_widgets_on_home_screen_summary">Show widgets on the home screen instead of an extra page</string>
-    <string name="preference_screen_homescreen">Home screen</string>
-    <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
-    <string name="preference_screen_icons">Grid &amp; icons</string>
-    <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
-    <string name="preference_weather_integration">Weather</string>
-    <string name="preference_media_integration">Media control</string>
-    <string name="preference_tasks_integration">Tasks</string>
+    <string name="preference_search_bar_color">צבע</string>
+    <string name="preference_search_bar_auto_focus">פתח מקלדת</string>
+    <string name="preference_search_bar_auto_focus_summary">הצג את המקלדת באופן אוטומטי בעת פתיחת מגירת היישומונים</string>
+    <string name="preference_search_bar_launch_on_enter">הפעל בכניסה</string>
+    <string name="preference_search_bar_launch_on_enter_summary">הפעל התאמה מסומנת או פעולה מהירה בעת הקשה על המשך</string>
+    <string name="preference_hidden_items">תוצאות חיפוש מוסתרות</string>
+    <string name="preference_hidden_items_summary">נהל יישומונים ותוצאות חיפוש מוסתרים</string>
+    <string name="preference_hidden_items_reveal_button">הצג את כפתור החשיפה</string>
+    <string name="preference_hidden_items_reveal_button_summary">הצג כפתור לחשיפת תוצאות חיפוש מוסתרות</string>
+    <string name="preference_screen_tags">תגיות</string>
+    <string name="preference_screen_tags_summary">נהל תגיות ופריטים מתויגים</string>
+    <string name="preference_wikipedia_customurl">כתובת URL בויקיפדיה</string>
+    <string name="preference_edit_favorites_summary">שנה את סדר הפריטים הנעוצים</string>
+    <string name="preference_category_favorites_frequently_used">בשימוש נפוץ</string>
+    <string name="preference_favorites_frequently_used_summary">הצג פריטים בשימוש נפוץ במועדפים</string>
+    <string name="preference_edit_button">כפתור עריכה</string>
+    <string name="preference_favorites_edit_button_summary">הצג כפתור לסידור מחדש של המועדפים</string>
+    <string name="preference_compact_tags">תגיות קומפקטיות</string>
+    <string name="preference_compact_tags_summary">הסתר תוויות או אייקונים של תגיות כדי לצמצם את השטח שתופסות תגיות</string>
+    <string name="preference_widgets_edit_button_summary">הצג כפתור להוספת, הסרת או סידור מחדש של ווידג\'טים</string>
+    <string name="preference_widgets_on_home_screen">ווידג\'טים במסך הבית</string>
+    <string name="preference_widgets_on_home_screen_summary">הצג ווידג\'טים במסך הבית במקום בעמוד נוסף</string>
+    <string name="preference_screen_homescreen">מסך הבית</string>
+    <string name="preference_screen_homescreen_summary">שעון, שורת חיפוש, רקע, שורות מערכת</string>
+    <string name="preference_screen_icons">רשת ואייקונים</string>
+    <string name="preference_screen_icons_summary">רשת, גודל אייקונים, חבילות אייקונים, תגים</string>
+    <string name="preference_weather_integration">מזג אוויר</string>
+    <string name="preference_media_integration">בקרת מדיה</string>
+    <string name="preference_tasks_integration">משימות</string>
     <!-- %1$s: app name (Kvaesitso) -->
-    <string name="preference_tasks_integration_description">Tasks is a free and open source to-do list and reminders app. If installed, %1$s can display and search your tasks from the Tasks app.</string>
-    <string name="preference_tasks_integration_ready">Tasks integration is fully set up and ready to use.</string>
-    <string name="preference_launch_tasks_app">Open Tasks app</string>
+    <string name="preference_tasks_integration_description">יישומון Tasks הינו יישומון רשימת מטלות ותזכורות חופשי בקוד פתוח. אם מותקן, %1$s יכול להציג ולחפש את המשימות שלך מתוך יישומון Tasks.</string>
+    <string name="preference_tasks_integration_ready">אינטגרציית Tasks הושלמה ומוכנה לשימוש.</string>
+    <string name="preference_launch_tasks_app">פתח את יישומון Tasks</string>
     <string name="preference_breezyweather_integration">Breezy Weather</string>
-    <string name="preference_breezyweather_integration_description">Breezy Weather is a free and open source weather app. If installed, %1$s can use Breezy Weather as a data source for weather data.</string>
-    <string name="preference_breezyweather_integration_instructions">To use Breezy Weather as weather provider:\n\n1. Go to Breezy Weather &gt; Settings &gt; Widgets &amp; Live wallpaper &gt; Send Gadgetbridge data &gt; Enable %1$s\n\n2. In %1$s, select Breezy Weather as weather provider</string>
-    <string name="preference_launch_breezyweather_app">Open Breezy Weather</string>
-    <string name="preference_contacts_call_on_tap">Tap to call</string>
-    <string name="preference_contacts_call_on_tap_summary">Immediately start a call when tapping a phone number</string>
+    <string name="preference_breezyweather_integration_description">יישומון Breezy Weather הינו יישומון מזג אוויר חופשי בקוד פתוח. אם מותקן, %1$s יכול להשתמש ב-Breezy Weather כמקור נתונים לנתוני מזג אוויר.</string>
+    <string name="preference_breezyweather_integration_instructions">כדי להשתמש ב-Breezy Weather כספק מזג אוויר:\n\n1. לך ל-Breezy Weather &gt; הגדרות &gt; ווידג\'טים ורקע חי &gt; שלח נתוני Gadgetbridge &gt; אפשר %1$s\n\n2. ב-%1$s, בחר ב-Breezy Weather כספק מזג אוויר</string>
+    <string name="preference_launch_breezyweather_app">פתח את Breezy Weather</string>
+    <string name="preference_contacts_call_on_tap">לחץ כדי להתקשר</string>
+    <string name="preference_contacts_call_on_tap_summary">התחל שיחה באופן מיידי בעת לחיצה על מספר טלפון</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
-    <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
+    <string name="no_account_nextcloud">טרם חיברת חשבון Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
-    <string name="no_account_owncloud">You haven\'t connected an Owncloud account yet</string>
+    <string name="no_account_owncloud">טרם חיברת חשבון Owncloud</string>
     <!-- Used in an info banner if a specific feature requires a Google account -->
     <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
-    <string name="connect_account">Connect account</string>
-    <string name="battery_part_charging">Charging</string>
+    <string name="connect_account">חבר חשבון</string>
+    <string name="battery_part_charging">מטעין</string>
     <plurals name="battery_part_remaining_charge_time">
-        <item quantity="one">Full in %1$s minute</item>
-        <item quantity="two">Full in %1$s minutes</item>
-        <item quantity="many">Full in %1$s minutes</item>
-        <item quantity="other">Full in %1$s minutes</item>
+        <item quantity="one">מלאה בעוד %1$s דקה</item>
+        <item quantity="two">מלאה בעוד %1$s דקות</item>
+        <item quantity="many">מלאה בעוד %1$s דקות</item>
+        <item quantity="other">מלאה בעוד %1$s דקות</item>
     </plurals>
-    <string name="backup_complete">The backup has been completed.</string>
-    <string name="restore_invalid_file">The selected file does not appear to be a backup. Are you sure you selected the right file?</string>
+    <string name="backup_complete">הגיבוי הושלם.</string>
+    <string name="restore_invalid_file">נראה שהקובץ שנבחר אינו גיבוי. האם אתה בטוח שבחרת את הקובץ הנכון?</string>
     <!-- %1$s: app name -->
-    <string name="restore_incompatible_file">This backup has been created with a different version of %1$s and cannot be restored with this version.</string>
+    <string name="restore_incompatible_file">הגיבוי נוצר עם גרסה אחרת של %1$s ולא יכול להיות משוחזר עם גרסה זו.</string>
     <!-- %1$s: app name -->
-    <string name="restore_different_minor_version">This backup has been created with a different version of %1$s. Some data might not be restored correctly.</string>
+    <string name="restore_different_minor_version">הגיבוי נוצר עם גרסה שונה של %1$s. ייתכן שנתונים מסוימים לא ישוחזרו כראוי.</string>
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
-    <string name="restore_meta">Created %1$s on %2$s with %3$s.</string>
-    <string name="restore_complete">The backup has been restored.</string>
-    <string name="icon_picker_default_icon">Default</string>
-    <string name="icon_picker_suggestions">Suggestions</string>
-    <string name="icon_picker_search_icon">Search in icon packs</string>
-    <string name="icon_picker_filter_all_packs">All icon packs</string>
-    <string name="apps_profile_main">Personal</string>
-    <string name="apps_profile_work">Work</string>
-    <string name="apps_profile_private">Private</string>
-    <string name="favorites">Favorites</string>
-    <string name="favorites_empty">Pinned and frequently used items will appear here</string>
-    <string name="favorites_empty_tag">There are no items with this tag</string>
-    <string name="frequently_used_show_in_favorites">Show in favorites</string>
-    <string name="frequently_used_rows">Number of rows</string>
-    <string name="preference_screen_search_actions">Quick actions</string>
-    <string name="preference_search_search_actions_summary">Configure quick actions and search shortcuts</string>
-    <string name="search_action_call">Call</string>
-    <string name="search_action_message">Message</string>
-    <string name="search_action_email">Email</string>
-    <string name="search_action_alarm">Set alarm</string>
-    <string name="search_action_timer">Start timer</string>
-    <string name="search_action_share">Share</string>
-    <string name="search_action_websearch">Web search</string>
-    <string name="search_action_contact">Add to contacts</string>
-    <string name="search_action_open_url">View website</string>
-    <string name="search_action_event">Schedule event</string>
-    <string name="create_search_action_type">What kind of action do you want to create?</string>
-    <string name="create_search_action_type_web">Search on a website</string>
-    <string name="create_search_action_type_app">Search in an app</string>
-    <string name="create_search_action_type_intent">Custom intent</string>
-    <string name="create_search_action_pick_app">Pick an app to search:</string>
-    <string name="create_search_action_website_url">Enter the address of the website:</string>
-    <string name="create_search_action_website_invalid_url">The given website cannot automatically be imported as a web search. You can try a different website or enter the required data manually in the next step.</string>
-    <string name="search_action_label">Name</string>
-    <string name="search_action_app">App</string>
-    <string name="search_action_websearch_url">URL template</string>
-    <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term, e.g. https://google.com/search?q=${1}.</string>
-    <string name="more_information">More information</string>
-    <string name="experimental_feature">Experimental</string>
-    <string name="tag_exists_error">A tag with this name already exists.</string>
-    <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged.</string>
-    <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted.</string>
-    <string name="tag_empty_name">A tag cannot exist without a name. If you continue, the tag will be deleted.</string>
-    <string name="tag_select_items">Select items:</string>
-    <string name="tag_name">Tag name</string>
+    <string name="restore_meta">נוצר ב-%1$s ב-%2$s באמצעות %3$s.</string>
+    <string name="restore_complete">הגיבוי שוחזר.</string>
+    <string name="icon_picker_default_icon">ברירת מחדל</string>
+    <string name="icon_picker_suggestions">הצעות</string>
+    <string name="icon_picker_search_icon">חפש בחבילות אייקונים</string>
+    <string name="icon_picker_filter_all_packs">כל חבילות האייקונים</string>
+    <string name="apps_profile_main">אישי</string>
+    <string name="apps_profile_work">עבודה</string>
+    <string name="apps_profile_private">פרטי</string>
+    <string name="favorites">מועדפים</string>
+    <string name="favorites_empty">פריטים נעוצים ובשימוש נפוץ יופיעו פה</string>
+    <string name="favorites_empty_tag">אין פריטים עם תגית זו</string>
+    <string name="frequently_used_show_in_favorites">הצג במועדפים</string>
+    <string name="frequently_used_rows">מספר שורות</string>
+    <string name="preference_screen_search_actions">פעולות מהירות</string>
+    <string name="preference_search_search_actions_summary">הגדר פעולות מהירות וחפש קיצורי דרך</string>
+    <string name="search_action_call">התקשר</string>
+    <string name="search_action_message">שלח הודעה</string>
+    <string name="search_action_email">דואר אלקטרוני</string>
+    <string name="search_action_alarm">הגדר שעון מעורר</string>
+    <string name="search_action_timer">התחל שעון עצר</string>
+    <string name="search_action_share">שתף</string>
+    <string name="search_action_websearch">חיפוש ברשת</string>
+    <string name="search_action_contact">הוסף כאיש קשר</string>
+    <string name="search_action_open_url">צפה באתר האינטרנט</string>
+    <string name="search_action_event">זַמן אירוע</string>
+    <string name="create_search_action_type">איזה סוג פעולה תרצה ליצור?</string>
+    <string name="create_search_action_type_web">חפש באתר אינטרנט</string>
+    <string name="create_search_action_type_app">חפש ביישומון</string>
+    <string name="create_search_action_type_intent">כוונה מותאמת אישית</string>
+    <string name="create_search_action_pick_app">בחר יישומון לחיפוש:</string>
+    <string name="create_search_action_website_url">הזן את כתובת אתר האינטרנט:</string>
+    <string name="create_search_action_website_invalid_url">לא ניתן לייבא את האתר האינטרנט הנתון לא יכול כחיפוש ברשת. ניתן לנסות אתר אינטרנט אחר או להזין את הנתונים הנדרשים באופן ידני בשלב הבא.</string>
+    <string name="search_action_label">שם</string>
+    <string name="search_action_app">יישומון</string>
+    <string name="search_action_websearch_url">תבנית כתובת URL</string>
+    <string name="search_action_websearch_url_hint">תבנית כתובת ה-URL שמשמשת ליצור את כתובת ה-URL לחיפוש ברשת. השתמש ב-‘${1}’ כמציין מקום עבור מונח החיפוש בפועל, לדוגמה https://google.com/search?q=${1}.</string>
+    <string name="more_information">מידע נוסף</string>
+    <string name="experimental_feature">ניסיוני</string>
+    <string name="tag_exists_error">תגית עם שם זה כבר קיימת.</string>
+    <string name="tag_exists_message">תגית עם שם זה כבר קיימת. אם תמשיך, שתי התגיות ימוזגו.</string>
+    <string name="tag_no_items_message">לא הוקצו פריטים לתגית זו. אם תמשיך, התגית תימחק.</string>
+    <string name="tag_empty_name">תגית לא יכולה להתקיים ללא שם. אם תמשיך, התגית תימחק.</string>
+    <string name="tag_select_items">בחר פריטים:</string>
+    <string name="tag_name">שם תגית</string>
     <plurals name="tag_selected_items">
-        <item quantity="one">%1$d item selected</item>
-        <item quantity="two">%1$d items selected</item>
-        <item quantity="many">%1$d items selected</item>
-        <item quantity="other">%1$d items selected</item>
+        <item quantity="one">%1$d פריט נבחר</item>
+        <item quantity="two">%1$d פריטים נבחרו</item>
+        <item quantity="many">%1$d פריטים נבחרו</item>
+        <item quantity="other">%1$d פריטים נבחרו</item>
     </plurals>
-    <string name="preference_layout_open_search">Search / app drawer</string>
-    <string name="open_search_pull_down">Swipe down</string>
-    <string name="open_search_swipe_left">Swipe left</string>
-    <string name="open_search_swipe_right">Swipe right</string>
-    <string name="preference_layout_search_bar_position">Search bar position</string>
-    <string name="search_bar_position_top">Top</string>
-    <string name="search_bar_position_bottom">Bottom</string>
-    <string name="preference_layout_search_results">Arrangement of search results</string>
-    <string name="search_results_order_top_down">Top-down</string>
-    <string name="search_results_order_bottom_up">Bottom-up</string>
-    <string name="preference_layout_fixed_search_bar">Fixed search bar</string>
-    <string name="preference_layout_fixed_search_bar_summary">Don\'t scroll the search bar out of view</string>
-    <string name="preference_layout_fixed_rotation">Fixed screen rotation</string>
-    <string name="preference_layout_fixed_rotation_summary">Lock screen rotation to portrait mode</string>
-    <string name="preference_screen_gestures">Gestures</string>
-    <string name="preference_screen_gestures_summary">Gestures and gesture actions</string>
-    <string name="preference_gesture_swipe_down">Swipe down</string>
-    <string name="preference_gesture_swipe_left">Swipe left</string>
-    <string name="preference_gesture_swipe_right">Swipe right</string>
-    <string name="preference_gesture_swipe_up">Swipe up</string>
-    <string name="preference_gesture_double_tap">Double tap</string>
-    <string name="preference_gesture_long_press">Long press</string>
-    <string name="preference_gesture_home_button">Home button/gesture</string>
-    <string name="gesture_action_none">Do nothing</string>
-    <string name="gesture_action_open_search">Open search</string>
-    <string name="gesture_action_widgets">Widgets</string>
-    <string name="gesture_action_launch_app">Launch app</string>
-    <string name="gesture_action_notifications">Open notification drawer</string>
-    <string name="gesture_action_lock_screen">Turn off screen</string>
-    <string name="gesture_action_quick_settings">Open quick settings</string>
-    <string name="gesture_action_power_menu">Show power menu</string>
-    <string name="gesture_action_recents">Open recents</string>
-    <string name="gesture_failed_message">You have performed a \"%1$s\" gesture. This gesture is currently set to trigger a \"%2$s\" action. However, the action could not be performed for the following reason:</string>
-    <string name="missing_permission_accessibility_gesture_failed">The launcher\'s accessibility service needs to be enabled to perform this action.</string>
-    <string name="missing_permission_accessibility_gesture_settings">This action requires the launcher\'s accessibility service to be enabled.</string>
-    <string name="preference_search_result_ordering_weight_factor">Ranking flexibility</string>
-    <string name="preference_search_result_ordering_weight_factor_low">Stable</string>
-    <string name="preference_search_result_ordering_weight_factor_default">Balanced</string>
-    <string name="preference_search_result_ordering_weight_factor_high">Variable</string>
-    <string name="widget_config_appwidget_borderless">Borderless</string>
-    <string name="widget_config_appwidget_background">Background card</string>
-    <string name="widget_config_appwidget_configure">Configure widget</string>
-    <string name="widget_config_appwidget_resize">Resize</string>
-    <string name="widget_config_weather_integration_settings">Weather integration settings</string>
-    <string name="widget_config_calendar_no_calendars">No calendars found</string>
-    <string name="widget_pick_widget">Pick widget</string>
-    <string name="app_widget_loading_failed">App widget failed to load.</string>
-    <string name="widget_config_music_integration_settings">Media control integration settings</string>
-    <string name="note_widget_link_file">Link to file</string>
-    <string name="note_widget_link_file_summary">Sync the contents of this widget with an external file</string>
-    <string name="note_widget_linked_file_summary">Linked to %1$s</string>
-    <string name="note_widget_action_unlink_file">Unlink</string>
-    <string name="note_widget_action_relink_file">Relink</string>
-    <string name="note_widget_conflict">Conflict</string>
-    <string name="note_widget_conflict_action_resolve">Resolve</string>
-    <string name="note_widget_conflict_keep_selected">Keep selected</string>
-    <string name="note_widget_conflict_description">The linked file is not empty and its content does not match the last saved version of this note. Which version do you want to keep\?</string>
-    <string name="note_widget_conflict_local_version">Last saved version:</string>
-    <string name="note_widget_conflict_file_version">Current file content:</string>
-    <string name="note_widget_file_read_error">Error reading note</string>
-    <string name="note_widget_file_read_error_description">The linked file could not be read. Possibly, it has been moved or deleted. A copy has been restored from the launcher\'s internal storage. If you edit the note, the linked file will possibly be overwritten.</string>
-    <string name="note_widget_file_write_error">Error saving note</string>
-    <string name="note_widget_file_write_error_description">The note could not be written to the linked file. Possibly, it has been moved or deleted. A copy has been saved to the launcher\'s internal storage.</string>
-    <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s\?</string>
-    <string name="confirmation_delete_shapes_scheme">Do you really want to delete the shape scheme %1$s?</string>
-    <string name="confirmation_delete_typography_scheme">Do you really want to delete the typography scheme %1$s?</string>
-    <string name="confirmation_delete_transparencies_scheme">Do you really want to delete the transparency scheme %1$s?</string>
-    <string name="new_theme_name">(untitled)</string>
-    <string name="theme_color_scheme_system_default">Use system default</string>
-    <string name="theme_color_scheme_autogenerate">From primary color</string>
+    <string name="preference_layout_open_search">מגירת חיפוש / יישומון</string>
+    <string name="open_search_pull_down">החלקה מטה</string>
+    <string name="open_search_swipe_left">החלקה שמאלה</string>
+    <string name="open_search_swipe_right">החלקה ימינה</string>
+    <string name="preference_layout_search_bar_position">מיקום שורת חיפוש</string>
+    <string name="search_bar_position_top">עליון</string>
+    <string name="search_bar_position_bottom">תחתון</string>
+    <string name="preference_layout_search_results">סידור תוצאות חיפוש</string>
+    <string name="search_results_order_top_down">מעלה-מטה</string>
+    <string name="search_results_order_bottom_up">מטה-מעלה</string>
+    <string name="preference_layout_fixed_search_bar">שורת חיפוש קבועה</string>
+    <string name="preference_layout_fixed_search_bar_summary">אל תגלול את שורת החיפוש מחוץ לטווח הראיה</string>
+    <string name="preference_layout_fixed_rotation">סיבוב מסך קבוע</string>
+    <string name="preference_layout_fixed_rotation_summary">נעל סיבוב מסך למצב אנכי</string>
+    <string name="preference_screen_gestures">מחוות</string>
+    <string name="preference_screen_gestures_summary">מחוות ופעולות מחווה</string>
+    <string name="preference_gesture_swipe_down">החלקה מטה</string>
+    <string name="preference_gesture_swipe_left">החלקה שמאלה</string>
+    <string name="preference_gesture_swipe_right">החלקה ימינה</string>
+    <string name="preference_gesture_swipe_up">החלקה מעלה</string>
+    <string name="preference_gesture_double_tap">הקשה כפולה</string>
+    <string name="preference_gesture_long_press">לחיצה ארוכה</string>
+    <string name="preference_gesture_home_button">כפתור/מחוות בית</string>
+    <string name="gesture_action_none">אל תעשה כלום</string>
+    <string name="gesture_action_open_search">פתח חיפוש</string>
+    <string name="gesture_action_widgets">ווידג\'טים</string>
+    <string name="gesture_action_launch_app">פתח יישומון</string>
+    <string name="gesture_action_notifications">פתח מגירת התראות</string>
+    <string name="gesture_action_lock_screen">כבה מסך</string>
+    <string name="gesture_action_quick_settings">פתח הגדרות מהירות</string>
+    <string name="gesture_action_power_menu">הצג תפריט הפעלה</string>
+    <string name="gesture_action_recents">פתח אחרונים</string>
+    <string name="gesture_failed_message">ביצעת מחווה של \"%1$s\". מחווה זו מוגדרת כעת להפעלת פעולת \"%2$s\". עם זאת, לא ניתן היה לבצע את הפעולה מהסיבה הבאה:</string>
+    <string name="missing_permission_accessibility_gesture_failed">שירות הנגישות של הלאנצ\'ר צריך להיות מופעל כדי לבצע פעולה זו.</string>
+    <string name="missing_permission_accessibility_gesture_settings">פעולה זו דורשת הפעלת שירות הנגישות של הלאנצ\'ר.</string>
+    <string name="preference_search_result_ordering_weight_factor">גמישות דירוג</string>
+    <string name="preference_search_result_ordering_weight_factor_low">יציבה</string>
+    <string name="preference_search_result_ordering_weight_factor_default">מאוזנת</string>
+    <string name="preference_search_result_ordering_weight_factor_high">משתנה</string>
+    <string name="widget_config_appwidget_borderless">ללא גבולות</string>
+    <string name="widget_config_appwidget_background">כרטיס רקע</string>
+    <string name="widget_config_appwidget_configure">הגדר ווידג\'ט</string>
+    <string name="widget_config_appwidget_resize">שנה גודל</string>
+    <string name="widget_config_weather_integration_settings">הגדרות אינטגרציית מזג אוויר</string>
+    <string name="widget_config_calendar_no_calendars">לא נמצאו לוחות שנה</string>
+    <string name="widget_pick_widget">בחר ווידג\'ט</string>
+    <string name="app_widget_loading_failed">טעינת ווידג\'ט היישומון נכשלה.</string>
+    <string name="widget_config_music_integration_settings">הגדרות אינטגרציית בקרת מדיה</string>
+    <string name="note_widget_link_file">קישור לקובץ</string>
+    <string name="note_widget_link_file_summary">סנכרן את תוכן ווידג\'ט זה עם קובץ חיצוני</string>
+    <string name="note_widget_linked_file_summary">מקושר ל-%1$s</string>
+    <string name="note_widget_action_unlink_file">נתק קישור</string>
+    <string name="note_widget_action_relink_file">קשר מחדש</string>
+    <string name="note_widget_conflict">התנגשות</string>
+    <string name="note_widget_conflict_action_resolve">פתור</string>
+    <string name="note_widget_conflict_keep_selected">השאר בחור</string>
+    <string name="note_widget_conflict_description">הקובץ המקושר אינו ריק ותוכנו לא תואם את הגרסה השמורה האחרונה של פתק זה. איזה גרסה תרצה לשמור?</string>
+    <string name="note_widget_conflict_local_version">גרסה שמורה אחרונה:</string>
+    <string name="note_widget_conflict_file_version">תוכן קובץ נוכחי:</string>
+    <string name="note_widget_file_read_error">שגיאה בקריאת פתק</string>
+    <string name="note_widget_file_read_error_description">לא ניתן היה לקרוא את הקובץ המקושר. ייתכן שהוא הועבר או נמחק. עותק שוחזר מהאחסון הפנימי של הלאנצ\'ר. אם תערוך את הפתק, ייתכן שהקובץ המקושר יידרס.</string>
+    <string name="note_widget_file_write_error">שגיאה בשמירת פתק</string>
+    <string name="note_widget_file_write_error_description">הפתק לא יכול להיכתב לקובץ המקושר. ייתכן שהוא הועבר או נמחק. עותק נשמר לאחסון הפנימי של הלאנצ\'ר.</string>
+    <string name="confirmation_delete_color_scheme">האם אתה באמת רוצה למחוק את ערכת הצבעים %1$s?</string>
+    <string name="confirmation_delete_shapes_scheme">האם אתה באמת רוצה למחוק את ערכת הצורות %1$s?</string>
+    <string name="confirmation_delete_typography_scheme">האם אתה באמת רוצה למחוק את סכמת הטיפוגרפיה ‌%1$s?</string>
+    <string name="confirmation_delete_transparencies_scheme">האם אתה באמת רוצה למחוק את סכמת השקיפות %1$s?</string>
+    <string name="new_theme_name">(ללא כותרת)</string>
+    <string name="theme_color_scheme_system_default">השתמש בברית המחדל של המערכת</string>
+    <string name="theme_color_scheme_autogenerate">מצבע ראשי</string>
     <string name="theme_color_scheme_palette_color">Palette</string>
-    <string name="theme_color_scheme_custom_color">Custom</string>
-    <string name="preference_restore_default">Restore default</string>
-    <string name="import_theme_contents">Contents</string>
-    <string name="import_theme_apply">Apply theme</string>
-    <string name="import_theme_exists">Theme already exists and will be updated</string>
-    <string name="import_theme_error">The selected file could not be read. Please make sure that you selected a valid theme file (*.kvtheme), and that the file is not corrupt.</string>
-    <string name="shortcut_label_unavailable">Unavailable</string>
-    <string name="app_label_locked_profile">Locked</string>
+    <string name="theme_color_scheme_custom_color">מותאם אישית</string>
+    <string name="preference_restore_default">שיחזור ברירת מחדל</string>
+    <string name="import_theme_contents">תוכן</string>
+    <string name="import_theme_apply">החל ערכת נושא</string>
+    <string name="import_theme_exists">ערכת הנושא כבר קיימת ותעודכן</string>
+    <string name="import_theme_error">לא ניתן היה לקרוא את הקובץ הנבחר. אנא וודאי שבחרת קובץ ערכת נושא תקין ‪(*.kvtheme)‬, ושהקובץ לא פגום.</string>
+    <string name="shortcut_label_unavailable">לא זמין</string>
+    <string name="app_label_locked_profile">נעול</string>
     <!-- %1$s: app name -->
-    <string name="shortcut_unavailable_description">This shortcut is unavailable because %1$s isn\'t the default launcher</string>
-    <string name="preference_plugin_enable">Enable plugin</string>
-    <string name="length_unit">Unit of length</string>
-    <string name="imperial">Imperial</string>
-    <string name="metric">Metric</string>
-    <string name="preference_search_location_custom_overpass_url">Overpass URL</string>
-    <string name="preference_search_locations_hide_uncategorized">Hide uncategorized places</string>
-    <string name="preference_search_locations_hide_uncategorized_summary">Only show results with well defined categories, like cafés or restaurants</string>
-    <string name="preference_search_locations_show_map">Map</string>
-    <string name="preference_search_locations_show_map_summary">Show a map preview for places</string>
-    <string name="preference_search_locations_theme_map">Map theming</string>
-    <string name="preference_search_locations_theme_map_summary">Apply the color scheme of the launcher to the map</string>
-    <string name="preference_search_location_custom_tile_server_url">Tileserver URL</string>
-    <string name="menu_dial">Call</string>
-    <string name="menu_navigation">Navigation</string>
-    <string name="menu_bugreport">Bug Report</string>
-    <string name="location_open_24_7">Open 24/7</string>
-    <string name="plugin_state_error">This plugin isn\'t working correctly</string>
-    <string name="plugin_state_setup_required">You need to setup this plugin first</string>
-    <string name="plugin_action_setup">Set up</string>
-    <string name="plugin_type_filesearch">Files</string>
-    <string name="plugin_type_contacts">Contacts</string>
-    <string name="plugin_type_weather">Weather provider</string>
-    <string name="plugin_weather_provider_enable">Set as weather provider</string>
-    <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
-    <string name="unavailable_searchable">This item does not exist anymore.</string>
-    <string name="clock_style_digital1">Bold</string>
-    <string name="clock_style_digital2">Simple</string>
-    <string name="clock_style_orbit">Orbit</string>
-    <string name="clock_style_binary">Binary</string>
-    <string name="clock_style_analog">Hands</string>
-    <string name="clock_style_segment">7-segment</string>
-    <string name="clock_style_empty">No clock</string>
-    <string name="clock_style_custom">Custom widget</string>
-    <string name="clock_variant_outlined">Outlined</string>
+    <string name="shortcut_unavailable_description">קיצור הדרך לא זמין משום ש-%1$s הוא לא לאנצ\'ר ברירת המחדל</string>
+    <string name="preference_plugin_enable">אפשר פלאגין</string>
+    <string name="length_unit">מידת אורך</string>
+    <string name="imperial">אימפריאלי</string>
+    <string name="metric">מטרי</string>
+    <string name="preference_search_location_custom_overpass_url">כתובת URL של Overpass</string>
+    <string name="preference_search_locations_hide_uncategorized">הסתר מקומות ללא קטגוריה</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">הצג רק תוצאות עם קטגוריות מוגדרות היטב, כמו בתי קפה ומסעדות</string>
+    <string name="preference_search_locations_show_map">מפה</string>
+    <string name="preference_search_locations_show_map_summary">הצג תצוגה מקדימה של מפה עבור מקומות</string>
+    <string name="preference_search_locations_theme_map">עיצוב מפות</string>
+    <string name="preference_search_locations_theme_map_summary">החל את ערכת הצבעים של הלאנצ\'ר עבור המפה</string>
+    <string name="preference_search_location_custom_tile_server_url">כתובת URL של Tileserver</string>
+    <string name="menu_dial">התקשר</string>
+    <string name="menu_navigation">ניווט</string>
+    <string name="menu_bugreport">דיווח על תקלות</string>
+    <string name="location_open_24_7">פתוח 24/7</string>
+    <string name="plugin_state_error">הפלאגין לא עובד כראוי</string>
+    <string name="plugin_state_setup_required">עליך להגדיר תחילה את תוסף זה</string>
+    <string name="plugin_action_setup">הגדר</string>
+    <string name="plugin_type_filesearch">קבצים</string>
+    <string name="plugin_type_contacts">אנשי קשר</string>
+    <string name="plugin_type_weather">ספק מזג אוויר</string>
+    <string name="plugin_weather_provider_enable">הגדר כספק מזג אוויר</string>
+    <string name="plugin_weather_provider_enabled">מוגדר כעת כספק מזג אוויר</string>
+    <string name="unavailable_searchable">פריט זה אינו קיים עוד.</string>
+    <string name="clock_style_digital1">מודגש</string>
+    <string name="clock_style_digital2">פשוט</string>
+    <string name="clock_style_orbit">מסלול</string>
+    <string name="clock_style_binary">בינארי</string>
+    <string name="clock_style_analog">מחוגים</string>
+    <string name="clock_style_segment">7-מקטעים</string>
+    <string name="clock_style_empty">ללא שעון</string>
+    <string name="clock_style_custom">ווידג\'ט מותאם אישית</string>
+    <string name="clock_variant_outlined">קווי מתאר</string>
     <string name="clock_variant_analog_ticks">Ticks</string>
-    <string name="menu_show_filters">Show filters</string>
-    <string name="menu_hide_filters">Hide filters</string>
-    <string name="search_filter_tools">Tools</string>
-    <string name="search_filter_online">Online results</string>
-    <string name="search_filter_apps">Apps</string>
-    <string name="plugin_type_locationsearch">Places search</string>
-    <string name="plugin_type_calendar">Calendar</string>
-    <string name="preference_default_filter">Default filter</string>
-    <string name="preference_default_filter_summary">Customize the default filter for searches</string>
-    <string name="preference_filter_bar">Show filter bar</string>
-    <string name="preference_filter_bar_summary">Show quick filters above the keyboard</string>
-    <string name="preference_customize_filter_bar">Customize filter bar</string>
-    <string name="preference_customize_filter_bar_summary">Customize which items are included in the filter bar</string>
-    <string name="filter_settings_network_warning">The current filter enables online results by default. Your search queries might unintentionally be sent to external web services. For privacy reasons, this is not recommended.</string>
-    <string name="preference_search_osm_locations">OpenStreetMap</string>
-    <string name="preference_search_osm_locations_summary">Search OpenStreetMap for shops and other places in the local area</string>
-    <string name="poi_category_restaurant">Restaurant</string>
-    <string name="poi_category_fast_food">Fast food</string>
-    <string name="poi_category_bar">Bar</string>
-    <string name="poi_category_cafe">Cafe</string>
-    <string name="poi_category_hotel">Hotel</string>
-    <string name="poi_category_supermarket">Supermarket</string>
-    <string name="poi_category_school">School</string>
-    <string name="poi_category_parking">Parking</string>
-    <string name="poi_category_fuel">Gas station</string>
-    <string name="poi_category_toilets">Restroom</string>
-    <string name="poi_category_pharmacy">Pharmacy</string>
-    <string name="poi_category_hospital">Hospital</string>
-    <string name="poi_category_post_office">Post office</string>
-    <string name="poi_category_pub">Pub</string>
-    <string name="poi_category_doctors">Doctors</string>
-    <string name="poi_category_police">Police</string>
-    <string name="poi_category_dentist">Dentist</string>
-    <string name="poi_category_library">Library</string>
-    <string name="poi_category_ice_cream">Ice cream parlor</string>
-    <string name="poi_category_theater">Theater</string>
-    <string name="poi_category_cinema">Movie theater</string>
-    <string name="poi_category_nightclub">Nightclub</string>
-    <string name="poi_category_clinic">Clinic</string>
-    <string name="poi_category_university">University</string>
-    <string name="poi_category_clothes">Apparel store</string>
-    <string name="poi_category_convenience">Convenience store</string>
-    <string name="poi_category_hairdresser">Hairdresser</string>
-    <string name="poi_category_books">Bookstore</string>
-    <string name="poi_category_bakery">Bakery</string>
-    <string name="poi_category_car_rental">Car rental</string>
-    <string name="poi_category_car_sharing">Car sharing</string>
-    <string name="poi_category_mobile_phone">Cell phone store</string>
-    <string name="poi_category_furniture">Furniture store</string>
-    <string name="poi_category_alcohol">Liquor store</string>
-    <string name="poi_category_florist">Flower shop</string>
-    <string name="poi_category_mall">Mall</string>
-    <string name="poi_category_optician">Optician</string>
-    <string name="poi_category_jewelry">Jewelry store</string>
-    <string name="poi_category_laundry">Laundry</string>
-    <string name="poi_category_bank">Bank</string>
-    <string name="poi_category_soccer">Soccer field</string>
-    <string name="poi_category_basketball">Basketball court</string>
-    <string name="poi_category_tennis">Tennis court</string>
-    <string name="poi_category_atm">ATM</string>
-    <string name="poi_category_kiosk">Kiosk</string>
-    <string name="poi_category_museum">Museum</string>
-    <string name="poi_category_fitness_center">Fitness center</string>
-    <string name="poi_category_church">Church</string>
-    <string name="poi_category_mosque">Mosque</string>
-    <string name="poi_category_buddhist_temple">Buddhist temple</string>
-    <string name="poi_category_hindu_temple">Hindu temple</string>
-    <string name="poi_category_synagogue">Synagogue</string>
-    <string name="poi_category_pizza_restaurant">Pizza restaurant</string>
-    <string name="poi_category_burger_restaurant">Burger restaurant</string>
-    <string name="poi_category_place_of_worship">Place of worship</string>
-    <string name="poi_category_chinese_restaurant">Chinese restaurant</string>
-    <string name="poi_category_japanese_restaurant">Japanese restaurant</string>
-    <string name="poi_category_kebab_restaurant">Kebab restaurant</string>
-    <string name="poi_category_asian_restaurant">Asian restaurant</string>
-    <string name="poi_category_ramen_restaurant">Ramen restaurant</string>
-    <string name="poi_category_soup_restaurant">Soup restaurant</string>
-    <string name="poi_category_brunch_restaurant">Brunch restaurant</string>
-    <string name="poi_category_car_wash">Car wash</string>
-    <string name="poi_category_charging_station">Charging station</string>
-    <string name="poi_category_motorcycle_rental">Motorcycle rental</string>
-    <string name="poi_category_gallery">Gallery</string>
-    <string name="poi_category_amusement_park">Amusement park</string>
-    <string name="poi_category_concert_hall">Concert hall</string>
-    <string name="poi_category_stadium">Stadium</string>
-    <string name="poi_category_casino">Casino</string>
-    <string name="poi_category_discount_store">Discount store</string>
-    <string name="poi_category_pet">Pet store</string>
-    <string name="poi_category_shopping">Shopping</string>
-    <string name="poi_category_swimming">Swimming pool</string>
-    <string name="poi_category_martial_arts">Martial arts</string>
-    <string name="poi_category_golf">Golf course</string>
-    <string name="poi_category_gymnastics">Gymnastics</string>
-    <string name="poi_category_ice_hockey">Ice hockey rink</string>
-    <string name="poi_category_baseball">Baseball field</string>
-    <string name="poi_category_american_football">American football field</string>
-    <string name="poi_category_handball">Handball court</string>
-    <string name="poi_category_volleyball">Volleyball court</string>
-    <string name="poi_category_skiing">Skiing</string>
-    <string name="poi_category_cricket">Cricket pitch</string>
-    <string name="poi_category_park">Park</string>
-    <string name="poi_category_monument">Monument</string>
-    <string name="poi_category_government_building">Government building</string>
-    <string name="poi_category_fire_station">Fire station</string>
-    <string name="poi_category_courthouse">Courthouse</string>
-    <string name="poi_category_townhall">Townhall</string>
-    <string name="customize_item_label">Label</string>
-    <string name="customize_item_tags">Tags</string>
-    <string name="customize_item_visibility">Show in</string>
-    <string name="item_visibility_app_default">App grid &amp; search results</string>
-    <string name="item_visibility_calendar_default">Calendar widget &amp; search results</string>
-    <string name="item_visibility_search_only">Search results</string>
-    <string name="item_visibility_hidden">Never</string>
-    <string name="contact_info_home">Home</string>
-    <string name="contact_info_mobile">Mobile</string>
-    <string name="contact_info_work">Work</string>
+    <string name="menu_show_filters">הצג מסננים</string>
+    <string name="menu_hide_filters">הסתר מסננים</string>
+    <string name="search_filter_tools">כלים</string>
+    <string name="search_filter_online">תוצאות מקוונות</string>
+    <string name="search_filter_apps">יישומונים</string>
+    <string name="plugin_type_locationsearch">חיפוש מקומות</string>
+    <string name="plugin_type_calendar">לוח שנה</string>
+    <string name="preference_default_filter">סינון ברירת מחדל</string>
+    <string name="preference_default_filter_summary">התאם אישית את סינון ברירת המחדל עבור חיפושים</string>
+    <string name="preference_filter_bar">הצג שורת מסננים</string>
+    <string name="preference_filter_bar_summary">הצג סינונים מהירים מעל המקלדת</string>
+    <string name="preference_customize_filter_bar">התאם אישית את שורת המסננים</string>
+    <string name="preference_customize_filter_bar_summary">התאם אישית אילו פריטים נכללים בשורת המסננים</string>
+    <string name="filter_settings_network_warning">הסינון הנוכחי מאפשר תוצאות מקוונות כברירת מחדל. שאילתות החיפוש שלך עשויות להישלח שלא במתכוון לשירותי אינטרנט חיצוניים. מסיבות של פרטיות, זה לא מומלץ.</string>
+    <string name="preference_search_osm_locations">‪OpenStreetMap‬</string>
+    <string name="preference_search_osm_locations_summary">חפש ב-OpenStreetMap חנויות ומקומות אחרים באזור המקומי</string>
+    <string name="poi_category_restaurant">מסעדה</string>
+    <string name="poi_category_fast_food">מזון מהיר</string>
+    <string name="poi_category_bar">בר</string>
+    <string name="poi_category_cafe">בית קפה</string>
+    <string name="poi_category_hotel">מלון</string>
+    <string name="poi_category_supermarket">סופרמרקט</string>
+    <string name="poi_category_school">בית ספר</string>
+    <string name="poi_category_parking">חניה</string>
+    <string name="poi_category_fuel">תחנת דלק</string>
+    <string name="poi_category_toilets">שירותים</string>
+    <string name="poi_category_pharmacy">בית מרקחת</string>
+    <string name="poi_category_hospital">בית חולים</string>
+    <string name="poi_category_post_office">בית דואר</string>
+    <string name="poi_category_pub">פאב</string>
+    <string name="poi_category_doctors">רופאים</string>
+    <string name="poi_category_police">משטרה</string>
+    <string name="poi_category_dentist">רופא שיניים</string>
+    <string name="poi_category_library">ספרייה</string>
+    <string name="poi_category_ice_cream">גלידריה</string>
+    <string name="poi_category_theater">תיאטרון</string>
+    <string name="poi_category_cinema">בית קולנוע</string>
+    <string name="poi_category_nightclub">מועדון לילה</string>
+    <string name="poi_category_clinic">מרפאה</string>
+    <string name="poi_category_university">אוניברסיטה</string>
+    <string name="poi_category_clothes">חנות ביגוד</string>
+    <string name="poi_category_convenience">חנות נוחות</string>
+    <string name="poi_category_hairdresser">סַפָּר</string>
+    <string name="poi_category_books">חנות ספרים</string>
+    <string name="poi_category_bakery">מאפייה</string>
+    <string name="poi_category_car_rental">השכרת רכב</string>
+    <string name="poi_category_car_sharing">שיתוף רכב</string>
+    <string name="poi_category_mobile_phone">חנות טלפונים ניידים</string>
+    <string name="poi_category_furniture">חנות רהיטים</string>
+    <string name="poi_category_alcohol">חנות משקאות</string>
+    <string name="poi_category_florist">חנות פרחים</string>
+    <string name="poi_category_mall">קניון</string>
+    <string name="poi_category_optician">אופטיקאי</string>
+    <string name="poi_category_jewelry">חנות תכשיטים</string>
+    <string name="poi_category_laundry">מכבסה</string>
+    <string name="poi_category_bank">בנק</string>
+    <string name="poi_category_soccer">מגרש כדורגל</string>
+    <string name="poi_category_basketball">מגרש כדורסל</string>
+    <string name="poi_category_tennis">מגרש טניס</string>
+    <string name="poi_category_atm">כספומט</string>
+    <string name="poi_category_kiosk">קיוסק</string>
+    <string name="poi_category_museum">מוזיאון</string>
+    <string name="poi_category_fitness_center">מרכז כושר</string>
+    <string name="poi_category_church">כנסיה</string>
+    <string name="poi_category_mosque">מסגד</string>
+    <string name="poi_category_buddhist_temple">מקדש בודהיסטי</string>
+    <string name="poi_category_hindu_temple">מקדש הינדי</string>
+    <string name="poi_category_synagogue">בית כנסת</string>
+    <string name="poi_category_pizza_restaurant">מסעדת פיצה</string>
+    <string name="poi_category_burger_restaurant">מסעדת המבורגרים</string>
+    <string name="poi_category_place_of_worship">מקום פולחן</string>
+    <string name="poi_category_chinese_restaurant">מסעדה סינית</string>
+    <string name="poi_category_japanese_restaurant">מסעדה יפנית</string>
+    <string name="poi_category_kebab_restaurant">מסעדת קבבים</string>
+    <string name="poi_category_asian_restaurant">מסעדה אסייתית</string>
+    <string name="poi_category_ramen_restaurant">מסעדת ראמן</string>
+    <string name="poi_category_soup_restaurant">מסעדת מרקים</string>
+    <string name="poi_category_brunch_restaurant">מסעדת בראנץ\'</string>
+    <string name="poi_category_car_wash">שטיפת רכבים</string>
+    <string name="poi_category_charging_station">תחנת טעינה</string>
+    <string name="poi_category_motorcycle_rental">השכרת אופנועים</string>
+    <string name="poi_category_gallery">גלריה</string>
+    <string name="poi_category_amusement_park">פארק שעשועים</string>
+    <string name="poi_category_concert_hall">אולם קונצרטים</string>
+    <string name="poi_category_stadium">אצטדיון</string>
+    <string name="poi_category_casino">קזינו</string>
+    <string name="poi_category_discount_store">חנות הכל בזול</string>
+    <string name="poi_category_pet">חנות חיות מחמד</string>
+    <string name="poi_category_shopping">שופינג</string>
+    <string name="poi_category_swimming">בריכת שחייה</string>
+    <string name="poi_category_martial_arts">אומנויות לחימה</string>
+    <string name="poi_category_golf">מסלול גולף</string>
+    <string name="poi_category_gymnastics">התעמלות</string>
+    <string name="poi_category_ice_hockey">משטח הוקי קרח</string>
+    <string name="poi_category_baseball">מגרש בייסבול</string>
+    <string name="poi_category_american_football">מגרש פוטבול אמריקאי</string>
+    <string name="poi_category_handball">מגרש כדוריד</string>
+    <string name="poi_category_volleyball">מגרש כדורעף</string>
+    <string name="poi_category_skiing">סקי</string>
+    <string name="poi_category_cricket">מגרש קריקט</string>
+    <string name="poi_category_park">פארק</string>
+    <string name="poi_category_monument">אנדרטה</string>
+    <string name="poi_category_government_building">בניין ממשל</string>
+    <string name="poi_category_fire_station">תחנת מכבי אש</string>
+    <string name="poi_category_courthouse">בית משפט</string>
+    <string name="poi_category_townhall">בית עירייה</string>
+    <string name="customize_item_label">תווית</string>
+    <string name="customize_item_tags">תגיות</string>
+    <string name="customize_item_visibility">הצג ב</string>
+    <string name="item_visibility_app_default">רשת יישומונים ותוצאות חיפוש</string>
+    <string name="item_visibility_calendar_default">ווידג\'ט לוח שנה ותוצאות חיפוש</string>
+    <string name="item_visibility_search_only">תוצאות חיפוש</string>
+    <string name="item_visibility_hidden">לעולם לא</string>
+    <string name="contact_info_home">בית</string>
+    <string name="contact_info_mobile">נייד</string>
+    <string name="contact_info_work">עבודה</string>
     <plurals name="contact_phone_numbers">
-        <item quantity="one">%1$s phone number</item>
-        <item quantity="two">%1$s phone numbers</item>
-        <item quantity="many">%1$s phone numbers</item>
-        <item quantity="other">%1$s phone numbers</item>
+        <item quantity="one">%1$s מספר טלפון</item>
+        <item quantity="two">%1$s מספרי טלפון</item>
+        <item quantity="many">­%1$s מספרי טלפון</item>
+        <item quantity="other">­%1$s מספרי טלפון</item>
     </plurals>
     <plurals name="contact_email_addresses">
-        <item quantity="one">%1$s email address</item>
-        <item quantity="two">%1$s email addresses</item>
-        <item quantity="many">%1$s email addresses</item>
-        <item quantity="other">%1$s email addresses</item>
+        <item quantity="one">%1$s כתובת דוא\"ל</item>
+        <item quantity="two">%1$s כתובות דוא\"ל</item>
+        <item quantity="many">%1$s כתובות דוא\"ל</item>
+        <item quantity="other">%1$s כתובות דוא\"ל</item>
     </plurals>
     <plurals name="contact_postal_addresses">
-        <item quantity="one">%1$s postal address</item>
-        <item quantity="two">%1$s postal addresses</item>
-        <item quantity="many">%1$s postal addresses</item>
-        <item quantity="other">%1$s postal addresses</item>
+        <item quantity="one">%1$s כתובת דואר</item>
+        <item quantity="two">­%1$s כתובות דואר</item>
+        <item quantity="many">­­%1$s כתובות דואר</item>
+        <item quantity="other">­­%1$s כתובות דואר</item>
     </plurals>
     <plurals name="app_info_notifications">
-        <item quantity="one">%1$s notification</item>
-        <item quantity="two">%1$s notifications</item>
-        <item quantity="many">%1$s notifications</item>
-        <item quantity="other">%1$s notifications</item>
+        <item quantity="one">%1$s התראה</item>
+        <item quantity="two">%1$s התראות</item>
+        <item quantity="many">%1$s התראות</item>
+        <item quantity="other">%1$s התראות</item>
     </plurals>
-    <string name="weather_widget_no_provider">No weather provider selected or the selected provider is not available</string>
-    <string name="music_widget_previous_track">Previous title</string>
-    <string name="music_widget_next_track">Next title</string>
-    <string name="music_widget_play">Play</string>
-    <string name="music_widget_pause">Pause</string>
-    <string name="music_widget_open_player">Open player</string>
-    <string name="calendar_widget_previous_day">Previous day</string>
-    <string name="calendar_widget_next_day">Next day</string>
-    <string name="calendar_widget_create_event">Create new event</string>
-    <string name="calendar_widget_open_calendar">Open calendar app</string>
-    <string name="profile_work_profile_state_locked">Work apps are paused.</string>
-    <string name="profile_work_profile_action_unlock">Unpause</string>
-    <string name="profile_work_profile_action_lock">Pause work apps</string>
-    <string name="profile_private_profile_state_locked">Private space is locked.</string>
-    <string name="profile_private_profile_action_unlock">Unlock</string>
-    <string name="profile_private_profile_action_lock">Lock private space</string>
-    <string name="hint_drag_and_drop_reorder">Hold and drag items to rearrange them</string>
+    <string name="weather_widget_no_provider">לא נבחר ספק מזג אוויר או שהספק שנבחר לא זמין</string>
+    <string name="music_widget_previous_track">כותר קודם</string>
+    <string name="music_widget_next_track">כותר הבא</string>
+    <string name="music_widget_play">נגן</string>
+    <string name="music_widget_pause">השהה</string>
+    <string name="music_widget_open_player">פתח נגן</string>
+    <string name="calendar_widget_previous_day">יום קודם</string>
+    <string name="calendar_widget_next_day">יום הבא</string>
+    <string name="calendar_widget_create_event">צור אירוע חדש</string>
+    <string name="calendar_widget_open_calendar">פתח יישומון לוח שנה</string>
+    <string name="profile_work_profile_state_locked">יישומוני העבודה מושהים.</string>
+    <string name="profile_work_profile_action_unlock">בטל השהיה</string>
+    <string name="profile_work_profile_action_lock">השהה יישומוני עבודה</string>
+    <string name="profile_private_profile_state_locked">המרחב הפרטי נעול.</string>
+    <string name="profile_private_profile_action_unlock">בטל נעילה</string>
+    <string name="profile_private_profile_action_lock">נעל מרחב פרטי</string>
+    <string name="hint_drag_and_drop_reorder">החזק וגרור פריטים כדי לסדר אותם מחדש</string>
     <plurals name="calendar_search_enabled_lists">
-        <item quantity="one">%1$s list selected</item>
-        <item quantity="two">%1$s lists selected</item>
-        <item quantity="many">%1$s lists selected</item>
-        <item quantity="other">%1$s lists selected</item>
+        <item quantity="one">%1$s רשימה נבחרה</item>
+        <item quantity="two">%1$s רשימות נבחרו</item>
+        <item quantity="many">%1$s רשימות נבחרו</item>
+        <item quantity="other">%1$s רשימות נבחרו</item>
     </plurals>
-    <string name="weather_forecast_humidity">Humidity</string>
-    <string name="weather_forecast_wind">Wind</string>
-    <string name="weather_forecast_precipitation">Precipitation</string>
-    <string name="departure_time_now">now</string>
+    <string name="weather_forecast_humidity">לחות</string>
+    <string name="weather_forecast_wind">רוחות</string>
+    <string name="weather_forecast_precipitation">משקעים</string>
+    <string name="departure_time_now">עכשיו</string>
     <plurals name="departure_time_in">
-        <item quantity="one">in one minute</item>
-        <item quantity="two">in %1$d minutes</item>
-        <item quantity="many">in %1$d minutes</item>
-        <item quantity="other">in %1$d minutes</item>
+        <item quantity="one">בעוד דקה</item>
+        <item quantity="two">בעוד %1$d דקות</item>
+        <item quantity="many">בעוד %1$d דקות</item>
+        <item quantity="other">בעוד %1$d דקות</item>
     </plurals>
-    <string name="departure_time_departed">departed</string>
-    <string name="bad_configuration_title">Congratulations, you\'ve locked yourself out!</string>
-    <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher.</string>
-    <string name="theme_export_title">Export theme</string>
-    <string name="theme_import_title">Import theme</string>
-    <string name="theme_bundle_name">Name</string>
-    <string name="theme_bundle_author">Author</string>
-    <string name="preference_typography_fonts">Fonts</string>
-    <string name="font_category_device_default">Device default</string>
-    <string name="font_name_device_headline">Default headline font</string>
-    <string name="font_name_device_body">Device text font</string>
-    <string name="font_category_generic">Generic</string>
+    <string name="departure_time_departed">עזבה</string>
+    <string name="bad_configuration_title">כל הכבוד, נעלת את עצמך בחוץ!</string>
+    <string name="bad_configuration_summary">גילית שילוב של הגדרות שהופך גם את החיפוש וגם את ההגדרות לבלתי נגישים — ובכך למעשה נועל אותך מחוץ ללאנצ\'ר.</string>
+    <string name="theme_export_title">ייצא ערכת נושא</string>
+    <string name="theme_import_title">ייבא ערכת נושא</string>
+    <string name="theme_bundle_name">שם</string>
+    <string name="theme_bundle_author">מחבר</string>
+    <string name="preference_typography_fonts">גופנים</string>
+    <string name="font_category_device_default">ברירת מחדל של המכשיר</string>
+    <string name="font_name_device_headline">ברירת מחדל של גופן כותרת</string>
+    <string name="font_name_device_body">גופן טקסט של המכשיר</string>
+    <string name="font_category_generic">כללי</string>
 </resources>
