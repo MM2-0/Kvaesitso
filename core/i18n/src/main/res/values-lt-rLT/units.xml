@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="lt">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <string name="dimension_length">Ilgis</string>
+    <string name="dimension_mass">Masė</string>
+    <string name="dimension_velocity">Greitis</string>
+    <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="one">metras</item>
+        <item quantity="few">metrai</item>
+        <item quantity="many">metrų</item>
+        <item quantity="other">metrų</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilometras</item>
+        <item quantity="few">kilometrai</item>
+        <item quantity="many">kilometrų</item>
+        <item quantity="other">kilometrų</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">centimetras</item>
+        <item quantity="few">centimetrai</item>
+        <item quantity="many">centimetrų</item>
+        <item quantity="other">centimetrų</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">milimetras</item>
+        <item quantity="few">milimetrai</item>
+        <item quantity="many">milimetrų</item>
+        <item quantity="other">milimetrų</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">colis</item>
+        <item quantity="few">coliai</item>
+        <item quantity="many">colių</item>
+        <item quantity="other">colių</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">pėda</item>
+        <item quantity="few">pėdos</item>
+        <item quantity="many">pėdų</item>
+        <item quantity="other">pėdų</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="one">yardas</item>
+        <item quantity="few">yardai</item>
+        <item quantity="many">yardų</item>
+        <item quantity="other">yardų</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">mylė</item>
+        <item quantity="few">mylios</item>
+        <item quantity="many">mylių</item>
+        <item quantity="other">mylių</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">jūrmylė</item>
+        <item quantity="few">jūrmylios</item>
+        <item quantity="many">jūrmylių</item>
+        <item quantity="other">jūrmylių</item>
+    </plurals>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">kvadratinis metras</item>
+        <item quantity="few">kvadratiniai metrai</item>
+        <item quantity="many">kvadratinių metrų</item>
+        <item quantity="other">kvadratinių metrų</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kvadratinis kilometras</item>
+        <item quantity="few">kvadratiniai kilometrai</item>
+        <item quantity="many">kvadratinių kilometrų</item>
+        <item quantity="other">kvadratinių kilometrų</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">kvadratinis centimetras</item>
+        <item quantity="few">kvadratiniai centimetrai</item>
+        <item quantity="many">kvadratinių centimetrų</item>
+        <item quantity="other">kvadratinių centimetrų</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">kvadratinis milimetras</item>
+        <item quantity="few">kvadratiniai milimetrai</item>
+        <item quantity="many">kvadratinių milimetrų</item>
+        <item quantity="other">kvadratinių milimetrų</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="one">kvadratinis colis</item>
+        <item quantity="few">kvadratiniai coliai</item>
+        <item quantity="many">kvadratinių colių</item>
+        <item quantity="other">kvadratinių colių</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">kvadratinė pėda</item>
+        <item quantity="few">kvadratinės pėdos</item>
+        <item quantity="many">kvadratinių pėdų</item>
+        <item quantity="other">kvadratinių pėdų</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">kvadratinis yardas</item>
+        <item quantity="few">kvadratiniai yardai</item>
+        <item quantity="many">kvadratinių yardų</item>
+        <item quantity="other">kvadratinių yardų</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">haktaras</item>
+        <item quantity="few">haktarai</item>
+        <item quantity="many">haktarų</item>
+        <item quantity="other">haktarų</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">aras</item>
+        <item quantity="few">arai</item>
+        <item quantity="many">arų</item>
+        <item quantity="other">arų</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">sekundė</item>
+        <item quantity="few">sekundės</item>
+        <item quantity="many">sekundžių</item>
+        <item quantity="other">sekundžių</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">milisekundė</item>
+        <item quantity="few">milisekundės</item>
+        <item quantity="many">milisekundžių</item>
+        <item quantity="other">milisekundžių</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="one">minutė</item>
+        <item quantity="few">minutės</item>
+        <item quantity="many">minučių</item>
+        <item quantity="other">minučių</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">valanda</item>
+        <item quantity="few">valandos</item>
+        <item quantity="many">valandų</item>
+        <item quantity="other">valandų</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="one">diena</item>
+        <item quantity="few">dienos</item>
+        <item quantity="many">dienų</item>
+        <item quantity="other">dienų</item>
+    </plurals>
+    <string name="unit_year_symbol">m</string>
+    <plurals name="unit_year">
+        <item quantity="one">metai</item>
+        <item quantity="few">metai</item>
+        <item quantity="many">metų</item>
+        <item quantity="other">metų</item>
+    </plurals>
+    <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_byte">
+        <item quantity="one">baitas</item>
+        <item quantity="few">baitai</item>
+        <item quantity="many">baitų</item>
+        <item quantity="other">baitų</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">kilobaitas</item>
+        <item quantity="few">kilobaitai</item>
+        <item quantity="many">kilobaitų</item>
+        <item quantity="other">kilobaitų</item>
+    </plurals>
+    <plurals name="unit_megabyte">
+        <item quantity="one">megabaitas</item>
+        <item quantity="few">megabaitai</item>
+        <item quantity="many">megabaitų</item>
+        <item quantity="other">megabaitų</item>
+    </plurals>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">gigabaitas</item>
+        <item quantity="few">gigabaitai</item>
+        <item quantity="many">gigabaitų</item>
+        <item quantity="other">gigabaitų</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="one">terabaitas</item>
+        <item quantity="few">terabaitai</item>
+        <item quantity="many">terabaitų</item>
+        <item quantity="other">terabaitų</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">kibibaitas</item>
+        <item quantity="few">kibibaitai</item>
+        <item quantity="many">kibibaitų</item>
+        <item quantity="other">kibibaitų</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">Mebibaitas</item>
+        <item quantity="few">Mebibaitai</item>
+        <item quantity="many">Mebibaitų</item>
+        <item quantity="other">Mebibaitų</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">Gibibaitas</item>
+        <item quantity="few">Gibibaitai</item>
+        <item quantity="many">Gibibaitų</item>
+        <item quantity="other">Gibibaitų</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">Tebibaitas</item>
+        <item quantity="few">Tebibaitai</item>
+        <item quantity="many">Tebibaitų</item>
+        <item quantity="other">Tebibaitų</item>
+    </plurals>
+    <plurals name="unit_bit">
+        <item quantity="one">bitas</item>
+        <item quantity="few">bitai</item>
+        <item quantity="many">bitų</item>
+        <item quantity="other">bitų</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="one">kilobitas</item>
+        <item quantity="few">kilobitai</item>
+        <item quantity="many">kilobitų</item>
+        <item quantity="other">kilobitų</item>
+    </plurals>
+    <plurals name="unit_megabit">
+        <item quantity="one">megabitas</item>
+        <item quantity="few">megabitai</item>
+        <item quantity="many">megabitų</item>
+        <item quantity="other">megabitų</item>
+    </plurals>
+    <plurals name="unit_gigabit">
+        <item quantity="one">gigabitas</item>
+        <item quantity="few">gigabitai</item>
+        <item quantity="many">gigabitų</item>
+        <item quantity="other">gigabitų</item>
+    </plurals>
+    <plurals name="unit_terabit">
+        <item quantity="one">terabitas</item>
+        <item quantity="few">terabitai</item>
+        <item quantity="many">terabitų</item>
+        <item quantity="other">terabitų</item>
+    </plurals>
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">metras per senkundę</item>
+        <item quantity="few">metrai per sekundę</item>
+        <item quantity="many">metrų per sekundę</item>
+        <item quantity="other">metrų per sekundę</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilometras per valandą</item>
+        <item quantity="few">kilometrai per valandą</item>
+        <item quantity="many">kilometrų per valandą</item>
+        <item quantity="other">kilometrų per valandą</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">mylė per valandą</item>
+        <item quantity="few">mylios per valandą</item>
+        <item quantity="many">mylių per valandą</item>
+        <item quantity="other">mylių per valandą</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">knotas</item>
+        <item quantity="few">knotai</item>
+        <item quantity="many">knotų</item>
+        <item quantity="other">knotų</item>
+    </plurals>
+    <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="one">kilogramas</item>
+        <item quantity="few">kilogramai</item>
+        <item quantity="many">kilogramų</item>
+        <item quantity="other">kilogramų</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="one">gramas</item>
+        <item quantity="few">gramai</item>
+        <item quantity="many">gramų</item>
+        <item quantity="other">gramų</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">metrinė tona</item>
+        <item quantity="few">metrinės tonos</item>
+        <item quantity="many">metrinių tonų</item>
+        <item quantity="other">metrinių tonų</item>
+    </plurals>
+    <string name="unit_long_ton_symbol">tn.l</string>
+    <plurals name="unit_long_ton">
+        <item quantity="one">ilga tona</item>
+        <item quantity="few">ilgos tonos</item>
+        <item quantity="many">ilgų tonų</item>
+        <item quantity="other">ilgų tonų</item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="one">akmuo</item>
+        <item quantity="few">akmenys</item>
+        <item quantity="many">akmenų</item>
+        <item quantity="other">akmenų</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="one">svaras</item>
+        <item quantity="few">svarai</item>
+        <item quantity="many">svarų</item>
+        <item quantity="other">svarų</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">uncija</item>
+        <item quantity="few">uncijos</item>
+        <item quantity="many">uncijų</item>
+        <item quantity="other">uncijų</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">trumpa tona</item>
+        <item quantity="few">trumpos tonos</item>
+        <item quantity="many">trumpų tonų</item>
+        <item quantity="other">trumpų tonų</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">celsijaus laipsnis</item>
+        <item quantity="few">celsijaus laipsniai</item>
+        <item quantity="many">celsijaus laipsnių</item>
+        <item quantity="other">celsijaus laipsnių</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">farenheito laipsnis</item>
+        <item quantity="few">farenheito laipsniai</item>
+        <item quantity="many">farenheito laipsnių</item>
+        <item quantity="other">farenheito laipsnių</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="one">kelvinas</item>
+        <item quantity="few">kelvinai</item>
+        <item quantity="many">kelvino</item>
+        <item quantity="other">kelvino</item>
+    </plurals>
+</resources>
