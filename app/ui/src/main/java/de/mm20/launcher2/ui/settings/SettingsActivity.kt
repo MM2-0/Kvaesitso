@@ -110,24 +110,6 @@ class SettingsActivity : BaseActivity() {
 
         setContent {
             val navController = rememberNavController()
-
-            LaunchedEffect(route) {
-                if (route != null) {
-                    try {
-                        navController.navigate(route ?: "settings") {
-                            popUpTo("settings") {
-                                inclusive = true
-                            }
-                        }
-                    } catch (e: IllegalArgumentException) {
-                        navController.navigate("settings") {
-                            popUpTo("settings") {
-                                inclusive = true
-                            }
-                        }
-                    }
-                }
-            }
             val wallpaperColors by wallpaperColorsAsState()
             CompositionLocalProvider(
                 LocalNavController provides navController,
@@ -153,7 +135,7 @@ class SettingsActivity : BaseActivity() {
                             NavHost(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = navController,
-                                startDestination = "settings",
+                                startDestination = route ?: "settings",
                                 exitTransition = {
                                     slideOutHorizontally { -it / 4 }
                                 },
