@@ -4,402 +4,402 @@
     Important note: Unit symbols may not contain spaces.
     -->
     <!-- DIMENSIONS -->
-    <string name="dimension_length">Length</string>
-    <string name="dimension_mass">Mass</string>
-    <string name="dimension_velocity">Velocity</string>
-    <string name="dimension_volume">Volume</string>
-    <string name="dimension_area">Area</string>
-    <string name="dimension_currency">Currency</string>
+    <string name="dimension_length">Délka</string>
+    <string name="dimension_mass">Hmotnost</string>
+    <string name="dimension_velocity">Rychlost</string>
+    <string name="dimension_volume">Objem</string>
+    <string name="dimension_area">Oblast</string>
+    <string name="dimension_currency">Měna</string>
     <string name="dimension_data">Data</string>
-    <string name="dimension_bitrate">Bitrate</string>
-    <string name="dimension_pressure">Pressure</string>
-    <string name="dimension_energy">Energy</string>
-    <string name="dimension_frequency">Frequency</string>
-    <string name="dimension_temperature">Temperature</string>
-    <string name="dimension_time">Time</string>
+    <string name="dimension_bitrate">Datvý tok</string>
+    <string name="dimension_pressure">Tlak</string>
+    <string name="dimension_energy">Energie</string>
+    <string name="dimension_frequency">Frekvence</string>
+    <string name="dimension_temperature">Teplota</string>
+    <string name="dimension_time">Čas</string>
     <!-- UNITS OF LENGTH -->
     <string name="unit_meter_symbol">m</string>
     <plurals name="unit_meter">
-        <item quantity="one">meter</item>
-        <item quantity="few">meters</item>
-        <item quantity="many">meters</item>
-        <item quantity="other">meters</item>
+        <item quantity="one">metr</item>
+        <item quantity="few">metry</item>
+        <item quantity="many">metrů</item>
+        <item quantity="other">metrů</item>
     </plurals>
     <string name="unit_kilometer_symbol">km</string>
     <plurals name="unit_kilometer">
-        <item quantity="one">kilometer</item>
-        <item quantity="few">kilometers</item>
-        <item quantity="many">kilometers</item>
-        <item quantity="other">kilometers</item>
+        <item quantity="one">kilometr</item>
+        <item quantity="few">kilometry</item>
+        <item quantity="many">kilometrů</item>
+        <item quantity="other">kilometrů</item>
     </plurals>
     <string name="unit_decimeter_symbol">dm</string>
     <plurals name="unit_decimeter">
-        <item quantity="one">decimeter</item>
-        <item quantity="few">decimeters</item>
-        <item quantity="many">decimeters</item>
-        <item quantity="other">decimeters</item>
+        <item quantity="one">decimetr</item>
+        <item quantity="few">decimetry</item>
+        <item quantity="many">decimetrů</item>
+        <item quantity="other">decimetrů</item>
     </plurals>
     <string name="unit_centimeter_symbol">cm</string>
     <plurals name="unit_centimeter">
-        <item quantity="one">centimeter</item>
-        <item quantity="few">centimeters</item>
-        <item quantity="many">centimeters</item>
-        <item quantity="other">centimeters</item>
+        <item quantity="one">centimetr</item>
+        <item quantity="few">centimetry</item>
+        <item quantity="many">centimetrů</item>
+        <item quantity="other">centimetrů</item>
     </plurals>
     <string name="unit_millimeter_symbol">mm</string>
     <plurals name="unit_millimeter">
-        <item quantity="one">millimeter</item>
-        <item quantity="few">millimeters</item>
-        <item quantity="many">millimeters</item>
-        <item quantity="other">millimeters</item>
+        <item quantity="one">milimetr</item>
+        <item quantity="few">milimetry</item>
+        <item quantity="many">milimetrů</item>
+        <item quantity="other">milimetrů</item>
     </plurals>
     <string name="unit_inch_symbol">in</string>
     <plurals name="unit_inch">
-        <item quantity="one">inch</item>
-        <item quantity="few">inches</item>
-        <item quantity="many">inches</item>
-        <item quantity="other">inches</item>
+        <item quantity="one">palec</item>
+        <item quantity="few">palce</item>
+        <item quantity="many">palců</item>
+        <item quantity="other">palců</item>
     </plurals>
     <string name="unit_foot_symbol">ft</string>
     <plurals name="unit_foot">
-        <item quantity="one">foot</item>
-        <item quantity="few">feet</item>
-        <item quantity="many">feet</item>
-        <item quantity="other">feet</item>
+        <item quantity="one">stopa</item>
+        <item quantity="few">stopy</item>
+        <item quantity="many">stop</item>
+        <item quantity="other">stop</item>
     </plurals>
     <string name="unit_yard_symbol">yd</string>
     <plurals name="unit_yard">
         <item quantity="one">yard</item>
-        <item quantity="few">yards</item>
-        <item quantity="many">yards</item>
-        <item quantity="other">yards</item>
+        <item quantity="few">yardy</item>
+        <item quantity="many">yardů</item>
+        <item quantity="other">yardů</item>
     </plurals>
     <string name="unit_mile_symbol">mi</string>
     <plurals name="unit_mile">
-        <item quantity="one">mile</item>
-        <item quantity="few">miles</item>
-        <item quantity="many">miles</item>
-        <item quantity="other">miles</item>
+        <item quantity="one">míle</item>
+        <item quantity="few">míle</item>
+        <item quantity="many">mil</item>
+        <item quantity="other">mil</item>
     </plurals>
     <string name="unit_nautic_mile_symbol">NM</string>
     <plurals name="unit_nautic_mile">
-        <item quantity="one">nautical mile</item>
-        <item quantity="few">nautical miles</item>
-        <item quantity="many">nautical miles</item>
-        <item quantity="other">nautical miles</item>
+        <item quantity="one">námořní míle</item>
+        <item quantity="few">námořní míle</item>
+        <item quantity="many">námořních mil</item>
+        <item quantity="other">námořních mil</item>
     </plurals>
     <!-- UNITS OF AREA -->
     <string name="unit_sqmeter_symbol">m²</string>
     <plurals name="unit_sqmeter">
-        <item quantity="one">square meter</item>
-        <item quantity="few">square meters</item>
-        <item quantity="many">square meters</item>
-        <item quantity="other">square meters</item>
+        <item quantity="one">metr čtvereční</item>
+        <item quantity="few">metry čtvereční</item>
+        <item quantity="many">metrů čtverečních</item>
+        <item quantity="other">metrů čtverečních</item>
     </plurals>
     <string name="unit_sqkilometer_symbol">km²</string>
     <plurals name="unit_sqkilometer">
-        <item quantity="one">square kilometer</item>
-        <item quantity="few">square kilometers</item>
-        <item quantity="many">square kilometers</item>
-        <item quantity="other">square kilometers</item>
+        <item quantity="one">kilometr čtvereční</item>
+        <item quantity="few">kilometry čtvereční</item>
+        <item quantity="many">kilometrů čtverečních</item>
+        <item quantity="other">kilometrů čtverečních</item>
     </plurals>
     <string name="unit_sqcentimeter_symbol">cm²</string>
     <plurals name="unit_sqcentimeter">
-        <item quantity="one">square centimeter</item>
-        <item quantity="few">square centimeters</item>
-        <item quantity="many">square centimeters</item>
-        <item quantity="other">square centimeters</item>
+        <item quantity="one">centimetr čtvereční</item>
+        <item quantity="few">centimetry čtvereční</item>
+        <item quantity="many">centimetrů čtverečních</item>
+        <item quantity="other">centimetrů čtverečních</item>
     </plurals>
     <string name="unit_sqmillimeter_symbol">mm²</string>
     <plurals name="unit_sqmillimeter">
-        <item quantity="one">square millimeter</item>
-        <item quantity="few">square millimeters</item>
-        <item quantity="many">square millimeters</item>
-        <item quantity="other">square millimeters</item>
+        <item quantity="one">milimetr čtvereční</item>
+        <item quantity="few">milimetry čtvereční</item>
+        <item quantity="many">milimetrů čtverečních</item>
+        <item quantity="other">milimetrů čtverečních</item>
     </plurals>
     <string name="unit_sqinch_symbol">sqin</string>
     <plurals name="unit_sqinch">
-        <item quantity="one">square inch</item>
-        <item quantity="few">square inches</item>
-        <item quantity="many">square inches</item>
-        <item quantity="other">square inches</item>
+        <item quantity="one">palec čtvereční</item>
+        <item quantity="few">palce čtvereční</item>
+        <item quantity="many">palců čtverečních</item>
+        <item quantity="other">palců čtverečních</item>
     </plurals>
     <string name="unit_sqfoot_symbol">sqft</string>
     <plurals name="unit_sqfoot">
-        <item quantity="one">square foot</item>
-        <item quantity="few">square feet</item>
-        <item quantity="many">square feet</item>
-        <item quantity="other">square feet</item>
+        <item quantity="one">stopa čtvereční</item>
+        <item quantity="few">stopy čtvereční</item>
+        <item quantity="many">stop čtverečních</item>
+        <item quantity="other">stop čtverečních</item>
     </plurals>
     <string name="unit_sqyard_symbol">sqyd</string>
     <plurals name="unit_sqyard">
-        <item quantity="one">square yard</item>
-        <item quantity="few">square yards</item>
-        <item quantity="many">square yards</item>
-        <item quantity="other">square yards</item>
+        <item quantity="one">yard čtvereční</item>
+        <item quantity="few">yardy čtvereční</item>
+        <item quantity="many">yardů čtverečních</item>
+        <item quantity="other">yardů čtverečních</item>
     </plurals>
     <string name="unit_hectare_symbol">ha</string>
     <plurals name="unit_hectare">
-        <item quantity="one">hectare</item>
-        <item quantity="few">hectares</item>
-        <item quantity="many">hectares</item>
-        <item quantity="other">hectares</item>
+        <item quantity="one">hektar</item>
+        <item quantity="few">hektary</item>
+        <item quantity="many">hektarů</item>
+        <item quantity="other">hektarů</item>
     </plurals>
     <string name="unit_acre_symbol">ac</string>
     <plurals name="unit_acre">
-        <item quantity="one">acre</item>
-        <item quantity="few">acres</item>
-        <item quantity="many">acres</item>
-        <item quantity="other">acres</item>
+        <item quantity="one">akr</item>
+        <item quantity="few">akry</item>
+        <item quantity="many">akrů</item>
+        <item quantity="other">akrů</item>
     </plurals>
     <!-- UNITS OF TIME -->
     <string name="unit_second_symbol">s</string>
     <plurals name="unit_second">
-        <item quantity="one">second</item>
-        <item quantity="few">seconds</item>
-        <item quantity="many">seconds</item>
-        <item quantity="other">seconds</item>
+        <item quantity="one">sekunda</item>
+        <item quantity="few">sekundy</item>
+        <item quantity="many">sekund</item>
+        <item quantity="other">sekund</item>
     </plurals>
     <string name="unit_millisecond_symbol">ms</string>
     <plurals name="unit_millisecond">
-        <item quantity="one">millisecond</item>
-        <item quantity="few">milliseconds</item>
-        <item quantity="many">milliseconds</item>
-        <item quantity="other">milliseconds</item>
+        <item quantity="one">milisekunda</item>
+        <item quantity="few">milisekundy</item>
+        <item quantity="many">milisekund</item>
+        <item quantity="other">milisekund</item>
     </plurals>
     <string name="unit_minute_symbol">min</string>
     <plurals name="unit_minute">
-        <item quantity="one">minute</item>
-        <item quantity="few">minutes</item>
-        <item quantity="many">minutes</item>
-        <item quantity="other">minutes</item>
+        <item quantity="one">minuta</item>
+        <item quantity="few">minuty</item>
+        <item quantity="many">minut</item>
+        <item quantity="other">minut</item>
     </plurals>
     <string name="unit_hour_symbol">h</string>
     <plurals name="unit_hour">
-        <item quantity="one">hour</item>
-        <item quantity="few">hours</item>
-        <item quantity="many">hours</item>
-        <item quantity="other">hours</item>
+        <item quantity="one">hodina</item>
+        <item quantity="few">hodiny</item>
+        <item quantity="many">hodin</item>
+        <item quantity="other">hodin</item>
     </plurals>
     <string name="unit_day_symbol">d</string>
     <plurals name="unit_day">
-        <item quantity="one">day</item>
-        <item quantity="few">days</item>
-        <item quantity="many">days</item>
-        <item quantity="other">days</item>
+        <item quantity="one">den</item>
+        <item quantity="few">dny</item>
+        <item quantity="many">dnů</item>
+        <item quantity="other">dnů</item>
     </plurals>
-    <string name="unit_year_symbol">a</string>
+    <string name="unit_year_symbol">r</string>
     <plurals name="unit_year">
-        <item quantity="one">year</item>
-        <item quantity="few">years</item>
-        <item quantity="many">years</item>
-        <item quantity="other">years</item>
+        <item quantity="one">rok</item>
+        <item quantity="few">roky</item>
+        <item quantity="many">let</item>
+        <item quantity="other">let</item>
     </plurals>
     <!-- UNITS OF DATA SIZES -->
     <string name="unit_byte_symbol">B</string>
     <plurals name="unit_byte">
-        <item quantity="one">byte</item>
-        <item quantity="few">bytes</item>
-        <item quantity="many">bytes</item>
-        <item quantity="other">bytes</item>
+        <item quantity="one">bajt</item>
+        <item quantity="few">bajty</item>
+        <item quantity="many">bajtů</item>
+        <item quantity="other">bajtů</item>
     </plurals>
     <string name="unit_kilobyte_symbol">kB</string>
     <plurals name="unit_kilobyte">
-        <item quantity="one">kilobyte</item>
-        <item quantity="few">kilobytes</item>
-        <item quantity="many">kilobytes</item>
-        <item quantity="other">kilobytes</item>
+        <item quantity="one">kilobajt</item>
+        <item quantity="few">kilobajty</item>
+        <item quantity="many">kilobajtů</item>
+        <item quantity="other">kilobajtů</item>
     </plurals>
     <string name="unit_megabyte_symbol">MB</string>
     <plurals name="unit_megabyte">
-        <item quantity="one">megabyte</item>
-        <item quantity="few">megabytes</item>
-        <item quantity="many">megabytes</item>
-        <item quantity="other">megabytes</item>
+        <item quantity="one">megabajt</item>
+        <item quantity="few">megabajty</item>
+        <item quantity="many">megabajtů</item>
+        <item quantity="other">megabajtů</item>
     </plurals>
     <string name="unit_gigabyte_symbol">GB</string>
     <plurals name="unit_gigabyte">
-        <item quantity="one">gigabyte</item>
-        <item quantity="few">gigabytes</item>
-        <item quantity="many">gigabytes</item>
-        <item quantity="other">gigabytes</item>
+        <item quantity="one">gigabajt</item>
+        <item quantity="few">gigabajty</item>
+        <item quantity="many">gigabajtů</item>
+        <item quantity="other">gigabajtů</item>
     </plurals>
     <string name="unit_terabyte_symbol">TB</string>
     <plurals name="unit_terabyte">
-        <item quantity="one">terabyte</item>
-        <item quantity="few">terabytes</item>
-        <item quantity="many">terabytes</item>
-        <item quantity="other">terabytes</item>
+        <item quantity="one">terabajt</item>
+        <item quantity="few">terabajty</item>
+        <item quantity="many">terabajtů</item>
+        <item quantity="other">terabajtů</item>
     </plurals>
     <string name="unit_kibibyte_symbol">kiB</string>
     <plurals name="unit_kibibyte">
-        <item quantity="one">kibibyte</item>
-        <item quantity="few">kibibytes</item>
-        <item quantity="many">kibibytes</item>
-        <item quantity="other">kibibytes</item>
+        <item quantity="one">kibibajt</item>
+        <item quantity="few">kibibajty</item>
+        <item quantity="many">kibibajtů</item>
+        <item quantity="other">kibibajtů</item>
     </plurals>
     <string name="unit_mebibyte_symbol">MiB</string>
     <plurals name="unit_mebibyte">
-        <item quantity="one">mebibytes</item>
-        <item quantity="few">mebibytes</item>
-        <item quantity="many">mebibytes</item>
-        <item quantity="other">mebibytes</item>
+        <item quantity="one">mibibajt</item>
+        <item quantity="few">mibibajty</item>
+        <item quantity="many">mibibajtů</item>
+        <item quantity="other">mibibajtů</item>
     </plurals>
     <string name="unit_gibibyte_symbol">GiB</string>
     <plurals name="unit_gibibyte">
-        <item quantity="one">gibiyte</item>
-        <item quantity="few">gibibytes</item>
-        <item quantity="many">gibibytes</item>
-        <item quantity="other">gibibytes</item>
+        <item quantity="one">gibibajt</item>
+        <item quantity="few">gibibajty</item>
+        <item quantity="many">gibibajtů</item>
+        <item quantity="other">gibibajtů</item>
     </plurals>
     <string name="unit_tebibyte_symbol">TiB</string>
     <plurals name="unit_tebibyte">
-        <item quantity="one">tebiyte</item>
-        <item quantity="few">tebiytes</item>
-        <item quantity="many">tebiytes</item>
-        <item quantity="other">tebiytes</item>
+        <item quantity="one">tebibajt</item>
+        <item quantity="few">tebibajty</item>
+        <item quantity="many">tebibajtů</item>
+        <item quantity="other">tebibajtů</item>
     </plurals>
     <string name="unit_bit_symbol">bit</string>
     <plurals name="unit_bit">
         <item quantity="one">bit</item>
-        <item quantity="few">bits</item>
-        <item quantity="many">bits</item>
-        <item quantity="other">bits</item>
+        <item quantity="few">bity</item>
+        <item quantity="many">bitů</item>
+        <item quantity="other">bitů</item>
     </plurals>
     <string name="unit_kilobit_symbol">kbit</string>
     <plurals name="unit_kilobit">
         <item quantity="one">kilobit</item>
-        <item quantity="few">kilobits</item>
-        <item quantity="many">kilobits</item>
-        <item quantity="other">kilobits</item>
+        <item quantity="few">kilobity</item>
+        <item quantity="many">kilobitů</item>
+        <item quantity="other">kilobitů</item>
     </plurals>
     <string name="unit_megabit_symbol">Mbit</string>
     <plurals name="unit_megabit">
         <item quantity="one">megabit</item>
-        <item quantity="few">megabits</item>
-        <item quantity="many">megabits</item>
-        <item quantity="other">megabits</item>
+        <item quantity="few">megabity</item>
+        <item quantity="many">megabitů</item>
+        <item quantity="other">megabitů</item>
     </plurals>
     <string name="unit_gigabit_symbol">Gbit</string>
     <plurals name="unit_gigabit">
         <item quantity="one">gigabit</item>
-        <item quantity="few">gigabits</item>
-        <item quantity="many">gigabits</item>
-        <item quantity="other">gigabits</item>
+        <item quantity="few">gigabity</item>
+        <item quantity="many">gigabitů</item>
+        <item quantity="other">gigabitů</item>
     </plurals>
     <string name="unit_terabit_symbol">Tbit</string>
     <plurals name="unit_terabit">
         <item quantity="one">terabit</item>
-        <item quantity="few">terabits</item>
-        <item quantity="many">terabits</item>
-        <item quantity="other">terabits</item>
+        <item quantity="few">terabity</item>
+        <item quantity="many">terabitů</item>
+        <item quantity="other">terabitů</item>
     </plurals>
     <!-- UNITS OF VELOCITY -->
     <string name="unit_meter_per_second_symbol">m/s</string>
     <plurals name="unit_meter_per_second">
-        <item quantity="one">meter per second</item>
-        <item quantity="few">meters per second</item>
-        <item quantity="many">meters per second</item>
-        <item quantity="other">meters per second</item>
+        <item quantity="one">metr za sekundu</item>
+        <item quantity="few">metry za sekundu</item>
+        <item quantity="many">metrů za sekundu</item>
+        <item quantity="other">metrů za sekundu</item>
     </plurals>
     <string name="unit_kilometer_per_hour_symbol">km/h</string>
     <plurals name="unit_kilometer_per_hour">
-        <item quantity="one">kilometer per hour</item>
-        <item quantity="few">kilometers per hour</item>
-        <item quantity="many">kilometers per hour</item>
-        <item quantity="other">kilometers per hour</item>
+        <item quantity="one">kilometr za hodinu</item>
+        <item quantity="few">kilometry za hodinu</item>
+        <item quantity="many">kilometrů za hodinu</item>
+        <item quantity="other">kilometrů za hodinu</item>
     </plurals>
     <string name="unit_mile_per_hour_symbol">mph</string>
     <plurals name="unit_mile_per_hour">
-        <item quantity="one">mile per hour</item>
-        <item quantity="few">miles per hour</item>
-        <item quantity="many">miles per hour</item>
-        <item quantity="other">miles per hour</item>
+        <item quantity="one">míle za hodinu</item>
+        <item quantity="few">míle za hodinu</item>
+        <item quantity="many">mílí za hodinu</item>
+        <item quantity="other">mílí za hodinu</item>
     </plurals>
     <string name="unit_knot_symbol">kn</string>
     <plurals name="unit_knot">
-        <item quantity="one">knot</item>
-        <item quantity="few">knots</item>
-        <item quantity="many">knots</item>
-        <item quantity="other">knots</item>
+        <item quantity="one">uzel</item>
+        <item quantity="few">uzly</item>
+        <item quantity="many">uzlů</item>
+        <item quantity="other">uzlů</item>
     </plurals>
     <!-- UNITS OF MASS -->
     <string name="unit_kilogram_symbol">kg</string>
     <plurals name="unit_kilogram">
         <item quantity="one">kilogram</item>
-        <item quantity="few">kilograms</item>
-        <item quantity="many">kilograms</item>
-        <item quantity="other">kilograms</item>
+        <item quantity="few">kilogramy</item>
+        <item quantity="many">kilogramů</item>
+        <item quantity="other">kilogramů</item>
     </plurals>
     <string name="unit_gram_symbol">g</string>
     <plurals name="unit_gram">
         <item quantity="one">gram</item>
-        <item quantity="few">grams</item>
-        <item quantity="many">grams</item>
-        <item quantity="other">grams</item>
+        <item quantity="few">gramy</item>
+        <item quantity="many">gramů</item>
+        <item quantity="other">gramů</item>
     </plurals>
     <string name="unit_metric_ton_symbol">t</string>
     <plurals name="unit_metric_ton">
-        <item quantity="one">metric ton</item>
-        <item quantity="few">metric tons</item>
-        <item quantity="many">metric tons</item>
-        <item quantity="other">metric tons</item>
+        <item quantity="one">tuna</item>
+        <item quantity="few">tuny</item>
+        <item quantity="many">tun</item>
+        <item quantity="other">tun</item>
     </plurals>
     <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
-        <item quantity="one">long ton</item>
-        <item quantity="few">long tons</item>
-        <item quantity="many">long tons</item>
-        <item quantity="other">long tons</item>
+        <item quantity="one">imperiální tuna</item>
+        <item quantity="few">imperiální tuny</item>
+        <item quantity="many">imperiálních tun</item>
+        <item quantity="other">imperiálních tun</item>
     </plurals>
     <string name="unit_stone_symbol">st.</string>
     <plurals name="unit_stone">
-        <item quantity="one">stone</item>
-        <item quantity="few">stones</item>
-        <item quantity="many">stones</item>
-        <item quantity="other">stones</item>
+        <item quantity="one">kámen</item>
+        <item quantity="few">kameny</item>
+        <item quantity="many">kamenů</item>
+        <item quantity="other">kamenů</item>
     </plurals>
     <string name="unit_pound_symbol">lb.</string>
     <plurals name="unit_pound">
-        <item quantity="one">pound</item>
-        <item quantity="few">pounds</item>
-        <item quantity="many">pounds</item>
-        <item quantity="other">pounds</item>
+        <item quantity="one">libra</item>
+        <item quantity="few">libry</item>
+        <item quantity="many">liber</item>
+        <item quantity="other">liber</item>
     </plurals>
     <string name="unit_ounce_symbol">oz.</string>
     <plurals name="unit_ounce">
-        <item quantity="one">ounce</item>
-        <item quantity="few">ounces</item>
-        <item quantity="many">ounces</item>
-        <item quantity="other">ounces</item>
+        <item quantity="one">unce</item>
+        <item quantity="few">unce</item>
+        <item quantity="many">uncí</item>
+        <item quantity="other">uncí</item>
     </plurals>
     <string name="unit_short_ton_symbol">tn.sh.</string>
     <plurals name="unit_short_ton">
-        <item quantity="one">short ton</item>
-        <item quantity="few">short tons</item>
-        <item quantity="many">short tons</item>
-        <item quantity="other">short tons</item>
+        <item quantity="one">krátká tuna</item>
+        <item quantity="few">krátké tuny</item>
+        <item quantity="many">krátkých tun</item>
+        <item quantity="other">krátkých tun</item>
     </plurals>
     <!-- UNITS OF TEMPERATURE -->
     <string name="unit_degree_celsius_symbol">°C</string>
     <plurals name="unit_degree_celsius">
-        <item quantity="one">degree celsius</item>
-        <item quantity="few">degrees celsius</item>
-        <item quantity="many">degrees celsius</item>
-        <item quantity="other">degrees celsius</item>
+        <item quantity="one">stupeň celsia</item>
+        <item quantity="few">stupně celsia</item>
+        <item quantity="many">stupňů celsia</item>
+        <item quantity="other">stupňů celsia</item>
     </plurals>
     <string name="unit_degree_fahrenheit_symbol">°F</string>
     <plurals name="unit_degree_fahrenheit">
-        <item quantity="one">degree fahrenheit</item>
-        <item quantity="few">degrees fahrenheit</item>
-        <item quantity="many">degrees fahrenheit</item>
-        <item quantity="other">degrees fahrenheit</item>
+        <item quantity="one">stupeň fahrenheita</item>
+        <item quantity="few">stupně fahrenheita</item>
+        <item quantity="many">stupňů fahrenheita</item>
+        <item quantity="other">stupňů fahrenheita</item>
     </plurals>
     <string name="unit_kelvin_symbol">K</string>
     <plurals name="unit_kelvin">
         <item quantity="one">kelvin</item>
-        <item quantity="few">kelvins</item>
-        <item quantity="many">kelvins</item>
-        <item quantity="other">kelvins</item>
+        <item quantity="few">kelviny</item>
+        <item quantity="many">kelvinů</item>
+        <item quantity="other">kelvinů</item>
     </plurals>
 </resources>
