@@ -11,21 +11,15 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combineTransform
-import kotlinx.coroutines.flow.coroutineContext
 import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newCoroutineContext
 import kotlinx.coroutines.supervisorScope
 
 internal class LocationsRepository(
@@ -35,6 +29,7 @@ internal class LocationsRepository(
     private val permissionsManager: PermissionsManager,
 ) : SearchableRepository<Location> {
 
+    @OptIn(FlowPreview::class)
     override fun search(
         query: String,
         allowNetwork: Boolean
@@ -45,15 +40,15 @@ internal class LocationsRepository(
 
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Location)
 
-        return combineTransform(settings.data, hasPermission) { settingsData, permission ->
+        return combineTransform(
+            poseProvider.getLocation(minDistanceM = 50.0f),
+            settings.data,
+            hasPermission
+        ) { userLocation, settingsData, permission ->
             emit(persistentListOf())
             if (!permission || settingsData.providers.isEmpty()) {
                 return@combineTransform
             }
-
-            val userLocation = poseProvider.getLocation().firstOrNull()
-                ?: poseProvider.lastLocation
-                ?: return@combineTransform
 
             val providers = settingsData.providers.map {
                 when (it) {
