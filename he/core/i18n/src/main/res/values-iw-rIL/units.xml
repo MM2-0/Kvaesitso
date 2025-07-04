@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="he">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <string name="dimension_length">אורך</string>
+    <string name="dimension_mass">מסה</string>
+    <!-- UNITS OF LENGTH -->
+    <!-- UNITS OF AREA -->
+    <!-- UNITS OF TIME -->
+    <!-- UNITS OF DATA SIZES -->
+    <!-- UNITS OF VELOCITY -->
+    <!-- UNITS OF MASS -->
+    <!-- UNITS OF TEMPERATURE -->
+</resources>
