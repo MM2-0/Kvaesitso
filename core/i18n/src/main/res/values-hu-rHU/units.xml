@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="hu">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <string name="dimension_length">Hosszúság</string>
+    <string name="dimension_mass">Tömeg</string>
+    <string name="dimension_velocity">Sebesség</string>
+    <string name="dimension_volume">Térfogat</string>
+    <string name="dimension_area">Terület</string>
+    <string name="dimension_currency">Pénznem</string>
+    <string name="dimension_data">Adat</string>
+    <string name="dimension_bitrate">Bitsebesség</string>
+    <string name="dimension_pressure">Nyomás</string>
+    <string name="dimension_energy">Energia</string>
+    <string name="dimension_frequency">Frekvencia</string>
+    <string name="dimension_temperature">Hőmérséklet</string>
+    <string name="dimension_time">Idő</string>
+    <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="one">méter</item>
+        <item quantity="other">méter</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilóméter</item>
+        <item quantity="other">kilóméter</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">deciméter</item>
+        <item quantity="other">deciméter</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">centiméter</item>
+        <item quantity="other">centiméter</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">milliméter</item>
+        <item quantity="other">milliméter</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">hüvelyk</item>
+        <item quantity="other">hüvelyk</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">láb</item>
+        <item quantity="other">láb</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">mérföld</item>
+        <item quantity="other">mérföld</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">tengeri mérföld</item>
+        <item quantity="other">tengeri mérföld</item>
+    </plurals>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">négyzetméter</item>
+        <item quantity="other">négyzetméter</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">négyzetkilóméter</item>
+        <item quantity="other">négyzetkilóméter</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">négyzetcentiméter</item>
+        <item quantity="other">négyzetcentiméter</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">négyzetmilliméter</item>
+        <item quantity="other">négyzetmilliméter</item>
+    </plurals>
+    <string name="unit_sqinch_symbol">in²</string>
+    <plurals name="unit_sqinch">
+        <item quantity="one">négyzethüvelyk</item>
+        <item quantity="other">négyzethüvelyk</item>
+    </plurals>
+    <string name="unit_sqfoot_symbol">ft²</string>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">négyzetláb</item>
+        <item quantity="other">négyzetláb</item>
+    </plurals>
+    <string name="unit_sqyard_symbol">yd²</string>
+    <plurals name="unit_sqyard">
+        <item quantity="one">négyzetyard</item>
+        <item quantity="other">négyzetyard</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">hektár</item>
+        <item quantity="other">hektár</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">angol hektár</item>
+        <item quantity="other">angol hektár</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">másodperc</item>
+        <item quantity="other">másodperc</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">ezredmásodperc</item>
+        <item quantity="other">ezredmásodperc</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="one">perc</item>
+        <item quantity="other">perc</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">óra</item>
+        <item quantity="other">óra</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="one">nap</item>
+        <item quantity="other">nap</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">év</item>
+        <item quantity="other">év</item>
+    </plurals>
+    <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_byte">
+        <item quantity="one">bájt</item>
+        <item quantity="other">bájt</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">kilóbájt</item>
+        <item quantity="other">kilóbájt</item>
+    </plurals>
+    <plurals name="unit_megabyte">
+        <item quantity="one">megabájt</item>
+        <item quantity="other">megabájt</item>
+    </plurals>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">gigabájt</item>
+        <item quantity="other">gigabájt</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="one">terabájt</item>
+        <item quantity="other">terabájt</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">kibibájt</item>
+        <item quantity="other">kibibájt</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">mebibájt</item>
+        <item quantity="other">mebibájt</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">gibibájt</item>
+        <item quantity="other">gibibájt</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebibájt</item>
+        <item quantity="other">tebibájt</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="one">kilóbit</item>
+        <item quantity="other">kilóbit</item>
+    </plurals>
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">méter per másodperc</item>
+        <item quantity="other">méter per másodperc</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilóméter per óra</item>
+        <item quantity="other">kilóméter per óra</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">mérföld per óra</item>
+        <item quantity="other">mérföld per óra</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">csomó</item>
+        <item quantity="other">csomó</item>
+    </plurals>
+    <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="one">kilógramm</item>
+        <item quantity="other">kilógramm</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="one">gramm</item>
+        <item quantity="other">gramm</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">metrikus tonna</item>
+        <item quantity="other">metrikus tonna</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="one">hosszú tonna</item>
+        <item quantity="other">hosszú tonna</item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="one">kő</item>
+        <item quantity="other">kő</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="one">font</item>
+        <item quantity="other">font</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">uncia</item>
+        <item quantity="other">uncia</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">rövid tonna</item>
+        <item quantity="other">rövid tonna</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">celsius-fok</item>
+        <item quantity="other">celsius-fok</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">fahrenheit-fok</item>
+        <item quantity="other">fahrenheit-fok</item>
+    </plurals>
+</resources>
