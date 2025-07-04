@@ -172,5 +172,22 @@
         <item quantity="one">onza</item>
         <item quantity="other">onzas</item>
     </plurals>
+    <string name="unit_short_ton_symbol">tn. sh.</string>
+    <plurals name="unit_short_ton">
+        <item quantity="one">tonelada corta</item>
+        <item quantity="other">toneladas cortas</item>
+    </plurals>
     <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">grado Celsius</item>
+        <item quantity="other">grados Celsius</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">grado Fahrenheit</item>
+        <item quantity="other">grados Fahrenheit</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="one">grado Kelvin</item>
+        <item quantity="other">grados Kelvin</item>
+    </plurals>
 </resources>
