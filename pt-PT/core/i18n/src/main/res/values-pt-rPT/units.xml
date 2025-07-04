@@ -4,104 +4,104 @@
     Important note: Unit symbols may not contain spaces.
     -->
     <!-- DIMENSIONS -->
-    <string name="dimension_length">Length</string>
-    <string name="dimension_mass">Mass</string>
-    <string name="dimension_velocity">Velocity</string>
+    <string name="dimension_length">Comprimento</string>
+    <string name="dimension_mass">Massa</string>
+    <string name="dimension_velocity">Velocidade</string>
     <string name="dimension_volume">Volume</string>
-    <string name="dimension_area">Area</string>
-    <string name="dimension_currency">Currency</string>
-    <string name="dimension_data">Data</string>
-    <string name="dimension_bitrate">Bitrate</string>
-    <string name="dimension_pressure">Pressure</string>
-    <string name="dimension_energy">Energy</string>
-    <string name="dimension_frequency">Frequency</string>
-    <string name="dimension_temperature">Temperature</string>
-    <string name="dimension_time">Time</string>
+    <string name="dimension_area">Área</string>
+    <string name="dimension_currency">Moeda</string>
+    <string name="dimension_data">Dados</string>
+    <string name="dimension_bitrate">Taxa de dados</string>
+    <string name="dimension_pressure">Pressão</string>
+    <string name="dimension_energy">Energia</string>
+    <string name="dimension_frequency">Frequência</string>
+    <string name="dimension_temperature">Temperatura</string>
+    <string name="dimension_time">Tempo</string>
     <!-- UNITS OF LENGTH -->
     <string name="unit_meter_symbol">m</string>
     <plurals name="unit_meter">
-        <item quantity="one">meter</item>
-        <item quantity="other">meters</item>
+        <item quantity="one">metro</item>
+        <item quantity="other">metros</item>
     </plurals>
     <string name="unit_kilometer_symbol">km</string>
     <plurals name="unit_kilometer">
-        <item quantity="one">kilometer</item>
-        <item quantity="other">kilometers</item>
+        <item quantity="one">quilómetro</item>
+        <item quantity="other">quilómetros</item>
     </plurals>
     <string name="unit_decimeter_symbol">dm</string>
     <plurals name="unit_decimeter">
-        <item quantity="one">decimeter</item>
-        <item quantity="other">decimeters</item>
+        <item quantity="one">decímetro</item>
+        <item quantity="other">decímetros</item>
     </plurals>
     <string name="unit_centimeter_symbol">cm</string>
     <plurals name="unit_centimeter">
-        <item quantity="one">centimeter</item>
-        <item quantity="other">centimeters</item>
+        <item quantity="one">centímetro</item>
+        <item quantity="other">centímetros</item>
     </plurals>
     <string name="unit_millimeter_symbol">mm</string>
     <plurals name="unit_millimeter">
-        <item quantity="one">millimeter</item>
-        <item quantity="other">millimeters</item>
+        <item quantity="one">milímetro</item>
+        <item quantity="other">milímetros</item>
     </plurals>
-    <string name="unit_inch_symbol">in</string>
+    <string name="unit_inch_symbol">pol</string>
     <plurals name="unit_inch">
-        <item quantity="one">inch</item>
-        <item quantity="other">inches</item>
+        <item quantity="one">polegada</item>
+        <item quantity="other">polegadas</item>
     </plurals>
-    <string name="unit_foot_symbol">ft</string>
+    <string name="unit_foot_symbol">p</string>
     <plurals name="unit_foot">
-        <item quantity="one">foot</item>
-        <item quantity="other">feet</item>
+        <item quantity="one">pé</item>
+        <item quantity="other">pés</item>
     </plurals>
-    <string name="unit_yard_symbol">yd</string>
+    <string name="unit_yard_symbol">jd</string>
     <plurals name="unit_yard">
-        <item quantity="one">yard</item>
-        <item quantity="other">yards</item>
+        <item quantity="one">jarda</item>
+        <item quantity="other">jardas</item>
     </plurals>
     <string name="unit_mile_symbol">mi</string>
     <plurals name="unit_mile">
-        <item quantity="one">mile</item>
-        <item quantity="other">miles</item>
+        <item quantity="one">milha</item>
+        <item quantity="other">milhas</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_nautic_mile_symbol">nm</string>
     <plurals name="unit_nautic_mile">
-        <item quantity="one">nautical mile</item>
-        <item quantity="other">nautical miles</item>
+        <item quantity="one">milha náutica</item>
+        <item quantity="other">milhas náuticas</item>
     </plurals>
     <!-- UNITS OF AREA -->
     <string name="unit_sqmeter_symbol">m²</string>
     <plurals name="unit_sqmeter">
-        <item quantity="one">square meter</item>
-        <item quantity="other">square meters</item>
+        <item quantity="one">metro quadrado</item>
+        <item quantity="other">metros quadrados</item>
     </plurals>
     <string name="unit_sqkilometer_symbol">km²</string>
     <plurals name="unit_sqkilometer">
-        <item quantity="one">square kilometer</item>
-        <item quantity="other">square kilometers</item>
+        <item quantity="one">quilómetro quadrado</item>
+        <item quantity="other">quilómetro quadrado</item>
     </plurals>
     <string name="unit_sqcentimeter_symbol">cm²</string>
     <plurals name="unit_sqcentimeter">
-        <item quantity="one">square centimeter</item>
-        <item quantity="other">square centimeters</item>
+        <item quantity="one">centímetro quadrado</item>
+        <item quantity="other">centímetros quadrados</item>
     </plurals>
     <string name="unit_sqmillimeter_symbol">mm²</string>
     <plurals name="unit_sqmillimeter">
-        <item quantity="one">square millimeter</item>
+        <item quantity="one">milímetro quadrado</item>
         <item quantity="other">square millimeters</item>
     </plurals>
     <string name="unit_sqinch_symbol">sqin</string>
     <plurals name="unit_sqinch">
-        <item quantity="one">square inch</item>
+        <item quantity="one">polegada quadrada</item>
         <item quantity="other">square inches</item>
     </plurals>
     <string name="unit_sqfoot_symbol">sqft</string>
     <plurals name="unit_sqfoot">
-        <item quantity="one">square foot</item>
+        <item quantity="one">pé quadrado</item>
         <item quantity="other">square feet</item>
     </plurals>
     <string name="unit_sqyard_symbol">sqyd</string>
     <plurals name="unit_sqyard">
-        <item quantity="one">square yard</item>
+        <item quantity="one">jarda quadrada</item>
         <item quantity="other">square yards</item>
     </plurals>
     <string name="unit_hectare_symbol">ha</string>
@@ -109,7 +109,7 @@
         <item quantity="one">hectare</item>
         <item quantity="other">hectares</item>
     </plurals>
-    <string name="unit_acre_symbol">ac</string>
+    <string name="unit_acre_symbol">acre</string>
     <plurals name="unit_acre">
         <item quantity="one">acre</item>
         <item quantity="other">acres</item>
@@ -117,32 +117,32 @@
     <!-- UNITS OF TIME -->
     <string name="unit_second_symbol">s</string>
     <plurals name="unit_second">
-        <item quantity="one">second</item>
+        <item quantity="one">segundo</item>
         <item quantity="other">seconds</item>
     </plurals>
     <string name="unit_millisecond_symbol">ms</string>
     <plurals name="unit_millisecond">
-        <item quantity="one">millisecond</item>
+        <item quantity="one">milisegundo</item>
         <item quantity="other">milliseconds</item>
     </plurals>
     <string name="unit_minute_symbol">min</string>
     <plurals name="unit_minute">
-        <item quantity="one">minute</item>
+        <item quantity="one">minuto</item>
         <item quantity="other">minutes</item>
     </plurals>
     <string name="unit_hour_symbol">h</string>
     <plurals name="unit_hour">
-        <item quantity="one">hour</item>
+        <item quantity="one">hora</item>
         <item quantity="other">hours</item>
     </plurals>
     <string name="unit_day_symbol">d</string>
     <plurals name="unit_day">
-        <item quantity="one">day</item>
+        <item quantity="one">dia</item>
         <item quantity="other">days</item>
     </plurals>
     <string name="unit_year_symbol">a</string>
     <plurals name="unit_year">
-        <item quantity="one">year</item>
+        <item quantity="one">ano</item>
         <item quantity="other">years</item>
     </plurals>
     <!-- UNITS OF DATA SIZES -->
@@ -178,17 +178,17 @@
     </plurals>
     <string name="unit_mebibyte_symbol">MiB</string>
     <plurals name="unit_mebibyte">
-        <item quantity="one">mebibytes</item>
+        <item quantity="one">mebibyte</item>
         <item quantity="other">mebibytes</item>
     </plurals>
     <string name="unit_gibibyte_symbol">GiB</string>
     <plurals name="unit_gibibyte">
-        <item quantity="one">gibiyte</item>
+        <item quantity="one">gibibyte</item>
         <item quantity="other">gibibytes</item>
     </plurals>
     <string name="unit_tebibyte_symbol">TiB</string>
     <plurals name="unit_tebibyte">
-        <item quantity="one">tebiyte</item>
+        <item quantity="one">tebibyte</item>
         <item quantity="other">tebiytes</item>
     </plurals>
     <string name="unit_bit_symbol">bit</string>
@@ -219,75 +219,75 @@
     <!-- UNITS OF VELOCITY -->
     <string name="unit_meter_per_second_symbol">m/s</string>
     <plurals name="unit_meter_per_second">
-        <item quantity="one">meter per second</item>
+        <item quantity="one">metro por segundo</item>
         <item quantity="other">meters per second</item>
     </plurals>
     <string name="unit_kilometer_per_hour_symbol">km/h</string>
     <plurals name="unit_kilometer_per_hour">
-        <item quantity="one">kilometer per hour</item>
+        <item quantity="one">quilómetro por hora</item>
         <item quantity="other">kilometers per hour</item>
     </plurals>
     <string name="unit_mile_per_hour_symbol">mph</string>
     <plurals name="unit_mile_per_hour">
-        <item quantity="one">mile per hour</item>
+        <item quantity="one">milha por hora</item>
         <item quantity="other">miles per hour</item>
     </plurals>
     <string name="unit_knot_symbol">kn</string>
     <plurals name="unit_knot">
-        <item quantity="one">knot</item>
+        <item quantity="one">nó</item>
         <item quantity="other">knots</item>
     </plurals>
     <!-- UNITS OF MASS -->
     <string name="unit_kilogram_symbol">kg</string>
     <plurals name="unit_kilogram">
-        <item quantity="one">kilogram</item>
+        <item quantity="one">kilograma</item>
         <item quantity="other">kilograms</item>
     </plurals>
     <string name="unit_gram_symbol">g</string>
     <plurals name="unit_gram">
-        <item quantity="one">gram</item>
+        <item quantity="one">grama</item>
         <item quantity="other">grams</item>
     </plurals>
     <string name="unit_metric_ton_symbol">t</string>
     <plurals name="unit_metric_ton">
-        <item quantity="one">metric ton</item>
+        <item quantity="one">tonelada métrica</item>
         <item quantity="other">metric tons</item>
     </plurals>
     <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
-        <item quantity="one">long ton</item>
+        <item quantity="one">tonelada longa</item>
         <item quantity="other">long tons</item>
     </plurals>
-    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_stone_symbol">st</string>
     <plurals name="unit_stone">
         <item quantity="one">stone</item>
         <item quantity="other">stones</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">lb</string>
     <plurals name="unit_pound">
-        <item quantity="one">pound</item>
+        <item quantity="one">libra</item>
         <item quantity="other">pounds</item>
     </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">on.</string>
     <plurals name="unit_ounce">
-        <item quantity="one">ounce</item>
-        <item quantity="other">ounces</item>
+        <item quantity="one">onça</item>
+        <item quantity="other">onças</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">ton. red.</string>
     <plurals name="unit_short_ton">
-        <item quantity="one">short ton</item>
-        <item quantity="other">short tons</item>
+        <item quantity="one">tonelada reduzida</item>
+        <item quantity="other">toneladas reduzidas</item>
     </plurals>
     <!-- UNITS OF TEMPERATURE -->
     <string name="unit_degree_celsius_symbol">°C</string>
     <plurals name="unit_degree_celsius">
-        <item quantity="one">degree celsius</item>
-        <item quantity="other">degrees celsius</item>
+        <item quantity="one">grau celsius</item>
+        <item quantity="other">graus celsius</item>
     </plurals>
     <string name="unit_degree_fahrenheit_symbol">°F</string>
     <plurals name="unit_degree_fahrenheit">
-        <item quantity="one">degree fahrenheit</item>
-        <item quantity="other">degrees fahrenheit</item>
+        <item quantity="one">grau fahrenheit</item>
+        <item quantity="other">graus fahrenheit</item>
     </plurals>
     <string name="unit_kelvin_symbol">K</string>
     <plurals name="unit_kelvin">
