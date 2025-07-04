@@ -167,7 +167,7 @@ fun LocationItem(
 
     val userLocation by remember {
         viewModel.devicePoseProvider.getLocation()
-    }.collectAsStateWithLifecycle(viewModel.devicePoseProvider.lastLocation)
+    }.collectAsStateWithLifecycle(null)
 
     val targetHeading by remember(userLocation, location) {
         if (userLocation != null) {
@@ -180,9 +180,7 @@ fun LocationItem(
     }.collectAsStateWithLifecycle(null)
 
     val userHeading by remember {
-        if (userLocation != null) {
-            viewModel.devicePoseProvider.getAzimuthDegrees()
-        } else emptyFlow()
+        viewModel.devicePoseProvider.getAzimuthDegrees()
     }.collectAsStateWithLifecycle(null)
 
     val icon by viewModel.icon.collectAsStateWithLifecycle()
