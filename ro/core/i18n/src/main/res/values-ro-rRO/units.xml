@@ -93,5 +93,25 @@
         <item quantity="few">tone lungi</item>
         <item quantity="other">de tone lungi</item>
     </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">tonă scurtă</item>
+        <item quantity="few">tone scurte</item>
+        <item quantity="other">de tone scurte</item>
+    </plurals>
     <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">grad celsius</item>
+        <item quantity="few">grade celsius</item>
+        <item quantity="other">de grade celsius</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">grad fahrenheit</item>
+        <item quantity="few">grade fahrenheit</item>
+        <item quantity="other">de grade fahrenheit</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="one">grad Kelvin</item>
+        <item quantity="few">grade Kelvin</item>
+        <item quantity="other">de grade Kelvin</item>
+    </plurals>
 </resources>
