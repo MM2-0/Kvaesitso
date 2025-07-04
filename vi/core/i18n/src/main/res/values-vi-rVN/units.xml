@@ -20,7 +20,7 @@
     <!-- UNITS OF LENGTH -->
     <string name="unit_meter_symbol">m</string>
     <plurals name="unit_meter">
-        <item quantity="other">meters</item>
+        <item quantity="other">mét</item>
     </plurals>
     <string name="unit_kilometer_symbol">km</string>
     <plurals name="unit_kilometer">
