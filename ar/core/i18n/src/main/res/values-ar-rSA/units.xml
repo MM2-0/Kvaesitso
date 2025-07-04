@@ -484,4 +484,30 @@
     </plurals>
     <!-- UNITS OF TEMPERATURE -->
     <string name="unit_degree_celsius_symbol">°س</string>
+    <plurals name="unit_degree_celsius">
+        <item quantity="zero">درجة سيلسيوس</item>
+        <item quantity="one">درجة سيلسيوس</item>
+        <item quantity="two">درجتان سيلسيوس</item>
+        <item quantity="few">درجات سيلسيوس</item>
+        <item quantity="many">درجة سيلسيوس</item>
+        <item quantity="other">درجة سيلسيوس</item>
+    </plurals>
+    <string name="unit_degree_fahrenheit_symbol">°ف</string>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="zero">درجة فهرنهايت</item>
+        <item quantity="one">درجة فهرنهايت</item>
+        <item quantity="two">درجتان فهرنهايت</item>
+        <item quantity="few">درجات فهرنهايت</item>
+        <item quantity="many">درجة فهرنهايت</item>
+        <item quantity="other">درجة فهرنهايت</item>
+    </plurals>
+    <string name="unit_kelvin_symbol">ك</string>
+    <plurals name="unit_kelvin">
+        <item quantity="zero">كلفن</item>
+        <item quantity="one">كلفن</item>
+        <item quantity="two">كلفنان</item>
+        <item quantity="few">كلفنات</item>
+        <item quantity="many">كلفن</item>
+        <item quantity="other">كلفن</item>
+    </plurals>
 </resources>
