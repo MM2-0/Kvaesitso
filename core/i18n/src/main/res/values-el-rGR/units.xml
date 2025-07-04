@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="el">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="one">μέτρο</item>
+        <item quantity="other">μέτρα</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="one">χιλιόμετρο</item>
+        <item quantity="other">χιλιόμετρα</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">εκατοστό</item>
+        <item quantity="other">εκατοστά</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">χιλιοστό</item>
+        <item quantity="other">χιλιοστά</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">ίντσα</item>
+        <item quantity="other">ίντσες</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">πόδι</item>
+        <item quantity="other">πόδια</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="one">γιάρδα</item>
+        <item quantity="other">γιάρδες</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">μίλι</item>
+        <item quantity="other">μίλια</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">ναυτικό μίλι</item>
+        <item quantity="other">ναυτικά μίλια</item>
+    </plurals>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">τετραγωνικό μέτρο</item>
+        <item quantity="other">τετραγωνικά μέτρα</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">τετραγωνικό χιλιόμετρο</item>
+        <item quantity="other">τετραγωνικά χιλιόμετρα</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">τετραγωνικό εκατοστό</item>
+        <item quantity="other">τετραγωνικά εκατοστά</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">τετραγωνικό χιλιοστό</item>
+        <item quantity="other">τετραγωνικά χιλιοστά</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="one">τετραγωνική ίντσα</item>
+        <item quantity="other">τετραγωνικές ίντσες</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">τετραγωνικό πόδι</item>
+        <item quantity="other">τετραγωνικά πόδια</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">τετραγωνική γιάρδα</item>
+        <item quantity="other">τετραγωνικές γιάρδες</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">εκτάριο</item>
+        <item quantity="other">εκτάρια</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">στρέμμα</item>
+        <item quantity="other">στρέμματα</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">δευτερόλεπτο</item>
+        <item quantity="other">δευτερόλεπτα</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">χιλιοστό δευτερολέπτου</item>
+        <item quantity="other">χιλιοστά δευτερολέπτου</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="one">λεπτό</item>
+        <item quantity="other">λεπτά</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">ώρα</item>
+        <item quantity="other">ώρες</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="one">ημέρα</item>
+        <item quantity="other">ημέρες</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">έτος</item>
+        <item quantity="other">έτη</item>
+    </plurals>
+    <!-- UNITS OF DATA SIZES -->
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">μέτρο ανά δευτερόλεπτο</item>
+        <item quantity="other">μέτρα ανά δευτερόλεπτο</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">χιλιόμετρο ανά ώρα</item>
+        <item quantity="other">χιλιόμετρα ανά ώρα</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">μίλι ανά ώρα</item>
+        <item quantity="other">μίλια ανά ώρα</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">κόμβος</item>
+        <item quantity="other">κόμβοι</item>
+    </plurals>
+    <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="one">κιλό</item>
+        <item quantity="other">κιλά</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="one">γραμμάριο</item>
+        <item quantity="other">γραμμάρια</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">τόνος</item>
+        <item quantity="other">τόνοι</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="one">μακρύς τόνος</item>
+        <item quantity="other">μακρείς τόνοι</item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="one">πέτρα</item>
+        <item quantity="other">πέτρες</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="one">λίβρα</item>
+        <item quantity="other">λίβρες</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">ουγγιά</item>
+        <item quantity="other">ουγγιές</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">κοντός τόνος</item>
+        <item quantity="other">κοντοί τόνοι</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">βαθμός Κελσίου</item>
+        <item quantity="other">βαθμοί Κελσίου</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">βαθμός Φάρεναιτ</item>
+        <item quantity="other">βαθμοί Φάρεναιτ</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="one">Κέλβιν</item>
+        <item quantity="other">Κέλβιν</item>
+    </plurals>
+</resources>
