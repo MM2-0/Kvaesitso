@@ -878,6 +878,7 @@
     <string name="clock_style_empty">No clock</string>
     <string name="clock_style_custom">Custom widget</string>
     <string name="clock_variant_outlined">Outlined</string>
+    <string name="clock_variant_analog_ticks">Ticks</string>
     <string name="menu_show_filters">Show filters</string>
     <string name="menu_hide_filters">Hide filters</string>
     <string name="search_filter_tools">Tools</string>
