@@ -18,56 +18,56 @@
     <string name="dimension_temperature">Temperature</string>
     <string name="dimension_time">Time</string>
     <!-- UNITS OF LENGTH -->
-    <string name="unit_meter_symbol">m</string>
+    <string name="unit_meter_symbol">м.</string>
     <plurals name="unit_meter">
         <item quantity="one">meter</item>
         <item quantity="few">meters</item>
         <item quantity="many">meters</item>
         <item quantity="other">meters</item>
     </plurals>
-    <string name="unit_kilometer_symbol">km</string>
+    <string name="unit_kilometer_symbol">км</string>
     <plurals name="unit_kilometer">
         <item quantity="one">kilometer</item>
         <item quantity="few">kilometers</item>
         <item quantity="many">kilometers</item>
         <item quantity="other">kilometers</item>
     </plurals>
-    <string name="unit_decimeter_symbol">dm</string>
+    <string name="unit_decimeter_symbol">дм</string>
     <plurals name="unit_decimeter">
         <item quantity="one">decimeter</item>
         <item quantity="few">decimeters</item>
         <item quantity="many">decimeters</item>
         <item quantity="other">decimeters</item>
     </plurals>
-    <string name="unit_centimeter_symbol">cm</string>
+    <string name="unit_centimeter_symbol">см</string>
     <plurals name="unit_centimeter">
         <item quantity="one">centimeter</item>
         <item quantity="few">centimeters</item>
         <item quantity="many">centimeters</item>
         <item quantity="other">centimeters</item>
     </plurals>
-    <string name="unit_millimeter_symbol">mm</string>
+    <string name="unit_millimeter_symbol">мм</string>
     <plurals name="unit_millimeter">
         <item quantity="one">millimeter</item>
         <item quantity="few">millimeters</item>
         <item quantity="many">millimeters</item>
         <item quantity="other">millimeters</item>
     </plurals>
-    <string name="unit_inch_symbol">in</string>
+    <string name="unit_inch_symbol">дюйм</string>
     <plurals name="unit_inch">
         <item quantity="one">inch</item>
         <item quantity="few">inches</item>
         <item quantity="many">inches</item>
         <item quantity="other">inches</item>
     </plurals>
-    <string name="unit_foot_symbol">ft</string>
+    <string name="unit_foot_symbol">фут</string>
     <plurals name="unit_foot">
         <item quantity="one">foot</item>
         <item quantity="few">feet</item>
         <item quantity="many">feet</item>
         <item quantity="other">feet</item>
     </plurals>
-    <string name="unit_yard_symbol">yd</string>
+    <string name="unit_yard_symbol">ярд</string>
     <plurals name="unit_yard">
         <item quantity="one">yard</item>
         <item quantity="few">yards</item>
@@ -110,7 +110,7 @@
         <item quantity="many">square centimeters</item>
         <item quantity="other">square centimeters</item>
     </plurals>
-    <string name="unit_sqmillimeter_symbol">mm²</string>
+    <string name="unit_sqmillimeter_symbol">мм²</string>
     <plurals name="unit_sqmillimeter">
         <item quantity="one">square millimeter</item>
         <item quantity="few">square millimeters</item>
@@ -138,14 +138,14 @@
         <item quantity="many">square yards</item>
         <item quantity="other">square yards</item>
     </plurals>
-    <string name="unit_hectare_symbol">ha</string>
+    <string name="unit_hectare_symbol">га</string>
     <plurals name="unit_hectare">
         <item quantity="one">hectare</item>
         <item quantity="few">hectares</item>
         <item quantity="many">hectares</item>
         <item quantity="other">hectares</item>
     </plurals>
-    <string name="unit_acre_symbol">ac</string>
+    <string name="unit_acre_symbol">акр</string>
     <plurals name="unit_acre">
         <item quantity="one">acre</item>
         <item quantity="few">acres</item>
