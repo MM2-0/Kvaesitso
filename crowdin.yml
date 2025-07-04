@@ -1,8 +1,8 @@
 preserve_hierarchy: false
 files:
-  - source: core/i18n/src/main/res/values/strings.xml
-    translation: core/i18n/src/main/res/values-%android_code%/strings.xml
+  - source: /core/i18n/src/main/res/values/strings.xml
+    translation: /core/i18n/src/main/res/values-%android_code%/%original_file_name%
     type: android
-  - source: core/i18n/src/main/res/values/units.xml
-    translation: core/i18n/src/main/res/values-%android_code%/units.xml
+  - source: /core/i18n/src/main/res/values/units.xml
+    translation: /core/i18n/src/main/res/values-%android_code%/%original_file_name%
     type: android
