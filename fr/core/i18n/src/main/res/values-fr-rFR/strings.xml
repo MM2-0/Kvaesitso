@@ -985,5 +985,7 @@
     <string name="bad_configuration_title">Félicitations, ça s\'appelle se faire enfermer dehors !</string>
     <string name="bad_configuration_summary">Vous avez découvert une combinaison de paramètres qui rendent à la fois la recherche et les paramètres inaccessibles — ce qui vous enferme efficacement à l\'extérieur du lanceur.</string>
     <string name="theme_export_title">Exporter le thème</string>
+    <string name="theme_import_title">Importer le thème</string>
     <string name="theme_bundle_name">Nom</string>
+    <string name="theme_bundle_author">Créé par</string>
 </resources>
