@@ -4,26 +4,26 @@
     Important note: Unit symbols may not contain spaces.
     -->
     <!-- DIMENSIONS -->
-    <string name="dimension_length">Length</string>
-    <string name="dimension_mass">Mass</string>
-    <string name="dimension_velocity">Velocity</string>
-    <string name="dimension_volume">Volume</string>
-    <string name="dimension_area">Area</string>
-    <string name="dimension_currency">Currency</string>
-    <string name="dimension_data">Data</string>
-    <string name="dimension_bitrate">Bitrate</string>
-    <string name="dimension_pressure">Pressure</string>
-    <string name="dimension_energy">Energy</string>
+    <string name="dimension_length">طول</string>
+    <string name="dimension_mass">جرم</string>
+    <string name="dimension_velocity">سرعت</string>
+    <string name="dimension_volume">حجم</string>
+    <string name="dimension_area">مساحت</string>
+    <string name="dimension_currency">ارز</string>
+    <string name="dimension_data">داده</string>
+    <string name="dimension_bitrate">نرخ بیت</string>
+    <string name="dimension_pressure">فشار</string>
+    <string name="dimension_energy">انرژی</string>
     <string name="dimension_frequency">Frequency</string>
     <string name="dimension_temperature">Temperature</string>
     <string name="dimension_time">Time</string>
     <!-- UNITS OF LENGTH -->
-    <string name="unit_meter_symbol">m</string>
+    <string name="unit_meter_symbol">متر</string>
     <plurals name="unit_meter">
         <item quantity="one">meter</item>
         <item quantity="other">meters</item>
     </plurals>
-    <string name="unit_kilometer_symbol">km</string>
+    <string name="unit_kilometer_symbol">کیلومتر</string>
     <plurals name="unit_kilometer">
         <item quantity="one">kilometer</item>
         <item quantity="other">kilometers</item>
@@ -33,32 +33,32 @@
         <item quantity="one">decimeter</item>
         <item quantity="other">decimeters</item>
     </plurals>
-    <string name="unit_centimeter_symbol">cm</string>
+    <string name="unit_centimeter_symbol">سانتی‌متر</string>
     <plurals name="unit_centimeter">
         <item quantity="one">centimeter</item>
         <item quantity="other">centimeters</item>
     </plurals>
-    <string name="unit_millimeter_symbol">mm</string>
+    <string name="unit_millimeter_symbol">میلی‌متر</string>
     <plurals name="unit_millimeter">
         <item quantity="one">millimeter</item>
         <item quantity="other">millimeters</item>
     </plurals>
-    <string name="unit_inch_symbol">in</string>
+    <string name="unit_inch_symbol">اینچ</string>
     <plurals name="unit_inch">
         <item quantity="one">inch</item>
         <item quantity="other">inches</item>
     </plurals>
-    <string name="unit_foot_symbol">ft</string>
+    <string name="unit_foot_symbol">پا</string>
     <plurals name="unit_foot">
         <item quantity="one">foot</item>
         <item quantity="other">feet</item>
     </plurals>
-    <string name="unit_yard_symbol">yd</string>
+    <string name="unit_yard_symbol">یارد</string>
     <plurals name="unit_yard">
         <item quantity="one">yard</item>
         <item quantity="other">yards</item>
     </plurals>
-    <string name="unit_mile_symbol">mi</string>
+    <string name="unit_mile_symbol">مایل</string>
     <plurals name="unit_mile">
         <item quantity="one">mile</item>
         <item quantity="other">miles</item>
@@ -104,43 +104,43 @@
         <item quantity="one">square yard</item>
         <item quantity="other">square yards</item>
     </plurals>
-    <string name="unit_hectare_symbol">ha</string>
+    <string name="unit_hectare_symbol">هکتار</string>
     <plurals name="unit_hectare">
         <item quantity="one">hectare</item>
         <item quantity="other">hectares</item>
     </plurals>
-    <string name="unit_acre_symbol">ac</string>
+    <string name="unit_acre_symbol">جریب</string>
     <plurals name="unit_acre">
         <item quantity="one">acre</item>
         <item quantity="other">acres</item>
     </plurals>
     <!-- UNITS OF TIME -->
-    <string name="unit_second_symbol">s</string>
+    <string name="unit_second_symbol">ثانیه</string>
     <plurals name="unit_second">
         <item quantity="one">second</item>
         <item quantity="other">seconds</item>
     </plurals>
-    <string name="unit_millisecond_symbol">ms</string>
+    <string name="unit_millisecond_symbol">میلی‌ثانیه</string>
     <plurals name="unit_millisecond">
         <item quantity="one">millisecond</item>
         <item quantity="other">milliseconds</item>
     </plurals>
-    <string name="unit_minute_symbol">min</string>
+    <string name="unit_minute_symbol">دقیقه</string>
     <plurals name="unit_minute">
         <item quantity="one">minute</item>
         <item quantity="other">minutes</item>
     </plurals>
-    <string name="unit_hour_symbol">h</string>
+    <string name="unit_hour_symbol">ساعت</string>
     <plurals name="unit_hour">
         <item quantity="one">hour</item>
         <item quantity="other">hours</item>
     </plurals>
-    <string name="unit_day_symbol">d</string>
+    <string name="unit_day_symbol">روز</string>
     <plurals name="unit_day">
         <item quantity="one">day</item>
         <item quantity="other">days</item>
     </plurals>
-    <string name="unit_year_symbol">a</string>
+    <string name="unit_year_symbol">سال</string>
     <plurals name="unit_year">
         <item quantity="one">year</item>
         <item quantity="other">years</item>
@@ -151,17 +151,17 @@
         <item quantity="one">byte</item>
         <item quantity="other">bytes</item>
     </plurals>
-    <string name="unit_kilobyte_symbol">kB</string>
+    <string name="unit_kilobyte_symbol">کیلوبایت</string>
     <plurals name="unit_kilobyte">
         <item quantity="one">kilobyte</item>
         <item quantity="other">kilobytes</item>
     </plurals>
-    <string name="unit_megabyte_symbol">MB</string>
+    <string name="unit_megabyte_symbol">مگابایت</string>
     <plurals name="unit_megabyte">
         <item quantity="one">megabyte</item>
         <item quantity="other">megabytes</item>
     </plurals>
-    <string name="unit_gigabyte_symbol">GB</string>
+    <string name="unit_gigabyte_symbol">گیگابایت</string>
     <plurals name="unit_gigabyte">
         <item quantity="one">gigabyte</item>
         <item quantity="other">gigabytes</item>
@@ -171,27 +171,27 @@
         <item quantity="one">terabyte</item>
         <item quantity="other">terabytes</item>
     </plurals>
-    <string name="unit_kibibyte_symbol">kiB</string>
+    <string name="unit_kibibyte_symbol">کیبی‌بایت</string>
     <plurals name="unit_kibibyte">
         <item quantity="one">kibibyte</item>
         <item quantity="other">kibibytes</item>
     </plurals>
-    <string name="unit_mebibyte_symbol">MiB</string>
+    <string name="unit_mebibyte_symbol">میبی‌بایت</string>
     <plurals name="unit_mebibyte">
         <item quantity="one">mebibytes</item>
         <item quantity="other">mebibytes</item>
     </plurals>
-    <string name="unit_gibibyte_symbol">GiB</string>
+    <string name="unit_gibibyte_symbol">گیبی‌بایت</string>
     <plurals name="unit_gibibyte">
         <item quantity="one">gibiyte</item>
         <item quantity="other">gibibytes</item>
     </plurals>
-    <string name="unit_tebibyte_symbol">TiB</string>
+    <string name="unit_tebibyte_symbol">تیبی‌بایت</string>
     <plurals name="unit_tebibyte">
         <item quantity="one">tebiyte</item>
         <item quantity="other">tebiytes</item>
     </plurals>
-    <string name="unit_bit_symbol">bit</string>
+    <string name="unit_bit_symbol">بیت</string>
     <plurals name="unit_bit">
         <item quantity="one">bit</item>
         <item quantity="other">bits</item>
@@ -232,48 +232,48 @@
         <item quantity="one">mile per hour</item>
         <item quantity="other">miles per hour</item>
     </plurals>
-    <string name="unit_knot_symbol">kn</string>
+    <string name="unit_knot_symbol">گره</string>
     <plurals name="unit_knot">
         <item quantity="one">knot</item>
         <item quantity="other">knots</item>
     </plurals>
     <!-- UNITS OF MASS -->
-    <string name="unit_kilogram_symbol">kg</string>
+    <string name="unit_kilogram_symbol">کیلوگرم</string>
     <plurals name="unit_kilogram">
         <item quantity="one">kilogram</item>
         <item quantity="other">kilograms</item>
     </plurals>
-    <string name="unit_gram_symbol">g</string>
+    <string name="unit_gram_symbol">گرم</string>
     <plurals name="unit_gram">
         <item quantity="one">gram</item>
         <item quantity="other">grams</item>
     </plurals>
-    <string name="unit_metric_ton_symbol">t</string>
+    <string name="unit_metric_ton_symbol">تن متریک</string>
     <plurals name="unit_metric_ton">
         <item quantity="one">metric ton</item>
         <item quantity="other">metric tons</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_long_ton_symbol">تن بلند</string>
     <plurals name="unit_long_ton">
         <item quantity="one">long ton</item>
         <item quantity="other">long tons</item>
     </plurals>
-    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_stone_symbol">استون</string>
     <plurals name="unit_stone">
         <item quantity="one">stone</item>
         <item quantity="other">stones</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">پوند</string>
     <plurals name="unit_pound">
         <item quantity="one">pound</item>
         <item quantity="other">pounds</item>
     </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">اونس</string>
     <plurals name="unit_ounce">
         <item quantity="one">ounce</item>
         <item quantity="other">ounces</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">تن کوتاه</string>
     <plurals name="unit_short_ton">
         <item quantity="one">short ton</item>
         <item quantity="other">short tons</item>
@@ -289,7 +289,7 @@
         <item quantity="one">degree fahrenheit</item>
         <item quantity="other">degrees fahrenheit</item>
     </plurals>
-    <string name="unit_kelvin_symbol">K</string>
+    <string name="unit_kelvin_symbol">کلوین</string>
     <plurals name="unit_kelvin">
         <item quantity="one">kelvin</item>
         <item quantity="other">kelvins</item>
