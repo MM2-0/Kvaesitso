@@ -631,7 +631,7 @@
     <string name="preference_search_calculator">Hesap makinesi</string>
     <string name="preference_search_calculator_summary">Matematiksel terimleri değerlendir</string>
     <string name="preference_search_unitconverter">Birim dönüştürücü</string>
-    <string name="preference_search_unitconverter_summary">Kullanım: 1.5 kg veya 4 cm >> in</string>
+    <string name="preference_search_unitconverter_summary">Kullanım: 1.5 kg veya 4 cm &gt;&gt; in</string>
     <string name="preference_search_currencyconverter">Para birimi dönüştürücü</string>
     <string name="preference_search_currencyconverter_summary">Para birimlerini dönüştürmek için döviz kurlarını periyodik olarak indirin</string>
     <string name="preference_search_supportedunits">Desteklenen birimler</string>
@@ -688,7 +688,7 @@
     <string name="preference_launch_tasks_app">Tasks uygulamasını aç</string>
     <string name="preference_breezyweather_integration">Breezy Weather</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather, ücretsiz ve açık kaynaklı bir hava durumu uygulamasıdır. Yüklüyse, %1$s Breezy Weather\'ı hava durumu verileri için bir veri kaynağı olarak kullanabilir.</string>
-    <string name="preference_breezyweather_integration_instructions">Breezy Weather\'ı hava durumu sağlayıcısı olarak kullanmak için:\n\n1. Breezy Weather > Ayarlar > Araçlar &amp; Canlı duvar kağıdı > Gadgetbridge verisi gönder > %1$s\'i Etkinleştir\'e gidin\n\n2. %1$s\'te, hava durumu sağlayıcısı olarak Breezy Weather\'ı seçin</string>
+    <string name="preference_breezyweather_integration_instructions">Breezy Weather\'ı hava durumu sağlayıcısı olarak kullanmak için:\n\n1. Breezy Weather &gt; Ayarlar &gt; Araçlar &amp; Canlı duvar kağıdı &gt; Gadgetbridge verisi gönder &gt; %1$s\'i Etkinleştir\'e gidin\n\n2. %1$s\'te, hava durumu sağlayıcısı olarak Breezy Weather\'ı seçin</string>
     <string name="preference_launch_breezyweather_app">Breezy Weather\'ı aç</string>
     <string name="preference_contacts_call_on_tap">Aramak için dokun</string>
     <string name="preference_contacts_call_on_tap_summary">Bir telefon numarasına dokunduğunuzda hemen bir arama başlatın</string>
@@ -1048,4 +1048,9 @@
     <string name="font_name_device_headline">Varsayılan başlık yazı tipi</string>
     <string name="font_name_device_body">Cihaz metin yazı tipi</string>
     <string name="font_category_generic">Genel</string>
+    <string name="preference_search_bar_style_transparent">Şeffaf</string>
+    <string name="preference_search_bar_style_solid">Koyu</string>
+    <string name="preference_search_bar_style_hidden">Gizli</string>
+    <string name="clock_variant_analog_ticks">Çubuklar</string>
+    <string name="music_widget_interactive_progress_bar">İnteraktif ilerleme barı</string>
 </resources>
