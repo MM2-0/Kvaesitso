@@ -325,6 +325,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s is playing media</string>
     <string name="music_widget_no_data">No media has been played yet</string>
+    <string name="music_widget_interactive_progress_bar">Interactive progress bar</string>
     <string name="weather_condition_sleetshowers">Sleet showers</string>
     <string name="weather_condition_heavysleet">Heavy sleet</string>
     <string name="weather_condition_lightrainshowersandthunder">Light rain showers and thunder</string>

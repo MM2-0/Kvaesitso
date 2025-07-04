@@ -119,7 +119,7 @@ fun ConfigureWidgetSheet(
                 is AppWidget -> ConfigureAppWidget(widget, onWidgetUpdated)
                 is CalendarWidget -> ConfigureCalendarWidget(widget, onWidgetUpdated)
                 is FavoritesWidget -> ConfigureFavoritesWidget(widget, onWidgetUpdated)
-                is MusicWidget -> ConfigureMusicWidget()
+                is MusicWidget -> ConfigureMusicWidget(widget, onWidgetUpdated)
                 is NotesWidget -> ConfigureNotesWidget(widget, onWidgetUpdated)
             }
         }
@@ -232,9 +232,26 @@ fun ColumnScope.ConfigureFavoritesWidget(
 
 @Composable
 fun ColumnScope.ConfigureMusicWidget(
+    widget: MusicWidget,
+    onWidgetUpdated: (MusicWidget) -> Unit,
 
 ) {
     val context = LocalContext.current
+
+    OutlinedCard {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            SwitchPreference(
+                title = stringResource(R.string.music_widget_interactive_progress_bar),
+                iconPadding = false,
+                value = widget.config.interactiveProgressBar,
+                onValueChanged = {
+                    onWidgetUpdated(widget.copy(config = widget.config.copy(interactiveProgressBar = it)))
+                }
+            )
+        }
+    }
 
     TextButton(
         modifier = Modifier

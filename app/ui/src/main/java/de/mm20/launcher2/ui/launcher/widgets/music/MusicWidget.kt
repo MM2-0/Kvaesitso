@@ -168,7 +168,7 @@ fun MusicWidget(widget: MusicWidget) {
                         var seekPosition by remember { mutableStateOf<Float?>(null) }
 
                         if (pos != null && dur != null && dur > 0) {
-                            if (playbackState != PlaybackState.Stopped || supportedActions.seekTo) {
+                            if (playbackState != PlaybackState.Stopped && supportedActions.seekTo && widget.config.interactiveProgressBar) {
                                 Slider(
                                     modifier = Modifier
                                         .fillMaxWidth()
