@@ -858,4 +858,7 @@
     <string name="font_name_device_headline">Standaard koplettertype</string>
     <string name="font_name_device_body">Tekstlettertype van het systeem</string>
     <string name="font_category_generic">Generiek</string>
+    <string name="preference_search_bar_style_transparent">Transparant</string>
+    <string name="preference_search_bar_style_hidden">Verborgen</string>
+    <string name="preference_search_bar_style_solid">Massief</string>
 </resources>
