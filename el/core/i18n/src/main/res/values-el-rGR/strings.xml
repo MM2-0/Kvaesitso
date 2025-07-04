@@ -12,162 +12,162 @@
     <string name="location_opens_other_day">opens %1$s, %2$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
-    <string name="menu_share">Share</string>
+    <string name="menu_share">Κοινοποίηση</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store
      %1$s is the name of the app store (e.g. Google Play)-->
-    <string name="menu_share_store_link">%1$s link</string>
+    <string name="menu_share_store_link">%1$s σύνδεσμος</string>
     <!-- Share an APK file, shown in the app detail share menu -->
-    <string name="menu_share_apk_file">Package file</string>
+    <string name="menu_share_apk_file">Αρχείο εφαρμογής</string>
     <!-- Uninstall an application -->
-    <string name="menu_uninstall">Uninstall</string>
-    <string name="menu_favorites_pin">Pin to favorites</string>
-    <string name="menu_favorites_unpin">Unpin</string>
-    <string name="menu_back">Back</string>
-    <string name="menu_app_info">App info</string>
+    <string name="menu_uninstall">Απεγκατάσταση</string>
+    <string name="menu_favorites_pin">Καρφίτσωμα στα αγαπημένα</string>
+    <string name="menu_favorites_unpin">Ξεκαρφίτσωμα</string>
+    <string name="menu_back">Πίσω</string>
+    <string name="menu_app_info">Πληροφορίες εφαρμογής</string>
     <!-- Launch an app -->
-    <string name="menu_launch">Launch</string>
-    <string name="menu_customize">Customize</string>
+    <string name="menu_launch">Εκκίνηση</string>
+    <string name="menu_customize">Παραμετροποίηση</string>
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Open</string>
     <string name="menu_map">View on map</string>
     <string name="menu_website">Open website</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
-    <string name="action_undo">Undo</string>
-    <string name="action_import">Import</string>
+    <string name="action_undo">Αναίρεση</string>
+    <string name="action_import">Εισαγωγή</string>
     <string name="action_done">Done</string>
     <string name="action_more_actions">More actions</string>
     <string name="action_clear">Clear</string>
     <string name="action_install">Install</string>
     <!-- Delete something (a file or a web search shortcut) -->
-    <string name="menu_delete">Delete</string>
-    <string name="menu_remove">Remove</string>
+    <string name="menu_delete">Διαγραφή</string>
+    <string name="menu_remove">Αφαίρεση</string>
     <!-- Open a contact in the contacts app -->
-    <string name="menu_contacts_open_externally">Open in contacts app</string>
+    <string name="menu_contacts_open_externally">Άνοιγμα στις επαφές</string>
     <!-- Open an event in the calendar app -->
-    <string name="menu_calendar_open_externally">Open in calendar app</string>
+    <string name="menu_calendar_open_externally">Άνοιγμα στο ημερολόγιο</string>
     <!-- Shown in the search bar when the search text field is empty -->
-    <string name="search_bar_placeholder">Search</string>
+    <string name="search_bar_placeholder">Αναζήτηση</string>
     <!-- App version, used in application details %1$s is the version -->
-    <string name="app_info_version">Version %1$s</string>
+    <string name="app_info_version">Έκδοση %1$s</string>
     <!-- Menu entry for launcher settings -->
-    <string name="settings">Settings</string>
+    <string name="settings">Ρυθμίσεις</string>
     <!-- Menu entry for launcher help -->
-    <string name="help">Help</string>
+    <string name="help">Βοήθεια</string>
     <!-- Set the device's wallpaper -->
-    <string name="wallpaper">Wallpaper</string>
+    <string name="wallpaper">Φόντο</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north">North</string>
+    <string name="wind_north">Βόρειος</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_east">North east</string>
+    <string name="wind_north_east">Βορειοανατολικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_east">North north east</string>
+    <string name="wind_north_north_east">Βόρειος βορειοανατολικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east_north_east">East north east</string>
+    <string name="wind_east_north_east">Ανατολικός βορειοανατολικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east">East</string>
+    <string name="wind_east">Ανατολικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east_south_east">East south east</string>
+    <string name="wind_east_south_east">Ανατολικός νοτιοανατολικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_east">South east</string>
+    <string name="wind_south_east">Νοτιοανατολικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_south_east">South south east</string>
+    <string name="wind_south_south_east">Νότιος νοτιοανατολικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south">South</string>
+    <string name="wind_south">Νότιος</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_south_west">South south west</string>
+    <string name="wind_south_south_west">Νότιος νοτιοδυτικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_west">South west</string>
+    <string name="wind_south_west">Νοτιοδυτικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west_south_west">West south west</string>
+    <string name="wind_west_south_west">Δυτικός νοτιοδυτικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west">West</string>
+    <string name="wind_west">Δυτικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west_north_west">West north west</string>
+    <string name="wind_west_north_west">Δυτικός βορειοδυτικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_west">North west</string>
+    <string name="wind_north_west">Βορειοδυτικός</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_west">North north west</string>
+    <string name="wind_north_north_west">Βόρειος βορειοδυτικός</string>
     <!-- No rain or snow, used in weather widget -->
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
       a fallback that is suited best for most users of this language should be used
       (English in most cases) -->
-    <string name="wikipedia_url">https://en.wikipedia.org</string>
+    <string name="wikipedia_url">https://el.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
-    <string name="wikipedia_source">From Wikipedia</string>
+    <string name="wikipedia_source">Από τη Wikipedia</string>
     <!-- File meta data, title of audio tracks -->
-    <string name="file_meta_title">Title: %1$s</string>
+    <string name="file_meta_title">Τίτλος: %1$s</string>
     <!-- File meta data, artist of audio tracks -->
-    <string name="file_meta_artist">Artist: %1$s</string>
+    <string name="file_meta_artist">Καλλιτέχνης: %1$s</string>
     <!-- File meta data, album of audio tracks -->
-    <string name="file_meta_album">Album: %1$s</string>
+    <string name="file_meta_album">Άλμπουμ: %1$s</string>
     <!-- File meta data, duration of audio tracks -->
-    <string name="file_meta_duration">Duration: %1$s</string>
+    <string name="file_meta_duration">Διάρκεια: %1$s</string>
     <!-- File meta data, year of audio tracks -->
-    <string name="file_meta_year">Year: %1$s</string>
+    <string name="file_meta_year">Έτος: %1$s</string>
     <!-- File size -->
-    <string name="file_meta_size">Size: %1$s</string>
+    <string name="file_meta_size">Μέγεθος: %1$s</string>
     <!-- File path -->
-    <string name="file_meta_path">Path: %1$s</string>
+    <string name="file_meta_path">Διαδρομή: %1$s</string>
     <!-- File type (MIME type) -->
-    <string name="file_meta_type">Type: %1$s</string>
+    <string name="file_meta_type">Τύπος: %1$s</string>
     <!-- File meta, image/video dimensions -->
-    <string name="file_meta_dimensions">Dimensions: %1$s</string>
+    <string name="file_meta_dimensions">Διαστάσεις: %1$s</string>
     <!-- File meta, app name of APK files -->
-    <string name="file_meta_app_name">App name: %1$s</string>
+    <string name="file_meta_app_name">Όνομα εφαρμογής: %1$s</string>
     <!-- File meta, version name of APK files -->
-    <string name="file_meta_app_version">Version: %1$s</string>
+    <string name="file_meta_app_version">Έκδοση: %1$s</string>
     <!-- File meta, package name of APK files -->
-    <string name="file_meta_app_pkgname">Package name: %1$s</string>
+    <string name="file_meta_app_pkgname">Όνομα πακέτου: %1$s</string>
     <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
-    <string name="file_meta_app_min_sdk">Min SDK version: %1$s</string>
+    <string name="file_meta_app_min_sdk">Ελ. έκδοση SDK: %1$s</string>
     <!-- File meta, owner (for files that are stored in a cloud) -->
-    <string name="file_meta_owner">Owner: %1$s</string>
+    <string name="file_meta_owner">Ιδιοκτήτης: %1$s</string>
     <!-- File meta, location (e.g. location where a photo has been taken) -->
-    <string name="file_meta_location">Location: %1$s</string>
-    <string name="file_type_directory">Directory</string>
+    <string name="file_meta_location">Τοποθεσία: %1$s</string>
+    <string name="file_type_directory">Φάκελος</string>
     <!-- ZIP, TAR, … archive files  -->
-    <string name="file_type_archive">Archive file</string>
+    <string name="file_type_archive">Αρχείο</string>
     <!-- APK file  -->
-    <string name="file_type_android">Android package file</string>
+    <string name="file_type_android">Αρχείο εφαρμογής Android</string>
     <!-- Code file (source code in a programming language) -->
-    <string name="file_type_source_code">Source code file</string>
+    <string name="file_type_source_code">Αρχείο πηγαίου κώδικα</string>
     <!-- Word document -->
-    <string name="file_type_document">Document</string>
+    <string name="file_type_document">Έγγραφο</string>
     <!-- Excel spreadsheet -->
-    <string name="file_type_spreadsheet">Spreadsheet</string>
+    <string name="file_type_spreadsheet">Υπολογιστικό φύλλο</string>
     <!-- Audio file -->
-    <string name="file_type_music">Music file</string>
+    <string name="file_type_music">Ήχος</string>
     <!-- Video file -->
-    <string name="file_type_video">Video</string>
+    <string name="file_type_video">Βίντεο</string>
     <!-- Picture file -->
-    <string name="file_type_image">Picture</string>
+    <string name="file_type_image">Εικόνα</string>
     <!-- Generic file without file extension -->
-    <string name="file_type_none">File</string>
+    <string name="file_type_none">Αρχείο</string>
     <!-- Powerpoint presentation -->
-    <string name="file_type_presentation">Presentation</string>
+    <string name="file_type_presentation">Παρουσίαση</string>
     <!-- BZIP, GZIP, … compressed file -->
-    <string name="file_type_compressed">Compressed file</string>
+    <string name="file_type_compressed">Συμπιεσμένο αρχείο</string>
     <!-- Plain text (TXT) file -->
-    <string name="file_type_text">Text file</string>
+    <string name="file_type_text">Αρχείο κειμένου</string>
     <!-- E-book file -->
-    <string name="file_type_ebook">E-book</string>
+    <string name="file_type_ebook">Ηλ. Βιβλίο</string>
     <!-- Google Drawings file -->
-    <string name="file_type_drawing">Drawing</string>
+    <string name="file_type_drawing">Ζωγραφιά</string>
     <!-- Google Forms file -->
-    <string name="file_type_form">Form</string>
+    <string name="file_type_form">Φόρμα</string>
     <!-- Launcher backup, %1$s: app name -->
-    <string name="file_type_launcherbackup">%1$s backup</string>
+    <string name="file_type_launcherbackup">%1$s αντίγραφο ασφαλείας</string>
     <!-- Launcher theme, %1$s: app name -->
-    <string name="file_type_launchertheme">%1$s theme</string>
+    <string name="file_type_launchertheme">%1$s θέμα</string>
     <!-- Generic file , %1$s is the file extension -->
-    <string name="file_type_generic">%1$s file</string>
+    <string name="file_type_generic">%1$s αρχείο</string>
     <!-- Warning message that is shown when a user attempts to delete a directory -->
-    <string name="alert_delete_directory">The directory %1$s and all its content will be deleted permanently. Proceed\?</string>
+    <string name="alert_delete_directory">Ο φάκελος %1$s και όλα τα περιεχόμενά του θα διαγράφουν μόνιμα. Συνέχεια;</string>
     <!-- Warning message that is shown when a user attempts to delete a file -->
-    <string name="alert_delete_file">The file %1$s will be deleted permanently. Proceed\?</string>
+    <string name="alert_delete_file">Το αρχείο %1$s θα διαγράφει μόνιμα. Συνέχεια;</string>
     <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
-    <string name="alert_delete_shortcut">The shortcut %1$s will be removed permanently. Proceed\?</string>
+    <string name="alert_delete_shortcut">Η συντόμευση %1$s θα αφαιρεθεί μόνιμα. Συνέχεια;</string>
     <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
     could not be opened because there was no app installed that could handle the request  -->
     <!--
@@ -210,99 +210,99 @@
         the region of the language or not commonly used.
        -->
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="websearch_dialog_url_error">The placeholder \'${1}\' is missing in this URL</string>
-    <string name="websearch_dialog_replace_icon">Replace icon</string>
-    <string name="websearch_dialog_delete_icon">Delete icon</string>
-    <string name="websearch_dialog_custom_icon">Custom icon</string>
-    <string name="websearch_dialog_advanced">Advanced</string>
-    <string name="websearch_dialog_query_encoding">Query encoding</string>
-    <string name="websearch_dialog_query_encoding_url">Percent-encoding</string>
+    <string name="websearch_dialog_url_error">Το σύμβολο θέσης \'${1}\' λείπει σε αυτήν τη διεύθυνση URL</string>
+    <string name="websearch_dialog_replace_icon">Αντικατάσταση εικονιδίου</string>
+    <string name="websearch_dialog_delete_icon">Διαγραφή εικονιδίου</string>
+    <string name="websearch_dialog_custom_icon">Προσαρμογή εικονιδίου</string>
+    <string name="websearch_dialog_advanced">Προχωρημένο</string>
+    <string name="websearch_dialog_query_encoding">Κωδικοποίηση ερωτήματος</string>
+    <string name="websearch_dialog_query_encoding_url">Κωδικοποίηση URL</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
-    <string name="websearch_dialog_query_encoding_none">None</string>
-    <string name="menu_edit_widgets">Edit widgets</string>
-    <string name="widget_name_weather">Weather</string>
-    <string name="widget_name_calendar">Calendar</string>
-    <string name="widget_name_music">Music</string>
-    <string name="widget_name_favorites">Favorites</string>
-    <string name="widget_name_notes">Note</string>
-    <string name="widget_name_unknown">Unknown app widget</string>
-    <string name="widget_add_widget">Add widget</string>
+    <string name="websearch_dialog_query_encoding_none">Κανένα</string>
+    <string name="menu_edit_widgets">Επεξεργασία γραφικών στοιχείων</string>
+    <string name="widget_name_weather">Καιρός</string>
+    <string name="widget_name_calendar">Ημερολόγιο</string>
+    <string name="widget_name_music">Μουσική</string>
+    <string name="widget_name_favorites">Αγαπημένα</string>
+    <string name="widget_name_notes">Ένα γραφικό στοιχείο που αποθηκεύει μία μόνο σημείωση</string>
+    <string name="widget_name_unknown">Ετικέτα που χρησιμοποιείται για μη έγκυρα γραφικά στοιχεία εφαρμογών</string>
+    <string name="widget_add_widget">Προσθήκη γραφικού στοιχείου</string>
     <string name="widget_removed">Widget removed</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Write a note…</string>
-    <string name="notes_widget_action_new">New note</string>
+    <string name="notes_widget_placeholder">Γράψε μια σημείωση…</string>
+    <string name="notes_widget_action_new">Νέα σημείωση</string>
     <!-- Save / export the current note content as markdown file -->
-    <string name="notes_widget_action_save">Save</string>
+    <string name="notes_widget_action_save">Αποθήκευση</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
-    <string name="notes_widget_export_filename">Note_%1$s</string>
-    <string name="notes_widget_action_dismiss">Dismiss</string>
-    <string name="notes_widget_dismissed">Note dismissed.</string>
+    <string name="notes_widget_export_filename">Σημείωση_%1$s</string>
+    <string name="notes_widget_action_dismiss">Απόρριψη</string>
+    <string name="notes_widget_dismissed">Η σημείωση απορρίφθηκε.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
-    <string name="shortcut_summary">By %1$s</string>
+    <string name="shortcut_summary">Από %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it\?</string>
+    <string name="easter_egg_text">Λοιπόν, με βρήκες. Συγχαρητήρια. Άξιζε τον κόπο;</string>
     <!-- Close a dialog -->
-    <string name="close">Close</string>
+    <string name="close">Κλείσιμο</string>
     <string name="no_selection">No selection</string>
-    <string name="save">Save</string>
+    <string name="save">Αποθήκευση</string>
     <string name="save_as_file">Save as file</string>
-    <string name="duplicate">Duplicate</string>
-    <string name="edit">Edit</string>
-    <string name="skip">Skip</string>
-    <string name="action_next">Next</string>
+    <string name="duplicate">Διπλότυπο</string>
+    <string name="edit">Επεξεργασία</string>
+    <string name="skip">Παράλειψη</string>
+    <string name="action_next">Επόμενο</string>
     <!-- Turn something off / disable a functionality of the launcher -->
-    <string name="turn_off">Turn off</string>
-    <string name="widget_action_remove">Remove</string>
-    <string name="widget_action_replace">Replace</string>
-    <string name="menu_item_edit_favs">Edit favorites</string>
+    <string name="turn_off">Απενεργοποίηση</string>
+    <string name="widget_action_remove">Αφαίρεση</string>
+    <string name="widget_action_replace">Αντικατάσταση</string>
+    <string name="menu_item_edit_favs">Επεξεργασία αγαπημένων</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
-    <string name="edit_favorites_dialog_unpinned">Not pinned – frequently used</string>
+    <string name="edit_favorites_dialog_unpinned">Δεν είναι καρφιτσωμένο - χρησιμοποιείται συχνά</string>
     <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
-    <string name="edit_favorites_dialog_pinned_unsorted">Pinned – automatically sorted</string>
+    <string name="edit_favorites_dialog_pinned_unsorted">Καρφιτσωμένο - αυτόματα ταξινομημένο</string>
     <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
-    <string name="edit_favorites_dialog_pinned_sorted">Pinned – manually sorted</string>
-    <string name="edit_favorites_dialog_empty_section">Drag items here</string>
-    <string name="edit_favorites_dialog_tags">Tags</string>
-    <string name="edit_favorites_dialog_tag_section_empty">Pinned tags will appear here</string>
-    <string name="edit_favorites_dialog_new_tag">Create tag…</string>
+    <string name="edit_favorites_dialog_pinned_sorted">Καρφιτσωμένο - χειροκίνητα ταξινομημένο</string>
+    <string name="edit_favorites_dialog_empty_section">Σύρετε στοιχεία εδώ</string>
+    <string name="edit_favorites_dialog_tags">Ετικέτες</string>
+    <string name="edit_favorites_dialog_tag_section_empty">Οι καρφιτσωμένες ετικέτες θα εμφανίζονται εδώ</string>
+    <string name="edit_favorites_dialog_new_tag">Δημιουργία ετικέτας…</string>
     <!-- Nextcloud login flow, URL-->
-    <string name="nextcloud_server_url">Nextcloud server URL</string>
+    <string name="nextcloud_server_url">URL διακομιστή Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
     <!-- Nextcloud login flow, error invalid URL-->
-    <string name="nextcloud_server_invalid_url">This URL does not point to a valid Nextcloud installation</string>
+    <string name="nextcloud_server_invalid_url">Αυτή η διεύθυνση URL δεν οδηγεί σε έγκυρη εγκατάσταση Nextcloud</string>
     <!-- Owncloud login flow, UR-->
-    <string name="owncloud_server_url">Owncloud server URL</string>
+    <string name="owncloud_server_url">URL διακομιστή Owncloud</string>
     <!-- Owncloud login flow, error invalid URL-->
-    <string name="owncloud_server_invalid_url">This URL does not point to a valid Owncloud installation</string>
+    <string name="owncloud_server_invalid_url">Αυτή η διεύθυνση URL δεν οδηγεί σε έγκυρη εγκατάσταση Owncloud</string>
     <!-- Owncloud login flow, password-->
-    <string name="owncloud_password">Password</string>
+    <string name="owncloud_password">Κωδικός πρόσβασης</string>
     <!-- Owncloud login flow, user name-->
-    <string name="owncloud_username">User name</string>
+    <string name="owncloud_username">Όνομα χρήστη</string>
     <!-- Owncloud login flow -->
-    <string name="owncloud_login_2fa_hint">If you have two factor authentication enabled, you must use an app password here.</string>
+    <string name="owncloud_login_2fa_hint">Εάν έχετε ενεργοποιημένο τον έλεγχο ταυτότητας δύο παραγόντων, πρέπει να χρησιμοποιήσετε εδώ έναν κωδικό πρόσβασης εφαρμογής.</string>
     <!-- Owncloud login flow, login failed -->
-    <string name="owncloud_login_failed">Login failed: incorrect username or password.</string>
+    <string name="owncloud_login_failed">Η σύνδεση απέτυχε: λανθασμένο όνομα χρήστη ή κωδικός πρόσβασης.</string>
     <!-- Owncloud login flow, error: username empty -->
     <!-- Owncloud login flow, error: password empty -->
     <!-- Nextcloud/Owncloud login flow, continue button -->
-    <string name="login_flow_continue">Continue</string>
+    <string name="login_flow_continue">Συνέχεια</string>
     <!-- Nextcloud/Owncloud login flow, login button -->
-    <string name="login_flow_login">Log in</string>
-    <string name="disclaimer">Disclaimer</string>
+    <string name="login_flow_login">Είσοδος</string>
+    <string name="disclaimer">Αποποίηση ευθυνών</string>
     <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
-    <string name="disclaimer_currency_converter">Exchange rates as published once per day by the European Central Bank. All information is provided \"as is\" without any kind of guarantee. No liability is assumed for these information.
+    <string name="disclaimer_currency_converter">Συναλλαγματικές ισοτιμίες όπως δημοσιεύονται μία φορά την ημέρα από την Ευρωπαϊκή Κεντρική Τράπεζα. Όλες οι πληροφορίες παρέχονται «ως έχουν» χωρίς κανενός είδους εγγύηση. Δεν αναλαμβάνεται καμία ευθύνη για αυτές τις πληροφορίες.
 \n
-\nLast update: %1$s</string>
-    <string name="show_all">Show all</string>
+\nΤελευταία ενημέρωση: %1$s</string>
+    <string name="show_all">Εμφάνιση όλων</string>
     <!-- Used in calendar widget date selector. -->
-    <string name="date_today">Today</string>
+    <string name="date_today">Σήμερα</string>
     <!-- Used in calendar widget date selector. -->
-    <string name="date_tomorrow">Tomorrow</string>
+    <string name="date_tomorrow">Αύριο</string>
     <!-- Headline used in calendar widget for pinned events -->
-    <string name="calendar_widget_pinned_events">Upcoming</string>
+    <string name="calendar_widget_pinned_events">Επερχόμενα</string>
     <!-- Headline used in calendar widget for the next event, if there is no event today -->
-    <string name="calendar_widget_next_events">Next event</string>
-    <string name="calendar_widget_no_events">No events today</string>
+    <string name="calendar_widget_next_events">Επόμενη εκδήλωση</string>
+    <string name="calendar_widget_no_events">Καμία εκδήλωση σήμερα</string>
     <!--
         In the calendar widget, only events that start or end at the selected date are shown.
         If an event runs for three days, it won't be listed if the second day is selected.
@@ -310,381 +310,381 @@
         running events that neither started nor will end on the selected day.
         -->
     <plurals name="calendar_widget_running_events">
-        <item quantity="one">+%1$d running event from past days</item>
-        <item quantity="other">+%1$d running events from past days</item>
+        <item quantity="one">%1$d εκτελούμενη εκδήλωση από προηγούμενες ημέρες</item>
+        <item quantity="other">%1$d εκτελούμενες εκδηλώσεις από προηγούμενες ημέρες</item>
     </plurals>
     <plurals name="calendar_widget_running_tasks">
         <item quantity="one">+%1$d unfinished task</item>
         <item quantity="other">+%1$d unfinished tasks</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">all-day</string>
+    <string name="calendar_event_allday">ολοήμερη</string>
     <string name="task_due_time">Due at %1$s</string>
     <string name="task_due_date">Due on %1$s</string>
     <string name="task_due_today">Due today</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
-    <string name="music_widget_default_title">%1$s is playing media</string>
-    <string name="music_widget_no_data">No media has been played yet</string>
+    <string name="music_widget_default_title">Το %1$s αναπαράγει πολυμέσα</string>
+    <string name="music_widget_no_data">Δεν έχει αναπαραχθεί ακόμα κανένα μέσο</string>
     <string name="music_widget_interactive_progress_bar">Interactive progress bar</string>
-    <string name="weather_condition_sleetshowers">Sleet showers</string>
-    <string name="weather_condition_heavysleet">Heavy sleet</string>
-    <string name="weather_condition_lightrainshowersandthunder">Light rain showers and thunder</string>
-    <string name="weather_condition_heavyrain">Heavy rain</string>
-    <string name="weather_condition_lightsnowandthunder">Light snow and thunder</string>
-    <string name="weather_condition_lightrain">Light rain</string>
-    <string name="weather_condition_lightrainshowers">Light rain showers</string>
-    <string name="weather_condition_lightsnow">Light snow</string>
-    <string name="weather_condition_heavysleetshowersandthunder">Heavy sleet showers and thunder</string>
-    <string name="weather_condition_lightsnowshowers">Light snow showers</string>
-    <string name="weather_condition_lightssleetshowersandthunder">Lights sleet showers and thunder</string>
-    <string name="weather_condition_snowandthunder">Snow and thunder</string>
-    <string name="weather_condition_heavysleetshowers">Heavy sleet showers</string>
-    <string name="weather_condition_heavysnow">Heavy snow</string>
-    <string name="weather_condition_cloudy">Cloudy</string>
-    <string name="weather_condition_lightrainandthunder">Light rain and thunder</string>
-    <string name="weather_condition_snow">Snow</string>
-    <string name="weather_condition_hail">Hail</string>
+    <string name="weather_condition_sleetshowers">Χιονόνερο</string>
+    <string name="weather_condition_heavysleet">Βαρύ χιονόνερο</string>
+    <string name="weather_condition_lightrainshowersandthunder">Ασθενείς βροχές και κεραυνοί</string>
+    <string name="weather_condition_heavyrain">Δυνατή βροχή</string>
+    <string name="weather_condition_lightsnowandthunder">Ασθενές χιόνι και κεραυνοί</string>
+    <string name="weather_condition_lightrain">Ασθενής βροχή</string>
+    <string name="weather_condition_lightrainshowers">Ασθενείς βροχές</string>
+    <string name="weather_condition_lightsnow">Ελαφρύ χιόνι</string>
+    <string name="weather_condition_heavysleetshowersandthunder">Σφοδρές βροχές και κεραυνοί</string>
+    <string name="weather_condition_lightsnowshowers">Ασθενείς χιονοπτώσεις</string>
+    <string name="weather_condition_lightssleetshowersandthunder">Ασθενές χιονόνερο και κεραυνοί</string>
+    <string name="weather_condition_snowandthunder">Χιόνι και κεραυνοί</string>
+    <string name="weather_condition_heavysleetshowers">Έντονο χιονόνερο</string>
+    <string name="weather_condition_heavysnow">Έντονη χιονόπτωση</string>
+    <string name="weather_condition_cloudy">Συννεφιά</string>
+    <string name="weather_condition_lightrainandthunder">Ασθενής βροχή και κεραυνοί</string>
+    <string name="weather_condition_snow">Χιόνι</string>
+    <string name="weather_condition_hail">Χαλάζι</string>
     <string name="weather_condition_thunderstorm">Thunderstorm</string>
     <string name="weather_condition_thunder">Thunder</string>
-    <string name="weather_condition_heavysnowshowers">Heavy snow showers</string>
-    <string name="weather_condition_heavyrainshowers">Heavy rain showers</string>
-    <string name="weather_condition_rainshowersandthunder">Rain showers and thunder</string>
-    <string name="weather_condition_clearsky">Clear sky</string>
-    <string name="weather_condition_sleet">Sleet</string>
-    <string name="weather_condition_rain">Rain</string>
-    <string name="weather_condition_sleetandthunder">Sleet and thunder</string>
-    <string name="weather_condition_lightssnowshowersandthunder">Lights snow showers and thunder</string>
-    <string name="weather_condition_heavyrainshowersandthunder">Heavy rain showers and thunder</string>
-    <string name="weather_condition_fair">Fair</string>
-    <string name="weather_condition_fog">Fog</string>
+    <string name="weather_condition_heavysnowshowers">Έντονες χιονοπτώσεις</string>
+    <string name="weather_condition_heavyrainshowers">Έντονες βροχοπτώσεις</string>
+    <string name="weather_condition_rainshowersandthunder">Βροχές και κεραυνοί</string>
+    <string name="weather_condition_clearsky">Καθαρός ουρανός</string>
+    <string name="weather_condition_sleet">Χιονόνερο</string>
+    <string name="weather_condition_rain">Βροχή</string>
+    <string name="weather_condition_sleetandthunder">Χιονόνερο και κεραυνοί</string>
+    <string name="weather_condition_lightssnowshowersandthunder">Ασθενείς χιονοπτώσεις και κεραυνοί</string>
+    <string name="weather_condition_heavyrainshowersandthunder">Έντονες βροχοπτώσεις και κεραυνοί</string>
+    <string name="weather_condition_fair">Καλοκαιρία</string>
+    <string name="weather_condition_fog">Ομίχλη</string>
     <string name="weather_condition_haze">Haze</string>
-    <string name="weather_condition_sleetshowersandthunder">Sleet showers and thunder</string>
-    <string name="weather_condition_rainandthunder">Rain and thunder</string>
-    <string name="weather_condition_lightsleet">Light sleet</string>
-    <string name="weather_condition_heavysleetandthunder">Heavy sleet and thunder</string>
-    <string name="weather_condition_partlycloudy">Partly cloudy</string>
-    <string name="weather_condition_heavysnowandthunder">Heavy snow and thunder</string>
-    <string name="weather_condition_rainshowers">Rain showers</string>
-    <string name="weather_condition_lightsleetandthunder">Light sleet and thunder</string>
-    <string name="weather_condition_heavysnowshowersandthunder">Heavy snow showers and thunder</string>
-    <string name="weather_condition_lightsleetshowers">Light sleet showers</string>
-    <string name="weather_condition_snowshowersandthunder">Snow showers and thunder</string>
-    <string name="weather_condition_snowshowers">Snow showers</string>
-    <string name="weather_condition_heavyrainandthunder">Heavy rain and thunder</string>
-    <string name="weather_condition_wind">Wind</string>
-    <string name="weather_condition_unknown">Unknown</string>
+    <string name="weather_condition_sleetshowersandthunder">Χιονόνερο και κεραυνοί</string>
+    <string name="weather_condition_rainandthunder">Βροχές και κεραυνοί</string>
+    <string name="weather_condition_lightsleet">Ελαφρύ χιονόνερο</string>
+    <string name="weather_condition_heavysleetandthunder">Έντονο χιονόνερο και κεραυνοί</string>
+    <string name="weather_condition_partlycloudy">Μερική συννεφιά</string>
+    <string name="weather_condition_heavysnowandthunder">Έντονη χιονόπτωση και κεραυνοί</string>
+    <string name="weather_condition_rainshowers">Βροχοπτώσεις</string>
+    <string name="weather_condition_lightsleetandthunder">Ελαφρύ χιονόνερο και κεραυνοί</string>
+    <string name="weather_condition_heavysnowshowersandthunder">Έντονες χιονοπτώσεις και κεραυνοί</string>
+    <string name="weather_condition_lightsleetshowers">Ελαφρύ χιονόνερο</string>
+    <string name="weather_condition_snowshowersandthunder">Χιονοπτώσεις και κεραυνοί</string>
+    <string name="weather_condition_snowshowers">Χιονοπτώσεις</string>
+    <string name="weather_condition_heavyrainandthunder">Έντονη βροχόπτωση και κεραυνοί</string>
+    <string name="weather_condition_wind">Άνεμος</string>
+    <string name="weather_condition_unknown">Άγνωστο</string>
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">No weather data available.</string>
+    <string name="weather_no_data">Δεν υπάρχουν διαθέσιμα δεδομένα καιρού.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
-    <string name="weather_widget_set_location">Set location</string>
-    <string name="weather_location_search_no_result">Location not found.</string>
+    <string name="weather_widget_set_location">Ορισμός τοποθεσίας</string>
+    <string name="weather_location_search_no_result">Η τοποθεσία δε βρέθηκε.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
-    <string name="missing_permission_auto_location">Location access is required to determine the location automatically</string>
+    <string name="missing_permission_auto_location">Απαιτείται πρόσβαση τοποθεσίας για να προσδιοριστεί αυτόματα</string>
     <!-- Missing notification permission in music widget settings -->
-    <string name="missing_permission_music_widget">Notification access is required to control media playback</string>
+    <string name="missing_permission_music_widget">Απαιτείται πρόσβαση στις ειδοποιήσεις για τον έλεγχο της αναπαραγωγής πολυμέσων</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Contact permission is required to search contacts</string>
+    <string name="missing_permission_contact_search_settings">Απαιτείται άδεια πρόσβασης στις επαφές για την αναζήτησή τους</string>
     <!-- Missing call permission in contacts settings screen -->
     <string name="missing_permission_call_contacts_settings">Call permission is required to start calls</string>
     <!-- Missing calendar permission in search settings screen -->
-    <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
+    <string name="missing_permission_calendar_search_settings">Απαιτείται άδεια πρόσβασης στο ημερολόγιο για αναζήτηση εκδηλώσεων</string>
     <string name="missing_permission_tasks_search_settings">Tasks permission is required to search tasks</string>
     <string name="missing_permission_tasks_integration">Tasks permission is required to use the Tasks integration</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">This widget requires calendar permission</string>
-    <string name="widget_config_calendar_missing_calendars_hint">Can\'t find your calendars?</string>
+    <string name="missing_permission_calendar_widget_settings">Αυτό το γραφικό στοιχείο απαιτεί άδεια πρόσβασης στο ημερολόγιο</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Δεν μπορείτε να βρείτε τα ημερολόγια σας;</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search_settings">%1$s must be set as default home app to search app shortcuts</string>
+    <string name="missing_permission_appshortcuts_search_settings">Το %1$s πρέπει να οριστεί ως προεπιλεγμένη εφαρμογή αρχικής οθόνης για αναζήτηση συντομεύσεων εφαρμογών</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">External storage permission is required to search local files</string>
+    <string name="missing_permission_file_search_settings">Απαιτείται άδεια εξωτερικής αποθήκευσης για την αναζήτηση τοπικών αρχείων</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Manage all files permission is required to search local files</string>
+    <string name="missing_permission_file_search_settings_android10">Για την αναζήτηση τοπικών αρχείων απαιτείται άδεια διαχείρισης όλων των αρχείων</string>
     <!-- Missing notification permission, used in badge settings screen -->
-    <string name="missing_permission_notification_badges">Notification access is required to display notification badges</string>
+    <string name="missing_permission_notification_badges">Απαιτείται πρόσβαση στις ειδοποιήσεις για την εμφάνιση σημάτων ειδοποιήσεων</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Grant calendar permission to display upcoming appointments and events here.</string>
+    <string name="missing_permission_calendar_widget">Παραχωρήστε άδεια στο ημερολόγιο για την εμφάνιση προσεχών συναντήσεων και εκδηλώσεων.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Grant calendar permission to search your calendar.</string>
+    <string name="missing_permission_calendar_search">Παραχωρήστε άδεια στο ημερολόγιο για αναζήτηση εκδηλώσεων ημερολογίου.</string>
     <!-- Missing location permission, used in location search results -->
     <string name="missing_permission_location_search">Grant location permission to search nearby locations.</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Grant storage permission to search photos, media and document on this device.</string>
+    <string name="missing_permission_files_search">Παραχωρήστε άδεια αποθηκευτικού χώρου για αναζήτηση φωτογραφιών, πολυμέσων και εγγράφων σε αυτήν τη συσκευή.</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Grant contact permission to search your contact.</string>
+    <string name="missing_permission_contact_search">Παραχωρήστε άδεια στις επαφές για αναζήτηση επαφών.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search">Set %1$s as default home app to search app shortcuts.</string>
+    <string name="missing_permission_appshortcuts_search">Ορίστε το %1$s ως προεπιλεγμένη εφαρμογή αρχικής οθόνης, για αναζήτηση συντομεύσεων εφαρμογών.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
-    <string name="missing_permission_appshortcuts_create">Set %1$s as default home app to create shortcuts.</string>
+    <string name="missing_permission_appshortcuts_create">Ορίστε τ %1$s ως προεπιλεγμένη εφαρμογή αρχικής οθόνης, για δημιουργία συντομεύσεων.</string>
     <!-- Grant a permission, shown in permission banners -->
-    <string name="grant_permission">Grant</string>
+    <string name="grant_permission">Παραχώρηση</string>
     <!-- Appearance preference title -->
-    <string name="preference_screen_appearance">Appearance</string>
-    <string name="preference_theme">Theme</string>
-    <string name="preference_theme_light">Light</string>
-    <string name="preference_theme_dark">Dark</string>
-    <string name="preference_screen_colors">Color scheme</string>
-    <string name="preference_colors_default">Default</string>
+    <string name="preference_screen_appearance">Εμφάνιση</string>
+    <string name="preference_theme">Θέμα</string>
+    <string name="preference_theme_light">Φωτεινό</string>
+    <string name="preference_theme_dark">Σκοτεινό</string>
+    <string name="preference_screen_colors">Χρωματικός συνδυασμός</string>
+    <string name="preference_colors_default">Προεπιλεγμένο</string>
     <string name="preference_colors_high_contrast">High contrast</string>
-    <string name="preference_colors_bw">Black and White</string>
-    <string name="preference_custom_colors_corepalette">Color palette</string>
+    <string name="preference_colors_bw">Ασπρόμαυρο</string>
+    <string name="preference_custom_colors_corepalette">Παλέτα χρωμάτων</string>
     <string name="preference_mdy_color_source">Source for dynamic colors</string>
     <string name="preference_mdy_color_source_system">System</string>
-    <string name="preference_mdy_color_source_wallpaper">Wallpaper</string>
+    <string name="preference_mdy_color_source_wallpaper">Φόντο</string>
     <string name="preference_screen_shapes">Shapes</string>
-    <string name="preference_shapes_default">Default</string>
+    <string name="preference_shapes_default">Προεπιλεγμένο</string>
     <string name="preference_shapes_extra_round">Extra round</string>
     <string name="preference_shapes_rect">Rectangular</string>
     <string name="preference_shapes_base">Base shape</string>
     <string name="preference_screen_typography">Typography</string>
     <string name="preference_screen_transparencies">Transparency</string>
-    <string name="preference_transparencies_default">Default</string>
+    <string name="preference_transparencies_default">Προεπιλεγμένο</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
-    <string name="preference_font">Font</string>
-    <string name="preference_font_system">System default</string>
-    <string name="preference_screen_about">About</string>
-    <string name="preference_version">Version</string>
-    <string name="preference_category_links">Links</string>
-    <string name="preference_category_licenses">Open source licenses</string>
-    <string name="preference_category_advanced">Advanced</string>
+    <string name="preference_font">Γραμματοσειρά</string>
+    <string name="preference_font_system">Προεπιλεγμένη συστήματος</string>
+    <string name="preference_screen_about">Περί</string>
+    <string name="preference_version">Έκδοση</string>
+    <string name="preference_category_links">Σύνδεσμοι</string>
+    <string name="preference_category_licenses">Άδειες ανοιχτού κώδικα</string>
+    <string name="preference_category_advanced">Προχωρημένο</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Open website</string>
-    <string name="preference_screen_about_summary">App and license information</string>
-    <string name="preference_screen_appearance_summary">Customize the look-and-feel</string>
-    <string name="preference_weather_provider">Provider</string>
+    <string name="preference_screen_about_summary">Πληροφορίες εφαρμογής και άδειας χρήσης</string>
+    <string name="preference_screen_appearance_summary">Προσαρμογή εμφάνισης και αίσθησης</string>
+    <string name="preference_weather_provider">Πάροχος</string>
     <string name="provider_metno">MET Norway</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
-    <string name="provider_brightsky">Deutscher Wetterdienst (Germany only)</string>
+    <string name="provider_brightsky">Deutscher Wetterdienst (Γερμανία μόνο)</string>
     <string name="provider_here">HERE</string>
     <string name="provider_breezy">Breezy Weather</string>
-    <string name="preference_category_location">Location</string>
-    <string name="preference_automatic_location">Automatic location</string>
-    <string name="preference_automatic_location_summary">Use GPS and location services to determine location automatically</string>
+    <string name="preference_category_location">Τοποθεσία</string>
+    <string name="preference_automatic_location">Αυτόματη τοποθεσία</string>
+    <string name="preference_automatic_location_summary">Χρησιμοποιήστε τις υπηρεσίες GPS και τοποθεσίας για να προσδιορίσετε αυτόματα την τοποθεσία</string>
     <string name="preference_location_managed">Managed by plugin</string>
     <string name="preference_location_managed_summary">The location for this provider is managed by the plugin app</string>
-    <string name="preference_location">Location</string>
+    <string name="preference_location">Τοποθεσία</string>
     <string name="preference_location_breezy">Manage location in Breezy Weather</string>
-    <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
-    <string name="preference_imperial_units">Imperial units</string>
-    <string name="widget_config_weather_compact">Compact mode</string>
-    <string name="preference_category_debug">Debug</string>
-    <string name="preference_category_debug_tools">Tools</string>
-    <string name="preference_debug_dump_heap">Memory snapshot</string>
-    <string name="preference_debug_dump_heap_summary">Capture a snapshot to analyze memory usage. The app will freeze until this process is completed.</string>
-    <string name="preference_debug_dump_heap_in_progress">Capturing snapshot…</string>
-    <string name="preference_debug_cleanup_database">Clean up database</string>
-    <string name="preference_debug_cleanup_database_summary">Remove broken and unused entries from the launcher database</string>
-    <string name="preference_debug_reinstall_iconpacks">Reinstall icon packs</string>
-    <string name="preference_debug_reinstall_iconpacks_summary">Clear and rebuild the icon pack cache</string>
+    <string name="preference_imperial_units_summary">Χρησιμοποιήστε βαθμούς Φαρενάιτ και μίλια ανά ώρα</string>
+    <string name="preference_imperial_units">Αγγλικό σύστημα μέτρησης</string>
+    <string name="widget_config_weather_compact">Συμπαγής λειτουργία</string>
+    <string name="preference_category_debug">Αποσφαλμάτωση</string>
+    <string name="preference_category_debug_tools">Εργαλεία</string>
+    <string name="preference_debug_dump_heap">Στιγμιότυπο μνήμης</string>
+    <string name="preference_debug_dump_heap_summary">Τραβήξτε ένα στιγμιότυπο για να αναλύσετε τη χρήση μνήμης. Η εφαρμογή θα μπει σε αδράνεια μέχρι να ολοκληρωθεί αυτή η διαδικασία.</string>
+    <string name="preference_debug_dump_heap_in_progress">Λήψη στιγμιότυπου…</string>
+    <string name="preference_debug_cleanup_database">Εκκαθάριση βάσης δεδομένων</string>
+    <string name="preference_debug_cleanup_database_summary">Καταργήστε κατεστραμμένες και αχρησιμοποίητες εγγραφές από τη βάση δεδομένων της εφαρμογής</string>
+    <string name="preference_debug_reinstall_iconpacks">Επανεγκατάσταση πακέτων εικονιδίων</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Εκκαθαρίστε και δημιουργήστε ξανά την προσωρινή μνήμη του πακέτου εικονιδίων</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d entry has been removed.</item>
-        <item quantity="other">%1$d entries have been removed.</item>
+        <item quantity="one">%1$d καταχώριση έχει αφαιρεθεί.</item>
+        <item quantity="other">%1$d καταχωρίσεις έχουν αφαιρεθεί.</item>
     </plurals>
-    <string name="preference_category_icons">Icons</string>
-    <string name="preference_cards">Cards</string>
-    <string name="preference_cards_summary">Customize card appearance</string>
-    <string name="preference_cards_corner_radius">Corner radius</string>
-    <string name="preference_cards_stroke_width">Stroke width</string>
-    <string name="preference_cards_opacity">Opacity</string>
-    <string name="preference_cards_shape">Shape</string>
-    <string name="preference_cards_shape_rounded">Rounded</string>
-    <string name="preference_cards_shape_cut">Cut</string>
-    <string name="preference_icon_shape">Shape</string>
-    <string name="preference_icon_shape_platform">System default</string>
-    <string name="preference_icon_shape_square">Square</string>
-    <string name="preference_icon_shape_rounded_square">Rounded square</string>
-    <string name="preference_icon_shape_squircle">Squircle</string>
-    <string name="preference_icon_shape_triangle">Reuleaux triangle</string>
-    <string name="preference_icon_shape_circle">Circle</string>
-    <string name="preference_icon_shape_teardrop">Teardrop</string>
-    <string name="preference_icon_shape_pebble">Pebble</string>
-    <string name="preference_icon_shape_hexagon">Hexagon</string>
-    <string name="preference_category_searchbar">Search bar</string>
-    <string name="preference_screen_integrations">Integrations</string>
-    <string name="preference_screen_plugins">Plugins</string>
-    <string name="preference_screen_plugins_summary">Manage installed extensions</string>
-    <string name="no_plugins_installed">No plugins installed</string>
-    <string name="preference_theme_system">Follow system</string>
-    <string name="preference_themed_icons">Themed icons</string>
-    <string name="preference_themed_icons_summary">Color icons with the application\'s color scheme</string>
-    <string name="preference_force_themed_icons">Enforce themed icons</string>
-    <string name="preference_force_themed_icons_summary">Apply the application\'s color scheme to all icons, including unsupported ones (not recommended)</string>
-    <string name="preference_icon_pack">Icon pack</string>
-    <string name="preference_icon_pack_summary_empty">No icon packs installed</string>
+    <string name="preference_category_icons">Εικονίδια</string>
+    <string name="preference_cards">Κάρτες</string>
+    <string name="preference_cards_summary">Παραμετροποίηση εμφάνισης κάρτας</string>
+    <string name="preference_cards_corner_radius">Ακτίνα γωνίας</string>
+    <string name="preference_cards_stroke_width">Πλάτος περιγράμματος</string>
+    <string name="preference_cards_opacity">Διαφάνεια</string>
+    <string name="preference_cards_shape">Σχήμα</string>
+    <string name="preference_cards_shape_rounded">Στρογγυλεμένη</string>
+    <string name="preference_cards_shape_cut">Κομμένη</string>
+    <string name="preference_icon_shape">Σχήμα</string>
+    <string name="preference_icon_shape_platform">Προεπιλεγμένη συστήματος</string>
+    <string name="preference_icon_shape_square">Τετράγωνο</string>
+    <string name="preference_icon_shape_rounded_square">Στρογγυλεμένο τετράγωνο</string>
+    <string name="preference_icon_shape_squircle">Τετραγωνοποιημένος κύκλος</string>
+    <string name="preference_icon_shape_triangle">Στρογγυλεμένο τρίγωνο</string>
+    <string name="preference_icon_shape_circle">Κύκλος</string>
+    <string name="preference_icon_shape_teardrop">Δάκρυ</string>
+    <string name="preference_icon_shape_pebble">Βότσαλο</string>
+    <string name="preference_icon_shape_hexagon">Εξάγωνο</string>
+    <string name="preference_category_searchbar">Γραμμή αναζήτησης</string>
+    <string name="preference_screen_integrations">Ενσωματώσεις</string>
+    <string name="preference_screen_plugins">Πρόσθετα</string>
+    <string name="preference_screen_plugins_summary">Διαχείριση εγκατεστημένων επεκτάσεων</string>
+    <string name="no_plugins_installed">Δεν έχουν εγκατασταθεί πρόσθετα</string>
+    <string name="preference_theme_system">Χρήση συστήματος</string>
+    <string name="preference_themed_icons">Θεματικά εικονίδια</string>
+    <string name="preference_themed_icons_summary">Έγχρωμα εικονίδια με τον συνδυασμό χρωμάτων της εφαρμογής</string>
+    <string name="preference_force_themed_icons">Επιβολή θεματικών εικονιδίων</string>
+    <string name="preference_force_themed_icons_summary">Εφαρμογή του συνδυασμού χρωμάτων της εφαρμογής σε όλα τα εικονίδια, συμπεριλαμβανομένων των μη υποστηριζόμενων (δεν συνιστάται)</string>
+    <string name="preference_icon_pack">Πακέτο εικονιδίων</string>
+    <string name="preference_icon_pack_summary_empty">Δεν έχουν εγκατασταθεί πακέτα εικονιδίων</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
     <string name="preference_category_animations">Animations</string>
     <string name="preference_charging_animation">Charging animation</string>
     <string name="preference_charging_animation_summary">Play a bubble animation while the device is charging</string>
-    <string name="preference_category_system_bars">System bars</string>
-    <string name="preference_status_bar_icons">Status bar icons</string>
-    <string name="preference_nav_bar_icons">Navigation bar icons</string>
-    <string name="preference_system_bar_icons_auto">Auto</string>
-    <string name="preference_system_bar_icons_light">Light</string>
-    <string name="preference_system_bar_icons_dark">Dark</string>
-    <string name="preference_hide_status_bar">Hide status bar</string>
-    <string name="preference_hide_nav_bar">Hide navigation bar</string>
-    <string name="preference_screen_integrations_summary">Manage connected accounts and services</string>
-    <string name="preference_signin_user">Signed in as %1$s</string>
+    <string name="preference_category_system_bars">Γραμμές συστήματος</string>
+    <string name="preference_status_bar_icons">Εικονίδια γραμμής κατάστασης</string>
+    <string name="preference_nav_bar_icons">Εικονίδια γραμμής πλοήγησης</string>
+    <string name="preference_system_bar_icons_auto">Αυτόματο</string>
+    <string name="preference_system_bar_icons_light">Φωτεινό</string>
+    <string name="preference_system_bar_icons_dark">Σκοτεινό</string>
+    <string name="preference_hide_status_bar">Απόκρυψη γραμμής κατάστασης</string>
+    <string name="preference_hide_nav_bar">Απόκρυψη γραμμής πλοήγησης</string>
+    <string name="preference_screen_integrations_summary">Διαχείριση συνδεδεμένων λογαριασμών και υπηρεσιών</string>
+    <string name="preference_signin_user">Συνδεδεμένος ως %1$s</string>
     <string name="preference_signout">Sign out</string>
-    <string name="preference_summary_not_logged_in">You are currently not logged in</string>
-    <string name="preference_icon_shape_pentagon">Pentagon</string>
-    <string name="preference_category_wallpaper">Wallpaper</string>
-    <string name="preference_dim_wallpaper">Dim wallpaper</string>
-    <string name="preference_dim_wallpaper_summary">In dark themes, darken wallpaper</string>
-    <string name="preference_blur_wallpaper">Blur wallpaper</string>
-    <string name="preference_blur_wallpaper_summary">Use a blur effect on the wallpaper</string>
-    <string name="preference_blur_wallpaper_unsupported">Not supported on this device</string>
-    <string name="preference_blur_wallpaper_radius">Blur radius</string>
-    <string name="preference_wallpaper_summary">Choose a wallpaper</string>
-    <string name="preference_category_badges">Badges</string>
-    <string name="preference_notification_badges">Notification badges</string>
-    <string name="preference_notification_badges_summary">Show a badge for applications with unread notifications</string>
-    <string name="preference_suspended_badges_summary">Show a badge for suspended applications</string>
-    <string name="preference_suspended_badges">Suspended apps</string>
-    <string name="preference_cloud_badges">Cloud badges</string>
-    <string name="preference_cloud_badges_summary">Show a badge for files that are stored in a cloud</string>
-    <string name="preference_shortcut_badges">Shortcut badges</string>
-    <string name="preference_shortcut_badges_summary">Show a badge which indicates to which app a shortcut belongs</string>
-    <string name="preference_plugin_badges">Plugin badges</string>
-    <string name="preference_plugin_badges_summary">Indicate by which plugin a search result was created</string>
-    <string name="preference_nextcloud_signin">Sign in to Nextcloud</string>
-    <string name="preference_nextcloud_signin_summary">Sign in to search your Nextcloud server</string>
+    <string name="preference_summary_not_logged_in">Αυτή την στιγμή δεν έχετε συνδεθεί</string>
+    <string name="preference_icon_shape_pentagon">Πεντάγωνο</string>
+    <string name="preference_category_wallpaper">Φόντο</string>
+    <string name="preference_dim_wallpaper">Σκοτείνιασμα ταπετσαρίας</string>
+    <string name="preference_dim_wallpaper_summary">Σε σκούρα θέματα, σκοτείνιασμα ταπετσαρίας</string>
+    <string name="preference_blur_wallpaper">Θάμπωμα ταπετσαρίας</string>
+    <string name="preference_blur_wallpaper_summary">Χρήση εφέ θαμπώματος στην ταπετσαρία</string>
+    <string name="preference_blur_wallpaper_unsupported">Δεν υποστηρίζεται σε αυτήν τη συσκευή</string>
+    <string name="preference_blur_wallpaper_radius">Ακτίνα θολώματος</string>
+    <string name="preference_wallpaper_summary">Επιλογή ταπετσαρίας</string>
+    <string name="preference_category_badges">Σήματα</string>
+    <string name="preference_notification_badges">Σήματα ειδοποιήσεων</string>
+    <string name="preference_notification_badges_summary">Εμφάνιση σήματος για εφαρμογές με μη αναγνωσμένες ειδοποιήσεις</string>
+    <string name="preference_suspended_badges_summary">Εμφάνιση σήματος για εφαρμογές σε αναστολή</string>
+    <string name="preference_suspended_badges">Εφαρμογές σε αναστολή</string>
+    <string name="preference_cloud_badges">Σήματα αρχείων στο cloud</string>
+    <string name="preference_cloud_badges_summary">Εμφάνιση σήματος για αρχεία που είναι αποθηκευμένα στο cloud</string>
+    <string name="preference_shortcut_badges">Σήματα συντομεύσεων</string>
+    <string name="preference_shortcut_badges_summary">Εμφάνιση ενός σήματος που υποδεικνύει σε ποια εφαρμογή ανήκει μια συντόμευση</string>
+    <string name="preference_plugin_badges">Σήματα προσθηκών</string>
+    <string name="preference_plugin_badges_summary">Υποδείξτε με ποια προσθήκη δημιουργήθηκε ένα αποτέλεσμα αναζήτησης</string>
+    <string name="preference_nextcloud_signin">Σύνδεση σε Nextcloud</string>
+    <string name="preference_nextcloud_signin_summary">Σύνδεση για αναζήτηση σε Nextcloud server</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_owncloud">Owncloud</string>
-    <string name="preference_owncloud_signin">Sign in to Owncloud</string>
-    <string name="preference_owncloud_signin_summary">Sign in to search your Owncloud server</string>
-    <string name="preference_about_telegram">Telegram group</string>
-    <string name="preference_about_fdroid">F-Droid repository</string>
-    <string name="preference_enforce_icon_shape">Enforce shape</string>
-    <string name="preference_enforce_icon_shape_summary">Apply shape to all icons including those that would normally not support it</string>
-    <string name="preference_category_license">License</string>
-    <string name="preference_about_license">This app is free software.</string>
-    <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>
-    <string name="preference_category_grid">Grid</string>
-    <string name="preference_grid_icon_size">Icon size</string>
-    <string name="preference_grid_column_count">Number of columns</string>
+    <string name="preference_owncloud_signin">Σύνδεση σε Owncloud</string>
+    <string name="preference_owncloud_signin_summary">Σύνδεση για αναζήτηση σε Owncloud server</string>
+    <string name="preference_about_telegram">Ομάδα Telegram</string>
+    <string name="preference_about_fdroid">Αποθετήριο F-Droid</string>
+    <string name="preference_enforce_icon_shape">Επιβολή σχήματος</string>
+    <string name="preference_enforce_icon_shape_summary">Εφαρμογή σχήματος σε όλα τα εικονίδια, συμπεριλαμβανομένων εκείνων που κανονικά δεν θα το υποστήριζαν</string>
+    <string name="preference_category_license">Άδεια χρήσης</string>
+    <string name="preference_about_license">Αυτή η εφαρμογή αποτελεί ελεύθερο λογισμικό.</string>
+    <string name="preference_about_license_summary">Άδεια χρήσης υπό την άδεια GNU General Public License 3.0</string>
+    <string name="preference_category_grid">Πλέγμα</string>
+    <string name="preference_grid_icon_size">Μέγεθος εικονιδίων</string>
+    <string name="preference_grid_column_count">Αριθμός στηλών</string>
     <string name="preference_grid_list_style">Show apps in a list</string>
     <string name="preference_grid_list_icons">Show app icons in list</string>
-    <string name="preference_grid_labels">Show labels</string>
-    <string name="preference_grid_labels_summary">Show the app name below the icon</string>
+    <string name="preference_grid_labels">Εμφάνιση ταμπελών</string>
+    <string name="preference_grid_labels_summary">Εμφάνιση του ονόματος της εφαρμογής κάτω από το εικονίδιο</string>
     <string name="preference_grid_list_style_summary">Show applications in a list instead of a grid</string>
     <string name="preference_grid_list_icons_summary">Show icons in the list view</string>
-    <string name="preference_screen_debug">Debug</string>
-    <string name="preference_screen_debug_summary">Troubleshooting tools</string>
-    <string name="preference_category_widgets">Widgets</string>
-    <string name="preference_screen_weatherwidget">Weather</string>
-    <string name="preference_category_media_apps">Media apps</string>
-    <string name="preference_screen_clockwidget">Clock</string>
-    <string name="preference_screen_clockwidget_summary">Configure clock style and components</string>
-    <string name="preference_clockwidget_layout_vertical">Default</string>
-    <string name="preference_clockwidget_layout_horizontal">Compact</string>
+    <string name="preference_screen_debug">Αποσφαλμάτωση</string>
+    <string name="preference_screen_debug_summary">Εργαλεία αντιμετώπισης προβλημάτων</string>
+    <string name="preference_category_widgets">Γραφικά στοιχεία</string>
+    <string name="preference_screen_weatherwidget">Καιρός</string>
+    <string name="preference_category_media_apps">Εφαρμογές πολυμέσων</string>
+    <string name="preference_screen_clockwidget">Ρολόι</string>
+    <string name="preference_screen_clockwidget_summary">Διαμορφώστε το στυλ και τα στοιχεία του ρολογιού</string>
+    <string name="preference_clockwidget_layout_vertical">Προεπιλεγμένο</string>
+    <string name="preference_clockwidget_layout_horizontal">Συμπαγής</string>
     <string name="preference_clock_widget_show_seconds">Show seconds</string>
     <string name="preference_clock_widget_time_format">Time format</string>
     <string name="preference_clock_widget_time_format_24h">24-hour</string>
     <string name="preference_clock_widget_time_format_12h">12-hour</string>
-    <string name="preference_clock_widget_time_format_system">System default</string>
+    <string name="preference_clock_widget_time_format_system">Προεπιλεγμένη συστήματος</string>
     <string name="widget_use_theme_colors">Use theme color</string>
-    <string name="preference_clock_widget_fill_height">Fill screen height</string>
-    <string name="preference_clock_widget_alignment">Alignment</string>
-    <string name="preference_clock_widget_alignment_top">Top</string>
-    <string name="preference_clock_widget_alignment_center">Center</string>
-    <string name="preference_clock_widget_alignment_bottom">Bottom</string>
-    <string name="preference_clockwidget_dynamic_zone">Dynamic zone</string>
-    <string name="preference_clockwidget_date_part">Date</string>
-    <string name="preference_clockwidget_date_part_summary">Show the current date</string>
-    <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Show the first row of pinned items</string>
-    <string name="preference_clockwidget_music_part">Media</string>
-    <string name="preference_clockwidget_music_part_summary">Show media controls when there is an active media session</string>
-    <string name="preference_clockwidget_battery_part">Battery</string>
-    <string name="preference_clockwidget_battery_part_summary">Show the current battery level when the battery is low or charging</string>
-    <string name="preference_clockwidget_alarm_part">Alarms</string>
-    <string name="preference_clockwidget_alarm_part_summary">Show alarms that will ring within the next 8 hours</string>
-    <string name="preference_screen_backup">Backup &amp; Restore</string>
-    <string name="preference_screen_backup_summary">Export and import launcher data</string>
-    <string name="preference_backup">Backup</string>
-    <string name="preference_backup_summary">Export preferences and launcher data</string>
-    <string name="preference_restore">Restore</string>
-    <string name="preference_restore_summary">Import a previously created backup</string>
-    <string name="preference_crash_reporter">Crash reporter</string>
-    <string name="preference_crash_reporter_summary">Error and crash reports</string>
-    <string name="preference_logs">Logs</string>
-    <string name="preference_logs_summary">View and export application logs</string>
-    <string name="preference_screen_search">Search</string>
-    <string name="preference_screen_search_summary">Search, tags, hidden items</string>
-    <string name="preference_search_favorites">Favorites</string>
-    <string name="preference_search_favorites_summary">Show pinned and frequently used items above app grid</string>
-    <string name="preference_search_files">Files</string>
-    <string name="preference_search_files_summary">Search local files and cloud files</string>
-    <string name="preference_search_contacts">Contacts</string>
-    <string name="preference_search_contacts_summary">Search contacts on this device</string>
-    <string name="preference_search_calendar">Calendar</string>
-    <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
+    <string name="preference_clock_widget_fill_height">Γέμισμα ύψους οθόνης</string>
+    <string name="preference_clock_widget_alignment">Ευθυγράμμιση</string>
+    <string name="preference_clock_widget_alignment_top">Πάνω</string>
+    <string name="preference_clock_widget_alignment_center">Κέντρο</string>
+    <string name="preference_clock_widget_alignment_bottom">Κάτω</string>
+    <string name="preference_clockwidget_dynamic_zone">Μέρος του γραφικού στοιχείου ρολογιού που εμφανίζει δυναμικές πληροφορίες (ημερομηνία, αναπαραγωγήςμουσικής, μπαταρία,…)</string>
+    <string name="preference_clockwidget_date_part">Ημερομηνία</string>
+    <string name="preference_clockwidget_date_part_summary">Εμφάνιση τωρινής ημερομηνίας</string>
+    <string name="preference_clockwidget_favorites_part">Αγαπημένα</string>
+    <string name="preference_clockwidget_favorites_part_summary">Εμφάνιση της πρώτης σειράς καρφιτσωμένων στοιχείων</string>
+    <string name="preference_clockwidget_music_part">Πολυμέσα</string>
+    <string name="preference_clockwidget_music_part_summary">Εμφάνιση ελέγχου πολυμέσων όταν υπάρχει ενεργή περίοδος λειτουργίας</string>
+    <string name="preference_clockwidget_battery_part">Μπαταρία</string>
+    <string name="preference_clockwidget_battery_part_summary">Εμφάνιση του τρέχοντος επιπέδου μπαταρίας όταν είναι χαμηλή ή φορτίζει</string>
+    <string name="preference_clockwidget_alarm_part">Ξυπνητήρια</string>
+    <string name="preference_clockwidget_alarm_part_summary">Εμφάνιση ξυπνητηριών που θα χτυπήσουν μέσα στα επόμενα 15 λεπτά</string>
+    <string name="preference_screen_backup">Αντίγραφα ασφαλείας &amp; Επαναφορά</string>
+    <string name="preference_screen_backup_summary">Εξαγωγή και εισαγωγή δεδομένων εφαρμογής εκκίνησης</string>
+    <string name="preference_backup">Αντίγραφα ασφαλείας</string>
+    <string name="preference_backup_summary">Εξαγωγή προτιμήσεων και δεδομένων εφαρμογής εκκίνησης</string>
+    <string name="preference_restore">Επαναφορά</string>
+    <string name="preference_restore_summary">Εισαγωγή ενός αντιγράφου ασφαλείας που δημιουργήθηκε προηγουμένως</string>
+    <string name="preference_crash_reporter">Αποστολή σφαλμάτων</string>
+    <string name="preference_crash_reporter_summary">Σφάλματα και αποστολή σφαλμάτων</string>
+    <string name="preference_logs">Αρχεία καταγραφής</string>
+    <string name="preference_logs_summary">Προβολή και εξαγωγή αρχείων καταγραφής</string>
+    <string name="preference_screen_search">Αναζήτηση</string>
+    <string name="preference_screen_search_summary">Αναζήτηση, ετικέτες, κρυφά στοιχεία</string>
+    <string name="preference_search_favorites">Αγαπημένα</string>
+    <string name="preference_search_favorites_summary">Εμφάνιση καρφιτσωμένων και συχνά χρησιμοποιούμενων στοιχείων πάνω από το πλέγμα εφαρμογών</string>
+    <string name="preference_search_files">Αρχεία</string>
+    <string name="preference_search_files_summary">Αναζήτηση τοπικών αρχείων και αρχείων cloud</string>
+    <string name="preference_search_contacts">Επαφές</string>
+    <string name="preference_search_contacts_summary">Αναζήτηση επαφών σε αυτή τη συσκευή</string>
+    <string name="preference_search_calendar">Ημερολόγιο</string>
+    <string name="preference_search_calendar_summary">Αναζητήστε επερχόμενων ραντεβού και εκδηλώσεων</string>
     <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
     <string name="preference_search_tasks">Tasks</string>
     <string name="preference_search_tasks_summary">Search tasks in the Tasks app</string>
-    <string name="preference_search_appshortcuts">App shortcuts</string>
-    <string name="preference_search_appshortcuts_summary">Search app shortcuts</string>
-    <string name="preference_search_calculator">Calculator</string>
-    <string name="preference_search_calculator_summary">Evaluate mathematical terms</string>
-    <string name="preference_search_unitconverter">Unit converter</string>
-    <string name="preference_search_unitconverter_summary">Usage: 1.5 kg or 4 cm &gt;&gt; in</string>
-    <string name="preference_search_currencyconverter">Currency converter</string>
-    <string name="preference_search_currencyconverter_summary">Periodically download exchange rates to convert currencies</string>
+    <string name="preference_search_appshortcuts">Συντομεύσεις εφαρμογών</string>
+    <string name="preference_search_appshortcuts_summary">Αναζήτηση συντομεύσεων εφαρμογών</string>
+    <string name="preference_search_calculator">Αριθμομηχανή</string>
+    <string name="preference_search_calculator_summary">Αξιολόγηση μαθηματικών όρων</string>
+    <string name="preference_search_unitconverter">Μετατροπέας μονάδων</string>
+    <string name="preference_search_unitconverter_summary">Χρήση: 1,5 kg ή 4 cm &gt;&gt; σε</string>
+    <string name="preference_search_currencyconverter">Μετατροπέας νομίσματος</string>
+    <string name="preference_search_currencyconverter_summary">Λήψη περιοδικών συναλλαγματικών ισοτιμιών για μετατροπή νομισμάτων</string>
     <string name="preference_search_supportedunits">Supported units</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
-    <string name="preference_search_wikipedia_summary">Search the free encyclopedia</string>
-    <string name="preference_search_websites">Websites</string>
+    <string name="preference_search_wikipedia_summary">Αναζήτηση στην ελεύθερη εγκυκλοπαίδεια</string>
+    <string name="preference_search_websites">Ιστοσελίδες</string>
     <string name="preference_search_locations">Places</string>
     <string name="preference_search_locations_radius">Search radius</string>
-    <string name="preference_search_websites_summary">Show a preview of a website if the search query is a URL</string>
+    <string name="preference_search_websites_summary">Εμφάνιση προεπισκόπησης του ιστότοπου εάν το ερώτημα αναζήτησης είναι διεύθυνση URL</string>
     <string name="preference_search_locations_summary">Search the local area for shops and other places</string>
-    <string name="preference_search_localfiles">Local files</string>
-    <string name="preference_search_localfiles_summary">Search documents, photos and other files stored on this device</string>
+    <string name="preference_search_localfiles">Τοπικά αρχεία</string>
+    <string name="preference_search_localfiles_summary">Αναζήτηση εγγράφων, φωτογραφιών και άλλων αρχείων που είναι αποθηκευμένα σε αυτήν τη συσκευή</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="preference_search_cloud_summary">Search %1$s\'s files</string>
+    <string name="preference_search_cloud_summary">Αναζήτηση στα αρχεία του %1$s</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_calendar_calendars">Calendars</string>
+    <string name="preference_calendar_calendars">Ημερολόγια</string>
     <string name="preference_calendar_hide_completed">Hide completed tasks</string>
-    <string name="preference_screen_buildinfo">Build information</string>
-    <string name="preference_screen_buildinfo_summary">More information about this build of this app</string>
-    <string name="preference_search_bar_style">Style</string>
-    <string name="preference_search_bar_style_summary">Customize search bar appearance</string>
+    <string name="preference_screen_buildinfo">Πληροφορίες έκδοσης</string>
+    <string name="preference_screen_buildinfo_summary">Περισσότερες πληροφορίες σχετικά με αυτή την έκδοση</string>
+    <string name="preference_search_bar_style">Στυλ</string>
+    <string name="preference_search_bar_style_summary">Παραμετροποίηση εμφάνισης γραμμής αναζήτησης</string>
     <string name="preference_search_bar_style_transparent">Transparent</string>
     <string name="preference_search_bar_style_solid">Solid</string>
     <string name="preference_search_bar_style_hidden">Hidden</string>
-    <string name="preference_search_bar_color">Color</string>
-    <string name="preference_search_bar_auto_focus">Open keyboard</string>
-    <string name="preference_search_bar_auto_focus_summary">Automatically show the keyboard when opening the app drawer</string>
+    <string name="preference_search_bar_color">Χρώμα</string>
+    <string name="preference_search_bar_auto_focus">Άνοιγμα πληκτρολογίου</string>
+    <string name="preference_search_bar_auto_focus_summary">Αυτόματη εμφάνιση του πληκτρολογίου κατά το άνοιγμα του μενού εφαρμογών</string>
     <string name="preference_search_bar_launch_on_enter">Launch on enter</string>
     <string name="preference_search_bar_launch_on_enter_summary">Launch highlighted match or quick action upon tapping go</string>
-    <string name="preference_hidden_items">Hidden search results</string>
-    <string name="preference_hidden_items_summary">Manage hidden apps and search results</string>
-    <string name="preference_hidden_items_reveal_button">Show reveal button</string>
-    <string name="preference_hidden_items_reveal_button_summary">Show a button to reveal hidden search results</string>
-    <string name="preference_screen_tags">Tags</string>
-    <string name="preference_screen_tags_summary">Manage tags and tagged items</string>
+    <string name="preference_hidden_items">Κρυφά αποτελέσματα αναζήτησης</string>
+    <string name="preference_hidden_items_summary">Διαχείριση κρυφών εφαρμογών και αποτελεσμάτων αναζήτησης</string>
+    <string name="preference_hidden_items_reveal_button">Εμφάνιση κουμπιού αποκάλυψης</string>
+    <string name="preference_hidden_items_reveal_button_summary">Εμφάνιση ενός κουμπιού για την αποκάλυψη κρυφών αποτελεσμάτων αναζήτησης</string>
+    <string name="preference_screen_tags">Ετικέτες</string>
+    <string name="preference_screen_tags_summary">Διαχείριση ετικετών και στοιχείων με ετικέτα</string>
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
-    <string name="preference_edit_favorites_summary">Change the order of pinned items</string>
-    <string name="preference_category_favorites_frequently_used">Frequently used</string>
-    <string name="preference_favorites_frequently_used_summary">Show frequently used items in favorites</string>
-    <string name="preference_edit_button">Edit button</string>
-    <string name="preference_favorites_edit_button_summary">Show a button to rearrange the favorites</string>
+    <string name="preference_edit_favorites_summary">Αλλαγή της σειράς των καρφιτσωμένων στοιχείων</string>
+    <string name="preference_category_favorites_frequently_used">Συχνή χρήση</string>
+    <string name="preference_favorites_frequently_used_summary">Εμφάνιση στοιχείων που χρησιμοποιούνται συχνά στα αγαπημένα</string>
+    <string name="preference_edit_button">Πλήκτρο επεξεργασίας</string>
+    <string name="preference_favorites_edit_button_summary">Εμφάνιση ενός πλήκτρου για την αναδιάταξη των αγαπημένων</string>
     <string name="preference_compact_tags">Compact tags</string>
     <string name="preference_compact_tags_summary">Hide tag labels or icons to reduce the space occupied by tags</string>
-    <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
+    <string name="preference_widgets_edit_button_summary">Εμφάνιση ενός πλήκτρου για προσθήκη, αφαίρεση και αναδιάταξη γραφικών στοιχείων</string>
     <string name="preference_widgets_on_home_screen">Widgets on home screen</string>
     <string name="preference_widgets_on_home_screen_summary">Show widgets on the home screen instead of an extra page</string>
-    <string name="preference_screen_homescreen">Home screen</string>
-    <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
-    <string name="preference_screen_icons">Grid &amp; icons</string>
-    <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
-    <string name="preference_weather_integration">Weather</string>
-    <string name="preference_media_integration">Media control</string>
+    <string name="preference_screen_homescreen">Αρχική οθόνη</string>
+    <string name="preference_screen_homescreen_summary">Ρολόι, γραμμή αναζήτησης, ταπετσαρία, γραμμές συστήματος</string>
+    <string name="preference_screen_icons">Πλέγμα και εικονίδια</string>
+    <string name="preference_screen_icons_summary">Πλέγμα, μέγεθος εικονιδίου, πακέτα εικονιδίων, σήματα</string>
+    <string name="preference_weather_integration">Καιρός</string>
+    <string name="preference_media_integration">Έλεγχος πολυμέσων</string>
     <string name="preference_tasks_integration">Tasks</string>
     <!-- %1$s: app name (Kvaesitso) -->
     <string name="preference_tasks_integration_description">Tasks is a free and open source to-do list and reminders app. If installed, %1$s can display and search your tasks from the Tasks app.</string>
@@ -697,63 +697,63 @@
     <string name="preference_contacts_call_on_tap">Tap to call</string>
     <string name="preference_contacts_call_on_tap_summary">Immediately start a call when tapping a phone number</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
-    <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
+    <string name="no_account_nextcloud">Δεν έχει συνδεθεί ακόμη λογαριασμός Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
-    <string name="no_account_owncloud">You haven\'t connected an Owncloud account yet</string>
+    <string name="no_account_owncloud">Δεν έχει συνδεθεί ακόμη λογαριασμός Owncloud</string>
     <!-- Used in an info banner if a specific feature requires a Google account -->
     <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
-    <string name="connect_account">Connect account</string>
-    <string name="battery_part_charging">Charging</string>
+    <string name="connect_account">Σύνδεση λογαριασμού</string>
+    <string name="battery_part_charging">Φορτίζει</string>
     <plurals name="battery_part_remaining_charge_time">
-        <item quantity="one">Full in %1$s minute</item>
-        <item quantity="other">Full in %1$s minutes</item>
+        <item quantity="one">Πλήρες σε %1$s λεπτό</item>
+        <item quantity="other">Πλήρες σε %1$s λεπτά</item>
     </plurals>
-    <string name="backup_complete">The backup has been completed.</string>
-    <string name="restore_invalid_file">The selected file does not appear to be a backup. Are you sure you selected the right file?</string>
+    <string name="backup_complete">Το αντίγραφο ασφαλείας έχει ολοκληρωθεί.</string>
+    <string name="restore_invalid_file">Το επιλεγμένο αρχείο δεν φαίνεται να αποτελεί αντίγραφο ασφαλείας. Είστε σίγουροι ότι επιλέξατε το σωστό αρχείο;</string>
     <!-- %1$s: app name -->
-    <string name="restore_incompatible_file">This backup has been created with a different version of %1$s and cannot be restored with this version.</string>
+    <string name="restore_incompatible_file">Αυτό το αντίγραφο ασφαλείας έχει δημιουργηθεί με διαφορετική έκδοση του %1$s και δεν μπορεί να επαναφερθεί με αυτήν την έκδοση.</string>
     <!-- %1$s: app name -->
-    <string name="restore_different_minor_version">This backup has been created with a different version of %1$s. Some data might not be restored correctly.</string>
+    <string name="restore_different_minor_version">Αυτό το αντίγραφο ασφαλείας έχει δημιουργηθεί με διαφορετική έκδοση του %1$s. Κάποια δεδομένα μπορεί να μην έχουν επαναφερθεί σωστά.</string>
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
-    <string name="restore_meta">Created %1$s on %2$s with %3$s.</string>
-    <string name="restore_complete">The backup has been restored.</string>
-    <string name="icon_picker_default_icon">Default</string>
-    <string name="icon_picker_suggestions">Suggestions</string>
-    <string name="icon_picker_search_icon">Search in icon packs</string>
-    <string name="icon_picker_filter_all_packs">All icon packs</string>
-    <string name="apps_profile_main">Personal</string>
-    <string name="apps_profile_work">Work</string>
+    <string name="restore_meta">Δημιουργήθηκε %1$s στις %2$s με το %3$s.</string>
+    <string name="restore_complete">Έγινε επαναφορά του αντιγράφου ασφαλείας.</string>
+    <string name="icon_picker_default_icon">Προεπιλεγμένο</string>
+    <string name="icon_picker_suggestions">Προτάσεις</string>
+    <string name="icon_picker_search_icon">Αναζήτηση σε πακέτα εικονιδίων</string>
+    <string name="icon_picker_filter_all_packs">Όλα τα πακέτα εικονιδίων</string>
+    <string name="apps_profile_main">Προσωπικό</string>
+    <string name="apps_profile_work">Εργασίας</string>
     <string name="apps_profile_private">Private</string>
-    <string name="favorites">Favorites</string>
-    <string name="favorites_empty">Pinned and frequently used items will appear here</string>
-    <string name="favorites_empty_tag">There are no items with this tag</string>
-    <string name="frequently_used_show_in_favorites">Show in favorites</string>
-    <string name="frequently_used_rows">Number of rows</string>
-    <string name="preference_screen_search_actions">Quick actions</string>
-    <string name="preference_search_search_actions_summary">Configure quick actions and search shortcuts</string>
-    <string name="search_action_call">Call</string>
-    <string name="search_action_message">Message</string>
+    <string name="favorites">Αγαπημένα</string>
+    <string name="favorites_empty">Τα καρφιτσωμένα και συχνά χρησιμοποιούμενα στοιχεία θα εμφανίζονται εδώ</string>
+    <string name="favorites_empty_tag">Δεν υπάρχουν στοιχεία με αυτήν την ετικέτα</string>
+    <string name="frequently_used_show_in_favorites">Εμφάνιση στα αγαπημένα</string>
+    <string name="frequently_used_rows">Αριθμός σειρών</string>
+    <string name="preference_screen_search_actions">Γρήγορες ενέργειες</string>
+    <string name="preference_search_search_actions_summary">Διαμορφώστε τις γρήγορες ενέργειες και τις συντομεύσεις αναζήτησης</string>
+    <string name="search_action_call">Κλήση</string>
+    <string name="search_action_message">Μήνυμα</string>
     <string name="search_action_email">Email</string>
-    <string name="search_action_alarm">Set alarm</string>
+    <string name="search_action_alarm">Βάζω ξυπνητήρι</string>
     <string name="search_action_timer">Start timer</string>
-    <string name="search_action_share">Share</string>
-    <string name="search_action_websearch">Web search</string>
-    <string name="search_action_contact">Add to contacts</string>
-    <string name="search_action_open_url">View website</string>
-    <string name="search_action_event">Schedule event</string>
-    <string name="create_search_action_type">What kind of action do you want to create?</string>
-    <string name="create_search_action_type_web">Search on a website</string>
-    <string name="create_search_action_type_app">Search in an app</string>
-    <string name="create_search_action_type_intent">Custom intent</string>
-    <string name="create_search_action_pick_app">Pick an app to search:</string>
-    <string name="create_search_action_website_url">Enter the address of the website:</string>
-    <string name="create_search_action_website_invalid_url">The given website cannot automatically be imported as a web search. You can try a different website or enter the required data manually in the next step.</string>
-    <string name="search_action_label">Name</string>
-    <string name="search_action_app">App</string>
-    <string name="search_action_websearch_url">URL template</string>
-    <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term, e.g. https://google.com/search?q=${1}.</string>
-    <string name="more_information">More information</string>
-    <string name="experimental_feature">Experimental</string>
+    <string name="search_action_share">Κοινοποίηση</string>
+    <string name="search_action_websearch">Διαδικτυακή αναζήτηση</string>
+    <string name="search_action_contact">Δημιουργία επαφής</string>
+    <string name="search_action_open_url">Προβολή ιστότοπου</string>
+    <string name="search_action_event">Προγραμματισμός εκδήλωσης</string>
+    <string name="create_search_action_type">Τι είδους δράση θέλετε να δημιουργήσετε;</string>
+    <string name="create_search_action_type_web">Αναζήτηση σε έναν ιστότοπο</string>
+    <string name="create_search_action_type_app">Αναζήτηση σε μία εφαρμογή</string>
+    <string name="create_search_action_type_intent">Προσαρμοσμένη πρόθεση</string>
+    <string name="create_search_action_pick_app">Επιλέξτε μια εφαρμογή για αναζήτηση:</string>
+    <string name="create_search_action_website_url">Εισαγάγετε τη διεύθυνση του ιστότοπου:</string>
+    <string name="create_search_action_website_invalid_url">Ο συγκεκριμένος ιστότοπος δεν μπορεί να εισαχθεί αυτόματα ως αναζήτηση ιστού. Μπορείτε να δοκιμάσετε έναν διαφορετικό ιστότοπο ή να εισαγάγετε τα απαιτούμενα δεδομένα με μη αυτόματο τρόπο στο επόμενο βήμα.</string>
+    <string name="search_action_label">Όνομα</string>
+    <string name="search_action_app">Εφαρμογή</string>
+    <string name="search_action_websearch_url">Πρότυπο URL</string>
+    <string name="search_action_websearch_url_hint">Το πρότυπο URL που χρησιμοποιείται για τη δημιουργία της διεύθυνσης URL αναζήτησης ιστού. Χρησιμοποιήστε το \"${1}\" ως σύμβολο κράτησης θέσης για τον πραγματικό όρο αναζήτησης, π.χ. https://google.com/search?q=${1}.</string>
+    <string name="more_information">Περισσότερες πληροφορίες</string>
+    <string name="experimental_feature">Πειραματικό</string>
     <string name="tag_exists_error">A tag with this name already exists.</string>
     <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged.</string>
     <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted.</string>
@@ -769,8 +769,8 @@
     <string name="open_search_swipe_left">Swipe left</string>
     <string name="open_search_swipe_right">Swipe right</string>
     <string name="preference_layout_search_bar_position">Search bar position</string>
-    <string name="search_bar_position_top">Top</string>
-    <string name="search_bar_position_bottom">Bottom</string>
+    <string name="search_bar_position_top">Πάνω</string>
+    <string name="search_bar_position_bottom">Κάτω</string>
     <string name="preference_layout_search_results">Arrangement of search results</string>
     <string name="search_results_order_top_down">Top-down</string>
     <string name="search_results_order_bottom_up">Bottom-up</string>
@@ -789,7 +789,7 @@
     <string name="preference_gesture_home_button">Home button/gesture</string>
     <string name="gesture_action_none">Do nothing</string>
     <string name="gesture_action_open_search">Open search</string>
-    <string name="gesture_action_widgets">Widgets</string>
+    <string name="gesture_action_widgets">Γραφικά στοιχεία</string>
     <string name="gesture_action_launch_app">Launch app</string>
     <string name="gesture_action_notifications">Open notification drawer</string>
     <string name="gesture_action_lock_screen">Turn off screen</string>
@@ -857,15 +857,15 @@
     <string name="preference_search_locations_theme_map">Map theming</string>
     <string name="preference_search_locations_theme_map_summary">Apply the color scheme of the launcher to the map</string>
     <string name="preference_search_location_custom_tile_server_url">Tileserver URL</string>
-    <string name="menu_dial">Call</string>
+    <string name="menu_dial">Κλήση</string>
     <string name="menu_navigation">Navigation</string>
     <string name="menu_bugreport">Bug Report</string>
     <string name="location_open_24_7">Open 24/7</string>
     <string name="plugin_state_error">This plugin isn\'t working correctly</string>
     <string name="plugin_state_setup_required">You need to setup this plugin first</string>
     <string name="plugin_action_setup">Set up</string>
-    <string name="plugin_type_filesearch">Files</string>
-    <string name="plugin_type_contacts">Contacts</string>
+    <string name="plugin_type_filesearch">Αρχεία</string>
+    <string name="plugin_type_contacts">Επαφές</string>
     <string name="plugin_type_weather">Weather provider</string>
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
@@ -882,11 +882,11 @@
     <string name="clock_variant_analog_ticks">Ticks</string>
     <string name="menu_show_filters">Show filters</string>
     <string name="menu_hide_filters">Hide filters</string>
-    <string name="search_filter_tools">Tools</string>
+    <string name="search_filter_tools">Εργαλεία</string>
     <string name="search_filter_online">Online results</string>
     <string name="search_filter_apps">Apps</string>
     <string name="plugin_type_locationsearch">Places search</string>
-    <string name="plugin_type_calendar">Calendar</string>
+    <string name="plugin_type_calendar">Ημερολόγιο</string>
     <string name="preference_default_filter">Default filter</string>
     <string name="preference_default_filter_summary">Customize the default filter for searches</string>
     <string name="preference_filter_bar">Show filter bar</string>
@@ -987,7 +987,7 @@
     <string name="poi_category_courthouse">Courthouse</string>
     <string name="poi_category_townhall">Townhall</string>
     <string name="customize_item_label">Label</string>
-    <string name="customize_item_tags">Tags</string>
+    <string name="customize_item_tags">Ετικέτες</string>
     <string name="customize_item_visibility">Show in</string>
     <string name="item_visibility_app_default">App grid &amp; search results</string>
     <string name="item_visibility_calendar_default">Calendar widget &amp; search results</string>
@@ -995,7 +995,7 @@
     <string name="item_visibility_hidden">Never</string>
     <string name="contact_info_home">Home</string>
     <string name="contact_info_mobile">Mobile</string>
-    <string name="contact_info_work">Work</string>
+    <string name="contact_info_work">Εργασίας</string>
     <plurals name="contact_phone_numbers">
         <item quantity="one">%1$s phone number</item>
         <item quantity="other">%1$s phone numbers</item>
@@ -1034,7 +1034,7 @@
         <item quantity="other">%1$s lists selected</item>
     </plurals>
     <string name="weather_forecast_humidity">Humidity</string>
-    <string name="weather_forecast_wind">Wind</string>
+    <string name="weather_forecast_wind">Άνεμος</string>
     <string name="weather_forecast_precipitation">Precipitation</string>
     <string name="departure_time_now">now</string>
     <plurals name="departure_time_in">
@@ -1046,7 +1046,7 @@
     <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher.</string>
     <string name="theme_export_title">Export theme</string>
     <string name="theme_import_title">Import theme</string>
-    <string name="theme_bundle_name">Name</string>
+    <string name="theme_bundle_name">Όνομα</string>
     <string name="theme_bundle_author">Author</string>
     <string name="preference_typography_fonts">Fonts</string>
     <string name="font_category_device_default">Device default</string>
