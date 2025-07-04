@@ -12,55 +12,55 @@
     <string name="location_opens_other_day">opens %1$s, %2$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
-    <string name="menu_share">Share</string>
+    <string name="menu_share">Поділитися</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store
      %1$s is the name of the app store (e.g. Google Play)-->
-    <string name="menu_share_store_link">%1$s link</string>
+    <string name="menu_share_store_link">%1$s Посилання</string>
     <!-- Share an APK file, shown in the app detail share menu -->
-    <string name="menu_share_apk_file">Package file</string>
+    <string name="menu_share_apk_file">Файл пакету</string>
     <!-- Uninstall an application -->
-    <string name="menu_uninstall">Uninstall</string>
-    <string name="menu_favorites_pin">Pin to favorites</string>
-    <string name="menu_favorites_unpin">Unpin</string>
-    <string name="menu_back">Back</string>
-    <string name="menu_app_info">App info</string>
+    <string name="menu_uninstall">Деінсталювати</string>
+    <string name="menu_favorites_pin">Зберегти до улюблених</string>
+    <string name="menu_favorites_unpin">Видалити з улюблених</string>
+    <string name="menu_back">Назад</string>
+    <string name="menu_app_info">Інформація про додаток</string>
     <!-- Launch an app -->
-    <string name="menu_launch">Launch</string>
-    <string name="menu_customize">Customize</string>
+    <string name="menu_launch">Запустити</string>
+    <string name="menu_customize">Редагувати</string>
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Open</string>
-    <string name="menu_map">View on map</string>
-    <string name="menu_website">Open website</string>
+    <string name="menu_map">Показати на мапі</string>
+    <string name="menu_website">Відкрити веб-сторінку</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
-    <string name="action_undo">Undo</string>
-    <string name="action_import">Import</string>
+    <string name="action_undo">Скасувати</string>
+    <string name="action_import">Імпорт</string>
     <string name="action_done">Done</string>
     <string name="action_more_actions">More actions</string>
     <string name="action_clear">Clear</string>
     <string name="action_install">Install</string>
     <!-- Delete something (a file or a web search shortcut) -->
-    <string name="menu_delete">Delete</string>
-    <string name="menu_remove">Remove</string>
+    <string name="menu_delete">Видалити</string>
+    <string name="menu_remove">Прибрати</string>
     <!-- Open a contact in the contacts app -->
-    <string name="menu_contacts_open_externally">Open in contacts app</string>
+    <string name="menu_contacts_open_externally">Відкрити у Контактах</string>
     <!-- Open an event in the calendar app -->
-    <string name="menu_calendar_open_externally">Open in calendar app</string>
+    <string name="menu_calendar_open_externally">Відкрити у Календарі</string>
     <!-- Shown in the search bar when the search text field is empty -->
-    <string name="search_bar_placeholder">Search</string>
+    <string name="search_bar_placeholder">Пошук</string>
     <!-- App version, used in application details %1$s is the version -->
-    <string name="app_info_version">Version %1$s</string>
+    <string name="app_info_version">Версія %1$s</string>
     <!-- Menu entry for launcher settings -->
-    <string name="settings">Settings</string>
+    <string name="settings">Налаштування</string>
     <!-- Menu entry for launcher help -->
-    <string name="help">Help</string>
+    <string name="help">Допомога</string>
     <!-- Set the device's wallpaper -->
-    <string name="wallpaper">Wallpaper</string>
+    <string name="wallpaper">Фон</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north">North</string>
+    <string name="wind_north">Північ</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_east">North east</string>
+    <string name="wind_north_east">Північний Схід</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_east">North north east</string>
+    <string name="wind_north_north_east">Північний Схід</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_east_north_east">East north east</string>
     <!-- Wind direction, used in weather widget -->
@@ -92,40 +92,40 @@
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
       a fallback that is suited best for most users of this language should be used
       (English in most cases) -->
-    <string name="wikipedia_url">https://en.wikipedia.org</string>
+    <string name="wikipedia_url">https://uk.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
-    <string name="wikipedia_source">From Wikipedia</string>
+    <string name="wikipedia_source">З Вікіпедії</string>
     <!-- File meta data, title of audio tracks -->
-    <string name="file_meta_title">Title: %1$s</string>
+    <string name="file_meta_title">Назва: %1$s</string>
     <!-- File meta data, artist of audio tracks -->
-    <string name="file_meta_artist">Artist: %1$s</string>
+    <string name="file_meta_artist">Виконавець: %1$s</string>
     <!-- File meta data, album of audio tracks -->
-    <string name="file_meta_album">Album: %1$s</string>
+    <string name="file_meta_album">Альбом: %1$s</string>
     <!-- File meta data, duration of audio tracks -->
-    <string name="file_meta_duration">Duration: %1$s</string>
+    <string name="file_meta_duration">Довжина: %1$s</string>
     <!-- File meta data, year of audio tracks -->
-    <string name="file_meta_year">Year: %1$s</string>
+    <string name="file_meta_year">Рік: %1$s</string>
     <!-- File size -->
-    <string name="file_meta_size">Size: %1$s</string>
+    <string name="file_meta_size">Розмір: %1$s</string>
     <!-- File path -->
-    <string name="file_meta_path">Path: %1$s</string>
+    <string name="file_meta_path">Шлях: %1$s</string>
     <!-- File type (MIME type) -->
-    <string name="file_meta_type">Type: %1$s</string>
+    <string name="file_meta_type">Тип: %1$s</string>
     <!-- File meta, image/video dimensions -->
-    <string name="file_meta_dimensions">Dimensions: %1$s</string>
+    <string name="file_meta_dimensions">Розмір кадру: %1$s</string>
     <!-- File meta, app name of APK files -->
-    <string name="file_meta_app_name">App name: %1$s</string>
+    <string name="file_meta_app_name">Назва додатку: %1$s</string>
     <!-- File meta, version name of APK files -->
-    <string name="file_meta_app_version">Version: %1$s</string>
+    <string name="file_meta_app_version">Версія: %1$s</string>
     <!-- File meta, package name of APK files -->
-    <string name="file_meta_app_pkgname">Package name: %1$s</string>
+    <string name="file_meta_app_pkgname">Назва пакета: %1$s</string>
     <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
-    <string name="file_meta_app_min_sdk">Min SDK version: %1$s</string>
+    <string name="file_meta_app_min_sdk">Мін. версія SDK: %1$s</string>
     <!-- File meta, owner (for files that are stored in a cloud) -->
-    <string name="file_meta_owner">Owner: %1$s</string>
+    <string name="file_meta_owner">Власник: %1$s</string>
     <!-- File meta, location (e.g. location where a photo has been taken) -->
-    <string name="file_meta_location">Location: %1$s</string>
-    <string name="file_type_directory">Directory</string>
+    <string name="file_meta_location">Розташування: %1$s</string>
+    <string name="file_type_directory">Шлях</string>
     <!-- ZIP, TAR, … archive files  -->
     <string name="file_type_archive">Archive file</string>
     <!-- APK file  -->
@@ -133,25 +133,25 @@
     <!-- Code file (source code in a programming language) -->
     <string name="file_type_source_code">Source code file</string>
     <!-- Word document -->
-    <string name="file_type_document">Document</string>
+    <string name="file_type_document">Документ</string>
     <!-- Excel spreadsheet -->
     <string name="file_type_spreadsheet">Spreadsheet</string>
     <!-- Audio file -->
-    <string name="file_type_music">Music file</string>
+    <string name="file_type_music">Аудіо файл</string>
     <!-- Video file -->
-    <string name="file_type_video">Video</string>
+    <string name="file_type_video">Відео файл</string>
     <!-- Picture file -->
-    <string name="file_type_image">Picture</string>
+    <string name="file_type_image">Зображення</string>
     <!-- Generic file without file extension -->
-    <string name="file_type_none">File</string>
+    <string name="file_type_none">Файл</string>
     <!-- Powerpoint presentation -->
-    <string name="file_type_presentation">Presentation</string>
+    <string name="file_type_presentation">Презентація</string>
     <!-- BZIP, GZIP, … compressed file -->
-    <string name="file_type_compressed">Compressed file</string>
+    <string name="file_type_compressed">Стиснутий файл</string>
     <!-- Plain text (TXT) file -->
-    <string name="file_type_text">Text file</string>
+    <string name="file_type_text">Текстовий файл</string>
     <!-- E-book file -->
-    <string name="file_type_ebook">E-book</string>
+    <string name="file_type_ebook">Файл електронної книги</string>
     <!-- Google Drawings file -->
     <string name="file_type_drawing">Drawing</string>
     <!-- Google Forms file -->
@@ -252,7 +252,7 @@
     <string name="action_next">Next</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Turn off</string>
-    <string name="widget_action_remove">Remove</string>
+    <string name="widget_action_remove">Прибрати</string>
     <string name="widget_action_replace">Replace</string>
     <string name="menu_item_edit_favs">Edit favorites</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
@@ -438,7 +438,7 @@
     <string name="preference_custom_colors_corepalette">Color palette</string>
     <string name="preference_mdy_color_source">Source for dynamic colors</string>
     <string name="preference_mdy_color_source_system">System</string>
-    <string name="preference_mdy_color_source_wallpaper">Wallpaper</string>
+    <string name="preference_mdy_color_source_wallpaper">Фон</string>
     <string name="preference_screen_shapes">Shapes</string>
     <string name="preference_shapes_default">Default</string>
     <string name="preference_shapes_extra_round">Extra round</string>
@@ -456,7 +456,7 @@
     <string name="preference_category_licenses">Open source licenses</string>
     <string name="preference_category_advanced">Advanced</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Open website</string>
+    <string name="open_webpage">Відкрити веб-сторінку</string>
     <string name="preference_screen_about_summary">App and license information</string>
     <string name="preference_screen_appearance_summary">Customize the look-and-feel</string>
     <string name="preference_weather_provider">Provider</string>
@@ -538,7 +538,7 @@
     <string name="preference_signout">Sign out</string>
     <string name="preference_summary_not_logged_in">You are currently not logged in</string>
     <string name="preference_icon_shape_pentagon">Pentagon</string>
-    <string name="preference_category_wallpaper">Wallpaper</string>
+    <string name="preference_category_wallpaper">Фон</string>
     <string name="preference_dim_wallpaper">Dim wallpaper</string>
     <string name="preference_dim_wallpaper_summary">In dark themes, darken wallpaper</string>
     <string name="preference_blur_wallpaper">Blur wallpaper</string>
@@ -620,7 +620,7 @@
     <string name="preference_crash_reporter_summary">Error and crash reports</string>
     <string name="preference_logs">Logs</string>
     <string name="preference_logs_summary">View and export application logs</string>
-    <string name="preference_screen_search">Search</string>
+    <string name="preference_screen_search">Пошук</string>
     <string name="preference_screen_search_summary">Search, tags, hidden items</string>
     <string name="preference_search_favorites">Favorites</string>
     <string name="preference_search_favorites_summary">Show pinned and frequently used items above app grid</string>
@@ -744,7 +744,7 @@
     <string name="search_action_email">Email</string>
     <string name="search_action_alarm">Set alarm</string>
     <string name="search_action_timer">Start timer</string>
-    <string name="search_action_share">Share</string>
+    <string name="search_action_share">Поділитися</string>
     <string name="search_action_websearch">Web search</string>
     <string name="search_action_contact">Add to contacts</string>
     <string name="search_action_open_url">View website</string>
