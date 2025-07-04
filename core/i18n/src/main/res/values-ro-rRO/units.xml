@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ro">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <!-- UNITS OF LENGTH -->
+    <plurals name="unit_decimeter">
+        <item quantity="one">decimetru</item>
+        <item quantity="few">decimetri</item>
+        <item quantity="other">de decimetri</item>
+    </plurals>
+    <string name="unit_inch_symbol">inch</string>
+    <string name="unit_yard_symbol">iard</string>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqinch">
+        <item quantity="one">inci pătrat</item>
+        <item quantity="few">inci pătrați</item>
+        <item quantity="other">de inci pătrați</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">picior pătrat</item>
+        <item quantity="few">picioare pătrate</item>
+        <item quantity="other">de picioare pătrate</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">iard</item>
+        <item quantity="few">iarzi</item>
+        <item quantity="other">de iarzi</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">acru</item>
+        <item quantity="few">acri</item>
+        <item quantity="other">de acri</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
+    <string name="unit_day_symbol">z</string>
+    <!-- UNITS OF DATA SIZES -->
+    <string name="unit_byte_symbol">O</string>
+    <plurals name="unit_megabyte">
+        <item quantity="one">megaoctet</item>
+        <item quantity="few">megaocteți</item>
+        <item quantity="other">de megaocteți</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">kibioctet</item>
+        <item quantity="few">kibiocteți</item>
+        <item quantity="other">de kibiocteți</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">mebioctet</item>
+        <item quantity="few">mebiocteți</item>
+        <item quantity="other">de mebiocteți</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">gibioctet</item>
+        <item quantity="few">gibiocteți</item>
+        <item quantity="other">de gibiocteți</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebioctet</item>
+        <item quantity="few">tebiocteți</item>
+        <item quantity="other">de tebiocteți</item>
+    </plurals>
+    <string name="unit_kilobit_symbol">kilobit</string>
+    <string name="unit_megabit_symbol">Megabit</string>
+    <string name="unit_gigabit_symbol">Gigabit</string>
+    <string name="unit_terabit_symbol">Terabit</string>
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">metru pe secundă</item>
+        <item quantity="few">metri pe secundă</item>
+        <item quantity="other">de metri pe secundă</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilometru la oră</item>
+        <item quantity="few">kilometri la oră</item>
+        <item quantity="other">de kilometri la oră</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">milă pe oră</item>
+        <item quantity="few">mile pe oră</item>
+        <item quantity="other">de mile pe oră</item>
+    </plurals>
+    <!-- UNITS OF MASS -->
+    <plurals name="unit_metric_ton">
+        <item quantity="one">tonă metrică</item>
+        <item quantity="few">tone metrice</item>
+        <item quantity="other">de tone metrice</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="one">tonă lungă</item>
+        <item quantity="few">tone lungi</item>
+        <item quantity="other">de tone lungi</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">tonă scurtă</item>
+        <item quantity="few">tone scurte</item>
+        <item quantity="other">de tone scurte</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">grad celsius</item>
+        <item quantity="few">grade celsius</item>
+        <item quantity="other">de grade celsius</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">grad fahrenheit</item>
+        <item quantity="few">grade fahrenheit</item>
+        <item quantity="other">de grade fahrenheit</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="one">grad Kelvin</item>
+        <item quantity="few">grade Kelvin</item>
+        <item quantity="other">de grade Kelvin</item>
+    </plurals>
+</resources>
