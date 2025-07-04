@@ -4,8 +4,8 @@
     Important note: Unit symbols may not contain spaces.
     -->
     <!-- DIMENSIONS -->
-    <string name="dimension_length">Length</string>
-    <string name="dimension_mass">Mass</string>
+    <string name="dimension_length">אורך</string>
+    <string name="dimension_mass">מסה</string>
     <string name="dimension_velocity">Velocity</string>
     <string name="dimension_volume">Volume</string>
     <string name="dimension_area">Area</string>
