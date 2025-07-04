@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="zh-rCN">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <string name="dimension_length">长度</string>
+    <string name="dimension_mass">质量</string>
+    <string name="dimension_velocity">速度</string>
+    <string name="dimension_volume">音量</string>
+    <string name="dimension_area">地区</string>
+    <string name="dimension_currency">货币</string>
+    <string name="dimension_data">数据</string>
+    <string name="dimension_bitrate">比特率</string>
+    <string name="dimension_pressure">压力</string>
+    <string name="dimension_energy">能量</string>
+    <string name="dimension_frequency">频率</string>
+    <string name="dimension_temperature">温度</string>
+    <string name="dimension_time">时间</string>
+    <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="other">米</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="other">公里</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="other">分米</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="other">厘米</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="other">毫米</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="other">英寸</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="other">英尺</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="other">码</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="other">英里</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="other">海里</item>
+    </plurals>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="other">平方米</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="other">平方千米</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="other">平方厘米</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="other">平方毫米</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="other">平方英寸</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="other">平方英尺</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="other">平方码</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="other">公顷</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="other">英亩</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="other">秒</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="other">毫秒</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="other">分钟</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="other">小时</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="other">天</item>
+    </plurals>
+    <string name="unit_year_symbol">y</string>
+    <plurals name="unit_year">
+        <item quantity="other">年</item>
+    </plurals>
+    <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_byte">
+        <item quantity="other">字节</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="other">千字节</item>
+    </plurals>
+    <plurals name="unit_megabyte">
+        <item quantity="other">兆字节</item>
+    </plurals>
+    <plurals name="unit_gigabyte">
+        <item quantity="other">吉字节</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="other">万亿字节</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="other">千位字节</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="other">兆位字节</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="other">吉位字节</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="other">万亿位字节</item>
+    </plurals>
+    <plurals name="unit_bit">
+        <item quantity="other">比特</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="other">千比特</item>
+    </plurals>
+    <plurals name="unit_megabit">
+        <item quantity="other">兆比特</item>
+    </plurals>
+    <plurals name="unit_gigabit">
+        <item quantity="other">吉比特</item>
+    </plurals>
+    <string name="unit_terabit_symbol">万亿比特</string>
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="other">米每秒</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="other">公里每小时</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="other">英里每小时</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="other">节</item>
+    </plurals>
+    <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="other">千克</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="other">克</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="other">公吨</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="other">英吨</item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="other">英石</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="other">磅</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="other">盎司</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="other">美吨</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="other">摄氏度</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="other">华氏度</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="other">开</item>
+    </plurals>
+</resources>
