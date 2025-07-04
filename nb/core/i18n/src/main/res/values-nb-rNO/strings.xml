@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nb">
+    <string name="location_open">Åpent</string>
+    <string name="location_closed">Stengt</string>
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_closes">stenger %1$s</string>
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_closes_other_day">stenger %1$s, %2$s</string>
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_opens">åpner %1$s</string>
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_opens_other_day">åpner %1$s, %2$s</string>
+    <!-- Name of the app -->
+    <!-- Share something. Can be anything, an app, a website, a file, … -->
+    <string name="menu_share">Del</string>
+    <!-- Shown in the app detail share menu if the application was installed from an app store
+     %1$s is the name of the app store (e.g. Google Play)-->
+    <string name="menu_share_store_link">%1$s-lenke</string>
+    <!-- Share an APK file, shown in the app detail share menu -->
+    <string name="menu_share_apk_file">Pakkefil</string>
+    <!-- Uninstall an application -->
+    <string name="menu_uninstall">Avinstaller</string>
+    <string name="menu_favorites_pin">Fest i favoritter</string>
+    <string name="menu_favorites_unpin">Løsne</string>
+    <string name="menu_back">Tilbake</string>
+    <string name="menu_app_info">App-info</string>
+    <!-- Launch an app -->
+    <string name="menu_launch">Åpne</string>
+    <string name="menu_customize">Tilpass</string>
+    <!-- Open a file in the corresponding app -->
+    <string name="menu_open_file">Åpent</string>
+    <string name="menu_map">Se på kart</string>
+    <string name="menu_website">Åpne nettside</string>
+    <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
+    <string name="action_undo">Angre</string>
+    <string name="action_import">Importer</string>
+    <string name="action_done">Ferdig</string>
+    <string name="action_more_actions">Flere handlinger</string>
+    <string name="action_clear">Tøm</string>
+    <!-- Delete something (a file or a web search shortcut) -->
+    <string name="menu_delete">Slett</string>
+    <string name="menu_remove">Fjern</string>
+    <!-- Open a contact in the contacts app -->
+    <string name="menu_contacts_open_externally">Åpne i kontakt-app</string>
+    <!-- Open an event in the calendar app -->
+    <string name="menu_calendar_open_externally">Åpne i kalender-app</string>
+    <!-- Shown in the search bar when the search text field is empty -->
+    <string name="search_bar_placeholder">Søk</string>
+    <!-- App version, used in application details %1$s is the version -->
+    <string name="app_info_version">Versjon %1$s</string>
+    <!-- Menu entry for launcher settings -->
+    <string name="settings">Innstillinger</string>
+    <!-- Menu entry for launcher help -->
+    <string name="help">Hjelp</string>
+    <!-- Set the device's wallpaper -->
+    <string name="wallpaper">Bakgrunn</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north">Nord</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_east">Nord-øst</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_north_east">Nord-nord-øst</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east_north_east">Øst-nord-øst</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east">Øst</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east_south_east">Øst-sør-øst</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_east">Sør-øst</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_south_east">Sør-sør-øst</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south">Sør</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_south_west">Sør-sør-vest</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_west">Sør-vest</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west_south_west">Vest-sør-vest</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west">Vest</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west_north_west">Vest-nord-vest</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_west">Nord-vest</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_north_west">Nord-nord-vest</string>
+    <!-- No rain or snow, used in weather widget -->
+    <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
+     This should point to the Wikipedia in the given language. If no such Wikipedia exists,
+      a fallback that is suited best for most users of this language should be used
+      (English in most cases) -->
+    <string name="wikipedia_url">https://no.wikipedia.org</string>
+    <!-- Shown in Wikipedia results to indicate where they come from -->
+    <string name="wikipedia_source">Fra Wikipedia</string>
+    <!-- File meta data, title of audio tracks -->
+    <string name="file_meta_title">Tittel: %1$s</string>
+    <!-- File meta data, artist of audio tracks -->
+    <!-- File meta data, album of audio tracks -->
+    <!-- File meta data, duration of audio tracks -->
+    <string name="file_meta_duration">Lengde: %1$s</string>
+    <!-- File meta data, year of audio tracks -->
+    <string name="file_meta_year">År: %1$s</string>
+    <!-- File size -->
+    <string name="file_meta_size">Størrelse: %1$s</string>
+    <!-- File path -->
+    <string name="file_meta_path">Sti: %1$s</string>
+    <!-- File type (MIME type) -->
+    <!-- File meta, image/video dimensions -->
+    <string name="file_meta_dimensions">Dimensjoner: %1$s</string>
+    <!-- File meta, app name of APK files -->
+    <string name="file_meta_app_name">App-navn: %1$s</string>
+    <!-- File meta, version name of APK files -->
+    <string name="file_meta_app_version">Versjon: %1$s</string>
+    <!-- File meta, package name of APK files -->
+    <string name="file_meta_app_pkgname">Pakkenavn: %1$s</string>
+    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <string name="file_meta_app_min_sdk">Minimum SDK-versjon: %1$s</string>
+    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <string name="file_meta_owner">Eier: %1$s</string>
+    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <string name="file_meta_location">Sted: %1$s</string>
+    <string name="file_type_directory">Katalog</string>
+    <!-- ZIP, TAR, … archive files  -->
+    <string name="file_type_archive">Arkivfil</string>
+    <!-- APK file  -->
+    <string name="file_type_android">Android-pakkefil</string>
+    <!-- Code file (source code in a programming language) -->
+    <string name="file_type_source_code">Kildekodefil</string>
+    <!-- Word document -->
+    <string name="file_type_document">Dokument</string>
+    <!-- Excel spreadsheet -->
+    <string name="file_type_spreadsheet">Regneark</string>
+    <!-- Audio file -->
+    <string name="file_type_music">Musikkfil</string>
+    <!-- Video file -->
+    <!-- Picture file -->
+    <string name="file_type_image">Bilde</string>
+    <!-- Generic file without file extension -->
+    <string name="file_type_none">Fil</string>
+    <!-- Powerpoint presentation -->
+    <string name="file_type_presentation">Presentasjon</string>
+    <!-- BZIP, GZIP, … compressed file -->
+    <string name="file_type_compressed">Komprimert fil</string>
+    <!-- Plain text (TXT) file -->
+    <string name="file_type_text">Tekstfil</string>
+    <!-- E-book file -->
+    <string name="file_type_ebook">E-bok</string>
+    <!-- Google Drawings file -->
+    <string name="file_type_drawing">Tegning</string>
+    <!-- Google Forms file -->
+    <string name="file_type_form">Skjema</string>
+    <!-- Launcher backup, %1$s: app name -->
+    <string name="file_type_launcherbackup">%1$s-sikkerhetskopi</string>
+    <!-- Launcher theme, %1$s: app name -->
+    <string name="file_type_launchertheme">%1$s-tema</string>
+    <!-- Generic file , %1$s is the file extension -->
+    <string name="file_type_generic">%1$s-fil</string>
+    <!-- Warning message that is shown when a user attempts to delete a directory -->
+    <string name="alert_delete_directory">Katalogen %1$s og all dens innhold vil bli slettet permanent. Vil du fortsette?</string>
+    <!-- Warning message that is shown when a user attempts to delete a file -->
+    <string name="alert_delete_file">Fila %1$s vil bli permanent slettet. Vil du fortsette?</string>
+    <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
+    <string name="alert_delete_shortcut">Snarveien %1$s vil ble permanent slettet. Vil du fortsette?</string>
+    <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
+    could not be opened because there was no app installed that could handle the request  -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the first one. Must be in sync with [default_websearch_1_url].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the first one. Must be in sync with [default_websearch_1_name].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the second one. Must be in sync with [default_websearch_2_url].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the second one. Must be in sync with [default_websearch_2_name].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the third one. Must be in sync with [default_websearch_3_url].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the third one. Must be in sync with [default_websearch_3_name].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
+    <string name="websearch_dialog_url_error">Stedsfortrederen \'${1}\' mangler i URLen</string>
+    <string name="websearch_dialog_replace_icon">Erstatt ikon</string>
+    <string name="websearch_dialog_delete_icon">Slett ikon</string>
+    <string name="websearch_dialog_custom_icon">Tilpasset ikon</string>
+    <string name="websearch_dialog_advanced">Avansert</string>
+    <string name="websearch_dialog_query_encoding">Spørrings-enkoding</string>
+    <string name="websearch_dialog_query_encoding_url">Prosent-enkoding</string>
+    <string name="websearch_dialog_query_encoding_none">Ingen</string>
+    <string name="menu_edit_widgets">Redigere widgets</string>
+    <string name="widget_name_weather">Vær</string>
+    <string name="widget_name_calendar">Kalender</string>
+    <string name="widget_name_music">Musikk</string>
+    <string name="widget_name_favorites">Favoritter</string>
+    <string name="widget_name_notes">Notat</string>
+    <string name="widget_name_unknown">Ukjent app-widget</string>
+    <string name="widget_add_widget">Legg til widget</string>
+    <!-- Add a third party widget (=a standard Android app widget) -->
+    <string name="notes_widget_placeholder">Skriv et notat…</string>
+    <string name="notes_widget_action_new">Nytt notat</string>
+    <!-- Save / export the current note content as markdown file -->
+    <string name="notes_widget_action_save">Lagre</string>
+    <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
+    <string name="notes_widget_export_filename">Notat_%1$s</string>
+    <string name="notes_widget_action_dismiss">Avvis</string>
+    <string name="notes_widget_dismissed">Notat avvist.</string>
+    <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
+    <string name="shortcut_summary">Fra %1$s</string>
+    <!-- Wait, we have easter eggs? No way! -->
+    <string name="easter_egg_text">Greit, du fant meg. Gratulerer. Var det verdt det?</string>
+    <!-- Close a dialog -->
+    <string name="close">Lukk</string>
+    <string name="save">Lagre</string>
+    <string name="duplicate">Dupliser</string>
+    <string name="edit">Rediger</string>
+    <string name="skip">Hopp over</string>
+    <string name="action_next">Neste</string>
+    <!-- Turn something off / disable a functionality of the launcher -->
+    <string name="turn_off">Slå av</string>
+    <string name="widget_action_remove">Fjern</string>
+    <string name="widget_action_replace">Erstatt</string>
+    <string name="menu_item_edit_favs">Redigere favoritter</string>
+    <!-- Edit favorites, title for items that are frequently used but not pinned -->
+    <string name="edit_favorites_dialog_unpinned">Ikke festet – ofte brukt</string>
+    <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
+    <string name="edit_favorites_dialog_pinned_unsorted">Festet – automatisk sortert</string>
+    <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
+    <string name="edit_favorites_dialog_pinned_sorted">Festet – manuelt sortert</string>
+    <string name="edit_favorites_dialog_empty_section">Dra elementer hit</string>
+    <string name="edit_favorites_dialog_tags">Merkelapper</string>
+    <string name="edit_favorites_dialog_tag_section_empty">Festede merkelapper dukker opp her</string>
+    <string name="edit_favorites_dialog_new_tag">Opprett merkelapp…</string>
+    <!-- Nextcloud login flow, URL-->
+    <string name="nextcloud_server_url">Nextcloud-server-URL</string>
+    <!-- Nextcloud/Owncloud login flow, empty URL-->
+    <!-- Nextcloud login flow, error invalid URL-->
+    <string name="nextcloud_server_invalid_url">Denne URLen peker ikke til en gyldig Nextcloud-installasjon</string>
+    <!-- Owncloud login flow, UR-->
+    <string name="owncloud_server_url">Owncloud-server-URL</string>
+    <!-- Owncloud login flow, error invalid URL-->
+    <string name="owncloud_server_invalid_url">Denne URLen peker ikke til en gyldig Owncloud-installasjon</string>
+    <!-- Owncloud login flow, password-->
+    <string name="owncloud_password">Passord</string>
+    <!-- Owncloud login flow, user name-->
+    <string name="owncloud_username">Brukernavn</string>
+    <!-- Owncloud login flow -->
+    <string name="owncloud_login_2fa_hint">Dersom du har tofaktor-autentisering akrivert, må du bruke et app-passord her.</string>
+    <!-- Owncloud login flow, login failed -->
+    <string name="owncloud_login_failed">Innlogging feilet: feil brukernavn eller passord.</string>
+    <!-- Owncloud login flow, error: username empty -->
+    <!-- Owncloud login flow, error: password empty -->
+    <!-- Nextcloud/Owncloud login flow, continue button -->
+    <string name="login_flow_continue">Fortsett</string>
+    <!-- Nextcloud/Owncloud login flow, login button -->
+    <string name="login_flow_login">Logg inn</string>
+    <string name="disclaimer">Ansvarsfraskrivelse</string>
+    <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
+    <string name="disclaimer_currency_converter">Valutakurser publiseres en gang om dagen av den europeiske sentralbanken. All informasjon gis «som den er» uten noen form for garanti. Vi fraskriver oss alt ansvar for denne informasjonen.
+\n
+\nSist oppdatert: %1$s</string>
+    <string name="show_all">Vis alle</string>
+    <!-- Used in calendar widget date selector. -->
+    <string name="date_today">I dag</string>
+    <!-- Used in calendar widget date selector. -->
+    <string name="date_tomorrow">I morgen</string>
+    <!-- Headline used in calendar widget for pinned events -->
+    <string name="calendar_widget_pinned_events">Kommende</string>
+    <!-- Headline used in calendar widget for the next event, if there is no event today -->
+    <string name="calendar_widget_next_events">Neste hendelse</string>
+    <string name="calendar_widget_no_events">Ingen aktiviteter i dag</string>
+    <!--
+        In the calendar widget, only events that start or end at the selected date are shown.
+        If an event runs for three days, it won't be listed if the second day is selected.
+        Instead, the following text will be shown, %1$d being the total number of
+        running events that neither started nor will end on the selected day.
+        -->
+    <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">hele dagen</string>
+    <string name="task_due_time">Forfaller klokka %1$s</string>
+    <string name="task_due_date">Forfaller %1$s</string>
+    <string name="task_due_today">Forfaller i dag</string>
+    <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
+    <string name="music_widget_default_title">%1$s spiller media</string>
+    <string name="music_widget_no_data">Ingen media har blitt spilt ennå</string>
+    <string name="weather_condition_sleetshowers">Sludd</string>
+    <string name="weather_condition_heavysleet">Kraftig sludd</string>
+    <string name="weather_condition_lightrainshowersandthunder">Lette regnbyger og torden</string>
+    <string name="weather_condition_heavyrain">Kraftig regn</string>
+    <string name="weather_condition_lightsnowandthunder">Lett snøfall og torden</string>
+    <string name="weather_condition_lightrain">Lett regn</string>
+    <string name="weather_condition_lightrainshowers">Lette regnbyger</string>
+    <string name="weather_condition_lightsnow">Lett snøfall</string>
+    <string name="weather_condition_heavysleetshowersandthunder">Kraftige sluddskurer og torden</string>
+    <string name="weather_condition_lightsnowshowers">Lette snøbyger</string>
+    <string name="weather_condition_lightssleetshowersandthunder">Lette sluddbyger og torden</string>
+    <string name="weather_condition_snowandthunder">Snø og torden</string>
+    <string name="weather_condition_heavysleetshowers">Kraftige sluddbyger</string>
+    <string name="weather_condition_heavysnow">Kraftig snøfall</string>
+    <string name="weather_condition_cloudy">Overskyet</string>
+    <string name="weather_condition_lightrainandthunder">Lett regn og tordenvær</string>
+    <string name="weather_condition_snow">Snø</string>
+    <string name="weather_condition_hail">Hagl</string>
+    <string name="weather_condition_thunderstorm">Tordenvær</string>
+    <string name="weather_condition_heavysnowshowers">Kraftige snøbyger</string>
+    <string name="weather_condition_heavyrainshowers">Kraftige regnbyger</string>
+    <string name="weather_condition_rainshowersandthunder">Regnbyger og tordenvær</string>
+    <string name="weather_condition_clearsky">Klarvær</string>
+    <string name="weather_condition_sleet">Sludd</string>
+    <string name="weather_condition_rain">Regn</string>
+    <string name="weather_condition_sleetandthunder">Sludd og tordenvær</string>
+    <string name="weather_condition_lightssnowshowersandthunder">Lette snøbyger og tordenvær</string>
+    <string name="weather_condition_heavyrainshowersandthunder">Kraftige regnbyger og tordenvær</string>
+    <string name="weather_condition_fair">Pent</string>
+    <string name="weather_condition_fog">Tåke</string>
+    <string name="weather_condition_sleetshowersandthunder">Sluddbyger og tordenvær</string>
+    <string name="weather_condition_rainandthunder">Regn og torden</string>
+    <string name="weather_condition_lightsleet">Lett sludd</string>
+    <string name="weather_condition_heavysleetandthunder">Kraftig sludd og tordenvær</string>
+    <string name="weather_condition_partlycloudy">Lettskyet</string>
+    <string name="weather_condition_heavysnowandthunder">Kraftig snø og tordenvær</string>
+    <string name="weather_condition_rainshowers">Regnbyger</string>
+    <string name="weather_condition_lightsleetandthunder">Lett sludd og tordenvær</string>
+    <string name="weather_condition_heavysnowshowersandthunder">Kraftige snøbyger og tordenvær</string>
+    <string name="weather_condition_lightsleetshowers">Lette sluddbyger</string>
+    <string name="weather_condition_snowshowersandthunder">Snøbyger og tordenvær</string>
+    <string name="weather_condition_snowshowers">Snøbyger</string>
+    <string name="weather_condition_heavyrainandthunder">Kraftig regn og tordenvær</string>
+    <string name="weather_condition_wind">Vind</string>
+    <string name="weather_condition_unknown">Ukjent</string>
+    <!-- Humidity details, %1$s: formatted humidity value -->
+    <!-- Wind details, %1$s: formatted wind values -->
+    <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <string name="weather_no_data">Ingen værdata tilgjengelig.</string>
+    <!-- Manually set a location, used in weather widget location permission banner as an
+        alternative to granting the permission -->
+    <string name="weather_widget_set_location">Sett lokasjon</string>
+    <string name="weather_location_search_no_result">Fant ikke lokasjon.</string>
+    <!-- Missing location permission in weather widget and weather widget settings settings -->
+    <string name="missing_permission_auto_location">Lokasjonstilgang kreves for å automatisk kunne fastslå lokasjon</string>
+    <!-- Missing notification permission in music widget settings -->
+    <string name="missing_permission_music_widget">Varseltilgang kreves for å styre mediaavspilling</string>
+    <!-- Missing contact permission in search settings screen -->
+    <string name="missing_permission_contact_search_settings">Kontakttilgang kreves for å søke i kontakter</string>
+    <!-- Missing call permission in contacts settings screen -->
+    <!-- Missing calendar permission in search settings screen -->
+    <string name="missing_permission_calendar_search_settings">Kalendertilgang kreves for å søke i kalender</string>
+    <!-- Missing calendar permission in calendar widget settings screen -->
+    <string name="missing_permission_calendar_widget_settings">Denne widgeten krever kalendertilgang</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Kan du ikke finne dine kalendre?</string>
+    <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
+    <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">Tilgang til ekstern lagring kreves for å søke i lokale filer</string>
+    <!-- Missing file permission in search settings screen.
+        Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
+        to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <string name="missing_permission_file_search_settings_android10">FIlhåndteringstilgang kreves for å søke i lokale filer</string>
+    <!-- Missing notification permission, used in badge settings screen -->
+    <string name="missing_permission_notification_badges">Varseltilgang kreves for å vise varselprikker</string>
+    <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">Gi tilgang til kalender for å vise kommende avtaler og hendelser her.</string>
+    <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">Gi tilgang til kalender for å søke i din kalender.</string>
+    <!-- Missing location permission, used in location search results -->
+    <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">Gi tilgang til lagring for å søke i bilder, media og dokumenter på denne enheten.</string>
+    <!-- Missing files permission, used in contact search results -->
+    <string name="missing_permission_contact_search">Gi tilgang til kontakter for å søke i dine kontakter.</string>
+    <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
+    <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
+    <!-- Grant a permission, shown in permission banners -->
+    <string name="grant_permission">Tillat</string>
+    <!-- Appearance preference title -->
+    <string name="preference_screen_appearance">Utseende</string>
+    <string name="preference_theme">Tema</string>
+    <string name="preference_theme_light">Lyst</string>
+    <string name="preference_theme_dark">Mørkt</string>
+    <string name="preference_screen_colors">Fargeskjema</string>
+    <string name="preference_colors_default">Standard</string>
+    <string name="preference_colors_bw">Sorthvitt</string>
+    <string name="preference_custom_colors_corepalette">Fargepalett</string>
+    <string name="preference_mdy_color_source">Kilde til dynamiske farger</string>
+    <string name="preference_mdy_color_source_wallpaper">Bakgrunn</string>
+    <string name="preference_shapes_default">Standard</string>
+    <string name="preference_transparencies_default">Standard</string>
+    <string name="preference_font_system">Systemstandard</string>
+    <string name="preference_screen_about">Om</string>
+    <string name="preference_version">Versjon</string>
+    <string name="preference_category_links">Lenker</string>
+    <string name="preference_category_licenses">Åpen kildekode-lisenser</string>
+    <string name="preference_category_advanced">Avansert</string>
+    <!-- Open website of an open source library -->
+    <string name="open_webpage">Åpne nettside</string>
+    <string name="preference_screen_about_summary">App- og lisensinformasjon</string>
+    <string name="preference_screen_appearance_summary">Tilpass utseende</string>
+    <string name="preference_weather_provider">Tilbyder</string>
+    <string name="provider_metno">Meteorologisk institutt</string>
+    <string name="provider_brightsky">Deutscher Wetterdienst (kun Tyskland)</string>
+    <string name="preference_category_location">Plassering</string>
+    <string name="preference_automatic_location">Automatisk plassering</string>
+    <string name="preference_automatic_location_summary">Bruk GPS og plasseringstjenester for å automatisk angi plassering</string>
+    <string name="preference_location_managed">Håndtert av programtillegg</string>
+    <string name="preference_location">Plassering</string>
+    <string name="preference_imperial_units_summary">Bruk grader fahrenheit og miles i timen</string>
+    <string name="preference_imperial_units">Britiske måleenheter</string>
+    <string name="widget_config_weather_compact">Kompakt modus</string>
+    <string name="preference_category_debug">Feilsøk</string>
+    <string name="preference_category_debug_tools">Verktøy</string>
+    <string name="preference_debug_dump_heap">Minneavbildning</string>
+    <string name="preference_debug_dump_heap_summary">Knips et øyeblikksbilde for analysere minnebruk. Appen vil fryse frem til denne prosessen er ferdig.</string>
+    <string name="preference_debug_dump_heap_in_progress">Knipser øyeblikksbilde…</string>
+    <string name="preference_debug_cleanup_database">Rydd opp database</string>
+    <string name="preference_debug_reinstall_iconpacks">Installer ikonpakker på nytt</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Tøm og bygg ikonpakke-mellomlager på nytt</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">Fjernet %1$d oppføring.</item>
+        <item quantity="other">Fjernet %1$d oppføringer.</item>
+    </plurals>
+    <string name="preference_category_icons">Ikoner</string>
+    <string name="preference_cards">Kort</string>
+    <string name="preference_cards_summary">Tilpass kortutseende</string>
+    <string name="preference_cards_corner_radius">Hjørneradius</string>
+    <string name="preference_cards_opacity">Gjennomsiktighet</string>
+    <string name="preference_cards_shape">Form</string>
+    <string name="preference_cards_shape_rounded">Avrundet</string>
+    <string name="preference_cards_shape_cut">Klipp ut</string>
+    <string name="preference_icon_shape">Form</string>
+    <string name="preference_icon_shape_platform">Systemstandard</string>
+    <string name="preference_icon_shape_square">Firkantet</string>
+    <string name="preference_icon_shape_rounded_square">Avrundet firkant</string>
+    <string name="preference_icon_shape_squircle">Kvirkel</string>
+    <string name="preference_icon_shape_triangle">Reuleaux-triangel</string>
+    <string name="preference_icon_shape_circle">Sirkel</string>
+    <string name="preference_icon_shape_teardrop">Dråpe</string>
+    <string name="preference_icon_shape_pebble">Småstein</string>
+    <string name="preference_icon_shape_hexagon">Sekskant</string>
+    <string name="preference_category_searchbar">Søkefelt</string>
+    <string name="preference_screen_integrations">Integrasjoner</string>
+    <string name="preference_screen_plugins">Programtillegg</string>
+    <string name="preference_screen_plugins_summary">Administrer installerte utvidelser</string>
+    <string name="no_plugins_installed">Ingen programtillegg installert</string>
+    <string name="preference_theme_system">Følg systemet</string>
+    <string name="preference_themed_icons_summary">Fargelegg ikoner med applikasjonens fargeskjema</string>
+    <string name="preference_icon_pack">Ikonpakke</string>
+    <string name="preference_icon_pack_summary_empty">Ingen ikonpakker installert</string>
+    <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="preference_category_animations">Animasjoner</string>
+    <string name="preference_charging_animation">Ladeanimasjoner</string>
+    <string name="preference_charging_animation_summary">Spill av en bobleanimasjon når enheten lades</string>
+    <string name="preference_system_bar_icons_auto">Automatisk</string>
+    <string name="preference_system_bar_icons_light">Lyst</string>
+    <string name="preference_system_bar_icons_dark">Mørkt</string>
+    <string name="preference_hide_status_bar">Skjul statusmeny</string>
+    <string name="preference_screen_integrations_summary">Administrer tilkoblede konti og tjenester</string>
+    <string name="preference_signin_user">Innlogget som %1$s</string>
+    <string name="preference_signout">Logg ut</string>
+    <string name="preference_summary_not_logged_in">Du er ikke innlogget</string>
+    <string name="preference_icon_shape_pentagon">Femkantet</string>
+    <string name="preference_category_wallpaper">Bakgrunn</string>
+    <string name="preference_dim_wallpaper">Demp bakgrunn</string>
+    <string name="preference_blur_wallpaper">Tilslør bakgrunn</string>
+    <string name="preference_blur_wallpaper_unsupported">Støttes ikke på denne enheten</string>
+    <string name="preference_blur_wallpaper_radius">Tilsløringsradius</string>
+    <string name="preference_wallpaper_summary">Velg en bakgrunn</string>
+    <string name="preference_notification_badges">Varselprikker</string>
+    <string name="preference_notification_badges_summary">Vis en prikk for applikasjoner med uleste varsler</string>
+    <string name="preference_suspended_badges_summary">Vis en prikk for hvilende applikasjoner</string>
+    <string name="preference_suspended_badges">Hvilende apper</string>
+    <string name="preference_cloud_badges_summary">Vis en prikk for filer som er lagret i skyen</string>
+    <string name="preference_shortcut_badges">Snarveisprikker</string>
+    <string name="preference_plugin_badges">Tilleggsprikker</string>
+    <string name="preference_nextcloud_signin">Logg inn på Nextcloud</string>
+    <string name="preference_nextcloud_signin_summary">Logg inn for å søke på din Nextcloud-tjener</string>
+    <string name="preference_owncloud_signin">Logg inn på Owncloud</string>
+    <string name="preference_owncloud_signin_summary">Logg inn for å søke på din Owncloud-tjener</string>
+    <string name="preference_about_telegram">Telegram-gruppe</string>
+    <string name="preference_about_fdroid">F-Droid-pakkebrønn</string>
+    <string name="preference_enforce_icon_shape">Tving form</string>
+    <string name="preference_category_license">Lisens</string>
+    <string name="preference_about_license">Denne appen er fri programvare.</string>
+    <string name="preference_about_license_summary">Lisensiert under GNU General Public License 3.0</string>
+    <string name="preference_category_grid">Rutenett</string>
+    <string name="preference_grid_icon_size">Ikonstørrelse</string>
+    <string name="preference_grid_column_count">Antall kolonner</string>
+    <string name="preference_grid_labels">Vis merkelapper</string>
+    <string name="preference_grid_labels_summary">Vis app-navn under ikonet</string>
+    <string name="preference_screen_debug">Feilsøk</string>
+    <string name="preference_screen_debug_summary">Feilsøkingsverktøy</string>
+    <string name="preference_screen_weatherwidget">Vær</string>
+    <string name="preference_category_media_apps">Media-apper</string>
+    <string name="preference_screen_clockwidget">Klokke</string>
+    <string name="preference_screen_clockwidget_summary">Konfigurer klokkestil og -komponenter</string>
+    <string name="preference_clockwidget_layout_vertical">Standard</string>
+    <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
+    <string name="preference_clock_widget_show_seconds">Vis sekunder</string>
+    <string name="preference_clock_widget_time_format_system">Systemstandard</string>
+    <string name="widget_use_theme_colors">Bruk temafarge</string>
+    <string name="preference_clock_widget_fill_height">Fyll skjermhøyden</string>
+    <string name="preference_clock_widget_alignment">Justering</string>
+    <string name="preference_clock_widget_alignment_top">Topp</string>
+    <string name="preference_clock_widget_alignment_center">Senter</string>
+    <string name="preference_clock_widget_alignment_bottom">Bunn</string>
+    <string name="preference_clockwidget_dynamic_zone">Dynamisk sone</string>
+    <string name="preference_clockwidget_date_part">Dato</string>
+    <string name="preference_clockwidget_date_part_summary">Vis dagens dato</string>
+    <string name="preference_clockwidget_favorites_part">Dokk</string>
+    <string name="preference_clockwidget_favorites_part_summary">Vis den første raden med festede enheter</string>
+    <string name="preference_clockwidget_music_part_summary">Vis mediakontroller når der er en aktiv mediaøkt</string>
+    <string name="preference_clockwidget_battery_part">Batteri</string>
+    <string name="preference_clockwidget_battery_part_summary">Vis nåværende batterinivå når batteriet er lavt eller lades</string>
+    <string name="preference_clockwidget_alarm_part">Alarmer</string>
+    <string name="preference_clockwidget_alarm_part_summary">Vis alarmer som vil gå de neste 8 timer</string>
+    <string name="preference_screen_backup">Sikkerhetskopi og gjenoppretting</string>
+    <string name="preference_backup">Sikkerhetskopi</string>
+    <string name="preference_restore">Gjenopprett</string>
+    <string name="preference_restore_summary">Importer en tidligere sikkerhetskopi</string>
+    <string name="preference_crash_reporter">Krasjrapportering</string>
+    <string name="preference_crash_reporter_summary">Feil- og krasjrapporter</string>
+    <string name="preference_logs">Logger</string>
+    <string name="preference_logs_summary">Se og eksporter applikasjonslogger</string>
+    <string name="preference_screen_search">Søk</string>
+    <string name="preference_screen_search_summary">Søk, etiketter, skjulte oppføringer</string>
+    <string name="preference_search_favorites">Favoritter</string>
+    <string name="preference_search_favorites_summary">Vis festede og ofte brukte oppføringer over app-rutenettet</string>
+    <string name="preference_search_files">Filer</string>
+    <string name="preference_search_files_summary">Søk i lokale filer og skylagrede filer</string>
+    <string name="preference_search_contacts">Kontakter</string>
+    <string name="preference_search_contacts_summary">Søk i kontakter på denne enheten</string>
+    <string name="preference_search_calendar">Kalender</string>
+    <string name="preference_search_calendar_summary">Søk i kommende avtaler og hendelser</string>
+    <string name="preference_search_appshortcuts">App-snarveier</string>
+    <string name="preference_search_appshortcuts_summary">Søk i app-snarveier</string>
+    <string name="preference_search_calculator">Kalkulator</string>
+    <string name="preference_search_calculator_summary">Evaluer matematiske termer</string>
+    <string name="preference_search_unitconverter">Enhetskalkulator</string>
+    <string name="preference_search_unitconverter_summary">Bruk: 1,5 kg eller 4 cm &gt;&gt; til</string>
+    <string name="preference_search_currencyconverter">Valutakalkulator</string>
+    <string name="preference_search_currencyconverter_summary">Periodisk nedlasting av valutakurser for valutakonvertering</string>
+    <string name="preference_search_wikipedia_summary">Søk i den frie encyklopedi</string>
+    <string name="preference_search_websites">Nettsider</string>
+    <string name="preference_search_locations">Steder</string>
+    <string name="preference_search_locations_radius">Søkeradius</string>
+    <string name="preference_search_websites_summary">Vis en forhåndsvisning av en nettside dersom søkestrengen er en URL</string>
+    <string name="preference_search_locations_summary">Søk i nærområdet etter butikker og andre steder</string>
+    <string name="preference_search_localfiles">Lokale filer</string>
+    <string name="preference_search_localfiles_summary">Søk dokumenter, foto og andre filer lagret på denne enheten</string>
+    <string name="preference_search_cloud_summary">Søk i %1$s sine filer</string>
+    <string name="preference_calendar_calendars">Kalendere</string>
+    <string name="preference_calendar_hide_completed">Skjul utførte oppgaver</string>
+    <string name="preference_screen_buildinfo">Bygg-informasjon</string>
+    <string name="preference_screen_buildinfo_summary">Mer informasjon on dette bygget av denne appen</string>
+    <string name="preference_search_bar_style">Stil</string>
+    <string name="preference_search_bar_style_summary">Tilpass søkefeltets utseende</string>
+    <string name="preference_search_bar_color">Farge</string>
+    <string name="preference_search_bar_auto_focus">Åpne tastatur</string>
+    <string name="preference_search_bar_auto_focus_summary">Vis tastatur automatisk når app-skuff åpnes</string>
+    <string name="preference_search_bar_launch_on_enter">Start med enter</string>
+    <string name="preference_hidden_items">Skjulte søkeresultater</string>
+    <string name="preference_hidden_items_summary">Administrer skjulte apper og søkeresultater</string>
+    <string name="preference_screen_tags">Merkelapper</string>
+    <string name="preference_screen_tags_summary">Administrer etiketter og merkede oppføringer</string>
+    <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
+    <string name="preference_edit_favorites_summary">Endre rekkefølgen til festede oppføringer</string>
+    <string name="preference_category_favorites_frequently_used">Ofte brukt</string>
+    <string name="preference_favorites_frequently_used_summary">Vis ofte brukte oppføringer i favoritter</string>
+    <string name="preference_favorites_edit_button_summary">Vis en knapp for å omrokkere favorittene</string>
+    <string name="preference_widgets_edit_button_summary">Vis en knapp for å legge til, fjerne og omrokkere widgeter</string>
+    <string name="preference_screen_homescreen">Hjemskjerm</string>
+    <string name="preference_screen_homescreen_summary">Klokke, søkefelt, bakgrunn, systemlinjer</string>
+    <string name="preference_screen_icons">Rutenett og ikoner</string>
+    <string name="preference_weather_integration">Vær</string>
+    <string name="preference_media_integration">Mediakontroll</string>
+    <!-- %1$s: app name (Kvaesitso) -->
+    <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
+    <string name="no_account_nextcloud">Du har ikke koblet til en Nextcloud-konto ennå</string>
+    <!-- Used in an info banner if a specific feature requires an Owncloud account -->
+    <string name="no_account_owncloud">Du har ikke koblet til en Owncloud-konto ennå</string>
+    <!-- Used in an info banner if a specific feature requires a Google account -->
+    <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
+    <string name="connect_account">Koble til konto</string>
+    <string name="battery_part_charging">Lader</string>
+    <plurals name="battery_part_remaining_charge_time">
+        <item quantity="one">Fullt om %1$s minutt</item>
+        <item quantity="other">Fullt om %1$s minutter</item>
+    </plurals>
+    <string name="backup_complete">Sikkerhetskopiering fullført.</string>
+    <string name="restore_invalid_file">Valgt fil virker ikke være en sikkerhetskopi. Har du valgt riktig vil?</string>
+    <!-- %1$s: app name -->
+    <string name="restore_incompatible_file">Denne sikkerhetskopien ble opprettet med en annen versjon av %1$s og kan ikke gjenopprettes med denne versjonen.</string>
+    <!-- %1$s: app name -->
+    <string name="restore_different_minor_version">Denne sikkerhetskopien ble opprettet med en annen versjon av %1$s. Det kan hende at noen data ikke gjenopprettes korrekt.</string>
+    <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
+    <string name="restore_meta">Opprettet %1$s på %2$s med %3$s.</string>
+    <string name="restore_complete">Sikkerhetskopi har blitt gjenopprettet.</string>
+    <string name="icon_picker_default_icon">Standard</string>
+    <string name="icon_picker_suggestions">Forslag</string>
+    <string name="icon_picker_search_icon">Søk i ikonpakker</string>
+    <string name="icon_picker_filter_all_packs">Alle ikonpakker</string>
+    <string name="apps_profile_main">Personlig</string>
+    <string name="apps_profile_work">Jobb</string>
+    <string name="favorites">Favoritter</string>
+    <string name="favorites_empty">Festede og ofte brukte oppføringer vises her</string>
+    <string name="favorites_empty_tag">Det er ingen oppføringer med denne merkelappen</string>
+    <string name="frequently_used_show_in_favorites">Vis i favoritter</string>
+    <string name="frequently_used_rows">Antall rader</string>
+    <string name="preference_screen_search_actions">Hurtighandlinger</string>
+    <string name="preference_search_search_actions_summary">Konfigurer hurtighandlinger og søkesnarveier</string>
+    <string name="search_action_call">Ring</string>
+    <string name="search_action_message">Send melding</string>
+    <string name="search_action_email">Send e-post</string>
+    <string name="search_action_alarm">Sett alarm</string>
+    <string name="search_action_share">Del</string>
+    <string name="search_action_websearch">Nettsøk</string>
+    <string name="search_action_contact">Legg til kontakter</string>
+    <string name="search_action_open_url">Se nettside</string>
+    <string name="search_action_event">Planlegg hendelse</string>
+    <string name="create_search_action_type">Hvilken type handling vil du opprette?</string>
+    <string name="create_search_action_type_web">Søk på en nettside</string>
+    <string name="create_search_action_type_app">Søk i en app</string>
+    <string name="create_search_action_type_intent">Tilpasset intent</string>
+    <string name="create_search_action_pick_app">Velg en app å søke i:</string>
+    <string name="create_search_action_website_url">Skriv inn nettsidens adresse:</string>
+    <string name="search_action_label">Navn</string>
+    <string name="search_action_websearch_url">URL-mal</string>
+    <string name="search_action_websearch_url_hint">URL-malen som brukes til å konstruere nettsøks-URLen. Bruk «${1}» som stedfortreder for søkestrengen, f.eks. https://google.com/search?q=${1}.</string>
+    <string name="more_information">Mer informasjon</string>
+    <string name="experimental_feature">Eksperimentell</string>
+    <string name="tag_exists_error">En merkelapp med dette navnet eksisterer alt.</string>
+    <string name="tag_exists_message">En merkelapp med dette navnet eksisterer alt. Om du fortsetter vil merkelappene flettes sammen.</string>
+    <string name="tag_no_items_message">Ingen oppføringer er tildelt denne merkelappen. Om du fortsetter vil merkelappen bli slettet.</string>
+    <string name="tag_select_items">Velg oppføringer:</string>
+    <string name="tag_name">Merkelappnavn</string>
+    <plurals name="tag_selected_items">
+        <item quantity="one">%1$d oppføring valgt</item>
+        <item quantity="other">%1$d oppføringer valgt</item>
+    </plurals>
+    <string name="open_search_pull_down">Sveip ned</string>
+    <string name="open_search_swipe_left">Sveip til venstre</string>
+    <string name="open_search_swipe_right">Sveip til høyre</string>
+    <string name="search_bar_position_top">Topp</string>
+    <string name="search_bar_position_bottom">Bunn</string>
+    <string name="search_results_order_top_down">Øverst-ned</string>
+    <string name="search_results_order_bottom_up">Nederst-opp</string>
+    <string name="preference_layout_fixed_search_bar">Fast søkefelt</string>
+    <string name="preference_layout_fixed_rotation">Festet skjermrotasjon</string>
+    <string name="preference_layout_fixed_rotation_summary">Lås skjermrotasjon til portrettmodus</string>
+    <string name="preference_screen_gestures">Bevegelser</string>
+    <string name="preference_gesture_swipe_down">Sveip ned</string>
+    <string name="preference_gesture_swipe_left">Sveip til venstre</string>
+    <string name="preference_gesture_swipe_right">Sveip til høyre</string>
+    <string name="preference_gesture_double_tap">Dobbelttrykk</string>
+    <string name="preference_gesture_long_press">Langt trykk</string>
+    <string name="gesture_action_none">Ikke gjør noe</string>
+    <string name="gesture_action_open_search">Åpne søk</string>
+    <string name="gesture_action_launch_app">Start app</string>
+    <string name="gesture_action_notifications">Åpne varselskuff</string>
+    <string name="gesture_action_lock_screen">Slå av skjerm</string>
+    <string name="gesture_action_quick_settings">Åpne hurtiginnstillinger</string>
+    <string name="preference_search_result_ordering_weight_factor">Rangeringsfleksibilitet</string>
+    <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
+    <string name="preference_search_result_ordering_weight_factor_default">Balansert</string>
+    <string name="preference_search_result_ordering_weight_factor_high">Variabel</string>
+    <string name="widget_config_appwidget_borderless">Uten kanter</string>
+    <string name="widget_config_appwidget_background">Bakgrunnskort</string>
+    <string name="widget_config_appwidget_configure">Tilpass widget</string>
+    <string name="widget_config_appwidget_resize">Endre størrelse</string>
+    <string name="widget_config_weather_integration_settings">Innstillinger for værintegrasjon</string>
+    <string name="widget_config_calendar_no_calendars">Ingen kalendere funnet</string>
+    <string name="widget_pick_widget">Velg widget</string>
+    <string name="widget_config_music_integration_settings">Innstillinger for mediakontroll-integrasjon</string>
+    <string name="note_widget_link_file">Lenke til fil</string>
+    <string name="note_widget_link_file_summary">Synkroniser widget-innhold med en ekstern fil</string>
+    <string name="note_widget_linked_file_summary">Lenket med %1$s</string>
+    <string name="note_widget_action_unlink_file">Fjern lenke</string>
+    <string name="note_widget_conflict">Konflikt</string>
+    <string name="note_widget_conflict_action_resolve">Løs</string>
+    <string name="note_widget_conflict_keep_selected">Behold valgt</string>
+    <string name="note_widget_conflict_local_version">Seneste lagrede versjon:</string>
+    <string name="note_widget_conflict_file_version">Nåværende filinnhold:</string>
+    <string name="confirmation_delete_color_scheme">Er du sikker på at du vil slette fargeskjemaet %1$s?</string>
+    <string name="theme_color_scheme_system_default">Bruk systemstandard</string>
+    <string name="theme_color_scheme_autogenerate">Fra primærfarge</string>
+    <string name="theme_color_scheme_palette_color">Palett</string>
+    <string name="theme_color_scheme_custom_color">Tilpasset</string>
+    <string name="preference_restore_default">Gjenopprett standard</string>
+    <string name="import_theme_apply">Bruk tema</string>
+    <string name="shortcut_label_unavailable">Utilgjengelig</string>
+    <string name="app_label_locked_profile">Låst</string>
+    <!-- %1$s: app name -->
+    <string name="preference_plugin_enable">Aktiver programtillegg</string>
+    <string name="length_unit">Lengdeenhet</string>
+    <string name="imperial">Britisk-amerikansk</string>
+    <string name="metric">Metrisk</string>
+    <string name="preference_search_locations_hide_uncategorized">Skjul ukategoriserte steder</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">Vis kun resultater med veldefinerte kategorier, som kaféer eller restauranter</string>
+    <string name="preference_search_locations_show_map">Kart</string>
+    <string name="preference_search_locations_show_map_summary">Vis et kartutsnitt for steder</string>
+    <string name="menu_dial">Ring</string>
+    <string name="menu_navigation">Navigasjon</string>
+    <string name="menu_bugreport">Feilrapport</string>
+    <string name="location_open_24_7">Åpen 24/7</string>
+    <string name="plugin_state_error">Dette programtillegget fungerer ikke som det skal</string>
+    <string name="plugin_state_setup_required">Du må konfigurere dette programtillegget først</string>
+    <string name="plugin_type_filesearch">Filer</string>
+    <string name="plugin_type_contacts">Kontakter</string>
+    <string name="plugin_type_weather">Værtilbyder</string>
+    <string name="plugin_weather_provider_enable">Sett som værtilbyder</string>
+    <string name="plugin_weather_provider_enabled">Satt som værtilbyder</string>
+    <string name="unavailable_searchable">Denne oppføringen eksisterer ikke lengre.</string>
+    <string name="clock_style_digital1">Fet</string>
+    <string name="clock_style_digital2">Enkel</string>
+    <string name="clock_style_binary">Binær</string>
+    <string name="clock_style_analog">Visere</string>
+    <string name="clock_style_empty">Ingen klokke</string>
+    <string name="clock_style_custom">Tilpasset widget</string>
+    <string name="menu_show_filters">Vis filtre</string>
+    <string name="menu_hide_filters">Skjul filtre</string>
+    <string name="search_filter_tools">Verktøy</string>
+    <string name="search_filter_online">Nettresultater</string>
+    <string name="search_filter_apps">Apper</string>
+    <string name="plugin_type_calendar">Kalender</string>
+    <string name="preference_search_osm_locations_summary">Søk i OpenStreetMap etter butikker og andre steder i nærmiljøet</string>
+    <string name="poi_category_fast_food">Hurtigmat</string>
+    <string name="poi_category_cafe">Kafé</string>
+    <string name="poi_category_hotel">Hotell</string>
+    <string name="poi_category_supermarket">Supermarked</string>
+    <string name="poi_category_school">Skole</string>
+    <string name="poi_category_parking">Parkering</string>
+    <string name="poi_category_fuel">Bensinstasjon</string>
+    <string name="poi_category_toilets">Toalett</string>
+    <string name="poi_category_pharmacy">Apotek</string>
+    <string name="poi_category_hospital">Sykehus</string>
+    <string name="poi_category_post_office">Postkontor</string>
+    <string name="poi_category_doctors">Leger</string>
+    <string name="poi_category_police">Politi</string>
+    <string name="poi_category_dentist">Tannlege</string>
+    <string name="poi_category_library">Bibliotek</string>
+    <string name="poi_category_ice_cream">Isbutikk</string>
+    <string name="poi_category_theater">Teater</string>
+    <string name="poi_category_cinema">Kino</string>
+    <string name="poi_category_nightclub">Nattklubb</string>
+    <string name="poi_category_clinic">Klinikk</string>
+    <string name="poi_category_university">Universitet</string>
+    <string name="poi_category_clothes">Klesbutikk</string>
+    <string name="poi_category_convenience">Dagligvarebutikk</string>
+    <string name="poi_category_hairdresser">Frisør</string>
+    <string name="poi_category_books">Bokhandel</string>
+    <string name="poi_category_bakery">Bakeri</string>
+    <string name="poi_category_car_rental">Bilutleie</string>
+    <string name="poi_category_car_sharing">Bildeling</string>
+    <string name="poi_category_mobile_phone">Mobiltelefonbutikk</string>
+    <string name="poi_category_furniture">Møbelbutikk</string>
+    <string name="poi_category_alcohol">Alkoholbutikk</string>
+    <string name="poi_category_florist">Blomsterhandel</string>
+    <string name="poi_category_mall">Kjøpesenter</string>
+    <string name="poi_category_optician">Optiker</string>
+    <string name="poi_category_jewelry">Gullsmed</string>
+    <string name="poi_category_laundry">Vaskeri</string>
+    <string name="poi_category_soccer">Fotballbane</string>
+    <string name="poi_category_basketball">Basketballbane</string>
+    <string name="poi_category_tennis">Tennisbane</string>
+    <string name="poi_category_atm">Minibank</string>
+    <string name="poi_category_fitness_center">Treningssenter</string>
+    <string name="poi_category_church">Kirke</string>
+    <string name="poi_category_mosque">Moské</string>
+    <string name="poi_category_buddhist_temple">Buddhistisk tempel</string>
+    <string name="poi_category_hindu_temple">Hinduistisk tempel</string>
+    <string name="poi_category_synagogue">Synagoge</string>
+    <string name="poi_category_pizza_restaurant">Pizzarestaurant</string>
+    <string name="poi_category_burger_restaurant">Burgerrestaurant</string>
+    <string name="poi_category_place_of_worship">Kultsted</string>
+    <string name="poi_category_chinese_restaurant">Kinesisk restaurant</string>
+    <string name="poi_category_japanese_restaurant">Japansk restaurant</string>
+    <string name="poi_category_kebab_restaurant">Kebabrestaurant</string>
+    <string name="poi_category_asian_restaurant">Asiatisk restaurant</string>
+    <string name="poi_category_ramen_restaurant">Ramenrestaurant</string>
+    <string name="poi_category_soup_restaurant">Supperestaurant</string>
+    <string name="poi_category_brunch_restaurant">Brunchrestaurant</string>
+    <string name="poi_category_car_wash">Bilvask</string>
+    <string name="poi_category_charging_station">Ladestasjon</string>
+    <string name="poi_category_motorcycle_rental">Motorsykkelutleie</string>
+    <string name="poi_category_gallery">Galleri</string>
+    <string name="poi_category_amusement_park">Fornøyelsespark</string>
+    <string name="poi_category_concert_hall">Konserthus</string>
+    <string name="poi_category_stadium">Stadion</string>
+    <string name="poi_category_casino">Kasino</string>
+    <string name="poi_category_discount_store">Lavprisbutikk</string>
+    <string name="poi_category_pet">Dyrebutikk</string>
+    <string name="poi_category_shopping">Handel</string>
+    <string name="poi_category_swimming">Svømmebasseng</string>
+    <string name="poi_category_martial_arts">Kampsport</string>
+    <string name="poi_category_golf">Golfbane</string>
+    <string name="poi_category_gymnastics">Gymnastikk</string>
+    <string name="poi_category_ice_hockey">Ishockeybane</string>
+    <string name="poi_category_baseball">Baseballbane</string>
+    <string name="poi_category_american_football">Amerikansk fotballbane</string>
+    <string name="poi_category_handball">Håndballbane</string>
+    <string name="poi_category_volleyball">Volleyballbane</string>
+    <string name="poi_category_skiing">Ski</string>
+    <string name="poi_category_cricket">Cricketbane</string>
+    <string name="poi_category_fire_station">Brannstasjon</string>
+    <string name="poi_category_courthouse">Rettssal</string>
+    <string name="poi_category_townhall">Rådhus</string>
+    <string name="customize_item_label">Etikett</string>
+    <string name="customize_item_tags">Merkelapper</string>
+    <string name="customize_item_visibility">Vis i</string>
+    <string name="item_visibility_app_default">Rutenett og søkeresultater</string>
+    <string name="item_visibility_calendar_default">Kalenderwidget og søkeresultater</string>
+    <string name="item_visibility_search_only">Søkeresultater</string>
+    <string name="item_visibility_hidden">Aldri</string>
+    <string name="contact_info_home">Hjem</string>
+    <string name="contact_info_mobile">Mobil</string>
+    <string name="contact_info_work">Jobb</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s telefonnummer</item>
+        <item quantity="other">%1$s telefonnumre</item>
+    </plurals>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s e-postadresse</item>
+        <item quantity="other">%1$s e-postadresser</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s postadresse</item>
+        <item quantity="other">%1$s postadresser</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s varsel</item>
+        <item quantity="other">%1$s varsler</item>
+    </plurals>
+    <string name="weather_widget_no_provider">Ingen værvarseltilbyder valgt eller valgt tilbyder er utilgjengelig</string>
+    <string name="music_widget_previous_track">Forrige tittel</string>
+    <string name="music_widget_next_track">Neste tittel</string>
+    <string name="music_widget_play">Spill av</string>
+    <string name="music_widget_open_player">Åpne spiller</string>
+    <string name="calendar_widget_previous_day">Forrige dag</string>
+    <string name="calendar_widget_next_day">Neste dag</string>
+    <string name="calendar_widget_create_event">Opprett ny hendelse</string>
+    <string name="calendar_widget_open_calendar">Åpne kalenderapp</string>
+    <string name="profile_work_profile_state_locked">Jobb-apper er satt på pause.</string>
+    <string name="profile_work_profile_action_unlock">Slå av pause</string>
+    <string name="profile_work_profile_action_lock">Sett jobb-apper på pause</string>
+    <string name="profile_private_profile_action_unlock">Lås opp</string>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s liste valgt</item>
+        <item quantity="other">%1$s lister valgt</item>
+    </plurals>
+    <string name="weather_forecast_wind">Vind</string>
+    <string name="theme_bundle_name">Navn</string>
+</resources>
