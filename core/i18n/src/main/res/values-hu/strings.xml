@@ -861,4 +861,5 @@
     <string name="preference_search_bar_style_transparent">Átlátszó</string>
     <string name="preference_search_bar_style_hidden">Rejtett</string>
     <string name="preference_search_bar_style_solid">Homogén</string>
+    <string name="clock_variant_analog_ticks">Tickek</string>
 </resources>
