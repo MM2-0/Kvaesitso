@@ -12,14 +12,14 @@
     <string name="location_opens_other_day">opens %1$s, %2$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
-    <string name="menu_share">Share</string>
+    <string name="menu_share">Kvoto</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store
      %1$s is the name of the app store (e.g. Google Play)-->
     <string name="menu_share_store_link">%1$s link</string>
     <!-- Share an APK file, shown in the app detail share menu -->
     <string name="menu_share_apk_file">Package file</string>
     <!-- Uninstall an application -->
-    <string name="menu_uninstall">Uninstall</string>
+    <string name="menu_uninstall">Malinstali</string>
     <string name="menu_favorites_pin">Pin to favorites</string>
     <string name="menu_favorites_unpin">Unpin</string>
     <string name="menu_back">Back</string>
@@ -40,23 +40,23 @@
     <string name="action_install">Install</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
-    <string name="menu_remove">Remove</string>
+    <string name="menu_remove">Fortiri</string>
     <!-- Open a contact in the contacts app -->
     <string name="menu_contacts_open_externally">Open in contacts app</string>
     <!-- Open an event in the calendar app -->
     <string name="menu_calendar_open_externally">Open in calendar app</string>
     <!-- Shown in the search bar when the search text field is empty -->
-    <string name="search_bar_placeholder">Search</string>
+    <string name="search_bar_placeholder">Serĉi</string>
     <!-- App version, used in application details %1$s is the version -->
     <string name="app_info_version">Version %1$s</string>
     <!-- Menu entry for launcher settings -->
-    <string name="settings">Settings</string>
+    <string name="settings">Agordoj</string>
     <!-- Menu entry for launcher help -->
-    <string name="help">Help</string>
+    <string name="help">Helpo</string>
     <!-- Set the device's wallpaper -->
-    <string name="wallpaper">Wallpaper</string>
+    <string name="wallpaper">Murpapero</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north">North</string>
+    <string name="wind_north">Nordo</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_east">North east</string>
     <!-- Wind direction, used in weather widget -->
@@ -64,7 +64,7 @@
     <!-- Wind direction, used in weather widget -->
     <string name="wind_east_north_east">East north east</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east">East</string>
+    <string name="wind_east">Oriento</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_east_south_east">East south east</string>
     <!-- Wind direction, used in weather widget -->
@@ -72,7 +72,7 @@
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south_south_east">South south east</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south">South</string>
+    <string name="wind_south">Sudo</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south_south_west">South south west</string>
     <!-- Wind direction, used in weather widget -->
@@ -80,7 +80,7 @@
     <!-- Wind direction, used in weather widget -->
     <string name="wind_west_south_west">West south west</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west">West</string>
+    <string name="wind_west">Okcidento</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_west_north_west">West north west</string>
     <!-- Wind direction, used in weather widget -->
@@ -125,7 +125,7 @@
     <string name="file_meta_owner">Owner: %1$s</string>
     <!-- File meta, location (e.g. location where a photo has been taken) -->
     <string name="file_meta_location">Location: %1$s</string>
-    <string name="file_type_directory">Directory</string>
+    <string name="file_type_directory">Adreslibro</string>
     <!-- ZIP, TAR, … archive files  -->
     <string name="file_type_archive">Archive file</string>
     <!-- APK file  -->
@@ -133,7 +133,7 @@
     <!-- Code file (source code in a programming language) -->
     <string name="file_type_source_code">Source code file</string>
     <!-- Word document -->
-    <string name="file_type_document">Document</string>
+    <string name="file_type_document">Dokumento</string>
     <!-- Excel spreadsheet -->
     <string name="file_type_spreadsheet">Spreadsheet</string>
     <!-- Audio file -->
@@ -141,11 +141,11 @@
     <!-- Video file -->
     <string name="file_type_video">Video</string>
     <!-- Picture file -->
-    <string name="file_type_image">Picture</string>
+    <string name="file_type_image">Figuro</string>
     <!-- Generic file without file extension -->
-    <string name="file_type_none">File</string>
+    <string name="file_type_none">Dosiero</string>
     <!-- Powerpoint presentation -->
-    <string name="file_type_presentation">Presentation</string>
+    <string name="file_type_presentation">Prezentado</string>
     <!-- BZIP, GZIP, … compressed file -->
     <string name="file_type_compressed">Compressed file</string>
     <!-- Plain text (TXT) file -->
@@ -155,9 +155,9 @@
     <!-- Google Drawings file -->
     <string name="file_type_drawing">Drawing</string>
     <!-- Google Forms file -->
-    <string name="file_type_form">Form</string>
+    <string name="file_type_form">Formo</string>
     <!-- Launcher backup, %1$s: app name -->
-    <string name="file_type_launcherbackup">%1$s backup</string>
+    <string name="file_type_launcherbackup">%1$s restaŭrokopio</string>
     <!-- Launcher theme, %1$s: app name -->
     <string name="file_type_launchertheme">%1$s theme</string>
     <!-- Generic file , %1$s is the file extension -->
@@ -218,11 +218,11 @@
     <string name="websearch_dialog_query_encoding">Query encoding</string>
     <string name="websearch_dialog_query_encoding_url">Percent-encoding</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
-    <string name="websearch_dialog_query_encoding_none">None</string>
+    <string name="websearch_dialog_query_encoding_none">Neniom</string>
     <string name="menu_edit_widgets">Edit widgets</string>
-    <string name="widget_name_weather">Weather</string>
-    <string name="widget_name_calendar">Calendar</string>
-    <string name="widget_name_music">Music</string>
+    <string name="widget_name_weather">Vetero</string>
+    <string name="widget_name_calendar">Kalendaro</string>
+    <string name="widget_name_music">Muziko</string>
     <string name="widget_name_favorites">Favorites</string>
     <string name="widget_name_notes">Note</string>
     <string name="widget_name_unknown">Unknown app widget</string>
@@ -248,11 +248,11 @@
     <string name="save_as_file">Save as file</string>
     <string name="duplicate">Duplicate</string>
     <string name="edit">Edit</string>
-    <string name="skip">Skip</string>
+    <string name="skip">Transsalti</string>
     <string name="action_next">Next</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Turn off</string>
-    <string name="widget_action_remove">Remove</string>
+    <string name="widget_action_remove">Fortiri</string>
     <string name="widget_action_replace">Replace</string>
     <string name="menu_item_edit_favs">Edit favorites</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
@@ -262,7 +262,7 @@
     <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
     <string name="edit_favorites_dialog_pinned_sorted">Pinned – manually sorted</string>
     <string name="edit_favorites_dialog_empty_section">Drag items here</string>
-    <string name="edit_favorites_dialog_tags">Tags</string>
+    <string name="edit_favorites_dialog_tags">Tagoj</string>
     <string name="edit_favorites_dialog_tag_section_empty">Pinned tags will appear here</string>
     <string name="edit_favorites_dialog_new_tag">Create tag…</string>
     <!-- Nextcloud login flow, URL-->
@@ -275,7 +275,7 @@
     <!-- Owncloud login flow, error invalid URL-->
     <string name="owncloud_server_invalid_url">This URL does not point to a valid Owncloud installation</string>
     <!-- Owncloud login flow, password-->
-    <string name="owncloud_password">Password</string>
+    <string name="owncloud_password">Pasvorto</string>
     <!-- Owncloud login flow, user name-->
     <string name="owncloud_username">User name</string>
     <!-- Owncloud login flow -->
@@ -295,9 +295,9 @@
 \nLast update: %1$s</string>
     <string name="show_all">Show all</string>
     <!-- Used in calendar widget date selector. -->
-    <string name="date_today">Today</string>
+    <string name="date_today">Hodiaŭ</string>
     <!-- Used in calendar widget date selector. -->
-    <string name="date_tomorrow">Tomorrow</string>
+    <string name="date_tomorrow">Morgaŭo</string>
     <!-- Headline used in calendar widget for pinned events -->
     <string name="calendar_widget_pinned_events">Upcoming</string>
     <!-- Headline used in calendar widget for the next event, if there is no event today -->
@@ -356,7 +356,7 @@
     <string name="weather_condition_lightssnowshowersandthunder">Lights snow showers and thunder</string>
     <string name="weather_condition_heavyrainshowersandthunder">Heavy rain showers and thunder</string>
     <string name="weather_condition_fair">Fair</string>
-    <string name="weather_condition_fog">Fog</string>
+    <string name="weather_condition_fog">Nebulo</string>
     <string name="weather_condition_haze">Haze</string>
     <string name="weather_condition_sleetshowersandthunder">Sleet showers and thunder</string>
     <string name="weather_condition_rainandthunder">Rain and thunder</string>
@@ -372,7 +372,7 @@
     <string name="weather_condition_snowshowers">Snow showers</string>
     <string name="weather_condition_heavyrainandthunder">Heavy rain and thunder</string>
     <string name="weather_condition_wind">Wind</string>
-    <string name="weather_condition_unknown">Unknown</string>
+    <string name="weather_condition_unknown">Nekonata</string>
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
@@ -428,21 +428,21 @@
     <string name="preference_theme_light">Light</string>
     <string name="preference_theme_dark">Dark</string>
     <string name="preference_screen_colors">Color scheme</string>
-    <string name="preference_colors_default">Default</string>
+    <string name="preference_colors_default">Defaŭlto</string>
     <string name="preference_colors_high_contrast">High contrast</string>
     <string name="preference_colors_bw">Black and White</string>
     <string name="preference_custom_colors_corepalette">Color palette</string>
     <string name="preference_mdy_color_source">Source for dynamic colors</string>
     <string name="preference_mdy_color_source_system">System</string>
-    <string name="preference_mdy_color_source_wallpaper">Wallpaper</string>
+    <string name="preference_mdy_color_source_wallpaper">Murpapero</string>
     <string name="preference_screen_shapes">Shapes</string>
-    <string name="preference_shapes_default">Default</string>
+    <string name="preference_shapes_default">Defaŭlto</string>
     <string name="preference_shapes_extra_round">Extra round</string>
     <string name="preference_shapes_rect">Rectangular</string>
     <string name="preference_shapes_base">Base shape</string>
     <string name="preference_screen_typography">Typography</string>
     <string name="preference_screen_transparencies">Transparency</string>
-    <string name="preference_transparencies_default">Default</string>
+    <string name="preference_transparencies_default">Defaŭlto</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
     <string name="preference_font">Font</string>
     <string name="preference_font_system">System default</string>
@@ -532,7 +532,7 @@
     <string name="preference_signout">Sign out</string>
     <string name="preference_summary_not_logged_in">You are currently not logged in</string>
     <string name="preference_icon_shape_pentagon">Pentagon</string>
-    <string name="preference_category_wallpaper">Wallpaper</string>
+    <string name="preference_category_wallpaper">Murpapero</string>
     <string name="preference_dim_wallpaper">Dim wallpaper</string>
     <string name="preference_dim_wallpaper_summary">In dark themes, darken wallpaper</string>
     <string name="preference_blur_wallpaper">Blur wallpaper</string>
@@ -576,11 +576,11 @@
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Troubleshooting tools</string>
     <string name="preference_category_widgets">Widgets</string>
-    <string name="preference_screen_weatherwidget">Weather</string>
+    <string name="preference_screen_weatherwidget">Vetero</string>
     <string name="preference_category_media_apps">Media apps</string>
     <string name="preference_screen_clockwidget">Clock</string>
     <string name="preference_screen_clockwidget_summary">Configure clock style and components</string>
-    <string name="preference_clockwidget_layout_vertical">Default</string>
+    <string name="preference_clockwidget_layout_vertical">Defaŭlto</string>
     <string name="preference_clockwidget_layout_horizontal">Compact</string>
     <string name="preference_clock_widget_show_seconds">Show seconds</string>
     <string name="preference_clock_widget_time_format">Time format</string>
@@ -614,7 +614,7 @@
     <string name="preference_crash_reporter_summary">Error and crash reports</string>
     <string name="preference_logs">Logs</string>
     <string name="preference_logs_summary">View and export application logs</string>
-    <string name="preference_screen_search">Search</string>
+    <string name="preference_screen_search">Serĉi</string>
     <string name="preference_screen_search_summary">Search, tags, hidden items</string>
     <string name="preference_search_favorites">Favorites</string>
     <string name="preference_search_favorites_summary">Show pinned and frequently used items above app grid</string>
@@ -622,7 +622,7 @@
     <string name="preference_search_files_summary">Search local files and cloud files</string>
     <string name="preference_search_contacts">Contacts</string>
     <string name="preference_search_contacts_summary">Search contacts on this device</string>
-    <string name="preference_search_calendar">Calendar</string>
+    <string name="preference_search_calendar">Kalendaro</string>
     <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
     <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
     <string name="preference_search_tasks">Tasks</string>
@@ -666,7 +666,7 @@
     <string name="preference_hidden_items_summary">Manage hidden apps and search results</string>
     <string name="preference_hidden_items_reveal_button">Show reveal button</string>
     <string name="preference_hidden_items_reveal_button_summary">Show a button to reveal hidden search results</string>
-    <string name="preference_screen_tags">Tags</string>
+    <string name="preference_screen_tags">Tagoj</string>
     <string name="preference_screen_tags_summary">Manage tags and tagged items</string>
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
     <string name="preference_edit_favorites_summary">Change the order of pinned items</string>
@@ -683,7 +683,7 @@
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
     <string name="preference_screen_icons">Grid &amp; icons</string>
     <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
-    <string name="preference_weather_integration">Weather</string>
+    <string name="preference_weather_integration">Vetero</string>
     <string name="preference_media_integration">Media control</string>
     <string name="preference_tasks_integration">Tasks</string>
     <!-- %1$s: app name (Kvaesitso) -->
@@ -717,7 +717,7 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">Created %1$s on %2$s with %3$s.</string>
     <string name="restore_complete">The backup has been restored.</string>
-    <string name="icon_picker_default_icon">Default</string>
+    <string name="icon_picker_default_icon">Defaŭlto</string>
     <string name="icon_picker_suggestions">Suggestions</string>
     <string name="icon_picker_search_icon">Search in icon packs</string>
     <string name="icon_picker_filter_all_packs">All icon packs</string>
@@ -736,7 +736,7 @@
     <string name="search_action_email">Email</string>
     <string name="search_action_alarm">Set alarm</string>
     <string name="search_action_timer">Start timer</string>
-    <string name="search_action_share">Share</string>
+    <string name="search_action_share">Kvoto</string>
     <string name="search_action_websearch">Web search</string>
     <string name="search_action_contact">Add to contacts</string>
     <string name="search_action_open_url">View website</string>
@@ -748,12 +748,12 @@
     <string name="create_search_action_pick_app">Pick an app to search:</string>
     <string name="create_search_action_website_url">Enter the address of the website:</string>
     <string name="create_search_action_website_invalid_url">The given website cannot automatically be imported as a web search. You can try a different website or enter the required data manually in the next step.</string>
-    <string name="search_action_label">Name</string>
+    <string name="search_action_label">Nomo</string>
     <string name="search_action_app">App</string>
     <string name="search_action_websearch_url">URL template</string>
     <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term, e.g. https://google.com/search?q=${1}.</string>
     <string name="more_information">More information</string>
-    <string name="experimental_feature">Experimental</string>
+    <string name="experimental_feature">Eksperimenta</string>
     <string name="tag_exists_error">A tag with this name already exists.</string>
     <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged.</string>
     <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted.</string>
@@ -886,7 +886,7 @@
     <string name="search_filter_online">Online results</string>
     <string name="search_filter_apps">Apps</string>
     <string name="plugin_type_locationsearch">Places search</string>
-    <string name="plugin_type_calendar">Calendar</string>
+    <string name="plugin_type_calendar">Kalendaro</string>
     <string name="preference_default_filter">Default filter</string>
     <string name="preference_default_filter_summary">Customize the default filter for searches</string>
     <string name="preference_filter_bar">Show filter bar</string>
@@ -987,7 +987,7 @@
     <string name="poi_category_courthouse">Courthouse</string>
     <string name="poi_category_townhall">Townhall</string>
     <string name="customize_item_label">Label</string>
-    <string name="customize_item_tags">Tags</string>
+    <string name="customize_item_tags">Tagoj</string>
     <string name="customize_item_visibility">Show in</string>
     <string name="item_visibility_app_default">App grid &amp; search results</string>
     <string name="item_visibility_calendar_default">Calendar widget &amp; search results</string>
@@ -1046,7 +1046,7 @@
     <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher.</string>
     <string name="theme_export_title">Export theme</string>
     <string name="theme_import_title">Import theme</string>
-    <string name="theme_bundle_name">Name</string>
+    <string name="theme_bundle_name">Nomo</string>
     <string name="theme_bundle_author">Author</string>
     <string name="preference_typography_fonts">Fonts</string>
     <string name="font_category_device_default">Device default</string>
