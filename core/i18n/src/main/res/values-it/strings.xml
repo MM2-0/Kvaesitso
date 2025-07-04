@@ -869,4 +869,7 @@
     <string name="font_name_device_headline">Font predefinito per il titolo</string>
     <string name="font_name_device_body">Font del testo del dispositivo</string>
     <string name="font_category_generic">Generico</string>
+    <string name="preference_search_bar_style_transparent">Trasparente</string>
+    <string name="preference_search_bar_style_solid">Solido</string>
+    <string name="preference_search_bar_style_hidden">Nascosto</string>
 </resources>
