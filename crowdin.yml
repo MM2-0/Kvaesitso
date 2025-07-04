@@ -1,7 +1,7 @@
 files:
   - source: core/i18n/src/main/res/values/strings.xml
     translation: core/i18n/src/main/res/values-%android_code%/strings.xml
-    translate_content: 0
-    translate_attributes: 0
+    type: android
   - source: core/i18n/src/main/res/values/units.xml
     translation: core/i18n/src/main/res/values-%android_code%/units.xml
+    type: android
