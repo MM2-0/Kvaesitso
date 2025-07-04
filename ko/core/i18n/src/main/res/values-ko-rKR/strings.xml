@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ko">
+    <string name="location_open">영업 중</string>
+    <string name="location_closed">영업 종료</string>
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_closes">%1$s에 영업 종료</string>
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_closes_other_day">%1$s %2$s에 영업 종료</string>
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_opens">%1$s에 영업 시작</string>
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_opens_other_day">%1$s %2$s에 영업 시작</string>
+    <!-- Name of the app -->
+    <!-- Share something. Can be anything, an app, a website, a file, … -->
+    <string name="menu_share">공유</string>
+    <!-- Shown in the app detail share menu if the application was installed from an app store
+     %1$s is the name of the app store (e.g. Google Play)-->
+    <string name="menu_share_store_link">%1$s 링크</string>
+    <!-- Share an APK file, shown in the app detail share menu -->
+    <string name="menu_share_apk_file">패키지 파일</string>
+    <!-- Uninstall an application -->
+    <string name="menu_uninstall">설치 제거</string>
+    <string name="menu_favorites_pin">즐겨찾기에 고정</string>
+    <string name="menu_favorites_unpin">고정 해제</string>
+    <string name="menu_back">뒤로</string>
+    <string name="menu_app_info">앱 정보</string>
+    <!-- Launch an app -->
+    <string name="menu_launch">앱 열기</string>
+    <string name="menu_customize">사용자 정의</string>
+    <!-- Open a file in the corresponding app -->
+    <string name="menu_open_file">영업 중</string>
+    <string name="menu_map">지도에서 보기</string>
+    <string name="menu_website">웹사이트 열기</string>
+    <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
+    <string name="action_undo">실행 취소</string>
+    <string name="action_import">가져오기</string>
+    <!-- Delete something (a file or a web search shortcut) -->
+    <string name="menu_delete">삭제</string>
+    <string name="menu_remove">제거</string>
+    <!-- Open a contact in the contacts app -->
+    <string name="menu_contacts_open_externally">연락처 앱으로 열기</string>
+    <!-- Open an event in the calendar app -->
+    <string name="menu_calendar_open_externally">캘린더 앱으로 열기</string>
+    <!-- Shown in the search bar when the search text field is empty -->
+    <string name="search_bar_placeholder">검색</string>
+    <!-- App version, used in application details %1$s is the version -->
+    <string name="app_info_version">버전 %1$s</string>
+    <!-- Menu entry for launcher settings -->
+    <string name="settings">설정</string>
+    <!-- Menu entry for launcher help -->
+    <string name="help">도움말</string>
+    <!-- Set the device's wallpaper -->
+    <string name="wallpaper">배경화면</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north">북풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_east">북동풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_north_east">북북동풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east_north_east">동북동풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east">동풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east_south_east">동남동풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_east">남서풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_south_east">남남동풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south">남풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_south_west">남남서풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_west">남서풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west_south_west">서남서풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west">서풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west_north_west">서북서풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_west">북서풍</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_north_west">북북서풍</string>
+    <!-- No rain or snow, used in weather widget -->
+    <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
+     This should point to the Wikipedia in the given language. If no such Wikipedia exists,
+      a fallback that is suited best for most users of this language should be used
+      (English in most cases) -->
+    <string name="wikipedia_url">https://ko.wikipedia.org</string>
+    <!-- Shown in Wikipedia results to indicate where they come from -->
+    <string name="wikipedia_source">위키백과에서 발췌</string>
+    <!-- File meta data, title of audio tracks -->
+    <string name="file_meta_title">제목: %1$s</string>
+    <!-- File meta data, artist of audio tracks -->
+    <string name="file_meta_artist">아티스트: %1$s</string>
+    <!-- File meta data, album of audio tracks -->
+    <string name="file_meta_album">앨범: %1$s</string>
+    <!-- File meta data, duration of audio tracks -->
+    <string name="file_meta_duration">길이: %1$s</string>
+    <!-- File meta data, year of audio tracks -->
+    <string name="file_meta_year">연도: %1$s</string>
+    <!-- File size -->
+    <string name="file_meta_size">크기: %1$s</string>
+    <!-- File path -->
+    <string name="file_meta_path">경로: %1$s</string>
+    <!-- File type (MIME type) -->
+    <string name="file_meta_type">형식: %1$s</string>
+    <!-- File meta, image/video dimensions -->
+    <string name="file_meta_dimensions">해상도: %1$s</string>
+    <!-- File meta, app name of APK files -->
+    <string name="file_meta_app_name">앱 이름: %1$s</string>
+    <!-- File meta, version name of APK files -->
+    <string name="file_meta_app_version">버전: %1$s</string>
+    <!-- File meta, package name of APK files -->
+    <string name="file_meta_app_pkgname">패키지 이름: %1$s</string>
+    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <string name="file_meta_app_min_sdk">최소 SDK 버전: %1$s</string>
+    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <string name="file_meta_owner">소유자: %1$s</string>
+    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <string name="file_meta_location">위치: %1$s</string>
+    <string name="file_type_directory">디렉터리</string>
+    <!-- ZIP, TAR, … archive files  -->
+    <string name="file_type_archive">압축 파일</string>
+    <!-- APK file  -->
+    <string name="file_type_android">Android 패키지 파일</string>
+    <!-- Code file (source code in a programming language) -->
+    <string name="file_type_source_code">소스 코드 파일</string>
+    <!-- Word document -->
+    <string name="file_type_document">문서</string>
+    <!-- Excel spreadsheet -->
+    <string name="file_type_spreadsheet">스프레드시트</string>
+    <!-- Audio file -->
+    <string name="file_type_music">음악 파일</string>
+    <!-- Video file -->
+    <string name="file_type_video">동영상</string>
+    <!-- Picture file -->
+    <string name="file_type_image">사진</string>
+    <!-- Generic file without file extension -->
+    <string name="file_type_none">파일</string>
+    <!-- Powerpoint presentation -->
+    <string name="file_type_presentation">프레젠테이션</string>
+    <!-- BZIP, GZIP, … compressed file -->
+    <string name="file_type_compressed">압축 파일</string>
+    <!-- Plain text (TXT) file -->
+    <string name="file_type_text">텍스트 파일</string>
+    <!-- E-book file -->
+    <string name="file_type_ebook">전자책</string>
+    <!-- Google Drawings file -->
+    <string name="file_type_drawing">드로잉</string>
+    <!-- Google Forms file -->
+    <string name="file_type_form">폼</string>
+    <!-- Launcher backup, %1$s: app name -->
+    <string name="file_type_launcherbackup">%1$s 백업</string>
+    <!-- Launcher theme, %1$s: app name -->
+    <string name="file_type_launchertheme">%1$s 테마</string>
+    <!-- Generic file , %1$s is the file extension -->
+    <string name="file_type_generic">%1$s 파일</string>
+    <!-- Warning message that is shown when a user attempts to delete a directory -->
+    <string name="alert_delete_directory">%1$s 디렉터리 및 하위 항목을 영구적으로 삭제합니다. 계속하시겠습니까\?</string>
+    <!-- Warning message that is shown when a user attempts to delete a file -->
+    <string name="alert_delete_file">%1$s 파일을 영구적으로 삭제합니다. 계속하시겠습니까\?</string>
+    <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
+    <string name="alert_delete_shortcut">%1$s 바로 가기를 영구적으로 제거합니다. 계속하시겠습니까\?</string>
+    <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
+    could not be opened because there was no app installed that could handle the request  -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the first one. Must be in sync with [default_websearch_1_url].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the first one. Must be in sync with [default_websearch_1_name].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the second one. Must be in sync with [default_websearch_2_url].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the second one. Must be in sync with [default_websearch_2_name].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the third one. Must be in sync with [default_websearch_3_url].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the third one. Must be in sync with [default_websearch_3_name].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <string name="websearch_dialog_url_error">이 URL에는 실제 검색어로 바뀔 \'${1}\'이 빠져 있습니다.</string>
+    <string name="websearch_dialog_replace_icon">아이콘 교체</string>
+    <string name="websearch_dialog_delete_icon">아이콘 삭제</string>
+    <string name="websearch_dialog_custom_icon">사용자 지정 아이콘</string>
+    <string name="websearch_dialog_advanced">고급</string>
+    <string name="websearch_dialog_query_encoding">검색어 인코딩</string>
+    <string name="websearch_dialog_query_encoding_url">퍼센트 인코딩</string>
+    <string name="websearch_dialog_query_encoding_none">없음</string>
+    <string name="menu_edit_widgets">위젯 편집</string>
+    <string name="widget_name_weather">날씨</string>
+    <string name="widget_name_calendar">캘린더</string>
+    <string name="widget_name_music">음악</string>
+    <string name="widget_name_favorites">즐겨찾기</string>
+    <string name="widget_name_notes">메모</string>
+    <string name="widget_name_unknown">알 수 없는 앱 위젯</string>
+    <string name="widget_add_widget">위젯 추가</string>
+    <!-- Add a third party widget (=a standard Android app widget) -->
+    <string name="notes_widget_placeholder">메모 쓰기…</string>
+    <string name="notes_widget_action_new">새 메모</string>
+    <!-- Save / export the current note content as markdown file -->
+    <string name="notes_widget_action_save">저장</string>
+    <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
+    <string name="notes_widget_export_filename">메모_%1$s</string>
+    <string name="notes_widget_action_dismiss">취소</string>
+    <string name="notes_widget_dismissed">메모를 취소했습니다.</string>
+    <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
+    <string name="shortcut_summary">%1$s 제공</string>
+    <!-- Wait, we have easter eggs? No way! -->
+    <string name="easter_egg_text">와, 찾아내셨군요. 축하드려요. 찾아낼 만 하셨나요\?</string>
+    <!-- Close a dialog -->
+    <string name="close">닫기</string>
+    <string name="save">저장</string>
+    <string name="duplicate">복제</string>
+    <string name="edit">편집</string>
+    <string name="skip">건너뛰기</string>
+    <string name="action_next">다음</string>
+    <!-- Turn something off / disable a functionality of the launcher -->
+    <string name="turn_off">끄기</string>
+    <string name="widget_action_remove">제거</string>
+    <string name="widget_action_replace">교체</string>
+    <string name="menu_item_edit_favs">즐겨찾기 편집</string>
+    <!-- Edit favorites, title for items that are frequently used but not pinned -->
+    <string name="edit_favorites_dialog_unpinned">고정되지 않음 – 자주 사용함</string>
+    <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
+    <string name="edit_favorites_dialog_pinned_unsorted">고정됨 – 자동 정렬됨</string>
+    <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
+    <string name="edit_favorites_dialog_pinned_sorted">고정됨 – 수동 정렬됨</string>
+    <string name="edit_favorites_dialog_empty_section">여기에 항목 끌어다 놓기</string>
+    <string name="edit_favorites_dialog_tags">태그</string>
+    <string name="edit_favorites_dialog_tag_section_empty">고정한 태그가 여기에 나타납니다.</string>
+    <string name="edit_favorites_dialog_new_tag">태그 만들기…</string>
+    <!-- Nextcloud login flow, URL-->
+    <string name="nextcloud_server_url">Nextcloud 서버 URL</string>
+    <!-- Nextcloud/Owncloud login flow, empty URL-->
+    <!-- Nextcloud login flow, error invalid URL-->
+    <string name="nextcloud_server_invalid_url">이 URL에는 Nextcloud가 설치되어 있지 않습니다.</string>
+    <!-- Owncloud login flow, UR-->
+    <string name="owncloud_server_url">Owncloud 서버 URL</string>
+    <!-- Owncloud login flow, error invalid URL-->
+    <string name="owncloud_server_invalid_url">이 URL에는 Owncloud가 설치되어 있지 않습니다.</string>
+    <!-- Owncloud login flow, password-->
+    <string name="owncloud_password">비밀번호</string>
+    <!-- Owncloud login flow, user name-->
+    <string name="owncloud_username">사용자 이름</string>
+    <!-- Owncloud login flow -->
+    <string name="owncloud_login_2fa_hint">2단계 인증을 사용하고 있는 경우 앱 비밀번호를 사용해야 합니다.</string>
+    <!-- Owncloud login flow, login failed -->
+    <string name="owncloud_login_failed">로그인 실패: 사용자 이름 또는 비밀번호가 잘못되었습니다.</string>
+    <!-- Owncloud login flow, error: username empty -->
+    <!-- Owncloud login flow, error: password empty -->
+    <!-- Nextcloud/Owncloud login flow, continue button -->
+    <string name="login_flow_continue">계속</string>
+    <!-- Nextcloud/Owncloud login flow, login button -->
+    <string name="login_flow_login">로그인</string>
+    <string name="disclaimer">면책 조항</string>
+    <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
+    <string name="disclaimer_currency_converter">European Central Bank(유럽중앙은행)에서 하루에 한 번 게시하는 환율입니다. 모든 정보는 어떠한 종류나 성격의 보증도 제공하지 않고 \"있는 그대로\" 제공합니다. 이 정보에 대해서는 어떠한 책임도 지지 않습니다.
+\n
+\n마지막 업데이트: %1$s</string>
+    <string name="show_all">모두 표시</string>
+    <!-- Used in calendar widget date selector. -->
+    <string name="date_today">오늘</string>
+    <!-- Used in calendar widget date selector. -->
+    <string name="date_tomorrow">내일</string>
+    <!-- Headline used in calendar widget for pinned events -->
+    <string name="calendar_widget_pinned_events">다가올 일정</string>
+    <!-- Headline used in calendar widget for the next event, if there is no event today -->
+    <string name="calendar_widget_next_events">다음 일정</string>
+    <string name="calendar_widget_no_events">오늘 일정 없음</string>
+    <!--
+        In the calendar widget, only events that start or end at the selected date are shown.
+        If an event runs for three days, it won't be listed if the second day is selected.
+        Instead, the following text will be shown, %1$d being the total number of
+        running events that neither started nor will end on the selected day.
+        -->
+    <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">종일</string>
+    <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
+    <string name="music_widget_default_title">%1$s 앱에서 미디어 재생 중</string>
+    <string name="music_widget_no_data">아직 미디어를 재생한 적이 없습니다.</string>
+    <string name="weather_condition_heavyrain">많은 비</string>
+    <string name="weather_condition_lightrain">비 조금</string>
+    <string name="weather_condition_lightrainshowers">소나기 조금</string>
+    <string name="weather_condition_lightsnow">눈 조금</string>
+    <string name="weather_condition_heavysnow">많은 눈</string>
+    <string name="weather_condition_cloudy">흐림</string>
+    <string name="weather_condition_snow">눈</string>
+    <string name="weather_condition_clearsky">맑음</string>
+    <string name="weather_condition_sleet">진눈깨비</string>
+    <string name="weather_condition_rain">비</string>
+    <string name="weather_condition_fog">안개</string>
+    <string name="weather_condition_partlycloudy">구름 조금</string>
+    <string name="weather_condition_rainshowers">소나기</string>
+    <string name="weather_condition_wind">바람</string>
+    <string name="weather_condition_unknown">알 수 없음</string>
+    <!-- Humidity details, %1$s: formatted humidity value -->
+    <!-- Wind details, %1$s: formatted wind values -->
+    <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <string name="weather_no_data">사용할 수 있는 날씨 데이터가 없습니다.</string>
+    <!-- Manually set a location, used in weather widget location permission banner as an
+        alternative to granting the permission -->
+    <string name="weather_widget_set_location">위치 지정</string>
+    <string name="weather_location_search_no_result">위치를 찾을 수 없습니다.</string>
+    <!-- Missing location permission in weather widget and weather widget settings settings -->
+    <string name="missing_permission_auto_location">자동으로 위치를 찾기 위해 위치 권한이 필요합니다.</string>
+    <!-- Missing notification permission in music widget settings -->
+    <string name="missing_permission_music_widget">미디어 재생을 제어하기 위해 알림 권한이 필요합니다.</string>
+    <!-- Missing contact permission in search settings screen -->
+    <string name="missing_permission_contact_search_settings">연락처를 검색하기 위해 연락처 권한이 필요합니다.</string>
+    <!-- Missing call permission in contacts settings screen -->
+    <!-- Missing calendar permission in search settings screen -->
+    <string name="missing_permission_calendar_search_settings">캘린더를 검색하기 위해 캘린더 권한이 필요합니다.</string>
+    <!-- Missing calendar permission in calendar widget settings screen -->
+    <string name="missing_permission_calendar_widget_settings">이 위젯은 캘린더 권한이 필요합니다.</string>
+    <string name="widget_config_calendar_missing_calendars_hint">캘린더를 찾을 수 없나요\?</string>
+    <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
+    <!-- Missing file permission in search settings screen -->
+    <!-- Missing file permission in search settings screen.
+        Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
+        to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <!-- Missing notification permission, used in badge settings screen -->
+    <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">다가오는 약속과 일정을 여기에 표시하려면 캘린더 권한이 필요합니다.</string>
+    <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">캘린더에서 항목을 검색하려면 캘린더 권한이 필요합니다.</string>
+    <!-- Missing location permission, used in location search results -->
+    <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">이 기기에 있는 사진이나 문서, 미디어를 검색하려면 저장공간 권한이 필요합니다.</string>
+    <!-- Missing files permission, used in contact search results -->
+    <string name="missing_permission_contact_search">연락처에서 항목을 검색하려면 연락처 권한이 필요합니다.</string>
+    <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
+    <string name="missing_permission_appshortcuts_search">앱 바로 가기를 검색하려면 %1$s 앱을 기본 홈 앱으로 지정해야 합니다.</string>
+    <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
+    <string name="missing_permission_appshortcuts_create">바로 가기를 만들기 위해서는 %1$s 앱을 기본 홈 앱으로 지정해야 합니다.</string>
+    <!-- Grant a permission, shown in permission banners -->
+    <string name="grant_permission">허용</string>
+    <!-- Appearance preference title -->
+    <string name="preference_screen_appearance">외관</string>
+    <string name="preference_theme">테마</string>
+    <string name="preference_theme_light">밝은 테마</string>
+    <string name="preference_theme_dark">어두운 테마</string>
+    <string name="preference_screen_colors">색상 구성</string>
+    <string name="preference_colors_default">기본</string>
+    <string name="preference_colors_bw">흑백</string>
+    <string name="preference_mdy_color_source_wallpaper">배경화면</string>
+    <string name="preference_shapes_default">기본</string>
+    <string name="preference_transparencies_default">기본</string>
+    <string name="preference_font">글꼴</string>
+    <string name="preference_font_system">시스템 기본값</string>
+    <string name="preference_screen_about">정보</string>
+    <string name="preference_version">버전</string>
+    <string name="preference_category_links">링크</string>
+    <string name="preference_category_licenses">오픈 소스 라이선스</string>
+    <string name="preference_category_advanced">고급</string>
+    <!-- Open website of an open source library -->
+    <string name="open_webpage">웹사이트 열기</string>
+    <string name="preference_screen_about_summary">앱 및 라이선스 정보</string>
+    <string name="preference_screen_appearance_summary">앱 생김새 사용자 정의</string>
+    <string name="preference_weather_provider">공급자</string>
+    <string name="provider_brightsky">Deutscher Wetterdienst (독일 한정)</string>
+    <string name="preference_category_location">위치</string>
+    <string name="preference_automatic_location">자동 위치</string>
+    <string name="preference_automatic_location_summary">GPS 및 위치 서비스를 사용하여 위치를 자동으로 지정</string>
+    <string name="preference_location">위치</string>
+    <string name="preference_imperial_units_summary">화씨 및 시속 마일 사용</string>
+    <string name="preference_imperial_units">야드파운드법 사용</string>
+    <string name="widget_config_weather_compact">간결한 모드</string>
+    <string name="preference_category_debug">디버그</string>
+    <string name="preference_category_debug_tools">도구</string>
+    <string name="preference_debug_dump_heap">메모리 스냅샷</string>
+    <string name="preference_debug_dump_heap_summary">메모리 사용량을 분석하기 위해 스냅샷을 찍습니다. 찍는 동안 앱이 잠시 멈춥니다.</string>
+    <string name="preference_debug_dump_heap_in_progress">스냅샷 찍는 중…</string>
+    <string name="preference_debug_cleanup_database">데이터베이스 정리</string>
+    <string name="preference_debug_cleanup_database_summary">런처 데이터베이스에서 사용하지 않거나 잘못된 항목 제거</string>
+    <string name="preference_debug_reinstall_iconpacks">아이콘 팩 재설치</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">아이콘 팩 캐시를 제거하고 다시 생성</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="other">%1$d개 항목을 제거했습니다.</item>
+    </plurals>
+    <string name="preference_category_icons">아이콘</string>
+    <string name="preference_cards">카드</string>
+    <string name="preference_cards_summary">카드 외관 사용자 정의</string>
+    <string name="preference_cards_corner_radius">가장자리 둥글기</string>
+    <string name="preference_cards_stroke_width">획 너비</string>
+    <string name="preference_cards_opacity">불투명도</string>
+    <string name="preference_cards_shape">모양</string>
+    <string name="preference_cards_shape_rounded">둥근 모서리</string>
+    <string name="preference_cards_shape_cut">각진 모서리</string>
+    <string name="preference_icon_shape">모양</string>
+    <string name="preference_icon_shape_platform">시스템 기본값</string>
+    <string name="preference_icon_shape_square">사각형</string>
+    <string name="preference_icon_shape_rounded_square">모서리가 둥근 사각형</string>
+    <string name="preference_icon_shape_squircle">둥근 사각형</string>
+    <string name="preference_icon_shape_triangle">뢸로 삼각형</string>
+    <string name="preference_icon_shape_circle">원</string>
+    <string name="preference_icon_shape_pebble">조약돌</string>
+    <string name="preference_icon_shape_hexagon">육각형</string>
+    <string name="preference_category_searchbar">검색 표시줄</string>
+    <string name="preference_screen_integrations">통합</string>
+    <string name="preference_theme_system">시스템 설정에 따름</string>
+    <string name="preference_themed_icons">아이콘에 테마 적용</string>
+    <string name="preference_themed_icons_summary">애플리케이션의 색 구성에 따라 아이콘 색상 바꾸기</string>
+    <string name="preference_force_themed_icons">테마 강제 적용</string>
+    <string name="preference_force_themed_icons_summary">지원하지 않는 아이콘을 포함한 모든 아이콘에 애플리케이션의 색상 적용 (권장 안 함)</string>
+    <string name="preference_icon_pack">아이콘 팩</string>
+    <string name="preference_icon_pack_summary_empty">설치한 아이콘 팩이 없습니다.</string>
+    <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="preference_category_system_bars">시스템 표시줄</string>
+    <string name="preference_status_bar_icons">상태 표시줄 아이콘</string>
+    <string name="preference_nav_bar_icons">내비게이션 바 아이콘</string>
+    <string name="preference_system_bar_icons_auto">자동</string>
+    <string name="preference_system_bar_icons_light">밝은 테마</string>
+    <string name="preference_system_bar_icons_dark">어두운 테마</string>
+    <string name="preference_hide_status_bar">상태 표시줄 숨기기</string>
+    <string name="preference_hide_nav_bar">내비게이션 바 숨기기</string>
+    <string name="preference_screen_integrations_summary">연결된 계정 및 서비스 관리</string>
+    <string name="preference_signin_user">%1$s 사용자로 로그인됨</string>
+    <string name="preference_summary_not_logged_in">로그인하지 않음</string>
+    <string name="preference_icon_shape_pentagon">오각형</string>
+    <string name="preference_category_wallpaper">배경화면</string>
+    <string name="preference_wallpaper_summary">배경화면 선택</string>
+    <string name="preference_category_badges">배지</string>
+    <string name="preference_notification_badges">알림 배지</string>
+    <string name="preference_notification_badges_summary">읽지 않은 알림이 있는 애플리케이션에 배지 표시</string>
+    <string name="preference_nextcloud_signin">Nextcloud에 로그인</string>
+    <string name="preference_nextcloud_signin_summary">로그인하여 Nextcloud 항목 검색</string>
+    <string name="preference_owncloud_signin">Owncloud에 로그인</string>
+    <string name="preference_owncloud_signin_summary">로그인하여 Owncloud 항목 검색</string>
+    <string name="preference_about_telegram">텔레그램 그룹</string>
+    <string name="preference_about_fdroid">F-Droid 리포지터리</string>
+    <string name="preference_category_license">라이선스</string>
+    <string name="preference_about_license">이 앱은 자유 소프트웨어입니다.</string>
+    <string name="preference_about_license_summary">GNU 일반 공중 사용 허가서(GPL) 3.0을 따름</string>
+    <string name="preference_category_grid">격자</string>
+    <string name="preference_grid_icon_size">아이콘 크기</string>
+    <string name="preference_grid_labels">라벨 표시</string>
+    <string name="preference_grid_labels_summary">아이콘 밑에 앱 이름 표시</string>
+    <string name="preference_screen_debug">디버그</string>
+    <string name="preference_screen_debug_summary">문제 해결 도구</string>
+    <string name="preference_category_widgets">위젯</string>
+    <string name="preference_screen_weatherwidget">날씨</string>
+    <string name="preference_category_media_apps">미디어 앱</string>
+    <string name="preference_screen_clockwidget">시계</string>
+    <string name="preference_screen_clockwidget_summary">시계 스타일 및 구성 요소 설정</string>
+    <string name="preference_clockwidget_layout_vertical">기본</string>
+    <string name="preference_clock_widget_time_format_system">시스템 기본값</string>
+    <string name="preference_clock_widget_fill_height">화면 높이 맞춤</string>
+    <string name="preference_clockwidget_date_part">날짜</string>
+    <string name="preference_clockwidget_date_part_summary">오늘 날짜 표시</string>
+    <string name="preference_clockwidget_favorites_part">즐겨찾기</string>
+    <string name="preference_clockwidget_favorites_part_summary">고정된 항목의 첫째 줄 표시</string>
+    <string name="preference_clockwidget_music_part">미디어</string>
+    <string name="preference_clockwidget_music_part_summary">활성 미디어 세션이 있을 경우 미디어 제어 기능 표시</string>
+    <string name="preference_clockwidget_battery_part">배터리</string>
+    <string name="preference_clockwidget_battery_part_summary">배터리 수준이 낮거나 충전 중이면 현재 배터리 수준 표시</string>
+    <string name="preference_clockwidget_alarm_part">알람</string>
+    <string name="preference_clockwidget_alarm_part_summary">15분 안에 울리는 알람이 있으면 표시</string>
+    <string name="preference_screen_backup">백업 및 복원</string>
+    <string name="preference_screen_backup_summary">런처 데이터 내보내기 및 가져오기</string>
+    <string name="preference_backup">백업</string>
+    <string name="preference_backup_summary">설정 및 런처 데이터 내보내기</string>
+    <string name="preference_restore">복원</string>
+    <string name="preference_restore_summary">이전에 만든 백업 가져오기</string>
+    <string name="preference_crash_reporter">충돌 보고 도구</string>
+    <string name="preference_crash_reporter_summary">오류 및 충돌 보고서</string>
+    <string name="preference_logs">로그</string>
+    <string name="preference_logs_summary">애플리케이션 로그 보기 및 내보내기</string>
+    <string name="preference_screen_search">검색</string>
+    <string name="preference_screen_search_summary">검색, 태그, 숨긴 항목</string>
+    <string name="preference_search_favorites">즐겨찾기</string>
+    <string name="preference_search_favorites_summary">앱 격자 위에 고정한 항목 및 자주 사용한 항목 표시</string>
+    <string name="preference_search_files">파일</string>
+    <string name="preference_search_files_summary">로컬 및 클라우드 파일 검색</string>
+    <string name="preference_search_contacts">연락처</string>
+    <string name="preference_search_contacts_summary">이 기기에 저장된 연락처 검색</string>
+    <string name="preference_search_calendar">캘린더</string>
+    <string name="preference_search_calendar_summary">다가올 약속 및 일정 검색</string>
+    <string name="preference_search_appshortcuts">앱 바로 가기</string>
+    <string name="preference_search_appshortcuts_summary">앱 바로 가기 검색</string>
+    <string name="preference_search_calculator">계산기</string>
+    <string name="preference_search_calculator_summary">수학 식 계산</string>
+    <string name="preference_search_unitconverter">단위 변환</string>
+    <string name="preference_search_unitconverter_summary">사용법: \'1.5 kg\' 또는 \'4 cm &gt;&gt; in\'</string>
+    <string name="preference_search_currencyconverter">환율 변환</string>
+    <string name="preference_search_currencyconverter_summary">주기적으로 현재 환율을 다운로드하여 환율 변환</string>
+    <string name="preference_search_wikipedia">위키백과</string>
+    <string name="preference_search_wikipedia_summary">자유 백과사전에서 검색</string>
+    <string name="preference_search_websites">웹사이트</string>
+    <string name="preference_search_websites_summary">검색어가 URL이면 해당 웹사이트의 미리보기 표시</string>
+    <string name="preference_search_localfiles">로컬 파일</string>
+    <string name="preference_search_localfiles_summary">이 기기에 저장된 문서, 사진 및 기타 파일 검색</string>
+    <string name="preference_search_cloud_summary">%1$s의 파일 검색</string>
+    <string name="preference_calendar_calendars">캘린더</string>
+    <string name="preference_screen_buildinfo">빌드 정보</string>
+    <string name="preference_screen_buildinfo_summary">이 빌드에 대한 추가 정보</string>
+    <string name="preference_search_bar_style">스타일</string>
+    <string name="preference_search_bar_style_summary">검색 표시줄 외관 사용자 정의</string>
+    <string name="preference_search_bar_color">색상</string>
+    <string name="preference_search_bar_auto_focus">키보드 열기</string>
+    <string name="preference_search_bar_auto_focus_summary">검색을 열 때 자동으로 키보드 표시</string>
+    <string name="preference_search_bar_launch_on_enter">엔터로 실행</string>
+    <string name="preference_hidden_items">숨긴 검색 결과</string>
+    <string name="preference_hidden_items_summary">숨긴 앱 및 검색 결과 관리</string>
+    <string name="preference_screen_tags">태그</string>
+    <string name="preference_screen_tags_summary">태그 및 태그한 항목 관리</string>
+    <string name="preference_wikipedia_customurl">위키백과 URL</string>
+    <string name="preference_edit_favorites_summary">고정된 항목 순서 바꾸기</string>
+    <string name="preference_category_favorites_frequently_used">자주 사용한 항목</string>
+    <string name="preference_favorites_frequently_used_summary">즐겨찾기에 자주 사용한 항목 표시</string>
+    <string name="preference_edit_button">버튼 편집</string>
+    <string name="preference_favorites_edit_button_summary">즐겨찾기를 정렬할 수 있는 버튼 표시</string>
+    <string name="preference_widgets_edit_button_summary">위젯을 추가, 제거하거나 정렬할 수 있는 버튼 표시</string>
+    <string name="preference_screen_homescreen">홈 화면</string>
+    <string name="preference_screen_homescreen_summary">시계, 검색 표시줄, 배경화면, 시스템 표시줄</string>
+    <string name="preference_screen_icons">격자 및 아이콘</string>
+    <string name="preference_screen_icons_summary">격자, 아이콘 크기, 아이콘 팩, 배지</string>
+    <string name="preference_weather_integration">날씨</string>
+    <string name="preference_media_integration">미디어 제어</string>
+    <!-- %1$s: app name (Kvaesitso) -->
+    <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
+    <string name="no_account_nextcloud">아직 Nextcloud 계정을 연결하지 않았습니다.</string>
+    <!-- Used in an info banner if a specific feature requires an Owncloud account -->
+    <string name="no_account_owncloud">아직 Owncloud 계정을 연결하지 않았습니다.</string>
+    <!-- Used in an info banner if a specific feature requires a Google account -->
+    <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
+    <string name="connect_account">계정 연결</string>
+    <string name="battery_part_charging">충전 중</string>
+    <plurals name="battery_part_remaining_charge_time">
+        <item quantity="other">%1$s분 뒤 충전 완료</item>
+    </plurals>
+    <string name="backup_complete">백업을 완료했습니다.</string>
+    <!-- %1$s: app name -->
+    <string name="restore_incompatible_file">이 백업은 다른 버전의 %1$s에서 생성되었습니다. 이 버전에서 복원할 수 없습니다.</string>
+    <!-- %1$s: app name -->
+    <string name="restore_different_minor_version">이 백업은 다른 버전의 %1$s에서 생성되었습니다. 일부 데이터를 복원하지 못할 수 있습니다.</string>
+    <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
+    <string name="restore_meta">%1$s에 %2$s의 %3$s에서 생성한 백업입니다.</string>
+    <string name="restore_complete">백업을 복원했습니다.</string>
+    <string name="icon_picker_default_icon">기본</string>
+    <string name="icon_picker_suggestions">제안</string>
+    <string name="icon_picker_search_icon">아이콘 검색</string>
+    <string name="icon_picker_filter_all_packs">모든 아이콘 팩</string>
+    <string name="favorites">즐겨찾기</string>
+    <string name="favorites_empty">고정된 항목과 자주 사용한 항목이 여기에 나타납니다.</string>
+    <string name="favorites_empty_tag">이 태그를 지정한 항목이 없습니다.</string>
+    <string name="frequently_used_show_in_favorites">즐겨찾기에 표시</string>
+    <string name="frequently_used_rows">줄 수</string>
+    <string name="preference_screen_search_actions">빠른 동작</string>
+    <string name="preference_search_search_actions_summary">빠른 동작 구성 및 검색 바로 가기</string>
+    <string name="search_action_call">전화</string>
+    <string name="search_action_message">메시지</string>
+    <string name="search_action_email">이메일</string>
+    <string name="search_action_alarm">알람 설정</string>
+    <string name="search_action_timer">타이머 시작</string>
+    <string name="search_action_share">공유</string>
+    <string name="search_action_websearch">웹 검색</string>
+    <string name="search_action_contact">연락처에 추가</string>
+    <string name="search_action_open_url">웹사이트 보기</string>
+    <string name="search_action_event">일정 추가</string>
+    <string name="create_search_action_type">어떤 종류의 동작을 만드시겠습니까\?</string>
+    <string name="create_search_action_type_web">웹사이트에서 검색</string>
+    <string name="create_search_action_type_app">앱에서 검색</string>
+    <string name="create_search_action_type_intent">사용자 정의 인텐트</string>
+    <string name="create_search_action_pick_app">검색할 앱 선택:</string>
+    <string name="create_search_action_website_url">웹사이트 주소 입력:</string>
+    <string name="create_search_action_website_invalid_url">입력한 웹사이트는 웹 검색으로 사용할 수 없습니다. 다른 웹사이트를 입력하거나, 다음 단계에서 필요한 데이터를 입력하세요.</string>
+    <string name="search_action_label">이름</string>
+    <string name="search_action_app">앱</string>
+    <string name="search_action_websearch_url">URL 템플릿</string>
+    <string name="search_action_websearch_url_hint">웹 검색 URL을 구성할 때 사용하는 URL 템플릿입니다. 실제 검색어 대신 ‘${1}’을 사용하세요. 예: https://google.com/search\?q=${1}</string>
+    <string name="more_information">추가 정보</string>
+    <string name="tag_exists_error">같은 이름의 태그가 이미 있습니다.</string>
+    <string name="tag_exists_message">같은 이름의 태그가 이미 있습니다. 계속 진행하면 두 태그를 하나로 합칩니다.</string>
+    <string name="tag_no_items_message">이 태그를 지정한 항목이 없습니다. 계속 진행하면 태그를 삭제합니다.</string>
+    <string name="tag_select_items">항목 선택:</string>
+    <string name="tag_name">태그 이름</string>
+    <string name="preference_layout_open_search">검색 / 앱 서랍</string>
+    <string name="preference_layout_search_bar_position">검색 표시줄 위치</string>
+    <string name="preference_layout_search_results">검색 결과 정렬</string>
+    <string name="preference_layout_fixed_search_bar">검색 표시줄 고정</string>
+    <string name="preference_layout_fixed_search_bar_summary">스크롤할 때 검색 표시줄 항상 표시</string>
+    <string name="preference_screen_gestures">제스처</string>
+    <string name="preference_screen_gestures_summary">제스처 및 제스처 동작</string>
+    <string name="preference_gesture_double_tap">두 번 누르기</string>
+    <string name="preference_gesture_long_press">길게 누르기</string>
+    <string name="preference_gesture_home_button">홈 버튼/제스처</string>
+    <string name="gesture_action_none">없음</string>
+    <string name="gesture_action_open_search">검색 열기</string>
+    <string name="gesture_action_widgets">위젯</string>
+    <string name="gesture_action_launch_app">앱 열기</string>
+    <string name="gesture_action_notifications">알림 서랍 열기</string>
+    <string name="gesture_action_lock_screen">화면 끄기</string>
+    <string name="gesture_action_quick_settings">빠른 설정 열기</string>
+    <string name="gesture_action_power_menu">전원 메뉴 표시</string>
+    <string name="gesture_action_recents">최근 앱 화면 열기</string>
+    <string name="widget_config_appwidget_background">배경 카드</string>
+    <string name="widget_config_weather_integration_settings">날씨 통합 설정</string>
+    <!-- %1$s: app name -->
+    <string name="menu_dial">전화</string>
+    <string name="plugin_type_filesearch">파일</string>
+    <string name="plugin_type_contacts">연락처</string>
+    <string name="search_filter_tools">도구</string>
+    <string name="search_filter_online">온라인 검색 결과</string>
+    <string name="search_filter_apps">앱</string>
+    <string name="plugin_type_locationsearch">장소 검색</string>
+    <string name="plugin_type_calendar">캘린더</string>
+    <string name="preference_default_filter">기본 필터</string>
+    <string name="poi_category_restaurant">레스토랑</string>
+    <string name="poi_category_fast_food">패스트푸드</string>
+    <string name="poi_category_bar">바</string>
+    <string name="poi_category_cafe">카페</string>
+    <string name="poi_category_hotel">호텔</string>
+    <string name="poi_category_supermarket">슈퍼마켓</string>
+    <string name="poi_category_school">학교</string>
+    <string name="poi_category_parking">주차장</string>
+    <string name="poi_category_fuel">주유소</string>
+    <string name="poi_category_toilets">화장실</string>
+    <string name="poi_category_pharmacy">약국</string>
+    <string name="poi_category_hospital">병원</string>
+    <string name="poi_category_post_office">우체국</string>
+    <string name="poi_category_pub">펍</string>
+    <string name="poi_category_doctors">의원</string>
+    <string name="poi_category_police">경찰서</string>
+    <string name="poi_category_dentist">치과</string>
+    <string name="poi_category_library">도서관</string>
+    <string name="poi_category_ice_cream">아이스크림 가게</string>
+    <string name="poi_category_theater">극장</string>
+    <string name="poi_category_cinema">영화관</string>
+    <string name="poi_category_nightclub">나이트클럽</string>
+    <string name="poi_category_clinic">진료소</string>
+    <string name="poi_category_university">대학교</string>
+    <string name="poi_category_clothes">옷 가게</string>
+    <string name="poi_category_convenience">편의점</string>
+    <string name="poi_category_hairdresser">미용실</string>
+    <string name="poi_category_books">서점</string>
+    <string name="poi_category_bakery">빵집</string>
+    <string name="poi_category_car_rental">렌터카</string>
+    <string name="poi_category_florist">꽃집</string>
+    <string name="poi_category_bank">은행</string>
+    <string name="poi_category_kiosk">키오스크</string>
+    <string name="poi_category_museum">박물관</string>
+    <string name="poi_category_fitness_center">헬스장</string>
+    <string name="poi_category_church">교회</string>
+    <string name="poi_category_mosque">모스크</string>
+    <string name="poi_category_buddhist_temple">절</string>
+    <string name="poi_category_hindu_temple">힌두 사원</string>
+    <string name="customize_item_tags">태그</string>
+    <string name="weather_forecast_wind">바람</string>
+    <string name="theme_bundle_name">이름</string>
+</resources>
