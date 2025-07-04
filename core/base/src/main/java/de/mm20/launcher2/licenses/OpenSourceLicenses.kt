@@ -176,14 +176,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://source.android.com/"
     ),
     OpenSourceLibrary(
-        name = "Protobuf",
-        copyrightNote = "Copyright 2008 Google Inc.  All rights reserved.",
-        description = "Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.",
-        licenseName = R.string.bsd_3clause_name,
-        licenseText = R.raw.license_bsd_3clause,
-        url = "https://developers.google.com/protocol-buffers"
-    ),
-    OpenSourceLibrary(
         name = "AndroidSVG",
         description = "AndroidSVG is a SVG parser and renderer for Android.",
         licenseName = R.string.apache_license_name,
