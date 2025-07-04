@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es-rES">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <string name="dimension_length">Longitud</string>
+    <string name="dimension_mass">Masa</string>
+    <string name="dimension_velocity">Velocidad</string>
+    <string name="dimension_volume">Volumen</string>
+    <string name="dimension_area">Área</string>
+    <string name="dimension_currency">Divisa</string>
+    <string name="dimension_data">Datos</string>
+    <string name="dimension_bitrate">Velocidad de bits</string>
+    <string name="dimension_pressure">Presión</string>
+    <string name="dimension_energy">Energía</string>
+    <string name="dimension_frequency">Frecuencia</string>
+    <string name="dimension_temperature">Temperatura</string>
+    <string name="dimension_time">Tiempo</string>
+    <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="one">metro</item>
+        <item quantity="other">metros</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilómetro</item>
+        <item quantity="other">kilómetros</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">decímetro</item>
+        <item quantity="other">decímetros</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">centímetro</item>
+        <item quantity="other">centímetros</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">milímetro</item>
+        <item quantity="other">milímetros</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">pulgada</item>
+        <item quantity="other">pulgadas</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">pie</item>
+        <item quantity="other">pies</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="one">yarda</item>
+        <item quantity="other">yardas</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">milla</item>
+        <item quantity="other">millas</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">milla náutica</item>
+        <item quantity="other">millas náuticas</item>
+    </plurals>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">metro cuadrado</item>
+        <item quantity="other">metros cuadrados</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kilómetro cuadrado</item>
+        <item quantity="other">kilómetros cuadrados</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">centímetro cuadrado</item>
+        <item quantity="other">centímetros cuadrados</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">milímetro cuadrado</item>
+        <item quantity="other">milímetros cuadrados</item>
+    </plurals>
+    <string name="unit_sqinch_symbol">in²</string>
+    <plurals name="unit_sqinch">
+        <item quantity="one">pulgada cuadrada</item>
+        <item quantity="other">pulgadas cuadradas</item>
+    </plurals>
+    <string name="unit_sqfoot_symbol">ft²</string>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">pie cuadrado</item>
+        <item quantity="other">pies cuadrados</item>
+    </plurals>
+    <string name="unit_sqyard_symbol">yd²</string>
+    <plurals name="unit_sqyard">
+        <item quantity="one">yarda cuadrada</item>
+        <item quantity="other">yardas cuadradas</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">hectárea</item>
+        <item quantity="other">hectáreas</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">segundo</item>
+        <item quantity="other">segundos</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">milisegundo</item>
+        <item quantity="other">milisegundos</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="one">minuto</item>
+        <item quantity="other">minutos</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">hora</item>
+        <item quantity="other">horas</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="one">día</item>
+        <item quantity="other">días</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">año</item>
+        <item quantity="other">años</item>
+    </plurals>
+    <!-- UNITS OF DATA SIZES -->
+    <string name="unit_kilobit_symbol">kb</string>
+    <string name="unit_megabit_symbol">Mb</string>
+    <string name="unit_gigabit_symbol">Gb</string>
+    <string name="unit_terabit_symbol">Tb</string>
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">metro por segundo</item>
+        <item quantity="other">metros por segundo</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilómetro por hora</item>
+        <item quantity="other">kilómetros por hora</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">milla por hora</item>
+        <item quantity="other">millas por hora</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">nudo</item>
+        <item quantity="other">nudos</item>
+    </plurals>
+    <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="one">kilogramo</item>
+        <item quantity="other">kilogramos</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="one">gramo</item>
+        <item quantity="other">gramos</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">tonelada métrica</item>
+        <item quantity="other">toneladas métricas</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="one">tonelada larga</item>
+        <item quantity="other">toneladas largas</item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="one">piedra (unidad de masa)</item>
+        <item quantity="other">piedras (unidades de masa)</item>
+    </plurals>
+    <string name="unit_pound_symbol">lb</string>
+    <plurals name="unit_pound">
+        <item quantity="one">libra</item>
+        <item quantity="other">libras</item>
+    </plurals>
+    <string name="unit_ounce_symbol">oz</string>
+    <plurals name="unit_ounce">
+        <item quantity="one">onza</item>
+        <item quantity="other">onzas</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+</resources>
