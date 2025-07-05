@@ -872,4 +872,6 @@
     <string name="preference_search_bar_style_transparent">Trasparente</string>
     <string name="preference_search_bar_style_solid">Solido</string>
     <string name="preference_search_bar_style_hidden">Nascosto</string>
+    <string name="clock_variant_analog_ticks">Tacche</string>
+    <string name="music_widget_interactive_progress_bar">Barra di avanzamento interattiva</string>
 </resources>
