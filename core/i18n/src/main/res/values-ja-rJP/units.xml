@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ja">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <string name="dimension_length">長さ</string>
+    <string name="dimension_mass">質量</string>
+    <string name="dimension_velocity">速度</string>
+    <string name="dimension_volume">音量</string>
+    <string name="dimension_area">エリア</string>
+    <string name="dimension_currency">通貨</string>
+    <string name="dimension_data">日付</string>
+    <string name="dimension_bitrate">ビットレート</string>
+    <string name="dimension_pressure">圧力</string>
+    <string name="dimension_energy">エネルギー</string>
+    <string name="dimension_frequency">周波数</string>
+    <string name="dimension_temperature">温度</string>
+    <string name="dimension_time">時間</string>
+    <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="other">メートル</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="other">キロメートル</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="other">デシメートル</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="other">センチメートル</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="other">ミリメートル</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="other">インチ</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="other">フィート</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="other">ヤード</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="other">マイル</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="other">海里</item>
+    </plurals>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="other">平方メートル</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="other">平方キロメートル</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="other">平方センチメートル</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="other">平方ミリメートル</item>
+    </plurals>
+    <string name="unit_sqinch_symbol">in²</string>
+    <plurals name="unit_sqinch">
+        <item quantity="other">平方インチ</item>
+    </plurals>
+    <string name="unit_sqfoot_symbol">ft²</string>
+    <plurals name="unit_sqfoot">
+        <item quantity="other">平方フィート</item>
+    </plurals>
+    <string name="unit_sqyard_symbol">yd²</string>
+    <plurals name="unit_sqyard">
+        <item quantity="other">平方ヤード</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="other">ヘクタール</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="other">エーカー</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="other">秒</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="other">ミリ秒</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="other">分</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="other">時</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="other">日</item>
+    </plurals>
+    <string name="unit_year_symbol">y</string>
+    <plurals name="unit_year">
+        <item quantity="other">年</item>
+    </plurals>
+    <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_byte">
+        <item quantity="other">バイト</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="other">キロバイト</item>
+    </plurals>
+    <plurals name="unit_megabyte">
+        <item quantity="other">メガバイト</item>
+    </plurals>
+    <plurals name="unit_gigabyte">
+        <item quantity="other">ギガバイト</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="other">テラバイト</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="other">キビバイト</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="other">メビバイト</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="other">ギビバイト</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="other">テビバイト</item>
+    </plurals>
+    <plurals name="unit_bit">
+        <item quantity="other">ビット</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="other">キロビット</item>
+    </plurals>
+    <plurals name="unit_megabit">
+        <item quantity="other">メガビット</item>
+    </plurals>
+    <plurals name="unit_gigabit">
+        <item quantity="other">ギガビット</item>
+    </plurals>
+    <plurals name="unit_terabit">
+        <item quantity="other">テラビット</item>
+    </plurals>
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="other">メートル毎秒</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="other">キロメートル毎時</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="other">マイル毎時</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="other">ノット</item>
+    </plurals>
+    <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="other">キログラム</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="other">グラム</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="other">トン</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="other">ロングトン</item>
+    </plurals>
+    <string name="unit_stone_symbol">st</string>
+    <plurals name="unit_stone">
+        <item quantity="other">ストーン</item>
+    </plurals>
+    <string name="unit_pound_symbol">lb</string>
+    <plurals name="unit_pound">
+        <item quantity="other">ポンド</item>
+    </plurals>
+    <string name="unit_ounce_symbol">oz</string>
+    <plurals name="unit_ounce">
+        <item quantity="other">オンス</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="other">ショートトン</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="other">セルシウス度</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="other">ファーレンハイト度</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="other">ケルビン</item>
+    </plurals>
+</resources>

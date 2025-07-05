@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ko">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="other">미터</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="other">킬로미터</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="other">센티미터</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="other">밀리미터</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="other">인치</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="other">피트</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="other">야드</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="other">마일</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="other">해리</item>
+    </plurals>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="other">제곱미터</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="other">제곱킬로미터</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="other">제곱센티미터</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="other">제곱밀리미터</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="other">제곱인치</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="other">제곱피트</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="other">제곱야드</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="other">헥타르</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="other">에이커</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="other">초</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="other">밀리초</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="other">분</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="other">시간</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="other">일</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="other">년</item>
+    </plurals>
+    <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_byte">
+        <item quantity="other">바이트</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="other">킬로바이트</item>
+    </plurals>
+    <plurals name="unit_megabyte">
+        <item quantity="other">메가바이트</item>
+    </plurals>
+    <plurals name="unit_gigabyte">
+        <item quantity="other">기가바이트</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="other">테라바이트</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="other">키비바이트</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="other">메비바이트</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="other">기비바이트</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="other">테비바이트</item>
+    </plurals>
+    <plurals name="unit_bit">
+        <item quantity="other">비트</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="other">킬로비트</item>
+    </plurals>
+    <plurals name="unit_megabit">
+        <item quantity="other">메가비트</item>
+    </plurals>
+    <plurals name="unit_gigabit">
+        <item quantity="other">기가비트</item>
+    </plurals>
+    <plurals name="unit_terabit">
+        <item quantity="other">테라비트</item>
+    </plurals>
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="other">초속 미터</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="other">시속 킬로미터</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="other">시속 마일</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="other">노트</item>
+    </plurals>
+    <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="other">킬로그램</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="other">그램</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="other">미터법 톤</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="other">롱 톤</item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="other">스톤</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="other">파운드</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="other">온스</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="other">쇼트 톤</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="other">섭씨온도</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="other">화씨온도</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="other">켈빈</item>
+    </plurals>
+</resources>

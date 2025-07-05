@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ia">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <!-- UNITS OF LENGTH -->
+    <!-- UNITS OF AREA -->
+    <!-- UNITS OF TIME -->
+    <!-- UNITS OF DATA SIZES -->
+    <!-- UNITS OF VELOCITY -->
+    <!-- UNITS OF MASS -->
+    <!-- UNITS OF TEMPERATURE -->
+</resources>

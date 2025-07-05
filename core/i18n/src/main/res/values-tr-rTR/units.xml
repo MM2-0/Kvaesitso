@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="tr">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <string name="dimension_length">Uzunluk</string>
+    <string name="dimension_mass">Kütle</string>
+    <string name="dimension_velocity">Hız</string>
+    <string name="dimension_volume">Hacim</string>
+    <string name="dimension_area">Alan</string>
+    <string name="dimension_currency">Para Birimi</string>
+    <string name="dimension_data">Veri</string>
+    <string name="dimension_bitrate">Bit Hızı</string>
+    <string name="dimension_pressure">Basınç</string>
+    <string name="dimension_energy">Enerji</string>
+    <string name="dimension_frequency">Frekans</string>
+    <string name="dimension_temperature">Sıcaklık</string>
+    <string name="dimension_time">Zaman</string>
+    <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="one">metre</item>
+        <item quantity="other">metre</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilometre</item>
+        <item quantity="other">kilometre</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">desimetre</item>
+        <item quantity="other">desimetre</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">santimetre</item>
+        <item quantity="other">santimetre</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">milimetre</item>
+        <item quantity="other">milimetre</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">inç</item>
+        <item quantity="other">inç</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="one">yarda</item>
+        <item quantity="other">yarda</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">mil</item>
+        <item quantity="other">mil</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">deniz mili</item>
+        <item quantity="other">deniz mili</item>
+    </plurals>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">metrekare</item>
+        <item quantity="other">metrekare</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kilometrekare</item>
+        <item quantity="other">kilometrekare</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">santimetrekare</item>
+        <item quantity="other">santimetrekare</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">milimetrekare</item>
+        <item quantity="other">milimetrekare</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="one">inç kare</item>
+        <item quantity="other">inç kare</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">foot kare</item>
+        <item quantity="other">foot kare</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">yarda kare</item>
+        <item quantity="other">yarda kare</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">hektar</item>
+        <item quantity="other">hektar</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">akr</item>
+        <item quantity="other">akr</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">saniye</item>
+        <item quantity="other">saniye</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">milisaniye</item>
+        <item quantity="other">milisaniye</item>
+    </plurals>
+    <string name="unit_minute_symbol">dk</string>
+    <plurals name="unit_minute">
+        <item quantity="one">dakika</item>
+        <item quantity="other">dakika</item>
+    </plurals>
+    <string name="unit_hour_symbol">sa</string>
+    <plurals name="unit_hour">
+        <item quantity="one">saat</item>
+        <item quantity="other">saat</item>
+    </plurals>
+    <string name="unit_day_symbol">g</string>
+    <plurals name="unit_day">
+        <item quantity="one">gün</item>
+        <item quantity="other">gün</item>
+    </plurals>
+    <string name="unit_year_symbol">y</string>
+    <plurals name="unit_year">
+        <item quantity="one">yıl</item>
+        <item quantity="other">yıl</item>
+    </plurals>
+    <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_byte">
+        <item quantity="one">bayt</item>
+        <item quantity="other">bayt</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">kilobayt</item>
+        <item quantity="other">kilobayt</item>
+    </plurals>
+    <plurals name="unit_megabyte">
+        <item quantity="one">megabayt</item>
+        <item quantity="other">megabayt</item>
+    </plurals>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">gigabayt</item>
+        <item quantity="other">gigabayt</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="one">terabayt</item>
+        <item quantity="other">terabayt</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">kibibayt</item>
+        <item quantity="other">kibibayt</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">mebibayt</item>
+        <item quantity="other">mebibayt</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">gibibayt</item>
+        <item quantity="other">gibibayt</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebibayt</item>
+        <item quantity="other">tebibayt</item>
+    </plurals>
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">metre/saniye</item>
+        <item quantity="other">metre/saniye</item>
+    </plurals>
+    <string name="unit_kilometer_per_hour_symbol">km/sa</string>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilometre/saat</item>
+        <item quantity="other">kilometre/saat</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">mil/saat</item>
+        <item quantity="other">mil/saat</item>
+    </plurals>
+    <!-- UNITS OF MASS -->
+    <plurals name="unit_metric_ton">
+        <item quantity="one">metrik ton</item>
+        <item quantity="other">metrik ton</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">ons</item>
+        <item quantity="other">ons</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">derece selsiyus</item>
+        <item quantity="other">derece selsiyus</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">derece fahrenhayt</item>
+        <item quantity="other">derece fahrenhayt</item>
+    </plurals>
+</resources>
