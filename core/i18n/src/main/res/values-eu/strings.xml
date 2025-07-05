@@ -1,185 +1,433 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="eu">
+    <string name="location_open">Irekia</string>
+    <string name="location_closed">Itxita</string>
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_closes">Itxiera-ordua: %1$s</string>
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_closes_other_day">Itxiera-orduak: %1$s, %2$s</string>
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_opens">Irekitze-ordua: %1$s</string>
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_opens_other_day">Irekitze-orduak: %1$s, %2$s</string>
+    <!-- Name of the app -->
+    <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Partekatu</string>
-    <string name="menu_uninstall">Desinstalatu</string>
+    <!-- Shown in the app detail share menu if the application was installed from an app store
+     %1$s is the name of the app store (e.g. Google Play)-->
+    <string name="menu_share_store_link">%1$s esteka</string>
+    <!-- Share an APK file, shown in the app detail share menu -->
     <string name="menu_share_apk_file">APK fitxategia</string>
+    <!-- Uninstall an application -->
+    <string name="menu_uninstall">Desinstalatu</string>
     <string name="menu_favorites_pin">Gogokoetara ainguratu</string>
     <string name="menu_favorites_unpin">Aingura kendu</string>
     <string name="menu_back">Atzera</string>
+    <string name="menu_app_info">Aplikazioaren informazioa</string>
+    <!-- Launch an app -->
     <string name="menu_launch">Abiarazi</string>
     <string name="menu_customize">Pertsonalizatu</string>
+    <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Ireki</string>
+    <string name="menu_map">Mapan ikusi</string>
+    <string name="menu_website">Web gunea ireki</string>
+    <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="action_undo">Desegin</string>
+    <string name="action_import">Inportatu</string>
+    <string name="action_done">Egina</string>
+    <string name="action_more_actions">Ekintza gehiago</string>
+    <string name="action_clear">Garbitu</string>
+    <string name="action_install">Instalatu</string>
+    <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Ezabatu</string>
     <string name="menu_remove">Kendu</string>
+    <!-- Open a contact in the contacts app -->
     <string name="menu_contacts_open_externally">Kontaktuen aplikazioan ireki</string>
+    <!-- Open an event in the calendar app -->
     <string name="menu_calendar_open_externally">Egutegiaren aplikazioan ireki</string>
+    <!-- Shown in the search bar when the search text field is empty -->
     <string name="search_bar_placeholder">Bilatu</string>
+    <!-- App version, used in application details %1$s is the version -->
     <string name="app_info_version">%1$s bertsioa</string>
+    <!-- Menu entry for launcher settings -->
     <string name="settings">Ezarpenak</string>
+    <!-- Menu entry for launcher help -->
     <string name="help">Laguntza</string>
+    <!-- Set the device's wallpaper -->
     <string name="wallpaper">Horma-papera</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north">Ipar haizea</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_east">Ipar-ekialdeko haizea</string>
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east">Ekialde haizea</string>
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_east">Hego-ekialde haizea</string>
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south">Hego haizea</string>
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_west">Hego-mendebaldeko haizea</string>
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west">Mendebalde haizea</string>
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_west">Ipar-mendebalde haizea</string>
+    <!-- Wind direction, used in weather widget -->
+    <!-- No rain or snow, used in weather widget -->
+    <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
+     This should point to the Wikipedia in the given language. If no such Wikipedia exists,
+      a fallback that is suited best for most users of this language should be used
+      (English in most cases) -->
+    <string name="wikipedia_url">https://eu.wikipedia.org</string>
+    <!-- Shown in Wikipedia results to indicate where they come from -->
+    <string name="wikipedia_source">Wikipediatik</string>
+    <!-- File meta data, title of audio tracks -->
     <string name="file_meta_title">Izenburua: %1$s</string>
+    <!-- File meta data, artist of audio tracks -->
     <string name="file_meta_artist">Artista: %1$s</string>
+    <!-- File meta data, album of audio tracks -->
     <string name="file_meta_album">Albuma: %1$s</string>
+    <!-- File meta data, duration of audio tracks -->
     <string name="file_meta_duration">Iraupena: %1$s</string>
+    <!-- File meta data, year of audio tracks -->
     <string name="file_meta_year">Urtea: %1$s</string>
+    <!-- File size -->
     <string name="file_meta_size">Tamaina: %1$s</string>
+    <!-- File path -->
     <string name="file_meta_path">Kokalekua: %1$s</string>
+    <!-- File type (MIME type) -->
     <string name="file_meta_type">Mota: %1$s</string>
+    <!-- File meta, image/video dimensions -->
     <string name="file_meta_dimensions">Neurriak: %1$s</string>
+    <!-- File meta, app name of APK files -->
     <string name="file_meta_app_name">Aplikazioaren izena: %1$s</string>
+    <!-- File meta, version name of APK files -->
     <string name="file_meta_app_version">Bertsioa: %1$s</string>
+    <!-- File meta, package name of APK files -->
     <string name="file_meta_app_pkgname">Paketearen izena: %1$s</string>
+    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
     <string name="file_meta_app_min_sdk">SDK gutxieneko bertsioa: %1$s</string>
+    <!-- File meta, owner (for files that are stored in a cloud) -->
     <string name="file_meta_owner">Jabea: %1$s</string>
+    <!-- File meta, location (e.g. location where a photo has been taken) -->
     <string name="file_meta_location">Kokapena: %1$s</string>
     <string name="file_type_directory">Karpeta</string>
+    <!-- ZIP, TAR, … archive files  -->
     <string name="file_type_archive">Fitxategia</string>
+    <!-- APK file  -->
     <string name="file_type_android">Android pakete fitxategia</string>
+    <!-- Code file (source code in a programming language) -->
     <string name="file_type_source_code">Iturburu-kode fitxategia</string>
+    <!-- Word document -->
     <string name="file_type_document">Dokumentua</string>
+    <!-- Excel spreadsheet -->
     <string name="file_type_spreadsheet">Kalkulu orria</string>
+    <!-- Audio file -->
     <string name="file_type_music">Musika fitxategia</string>
+    <!-- Video file -->
     <string name="file_type_video">Bideoa</string>
+    <!-- Picture file -->
     <string name="file_type_image">Irudia</string>
+    <!-- Generic file without file extension -->
     <string name="file_type_none">Fitxategia</string>
+    <!-- Powerpoint presentation -->
     <string name="file_type_presentation">Aurkezpena</string>
+    <!-- BZIP, GZIP, … compressed file -->
     <string name="file_type_compressed">Fitxategi konprimatua</string>
+    <!-- Plain text (TXT) file -->
     <string name="file_type_text">Testu fitxategia</string>
-    <string name="file_type_ebook">E-book</string>
+    <!-- E-book file -->
+    <!-- Google Drawings file -->
     <string name="file_type_drawing">Marrazkia</string>
+    <!-- Google Forms file -->
     <string name="file_type_form">Inprimakia</string>
+    <!-- Launcher backup, %1$s: app name -->
+    <string name="file_type_launcherbackup">%1$s-(r)en segurtasun kopia</string>
+    <!-- Launcher theme, %1$s: app name -->
+    <string name="file_type_launchertheme">%1$s-(r)en gaia</string>
+    <!-- Generic file , %1$s is the file extension -->
     <string name="file_type_generic">%1$s fitxategia</string>
-    <string name="alert_delete_file">%1$s fitxategia betirako ezabatuko da. Jarraitu nahi duzu\?</string>
-    <string name="alert_delete_shortcut">%1$s lasterbidea betirako ezabatuko da. Jarraitu nahi duzu\?</string>
-    <string name="default_websearch_2_name">YouTube</string>
-    <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="wikipedia_url">https://eu.wikipedia.org</string>
-    <string name="default_websearch_3_name">Google Play</string>
+    <!-- Warning message that is shown when a user attempts to delete a directory -->
     <string name="alert_delete_directory">%1$s karpeta eta barruan duen guztia betirako ezabatuko dira. Jarraitu nahi duzu\?</string>
+    <!-- Warning message that is shown when a user attempts to delete a file -->
+    <string name="alert_delete_file">%1$s fitxategia betirako ezabatuko da. Jarraitu nahi duzu\?</string>
+    <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
+    <string name="alert_delete_shortcut">%1$s lasterbidea betirako ezabatuko da. Jarraitu nahi duzu\?</string>
+    <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
+    could not be opened because there was no app installed that could handle the request  -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the first one. Must be in sync with [default_websearch_1_url].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the first one. Must be in sync with [default_websearch_1_name].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the second one. Must be in sync with [default_websearch_2_url].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the second one. Must be in sync with [default_websearch_2_name].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <string name="default_websearch_2_url">https://www.youtube.es/results\?search_query=${1}</string>
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the third one. Must be in sync with [default_websearch_3_url].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the third one. Must be in sync with [default_websearch_3_name].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <string name="websearch_dialog_url_error">\'${1}\' leku-marka falta da URL honetan</string>
     <string name="websearch_dialog_replace_icon">Ikonoa ordeztu</string>
     <string name="websearch_dialog_delete_icon">Ikonoa ezabatu</string>
     <string name="websearch_dialog_custom_icon">Ikono pertsonalizatua</string>
     <string name="websearch_dialog_advanced">Aurreratua</string>
     <string name="websearch_dialog_query_encoding">Kontsulta kodeketa</string>
-    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
+    <string name="websearch_dialog_query_encoding_url">Ehuneko-kodeketa</string>
     <string name="websearch_dialog_query_encoding_none">Bat ere ez</string>
     <string name="menu_edit_widgets">Trepetak editatu</string>
     <string name="widget_name_weather">Eguraldia</string>
     <string name="widget_name_calendar">Egutegia</string>
     <string name="widget_name_music">Musika</string>
     <string name="widget_name_favorites">Gogokoak</string>
+    <string name="widget_name_notes">Oharrak</string>
     <string name="widget_name_unknown">Aplikazio ezezagunaren trepeta</string>
     <string name="widget_add_widget">Trepeta gehitu</string>
+    <string name="widget_removed">Trepeta ezabatua</string>
+    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Ohar bat idatzi…</string>
     <string name="notes_widget_action_new">Ohar berria</string>
+    <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Gorde</string>
+    <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
+    <string name="notes_widget_export_filename">Oharra_%1$s</string>
     <string name="notes_widget_action_dismiss">Baztertu</string>
     <string name="notes_widget_dismissed">Oharra baztertu da.</string>
+    <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
+    <string name="shortcut_summary">%1$s-(r)ena</string>
+    <!-- Wait, we have easter eggs? No way! -->
+    <string name="easter_egg_text">Tira, aurkitu nauzu. Zorionak. Merezi izan du\?</string>
+    <!-- Close a dialog -->
     <string name="close">Itxi</string>
     <string name="save">Gorde</string>
     <string name="duplicate">Bikoiztu</string>
+    <string name="edit">Editatu</string>
     <string name="skip">Saltatu</string>
     <string name="action_next">Hurrengoa</string>
+    <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Desaktibatu</string>
     <string name="widget_action_remove">Ezabatu</string>
     <string name="widget_action_replace">Ordeztu</string>
+    <string name="menu_item_edit_favs">Gogokoak editatu</string>
+    <!-- Edit favorites, title for items that are frequently used but not pinned -->
     <string name="edit_favorites_dialog_unpinned">Ainguratu gabeak – maiz erabiliak</string>
+    <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
+    <string name="edit_favorites_dialog_pinned_unsorted">Ainguratuak – automatikoki ordenatuak</string>
+    <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
     <string name="edit_favorites_dialog_pinned_sorted">Ainguratuak – eskuz ordenatuak</string>
     <string name="edit_favorites_dialog_empty_section">Arrastatu elementuak hona</string>
     <string name="edit_favorites_dialog_tags">Etiketak</string>
     <string name="edit_favorites_dialog_tag_section_empty">Ainguratutako etiketak hemen agertuko dira</string>
     <string name="edit_favorites_dialog_new_tag">Etiketa sortu…</string>
+    <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud zerbitzariaren URLa</string>
+    <!-- Nextcloud/Owncloud login flow, empty URL-->
+    <!-- Nextcloud login flow, error invalid URL-->
     <string name="nextcloud_server_invalid_url">URL hau ez da onartutako Nextcloud inztalazio batena</string>
+    <!-- Owncloud login flow, UR-->
     <string name="owncloud_server_url">Owncloud zerbitzariaren URLa</string>
-    <string name="owncloud_username">Erabiltzaile-izena</string>
-    <string name="menu_item_edit_favs">Gogokoak editatu</string>
-    <string name="edit_favorites_dialog_pinned_unsorted">Ainguratuak – automatikoki ordenatuak</string>
+    <!-- Owncloud login flow, error invalid URL-->
     <string name="owncloud_server_invalid_url">URL hau ez da onartutako Owncloud inztalazio batena</string>
+    <!-- Owncloud login flow, password-->
     <string name="owncloud_password">Pasahitza</string>
+    <!-- Owncloud login flow, user name-->
+    <string name="owncloud_username">Erabiltzaile-izena</string>
+    <!-- Owncloud login flow -->
     <string name="owncloud_login_2fa_hint">Faktore bikoitzeko autentifikazioa gaitua baduzi, aplikazio-pasahitza hemen erabili behar duzu.</string>
-    <string name="menu_app_info">Aplikazioaren informazioa</string>
-    <string name="menu_share_store_link">%1$s esteka</string>
-    <string name="wikipedia_source">Wikipediatik</string>
-    <string name="file_type_launcherbackup">%1$s-(r)en segurtasun kopia</string>
-    <string name="default_websearch_2_url">https://www.youtube.es/results\?search_query=${1}</string>
-    <string name="websearch_dialog_url_error">\'${1}\' leku-marka falta da URL honetan</string>
-    <string name="widget_name_notes">Oharrak</string>
-    <string name="notes_widget_export_filename">Oharra_%1$s</string>
-    <string name="websearch_dialog_query_encoding_url">Ehuneko-kodeketa</string>
-    <string name="easter_egg_text">Tira, aurkitu nauzu. Zorionak. Merezi izan du\?</string>
-    <string name="login_flow_continue">Jarraitu</string>
-    <string name="date_today">Gaur</string>
-    <string name="date_tomorrow">Bihar</string>
-    <string name="calendar_widget_no_events">Ez dago gertaerarik gaur</string>
-    <string name="calendar_widget_next_events">Hurrengo gertaera</string>
-    <string name="calendar_widget_pinned_events">Hurrengoak</string>
+    <!-- Owncloud login flow, login failed -->
     <string name="owncloud_login_failed">Saio-hasteak huts egin du: erabiltzaile-izen edo pasahitz okerra.</string>
+    <!-- Owncloud login flow, error: username empty -->
+    <!-- Owncloud login flow, error: password empty -->
+    <!-- Nextcloud/Owncloud login flow, continue button -->
+    <string name="login_flow_continue">Jarraitu</string>
+    <!-- Nextcloud/Owncloud login flow, login button -->
     <string name="login_flow_login">Saioa hasi</string>
+    <string name="disclaimer">Erantzukizun-deskargua</string>
+    <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
     <string name="show_all">Guztia erakutsi</string>
+    <!-- Used in calendar widget date selector. -->
+    <string name="date_today">Gaur</string>
+    <!-- Used in calendar widget date selector. -->
+    <string name="date_tomorrow">Bihar</string>
+    <!-- Headline used in calendar widget for pinned events -->
+    <string name="calendar_widget_pinned_events">Hurrengoak</string>
+    <!-- Headline used in calendar widget for the next event, if there is no event today -->
+    <string name="calendar_widget_next_events">Hurrengo gertaera</string>
+    <string name="calendar_widget_no_events">Ez dago gertaerarik gaur</string>
+    <!--
+        In the calendar widget, only events that start or end at the selected date are shown.
+        If an event runs for three days, it won't be listed if the second day is selected.
+        Instead, the following text will be shown, %1$d being the total number of
+        running events that neither started nor will end on the selected day.
+        -->
+    <plurals name="calendar_widget_running_events">
+        <item quantity="one">Azken egunetako ekitaldi %1$d martxan</item>
+        <item quantity="other">Azken egunetako %1$d ekitaldi martxan</item>
+    </plurals>
+    <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">egun osoan</string>
+    <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s multimedia erreproduzitzen ari da</string>
     <string name="music_widget_no_data">Oraindik ez da multimediarik erreproduzitu</string>
-    <string name="weather_condition_snow">Elurra</string>
+    <string name="weather_condition_sleetshowers">Elurbusti-zaparradak</string>
+    <string name="weather_condition_lightrainshowersandthunder">Euri-zaparrada arinak eta trumoiak</string>
+    <string name="weather_condition_lightsnowandthunder">Elur arina eta trumoiak</string>
+    <string name="weather_condition_lightrain">Euri arina</string>
+    <string name="weather_condition_lightrainshowers">Euri-zaparrada arinak</string>
+    <string name="weather_condition_lightsnow">Elur arina</string>
+    <string name="weather_condition_lightsnowshowers">Elur-zaparrada arinak</string>
+    <string name="weather_condition_lightssleetshowersandthunder">Elurbusti-zaparrada arinak eta trumoiak</string>
     <string name="weather_condition_snowandthunder">Elurra eta trumoiak</string>
     <string name="weather_condition_cloudy">Lainotua</string>
-    <string name="weather_condition_sleetshowers">Elurbusti-zaparradak</string>
+    <string name="weather_condition_lightrainandthunder">Euri arina eta trumoiak</string>
+    <string name="weather_condition_snow">Elurra</string>
     <string name="weather_condition_hail">Kazkabarra</string>
+    <string name="weather_condition_thunderstorm">Trumoi-ekaitza</string>
+    <string name="weather_condition_rainshowersandthunder">Euri-zaparradak eta trumoiak</string>
     <string name="weather_condition_clearsky">Oskarbi</string>
     <string name="weather_condition_sleet">Elurbustia</string>
     <string name="weather_condition_rain">Euria</string>
     <string name="weather_condition_sleetandthunder">Elurbustia eta trumoiak</string>
+    <string name="weather_condition_lightssnowshowersandthunder">Elur-zaparrada arinak eta trumoiak</string>
     <string name="weather_condition_fair">Oskarbi</string>
     <string name="weather_condition_fog">Lainoa</string>
+    <string name="weather_condition_sleetshowersandthunder">Elurbusti-zaparradak eta trumoiak</string>
     <string name="weather_condition_rainandthunder">Euria eta trumoiak</string>
+    <string name="weather_condition_lightsleet">Elurbusti arina</string>
     <string name="weather_condition_partlycloudy">Ostarteak</string>
     <string name="weather_condition_rainshowers">Euri-zaparradak</string>
+    <string name="weather_condition_lightsleetandthunder">Elurbusti arina eta trumoiak</string>
+    <string name="weather_condition_lightsleetshowers">Elurbusti-zaparrada arinak</string>
     <string name="weather_condition_snowshowersandthunder">Elur-zaparradak eta trumoiak</string>
     <string name="weather_condition_snowshowers">Elur-zaparradak</string>
-    <string name="weather_condition_rainshowersandthunder">Euri-zaparradak eta trumoiak</string>
-    <string name="weather_condition_sleetshowersandthunder">Elurbusti-zaparradak eta trumoiak</string>
-    <string name="weather_condition_unknown">Ezezaguna</string>
     <string name="weather_condition_wind">Haizea</string>
+    <string name="weather_condition_unknown">Ezezaguna</string>
+    <!-- Humidity details, %1$s: formatted humidity value -->
+    <!-- Wind details, %1$s: formatted wind values -->
+    <!-- Precipitation details, %1$s: formatted precipitation values -->
     <string name="weather_no_data">Ez dago eguraldi-daturik eskuragarri.</string>
+    <!-- Manually set a location, used in weather widget location permission banner as an
+        alternative to granting the permission -->
+    <string name="weather_widget_set_location">Kokapena zehaztu</string>
     <string name="weather_location_search_no_result">Kokapena ez da aurkitu.</string>
+    <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Kokapenerako sarbidea beharrezkoa da kokapena automatikoki zehazteko</string>
+    <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Jakinarazpenetarako sarbidea behar da multimedia-erreprodukzioa kontrolatzeko</string>
+    <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">Kontaktuetarako sarbidea behar da kontaktuak bilatzeko</string>
-    <string name="grant_permission">Baimendu</string>
-    <string name="preference_screen_appearance">Itxura</string>
+    <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">Deitzeko baimena behar da deiak hasteko</string>
+    <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Egutegirako sarbidea behar da egutegian bilatzeko</string>
+    <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Trepeta honek egutegirako sarbidea behar du</string>
     <string name="widget_config_calendar_missing_calendars_hint">Ezin dituzu zure egutegiak aurkitu\?</string>
+    <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
+    <string name="missing_permission_appshortcuts_search_settings">%1$s hasierako aplikazio gisa ezarri behar da lasterbideak bilatzeko</string>
+    <!-- Missing file permission in search settings screen -->
     <string name="missing_permission_file_search_settings">Kanpoko biltegiratze-sarbidea behar da fitxategi lokalak bilatzeko</string>
+    <!-- Missing file permission in search settings screen.
+        Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
+        to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <string name="missing_permission_file_search_settings_android10">Fitxategi guztiak kudeatzeko sarbidea behar da fitxategi lokalak bilatzeko</string>
+    <!-- Missing notification permission, used in badge settings screen -->
+    <string name="missing_permission_notification_badges">Jakinarazpenetarako sarbidea behar da jakinarazpen-biribiltxoak bistaratzeko</string>
+    <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">Egutegiaren sarbidea eman datozen hitzorduak eta gertaerak hemen bistaratzeko.</string>
+    <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">Egutegirako sarbidea eman zure egutegian bilatzeko.</string>
+    <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">Kokapen-baimena eman inguruko lekuak bilatzeko.</string>
+    <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">Biltegiratzeko sarbidea eman gailu honetan argazkiak, multimedia eta dokumentuak bilatzeko.</string>
+    <!-- Missing files permission, used in contact search results -->
+    <string name="missing_permission_contact_search">Kontaktuetarako sarbidea eman zure kontaktuak bilatzeko.</string>
+    <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
+    <string name="missing_permission_appshortcuts_search">%1$s hasierako aplikazio gisa ezarri lasterbideak bilatzeko.</string>
+    <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
+    <string name="missing_permission_appshortcuts_create">%1$s hasierako aplikazio gisa ezarri lasterbideak sortzeko.</string>
+    <!-- Grant a permission, shown in permission banners -->
+    <string name="grant_permission">Baimendu</string>
+    <!-- Appearance preference title -->
+    <string name="preference_screen_appearance">Itxura</string>
     <string name="preference_theme">Gaia</string>
     <string name="preference_theme_light">Argia</string>
     <string name="preference_theme_dark">Iluna</string>
     <string name="preference_screen_colors">Kolore eskema</string>
     <string name="preference_colors_default">Lehenetsia</string>
     <string name="preference_colors_bw">Zuri-beltza</string>
+    <string name="preference_custom_colors_corepalette">Kolore paleta</string>
+    <string name="preference_mdy_color_source">Kolore dinamikoen jatorria</string>
+    <string name="preference_mdy_color_source_system">Sistema</string>
+    <string name="preference_mdy_color_source_wallpaper">Horma-papera</string>
+    <string name="preference_shapes_default">Lehenetsia</string>
+    <string name="preference_transparencies_default">Lehenetsia</string>
     <string name="preference_font">Letra-tipoa</string>
     <string name="preference_font_system">Sistemaren lehenetsia</string>
     <string name="preference_screen_about">Honi buruz</string>
     <string name="preference_version">Bertsioa</string>
     <string name="preference_category_links">Estekak</string>
     <string name="preference_category_licenses">Kode irekiko lizentziak</string>
+    <string name="preference_category_advanced">Aurreratua</string>
+    <!-- Open website of an open source library -->
     <string name="open_webpage">Webgunea ireki</string>
     <string name="preference_screen_about_summary">Aplikazioaren eta lizentziaren informazioa</string>
     <string name="preference_screen_appearance_summary">Itxura pertsonalizatu</string>
     <string name="preference_weather_provider">Hornitzailea</string>
-    <string name="provider_metno">MET Norway</string>
-    <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (Alemania bakarrik)</string>
     <string name="preference_category_location">Kokapena</string>
     <string name="preference_automatic_location">Kokapen automatikoa</string>
     <string name="preference_automatic_location_summary">GPS eta kokapen zerbitzuak erabili kokapena automatikoki zehazteko</string>
+    <string name="preference_location_managed">Gehigarriak kudeatua</string>
+    <string name="preference_location_managed_summary">Hornitzaile honen kokapena gehigarriak kudeatzen du</string>
+    <string name="preference_location">Kokapena</string>
+    <string name="preference_location_breezy">Breezy Weather-en kokapena kudeatu</string>
     <string name="preference_imperial_units_summary">Fahrenheit graduak eta miliak orduko erabili</string>
     <string name="preference_imperial_units">Unitate inperialak</string>
     <string name="widget_config_weather_compact">Modu trinkoa</string>
+    <string name="preference_category_debug">Arazketa</string>
     <string name="preference_category_debug_tools">Tresnak</string>
+    <string name="preference_debug_dump_heap">Memoriaren argazkia</string>
     <string name="preference_debug_cleanup_database">Datu-basea garbitu</string>
+    <string name="preference_debug_cleanup_database_summary">Kendu hautsitako eta erabili gabeko sarrerak abiarazlearen datu-basetik</string>
     <string name="preference_debug_reinstall_iconpacks">Ikono paketeak berrinstalatu</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Garbitu eta berreraiki ikono paketearen cachea</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">Sarrera %1$d ezabatu da.</item>
+        <item quantity="other">%1$d sarrera ezabatu dira.</item>
+    </plurals>
     <string name="preference_category_icons">Ikonoak</string>
     <string name="preference_cards">Txartelak</string>
     <string name="preference_cards_summary">Txartelaren itxura pertsonalizatu</string>
@@ -197,62 +445,103 @@
     <string name="preference_icon_shape_circle">Zirkulua</string>
     <string name="preference_icon_shape_teardrop">Malkoa</string>
     <string name="preference_icon_shape_pebble">Harri-koskorra</string>
+    <string name="preference_icon_shape_hexagon">Hexagonoa</string>
     <string name="preference_category_searchbar">Bilaketa-barra</string>
     <string name="preference_screen_integrations">Integrazioak</string>
+    <string name="preference_screen_plugins">Gehigarriak</string>
+    <string name="preference_screen_plugins_summary">Instalatutako gehigarriak kudeatu</string>
+    <string name="no_plugins_installed">Ez da gehigarririk instalatu</string>
+    <string name="preference_theme_system">Sistemaren arabera</string>
     <string name="preference_themed_icons">Ikono gaidunak</string>
+    <string name="preference_themed_icons_summary">Kolore ikonoak aplikazioaren kolore-eskemarekin</string>
     <string name="preference_force_themed_icons">Ikono gaidunak behartu</string>
+    <string name="preference_force_themed_icons_summary">Aplikatu aplikazioaren kolore-eskema ikono guztiei, onartzen ez direnei barne (ez da gomendatzen)</string>
     <string name="preference_icon_pack">Ikono paketea</string>
     <string name="preference_icon_pack_summary_empty">Ez da ikono paketerik instalatu</string>
+    <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="preference_category_animations">Animazioak</string>
+    <string name="preference_charging_animation">Kargatze-animazioa</string>
+    <string name="preference_charging_animation_summary">Erreproduzitu burbuilen animazio bat gailua kargatzen ari den bitartean</string>
     <string name="preference_category_system_bars">Sistema-barrak</string>
     <string name="preference_status_bar_icons">Egoera-barraren ikonoak</string>
     <string name="preference_nav_bar_icons">Nabigazio-barraren ikonoak</string>
-    <string name="preference_system_bar_icons_auto">Auto</string>
     <string name="preference_system_bar_icons_light">Argia</string>
     <string name="preference_system_bar_icons_dark">Iluna</string>
     <string name="preference_hide_status_bar">Egoera-barra ezkutatu</string>
     <string name="preference_hide_nav_bar">Nabigazio-barra ezkutatu</string>
     <string name="preference_screen_integrations_summary">Konektatutako kontuak eta zerbitzuak kudeatu</string>
+    <string name="preference_signin_user">%1$s gisa saioa hasita</string>
+    <string name="preference_signout">Saioa itxi</string>
     <string name="preference_summary_not_logged_in">Ez duzu saioa hasi</string>
     <string name="preference_icon_shape_pentagon">Pentagonoa</string>
     <string name="preference_category_wallpaper">Horma-papera</string>
     <string name="preference_dim_wallpaper">Horma-papera ilundu</string>
+    <string name="preference_dim_wallpaper_summary">Gai ilunetan, horma-papera ilundu</string>
     <string name="preference_blur_wallpaper">Horma-papera lausotu</string>
     <string name="preference_blur_wallpaper_summary">Lausotze-efektua erabili horma-paperaren gainean</string>
+    <string name="preference_blur_wallpaper_unsupported">Gailu honetan ez da onartzen</string>
+    <string name="preference_blur_wallpaper_radius">Lausotze erradioa</string>
     <string name="preference_wallpaper_summary">Horma-papera aukeratu</string>
     <string name="preference_category_badges">Biribiltxoak</string>
     <string name="preference_notification_badges">Jakinarazpen-biribiltxoak</string>
+    <string name="preference_notification_badges_summary">Irakurri gabeko jakinarazpenak dituzten aplikazioetan biribiltxoa erakutsi</string>
     <string name="preference_suspended_badges_summary">Pausatuta dauden aplikazioetan biribiltxoa erakutsi</string>
     <string name="preference_suspended_badges">Pausatutako aplikazioak</string>
     <string name="preference_cloud_badges">Hodei-biribiltxoak</string>
     <string name="preference_cloud_badges_summary">Hodeian gordetako fitxategietan biribiltxoa erakutsi</string>
     <string name="preference_shortcut_badges">Lasterbide-biribiltxoak</string>
+    <string name="preference_shortcut_badges_summary">Lasterbidea zein aplikaziori dagokion biribiltxoa erakutsi lasterbideetan</string>
+    <string name="preference_plugin_badges">Plugin biribiltxoak</string>
+    <string name="preference_plugin_badges_summary">Adierazi zein pluginak sortu den bilaketa-emaitza</string>
     <string name="preference_nextcloud_signin">Nextcloud-en izena eman</string>
     <string name="preference_nextcloud_signin_summary">Nextcloud-en bilatzeko izena eman</string>
-    <string name="preference_nextcloud">Nextcloud</string>
-    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Owncloud-en izena eman</string>
+    <string name="preference_owncloud_signin_summary">Owncloud-en bilatzeko izena eman</string>
     <string name="preference_about_telegram">Telegram taldea</string>
     <string name="preference_about_fdroid">F-Droid biltegia</string>
     <string name="preference_enforce_icon_shape">Forma behartu</string>
+    <string name="preference_enforce_icon_shape_summary">Aplikatu forma ikono guztiei, normalean onartzen ez dutenei barne</string>
     <string name="preference_category_license">Lizentzia</string>
+    <string name="preference_about_license">Aplikazio hau software librea da.</string>
     <string name="preference_about_license_summary">GNU General Public License 3.0 lizentziapean</string>
     <string name="preference_category_grid">Lauki-sarea</string>
     <string name="preference_grid_icon_size">Ikonoaren tamaina</string>
     <string name="preference_grid_column_count">Zutabe kopurua</string>
+    <string name="preference_grid_list_style">Aplikazioak zerrenda batean erakutsi</string>
+    <string name="preference_grid_list_icons">Aplikazio ikonoak zerrenda batean erakutsi</string>
     <string name="preference_grid_labels">Etiketak erakutsi</string>
+    <string name="preference_grid_labels_summary">Aplikazioaren izena ikonoaren azpian erakutsi</string>
+    <string name="preference_grid_list_style_summary">Aplikazioak zerrenda batean erakutsi sareta batean ordez</string>
+    <string name="preference_grid_list_icons_summary">Erakutsi ikonoak zerrenda-ikuspegian</string>
     <string name="preference_screen_debug">Arazketa</string>
     <string name="preference_screen_debug_summary">Arazoak konpontzeko tresnak</string>
     <string name="preference_category_widgets">Trepetak</string>
     <string name="preference_screen_weatherwidget">Eguraldia</string>
+    <string name="preference_category_media_apps">Multimedia-aplikazioak</string>
     <string name="preference_screen_clockwidget">Ordularia</string>
+    <string name="preference_screen_clockwidget_summary">Ordulariaren estiloa eta osagaiak konfiguratu</string>
     <string name="preference_clockwidget_layout_vertical">Lehenetsia</string>
     <string name="preference_clockwidget_layout_horizontal">Trinkoa</string>
+    <string name="preference_clock_widget_show_seconds">Segundoak erakutsi</string>
+    <string name="preference_clock_widget_time_format">Ordu formatua</string>
+    <string name="preference_clock_widget_time_format_24h">24 ordu</string>
+    <string name="preference_clock_widget_time_format_12h">12 ordu</string>
+    <string name="preference_clock_widget_time_format_system">Sistemaren lehenetsia</string>
+    <string name="widget_use_theme_colors">Erabili kolore tematikoa</string>
     <string name="preference_clock_widget_fill_height">Pantailaren garaiera bete</string>
+    <string name="preference_clock_widget_alignment">Kokapena</string>
+    <string name="preference_clock_widget_alignment_top">Goian</string>
+    <string name="preference_clock_widget_alignment_center">Erdian</string>
+    <string name="preference_clock_widget_alignment_bottom">Behean</string>
+    <string name="preference_clockwidget_dynamic_zone">Eremu dinamikoa</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Erakutsi uneko data</string>
     <string name="preference_clockwidget_favorites_part">Gogokoak</string>
     <string name="preference_clockwidget_favorites_part_summary">Erakutsi ainguratutako elementuen lehen ilara</string>
+    <string name="preference_clockwidget_music_part">Multimedia</string>
+    <string name="preference_clockwidget_music_part_summary">Multimedia-kontrolak erakutsi multimedia-saio aktibo bat dagoenean</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
+    <string name="preference_clockwidget_battery_part_summary">Erakutsi uneko bateriaren maila bateria gutxi dagoenean edo kargatzen ari denean</string>
     <string name="preference_clockwidget_alarm_part">Alarmak</string>
     <string name="preference_clockwidget_alarm_part_summary">Erakutsi hurrengo 8 orduetan joko duten alarmak</string>
     <string name="preference_screen_backup">Babeskopia eta berreskuratzea</string>
@@ -261,89 +550,43 @@
     <string name="preference_backup_summary">Esportatu ezarpenak eta abiarazlearen datuak</string>
     <string name="preference_restore">Berreskuratu</string>
     <string name="preference_restore_summary">Inportatu aurreko babeskopia</string>
+    <string name="preference_crash_reporter">Akatsen txostena</string>
+    <string name="preference_crash_reporter_summary">Errore eta akatsen txostenak</string>
+    <string name="preference_logs">Erregistroak</string>
+    <string name="preference_logs_summary">Aplikazioaren erregistroak ikusi eta esportatu</string>
+    <string name="preference_screen_search">Bilatu</string>
+    <string name="preference_screen_search_summary">Bilaketa, etiketak, elementu ezkutuak</string>
     <string name="preference_search_favorites">Gogokoak</string>
+    <string name="preference_search_favorites_summary">Ainguratutako eta maiz erabiltzen diren elementuak aplikazioen saretaren gainean erakutsi</string>
     <string name="preference_search_files">Fitxategiak</string>
+    <string name="preference_search_files_summary">Tokiko fitxategiak eta hodeiko fitxategiak bilatu</string>
     <string name="preference_search_contacts">Kontaktuak</string>
     <string name="preference_search_contacts_summary">Kontaktuak gailu honetan bilatu</string>
     <string name="preference_search_calendar">Egutegia</string>
     <string name="preference_search_calendar_summary">Bilatu datozen hitzordu eta ekitaldiak</string>
-    <string name="preference_search_calculator">Kalkulagailua</string>
-    <string name="preference_search_unitconverter_summary">Erabilera: 1.5 kg edo 4 cm &gt;&gt; in</string>
-    <string name="preference_search_wikipedia">Wikipedia</string>
-    <string name="preference_search_wikipedia_summary">Bilatu entziklopedia librean</string>
-    <string name="preference_search_websites">Webguneak</string>
-    <string name="preference_location">Kokapena</string>
-    <string name="preference_notification_badges_summary">Irakurri gabeko jakinarazpenak dituzten aplikazioetan biribiltxoa erakutsi</string>
-    <string name="preference_shortcut_badges_summary">Lasterbidea zein aplikaziori dagokion biribiltxoa erakutsi lasterbideetan</string>
-    <plurals name="calendar_widget_running_events">
-        <item quantity="one">Azken egunetako ekitaldi %1$d martxan</item>
-        <item quantity="other">Azken egunetako %1$d ekitaldi martxan</item>
-    </plurals>
-    <string name="preference_category_debug">Arazketa</string>
-    <string name="preference_owncloud_signin_summary">Owncloud-en bilatzeko izena eman</string>
-    <string name="weather_widget_set_location">Kokapena zehaztu</string>
-    <plurals name="debug_cleanup_database_result">
-        <item quantity="one">Sarrera %1$d ezabatu da.</item>
-        <item quantity="other">%1$d sarrera ezabatu dira.</item>
-    </plurals>
-    <string name="preference_about_license">Aplikazio hau software librea da.</string>
-    <string name="preference_icon_shape_hexagon">Hexagonoa</string>
-    <string name="preference_grid_labels_summary">Aplikazioaren izena ikonoaren azpian erakutsi</string>
-    <string name="preference_theme_system">Sistemaren arabera</string>
-    <string name="preference_clockwidget_battery_part_summary">Erakutsi uneko bateriaren maila bateria gutxi dagoenean edo kargatzen ari denean</string>
-    <string name="preference_screen_search">Bilatu</string>
-    <string name="preference_dim_wallpaper_summary">Gai ilunetan, horma-papera ilundu</string>
-    <string name="preference_search_files_summary">Tokiko fitxategiak eta hodeiko fitxategiak bilatu</string>
-    <string name="preference_search_websites_summary">Erakutsi webgune baten aurrebista bilaketa-kontsulta URL bat bada</string>
-    <string name="icon_picker_suggestions">Iradokizunak</string>
-    <string name="create_search_action_type">Zein ekintza mota sortu nahi dituzu\?</string>
-    <string name="weather_condition_lightrainshowersandthunder">Euri-zaparrada arinak eta trumoiak</string>
-    <string name="weather_condition_lightsnowandthunder">Elur arina eta trumoiak</string>
-    <string name="weather_condition_lightrain">Euri arina</string>
-    <string name="weather_condition_lightrainshowers">Euri-zaparrada arinak</string>
-    <string name="weather_condition_lightsnow">Elur arina</string>
-    <string name="weather_condition_lightsnowshowers">Elur-zaparrada arinak</string>
-    <string name="weather_condition_lightrainandthunder">Euri arina eta trumoiak</string>
-    <string name="weather_condition_heavysleetshowersandthunder"/>
-    <string name="weather_condition_lightssleetshowersandthunder">Elurbusti-zaparrada arinak eta trumoiak</string>
-    <string name="weather_condition_lightssnowshowersandthunder">Elur-zaparrada arinak eta trumoiak</string>
-    <string name="weather_condition_lightsleet">Elurbusti arina</string>
-    <string name="weather_condition_lightsleetandthunder">Elurbusti arina eta trumoiak</string>
-    <string name="weather_condition_lightsleetshowers">Elurbusti-zaparrada arinak</string>
-    <string name="missing_permission_file_search_settings_android10">Fitxategi guztiak kudeatzeko sarbidea behar da fitxategi lokalak bilatzeko</string>
-    <string name="missing_permission_notification_badges">Jakinarazpenetarako sarbidea behar da jakinarazpen-biribiltxoak bistaratzeko</string>
-    <string name="missing_permission_calendar_widget">Egutegiaren sarbidea eman datozen hitzorduak eta gertaerak hemen bistaratzeko.</string>
-    <string name="missing_permission_calendar_search">Egutegirako sarbidea eman zure egutegian bilatzeko.</string>
-    <string name="missing_permission_files_search">Biltegiratzeko sarbidea eman gailu honetan argazkiak, multimedia eta dokumentuak bilatzeko.</string>
-    <string name="missing_permission_contact_search">Kontaktuetarako sarbidea eman zure kontaktuak bilatzeko.</string>
-    <string name="missing_permission_appshortcuts_search_settings">%1$s hasierako aplikazio gisa ezarri behar da lasterbideak bilatzeko</string>
-    <string name="missing_permission_appshortcuts_search">%1$s hasierako aplikazio gisa ezarri lasterbideak bilatzeko.</string>
-    <string name="missing_permission_appshortcuts_create">%1$s hasierako aplikazio gisa ezarri lasterbideak sortzeko.</string>
-    <string name="preference_debug_cleanup_database_summary">Kendu hautsitako eta erabili gabeko sarrerak abiarazlearen datu-basetik</string>
-    <string name="preference_debug_reinstall_iconpacks_summary">Garbitu eta berreraiki ikono paketearen cachea</string>
-    <string name="preference_themed_icons_summary">Kolore ikonoak aplikazioaren kolore-eskemarekin</string>
-    <string name="preference_force_themed_icons_summary">Aplikatu aplikazioaren kolore-eskema ikono guztiei, onartzen ez direnei barne (ez da gomendatzen)</string>
-    <string name="preference_signin_user">%1$s gisa saioa hasita</string>
-    <string name="preference_blur_wallpaper_unsupported">Gailu honetan ez da onartzen</string>
-    <string name="preference_enforce_icon_shape_summary">Aplikatu forma ikono guztiei, normalean onartzen ez dutenei barne</string>
-    <string name="preference_category_media_apps">Multimedia-aplikazioak</string>
-    <string name="preference_screen_clockwidget_summary">Ordulariaren estiloa eta osagaiak konfiguratu</string>
-    <string name="preference_clockwidget_music_part">Multimedia</string>
-    <string name="preference_clockwidget_music_part_summary">Multimedia-kontrolak erakutsi multimedia-saio aktibo bat dagoenean</string>
-    <string name="preference_logs">Erregistroak</string>
-    <string name="preference_logs_summary">Aplikazioaren erregistroak ikusi eta esportatu</string>
-    <string name="preference_screen_search_summary">Bilaketa, etiketak, elementu ezkutuak</string>
-    <string name="preference_search_favorites_summary">Ainguratutako eta maiz erabiltzen diren elementuak aplikazioen saretaren gainean erakutsi</string>
+    <string name="preference_search_local_calendar_summary">Egutegiak gailu honetan bilatu</string>
+    <string name="preference_search_tasks">Zereginak</string>
+    <string name="preference_search_tasks_summary">Zereginak bilatu Tasks aplikazioan</string>
     <string name="preference_search_appshortcuts">Aplikazio-lasterbideak</string>
     <string name="preference_search_appshortcuts_summary">Aplikazio-lasterbideak bilatu</string>
+    <string name="preference_search_calculator">Kalkulagailua</string>
     <string name="preference_search_calculator_summary">Termino matematikoak ebaluatu</string>
     <string name="preference_search_unitconverter">Unitate bihurgailua</string>
+    <string name="preference_search_unitconverter_summary">Erabilera: 1.5 kg edo 4 cm &gt;&gt; in</string>
     <string name="preference_search_currencyconverter">Moneta bihurgailua</string>
+    <string name="preference_search_currencyconverter_summary">Aldian-aldian deskargatu truke-tasak dibisak bihurtzeko</string>
+    <string name="preference_search_supportedunits">Onartutako unitateak</string>
+    <string name="preference_search_wikipedia_summary">Bilatu entziklopedia librean</string>
+    <string name="preference_search_websites">Webguneak</string>
+    <string name="preference_search_locations">Lekuak</string>
+    <string name="preference_search_locations_radius">Bilaketa erradioa</string>
+    <string name="preference_search_websites_summary">Erakutsi webgune baten aurrebista bilaketa-kontsulta URL bat bada</string>
+    <string name="preference_search_locations_summary">Bilatu dendak eta beste leku batzuk inguruko eremuan</string>
     <string name="preference_search_localfiles">Fitxategi lokalak</string>
     <string name="preference_search_localfiles_summary">Bilatu gailu honetan gordetako dokumentuak, argazkiak eta bestelako fitxategiak</string>
-    <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="preference_search_owncloud">Owncloud</string>
+    <string name="preference_search_cloud_summary">%1$s-(r)en fitxategiak bilatu</string>
     <string name="preference_calendar_calendars">Egutegiak</string>
+    <string name="preference_calendar_hide_completed">Amaitutako zereginak ezkutatu</string>
     <string name="preference_screen_buildinfo">Konpilazioaren informazioa</string>
     <string name="preference_screen_buildinfo_summary">Aplikazio honen konpilazioari buruzko informazio gehiago</string>
     <string name="preference_search_bar_style">Estiloa</string>
@@ -352,10 +595,11 @@
     <string name="preference_search_bar_auto_focus">Teklatua ireki</string>
     <string name="preference_search_bar_auto_focus_summary">Aplikazioen tiradera irekitzean teklatua automatikoki erakutsi</string>
     <string name="preference_search_bar_launch_on_enter">Enter sakatzean abiarazi</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Nabarmendutako bat-etortze edo ekintza azkarra abiarazi enter sakatzean</string>
     <string name="preference_hidden_items">Bilaketa-emaitza ezkutuak</string>
     <string name="preference_hidden_items_summary">Ezkutuko aplikazioak eta bilaketa-emaitzak kudeatu</string>
-    <string name="preference_hidden_items_reveal_button_summary">Erakutsi botoi bat ezkutuko bilaketa-emaitzak agerian jartzeko</string>
     <string name="preference_hidden_items_reveal_button">Erakutsi agerian jartzeko botoia</string>
+    <string name="preference_hidden_items_reveal_button_summary">Erakutsi botoi bat ezkutuko bilaketa-emaitzak agerian jartzeko</string>
     <string name="preference_screen_tags">Etiketak</string>
     <string name="preference_screen_tags_summary">Etiketak eta etiketatutako elementuak kudeatu</string>
     <string name="preference_wikipedia_customurl">Wikipedia URLa</string>
@@ -364,6 +608,8 @@
     <string name="preference_favorites_frequently_used_summary">Maiz erabiltzen diren elementuak gogokoetan erakutsi</string>
     <string name="preference_edit_button">Edizio botoia</string>
     <string name="preference_favorites_edit_button_summary">Gogokoak berrantolatzeko botoi bat erakutsi</string>
+    <string name="preference_compact_tags">Etiketa trinkoak</string>
+    <string name="preference_compact_tags_summary">Ezkutatu etiketen testua edo ikonoak etiketen lekua murrizteko</string>
     <string name="preference_widgets_edit_button_summary">Trepetak gehitzeko, kentzeko eta berrantolatzeko botoi bat erakutsi</string>
     <string name="preference_screen_homescreen">Hasierako pantaila</string>
     <string name="preference_screen_homescreen_summary">Ordularia, bilaketa-barra, horma-papera, sistema-barrak</string>
@@ -371,33 +617,59 @@
     <string name="preference_screen_icons_summary">Sareta, ikonoen tamaina, ikono paketeak, biribiltxoak</string>
     <string name="preference_weather_integration">Eguraldia</string>
     <string name="preference_media_integration">Multimedia kontrola</string>
+    <string name="preference_tasks_integration">Zereginak</string>
+    <!-- %1$s: app name (Kvaesitso) -->
+    <string name="preference_launch_tasks_app">Ireki Tasks aplikazioa</string>
+    <string name="preference_breezyweather_integration_instructions">Breezy Weather eguraldi hornitzaile gisa erabiltzeko:\n\n1. Joan hona: Breezy Weather &gt; Ezarpenak &gt; Trepetak eta horma-papera animatua &gt; Bidali eguraldi datuak Gadgetbridge-ra &gt; Gaitu %1$s\n\n2. %1$s-n, hautatu Breezy Weather eguraldi hornitzaile gisa</string>
+    <string name="preference_launch_breezyweather_app">Ireki Breezy Weather</string>
+    <string name="preference_contacts_call_on_tap">Deitzeko sakatu</string>
+    <string name="preference_contacts_call_on_tap_summary">Dei bat berehala hasi telefono zenbaki bat sakatzean</string>
+    <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Oraindik ez duzu Nextcloud konturik konektatu</string>
+    <!-- Used in an info banner if a specific feature requires an Owncloud account -->
     <string name="no_account_owncloud">Oraindik ez duzu Owncloud konturik konektatu</string>
+    <!-- Used in an info banner if a specific feature requires a Google account -->
+    <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
+    <string name="connect_account">Kontua konektatu</string>
     <string name="battery_part_charging">Kargatzen</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Kargatua minutu %1$sean</item>
         <item quantity="other">Kargatua %1$s minutuan</item>
     </plurals>
     <string name="backup_complete">Babeskopia osatu da.</string>
+    <string name="restore_invalid_file">Hautatutako fitxategia ez dirudi babeskopia denik. Ziur fitxategi egokia hautatu duzula\?</string>
+    <!-- %1$s: app name -->
     <string name="restore_incompatible_file">Babeskopia hau %1$s-(r)en beste bertsio batekin sortu da eta ezin da bertsio honetan leheneratu.</string>
+    <!-- %1$s: app name -->
+    <string name="restore_different_minor_version">Babeskopia hau %1$s-(r)en beste bertsio batekin sortu da. Baliteke datu batzuk behar bezala ez leheneratzea.</string>
+    <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">%1$s-an sortua %2$s gailuan %3$s-(r)ekin.</string>
     <string name="restore_complete">Babeskopia leheneratu da.</string>
     <string name="icon_picker_default_icon">Lehenetsia</string>
+    <string name="icon_picker_suggestions">Iradokizunak</string>
+    <string name="icon_picker_search_icon">Ikono paketeetan bilatu</string>
     <string name="icon_picker_filter_all_packs">Ikono pakete guztiak</string>
+    <string name="apps_profile_main">Pertsonala</string>
+    <string name="apps_profile_private">Pribatua</string>
     <string name="favorites">Gogokoak</string>
     <string name="favorites_empty">Ainguratutako eta maiz erabiltzen diren elementuak hemen agertuko dira</string>
     <string name="favorites_empty_tag">Ez dago etiketa hau duen elementurik</string>
     <string name="frequently_used_show_in_favorites">Gogokoetan erakutsi</string>
     <string name="frequently_used_rows">Errenkada kopurua</string>
+    <string name="preference_screen_search_actions">Ekintza bizkorrak</string>
+    <string name="preference_search_search_actions_summary">Ekintza bizkorrak eta bilaketa-lasterbideak konfiguratu</string>
     <string name="search_action_call">Deitu</string>
     <string name="search_action_message">Mezua</string>
     <string name="search_action_email">E-posta</string>
     <string name="search_action_alarm">Alarma ezarri</string>
     <string name="search_action_timer">Tenporizadorea hasi</string>
+    <string name="search_action_share">Partekatu</string>
+    <string name="search_action_websearch">Web bilaketa</string>
     <string name="search_action_contact">Kontaktuetara gehitu</string>
-    <string name="search_action_event">Ekitaldia programatu</string>
-    <string name="create_search_action_type_web">Webgune batean bilatu</string>
     <string name="search_action_open_url">Webgunea ikusi</string>
+    <string name="search_action_event">Ekitaldia programatu</string>
+    <string name="create_search_action_type">Zein ekintza mota sortu nahi dituzu\?</string>
+    <string name="create_search_action_type_web">Webgune batean bilatu</string>
     <string name="create_search_action_type_app">Aplikazio batean bilatu</string>
     <string name="create_search_action_type_intent">Intent pertsonalizatua</string>
     <string name="create_search_action_pick_app">Aukeratu bilatzeko aplikazio bat:</string>
@@ -406,47 +678,18 @@
     <string name="search_action_label">Izena</string>
     <string name="search_action_app">Aplikazioa</string>
     <string name="search_action_websearch_url">URL txantiloia</string>
-    <string name="connect_account">Kontua konektatu</string>
-    <string name="restore_invalid_file">Hautatutako fitxategia ez dirudi babeskopia denik. Ziur fitxategi egokia hautatu duzula\?</string>
-    <string name="restore_different_minor_version">Babeskopia hau %1$s-(r)en beste bertsio batekin sortu da. Baliteke datu batzuk behar bezala ez leheneratzea.</string>
-    <string name="preference_screen_search_actions">Ekintza bizkorrak</string>
-    <string name="preference_search_search_actions_summary">Ekintza bizkorrak eta bilaketa-lasterbideak konfiguratu</string>
-    <string name="gesture_action_recents">Azkenekoak ireki</string>
-    <string name="gesture_failed_message">\"%1$s\" keinua egin duzu. Keinu hau \"%2$s\" ekintza abiarazteko ezarrita dago. Hala ere, ezin izan da ekintza burutu honako arrazoi honengatik:</string>
-    <string name="missing_permission_accessibility_gesture_failed">Abiarazlearen erabilerraztasun-zerbitzua gaituta egon behar da ekintza hau burutzeko.</string>
-    <string name="missing_permission_accessibility_gesture_settings">Ekintza honek abiarazlearen erabilerraztasun-zerbitzua gaituta egotea eskatzen du.</string>
-    <string name="preference_screen_gestures">Keinuak</string>
-    <string name="preference_screen_gestures_summary">Keinuak eta keinuen ekintzak</string>
-    <string name="preference_gesture_swipe_left">Hatza ezkerrera irristatu</string>
-    <string name="preference_gesture_swipe_down">Hatza behera irristatu</string>
-    <string name="preference_gesture_swipe_right">Hatza eskuinera irristatu</string>
-    <string name="preference_gesture_double_tap">Birritan sakatu</string>
-    <string name="preference_gesture_long_press">Luze sakatu</string>
-    <string name="gesture_action_none">Ez egin ezer</string>
-    <string name="gesture_action_open_search">Bilaketa ireki</string>
-    <string name="gesture_action_launch_app">Aplikazioa abiarazi</string>
-    <string name="gesture_action_lock_screen">Pantaila itzali</string>
-    <string name="gesture_action_quick_settings">Ezarpen azkarrak ireki</string>
-    <string name="gesture_action_notifications">Jakinarazpenen tiradera ireki</string>
-    <string name="gesture_action_power_menu">Itzaltze-menua erakutsi</string>
-    <string name="tag_no_items_message">Etiketa honi ez zaio elementurik esleitu. Jarraitzen baduzu, etiketa ezabatu egingo da.</string>
-    <plurals name="tag_selected_items">
-        <item quantity="one">Elementu %1$d aukeratua</item>
-        <item quantity="other">%1$d elementu aukeratuta</item>
-    </plurals>
-    <string name="shortcut_summary">%1$s-(r)ena</string>
-    <string name="calendar_event_allday">egun osoan</string>
-    <string name="provider_here">HERE</string>
-    <string name="preference_crash_reporter">Akatsen txostena</string>
-    <string name="preference_crash_reporter_summary">Errore eta akatsen txostenak</string>
-    <string name="preference_search_currencyconverter_summary">Aldian-aldian deskargatu truke-tasak dibisak bihurtzeko</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Nabarmendutako bat-etortze edo ekintza azkarra abiarazi enter sakatzean</string>
     <string name="more_information">Informazio gehiago</string>
     <string name="experimental_feature">Esperimentala</string>
     <string name="tag_exists_error">Izen hau duen etiketa bat badago.</string>
     <string name="tag_exists_message">Izen hau duen etiketa bat badago. Jarraitzen baduzu, bi etiketak batu egingo dira.</string>
+    <string name="tag_no_items_message">Etiketa honi ez zaio elementurik esleitu. Jarraitzen baduzu, etiketa ezabatu egingo da.</string>
+    <string name="tag_empty_name">Etiketa bat ezin da izenik gabe existitu. Jarraitzen baduzu, etiketa ezabatuko da.</string>
     <string name="tag_select_items">Elementuak aukeratu:</string>
     <string name="tag_name">Etiketaren izena</string>
+    <plurals name="tag_selected_items">
+        <item quantity="one">Elementu %1$d aukeratua</item>
+        <item quantity="other">%1$d elementu aukeratuta</item>
+    </plurals>
     <string name="preference_layout_open_search">Bilatu / aplikazioen tiradera</string>
     <string name="open_search_pull_down">Hatza behera irristatu</string>
     <string name="open_search_swipe_left">Hatza ezkerrera irristatu</string>
@@ -461,199 +704,137 @@
     <string name="preference_layout_fixed_search_bar_summary">Ez korritu bilaketa-barra bistatik kanpo</string>
     <string name="preference_layout_fixed_rotation">Pantailaren biratze finkoa</string>
     <string name="preference_layout_fixed_rotation_summary">Blokeatu pantailaren biratzea modu bertikalean</string>
+    <string name="preference_screen_gestures">Keinuak</string>
+    <string name="preference_screen_gestures_summary">Keinuak eta keinuen ekintzak</string>
+    <string name="preference_gesture_swipe_down">Hatza behera irristatu</string>
+    <string name="preference_gesture_swipe_left">Hatza ezkerrera irristatu</string>
+    <string name="preference_gesture_swipe_right">Hatza eskuinera irristatu</string>
+    <string name="preference_gesture_double_tap">Birritan sakatu</string>
+    <string name="preference_gesture_long_press">Luze sakatu</string>
+    <string name="preference_gesture_home_button">Hasiera botoia/keinuak</string>
+    <string name="gesture_action_none">Ez egin ezer</string>
+    <string name="gesture_action_open_search">Bilaketa ireki</string>
+    <string name="gesture_action_widgets">Trepetak</string>
+    <string name="gesture_action_launch_app">Aplikazioa abiarazi</string>
+    <string name="gesture_action_notifications">Jakinarazpenen tiradera ireki</string>
+    <string name="gesture_action_lock_screen">Pantaila itzali</string>
+    <string name="gesture_action_quick_settings">Ezarpen azkarrak ireki</string>
+    <string name="gesture_action_power_menu">Itzaltze-menua erakutsi</string>
+    <string name="gesture_action_recents">Azkenekoak ireki</string>
+    <string name="gesture_failed_message">\"%1$s\" keinua egin duzu. Keinu hau \"%2$s\" ekintza abiarazteko ezarrita dago. Hala ere, ezin izan da ekintza burutu honako arrazoi honengatik:</string>
+    <string name="missing_permission_accessibility_gesture_failed">Abiarazlearen erabilerraztasun-zerbitzua gaituta egon behar da ekintza hau burutzeko.</string>
+    <string name="missing_permission_accessibility_gesture_settings">Ekintza honek abiarazlearen erabilerraztasun-zerbitzua gaituta egotea eskatzen du.</string>
     <string name="preference_search_result_ordering_weight_factor">Sailkapenaren malgutasuna</string>
     <string name="preference_search_result_ordering_weight_factor_low">Egonkorra</string>
     <string name="preference_search_result_ordering_weight_factor_default">Orekatua</string>
     <string name="preference_search_result_ordering_weight_factor_high">Aldakorra</string>
-    <string name="widget_config_appwidget_background">Atzeko planoa</string>
     <string name="widget_config_appwidget_borderless">Mugarik gabekoa</string>
+    <string name="widget_config_appwidget_background">Atzeko planoa</string>
     <string name="widget_config_appwidget_configure">Trepeta konfiguratu</string>
+    <string name="widget_config_appwidget_resize">Birdimentsionatu</string>
     <string name="widget_config_weather_integration_settings">Eguraldiaren integrazio ezarpenak</string>
     <string name="widget_config_calendar_no_calendars">Ez da egutegirik aurkitu</string>
+    <string name="widget_pick_widget">Trepeta hautatu</string>
     <string name="app_widget_loading_failed">Ezin izan da aplikazioaren trepeta kargatu.</string>
     <string name="widget_config_music_integration_settings">Multimedia kontrolatzeko integrazio-ezarpenak</string>
     <string name="note_widget_link_file">Fitxategi batera estekatu</string>
+    <string name="note_widget_link_file_summary">Sinkronizatu trepeta honen edukia kanpoko fitxategi batekin</string>
     <string name="note_widget_linked_file_summary">%1$s-(r)a estekatua</string>
     <string name="note_widget_action_unlink_file">Esteka kendu</string>
-    <string name="note_widget_link_file_summary">Sinkronizatu trepeta honen edukia kanpoko fitxategi batekin</string>
-    <string name="note_widget_conflict_keep_selected">Hautatuta mantendu</string>
-    <string name="note_widget_conflict_description">Estekatutako fitxategia ez dago hutsik eta bere edukia ez dator bat ohar honen azken bertsioarekin. Zein bertsio mantendu nahi duzu\?</string>
-    <string name="note_widget_file_read_error_description">Ezin izan da estekatutako fitxategia irakurri. Baliteke, mugitu edo ezabatu izana. Kopia bat leheneratu da abiarazlearen barne biltegitik. Oharra editatzen baduzu, estekatutako fitxategia gainidatziko da.</string>
-    <string name="note_widget_file_write_error_description">Oharra estekatutako fitxategian ezin izan da idatzi. Baliteke, mugitu edo ezabatu izana. Kopia bat gorde da abiarazlearen barne biltegian.</string>
-    <string name="preference_gesture_home_button">Hasiera botoia/keinuak</string>
     <string name="note_widget_action_relink_file">Berriro estekatu</string>
     <string name="note_widget_conflict">Gatazka</string>
     <string name="note_widget_conflict_action_resolve">Ebatzi</string>
+    <string name="note_widget_conflict_keep_selected">Hautatuta mantendu</string>
+    <string name="note_widget_conflict_description">Estekatutako fitxategia ez dago hutsik eta bere edukia ez dator bat ohar honen azken bertsioarekin. Zein bertsio mantendu nahi duzu\?</string>
     <string name="note_widget_conflict_local_version">Gordetako azken bertsioa:</string>
     <string name="note_widget_conflict_file_version">Uneko fitxategiaren edukia:</string>
     <string name="note_widget_file_read_error">Errorea oharra irakurtzean</string>
+    <string name="note_widget_file_read_error_description">Ezin izan da estekatutako fitxategia irakurri. Baliteke, mugitu edo ezabatu izana. Kopia bat leheneratu da abiarazlearen barne biltegitik. Oharra editatzen baduzu, estekatutako fitxategia gainidatziko da.</string>
     <string name="note_widget_file_write_error">Errorea oharra gordetzean</string>
+    <string name="note_widget_file_write_error_description">Oharra estekatutako fitxategian ezin izan da idatzi. Baliteke, mugitu edo ezabatu izana. Kopia bat gorde da abiarazlearen barne biltegian.</string>
+    <string name="confirmation_delete_color_scheme">Benetan %1$s kolore-eskema ezabatu nahi duzu\?</string>
+    <string name="theme_color_scheme_system_default">Sistemaren lehenetsia erabili</string>
+    <string name="theme_color_scheme_autogenerate">Kolore primariotik</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Pertsonalizatua</string>
-    <string name="theme_color_scheme_system_default">Sistemaren lehenetsia erabili</string>
-    <string name="confirmation_delete_color_scheme">Benetan %1$s kolore-eskema ezabatu nahi duzu\?</string>
-    <string name="edit">Editatu</string>
     <string name="preference_restore_default">Lehenetsia berrezarri</string>
-    <string name="preference_category_animations">Animazioak</string>
-    <string name="preference_charging_animation">Kargatze-animazioa</string>
-    <string name="preference_charging_animation_summary">Erreproduzitu burbuilen animazio bat gailua kargatzen ari den bitartean</string>
-    <string name="preference_custom_colors_corepalette">Kolore paleta</string>
-    <string name="clock_style_segment">7 segmentu</string>
-    <string name="clock_style_digital2">Sinplea</string>
-    <string name="poi_category_post_office">Posta-etxea</string>
-    <string name="customize_item_label">Etiketa</string>
-    <string name="contact_info_home">Etxea</string>
-    <string name="contact_info_work">Etxea</string>
-    <string name="clock_style_orbit">Orbita</string>
-    <string name="contact_info_mobile">Sakelekoa</string>
-    <string name="preference_clock_widget_alignment_top">Goian</string>
-    <string name="preference_clock_widget_alignment">Kokapena</string>
-    <string name="plugin_action_setup">Konfiguratu</string>
-    <string name="poi_category_restaurant">Jatetxea</string>
-    <string name="poi_category_police">Polizia</string>
-    <string name="poi_category_mall">Merkataritza-gunea</string>
-    <string name="poi_category_parking">Aparkalekua</string>
-    <string name="poi_category_pharmacy">Botika</string>
-    <string name="poi_category_library">Liburutegia</string>
-    <string name="no_plugins_installed">Ez da gehigarririk instalatu</string>
-    <string name="clock_style_digital1">Lodia</string>
-    <string name="poi_category_synagogue">Sinagoga</string>
-    <string name="preference_blur_wallpaper_radius">Lausotze erradioa</string>
-    <string name="preference_clock_widget_show_seconds">Segundoak erakutsi</string>
-    <string name="preference_search_locations_show_map">Mapa</string>
-    <string name="preference_clock_widget_alignment_bottom">Behean</string>
-    <string name="clock_style_empty">Erlojurik ez</string>
-    <string name="preference_screen_plugins">Gehigarriak</string>
-    <string name="preference_screen_plugins_summary">Instalatutako gehigarriak kudeatu</string>
-    <string name="preference_signout">Saioa itxi</string>
-    <string name="widget_use_theme_colors">Erabili kolore tematikoa</string>
-    <string name="preference_clock_widget_alignment_center">Erdian</string>
-    <string name="preference_search_locations_radius">Bilaketa erradioa</string>
-    <string name="widget_config_appwidget_resize">Birdimentsionatu</string>
-    <string name="poi_category_hotel">Hotela</string>
-    <string name="poi_category_supermarket">Supermerkatua</string>
-    <string name="poi_category_fuel">Gasolindegia</string>
-    <string name="poi_category_church">Eliza</string>
-    <string name="music_widget_pause">Gelditu</string>
-    <string name="calendar_widget_previous_day">Aurreko eguna</string>
-    <string name="calendar_widget_create_event">Gertaera berria sortu</string>
-    <string name="calendar_widget_next_day">Hurrengo eguna</string>
-    <string name="profile_private_profile_state_locked">Eremu pribatua blokeatua dago.</string>
-    <string name="profile_private_profile_action_unlock">Desblokeatu</string>
-    <string name="profile_private_profile_action_lock">Eremu pribatua blokeatu</string>
-    <string name="location_closes">Itxiera-ordua: %1$s</string>
-    <string name="location_closes_other_day">Itxiera-orduak: %1$s, %2$s</string>
-    <string name="location_opens">Irekitze-ordua: %1$s</string>
-    <string name="location_opens_other_day">Irekitze-orduak: %1$s, %2$s</string>
-    <string name="search_filter_online">Lineako emaitzak</string>
-    <string name="plugin_type_calendar">Egutegia</string>
-    <string name="preference_search_osm_locations">OpenStreetMap</string>
-    <string name="poi_category_cafe">Kafetegia</string>
-    <string name="poi_category_hospital">Ospitalea</string>
-    <string name="search_filter_apps">Aplikazioak</string>
-    <string name="action_more_actions">Ekintza gehiago</string>
-    <string name="action_clear">Garbitu</string>
-    <string name="disclaimer">Erantzukizun-deskargua</string>
-    <string name="apps_profile_main">Pertsonala</string>
-    <string name="search_action_share">Partekatu</string>
-    <string name="widget_pick_widget">Trepeta hautatu</string>
+    <string name="import_theme_apply">Gaia ezarri</string>
+    <string name="import_theme_error">Hautatutako fitxategia ezin izan da irakurri. Ziurtatu baliozko gai-fitxategia hautatu duzula (*.kvtheme), eta fitxategia ez dagoela hondatuta.</string>
+    <string name="shortcut_label_unavailable">Eskuraezina</string>
+    <string name="app_label_locked_profile">Blokeatua</string>
+    <!-- %1$s: app name -->
+    <string name="shortcut_unavailable_description">Lasterbide hau ez dago erabilgarri %1$s ez delako abiarazle lehenetsia</string>
+    <string name="preference_plugin_enable">Gehigarria baimendu</string>
+    <string name="length_unit">Luzera unitatea</string>
     <string name="imperial">Inperiala</string>
+    <string name="metric">Metrikoa</string>
+    <string name="preference_search_locations_hide_uncategorized">Ezkutatu kategoriarik gabeko lekuak</string>
+    <string name="preference_search_locations_show_map">Mapa</string>
     <string name="menu_dial">Deitu</string>
     <string name="menu_navigation">Nabigazioa</string>
     <string name="location_open_24_7">24/7 irekia</string>
     <string name="plugin_state_error">Gehigarri honek ez du ongi funtzionatzen</string>
+    <string name="plugin_action_setup">Konfiguratu</string>
+    <string name="plugin_type_filesearch">Fitxategiak</string>
+    <string name="plugin_type_contacts">Kontaktuak</string>
     <string name="plugin_type_weather">Eguraldi hornitzailea</string>
+    <string name="clock_style_digital1">Lodia</string>
+    <string name="clock_style_digital2">Sinplea</string>
+    <string name="clock_style_orbit">Orbita</string>
     <string name="clock_style_binary">Bitarra</string>
     <string name="clock_style_analog">Orratzak</string>
+    <string name="clock_style_segment">7 segmentu</string>
+    <string name="clock_style_empty">Erlojurik ez</string>
+    <string name="clock_style_custom">Trepeta pertsonalizatua</string>
+    <string name="search_filter_tools">Tresnak</string>
+    <string name="search_filter_online">Lineako emaitzak</string>
+    <string name="search_filter_apps">Aplikazioak</string>
+    <string name="plugin_type_calendar">Egutegia</string>
+    <string name="poi_category_restaurant">Jatetxea</string>
+    <string name="poi_category_cafe">Kafetegia</string>
+    <string name="poi_category_hotel">Hotela</string>
+    <string name="poi_category_supermarket">Supermerkatua</string>
+    <string name="poi_category_parking">Aparkalekua</string>
+    <string name="poi_category_fuel">Gasolindegia</string>
+    <string name="poi_category_pharmacy">Botika</string>
+    <string name="poi_category_hospital">Ospitalea</string>
+    <string name="poi_category_post_office">Posta-etxea</string>
+    <string name="poi_category_police">Polizia</string>
+    <string name="poi_category_library">Liburutegia</string>
     <string name="poi_category_theater">Antzokia</string>
     <string name="poi_category_cinema">Zinema</string>
     <string name="poi_category_university">Unibertsitatea</string>
     <string name="poi_category_books">Liburudenda</string>
+    <string name="poi_category_mall">Merkataritza-gunea</string>
     <string name="poi_category_bank">Bankua</string>
     <string name="poi_category_soccer">Futbol-zelaia</string>
     <string name="poi_category_kiosk">Kioskoa</string>
     <string name="poi_category_museum">Museoa</string>
+    <string name="poi_category_church">Eliza</string>
     <string name="poi_category_mosque">Meskita</string>
     <string name="poi_category_buddhist_temple">Tenplu budista</string>
     <string name="poi_category_hindu_temple">Tenplu hinduista</string>
+    <string name="poi_category_synagogue">Sinagoga</string>
+    <string name="customize_item_label">Etiketa</string>
     <string name="customize_item_tags">Etiketak</string>
     <string name="item_visibility_search_only">Bilaketa-emaitzak</string>
     <string name="item_visibility_hidden">Inoiz ez</string>
+    <string name="contact_info_home">Etxea</string>
+    <string name="contact_info_mobile">Sakelekoa</string>
+    <string name="contact_info_work">Etxea</string>
+    <string name="weather_widget_no_provider">Ez da eguraldi hornitzailerik hautatu edo hautatutako hornitzailea ez dago eskuragarri</string>
     <string name="music_widget_previous_track">Aurreko kanta</string>
     <string name="music_widget_next_track">Hurrengo kanta</string>
-    <string name="calendar_widget_open_calendar">Egutegi aplikazioa ireki</string>
-    <string name="location_closed">Itxita</string>
-    <string name="location_open">Irekia</string>
-    <string name="menu_map">Mapan ikusi</string>
-    <string name="hint_drag_and_drop_reorder">Eutsi eta arrastatu elementuak berrantolatzeko</string>
-    <string name="apps_profile_private">Pribatua</string>
-    <string name="preference_search_locations">Lekuak</string>
-    <string name="shortcut_label_unavailable">Eskuraezina</string>
-    <string name="app_label_locked_profile">Blokeatua</string>
-    <string name="preference_plugin_enable">Gehigarria baimendu</string>
-    <string name="length_unit">Luzera unitatea</string>
-    <string name="metric">Metrikoa</string>
-    <string name="preference_calendar_hide_completed">Amaitutako zereginak ezkutatu</string>
-    <string name="action_import">Inportatu</string>
-    <string name="missing_permission_location_search">Kokapen-baimena eman inguruko lekuak bilatzeko.</string>
-    <string name="preference_mdy_color_source">Kolore dinamikoen jatorria</string>
-    <string name="preference_mdy_color_source_system">Sistema</string>
-    <string name="preference_mdy_color_source_wallpaper">Horma-papera</string>
-    <string name="preference_category_advanced">Aurreratua</string>
-    <string name="preference_debug_dump_heap">Memoriaren argazkia</string>
-    <string name="preference_clockwidget_dynamic_zone">Eremu dinamikoa</string>
-    <string name="preference_search_cloud_summary">%1$s-(r)en fitxategiak bilatu</string>
-    <string name="file_type_launchertheme">%1$s-(r)en gaia</string>
-    <string name="preference_compact_tags">Etiketa trinkoak</string>
-    <string name="preference_compact_tags_summary">Ezkutatu etiketen testua edo ikonoak etiketen lekua murrizteko</string>
-    <string name="icon_picker_search_icon">Ikono paketeetan bilatu</string>
-    <string name="search_action_websearch">Web bilaketa</string>
-    <string name="import_theme_apply">Gaia ezarri</string>
-    <string name="menu_website">Web gunea ireki</string>
-    <string name="preference_location_managed">Gehigarriak kudeatua</string>
-    <string name="preference_location_managed_summary">Hornitzaile honen kokapena gehigarriak kudeatzen du</string>
-    <string name="preference_search_supportedunits">Onartutako unitateak</string>
-    <string name="provider_breezy">Breezy Weather</string>
-    <string name="preference_location_breezy">Breezy Weather-en kokapena kudeatu</string>
-    <string name="preference_breezyweather_integration"/>
-    <string name="preference_breezyweather_integration_instructions">Breezy Weather eguraldi hornitzaile gisa erabiltzeko:\n\n1. Joan hona: Breezy Weather &gt; Ezarpenak &gt; Trepetak eta horma-papera animatua &gt; Bidali eguraldi datuak Gadgetbridge-ra &gt; Gaitu %1$s\n\n2. %1$s-n, hautatu Breezy Weather eguraldi hornitzaile gisa</string>
-    <string name="preference_launch_breezyweather_app">Ireki Breezy Weather</string>
-    <string name="action_install">Instalatu</string>
-    <string name="preference_search_tasks_summary">Zereginak bilatu Tasks aplikazioan</string>
-    <string name="preference_plugin_badges">Plugin biribiltxoak</string>
-    <string name="preference_search_local_calendar_summary">Egutegiak gailu honetan bilatu</string>
-    <string name="theme_color_scheme_autogenerate">Kolore primariotik</string>
-    <string name="import_theme_error">Hautatutako fitxategia ezin izan da irakurri. Ziurtatu baliozko gai-fitxategia hautatu duzula (*.kvtheme), eta fitxategia ez dagoela hondatuta.</string>
-    <string name="preference_grid_list_style">Aplikazioak zerrenda batean erakutsi</string>
-    <string name="preference_grid_list_icons">Aplikazio ikonoak zerrenda batean erakutsi</string>
-    <string name="preference_grid_list_style_summary">Aplikazioak zerrenda batean erakutsi sareta batean ordez</string>
-    <string name="preference_grid_list_icons_summary">Erakutsi ikonoak zerrenda-ikuspegian</string>
-    <string name="shortcut_unavailable_description">Lasterbide hau ez dago erabilgarri %1$s ez delako abiarazle lehenetsia</string>
-    <string name="clock_style_custom">Trepeta pertsonalizatua</string>
-    <string name="tag_empty_name">Etiketa bat ezin da izenik gabe existitu. Jarraitzen baduzu, etiketa ezabatuko da.</string>
-    <string name="preference_search_locations_hide_uncategorized">Ezkutatu kategoriarik gabeko lekuak</string>
     <string name="music_widget_play">Erreproduzitu</string>
-    <string name="preference_search_tasks">Zereginak</string>
-    <string name="preference_contacts_call_on_tap">Deitzeko sakatu</string>
-    <string name="preference_contacts_call_on_tap_summary">Dei bat berehala hasi telefono zenbaki bat sakatzean</string>
-    <string name="wind_north_east">Ipar-ekialdeko haizea</string>
-    <string name="wind_north">Ipar haizea</string>
-    <string name="action_done">Egina</string>
-    <string name="wind_west">Mendebalde haizea</string>
-    <string name="wind_north_west">Ipar-mendebalde haizea</string>
-    <string name="weather_condition_thunderstorm">Trumoi-ekaitza</string>
-    <string name="preference_clock_widget_time_format">Ordu formatua</string>
-    <string name="preference_clock_widget_time_format_24h">24 ordu</string>
-    <string name="preference_clock_widget_time_format_12h">12 ordu</string>
-    <string name="preference_clock_widget_time_format_system">Sistemaren lehenetsia</string>
-    <string name="preference_search_locations_summary">Bilatu dendak eta beste leku batzuk inguruko eremuan</string>
-    <string name="wind_east">Ekialde haizea</string>
-    <string name="wind_south_east">Hego-ekialde haizea</string>
-    <string name="wind_south">Hego haizea</string>
-    <string name="wind_south_west">Hego-mendebaldeko haizea</string>
-    <string name="weather_widget_no_provider">Ez da eguraldi hornitzailerik hautatu edo hautatutako hornitzailea ez dago eskuragarri</string>
-    <string name="widget_removed">Trepeta ezabatua</string>
-    <string name="missing_permission_call_contacts_settings">Deitzeko baimena behar da deiak hasteko</string>
-    <string name="preference_plugin_badges_summary">Adierazi zein pluginak sortu den bilaketa-emaitza</string>
-    <string name="preference_launch_tasks_app">Ireki Tasks aplikazioa</string>
+    <string name="music_widget_pause">Gelditu</string>
+    <string name="calendar_widget_previous_day">Aurreko eguna</string>
+    <string name="calendar_widget_next_day">Hurrengo eguna</string>
+    <string name="calendar_widget_create_event">Gertaera berria sortu</string>
+    <string name="calendar_widget_open_calendar">Egutegi aplikazioa ireki</string>
+    <string name="profile_private_profile_state_locked">Eremu pribatua blokeatua dago.</string>
+    <string name="profile_private_profile_action_unlock">Desblokeatu</string>
+    <string name="profile_private_profile_action_lock">Eremu pribatua blokeatu</string>
+    <string name="hint_drag_and_drop_reorder">Eutsi eta arrastatu elementuak berrantolatzeko</string>
+    <string name="weather_forecast_wind">Haizea</string>
+    <string name="theme_bundle_name">Izena</string>
 </resources>
