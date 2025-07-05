@@ -20,6 +20,7 @@
     <string name="menu_launch">Lancear</string>
     <string name="menu_customize">Personalisar</string>
     <!-- Open a file in the corresponding app -->
+    <string name="menu_open_file">Aperir</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="action_undo">Disfacer</string>
     <string name="action_import">Importar</string>
@@ -273,6 +274,7 @@
     <string name="preference_category_licenses">Licentias de codice aperte</string>
     <string name="preference_category_advanced">Avantiate</string>
     <!-- Open website of an open source library -->
+    <string name="open_webpage">Aperir sito web</string>
     <string name="preference_screen_about_summary">Information de application e licentia</string>
     <string name="preference_screen_appearance_summary">Personalisar le apparentia</string>
     <string name="preference_weather_provider">Fornitor</string>
