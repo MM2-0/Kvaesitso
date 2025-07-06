@@ -28,7 +28,7 @@
     <string name="menu_launch">Inicia</string>
     <string name="menu_customize">Personalitza</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Obert</string>
+    <string name="menu_open_file">Obrir</string>
     <string name="menu_map">Veure al mapa</string>
     <string name="menu_website">Lloc web obert</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -242,7 +242,7 @@
     <string name="action_next">Següent</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Apaga</string>
-    <string name="widget_action_remove">Moure</string>
+    <string name="widget_action_remove">Elimina</string>
     <string name="widget_action_replace">Substitueix</string>
     <string name="menu_item_edit_favs">Edita els preferits</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
@@ -413,7 +413,7 @@
     <string name="preference_custom_colors_corepalette">Paleta de colors</string>
     <string name="preference_mdy_color_source">Font de Colors dinàmics</string>
     <string name="preference_mdy_color_source_system">Colors del Sistema</string>
-    <string name="preference_mdy_color_source_wallpaper">Fons de pantalla</string>
+    <string name="preference_mdy_color_source_wallpaper">Colors del Fons de Pantalla</string>
     <string name="preference_shapes_default">Per defecte</string>
     <string name="preference_transparencies_default">Per defecte</string>
     <string name="preference_font_system">Sistema predeterminat</string>
@@ -547,7 +547,7 @@
     <string name="preference_clock_widget_time_format">Format horari</string>
     <string name="preference_clock_widget_time_format_24h">24h</string>
     <string name="preference_clock_widget_time_format_12h">12h</string>
-    <string name="preference_clock_widget_time_format_system">Sistema predeterminat</string>
+    <string name="preference_clock_widget_time_format_system">Predeterminat</string>
     <string name="widget_use_theme_colors">Utilitzeu el color del tema</string>
     <string name="preference_clock_widget_fill_height">Omplir l\'alçada de la pantalla</string>
     <string name="preference_clock_widget_alignment">Alineació</string>
@@ -673,7 +673,7 @@
     <string name="search_action_email">Correu electrònic</string>
     <string name="search_action_alarm">Estableix l\'alarma</string>
     <string name="search_action_timer">Inicieu el temporitzador</string>
-    <string name="search_action_share">Comparteix</string>
+    <string name="search_action_share">Compartir</string>
     <string name="search_action_websearch">Cerca web</string>
     <string name="search_action_contact">Afegir a contactes</string>
     <string name="search_action_open_url">Veure lloc web</string>
@@ -791,7 +791,7 @@
     <string name="plugin_state_error">Aquest connector no funciona correctament</string>
     <string name="plugin_state_setup_required">Primer heu de configurar aquest connector</string>
     <string name="plugin_action_setup">Configurar</string>
-    <string name="plugin_type_filesearch">Fitxers</string>
+    <string name="plugin_type_filesearch">Cerca de fitxers</string>
     <string name="plugin_type_contacts">Contactes</string>
     <string name="plugin_type_weather">Proveïdor de dades climatològiques</string>
     <string name="plugin_weather_provider_enable">Estableix com a proveïdor meteorològic</string>
@@ -911,7 +911,7 @@
     <string name="item_visibility_hidden">Mai</string>
     <string name="contact_info_home">Casa</string>
     <string name="contact_info_mobile">Telèfon mòbil</string>
-    <string name="contact_info_work">Feina</string>
+    <string name="contact_info_work">Treball</string>
     <plurals name="contact_phone_numbers">
         <item quantity="one">%1$s número de telèfon</item>
         <item quantity="other">%1$s números de telèfon</item>
