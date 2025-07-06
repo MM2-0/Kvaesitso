@@ -25,7 +25,7 @@
     <string name="menu_launch">Paleisti</string>
     <string name="menu_customize">Tinkinti</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Atidarytas</string>
+    <string name="menu_open_file">Atidaryti</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="action_undo">Atstatyti</string>
     <string name="action_import">Importuoti</string>
@@ -412,6 +412,7 @@
     <string name="preference_category_licenses">Atviro šaltinio licensijos</string>
     <string name="preference_category_advanced">Pažengusiem</string>
     <!-- Open website of an open source library -->
+    <string name="open_webpage">Atidaryti puslapį</string>
     <string name="preference_screen_about_summary">Programėlės ir licensijos informacija</string>
     <string name="preference_screen_appearance_summary">Tinkinti išvaizda ir jausma</string>
     <string name="preference_weather_provider">Tiekėjas</string>
@@ -449,7 +450,7 @@
     <string name="preference_cards_shape_rounded">Apvalinta</string>
     <string name="preference_cards_shape_cut">Kirpti</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Sistemos numatytas</string>
+    <string name="preference_icon_shape_platform">Sistemos numatyta</string>
     <string name="preference_icon_shape_square">Kvadratas</string>
     <string name="preference_icon_shape_rounded_square">Apvalintas kvadratas</string>
     <string name="preference_icon_shape_squircle">Apvalintas kvadratas</string>
@@ -522,11 +523,11 @@
     <string name="preference_screen_debug">Taisymas (Debug)</string>
     <string name="preference_screen_debug_summary">Taisymo įrankiai</string>
     <string name="preference_category_widgets">Valdikliai</string>
-    <string name="preference_screen_weatherwidget">Oras</string>
+    <string name="preference_screen_weatherwidget">Orai</string>
     <string name="preference_category_media_apps">Medijos programa</string>
     <string name="preference_screen_clockwidget">Laikrodis</string>
     <string name="preference_screen_clockwidget_summary">Tinkinti laikrodžio stilių ir komponentus</string>
-    <string name="preference_clockwidget_layout_vertical">Numatyta</string>
+    <string name="preference_clockwidget_layout_vertical">Numatytas</string>
     <string name="preference_clockwidget_layout_horizontal">Kompaktiškas</string>
     <string name="preference_clock_widget_time_format_system">Sistemos numatytas</string>
     <string name="preference_clock_widget_fill_height">Užpildyti ekrano aukštį</string>
@@ -554,9 +555,9 @@
     <string name="preference_crash_reporter">Užlūžimo pranešėjas</string>
     <string name="preference_crash_reporter_summary">Klaidų ir ūžlužimo pranešimas</string>
     <string name="preference_logs_summary">Žiurėti ir eksportuoti programos logs</string>
-    <string name="preference_screen_search">Ieškoti</string>
+    <string name="preference_screen_search">Paieška</string>
     <string name="preference_screen_search_summary">Ieška ,žymos ,paslėptos programos</string>
-    <string name="preference_search_favorites">Mėgstami</string>
+    <string name="preference_search_favorites">Mėgstamiausi</string>
     <string name="preference_search_favorites_summary">Rodyti prisegtus ir dažnai naudojamus rodyti virš programų lauko</string>
     <string name="preference_search_files">Failai</string>
     <string name="preference_search_files_summary">Ieškoti vietinius failus ir debesies failus</string>
@@ -695,9 +696,9 @@
     <string name="preference_layout_fixed_rotation_summary">Ūžrakto ekranas portretinių režimu</string>
     <string name="preference_screen_gestures">Gestai</string>
     <string name="preference_screen_gestures_summary">Gestai ir jų veiksmai</string>
-    <string name="preference_gesture_swipe_down">Tempkite žemyn</string>
-    <string name="preference_gesture_swipe_left">Tempkite kairėn</string>
-    <string name="preference_gesture_swipe_right">Tempkite dešinėn</string>
+    <string name="preference_gesture_swipe_down">Tempti žemyn</string>
+    <string name="preference_gesture_swipe_left">Tempti kairėn</string>
+    <string name="preference_gesture_swipe_right">Tempti dešinėn</string>
     <string name="preference_gesture_double_tap">Dukart bakstelėti</string>
     <string name="preference_gesture_long_press">Ilgas paspaudimas</string>
     <string name="preference_gesture_home_button">Namų mygtukas / gestas</string>
