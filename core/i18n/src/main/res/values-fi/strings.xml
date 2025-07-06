@@ -28,7 +28,7 @@
     <string name="menu_launch">Käynnistä</string>
     <string name="menu_customize">Mukauta</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Avoinna</string>
+    <string name="menu_open_file">Avaa</string>
     <string name="menu_map">Näytä kartalla</string>
     <string name="menu_website">Avaa verkkosivu</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -555,7 +555,7 @@
     <string name="preference_crash_reporter_summary">Virhe- ja kaatumisraportit</string>
     <string name="preference_logs">Lokit</string>
     <string name="preference_logs_summary">Näytä tai vie sovelluksen lokit</string>
-    <string name="preference_screen_search">Hae</string>
+    <string name="preference_screen_search">Haku</string>
     <string name="preference_screen_search_summary">Haku, avainsanat, piilotetut kohteet</string>
     <string name="preference_search_favorites">Suosikit</string>
     <string name="preference_search_favorites_summary">Näytä kiinnitetyt ja usein käytetyt kohteet sovellusruudukon yläpuolella</string>
