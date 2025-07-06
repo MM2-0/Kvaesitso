@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="request_permission_deny_button">拒絕</string>
-    <string name="request_permission_allow_button">允許</string>
-    <string name="request_permission_message"><b>%1$s</b> 想要從 <b>%2$s</b> 存取資料。</string>
-</resources>
+<resources></resources>
