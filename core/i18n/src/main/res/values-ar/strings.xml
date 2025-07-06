@@ -28,7 +28,7 @@
     <string name="menu_launch">فتح</string>
     <string name="menu_customize">تخصيص</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">مفتوح</string>
+    <string name="menu_open_file">افتح</string>
     <string name="menu_map">عرض على الخريطة</string>
     <string name="menu_website">فتح الموقع</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -239,7 +239,7 @@
     <string name="easter_egg_text">حسنا، لقد وجدتني. تهانينا. هل كان يستحق كل هذا العناء؟</string>
     <!-- Close a dialog -->
     <string name="close">إغلاق</string>
-    <string name="save">‌حفظ</string>
+    <string name="save">حفظ</string>
     <string name="save_as_file">اهلا</string>
     <string name="duplicate">تكرار</string>
     <string name="edit">تعديل</string>
@@ -247,7 +247,7 @@
     <string name="action_next">التالي</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">إيقاف التشغيل</string>
-    <string name="widget_action_remove">أزِل</string>
+    <string name="widget_action_remove">إزالة</string>
     <string name="widget_action_replace">إستبدال</string>
     <string name="menu_item_edit_favs">تعديل المفضلة</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
@@ -424,7 +424,7 @@
     <string name="preference_version">الاصدار</string>
     <string name="preference_category_links">الروابط</string>
     <string name="preference_category_licenses">رخص مفتوحة المصدر</string>
-    <string name="preference_category_advanced">متقدمة</string>
+    <string name="preference_category_advanced">متقدم</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">فتح الموقع</string>
     <string name="preference_screen_about_summary">معلومات حول التطبيق والرخصة</string>
@@ -461,8 +461,8 @@
     <string name="preference_cards_shape">شكل</string>
     <string name="preference_cards_shape_rounded">مستدير</string>
     <string name="preference_cards_shape_cut">مقصوص</string>
-    <string name="preference_icon_shape">شكل</string>
-    <string name="preference_icon_shape_platform">الافتراضي للنظام</string>
+    <string name="preference_icon_shape">الشكل</string>
+    <string name="preference_icon_shape_platform">افتراضي النظام</string>
     <string name="preference_icon_shape_square">مربع</string>
     <string name="preference_icon_shape_rounded_square">مربع مدور</string>
     <string name="preference_icon_shape_squircle">مربع دائري</string>
@@ -492,7 +492,7 @@
     <string name="preference_nav_bar_icons">رموز شريط التنقل</string>
     <string name="preference_system_bar_icons_auto">تلقائي</string>
     <string name="preference_system_bar_icons_light">فاتح</string>
-    <string name="preference_system_bar_icons_dark">مظلم</string>
+    <string name="preference_system_bar_icons_dark">داكن</string>
     <string name="preference_hide_status_bar">إخفاء شريط الحالة</string>
     <string name="preference_hide_nav_bar">إخفاء شريط التنقل</string>
     <string name="preference_screen_integrations_summary">إدارة الحسابات والخدمات المتصلة</string>
@@ -500,7 +500,7 @@
     <string name="preference_signout">تسجيل الخروج</string>
     <string name="preference_summary_not_logged_in">أنت غير مسجل الدخول حاليًا</string>
     <string name="preference_icon_shape_pentagon">خماسي</string>
-    <string name="preference_category_wallpaper">الخلفية</string>
+    <string name="preference_category_wallpaper">خلفية الشاشة</string>
     <string name="preference_dim_wallpaper">تعتيم خلفية الشاشة</string>
     <string name="preference_dim_wallpaper_summary">في السمات الداكنة، قم بتعتيم خلفية الشاشة</string>
     <string name="preference_blur_wallpaper">تشويش خلفية الشاشة</string>
@@ -539,7 +539,7 @@
     <string name="preference_grid_labels_summary">إظهار اسم التطبيق أسفل الرمز</string>
     <string name="preference_grid_list_style_summary">عرض التطبيقات في قائمة بدلاً من شبكة</string>
     <string name="preference_grid_list_icons_summary">إظهار الأيقونات في عرض القائمة</string>
-    <string name="preference_screen_debug">تصحيح الأخطاء</string>
+    <string name="preference_screen_debug">التصحيح</string>
     <string name="preference_screen_debug_summary">أدوات استكشاف الأخطاء وإصلاحها</string>
     <string name="preference_category_widgets">عناصر واجهة المستخدم</string>
     <string name="preference_screen_weatherwidget">الطقس</string>
@@ -552,7 +552,7 @@
     <string name="preference_clock_widget_time_format">تنسيق الوقت</string>
     <string name="preference_clock_widget_time_format_24h">24-ساعة</string>
     <string name="preference_clock_widget_time_format_12h">12-ساعة</string>
-    <string name="preference_clock_widget_time_format_system">الافتراضي للنظام</string>
+    <string name="preference_clock_widget_time_format_system">النظام الافتراضي</string>
     <string name="widget_use_theme_colors">استخدام لون السمة</string>
     <string name="preference_clock_widget_fill_height">ملء ارتفاع الشاشة</string>
     <string name="preference_clock_widget_alignment">المحاذاة</string>
@@ -580,7 +580,7 @@
     <string name="preference_crash_reporter_summary">تقارير الأخطاء والأعطال</string>
     <string name="preference_logs">السجلات</string>
     <string name="preference_logs_summary">عرض وتصدير سجلات التطبيقات</string>
-    <string name="preference_screen_search">بحث</string>
+    <string name="preference_screen_search">البحث</string>
     <string name="preference_screen_search_summary">البحث، العلامات، العناصر المخفية</string>
     <string name="preference_search_favorites">المفضلة</string>
     <string name="preference_search_favorites_summary">إظهار العناصر المثبتة والمستخدمة بشكل متكرر أعلى شبكة التطبيقات</string>
@@ -609,7 +609,9 @@
     <string name="preference_search_locations_summary">البحث في المنطقة المحلية عن المتاجر والأماكن الأخرى</string>
     <string name="preference_search_localfiles">الملفات المحلية</string>
     <string name="preference_search_localfiles_summary">البحث عن المستندات والصور والملفات الأخرى المخزنة على هذا الجهاز</string>
+    <string name="preference_search_nextcloud">نكست كلاود Nextcloud</string>
     <string name="preference_search_cloud_summary">البحث في ملفات %1$s</string>
+    <string name="preference_search_owncloud">أون كلاود Owncloud</string>
     <string name="preference_calendar_calendars">التقويمات</string>
     <string name="preference_calendar_hide_completed">إخفاء المهام المكتملة</string>
     <string name="preference_screen_buildinfo">معلومات الإصدار</string>
@@ -625,7 +627,7 @@
     <string name="preference_hidden_items_summary">إدارة التطبيقات ونتائج البحث المخفية</string>
     <string name="preference_hidden_items_reveal_button">إظهار زر الكشف</string>
     <string name="preference_hidden_items_reveal_button_summary">إظهار زر للكشف عن نتائج البحث المخفية</string>
-    <string name="preference_screen_tags">علامات</string>
+    <string name="preference_screen_tags">العلامات</string>
     <string name="preference_screen_tags_summary">إدارة العلامات والعناصر الموسومة</string>
     <string name="preference_wikipedia_customurl">عنوان URL في ويكيبيديا</string>
     <string name="preference_edit_favorites_summary">تغيير ترتيب العناصر المثبتة</string>
@@ -815,7 +817,7 @@
     <string name="clock_variant_outlined">مخطط</string>
     <string name="menu_show_filters">إظهار المرشحات</string>
     <string name="menu_hide_filters">إخفاء المرشحات</string>
-    <string name="search_filter_tools">الأدوات</string>
+    <string name="search_filter_tools">أدوات</string>
     <string name="search_filter_online">النتائج عبر الإنترنت</string>
     <string name="search_filter_apps">التطبيقات</string>
     <string name="plugin_type_locationsearch">البحث عن الأماكن</string>
@@ -919,7 +921,7 @@
     <string name="poi_category_courthouse">محكمة</string>
     <string name="poi_category_townhall">قاعة المدينة</string>
     <string name="customize_item_label">التسمية</string>
-    <string name="customize_item_tags">علامات</string>
+    <string name="customize_item_tags">العلامات</string>
     <string name="customize_item_visibility">إظهار في</string>
     <string name="item_visibility_app_default">شبكة التطبيقات ونتائج البحث</string>
     <string name="item_visibility_calendar_default">أداة التقويم ونتائج البحث</string>
@@ -927,7 +929,7 @@
     <string name="item_visibility_hidden">أبدًا</string>
     <string name="contact_info_home">المنزل</string>
     <string name="contact_info_mobile">جوال</string>
-    <string name="contact_info_work">عمل</string>
+    <string name="contact_info_work">العمل</string>
     <string name="weather_widget_no_provider">لم يتم تحديد موفر للطقس أو أن الموفر المحدد غير متاح</string>
     <string name="music_widget_previous_track">العنوان السابق</string>
     <string name="music_widget_next_track">العنوان التالي</string>
@@ -946,7 +948,7 @@
     <string name="profile_private_profile_action_lock">قفل المساحة الخاصة</string>
     <string name="hint_drag_and_drop_reorder">اضغط مع الاستمرار واسحب العناصر لإعادة ترتيبها</string>
     <string name="weather_forecast_humidity">رطوبة</string>
-    <string name="weather_forecast_wind">ريح</string>
+    <string name="weather_forecast_wind">رياح</string>
     <string name="weather_forecast_precipitation">هطول الأمطار</string>
     <string name="departure_time_now">الآن</string>
     <string name="departure_time_departed">مضت</string>
