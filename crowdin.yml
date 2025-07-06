@@ -45,7 +45,7 @@ files:
   - source: /core/i18n/src/main/res/values/units.xml
     translation: /core/i18n/src/main/res/values-%android_code%/%original_file_name%
     type: android
-    language_mapping:
+    languages_mapping:
       android_code:
         ar: ar        # Arabic
         az: az        # Azerbaijani
