@@ -28,7 +28,7 @@
     <string name="menu_launch">Iniciar</string>
     <string name="menu_customize">Personalizar</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Abierto</string>
+    <string name="menu_open_file">Abrir</string>
     <string name="menu_map">Ver en mapa</string>
     <string name="menu_website">Abrir sitio web</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -473,7 +473,7 @@
     <string name="preference_cards_shape_rounded">Redondeada</string>
     <string name="preference_cards_shape_cut">Cortada</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Predeterminado del sistema</string>
+    <string name="preference_icon_shape_platform">Predeterminada del sistema</string>
     <string name="preference_icon_shape_square">Cuadrado</string>
     <string name="preference_icon_shape_rounded_square">Cuadrado redondeado</string>
     <string name="preference_icon_shape_squircle">Cuadrírculo</string>
@@ -509,7 +509,7 @@
     <string name="preference_signout">Cerrar sesión</string>
     <string name="preference_summary_not_logged_in">No has iniciado sesión</string>
     <string name="preference_icon_shape_pentagon">Pentágono</string>
-    <string name="preference_category_wallpaper">Fondo de pantalla</string>
+    <string name="preference_category_wallpaper">Papel tapiz</string>
     <string name="preference_dim_wallpaper">Oscurecer papel tapiz</string>
     <string name="preference_dim_wallpaper_summary">En temas oscuros, oscurecer papel tapiz</string>
     <string name="preference_blur_wallpaper">Difuminar papel tapiz</string>
@@ -549,6 +549,7 @@
     <string name="preference_grid_labels_summary">Mostrar el nombre de la aplicación debajo del icono</string>
     <string name="preference_grid_list_style_summary">Mostrar aplicaciones en una lista en lugar de una cuadrícula</string>
     <string name="preference_grid_list_icons_summary">Mostrar íconos en la vista de lista</string>
+    <string name="preference_screen_debug">Depuración</string>
     <string name="preference_screen_debug_summary">Herramientas de solución de problemas</string>
     <string name="preference_screen_weatherwidget">Tiempo</string>
     <string name="preference_category_media_apps">Aplicaciones multimedia</string>
@@ -560,7 +561,7 @@
     <string name="preference_clock_widget_time_format">Formato de hora</string>
     <string name="preference_clock_widget_time_format_24h">24 horas</string>
     <string name="preference_clock_widget_time_format_12h">12 horas</string>
-    <string name="preference_clock_widget_time_format_system">Predeterminado del sistema</string>
+    <string name="preference_clock_widget_time_format_system">Predeterminado por el sistema</string>
     <string name="widget_use_theme_colors">Usar color del tema</string>
     <string name="preference_clock_widget_fill_height">Rellenar altura de pantalla</string>
     <string name="preference_clock_widget_alignment">Alineación</string>
@@ -651,7 +652,7 @@
     <string name="preference_screen_homescreen_summary">Reloj, barra de búsqueda, fondo de pantalla, barras del sistema</string>
     <string name="preference_screen_icons">Cuadrícula e ícono</string>
     <string name="preference_screen_icons_summary">Cuadrícula, tamaño de íconos, paquete de íconos, insignias</string>
-    <string name="preference_weather_integration">Tiempo</string>
+    <string name="preference_weather_integration">Clima</string>
     <string name="preference_media_integration">Control de medios</string>
     <string name="preference_tasks_integration">Tareas</string>
     <!-- %1$s: app name (Kvaesitso) -->
@@ -734,8 +735,8 @@
     <string name="open_search_swipe_left">Deslizar hacia la izquierda</string>
     <string name="open_search_swipe_right">Deslizar hacia la derecha</string>
     <string name="preference_layout_search_bar_position">Posición de la barra de búsqueda</string>
-    <string name="search_bar_position_top">Superior</string>
-    <string name="search_bar_position_bottom">Inferior</string>
+    <string name="search_bar_position_top">Arriba</string>
+    <string name="search_bar_position_bottom">Abajo</string>
     <string name="preference_layout_search_results">Organización de los resultados de búsqueda</string>
     <string name="search_results_order_top_down">De arriba hacia abajo</string>
     <string name="search_results_order_bottom_up">De abajo hacia arriba</string>
