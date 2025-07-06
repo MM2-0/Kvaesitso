@@ -28,7 +28,7 @@
     <string name="menu_launch">Запусціць</string>
     <string name="menu_customize">Дапасаваць</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Адкрытае</string>
+    <string name="menu_open_file">Адкрыць</string>
     <string name="menu_map">Праглядзець на мапе</string>
     <string name="menu_website">Адкрыць вэбсайт</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -247,7 +247,7 @@
     <string name="action_next">Наперад</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Выключыць</string>
-    <string name="widget_action_remove">Прыняць</string>
+    <string name="widget_action_remove">Прыбраць</string>
     <string name="widget_action_replace">Замяніць</string>
     <string name="menu_item_edit_favs">Рэдагаваць абраныя</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
@@ -427,7 +427,7 @@
     <string name="preference_version">Версія</string>
     <string name="preference_category_links">Спасылкі</string>
     <string name="preference_category_licenses">Open source ліцэнзіі</string>
-    <string name="preference_category_advanced">Пашыраныя налады</string>
+    <string name="preference_category_advanced">Пашыраныя</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Адкрыць вэбсайт</string>
     <string name="preference_screen_about_summary">Інфармацыя аб праграме й ліцэнзіях</string>
@@ -468,7 +468,7 @@
     <string name="preference_cards_shape_rounded">Акруглая</string>
     <string name="preference_cards_shape_cut">Абрэзаная</string>
     <string name="preference_icon_shape">Фігура</string>
-    <string name="preference_icon_shape_platform">Сістэмны</string>
+    <string name="preference_icon_shape_platform">Стандартная</string>
     <string name="preference_icon_shape_square">Квадратная</string>
     <string name="preference_icon_shape_rounded_square">Скругленая квадратная</string>
     <string name="preference_icon_shape_squircle">Круграт</string>
@@ -497,8 +497,8 @@
     <string name="preference_status_bar_icons">Значкі сістэмнай панэлі</string>
     <string name="preference_nav_bar_icons">Значкі панэлі навігацыі</string>
     <string name="preference_system_bar_icons_auto">Аўтаматычна</string>
-    <string name="preference_system_bar_icons_light">Светлая</string>
-    <string name="preference_system_bar_icons_dark">Цёмная</string>
+    <string name="preference_system_bar_icons_light">Светлыя</string>
+    <string name="preference_system_bar_icons_dark">Цёмныя</string>
     <string name="preference_hide_status_bar">Схаваць панэль статусу</string>
     <string name="preference_hide_nav_bar">Схаваць панэль навігацыі</string>
     <string name="preference_screen_integrations_summary">Кіраванне злучаннамі уліковымі запісамі і сэрвісамі</string>
@@ -548,7 +548,7 @@
     <string name="preference_category_media_apps">Праграмы мультымедыя</string>
     <string name="preference_screen_clockwidget">Гадзіннік</string>
     <string name="preference_screen_clockwidget_summary">Наладзіць стыль і кампаненты гадзінніка</string>
-    <string name="preference_clockwidget_layout_vertical">Прадвызначанная</string>
+    <string name="preference_clockwidget_layout_vertical">Стандартны</string>
     <string name="preference_clockwidget_layout_horizontal">Кампактны</string>
     <string name="preference_clock_widget_show_seconds">Паказваць секунды</string>
     <string name="preference_clock_widget_time_format_system">Сістэмны</string>
@@ -579,7 +579,7 @@
     <string name="preference_crash_reporter_summary">Памылкі і справаздачы аб збоях</string>
     <string name="preference_logs">Журнал аўдыта</string>
     <string name="preference_logs_summary">Праглядвайце і экспартуйце запісы з журнала праграмы</string>
-    <string name="preference_screen_search">Шукаць</string>
+    <string name="preference_screen_search">Пошук</string>
     <string name="preference_screen_search_summary">Пошук, цэтлікі, схаваныя ярлыкі</string>
     <string name="preference_search_favorites">Абраныя</string>
     <string name="preference_search_favorites_summary">Адлюстроўваць замацаваныя праграмы і праграмы, якія часта выкарыстоўваюцца, уверсе меню</string>
@@ -664,7 +664,7 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">Створана %1$s на %2$s з %3$s.</string>
     <string name="restore_complete">Рэзервовая копія адноўлена.</string>
-    <string name="icon_picker_default_icon">Прадвызначанная</string>
+    <string name="icon_picker_default_icon">Прадвызначаны</string>
     <string name="icon_picker_suggestions">Прапановы</string>
     <string name="icon_picker_search_icon">Пошук у пакетах значкоў</string>
     <string name="icon_picker_filter_all_packs">Усе пакеты значкоў</string>
@@ -799,14 +799,14 @@
     <string name="preference_search_locations_theme_map">Тэма для карты</string>
     <string name="preference_search_locations_theme_map_summary">Прымяніць колеравую схему праграмы запуску для карты</string>
     <string name="preference_search_location_custom_tile_server_url">Спасылка на Tileserver</string>
-    <string name="menu_dial">Выклікаць</string>
+    <string name="menu_dial">Выклік</string>
     <string name="menu_navigation">Навігацыя</string>
     <string name="menu_bugreport">Справаздача аб памылцы</string>
     <string name="location_open_24_7">Кругласутачна</string>
     <string name="plugin_state_error">Гэты плагін працуе некарэктна</string>
     <string name="plugin_state_setup_required">Спачатку вам трэба наладзіць гэты плагін</string>
     <string name="plugin_action_setup">Наладзіць</string>
-    <string name="plugin_type_filesearch">Файлы</string>
+    <string name="plugin_type_filesearch">Пошук файлаў</string>
     <string name="plugin_type_contacts">Кантакты</string>
     <string name="plugin_type_weather">Правайдар надвор\'я</string>
     <string name="plugin_weather_provider_enable">Задаць правайдарам надвор\'я</string>
