@@ -28,7 +28,7 @@
     <string name="menu_launch">הפעל</string>
     <string name="menu_customize">התאם אישית</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">פתוח</string>
+    <string name="menu_open_file">פתח</string>
     <string name="menu_map">צפה על מפה</string>
     <string name="menu_website">פתח אתר</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -244,7 +244,7 @@
     <!-- Close a dialog -->
     <string name="close">סגוֹר</string>
     <string name="no_selection">ללא בחירה</string>
-    <string name="save">שמור</string>
+    <string name="save">שמוֹר</string>
     <string name="save_as_file">שמוֹר כקובץ</string>
     <string name="duplicate">שכפל</string>
     <string name="edit">ערוֹך</string>
@@ -1040,7 +1040,7 @@
         <item quantity="other">%1$s רשימות נבחרו</item>
     </plurals>
     <string name="weather_forecast_humidity">לחות</string>
-    <string name="weather_forecast_wind">רוחות</string>
+    <string name="weather_forecast_wind">רוח</string>
     <string name="weather_forecast_precipitation">משקעים</string>
     <string name="departure_time_now">עכשיו</string>
     <plurals name="departure_time_in">
