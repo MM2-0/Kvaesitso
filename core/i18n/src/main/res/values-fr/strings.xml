@@ -28,7 +28,7 @@
     <string name="menu_launch">Lancer</string>
     <string name="menu_customize">Personnaliser</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Ouvert</string>
+    <string name="menu_open_file">Ouvrir</string>
     <string name="menu_map">Afficher sur la carte</string>
     <string name="menu_website">Ouvrir le site web</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -236,7 +236,7 @@
     <!-- Close a dialog -->
     <string name="close">Fermer</string>
     <string name="no_selection">Aucune sélection</string>
-    <string name="save">Sauvegarder</string>
+    <string name="save">Enregistrer</string>
     <string name="save_as_file">Enregistrer comme fichier</string>
     <string name="duplicate">Dupliquer</string>
     <string name="edit">Modifier</string>
@@ -244,7 +244,7 @@
     <string name="action_next">Suivant</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Désactiver</string>
-    <string name="widget_action_remove">Supprimer</string>
+    <string name="widget_action_remove">Retirer</string>
     <string name="widget_action_replace">Remplacer</string>
     <string name="menu_item_edit_favs">Modifier les favoris</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
@@ -425,14 +425,14 @@
     <string name="preference_custom_colors_corepalette">Palette de couleur</string>
     <string name="preference_mdy_color_source">Source pour les couleurs dynamiques</string>
     <string name="preference_mdy_color_source_system">Utiliser les couleurs Material You suggérées par le système</string>
-    <string name="preference_mdy_color_source_wallpaper">Fond d\'écran</string>
+    <string name="preference_mdy_color_source_wallpaper">Extraire les couleurs Material You à partir du fond d\'écran actuel. Ceci est le choix par défaut pour Android 11 et plus ancien, mais est aussi disponible avec Android 12+ pour des raisons de compatibilité</string>
     <string name="preference_screen_shapes">Formes</string>
-    <string name="preference_shapes_default">Défaut</string>
+    <string name="preference_shapes_default">Par défaut</string>
     <string name="preference_shapes_extra_round">Très arrondi</string>
     <string name="preference_shapes_rect">Rectangulaire</string>
     <string name="preference_shapes_base">Forme de base</string>
     <string name="preference_screen_transparencies">Transparence</string>
-    <string name="preference_transparencies_default">Défaut</string>
+    <string name="preference_transparencies_default">Par défaut</string>
     <string name="preference_font">Police de caractères</string>
     <string name="preference_font_system">Police par défaut du système, dépendante du fournisseur (Google Sans sur les téléphones Google Pixel, Roboto sur AOSP)</string>
     <string name="preference_screen_about">À propos</string>
@@ -440,7 +440,7 @@
     <string name="preference_category_licenses">Licences open-source</string>
     <string name="preference_category_advanced">Avancé</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Ouvrir le site web</string>
+    <string name="open_webpage">Ouvrir le site Internet</string>
     <string name="preference_screen_about_summary">Informations sur l\'application et la licence</string>
     <string name="preference_screen_appearance_summary">Modifier l\'apparence</string>
     <string name="preference_weather_provider">Fournisseur</string>
@@ -478,7 +478,7 @@
     <string name="preference_cards_shape_rounded">Arrondi</string>
     <string name="preference_cards_shape_cut">Coupé</string>
     <string name="preference_icon_shape">Forme</string>
-    <string name="preference_icon_shape_platform">Police par défaut du système, dépendante du fournisseur (Google Sans sur les téléphones Google Pixel, Roboto sur AOSP)</string>
+    <string name="preference_icon_shape_platform">Suivre le système</string>
     <string name="preference_icon_shape_square">Carré</string>
     <string name="preference_icon_shape_rounded_square">Carré arrondi</string>
     <string name="preference_icon_shape_triangle">Triangle arrondi</string>
@@ -563,7 +563,7 @@
     <string name="preference_clock_widget_time_format">Format de l\'heure</string>
     <string name="preference_clock_widget_time_format_24h">24 heures</string>
     <string name="preference_clock_widget_time_format_12h">12 heures</string>
-    <string name="preference_clock_widget_time_format_system">Police par défaut du système, dépendante du fournisseur (Google Sans sur les téléphones Google Pixel, Roboto sur AOSP)</string>
+    <string name="preference_clock_widget_time_format_system">Défini par le système</string>
     <string name="widget_use_theme_colors">Utiliser les couleurs du thème</string>
     <string name="preference_clock_widget_fill_height">Remplir la hauteur de l\'écran</string>
     <string name="preference_clock_widget_alignment">Alignement</string>
@@ -684,7 +684,7 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">Créée le %1$s sur %2$s depuis %3$s.</string>
     <string name="restore_complete">La sauvegarde a bien été restaurée.</string>
-    <string name="icon_picker_default_icon">Défaut</string>
+    <string name="icon_picker_default_icon">Défault</string>
     <string name="icon_picker_search_icon">Rechercher dans les packs d\'icônes</string>
     <string name="icon_picker_filter_all_packs">Tous les packs d\'icônes</string>
     <string name="apps_profile_main">Personnel</string>
@@ -934,14 +934,14 @@
     <string name="poi_category_courthouse">Palais de justice</string>
     <string name="poi_category_townhall">Mairie</string>
     <string name="customize_item_label">Étiquette</string>
-    <string name="customize_item_tags">Étiquettes</string>
+    <string name="customize_item_tags">Étiquette</string>
     <string name="customize_item_visibility">Afficher dans</string>
     <string name="item_visibility_app_default">Grille d\'applications et résultats de recherche</string>
     <string name="item_visibility_calendar_default">Widget calendrier et résultats de recherche</string>
     <string name="item_visibility_search_only">Résultats de recherche</string>
     <string name="item_visibility_hidden">Jamais</string>
     <string name="contact_info_home">Domicile</string>
-    <string name="contact_info_work">Professionnel</string>
+    <string name="contact_info_work">Bureau</string>
     <plurals name="contact_phone_numbers">
         <item quantity="one">%1$s numéro de téléphone</item>
         <item quantity="other">%1$s numéros de téléphone</item>
