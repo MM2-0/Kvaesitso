@@ -28,7 +28,7 @@
     <string name="menu_launch">Запустить</string>
     <string name="menu_customize">Персонализировать</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Открыто</string>
+    <string name="menu_open_file">Открыть</string>
     <string name="menu_map">Показать на карте</string>
     <string name="menu_website">Открыть веб-сайт</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -246,7 +246,7 @@
     <string name="action_next">Далее</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Выключить</string>
-    <string name="widget_action_remove">Удалить</string>
+    <string name="widget_action_remove">Убрать</string>
     <string name="widget_action_replace">Заменить</string>
     <string name="menu_item_edit_favs">Редактировать избранное</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
@@ -443,7 +443,7 @@
     <string name="preference_version">Версия</string>
     <string name="preference_category_links">Ссылки</string>
     <string name="preference_category_licenses">Лицензии открытого ПО</string>
-    <string name="preference_category_advanced">Расширенный</string>
+    <string name="preference_category_advanced">Прочее</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Открыть веб-сайт</string>
     <string name="preference_screen_about_summary">Информация о лицензии и приложении</string>
@@ -485,7 +485,7 @@
     <string name="preference_cards_shape_rounded">Закруглённая</string>
     <string name="preference_cards_shape_cut">Срезанная</string>
     <string name="preference_icon_shape">Форма</string>
-    <string name="preference_icon_shape_platform">Системный</string>
+    <string name="preference_icon_shape_platform">Системное умолчание</string>
     <string name="preference_icon_shape_square">Квадрат</string>
     <string name="preference_icon_shape_rounded_square">Закруглённый квадрат</string>
     <string name="preference_icon_shape_squircle">Сквиркл</string>
@@ -514,8 +514,8 @@
     <string name="preference_status_bar_icons">Цвет значков строки состояния</string>
     <string name="preference_nav_bar_icons">Значки в панели навигации</string>
     <string name="preference_system_bar_icons_auto">Авто</string>
-    <string name="preference_system_bar_icons_light">Светлая</string>
-    <string name="preference_system_bar_icons_dark">Тёмная</string>
+    <string name="preference_system_bar_icons_light">Светлый</string>
+    <string name="preference_system_bar_icons_dark">Тёмный</string>
     <string name="preference_hide_status_bar">Скрыть строку состояния</string>
     <string name="preference_hide_nav_bar">Скрыть панель навигации</string>
     <string name="preference_screen_integrations_summary">Управление подключенными учётными записями и сервисами</string>
@@ -569,13 +569,13 @@
     <string name="preference_category_media_apps">Приложения с медиаплеерами</string>
     <string name="preference_screen_clockwidget">Часы</string>
     <string name="preference_screen_clockwidget_summary">Настроить стиль часов и их компоненты</string>
-    <string name="preference_clockwidget_layout_vertical">По умолчанию</string>
+    <string name="preference_clockwidget_layout_vertical">Стандартный</string>
     <string name="preference_clockwidget_layout_horizontal">Компактный</string>
     <string name="preference_clock_widget_show_seconds">Показать секунды</string>
     <string name="preference_clock_widget_time_format">Формат времени</string>
     <string name="preference_clock_widget_time_format_24h">24-часовой</string>
     <string name="preference_clock_widget_time_format_12h">12-часовой</string>
-    <string name="preference_clock_widget_time_format_system">Системный</string>
+    <string name="preference_clock_widget_time_format_system">Системные настройки по умолчанию</string>
     <string name="widget_use_theme_colors">Использовать цвет темы</string>
     <string name="preference_clock_widget_fill_height">Заполнить по высоте</string>
     <string name="preference_clock_widget_alignment">Расположить</string>
@@ -972,7 +972,7 @@
     <string name="item_visibility_hidden">Нигде</string>
     <string name="contact_info_home">Домашний</string>
     <string name="contact_info_mobile">Мобильный</string>
-    <string name="contact_info_work">Рабочие</string>
+    <string name="contact_info_work">Рабочий</string>
     <plurals name="contact_phone_numbers">
         <item quantity="one">%1$s номер телефона</item>
         <item quantity="few">%1$s номера телефона</item>
@@ -1021,7 +1021,7 @@
         <item quantity="other">%1$s списка выбрано</item>
     </plurals>
     <string name="weather_forecast_humidity">Влажность</string>
-    <string name="weather_forecast_wind">Ветрено</string>
+    <string name="weather_forecast_wind">Ветер</string>
     <string name="weather_forecast_precipitation">Осадки</string>
     <string name="departure_time_now">сейчас</string>
     <plurals name="departure_time_in">
@@ -1033,7 +1033,7 @@
     <string name="departure_time_departed">ушел</string>
     <string name="theme_export_title">Экспортировать тему</string>
     <string name="theme_import_title">Импортировать тему</string>
-    <string name="theme_bundle_name">Название</string>
+    <string name="theme_bundle_name">Имя</string>
     <string name="theme_bundle_author">Автор</string>
     <string name="preference_typography_fonts">Шрифты</string>
     <string name="font_category_device_default">Устройство по умолчанию</string>
