@@ -28,7 +28,7 @@
     <string name="menu_launch">Spustit</string>
     <string name="menu_customize">Přizpůsobit</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Otevřeno</string>
+    <string name="menu_open_file">Otevřít</string>
     <string name="menu_map">Zobrazit na mapě</string>
     <string name="menu_website">Otevřít web</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -430,7 +430,7 @@
     <string name="preference_custom_colors_corepalette">Barevná paleta</string>
     <string name="preference_mdy_color_source">Zdroj dynamických barev</string>
     <string name="preference_mdy_color_source_system">Systém</string>
-    <string name="preference_mdy_color_source_wallpaper">Pozadí</string>
+    <string name="preference_mdy_color_source_wallpaper">Tapeta</string>
     <string name="preference_screen_shapes">Tvary</string>
     <string name="preference_shapes_default">Výchozí</string>
     <string name="preference_shapes_extra_round">Extra zaoblený</string>
@@ -488,7 +488,7 @@
     <string name="preference_cards_shape_rounded">Zakulacený</string>
     <string name="preference_cards_shape_cut">Uřízlý</string>
     <string name="preference_icon_shape">Tvar</string>
-    <string name="preference_icon_shape_platform">Výchozí systémové</string>
+    <string name="preference_icon_shape_platform">Podle systému</string>
     <string name="preference_icon_shape_square">Čtverec</string>
     <string name="preference_icon_shape_rounded_square">Zakulacený čtverec</string>
     <string name="preference_icon_shape_squircle">Čtverco-kruh</string>
@@ -517,8 +517,8 @@
     <string name="preference_status_bar_icons">Ikony ve stavové liště</string>
     <string name="preference_nav_bar_icons">Ikony v navigační liště</string>
     <string name="preference_system_bar_icons_auto">Automaticky</string>
-    <string name="preference_system_bar_icons_light">Světlý</string>
-    <string name="preference_system_bar_icons_dark">Tmavý</string>
+    <string name="preference_system_bar_icons_light">Světlé</string>
+    <string name="preference_system_bar_icons_dark">Tmavé</string>
     <string name="preference_hide_status_bar">Skrýt stavovou lištu</string>
     <string name="preference_hide_nav_bar">Skrýt navigační lištu</string>
     <string name="preference_screen_integrations_summary">Spravovat připojené účty a služby</string>
@@ -571,13 +571,13 @@
     <string name="preference_category_media_apps">Aplikace médií</string>
     <string name="preference_screen_clockwidget">Hodiny</string>
     <string name="preference_screen_clockwidget_summary">Nastavení stylu hodin a komponent</string>
-    <string name="preference_clockwidget_layout_vertical">Výchozí</string>
+    <string name="preference_clockwidget_layout_vertical">Vertikální</string>
     <string name="preference_clockwidget_layout_horizontal">Horizontální</string>
     <string name="preference_clock_widget_show_seconds">Zobrazit sekundy</string>
     <string name="preference_clock_widget_time_format">Formát času</string>
     <string name="preference_clock_widget_time_format_24h">24hodinový</string>
     <string name="preference_clock_widget_time_format_12h">12hodinový</string>
-    <string name="preference_clock_widget_time_format_system">Výchozí systémové</string>
+    <string name="preference_clock_widget_time_format_system">Podle systému</string>
     <string name="widget_use_theme_colors">Použít barvu motivu</string>
     <string name="preference_clock_widget_fill_height">Vyplnit výšku obrazovky</string>
     <string name="preference_clock_widget_alignment">Zarovnání</string>
@@ -605,7 +605,7 @@
     <string name="preference_crash_reporter_summary">Hlášení chyb a pádů</string>
     <string name="preference_logs">Protokoly</string>
     <string name="preference_logs_summary">Zobrazit a exportovat protokoly aplikace</string>
-    <string name="preference_screen_search">Hledat</string>
+    <string name="preference_screen_search">Hledání</string>
     <string name="preference_screen_search_summary">Vyhledávání, štítky, skryté položky</string>
     <string name="preference_search_favorites">Oblíbené</string>
     <string name="preference_search_favorites_summary">Zobrazit připnuté a často používané položky nad mřízkou s aplikacemi</string>
