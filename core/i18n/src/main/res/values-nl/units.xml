@@ -4,11 +4,118 @@
     Important note: Unit symbols may not contain spaces.
     -->
     <!-- DIMENSIONS -->
+    <string name="dimension_length">Lengte</string>
+    <string name="dimension_mass">Massa</string>
+    <string name="dimension_velocity">Snelheid</string>
+    <string name="dimension_area">Oppervlakte</string>
+    <string name="dimension_currency">Munteenheid</string>
+    <string name="dimension_data">Gegevens</string>
+    <string name="dimension_pressure">Druk</string>
+    <string name="dimension_energy">Energie</string>
+    <string name="dimension_frequency">Frequentie</string>
+    <string name="dimension_temperature">Temperatuur</string>
+    <string name="dimension_time">Tijd</string>
     <!-- UNITS OF LENGTH -->
+    <plurals name="unit_foot">
+        <item quantity="one">voet</item>
+        <item quantity="other">voet</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">mijl</item>
+        <item quantity="other">mijlen</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">zeemijl</item>
+        <item quantity="other">zeemijlen</item>
+    </plurals>
     <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">vierkante meter</item>
+        <item quantity="other">vierkante meter</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">vierkante kilometer</item>
+        <item quantity="other">vierkante kilometer</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">vierkante centimeter</item>
+        <item quantity="other">vierkante centimeter</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">vierkante millimeter</item>
+        <item quantity="other">vierkante millimeter</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="one">vierkante inch</item>
+        <item quantity="other">vierkante inches</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">vierkante foot</item>
+        <item quantity="other">vierkante feet</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">vierkante yard</item>
+        <item quantity="other">vierkante yards</item>
+    </plurals>
     <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">seconde</item>
+        <item quantity="other">seconden</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">milliseconde</item>
+        <item quantity="other">milliseconden</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="one">minuut</item>
+        <item quantity="other">minuten</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">uur</item>
+        <item quantity="other">uren</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="one">dag</item>
+        <item quantity="other">dagen</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">jaar</item>
+        <item quantity="other">jaren</item>
+    </plurals>
     <!-- UNITS OF DATA SIZES -->
     <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">meter per seconde</item>
+        <item quantity="other">meters per seconde</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilometer per uur</item>
+        <item quantity="other">kilometers per uur</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">mijl per uur</item>
+        <item quantity="other">mijlen per uur</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">knoop</item>
+        <item quantity="other">knopen</item>
+    </plurals>
     <!-- UNITS OF MASS -->
+    <plurals name="unit_metric_ton">
+        <item quantity="one">ton</item>
+        <item quantity="other">ton</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="one">Engelse ton</item>
+        <item quantity="other">Engelse ton</item>
+    </plurals>
     <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">graad Celsius</item>
+        <item quantity="other">graden Celsius</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">graad Fahrenheit</item>
+        <item quantity="other">graden Fahrenheit</item>
+    </plurals>
 </resources>
