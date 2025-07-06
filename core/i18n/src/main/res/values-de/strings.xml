@@ -158,9 +158,9 @@
     <!-- Generic file , %1$s is the file extension -->
     <string name="file_type_generic">%1$s-Datei</string>
     <!-- Warning message that is shown when a user attempts to delete a directory -->
-    <string name="alert_delete_directory">Das Verzeichnis %1$s wird samt Inhalt unwideruflich gelöscht. Fortfahren\?</string>
+    <string name="alert_delete_directory">Das Verzeichnis %1$s wird samt Inhalt unwiderruflich gelöscht. Fortfahren\?</string>
     <!-- Warning message that is shown when a user attempts to delete a file -->
-    <string name="alert_delete_file">Die Datei %1$s wird unwideruflich gelöscht. Fortfahren\?</string>
+    <string name="alert_delete_file">Die Datei %1$s wird unwiderruflich gelöscht. Fortfahren\?</string>
     <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
     <string name="alert_delete_shortcut">Der Shortcut %1$s wird unwiderruflich gelöscht. Fortfahren\?</string>
     <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
@@ -374,7 +374,7 @@
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Benachrichtigungszugriff wird benötigt, um Medienwiedergabe zu steuern</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Kontakteberechtigung ist erforderlich, um Kontakte durchsuchen zu können</string>
+    <string name="missing_permission_contact_search_settings">Kontaktberechtigung ist erforderlich, um Kontakte durchsuchen zu können</string>
     <!-- Missing call permission in contacts settings screen -->
     <string name="missing_permission_call_contacts_settings">Telefonberechtigung wird benötigt, um Anrufe zu starten</string>
     <!-- Missing calendar permission in search settings screen -->
@@ -382,18 +382,18 @@
     <string name="missing_permission_tasks_search_settings">Aufgabenberechtigung ist erforderlich, um Aufgaben durchsuchen zu können</string>
     <string name="missing_permission_tasks_integration">Aufgaben-Berechtigung wird benötigt, um die Tasks-Integration zu verwenden</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt um Termine abzurufen</string>
+    <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt, um Termine abzurufen</string>
     <string name="widget_config_calendar_missing_calendars_hint">Sie können Ihre Kalender nicht finden\?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s muss als Standard-Start-App gesetzt sein, um App-Shortcuts durchsuchen zu können</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">Speicher-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
+    <string name="missing_permission_file_search_settings">Speicher-Berechtigung wird benötigt, um lokale Dateien zu durchsuchen</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Alle Dateien verwalten-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
+    <string name="missing_permission_file_search_settings_android10">Alle Dateien verwalten-Berechtigung wird benötigt, um lokale Dateien zu durchsuchen</string>
     <!-- Missing notification permission, used in badge settings screen -->
-    <string name="missing_permission_notification_badges">Benachrichtigungszugriff wird benötigt um Benachrichtigungsplaketten anzuzeigen</string>
+    <string name="missing_permission_notification_badges">Benachrichtigungszugriff wird benötigt, um Benachrichtigungsplaketten anzuzeigen</string>
     <!-- Missing calendar permission, used in calendar widget -->
     <string name="missing_permission_calendar_widget">Kalender-Berechtigung gewähren, um Ihre nächsten Termine hier anzuzeigen.</string>
     <!-- Missing calendar permission, used in calendar search results -->
@@ -424,7 +424,7 @@
     <string name="preference_mdy_color_source_wallpaper">Hintergrundbild</string>
     <string name="preference_screen_shapes">Formen</string>
     <string name="preference_shapes_default">Standard</string>
-    <string name="preference_shapes_extra_round">Extrarund</string>
+    <string name="preference_shapes_extra_round">Extra rund</string>
     <string name="preference_shapes_rect">Rechteckig</string>
     <string name="preference_shapes_base">Grundform</string>
     <string name="preference_screen_typography">Typografie</string>
@@ -512,9 +512,9 @@
     <string name="preference_dim_wallpaper">Hintergrund dimmen</string>
     <string name="preference_dim_wallpaper_summary">Hintergrundbild bei Verwendung von dunklen Designs abdunkeln</string>
     <string name="preference_blur_wallpaper">Hintergrund weichzeichnen</string>
-    <string name="preference_blur_wallpaper_summary">Einen Unschärfeeffekt für das Hintergrundbild verwenden</string>
+    <string name="preference_blur_wallpaper_summary">Einen Unschärfe-Effekt für das Hintergrundbild verwenden</string>
     <string name="preference_blur_wallpaper_unsupported">Auf diesem Gerät nicht unterstützt</string>
-    <string name="preference_blur_wallpaper_radius">Blur-Radius</string>
+    <string name="preference_blur_wallpaper_radius">Unschärfe-Radius</string>
     <string name="preference_wallpaper_summary">Hintergrundbild auswählen</string>
     <string name="preference_category_badges">Plaketten</string>
     <string name="preference_notification_badges">Benachrichtigungsplaketten</string>
@@ -572,7 +572,7 @@
     <string name="preference_clockwidget_music_part">Medien</string>
     <string name="preference_clockwidget_music_part_summary">Mediensteuerung anzeigen, wenn Medien wiedergegeben werden</string>
     <string name="preference_clockwidget_battery_part">Akku</string>
-    <string name="preference_clockwidget_battery_part_summary">Den Akkustand anzeigen wenn der Akku fast leer ist oder geladen wird</string>
+    <string name="preference_clockwidget_battery_part_summary">Den Akkustand anzeigen, wenn der Akku fast leer ist oder geladen wird</string>
     <string name="preference_clockwidget_alarm_part">Wecker</string>
     <string name="preference_clockwidget_alarm_part_summary">Wecker anzeigen, wenn diese in den nächsten 8 Stunden klingeln werden</string>
     <string name="preference_screen_backup">Sichern &amp; Wiederherstellen</string>
@@ -603,14 +603,14 @@
     <string name="preference_search_calculator_summary">Mathematische Terme auswerten</string>
     <string name="preference_search_unitconverter">Einheitenrechner</string>
     <string name="preference_search_unitconverter_summary">Benutzung: „1,5 kg“ oder „4 cm &gt;&gt; in“</string>
-    <string name="preference_search_currencyconverter">Währungsumrechner</string>
-    <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen um Währungen umzurechnen</string>
+    <string name="preference_search_currencyconverter">Währungsrechner</string>
+    <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen, um Währungen umzurechnen</string>
     <string name="preference_search_supportedunits">Unterstützte Einheiten</string>
     <string name="preference_search_wikipedia_summary">Die freie Enzyklopädie durchsuchen</string>
     <string name="preference_search_websites">Webseiten</string>
     <string name="preference_search_locations">Orte</string>
     <string name="preference_search_locations_radius">Suchradius</string>
-    <string name="preference_search_websites_summary">Vorschau einer Webseite anzeigen wenn die Suchanfrage eine URL ist</string>
+    <string name="preference_search_websites_summary">Vorschau einer Webseite anzeigen, wenn die Suchanfrage eine URL ist</string>
     <string name="preference_search_locations_summary">In der lokalen Umgebung nach Geschäften und anderen Orten suchen</string>
     <string name="preference_search_localfiles">Lokale Dateien</string>
     <string name="preference_search_localfiles_summary">Dokumente, Fotos und andere Dateien auf diesem Gerät durchsuchen</string>
@@ -625,7 +625,7 @@
     <string name="preference_search_bar_style_hidden">Versteckt</string>
     <string name="preference_search_bar_color">Farbe</string>
     <string name="preference_search_bar_auto_focus">Tastatur öffnen</string>
-    <string name="preference_search_bar_auto_focus_summary">Bildschirmtastatur beim Öffnen der Appübersicht automatisch einblenden</string>
+    <string name="preference_search_bar_auto_focus_summary">Bildschirmtastatur beim Öffnen der App-Übersicht automatisch einblenden</string>
     <string name="preference_search_bar_launch_on_enter">Eingabe zum Starten</string>
     <string name="preference_search_bar_launch_on_enter_summary">Hervorgehobenes Suchergebnis mit der Eingabetaste aufrufen</string>
     <string name="preference_hidden_items">Ausgeblendete Suchergebnisse</string>
@@ -640,7 +640,7 @@
     <string name="preference_edit_button">Bearbeiten-Button</string>
     <string name="preference_favorites_edit_button_summary">Eine Schaltfläche zum neu anordnen der Favoriten anzeigen</string>
     <string name="preference_compact_tags">Kompakte Tags</string>
-    <string name="preference_compact_tags_summary">Beschriftungen oder Symbole von Tags ausblenden um den von Tags eingenommenen Platz zu reduzieren</string>
+    <string name="preference_compact_tags_summary">Beschriftungen oder Symbole von Tags ausblenden, um den von Tags eingenommenen Platz zu reduzieren</string>
     <string name="preference_widgets_edit_button_summary">Eine Schaltfläche zum Hinzufügen, Entfernen und Anordnen von Widgets anzeigen</string>
     <string name="preference_widgets_on_home_screen">Widgets auf Startbildschirm</string>
     <string name="preference_widgets_on_home_screen_summary">Widgets auf dem Startbildschirm anstatt auf einer eigenen Seite anzeigen</string>
@@ -652,7 +652,7 @@
     <string name="preference_media_integration">Mediensteuerung</string>
     <string name="preference_tasks_integration">Aufgaben</string>
     <!-- %1$s: app name (Kvaesitso) -->
-    <string name="preference_tasks_integration_description">Tasks ist eine freie und quelloffene ToDo-Listen- und Erinnerungs-App. Wenn installiert kann %1$s Ihre Aufgaben aus der Tasks-App anzeigen und durchsuchen.</string>
+    <string name="preference_tasks_integration_description">Tasks ist eine freie und quelloffene To-do-Listen- und Erinnerungs-App. Wenn installiert kann %1$s Ihre Aufgaben aus der Tasks-App anzeigen und durchsuchen.</string>
     <string name="preference_tasks_integration_ready">Die Tasks-Integration ist fertig eingerichtet und bereit zur Verwendung.</string>
     <string name="preference_launch_tasks_app">Tasks-App öffnen</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather ist eine freie und quelloffene Wetterapp. Wenn installiert, kann %1$s Breezy Weather als Datenquelle für Wetterdaten verwenden.</string>
@@ -713,7 +713,7 @@
     <string name="create_search_action_website_url">Adresse der Webseite eingeben:</string>
     <string name="create_search_action_website_invalid_url">Die angegebene Webseite kann nicht automatisch als Websuche importiert werden. Sie können es mit einer anderen Webseite versuchen oder die benötigten Daten im nächsten Schritt manuell eingeben.</string>
     <string name="search_action_websearch_url">URL-Vorlage</string>
-    <string name="search_action_websearch_url_hint">Die URL-Vorlage, die verwendet wird um die Websuch-URL zusammenzusetzen. Verwenden Sie „${1}“ als Platzhalter für den eigentlichen Suchbegriff, z.B. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Die URL-Vorlage, die verwendet wird, um die Websuch-URL zusammenzusetzen. Verwenden Sie „${1}“ als Platzhalter für den eigentlichen Suchbegriff, z.B. https://google.com/search\?q=${1}.</string>
     <string name="more_information">Mehr Informationen</string>
     <string name="experimental_feature">Experimentell</string>
     <string name="tag_exists_error">Ein Tag mit diesem Namen existiert bereits.</string>
@@ -737,7 +737,7 @@
     <string name="search_results_order_top_down">Von oben nach unten</string>
     <string name="search_results_order_bottom_up">Von unten nach oben</string>
     <string name="preference_layout_fixed_search_bar">Angeheftete Suchleiste</string>
-    <string name="preference_layout_fixed_search_bar_summary">Suchleiste nicht aus dem Sichtbereich herausscrollen</string>
+    <string name="preference_layout_fixed_search_bar_summary">Suchleiste nicht aus dem Sichtbereich heraus scrollen</string>
     <string name="preference_layout_fixed_rotation">Feste Bildschirmausrichtung</string>
     <string name="preference_layout_fixed_rotation_summary">Porträtmodus erzwingen</string>
     <string name="preference_screen_gestures">Gesten</string>
@@ -882,7 +882,7 @@
     <string name="poi_category_alcohol">Spirituosengeschäft</string>
     <string name="poi_category_florist">Blumenhandlung</string>
     <string name="poi_category_mall">Einkaufszentrum</string>
-    <string name="poi_category_optician">Augenoptiker:in</string>
+    <string name="poi_category_optician">Augenoptiker*in</string>
     <string name="poi_category_jewelry">Juwelier</string>
     <string name="poi_category_laundry">Wäscherei</string>
     <string name="poi_category_soccer">Fußballplatz</string>
@@ -916,7 +916,7 @@
     <string name="poi_category_pet">Zoofachgeschäft</string>
     <string name="poi_category_shopping">Geschäft</string>
     <string name="poi_category_swimming">Schwimmbecken</string>
-    <string name="poi_category_martial_arts">Martial Arts</string>
+    <string name="poi_category_martial_arts">Kampfsport</string>
     <string name="poi_category_golf">Golfplatz</string>
     <string name="poi_category_gymnastics">Gymnastik</string>
     <string name="poi_category_ice_hockey">Eishockeybahn</string>
