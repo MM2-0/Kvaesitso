@@ -404,14 +404,15 @@
     <string name="preference_custom_colors_corepalette">Palet warna</string>
     <string name="preference_mdy_color_source">Sumber warna dinamis</string>
     <string name="preference_mdy_color_source_system">Sistem</string>
+    <string name="preference_mdy_color_source_wallpaper">Walpaper</string>
     <string name="preference_font_system">Bawaan sistem</string>
     <string name="preference_screen_about">Tentang</string>
     <string name="preference_version">Versi</string>
     <string name="preference_category_links">Tautan</string>
     <string name="preference_category_licenses">Lisensi sumber terbuka</string>
-    <string name="preference_category_advanced">Lanjutan</string>
+    <string name="preference_category_advanced">Lebih lanjut</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Buka situs</string>
+    <string name="open_webpage">Buka laman web</string>
     <string name="preference_screen_about_summary">Informasi aplikasi dan lisensi</string>
     <string name="preference_screen_appearance_summary">Sesuaikan tampilan dan suasana</string>
     <string name="preference_weather_provider">Penyedia</string>
@@ -542,7 +543,7 @@
     <string name="preference_clockwidget_battery_part_summary">Tampilkan level baterai ketika baterai lemah atau sedang mengisi daya</string>
     <string name="preference_clockwidget_alarm_part">Alarm</string>
     <string name="preference_clockwidget_alarm_part_summary">Tampilkan alarm yang akan berdering sekitar 15 menit mendatang</string>
-    <string name="preference_screen_search">Cari</string>
+    <string name="preference_screen_search">Pencarian</string>
     <string name="preference_screen_search_summary">Cari, label, item tersembunyi</string>
     <string name="preference_search_favorites">Favorit</string>
     <string name="preference_search_favorites_summary">Tampilkan item tersemat dan yang paling sering digunakan di atas daftar aplikasi</string>
@@ -600,6 +601,8 @@
     <string name="open_search_swipe_left">Geser ke kiri</string>
     <string name="open_search_swipe_right">Geser ke kanan</string>
     <string name="preference_layout_search_bar_position">Posisi bar pencarian</string>
+    <string name="search_bar_position_top">Atas</string>
+    <string name="search_bar_position_bottom">Bawah</string>
     <string name="preference_gesture_swipe_down">Geser ke bawah</string>
     <string name="preference_gesture_swipe_left">Geser ke kiri</string>
     <string name="preference_gesture_swipe_right">Geser ke kanan</string>
