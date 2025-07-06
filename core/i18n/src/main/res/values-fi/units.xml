@@ -5,10 +5,214 @@
     -->
     <!-- DIMENSIONS -->
     <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="one">metri</item>
+        <item quantity="other">metriä</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilometri</item>
+        <item quantity="other">kilometriä</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">senttimetri</item>
+        <item quantity="other">senttimetriä</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">millimetri</item>
+        <item quantity="other">millimetriä</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">tuuma</item>
+        <item quantity="other">tuumaa</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">jalka</item>
+        <item quantity="other">jalkaa</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="one">jaardi</item>
+        <item quantity="other">jaardia</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">maili</item>
+        <item quantity="other">mailia</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">merimaili</item>
+        <item quantity="other">merimailia</item>
+    </plurals>
     <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">neliömetri</item>
+        <item quantity="other">neliömetriä</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">neliökilometri</item>
+        <item quantity="other">neliökilometriä</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">neliösenttimetri</item>
+        <item quantity="other">neliösenttimetriä</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">neliömillimetri</item>
+        <item quantity="other">neliömillimetriä</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="one">neliötuuma</item>
+        <item quantity="other">neliötuumaa</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">neliöjalka</item>
+        <item quantity="other">neliöjalkaa</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">neliöjaardi</item>
+        <item quantity="other">neliöjaardia</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">hehtaari</item>
+        <item quantity="other">hehtaaria</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">eekkeri</item>
+        <item quantity="other">eekkeriä</item>
+    </plurals>
     <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">sekunti</item>
+        <item quantity="other">sekuntia</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">millisekunti</item>
+        <item quantity="other">millisekuntia</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="one">minuutti</item>
+        <item quantity="other">minuuttia</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">tunti</item>
+        <item quantity="other">tuntia</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="one">päivä</item>
+        <item quantity="other">päivää</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">vuosi</item>
+        <item quantity="other">vuotta</item>
+    </plurals>
     <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_byte">
+        <item quantity="one">tavu</item>
+        <item quantity="other">tavua</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">kilotavu</item>
+        <item quantity="other">kilotavua</item>
+    </plurals>
+    <plurals name="unit_megabyte">
+        <item quantity="one">megatavu</item>
+        <item quantity="other">megatavua</item>
+    </plurals>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">gigatavu</item>
+        <item quantity="other">gigatavua</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="one">teratavu</item>
+        <item quantity="other">teratavua</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">kibitavu</item>
+        <item quantity="other">kibitavua</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">mebitavu</item>
+        <item quantity="other">mebitavua</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">gibitavu</item>
+        <item quantity="other">gibitavua</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebitavu</item>
+        <item quantity="other">tebitavua</item>
+    </plurals>
+    <plurals name="unit_bit">
+        <item quantity="one">bitti</item>
+        <item quantity="other">bittiä</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="one">kilobitti</item>
+        <item quantity="other">kilobittiä</item>
+    </plurals>
+    <plurals name="unit_megabit">
+        <item quantity="one">megabitti</item>
+        <item quantity="other">megabittiä</item>
+    </plurals>
+    <plurals name="unit_gigabit">
+        <item quantity="one">gigabitti</item>
+        <item quantity="other">gigabittiä</item>
+    </plurals>
+    <plurals name="unit_terabit">
+        <item quantity="one">terabitti</item>
+        <item quantity="other">terabittiä</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">metri sekunnissa</item>
+        <item quantity="other">metriä sekunnissa</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilometri tunnissa</item>
+        <item quantity="other">kilometriä tunnissa</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">maili tunnissa</item>
+        <item quantity="other">mailia tunnissa</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">solmu</item>
+        <item quantity="other">solmua</item>
+    </plurals>
     <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="one">kilogramma</item>
+        <item quantity="other">kilogrammaa</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="one">gramma</item>
+        <item quantity="other">grammaa</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">tonni</item>
+        <item quantity="other">tonnia</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="one">pitkä tonni</item>
+        <item quantity="other">pitkää tonnia</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="one">pauna</item>
+        <item quantity="other">paunaa</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">unssi</item>
+        <item quantity="other">unssia</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">lyhyt tonni</item>
+        <item quantity="other">lyhyttä tonnia</item>
+    </plurals>
     <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">aste celsiusta</item>
+        <item quantity="other">astetta celsiusta</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">aste fahrenheitia</item>
+        <item quantity="other">astetta fahrenheitia</item>
+    </plurals>
 </resources>
