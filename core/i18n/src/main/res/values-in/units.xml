@@ -4,11 +4,178 @@
     Important note: Unit symbols may not contain spaces.
     -->
     <!-- DIMENSIONS -->
+    <string name="dimension_length">Panjang</string>
+    <string name="dimension_mass">Massa</string>
+    <string name="dimension_velocity">Kecepatan</string>
     <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="other">meter</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="other">kilometer</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="other">sentimeter</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="other">milimeter</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="other">inci</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="other">kaki</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="other">yar</item>
+    </plurals>
+    <string name="unit_mile_symbol">mil</string>
+    <plurals name="unit_mile">
+        <item quantity="other">mil</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="other">mil laut</item>
+    </plurals>
     <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="other">meter persegi</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="other">kilometer persegi</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="other">sentimeter persegi</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="other">milimeter persegi</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="other">inci persegi</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="other">kaki persegi</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="other">yar persegi</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="other">hektar</item>
+    </plurals>
     <!-- UNITS OF TIME -->
+    <string name="unit_second_symbol">d</string>
+    <plurals name="unit_second">
+        <item quantity="other">detik</item>
+    </plurals>
+    <string name="unit_millisecond_symbol">md</string>
+    <plurals name="unit_millisecond">
+        <item quantity="other">milidetik</item>
+    </plurals>
+    <string name="unit_minute_symbol">mnt</string>
+    <plurals name="unit_minute">
+        <item quantity="other">menit</item>
+    </plurals>
+    <string name="unit_hour_symbol">j</string>
+    <plurals name="unit_hour">
+        <item quantity="other">jam</item>
+    </plurals>
+    <string name="unit_day_symbol">h</string>
+    <plurals name="unit_day">
+        <item quantity="other">hari</item>
+    </plurals>
+    <string name="unit_year_symbol">th</string>
+    <plurals name="unit_year">
+        <item quantity="other">tahun</item>
+    </plurals>
     <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_byte">
+        <item quantity="other">byte</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="other">kilobita</item>
+    </plurals>
+    <plurals name="unit_megabyte">
+        <item quantity="other">megabita</item>
+    </plurals>
+    <plurals name="unit_gigabyte">
+        <item quantity="other">gigabita</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="other">terabita</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="other">kibibita</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="other">mebibita</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="other">gibibita</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="other">tebibita</item>
+    </plurals>
+    <plurals name="unit_bit">
+        <item quantity="other">bit</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="other">kilobit</item>
+    </plurals>
+    <plurals name="unit_megabit">
+        <item quantity="other">megabit</item>
+    </plurals>
+    <plurals name="unit_gigabit">
+        <item quantity="other">gigabit</item>
+    </plurals>
+    <plurals name="unit_terabit">
+        <item quantity="other">terabit</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
+    <string name="unit_meter_per_second_symbol">m/d</string>
+    <plurals name="unit_meter_per_second">
+        <item quantity="other">meter per detik</item>
+    </plurals>
+    <string name="unit_kilometer_per_hour_symbol">km/j</string>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="other">kilometer per jam</item>
+    </plurals>
+    <string name="unit_mile_per_hour_symbol">mpj</string>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="other">mil per jam</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="other">knot</item>
+    </plurals>
     <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="other">kilogram</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="other">gram</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="other">ton</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="other">ton panjang</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="other">pon</item>
+    </plurals>
+    <string name="unit_ounce_symbol">ons</string>
+    <plurals name="unit_ounce">
+        <item quantity="other">ons</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="other">ton pendek</item>
+    </plurals>
     <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="other">derajat celcius</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="other">derajat fahrenheit</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="other">kelvin</item>
+    </plurals>
 </resources>
