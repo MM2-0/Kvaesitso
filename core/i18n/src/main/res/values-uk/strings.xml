@@ -22,6 +22,7 @@
     <string name="menu_launch">Запустити</string>
     <string name="menu_customize">Редагувати</string>
     <!-- Open a file in the corresponding app -->
+    <string name="menu_open_file">Відкрити</string>
     <string name="menu_map">Показати на мапі</string>
     <string name="menu_website">Відкрити веб-сторінку</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
