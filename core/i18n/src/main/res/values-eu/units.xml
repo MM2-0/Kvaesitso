@@ -4,11 +4,175 @@
     Important note: Unit symbols may not contain spaces.
     -->
     <!-- DIMENSIONS -->
+    <string name="dimension_length">Luzera</string>
+    <string name="dimension_mass">Masa</string>
+    <string name="dimension_velocity">Abiadura</string>
+    <string name="dimension_volume">Bolumena</string>
+    <string name="dimension_area">Azalera</string>
+    <string name="dimension_currency">Moneta</string>
+    <string name="dimension_bitrate">Bit-tasa</string>
+    <string name="dimension_pressure">Presioa</string>
+    <string name="dimension_energy">Energia</string>
+    <string name="dimension_frequency">Maiztasuna</string>
+    <string name="dimension_temperature">Tenperatura</string>
+    <string name="dimension_time">Denbora</string>
     <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="one">metro</item>
+        <item quantity="other">metro</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilometro</item>
+        <item quantity="other">kilometro</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">dezimetro</item>
+        <item quantity="other">dezimetro</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">zentimetro</item>
+        <item quantity="other">zentimetro</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">milimetro</item>
+        <item quantity="other">milimetro</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">hazbete</item>
+        <item quantity="other">hazbete</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">oin</item>
+        <item quantity="other">oin</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="one">yarda</item>
+        <item quantity="other">yarda</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">milia</item>
+        <item quantity="other">milia</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">itsas milia</item>
+        <item quantity="other">itsas milia</item>
+    </plurals>
     <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">metro karratu</item>
+        <item quantity="other">metro karratu</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kilometro karratu</item>
+        <item quantity="other">kilometro karratu</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">zentimetro karratu</item>
+        <item quantity="other">zentimetro karratu</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">milimetro karratu</item>
+        <item quantity="other">milimetro karratu</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="one">hazbete karratu</item>
+        <item quantity="other">hazbete karratu</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">oin karratu</item>
+        <item quantity="other">oin karratu</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">yarda karratu</item>
+        <item quantity="other">yarda karratu</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">hektarea</item>
+        <item quantity="other">hektarea</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">akre</item>
+        <item quantity="other">akre</item>
+    </plurals>
     <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">segundo</item>
+        <item quantity="other">segundo</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">milisegundo</item>
+        <item quantity="other">milisegundo</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="one">minutu</item>
+        <item quantity="other">minutu</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">ordu</item>
+        <item quantity="other">ordu</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="one">egun</item>
+        <item quantity="other">egun</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">urte</item>
+        <item quantity="other">urte</item>
+    </plurals>
     <!-- UNITS OF DATA SIZES -->
     <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">metro segundoko</item>
+        <item quantity="other">metro segundoko</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilometro orduko</item>
+        <item quantity="other">kilometro orduko</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">milia orduko</item>
+        <item quantity="other">milia orduko</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">korapilo</item>
+        <item quantity="other">korapilo</item>
+    </plurals>
     <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="one">kilogramo</item>
+        <item quantity="other">kilogramo</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="one">gramo</item>
+        <item quantity="other">gramo</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">tona</item>
+        <item quantity="other">tona</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="one">tona luze</item>
+        <item quantity="other">tona luze</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="one">libra</item>
+        <item quantity="other">libra</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">ontza</item>
+        <item quantity="other">ontza</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">tona motz</item>
+        <item quantity="other">tona motz</item>
+    </plurals>
     <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">celsius gradu</item>
+        <item quantity="other">celsius gradu</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">fahrenheit gradu</item>
+        <item quantity="other">fahrenheit gradu</item>
+    </plurals>
 </resources>
