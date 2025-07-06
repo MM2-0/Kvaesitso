@@ -1,850 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="menu_share">แชร์</string>
-    <string name="menu_share_apk_file">ไฟล์แพ็กเกจ</string>
-    <string name="menu_uninstall">ถอนการติดตั้ง</string>
-    <string name="menu_favorites_unpin">เลิกปักหมุด</string>
-    <string name="menu_back">กลับ</string>
-    <string name="menu_launch">เปิดใช้</string>
-    <string name="menu_customize">ปรับแต่งเอง</string>
-    <string name="action_undo">เลิกทำ</string>
-    <string name="menu_delete">ลบ</string>
-    <string name="menu_remove">ลบ</string>
-    <string name="menu_calendar_open_externally">เปิดในแอปปฏิทิน</string>
-    <string name="app_info_version">เวอร์ชั่น %1$s</string>
-    <string name="help">ช่วยเหลือ</string>
-    <string name="wallpaper">ภาพพื้นหลัง</string>
-    <string name="wind_north_east">ตะวันออกเฉียงเหนือ</string>
-    <string name="wind_east_north_east">ตะวันออกค่อนไปทางเหนือ</string>
-    <string name="wind_east">ตะวันออก</string>
-    <string name="wind_east_south_east">ตะวันออกค่อนไปทางใต้</string>
-    <string name="wind_south">ใต้</string>
-    <string name="wind_south_south_west">ใต้ค่อนไปทางตะวันตก</string>
-    <string name="wind_west_south_west">ตะวันตกค่อนไปทางใต้</string>
-    <string name="wind_west">ตะวันตก</string>
-    <string name="wind_north_north_west">เหนือค่อนไปทางตะวันตก</string>
-    <string name="wikipedia_source">โดยวิกิพีเดีย</string>
-    <string name="file_meta_artist">ศิลปิน: %1$s</string>
-    <string name="file_meta_album">อัลบั้ม: %1$s</string>
-    <string name="file_meta_year">ปี: %1$s</string>
-    <string name="file_meta_size">ขนาด: %1$s</string>
-    <string name="file_meta_type">ชนิด: %1$s</string>
-    <string name="file_meta_app_name">ชื่อแอป: %1$s</string>
-    <string name="file_meta_app_min_sdk">เวอร์ชั่น SDK ขั้นต่ำ: %1$s</string>
-    <string name="file_type_directory">โฟลเดอร์</string>
-    <string name="file_type_archive">ไฟล์เก็บถาวร</string>
-    <string name="file_type_document">เอกสาร</string>
-    <string name="file_type_spreadsheet">ตารางคำนวณ</string>
-    <string name="file_type_music">ไฟล์เพลง</string>
-    <string name="file_type_video">วิดีโอ</string>
-    <string name="file_type_image">รูปภาพ</string>
-    <string name="file_type_none">ไฟล์</string>
-    <string name="file_type_presentation">การนำเสนอ</string>
-    <string name="file_type_compressed">ไฟล์บีบอัด</string>
-    <string name="file_type_text">ไฟล์ข้อความ</string>
-    <string name="file_type_ebook">อีบุ๊ก</string>
-    <string name="file_type_drawing">รูปวาด</string>
-    <string name="file_type_form">แบบฟอร์ม</string>
-    <string name="alert_delete_file">ไฟล์ %1$s จะถูกลบอย่างถาวร ทำต่อหรือไม่\?</string>
-    <string name="default_websearch_2_name">YouTube</string>
-    <string name="websearch_dialog_url_error">ลิงก์นี้ขาดตัวยึดนำแหน่ง \'${1}\'</string>
-    <string name="websearch_dialog_custom_icon">ไอคอนแบบกำหนดเอง</string>
-    <string name="websearch_dialog_advanced">ขั้นสูง</string>
-    <string name="websearch_dialog_query_encoding">เข้ารหัสคำค้นหา</string>
-    <string name="websearch_dialog_query_encoding_none">ไม่ใช้</string>
-    <string name="widget_name_weather">สภาพอากาศ</string>
-    <string name="widget_name_calendar">ปฏิทิน</string>
-    <string name="widget_name_music">ดนตรี</string>
-    <string name="widget_name_favorites">รายการโปรด</string>
-    <string name="widget_name_notes">โน้ต</string>
-    <string name="widget_name_unknown">วิดเจ็ตที่ไม่รู้จัก</string>
-    <string name="notes_widget_placeholder">เขียนโน้ต…</string>
-    <string name="notes_widget_action_new">สร้างโน้ต</string>
-    <string name="notes_widget_action_dismiss">ลบโน้ต</string>
-    <string name="notes_widget_dismissed">โน้ตถูกลบแล้ว</string>
-    <string name="shortcut_summary">สร้างโดย %1$s</string>
-    <string name="easter_egg_text">โดนหาเจอซะแล้วสิ ยินดีด้วย คิดว่าคุ้มมั้ย\?</string>
-    <string name="close">ปิด</string>
-    <string name="save">บันทึก</string>
-    <string name="duplicate">สร้างสำเนา</string>
-    <string name="edit">แก้ไข</string>
-    <string name="skip">ข้าม</string>
-    <string name="action_next">ต่อไป</string>
-    <string name="turn_off">ปิด</string>
-    <string name="widget_action_remove">ลบ</string>
-    <string name="widget_action_replace">แทนที่</string>
-    <string name="menu_item_edit_favs">แก้ไขรายการโปรด</string>
-    <string name="edit_favorites_dialog_pinned_sorted">ปักหมุด - เรียงด้วยตัวเอง</string>
-    <string name="edit_favorites_dialog_tags">แท็ก</string>
-    <string name="edit_favorites_dialog_new_tag">สร้างแท็ก…</string>
-    <string name="edit_favorites_dialog_empty_section">ลากรายการต่างๆมาที่นี่</string>
-    <string name="nextcloud_server_invalid_url">ลิงก์นี้ไม่ได้ชี้ไปที่เซิร์ฟเวอร์ Nextcloud ที่ถูกต้อง</string>
-    <string name="owncloud_server_url">ลิงก์เซิร์ฟเวอร์ Owncloud</string>
-    <string name="owncloud_username">ชื่อผู้ใช้</string>
-    <string name="owncloud_login_failed">การลงชื่อเข้าใช้ไม่สำเร็จ เพราะชื่อผู้ใช้หรือรหัสผ่านผิด</string>
-    <string name="login_flow_continue">ไปต่อ</string>
-    <string name="disclaimer">ข้อจำกัดความรับผิดชอบ</string>
-    <string name="show_all">แสดงทั้งหมด</string>
-    <string name="date_today">วันนี้</string>
-    <string name="date_tomorrow">พรุ่งนี้</string>
-    <string name="music_widget_no_data">ยังไม่มีสื่อใดที่ถูกเล่น</string>
-    <string name="weather_condition_lightrain">ฝนตกเล็กน้อย</string>
-    <string name="weather_condition_lightsnow">หิมะตกเล็กน้อย</string>
-    <string name="weather_condition_lightsnowshowers">หิมะตกเล็กน้อยบางแห่ง</string>
-    <string name="weather_condition_heavysnow">หิมะตกหนัก</string>
-    <string name="weather_condition_snowandthunder">หิมะตกและมีท้องฟ้าคำราม</string>
-    <string name="weather_condition_snow">หิมะตก</string>
-    <string name="weather_condition_hail">ลูกเห็บตก</string>
-    <string name="weather_condition_clearsky">ท้องฟ้าแจ่มใส</string>
-    <string name="weather_condition_sleet">ฝนน้ำแข็งตก</string>
-    <string name="weather_condition_rain">ฝนตก</string>
-    <string name="weather_condition_heavyrainshowersandthunder">ฝนตกหนักบางแห่งและมีท้องฟ้าคำราม</string>
-    <string name="weather_condition_rainandthunder">ฝนตกและมีท้องฟ้าคำราม</string>
-    <string name="weather_condition_fair">ท้องฟ้ามีเมฆเล็กน้อย</string>
-    <string name="weather_condition_fog">มีหมอก</string>
-    <string name="weather_condition_partlycloudy">ท้องฟ้ามีเมฆบางส่วน</string>
-    <string name="weather_condition_heavysnowandthunder">หิมะตกหนักและมีท้องฟ้าคำราม</string>
-    <string name="weather_condition_rainshowers">ฝนตกบางแห่ง</string>
-    <string name="weather_condition_heavysnowshowersandthunder">หิมะตกหนักบางแห่งและมีท้องฟ้าคำราม</string>
-    <string name="weather_condition_lightsleetshowers">ฝนน้ำแข็งตกเล็กน้อยบางแห่ง</string>
-    <string name="weather_condition_snowshowers">หิมะตกบางแห่ง</string>
-    <string name="weather_condition_heavyrainandthunder">ฝนตกหนักและมีท้องฟ้าคำราม</string>
-    <string name="weather_condition_wind">มีลมแรง</string>
-    <string name="weather_condition_unknown">ไม่มีข้อมูล</string>
-    <string name="weather_location_search_no_result">ไม่พบตำแหน่งที่ค้นหา</string>
-    <string name="missing_permission_music_widget">คุณต้องอนุญาตให้แอปเข้าถึงการแจ้งเตือนเพื่อควบคุมการเล่นสื่อ</string>
-    <string name="missing_permission_calendar_widget_settings">วิดเจ็ตนี้ต้องการต้องได้รับการอนุญาตการเข้าถึงปฏิทิน</string>
-    <string name="widget_config_calendar_missing_calendars_hint">หาปฏิทินไม่เจอหรือ\?</string>
-    <string name="missing_permission_calendar_widget">คุณต้องอนุญาตให้แอปเข้าถึงปฏิทินเพื่อแสดงนัดหมายและกิจกรรมที่นี่</string>
-    <string name="missing_permission_contact_search">คุณต้องอนุญาตให้แอปเข้าถึงรายชื่อผู้ติดต่อเพื่อค้นหาในรายชื่อผู้ติดต่อ</string>
-    <string name="missing_permission_appshortcuts_search">กำหนดให้แอป %1$s เป็นตัวใช้งานเริ่มต้นเพื่อค้นหาทางลัดแอป</string>
-    <string name="grant_permission">อนุญาต</string>
-    <string name="preference_screen_appearance">ลักษณะ</string>
-    <string name="preference_theme_dark">มืด</string>
-    <string name="preference_screen_colors">โทนสี</string>
-    <string name="preference_colors_default">ค่าเริ่มต้น</string>
-    <string name="preference_custom_colors_corepalette">จานสี</string>
-    <string name="preference_font">ชุดแบบอักษร</string>
-    <string name="preference_font_system">ค่าเริ่มต้นของระบบ</string>
-    <string name="preference_screen_about">เกี่ยวกับ</string>
-    <string name="preference_version">เวอร์ชั่น</string>
-    <string name="open_webpage">เปิดเว็บไซต์</string>
-    <string name="preference_screen_appearance_summary">กำหนดลักษณะและความรู้สึก</string>
-    <string name="preference_weather_provider">ผู้ให้บริการ</string>
-    <string name="provider_metno">สถาบันอุตุนิยมวิทยานอร์เวย์</string>
-    <string name="provider_brightsky">บริการอุตุนิยมวิทยาเยอรมัน (ประเทศเยอรมันเท่านั้น)</string>
-    <string name="provider_here">ที่นี่</string>
-    <string name="preference_category_location">ตำแหน่ง</string>
-    <string name="preference_automatic_location">ตำแหน่งอัตโนมัติ</string>
-    <string name="preference_location">ตำแหน่ง</string>
-    <string name="preference_imperial_units">หน่วยวัดแบบอังกฤษ</string>
-    <string name="preference_category_debug">แก้ไขข้อผิดพลาด</string>
-    <string name="preference_category_debug_tools">เครื่องมือ</string>
-    <string name="preference_debug_reinstall_iconpacks">ติดตั้งชุดไอคอนใหม่อีกครั้ง</string>
-    <string name="preference_debug_reinstall_iconpacks_summary">ล้างและสร้างแคชของชุดไอคอนใหม่อีกครั้ง</string>
-    <string name="preference_debug_dump_heap_in_progress">กำลังจับแสนปช็อต…</string>
-    <string name="preference_debug_cleanup_database">ทำความสะอาดฐานข้อมูล</string>
-    <plurals name="debug_cleanup_database_result">
-        <item quantity="other">%1$d รายการถูกลบแล้ว</item>
-    </plurals>
-    <string name="preference_cards">การ์ด</string>
-    <string name="preference_cards_corner_radius">ความมนของมุม</string>
-    <string name="preference_cards_stroke_width">ความหนาของเส้น</string>
-    <string name="preference_icon_shape_square">สี่เหลี่ยม</string>
-    <string name="preference_cards_opacity">ความทึบ</string>
-    <string name="preference_cards_shape">รูปร่าง</string>
-    <string name="preference_cards_shape_rounded">มุมมน</string>
-    <string name="preference_cards_shape_cut">มุมตัด</string>
-    <string name="preference_icon_shape_squircle">สี่เหลี่ยมบวม</string>
-    <string name="preference_icon_shape_triangle">สามเหลี่ยมบวม</string>
-    <string name="preference_icon_shape_circle">วงกลม</string>
-    <string name="preference_icon_shape_teardrop">หยดน้ำ</string>
-    <string name="preference_icon_shape_hexagon">หกเหลี่ยม</string>
-    <string name="preference_screen_integrations">การเชื่อมต่อ</string>
-    <string name="preference_theme_system">ทำตามระบบ</string>
-    <string name="preference_icon_pack_summary_empty">ไม่ได้ติดตั้งชุดไอคอนใด</string>
-    <string name="preference_status_bar_icons">ไอคอนบนแถบสถานะ</string>
-    <string name="preference_charging_animation">ภาพเคลื่อนไหวขณะชาร์จ</string>
-    <string name="preference_charging_animation_summary">เล่นภาพฟองน้ำเคลื่อนไหวขณะชาร์จอุปกรณ์</string>
-    <string name="preference_category_system_bars">แถบระบบ</string>
-    <string name="preference_system_bar_icons_light">สว่าง</string>
-    <string name="preference_system_bar_icons_dark">มืด</string>
-    <string name="preference_icon_shape_pentagon">ห้าเหลี่ยม</string>
-    <string name="preference_hide_status_bar">ซ่อนแถบสถานะ</string>
-    <string name="preference_hide_nav_bar">ซ่อนแถบนำทาง</string>
-    <string name="preference_signin_user">ลงชื่อเข้าใช้เป็น %1$s</string>
-    <string name="preference_summary_not_logged_in">คุณยังไม่ได้ลงชื่อเข้าใช้</string>
-    <string name="preference_category_wallpaper">ภาพพื้นหลัง</string>
-    <string name="preference_blur_wallpaper_summary">ใช้เอฟเฟกต์ทำให้ภาพพื้นหลังดูมัว</string>
-    <string name="preference_blur_wallpaper">ปรับภาพพื้นหลังให้ดูมัว</string>
-    <string name="preference_blur_wallpaper_unsupported">ไม่รองรับบนอุปกรณ์นี้</string>
-    <string name="preference_wallpaper_summary">เลือกภาพพื้นหลัง</string>
-    <string name="preference_category_badges">ป้าย</string>
-    <string name="preference_suspended_badges_summary">แสดงป้ายบนไอคอนของแอปที่ถูกพักการใช้งาน</string>
-    <string name="preference_suspended_badges">แอปที่ถูกพักการใช้งาน</string>
-    <string name="preference_cloud_badges">ป้ายคลาวด์</string>
-    <string name="preference_cloud_badges_summary">แสดงป้ายบนไอคอนของไฟล์ที่เก็บไว้บนคลาวด์</string>
-    <string name="preference_nextcloud_signin">ลงชื่อเข้าใช้ Nextcloud</string>
-    <string name="preference_nextcloud_signin_summary">ลงชื่อเข้าใช้เพื่อค้นหาในเซิร์ฟเวอร์ Nextcloud</string>
-    <string name="preference_nextcloud">Nextcloud</string>
-    <string name="preference_owncloud">Owncloud</string>
-    <string name="preference_about_telegram">กลุ่ม Telegram</string>
-    <string name="preference_about_fdroid">คลังโปรแกรม F-Droid</string>
-    <string name="preference_category_license">ใบอนุญาต</string>
-    <string name="preference_about_license">แอปนี้เป็นซอฟต์แวร์เสรี</string>
-    <string name="preference_about_license_summary">ได้รับการอนุญาตให้ใช้ภายใต้สัญญาอนุญาตสาธารณะทั่วไปของกนู 3.0</string>
-    <string name="preference_category_grid">ลิ้นชักแอป</string>
-    <string name="preference_grid_column_count">จำนวนคอลัมน์</string>
-    <string name="preference_grid_labels">แสดงป้ายชื่อ</string>
-    <string name="preference_screen_debug">แก้ไขข้อผิดพลาด</string>
-    <string name="preference_screen_debug_summary">เครื่องมือแก้ไขปัญหา</string>
-    <string name="preference_category_widgets">วิดเจ็ต</string>
-    <string name="preference_category_media_apps">แอปสื่อ</string>
-    <string name="preference_screen_clockwidget">นาฬิกา</string>
-    <string name="preference_clockwidget_layout_horizontal">กะทัดรัด</string>
-    <string name="preference_clock_widget_fill_height">เติมให้เต็มความสูงของหน้าจอ</string>
-    <string name="preference_clockwidget_date_part">วันที่</string>
-    <string name="preference_clockwidget_date_part_summary">แสดงวันที่ปัจจุบัน</string>
-    <string name="preference_clockwidget_favorites_part">แถบใช้งาน</string>
-    <string name="preference_clockwidget_music_part">สื่อ</string>
-    <string name="preference_clockwidget_music_part_summary">แสดงตัวควบคุมสื่อเมื่อมีสื่อกำลังเล่น</string>
-    <string name="preference_clockwidget_battery_part">แบตเตอรี่</string>
-    <string name="preference_clockwidget_alarm_part">การตั้งปลุก</string>
-    <string name="preference_clockwidget_alarm_part_summary">แสดงการตั้งปลุกที่กำลังจะปลุกในอีก 8 ชั่วโมงข้างหน้า</string>
-    <string name="preference_screen_backup">สำรองข้อมูลและกู้คืนข้อมูล</string>
-    <string name="preference_backup">สำรองข้อมูล</string>
-    <string name="preference_restore_summary">นำเข้าข้อมูลสำรองที่เคยสร้างไว้</string>
-    <string name="preference_crash_reporter_summary">ดูข้อผิดพลาดและรายงานแอปล่ม</string>
-    <string name="preference_screen_search">ค้นหา</string>
-    <string name="preference_logs">ไฟล์เก็บข้อมูลกิจกรรมแอป</string>
-    <string name="preference_search_favorites">รายการโปรด</string>
-    <string name="preference_screen_search_summary">การค้นหา แท็ก สิ่งที่ถูกซ่อน</string>
-    <string name="preference_search_files">ไฟล์</string>
-    <string name="preference_search_calendar">ปฏิทิน</string>
-    <string name="preference_search_appshortcuts">ทางลัดแอป</string>
-    <string name="preference_search_appshortcuts_summary">ค้นหาทางลัดแอป</string>
-    <string name="preference_search_calculator">เครื่องคิดเลข</string>
-    <string name="preference_search_unitconverter">ตัวแปลงหน่วย</string>
-    <string name="preference_search_unitconverter_summary">วิธีใช้: 1.5 กก. หรือ 4 ซม. &gt;&gt; นิ้ว</string>
-    <string name="preference_search_currencyconverter">ตัวแปลงสกุลเงิน</string>
-    <string name="preference_search_wikipedia">วิกิพีเดีย</string>
-    <string name="preference_search_wikipedia_summary">ค้นหาในสารานุกรมเสรี</string>
-    <string name="preference_search_websites">เว็บไซต์</string>
-    <string name="preference_search_localfiles">ไฟล์บนเครื่อง</string>
-    <string name="preference_search_cloud_summary">ค้นหาไฟล์ของ %1$s</string>
-    <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_calendar_calendars">ปฏิทิน</string>
-    <string name="preference_screen_buildinfo">ข้อมูลบิลด์</string>
-    <string name="preference_search_bar_style">รูปแบบ</string>
-    <string name="preference_search_bar_color">สี</string>
-    <string name="preference_search_bar_auto_focus">เปิดคีย์บอร์ด</string>
-    <string name="preference_search_bar_launch_on_enter">เปิดแอปเมื่อกด Enter</string>
-    <string name="preference_hidden_items">ซ่อนผลการค้นหา</string>
-    <string name="preference_hidden_items_summary">จัดการแอปและผลการค้นหาที่ถูกซ่อน</string>
-    <string name="preference_hidden_items_reveal_button_summary">แสดงปุ่มที่เปิดเผยผลการค้นหาที่ซ่อนไว้</string>
-    <string name="preference_screen_tags">แท็ก</string>
-    <string name="preference_screen_tags_summary">จัดการแท็ก และสิ่งที่ถูกแท็ก</string>
-    <string name="preference_wikipedia_customurl">ลิงก์วิกิพีเดีย</string>
-    <string name="preference_edit_favorites_summary">เปลี่ยนการเรียงของสิ่งที่ถูกปักหมุด</string>
-    <string name="preference_category_favorites_frequently_used">ใช้บ่อย</string>
-    <string name="preference_favorites_frequently_used_summary">แสดงสิ่งที่ถูกใช้บ่อยๆในรายการโปรด</string>
-    <string name="preference_edit_button">แก้ไขปุ่ม</string>
-    <string name="no_account_nextcloud">คุณยังไม่ได้เชื่อมต่อกับบัญชี Nextcloud</string>
-    <string name="connect_account">เชื่อมต่อบัญชี</string>
-    <string name="battery_part_charging">กำลังชาร์จ</string>
-    <plurals name="battery_part_remaining_charge_time">
-        <item quantity="other">ชาร์จเต็มในอีก %1$s นาที</item>
-    </plurals>
-    <string name="restore_meta">สร้างเมื่อ %1$s บนอุปกรณ์ %2$s ด้วยแอป %3$s</string>
-    <string name="restore_complete">กู้คืนข้อมูลสำรองสำเร็จ</string>
-    <string name="icon_picker_default_icon">ค่าเริ่มต้น</string>
-    <string name="icon_picker_suggestions">คำแนะนำ</string>
-    <string name="icon_picker_filter_all_packs">ชุดไอคอนทั้งหมด</string>
-    <string name="apps_profile_main">ส่วนตัว</string>
-    <string name="apps_profile_work">งาน</string>
-    <string name="favorites_empty_tag">ไม่มีสิ่งที่มีแท็กนี้</string>
-    <string name="frequently_used_rows">จำนวนแถว</string>
-    <string name="preference_screen_search_actions">ควิกแอ็กชั่น</string>
-    <string name="search_action_call">โทร</string>
-    <string name="search_action_message">ส่งข้อความ</string>
-    <string name="search_action_email">ส่งอีเมล</string>
-    <string name="search_action_websearch">ค้นหาบนเว็บ</string>
-    <string name="search_action_contact">เพิ่มผู้ติดต่อ</string>
-    <string name="search_action_open_url">เปิดเว็บไซต์</string>
-    <string name="create_search_action_type_web">ค้นหาบนเว็บไซต์</string>
-    <string name="create_search_action_type_app">ค้นหาในแอป</string>
-    <string name="create_search_action_website_url">ป้อนลิงก์ของเว็บไซต์:</string>
-    <string name="search_action_label">ชื่อ</string>
-    <string name="search_action_app">แอป</string>
-    <string name="more_information">ข้อมูลเพิ่มเติม</string>
-    <string name="experimental_feature">ฟีเจอร์ทดลองใช้</string>
-    <string name="tag_no_items_message">ไม่มีสิ่งใดใช้แท็กนี้ ถ้าคุณไปต่อ แท็กนี้จะถูกลบ</string>
-    <plurals name="tag_selected_items">
-        <item quantity="other">เลือกแล้ว %1$d อย่าง</item>
-    </plurals>
-    <string name="open_search_pull_down">ปัดลง</string>
-    <string name="open_search_swipe_left">ปัดซ้าย</string>
-    <string name="open_search_swipe_right">ปัดขวา</string>
-    <string name="preference_layout_search_bar_position">ตำแหน่งของแถบค้นหา</string>
-    <string name="search_bar_position_top">ด้านบน</string>
-    <string name="search_results_order_top_down">จากด้านบนไปด้านล่าง</string>
-    <string name="search_results_order_bottom_up">จากด้านล่างไปด้านบน</string>
-    <string name="preference_layout_fixed_search_bar">แถบค้นหาแบบอยู่กับที่</string>
-    <string name="preference_screen_gestures">ท่าทางการสัมผัส</string>
-    <string name="preference_screen_gestures_summary">ท่าทางการสัมผัสและการตอบสนอง</string>
-    <string name="preference_gesture_swipe_down">ปัดลง</string>
-    <string name="preference_gesture_swipe_left">ปัดซ้าย</string>
-    <string name="preference_gesture_double_tap">แตะสองครั้งติดกัน</string>
-    <string name="preference_gesture_home_button">ปุ่มหน้าแรก/ท่าทางการสัมผัส</string>
-    <string name="gesture_action_none">ไม่ต้องทำอะไร</string>
-    <string name="gesture_action_open_search">เปิดการค้นหา</string>
-    <string name="gesture_action_lock_screen">ปิดหน้าจอ</string>
-    <string name="gesture_action_power_menu">แสดงเมนูเปิดปิดเครื่อง</string>
-    <string name="gesture_action_recents">เปิดแอปที่เพิ่งถูกใช้</string>
-    <string name="preference_search_result_ordering_weight_factor_low">เปลี่ยนช้า</string>
-    <string name="preference_search_result_ordering_weight_factor_default">เปลี่ยนปานกลาง</string>
-    <string name="preference_search_result_ordering_weight_factor_high">เปลี่ยนเร็ว</string>
-    <string name="widget_config_appwidget_borderless">ไม่มีขอบ</string>
-    <string name="widget_config_appwidget_configure">ปรับแต่งวิดเจ็ต</string>
-    <string name="widget_config_music_integration_settings">การตั้งค่าการเชื่อมต่อกับวิดเจ็ตดนตรี</string>
-    <string name="note_widget_link_file">ลิงก์ไปยังไฟล์</string>
-    <string name="note_widget_linked_file_summary">ลิงก์ไปที่ไฟล์ %1$s แล้ว</string>
-    <string name="note_widget_action_unlink_file">เลิกลิงก์</string>
-    <string name="note_widget_conflict_action_resolve">แก้ปัญหา</string>
-    <string name="note_widget_conflict_keep_selected">ใช้สิ่งที่เลือก</string>
-    <string name="note_widget_conflict_local_version">เวอร์ชั่นล่าสุดที่ถูกบันทึกไว้:</string>
-    <string name="note_widget_conflict_file_version">เนื้อหาปัจจุบันของไฟล์:</string>
-    <string name="note_widget_file_read_error">ไม่สามารถอ่านโน้ตได้</string>
-    <string name="note_widget_file_write_error">ไม่สามารถบันทึกโน้ตได้</string>
-    <string name="theme_color_scheme_system_default">ใช้ค่าเริ่มต้นของระบบ</string>
-    <string name="theme_color_scheme_autogenerate">ใช้สีหลัก</string>
-    <string name="theme_color_scheme_palette_color">จานสี</string>
-    <string name="theme_color_scheme_custom_color">กำหนดเอง</string>
-    <string name="preference_restore_default">กู้คืนค่าเริ่มต้น</string>
-    <string name="preference_screen_icons">ลิ้นชักและไอคอน</string>
-    <string name="wind_south_east">ตะวันออกเฉียงใต้</string>
-    <string name="preference_icon_pack">ชุดไอคอน</string>
-    <string name="wind_south_south_east">ใต้ค่อนไปทางตะวันออก</string>
-    <string name="wind_south_west">ตะวันตกเฉียงใต้</string>
-    <string name="wind_west_north_west">ตะวันตกค่อนไปทางเหนือ</string>
-    <string name="wind_north_west">ตะวันตกเฉียงเหนือ</string>
-    <string name="preference_screen_icons_summary">ลิ้นชักแอป ขนาดไอคอน ชุดไอคอน ป้าย</string>
-    <string name="icon_picker_search_icon">ค้นหาในชุดไอคอน</string>
-    <string name="wikipedia_url">https://th.wikipedia.org</string>
-    <string name="websearch_dialog_replace_icon">แทนที่ไอคอน</string>
-    <string name="file_meta_title">เพลง: %1$s</string>
-    <string name="websearch_dialog_delete_icon">ลบไอคอน</string>
-    <string name="file_meta_duration">ระยะเวลา: %1$s</string>
-    <string name="preference_category_icons">ไอคอน</string>
-    <string name="file_meta_path">ตำแหน่งไฟล์: %1$s</string>
-    <string name="preference_icon_shape">รูปร่าง</string>
-    <string name="file_meta_dimensions">ความละเอียด: %1$s</string>
-    <string name="preference_icon_shape_platform">ค่าเริ่มต้นของระบบ</string>
-    <string name="file_meta_app_version">เวอร์ชั่น: %1$s</string>
-    <string name="preference_icon_shape_rounded_square">สีเหลี่ยมมุมมน</string>
-    <string name="file_meta_app_pkgname">ชื่อแพ็กเกจ: %1$s</string>
-    <string name="preference_icon_shape_pebble">ก้อนหิน</string>
-    <string name="file_meta_owner">เจ้าของ: %1$s</string>
-    <string name="preference_themed_icons">ปรับสีไอคอน</string>
-    <string name="file_meta_location">สถานที่: %1$s</string>
-    <string name="preference_themed_icons_summary">ปรับสีไอคอนให้เข้ากับโทนสีของแอป</string>
-    <string name="file_type_android">ไฟล์แพ็กเกจแอนดรอยด์</string>
-    <string name="preference_force_themed_icons">บังคับการปรับสีไอคอน</string>
-    <string name="file_type_source_code">ไฟล์โค้ดโปรแกรม</string>
-    <string name="preference_force_themed_icons_summary">ปรับสีไอคอนทั้งหมดให้เข้ากับโทนสีของแอป ถึงแม้ว่าตัวไอคอนจะไม่รองรับก็ตาม (ไม่แนะนำ)</string>
-    <string name="file_type_generic">ไฟล์ %1$s</string>
-    <string name="preference_nav_bar_icons">ไอคอนบนแถบนำทาง</string>
-    <string name="alert_delete_directory">โฟลเดอร์ %1$s และข้อมูลในโฟลเดอร์จะถูกลบอย่างถาวร ทำต่อหรือไม่\?</string>
-    <string name="preference_system_bar_icons_auto">อัตโนมัติ</string>
-    <string name="alert_delete_shortcut">ทางลัด %1$s จะถูกลบอย่างถาวร ทำต่อหรือไม่\?</string>
-    <string name="preference_enforce_icon_shape">บังคับรูปร่าง</string>
-    <string name="preference_enforce_icon_shape_summary">บังคับให้ไอคอนทั้งหมดใช้รูปร่างนี้ ถึงแม้ว่าตัวไอคอนจะไม่รองรับก็ตาม</string>
-    <string name="preference_grid_icon_size">ขนาดไอคอน</string>
-    <string name="preference_grid_labels_summary">แสดงชื่อแอปใต้ไอคอน</string>
-    <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
-    <string name="file_type_launcherbackup">ข้อมูลสำรอง %1$s</string>
-    <string name="default_websearch_3_name">Google Play</string>
-    <string name="preference_debug_cleanup_database_summary">ลบรายการที่เสียและไม่จำเป็นออกจากฐานข้อมูลของแอปหน้าแรก</string>
-    <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="preference_screen_backup_summary">ส่งออกและนำเข้าข้อมูลแอปหน้าแรก</string>
-    <string name="preference_backup_summary">ส่งออกการตั้งค่าและข้อมูลแอปหน้าแรก</string>
-    <string name="missing_permission_accessibility_gesture_failed">จำเป็นต้องเปิดใช้งานสิทธิ์การเข้าถึงของแอปหน้าแรกจึงจะสามารถดำเนินการนี้ได้</string>
-    <string name="websearch_dialog_query_encoding_url">เข้ารหัสแบบเปอร์เซ็นต์</string>
-    <string name="missing_permission_accessibility_gesture_settings">การดำเนินการนี้ต้องการสิทธิ์การเข้าถึงของแอปหน้าแรก</string>
-    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
-    <string name="menu_edit_widgets">แก้ไขวิดเจ็ต</string>
-    <string name="note_widget_file_read_error_description">ไม่สามารถอ่านไฟล์โน้ตต้นฉบับได้ เป็นไปได้ว่าอาจโดนย้ายหรือลบ ข้อมูลสำเนาถูกกู้คืนมาจากพื้นที่จัดเก็บภายในของแอปหน้าแรก ถ้าคุณแก้ไขโน้ต ไฟล์โน้ตต้นฉบับอาจโดนเขียนทับ</string>
-    <string name="note_widget_file_write_error_description">ไม่สามารถเขียนโน้ตไปยังไฟล์ต้นฉบับได้ เป็นไปได้ว่ามันอาจโดนย้ายหรือลบ ข้อมูลสำเนาถูกบันทึกไปที่พื้นที่จัดเก็บภายในของแอปหน้าแรก</string>
-    <string name="menu_share_store_link">ลิงก์ %1$s</string>
-    <string name="widget_add_widget">เพิ่มวิดเจ็ต</string>
-    <string name="menu_favorites_pin">ปักหมุดไปยังรายการโปรด</string>
-    <string name="notes_widget_action_save">บันทึก</string>
-    <string name="menu_app_info">ข้อมูลแอป</string>
-    <string name="notes_widget_export_filename">โน้ต_%1$s</string>
-    <string name="menu_open_file">เปิด</string>
-    <string name="menu_contacts_open_externally">เปิดในแอปรายชื่อผู้ติดต่อ</string>
-    <string name="search_bar_placeholder">ค้นหา</string>
-    <string name="settings">การตั้งค่า</string>
-    <string name="wind_north">เหนือ</string>
-    <string name="wind_north_north_east">เหนือค่อนไปทางตะวันออก</string>
-    <string name="disclaimer_currency_converter">ธนาคารกลางยุโรปทำการประกาศอัตราแรกเปลี่ยนวันละครั้ง ข้อมูลทั้งหมดนี้มีให้ \"ตามสภาพ\" โดยไม่มีการรับประกันใดๆ จะไม่มีความรับผิดชอบใดๆต่อความเสียหายจากข้อมูลเหล่านี้
-\n
-\nอัพเดตครั้งล่าสุด: %1$s</string>
-    <string name="edit_favorites_dialog_unpinned">ไม่ได้ปักหมุด - ถูกใช้บ่อย</string>
-    <string name="calendar_widget_pinned_events">ที่จะถึง</string>
-    <string name="edit_favorites_dialog_pinned_unsorted">ปัดหมุด - เรียงโดยอัตโนมัติ</string>
-    <string name="calendar_widget_next_events">กิจกรรมต่อไป</string>
-    <string name="preference_category_links">ลิงก์</string>
-    <string name="edit_favorites_dialog_tag_section_empty">แท็กที่ถูกปักหมุดจะถูกแสดงที่นี่</string>
-    <string name="calendar_widget_no_events">วันนี้ไม่มีกิจกรรมใดๆ</string>
-    <string name="preference_category_licenses">ใบอนุญาตโอเพ่นซอร์ส</string>
-    <string name="nextcloud_server_url">ลิงก์เซิร์ฟเวอร์ Nextcloud</string>
-    <plurals name="calendar_widget_running_events">
-        <item quantity="other">+อีก %1$d กิจกรรมที่ยังไม่สิ้นสุดจากวันก่อนๆ</item>
-    </plurals>
-    <string name="preference_screen_about_summary">ข้อมูลแอปและใบอนุญาต</string>
-    <string name="calendar_event_allday">ทั้งวัน</string>
-    <string name="provider_openweathermap">OpenWeatherMap</string>
-    <string name="owncloud_server_invalid_url">ลิงก์นี้ไม่ได้ชี้ไปที่เซิร์ฟเวอร์ Owncloud ที่ถูกต้อง</string>
-    <string name="music_widget_default_title">%1$s กำลังเล่นสื่อ</string>
-    <string name="preference_automatic_location_summary">ใช้ GPS และบริการเข้าถึงตำแหน่งเพื่อกำหนดตำแหน่งอัตโนมัติ</string>
-    <string name="owncloud_password">รหัสผ่าน</string>
-    <string name="weather_condition_sleetshowers">ฝนน้ำแข็งตกบางแห่ง</string>
-    <string name="preference_imperial_units_summary">ใช้องศาฟาเรนไฮต์และไมล์ต่อชั่วโมง</string>
-    <string name="owncloud_login_2fa_hint">ถ้าคุณได้เปิดใช้งานการยืนยันตัวตนโดยใช้หลายปัจจัย คุณต้องใส่รหัสผ่านแอปที่นี่</string>
-    <string name="weather_condition_heavysleet">ฝนน้ำแข็งตกหนัก</string>
-    <string name="widget_config_weather_compact">โหมดกะทัดรัด</string>
-    <string name="weather_condition_heavyrain">ฝนตกหนัก</string>
-    <string name="login_flow_login">ลงชื่อเข้าใช้</string>
-    <string name="preference_debug_dump_heap">สแนปช็อตเมมโมรี่</string>
-    <string name="weather_condition_lightrainshowers">ฝนตกเล็กน้อยบางแห่ง</string>
-    <string name="preference_debug_dump_heap_summary">จับสแนปช็อตเพื่อวิเคราะห์การใช้งานเมมโมรี่ แอปจะค้างจนกว่ากระบวนการนี้จะสิ้นสุด</string>
-    <string name="weather_condition_heavysleetshowersandthunder">ฝนน้ำแข็งตกหนักบางแห่งและมีท้องฟ้าคำราม</string>
-    <string name="preference_cards_summary">ปรับแต่งลักษณะการ์ด</string>
-    <string name="weather_condition_heavysleetshowers">ฝนน้ำแข็งตกหนักบางแห่ง</string>
-    <string name="preference_category_searchbar">แถบค้นหา</string>
-    <string name="weather_condition_cloudy">ท้องฟ้ามีเมฆปกคลุม</string>
-    <string name="preference_category_animations">ภาพเคลื่อนไหว</string>
-    <string name="weather_condition_lightrainandthunder">ฝนตกเล็กน้อยและมีท้องฟ้าคำราม</string>
-    <string name="preference_screen_integrations_summary">จัดการบัญชีและบริการที่เชื่อมต่อ</string>
-    <string name="weather_condition_heavysnowshowers">หิมะตกหนักบางแห่ง</string>
-    <string name="preference_dim_wallpaper">ปรับภาพพื้นหลังให้มืดลง</string>
-    <string name="weather_condition_heavyrainshowers">ฝนตกหนักบางแห่ง</string>
-    <string name="preference_dim_wallpaper_summary">ปรับภาพพื้นหลังให้มืดลงเมื่อใช้ธีมมืด</string>
-    <string name="weather_condition_sleetandthunder">ฝนน้ำแข็งตกและมีท้องฟ้าคำราม</string>
-    <string name="preference_notification_badges">ป้ายการแจ้งเตือน</string>
-    <string name="weather_condition_lightssnowshowersandthunder">หิมะตกเล็กน้อยบางแห่งและมีท้องฟ้าคำราม</string>
-    <string name="preference_notification_badges_summary">แสดงป้ายบนไอคอนของแอปที่มีการแจ้งเตือนที่ยังไม่ได้อ่าน</string>
-    <string name="weather_condition_lightrainshowersandthunder">ฝนตกเล็กน้อยบางแห่งและมีท้องฟ้าคำราม</string>
-    <string name="preference_shortcut_badges">ป้ายทางลัด</string>
-    <string name="weather_condition_lightsnowandthunder">หิมะตกเล็กน้อยบางแห่งและมีท้องฟ้าคำราม</string>
-    <string name="preference_shortcut_badges_summary">แสดงป้ายบนไอคอนของทางลัดให้เห็นว่ามาจากแอปใด</string>
-    <string name="weather_condition_lightssleetshowersandthunder">ฝนน้ำแข็งตกเล็กน้อยบางแห่งและมีท้องฟ้าคำราม</string>
-    <string name="weather_condition_rainshowersandthunder">ฝนตกบางแห่งและมีท้องฟ้าคำราม</string>
-    <string name="preference_owncloud_signin">ลงชื่อเข้าใช้ Owncloud</string>
-    <string name="weather_condition_sleetshowersandthunder">ฝนน้ำแข็งตกบางแห่งและมีท้องฟ้าคำราม</string>
-    <string name="preference_owncloud_signin_summary">ลงชื่อเข้าใช้เพื่อค้นหาบนเซิร์ฟเวอร์ Owncloud</string>
-    <string name="weather_condition_lightsleet">ฝนน้ำแข็งตกเล็กน้อย</string>
-    <string name="weather_condition_heavysleetandthunder">ฝนน้ำแข็งตกหนักและมีท้องฟ้าคำราม</string>
-    <string name="preference_screen_weatherwidget">สภาพอากาศ</string>
-    <string name="weather_condition_lightsleetandthunder">ฝนน้ำแข็งตกเล็กน้อยและมีท้องฟ้าคำราม</string>
-    <string name="preference_screen_clockwidget_summary">ปรับแต่งรูปแบบนาฬิกาและส่วนประกอบ</string>
-    <string name="weather_condition_snowshowersandthunder">หิมะตกบางแห่งและมีท้องฟ้าคำราม</string>
-    <string name="preference_clockwidget_layout_vertical">ค่าเริ่มต้น</string>
-    <string name="preference_clockwidget_favorites_part_summary">แสดงแถวแรกของรายการที่ปักหมุดไว้</string>
-    <string name="weather_no_data">ไม่มีข้อมูลสภาพอากาศ</string>
-    <string name="preference_clockwidget_battery_part_summary">แสดงระดับแบตเตอรี่ปัจจุบันเมื่อแบตเตอรี่เหลือน้อยหรือกำลังถูกชาร์จอยู่</string>
-    <string name="weather_widget_set_location">กำหนดตำแหน่ง</string>
-    <string name="preference_restore">กู้คืนข้อมูล</string>
-    <string name="missing_permission_auto_location">คุณต้องอนุญาตให้แอปเข้าถึงตำแหน่งเพื่อการกำหนดตำแหน่งแบบอัตโนมัติ</string>
-    <string name="preference_crash_reporter">ตัวรายงานแอปล่ม</string>
-    <string name="missing_permission_contact_search_settings">คุณต้องอนุญาตให้แอปเข้าถึงรายชื่อผู้ติดต่อเพื่อค้นหาผู้ติดต่อ</string>
-    <string name="preference_logs_summary">ดูและส่งออกไฟล์เก็บข้อมูลกิจกรรมแอป</string>
-    <string name="missing_permission_calendar_search_settings">คุณต้องอนุญาตให้แอปเข้าถึงปฏิทินเพื่อค้นหาปฏิทิน</string>
-    <string name="missing_permission_appshortcuts_search_settings">คุณต้องกำหนดให้แอป %1$s เป็นตัวใช้งานเริ่มต้นจึงจะค้นหาทางลัดแอปได้</string>
-    <string name="preference_search_favorites_summary">แสดงสิ่งที่ถูกปักหมุดและสิ่งที่ถูกใช้งานบ่อยข้างบนลิ้นชักแอป</string>
-    <string name="preference_widgets_edit_button_summary">แสดงปุ่มสำหรับการเพิ่ม ลบ และจัดเรียงวิดเจ็ต</string>
-    <string name="missing_permission_file_search_settings">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลภายนอกเพื่อค้นหาไฟล์</string>
-    <string name="preference_search_files_summary">ค้นหาไฟล์บนเครื่องและบนคลาวด์</string>
-    <string name="preference_favorites_edit_button_summary">แสดงปุ่มจัดเรียงรายการโปรด</string>
-    <string name="missing_permission_file_search_settings_android10">คุณต้องอนุญาตให้แอปจัดการไฟล์ทั้งหมดเพื่อค้นหาไฟล์</string>
-    <string name="preference_search_contacts">รายชื่อผู้ติดต่อ</string>
-    <string name="preference_screen_homescreen">หน้าจอหลัก</string>
-    <string name="missing_permission_notification_badges">คุณต้องอนุญาตให้แอปเข้าถึงการแจ้งเตือนเพื่อการแสดงป้ายการแจ้งเตือน</string>
-    <string name="preference_search_contacts_summary">ค้นหารายชื่อผู้ติดต่อบนอุปกรณ์นี้</string>
-    <string name="preference_screen_homescreen_summary">นาฬิกา แถบค้นหา ภาพพื้นหลัง แถบระบบ</string>
-    <string name="missing_permission_calendar_search">คุณต้องอนุญาตให้แอปเข้าถึงปฏิทินเพื่อค้นหาในปฏิทินของคุณ</string>
-    <string name="preference_search_calendar_summary">ค้นหานัดหมายและกิจกรรมที่กำลังมาถึง</string>
-    <string name="preference_weather_integration">สภาพอากาศ</string>
-    <string name="missing_permission_files_search">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลเพื่อค้นหารูปภาพ สื่อและเอกสารบนอุปกรณ์นี้</string>
-    <string name="preference_search_calculator_summary">คำนวณและดำเนินการทางคณิตศาสตร์</string>
-    <string name="missing_permission_appshortcuts_create">กำหนดให้แอป %1$s เป็นตัวใช้งานเริ่มต้นเพื่อสร้างทางลัด</string>
-    <string name="preference_search_currencyconverter_summary">ดาวน์โหลดอัตราแรกเปลี่ยนเพื่อแปลงสกุลเงินเป็นระยะๆ</string>
-    <string name="preference_search_websites_summary">แสดงตัวอย่างของเว็บไซต์ถ้าคำค้นหาเป็นลิงก์</string>
-    <string name="preference_media_integration">ตัวควบคุมสื่อ</string>
-    <string name="preference_theme">ธีม</string>
-    <string name="preference_search_localfiles_summary">ค้นหาเอกสาร รูปภาพและไฟล์อื่นๆที่เก็บบนอุปกรณ์นี้</string>
-    <string name="preference_theme_light">สว่าง</string>
-    <string name="no_account_owncloud">คุณยังไม่ได้เชื่อมต่อกับบัญชี Owncloud</string>
-    <string name="preference_colors_bw">ขาว-ดำ</string>
-    <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="backup_complete">การสำรองข้อมูลเสร็จสิ้น</string>
-    <string name="preference_screen_buildinfo_summary">ข้อมูลเพิ่มเติมเกี่ยวกับบิลด์นี้ของแอป</string>
-    <string name="restore_invalid_file">ไฟล์ที่ถูกเลือกไม่ใช่ไฟล์ข้อมูลสำรอง คุณแน่ใจหรือไม่ว่าคุณเลือกถูกไฟล์\?</string>
-    <string name="preference_search_bar_style_summary">ปรับแต่งลักษณะแถบค้นหา</string>
-    <string name="restore_incompatible_file">ข้อมูลสำรองนี้ถูกสร้างโดย %1$s คนละเวอร์ชั่น จึงไม่สามารถกู้คืนด้วยเวอร์ชั่นปัจจุบันได้</string>
-    <string name="preference_search_bar_auto_focus_summary">แสดงคีย์บอร์ดอัตโนมัติเมื่อเปิดลิ้นชักรวมแอป</string>
-    <string name="restore_different_minor_version">ข้อมูลสำรองนี้ถูกสร้างโดย %1$s คนละเวอร์ชั่น ข้อมูลบางส่วนอาจไม่ถูกกู้คืนอย่างถูกต้อง</string>
-    <string name="preference_search_bar_launch_on_enter_summary">เปิดสิ่งที่ถูกไฮไลต์หรือควิกแอ็กชั่นเมื่อแตะ \"ไป\"</string>
-    <string name="favorites">รายการโปรด</string>
-    <string name="preference_hidden_items_reveal_button">แสดงปุ่มเลิกซ่อน</string>
-    <string name="favorites_empty">สิ่งที่ถูกปักหมุดไว้และสิ่งที่ถูกใช้บ่อยจะถูกแสดงที่นี่</string>
-    <string name="frequently_used_show_in_favorites">แสดงในรายการโปรด</string>
-    <string name="preference_search_search_actions_summary">ปรับแต่งควิกแอ็กชั่น</string>
-    <string name="search_action_alarm">ตั้งปลุก</string>
-    <string name="search_action_timer">เริ่มจับเวลา</string>
-    <string name="search_action_event">เขียนกำหนดการกิจกรรม</string>
-    <string name="create_search_action_type">คุณอยากสร้างแอ็กชั่นแบบไหน\?</string>
-    <string name="create_search_action_type_intent">Intent แบบกำหนดเอง</string>
-    <string name="create_search_action_pick_app">เลือกแอปที่จะค้นหา:</string>
-    <string name="create_search_action_website_invalid_url">ไม่สามารถใช้เว็บไซต์ที่ระบุเป็นเครื่องค้นหาบนเว็บแบบอัตโนมัติได้ คุณสามารถลองเว็บไซต์อื่นๆหรือป้อนข้อมูลที่จำเป็นด้วยตัวคุณเองในขั้นตอนต่อไป</string>
-    <string name="search_action_websearch_url">แม่แบบลิงก์</string>
-    <string name="search_action_websearch_url_hint">แม่แบบลิงก์ที่จะนำไปใช้สร้างลิงก์ค้นหาผ่านเว็บ ใช้ ‘${1}’ เป็นตัวยึดตำแหน่งสำหรับคำค้นหาจริง เช่น https://google.com/search\?q=${1}</string>
-    <string name="tag_exists_error">มีแท็กชื่อนี้อยู่แล้ว</string>
-    <string name="tag_exists_message">มีแท็กชื่อนี้อยู่แล้ว ถ้าคุณไปต่อ ทั้งสองแท็กจะถูกนำมารวมกัน</string>
-    <string name="tag_select_items">สิ่งที่ถูกเลือก:</string>
-    <string name="tag_name">ชื่อแท็ก</string>
-    <string name="preference_layout_open_search">ค้นหา / ลิ้นชักรวมแอป</string>
-    <string name="search_bar_position_bottom">ด้านล่าง</string>
-    <string name="preference_layout_search_results">การจัดเรียงของผลการค้นหา</string>
-    <string name="preference_layout_fixed_search_bar_summary">ไม่เลื่อนแถบค้นหาออกไปจากหน้าจอ</string>
-    <string name="preference_layout_fixed_rotation">ไม่หมุนหน้าจอ</string>
-    <string name="preference_layout_fixed_rotation_summary">ล็อกการหมุนหน้าจอให้เป็นแบบแนวตั้ง</string>
-    <string name="preference_gesture_swipe_right">ปัดขวา</string>
-    <string name="preference_gesture_long_press">แตะค้าง</string>
-    <string name="gesture_action_launch_app">เปิดแอป</string>
-    <string name="gesture_action_notifications">เปิดแผงการแจ้งเตือน</string>
-    <string name="gesture_action_quick_settings">เปิดการตั้งค่าลัด</string>
-    <string name="gesture_failed_message">คุณได้ทำท่าทางการสัมผัสแบบ \"%1$s\" ซึ่งถูกกำหนดไว้ว่าให้ทำ \"%2$s\" แต่ไม่สามารถดำเนินการได้เพราะเหตุผลต่อไปนี้:</string>
-    <string name="preference_search_result_ordering_weight_factor">ความเร็วในการเปลี่ยนแปลงลำดับ</string>
-    <string name="widget_config_appwidget_background">การ์ดพื้นหลัง</string>
-    <string name="widget_config_weather_integration_settings">การตั้งค่าการเชื่อมต่อกับวิดเจ็ตสภาพอากาศ</string>
-    <string name="widget_config_calendar_no_calendars">ไม่มีปฏิทิน</string>
-    <string name="app_widget_loading_failed">ไม่สามารถโหลดวิดเจ็ตของแอปได้</string>
-    <string name="note_widget_link_file_summary">ทำให้เนื้อหาของวิดเจ็ตนี้ตรงกับไฟล์</string>
-    <string name="note_widget_action_relink_file">ลิงก์ใหม่</string>
-    <string name="note_widget_conflict">มีความขัดแย้งของข้อมูล</string>
-    <string name="note_widget_conflict_description">ไฟล์ที่ถูกลิงก์มีข้อมูลอยู่แต่เนื้อหาของไฟล์ไม่ตรงกับเวอร์ชั่นล่าสุดที่ถูกบันทึกในโน้ตนี้ คุณต้องการเก็บเวอร์ชั่นใดไว้\?</string>
-    <string name="confirmation_delete_color_scheme">คุณต้องการลบชุดสี %1$s ใช่หรือไม่?</string>
-    <string name="file_type_launchertheme">ธีม %1$s</string>
-    <string name="import_theme_error">ไม่สามารถอ่านไฟล์ที่เลือกไว้ได้ กรุณาตรวจสอบว่าคุณได้เลือกไฟล์ธีมที่ถูกต้อง (*.kvtheme) และข้อมูลไฟล์ไม่เสียหาย</string>
-    <string name="preference_blur_wallpaper_radius">ความมัว</string>
-    <string name="action_import">นำเข้า</string>
-    <string name="import_theme_apply">นำธีมไปใช้</string>
-    <string name="preference_clock_widget_alignment_center">กึ่งกลาง</string>
-    <string name="preference_clock_widget_alignment_top">ด้านบน</string>
-    <string name="shortcut_label_unavailable">เข้าถึงไม่ได้</string>
-    <string name="preference_clock_widget_alignment">การจัดตำแหน่ง</string>
-    <string name="preference_clock_widget_alignment_bottom">ด้านล่าง</string>
-    <string name="shortcut_unavailable_description">ไม่สามารถเข้าถึงทางลัดนี้ได้ เนื่องจาก %1$s ไม่ได้ถูกตั้งเป็นแอปหน้าแรกริ่มต้น</string>
-    <string name="preference_clockwidget_dynamic_zone">ส่วนไดนามิก</string>
-    <string name="preference_screen_plugins">ปลั๊กอิน</string>
-    <string name="preference_screen_plugins_summary">จัดการส่วนเสริมที่ติดตั้งไว้</string>
-    <string name="no_plugins_installed">ยังไม่ได้ติดตั้งปลั๊กอินใด</string>
-    <string name="preference_mdy_color_source">ที่มาของสีไดนามิก</string>
-    <string name="preference_mdy_color_source_wallpaper">ภาพพื้นหลัง</string>
-    <string name="preference_mdy_color_source_system">ระบบ</string>
-    <string name="plugin_state_error">ปลั๊กอินนี้ทำงานไม่ถูกต้อง</string>
-    <string name="plugin_weather_provider_enabled">ตั้งเป็นผู้ให้บริการสภาพอากาศอยู่</string>
-    <string name="preference_plugin_enable">เปิดใช้งานปลั๊กอิน</string>
-    <string name="widget_pick_widget">เลือกวิดเจ็ต</string>
-    <string name="length_unit">หน่วยวัดความยาว</string>
-    <string name="imperial">หน่วยวัดแบบอังกฤษ</string>
-    <string name="preference_search_location_custom_overpass_url">ลิงก์ Overpass</string>
-    <string name="preference_search_locations_hide_uncategorized">ซ่อนสถานที่ที่ไม่มีหมวดหมู่</string>
-    <string name="preference_search_locations_hide_uncategorized_summary">แสดงเฉพาะสถานที่ที่มีหมวดหมู่ชัดเจน เช่น ร้านกาแฟ หรือ ร้านอาหาร</string>
-    <string name="preference_search_locations_show_map_summary">แสดงตัวอย่างแผนที่สำหรับสถานที่ต่างๆ</string>
-    <string name="menu_dial">โทรศัพท์</string>
-    <string name="widget_use_theme_colors">ใช้สีตามธีม</string>
-    <string name="poi_category_clothes">ร้านขายเสื้อผ้า</string>
-    <string name="poi_category_convenience">ร้านสะดวกซื้อ</string>
-    <string name="poi_category_hairdresser">ร้านทำผม</string>
-    <string name="poi_category_books">ร้านหนังสือ</string>
-    <string name="poi_category_bakery">ร้านขนมปัง</string>
-    <string name="poi_category_florist">ร้านขายดอกไม้</string>
-    <string name="poi_category_furniture">ร้านขายเฟอร์นิเจอร์</string>
-    <string name="poi_category_alcohol">ร้านสุรา</string>
-    <string name="poi_category_mobile_phone">ร้านโทรศัพท์มือถือ</string>
-    <string name="poi_category_mall">ห้างสรรพสินค้า</string>
-    <string name="poi_category_optician">คลินิกจักษุแพทย์</string>
-    <string name="poi_category_jewelry">ร้านอัญมณี</string>
-    <string name="poi_category_laundry">ร้านซักรีด</string>
-    <string name="poi_category_soccer">สนามฟุตบอล</string>
-    <string name="poi_category_bank">ธนาคาร</string>
-    <string name="widget_config_appwidget_resize">ปรับขนาด</string>
-    <string name="menu_website">เข้าเว็บไซต์</string>
-    <string name="location_closed">ปิดแล้ว</string>
-    <string name="menu_map">ดูในแผนที่</string>
-    <string name="preference_search_locations_theme_map">ปรับสีของแผนที่</string>
-    <string name="preference_category_advanced">ขั้นสูง</string>
-    <string name="location_open">เปิดอยู่</string>
-    <string name="preference_location_managed_summary">ตำแหน่งของผู้ให้บริการนี้ถูกควบคุมโดยปลั๊กอิน</string>
-    <string name="preference_search_locations_radius">ขอบเขตการค้นหา</string>
-    <string name="preference_search_locations_summary">ค้นหาร้านค้าและสถานที่อื่นๆในพื้นที่ใกล้เคียง</string>
-    <string name="preference_search_locations_show_map">แผนที่</string>
-    <string name="preference_search_locations_theme_map_summary">ปรับสีของแผนที่ตามโทนสีของแอปหน้าแรก</string>
-    <string name="plugin_state_setup_required">คุณต้องตั้งค่าปลั๊กอินนี้ก่อน</string>
-    <string name="weather_condition_thunderstorm">พายุฝนฟ้าคะนอง</string>
-    <string name="preference_search_locations">สถานที่</string>
-    <string name="location_open_24_7">เปิด 24 ชั่วโมง</string>
-    <string name="missing_permission_location_search">คุณต้องอนุญาตให้แอปเข้าถึงตำแหน่งเพื่อค้นหาสถานที่ใกล้เคียง</string>
-    <string name="metric">หน่วยวัดแบบเมตริก</string>
-    <string name="plugin_action_setup">ตั้งค่า</string>
-    <string name="plugin_type_filesearch">ไฟล์</string>
-    <string name="plugin_type_weather">ผู้ให้บริการสภาพอากาศ</string>
-    <string name="plugin_weather_provider_enable">ตั้งเป็นผู้ให้บริการสภาพอากาศ</string>
-    <string name="search_action_share">แชร์</string>
-    <string name="preference_clock_widget_show_seconds">แสดงวินาที</string>
-    <string name="location_closes">ปิดเวลา %1$s</string>
-    <string name="location_closes_other_day">ปิด %1$s เวลา %2$s</string>
-    <string name="location_opens">เปิดเวลา %1$s</string>
-    <string name="location_opens_other_day">เปิด %1$s เวลา %2$s</string>
-    <string name="preference_location_managed">จัดการโดยปลั๊กอิน</string>
-    <string name="preference_plugin_badges">ป้ายปลั๊กอิน</string>
-    <string name="preference_plugin_badges_summary">แสดงป้ายบนผลการค้นหาให้เห็นว่ามาจากปลั๊กอินใด</string>
-    <string name="preference_search_location_custom_tile_server_url">ลิงก์ Tileserver</string>
-    <string name="menu_navigation">การนำทาง</string>
-    <string name="menu_bugreport">รายงานปัญหา</string>
-    <plurals name="calendar_search_enabled_lists">
-        <item quantity="other">เลือกแล้ว %1$s รายการ</item>
-    </plurals>
-    <string name="action_done">เรียบร้อยแล้ว</string>
-    <string name="action_more_actions">เมนูเพิ่มเติม</string>
-    <string name="action_clear">ล้าง</string>
-    <string name="preference_calendar_hide_completed">ซ่อนงานที่ทำเสร็จแล้ว</string>
-    <string name="clock_style_digital1">ตัวหนา</string>
-    <string name="clock_style_binary">เลขฐานสอง</string>
-    <string name="preference_default_filter_summary">ตั้งค่าตัวกรองเริ่มต้นสำหรับการค้นหา</string>
-    <string name="filter_settings_network_warning">คุณได้เปิดใช้งานผลการค้นหาออนไลน์ในตัวกรองปัจจุบันซึ่งไม่แนะนำให้ใช้ด้วยเหตุผลด้านความเป็นส่วนตัว เนื่องจากคำค้นหาของคุณอาจถูกส่งไปยังบริการค้นหาภายนอก</string>
-    <string name="calendar_widget_open_calendar">เปิดแอปปฏิทิน</string>
-    <plurals name="contact_postal_addresses">
-        <item quantity="other">ที่อยู่ไปรษณีย์ %1$s ที่</item>
-    </plurals>
-    <string name="hint_drag_and_drop_reorder">แตะค้างไว้และลากเพื่อจัดเรียงสิ่งต่างๆ</string>
-    <string name="clock_style_digital2">เรียบง่าย</string>
-    <string name="clock_style_empty">ไม่แสดงนาฬิกา</string>
-    <string name="clock_style_custom">วิดเจ็ตแบบกำหนดเอง</string>
-    <string name="menu_show_filters">แสดงตัวกรอง</string>
-    <string name="menu_hide_filters">ซ่อนตัวกรอง</string>
-    <string name="preference_search_osm_locations_summary">ค้นหาร้านค้าและสถานที่อื่นๆในพื้นที่ใกล้เคียงบน OpenStreetMap</string>
-    <string name="poi_category_hospital">โรงพยาบาล</string>
-    <string name="poi_category_theater">โรงละคร</string>
-    <string name="poi_category_tennis">สนามเทนนิส</string>
-    <string name="poi_category_burger_restaurant">ร้านเบอร์เกอร์</string>
-    <string name="poi_category_pizza_restaurant">ร้านพิซซา</string>
-    <string name="poi_category_place_of_worship">ศาสนสถาน</string>
-    <string name="poi_category_car_rental">บริการรถเช่า</string>
-    <string name="poi_category_car_sharing">บริการแชร์รถ</string>
-    <string name="poi_category_motorcycle_rental">บริการจักรยานยนต์เช่า</string>
-    <string name="poi_category_gallery">หอศิลป์</string>
-    <string name="poi_category_amusement_park">สวนสนุก</string>
-    <string name="poi_category_discount_store">ร้านขายของลดราคา</string>
-    <string name="poi_category_pet">ร้านขายผลิตภัณฑ์สัตว์เลี้ยง</string>
-    <string name="poi_category_shopping">ร้านขายของ</string>
-    <string name="poi_category_handball">สนามแฮนด์บอล</string>
-    <string name="poi_category_fire_station">สถานีดับเพลิง</string>
-    <string name="poi_category_restaurant">ร้านอาหาร</string>
-    <string name="poi_category_bar">บาร์</string>
-    <string name="poi_category_fast_food">ฟาสต์ฟู้ด</string>
-    <string name="poi_category_cafe">คาเฟ่</string>
-    <string name="poi_category_hotel">โรงแรม</string>
-    <string name="poi_category_parking">ลานจอดรถ</string>
-    <string name="poi_category_fuel">ปั๊มน้ำมัน</string>
-    <string name="poi_category_toilets">ห้องน้ำ</string>
-    <string name="poi_category_pharmacy">ร้านขายยา</string>
-    <string name="poi_category_post_office">ที่ทำการไปรษณีย์</string>
-    <string name="poi_category_pub">พับ</string>
-    <string name="poi_category_doctors">ห้องตรวจแพทย์</string>
-    <string name="poi_category_nightclub">ไนต์คลับ</string>
-    <string name="poi_category_cinema">โรงภาพยนตร์</string>
-    <string name="poi_category_clinic">คลินิก</string>
-    <string name="calendar_widget_previous_day">วันก่อนหน้า</string>
-    <string name="poi_category_basketball">สนามบาสเกตบอล</string>
-    <string name="poi_category_kiosk">แผงลอย</string>
-    <string name="poi_category_atm">ตู้ ATM</string>
-    <string name="poi_category_museum">พิพิธภัณฑ์</string>
-    <string name="preference_search_supportedunits">หน่วยที่รองรับ</string>
-    <string name="search_filter_apps">แอป</string>
-    <string name="preference_filter_bar">แสดงแผงตัวกรอง</string>
-    <string name="poi_category_church">โบสถ์คริสต์</string>
-    <string name="poi_category_fitness_center">ฟิตเนส</string>
-    <string name="poi_category_mosque">มัสยิด</string>
-    <string name="poi_category_buddhist_temple">วัด</string>
-    <string name="poi_category_hindu_temple">โบสถ์พราหมณ์</string>
-    <string name="poi_category_synagogue">โบสถ์ยิว</string>
-    <string name="poi_category_chinese_restaurant">ร้านอาหารจีน</string>
-    <string name="poi_category_ice_hockey">สนามฮอกกี้น้ำแข็ง</string>
-    <string name="poi_category_baseball">สนามเบสบอล</string>
-    <string name="poi_category_american_football">สนามรักบี้</string>
-    <string name="poi_category_volleyball">สนามวอลเลย์บอล</string>
-    <string name="poi_category_gymnastics">สนามยิมนาสติก</string>
-    <string name="poi_category_courthouse">ศาล</string>
-    <string name="customize_item_tags">แท็ก</string>
-    <string name="item_visibility_app_default">ลิ้นชักรวมแอปและผลการค้นหา</string>
-    <string name="item_visibility_calendar_default">วิดเจ็ตปฏิทินและผลการค้นหา</string>
-    <string name="customize_item_label">ป้าย</string>
-    <string name="customize_item_visibility">แสดงใน</string>
-    <plurals name="app_info_notifications">
-        <item quantity="other">การแจ้งเตือน %1$s รายการ</item>
-    </plurals>
-    <string name="weather_widget_no_provider">ยังไม่ได้เลือกผู้ให้บริการสภาพอากาศ หรือไม่สามารถติดต่อผู้ให้บริการที่เลือกไว้ได้</string>
-    <string name="music_widget_previous_track">เพลงก่อนหน้า</string>
-    <string name="search_filter_tools">เครื่องมือ</string>
-    <string name="search_filter_online">ผลการค้นหาออนไลน์</string>
-    <string name="preference_signout">ออกจากระบบ</string>
-    <string name="unavailable_searchable">ไม่มีสิ่งนี้อยู่แล้ว</string>
-    <string name="preference_default_filter">ตัวกรองเริ่มต้น</string>
-    <string name="preference_customize_filter_bar_summary">ตั้งค่าสิ่งที่แสดงในแผงตัวกรอง</string>
-    <string name="preference_customize_filter_bar">ปรับแต่งแผงตัวกรอง</string>
-    <string name="plugin_type_locationsearch">ค้นหาสถานที่</string>
-    <string name="plugin_type_calendar">ปฏิทิน</string>
-    <string name="profile_work_profile_state_locked">แอปในโปรไฟล์งานถูกพักอยู่</string>
-    <string name="profile_work_profile_action_unlock">เลิกพัก</string>
-    <string name="profile_work_profile_action_lock">พักแอปในโปรไฟล์งาน</string>
-    <string name="profile_private_profile_state_locked">Private space ถูกล็อกอยู่</string>
-    <string name="profile_private_profile_action_unlock">ปลดล็อก</string>
-    <string name="profile_private_profile_action_lock">ล็อก private space</string>
-    <string name="task_due_time">ครบกำหนดเวลา %1$s</string>
-    <string name="task_due_date">ครบกำหนดวันที่ %1$s</string>
-    <string name="task_due_today">ครบกำหนดวันนี้</string>
-    <string name="apps_profile_private">ส่วนตัว</string>
-    <string name="app_label_locked_profile">ล็อกอยู่</string>
-    <string name="clock_style_analog">นาฬิกาเข็ม</string>
-    <string name="poi_category_school">โรงเรียน</string>
-    <string name="poi_category_police">สถานีตำรวจ</string>
-    <string name="poi_category_dentist">คลินิกทันตกรรม</string>
-    <string name="poi_category_library">ห้องสมุด</string>
-    <string name="contact_info_home">บ้าน</string>
-    <string name="contact_info_mobile">มือถือ</string>
-    <string name="contact_info_work">ที่ทำงาน</string>
-    <plurals name="contact_phone_numbers">
-        <item quantity="other">หมายเลขโทรศัพท์ %1$s หมายเลข</item>
-    </plurals>
-    <plurals name="contact_email_addresses">
-        <item quantity="other">ที่อยู่อีเมล %1$s ที่</item>
-    </plurals>
-    <string name="clock_style_orbit">วงโคจร</string>
-    <string name="clock_style_segment">7-segment</string>
-    <string name="clock_variant_outlined">ใช้เส้นรอบนอก</string>
-    <string name="preference_filter_bar_summary">แสดงตัวกรองลัดด้านบนแป้นพิมพ์</string>
-    <string name="preference_search_osm_locations">OpenStreetMap</string>
-    <string name="poi_category_supermarket">ห้างสรรพสินค้า</string>
-    <string name="poi_category_ice_cream">ร้านไอศกรีม</string>
-    <string name="poi_category_university">มหาวิทยาลัย</string>
-    <string name="poi_category_japanese_restaurant">ร้านอาหารญี่ปุ่น</string>
-    <string name="poi_category_kebab_restaurant">ร้านเคบับ</string>
-    <string name="poi_category_asian_restaurant">ร้านอาหารเอเชีย</string>
-    <string name="poi_category_ramen_restaurant">ร้านราเม็ง</string>
-    <string name="poi_category_soup_restaurant">ร้านซุป</string>
-    <string name="poi_category_brunch_restaurant">ร้านบรันช์</string>
-    <string name="poi_category_car_wash">ร้านล้างรถ</string>
-    <string name="poi_category_charging_station">สถานีชาร์จรถไฟฟ้า</string>
-    <string name="poi_category_concert_hall">โรงแสดงคอนเสิร์ต</string>
-    <string name="poi_category_stadium">สนามกีฬา</string>
-    <string name="poi_category_casino">คาสิโน</string>
-    <string name="poi_category_swimming">สระว่ายน้ำ</string>
-    <string name="poi_category_golf">สนามกอล์ฟ</string>
-    <string name="poi_category_martial_arts">สนามศิลปะการต่อสู้ป้องกันตัว</string>
-    <string name="poi_category_skiing">สนามสกี</string>
-    <string name="poi_category_cricket">สนามคริกเกต</string>
-    <string name="poi_category_park">สวนสาธารณะ</string>
-    <string name="poi_category_monument">อนุสาวรีย์</string>
-    <string name="poi_category_government_building">สำนักงานรัฐ</string>
-    <string name="poi_category_townhall">ศาลากลางจังหวัด</string>
-    <string name="item_visibility_search_only">ผลการค้นหา</string>
-    <string name="item_visibility_hidden">ไม่ต้องแสดง</string>
-    <string name="music_widget_next_track">เพลงถัดไป</string>
-    <string name="music_widget_play">เล่น</string>
-    <string name="music_widget_pause">พัก</string>
-    <string name="music_widget_open_player">เปิดเครื่องเล่น</string>
-    <string name="calendar_widget_next_day">วันถัดไป</string>
-    <string name="calendar_widget_create_event">สร้างกิจกรรมใหม่</string>
-    <string name="preference_compact_tags">แท็กขนาดกะทัดรัด</string>
-    <string name="preference_compact_tags_summary">ซ่อนชื่อหรือไอคอนของแท็กเพื่อทำให้แท็กใช้พื้นที่น้อยลง</string>
-    <string name="weather_forecast_precipitation">หยาดน้ำฟ้า</string>
-    <string name="weather_forecast_humidity">ความชื้น</string>
-    <string name="weather_forecast_wind">ลม</string>
-    <string name="tag_empty_name">ไม่สามารถตั้งแท็กที่ไม่มีชื่อได้ หากคุณดำเนินการต่อ แท็กจะถูกลบ</string>
-    <string name="preference_clock_widget_time_format">รูปแบบเวลา</string>
-    <string name="preference_clock_widget_time_format_24h">24 ชั่วโมง</string>
-    <string name="widget_removed">ลบวิดเจ็ตแล้ว</string>
-    <string name="preference_clock_widget_time_format_12h">12 ชั่วโมง</string>
-    <string name="preference_clock_widget_time_format_system">ค่าเริ่มต้นของระบบ</string>
-    <plurals name="departure_time_in">
-        <item quantity="other">ในอีก %1$d นาที</item>
-    </plurals>
-    <string name="departure_time_now">ตอนนี้</string>
-    <string name="preference_search_local_calendar_summary">ค้นหาปฏิทินบนอุปกรณ์นี้</string>
-    <string name="departure_time_departed">เวลาออกเดินทาง</string>
-    <string name="plugin_type_contacts">ผู้ติดต่อ</string>
-    <string name="preference_grid_list_icons">แสดงไอคอนแอปในรายการ</string>
-    <string name="preference_grid_list_style_summary">แสดงแอปแบบเรียงรายการ แทนการแสดงแอปแบบเรียงเป็นตาราง</string>
-    <string name="preference_grid_list_icons_summary">แสดงไอคอนในรายการแอป</string>
-    <string name="preference_contacts_call_on_tap">แตะเพื่อโทรฯ</string>
-    <string name="preference_contacts_call_on_tap_summary">เริ่มการโทรฯทันทีที่แตะเบอร์โทรศัพท์</string>
-    <string name="preference_grid_list_style">แสดงแอปแบบเรียงรายการ</string>
-    <string name="missing_permission_call_contacts_settings">คุณต้องอนุญาตให้แอปเข้าถึงโทรศัพท์เพื่อเริ่มการโทรฯ</string>
-    <string name="import_theme_exists">ธีมนี้ถูกติดตั้งไว้แล้วและจะถูกอัปเดต</string>
-    <string name="import_theme_contents">รายการการปรับแต่ง</string>
-    <string name="preference_tasks_integration_description">Tasks คือแอปเสรีและโอเพนซอร์สสำหรับการจดบันทึกและแจ้งเตือนรายการสิ่งที่ต้องทำ คุณสามารถติดตั้งแอป Tasks เพื่อให้ %1$s แสดงและค้นหางานของคุณได้</string>
-    <string name="preference_breezyweather_integration_instructions">ขั้นตอนการตั้งแอป Breezy Weather เป็นแหล่งข้อมูลสภาพอากาศ\n\n1. เปิดแอป Breezy Weather &gt; การตั้งค่า &gt; วิดเจ็ตและภาพพื้นหลังแบบเคลื่อนไหว &gt; ส่งข้อมูล Gadgetbridge &gt; เปิดใช้งาน %1$s \n\n2. เปิดการตั้งค่า %1$s และเลือก Breezy Weather เป็นผู้ให้บริการข้อมูลสภาพอากาศ</string>
-    <string name="theme_import_title">นำเข้าธีม</string>
-    <string name="preference_screen_shapes">รูปร่าง</string>
-    <string name="preference_shapes_default">ค่าเริ่มต้น</string>
-    <string name="preference_shapes_extra_round">มุมมน</string>
-    <string name="preference_shapes_base">รูปร่างหลัก</string>
-    <string name="preference_shapes_rect">สี่เหลี่ยม</string>
-    <string name="confirmation_delete_shapes_scheme">คุณต้องการลบชุดรูปร่าง %1$s ใช่หรือไม่?</string>
-    <string name="bad_configuration_title">ยินดีด้วย คุณใช้งานแอปนี้ไม่ได้แล้ว!</string>
-    <string name="bad_configuration_summary">คุณได้ค้นพบวิธีการตั้งค่าที่ทำให้ทั้งการค้นหาและการตั้งค่าของแอปใช้งานไม่ได้ ทำให้คุณไม่สามารถใช้งานแอปนี้ได้อีกต่อไป</string>
-    <string name="weather_condition_thunder">ท้องฟ้าคำราม</string>
-    <string name="missing_permission_tasks_integration">คุณต้องอนุญาตให้เข้าถึง Tasks เพื่อใช้งานตัวเชื่อมต่อ Tasks</string>
-    <string name="provider_breezy">Breezy Weather</string>
-    <string name="preference_location_breezy">จัดการตำแหน่งที่อยู่ใน Breezy Weather</string>
-    <string name="preference_launch_breezyweather_app">เปิด Breezy Weather</string>
-    <string name="preference_breezyweather_integration_description">Breezy Weather คือแอปเสรีและโอเพนซอร์สสำหรับการติดตามสภาพอากาศ คุณสามารถติดตั้งแอป Breeze Weather เพื่อให้ %1$s ใช้ข้อมูลสภาพอากาศจาก Breezy Weather ได้</string>
-    <string name="no_selection">ยังไม่ได้เลือกสิ่งใด</string>
-    <string name="save_as_file">บันทึกเป็นไฟล์</string>
-    <string name="theme_export_title">ส่งออกธีม</string>
-    <string name="theme_bundle_name">ชื่อ</string>
-    <string name="theme_bundle_author">ผู้สร้าง</string>
-    <string name="action_install">ติดตั้ง</string>
-    <string name="preference_tasks_integration">Tasks</string>
-    <string name="preference_tasks_integration_ready">การตั้งค่าตัวเชื่อมต่อ Tasks เสร็จสมบูรณ์และพร้อมใช้งาน</string>
-    <plurals name="calendar_widget_running_tasks">
-        <item quantity="other">+ อีก %1$d งานที่ยังไม่เสร็จ</item>
-    </plurals>
-    <string name="missing_permission_tasks_search_settings">คุณต้องอนุญาตให้เข้าถึง Tasks เพื่อค้นหางาน</string>
-    <string name="preference_search_tasks">งาน</string>
-    <string name="preference_search_tasks_summary">ค้นหางานในแอป Tasks</string>
-    <string name="preference_breezyweather_integration">Breezy Weather</string>
-    <string name="preference_widgets_on_home_screen">วิดเจ็ตบนหน้าจอหลัก</string>
-    <string name="preference_widgets_on_home_screen_summary">แสดงวิดเจ็ตบนหน้าจอหลักแทนการใช้หน้าจอเสริม</string>
-    <string name="preference_gesture_swipe_up">ปัดขึ้น</string>
-    <string name="gesture_action_widgets">วิดเจ็ต</string>
-    <string name="preference_launch_tasks_app">เปิดแอป Tasks</string>
-    <string name="weather_condition_haze">มีฝุ่นควัน</string>
-    <string name="preference_colors_high_contrast">คมชัดสูง</string>
-    <string name="preference_transparencies_default">ค่าเริ่มต้น</string>
-    <string name="preference_transparencies_semi_transparent">โปร่งแสง</string>
-    <string name="new_theme_name">(ไม่มีชื่อ)</string>
-    <string name="preference_screen_transparencies">ความโปร่งใส</string>
-    <string name="confirmation_delete_transparencies_scheme">คุณต้องการลบชุดความโปร่งใส %1$s ใช่หรือไม่?</string>
-    <string name="preference_screen_typography">การจัดตัวอักษร</string>
-    <string name="confirmation_delete_typography_scheme">คุณต้องการลบชุดการจัดตัวอักษร %1$s ใช่หรือไม่?</string>
-    <string name="preference_typography_fonts">ชุดแบบอักษร</string>
-    <string name="font_category_device_default">ค่าเริ่มต้นของอุปกรณ์</string>
-    <string name="font_name_device_body">ชุดแบบอักษรของอุปกรณ์</string>
-    <string name="font_name_device_headline">ชุดแบบอักษรเริ่มต้นสำหรับหัวเรื่อง</string>
-    <string name="font_category_generic">ทั่วไป</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="th">
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <!-- Name of the app -->
+    <!-- Share something. Can be anything, an app, a website, a file, … -->
+    <!-- Shown in the app detail share menu if the application was installed from an app store
+     %1$s is the name of the app store (e.g. Google Play)-->
+    <!-- Share an APK file, shown in the app detail share menu -->
+    <!-- Uninstall an application -->
+    <!-- Launch an app -->
+    <!-- Open a file in the corresponding app -->
+    <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
+    <!-- Delete something (a file or a web search shortcut) -->
+    <!-- Open a contact in the contacts app -->
+    <!-- Open an event in the calendar app -->
+    <!-- Shown in the search bar when the search text field is empty -->
+    <!-- App version, used in application details %1$s is the version -->
+    <!-- Menu entry for launcher settings -->
+    <!-- Menu entry for launcher help -->
+    <!-- Set the device's wallpaper -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- No rain or snow, used in weather widget -->
+    <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
+     This should point to the Wikipedia in the given language. If no such Wikipedia exists,
+      a fallback that is suited best for most users of this language should be used
+      (English in most cases) -->
+    <!-- Shown in Wikipedia results to indicate where they come from -->
+    <!-- File meta data, title of audio tracks -->
+    <!-- File meta data, artist of audio tracks -->
+    <!-- File meta data, album of audio tracks -->
+    <!-- File meta data, duration of audio tracks -->
+    <!-- File meta data, year of audio tracks -->
+    <!-- File size -->
+    <!-- File path -->
+    <!-- File type (MIME type) -->
+    <!-- File meta, image/video dimensions -->
+    <!-- File meta, app name of APK files -->
+    <!-- File meta, version name of APK files -->
+    <!-- File meta, package name of APK files -->
+    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- ZIP, TAR, … archive files  -->
+    <!-- APK file  -->
+    <!-- Code file (source code in a programming language) -->
+    <!-- Word document -->
+    <!-- Excel spreadsheet -->
+    <!-- Audio file -->
+    <!-- Video file -->
+    <!-- Picture file -->
+    <!-- Generic file without file extension -->
+    <!-- Powerpoint presentation -->
+    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Plain text (TXT) file -->
+    <!-- E-book file -->
+    <!-- Google Drawings file -->
+    <!-- Google Forms file -->
+    <!-- Launcher backup, %1$s: app name -->
+    <!-- Launcher theme, %1$s: app name -->
+    <!-- Generic file , %1$s is the file extension -->
+    <!-- Warning message that is shown when a user attempts to delete a directory -->
+    <!-- Warning message that is shown when a user attempts to delete a file -->
+    <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
+    <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
+    could not be opened because there was no app installed that could handle the request  -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the first one. Must be in sync with [default_websearch_1_url].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the first one. Must be in sync with [default_websearch_1_name].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the second one. Must be in sync with [default_websearch_2_url].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the second one. Must be in sync with [default_websearch_2_name].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the third one. Must be in sync with [default_websearch_3_url].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the third one. Must be in sync with [default_websearch_3_name].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <!-- Add a third party widget (=a standard Android app widget) -->
+    <!-- Save / export the current note content as markdown file -->
+    <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
+    <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
+    <!-- Wait, we have easter eggs? No way! -->
+    <!-- Close a dialog -->
+    <!-- Turn something off / disable a functionality of the launcher -->
+    <!-- Edit favorites, title for items that are frequently used but not pinned -->
+    <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
+    <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
+    <!-- Nextcloud login flow, URL-->
+    <!-- Nextcloud/Owncloud login flow, empty URL-->
+    <!-- Nextcloud login flow, error invalid URL-->
+    <!-- Owncloud login flow, UR-->
+    <!-- Owncloud login flow, error invalid URL-->
+    <!-- Owncloud login flow, password-->
+    <!-- Owncloud login flow, user name-->
+    <!-- Owncloud login flow -->
+    <!-- Owncloud login flow, login failed -->
+    <!-- Owncloud login flow, error: username empty -->
+    <!-- Owncloud login flow, error: password empty -->
+    <!-- Nextcloud/Owncloud login flow, continue button -->
+    <!-- Nextcloud/Owncloud login flow, login button -->
+    <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
+    <!-- Used in calendar widget date selector. -->
+    <!-- Used in calendar widget date selector. -->
+    <!-- Headline used in calendar widget for pinned events -->
+    <!-- Headline used in calendar widget for the next event, if there is no event today -->
+    <!--
+        In the calendar widget, only events that start or end at the selected date are shown.
+        If an event runs for three days, it won't be listed if the second day is selected.
+        Instead, the following text will be shown, %1$d being the total number of
+        running events that neither started nor will end on the selected day.
+        -->
+    <!-- Calendar events that last the entire day -->
+    <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
+    <!-- Humidity details, %1$s: formatted humidity value -->
+    <!-- Wind details, %1$s: formatted wind values -->
+    <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <!-- Manually set a location, used in weather widget location permission banner as an
+        alternative to granting the permission -->
+    <!-- Missing location permission in weather widget and weather widget settings settings -->
+    <!-- Missing notification permission in music widget settings -->
+    <!-- Missing contact permission in search settings screen -->
+    <!-- Missing call permission in contacts settings screen -->
+    <!-- Missing calendar permission in search settings screen -->
+    <!-- Missing calendar permission in calendar widget settings screen -->
+    <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
+    <!-- Missing file permission in search settings screen -->
+    <!-- Missing file permission in search settings screen.
+        Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
+        to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <!-- Missing notification permission, used in badge settings screen -->
+    <!-- Missing calendar permission, used in calendar widget -->
+    <!-- Missing calendar permission, used in calendar search results -->
+    <!-- Missing location permission, used in location search results -->
+    <!-- Missing files permission, used in files search results -->
+    <!-- Missing files permission, used in contact search results -->
+    <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
+    <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
+    <!-- Grant a permission, shown in permission banners -->
+    <!-- Appearance preference title -->
+    <!-- Open website of an open source library -->
+    <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <!-- %1$s: app name (Kvaesitso) -->
+    <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
+    <!-- Used in an info banner if a specific feature requires an Owncloud account -->
+    <!-- Used in an info banner if a specific feature requires a Google account -->
+    <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
+    <!-- %1$s: app name -->
+    <!-- %1$s: app name -->
+    <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
+    <!-- %1$s: app name -->
 </resources>
