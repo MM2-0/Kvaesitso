@@ -28,7 +28,7 @@
     <string name="menu_launch">Uruchom</string>
     <string name="menu_customize">Dostosuj</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Otwarte</string>
+    <string name="menu_open_file">Otwórz</string>
     <string name="menu_map">Zobacz na mapie</string>
     <string name="menu_website">Otwórz stronę www</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -419,7 +419,7 @@
     <string name="preference_category_licenses">Licencje otwarto źródłowe</string>
     <string name="preference_category_advanced">Zaawansowane</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Otwórz stronę www</string>
+    <string name="open_webpage">Otwórz stronę internetową</string>
     <string name="preference_screen_about_summary">Informacje o aplikacji i licencji</string>
     <string name="preference_screen_appearance_summary">Dostosuj wygląd</string>
     <string name="preference_weather_provider">Dostawca</string>
@@ -457,7 +457,7 @@
     <string name="preference_cards_shape_rounded">Zaokrąglone</string>
     <string name="preference_cards_shape_cut">Przycięte</string>
     <string name="preference_icon_shape">Kształt</string>
-    <string name="preference_icon_shape_platform">Domyślne</string>
+    <string name="preference_icon_shape_platform">Domyślne systemowe</string>
     <string name="preference_icon_shape_square">Kwadrat</string>
     <string name="preference_icon_shape_rounded_square">Zaokrąglony kwadrat</string>
     <string name="preference_icon_shape_triangle">Trójkąt Reuleaux</string>
@@ -534,7 +534,7 @@
     <string name="preference_category_media_apps">Aplikacje multimedialne</string>
     <string name="preference_screen_clockwidget">Zegar</string>
     <string name="preference_screen_clockwidget_summary">Konfiguracja stylu i komponentów zegara</string>
-    <string name="preference_clockwidget_layout_vertical">Domyślny</string>
+    <string name="preference_clockwidget_layout_vertical">Pionowy</string>
     <string name="preference_clockwidget_layout_horizontal">Poziomy</string>
     <string name="preference_clock_widget_show_seconds">Pokaż sekundy</string>
     <string name="preference_clock_widget_time_format_system">Domyślne</string>
@@ -564,7 +564,7 @@
     <string name="preference_crash_reporter_summary">Raporty o błędach i awariach</string>
     <string name="preference_logs">Dzienniki zdarzeń</string>
     <string name="preference_logs_summary">Wyświetlanie i eksportowanie dzienników zdarzeń aplikacji</string>
-    <string name="preference_screen_search">Szukaj</string>
+    <string name="preference_screen_search">Wyszukiwanie</string>
     <string name="preference_screen_search_summary">Wyszukiwanie, tagi, ukryte elementy</string>
     <string name="preference_search_favorites">Ulubione</string>
     <string name="preference_search_favorites_summary">Pokazuje przypięte oraz często używane rzeczy nad listą aplikacji</string>
@@ -644,7 +644,7 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">Utworzono %1$s na %2$s przez %3$s.</string>
     <string name="restore_complete">Kopia zapasowa została przywrócona.</string>
-    <string name="icon_picker_default_icon">Domyślny</string>
+    <string name="icon_picker_default_icon">Domyślna</string>
     <string name="icon_picker_suggestions">Sugestie</string>
     <string name="icon_picker_search_icon">Wyszukiwanie w pakietach ikon</string>
     <string name="icon_picker_filter_all_packs">Wszystkie pakiety ikon</string>
@@ -782,7 +782,7 @@
     <string name="plugin_state_error">Wtyczka nie działa poprawnie</string>
     <string name="plugin_state_setup_required">Musisz najpierw skonfigurować wtyczkę</string>
     <string name="plugin_action_setup">Konfiguracja</string>
-    <string name="plugin_type_filesearch">Pliki</string>
+    <string name="plugin_type_filesearch">Szukaj pliku</string>
     <string name="plugin_type_contacts">Kontakty</string>
     <string name="plugin_type_weather">Dostawca pogody</string>
     <string name="plugin_weather_provider_enable">Ustaw jako dostawcę pogody</string>
