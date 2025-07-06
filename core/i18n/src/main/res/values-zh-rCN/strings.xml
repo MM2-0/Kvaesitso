@@ -796,7 +796,7 @@
     <string name="preference_search_locations_theme_map">地图主题</string>
     <string name="preference_search_locations_theme_map_summary">将启动器的配色方案应用到地图</string>
     <string name="preference_search_location_custom_tile_server_url">瓦片服务器 URL</string>
-    <string name="menu_dial">拨号</string>
+    <string name="menu_dial">呼叫</string>
     <string name="menu_navigation">导航</string>
     <string name="menu_bugreport">Bug 报告</string>
     <string name="location_open_24_7">24/7开</string>
@@ -924,7 +924,7 @@
     <string name="poi_category_courthouse">法院</string>
     <string name="poi_category_townhall">市政厅</string>
     <string name="customize_item_label">标签</string>
-    <string name="customize_item_tags">标签</string>
+    <string name="customize_item_tags">类别</string>
     <string name="customize_item_visibility">显示在</string>
     <string name="item_visibility_app_default">添加网格与搜索结果</string>
     <string name="item_visibility_calendar_default">日历工具与搜索结果</string>
@@ -966,7 +966,7 @@
         <item quantity="other">%1$s个列表已选择</item>
     </plurals>
     <string name="weather_forecast_humidity">湿度</string>
-    <string name="weather_forecast_wind">刮风</string>
+    <string name="weather_forecast_wind">风</string>
     <string name="weather_forecast_precipitation">季节</string>
     <string name="departure_time_now">现在</string>
     <plurals name="departure_time_in">
