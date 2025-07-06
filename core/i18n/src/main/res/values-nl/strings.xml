@@ -26,6 +26,7 @@
     <string name="menu_launch">Starten</string>
     <string name="menu_customize">Aanpassen</string>
     <!-- Open a file in the corresponding app -->
+    <string name="menu_open_file">Openen</string>
     <string name="menu_map">Op kaart bekijken</string>
     <string name="menu_website">Website openen</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -418,7 +419,7 @@
     <string name="preference_custom_colors_corepalette">Kleurenpalet</string>
     <string name="preference_mdy_color_source">Kleuren om vanaf Android 12 te gebruiken voor Material You kleurenschema\'s: wat het systeem voorstelt of de eigen kleurextractie uit de achtergrond van Kvaesitso</string>
     <string name="preference_mdy_color_source_system">Material You kleuren van het OS gebruiken</string>
-    <string name="preference_mdy_color_source_wallpaper">Achtergrond</string>
+    <string name="preference_mdy_color_source_wallpaper">Material You kleuren uit de achtergrond halen. Dit is de standaardinstelling op Android 11 en lager, maar kan ook aangezet worden op Android 12 en hoger voor compatibiliteit</string>
     <string name="preference_screen_shapes">Vormen</string>
     <string name="preference_shapes_default">Standaard</string>
     <string name="preference_shapes_extra_round">Extra rond</string>
@@ -546,6 +547,7 @@
     <string name="preference_grid_labels_summary">Applicatienaam onder pictogram tonen</string>
     <string name="preference_grid_list_style_summary">Apps weergeven in een lijst in plaats van in een raster</string>
     <string name="preference_grid_list_icons_summary">Pictogrammen weergeven in de lijstweergave</string>
+    <string name="preference_screen_debug">Foutopsporing</string>
     <string name="preference_screen_debug_summary">Hulpmiddelen</string>
     <string name="preference_screen_weatherwidget">Weer</string>
     <string name="preference_category_media_apps">Media-applicaties</string>
@@ -730,7 +732,7 @@
     <string name="open_search_swipe_left">Naar links vegen</string>
     <string name="open_search_swipe_right">Naar rechts vegen</string>
     <string name="preference_layout_search_bar_position">Zoekbalkpositie</string>
-    <string name="search_bar_position_top">Bovenaan</string>
+    <string name="search_bar_position_top">Boven</string>
     <string name="search_bar_position_bottom">Onderaan</string>
     <string name="preference_layout_search_results">Rangschikking van zoekresultaten</string>
     <string name="search_results_order_top_down">Boven naar beneden</string>
@@ -741,7 +743,7 @@
     <string name="preference_layout_fixed_rotation_summary">Zet scherm vast in portretmodus</string>
     <string name="preference_screen_gestures">Gebaren</string>
     <string name="preference_screen_gestures_summary">Gebaren en acties voor gebaren</string>
-    <string name="preference_gesture_swipe_down">Omlaag vegen</string>
+    <string name="preference_gesture_swipe_down">Naar beneden vegen</string>
     <string name="preference_gesture_swipe_left">Naar links vegen</string>
     <string name="preference_gesture_swipe_right">Naar rechts vegen</string>
     <string name="preference_gesture_swipe_up">Naar boven vegen</string>
@@ -815,7 +817,7 @@
     <string name="preference_search_locations_show_map_summary">Kaartvoorbeeld voor plaatsen weergeven</string>
     <string name="preference_search_locations_theme_map">Kaart-thema</string>
     <string name="preference_search_locations_theme_map_summary">Kleurenschema van de launcher op de kaart toepassen</string>
-    <string name="menu_dial">Oproep</string>
+    <string name="menu_dial">Bellen</string>
     <string name="menu_navigation">Navigatie</string>
     <string name="menu_bugreport">Foutrapport</string>
     <string name="location_open_24_7">24/7 geopend</string>
@@ -823,7 +825,7 @@
     <string name="plugin_state_setup_required">Je moet deze plug-in eerst instellen</string>
     <string name="plugin_action_setup">Instellen</string>
     <string name="plugin_type_filesearch">Bestanden</string>
-    <string name="plugin_type_contacts">Contacten</string>
+    <string name="plugin_type_contacts">Contactpersonen</string>
     <string name="plugin_type_weather">Aanbieder van weergegevens</string>
     <string name="plugin_weather_provider_enable">Instellen als aanbieder van weer</string>
     <string name="plugin_weather_provider_enabled">Momenteel ingesteld als aanbieder van weer</string>
