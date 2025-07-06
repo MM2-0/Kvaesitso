@@ -84,3 +84,45 @@ files:
         tr: tr
         uk: uk
         vi: vi
+  - source: /plugins/sdk/src/main/res/values/strings.xml
+    translation: /plugins/sdk/src/main/res/values-%android_code%/%original_file_name%
+    type: android
+    languages_mapping:
+      android_code:
+        ar: ar
+        az: az
+        eu: eu
+        be: be
+        bn: bn
+        ca: ca
+        zh-CN: zh-rCN
+        zh-TW: zh-rTW
+        cs: cs
+        da: da
+        nl: nl
+        eo: eo
+        fi: fi
+        fr: fr
+        de: de
+        el: el
+        he: iw
+        hu: hu
+        id: in
+        it: it
+        ja: ja
+        ko: ko
+        lt: lt
+        ms: ms
+        nb: nb
+        fa: fa
+        pl: pl
+        pt-BR: pt
+        pt-PT: pt-rPT
+        ro: ro
+        ru: ru
+        es-MX: es
+        sv-SE: sv
+        th: th
+        tr: tr
+        uk: uk
+        vi: vi
