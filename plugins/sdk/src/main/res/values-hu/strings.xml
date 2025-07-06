@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="request_permission_message">A(z) <b>%1$s</b> hozzá szeretne férni a(z) <b>%2$s</b> adataidhoz.</string>
-    <string name="request_permission_deny_button">Elutasítás</string>
-    <string name="request_permission_allow_button">Engedélyezés</string>
-</resources>
+<resources></resources>
