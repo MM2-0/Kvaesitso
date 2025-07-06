@@ -4,11 +4,218 @@
     Important note: Unit symbols may not contain spaces.
     -->
     <!-- DIMENSIONS -->
+    <string name="dimension_length">Longueur</string>
+    <string name="dimension_mass">Masse</string>
+    <string name="dimension_velocity">Vélocité</string>
+    <string name="dimension_area">Surface</string>
+    <string name="dimension_currency">Devise</string>
+    <string name="dimension_data">Données</string>
+    <string name="dimension_bitrate">Débit</string>
+    <string name="dimension_pressure">Pression</string>
+    <string name="dimension_energy">Énergie</string>
+    <string name="dimension_frequency">Fréquence</string>
+    <string name="dimension_temperature">Température</string>
+    <string name="dimension_time">Temps</string>
     <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="one">mètre</item>
+        <item quantity="other">mètres</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilomètre</item>
+        <item quantity="other">kilomètres</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">décimètre</item>
+        <item quantity="other">décimètres</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">centimètre</item>
+        <item quantity="other">centimètres</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">millimètre</item>
+        <item quantity="other">millimètres</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">pouce</item>
+        <item quantity="other">pouces</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">pied</item>
+        <item quantity="other">pieds</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">mille nautique</item>
+        <item quantity="other">milles nautiques</item>
+    </plurals>
     <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">mètre carré</item>
+        <item quantity="other">mètres carrés</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kilomètre carré</item>
+        <item quantity="other">kilomètres carrés</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">centimètre carré</item>
+        <item quantity="other">centimètres carrés</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">millimètre carré</item>
+        <item quantity="other">millimètres carrés</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="one">pouce carré</item>
+        <item quantity="other">pouces carrés</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">pied carré</item>
+        <item quantity="other">pieds carrés</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">yard carré</item>
+        <item quantity="other">yards carrés</item>
+    </plurals>
     <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">seconde</item>
+        <item quantity="other">secondes</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">milliseconde</item>
+        <item quantity="other">millisecondes</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">heure</item>
+        <item quantity="other">heures</item>
+    </plurals>
+    <string name="unit_day_symbol">j</string>
+    <plurals name="unit_day">
+        <item quantity="one">jour</item>
+        <item quantity="other">jours</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">année</item>
+        <item quantity="other">années</item>
+    </plurals>
     <!-- UNITS OF DATA SIZES -->
+    <string name="unit_byte_symbol">o</string>
+    <plurals name="unit_byte">
+        <item quantity="one">octet</item>
+        <item quantity="other">octets</item>
+    </plurals>
+    <string name="unit_kilobyte_symbol">Ko</string>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">kilo-octet</item>
+        <item quantity="other">kilo-octets</item>
+    </plurals>
+    <string name="unit_megabyte_symbol">Mo</string>
+    <plurals name="unit_megabyte">
+        <item quantity="one">méga-octet</item>
+        <item quantity="other">méga-octets</item>
+    </plurals>
+    <string name="unit_gigabyte_symbol">Go</string>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">giga-octet</item>
+        <item quantity="other">giga-octets</item>
+    </plurals>
+    <string name="unit_terabyte_symbol">To</string>
+    <plurals name="unit_terabyte">
+        <item quantity="one">téra-octet</item>
+        <item quantity="other">téra-octets</item>
+    </plurals>
+    <string name="unit_kibibyte_symbol">kio</string>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">kibi-octet</item>
+        <item quantity="other">kibi-octets</item>
+    </plurals>
+    <string name="unit_mebibyte_symbol">Mio</string>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">mebi-octet</item>
+        <item quantity="other">mebi-octets</item>
+    </plurals>
+    <string name="unit_gibibyte_symbol">Gio</string>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">gibi-octet</item>
+        <item quantity="other">gibi-octets</item>
+    </plurals>
+    <string name="unit_tebibyte_symbol">Tio</string>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebi-octet</item>
+        <item quantity="other">tebi-octets</item>
+    </plurals>
+    <plurals name="unit_megabit">
+        <item quantity="one">mégabit</item>
+        <item quantity="other">mégabits</item>
+    </plurals>
+    <plurals name="unit_terabit">
+        <item quantity="one">térabit</item>
+        <item quantity="other">térabits</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">mètre par seconde</item>
+        <item quantity="other">mètres par seconde</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilomètre par heure</item>
+        <item quantity="other">kilomètres par heure</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">mile par heure</item>
+        <item quantity="other">miles par heure</item>
+    </plurals>
+    <string name="unit_knot_symbol">nd</string>
+    <plurals name="unit_knot">
+        <item quantity="one">nœud</item>
+        <item quantity="other">nœuds</item>
+    </plurals>
     <!-- UNITS OF MASS -->
+    <plurals name="unit_kilogram">
+        <item quantity="one">kilogramme</item>
+        <item quantity="other">kilogrammes</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="one">gramme</item>
+        <item quantity="other">grammes</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">tonne</item>
+        <item quantity="other">tonnes</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="one">tonne longue</item>
+        <item quantity="other">tonnes longues</item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="one">pierre</item>
+        <item quantity="other">pierres</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="one">livre</item>
+        <item quantity="other">livres</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">once</item>
+        <item quantity="other">onces</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">tonne courte</item>
+        <item quantity="other">tonnes courtes</item>
+    </plurals>
     <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">degré Celsius</item>
+        <item quantity="other">degrés Celsius</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">degré Fahrenheit</item>
+        <item quantity="other">degrés Fahrenheit</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="one">Kelvin</item>
+        <item quantity="other">Kelvins</item>
+    </plurals>
 </resources>
