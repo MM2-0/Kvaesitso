@@ -5,10 +5,102 @@
     -->
     <!-- DIMENSIONS -->
     <!-- UNITS OF LENGTH -->
+    <plurals name="unit_inch">
+        <item quantity="one">tum</item>
+        <item quantity="other">tum</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">fot</item>
+        <item quantity="other">fot</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">nautisk mil</item>
+        <item quantity="other">nautiska mil</item>
+    </plurals>
     <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">kvadratmeter</item>
+        <item quantity="other">kvadratmeter</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kvadratkilometer</item>
+        <item quantity="other">kvadratkilometer</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">kvadratcentimeter</item>
+        <item quantity="other">kvadratcentimeter</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">kvadratmillimeter</item>
+        <item quantity="other">kvadratmillimeter</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="one">kvadrattum</item>
+        <item quantity="other">kvadrattum</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">kvadratfot</item>
+        <item quantity="other">kvadratfot</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">kvadratyard</item>
+        <item quantity="other">kvadratyards</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">hektar</item>
+        <item quantity="other">hektar</item>
+    </plurals>
     <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">sekund</item>
+        <item quantity="other">sekunder</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">millisekund</item>
+        <item quantity="other">millisekunder</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="one">minut</item>
+        <item quantity="other">minuter</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">timme</item>
+        <item quantity="other">timmar</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="one">dag</item>
+        <item quantity="other">dagar</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">år</item>
+        <item quantity="other">år</item>
+    </plurals>
     <!-- UNITS OF DATA SIZES -->
     <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">meter per sekund</item>
+        <item quantity="other">meter per sekund</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilometer per timme</item>
+        <item quantity="other">kilometer per timme</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">knop</item>
+        <item quantity="other">knop</item>
+    </plurals>
     <!-- UNITS OF MASS -->
+    <plurals name="unit_metric_ton">
+        <item quantity="one">ton</item>
+        <item quantity="other">ton</item>
+    </plurals>
     <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">grad celsius</item>
+        <item quantity="other">grader celsius</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">grad fahrenheit</item>
+        <item quantity="other">grader fahrenheit</item>
+    </plurals>
 </resources>
