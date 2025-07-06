@@ -28,7 +28,7 @@
     <string name="menu_launch">Start</string>
     <string name="menu_customize">Tilpas</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Åben</string>
+    <string name="menu_open_file">Åbn</string>
     <string name="menu_map">Se på kort</string>
     <string name="menu_website">Åbn hjemmeside</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -525,7 +525,7 @@
     <string name="preference_grid_column_count">Antal kolonner</string>
     <string name="preference_grid_labels">Vis mærkater</string>
     <string name="preference_grid_labels_summary">Vis appens navn under ikonet</string>
-    <string name="preference_screen_debug">Fejlfinding</string>
+    <string name="preference_screen_debug">Fejlretning</string>
     <string name="preference_screen_debug_summary">Fejlfindingsværktøjer</string>
     <string name="preference_screen_weatherwidget">Vejr</string>
     <string name="preference_category_media_apps">Medie-apps</string>
@@ -695,7 +695,8 @@
     <string name="open_search_swipe_left">Stryg til venstre</string>
     <string name="open_search_swipe_right">Stryg til højre</string>
     <string name="preference_layout_search_bar_position">Position for søgefelt</string>
-    <string name="search_bar_position_bottom">Bund</string>
+    <string name="search_bar_position_top">Øverst</string>
+    <string name="search_bar_position_bottom">Nederst</string>
     <string name="preference_layout_search_results">Opsætning af søgeresultater</string>
     <string name="search_results_order_top_down">Øverst-ned</string>
     <string name="search_results_order_bottom_up">Nederst-op</string>
@@ -776,7 +777,7 @@
     <string name="plugin_state_error">Denne udvidelse fungerer ikke korrekt</string>
     <string name="plugin_state_setup_required">Du skal opsætte denne udvidelse først</string>
     <string name="plugin_action_setup">Opsæt</string>
-    <string name="plugin_type_filesearch">Filer</string>
+    <string name="plugin_type_filesearch">Filsøgning</string>
     <string name="plugin_type_contacts">Kontakter</string>
     <string name="plugin_type_weather">Vejr-udbyder</string>
     <string name="plugin_weather_provider_enable">Indstil som vejr-udbyder</string>
@@ -791,7 +792,7 @@
     <string name="clock_variant_outlined">Omridset</string>
     <string name="menu_show_filters">Vis filtre</string>
     <string name="menu_hide_filters">Skjul filtre</string>
-    <string name="search_filter_tools">Værktøj</string>
+    <string name="search_filter_tools">Værktøjer</string>
     <string name="search_filter_online">Online resultater</string>
     <string name="plugin_type_calendar">Kalender</string>
     <string name="preference_default_filter">Standardfilter</string>
@@ -923,7 +924,7 @@
         <item quantity="other">%1$s lister valgt</item>
     </plurals>
     <string name="weather_forecast_humidity">Fugtighed</string>
-    <string name="weather_forecast_wind">Blæser</string>
+    <string name="weather_forecast_wind">Vind</string>
     <string name="weather_forecast_precipitation">Nedbør</string>
     <string name="departure_time_now">nu</string>
     <plurals name="departure_time_in">
