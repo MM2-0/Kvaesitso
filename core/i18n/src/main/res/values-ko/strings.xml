@@ -28,7 +28,7 @@
     <string name="menu_launch">앱 열기</string>
     <string name="menu_customize">사용자 정의</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">영업 중</string>
+    <string name="menu_open_file">열기</string>
     <string name="menu_map">지도에서 보기</string>
     <string name="menu_website">웹사이트 열기</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -433,8 +433,8 @@
     <string name="preference_status_bar_icons">상태 표시줄 아이콘</string>
     <string name="preference_nav_bar_icons">내비게이션 바 아이콘</string>
     <string name="preference_system_bar_icons_auto">자동</string>
-    <string name="preference_system_bar_icons_light">밝은 테마</string>
-    <string name="preference_system_bar_icons_dark">어두운 테마</string>
+    <string name="preference_system_bar_icons_light">밝게</string>
+    <string name="preference_system_bar_icons_dark">어둡게</string>
     <string name="preference_hide_status_bar">상태 표시줄 숨기기</string>
     <string name="preference_hide_nav_bar">내비게이션 바 숨기기</string>
     <string name="preference_screen_integrations_summary">연결된 계정 및 서비스 관리</string>
@@ -560,7 +560,7 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">%1$s에 %2$s의 %3$s에서 생성한 백업입니다.</string>
     <string name="restore_complete">백업을 복원했습니다.</string>
-    <string name="icon_picker_default_icon">기본</string>
+    <string name="icon_picker_default_icon">기본값</string>
     <string name="icon_picker_suggestions">제안</string>
     <string name="icon_picker_search_icon">아이콘 검색</string>
     <string name="icon_picker_filter_all_packs">모든 아이콘 팩</string>
@@ -600,11 +600,16 @@
     <string name="tag_name">태그 이름</string>
     <string name="preference_layout_open_search">검색 / 앱 서랍</string>
     <string name="preference_layout_search_bar_position">검색 표시줄 위치</string>
+    <string name="search_bar_position_top">위쪽</string>
+    <string name="search_bar_position_bottom">아래쪽</string>
     <string name="preference_layout_search_results">검색 결과 정렬</string>
     <string name="preference_layout_fixed_search_bar">검색 표시줄 고정</string>
     <string name="preference_layout_fixed_search_bar_summary">스크롤할 때 검색 표시줄 항상 표시</string>
     <string name="preference_screen_gestures">제스처</string>
     <string name="preference_screen_gestures_summary">제스처 및 제스처 동작</string>
+    <string name="preference_gesture_swipe_down">아래로 스와이프</string>
+    <string name="preference_gesture_swipe_left">왼쪽으로 스와이프</string>
+    <string name="preference_gesture_swipe_right">오른쪽으로 스와이프</string>
     <string name="preference_gesture_double_tap">두 번 누르기</string>
     <string name="preference_gesture_long_press">길게 누르기</string>
     <string name="preference_gesture_home_button">홈 버튼/제스처</string>
