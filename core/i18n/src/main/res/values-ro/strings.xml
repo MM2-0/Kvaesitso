@@ -28,7 +28,7 @@
     <string name="menu_launch">Lansează</string>
     <string name="menu_customize">Personalizează</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Deschis</string>
+    <string name="menu_open_file">Deschide</string>
     <string name="menu_map">Vezi pe hartă</string>
     <string name="menu_website">Deschide site web</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -237,7 +237,7 @@
     <string name="action_next">Următorul</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Opreşte</string>
-    <string name="widget_action_remove">Înlătură</string>
+    <string name="widget_action_remove">Eliminați</string>
     <string name="widget_action_replace">Înlocuiți</string>
     <string name="menu_item_edit_favs">Editează favoritele</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
@@ -419,7 +419,7 @@
     <string name="preference_category_licenses">Licențe open source</string>
     <string name="preference_category_advanced">Avansat</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Deschide site web</string>
+    <string name="open_webpage">Deschide website</string>
     <string name="preference_screen_about_summary">Informații despre aplicație și licențe</string>
     <string name="preference_screen_appearance_summary">Personalizați aspectul</string>
     <string name="preference_weather_provider">Furnizor</string>
@@ -452,7 +452,7 @@
     <string name="preference_cards_shape_rounded">Rotunjită</string>
     <string name="preference_cards_shape_cut">Tăiată</string>
     <string name="preference_icon_shape">Formă</string>
-    <string name="preference_icon_shape_platform">Font implicit</string>
+    <string name="preference_icon_shape_platform">Implicită de sistem</string>
     <string name="preference_icon_shape_square">Pătrat</string>
     <string name="preference_icon_shape_rounded_square">Pătrat rotunjit</string>
     <string name="preference_icon_shape_squircle">Pătrat rotunjit</string>
@@ -480,15 +480,15 @@
     <string name="preference_status_bar_icons">Pictograme din bara de stare</string>
     <string name="preference_nav_bar_icons">Pictograme din bara de navigare</string>
     <string name="preference_system_bar_icons_auto">Automat</string>
-    <string name="preference_system_bar_icons_light">Luminat</string>
-    <string name="preference_system_bar_icons_dark">Întunecat</string>
+    <string name="preference_system_bar_icons_light">Luminoase</string>
+    <string name="preference_system_bar_icons_dark">Întunecate</string>
     <string name="preference_hide_status_bar">Ascunde bara de stare</string>
     <string name="preference_hide_nav_bar">Ascunde bara de navigare</string>
     <string name="preference_screen_integrations_summary">Gestionează conturile și serviciile conectate</string>
     <string name="preference_signin_user">Conectat ca %1$s</string>
     <string name="preference_signout">Deconectați-vă</string>
     <string name="preference_summary_not_logged_in">În prezent, nu sunteți conectat</string>
-    <string name="preference_category_wallpaper">Imagine fundal</string>
+    <string name="preference_category_wallpaper">Fundal</string>
     <string name="preference_dim_wallpaper">Întunecă imaginea de fundal</string>
     <string name="preference_dim_wallpaper_summary">La teme întunecate, fundal întunecat</string>
     <string name="preference_blur_wallpaper">Încețoșează fundalul</string>
@@ -530,7 +530,7 @@
     <string name="preference_category_media_apps">Aplicați Media</string>
     <string name="preference_screen_clockwidget">Ceas</string>
     <string name="preference_screen_clockwidget_summary">Configurează stilul ceasului și componentele</string>
-    <string name="preference_clockwidget_layout_vertical">Implicit</string>
+    <string name="preference_clockwidget_layout_vertical">Vertical</string>
     <string name="preference_clockwidget_layout_horizontal">Orizontal</string>
     <string name="preference_clock_widget_show_seconds">Arată secundele</string>
     <string name="preference_clock_widget_time_format_system">Font implicit</string>
@@ -604,6 +604,8 @@
     <string name="favorites">Favorite</string>
     <string name="search_action_share">Distribuie</string>
     <string name="preference_layout_search_bar_position">Poziția barei de căutare</string>
+    <string name="search_bar_position_top">Sus</string>
+    <string name="search_bar_position_bottom">Jos</string>
     <string name="preference_layout_fixed_search_bar">Bară de căutare fixă</string>
     <string name="preference_layout_fixed_search_bar_summary">Nu derula bara de căutare din vedere</string>
     <string name="preference_layout_fixed_rotation">Rotire ecran blocată</string>
