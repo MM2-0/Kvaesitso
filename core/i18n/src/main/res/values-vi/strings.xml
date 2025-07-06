@@ -238,7 +238,7 @@
     <string name="action_next">Tiếp theo</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Tắt</string>
-    <string name="widget_action_remove">Loại bỏ</string>
+    <string name="widget_action_remove">Xóa</string>
     <string name="widget_action_replace">Thay thế</string>
     <string name="menu_item_edit_favs">Chỉnh sửa mục yêu thích</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
@@ -773,7 +773,7 @@
     <string name="plugin_state_error">Plugin này không hoạt động chính xác</string>
     <string name="plugin_state_setup_required">Bạn cần thiết lập plugin này trước</string>
     <string name="plugin_action_setup">Thiết lập</string>
-    <string name="plugin_type_filesearch">Tệp tin</string>
+    <string name="plugin_type_filesearch">Tìm kiếm tệp tin</string>
     <string name="plugin_type_contacts">Danh bạ</string>
     <string name="plugin_type_weather">Nhà cung cấp thời tiết</string>
     <string name="plugin_weather_provider_enable">Đặt làm nhà cung cấp thời tiết</string>
