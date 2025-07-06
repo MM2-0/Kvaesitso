@@ -21,6 +21,7 @@
     <!-- Launch an app -->
     <string name="menu_launch">Öppna</string>
     <!-- Open a file in the corresponding app -->
+    <string name="menu_open_file">Öppna</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Radera</string>
@@ -199,6 +200,7 @@
     <string name="close">Stäng</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Stäng av</string>
+    <string name="widget_action_remove">Radera</string>
     <string name="menu_item_edit_favs">Redigera favoriter</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
     <string name="edit_favorites_dialog_unpinned">Ej fästa – ofta använda</string>
@@ -356,6 +358,7 @@
     <string name="preference_category_links">Länkar</string>
     <string name="preference_category_licenses">Open source-licenser</string>
     <!-- Open website of an open source library -->
+    <string name="open_webpage">Öppna hemsida</string>
     <string name="preference_screen_about_summary">App- och licensinformation</string>
     <string name="preference_screen_appearance_summary">Anpassa utseendet och känslan</string>
     <string name="preference_weather_provider">Leverantör</string>
@@ -373,6 +376,8 @@
     <string name="preference_cards_corner_radius">Hörnradie</string>
     <string name="preference_cards_stroke_width">Kantbredd</string>
     <string name="preference_cards_opacity">Genomskinlighet</string>
+    <string name="preference_icon_shape">Form</string>
+    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_icon_shape_square">Fyrkant</string>
     <string name="preference_icon_shape_rounded_square">Rundad fyrkant</string>
     <string name="preference_icon_shape_squircle">Kvirkel</string>
@@ -421,7 +426,7 @@
     <string name="preference_screen_debug_summary">Felsökningsverktyg</string>
     <string name="preference_screen_weatherwidget">Väder</string>
     <string name="preference_screen_clockwidget">Klocka</string>
-    <string name="preference_clockwidget_layout_vertical">Standard</string>
+    <string name="preference_clockwidget_layout_vertical">Vertikal</string>
     <string name="preference_clockwidget_layout_horizontal">Horisontell</string>
     <string name="preference_clockwidget_date_part">Datum</string>
     <string name="preference_clockwidget_date_part_summary">Visa aktuellt datum</string>
@@ -434,6 +439,7 @@
     <string name="preference_crash_reporter_summary">Error- och kraschrapporter</string>
     <string name="preference_screen_search">Sök</string>
     <string name="preference_screen_search_summary">Konfigurera sökningen</string>
+    <string name="preference_search_favorites">Favoriter</string>
     <string name="preference_search_favorites_summary">Visa fastnålade och ofta använda objekt ovanför apprutan</string>
     <string name="preference_search_files">Filer</string>
     <string name="preference_search_files_summary">Sök bland lokala filer och filer i molnet</string>
