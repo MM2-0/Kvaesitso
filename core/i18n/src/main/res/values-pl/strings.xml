@@ -1,327 +1,688 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="pl">
+    <string name="location_open">Otwarte</string>
+    <string name="location_closed">Zamknięte</string>
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_closes">Zamyka się o %1$s</string>
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_closes_other_day">Zamknięcie %1$s, %2$s</string>
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_opens">Otwarte od  %1$s</string>
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_opens_other_day">Otwarte  %1$s, %2$s</string>
+    <!-- Name of the app -->
+    <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Udostępnij</string>
+    <!-- Shown in the app detail share menu if the application was installed from an app store
+     %1$s is the name of the app store (e.g. Google Play)-->
+    <string name="menu_share_store_link">Link %1$s</string>
+    <!-- Share an APK file, shown in the app detail share menu -->
+    <string name="menu_share_apk_file">Plik pakietu</string>
+    <!-- Uninstall an application -->
     <string name="menu_uninstall">Odinstaluj</string>
     <string name="menu_favorites_pin">Przypnij do ulubionych</string>
     <string name="menu_favorites_unpin">Odepnij</string>
-    <string name="menu_share_apk_file">Plik pakietu</string>
     <string name="menu_back">Wróć</string>
+    <string name="menu_app_info">Informacje o aplikacji</string>
+    <!-- Launch an app -->
     <string name="menu_launch">Uruchom</string>
-    <string name="menu_open_file">Otwórz</string>
+    <string name="menu_customize">Dostosuj</string>
+    <!-- Open a file in the corresponding app -->
+    <string name="menu_open_file">Otwarte</string>
+    <string name="menu_map">Zobacz na mapie</string>
+    <string name="menu_website">Otwórz stronę www</string>
+    <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
+    <string name="action_undo">Cofnij</string>
+    <string name="action_import">Importuj</string>
+    <!-- Delete something (a file or a web search shortcut) -->
+    <string name="menu_delete">Usuń</string>
+    <string name="menu_remove">Usuń</string>
+    <!-- Open a contact in the contacts app -->
     <string name="menu_contacts_open_externally">Otwórz w kontaktach</string>
+    <!-- Open an event in the calendar app -->
     <string name="menu_calendar_open_externally">Otwórz w kalendarzu</string>
+    <!-- Shown in the search bar when the search text field is empty -->
+    <string name="search_bar_placeholder">Szukaj</string>
+    <!-- App version, used in application details %1$s is the version -->
     <string name="app_info_version">Wersja %1$s</string>
+    <!-- Menu entry for launcher settings -->
     <string name="settings">Ustawienia</string>
+    <!-- Menu entry for launcher help -->
+    <string name="help">Pomoc</string>
+    <!-- Set the device's wallpaper -->
     <string name="wallpaper">Tapeta</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north">Północ</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north_east">Północny-wschód</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_north_east">Północny północny wschód</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east_north_east">Wschodni północny wschód</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east">Wschód</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east_south_east">Wschodni południowy wschód</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south_east">Południowy-wschód</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_south_east">Południowy południowy zachód</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south">Południe</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_south_west">Południowy południowy zachód</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_west">Południowy-zachód</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west_south_west">Zachodni południowy zachód</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west">Zachód</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west_north_west">Zachodni północny zachód</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north_west">Północny-zachód</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_north_west">Północny północny zachód</string>
+    <!-- No rain or snow, used in weather widget -->
+    <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
+     This should point to the Wikipedia in the given language. If no such Wikipedia exists,
+      a fallback that is suited best for most users of this language should be used
+      (English in most cases) -->
+    <string name="wikipedia_url">https://pl.wikipedia.org</string>
+    <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Z Wikipedii</string>
+    <!-- File meta data, title of audio tracks -->
     <string name="file_meta_title">Tytuł: %1$s</string>
+    <!-- File meta data, artist of audio tracks -->
     <string name="file_meta_artist">Artysta: %1$s</string>
-    <string name="file_meta_album">Album: %1$s</string>
+    <!-- File meta data, album of audio tracks -->
+    <!-- File meta data, duration of audio tracks -->
     <string name="file_meta_duration">Czas: %1$s</string>
+    <!-- File meta data, year of audio tracks -->
     <string name="file_meta_year">Rok: %1$s</string>
+    <!-- File size -->
     <string name="file_meta_size">Rozmiar: %1$s</string>
+    <!-- File path -->
+    <string name="file_meta_path">Ścieżka: %1$s</string>
+    <!-- File type (MIME type) -->
     <string name="file_meta_type">Typ: %1$s</string>
+    <!-- File meta, image/video dimensions -->
+    <string name="file_meta_dimensions">Rozdzielczość: %1$s</string>
+    <!-- File meta, app name of APK files -->
     <string name="file_meta_app_name">Nazwa aplikacji: %1$s</string>
+    <!-- File meta, version name of APK files -->
     <string name="file_meta_app_version">Wersja: %1$s</string>
+    <!-- File meta, package name of APK files -->
+    <string name="file_meta_app_pkgname">Nazwa pakietu: %1$s</string>
+    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
     <string name="file_meta_app_min_sdk">Minimalna wersja SDK: %1$s</string>
+    <!-- File meta, owner (for files that are stored in a cloud) -->
     <string name="file_meta_owner">Właściciel: %1$s</string>
+    <!-- File meta, location (e.g. location where a photo has been taken) -->
     <string name="file_meta_location">Lokalizacja: %1$s</string>
     <string name="file_type_directory">Folder</string>
-    <string name="file_meta_dimensions">Rozdzielczość: %1$s</string>
+    <!-- ZIP, TAR, … archive files  -->
     <string name="file_type_archive">Plik archiwum</string>
-    <string name="file_type_source_code">Plik kodu źródłowego</string>
-    <string name="file_type_document">Dokument</string>
-    <string name="file_type_spreadsheet">Arkusz</string>
-    <string name="file_type_music">Plik muzyczny</string>
-    <string name="file_type_video">Wideo</string>
-    <string name="file_type_image">Zdjęcie</string>
-    <string name="file_type_none">Plik</string>
-    <string name="file_type_presentation">Prezentacja</string>
+    <!-- APK file  -->
     <string name="file_type_android">Plik pakietu Android</string>
+    <!-- Code file (source code in a programming language) -->
+    <string name="file_type_source_code">Plik kodu źródłowego</string>
+    <!-- Word document -->
+    <string name="file_type_document">Dokument</string>
+    <!-- Excel spreadsheet -->
+    <string name="file_type_spreadsheet">Arkusz</string>
+    <!-- Audio file -->
+    <string name="file_type_music">Plik muzyczny</string>
+    <!-- Video file -->
+    <string name="file_type_video">Wideo</string>
+    <!-- Picture file -->
+    <string name="file_type_image">Zdjęcie</string>
+    <!-- Generic file without file extension -->
+    <string name="file_type_none">Plik</string>
+    <!-- Powerpoint presentation -->
+    <string name="file_type_presentation">Prezentacja</string>
+    <!-- BZIP, GZIP, … compressed file -->
     <string name="file_type_compressed">Plik skompresowany</string>
+    <!-- Plain text (TXT) file -->
     <string name="file_type_text">Plik tekstowy</string>
-    <string name="file_type_generic">Plik %1$s</string>
-    <string name="alert_delete_directory">Folder %1$s zostanie trwale usunięty razem z jego zawartością. Czy chcesz kontynuować\?</string>
-    <string name="alert_delete_file">Plik %1$s zostanie trwale usunięty. Czy chcesz kontynuować\?</string>
-    <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
-    <string name="default_websearch_3_name">Sklep Play</string>
-    <string name="file_type_ebook">E-book</string>
+    <!-- E-book file -->
+    <!-- Google Drawings file -->
     <string name="file_type_drawing">Rysunek</string>
+    <!-- Google Forms file -->
     <string name="file_type_form">Formularz</string>
+    <!-- Launcher backup, %1$s: app name -->
+    <string name="file_type_launcherbackup">Kopia zapasowa %1$s</string>
+    <!-- Launcher theme, %1$s: app name -->
+    <string name="file_type_launchertheme">%1$s temat</string>
+    <!-- Generic file , %1$s is the file extension -->
+    <string name="file_type_generic">Plik %1$s</string>
+    <!-- Warning message that is shown when a user attempts to delete a directory -->
+    <string name="alert_delete_directory">Folder %1$s zostanie trwale usunięty razem z jego zawartością. Czy chcesz kontynuować\?</string>
+    <!-- Warning message that is shown when a user attempts to delete a file -->
+    <string name="alert_delete_file">Plik %1$s zostanie trwale usunięty. Czy chcesz kontynuować\?</string>
+    <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
+    <string name="alert_delete_shortcut">Skrót %1$s zostanie trwale usunięty. Czy chcesz kontynuować\?</string>
+    <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
+    could not be opened because there was no app installed that could handle the request  -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the first one. Must be in sync with [default_websearch_1_url].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the first one. Must be in sync with [default_websearch_1_name].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the second one. Must be in sync with [default_websearch_2_url].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the second one. Must be in sync with [default_websearch_2_name].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the third one. Must be in sync with [default_websearch_3_url].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <string name="default_websearch_3_name">Sklep Play</string>
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the third one. Must be in sync with [default_websearch_3_name].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <string name="websearch_dialog_url_error">W tym adresie URL brakuje wyrazu \'${1}\'</string>
+    <string name="websearch_dialog_replace_icon">Zastąp ikonkę</string>
     <string name="websearch_dialog_delete_icon">Usuń ikonkę</string>
     <string name="websearch_dialog_custom_icon">Niestandardowa ikonka</string>
+    <string name="websearch_dialog_advanced">Zaawansowane</string>
+    <string name="websearch_dialog_query_encoding">Kodowanie zapytania</string>
+    <string name="websearch_dialog_query_encoding_url">Kodowanie procentowe</string>
+    <string name="websearch_dialog_query_encoding_none">Brak</string>
     <string name="menu_edit_widgets">Edytuj widżety</string>
     <string name="widget_name_weather">Pogoda</string>
     <string name="widget_name_calendar">Kalendarz</string>
     <string name="widget_name_music">Muzyka</string>
     <string name="widget_name_favorites">Ulubione</string>
+    <string name="widget_name_notes">Widżet przechowujący pojedynczą notatkę</string>
+    <string name="widget_name_unknown">Nieznany widżet</string>
     <string name="widget_add_widget">Dodaj widżet</string>
+    <!-- Add a third party widget (=a standard Android app widget) -->
+    <string name="notes_widget_placeholder">Napisz notatkę…</string>
+    <string name="notes_widget_action_new">Nowa notatka</string>
+    <!-- Save / export the current note content as markdown file -->
+    <string name="notes_widget_action_save">Zapisz</string>
+    <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
+    <string name="notes_widget_export_filename">Notatka_%1$s</string>
+    <string name="notes_widget_action_dismiss">Odrzuć</string>
+    <string name="notes_widget_dismissed">Notatka odrzucona.</string>
+    <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
+    <string name="shortcut_summary">Z %1$s</string>
+    <!-- Wait, we have easter eggs? No way! -->
+    <string name="easter_egg_text">No cóż, zostałem odnaleziony. Gratulacje. Warto było\?</string>
+    <!-- Close a dialog -->
+    <string name="close">Zamknij</string>
+    <string name="save">Zapisz</string>
+    <string name="duplicate">Duplikuj</string>
+    <string name="edit">Edytuj</string>
+    <string name="skip">Pomiń</string>
+    <string name="action_next">Dalej</string>
+    <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Wyłącz</string>
     <string name="widget_action_remove">Usuń</string>
+    <string name="widget_action_replace">Zamień</string>
     <string name="menu_item_edit_favs">Edytuj ulubione</string>
+    <!-- Edit favorites, title for items that are frequently used but not pinned -->
+    <string name="edit_favorites_dialog_unpinned">Nie przypięte - często używane</string>
+    <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
     <string name="edit_favorites_dialog_pinned_unsorted">Przypięte - sortowane automatycznie</string>
+    <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
     <string name="edit_favorites_dialog_pinned_sorted">Przypięte - sortowane manualnie</string>
-    <string name="owncloud_password">Hasło</string>
-    <string name="owncloud_username">Nazwa użytkownika</string>
+    <string name="edit_favorites_dialog_empty_section">Przeciągnij elementy tutaj</string>
+    <string name="edit_favorites_dialog_tags">Tagi</string>
+    <string name="edit_favorites_dialog_tag_section_empty">Przypięte tagi pojawią się tutaj</string>
+    <string name="edit_favorites_dialog_new_tag">Utwórz tag…</string>
+    <!-- Nextcloud login flow, URL-->
+    <string name="nextcloud_server_url">Adres URL serwera Nextcloud</string>
+    <!-- Nextcloud/Owncloud login flow, empty URL-->
+    <!-- Nextcloud login flow, error invalid URL-->
     <string name="nextcloud_server_invalid_url">Adres URL nie wskazuje na żadną właściwą instalacje Nextcloud</string>
+    <!-- Owncloud login flow, UR-->
     <string name="owncloud_server_url">Adres URL serwera Owncloud</string>
+    <!-- Owncloud login flow, error invalid URL-->
     <string name="owncloud_server_invalid_url">Adres URL nie wskazuje na żadną właściwą instalacje Owncloud</string>
+    <!-- Owncloud login flow, password-->
+    <string name="owncloud_password">Hasło</string>
+    <!-- Owncloud login flow, user name-->
+    <string name="owncloud_username">Nazwa użytkownika</string>
+    <!-- Owncloud login flow -->
+    <string name="owncloud_login_2fa_hint">Jeśli posiadasz uwierzytelnianie dwuskładowe, musisz podać hasło aplikacji tutaj.</string>
+    <!-- Owncloud login flow, login failed -->
+    <string name="owncloud_login_failed">Logowanie nie powiodło się: nieprawidłowa nazwa użytkownika lub hasło.</string>
+    <!-- Owncloud login flow, error: username empty -->
+    <!-- Owncloud login flow, error: password empty -->
+    <!-- Nextcloud/Owncloud login flow, continue button -->
     <string name="login_flow_continue">Kontynuuj</string>
+    <!-- Nextcloud/Owncloud login flow, login button -->
     <string name="login_flow_login">Zaloguj się</string>
     <string name="disclaimer">Ostrzeżenie</string>
-    <string name="show_all">Pokaż wszystkie</string>
-    <string name="date_today">Dzisiaj</string>
-    <string name="date_tomorrow">Jutro</string>
-    <string name="calendar_widget_pinned_events">Nadchodzące</string>
-    <string name="calendar_widget_no_events">Brak wydarzeń</string>
-    <string name="weather_condition_heavyrain">Ciężki deszcz</string>
-    <string name="weather_condition_lightsnowandthunder">Lekki śnieg z piorunami</string>
-    <string name="weather_condition_lightrain">Lekki deszcz</string>
-    <string name="weather_condition_lightrainshowers">Lekkie przelotne opady deszczu</string>
-    <string name="weather_condition_lightsnow">Lekki śnieg</string>
-    <string name="weather_condition_sleetshowers">Przelotne opady śniegu z deszczem</string>
-    <string name="weather_condition_lightsnowshowers">Lekkie przelotne opady śniegu</string>
-    <string name="weather_condition_lightrainshowersandthunder">Lekkie przelotne opady deszczu z piorunami</string>
-    <string name="weather_condition_lightssleetshowersandthunder">Lekki śnieg z deszczem i piorunami</string>
-    <string name="weather_condition_heavysleetshowers">Ciężkie przelotne opady śniegu z deszczem</string>
-    <string name="weather_condition_heavysnow">Ciężki śnieg</string>
-    <string name="weather_condition_cloudy">Pochmurnie</string>
-    <string name="weather_condition_snow">Śnieg</string>
-    <string name="weather_condition_hail">Grad</string>
-    <string name="weather_condition_heavysnowshowers">Ciężkie przelotne opady śniegu</string>
-    <string name="weather_condition_heavyrainshowers">Ciężkie przelotne opady deszczu</string>
-    <string name="weather_condition_rainshowersandthunder">Przelotne opady deszczu z piorunami</string>
-    <string name="weather_condition_clearsky">Czyste niebo</string>
-    <string name="weather_condition_sleet">Śnieg z deszczem</string>
-    <string name="weather_condition_rain">Deszcz</string>
-    <string name="weather_condition_lightssnowshowersandthunder">Lekkie przelotne opady śniegu z piorunami</string>
-    <string name="weather_condition_heavyrainshowersandthunder">Ciężkie przelotne opady deszczu z piorunami</string>
-    <string name="weather_condition_fair">Ładna pogoda</string>
-    <string name="weather_condition_fog">Mgła</string>
-    <string name="weather_condition_rainandthunder">Deszcz z piorunami</string>
-    <string name="weather_condition_lightsleet">Lekki śnieg z deszczem</string>
-    <string name="weather_condition_heavysleetandthunder">Ciężki śnieg z deszczem i piorunami</string>
-    <string name="weather_condition_partlycloudy">Częściowo pochmurnie</string>
-    <string name="weather_condition_rainshowers">Przelotne opady deszczu</string>
-    <string name="weather_condition_lightsleetandthunder">Lekki śnieg z deszczem i piorunami</string>
-    <string name="weather_condition_heavysnowshowersandthunder">Ciężkie przelotne opady śniegu z piorunami</string>
-    <string name="weather_condition_lightsleetshowers">Lekkie przelotne opady śniegu z deszczem</string>
-    <string name="weather_condition_snowshowers">Przelotne opady śniegu</string>
-    <string name="weather_condition_heavyrainandthunder">Ciężki deszcz z piorunami</string>
-    <string name="weather_condition_wind">Wiatr</string>
-    <string name="weather_condition_unknown">Nieznany</string>
-    <string name="preference_screen_appearance">Wygląd</string>
-    <string name="preference_theme">Motyw</string>
-    <string name="preference_theme_light">Jasny</string>
-    <string name="preference_theme_dark">Ciemny</string>
-    <string name="preference_colors_default">Domyślny</string>
-    <string name="preference_colors_bw">Czarno-biały</string>
-    <string name="preference_screen_colors">Kolorystyka</string>
-    <string name="preference_screen_about">O aplikacji</string>
-    <string name="preference_version">Wersja</string>
-    <string name="preference_weather_provider">Dostawca</string>
-    <string name="preference_screen_appearance_summary">Dostosuj wygląd</string>
-    <string name="provider_metno">MET Norway</string>
-    <string name="provider_openweathermap">OpenWeatherMap</string>
-    <string name="provider_brightsky">Deutscher Wetterdienst (jedynie w Niemczech)</string>
-    <string name="provider_here">HERE</string>
-    <string name="preference_category_links">Linki</string>
-    <string name="preference_screen_about_summary">Informacje o aplikacji i licencji</string>
-    <string name="preference_category_location">Lokalizacja</string>
-    <string name="preference_imperial_units">Jednostki imperialne</string>
-    <string name="preference_category_icons">Ikonki</string>
-    <string name="preference_location">Lokalizacja</string>
-    <string name="preference_category_debug">Debug</string>
-    <string name="preference_cards">Karty</string>
-    <string name="preference_cards_summary">Dostosuj wygląd kart</string>
-    <string name="preference_icon_shape">Kształt</string>
-    <string name="preference_icon_shape_square">Kwadrat</string>
-    <string name="preference_icon_shape_rounded_square">Zaokrąglony kwadrat</string>
-    <string name="preference_icon_shape_hexagon">Heksagon</string>
-    <string name="preference_icon_pack">Paczka ikon</string>
-    <string name="preference_icon_pack_summary_empty">Brak zainstalowanych paczek ikon</string>
-    <string name="preference_category_system_bars">Paski systemowe</string>
-    <string name="preference_signin_user">Zalogowany jako %1$s</string>
-    <string name="preference_summary_not_logged_in">Nie jesteś zalogowany</string>
-    <string name="preference_icon_shape_pentagon">Pięciokąt</string>
-    <string name="preference_category_wallpaper">Tapeta</string>
-    <string name="preference_dim_wallpaper">Przyciemniona tapeta</string>
-    <string name="preference_dim_wallpaper_summary">W ciemnych motywach, przyciemnij tapetę</string>
-    <string name="preference_wallpaper_summary">Wybierz tapetę</string>
-    <string name="preference_nextcloud_signin">Zaloguj się do Nextcloud</string>
-    <string name="preference_owncloud">Owncloud</string>
-    <string name="preference_owncloud_signin">Zaloguj się do Owncloud</string>
-    <string name="preference_about_telegram">Grupa Telegram</string>
-    <string name="preference_about_fdroid">Repozytorium F-Droid</string>
-    <string name="preference_owncloud_signin_summary">Zaloguj się, aby móc przeszukiwać twój serwer Owncloud</string>
-    <string name="preference_about_license">Ta aplikacja jest wolnym oprogramowaniem.</string>
-    <string name="preference_category_grid">Siatka</string>
-    <string name="preference_grid_icon_size">Rozmiar ikon</string>
-    <string name="preference_grid_column_count">Liczba kolumn</string>
-    <string name="preference_screen_debug">Debug</string>
-    <string name="preference_screen_debug_summary">Narzędzia do rozwiązywania problemów</string>
-    <string name="preference_category_widgets">Widżety</string>
-    <string name="preference_screen_weatherwidget">Pogoda</string>
-    <string name="preference_screen_clockwidget">Zegar</string>
-    <string name="preference_clockwidget_layout_vertical">Pionowy</string>
-    <string name="preference_clockwidget_layout_horizontal">Poziomy</string>
-    <string name="preference_clockwidget_date_part">Data</string>
-    <string name="preference_clockwidget_date_part_summary">Pokaż aktualną datę</string>
-    <string name="preference_clockwidget_favorites_part">Główny dock</string>
-    <string name="preference_screen_search_summary">Wyszukiwanie, tagi, ukryte elementy</string>
-    <string name="preference_clockwidget_alarm_part">Alarmy</string>
-    <string name="preference_search_files">Pliki</string>
-    <string name="preference_search_contacts">Kontakty</string>
-    <string name="preference_search_contacts_summary">Szukaj kontaktów zapisanych na urządzeniu</string>
-    <string name="preference_search_calendar">Kalendarz</string>
-    <string name="preference_search_calendar_summary">Szukaj nadchodzących wydarzeń</string>
-    <string name="preference_search_calculator">Kalkulator</string>
-    <string name="preference_search_calculator_summary">Wykonywaj obliczenia matematyczne</string>
-    <string name="preference_search_unitconverter">Konwerter jednostek</string>
-    <string name="preference_search_unitconverter_summary">Użycie: 1.5 kg lub 4 cm &gt;&gt; in</string>
-    <string name="preference_search_currencyconverter">Konwerter walut</string>
-    <string name="preference_search_websites">Strony internetowe</string>
-    <string name="preference_search_localfiles">Lokalne pliki</string>
-    <string name="preference_search_wikipedia_summary">Przeszukaj wolną encyklopedię</string>
-    <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="preference_search_cloud_summary">Szukaj plików użytkownika %1$s</string>
-    <string name="preference_calendar_calendars">Kalendarze</string>
-    <string name="preference_search_bar_style">Styl</string>
-    <string name="preference_search_bar_auto_focus">Pokaż klawiaturę</string>
-    <string name="battery_part_charging">Ładowanie</string>
-    <string name="connect_account">Połącz konto</string>
-    <plurals name="battery_part_remaining_charge_time">
-        <item quantity="one">Naładowany w %1$s minutę</item>
-        <item quantity="few">Naładowany w %1$s minuty</item>
-        <item quantity="many">Naładowany w %1$s minut</item>
-        <item quantity="other">Naładowany w %1$s minut</item>
-    </plurals>
-    <string name="menu_app_info">Informacje o aplikacji</string>
-    <string name="menu_delete">Usuń</string>
-    <string name="search_bar_placeholder">Szukaj</string>
-    <string name="preference_screen_search">Wyszukiwanie</string>
-    <string name="wind_east">Wschód</string>
-    <string name="preference_search_favorites">Ulubione</string>
-    <string name="wind_south_west">Południowy-zachód</string>
-    <string name="preference_search_favorites_summary">Pokazuje przypięte oraz często używane rzeczy nad listą aplikacji</string>
-    <string name="wind_west">Zachód</string>
-    <string name="preference_search_files_summary">Szukaj lokalnych plików oraz plików zapisanych w chmurze</string>
-    <string name="wikipedia_url">https://pl.wikipedia.org</string>
-    <string name="preference_search_wikipedia">Wikipedia</string>
-    <string name="file_meta_path">Ścieżka: %1$s</string>
-    <string name="file_meta_app_pkgname">Nazwa pakietu: %1$s</string>
-    <string name="preference_search_localfiles_summary">Szukaj dokumentów, zdjęć oraz innych plików na twoim urządzeniu</string>
-    <string name="default_websearch_2_name">YouTube</string>
-    <string name="preference_nextcloud">Nextcloud</string>
-    <string name="preference_category_license">Licencja</string>
-    <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="preference_about_license_summary">Licencjonowana pod GNU General Public License 3.0</string>
-    <string name="weather_condition_heavysleet">Ciężki śnieg z deszczem</string>
-    <string name="close">Zamknij</string>
-    <string name="weather_condition_heavysleetshowersandthunder">Ciężkie przelotne opady śniegu z deszczem i piorunami</string>
-    <string name="edit_favorites_dialog_unpinned">Nie przypięte - często używane</string>
-    <string name="preference_clockwidget_favorites_part_summary">Pokaż pierwszy rząd przypiętych rzeczy</string>
-    <string name="weather_condition_snowandthunder">Śnieg z piorunami</string>
-    <string name="owncloud_login_2fa_hint">Jeśli posiadasz uwierzytelnianie dwuskładowe, musisz podać hasło aplikacji tutaj.</string>
-    <string name="preference_clockwidget_music_part">Media</string>
-    <string name="weather_condition_lightrainandthunder">Lekki deszcz z piorunami</string>
-    <string name="owncloud_login_failed">Logowanie nie powiodło się: nieprawidłowa nazwa użytkownika lub hasło.</string>
-    <string name="preference_clockwidget_battery_part">Bateria</string>
-    <string name="weather_condition_sleetandthunder">Śnieg z deszczem i piorunami</string>
-    <string name="calendar_event_allday">cały dzień</string>
-    <string name="preference_clockwidget_battery_part_summary">Pokaż aktualny poziom baterii kiedy jest bliska wyczerpaniu lub gdy się ładuje</string>
-    <string name="weather_condition_sleetshowersandthunder">Przelotne opady śniegu z deszczem i piorunami</string>
-    <string name="menu_share_store_link">Link %1$s</string>
-    <string name="preference_clockwidget_alarm_part_summary">Pokaż alarmy które zadzwonią w ciągu 15 minut</string>
-    <string name="weather_condition_heavysnowandthunder">Ciężki śnieg z piorunami</string>
-    <string name="websearch_dialog_replace_icon">Zastąp ikonkę</string>
-    <string name="weather_condition_snowshowersandthunder">Przelotne opady śniegu z piorunami</string>
-    <string name="no_account_nextcloud">Konto Nextcloud nie zostało jeszcze połączone</string>
-    <string name="no_account_owncloud">Konto Owncloud nie zostało jeszcze połączone</string>
-    <string name="shortcut_summary">Z %1$s</string>
-    <string name="weather_no_data">Brak dostępnych informacji o pogodzie.</string>
-    <string name="nextcloud_server_url">Adres URL serwera Nextcloud</string>
-    <string name="weather_widget_set_location">Ustaw lokalizację</string>
-    <string name="grant_permission">Przyznaj</string>
-    <string name="easter_egg_text">No cóż, zostałem odnaleziony. Gratulacje. Warto było\?</string>
+    <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
     <string name="disclaimer_currency_converter">Kurs walut, taki jak udostępniany codziennie przez Centralny Bank Europejski. Wszystkie informacje są dostarczane \"takie jakie są\" bez jakiejkolwiek gwarancji. Nie ponosimy odpowiedzialności za podane informacje.
 \n
 \nOstatnia aktualizacja: %1$s</string>
-    <string name="preference_category_licenses">Licencje otwarto źródłowe</string>
-    <string name="preference_automatic_location_summary">Użyj GPS i usług lokalizacyjnych aby ustalić twoją lokalizację automatycznie</string>
-    <string name="open_webpage">Otwórz stronę internetową</string>
-    <string name="preference_icon_shape_platform">Domyślne systemowe</string>
-    <string name="preference_automatic_location">Automatyczna lokalizacja</string>
-    <string name="preference_icon_shape_circle">Okrąg</string>
-    <string name="preference_imperial_units_summary">Użyj stopni Fahrenheit\'a oraz mil na godzinę</string>
-    <string name="preference_category_searchbar">Pasek wyszukiwania</string>
-    <string name="preference_screen_integrations_summary">Zarządzaj połączonymi kontami i usługami</string>
-    <string name="preference_nextcloud_signin_summary">Zaloguj się, aby móc przeszukiwać twój serwer Nextcloud</string>
-    <string name="preference_search_currencyconverter_summary">Cyklicznie pobieraj kurs walut do konwersji walut</string>
-    <string name="preference_search_websites_summary">Pokazuj podgląd strony internetowej gdy wyszukiwaną frazą jest adres URL</string>
-    <string name="preference_wikipedia_customurl">Adres URL Wikipedii</string>
-    <string name="preference_search_bar_auto_focus_summary">Automatyczne wyświetlanie klawiatury po otwarciu szuflady aplikacji</string>
-    <string name="preference_search_bar_style_summary">Dostosuj wygląd paska wyszukiwania</string>
-    <string name="action_undo">Cofnij</string>
-    <string name="preference_hidden_items_summary">Zarządzaj ukrytymi aplikacjami i wynikami wyszukiwania</string>
-    <string name="preference_hidden_items">Ukryte elementy</string>
-    <string name="wind_east_south_east">Wschodni południowy wschód</string>
-    <string name="wind_south_south_east">Południowy południowy zachód</string>
-    <string name="wind_west_south_west">Zachodni południowy zachód</string>
-    <string name="wind_west_north_west">Zachodni północny zachód</string>
-    <string name="music_widget_no_data">Nie odtworzono jeszcze żadnych mediów</string>
-    <string name="wind_north_north_east">Północny północny wschód</string>
-    <string name="missing_permission_auto_location">Dostęp do lokalizacji jest wymagany, by aktualizować położenie automatycznie</string>
-    <string name="wind_east_north_east">Wschodni północny wschód</string>
-    <string name="websearch_dialog_url_error">W tym adresie URL brakuje wyrazu \'${1}\'</string>
+    <string name="show_all">Pokaż wszystkie</string>
+    <!-- Used in calendar widget date selector. -->
+    <string name="date_today">Dzisiaj</string>
+    <!-- Used in calendar widget date selector. -->
+    <string name="date_tomorrow">Jutro</string>
+    <!-- Headline used in calendar widget for pinned events -->
+    <string name="calendar_widget_pinned_events">Nadchodzące</string>
+    <!-- Headline used in calendar widget for the next event, if there is no event today -->
+    <string name="calendar_widget_next_events">Następne wydarzenie</string>
+    <string name="calendar_widget_no_events">Brak wydarzeń</string>
+    <!--
+        In the calendar widget, only events that start or end at the selected date are shown.
+        If an event runs for three days, it won't be listed if the second day is selected.
+        Instead, the following text will be shown, %1$d being the total number of
+        running events that neither started nor will end on the selected day.
+        -->
     <plurals name="calendar_widget_running_events">
         <item quantity="one">+%1$d wydarzenie w toku z poprzednich dni</item>
         <item quantity="few">+%1$d wydarzenia w toku z poprzednich dni</item>
         <item quantity="many">+%1$d wydarzeń w toku z poprzednich dni</item>
         <item quantity="other">+%1$d wydarzeń w toku z poprzednich dni</item>
     </plurals>
-    <string name="save">Zapisz</string>
-    <string name="missing_permission_calendar_widget_settings">Ten widżet potrzebuje uprawnień dostępu do kalendarza</string>
-    <string name="file_type_launcherbackup">Kopia zapasowa %1$s</string>
-    <string name="wind_south_south_west">Południowy południowy zachód</string>
-    <string name="wind_north_north_west">Północny północny zachód</string>
-    <string name="calendar_widget_next_events">Następne wydarzenie</string>
+    <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">cały dzień</string>
+    <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s odtwarza media</string>
+    <string name="music_widget_no_data">Nie odtworzono jeszcze żadnych mediów</string>
+    <string name="weather_condition_sleetshowers">Przelotne opady śniegu z deszczem</string>
+    <string name="weather_condition_heavysleet">Ciężki śnieg z deszczem</string>
+    <string name="weather_condition_lightrainshowersandthunder">Lekkie przelotne opady deszczu z piorunami</string>
+    <string name="weather_condition_heavyrain">Ciężki deszcz</string>
+    <string name="weather_condition_lightsnowandthunder">Lekki śnieg z piorunami</string>
+    <string name="weather_condition_lightrain">Lekki deszcz</string>
+    <string name="weather_condition_lightrainshowers">Lekkie przelotne opady deszczu</string>
+    <string name="weather_condition_lightsnow">Lekki śnieg</string>
+    <string name="weather_condition_heavysleetshowersandthunder">Ciężkie przelotne opady śniegu z deszczem i piorunami</string>
+    <string name="weather_condition_lightsnowshowers">Lekkie przelotne opady śniegu</string>
+    <string name="weather_condition_lightssleetshowersandthunder">Lekki śnieg z deszczem i piorunami</string>
+    <string name="weather_condition_snowandthunder">Śnieg z piorunami</string>
+    <string name="weather_condition_heavysleetshowers">Ciężkie przelotne opady śniegu z deszczem</string>
+    <string name="weather_condition_heavysnow">Ciężki śnieg</string>
+    <string name="weather_condition_cloudy">Pochmurnie</string>
+    <string name="weather_condition_lightrainandthunder">Lekki deszcz z piorunami</string>
+    <string name="weather_condition_snow">Śnieg</string>
+    <string name="weather_condition_hail">Grad</string>
+    <string name="weather_condition_thunderstorm">Burza z piorunami</string>
+    <string name="weather_condition_heavysnowshowers">Ciężkie przelotne opady śniegu</string>
+    <string name="weather_condition_heavyrainshowers">Ciężkie przelotne opady deszczu</string>
+    <string name="weather_condition_rainshowersandthunder">Przelotne opady deszczu z piorunami</string>
+    <string name="weather_condition_clearsky">Czyste niebo</string>
+    <string name="weather_condition_sleet">Śnieg z deszczem</string>
+    <string name="weather_condition_rain">Deszcz</string>
+    <string name="weather_condition_sleetandthunder">Śnieg z deszczem i piorunami</string>
+    <string name="weather_condition_lightssnowshowersandthunder">Lekkie przelotne opady śniegu z piorunami</string>
+    <string name="weather_condition_heavyrainshowersandthunder">Ciężkie przelotne opady deszczu z piorunami</string>
+    <string name="weather_condition_fair">Ładna pogoda</string>
+    <string name="weather_condition_fog">Mgła</string>
+    <string name="weather_condition_sleetshowersandthunder">Przelotne opady śniegu z deszczem i piorunami</string>
+    <string name="weather_condition_rainandthunder">Deszcz z piorunami</string>
+    <string name="weather_condition_lightsleet">Lekki śnieg z deszczem</string>
+    <string name="weather_condition_heavysleetandthunder">Ciężki śnieg z deszczem i piorunami</string>
+    <string name="weather_condition_partlycloudy">Częściowo pochmurnie</string>
+    <string name="weather_condition_heavysnowandthunder">Ciężki śnieg z piorunami</string>
+    <string name="weather_condition_rainshowers">Przelotne opady deszczu</string>
+    <string name="weather_condition_lightsleetandthunder">Lekki śnieg z deszczem i piorunami</string>
+    <string name="weather_condition_heavysnowshowersandthunder">Ciężkie przelotne opady śniegu z piorunami</string>
+    <string name="weather_condition_lightsleetshowers">Lekkie przelotne opady śniegu z deszczem</string>
+    <string name="weather_condition_snowshowersandthunder">Przelotne opady śniegu z piorunami</string>
+    <string name="weather_condition_snowshowers">Przelotne opady śniegu</string>
+    <string name="weather_condition_heavyrainandthunder">Ciężki deszcz z piorunami</string>
+    <string name="weather_condition_wind">Wiatr</string>
+    <string name="weather_condition_unknown">Nieznany</string>
+    <!-- Humidity details, %1$s: formatted humidity value -->
+    <!-- Wind details, %1$s: formatted wind values -->
+    <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <string name="weather_no_data">Brak dostępnych informacji o pogodzie.</string>
+    <!-- Manually set a location, used in weather widget location permission banner as an
+        alternative to granting the permission -->
+    <string name="weather_widget_set_location">Ustaw lokalizację</string>
     <string name="weather_location_search_no_result">Nie znaleziono położenia.</string>
+    <!-- Missing location permission in weather widget and weather widget settings settings -->
+    <string name="missing_permission_auto_location">Dostęp do lokalizacji jest wymagany, by aktualizować położenie automatycznie</string>
+    <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Dostęp do powiadomień jest wymagany do sterowania odtwarzaniem mediów</string>
-    <string name="missing_permission_calendar_search_settings">Dostęp do kalendarza jest wymagany do przeszukiwania kalendarza</string>
+    <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">Dostęp do kontaktów jest wymagany do wyszukiwania kontaktów</string>
-    <string name="frequently_used_show_in_favorites">Pokaż w ulubionych</string>
-    <string name="apps_profile_main">Osobisty</string>
-    <string name="menu_customize">Dostosuj</string>
-    <string name="action_next">Dalej</string>
+    <!-- Missing call permission in contacts settings screen -->
+    <!-- Missing calendar permission in search settings screen -->
+    <string name="missing_permission_calendar_search_settings">Dostęp do kalendarza jest wymagany do przeszukiwania kalendarza</string>
+    <!-- Missing calendar permission in calendar widget settings screen -->
+    <string name="missing_permission_calendar_widget_settings">Ten widżet potrzebuje uprawnień dostępu do kalendarza</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Nie możesz znaleźć kalendarza?</string>
+    <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
+    <string name="missing_permission_appshortcuts_search_settings">%1$s musi być ustawiona jako domyślna aplikacja ekranu głównego aby przeszukiwać skróty</string>
+    <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">Do przeszukiwania plików lokalnych wymagane jest uprawnienie do korzystania z zewnętrznej pamięci masowej</string>
+    <!-- Missing file permission in search settings screen.
+        Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
+        to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <string name="missing_permission_file_search_settings_android10">Uprawnienie \"Zarządzaj wszystkimi plikami\" jest wymagane do przeszukiwania plików lokalnych</string>
+    <!-- Missing notification permission, used in badge settings screen -->
+    <string name="missing_permission_notification_badges">Dostęp do powiadomień jest wymagany do wyświetlania plakietek powiadomień</string>
+    <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">Nadaj kalendarzowi uprawnienia do wyświetlania tutaj nadchodzących terminów i wydarzeń.</string>
+    <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">Przyznaj uprawnienia do kalendarza, aby przeszukać Twój kalendarz.</string>
+    <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">Przyznaj uprawnienia lokalizacji, aby przeszukiwać pobliskie lokalizacje.</string>
+    <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">Zezwól na przeszukiwanie zdjęć, multimediów i dokumentów w tym urządzeniu.</string>
+    <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">Zezwól na przeszukiwanie kontaktów.</string>
+    <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Ustaw %1$s jako domyślną aplikację ekranu głownego do wyszukiwania skrótów aplikacji.</string>
-    <string name="preference_layout_fixed_rotation">Ustalony obrót ekranu</string>
-    <string name="preference_layout_fixed_rotation_summary">Wymuś tryb portretowy</string>
+    <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
+    <string name="missing_permission_appshortcuts_create">Ustaw %1$s jako domyślną aplikację ekranu głownego aby tworzyć skróty.</string>
+    <!-- Grant a permission, shown in permission banners -->
+    <string name="grant_permission">Przyznaj</string>
+    <!-- Appearance preference title -->
+    <string name="preference_screen_appearance">Wygląd</string>
+    <string name="preference_theme">Motyw</string>
+    <string name="preference_theme_light">Jasny</string>
+    <string name="preference_theme_dark">Ciemny</string>
+    <string name="preference_screen_colors">Kolorystyka</string>
+    <string name="preference_colors_default">Domyślny</string>
+    <string name="preference_colors_bw">Czarno-biały</string>
+    <string name="preference_custom_colors_corepalette">Schemat kolorów</string>
+    <string name="preference_mdy_color_source">Źródło dynamicznych kolorów</string>
+    <string name="preference_mdy_color_source_wallpaper">Tapeta</string>
+    <string name="preference_shapes_default">Domyślny</string>
+    <string name="preference_transparencies_default">Domyślny</string>
+    <string name="preference_font">Czcionka</string>
+    <string name="preference_font_system">Domyślne</string>
+    <string name="preference_screen_about">O aplikacji</string>
+    <string name="preference_version">Wersja</string>
+    <string name="preference_category_links">Linki</string>
+    <string name="preference_category_licenses">Licencje otwarto źródłowe</string>
+    <string name="preference_category_advanced">Zaawansowane</string>
+    <!-- Open website of an open source library -->
+    <string name="open_webpage">Otwórz stronę www</string>
+    <string name="preference_screen_about_summary">Informacje o aplikacji i licencji</string>
+    <string name="preference_screen_appearance_summary">Dostosuj wygląd</string>
+    <string name="preference_weather_provider">Dostawca</string>
+    <string name="provider_brightsky">Deutscher Wetterdienst (jedynie w Niemczech)</string>
+    <string name="preference_category_location">Lokalizacja</string>
+    <string name="preference_automatic_location">Automatyczna lokalizacja</string>
+    <string name="preference_automatic_location_summary">Użyj GPS i usług lokalizacyjnych aby ustalić twoją lokalizację automatycznie</string>
+    <string name="preference_location_managed">Zarządzane przez wtyczkę</string>
+    <string name="preference_location_managed_summary">Lokalizacja tego dostawcy jest zarządzana przez wtyczkę</string>
+    <string name="preference_location">Lokalizacja</string>
+    <string name="preference_imperial_units_summary">Użyj stopni Fahrenheit\'a oraz mil na godzinę</string>
+    <string name="preference_imperial_units">Jednostki imperialne</string>
+    <string name="widget_config_weather_compact">Tryb kompaktowy</string>
+    <string name="preference_category_debug_tools">Narzędzia</string>
+    <string name="preference_debug_dump_heap">Migawka pamięci</string>
+    <string name="preference_debug_dump_heap_summary">Przechwytywanie migawki w celu analizy wykorzystania pamięci. Aplikacja zawiesi się do czasu zakończenia tego procesu.</string>
+    <string name="preference_debug_dump_heap_in_progress">Przechwytywanie migawki…</string>
+    <string name="preference_debug_cleanup_database">Wyczyść bazę danych</string>
+    <string name="preference_debug_cleanup_database_summary">Usuń uszkodzone i nieużywane wpisy z bazy danych launchera</string>
+    <string name="preference_debug_reinstall_iconpacks">Ponowna instalacja pakietów ikon</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Wyczyść i odbuduj pamięć podręczną pakietów ikon</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$d wpis usunięty.</item>
+        <item quantity="few">%1$d wpisy usunięte.</item>
+        <item quantity="many">%1$d wpisów usunięto.</item>
+        <item quantity="other">%1$d wpisów usunięto.</item>
+    </plurals>
+    <string name="preference_category_icons">Ikonki</string>
+    <string name="preference_cards">Karty</string>
+    <string name="preference_cards_summary">Dostosuj wygląd kart</string>
+    <string name="preference_cards_corner_radius">Promień narożnika</string>
+    <string name="preference_cards_stroke_width">Grubość linii</string>
+    <string name="preference_cards_opacity">Nieprzejrzystość</string>
+    <string name="preference_cards_shape">Kształt</string>
+    <string name="preference_cards_shape_rounded">Zaokrąglone</string>
+    <string name="preference_cards_shape_cut">Przycięte</string>
+    <string name="preference_icon_shape">Kształt</string>
+    <string name="preference_icon_shape_platform">Domyślne</string>
+    <string name="preference_icon_shape_square">Kwadrat</string>
+    <string name="preference_icon_shape_rounded_square">Zaokrąglony kwadrat</string>
+    <string name="preference_icon_shape_triangle">Trójkąt Reuleaux</string>
+    <string name="preference_icon_shape_circle">Okrąg</string>
+    <string name="preference_icon_shape_teardrop">Łza</string>
+    <string name="preference_icon_shape_pebble">Kamyk</string>
+    <string name="preference_icon_shape_hexagon">Heksagon</string>
+    <string name="preference_category_searchbar">Pasek wyszukiwania</string>
+    <string name="preference_screen_integrations">Integracja</string>
+    <string name="preference_screen_plugins">Wtyczki</string>
+    <string name="preference_screen_plugins_summary">Zarządzanie zainstalowanymi rozszerzeniami</string>
+    <string name="no_plugins_installed">Brak zainstalowanych wtyczek</string>
+    <string name="preference_theme_system">Systemowe</string>
+    <string name="preference_themed_icons">Ikony tematyczne</string>
+    <string name="preference_themed_icons_summary">Pokoloruj ikony zgodnie z kolorystyką aplikacji</string>
+    <string name="preference_force_themed_icons">Wymuś ikony tematyczne</string>
+    <string name="preference_force_themed_icons_summary">Zastosuj schemat kolorów aplikacji do wszystkich ikon, również tych nieobsługiwanych (niezalecane)</string>
+    <string name="preference_icon_pack">Paczka ikon</string>
+    <string name="preference_icon_pack_summary_empty">Brak zainstalowanych paczek ikon</string>
+    <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="preference_category_animations">Animacje</string>
+    <string name="preference_charging_animation">Animacja ładowania</string>
+    <string name="preference_charging_animation_summary">Odtwarzanie animacji bąbelków podczas ładowania urządzenia</string>
+    <string name="preference_category_system_bars">Paski systemowe</string>
+    <string name="preference_status_bar_icons">Ikony paska stanu</string>
+    <string name="preference_nav_bar_icons">Ikony paska nawigacyjnego</string>
+    <string name="preference_system_bar_icons_auto">Automatycznie</string>
+    <string name="preference_system_bar_icons_light">Jasny</string>
+    <string name="preference_system_bar_icons_dark">Ciemny</string>
+    <string name="preference_hide_status_bar">Ukryj pasek stanu</string>
+    <string name="preference_hide_nav_bar">Ukryj pasek nawigacji</string>
+    <string name="preference_screen_integrations_summary">Zarządzaj połączonymi kontami i usługami</string>
+    <string name="preference_signin_user">Zalogowany jako %1$s</string>
+    <string name="preference_summary_not_logged_in">Nie jesteś zalogowany</string>
+    <string name="preference_icon_shape_pentagon">Pięciokąt</string>
+    <string name="preference_category_wallpaper">Tapeta</string>
+    <string name="preference_dim_wallpaper">Przyciemniona tapeta</string>
+    <string name="preference_dim_wallpaper_summary">W ciemnych motywach, przyciemnij tapetę</string>
+    <string name="preference_blur_wallpaper">Rozmywaj tapetę</string>
+    <string name="preference_blur_wallpaper_summary">Użyj efektu rozmycia na tapecie</string>
+    <string name="preference_blur_wallpaper_unsupported">Nieobsługiwane na tym urządzeniu</string>
+    <string name="preference_blur_wallpaper_radius">Promień rozmycia</string>
+    <string name="preference_wallpaper_summary">Wybierz tapetę</string>
     <string name="preference_category_badges">Plakietki</string>
+    <string name="preference_notification_badges">Plakietki powiadomień</string>
+    <string name="preference_notification_badges_summary">Pokaż plakietki dla aplikacji z nieprzeczytanymi powiadomieniami</string>
+    <string name="preference_suspended_badges_summary">Pokaż plakietkę dla zawieszonych aplikacji</string>
+    <string name="preference_suspended_badges">Zawieszone aplikacje</string>
+    <string name="preference_cloud_badges">Plakietki przechowywania w chmurze</string>
+    <string name="preference_cloud_badges_summary">Pokaż plakietkę dla plików, które są przechowywane w chmurze</string>
+    <string name="preference_shortcut_badges">Plakietki skrótów</string>
+    <string name="preference_shortcut_badges_summary">Pokaż plakietkę, która wskazuje do jakiej aplikacji należy dany skrót</string>
+    <string name="preference_plugin_badges">Identyfikatory wtyczek</string>
+    <string name="preference_plugin_badges_summary">Wskazuje, przez którą wtyczkę został utworzony wynik wyszukiwania</string>
+    <string name="preference_nextcloud_signin">Zaloguj się do Nextcloud</string>
+    <string name="preference_nextcloud_signin_summary">Zaloguj się, aby móc przeszukiwać twój serwer Nextcloud</string>
+    <string name="preference_owncloud_signin">Zaloguj się do Owncloud</string>
+    <string name="preference_owncloud_signin_summary">Zaloguj się, aby móc przeszukiwać twój serwer Owncloud</string>
+    <string name="preference_about_telegram">Grupa Telegram</string>
+    <string name="preference_about_fdroid">Repozytorium F-Droid</string>
     <string name="preference_enforce_icon_shape">Wymuś kształt</string>
     <string name="preference_enforce_icon_shape_summary">Zastosuj kształt do wszystkich ikon, również do tych, które normalnie by go nie obsługiwały</string>
+    <string name="preference_category_license">Licencja</string>
+    <string name="preference_about_license">Ta aplikacja jest wolnym oprogramowaniem.</string>
+    <string name="preference_about_license_summary">Licencjonowana pod GNU General Public License 3.0</string>
+    <string name="preference_category_grid">Siatka</string>
+    <string name="preference_grid_icon_size">Rozmiar ikon</string>
+    <string name="preference_grid_column_count">Liczba kolumn</string>
     <string name="preference_grid_labels">Pokaż etykiety</string>
-    <string name="preference_restore_summary">Importuj wcześniej utworzoną kopię zapasową</string>
-    <string name="duplicate">Duplikuj</string>
-    <string name="missing_permission_file_search_settings_android10">Uprawnienie \"Zarządzaj wszystkimi plikami\" jest wymagane do przeszukiwania plików lokalnych</string>
-    <string name="missing_permission_calendar_widget">Nadaj kalendarzowi uprawnienia do wyświetlania tutaj nadchodzących terminów i wydarzeń.</string>
-    <string name="preference_icon_shape_triangle">Trójkąt Reuleaux</string>
-    <string name="preference_shortcut_badges_summary">Pokaż plakietkę, która wskazuje do jakiej aplikacji należy dany skrót</string>
     <string name="preference_grid_labels_summary">Pokaż nazwę aplikacji pod ikoną</string>
-    <string name="create_search_action_type_intent">Niestandardowy intent</string>
-    <string name="create_search_action_type_app">Wyszukiwanie w aplikacji</string>
+    <string name="preference_screen_debug_summary">Narzędzia do rozwiązywania problemów</string>
+    <string name="preference_category_widgets">Widżety</string>
+    <string name="preference_screen_weatherwidget">Pogoda</string>
+    <string name="preference_category_media_apps">Aplikacje multimedialne</string>
+    <string name="preference_screen_clockwidget">Zegar</string>
+    <string name="preference_screen_clockwidget_summary">Konfiguracja stylu i komponentów zegara</string>
+    <string name="preference_clockwidget_layout_vertical">Domyślny</string>
+    <string name="preference_clockwidget_layout_horizontal">Poziomy</string>
+    <string name="preference_clock_widget_show_seconds">Pokaż sekundy</string>
+    <string name="preference_clock_widget_time_format_system">Domyślne</string>
+    <string name="widget_use_theme_colors">Użyj koloru motywu</string>
+    <string name="preference_clock_widget_fill_height">Wypełnij wysokość ekranu</string>
+    <string name="preference_clock_widget_alignment">Wyrównanie</string>
+    <string name="preference_clock_widget_alignment_top">Góra</string>
+    <string name="preference_clock_widget_alignment_center">Środek</string>
+    <string name="preference_clock_widget_alignment_bottom">Dół</string>
+    <string name="preference_clockwidget_dynamic_zone">Dynamiczna strefa</string>
+    <string name="preference_clockwidget_date_part">Data</string>
+    <string name="preference_clockwidget_date_part_summary">Pokaż aktualną datę</string>
+    <string name="preference_clockwidget_favorites_part">Główny dock</string>
+    <string name="preference_clockwidget_favorites_part_summary">Pokaż pierwszy rząd przypiętych rzeczy</string>
+    <string name="preference_clockwidget_music_part_summary">Pokaż elementy sterujące mediów, gdy jest aktywna sesja multimedialna</string>
+    <string name="preference_clockwidget_battery_part">Bateria</string>
+    <string name="preference_clockwidget_battery_part_summary">Pokaż aktualny poziom baterii kiedy jest bliska wyczerpaniu lub gdy się ładuje</string>
+    <string name="preference_clockwidget_alarm_part">Alarmy</string>
+    <string name="preference_clockwidget_alarm_part_summary">Pokaż alarmy które zadzwonią w ciągu 15 minut</string>
+    <string name="preference_screen_backup">Kopia zapasowa i przywracanie</string>
+    <string name="preference_screen_backup_summary">Eksport i import danych launchera</string>
+    <string name="preference_backup">Kopia zapasowa</string>
+    <string name="preference_backup_summary">Eksportowanie preferencji i danych launchera</string>
     <string name="preference_restore">Przywróć</string>
+    <string name="preference_restore_summary">Importuj wcześniej utworzoną kopię zapasową</string>
+    <string name="preference_crash_reporter">Reporter błędów</string>
+    <string name="preference_crash_reporter_summary">Raporty o błędach i awariach</string>
+    <string name="preference_logs">Dzienniki zdarzeń</string>
+    <string name="preference_logs_summary">Wyświetlanie i eksportowanie dzienników zdarzeń aplikacji</string>
+    <string name="preference_screen_search">Szukaj</string>
+    <string name="preference_screen_search_summary">Wyszukiwanie, tagi, ukryte elementy</string>
+    <string name="preference_search_favorites">Ulubione</string>
+    <string name="preference_search_favorites_summary">Pokazuje przypięte oraz często używane rzeczy nad listą aplikacji</string>
+    <string name="preference_search_files">Pliki</string>
+    <string name="preference_search_files_summary">Szukaj lokalnych plików oraz plików zapisanych w chmurze</string>
+    <string name="preference_search_contacts">Kontakty</string>
+    <string name="preference_search_contacts_summary">Szukaj kontaktów zapisanych na urządzeniu</string>
+    <string name="preference_search_calendar">Kalendarz</string>
+    <string name="preference_search_calendar_summary">Szukaj nadchodzących wydarzeń</string>
+    <string name="preference_search_appshortcuts">Skróty aplikacji</string>
+    <string name="preference_search_appshortcuts_summary">Przeszukuj skróty aplikacji</string>
+    <string name="preference_search_calculator">Kalkulator</string>
+    <string name="preference_search_calculator_summary">Wykonywaj obliczenia matematyczne</string>
+    <string name="preference_search_unitconverter">Konwerter jednostek</string>
+    <string name="preference_search_unitconverter_summary">Użycie: 1.5 kg lub 4 cm &gt;&gt; in</string>
+    <string name="preference_search_currencyconverter">Konwerter walut</string>
+    <string name="preference_search_currencyconverter_summary">Cyklicznie pobieraj kurs walut do konwersji walut</string>
+    <string name="preference_search_wikipedia_summary">Przeszukaj wolną encyklopedię</string>
+    <string name="preference_search_websites">Strony internetowe</string>
+    <string name="preference_search_locations">Miejsca</string>
+    <string name="preference_search_locations_radius">Promień wyszukiwania</string>
+    <string name="preference_search_websites_summary">Pokazuj podgląd strony internetowej gdy wyszukiwaną frazą jest adres URL</string>
+    <string name="preference_search_locations_summary">Wyszukiwanie sklepów i innych miejsc w okolicy</string>
+    <string name="preference_search_localfiles">Lokalne pliki</string>
+    <string name="preference_search_localfiles_summary">Szukaj dokumentów, zdjęć oraz innych plików na twoim urządzeniu</string>
+    <string name="preference_search_cloud_summary">Szukaj plików użytkownika %1$s</string>
+    <string name="preference_calendar_calendars">Kalendarze</string>
+    <string name="preference_screen_buildinfo">Informacje o wersji</string>
+    <string name="preference_screen_buildinfo_summary">Więcej informacji o tej wersji aplikacji</string>
+    <string name="preference_search_bar_style">Styl</string>
+    <string name="preference_search_bar_style_summary">Dostosuj wygląd paska wyszukiwania</string>
+    <string name="preference_search_bar_color">Kolor</string>
+    <string name="preference_search_bar_auto_focus">Pokaż klawiaturę</string>
+    <string name="preference_search_bar_auto_focus_summary">Automatyczne wyświetlanie klawiatury po otwarciu szuflady aplikacji</string>
+    <string name="preference_search_bar_launch_on_enter">Uruchom na starcie</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Uruchamianie podświetlonego dopasowania lub szybkiej akcji po dotknięciu przycisku Go</string>
+    <string name="preference_hidden_items">Ukryte elementy</string>
+    <string name="preference_hidden_items_summary">Zarządzaj ukrytymi aplikacjami i wynikami wyszukiwania</string>
+    <string name="preference_hidden_items_reveal_button">Pokaż przycisk ujawniania</string>
+    <string name="preference_hidden_items_reveal_button_summary">Pokaż przycisk, aby ujawnić ukryte wyniki wyszukiwania</string>
+    <string name="preference_screen_tags">Tagi</string>
+    <string name="preference_screen_tags_summary">Zarządzaj tagami i oznaczonymi elementami</string>
+    <string name="preference_wikipedia_customurl">Adres URL Wikipedii</string>
+    <string name="preference_edit_favorites_summary">Zmiana kolejności przypiętych elementów</string>
+    <string name="preference_category_favorites_frequently_used">Często używane</string>
+    <string name="preference_favorites_frequently_used_summary">Pokaż często używane elementy w ulubionych</string>
+    <string name="preference_edit_button">Przycisk \"Edytuj\"</string>
+    <string name="preference_favorites_edit_button_summary">Pokaż przycisk, aby zmienić układ ulubionych</string>
+    <string name="preference_widgets_edit_button_summary">Pokaż przycisk do dodawania, usuwania i zmiany układu widżetów</string>
+    <string name="preference_screen_homescreen">Ekran domowy</string>
+    <string name="preference_screen_homescreen_summary">Zegar, pasek wyszukiwania, tapeta, paski systemowe</string>
+    <string name="preference_screen_icons">Siatka i ikony</string>
+    <string name="preference_screen_icons_summary">Siatka, rozmiar ikon, pakiety ikon, plakietki</string>
+    <string name="preference_weather_integration">Pogoda</string>
+    <string name="preference_media_integration">Sterowanie multimediami</string>
+    <!-- %1$s: app name (Kvaesitso) -->
+    <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
+    <string name="no_account_nextcloud">Konto Nextcloud nie zostało jeszcze połączone</string>
+    <!-- Used in an info banner if a specific feature requires an Owncloud account -->
+    <string name="no_account_owncloud">Konto Owncloud nie zostało jeszcze połączone</string>
+    <!-- Used in an info banner if a specific feature requires a Google account -->
+    <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
+    <string name="connect_account">Połącz konto</string>
+    <string name="battery_part_charging">Ładowanie</string>
+    <plurals name="battery_part_remaining_charge_time">
+        <item quantity="one">Naładowany w %1$s minutę</item>
+        <item quantity="few">Naładowany w %1$s minuty</item>
+        <item quantity="many">Naładowany w %1$s minut</item>
+        <item quantity="other">Naładowany w %1$s minut</item>
+    </plurals>
+    <string name="backup_complete">Tworzenie kopii zapasowej zostało zakończone.</string>
+    <string name="restore_invalid_file">Wybrany plik nie wydaje się być kopią zapasową. Czy jesteś pewien, że wybrałeś właściwy plik\?</string>
+    <!-- %1$s: app name -->
+    <string name="restore_incompatible_file">Ta kopia zapasowa została utworzona przy użyciu innej wersji %1$s i nie może być przywrócona przy użyciu tej wersji.</string>
+    <!-- %1$s: app name -->
+    <string name="restore_different_minor_version">Ta kopia zapasowa została utworzona przy użyciu innej wersji programu %1$s. Niektóre dane mogą nie zostać przywrócone prawidłowo.</string>
+    <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
+    <string name="restore_meta">Utworzono %1$s na %2$s przez %3$s.</string>
+    <string name="restore_complete">Kopia zapasowa została przywrócona.</string>
+    <string name="icon_picker_default_icon">Domyślny</string>
+    <string name="icon_picker_suggestions">Sugestie</string>
+    <string name="icon_picker_search_icon">Wyszukiwanie w pakietach ikon</string>
+    <string name="icon_picker_filter_all_packs">Wszystkie pakiety ikon</string>
+    <string name="apps_profile_main">Osobisty</string>
+    <string name="apps_profile_work">Praca</string>
+    <string name="favorites">Ulubione</string>
+    <string name="favorites_empty">Tutaj pojawią się przypięte i często używane elementy</string>
+    <string name="favorites_empty_tag">Nie ma przedmiotów z tym tagiem</string>
+    <string name="frequently_used_show_in_favorites">Pokaż w ulubionych</string>
+    <string name="frequently_used_rows">Liczba wierszy</string>
+    <string name="preference_screen_search_actions">Szybkie akcje</string>
+    <string name="preference_search_search_actions_summary">Skonfiguruj szybkie akcje i skróty wyszukiwania</string>
+    <string name="search_action_call">Zadzwoń</string>
+    <string name="search_action_message">Wiadomość</string>
+    <string name="search_action_alarm">Ustaw alarm</string>
+    <string name="search_action_timer">Uruchom licznik czasu</string>
+    <string name="search_action_share">Udostępnij</string>
+    <string name="search_action_websearch">Wyszukiwanie w sieci</string>
+    <string name="search_action_contact">Dodaj do kontaktów</string>
+    <string name="search_action_open_url">Zobacz stronę</string>
+    <string name="search_action_event">Zaplanuj wydarzenie</string>
+    <string name="create_search_action_type">Jaką akcję chcesz stworzyć\?</string>
+    <string name="create_search_action_type_web">Wyszukiwanie na stronie internetowej</string>
+    <string name="create_search_action_type_app">Wyszukiwanie w aplikacji</string>
+    <string name="create_search_action_type_intent">Niestandardowy intent</string>
+    <string name="create_search_action_pick_app">Wybierz aplikację do przeszukiwania:</string>
+    <string name="create_search_action_website_url">Wpisz adres strony:</string>
+    <string name="create_search_action_website_invalid_url">Podana strona nie może być automatycznie zaimportowana jako wyszukiwarka internetowa. Możesz spróbować innej strony internetowej lub wprowadzić wymagane dane ręcznie w następnym kroku.</string>
+    <string name="search_action_label">Nazwa</string>
+    <string name="search_action_app">Aplikacja</string>
+    <string name="search_action_websearch_url">Wzorzec URL</string>
+    <string name="search_action_websearch_url_hint">Wzorzec URL, który jest używany do konstruowania adresu URL wyszukiwania w sieci. Użyj \'${1}\' jako placeholder dla rzeczywistego terminu wyszukiwania, np. https://google.com/search\?q=${1}.</string>
+    <string name="more_information">Więcej informacji</string>
+    <string name="experimental_feature">Eksperymentalne</string>
     <string name="tag_exists_error">Tag o tej nazwie już istnieje.</string>
     <string name="tag_exists_message">Tag o tej nazwie już istnieje. Jeśli będziesz kontynuować, oba tagi zostaną połączone.</string>
     <string name="tag_no_items_message">Do tego tagu nie są przypisane żadne elementy. Jeśli będziesz kontynuować, tag zostanie usunięty.</string>
+    <string name="tag_select_items">Wybierz elementy:</string>
     <string name="tag_name">Nazwa tagu</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d element zaznaczony</item>
@@ -329,93 +690,6 @@
         <item quantity="many">%1$d elementów zaznaczonych</item>
         <item quantity="other">%1$d elementów zaznaczonych</item>
     </plurals>
-    <string name="tag_select_items">Wybierz elementy:</string>
-    <string name="search_action_event">Zaplanuj wydarzenie</string>
-    <string name="edit_favorites_dialog_new_tag">Utwórz tag…</string>
-    <string name="missing_permission_calendar_search">Przyznaj uprawnienia do kalendarza, aby przeszukać Twój kalendarz.</string>
-    <string name="missing_permission_files_search">Zezwól na przeszukiwanie zdjęć, multimediów i dokumentów w tym urządzeniu.</string>
-    <string name="preference_category_debug_tools">Narzędzia</string>
-    <string name="preference_debug_cleanup_database">Wyczyść bazę danych</string>
-    <string name="preference_themed_icons">Ikony tematyczne</string>
-    <string name="preference_themed_icons_summary">Pokoloruj ikony zgodnie z kolorystyką aplikacji</string>
-    <string name="preference_force_themed_icons">Wymuś ikony tematyczne</string>
-    <string name="preference_force_themed_icons_summary">Zastosuj schemat kolorów aplikacji do wszystkich ikon, również tych nieobsługiwanych (niezalecane)</string>
-    <string name="preference_blur_wallpaper">Rozmywaj tapetę</string>
-    <string name="preference_screen_backup">Kopia zapasowa i przywracanie</string>
-    <string name="preference_status_bar_icons">Ikony paska stanu</string>
-    <string name="preference_nav_bar_icons">Ikony paska nawigacyjnego</string>
-    <string name="preference_system_bar_icons_auto">Automatycznie</string>
-    <string name="preference_system_bar_icons_light">Jasny</string>
-    <string name="preference_cloud_badges">Plakietki przechowywania w chmurze</string>
-    <string name="preference_theme_system">Systemowe</string>
-    <string name="preference_clockwidget_music_part_summary">Pokaż elementy sterujące mediów, gdy jest aktywna sesja multimedialna</string>
-    <string name="preference_search_appshortcuts">Skróty aplikacji</string>
-    <string name="edit_favorites_dialog_empty_section">Przeciągnij elementy tutaj</string>
-    <string name="restore_invalid_file">Wybrany plik nie wydaje się być kopią zapasową. Czy jesteś pewien, że wybrałeś właściwy plik\?</string>
-    <string name="restore_incompatible_file">Ta kopia zapasowa została utworzona przy użyciu innej wersji %1$s i nie może być przywrócona przy użyciu tej wersji.</string>
-    <string name="preference_notification_badges">Plakietki powiadomień</string>
-    <string name="preference_screen_backup_summary">Eksport i import danych launchera</string>
-    <string name="preference_font">Czcionka</string>
-    <string name="preference_font_system">Domyślne</string>
-    <string name="preference_logs">Dzienniki zdarzeń</string>
-    <string name="preference_logs_summary">Wyświetlanie i eksportowanie dzienników zdarzeń aplikacji</string>
-    <string name="preference_widgets_edit_button_summary">Pokaż przycisk do dodawania, usuwania i zmiany układu widżetów</string>
-    <string name="preference_search_search_actions_summary">Skonfiguruj szybkie akcje i skróty wyszukiwania</string>
-    <string name="search_action_call">Zadzwoń</string>
-    <string name="search_action_message">Wiadomość</string>
-    <string name="create_search_action_pick_app">Wybierz aplikację do przeszukiwania:</string>
-    <string name="create_search_action_website_url">Wpisz adres strony:</string>
-    <string name="create_search_action_website_invalid_url">Podana strona nie może być automatycznie zaimportowana jako wyszukiwarka internetowa. Możesz spróbować innej strony internetowej lub wprowadzić wymagane dane ręcznie w następnym kroku.</string>
-    <string name="search_action_label">Nazwa</string>
-    <string name="preference_notification_badges_summary">Pokaż plakietki dla aplikacji z nieprzeczytanymi powiadomieniami</string>
-    <string name="preference_cloud_badges_summary">Pokaż plakietkę dla plików, które są przechowywane w chmurze</string>
-    <string name="menu_remove">Usuń</string>
-    <string name="alert_delete_shortcut">Skrót %1$s zostanie trwale usunięty. Czy chcesz kontynuować\?</string>
-    <string name="missing_permission_appshortcuts_search_settings">%1$s musi być ustawiona jako domyślna aplikacja ekranu głównego aby przeszukiwać skróty</string>
-    <string name="missing_permission_file_search_settings">Do przeszukiwania plików lokalnych wymagane jest uprawnienie do korzystania z zewnętrznej pamięci masowej</string>
-    <string name="icon_picker_default_icon">Domyślna</string>
-    <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d wpis usunięty.</item>
-        <item quantity="few">%1$d wpisy usunięte.</item>
-        <item quantity="many">%1$d wpisów usunięto.</item>
-        <item quantity="other">%1$d wpisów usunięto.</item>
-    </plurals>
-    <string name="preference_icon_shape_pebble">Kamyk</string>
-    <string name="preference_blur_wallpaper_summary">Użyj efektu rozmycia na tapecie</string>
-    <string name="preference_blur_wallpaper_unsupported">Nieobsługiwane na tym urządzeniu</string>
-    <string name="icon_picker_search_icon">Wyszukiwanie w pakietach ikon</string>
-    <string name="preference_icon_shape_teardrop">Łza</string>
-    <string name="backup_complete">Tworzenie kopii zapasowej zostało zakończone.</string>
-    <string name="edit_favorites_dialog_tags">Tagi</string>
-    <string name="edit_favorites_dialog_tag_section_empty">Przypięte tagi pojawią się tutaj</string>
-    <string name="restore_complete">Kopia zapasowa została przywrócona.</string>
-    <string name="preference_screen_tags">Tagi</string>
-    <string name="preference_screen_tags_summary">Zarządzaj tagami i oznaczonymi elementami</string>
-    <string name="restore_different_minor_version">Ta kopia zapasowa została utworzona przy użyciu innej wersji programu %1$s. Niektóre dane mogą nie zostać przywrócone prawidłowo.</string>
-    <string name="preference_backup">Kopia zapasowa</string>
-    <string name="preference_backup_summary">Eksportowanie preferencji i danych launchera</string>
-    <string name="websearch_dialog_advanced">Zaawansowane</string>
-    <string name="preference_cards_corner_radius">Promień narożnika</string>
-    <string name="websearch_dialog_query_encoding">Kodowanie zapytania</string>
-    <string name="websearch_dialog_query_encoding_url">Kodowanie procentowe</string>
-    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
-    <string name="websearch_dialog_query_encoding_none">Brak</string>
-    <string name="skip">Pomiń</string>
-    <string name="missing_permission_notification_badges">Dostęp do powiadomień jest wymagany do wyświetlania plakietek powiadomień</string>
-    <string name="missing_permission_appshortcuts_create">Ustaw %1$s jako domyślną aplikację ekranu głownego aby tworzyć skróty.</string>
-    <string name="preference_debug_cleanup_database_summary">Usuń uszkodzone i nieużywane wpisy z bazy danych launchera</string>
-    <string name="preference_cards_stroke_width">Grubość linii</string>
-    <string name="preference_cards_opacity">Nieprzejrzystość</string>
-    <string name="preference_cards_shape">Kształt</string>
-    <string name="preference_cards_shape_rounded">Zaokrąglone</string>
-    <string name="preference_cards_shape_cut">Przycięte</string>
-    <string name="preference_icon_shape_squircle">Squircle</string>
-    <string name="preference_hide_status_bar">Ukryj pasek stanu</string>
-    <string name="preference_hide_nav_bar">Ukryj pasek nawigacji</string>
-    <string name="preference_suspended_badges_summary">Pokaż plakietkę dla zawieszonych aplikacji</string>
-    <string name="preference_suspended_badges">Zawieszone aplikacje</string>
-    <string name="preference_shortcut_badges">Plakietki skrótów</string>
-    <string name="preference_clock_widget_fill_height">Wypełnij wysokość ekranu</string>
     <string name="preference_layout_open_search">Wyszukiwarka / szuflada aplikacji</string>
     <string name="open_search_pull_down">Przeciągnij w dół</string>
     <string name="open_search_swipe_left">Przeciągnij w lewo</string>
@@ -426,261 +700,166 @@
     <string name="preference_layout_search_results">Układ wyników wyszukiwania</string>
     <string name="search_results_order_top_down">Z góry na dół</string>
     <string name="search_results_order_bottom_up">Z dołu do góry</string>
-    <string name="preference_crash_reporter">Reporter błędów</string>
-    <string name="preference_crash_reporter_summary">Raporty o błędach i awariach</string>
-    <string name="preference_search_appshortcuts_summary">Przeszukuj skróty aplikacji</string>
-    <string name="preference_screen_buildinfo">Informacje o wersji</string>
-    <string name="preference_screen_buildinfo_summary">Więcej informacji o tej wersji aplikacji</string>
-    <string name="preference_search_bar_color">Kolor</string>
-    <string name="preference_edit_favorites_summary">Zmiana kolejności przypiętych elementów</string>
-    <string name="preference_category_favorites_frequently_used">Często używane</string>
-    <string name="preference_favorites_frequently_used_summary">Pokaż często używane elementy w ulubionych</string>
-    <string name="preference_edit_button">Przycisk \"Edytuj\"</string>
-    <string name="preference_favorites_edit_button_summary">Pokaż przycisk, aby zmienić układ ulubionych</string>
-    <string name="restore_meta">Utworzono %1$s na %2$s przez %3$s.</string>
-    <string name="icon_picker_suggestions">Sugestie</string>
-    <string name="apps_profile_work">Praca</string>
-    <string name="favorites">Ulubione</string>
-    <string name="favorites_empty">Tutaj pojawią się przypięte i często używane elementy</string>
-    <string name="favorites_empty_tag">Nie ma przedmiotów z tym tagiem</string>
-    <string name="frequently_used_rows">Liczba wierszy</string>
-    <string name="preference_screen_search_actions">Szybkie akcje</string>
-    <string name="search_action_email">Email</string>
-    <string name="search_action_alarm">Ustaw alarm</string>
-    <string name="search_action_timer">Uruchom licznik czasu</string>
-    <string name="search_action_contact">Dodaj do kontaktów</string>
-    <string name="search_action_open_url">Zobacz stronę</string>
-    <string name="create_search_action_type">Jaką akcję chcesz stworzyć\?</string>
-    <string name="create_search_action_type_web">Wyszukiwanie na stronie internetowej</string>
-    <string name="search_action_app">Aplikacja</string>
-    <string name="search_action_websearch_url">Wzorzec URL</string>
-    <string name="search_action_websearch_url_hint">Wzorzec URL, który jest używany do konstruowania adresu URL wyszukiwania w sieci. Użyj \'${1}\' jako placeholder dla rzeczywistego terminu wyszukiwania, np. https://google.com/search\?q=${1}.</string>
-    <string name="more_information">Więcej informacji</string>
-    <string name="experimental_feature">Eksperymentalne</string>
-    <string name="gesture_action_quick_settings">Otwórz szybkie ustawienia</string>
-    <string name="gesture_action_power_menu">Pokaż menu zasilania</string>
+    <string name="preference_layout_fixed_search_bar">Stały pasek wyszukiwania</string>
+    <string name="preference_layout_fixed_search_bar_summary">Nie przewijaj paska wyszukiwania poza zasięg wzroku</string>
+    <string name="preference_layout_fixed_rotation">Ustalony obrót ekranu</string>
+    <string name="preference_layout_fixed_rotation_summary">Wymuś tryb portretowy</string>
     <string name="preference_screen_gestures">Gesty</string>
+    <string name="preference_screen_gestures_summary">Gesty i działania gestów</string>
     <string name="preference_gesture_swipe_down">Przeciągnij w dół</string>
     <string name="preference_gesture_swipe_left">Przeciągnij w lewo</string>
     <string name="preference_gesture_swipe_right">Przeciągnij w prawo</string>
     <string name="preference_gesture_double_tap">Podwójne stuknięcie</string>
     <string name="preference_gesture_long_press">Długie naciśnięcie</string>
+    <string name="preference_gesture_home_button">Przycisk strony głównej/gest</string>
     <string name="gesture_action_none">Nic nie rób</string>
     <string name="gesture_action_open_search">Otwórz wyszukiwarkę</string>
+    <string name="gesture_action_widgets">Widżety</string>
+    <string name="gesture_action_launch_app">Uruchom aplikację</string>
     <string name="gesture_action_notifications">Otwórz szufladę powiadomień</string>
     <string name="gesture_action_lock_screen">Wyłącz ekran</string>
+    <string name="gesture_action_quick_settings">Otwórz szybkie ustawienia</string>
+    <string name="gesture_action_power_menu">Pokaż menu zasilania</string>
     <string name="gesture_action_recents">Otwórz ostatnie</string>
     <string name="gesture_failed_message">Wykonałeś gest \"%1$s\". Ten gest jest obecnie ustawiony na wywołanie akcji \"%2$s\". Jednak akcja nie mogła zostać wykonana z następującego powodu:</string>
-    <string name="preference_screen_gestures_summary">Gesty i działania gestów</string>
-    <string name="preference_layout_fixed_search_bar">Stały pasek wyszukiwania</string>
-    <string name="preference_layout_fixed_search_bar_summary">Nie przewijaj paska wyszukiwania poza zasięg wzroku</string>
     <string name="missing_permission_accessibility_gesture_failed">Usługa dostępności launchera musi być włączona, aby wykonać to działanie.</string>
     <string name="missing_permission_accessibility_gesture_settings">Ta czynność wymaga włączenia usługi dostępności launchera.</string>
-    <string name="help">Pomoc</string>
-    <string name="preference_system_bar_icons_dark">Ciemny</string>
-    <string name="location_open">Otwarte</string>
-    <string name="location_closed">Zamknięte</string>
-    <string name="file_type_launchertheme">%1$s temat</string>
-    <string name="clock_style_segment">7-segmentów</string>
+    <string name="preference_search_result_ordering_weight_factor">Elastyczność rankingu</string>
+    <string name="preference_search_result_ordering_weight_factor_low">Stabilny</string>
+    <string name="preference_search_result_ordering_weight_factor_default">Zbalansowany</string>
+    <string name="preference_search_result_ordering_weight_factor_high">Zmienny</string>
+    <string name="widget_config_appwidget_borderless">Bez ramki</string>
+    <string name="widget_config_appwidget_background">Tło karty</string>
+    <string name="widget_config_appwidget_configure">Konfiguruj widżet</string>
+    <string name="widget_config_appwidget_resize">Zmień rozmiar</string>
+    <string name="widget_config_weather_integration_settings">Ustawienia integracji z pogodą</string>
+    <string name="widget_config_calendar_no_calendars">Brak kalendarza</string>
+    <string name="widget_pick_widget">Wybór widżetu</string>
+    <string name="app_widget_loading_failed">Nie udało się załadować widżetu aplikacji.</string>
+    <string name="widget_config_music_integration_settings">Ustawienia integracji sterowania multimediami</string>
+    <string name="note_widget_link_file">Ścieżka do pliku</string>
+    <string name="note_widget_link_file_summary">Synchronizuje zawartość widżetu z plikiem zewnętrznym</string>
+    <string name="note_widget_linked_file_summary">Powiązany z %1$s</string>
+    <string name="note_widget_action_unlink_file">Odłącz</string>
+    <string name="note_widget_action_relink_file">Dodaj link</string>
+    <string name="note_widget_conflict">Konflikt</string>
+    <string name="note_widget_conflict_action_resolve">Rozwiąż</string>
+    <string name="note_widget_conflict_keep_selected">Zachowaj wybrane</string>
+    <string name="note_widget_conflict_description">Połączony plik nie jest pusty, a jego zawartość nie jest zgodna z ostatnio zapisaną wersją tej notatki. Którą wersję chcesz zachować?</string>
+    <string name="note_widget_conflict_local_version">Ostania zapisana wersja:</string>
+    <string name="note_widget_conflict_file_version">Bieżąca zawartość pliku:</string>
+    <string name="note_widget_file_read_error">Błąd odczytu notatki</string>
+    <string name="note_widget_file_read_error_description">Nie można odczytać połączonego pliku. Prawdopodobnie został przeniesiony lub usunięty. Kopia została przywrócona z pamięci wewnętrznej programu uruchamiającego. Jeśli edytujesz notatkę, połączony plik może zostać nadpisany.</string>
+    <string name="note_widget_file_write_error">Błąd zapisu notatki</string>
+    <string name="note_widget_file_write_error_description">Notatka nie mogła zostać zapisana w połączonym pliku. Możliwe, że została przeniesiona lub usunięta. Kopia została zapisana w pamięci wewnętrznej programu uruchamiającego.</string>
+    <string name="confirmation_delete_color_scheme">Czy naprawdę chcesz usunąć schemat kolorów %1$s?</string>
     <string name="theme_color_scheme_system_default">Użyj domyślnych ustawień systemowych</string>
-    <string name="preference_mdy_color_source_system">System</string>
-    <string name="preference_mdy_color_source">Źródło dynamicznych kolorów</string>
-    <string name="preference_mdy_color_source_wallpaper">Tapeta</string>
-    <string name="preference_screen_icons">Siatka i ikony</string>
-    <string name="preference_category_media_apps">Aplikacje multimedialne</string>
-    <string name="preference_weather_integration">Pogoda</string>
-    <string name="preference_hidden_items_reveal_button">Pokaż przycisk ujawniania</string>
+    <string name="theme_color_scheme_autogenerate">Z koloru podstawowego</string>
+    <string name="theme_color_scheme_palette_color">Paleta</string>
+    <string name="theme_color_scheme_custom_color">Własny</string>
+    <string name="preference_restore_default">Przywróć domyślne</string>
+    <string name="import_theme_apply">Zastosuj motyw</string>
+    <string name="import_theme_error">Nie można odczytać wybranego pliku. Upewnij się, że wybrano prawidłowy plik motywu (*.kvtheme) i że nie jest on uszkodzony.</string>
+    <string name="shortcut_label_unavailable">Niedostępny</string>
+    <!-- %1$s: app name -->
+    <string name="shortcut_unavailable_description">Ten skrót jest niedostępny, ponieważ %1$s nie jest domyślnym programem uruchamiającym</string>
+    <string name="preference_plugin_enable">Włącz wtyczkę</string>
+    <string name="length_unit">Jednostka długości</string>
+    <string name="imperial">Imperialne</string>
+    <string name="metric">Metryczne</string>
+    <string name="preference_search_location_custom_overpass_url">Obejście URL</string>
+    <string name="preference_search_locations_hide_uncategorized">Ukryj miejsca nieskategoryzowane</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">Wyświetlaj tylko wyniki z dobrze zdefiniowanymi kategoriami, takimi jak kawiarnie lub restauracje</string>
+    <string name="preference_search_locations_show_map">Mapa</string>
+    <string name="preference_search_locations_show_map_summary">Pokaż podgląd mapy dla miejsc</string>
+    <string name="preference_search_locations_theme_map">Motyw mapy</string>
+    <string name="preference_search_locations_theme_map_summary">Zastosuj schemat kolorów programu uruchamiającego do mapy</string>
+    <string name="preference_search_location_custom_tile_server_url">Adres URL serwera</string>
+    <string name="menu_dial">Zadzwoń</string>
+    <string name="menu_navigation">Nawigacja</string>
+    <string name="menu_bugreport">Raport błędów</string>
+    <string name="location_open_24_7">Otwarte 24/7</string>
+    <string name="plugin_state_error">Wtyczka nie działa poprawnie</string>
+    <string name="plugin_state_setup_required">Musisz najpierw skonfigurować wtyczkę</string>
+    <string name="plugin_action_setup">Konfiguracja</string>
+    <string name="plugin_type_filesearch">Pliki</string>
+    <string name="plugin_type_contacts">Kontakty</string>
+    <string name="plugin_type_weather">Dostawca pogody</string>
+    <string name="plugin_weather_provider_enable">Ustaw jako dostawcę pogody</string>
+    <string name="plugin_weather_provider_enabled">Obecnie ustawiony jako dostawca pogody</string>
+    <string name="unavailable_searchable">Ten element już nie istnieje.</string>
+    <string name="clock_style_digital1">Gruby</string>
     <string name="clock_style_digital2">Prosty</string>
+    <string name="clock_style_orbit">Orbita</string>
+    <string name="clock_style_binary">Binarny</string>
+    <string name="clock_style_analog">Wskazówkowy</string>
+    <string name="clock_style_segment">7-segmentów</string>
+    <string name="clock_style_empty">Bez zegara</string>
+    <string name="clock_style_custom">Własny widżet</string>
+    <string name="clock_variant_outlined">Z obwódką</string>
+    <string name="menu_hide_filters">Ukryj filtry</string>
+    <string name="search_filter_tools">Narzędzia</string>
+    <string name="search_filter_online">Wyniki online</string>
+    <string name="search_filter_apps">Aplikacje</string>
+    <string name="plugin_type_locationsearch">Przeszukaj miejsca</string>
+    <string name="plugin_type_calendar">Kalendarz</string>
+    <string name="preference_default_filter">Domyślny filtr</string>
+    <string name="preference_default_filter_summary">Dostosuj domyślny filtr wyszukiwania</string>
+    <string name="preference_filter_bar">Pokaż pasek filtrów</string>
+    <string name="preference_filter_bar_summary">Pokaż szybkie filtry nad klawiaturą</string>
+    <string name="preference_customize_filter_bar">Dostosuj pasek filtrów</string>
+    <string name="preference_customize_filter_bar_summary">Dostosuj elementy uwzględnione na pasku filtrów</string>
+    <string name="filter_settings_network_warning">Dostosowywanie elementów uwzględnianych na pasku filtrów.
+\nBieżący filtr domyślnie włącza wyniki online. Zapytania wyszukiwania mogą być nieumyślnie wysyłane do zewnętrznych usług internetowych. Ze względu na ochronę prywatności nie jest to zalecane.</string>
+    <string name="preference_search_osm_locations_summary">Przeszukaj OpenStreetMap w poszukiwaniu sklepów oraz innych obiektów w okolicy</string>
     <string name="poi_category_restaurant">Restauracje</string>
     <string name="poi_category_fast_food">Szybkie żarcie</string>
-    <string name="preference_search_result_ordering_weight_factor_default">Zbalansowany</string>
-    <string name="poi_category_cafe">Kawiarnie</string>
     <string name="poi_category_bar">Bary</string>
-    <string name="poi_category_supermarket">Markety</string>
+    <string name="poi_category_cafe">Kawiarnie</string>
     <string name="poi_category_hotel">Hotele</string>
+    <string name="poi_category_supermarket">Markety</string>
+    <string name="poi_category_school">Szkoły</string>
     <string name="poi_category_parking">Parkingi</string>
     <string name="poi_category_fuel">Stacje benzynowe</string>
     <string name="poi_category_toilets">Toalety</string>
     <string name="poi_category_pharmacy">Apteki</string>
+    <string name="poi_category_hospital">Szpitale</string>
     <string name="poi_category_post_office">Poczta</string>
     <string name="poi_category_pub">Puby</string>
     <string name="poi_category_doctors">Lekarze</string>
     <string name="poi_category_police">Policja</string>
-    <string name="poi_category_hospital">Szpitale</string>
-    <string name="poi_category_library">Biblioteki</string>
     <string name="poi_category_dentist">Dentyści</string>
+    <string name="poi_category_library">Biblioteki</string>
     <string name="poi_category_ice_cream">Lodziarnie</string>
     <string name="poi_category_theater">Teatry</string>
     <string name="poi_category_cinema">Kina</string>
     <string name="poi_category_nightclub">Kluby nocne</string>
     <string name="poi_category_clinic">Kliniki</string>
     <string name="poi_category_university">Uniwersytety</string>
-    <string name="poi_category_convenience">Sklepy spożywcze</string>
     <string name="poi_category_clothes">Sklepy odzieżowe</string>
+    <string name="poi_category_convenience">Sklepy spożywcze</string>
     <string name="poi_category_hairdresser">Fryzjerzy</string>
+    <string name="poi_category_books">Księgarnie</string>
     <string name="poi_category_bakery">Piekarnie</string>
+    <string name="poi_category_car_rental">Wypożyczalnia aut</string>
     <string name="poi_category_mobile_phone">Sklepy gsm</string>
     <string name="poi_category_furniture">Meble</string>
     <string name="poi_category_alcohol">Monopolowe</string>
     <string name="poi_category_florist">Kwiaciarnie</string>
     <string name="poi_category_mall">Centra handlowe</string>
     <string name="poi_category_optician">Optyk</string>
-    <string name="poi_category_laundry">Pralnie</string>
-    <string name="preference_clock_widget_alignment_top">Góra</string>
-    <string name="preference_clock_widget_alignment_bottom">Dół</string>
-    <string name="preference_clock_widget_alignment_center">Środek</string>
-    <string name="poi_category_tennis">Korty</string>
-    <string name="poi_category_atm">Bankomaty</string>
-    <string name="poi_category_kiosk">Kioski</string>
-    <string name="widget_use_theme_colors">Użyj koloru motywu</string>
-    <string name="import_theme_apply">Zastosuj motyw</string>
-    <string name="shortcut_label_unavailable">Niedostępny</string>
-    <string name="widget_config_calendar_no_calendars">Brak kalendarza</string>
-    <string name="missing_permission_location_search">Przyznaj uprawnienia lokalizacji, aby przeszukiwać pobliskie lokalizacje.</string>
-    <string name="widget_config_calendar_missing_calendars_hint">Nie możesz znaleźć kalendarza?</string>
-    <string name="shortcut_unavailable_description">Ten skrót jest niedostępny, ponieważ %1$s nie jest domyślnym programem uruchamiającym</string>
-    <string name="metric">Metryczne</string>
-    <string name="preference_search_location_custom_overpass_url">Obejście URL</string>
-    <string name="preference_search_locations_hide_uncategorized">Ukryj miejsca nieskategoryzowane</string>
-    <string name="menu_bugreport">Raport błędów</string>
-    <string name="location_open_24_7">Otwarte 24/7</string>
-    <string name="gesture_action_launch_app">Uruchom aplikację</string>
-    <string name="notes_widget_placeholder">Napisz notatkę…</string>
-    <string name="notes_widget_action_new">Nowa notatka</string>
-    <string name="notes_widget_action_save">Zapisz</string>
-    <string name="notes_widget_action_dismiss">Odrzuć</string>
-    <string name="notes_widget_dismissed">Notatka odrzucona.</string>
-    <string name="notes_widget_export_filename">Notatka_%1$s</string>
-    <string name="note_widget_conflict_file_version">Bieżąca zawartość pliku:</string>
-    <string name="note_widget_action_unlink_file">Odłącz</string>
-    <string name="note_widget_action_relink_file">Dodaj link</string>
-    <string name="note_widget_conflict_keep_selected">Zachowaj wybrane</string>
-    <string name="note_widget_file_read_error">Błąd odczytu notatki</string>
-    <string name="note_widget_file_write_error">Błąd zapisu notatki</string>
-    <string name="imperial">Imperialne</string>
-    <string name="preference_restore_default">Przywróć domyślne</string>
-    <string name="theme_color_scheme_custom_color">Własny</string>
-    <string name="import_theme_error">Nie można odczytać wybranego pliku. Upewnij się, że wybrano prawidłowy plik motywu (*.kvtheme) i że nie jest on uszkodzony.</string>
-    <string name="plugin_state_error">Wtyczka nie działa poprawnie</string>
-    <string name="menu_dial">Zadzwoń</string>
-    <string name="preference_blur_wallpaper_radius">Promień rozmycia</string>
-    <string name="widget_config_appwidget_background">Tło karty</string>
-    <string name="widget_config_appwidget_configure">Konfiguruj widżet</string>
-    <string name="widget_config_appwidget_resize">Zmień rozmiar</string>
-    <string name="widget_pick_widget">Wybór widżetu</string>
-    <string name="app_widget_loading_failed">Nie udało się załadować widżetu aplikacji.</string>
-    <string name="widget_config_music_integration_settings">Ustawienia integracji sterowania multimediami</string>
-    <string name="note_widget_linked_file_summary">Powiązany z %1$s</string>
-    <string name="note_widget_conflict">Konflikt</string>
-    <string name="note_widget_conflict_local_version">Ostania zapisana wersja:</string>
-    <string name="note_widget_file_write_error_description">Notatka nie mogła zostać zapisana w połączonym pliku. Możliwe, że została przeniesiona lub usunięta. Kopia została zapisana w pamięci wewnętrznej programu uruchamiającego.</string>
-    <string name="confirmation_delete_color_scheme">Czy naprawdę chcesz usunąć schemat kolorów %1$s?</string>
-    <string name="theme_color_scheme_autogenerate">Z koloru podstawowego</string>
-    <string name="preference_plugin_enable">Włącz wtyczkę</string>
-    <string name="length_unit">Jednostka długości</string>
-    <string name="weather_condition_thunderstorm">Burza z piorunami</string>
-    <string name="widget_name_notes">Widżet przechowujący pojedynczą notatkę</string>
-    <string name="edit">Edytuj</string>
-    <string name="preference_debug_dump_heap_summary">Przechwytywanie migawki w celu analizy wykorzystania pamięci. Aplikacja zawiesi się do czasu zakończenia tego procesu.</string>
-    <string name="preference_category_animations">Animacje</string>
-    <string name="preference_search_locations">Miejsca</string>
-    <string name="preference_screen_homescreen">Ekran domowy</string>
-    <string name="preference_screen_homescreen_summary">Zegar, pasek wyszukiwania, tapeta, paski systemowe</string>
-    <string name="preference_gesture_home_button">Przycisk strony głównej/gest</string>
-    <string name="preference_search_result_ordering_weight_factor_low">Stabilny</string>
-    <string name="note_widget_conflict_action_resolve">Rozwiąż</string>
-    <string name="note_widget_conflict_description">Połączony plik nie jest pusty, a jego zawartość nie jest zgodna z ostatnio zapisaną wersją tej notatki. Którą wersję chcesz zachować?</string>
-    <string name="theme_color_scheme_palette_color">Paleta</string>
-    <string name="preference_search_locations_theme_map_summary">Zastosuj schemat kolorów programu uruchamiającego do mapy</string>
-    <string name="clock_style_digital1">Gruby</string>
-    <string name="poi_category_books">Księgarnie</string>
-    <string name="preference_debug_reinstall_iconpacks">Ponowna instalacja pakietów ikon</string>
-    <string name="preference_search_locations_summary">Wyszukiwanie sklepów i innych miejsc w okolicy</string>
-    <string name="note_widget_file_read_error_description">Nie można odczytać połączonego pliku. Prawdopodobnie został przeniesiony lub usunięty. Kopia została przywrócona z pamięci wewnętrznej programu uruchamiającego. Jeśli edytujesz notatkę, połączony plik może zostać nadpisany.</string>
-    <string name="preference_screen_clockwidget_summary">Konfiguracja stylu i komponentów zegara</string>
-    <string name="widget_config_weather_integration_settings">Ustawienia integracji z pogodą</string>
-    <string name="preference_search_locations_hide_uncategorized_summary">Wyświetlaj tylko wyniki z dobrze zdefiniowanymi kategoriami, takimi jak kawiarnie lub restauracje</string>
-    <string name="preference_screen_icons_summary">Siatka, rozmiar ikon, pakiety ikon, plakietki</string>
-    <string name="preference_search_result_ordering_weight_factor_high">Zmienny</string>
-    <string name="widget_config_appwidget_borderless">Bez ramki</string>
-    <string name="preference_customize_filter_bar_summary">Dostosuj elementy uwzględnione na pasku filtrów</string>
-    <string name="filter_settings_network_warning">Dostosowywanie elementów uwzględnianych na pasku filtrów.
-\nBieżący filtr domyślnie włącza wyniki online. Zapytania wyszukiwania mogą być nieumyślnie wysyłane do zewnętrznych usług internetowych. Ze względu na ochronę prywatności nie jest to zalecane.</string>
-    <string name="search_action_share">Udostępnij</string>
-    <string name="note_widget_link_file">Ścieżka do pliku</string>
-    <string name="note_widget_link_file_summary">Synchronizuje zawartość widżetu z plikiem zewnętrznym</string>
-    <string name="preference_search_location_custom_tile_server_url">Adres URL serwera</string>
-    <string name="plugin_state_setup_required">Musisz najpierw skonfigurować wtyczkę</string>
-    <string name="plugin_action_setup">Konfiguracja</string>
-    <string name="plugin_type_filesearch">Szukaj pliku</string>
-    <string name="plugin_type_weather">Dostawca pogody</string>
-    <string name="search_filter_tools">Narzędzia</string>
-    <string name="preference_debug_dump_heap_in_progress">Przechwytywanie migawki…</string>
-    <string name="preference_plugin_badges_summary">Wskazuje, przez którą wtyczkę został utworzony wynik wyszukiwania</string>
-    <string name="preference_plugin_badges">Identyfikatory wtyczek</string>
-    <string name="preference_default_filter">Domyślny filtr</string>
-    <string name="preference_default_filter_summary">Dostosuj domyślny filtr wyszukiwania</string>
-    <string name="preference_filter_bar">Pokaż pasek filtrów</string>
-    <string name="preference_filter_bar_summary">Pokaż szybkie filtry nad klawiaturą</string>
-    <string name="location_closes">Zamyka się o %1$s</string>
-    <string name="location_closes_other_day">Zamknięcie %1$s, %2$s</string>
-    <string name="location_opens">"Otwarte od  %1$s"</string>
-    <string name="location_opens_other_day">"Otwarte  %1$s, %2$s"</string>
-    <string name="menu_map">Zobacz na mapie</string>
-    <string name="menu_website">Otwórz stronę www</string>
-    <string name="action_import">Importuj</string>
-    <string name="widget_name_unknown">Nieznany widżet</string>
-    <string name="widget_action_replace">Zamień</string>
-    <string name="preference_category_advanced">Zaawansowane</string>
-    <string name="widget_config_weather_compact">Tryb kompaktowy</string>
-    <string name="preference_debug_dump_heap">Migawka pamięci</string>
-    <string name="preference_screen_plugins">Wtyczki</string>
-    <string name="preference_screen_plugins_summary">Zarządzanie zainstalowanymi rozszerzeniami</string>
-    <string name="no_plugins_installed">Brak zainstalowanych wtyczek</string>
-    <string name="search_filter_apps">Aplikacje</string>
-    <string name="preference_search_result_ordering_weight_factor">Elastyczność rankingu</string>
-    <string name="preference_custom_colors_corepalette">Schemat kolorów</string>
-    <string name="preference_location_managed">Zarządzane przez wtyczkę</string>
-    <string name="preference_location_managed_summary">Lokalizacja tego dostawcy jest zarządzana przez wtyczkę</string>
-    <string name="preference_debug_reinstall_iconpacks_summary">Wyczyść i odbuduj pamięć podręczną pakietów ikon</string>
-    <string name="preference_screen_integrations">Integracja</string>
-    <string name="preference_charging_animation">Animacja ładowania</string>
-    <string name="preference_charging_animation_summary">Odtwarzanie animacji bąbelków podczas ładowania urządzenia</string>
-    <string name="preference_clock_widget_show_seconds">Pokaż sekundy</string>
-    <string name="preference_clock_widget_alignment">Wyrównanie</string>
-    <string name="preference_clockwidget_dynamic_zone">Dynamiczna strefa</string>
-    <string name="preference_search_locations_radius">Promień wyszukiwania</string>
-    <string name="preference_search_bar_launch_on_enter">Uruchom na starcie</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Uruchamianie podświetlonego dopasowania lub szybkiej akcji po dotknięciu przycisku Go</string>
-    <string name="preference_hidden_items_reveal_button_summary">Pokaż przycisk, aby ujawnić ukryte wyniki wyszukiwania</string>
-    <string name="preference_media_integration">Sterowanie multimediami</string>
-    <string name="icon_picker_filter_all_packs">Wszystkie pakiety ikon</string>
-    <string name="search_action_websearch">Wyszukiwanie w sieci</string>
-    <string name="preference_search_locations_show_map">Mapa</string>
-    <string name="preference_search_locations_show_map_summary">Pokaż podgląd mapy dla miejsc</string>
-    <string name="preference_search_locations_theme_map">Motyw mapy</string>
-    <string name="menu_navigation">Nawigacja</string>
-    <string name="plugin_weather_provider_enable">Ustaw jako dostawcę pogody</string>
-    <string name="plugin_weather_provider_enabled">Obecnie ustawiony jako dostawca pogody</string>
-    <string name="unavailable_searchable">Ten element już nie istnieje.</string>
-    <string name="clock_style_orbit">Orbita</string>
-    <string name="clock_style_binary">Binarny</string>
-    <string name="clock_style_analog">Wskazówkowy</string>
-    <string name="clock_style_empty">Bez zegara</string>
-    <string name="clock_style_custom">Własny widżet</string>
-    <string name="clock_variant_outlined">Z obwódką</string>
-    <string name="search_filter_online">Wyniki online</string>
-    <string name="preference_customize_filter_bar">Dostosuj pasek filtrów</string>
-    <string name="poi_category_school">Szkoły</string>
     <string name="poi_category_jewelry">Biżuteria</string>
+    <string name="poi_category_laundry">Pralnie</string>
     <string name="poi_category_bank">Banki</string>
     <string name="poi_category_soccer">Boiska</string>
     <string name="poi_category_basketball">Koszykówka</string>
+    <string name="poi_category_tennis">Korty</string>
+    <string name="poi_category_atm">Bankomaty</string>
+    <string name="poi_category_kiosk">Kioski</string>
     <string name="poi_category_museum">Muzea</string>
     <string name="poi_category_fitness_center">Centrum ćwiczeń</string>
-    <string name="poi_category_car_rental">Wypożyczalnia aut</string>
-    <string name="plugin_type_locationsearch">Przeszukaj miejsca</string>
-    <string name="menu_hide_filters">Ukryj filtry</string>
-    <string name="preference_search_osm_locations">OpenStreetMap</string>
-    <string name="preference_search_osm_locations_summary">Przeszukaj OpenStreetMap w poszukiwaniu sklepów oraz innych obiektów w okolicy</string>
+    <string name="customize_item_tags">Tagi</string>
+    <string name="contact_info_work">Praca</string>
+    <string name="weather_forecast_wind">Wiatr</string>
+    <string name="theme_bundle_name">Nazwa</string>
 </resources>
