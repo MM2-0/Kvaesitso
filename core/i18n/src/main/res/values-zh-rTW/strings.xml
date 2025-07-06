@@ -424,7 +424,7 @@
     <string name="preference_mdy_color_source_system">系統</string>
     <string name="preference_mdy_color_source_wallpaper">桌布</string>
     <string name="preference_screen_shapes">形狀</string>
-    <string name="preference_shapes_default">預設</string>
+    <string name="preference_shapes_default">系統預設</string>
     <string name="preference_shapes_extra_round">圓形</string>
     <string name="preference_shapes_rect">正方形</string>
     <string name="preference_shapes_base">基底形狀</string>
@@ -824,7 +824,7 @@
     <string name="preference_search_locations_show_map_summary">為地點顯示地圖預覽</string>
     <string name="preference_search_locations_theme_map">地圖主題</string>
     <string name="preference_search_locations_theme_map_summary">將啟動器的色彩方案應用至地圖</string>
-    <string name="menu_dial">撥號</string>
+    <string name="menu_dial">呼叫</string>
     <string name="menu_navigation">導航</string>
     <string name="menu_bugreport">Bug 回報</string>
     <string name="location_open_24_7">24/7 開業</string>
@@ -993,7 +993,7 @@
         <item quantity="other">已選擇 %1$s 個列表</item>
     </plurals>
     <string name="weather_forecast_humidity">濕度</string>
-    <string name="weather_forecast_wind">颳風</string>
+    <string name="weather_forecast_wind">風</string>
     <string name="weather_forecast_precipitation">降水</string>
     <string name="departure_time_now">現在</string>
     <plurals name="departure_time_in">
