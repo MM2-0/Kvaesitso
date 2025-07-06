@@ -26,7 +26,7 @@
     <string name="menu_launch">開く</string>
     <string name="menu_customize">カスタマイズ</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">オープン</string>
+    <string name="menu_open_file">開く</string>
     <string name="menu_map">地図で見る</string>
     <string name="menu_website">WEBサイトを開く</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -401,7 +401,7 @@
     <string name="preference_cards_corner_radius">角の丸み</string>
     <string name="preference_cards_opacity">透明度</string>
     <string name="preference_cards_shape">形状</string>
-    <string name="preference_icon_shape">形状</string>
+    <string name="preference_icon_shape">形</string>
     <string name="preference_icon_shape_platform">システムのデフォルト</string>
     <string name="preference_icon_shape_square">スクエア</string>
     <string name="preference_icon_shape_rounded_square">角丸</string>
@@ -426,6 +426,7 @@
     <string name="preference_about_license_summary">GNU 一般公衆ライセンス 3.0 のもとでライセンスされています</string>
     <string name="preference_grid_icon_size">アイコンのサイズ</string>
     <string name="preference_grid_labels">ラベルの表示</string>
+    <string name="preference_screen_debug">デバッグ</string>
     <string name="preference_screen_debug_summary">トラブルシューティングのツール</string>
     <string name="preference_screen_weatherwidget">天気</string>
     <string name="preference_screen_clockwidget">時計</string>
