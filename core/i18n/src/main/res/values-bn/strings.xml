@@ -28,7 +28,7 @@
     <string name="menu_launch">চালু করুন</string>
     <string name="menu_customize">কাস্টোমাইজ করুন</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">খোলা আছে</string>
+    <string name="menu_open_file">খুলুন</string>
     <string name="menu_map">ম্যাপে দেখুন</string>
     <string name="menu_website">ওয়েবসাইট খুলুন</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -428,6 +428,7 @@
     <string name="preference_category_advanced">আরো অপশন</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">ওয়েবসাইট খুলুন</string>
+    <string name="preference_location">অবস্থান</string>
     <string name="preference_imperial_units_summary">ফারেনহাইট ডিগ্রী এবং মাইল প্রতি ঘণ্টা ব্যবহার করুন</string>
     <string name="preference_imperial_units">ঐতিহাসিক একক</string>
     <string name="widget_config_weather_compact">সংক্ষিপ্ত মোড</string>
@@ -483,8 +484,8 @@
     <string name="preference_status_bar_icons">স্ট্যাটাস বার এর চিহ্ন</string>
     <string name="preference_nav_bar_icons">নির্দেশনা বারের চিহ্ন</string>
     <string name="preference_system_bar_icons_auto">স্বয়ংক্রিয়</string>
-    <string name="preference_system_bar_icons_light">হালকা</string>
-    <string name="preference_system_bar_icons_dark">গাঢ়</string>
+    <string name="preference_system_bar_icons_light">সাদা</string>
+    <string name="preference_system_bar_icons_dark">কালো</string>
     <string name="preference_hide_status_bar">স্ট্যাটাস বার লুকান</string>
     <string name="preference_hide_nav_bar">নির্দেশনা বার লুকান</string>
     <string name="preference_category_wallpaper">ওয়ালপেপার</string>
