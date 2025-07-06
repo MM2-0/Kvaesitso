@@ -28,7 +28,7 @@
     <string name="menu_launch">اجرا</string>
     <string name="menu_customize">شخصی‌سازی</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">باز</string>
+    <string name="menu_open_file">بازکردن پرونده</string>
     <string name="menu_map">مشاهده در نقشه</string>
     <string name="menu_website">بازکردن وبگاه</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -417,7 +417,7 @@
     <string name="preference_custom_colors_corepalette">تخته رنگ</string>
     <string name="preference_mdy_color_source">منبع برای رنگ‌های پویا</string>
     <string name="preference_mdy_color_source_system">سامانه</string>
-    <string name="preference_mdy_color_source_wallpaper">پس‌زمینه</string>
+    <string name="preference_mdy_color_source_wallpaper">تصویر زمینه</string>
     <string name="preference_shapes_default">پیش‌گزیده</string>
     <string name="preference_transparencies_default">پیش‌گزیده</string>
     <string name="preference_font">قلم</string>
@@ -468,7 +468,7 @@
     <string name="preference_cards_shape_rounded">گرد</string>
     <string name="preference_cards_shape_cut">برش‌دار</string>
     <string name="preference_icon_shape">شکل</string>
-    <string name="preference_icon_shape_platform">قلم پیش‌گزیده سامانه</string>
+    <string name="preference_icon_shape_platform">پیش‌گزیده سامانه</string>
     <string name="preference_icon_shape_square">مربع</string>
     <string name="preference_icon_shape_rounded_square">مربع گرد</string>
     <string name="preference_icon_shape_squircle">squircle</string>
@@ -556,7 +556,7 @@
     <string name="preference_clock_widget_time_format">فرمت زمان</string>
     <string name="preference_clock_widget_time_format_24h">24 ساعته</string>
     <string name="preference_clock_widget_time_format_12h">12 ساعته</string>
-    <string name="preference_clock_widget_time_format_system">قلم پیش‌گزیده سامانه</string>
+    <string name="preference_clock_widget_time_format_system">پیش‌گزیده سامانه</string>
     <string name="widget_use_theme_colors">به‌کارگیری رنگ‌های پوسته</string>
     <string name="preference_clock_widget_fill_height">پر کردن ارتفاع صفحه</string>
     <string name="preference_clock_widget_alignment">تراز</string>
@@ -586,7 +586,7 @@
     <string name="preference_logs_summary">مشاهده و صدور گزارش‌های برنامه</string>
     <string name="preference_screen_search">جستجو</string>
     <string name="preference_screen_search_summary">جستجو، برچسب‌ها، موارد مخفی</string>
-    <string name="preference_search_favorites">دلخواه</string>
+    <string name="preference_search_favorites">موارد دلخواه</string>
     <string name="preference_search_favorites_summary">نمایش موارد دلخواه و مورد استفاده بالا بالای شبکه برنامه‌ها</string>
     <string name="preference_search_files">پرونده‌ها</string>
     <string name="preference_search_files_summary">جستجوی پرونده‌های محلی و ابری</string>
@@ -613,9 +613,9 @@
     <string name="preference_search_locations_summary">جستجوی منطقه محلی برای فروشگاه‌ها و سایر مکان‌ها</string>
     <string name="preference_search_localfiles">فایل‌های محلی</string>
     <string name="preference_search_localfiles_summary">جستجوی اسناد، عکس‌ها و سایر فایل‌های ذخیره‌شده روی این دستگاه</string>
-    <string name="preference_search_nextcloud">نکست‌کلود (Nextcloud)</string>
+    <string name="preference_search_nextcloud">نکست‌کلود</string>
     <string name="preference_search_cloud_summary">جستجوی پرونده‌های %1$s</string>
-    <string name="preference_search_owncloud">اون‌کلود (Owncloud)</string>
+    <string name="preference_search_owncloud">اون‌کلود</string>
     <string name="preference_calendar_calendars">تقویم‌ها</string>
     <string name="preference_calendar_hide_completed">پنهان کردن وظیفه‌های انجام‌شده</string>
     <string name="preference_screen_buildinfo">درباره ساخت</string>
@@ -679,7 +679,7 @@
     <string name="apps_profile_main">شخصی</string>
     <string name="apps_profile_work">کار</string>
     <string name="apps_profile_private">خصوصی</string>
-    <string name="favorites">دلخواه</string>
+    <string name="favorites">موارد دلخواه</string>
     <string name="favorites_empty">موارد سنجاق شده و بیشتر استفاده شده اینجا نمایش داده خواهند شد</string>
     <string name="favorites_empty_tag">هیچ موردی با این برچسب نیست</string>
     <string name="frequently_used_show_in_favorites">نمایش در موارد دلخواه</string>
@@ -812,7 +812,7 @@
     <string name="plugin_state_error">این افزونه به‌درستی کار نمی‌کند</string>
     <string name="plugin_state_setup_required">در آغاز باید این افزونه را تنظیم کنید</string>
     <string name="plugin_action_setup">راه‌اندازی</string>
-    <string name="plugin_type_filesearch">پرونده‌ها</string>
+    <string name="plugin_type_filesearch">جستجوی پرونده</string>
     <string name="plugin_type_contacts">مخاطبین</string>
     <string name="plugin_type_weather">ارائه‌دهنده آب و هوا</string>
     <string name="plugin_weather_provider_enable">تنظیم به عنوان ارائه‌دهنده آب و هوا</string>
