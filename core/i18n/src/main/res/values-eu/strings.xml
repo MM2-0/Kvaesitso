@@ -28,7 +28,7 @@
     <string name="menu_launch">Abiarazi</string>
     <string name="menu_customize">Pertsonalizatu</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Irekia</string>
+    <string name="menu_open_file">Ireki</string>
     <string name="menu_map">Mapan ikusi</string>
     <string name="menu_website">Web gunea ireki</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -237,7 +237,7 @@
     <string name="action_next">Hurrengoa</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Desaktibatu</string>
-    <string name="widget_action_remove">Kendu</string>
+    <string name="widget_action_remove">Ezabatu</string>
     <string name="widget_action_replace">Ordeztu</string>
     <string name="menu_item_edit_favs">Gogokoak editatu</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
@@ -402,7 +402,7 @@
     <string name="preference_category_licenses">Kode irekiko lizentziak</string>
     <string name="preference_category_advanced">Aurreratua</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Web gunea ireki</string>
+    <string name="open_webpage">Webgunea ireki</string>
     <string name="preference_screen_about_summary">Aplikazioaren eta lizentziaren informazioa</string>
     <string name="preference_screen_appearance_summary">Itxura pertsonalizatu</string>
     <string name="preference_weather_provider">Hornitzailea</string>
@@ -821,6 +821,7 @@
     <string name="item_visibility_hidden">Inoiz ez</string>
     <string name="contact_info_home">Etxea</string>
     <string name="contact_info_mobile">Sakelekoa</string>
+    <string name="contact_info_work">Etxea</string>
     <string name="weather_widget_no_provider">Ez da eguraldi hornitzailerik hautatu edo hautatutako hornitzailea ez dago eskuragarri</string>
     <string name="music_widget_previous_track">Aurreko kanta</string>
     <string name="music_widget_next_track">Hurrengo kanta</string>
