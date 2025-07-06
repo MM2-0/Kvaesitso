@@ -22,6 +22,7 @@
     <string name="menu_launch">Εκκίνηση</string>
     <string name="menu_customize">Παραμετροποίηση</string>
     <!-- Open a file in the corresponding app -->
+    <string name="menu_open_file">Άνοιγμα</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="action_undo">Αναίρεση</string>
     <string name="action_import">Εισαγωγή</string>
@@ -406,6 +407,7 @@
     <string name="preference_category_licenses">Άδειες ανοιχτού κώδικα</string>
     <string name="preference_category_advanced">Προχωρημένο</string>
     <!-- Open website of an open source library -->
+    <string name="open_webpage">Άνοιγμα σελίδας</string>
     <string name="preference_screen_about_summary">Πληροφορίες εφαρμογής και άδειας χρήσης</string>
     <string name="preference_screen_appearance_summary">Προσαρμογή εμφάνισης και αίσθησης</string>
     <string name="preference_weather_provider">Πάροχος</string>
@@ -440,7 +442,7 @@
     <string name="preference_cards_shape_rounded">Στρογγυλεμένη</string>
     <string name="preference_cards_shape_cut">Κομμένη</string>
     <string name="preference_icon_shape">Σχήμα</string>
-    <string name="preference_icon_shape_platform">Προεπιλεγμένη συστήματος</string>
+    <string name="preference_icon_shape_platform">Προεπιλογή συστήματος</string>
     <string name="preference_icon_shape_square">Τετράγωνο</string>
     <string name="preference_icon_shape_rounded_square">Στρογγυλεμένο τετράγωνο</string>
     <string name="preference_icon_shape_squircle">Τετραγωνοποιημένος κύκλος</string>
@@ -474,7 +476,7 @@
     <string name="preference_signin_user">Συνδεδεμένος ως %1$s</string>
     <string name="preference_summary_not_logged_in">Αυτή την στιγμή δεν έχετε συνδεθεί</string>
     <string name="preference_icon_shape_pentagon">Πεντάγωνο</string>
-    <string name="preference_category_wallpaper">Φόντο</string>
+    <string name="preference_category_wallpaper">Ταπετσαρία</string>
     <string name="preference_dim_wallpaper">Σκοτείνιασμα ταπετσαρίας</string>
     <string name="preference_dim_wallpaper_summary">Σε σκούρα θέματα, σκοτείνιασμα ταπετσαρίας</string>
     <string name="preference_blur_wallpaper">Θάμπωμα ταπετσαρίας</string>
@@ -516,7 +518,7 @@
     <string name="preference_category_media_apps">Εφαρμογές πολυμέσων</string>
     <string name="preference_screen_clockwidget">Ρολόι</string>
     <string name="preference_screen_clockwidget_summary">Διαμορφώστε το στυλ και τα στοιχεία του ρολογιού</string>
-    <string name="preference_clockwidget_layout_vertical">Προεπιλεγμένο</string>
+    <string name="preference_clockwidget_layout_vertical">Προεπιλογή</string>
     <string name="preference_clockwidget_layout_horizontal">Συμπαγής</string>
     <string name="preference_clock_widget_time_format_system">Προεπιλεγμένη συστήματος</string>
     <string name="preference_clock_widget_fill_height">Γέμισμα ύψους οθόνης</string>
@@ -617,7 +619,7 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">Δημιουργήθηκε %1$s στις %2$s με το %3$s.</string>
     <string name="restore_complete">Έγινε επαναφορά του αντιγράφου ασφαλείας.</string>
-    <string name="icon_picker_default_icon">Προεπιλεγμένο</string>
+    <string name="icon_picker_default_icon">Προεπιλογή</string>
     <string name="icon_picker_suggestions">Προτάσεις</string>
     <string name="icon_picker_search_icon">Αναζήτηση σε πακέτα εικονιδίων</string>
     <string name="icon_picker_filter_all_packs">Όλα τα πακέτα εικονιδίων</string>
