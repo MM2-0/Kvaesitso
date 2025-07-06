@@ -1,87 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="bn">
+    <string name="location_open">খোলা আছে</string>
+    <string name="location_closed">বন্ধ আছে</string>
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_closes">%1$s তে বন্ধ হবে</string>
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_closes_other_day">বন্ধ হবে %1$s, %2$s</string>
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_opens">%1$s তে খুলবে</string>
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_opens_other_day">খোলে %1$s, %2$s</string>
+    <!-- Name of the app -->
+    <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">শেয়ার করুন</string>
+    <!-- Shown in the app detail share menu if the application was installed from an app store
+     %1$s is the name of the app store (e.g. Google Play)-->
     <string name="menu_share_store_link">%1$s এর লিংক</string>
+    <!-- Share an APK file, shown in the app detail share menu -->
     <string name="menu_share_apk_file">প্যাকেজ ফাইল</string>
+    <!-- Uninstall an application -->
     <string name="menu_uninstall">আনইনষ্টল করুন</string>
     <string name="menu_favorites_pin">প্রিয় তালিকায় পিন করুন</string>
     <string name="menu_favorites_unpin">পিন থেকে সরান</string>
     <string name="menu_back">পেছনে ফিরুন</string>
     <string name="menu_app_info">অ্যাপের তথ্য</string>
+    <!-- Launch an app -->
     <string name="menu_launch">চালু করুন</string>
     <string name="menu_customize">কাস্টোমাইজ করুন</string>
+    <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">খুলুন</string>
-    <string name="wind_east_north_east">পূর্ব উত্তর-পূর্ব</string>
-    <string name="wind_south_south_west">দক্ষিণ দক্ষিণ-পশ্চিম</string>
-    <string name="widget_name_notes">নোট</string>
-    <string name="owncloud_login_2fa_hint">যদি আপনার দ্বি-স্তর অথেনটিকেশন চালু থাকে, তাহলে অবশ্যই আপনাকে একটি অ্যাপ পাসওয়ার্ড ব্যবহার করতে হবে।</string>
-    <string name="disclaimer_currency_converter">ইউরোপীয় সেন্ট্রাল ব্যাংক দ্বারা প্রতিদিন একবার প্রকাশিত বিনিময় হার। সমস্ত তথ্য কোন ধরনের গ্যারান্টি ছাড়াই \"যেমন আছে\" তেমন প্রদান করা হয়। এই তথ্যের জন্য কোন দায়বদ্ধতা ধরে নেয়া যাবে না।
-\n
-\nশেষ আপডেট: %1$s</string>
-    <plurals name="calendar_widget_running_events">
-        <item quantity="one">বিগত দিনের +%1$d চলমান ইভেন্ট</item>
-        <item quantity="other">বিগত দিনের %1$dটি চলমান ইভেন্ট</item>
-    </plurals>
-    <string name="wind_north_north_west">উত্তর উত্তর-পশ্চিম</string>
-    <string name="edit_favorites_dialog_unpinned">পিন করা নয় কিন্তু প্রায়শই ব্যবহৃত</string>
-    <string name="weather_condition_sleet">তুষার ও বৃষ্টি</string>
-    <string name="weather_condition_lightssnowshowersandthunder">হালকা তুষার এবং বজ্রপাত</string>
+    <string name="menu_map">ম্যাপে দেখুন</string>
+    <string name="menu_website">ওয়েবসাইট খুলুন</string>
+    <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
+    <string name="action_undo">আগের অবস্থায় ফিরুন</string>
     <string name="action_import">ইমপোর্ট করুন</string>
+    <string name="action_done">হয়েছে</string>
+    <string name="action_more_actions">আরো একশন</string>
+    <string name="action_clear">মুছে ফেলুন</string>
+    <!-- Delete something (a file or a web search shortcut) -->
+    <string name="menu_delete">মুছুন</string>
     <string name="menu_remove">সরান</string>
+    <!-- Open a contact in the contacts app -->
     <string name="menu_contacts_open_externally">ফোন নাম্বারের অ্যাপে খুলুন</string>
+    <!-- Open an event in the calendar app -->
+    <string name="menu_calendar_open_externally">ক্যালেন্ডার অ্যাপে খুলুন</string>
+    <!-- Shown in the search bar when the search text field is empty -->
     <string name="search_bar_placeholder">খুঁজুন</string>
+    <!-- App version, used in application details %1$s is the version -->
     <string name="app_info_version">%1$s ভার্সন নাম্বার</string>
+    <!-- Menu entry for launcher settings -->
     <string name="settings">সেটিংস</string>
+    <!-- Menu entry for launcher help -->
     <string name="help">সাহায্য</string>
+    <!-- Set the device's wallpaper -->
     <string name="wallpaper">ওয়ালপেপার</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north">উত্তর</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north_east">উত্তর পূর্ব</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north_north_east">উত্তর উত্তর-পূর্ব</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_east_north_east">পূর্ব উত্তর-পূর্ব</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_east">পূর্ব</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_east_south_east">পূর্ব দক্ষিণ-পূর্ব</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south_east">দক্ষিণ পূর্ব</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south_south_east">দক্ষিণ দক্ষিণ-পূর্ব</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south">দক্ষিণ</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_south_west">দক্ষিণ দক্ষিণ-পশ্চিম</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south_west">দক্ষিণ পশ্চিম</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_west_south_west">পশ্চিম দক্ষিণ-পশ্চিম</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_west">পশ্চিম</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_west_north_west">পশ্চিম উত্তর-পশ্চিম</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north_west">উত্তর পশ্চিম</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_north_west">উত্তর উত্তর-পশ্চিম</string>
+    <!-- No rain or snow, used in weather widget -->
+    <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
+     This should point to the Wikipedia in the given language. If no such Wikipedia exists,
+      a fallback that is suited best for most users of this language should be used
+      (English in most cases) -->
+    <string name="wikipedia_url">https://bn.wikipedia.org</string>
+    <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">উইকিপিডিয়া থেকে</string>
+    <!-- File meta data, title of audio tracks -->
     <string name="file_meta_title">নাম: %1$s</string>
+    <!-- File meta data, artist of audio tracks -->
     <string name="file_meta_artist">শিল্পী: %1$s</string>
+    <!-- File meta data, album of audio tracks -->
     <string name="file_meta_album">অ্যালবাম: %1$s</string>
+    <!-- File meta data, duration of audio tracks -->
     <string name="file_meta_duration">ব্যাপ্তি: %1$s</string>
+    <!-- File meta data, year of audio tracks -->
     <string name="file_meta_year">বছর: %1$s</string>
+    <!-- File size -->
     <string name="file_meta_size">আকার: %1$s</string>
+    <!-- File path -->
     <string name="file_meta_path">পথ: %1$s</string>
+    <!-- File type (MIME type) -->
     <string name="file_meta_type">ধরন: %1$s</string>
+    <!-- File meta, image/video dimensions -->
     <string name="file_meta_dimensions">মাত্রা: %1$s</string>
+    <!-- File meta, app name of APK files -->
     <string name="file_meta_app_name">অ্যাপের নাম: %1$s</string>
+    <!-- File meta, version name of APK files -->
     <string name="file_meta_app_version">ভার্সন: %1$s</string>
+    <!-- File meta, package name of APK files -->
     <string name="file_meta_app_pkgname">প্যাকেজের নাম: %1$s</string>
+    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <string name="file_meta_app_min_sdk">ন্যূনতম SDK ভার্সন: %1$s</string>
+    <!-- File meta, owner (for files that are stored in a cloud) -->
     <string name="file_meta_owner">মালিক: %1$s</string>
+    <!-- File meta, location (e.g. location where a photo has been taken) -->
     <string name="file_meta_location">স্থান: %1$s</string>
     <string name="file_type_directory">ডিরেক্টরি</string>
+    <!-- ZIP, TAR, … archive files  -->
     <string name="file_type_archive">জিপ ফাইল</string>
+    <!-- APK file  -->
+    <string name="file_type_android">অ্যান্ড্রয়েড এপিকে ফাইল</string>
+    <!-- Code file (source code in a programming language) -->
     <string name="file_type_source_code">সোর্স কোড ফাইল</string>
+    <!-- Word document -->
     <string name="file_type_document">ডকুমেন্ট ফাইল</string>
+    <!-- Excel spreadsheet -->
     <string name="file_type_spreadsheet">স্প্রেডশীট</string>
-    <string name="file_type_video">চলচ্চিত্র</string>
-    <string name="file_type_image">ছবি</string>
-    <string name="file_type_presentation">স্লাইড</string>
-    <string name="file_type_compressed">কম্প্রেসড ফাইল</string>
-    <string name="file_type_text">প্লেইন টেক্সট ফাইল</string>
-    <string name="file_type_ebook">ইলেকট্রনিক বই</string>
-    <string name="file_type_form">ফরম</string>
-    <string name="file_type_launcherbackup">%1$s ব্যাকআপ</string>
-    <string name="file_type_launchertheme">%1$s থীম</string>
-    <string name="file_type_generic">%1$s ফাইল</string>
+    <!-- Audio file -->
     <string name="file_type_music">সঙ্গীত ফাইল</string>
+    <!-- Video file -->
+    <string name="file_type_video">চলচ্চিত্র</string>
+    <!-- Picture file -->
+    <string name="file_type_image">ছবি</string>
+    <!-- Generic file without file extension -->
+    <string name="file_type_none">ফাইল</string>
+    <!-- Powerpoint presentation -->
+    <string name="file_type_presentation">স্লাইড</string>
+    <!-- BZIP, GZIP, … compressed file -->
+    <string name="file_type_compressed">কম্প্রেসড ফাইল</string>
+    <!-- Plain text (TXT) file -->
+    <string name="file_type_text">প্লেইন টেক্সট ফাইল</string>
+    <!-- E-book file -->
+    <string name="file_type_ebook">ইলেকট্রনিক বই</string>
+    <!-- Google Drawings file -->
+    <string name="file_type_drawing">আঁকাবুকি ফাইল</string>
+    <!-- Google Forms file -->
+    <string name="file_type_form">ফরম</string>
+    <!-- Launcher backup, %1$s: app name -->
+    <string name="file_type_launcherbackup">%1$s ব্যাকআপ</string>
+    <!-- Launcher theme, %1$s: app name -->
+    <string name="file_type_launchertheme">%1$s থীম</string>
+    <!-- Generic file , %1$s is the file extension -->
+    <string name="file_type_generic">%1$s ফাইল</string>
+    <!-- Warning message that is shown when a user attempts to delete a directory -->
+    <string name="alert_delete_directory">ডিরেক্টরি %1$s এবং এর সমস্ত সামগ্রী স্থায়ীভাবে মুছে ফেলা হবে৷ আগাবেন?</string>
+    <!-- Warning message that is shown when a user attempts to delete a file -->
     <string name="alert_delete_file">%1$s ফাইলটি স্থায়ীভাবে মুছে ফেলা হবে৷ আপনি নিশ্চিত?</string>
+    <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
+    <string name="alert_delete_shortcut">%1$s শর্টকাটটি স্থায়ীভাবে মুছে ফেলা হবে৷ আপনি নিশ্চিত?</string>
+    <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
+    could not be opened because there was no app installed that could handle the request  -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the first one. Must be in sync with [default_websearch_1_url].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the first one. Must be in sync with [default_websearch_1_name].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the second one. Must be in sync with [default_websearch_2_url].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
     <string name="default_websearch_2_name">ইউটিউব</string>
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the second one. Must be in sync with [default_websearch_2_name].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
     <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the third one. Must be in sync with [default_websearch_3_url].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
     <string name="default_websearch_3_name">প্লে স্টোর</string>
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the third one. Must be in sync with [default_websearch_3_name].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
     <string name="websearch_dialog_url_error">এই লিংকে স্থানধারক \'${1}\' অনুপস্থিত</string>
     <string name="websearch_dialog_replace_icon">আইকন পরিবর্তন</string>
@@ -90,50 +216,104 @@
     <string name="websearch_dialog_advanced">আরো অপশন</string>
     <string name="websearch_dialog_query_encoding">প্রশ্ন এনকোডিং</string>
     <string name="websearch_dialog_query_encoding_url">পার্সেন্ট এনকোডিং</string>
-    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="websearch_dialog_query_encoding_none">কোনোটিই নয়</string>
     <string name="menu_edit_widgets">উইজেট সম্পাদনা করুন</string>
     <string name="widget_name_weather">আবহাওয়া</string>
     <string name="widget_name_calendar">ক্যালেন্ডার</string>
     <string name="widget_name_music">সঙ্গীত</string>
     <string name="widget_name_favorites">প্রিয়গুলি</string>
+    <string name="widget_name_notes">নোট</string>
     <string name="widget_name_unknown">অজানা অ্যাপের উইজেট</string>
+    <string name="widget_add_widget">উইজেট যোগ করুন</string>
+    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">একটি নোট লিখুন…</string>
     <string name="notes_widget_action_new">নতুন নোট</string>
+    <!-- Save / export the current note content as markdown file -->
+    <string name="notes_widget_action_save">সংরক্ষণ করুন</string>
+    <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">নোট_%1$s</string>
     <string name="notes_widget_action_dismiss">বাদ দিন</string>
     <string name="notes_widget_dismissed">নোটটি বাদ দেয়া হয়েছে।</string>
+    <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">%1$s এর শর্টকাট</string>
+    <!-- Wait, we have easter eggs? No way! -->
     <string name="easter_egg_text">আহ্। আপনি আমাকে খুঁজে পেলেন। অভিনন্দন। খুব মজা, তাই না?</string>
+    <!-- Close a dialog -->
+    <string name="close">বন্ধ</string>
     <string name="save">সংরক্ষণ করুন</string>
     <string name="duplicate">অনুলিপি তৈরি</string>
     <string name="edit">সম্পাদনা</string>
     <string name="skip">এড়িয়ে যান</string>
     <string name="action_next">পরবর্তী</string>
-    <string name="close">বন্ধ</string>
+    <!-- Turn something off / disable a functionality of the launcher -->
+    <string name="turn_off">বন্ধ করুন</string>
     <string name="widget_action_remove">সরান</string>
     <string name="widget_action_replace">প্রতিস্থাপন করুন</string>
     <string name="menu_item_edit_favs">প্রিয়গুলো সম্পাদন</string>
+    <!-- Edit favorites, title for items that are frequently used but not pinned -->
+    <string name="edit_favorites_dialog_unpinned">পিন করা নয় কিন্তু প্রায়শই ব্যবহৃত</string>
+    <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
     <string name="edit_favorites_dialog_pinned_unsorted">পিন করা - সয়ংক্রিয়ভাবে সাজানো</string>
+    <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
     <string name="edit_favorites_dialog_pinned_sorted">পিন করা - ম্যানুয়ালি সাজানো</string>
     <string name="edit_favorites_dialog_empty_section">আইটেম এখানে টেনে আনুন</string>
     <string name="edit_favorites_dialog_tags">ট্যাগগুলো</string>
+    <string name="edit_favorites_dialog_tag_section_empty">পিন করা ট্যাগ এখানে দেখা যাবে</string>
     <string name="edit_favorites_dialog_new_tag">ট্যাগ তৈরি করুন…</string>
+    <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">নেক্সটক্লাইড সার্ভারের লিংক</string>
+    <!-- Nextcloud/Owncloud login flow, empty URL-->
+    <!-- Nextcloud login flow, error invalid URL-->
     <string name="nextcloud_server_invalid_url">এই লিংকটি একটি নেক্সটক্লাউড সার্ভারকে নির্দেশ করে না</string>
+    <!-- Owncloud login flow, UR-->
     <string name="owncloud_server_url">Owncloud সার্ভার লিংক</string>
+    <!-- Owncloud login flow, error invalid URL-->
+    <string name="owncloud_server_invalid_url">এই লিংকটি একটি Owncloud সার্ভারকে নির্দেশ করে না</string>
+    <!-- Owncloud login flow, password-->
     <string name="owncloud_password">পাসওয়ার্ড</string>
+    <!-- Owncloud login flow, user name-->
     <string name="owncloud_username">ইউজার নাম</string>
+    <!-- Owncloud login flow -->
+    <string name="owncloud_login_2fa_hint">যদি আপনার দ্বি-স্তর অথেনটিকেশন চালু থাকে, তাহলে অবশ্যই আপনাকে একটি অ্যাপ পাসওয়ার্ড ব্যবহার করতে হবে।</string>
+    <!-- Owncloud login flow, login failed -->
+    <string name="owncloud_login_failed">লগইন ব্যর্থ: ইউজার নাম অথবা পাসওয়ার্ড সঠিক নয়।</string>
+    <!-- Owncloud login flow, error: username empty -->
+    <!-- Owncloud login flow, error: password empty -->
+    <!-- Nextcloud/Owncloud login flow, continue button -->
     <string name="login_flow_continue">চালিয়ে যান</string>
+    <!-- Nextcloud/Owncloud login flow, login button -->
     <string name="login_flow_login">লগইন</string>
     <string name="disclaimer">ডিসক্লেইমার</string>
+    <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
+    <string name="disclaimer_currency_converter">ইউরোপীয় সেন্ট্রাল ব্যাংক দ্বারা প্রতিদিন একবার প্রকাশিত বিনিময় হার। সমস্ত তথ্য কোন ধরনের গ্যারান্টি ছাড়াই \"যেমন আছে\" তেমন প্রদান করা হয়। এই তথ্যের জন্য কোন দায়বদ্ধতা ধরে নেয়া যাবে না।
+\n
+\nশেষ আপডেট: %1$s</string>
     <string name="show_all">সব দেখুন</string>
+    <!-- Used in calendar widget date selector. -->
     <string name="date_today">আজ</string>
+    <!-- Used in calendar widget date selector. -->
     <string name="date_tomorrow">আগামীকাল</string>
+    <!-- Headline used in calendar widget for pinned events -->
     <string name="calendar_widget_pinned_events">আসন্ন</string>
+    <!-- Headline used in calendar widget for the next event, if there is no event today -->
     <string name="calendar_widget_next_events">পরবর্তী ঘটনা</string>
     <string name="calendar_widget_no_events">আজ কোনো ঘটনা নেই</string>
+    <!--
+        In the calendar widget, only events that start or end at the selected date are shown.
+        If an event runs for three days, it won't be listed if the second day is selected.
+        Instead, the following text will be shown, %1$d being the total number of
+        running events that neither started nor will end on the selected day.
+        -->
+    <plurals name="calendar_widget_running_events">
+        <item quantity="one">বিগত দিনের +%1$d চলমান ইভেন্ট</item>
+        <item quantity="other">বিগত দিনের %1$dটি চলমান ইভেন্ট</item>
+    </plurals>
+    <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">সারাদিন</string>
+    <string name="task_due_time">শেষ সময় %1$s</string>
+    <string name="task_due_date">শেষ তারিখ %1$s</string>
+    <string name="task_due_today">আজকে শেষ সময়</string>
+    <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s মিডিয়া চালাচ্ছে</string>
     <string name="music_widget_no_data">কোনো মিডিয়া চলছে না</string>
     <string name="weather_condition_sleetshowers">শিলা বৃষ্টি</string>
@@ -148,130 +328,130 @@
     <string name="weather_condition_lightsnowshowers">হালকা তুষারপাত বর্ষণ</string>
     <string name="weather_condition_lightssleetshowersandthunder">হালকা শিলা বৃষ্টি এবং বজ্রপাত</string>
     <string name="weather_condition_snowandthunder">তুষারপাত এবং বজ্রপাত</string>
+    <string name="weather_condition_heavysleetshowers">প্রচণ্ড শিলা বৃষ্টি</string>
     <string name="weather_condition_heavysnow">প্রচণ্ড তুষারপাত</string>
     <string name="weather_condition_cloudy">মেঘাচ্ছন্ন</string>
     <string name="weather_condition_lightrainandthunder">হালকা বর্ষণ এবং বজ্রপাত</string>
     <string name="weather_condition_snow">তুষার</string>
     <string name="weather_condition_hail">শিলা</string>
+    <string name="weather_condition_thunderstorm">বজ্রঝড়</string>
     <string name="weather_condition_heavysnowshowers">প্রচণ্ড তুষার বর্ষণ</string>
     <string name="weather_condition_heavyrainshowers">প্রচণ্ড বৃষ্টিপাত</string>
     <string name="weather_condition_rainshowersandthunder">বৃষ্টিপাত এবং বজ্রপাত</string>
     <string name="weather_condition_clearsky">পরিষ্কার আকাশ</string>
+    <string name="weather_condition_sleet">তুষার ও বৃষ্টি</string>
     <string name="weather_condition_rain">বর্ষা</string>
     <string name="weather_condition_sleetandthunder">তুষার, বৃষ্টি এবং বজ্রপাত</string>
+    <string name="weather_condition_lightssnowshowersandthunder">হালকা তুষার এবং বজ্রপাত</string>
     <string name="weather_condition_heavyrainshowersandthunder">প্রচণ্ড বর্ষণ এবং বজ্রপাত</string>
     <string name="weather_condition_fair">পরিষ্কার</string>
     <string name="weather_condition_fog">কুয়াশা</string>
     <string name="weather_condition_sleetshowersandthunder">তুষার বৃষ্টি এবং বজ্রপাত</string>
     <string name="weather_condition_rainandthunder">বর্ষা এবং বজ্রপাত</string>
+    <string name="weather_condition_lightsleet">হালকা তুষার বৃষ্টি</string>
     <string name="weather_condition_heavysleetandthunder">প্রচণ্ড তুষার বৃষ্টি এবং বজ্রপাত</string>
     <string name="weather_condition_partlycloudy">আংশিক মেঘাচ্ছন্ন</string>
+    <string name="weather_condition_heavysnowandthunder">প্রচণ্ড তুষার এবং বজ্রপাত</string>
     <string name="weather_condition_rainshowers">বৃষ্টি</string>
     <string name="weather_condition_lightsleetandthunder">হালকা তুষার বৃষ্টি এবং বজ্রপাত</string>
-    <string name="action_undo">আগের অবস্থায় ফিরুন</string>
-    <string name="wikipedia_url">https://bn.wikipedia.org</string>
-    <string name="file_type_android">অ্যান্ড্রয়েড এপিকে ফাইল</string>
-    <string name="file_type_none">ফাইল</string>
-    <string name="file_type_drawing">আঁকাবুকি ফাইল</string>
-    <string name="alert_delete_shortcut">%1$s শর্টকাটটি স্থায়ীভাবে মুছে ফেলা হবে৷ আপনি নিশ্চিত?</string>
-    <string name="notes_widget_action_save">সংরক্ষণ করুন</string>
-    <string name="turn_off">বন্ধ করুন</string>
-    <string name="menu_delete">মুছুন</string>
-    <string name="file_meta_app_min_sdk">ন্যূনতম SDK ভার্সন: %1$s</string>
-    <string name="widget_add_widget">উইজেট যোগ করুন</string>
-    <string name="edit_favorites_dialog_tag_section_empty">পিন করা ট্যাগ এখানে দেখা যাবে</string>
-    <string name="owncloud_server_invalid_url">এই লিংকটি একটি Owncloud সার্ভারকে নির্দেশ করে না</string>
-    <string name="owncloud_login_failed">লগইন ব্যর্থ: ইউজার নাম অথবা পাসওয়ার্ড সঠিক নয়।</string>
-    <string name="weather_condition_heavysleetshowers">প্রচণ্ড শিলা বৃষ্টি</string>
-    <string name="weather_condition_heavysnowandthunder">প্রচণ্ড তুষার এবং বজ্রপাত</string>
-    <string name="menu_calendar_open_externally">ক্যালেন্ডার অ্যাপে খুলুন</string>
-    <string name="alert_delete_directory">ডিরেক্টরি %1$s এবং এর সমস্ত সামগ্রী স্থায়ীভাবে মুছে ফেলা হবে৷ আগাবেন?</string>
-    <string name="weather_condition_lightsleet">হালকা তুষার বৃষ্টি</string>
-    <string name="task_due_time">শেষ সময় %1$s</string>
-    <string name="task_due_date">শেষ তারিখ %1$s</string>
-    <string name="task_due_today">আজকে শেষ সময়</string>
-    <string name="location_closes">%1$s তে বন্ধ হবে</string>
-    <string name="location_closes_other_day">বন্ধ হবে %1$s, %2$s</string>
-    <string name="location_opens_other_day">খোলে %1$s, %2$s</string>
-    <string name="location_opens">%1$s তে খুলবে</string>
-    <string name="missing_permission_file_search_settings_android10">লোকাল ফাইল অনুসন্ধান করতে সব ফাইল পরিচালনা করার অনুমতির প্রয়োজন</string>
-    <string name="widget_config_calendar_missing_calendars_hint">আপনার ক্যালেন্ডার খুঁজে পাচ্ছেন না?</string>
-    <string name="action_done">হয়েছে</string>
-    <string name="action_more_actions">আরো একশন</string>
-    <string name="action_clear">মুছে ফেলুন</string>
-    <string name="weather_condition_thunderstorm">বজ্রঝড়</string>
     <string name="weather_condition_heavysnowshowersandthunder">ভারী তুষারপাত ও বজ্রপাত</string>
     <string name="weather_condition_lightsleetshowers">হালকা শিলাবৃষ্টি</string>
     <string name="weather_condition_snowshowersandthunder">তুষারপাত ও বজ্রপাত</string>
     <string name="weather_condition_snowshowers">তুষারপাত</string>
+    <string name="weather_condition_heavyrainandthunder">ভারী বৃষ্টি ও বজ্রপাত</string>
     <string name="weather_condition_wind">বাতাস</string>
     <string name="weather_condition_unknown">অজানা</string>
-    <string name="weather_location_search_no_result">স্থান খুঁজে পাওয়া যায়নি।</string>
-    <string name="missing_permission_auto_location">অবস্থান স্বয়ংক্রিয়ভাবে নির্ধারণ করতে লোকেশন অ্যাক্সেস প্রয়োজন</string>
-    <string name="missing_permission_music_widget">মিডিয়া প্লেব্যাক নিয়ন্ত্রণ করতে নোটিফিকেশন অ্যাক্সেস প্রয়োজন</string>
-    <string name="missing_permission_contact_search_settings">কন্টাক্ট অনুসন্ধান করতে কন্টাক্ট অনুমতির প্রয়োজন</string>
-    <string name="missing_permission_calendar_search_settings">ক্যালেন্ডার অনুসন্ধান করতে ক্যালেন্ডার অনুমতির প্রয়োজন</string>
-    <string name="missing_permission_calendar_widget_settings">এই উইজেটটির ব্যবহারের জন্য ক্যালেন্ডার অনুমতির প্রয়োজন</string>
-    <string name="missing_permission_file_search_settings">লোকাল ফাইল অনুসন্ধান করতে এক্সটার্নাল স্টোরেজ অনুমতির প্রয়োজন</string>
-    <string name="missing_permission_appshortcuts_search_settings">অ্যাপ শর্টকাট অনুসন্ধান করার জন্য %1$s-কে ডিফল্ট হোম অ্যাপ হিসেবে সেট করা আবশ্যক</string>
-    <string name="missing_permission_notification_badges">বিজ্ঞপ্তি ব্যাজ প্রদর্শন করতে নোটিফিকেশন অ্যাক্সেস প্রয়োজন</string>
-    <string name="missing_permission_calendar_widget">এখানে আসন্ন অ্যাপয়েন্টমেন্ট এবং ইভেন্টগুলি প্রদর্শন করতে ক্যালেন্ডার অনুমতি প্রদান করুন।</string>
-    <string name="missing_permission_calendar_search">আপনার ক্যালেন্ডার অনুসন্ধান করতে ক্যালেন্ডার অনুমতি প্রদান করুন।</string>
-    <string name="missing_permission_location_search">নিকটবর্তী অবস্থান অনুসন্ধান করতে অবস্থান অনুমতি প্রদান করুন।</string>
-    <string name="weather_condition_heavyrainandthunder">ভারী বৃষ্টি ও বজ্রপাত</string>
-    <string name="weather_widget_set_location">স্থান নির্বাচন</string>
+    <!-- Humidity details, %1$s: formatted humidity value -->
+    <!-- Wind details, %1$s: formatted wind values -->
+    <!-- Precipitation details, %1$s: formatted precipitation values -->
     <string name="weather_no_data">আবহাওয়ার তথ্য পাওয়া যায়নি।</string>
-    <string name="location_open">খোলা আছে</string>
-    <string name="menu_website">ওয়েবসাইট খুলুন</string>
-    <string name="location_closed">বন্ধ আছে</string>
-    <string name="menu_map">ম্যাপে দেখুন</string>
-    <string name="preference_debug_dump_heap_summary">মেমোরি ব্যবহারের বিশ্লেষণ করতে একটি স্ন্যাপশট ক্যাপচার করুন। এই প্রক্রিয়া সম্পন্ন হওয়া পর্যন্ত অ্যাপটি থেমে থাকবে।</string>
-    <string name="preference_force_themed_icons">থিমযুক্ত আইকন প্রয়োগ করুন</string>
-    <string name="preference_debug_reinstall_iconpacks">আইকন প্যাক পুনরায় ইনস্টল করুন</string>
-    <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$dটি এন্ট্রি মুছে ফেলা হয়েছে।</item>
-        <item quantity="other">%1$dটি এন্ট্রি মুছে ফেলা হয়েছে।</item>
-    </plurals>
-    <string name="preference_cards_stroke_width">রেখার প্রস্থ</string>
+    <!-- Manually set a location, used in weather widget location permission banner as an
+        alternative to granting the permission -->
+    <string name="weather_widget_set_location">স্থান নির্বাচন</string>
+    <string name="weather_location_search_no_result">স্থান খুঁজে পাওয়া যায়নি।</string>
+    <!-- Missing location permission in weather widget and weather widget settings settings -->
+    <string name="missing_permission_auto_location">অবস্থান স্বয়ংক্রিয়ভাবে নির্ধারণ করতে লোকেশন অ্যাক্সেস প্রয়োজন</string>
+    <!-- Missing notification permission in music widget settings -->
+    <string name="missing_permission_music_widget">মিডিয়া প্লেব্যাক নিয়ন্ত্রণ করতে নোটিফিকেশন অ্যাক্সেস প্রয়োজন</string>
+    <!-- Missing contact permission in search settings screen -->
+    <string name="missing_permission_contact_search_settings">কন্টাক্ট অনুসন্ধান করতে কন্টাক্ট অনুমতির প্রয়োজন</string>
+    <!-- Missing call permission in contacts settings screen -->
+    <!-- Missing calendar permission in search settings screen -->
+    <string name="missing_permission_calendar_search_settings">ক্যালেন্ডার অনুসন্ধান করতে ক্যালেন্ডার অনুমতির প্রয়োজন</string>
+    <!-- Missing calendar permission in calendar widget settings screen -->
+    <string name="missing_permission_calendar_widget_settings">এই উইজেটটির ব্যবহারের জন্য ক্যালেন্ডার অনুমতির প্রয়োজন</string>
+    <string name="widget_config_calendar_missing_calendars_hint">আপনার ক্যালেন্ডার খুঁজে পাচ্ছেন না?</string>
+    <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
+    <string name="missing_permission_appshortcuts_search_settings">অ্যাপ শর্টকাট অনুসন্ধান করার জন্য %1$s-কে ডিফল্ট হোম অ্যাপ হিসেবে সেট করা আবশ্যক</string>
+    <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">লোকাল ফাইল অনুসন্ধান করতে এক্সটার্নাল স্টোরেজ অনুমতির প্রয়োজন</string>
+    <!-- Missing file permission in search settings screen.
+        Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
+        to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <string name="missing_permission_file_search_settings_android10">লোকাল ফাইল অনুসন্ধান করতে সব ফাইল পরিচালনা করার অনুমতির প্রয়োজন</string>
+    <!-- Missing notification permission, used in badge settings screen -->
+    <string name="missing_permission_notification_badges">বিজ্ঞপ্তি ব্যাজ প্রদর্শন করতে নোটিফিকেশন অ্যাক্সেস প্রয়োজন</string>
+    <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">এখানে আসন্ন অ্যাপয়েন্টমেন্ট এবং ইভেন্টগুলি প্রদর্শন করতে ক্যালেন্ডার অনুমতি প্রদান করুন।</string>
+    <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">আপনার ক্যালেন্ডার অনুসন্ধান করতে ক্যালেন্ডার অনুমতি প্রদান করুন।</string>
+    <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">নিকটবর্তী অবস্থান অনুসন্ধান করতে অবস্থান অনুমতি প্রদান করুন।</string>
+    <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">এই ডিভাইসে ছবি, মিডিয়া এবং ডকুমেন্ট খোঁজার জন্য স্টোরেজের অনুমতি দিন</string>
+    <!-- Missing files permission, used in contact search results -->
+    <string name="missing_permission_contact_search">আপনার কন্টাক্ট খোঁজার জন্য কন্টাক্ট অনুমতি দিন।</string>
+    <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">অ্যাপ শর্টকাট খোঁজার জন্য %1$s-কে ডিফল্ট হোম অ্যাপ হিসেবে সেট করুন।</string>
+    <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">শর্টকাট তৈরি করার জন্য %1$s-কে ডিফল্ট হোম অ্যাপ হিসেবে সেট করুন।</string>
+    <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">অনুমতি দিন</string>
+    <!-- Appearance preference title -->
     <string name="preference_screen_appearance">রূপসজ্জা</string>
+    <string name="preference_theme">থিম</string>
     <string name="preference_theme_light">হালকা</string>
     <string name="preference_theme_dark">গাঢ়</string>
     <string name="preference_screen_colors">রঙের বিন্যাস</string>
+    <string name="preference_colors_default">পূর্বনির্ধারিত</string>
+    <string name="preference_colors_bw">সাদা-কালো</string>
+    <string name="preference_custom_colors_corepalette">রঙের প্যালেট</string>
+    <string name="preference_mdy_color_source">ডাইনামিক রঙের উৎস</string>
+    <string name="preference_mdy_color_source_system">সিস্টেম</string>
+    <string name="preference_mdy_color_source_wallpaper">ওয়ালপেপার</string>
+    <string name="preference_shapes_default">পূর্বনির্ধারিত</string>
+    <string name="preference_transparencies_default">পূর্বনির্ধারিত</string>
+    <string name="preference_font">অক্ষররেখা</string>
+    <string name="preference_font_system">সিস্টেমের পূর্বনির্ধারিত</string>
+    <string name="preference_screen_about">সম্পর্কে</string>
+    <string name="preference_version">সংস্করণ</string>
+    <string name="preference_category_advanced">আরো অপশন</string>
+    <!-- Open website of an open source library -->
+    <string name="open_webpage">ওয়েবসাইট খুলুন</string>
+    <string name="preference_location">অবস্থান</string>
+    <string name="preference_imperial_units_summary">ফারেনহাইট ডিগ্রী এবং মাইল প্রতি ঘণ্টা ব্যবহার করুন</string>
     <string name="preference_imperial_units">ঐতিহাসিক একক</string>
     <string name="widget_config_weather_compact">সংক্ষিপ্ত মোড</string>
     <string name="preference_category_debug">ত্রুটি সংশোধন</string>
     <string name="preference_category_debug_tools">সরঞ্জাম</string>
     <string name="preference_debug_dump_heap">মেমোরির চিত্রনির্মাণ</string>
+    <string name="preference_debug_dump_heap_summary">মেমোরি ব্যবহারের বিশ্লেষণ করতে একটি স্ন্যাপশট ক্যাপচার করুন। এই প্রক্রিয়া সম্পন্ন হওয়া পর্যন্ত অ্যাপটি থেমে থাকবে।</string>
     <string name="preference_debug_dump_heap_in_progress">চিত্রনির্মান ক্যাপচার করা হচ্ছে…</string>
-    <string name="preference_screen_integrations">একত্রীকরণ</string>
-    <string name="preference_screen_plugins">সংযোজন</string>
-    <string name="preference_screen_plugins_summary">ইনস্টল করা সংযোজনগুলি পরিচালনা করুন</string>
-    <string name="no_plugins_installed">কোনো সংযোজন ইনস্টল করা নেই</string>
-    <string name="preference_theme_system">সিস্টেম অনুসরণ করে</string>
-    <string name="preference_themed_icons">থিমযুক্ত আইকন</string>
-    <string name="preference_themed_icons_summary">অ্যাপ্লিকেশনের রঙের স্কিম অনুসারে আইকন রঙিন করুন</string>
-    <string name="preference_force_themed_icons_summary">সমস্ত আইকনে, সমর্থিত না হওয়া আইকনসহ, অ্যাপ্লিকেশনের রঙের স্কিম প্রয়োগ করুন (প্রস্তাবিত নয়)</string>
-    <string name="preference_colors_bw">সাদা-কালো</string>
-    <string name="missing_permission_contact_search">আপনার কন্টাক্ট খোঁজার জন্য কন্টাক্ট অনুমতি দিন।</string>
-    <string name="missing_permission_files_search">এই ডিভাইসে ছবি, মিডিয়া এবং ডকুমেন্ট খোঁজার জন্য স্টোরেজের অনুমতি দিন</string>
-    <string name="preference_theme">থিম</string>
-    <string name="preference_font">অক্ষররেখা</string>
-    <string name="preference_colors_default">পূর্বনির্ধারিত</string>
-    <string name="preference_custom_colors_corepalette">রঙের প্যালেট</string>
-    <string name="preference_mdy_color_source">ডাইনামিক রঙের উৎস</string>
-    <string name="preference_mdy_color_source_system">সিস্টেম</string>
-    <string name="preference_mdy_color_source_wallpaper">ওয়ালপেপার</string>
-    <string name="preference_screen_about">সম্পর্কে</string>
-    <string name="preference_version">সংস্করণ</string>
-    <string name="preference_debug_cleanup_database_summary">লঞ্চার ডেটাবেস থেকে ভাঙা এবং ব্যবহৃত না হওয়া এন্ট্রি মুছে ফেলুন</string>
-    <string name="preference_category_icons">আইকনস</string>
-    <string name="preference_cards_summary">কার্ডের চেহারা কাস্টমাইজ করুন</string>
     <string name="preference_debug_cleanup_database">ডেটাবেস পরিষ্কার করুন</string>
+    <string name="preference_debug_cleanup_database_summary">লঞ্চার ডেটাবেস থেকে ভাঙা এবং ব্যবহৃত না হওয়া এন্ট্রি মুছে ফেলুন</string>
+    <string name="preference_debug_reinstall_iconpacks">আইকন প্যাক পুনরায় ইনস্টল করুন</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">আইকন প্যাকের সঞ্চয় পরিষ্কার করুন এবং পুনর্নির্মাণ করুন</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$dটি এন্ট্রি মুছে ফেলা হয়েছে।</item>
+        <item quantity="other">%1$dটি এন্ট্রি মুছে ফেলা হয়েছে।</item>
+    </plurals>
+    <string name="preference_category_icons">আইকনস</string>
+    <string name="preference_cards">কার্ড</string>
+    <string name="preference_cards_summary">কার্ডের চেহারা কাস্টমাইজ করুন</string>
     <string name="preference_cards_corner_radius">কোণার ব্যাসার্ধ</string>
+    <string name="preference_cards_stroke_width">রেখার প্রস্থ</string>
     <string name="preference_cards_opacity">অস্বচ্ছতা</string>
+    <string name="preference_cards_shape">আকৃতি</string>
     <string name="preference_cards_shape_rounded">গোলাকার</string>
     <string name="preference_cards_shape_cut">কাটা</string>
     <string name="preference_icon_shape">আকৃতি</string>
@@ -281,6 +461,23 @@
     <string name="preference_icon_shape_squircle">বর্গাকৃত গোলাকার</string>
     <string name="preference_icon_shape_triangle">রুলো ত্রিভুজ</string>
     <string name="preference_icon_shape_circle">বৃত্ত</string>
+    <string name="preference_icon_shape_teardrop">অশ্রুপাত</string>
+    <string name="preference_icon_shape_pebble">পাথরের টুকরা</string>
+    <string name="preference_icon_shape_hexagon">ষড়ভুজ</string>
+    <string name="preference_category_searchbar">অনুসন্ধান বক্স</string>
+    <string name="preference_screen_integrations">একত্রীকরণ</string>
+    <string name="preference_screen_plugins">সংযোজন</string>
+    <string name="preference_screen_plugins_summary">ইনস্টল করা সংযোজনগুলি পরিচালনা করুন</string>
+    <string name="no_plugins_installed">কোনো সংযোজন ইনস্টল করা নেই</string>
+    <string name="preference_theme_system">সিস্টেম অনুসরণ করে</string>
+    <string name="preference_themed_icons">থিমযুক্ত আইকন</string>
+    <string name="preference_themed_icons_summary">অ্যাপ্লিকেশনের রঙের স্কিম অনুসারে আইকন রঙিন করুন</string>
+    <string name="preference_force_themed_icons">থিমযুক্ত আইকন প্রয়োগ করুন</string>
+    <string name="preference_force_themed_icons_summary">সমস্ত আইকনে, সমর্থিত না হওয়া আইকনসহ, অ্যাপ্লিকেশনের রঙের স্কিম প্রয়োগ করুন (প্রস্তাবিত নয়)</string>
+    <string name="preference_icon_pack">আইকন প্যাক</string>
+    <string name="preference_icon_pack_summary_empty">কোনো আইকন প্যাক ইনস্টল করা নেই</string>
+    <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="preference_category_animations">এনিমেশন</string>
     <string name="preference_charging_animation">চার্জ করার চলচিত্র</string>
     <string name="preference_charging_animation_summary">যখন ডিভাইস চার্জ হচ্ছে, তখন একটি বুদবুদ চলচিত্র প্লে করুন</string>
     <string name="preference_category_system_bars">সিস্টেম বার</string>
@@ -291,17 +488,30 @@
     <string name="preference_system_bar_icons_dark">কালো</string>
     <string name="preference_hide_status_bar">স্ট্যাটাস বার লুকান</string>
     <string name="preference_hide_nav_bar">নির্দেশনা বার লুকান</string>
-    <string name="preference_font_system">সিস্টেমের পূর্বনির্ধারিত</string>
-    <string name="preference_icon_shape_teardrop">অশ্রুপাত</string>
-    <string name="preference_icon_shape_pebble">পাথরের টুকরা</string>
-    <string name="preference_icon_shape_hexagon">ষড়ভুজ</string>
-    <string name="preference_category_searchbar">অনুসন্ধান বক্স</string>
-    <string name="preference_icon_pack">আইকন প্যাক</string>
-    <string name="preference_imperial_units_summary">ফারেনহাইট ডিগ্রী এবং মাইল প্রতি ঘণ্টা ব্যবহার করুন</string>
-    <string name="preference_debug_reinstall_iconpacks_summary">আইকন প্যাকের সঞ্চয় পরিষ্কার করুন এবং পুনর্নির্মাণ করুন</string>
-    <string name="preference_cards">কার্ড</string>
-    <string name="preference_category_animations">এনিমেশন</string>
-    <string name="preference_icon_pack_summary_empty">কোনো আইকন প্যাক ইনস্টল করা নেই</string>
-    <string name="preference_cards_shape">আকৃতি</string>
-    <string name="preference_location">অবস্থান</string>
+    <string name="preference_category_wallpaper">ওয়ালপেপার</string>
+    <string name="preference_screen_debug">ত্রুটি সংশোধন</string>
+    <string name="preference_screen_weatherwidget">আবহাওয়া</string>
+    <string name="preference_clockwidget_layout_vertical">পূর্বনির্ধারিত</string>
+    <string name="preference_clock_widget_time_format_system">সিস্টেমের পূর্বনির্ধারিত</string>
+    <string name="preference_screen_search">খুঁজুন</string>
+    <string name="preference_search_favorites">প্রিয়গুলি</string>
+    <string name="preference_search_calendar">ক্যালেন্ডার</string>
+    <string name="preference_screen_tags">ট্যাগগুলো</string>
+    <string name="preference_weather_integration">আবহাওয়া</string>
+    <!-- %1$s: app name (Kvaesitso) -->
+    <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
+    <!-- Used in an info banner if a specific feature requires an Owncloud account -->
+    <!-- Used in an info banner if a specific feature requires a Google account -->
+    <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
+    <!-- %1$s: app name -->
+    <!-- %1$s: app name -->
+    <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
+    <string name="icon_picker_default_icon">পূর্বনির্ধারিত</string>
+    <string name="favorites">প্রিয়গুলি</string>
+    <string name="search_action_share">শেয়ার করুন</string>
+    <!-- %1$s: app name -->
+    <string name="search_filter_tools">সরঞ্জাম</string>
+    <string name="plugin_type_calendar">ক্যালেন্ডার</string>
+    <string name="customize_item_tags">ট্যাগগুলো</string>
+    <string name="weather_forecast_wind">বাতাস</string>
 </resources>

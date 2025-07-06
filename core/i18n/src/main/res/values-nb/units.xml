@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="nb">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <string name="dimension_length">Lengde</string>
+    <string name="dimension_mass">Masse</string>
+    <string name="dimension_velocity">Hastighet</string>
+    <string name="dimension_volume">Volum</string>
+    <string name="dimension_area">Areal</string>
+    <string name="dimension_currency">Valuta</string>
+    <string name="dimension_pressure">Trykk</string>
+    <string name="dimension_energy">Energi</string>
+    <string name="dimension_frequency">Frekvens</string>
+    <string name="dimension_temperature">Temperatur</string>
+    <string name="dimension_time">Tid</string>
+    <!-- UNITS OF LENGTH -->
+    <plurals name="unit_decimeter">
+        <item quantity="one">desimeter</item>
+        <item quantity="other">desimeter</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">tomme</item>
+        <item quantity="other">tommer</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">fot</item>
+        <item quantity="other">fot</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">engelsk mil</item>
+        <item quantity="other">engelske mil</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">nautisk mil</item>
+        <item quantity="other">nautiske mil</item>
+    </plurals>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">kvadratmeter</item>
+        <item quantity="other">kvadratmeter</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kvadratkilometer</item>
+        <item quantity="other">kvadratkilometer</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">kvadratcentimeter</item>
+        <item quantity="other">kvadratcentimeter</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">kvadratmillimeter</item>
+        <item quantity="other">kvadratmillimeter</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="one">kvadrattomme</item>
+        <item quantity="other">kvadrattommer</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">kvadratfot</item>
+        <item quantity="other">kvadratfot</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">kvadratyard</item>
+        <item quantity="other">kvadratyard</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">hektar</item>
+        <item quantity="other">hektar</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
+    <plurals name="unit_second">
+        <item quantity="one">sekund</item>
+        <item quantity="other">sekunder</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">millisekund</item>
+        <item quantity="other">millisekunder</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="one">minutt</item>
+        <item quantity="other">minutter</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">time</item>
+        <item quantity="other">timer</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="one">dag</item>
+        <item quantity="other">dager</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">år</item>
+        <item quantity="other">år</item>
+    </plurals>
+    <!-- UNITS OF DATA SIZES -->
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">meter i sekundet</item>
+        <item quantity="other">meter i sekundet</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilometer i timen</item>
+        <item quantity="other">kilometer i timen</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">knop</item>
+        <item quantity="other">knop</item>
+    </plurals>
+    <!-- UNITS OF MASS -->
+    <plurals name="unit_metric_ton">
+        <item quantity="one">tonn</item>
+        <item quantity="other">tonn</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">grad celsius</item>
+        <item quantity="other">grader celsius</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">grad fahrenheit</item>
+        <item quantity="other">grader fahrenheit</item>
+    </plurals>
+</resources>

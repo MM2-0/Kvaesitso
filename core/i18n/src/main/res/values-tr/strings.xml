@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="tr">
     <string name="location_open">Açık</string>
     <string name="location_closed">Kapalı</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
@@ -139,7 +139,6 @@
     <!-- Audio file -->
     <string name="file_type_music">Müzik dosyası</string>
     <!-- Video file -->
-    <string name="file_type_video">Video</string>
     <!-- Picture file -->
     <string name="file_type_image">Resim</string>
     <!-- Generic file without file extension -->
@@ -155,7 +154,6 @@
     <!-- Google Drawings file -->
     <string name="file_type_drawing">Çizim</string>
     <!-- Google Forms file -->
-    <string name="file_type_form">Form</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s yedeği</string>
     <!-- Launcher theme, %1$s: app name -->
@@ -188,28 +186,24 @@
         Usually YouTube, but can be substituted with something else if YouTube is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_2_name">YouTube</string>
     <!--
         When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
         This is the URL of the second one. Must be in sync with [default_websearch_2_name].
         Usually YouTube, but can be substituted with something else if YouTube is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <!--
         When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
         This is the name of the third one. Must be in sync with [default_websearch_3_url].
         Usually Google Play, but can be substituted with something else if Google Play is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_3_name">Google Play</string>
     <!--
         When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
         This is the URL of the third one. Must be in sync with [default_websearch_3_name].
         Usually Google Play, but can be substituted with something else if Google Play is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="websearch_dialog_url_error">Bu URL\'de \'${1}\' yer tutucusu eksik</string>
     <string name="websearch_dialog_replace_icon">Simgeyi değiştir</string>
     <string name="websearch_dialog_delete_icon">Simgeyi sil</string>
@@ -217,7 +211,6 @@
     <string name="websearch_dialog_advanced">Gelişmiş</string>
     <string name="websearch_dialog_query_encoding">Sorgu kodlaması</string>
     <string name="websearch_dialog_query_encoding_url">Yüzde kodlaması</string>
-    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="websearch_dialog_query_encoding_none">Hiçbiri</string>
     <string name="menu_edit_widgets">Araçları düzenle</string>
     <string name="widget_name_weather">Hava Durumu</string>
@@ -325,6 +318,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s medya oynatıyor</string>
     <string name="music_widget_no_data">Henüz medya oynatılmadı</string>
+    <string name="music_widget_interactive_progress_bar">İnteraktif ilerleme barı</string>
     <string name="weather_condition_sleetshowers">Sulu kar sağanağı</string>
     <string name="weather_condition_heavysleet">Yoğun sulu kar</string>
     <string name="weather_condition_lightrainshowersandthunder">Hafif sağanak yağmur ve gök gürültüsü</string>
@@ -456,10 +450,7 @@
     <string name="preference_screen_appearance_summary">Görünümü ve hissi özelleştirin</string>
     <string name="preference_weather_provider">Sağlayıcı</string>
     <string name="provider_metno">MET Norveç</string>
-    <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (sadece Almanya)</string>
-    <string name="provider_here">HERE</string>
-    <string name="provider_breezy">Breezy Weather</string>
     <string name="preference_category_location">Konum</string>
     <string name="preference_automatic_location">Otomatik konum</string>
     <string name="preference_automatic_location_summary">Konumu otomatik olarak belirlemek için GPS ve konum servislerini kullan</string>
@@ -552,8 +543,6 @@
     <string name="preference_plugin_badges_summary">Bir arama sonucunun hangi eklenti tarafından oluşturulduğunu belirt</string>
     <string name="preference_nextcloud_signin">Nextcloud\'a giriş yap</string>
     <string name="preference_nextcloud_signin_summary">Nextcloud sunucunuzda arama yapmak için giriş yapın</string>
-    <string name="preference_nextcloud">Nextcloud</string>
-    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Owncloud\'a giriş yap</string>
     <string name="preference_owncloud_signin_summary">Owncloud sunucunuzda arama yapmak için giriş yapın</string>
     <string name="preference_about_telegram">Telegram grubu</string>
@@ -595,7 +584,6 @@
     <string name="preference_clockwidget_dynamic_zone">Dinamik bölge</string>
     <string name="preference_clockwidget_date_part">Tarih</string>
     <string name="preference_clockwidget_date_part_summary">Geçerli tarihi göster</string>
-    <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_clockwidget_favorites_part_summary">Sabitlenmiş öğelerin ilk sırasını göster</string>
     <string name="preference_clockwidget_music_part">Medya</string>
     <string name="preference_clockwidget_music_part_summary">Aktif bir medya oturumu olduğunda medya kontrollerini göster</string>
@@ -644,15 +632,16 @@
     <string name="preference_search_locations_summary">Yerel bölgedeki dükkanları ve diğer yerleri ara</string>
     <string name="preference_search_localfiles">Yerel dosyalar</string>
     <string name="preference_search_localfiles_summary">Bu cihazda depolanan belgeleri, fotoğrafları ve diğer dosyaları ara</string>
-    <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">%1$s\'in dosyalarında ara</string>
-    <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Takvimler</string>
     <string name="preference_calendar_hide_completed">Tamamlanan görevleri gizle</string>
     <string name="preference_screen_buildinfo">Yapı bilgisi</string>
     <string name="preference_screen_buildinfo_summary">Bu uygulamanın bu yapısı hakkında daha fazla bilgi</string>
     <string name="preference_search_bar_style">Stil</string>
     <string name="preference_search_bar_style_summary">Arama çubuğu görünümünü özelleştir</string>
+    <string name="preference_search_bar_style_transparent">Şeffaf</string>
+    <string name="preference_search_bar_style_solid">Koyu</string>
+    <string name="preference_search_bar_style_hidden">Gizli</string>
     <string name="preference_search_bar_color">Renk</string>
     <string name="preference_search_bar_auto_focus">Klavyeyi aç</string>
     <string name="preference_search_bar_auto_focus_summary">Uygulama çekmecesini açarken klavyeyi otomatik olarak göster</string>
@@ -686,7 +675,6 @@
     <string name="preference_tasks_integration_description">Tasks, ücretsiz ve açık kaynaklı bir yapılacaklar listesi ve hatırlatıcı uygulamasıdır. Yüklüyse, %1$s görevlerinizi Tasks uygulamasından görüntüleyebilir ve arayabilir.</string>
     <string name="preference_tasks_integration_ready">Görevler entegrasyonu tamamen kuruldu ve kullanıma hazır.</string>
     <string name="preference_launch_tasks_app">Tasks uygulamasını aç</string>
-    <string name="preference_breezyweather_integration">Breezy Weather</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather, ücretsiz ve açık kaynaklı bir hava durumu uygulamasıdır. Yüklüyse, %1$s Breezy Weather\'ı hava durumu verileri için bir veri kaynağı olarak kullanabilir.</string>
     <string name="preference_breezyweather_integration_instructions">Breezy Weather\'ı hava durumu sağlayıcısı olarak kullanmak için:\n\n1. Breezy Weather &gt; Ayarlar &gt; Araçlar &amp; Canlı duvar kağıdı &gt; Gadgetbridge verisi gönder &gt; %1$s\'i Etkinleştir\'e gidin\n\n2. %1$s\'te, hava durumu sağlayıcısı olarak Breezy Weather\'ı seçin</string>
     <string name="preference_launch_breezyweather_app">Breezy Weather\'ı aç</string>
@@ -875,6 +863,7 @@
     <string name="clock_style_empty">Saat yok</string>
     <string name="clock_style_custom">Özel araç</string>
     <string name="clock_variant_outlined">Dış çizgili</string>
+    <string name="clock_variant_analog_ticks">Çubuklar</string>
     <string name="menu_show_filters">Filtreleri göster</string>
     <string name="menu_hide_filters">Filtreleri gizle</string>
     <string name="search_filter_tools">Araçlar</string>
@@ -889,11 +878,8 @@
     <string name="preference_customize_filter_bar">Filtre çubuğunu özelleştir</string>
     <string name="preference_customize_filter_bar_summary">Filtre çubuğuna hangi öğelerin dahil edileceğini özelleştir</string>
     <string name="filter_settings_network_warning">Mevcut filtre varsayılan olarak çevrimiçi sonuçları etkinleştirir. Arama sorgularınız istemeden harici web hizmetlerine gönderilebilir. Gizlilik nedenleriyle bu önerilmez.</string>
-    <string name="preference_search_osm_locations">OpenStreetMap</string>
     <string name="preference_search_osm_locations_summary">Yerel bölgedeki dükkanlar ve diğer yerler için OpenStreetMap\'te arama yapın</string>
     <string name="poi_category_restaurant">Restoran</string>
-    <string name="poi_category_fast_food">Fast food</string>
-    <string name="poi_category_bar">Bar</string>
     <string name="poi_category_cafe">Kafe</string>
     <string name="poi_category_hotel">Otel</string>
     <string name="poi_category_supermarket">Süpermarket</string>
@@ -904,7 +890,6 @@
     <string name="poi_category_pharmacy">Eczane</string>
     <string name="poi_category_hospital">Hastane</string>
     <string name="poi_category_post_office">Postane</string>
-    <string name="poi_category_pub">Pub</string>
     <string name="poi_category_doctors">Doktorlar</string>
     <string name="poi_category_police">Polis</string>
     <string name="poi_category_dentist">Dişçi</string>
@@ -934,7 +919,6 @@
     <string name="poi_category_soccer">Futbol sahası</string>
     <string name="poi_category_basketball">Basketbol sahası</string>
     <string name="poi_category_tennis">Tenis kortu</string>
-    <string name="poi_category_atm">ATM</string>
     <string name="poi_category_kiosk">Büfe</string>
     <string name="poi_category_museum">Müze</string>
     <string name="poi_category_fitness_center">Spor salonu</string>
@@ -975,7 +959,6 @@
     <string name="poi_category_volleyball">Voleybol sahası</string>
     <string name="poi_category_skiing">Kayak</string>
     <string name="poi_category_cricket">Kriket sahası</string>
-    <string name="poi_category_park">Park</string>
     <string name="poi_category_monument">Anıt</string>
     <string name="poi_category_government_building">Hükümet binası</string>
     <string name="poi_category_fire_station">İtfaiye</string>
@@ -1048,9 +1031,4 @@
     <string name="font_name_device_headline">Varsayılan başlık yazı tipi</string>
     <string name="font_name_device_body">Cihaz metin yazı tipi</string>
     <string name="font_category_generic">Genel</string>
-    <string name="preference_search_bar_style_transparent">Şeffaf</string>
-    <string name="preference_search_bar_style_solid">Koyu</string>
-    <string name="preference_search_bar_style_hidden">Gizli</string>
-    <string name="clock_variant_analog_ticks">Çubuklar</string>
-    <string name="music_widget_interactive_progress_bar">İnteraktif ilerleme barı</string>
 </resources>

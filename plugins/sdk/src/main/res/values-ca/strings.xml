@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="request_permission_message"><b>%1$s</b> necessita accedir a les dades de <b>%2$s</b>.</string>
+    <string name="request_permission_message"><![CDATA[<b>%1$s</b> necessita accedir a les dades de <b>%2$s</b>.]]></string>
     <string name="request_permission_deny_button">Denega</string>
     <string name="request_permission_allow_button">Permetre</string>
 </resources>

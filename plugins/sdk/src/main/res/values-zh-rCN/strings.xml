@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="request_permission_message"><b>%1$s</b>想要从<b>%2$s</b>获取数据.</string>
+    <string name="request_permission_message"><![CDATA[<b>%1$s</b>想要从<b>%2$s</b>获取数据.]]></string>
     <string name="request_permission_deny_button">拒绝</string>
     <string name="request_permission_allow_button">允许</string>
 </resources>

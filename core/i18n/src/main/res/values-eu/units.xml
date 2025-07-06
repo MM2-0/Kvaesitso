@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="unit_meter_symbol">m</string>
-    <string name="unit_kilometer_symbol">km</string>
-    <string name="unit_centimeter_symbol">cm</string>
-    <plurals name="unit_acre">
-        <item quantity="one">akre</item>
-        <item quantity="other">akre</item>
-    </plurals>
-    <string name="unit_kelvin_symbol">K</string>
-    <string name="unit_millimeter_symbol">mm</string>
-    <string name="unit_sqmeter_symbol">m²</string>
-    <string name="unit_sqkilometer_symbol">km²</string>
-    <string name="unit_sqcentimeter_symbol">cm²</string>
-    <string name="unit_sqmillimeter_symbol">mm²</string>
-    <string name="unit_hectare_symbol">ha</string>
-    <string name="unit_millisecond_symbol">ms</string>
-    <string name="unit_hour_symbol">h</string>
-    <string name="unit_minute_symbol">min</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="eu">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <string name="dimension_length">Luzera</string>
+    <string name="dimension_mass">Masa</string>
+    <string name="dimension_velocity">Abiadura</string>
+    <string name="dimension_volume">Bolumena</string>
+    <string name="dimension_area">Azalera</string>
+    <string name="dimension_currency">Moneta</string>
+    <string name="dimension_bitrate">Bit-tasa</string>
+    <string name="dimension_pressure">Presioa</string>
+    <string name="dimension_energy">Energia</string>
+    <string name="dimension_frequency">Maiztasuna</string>
+    <string name="dimension_temperature">Tenperatura</string>
+    <string name="dimension_time">Denbora</string>
+    <!-- UNITS OF LENGTH -->
     <plurals name="unit_meter">
         <item quantity="one">metro</item>
         <item quantity="other">metro</item>
@@ -24,6 +24,10 @@
     <plurals name="unit_kilometer">
         <item quantity="one">kilometro</item>
         <item quantity="other">kilometro</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">dezimetro</item>
+        <item quantity="other">dezimetro</item>
     </plurals>
     <plurals name="unit_centimeter">
         <item quantity="one">zentimetro</item>
@@ -37,27 +41,23 @@
         <item quantity="one">hazbete</item>
         <item quantity="other">hazbete</item>
     </plurals>
-    <string name="unit_inch_symbol">in</string>
-    <string name="unit_foot_symbol">ft</string>
     <plurals name="unit_foot">
         <item quantity="one">oin</item>
         <item quantity="other">oin</item>
     </plurals>
-    <string name="unit_yard_symbol">yd</string>
     <plurals name="unit_yard">
         <item quantity="one">yarda</item>
         <item quantity="other">yarda</item>
     </plurals>
-    <string name="unit_mile_symbol">mi</string>
     <plurals name="unit_mile">
         <item quantity="one">milia</item>
         <item quantity="other">milia</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">NM</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">itsas milia</item>
         <item quantity="other">itsas milia</item>
     </plurals>
+    <!-- UNITS OF AREA -->
     <plurals name="unit_sqmeter">
         <item quantity="one">metro karratu</item>
         <item quantity="other">metro karratu</item>
@@ -74,17 +74,14 @@
         <item quantity="one">milimetro karratu</item>
         <item quantity="other">milimetro karratu</item>
     </plurals>
-    <string name="unit_sqinch_symbol">sqin</string>
     <plurals name="unit_sqinch">
         <item quantity="one">hazbete karratu</item>
         <item quantity="other">hazbete karratu</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">sqft</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">oin karratu</item>
         <item quantity="other">oin karratu</item>
     </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
     <plurals name="unit_sqyard">
         <item quantity="one">yarda karratu</item>
         <item quantity="other">yarda karratu</item>
@@ -93,8 +90,11 @@
         <item quantity="one">hektarea</item>
         <item quantity="other">hektarea</item>
     </plurals>
-    <string name="unit_acre_symbol">ac</string>
-    <string name="unit_second_symbol">s</string>
+    <plurals name="unit_acre">
+        <item quantity="one">akre</item>
+        <item quantity="other">akre</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
     <plurals name="unit_second">
         <item quantity="one">segundo</item>
         <item quantity="other">segundo</item>
@@ -111,91 +111,16 @@
         <item quantity="one">ordu</item>
         <item quantity="other">ordu</item>
     </plurals>
-    <string name="unit_day_symbol">d</string>
     <plurals name="unit_day">
         <item quantity="one">egun</item>
         <item quantity="other">egun</item>
     </plurals>
-    <string name="unit_year_symbol">a</string>
     <plurals name="unit_year">
         <item quantity="one">urte</item>
         <item quantity="other">urte</item>
     </plurals>
-    <string name="unit_meter_per_second_symbol">m/s</string>
-    <string name="unit_kilometer_per_hour_symbol">km/h</string>
-    <string name="unit_byte_symbol">B</string>
-    <string name="unit_kilobyte_symbol">kB</string>
-    <string name="unit_megabyte_symbol">MB</string>
-    <string name="unit_gigabyte_symbol">GB</string>
-    <string name="unit_terabyte_symbol">TB</string>
-    <string name="unit_kibibyte_symbol">kiB</string>
-    <string name="unit_mebibyte_symbol">MiB</string>
-    <string name="unit_gibibyte_symbol">GiB</string>
-    <string name="unit_tebibyte_symbol">TiB</string>
-    <string name="unit_bit_symbol">bit</string>
-    <string name="unit_kilobit_symbol">kbit</string>
-    <string name="unit_megabit_symbol">Mbit</string>
-    <string name="unit_gigabit_symbol">Gbit</string>
-    <string name="unit_terabit_symbol">Tbit</string>
-    <string name="unit_kilogram_symbol">kg</string>
-    <string name="unit_gram_symbol">g</string>
-    <string name="unit_metric_ton_symbol">t</string>
-    <plurals name="unit_byte">
-        <item quantity="one">byte</item>
-        <item quantity="other">byte</item>
-    </plurals>
-    <plurals name="unit_kilobyte">
-        <item quantity="one">kilobyte</item>
-        <item quantity="other">kilobyte</item>
-    </plurals>
-    <plurals name="unit_megabyte">
-        <item quantity="one">megabyte</item>
-        <item quantity="other">megabyte</item>
-    </plurals>
-    <plurals name="unit_gigabyte">
-        <item quantity="one">gigabyte</item>
-        <item quantity="other">gigabyte</item>
-    </plurals>
-    <plurals name="unit_terabyte">
-        <item quantity="one">terabyte</item>
-        <item quantity="other">terabyte</item>
-    </plurals>
-    <plurals name="unit_kibibyte">
-        <item quantity="one">kibibyte</item>
-        <item quantity="other">kibibyte</item>
-    </plurals>
-    <plurals name="unit_mebibyte">
-        <item quantity="one">mebibytes</item>
-        <item quantity="other">mebibytes</item>
-    </plurals>
-    <plurals name="unit_gibibyte">
-        <item quantity="one">gibiyte</item>
-        <item quantity="other">gibiyte</item>
-    </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="one">tebiyte</item>
-        <item quantity="other">tebiyte</item>
-    </plurals>
-    <plurals name="unit_bit">
-        <item quantity="one">bit</item>
-        <item quantity="other">bit</item>
-    </plurals>
-    <plurals name="unit_kilobit">
-        <item quantity="one">kilobit</item>
-        <item quantity="other">kilobit</item>
-    </plurals>
-    <plurals name="unit_megabit">
-        <item quantity="one">megabit</item>
-        <item quantity="other">megabit</item>
-    </plurals>
-    <plurals name="unit_gigabit">
-        <item quantity="one">gigabit</item>
-        <item quantity="other">gigabit</item>
-    </plurals>
-    <plurals name="unit_terabit">
-        <item quantity="one">terabit</item>
-        <item quantity="other">terabit</item>
-    </plurals>
+    <!-- UNITS OF DATA SIZES -->
+    <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
         <item quantity="one">metro segundoko</item>
         <item quantity="other">metro segundoko</item>
@@ -208,12 +133,11 @@
         <item quantity="one">milia orduko</item>
         <item quantity="other">milia orduko</item>
     </plurals>
-    <string name="unit_mile_per_hour_symbol">mph</string>
-    <string name="unit_knot_symbol">kn</string>
     <plurals name="unit_knot">
         <item quantity="one">korapilo</item>
         <item quantity="other">korapilo</item>
     </plurals>
+    <!-- UNITS OF MASS -->
     <plurals name="unit_kilogram">
         <item quantity="one">kilogramo</item>
         <item quantity="other">kilogramo</item>
@@ -226,28 +150,23 @@
         <item quantity="one">tona</item>
         <item quantity="other">tona</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
         <item quantity="one">tona luze</item>
         <item quantity="other">tona luze</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
     <plurals name="unit_pound">
         <item quantity="one">libra</item>
         <item quantity="other">libra</item>
     </plurals>
-    <string name="unit_degree_celsius_symbol">°C</string>
-    <string name="unit_degree_fahrenheit_symbol">°F</string>
-    <string name="unit_ounce_symbol">oz.</string>
     <plurals name="unit_ounce">
         <item quantity="one">ontza</item>
         <item quantity="other">ontza</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
     <plurals name="unit_short_ton">
         <item quantity="one">tona motz</item>
         <item quantity="other">tona motz</item>
     </plurals>
+    <!-- UNITS OF TEMPERATURE -->
     <plurals name="unit_degree_celsius">
         <item quantity="one">celsius gradu</item>
         <item quantity="other">celsius gradu</item>
@@ -256,25 +175,4 @@
         <item quantity="one">fahrenheit gradu</item>
         <item quantity="other">fahrenheit gradu</item>
     </plurals>
-    <plurals name="unit_kelvin">
-        <item quantity="one">kelvin</item>
-        <item quantity="other">kelvin</item>
-    </plurals>
-    <string name="unit_decimeter_symbol">dm</string>
-    <plurals name="unit_decimeter">
-        <item quantity="one">dezimetro</item>
-        <item quantity="other">dezimetro</item>
-    </plurals>
-    <string name="dimension_length">Luzera</string>
-    <string name="dimension_velocity">Abiadura</string>
-    <string name="dimension_volume">Bolumena</string>
-    <string name="dimension_area">Azalera</string>
-    <string name="dimension_currency">Moneta</string>
-    <string name="dimension_pressure">Presioa</string>
-    <string name="dimension_energy">Energia</string>
-    <string name="dimension_frequency">Maiztasuna</string>
-    <string name="dimension_temperature">Tenperatura</string>
-    <string name="dimension_time">Denbora</string>
-    <string name="dimension_mass">Masa</string>
-    <string name="dimension_bitrate">Bit-tasa</string>
 </resources>

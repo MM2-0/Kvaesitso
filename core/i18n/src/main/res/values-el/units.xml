@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="el">
+    <!--
+    Important note: Unit symbols may not contain spaces.
+    -->
+    <!-- DIMENSIONS -->
+    <!-- UNITS OF LENGTH -->
     <plurals name="unit_meter">
         <item quantity="one">μέτρο</item>
         <item quantity="other">μέτρα</item>
     </plurals>
-    <string name="unit_kilometer_symbol">km</string>
-    <string name="unit_centimeter_symbol">cm</string>
+    <plurals name="unit_kilometer">
+        <item quantity="one">χιλιόμετρο</item>
+        <item quantity="other">χιλιόμετρα</item>
+    </plurals>
     <plurals name="unit_centimeter">
         <item quantity="one">εκατοστό</item>
         <item quantity="other">εκατοστά</item>
     </plurals>
-    <string name="unit_millimeter_symbol">mm</string>
     <plurals name="unit_millimeter">
         <item quantity="one">χιλιοστό</item>
         <item quantity="other">χιλιοστά</item>
@@ -19,152 +25,140 @@
         <item quantity="one">ίντσα</item>
         <item quantity="other">ίντσες</item>
     </plurals>
-    <string name="unit_foot_symbol">ft</string>
     <plurals name="unit_foot">
         <item quantity="one">πόδι</item>
         <item quantity="other">πόδια</item>
     </plurals>
-    <string name="unit_yard_symbol">yd</string>
-    <string name="unit_mile_symbol">mi</string>
-    <string name="unit_nautic_mile_symbol">NM</string>
-    <string name="unit_sqmeter_symbol">m²</string>
-    <string name="unit_sqkilometer_symbol">km²</string>
+    <plurals name="unit_yard">
+        <item quantity="one">γιάρδα</item>
+        <item quantity="other">γιάρδες</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">μίλι</item>
+        <item quantity="other">μίλια</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">ναυτικό μίλι</item>
+        <item quantity="other">ναυτικά μίλια</item>
+    </plurals>
+    <!-- UNITS OF AREA -->
+    <plurals name="unit_sqmeter">
+        <item quantity="one">τετραγωνικό μέτρο</item>
+        <item quantity="other">τετραγωνικά μέτρα</item>
+    </plurals>
     <plurals name="unit_sqkilometer">
         <item quantity="one">τετραγωνικό χιλιόμετρο</item>
         <item quantity="other">τετραγωνικά χιλιόμετρα</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">τετραγωνικό εκατοστό</item>
+        <item quantity="other">τετραγωνικά εκατοστά</item>
     </plurals>
     <plurals name="unit_sqmillimeter">
         <item quantity="one">τετραγωνικό χιλιοστό</item>
         <item quantity="other">τετραγωνικά χιλιοστά</item>
     </plurals>
-    <string name="unit_sqinch_symbol">sqin</string>
-    <string name="unit_sqfoot_symbol">sqft</string>
-    <string name="unit_hectare_symbol">ha</string>
+    <plurals name="unit_sqinch">
+        <item quantity="one">τετραγωνική ίντσα</item>
+        <item quantity="other">τετραγωνικές ίντσες</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">τετραγωνικό πόδι</item>
+        <item quantity="other">τετραγωνικά πόδια</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">τετραγωνική γιάρδα</item>
+        <item quantity="other">τετραγωνικές γιάρδες</item>
+    </plurals>
     <plurals name="unit_hectare">
         <item quantity="one">εκτάριο</item>
         <item quantity="other">εκτάρια</item>
     </plurals>
-    <string name="unit_second_symbol">s</string>
+    <plurals name="unit_acre">
+        <item quantity="one">στρέμμα</item>
+        <item quantity="other">στρέμματα</item>
+    </plurals>
+    <!-- UNITS OF TIME -->
     <plurals name="unit_second">
         <item quantity="one">δευτερόλεπτο</item>
         <item quantity="other">δευτερόλεπτα</item>
     </plurals>
-    <string name="unit_millisecond_symbol">ms</string>
     <plurals name="unit_millisecond">
         <item quantity="one">χιλιοστό δευτερολέπτου</item>
         <item quantity="other">χιλιοστά δευτερολέπτου</item>
     </plurals>
-    <string name="unit_acre_symbol">ac</string>
     <plurals name="unit_minute">
         <item quantity="one">λεπτό</item>
         <item quantity="other">λεπτά</item>
     </plurals>
-    <string name="unit_hour_symbol">h</string>
     <plurals name="unit_hour">
         <item quantity="one">ώρα</item>
         <item quantity="other">ώρες</item>
     </plurals>
-    <string name="unit_day_symbol">d</string>
     <plurals name="unit_day">
         <item quantity="one">ημέρα</item>
         <item quantity="other">ημέρες</item>
     </plurals>
-    <string name="unit_year_symbol">a</string>
-    <string name="unit_byte_symbol">B</string>
-    <plurals name="unit_byte">
-        <item quantity="one">byte</item>
-        <item quantity="other">bytes</item>
+    <plurals name="unit_year">
+        <item quantity="one">έτος</item>
+        <item quantity="other">έτη</item>
     </plurals>
-    <string name="unit_kilobyte_symbol">kB</string>
-    <plurals name="unit_kilobyte">
-        <item quantity="one">kilobyte</item>
-        <item quantity="other">kilobytes</item>
+    <!-- UNITS OF DATA SIZES -->
+    <!-- UNITS OF VELOCITY -->
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">μέτρο ανά δευτερόλεπτο</item>
+        <item quantity="other">μέτρα ανά δευτερόλεπτο</item>
     </plurals>
-    <string name="unit_gigabyte_symbol">GB</string>
-    <plurals name="unit_gigabyte">
-        <item quantity="one">gigabyte</item>
-        <item quantity="other">gigabytes</item>
-    </plurals>
-    <string name="unit_terabyte_symbol">TB</string>
-    <plurals name="unit_terabyte">
-        <item quantity="one">terabyte</item>
-        <item quantity="other">terabytes</item>
-    </plurals>
-    <string name="unit_kibibyte_symbol">kiB</string>
-    <plurals name="unit_kibibyte">
-        <item quantity="one">kibibyte</item>
-        <item quantity="other">kibibytes</item>
-    </plurals>
-    <string name="unit_mebibyte_symbol">MiB</string>
-    <string name="unit_gibibyte_symbol">GiB</string>
-    <plurals name="unit_gibibyte">
-        <item quantity="one">gibiyte</item>
-        <item quantity="other">gibibytes</item>
-    </plurals>
-    <string name="unit_tebibyte_symbol">TiB</string>
-    <string name="unit_bit_symbol">bit</string>
-    <plurals name="unit_bit">
-        <item quantity="one">bit</item>
-        <item quantity="other">bits</item>
-    </plurals>
-    <string name="unit_kilobit_symbol">kbit</string>
-    <plurals name="unit_kilobit">
-        <item quantity="one">kilobit</item>
-        <item quantity="other">kilobits</item>
-    </plurals>
-    <string name="unit_kilometer_per_hour_symbol">km/h</string>
     <plurals name="unit_kilometer_per_hour">
         <item quantity="one">χιλιόμετρο ανά ώρα</item>
         <item quantity="other">χιλιόμετρα ανά ώρα</item>
     </plurals>
-    <string name="unit_knot_symbol">kn</string>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">μίλι ανά ώρα</item>
+        <item quantity="other">μίλια ανά ώρα</item>
+    </plurals>
     <plurals name="unit_knot">
         <item quantity="one">κόμβος</item>
         <item quantity="other">κόμβοι</item>
     </plurals>
-    <string name="unit_kilogram_symbol">kg</string>
+    <!-- UNITS OF MASS -->
     <plurals name="unit_kilogram">
         <item quantity="one">κιλό</item>
         <item quantity="other">κιλά</item>
     </plurals>
-    <string name="unit_megabit_symbol">Mbit</string>
-    <plurals name="unit_megabit">
-        <item quantity="one">megabit</item>
-        <item quantity="other">megabits</item>
+    <plurals name="unit_gram">
+        <item quantity="one">γραμμάριο</item>
+        <item quantity="other">γραμμάρια</item>
     </plurals>
-    <string name="unit_gigabit_symbol">Gbit</string>
-    <plurals name="unit_gigabit">
-        <item quantity="one">gigabit</item>
-        <item quantity="other">gigabits</item>
-    </plurals>
-    <string name="unit_terabit_symbol">Tbit</string>
-    <plurals name="unit_terabit">
-        <item quantity="one">terabit</item>
-        <item quantity="other">terabits</item>
-    </plurals>
-    <string name="unit_mile_per_hour_symbol">mph</string>
-    <string name="unit_metric_ton_symbol">t</string>
     <plurals name="unit_metric_ton">
         <item quantity="one">τόνος</item>
         <item quantity="other">τόνοι</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
-    <plurals name="unit_pound">
-        <item quantity="one">λίβρα</item>
-        <item quantity="other">λίβρες</item>
-    </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
-    <plurals name="unit_ounce">
-        <item quantity="one">ουγγιά</item>
-        <item quantity="other">ουγγιές</item>
-    </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
         <item quantity="one">μακρύς τόνος</item>
         <item quantity="other">μακρείς τόνοι</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
-    <string name="unit_degree_celsius_symbol">°C</string>
+    <plurals name="unit_stone">
+        <item quantity="one">πέτρα</item>
+        <item quantity="other">πέτρες</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="one">λίβρα</item>
+        <item quantity="other">λίβρες</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">ουγγιά</item>
+        <item quantity="other">ουγγιές</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">κοντός τόνος</item>
+        <item quantity="other">κοντοί τόνοι</item>
+    </plurals>
+    <!-- UNITS OF TEMPERATURE -->
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">βαθμός Κελσίου</item>
+        <item quantity="other">βαθμοί Κελσίου</item>
+    </plurals>
     <plurals name="unit_degree_fahrenheit">
         <item quantity="one">βαθμός Φάρεναιτ</item>
         <item quantity="other">βαθμοί Φάρεναιτ</item>
@@ -172,97 +166,5 @@
     <plurals name="unit_kelvin">
         <item quantity="one">Κέλβιν</item>
         <item quantity="other">Κέλβιν</item>
-    </plurals>
-    <plurals name="unit_degree_celsius">
-        <item quantity="one">βαθμός Κελσίου</item>
-        <item quantity="other">βαθμοί Κελσίου</item>
-    </plurals>
-    <string name="unit_degree_fahrenheit_symbol">°F</string>
-    <string name="unit_kelvin_symbol">K</string>
-    <string name="unit_meter_symbol">m</string>
-    <plurals name="unit_kilometer">
-        <item quantity="one">χιλιόμετρο</item>
-        <item quantity="other">χιλιόμετρα</item>
-    </plurals>
-    <plurals name="unit_sqinch">
-        <item quantity="one">τετραγωνική ίντσα</item>
-        <item quantity="other">τετραγωνικές ίντσες</item>
-    </plurals>
-    <string name="unit_inch_symbol">in</string>
-    <plurals name="unit_sqfoot">
-        <item quantity="one">τετραγωνικό πόδι</item>
-        <item quantity="other">τετραγωνικά πόδια</item>
-    </plurals>
-    <plurals name="unit_yard">
-        <item quantity="one">γιάρδα</item>
-        <item quantity="other">γιάρδες</item>
-    </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
-    <plurals name="unit_mile">
-        <item quantity="one">μίλι</item>
-        <item quantity="other">μίλια</item>
-    </plurals>
-    <plurals name="unit_sqyard">
-        <item quantity="one">τετραγωνική γιάρδα</item>
-        <item quantity="other">τετραγωνικές γιάρδες</item>
-    </plurals>
-    <plurals name="unit_nautic_mile">
-        <item quantity="one">ναυτικό μίλι</item>
-        <item quantity="other">ναυτικά μίλια</item>
-    </plurals>
-    <string name="unit_minute_symbol">min</string>
-    <plurals name="unit_sqmeter">
-        <item quantity="one">τετραγωνικό μέτρο</item>
-        <item quantity="other">τετραγωνικά μέτρα</item>
-    </plurals>
-    <plurals name="unit_year">
-        <item quantity="one">έτος</item>
-        <item quantity="other">έτη</item>
-    </plurals>
-    <string name="unit_sqcentimeter_symbol">cm²</string>
-    <string name="unit_meter_per_second_symbol">m/s</string>
-    <plurals name="unit_sqcentimeter">
-        <item quantity="one">τετραγωνικό εκατοστό</item>
-        <item quantity="other">τετραγωνικά εκατοστά</item>
-    </plurals>
-    <plurals name="unit_meter_per_second">
-        <item quantity="one">μέτρο ανά δευτερόλεπτο</item>
-        <item quantity="other">μέτρα ανά δευτερόλεπτο</item>
-    </plurals>
-    <string name="unit_sqmillimeter_symbol">mm²</string>
-    <string name="unit_gram_symbol">g</string>
-    <plurals name="unit_gram">
-        <item quantity="one">γραμμάριο</item>
-        <item quantity="other">γραμμάρια</item>
-    </plurals>
-    <plurals name="unit_acre">
-        <item quantity="one">στρέμμα</item>
-        <item quantity="other">στρέμματα</item>
-    </plurals>
-    <string name="unit_megabyte_symbol">MB</string>
-    <plurals name="unit_megabyte">
-        <item quantity="one">megabytes</item>
-        <item quantity="other">megabytes</item>
-    </plurals>
-    <plurals name="unit_mebibyte">
-        <item quantity="one">mebibyte</item>
-        <item quantity="other">mebibytes</item>
-    </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="one">tebiyte</item>
-        <item quantity="other">tebiytes</item>
-    </plurals>
-    <plurals name="unit_mile_per_hour">
-        <item quantity="one">μίλι ανά ώρα</item>
-        <item quantity="other">μίλια ανά ώρα</item>
-    </plurals>
-    <plurals name="unit_short_ton">
-        <item quantity="one">κοντός τόνος</item>
-        <item quantity="other">κοντοί τόνοι</item>
-    </plurals>
-    <string name="unit_stone_symbol">st.</string>
-    <plurals name="unit_stone">
-        <item quantity="one">πέτρα</item>
-        <item quantity="other">πέτρες</item>
     </plurals>
 </resources>
