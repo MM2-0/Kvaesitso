@@ -1,57 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="uk">
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <!-- Name of the app -->
+    <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Поділитися</string>
+    <!-- Shown in the app detail share menu if the application was installed from an app store
+     %1$s is the name of the app store (e.g. Google Play)-->
     <string name="menu_share_store_link">%1$s Посилання</string>
+    <!-- Share an APK file, shown in the app detail share menu -->
     <string name="menu_share_apk_file">Файл пакету</string>
+    <!-- Uninstall an application -->
     <string name="menu_uninstall">Деінсталювати</string>
     <string name="menu_favorites_pin">Зберегти до улюблених</string>
     <string name="menu_favorites_unpin">Видалити з улюблених</string>
     <string name="menu_back">Назад</string>
     <string name="menu_app_info">Інформація про додаток</string>
+    <!-- Launch an app -->
     <string name="menu_launch">Запустити</string>
     <string name="menu_customize">Редагувати</string>
-    <string name="menu_open_file">Відкрити</string>
-    <string name="action_undo">Скасувати</string>
-    <string name="menu_delete">Видалити</string>
-    <string name="menu_remove">Прибрати</string>
-    <string name="menu_contacts_open_externally">Відкрити у Контактах</string>
-    <string name="menu_calendar_open_externally">Відкрити у Календарі</string>
-    <string name="search_bar_placeholder">Пошук</string>
-    <string name="app_info_version">Версія %1$s</string>
-    <string name="settings">Налаштування</string>
-    <string name="help">Допомога</string>
-    <string name="wallpaper">Фон</string>
-    <string name="wind_north">Північ</string>
-    <string name="wind_north_east">Північний Схід</string>
-    <string name="wind_north_north_east">Північний Схід</string>
-    <string name="file_meta_duration">Довжина: %1$s</string>
-    <string name="file_meta_year">Рік: %1$s</string>
-    <string name="file_meta_size">Розмір: %1$s</string>
-    <string name="file_meta_path">Шлях: %1$s</string>
-    <string name="file_meta_type">Тип: %1$s</string>
-    <string name="file_meta_dimensions">Розмір кадру: %1$s</string>
-    <string name="file_meta_app_name">Назва додатку: %1$s</string>
-    <string name="file_meta_app_version">Версія: %1$s</string>
-    <string name="file_meta_app_pkgname">Назва пакета: %1$s</string>
-    <string name="file_meta_owner">Власник: %1$s</string>
-    <string name="file_meta_location">Розташування: %1$s</string>
-    <string name="file_type_directory">Шлях</string>
-    <string name="wikipedia_url">https://uk.wikipedia.org</string>
-    <string name="wikipedia_source">З Вікіпедії</string>
-    <string name="file_meta_title">Назва: %1$s</string>
-    <string name="file_meta_artist">Виконавець: %1$s</string>
-    <string name="file_meta_album">Альбом: %1$s</string>
-    <string name="file_meta_app_min_sdk">Мін. версія SDK: %1$s</string>
-    <string name="file_type_image">Зображення</string>
-    <string name="file_type_ebook">Файл електронної книги</string>
-    <string name="file_type_document">Документ</string>
-    <string name="file_type_video">Відео файл</string>
-    <string name="file_type_none">Файл</string>
-    <string name="file_type_music">Аудіо файл</string>
+    <!-- Open a file in the corresponding app -->
     <string name="menu_map">Показати на мапі</string>
     <string name="menu_website">Відкрити веб-сторінку</string>
-    <string name="file_type_presentation">Презентація</string>
-    <string name="file_type_compressed">Стиснутий файл</string>
-    <string name="file_type_text">Текстовий файл</string>
+    <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
+    <string name="action_undo">Скасувати</string>
     <string name="action_import">Імпорт</string>
+    <!-- Delete something (a file or a web search shortcut) -->
+    <string name="menu_delete">Видалити</string>
+    <string name="menu_remove">Прибрати</string>
+    <!-- Open a contact in the contacts app -->
+    <string name="menu_contacts_open_externally">Відкрити у Контактах</string>
+    <!-- Open an event in the calendar app -->
+    <string name="menu_calendar_open_externally">Відкрити у Календарі</string>
+    <!-- Shown in the search bar when the search text field is empty -->
+    <string name="search_bar_placeholder">Пошук</string>
+    <!-- App version, used in application details %1$s is the version -->
+    <string name="app_info_version">Версія %1$s</string>
+    <!-- Menu entry for launcher settings -->
+    <string name="settings">Налаштування</string>
+    <!-- Menu entry for launcher help -->
+    <string name="help">Допомога</string>
+    <!-- Set the device's wallpaper -->
+    <string name="wallpaper">Фон</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north">Північ</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_east">Північний Схід</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_north_east">Північний Схід</string>
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- No rain or snow, used in weather widget -->
+    <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
+     This should point to the Wikipedia in the given language. If no such Wikipedia exists,
+      a fallback that is suited best for most users of this language should be used
+      (English in most cases) -->
+    <string name="wikipedia_url">https://uk.wikipedia.org</string>
+    <!-- Shown in Wikipedia results to indicate where they come from -->
+    <string name="wikipedia_source">З Вікіпедії</string>
+    <!-- File meta data, title of audio tracks -->
+    <string name="file_meta_title">Назва: %1$s</string>
+    <!-- File meta data, artist of audio tracks -->
+    <string name="file_meta_artist">Виконавець: %1$s</string>
+    <!-- File meta data, album of audio tracks -->
+    <string name="file_meta_album">Альбом: %1$s</string>
+    <!-- File meta data, duration of audio tracks -->
+    <string name="file_meta_duration">Довжина: %1$s</string>
+    <!-- File meta data, year of audio tracks -->
+    <string name="file_meta_year">Рік: %1$s</string>
+    <!-- File size -->
+    <string name="file_meta_size">Розмір: %1$s</string>
+    <!-- File path -->
+    <string name="file_meta_path">Шлях: %1$s</string>
+    <!-- File type (MIME type) -->
+    <string name="file_meta_type">Тип: %1$s</string>
+    <!-- File meta, image/video dimensions -->
+    <string name="file_meta_dimensions">Розмір кадру: %1$s</string>
+    <!-- File meta, app name of APK files -->
+    <string name="file_meta_app_name">Назва додатку: %1$s</string>
+    <!-- File meta, version name of APK files -->
+    <string name="file_meta_app_version">Версія: %1$s</string>
+    <!-- File meta, package name of APK files -->
+    <string name="file_meta_app_pkgname">Назва пакета: %1$s</string>
+    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <string name="file_meta_app_min_sdk">Мін. версія SDK: %1$s</string>
+    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <string name="file_meta_owner">Власник: %1$s</string>
+    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <string name="file_meta_location">Розташування: %1$s</string>
+    <string name="file_type_directory">Шлях</string>
+    <!-- ZIP, TAR, … archive files  -->
+    <!-- APK file  -->
+    <!-- Code file (source code in a programming language) -->
+    <!-- Word document -->
+    <string name="file_type_document">Документ</string>
+    <!-- Excel spreadsheet -->
+    <!-- Audio file -->
+    <string name="file_type_music">Аудіо файл</string>
+    <!-- Video file -->
+    <string name="file_type_video">Відео файл</string>
+    <!-- Picture file -->
+    <string name="file_type_image">Зображення</string>
+    <!-- Generic file without file extension -->
+    <string name="file_type_none">Файл</string>
+    <!-- Powerpoint presentation -->
+    <string name="file_type_presentation">Презентація</string>
+    <!-- BZIP, GZIP, … compressed file -->
+    <string name="file_type_compressed">Стиснутий файл</string>
+    <!-- Plain text (TXT) file -->
+    <string name="file_type_text">Текстовий файл</string>
+    <!-- E-book file -->
+    <string name="file_type_ebook">Файл електронної книги</string>
+    <!-- Google Drawings file -->
+    <!-- Google Forms file -->
+    <!-- Launcher backup, %1$s: app name -->
+    <!-- Launcher theme, %1$s: app name -->
+    <!-- Generic file , %1$s is the file extension -->
+    <!-- Warning message that is shown when a user attempts to delete a directory -->
+    <!-- Warning message that is shown when a user attempts to delete a file -->
+    <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
+    <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
+    could not be opened because there was no app installed that could handle the request  -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the first one. Must be in sync with [default_websearch_1_url].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the first one. Must be in sync with [default_websearch_1_name].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the second one. Must be in sync with [default_websearch_2_url].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the second one. Must be in sync with [default_websearch_2_name].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the third one. Must be in sync with [default_websearch_3_url].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the third one. Must be in sync with [default_websearch_3_name].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <!-- Add a third party widget (=a standard Android app widget) -->
+    <!-- Save / export the current note content as markdown file -->
+    <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
+    <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
+    <!-- Wait, we have easter eggs? No way! -->
+    <!-- Close a dialog -->
+    <!-- Turn something off / disable a functionality of the launcher -->
+    <string name="widget_action_remove">Прибрати</string>
+    <!-- Edit favorites, title for items that are frequently used but not pinned -->
+    <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
+    <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
+    <!-- Nextcloud login flow, URL-->
+    <!-- Nextcloud/Owncloud login flow, empty URL-->
+    <!-- Nextcloud login flow, error invalid URL-->
+    <!-- Owncloud login flow, UR-->
+    <!-- Owncloud login flow, error invalid URL-->
+    <!-- Owncloud login flow, password-->
+    <!-- Owncloud login flow, user name-->
+    <!-- Owncloud login flow -->
+    <!-- Owncloud login flow, login failed -->
+    <!-- Owncloud login flow, error: username empty -->
+    <!-- Owncloud login flow, error: password empty -->
+    <!-- Nextcloud/Owncloud login flow, continue button -->
+    <!-- Nextcloud/Owncloud login flow, login button -->
+    <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
+    <!-- Used in calendar widget date selector. -->
+    <!-- Used in calendar widget date selector. -->
+    <!-- Headline used in calendar widget for pinned events -->
+    <!-- Headline used in calendar widget for the next event, if there is no event today -->
+    <!--
+        In the calendar widget, only events that start or end at the selected date are shown.
+        If an event runs for three days, it won't be listed if the second day is selected.
+        Instead, the following text will be shown, %1$d being the total number of
+        running events that neither started nor will end on the selected day.
+        -->
+    <!-- Calendar events that last the entire day -->
+    <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
+    <!-- Humidity details, %1$s: formatted humidity value -->
+    <!-- Wind details, %1$s: formatted wind values -->
+    <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <!-- Manually set a location, used in weather widget location permission banner as an
+        alternative to granting the permission -->
+    <!-- Missing location permission in weather widget and weather widget settings settings -->
+    <!-- Missing notification permission in music widget settings -->
+    <!-- Missing contact permission in search settings screen -->
+    <!-- Missing call permission in contacts settings screen -->
+    <!-- Missing calendar permission in search settings screen -->
+    <!-- Missing calendar permission in calendar widget settings screen -->
+    <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
+    <!-- Missing file permission in search settings screen -->
+    <!-- Missing file permission in search settings screen.
+        Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
+        to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <!-- Missing notification permission, used in badge settings screen -->
+    <!-- Missing calendar permission, used in calendar widget -->
+    <!-- Missing calendar permission, used in calendar search results -->
+    <!-- Missing location permission, used in location search results -->
+    <!-- Missing files permission, used in files search results -->
+    <!-- Missing files permission, used in contact search results -->
+    <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
+    <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
+    <!-- Grant a permission, shown in permission banners -->
+    <!-- Appearance preference title -->
+    <string name="preference_mdy_color_source_wallpaper">Фон</string>
+    <!-- Open website of an open source library -->
+    <string name="open_webpage">Відкрити веб-сторінку</string>
+    <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="preference_category_wallpaper">Фон</string>
+    <string name="preference_screen_search">Пошук</string>
+    <!-- %1$s: app name (Kvaesitso) -->
+    <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
+    <!-- Used in an info banner if a specific feature requires an Owncloud account -->
+    <!-- Used in an info banner if a specific feature requires a Google account -->
+    <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
+    <!-- %1$s: app name -->
+    <!-- %1$s: app name -->
+    <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
+    <string name="search_action_share">Поділитися</string>
+    <!-- %1$s: app name -->
 </resources>
