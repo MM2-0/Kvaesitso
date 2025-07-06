@@ -28,7 +28,7 @@
     <string name="menu_launch">Futtatás</string>
     <string name="menu_customize">Testreszabás</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Nyitva</string>
+    <string name="menu_open_file">Megnyitás</string>
     <string name="menu_map">Megtekintés a térképen</string>
     <string name="menu_website">Weboldal megnyitása</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -443,7 +443,7 @@
     <string name="preference_version">Verzió</string>
     <string name="preference_category_links">Hivatkozások</string>
     <string name="preference_category_licenses">Nyílt forráskódú licencek</string>
-    <string name="preference_category_advanced">Speciális</string>
+    <string name="preference_category_advanced">Haladó</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Weboldal megnyitása</string>
     <string name="preference_screen_about_summary">Alkalmazás- és licencinformációk</string>
@@ -752,8 +752,8 @@
     <string name="open_search_swipe_left">Balra húzás</string>
     <string name="open_search_swipe_right">Jobbra húzás</string>
     <string name="preference_layout_search_bar_position">Keresősáv pozíciója</string>
-    <string name="search_bar_position_top">Felülre</string>
-    <string name="search_bar_position_bottom">Alulra</string>
+    <string name="search_bar_position_top">Fent</string>
+    <string name="search_bar_position_bottom">Lent</string>
     <string name="preference_layout_search_results">Keresési eredmények elrendezése</string>
     <string name="search_results_order_top_down">Fentről-lefelé</string>
     <string name="search_results_order_bottom_up">Lentről-felfelé</string>
@@ -973,7 +973,7 @@
     <string name="item_visibility_hidden">Soha</string>
     <string name="contact_info_home">Otthoni</string>
     <string name="contact_info_mobile">Mobil</string>
-    <string name="contact_info_work">Munka</string>
+    <string name="contact_info_work">Munkahelyi</string>
     <plurals name="contact_phone_numbers">
         <item quantity="one">%1$s telefonszám</item>
         <item quantity="other">%1$s telefonszám</item>
