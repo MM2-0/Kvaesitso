@@ -28,7 +28,7 @@
     <string name="menu_launch">Avvia</string>
     <string name="menu_customize">Personalizza</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Aperto</string>
+    <string name="menu_open_file">Apri</string>
     <string name="menu_map">Visualizza sulla mappa</string>
     <string name="menu_website">Apri sito web</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -478,7 +478,7 @@
     <string name="preference_cards_shape_rounded">Arrotondata</string>
     <string name="preference_cards_shape_cut">Tagliata</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Predefinito del sistema</string>
+    <string name="preference_icon_shape_platform">Predefinita sistema</string>
     <string name="preference_icon_shape_square">Quadrato</string>
     <string name="preference_icon_shape_rounded_square">Quadrato smussato</string>
     <string name="preference_icon_shape_squircle">Scoiattolo</string>
@@ -592,7 +592,7 @@
     <string name="preference_crash_reporter_summary">Segnalazioni di errori e arresti anomali</string>
     <string name="preference_logs">Log</string>
     <string name="preference_logs_summary">Visualizza ed esporta i log dell\'applicazione</string>
-    <string name="preference_screen_search">Cerca</string>
+    <string name="preference_screen_search">Ricerca</string>
     <string name="preference_screen_search_summary">Cerca, tag, oggetti nascosti</string>
     <string name="preference_search_favorites">Preferiti</string>
     <string name="preference_search_favorites_summary">Mostra elementi appuntati e usati frequentemente sopra la griglia delle app</string>
@@ -830,7 +830,7 @@
     <string name="preference_search_locations_theme_map">Tematizzazione mappa</string>
     <string name="preference_search_locations_theme_map_summary">Applica combinazione di colori del launcher alla mappa</string>
     <string name="preference_search_location_custom_tile_server_url">URL Tileserver</string>
-    <string name="menu_dial">Chiamata</string>
+    <string name="menu_dial">Chiama</string>
     <string name="menu_navigation">Navigazione</string>
     <string name="menu_bugreport">Segnalazione bug</string>
     <string name="location_open_24_7">Orario non stop</string>
