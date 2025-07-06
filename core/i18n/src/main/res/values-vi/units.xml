@@ -5,6 +5,9 @@
     -->
     <!-- DIMENSIONS -->
     <!-- UNITS OF LENGTH -->
+    <plurals name="unit_meter">
+        <item quantity="other">mét</item>
+    </plurals>
     <!-- UNITS OF AREA -->
     <!-- UNITS OF TIME -->
     <!-- UNITS OF DATA SIZES -->
