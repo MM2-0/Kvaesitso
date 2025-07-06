@@ -1,225 +1,307 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="websearch_dialog_replace_icon">Thay thế biểu tượng</string>
-    <string name="preference_custom_colors_corepalette">Bảng màu</string>
-    <string name="location_closed">Đã đóng</string>
-    <string name="websearch_dialog_custom_icon">Tùy chỉnh biểu tượng</string>
-    <string name="websearch_dialog_advanced">Nâng cao</string>
-    <string name="websearch_dialog_query_encoding">Mã hóa truy vấn</string>
-    <string name="websearch_dialog_query_encoding_url">Mã hóa phần trăm</string>
-    <string name="weather_location_search_no_result">Location not found.</string>
-    <string name="preference_screen_appearance">Diện mạo</string>
-    <string name="preference_theme">Chủ đề</string>
-    <string name="preference_theme_light">Sáng</string>
-    <string name="preference_theme_dark">Tối</string>
-    <string name="preference_screen_colors">Phối màu</string>
-    <string name="preference_colors_default">Mặc định</string>
-    <string name="preference_colors_bw">Đen và Trắng</string>
-    <string name="preference_mdy_color_source_system">Hệ thống</string>
-    <string name="preference_mdy_color_source_wallpaper">Hình nền</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="vi">
     <string name="location_open">Mở</string>
-    <string name="search_bar_placeholder">Tìm kiếm</string>
-    <string name="websearch_dialog_query_encoding_none">Không có</string>
-    <string name="preference_mdy_color_source">Nguồn cho màu động</string>
-    <string name="websearch_dialog_delete_icon">Xóa biểu tượng</string>
-    <string name="grant_permission">Cấp</string>
-    <string name="file_type_text">Tệp văn bản</string>
-    <plurals name="calendar_widget_running_events">
-        <item quantity="other">+%1$d sự kiện đang chạy từ ngày trước</item>
-    </plurals>
-    <string name="menu_open_file">Mở</string>
-    <string name="menu_calendar_open_externally">Mở trong ứng dụng lịch</string>
-    <string name="wind_west_south_west">Tây tây nam</string>
-    <string name="wikipedia_url">https://en.wikipedia.org</string>
-    <string name="file_type_ebook">E-book</string>
-    <string name="file_type_drawing">Vẽ</string>
-    <string name="alert_delete_shortcut">Lối tắt %1$s sẽ bị xóa vĩnh viễn. Tiếp tục?</string>
-    <string name="websearch_dialog_url_error">Phần giữ chỗ \'${1}\' bị thiếu trong URL này</string>
-    <string name="widget_name_weather">Thời tiết</string>
-    <string name="widget_name_unknown">Tiện ích ứng dụng không xác định</string>
-    <string name="widget_add_widget">Thêm tiện ích</string>
-    <string name="notes_widget_placeholder">Viết ghi chú…</string>
-    <string name="notes_widget_action_new">Ghi chú mới</string>
-    <string name="notes_widget_export_filename">Lưu ý_%1$s</string>
-    <string name="edit_favorites_dialog_empty_section">Kéo các mục vào đây</string>
-    <string name="login_flow_continue">Tiếp tục</string>
-    <string name="calendar_event_allday">cả ngày</string>
-    <string name="music_widget_default_title">%1$s đang phát phương tiện</string>
-    <string name="weather_condition_heavyrainshowers">Mưa rào</string>
-    <string name="weather_condition_rainshowersandthunder">Mưa rào và sấm sét</string>
-    <string name="weather_condition_clearsky">Bầu trời quang đãng</string>
-    <string name="weather_condition_sleet">Mưa đá</string>
-    <string name="weather_condition_fair">Tốt</string>
-    <string name="missing_permission_appshortcuts_create">Đặt %1$s làm ứng dụng trang chủ mặc định để tạo lối tắt.</string>
-    <string name="preference_font">Phông chữ</string>
-    <string name="preference_font_system">Mặc định hệ thống</string>
-    <string name="preference_screen_about">Giới thiệu</string>
-    <string name="provider_here">TẠI ĐÂY</string>
-    <plurals name="debug_cleanup_database_result">
-        <item quantity="other">Mục nhập %1$d đã bị loại bỏ.</item>
-    </plurals>
-    <string name="preference_signout">Đăng xuất</string>
-    <string name="preference_clockwidget_date_part">Ngày</string>
-    <string name="preference_clockwidget_date_part_summary">Hiển thị ngày hiện tại</string>
-    <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_search_cloud_summary">Tìm kiếm tệp tin của %1$s\\</string>
-    <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_weather_integration">Thời tiết</string>
-    <string name="preference_media_integration">Kiểm soát phương tiện</string>
-    <plurals name="battery_part_remaining_charge_time">
-        <item quantity="other">Đầy sau %1$s phút</item>
-    </plurals>
-    <string name="restore_complete">Bản sao lưu đã được khôi phục.</string>
-    <string name="search_action_open_url">Xem trang web</string>
-    <string name="search_action_event">Lên lịch sự kiện</string>
-    <string name="create_search_action_type">Bạn muốn tạo ra loại hành động nào?</string>
-    <string name="create_search_action_type_intent">Mục đích tùy chỉnh</string>
-    <plurals name="tag_selected_items">
-        <item quantity="other">Đã chọn %1$d mục</item>
-    </plurals>
-    <string name="preference_gesture_long_press">Nhấn và giữ</string>
-    <string name="imperial">Hệ Anh</string>
-    <string name="poi_category_mobile_phone">Cửa hàng điện thoại di động</string>
-    <string name="poi_category_buddhist_temple">Chùa Phật giáo</string>
-    <string name="poi_category_hindu_temple">Đền Hindu</string>
-    <string name="poi_category_synagogue">Giáo đường Do Thái</string>
-    <string name="contact_info_home">Trang chủ</string>
-    <plurals name="contact_phone_numbers">
-        <item quantity="other">%1$s số điện thoại</item>
-    </plurals>
-    <plurals name="contact_email_addresses">
-        <item quantity="other">%1$s địa chỉ email</item>
-    </plurals>
-    <plurals name="contact_postal_addresses">
-        <item quantity="other">%1$s địa chỉ bưu điện</item>
-    </plurals>
-    <plurals name="app_info_notifications">
-        <item quantity="other">%1$s thông báo</item>
-    </plurals>
+    <string name="location_closed">Đã đóng</string>
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
     <string name="location_closes">đóng lúc %1$s</string>
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
     <string name="location_closes_other_day">đóng %1$s, %2$s</string>
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
     <string name="location_opens">mở lúc %1$s</string>
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
     <string name="location_opens_other_day">mở %1$s, %2$s</string>
+    <!-- Name of the app -->
+    <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Chia sẻ</string>
+    <!-- Shown in the app detail share menu if the application was installed from an app store
+     %1$s is the name of the app store (e.g. Google Play)-->
     <string name="menu_share_store_link">%1$s liên kết</string>
+    <!-- Share an APK file, shown in the app detail share menu -->
     <string name="menu_share_apk_file">Tệp gói</string>
+    <!-- Uninstall an application -->
     <string name="menu_uninstall">Gỡ cài đặt</string>
     <string name="menu_favorites_pin">Ghim vào mục yêu thích</string>
     <string name="menu_favorites_unpin">Bỏ ghim</string>
     <string name="menu_back">Quay lại</string>
     <string name="menu_app_info">Thông tin ứng dụng</string>
+    <!-- Launch an app -->
     <string name="menu_launch">Khởi chạy</string>
     <string name="menu_customize">Tùy chỉnh</string>
+    <!-- Open a file in the corresponding app -->
+    <string name="menu_open_file">Mở</string>
     <string name="menu_map">Xem trên bản đồ</string>
     <string name="menu_website">Mở trang web</string>
+    <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="action_undo">Hoàn tác</string>
     <string name="action_import">Nhập</string>
+    <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Xóa</string>
     <string name="menu_remove">Loại bỏ</string>
+    <!-- Open a contact in the contacts app -->
     <string name="menu_contacts_open_externally">Mở trong ứng dụng danh bạ</string>
+    <!-- Open an event in the calendar app -->
+    <string name="menu_calendar_open_externally">Mở trong ứng dụng lịch</string>
+    <!-- Shown in the search bar when the search text field is empty -->
+    <string name="search_bar_placeholder">Tìm kiếm</string>
+    <!-- App version, used in application details %1$s is the version -->
     <string name="app_info_version">Phiên bản %1$s</string>
+    <!-- Menu entry for launcher settings -->
     <string name="settings">Thiết đặt</string>
+    <!-- Menu entry for launcher help -->
     <string name="help">Trợ giúp</string>
+    <!-- Set the device's wallpaper -->
     <string name="wallpaper">Hình nền</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north">Bắc</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north_east">Đông Bắc</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north_north_east">Bắc đông bắc</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_east_north_east">Đông đông bắc</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_east">Đông</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_east_south_east">Đông đông nam</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south_east">Đông Nam</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south_south_east">Nam đông nam</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south">Nam</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south_south_west">Nam tây nam</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_south_west">Tây Nam</string>
+    <!-- Wind direction, used in weather widget -->
+    <string name="wind_west_south_west">Tây tây nam</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_west">Tây</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_west_north_west">Tây tây bắc</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north_west">Tây Bắc</string>
+    <!-- Wind direction, used in weather widget -->
     <string name="wind_north_north_west">Bắc Tây Bắc</string>
+    <!-- No rain or snow, used in weather widget -->
+    <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
+     This should point to the Wikipedia in the given language. If no such Wikipedia exists,
+      a fallback that is suited best for most users of this language should be used
+      (English in most cases) -->
+    <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Từ Wikipedia</string>
+    <!-- File meta data, title of audio tracks -->
     <string name="file_meta_title">Tiêu đề: %1$s</string>
+    <!-- File meta data, artist of audio tracks -->
     <string name="file_meta_artist">Nghệ sĩ: %1$s</string>
-    <string name="file_meta_album">Album: %1$s</string>
+    <!-- File meta data, album of audio tracks -->
+    <!-- File meta data, duration of audio tracks -->
     <string name="file_meta_duration">Thời lượng: %1$s</string>
+    <!-- File meta data, year of audio tracks -->
     <string name="file_meta_year">Năm: %1$s</string>
+    <!-- File size -->
     <string name="file_meta_size">Kích thước: %1$s</string>
+    <!-- File path -->
     <string name="file_meta_path">Đường dẫn: %1$s</string>
+    <!-- File type (MIME type) -->
     <string name="file_meta_type">Loại: %1$s</string>
+    <!-- File meta, image/video dimensions -->
     <string name="file_meta_dimensions">Kích thước: %1$s</string>
+    <!-- File meta, app name of APK files -->
     <string name="file_meta_app_name">Tên ứng dụng: %1$s</string>
+    <!-- File meta, version name of APK files -->
     <string name="file_meta_app_version">Phiên bản: %1$s</string>
+    <!-- File meta, package name of APK files -->
     <string name="file_meta_app_pkgname">Tên gói: %1$s</string>
+    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
     <string name="file_meta_app_min_sdk">Phiên bản SDK tối thiểu: %1$s</string>
+    <!-- File meta, owner (for files that are stored in a cloud) -->
     <string name="file_meta_owner">Chủ sở hữu: %1$s</string>
+    <!-- File meta, location (e.g. location where a photo has been taken) -->
     <string name="file_meta_location">Vị trí: %1$s</string>
     <string name="file_type_directory">Thư mục</string>
+    <!-- ZIP, TAR, … archive files  -->
     <string name="file_type_archive">Lưu trữ tệp tin</string>
+    <!-- APK file  -->
     <string name="file_type_android">Tệp gói Android</string>
+    <!-- Code file (source code in a programming language) -->
     <string name="file_type_source_code">Tệp mã nguồn</string>
+    <!-- Word document -->
     <string name="file_type_document">Tài liệu</string>
+    <!-- Excel spreadsheet -->
     <string name="file_type_spreadsheet">Bảng tính</string>
+    <!-- Audio file -->
     <string name="file_type_music">Tệp nhạc</string>
-    <string name="file_type_video">Video</string>
+    <!-- Video file -->
+    <!-- Picture file -->
     <string name="file_type_image">Hình ảnh</string>
+    <!-- Generic file without file extension -->
     <string name="file_type_none">Tệp tin</string>
+    <!-- Powerpoint presentation -->
     <string name="file_type_presentation">Trình bày</string>
+    <!-- BZIP, GZIP, … compressed file -->
     <string name="file_type_compressed">Tệp nén</string>
+    <!-- Plain text (TXT) file -->
+    <string name="file_type_text">Tệp văn bản</string>
+    <!-- E-book file -->
+    <!-- Google Drawings file -->
+    <string name="file_type_drawing">Vẽ</string>
+    <!-- Google Forms file -->
     <string name="file_type_form">Biểu mẫu</string>
+    <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s sao lưu</string>
+    <!-- Launcher theme, %1$s: app name -->
     <string name="file_type_launchertheme">%1$s chủ đề</string>
+    <!-- Generic file , %1$s is the file extension -->
     <string name="file_type_generic">Tệp %1$s</string>
+    <!-- Warning message that is shown when a user attempts to delete a directory -->
     <string name="alert_delete_directory">Thư mục %1$s và tất cả nội dung của nó sẽ bị xóa vĩnh viễn. Tiếp tục?</string>
+    <!-- Warning message that is shown when a user attempts to delete a file -->
     <string name="alert_delete_file">Tệp %1$s sẽ bị xóa vĩnh viễn. Tiếp tục?</string>
-    <string name="default_websearch_2_name">YouTube</string>
+    <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
+    <string name="alert_delete_shortcut">Lối tắt %1$s sẽ bị xóa vĩnh viễn. Tiếp tục?</string>
+    <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
+    could not be opened because there was no app installed that could handle the request  -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the first one. Must be in sync with [default_websearch_1_url].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the first one. Must be in sync with [default_websearch_1_name].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the second one. Must be in sync with [default_websearch_2_url].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the second one. Must be in sync with [default_websearch_2_name].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
     <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
-    <string name="default_websearch_3_name">Google Play</string>
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the third one. Must be in sync with [default_websearch_3_url].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the third one. Must be in sync with [default_websearch_3_name].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
-    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
+    <string name="websearch_dialog_url_error">Phần giữ chỗ \'${1}\' bị thiếu trong URL này</string>
+    <string name="websearch_dialog_replace_icon">Thay thế biểu tượng</string>
+    <string name="websearch_dialog_delete_icon">Xóa biểu tượng</string>
+    <string name="websearch_dialog_custom_icon">Tùy chỉnh biểu tượng</string>
+    <string name="websearch_dialog_advanced">Nâng cao</string>
+    <string name="websearch_dialog_query_encoding">Mã hóa truy vấn</string>
+    <string name="websearch_dialog_query_encoding_url">Mã hóa phần trăm</string>
+    <string name="websearch_dialog_query_encoding_none">Không có</string>
     <string name="menu_edit_widgets">Chỉnh sửa tiện ích</string>
+    <string name="widget_name_weather">Thời tiết</string>
     <string name="widget_name_calendar">Lịch</string>
     <string name="widget_name_music">Âm nhạc</string>
     <string name="widget_name_favorites">Yêu thích</string>
     <string name="widget_name_notes">Ghi chú</string>
+    <string name="widget_name_unknown">Tiện ích ứng dụng không xác định</string>
+    <string name="widget_add_widget">Thêm tiện ích</string>
+    <!-- Add a third party widget (=a standard Android app widget) -->
+    <string name="notes_widget_placeholder">Viết ghi chú…</string>
+    <string name="notes_widget_action_new">Ghi chú mới</string>
+    <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Lưu</string>
+    <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
+    <string name="notes_widget_export_filename">Lưu ý_%1$s</string>
     <string name="notes_widget_action_dismiss">Bỏ qua</string>
     <string name="notes_widget_dismissed">Đã bỏ qua ghi chú.</string>
+    <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Bởi %1$s</string>
+    <!-- Wait, we have easter eggs? No way! -->
     <string name="easter_egg_text">Vâng, bạn đã tìm thấy tôi. Chúc mừng. Có đáng không?</string>
+    <!-- Close a dialog -->
     <string name="close">Đóng</string>
     <string name="save">Lưu</string>
     <string name="duplicate">Nhân đôi</string>
     <string name="edit">Chỉnh sửa</string>
     <string name="skip">Bỏ qua</string>
     <string name="action_next">Tiếp theo</string>
+    <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Tắt</string>
-    <string name="widget_action_remove">Xóa</string>
+    <string name="widget_action_remove">Loại bỏ</string>
     <string name="widget_action_replace">Thay thế</string>
     <string name="menu_item_edit_favs">Chỉnh sửa mục yêu thích</string>
+    <!-- Edit favorites, title for items that are frequently used but not pinned -->
     <string name="edit_favorites_dialog_unpinned">Không được ghim – sử dụng thường xuyên</string>
+    <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
     <string name="edit_favorites_dialog_pinned_unsorted">Đã ghim – được sắp xếp tự động</string>
+    <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
     <string name="edit_favorites_dialog_pinned_sorted">Đã ghim – sắp xếp thủ công</string>
+    <string name="edit_favorites_dialog_empty_section">Kéo các mục vào đây</string>
     <string name="edit_favorites_dialog_tags">Thẻ</string>
     <string name="edit_favorites_dialog_tag_section_empty">Thẻ được ghim sẽ xuất hiện ở đây</string>
     <string name="edit_favorites_dialog_new_tag">Tạo thẻ…</string>
+    <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL máy chủ Nextcloud</string>
+    <!-- Nextcloud/Owncloud login flow, empty URL-->
+    <!-- Nextcloud login flow, error invalid URL-->
     <string name="nextcloud_server_invalid_url">URL này không trỏ đến cài đặt Nextcloud hợp lệ</string>
+    <!-- Owncloud login flow, UR-->
     <string name="owncloud_server_url">URL máy chủ Owncloud</string>
+    <!-- Owncloud login flow, error invalid URL-->
     <string name="owncloud_server_invalid_url">URL này không trỏ tới cài đặt Owncloud hợp lệ</string>
+    <!-- Owncloud login flow, password-->
     <string name="owncloud_password">Mật khẩu</string>
+    <!-- Owncloud login flow, user name-->
     <string name="owncloud_username">Tên người dùng</string>
+    <!-- Owncloud login flow -->
     <string name="owncloud_login_2fa_hint">Nếu bạn đã bật xác thực hai yếu tố, bạn phải sử dụng mật khẩu ứng dụng tại đây.</string>
+    <!-- Owncloud login flow, login failed -->
     <string name="owncloud_login_failed">Đăng nhập thất bại: tên người dùng hoặc mật khẩu không chính xác.</string>
+    <!-- Owncloud login flow, error: username empty -->
+    <!-- Owncloud login flow, error: password empty -->
+    <!-- Nextcloud/Owncloud login flow, continue button -->
+    <string name="login_flow_continue">Tiếp tục</string>
+    <!-- Nextcloud/Owncloud login flow, login button -->
     <string name="login_flow_login">Đăng nhập</string>
     <string name="disclaimer">Tuyên bố miễn trừ trách nhiệm</string>
+    <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
     <string name="disclaimer_currency_converter">Tỷ giá hối đoái được Ngân hàng Trung ương Châu Âu công bố một lần mỗi ngày. Tất cả thông tin được cung cấp \"nguyên trạng\" mà không có bất kỳ hình thức đảm bảo nào. Không có trách nhiệm pháp lý nào được giả định đối với những thông tin này.
 \n
 \nCập nhật lần cuối: %1$s</string>
     <string name="show_all">Hiển thị tất cả</string>
+    <!-- Used in calendar widget date selector. -->
     <string name="date_today">Hôm nay</string>
+    <!-- Used in calendar widget date selector. -->
     <string name="date_tomorrow">Ngày mai</string>
+    <!-- Headline used in calendar widget for pinned events -->
     <string name="calendar_widget_pinned_events">Sắp tới</string>
+    <!-- Headline used in calendar widget for the next event, if there is no event today -->
     <string name="calendar_widget_next_events">Sự kiện tiếp theo</string>
     <string name="calendar_widget_no_events">Không có sự kiện nào hôm nay</string>
+    <!--
+        In the calendar widget, only events that start or end at the selected date are shown.
+        If an event runs for three days, it won't be listed if the second day is selected.
+        Instead, the following text will be shown, %1$d being the total number of
+        running events that neither started nor will end on the selected day.
+        -->
+    <plurals name="calendar_widget_running_events">
+        <item quantity="other">+%1$d sự kiện đang chạy từ ngày trước</item>
+    </plurals>
+    <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">cả ngày</string>
+    <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
+    <string name="music_widget_default_title">%1$s đang phát phương tiện</string>
     <string name="music_widget_no_data">Chưa có phương tiện nào được phát</string>
     <string name="weather_condition_sleetshowers">Mưa đá</string>
     <string name="weather_condition_heavysleet">Mưa tuyết lớn</string>
@@ -241,10 +323,15 @@
     <string name="weather_condition_hail">Mưa đá</string>
     <string name="weather_condition_thunderstorm">Sấm sét</string>
     <string name="weather_condition_heavysnowshowers">Mưa tuyết dày đặc</string>
+    <string name="weather_condition_heavyrainshowers">Mưa rào</string>
+    <string name="weather_condition_rainshowersandthunder">Mưa rào và sấm sét</string>
+    <string name="weather_condition_clearsky">Bầu trời quang đãng</string>
+    <string name="weather_condition_sleet">Mưa đá</string>
     <string name="weather_condition_rain">Mưa</string>
     <string name="weather_condition_sleetandthunder">Mưa đá và sấm sét</string>
     <string name="weather_condition_lightssnowshowersandthunder">Có mưa tuyết và sấm sét</string>
     <string name="weather_condition_heavyrainshowersandthunder">Mưa lớn và sấm sét</string>
+    <string name="weather_condition_fair">Tốt</string>
     <string name="weather_condition_fog">Sương mù</string>
     <string name="weather_condition_sleetshowersandthunder">Mưa đá và sấm sét</string>
     <string name="weather_condition_rainandthunder">Mưa và sấm sét</string>
@@ -261,35 +348,78 @@
     <string name="weather_condition_heavyrainandthunder">Mưa lớn và sấm sét</string>
     <string name="weather_condition_wind">Gió</string>
     <string name="weather_condition_unknown">Không rõ</string>
+    <!-- Humidity details, %1$s: formatted humidity value -->
+    <!-- Wind details, %1$s: formatted wind values -->
+    <!-- Precipitation details, %1$s: formatted precipitation values -->
     <string name="weather_no_data">Không có dữ liệu thời tiết.</string>
-    <string name="weather_widget_set_location">Set location</string>
+    <!-- Manually set a location, used in weather widget location permission banner as an
+        alternative to granting the permission -->
+    <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Cần có quyền truy cập vị trí để tự động xác định vị trí</string>
+    <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Cần có quyền truy cập thông báo để kiểm soát việc phát lại phương tiện</string>
+    <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">Cần có quyền danh bạ để tìm kiếm liên hệ</string>
+    <!-- Missing call permission in contacts settings screen -->
+    <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Cần có quyền lịch để tìm kiếm lịch</string>
+    <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Tiện ích này yêu cầu quyền truy cập lịch</string>
     <string name="widget_config_calendar_missing_calendars_hint">Không thể tìm thấy lịch của bạn?</string>
+    <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s phải được đặt làm ứng dụng trang chủ mặc định để tìm kiếm các lối tắt ứng dụng</string>
+    <!-- Missing file permission in search settings screen -->
     <string name="missing_permission_file_search_settings">Cần có quyền lưu trữ bên ngoài để tìm kiếm các tệp cục bộ</string>
-    <string name="missing_permission_file_search_settings_android10">Manage all files permission is required to search local files</string>
+    <!-- Missing file permission in search settings screen.
+        Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
+        to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Cần có quyền truy cập thông báo để hiển thị dấu hiệu thông báo</string>
+    <!-- Missing calendar permission, used in calendar widget -->
     <string name="missing_permission_calendar_widget">Cấp quyền cho lịch hiển thị các cuộc hẹn và sự kiện sắp tới tại đây.</string>
+    <!-- Missing calendar permission, used in calendar search results -->
     <string name="missing_permission_calendar_search">Cấp quyền cho lịch để tìm kiếm lịch của bạn.</string>
+    <!-- Missing location permission, used in location search results -->
     <string name="missing_permission_location_search">Cấp quyền vị trí để tìm kiếm các vị trí lân cận.</string>
+    <!-- Missing files permission, used in files search results -->
     <string name="missing_permission_files_search">Cấp quyền lưu trữ để tìm kiếm ảnh, phương tiện và tài liệu trên thiết bị này.</string>
+    <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">Cấp quyền danh bạ để tìm kiếm liên hệ của bạn.</string>
+    <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Đặt %1$s làm ứng dụng trang chủ mặc định để tìm kiếm các lối tắt ứng dụng.</string>
+    <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
+    <string name="missing_permission_appshortcuts_create">Đặt %1$s làm ứng dụng trang chủ mặc định để tạo lối tắt.</string>
+    <!-- Grant a permission, shown in permission banners -->
+    <string name="grant_permission">Cấp</string>
+    <!-- Appearance preference title -->
+    <string name="preference_screen_appearance">Diện mạo</string>
+    <string name="preference_theme">Chủ đề</string>
+    <string name="preference_theme_light">Sáng</string>
+    <string name="preference_theme_dark">Tối</string>
+    <string name="preference_screen_colors">Phối màu</string>
+    <string name="preference_colors_default">Mặc định</string>
+    <string name="preference_colors_bw">Đen và Trắng</string>
+    <string name="preference_custom_colors_corepalette">Bảng màu</string>
+    <string name="preference_mdy_color_source">Nguồn cho màu động</string>
+    <string name="preference_mdy_color_source_system">Hệ thống</string>
+    <string name="preference_mdy_color_source_wallpaper">Hình nền</string>
+    <string name="preference_shapes_default">Mặc định</string>
+    <string name="preference_transparencies_default">Mặc định</string>
+    <string name="preference_font">Phông chữ</string>
+    <string name="preference_font_system">Mặc định hệ thống</string>
+    <string name="preference_screen_about">Giới thiệu</string>
     <string name="preference_version">Phiên bản</string>
     <string name="preference_category_links">Liên kết</string>
     <string name="preference_category_licenses">Giấy phép nguồn mở</string>
     <string name="preference_category_advanced">Nâng cao</string>
+    <!-- Open website of an open source library -->
     <string name="open_webpage">Mở trang web</string>
     <string name="preference_screen_about_summary">Thông tin ứng dụng và giấy phép</string>
     <string name="preference_screen_appearance_summary">Tùy chỉnh giao diện</string>
     <string name="preference_weather_provider">Nhà cung cấp</string>
     <string name="provider_metno">MET Na Uy</string>
-    <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (chỉ ở Đức)</string>
+    <string name="provider_here">TẠI ĐÂY</string>
     <string name="preference_category_location">Vị trí</string>
     <string name="preference_automatic_location">Vị trí tự động</string>
     <string name="preference_automatic_location_summary">Sử dụng GPS và dịch vụ định vị để tự động xác định vị trí</string>
@@ -308,6 +438,9 @@
     <string name="preference_debug_cleanup_database_summary">Xóa các mục bị hỏng và không được sử dụng khỏi cơ sở dữ liệu trình khởi chạy</string>
     <string name="preference_debug_reinstall_iconpacks">Cài đặt lại gói biểu tượng</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Xóa và xây dựng lại bộ nhớ đệm gói biểu tượng</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="other">Mục nhập %1$d đã bị loại bỏ.</item>
+    </plurals>
     <string name="preference_category_icons">Biểu tượng</string>
     <string name="preference_cards">Thẻ</string>
     <string name="preference_cards_summary">Tùy chỉnh giao diện thẻ</string>
@@ -339,6 +472,7 @@
     <string name="preference_force_themed_icons_summary">Áp dụng bảng màu của ứng dụng cho tất cả các biểu tượng, kể cả những biểu tượng không được hỗ trợ (không khuyến nghị)</string>
     <string name="preference_icon_pack">Gói biểu tượng</string>
     <string name="preference_icon_pack_summary_empty">Không có gói biểu tượng nào được cài đặt</string>
+    <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
     <string name="preference_category_animations">Hoạt ảnh</string>
     <string name="preference_charging_animation">Hoạt ảnh sạc</string>
     <string name="preference_charging_animation_summary">Phát hoạt ảnh bong bóng khi thiết bị đang sạc</string>
@@ -352,6 +486,7 @@
     <string name="preference_hide_nav_bar">Ẩn thanh điều hướng</string>
     <string name="preference_screen_integrations_summary">Quản lý các tài khoản và dịch vụ được kết nối</string>
     <string name="preference_signin_user">Đã đăng nhập với tên %1$s</string>
+    <string name="preference_signout">Đăng xuất</string>
     <string name="preference_summary_not_logged_in">Bạn hiện chưa đăng nhập</string>
     <string name="preference_icon_shape_pentagon">Ngũ giác</string>
     <string name="preference_category_wallpaper">Hình nền</string>
@@ -375,8 +510,6 @@
     <string name="preference_plugin_badges_summary">Cho biết kết quả tìm kiếm được tạo bằng plugin nào</string>
     <string name="preference_nextcloud_signin">Đăng nhập vào Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Đăng nhập để tìm kiếm máy chủ Nextcloud của bạn</string>
-    <string name="preference_nextcloud">Nextcloud</string>
-    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Đăng nhập vào Owncloud</string>
     <string name="preference_owncloud_signin_summary">Đăng nhập để tìm kiếm máy chủ Owncloud của bạn</string>
     <string name="preference_about_telegram">Nhóm Telegram</string>
@@ -401,6 +534,7 @@
     <string name="preference_clockwidget_layout_vertical">Mặc định</string>
     <string name="preference_clockwidget_layout_horizontal">Nhỏ gọn</string>
     <string name="preference_clock_widget_show_seconds">Hiển thị giây</string>
+    <string name="preference_clock_widget_time_format_system">Mặc định hệ thống</string>
     <string name="widget_use_theme_colors">Sử dụng màu chủ đề</string>
     <string name="preference_clock_widget_fill_height">Lấp đầy chiều cao màn hình</string>
     <string name="preference_clock_widget_alignment">Căn chỉnh</string>
@@ -408,6 +542,8 @@
     <string name="preference_clock_widget_alignment_center">Trung tâm</string>
     <string name="preference_clock_widget_alignment_bottom">Dưới cùng</string>
     <string name="preference_clockwidget_dynamic_zone">Vùng động</string>
+    <string name="preference_clockwidget_date_part">Ngày</string>
+    <string name="preference_clockwidget_date_part_summary">Hiển thị ngày hiện tại</string>
     <string name="preference_clockwidget_favorites_part_summary">Hiển thị hàng đầu tiên của các mục được ghim</string>
     <string name="preference_clockwidget_music_part">Phương tiện</string>
     <string name="preference_clockwidget_music_part_summary">Hiển thị các điều khiển phương tiện khi có phiên phương tiện đang hoạt động</string>
@@ -443,7 +579,6 @@
     <string name="preference_search_unitconverter_summary">Cách sử dụng: 1,5 kg hoặc 4 cm &gt;&gt; trong</string>
     <string name="preference_search_currencyconverter">Công cụ chuyển đổi tiền tệ</string>
     <string name="preference_search_currencyconverter_summary">Định kỳ tải xuống tỷ giá hối đoái để chuyển đổi tiền tệ</string>
-    <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Tìm kiếm bách khoa toàn thư miễn phí</string>
     <string name="preference_search_websites">Trang web</string>
     <string name="preference_search_locations">Địa điểm</string>
@@ -452,7 +587,7 @@
     <string name="preference_search_locations_summary">Tìm kiếm các cửa hàng và địa điểm khác trong khu vực địa phương</string>
     <string name="preference_search_localfiles">Tệp cục bộ</string>
     <string name="preference_search_localfiles_summary">Tìm kiếm tài liệu, ảnh và các tệp khác được lưu trữ trên thiết bị này</string>
-    <string name="preference_search_nextcloud">Nextcloud</string>
+    <string name="preference_search_cloud_summary">Tìm kiếm tệp tin của %1$s\\</string>
     <string name="preference_calendar_calendars">Lịch</string>
     <string name="preference_screen_buildinfo">Xây dựng thông tin</string>
     <string name="preference_screen_buildinfo_summary">Thông tin thêm về bản dựng của ứng dụng này</string>
@@ -480,15 +615,29 @@
     <string name="preference_screen_homescreen_summary">Đồng hồ, thanh tìm kiếm, hình nền, thanh hệ thống</string>
     <string name="preference_screen_icons">Lưới &amp; biểu tượng</string>
     <string name="preference_screen_icons_summary">Lưới, kích thước biểu tượng, gói biểu tượng, dấu hiệu</string>
+    <string name="preference_weather_integration">Thời tiết</string>
+    <string name="preference_media_integration">Kiểm soát phương tiện</string>
+    <!-- %1$s: app name (Kvaesitso) -->
+    <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Bạn chưa kết nối tài khoản Nextcloud</string>
+    <!-- Used in an info banner if a specific feature requires an Owncloud account -->
     <string name="no_account_owncloud">Bạn chưa kết nối tài khoản Owncloud</string>
+    <!-- Used in an info banner if a specific feature requires a Google account -->
+    <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
     <string name="connect_account">Kết nối tài khoản</string>
     <string name="battery_part_charging">Sạc</string>
+    <plurals name="battery_part_remaining_charge_time">
+        <item quantity="other">Đầy sau %1$s phút</item>
+    </plurals>
     <string name="backup_complete">Việc sao lưu đã hoàn tất.</string>
     <string name="restore_invalid_file">Tệp đã chọn dường như không phải là bản sao lưu. Bạn có chắc là mình đã chọn đúng tệp không?</string>
+    <!-- %1$s: app name -->
     <string name="restore_incompatible_file">Bản sao lưu này đã được tạo bằng phiên bản khác của %1$s và không thể khôi phục bằng phiên bản này.</string>
+    <!-- %1$s: app name -->
     <string name="restore_different_minor_version">Bản sao lưu này đã được tạo bằng một phiên bản khác của %1$s. Một số dữ liệu có thể không được khôi phục chính xác.</string>
+    <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">Đã tạo %1$s trên %2$s với %3$s.</string>
+    <string name="restore_complete">Bản sao lưu đã được khôi phục.</string>
     <string name="icon_picker_default_icon">Mặc định</string>
     <string name="icon_picker_suggestions">Đề xuất</string>
     <string name="icon_picker_search_icon">Tìm kiếm trong gói biểu tượng</string>
@@ -504,14 +653,17 @@
     <string name="preference_search_search_actions_summary">Định cấu hình các thao tác nhanh và lối tắt tìm kiếm</string>
     <string name="search_action_call">Gọi</string>
     <string name="search_action_message">Tin nhắn</string>
-    <string name="search_action_email">Email</string>
     <string name="search_action_alarm">Đặt báo thức</string>
     <string name="search_action_timer">Bắt đầu hẹn giờ</string>
     <string name="search_action_share">Chia sẻ</string>
     <string name="search_action_websearch">Tìm kiếm trên web</string>
     <string name="search_action_contact">Thêm vào danh bạ</string>
+    <string name="search_action_open_url">Xem trang web</string>
+    <string name="search_action_event">Lên lịch sự kiện</string>
+    <string name="create_search_action_type">Bạn muốn tạo ra loại hành động nào?</string>
     <string name="create_search_action_type_web">Tìm kiếm trên một trang web</string>
     <string name="create_search_action_type_app">Tìm kiếm trong một ứng dụng</string>
+    <string name="create_search_action_type_intent">Mục đích tùy chỉnh</string>
     <string name="create_search_action_pick_app">Chọn ứng dụng để tìm kiếm:</string>
     <string name="create_search_action_website_url">Nhập địa chỉ của trang web:</string>
     <string name="create_search_action_website_invalid_url">Trang web đã cho không thể được nhập tự động dưới dạng tìm kiếm trên web. Bạn có thể thử một trang web khác hoặc nhập dữ liệu cần thiết theo cách thủ công ở bước tiếp theo.</string>
@@ -526,6 +678,9 @@
     <string name="tag_no_items_message">Không có mục nào được gán cho thẻ này. Nếu bạn tiếp tục, thẻ sẽ bị xóa.</string>
     <string name="tag_select_items">Chọn mục:</string>
     <string name="tag_name">Tên thẻ</string>
+    <plurals name="tag_selected_items">
+        <item quantity="other">Đã chọn %1$d mục</item>
+    </plurals>
     <string name="preference_layout_open_search">Tìm kiếm / Ngăn kéo ứng dụng</string>
     <string name="open_search_pull_down">Vuốt xuống</string>
     <string name="open_search_swipe_left">Vuốt sang trái</string>
@@ -546,9 +701,11 @@
     <string name="preference_gesture_swipe_left">Vuốt sang trái</string>
     <string name="preference_gesture_swipe_right">Vuốt sang phải</string>
     <string name="preference_gesture_double_tap">Nhấn đúp</string>
+    <string name="preference_gesture_long_press">Nhấn và giữ</string>
     <string name="preference_gesture_home_button">Nút Home /cử chỉ</string>
     <string name="gesture_action_none">Không làm gì cả</string>
     <string name="gesture_action_open_search">Mở tìm kiếm</string>
+    <string name="gesture_action_widgets">Tiện ích</string>
     <string name="gesture_action_launch_app">Khởi chạy ứng dụng</string>
     <string name="gesture_action_notifications">Mở ngăn thông báo</string>
     <string name="gesture_action_lock_screen">Tắt màn hình</string>
@@ -595,9 +752,11 @@
     <string name="import_theme_apply">Áp dụng chủ đề</string>
     <string name="import_theme_error">Không thể đọc được tệp tin đã chọn. Hãy đảm bảo rằng bạn đã chọn tệp chủ đề hợp lệ (*.kvtheme) và tệp đó không bị hỏng.</string>
     <string name="shortcut_label_unavailable">Không có sẵn</string>
+    <!-- %1$s: app name -->
     <string name="shortcut_unavailable_description">Lối tắt này không khả dụng vì %1$s không phải là trình khởi chạy mặc định</string>
     <string name="preference_plugin_enable">Kích hoạt plugin</string>
     <string name="length_unit">Đơn vị độ dài</string>
+    <string name="imperial">Hệ Anh</string>
     <string name="metric">Hệ Mét</string>
     <string name="preference_search_location_custom_overpass_url">URL vượt quá</string>
     <string name="preference_search_locations_hide_uncategorized">Ẩn các địa điểm chưa được phân loại</string>
@@ -614,7 +773,8 @@
     <string name="plugin_state_error">Plugin này không hoạt động chính xác</string>
     <string name="plugin_state_setup_required">Bạn cần thiết lập plugin này trước</string>
     <string name="plugin_action_setup">Thiết lập</string>
-    <string name="plugin_type_filesearch">Tìm kiếm tệp tin</string>
+    <string name="plugin_type_filesearch">Tệp tin</string>
+    <string name="plugin_type_contacts">Danh bạ</string>
     <string name="plugin_type_weather">Nhà cung cấp thời tiết</string>
     <string name="plugin_weather_provider_enable">Đặt làm nhà cung cấp thời tiết</string>
     <string name="plugin_weather_provider_enabled">Hiện được đặt làm nhà cung cấp thời tiết</string>
@@ -632,6 +792,7 @@
     <string name="search_filter_online">Kết quả trực tuyến</string>
     <string name="search_filter_apps">Ứng dụng</string>
     <string name="plugin_type_locationsearch">Tìm kiếm địa điểm</string>
+    <string name="plugin_type_calendar">Lịch</string>
     <string name="preference_default_filter">Bộ lọc mặc định</string>
     <string name="preference_default_filter_summary">Tùy chỉnh bộ lọc mặc định cho tìm kiếm</string>
     <string name="preference_filter_bar">Hiển thị thanh bộ lọc</string>
@@ -639,7 +800,6 @@
     <string name="preference_customize_filter_bar">Tùy chỉnh thanh bộ lọc</string>
     <string name="preference_customize_filter_bar_summary">Tùy chỉnh các mục được đưa vào thanh bộ lọc</string>
     <string name="filter_settings_network_warning">Bộ lọc hiện tại cho phép kết quả trực tuyến theo mặc định. Truy vấn tìm kiếm của bạn có thể vô tình được gửi đến các dịch vụ web bên ngoài. Vì lý do riêng tư, điều này không được khuyến khích.</string>
-    <string name="preference_search_osm_locations">OpenStreetMap</string>
     <string name="preference_search_osm_locations_summary">Tìm kiếm OpenStreetMap cho các cửa hàng và địa điểm khác trong khu vực địa phương</string>
     <string name="poi_category_restaurant">Nhà hàng</string>
     <string name="poi_category_fast_food">Thức ăn nhanh</string>
@@ -672,6 +832,7 @@
     <string name="poi_category_bakery">Tiệm bánh</string>
     <string name="poi_category_car_rental">Thuê ô tô</string>
     <string name="poi_category_car_sharing">Chia sẻ xe</string>
+    <string name="poi_category_mobile_phone">Cửa hàng điện thoại di động</string>
     <string name="poi_category_furniture">Cửa hàng nội thất</string>
     <string name="poi_category_alcohol">Cửa hàng rượu</string>
     <string name="poi_category_florist">Cửa hàng hoa</string>
@@ -683,12 +844,14 @@
     <string name="poi_category_soccer">Sân bóng đá</string>
     <string name="poi_category_basketball">Sân bóng rổ</string>
     <string name="poi_category_tennis">Sân quần vợt</string>
-    <string name="poi_category_atm">ATM</string>
     <string name="poi_category_kiosk">Ki-ốt</string>
     <string name="poi_category_museum">Bảo tàng</string>
     <string name="poi_category_fitness_center">Trung tâm thể hình</string>
     <string name="poi_category_church">Nhà thờ</string>
     <string name="poi_category_mosque">Nhà thờ Hồi giáo</string>
+    <string name="poi_category_buddhist_temple">Chùa Phật giáo</string>
+    <string name="poi_category_hindu_temple">Đền Hindu</string>
+    <string name="poi_category_synagogue">Giáo đường Do Thái</string>
     <string name="poi_category_pizza_restaurant">Nhà hàng pizza</string>
     <string name="poi_category_burger_restaurant">Nhà hàng burger</string>
     <string name="poi_category_place_of_worship">Nơi thờ cúng</string>
@@ -734,7 +897,22 @@
     <string name="item_visibility_calendar_default">Tiện ích lịch &amp; kết quả tìm kiếm</string>
     <string name="item_visibility_search_only">Kết quả tìm kiếm</string>
     <string name="item_visibility_hidden">Không bao giờ</string>
+    <string name="contact_info_home">Trang chủ</string>
     <string name="contact_info_mobile">Di động</string>
     <string name="contact_info_work">Công việc</string>
+    <plurals name="contact_phone_numbers">
+        <item quantity="other">%1$s số điện thoại</item>
+    </plurals>
+    <plurals name="contact_email_addresses">
+        <item quantity="other">%1$s địa chỉ email</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="other">%1$s địa chỉ bưu điện</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="other">%1$s thông báo</item>
+    </plurals>
     <string name="weather_widget_no_provider">Không có nhà cung cấp thời tiết nào được chọn hoặc nhà cung cấp đã chọn không có sẵn</string>
+    <string name="weather_forecast_wind">Gió</string>
+    <string name="theme_bundle_name">Tên</string>
 </resources>
