@@ -5,7 +5,18 @@
     -->
     <!-- DIMENSIONS -->
     <!-- UNITS OF LENGTH -->
+    <string name="unit_meter_symbol">м.</string>
+    <string name="unit_kilometer_symbol">км</string>
+    <string name="unit_decimeter_symbol">дм</string>
+    <string name="unit_centimeter_symbol">см</string>
+    <string name="unit_millimeter_symbol">мм</string>
+    <string name="unit_inch_symbol">дюйм</string>
+    <string name="unit_foot_symbol">фут</string>
+    <string name="unit_yard_symbol">ярд</string>
     <!-- UNITS OF AREA -->
+    <string name="unit_sqmillimeter_symbol">мм²</string>
+    <string name="unit_hectare_symbol">га</string>
+    <string name="unit_acre_symbol">акр</string>
     <!-- UNITS OF TIME -->
     <!-- UNITS OF DATA SIZES -->
     <!-- UNITS OF VELOCITY -->
