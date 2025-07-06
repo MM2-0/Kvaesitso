@@ -4,6 +4,8 @@
     Important note: Unit symbols may not contain spaces.
     -->
     <!-- DIMENSIONS -->
+    <string name="dimension_length">אורך</string>
+    <string name="dimension_mass">מסה</string>
     <!-- UNITS OF LENGTH -->
     <!-- UNITS OF AREA -->
     <!-- UNITS OF TIME -->
