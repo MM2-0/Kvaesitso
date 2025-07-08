@@ -312,6 +312,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s speelt media</string>
     <string name="music_widget_no_data">Nog geen media afgespeeld</string>
+    <string name="music_widget_interactive_progress_bar">Interactieve voortgangsbalk</string>
     <string name="weather_condition_sleetshowers">Buien van smeltende sneeuw</string>
     <string name="weather_condition_heavysleet">Hevige smeltende sneeuw</string>
     <string name="weather_condition_lightrainshowersandthunder">Lichte regenbuien en donder</string>
@@ -838,6 +839,7 @@
     <string name="clock_style_empty">Geen klok</string>
     <string name="clock_style_custom">Aangepaste widget</string>
     <string name="clock_variant_outlined">Omtrek</string>
+    <string name="clock_variant_analog_ticks">Streepjes</string>
     <string name="menu_show_filters">Filters weergeven</string>
     <string name="menu_hide_filters">Filters verbergen</string>
     <string name="search_filter_tools">Hulpmiddelen</string>
