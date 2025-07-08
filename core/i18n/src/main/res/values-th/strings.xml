@@ -847,4 +847,9 @@
     <string name="font_name_device_body">ชุดแบบอักษรของอุปกรณ์</string>
     <string name="font_name_device_headline">ชุดแบบอักษรเริ่มต้นสำหรับหัวเรื่อง</string>
     <string name="font_category_generic">ทั่วไป</string>
+    <string name="preference_search_bar_style_transparent">โปร่งใส</string>
+    <string name="preference_search_bar_style_solid">สีทึบ</string>
+    <string name="preference_search_bar_style_hidden">ซ่อน</string>
+    <string name="clock_variant_analog_ticks">ขีด</string>
+    <string name="music_widget_interactive_progress_bar">แถบเวลาแบบควบคุมได้</string>
 </resources>
