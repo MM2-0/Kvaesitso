@@ -327,6 +327,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s מנגן מדיה</string>
     <string name="music_widget_no_data">טרם נוגנה מדיה</string>
+    <string name="music_widget_interactive_progress_bar">סרגל התקדמות אינטראקטיבי</string>
     <string name="weather_condition_sleetshowers">ממטרי גשם קרחי</string>
     <string name="weather_condition_heavysleet">גשם קרחי כבד</string>
     <string name="weather_condition_lightrainshowersandthunder">ממטרי גשם קל ורעמים</string>
@@ -652,6 +653,9 @@
     <string name="preference_screen_buildinfo_summary">עוד מידע על בנייה זו של יישומון זה</string>
     <string name="preference_search_bar_style">עיצוב</string>
     <string name="preference_search_bar_style_summary">התאם אישית את מראה שורת החיפוש</string>
+    <string name="preference_search_bar_style_transparent">שקוף</string>
+    <string name="preference_search_bar_style_solid">מוצק</string>
+    <string name="preference_search_bar_style_hidden">מוסתר</string>
     <string name="preference_search_bar_color">צבע</string>
     <string name="preference_search_bar_auto_focus">פתח מקלדת</string>
     <string name="preference_search_bar_auto_focus_summary">הצג את המקלדת באופן אוטומטי בעת פתיחת מגירת היישומונים</string>
@@ -876,6 +880,7 @@
     <string name="clock_style_empty">ללא שעון</string>
     <string name="clock_style_custom">ווידג\'ט מותאם אישית</string>
     <string name="clock_variant_outlined">קווי מתאר</string>
+    <string name="clock_variant_analog_ticks">סימנים</string>
     <string name="menu_show_filters">הצג מסננים</string>
     <string name="menu_hide_filters">הסתר מסננים</string>
     <string name="search_filter_tools">כלים</string>
