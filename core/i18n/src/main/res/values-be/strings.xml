@@ -37,6 +37,7 @@
     <string name="action_done">Гатова</string>
     <string name="action_more_actions">Больш дзеянняў</string>
     <string name="action_clear">Ачысціць</string>
+    <string name="action_install">Усталяваць</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Выдаліць</string>
     <string name="menu_remove">Прыняць</string>
@@ -240,7 +241,9 @@
     <string name="easter_egg_text">Файна, ты знайшоў мяне. Віншую. Але гэта варта было рабіць?</string>
     <!-- Close a dialog -->
     <string name="close">Закрыць</string>
+    <string name="no_selection">Не выбрана</string>
     <string name="save">Захаваць</string>
+    <string name="save_as_file">Захаваць у файл</string>
     <string name="duplicate">Дубліраваць</string>
     <string name="edit">Рэдагаваць</string>
     <string name="skip">Прапусціць</string>
@@ -308,6 +311,12 @@
         <item quantity="many">+%1$d бягучых падзей з тых часоў</item>
         <item quantity="other">+%1$d бягучых падзей з тых часоў</item>
     </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d незавершаная задача</item>
+        <item quantity="few">+%1$d незавершаныя задачы</item>
+        <item quantity="many">+%1$d незавершаных задач</item>
+        <item quantity="other">+%1$d незавершаных задач</item>
+    </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">увесь дзень</string>
     <string name="task_due_time">Час выканання: %1$s</string>
@@ -316,6 +325,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s грае медыя</string>
     <string name="music_widget_no_data">Пакуль што нічога не грала</string>
+    <string name="music_widget_interactive_progress_bar">Інтэрактыўная панэль выканання</string>
     <string name="weather_condition_sleetshowers">Лівень з мокрым снегам</string>
     <string name="weather_condition_heavysleet">Моцны мокры снег</string>
     <string name="weather_condition_lightrainshowersandthunder">Слабы лівень з навальніцай</string>
@@ -335,6 +345,7 @@
     <string name="weather_condition_snow">Снег</string>
     <string name="weather_condition_hail">Град</string>
     <string name="weather_condition_thunderstorm">Навальніца</string>
+    <string name="weather_condition_thunder">Гром</string>
     <string name="weather_condition_heavysnowshowers">Моцны снег з ліўнем</string>
     <string name="weather_condition_heavyrainshowers">Моцны лівень</string>
     <string name="weather_condition_rainshowersandthunder">Ліўні з навальніцай</string>
@@ -346,6 +357,7 @@
     <string name="weather_condition_heavyrainshowersandthunder">Моцны лівень з навальніцай</string>
     <string name="weather_condition_fair">Ясна</string>
     <string name="weather_condition_fog">Туман</string>
+    <string name="weather_condition_haze">Смуга</string>
     <string name="weather_condition_sleetshowersandthunder">Мокры снег з ліўнем і навальніца</string>
     <string name="weather_condition_rainandthunder">Дождж з навальніцай</string>
     <string name="weather_condition_lightsleet">Слабы мокры снег</string>
@@ -370,27 +382,30 @@
     <string name="weather_widget_set_location">Абраць месцазнаходжанне</string>
     <string name="weather_location_search_no_result">Месцазнаходжанне ня знойдзена.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
-    <string name="missing_permission_auto_location">Доступ да месцазнаходжання патрэбны для яго аўтаматычнага вызначэння</string>
+    <string name="missing_permission_auto_location">Для аўтаматычнага вызначэння лакацыі патрэбны доступ да месцазнаходжання</string>
     <!-- Missing notification permission in music widget settings -->
-    <string name="missing_permission_music_widget">Доступ да апавяшчэнняў патрэбны для кіравання прайграваннем медыя</string>
+    <string name="missing_permission_music_widget">Для кіравання прайграваннем медыя патрэбны доступ да апавяшчэнняў</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Доступ да кантактаў патрэбны для іх пошуку</string>
+    <string name="missing_permission_contact_search_settings">Для пошуку кантактаў патрэбны доступ да кантактнай кнігі</string>
     <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">Для выканання выклікаў патрэбны доступ да тэлефону</string>
     <!-- Missing calendar permission in search settings screen -->
-    <string name="missing_permission_calendar_search_settings">Доступ да календара патрэбны для пошуку праз каляндар</string>
+    <string name="missing_permission_calendar_search_settings">Для пошуку праз каляндар патрэбны доступ да календара</string>
+    <string name="missing_permission_tasks_search_settings">Для пошуку праз заданні патрэбны доступ да заданняў</string>
+    <string name="missing_permission_tasks_integration">Для інтэграцыі з задачамі патрэбны доступ да заданняў</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Гэтаму віджэту патрэбны доступ да календара</string>
     <string name="widget_config_calendar_missing_calendars_hint">Не можаце знайсці свае календары?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s павінна быць стандартнай праграмай галоўнага экрана для пошуку ярлыкоў</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">Доступ да файлаў патрэбны для пошуку праз лакальныя файлы</string>
+    <string name="missing_permission_file_search_settings">Для пошуку праз лакальныя файлы патрэбны доступ да файлаў</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Доступ да ўсіх файлаў патрэбны для пошуку праз лакальныя файлы</string>
+    <string name="missing_permission_file_search_settings_android10">Для пошуку праз лакальныя файлы патрэбны доступ да ўсіх файлаў</string>
     <!-- Missing notification permission, used in badge settings screen -->
-    <string name="missing_permission_notification_badges">Доступ да апавяшчэнняў патрэбны для адлюстроўвання бэйджаў апавяшчэнняў на значках</string>
+    <string name="missing_permission_notification_badges">Для адлюстравання бэйджаў апавяшчэнняў на значках патрэбны доступ да апавяшчэнняў</string>
     <!-- Missing calendar permission, used in calendar widget -->
     <string name="missing_permission_calendar_widget">Дайце дазвол на доступ да календару, каб тут паказваліся будучыя сустрэчы і падзеі.</string>
     <!-- Missing calendar permission, used in calendar search results -->
@@ -414,13 +429,21 @@
     <string name="preference_theme_dark">Цёмная</string>
     <string name="preference_screen_colors">Колеравая схема</string>
     <string name="preference_colors_default">Прадвызначанная</string>
+    <string name="preference_colors_high_contrast">Высокі кантраст</string>
     <string name="preference_colors_bw">Чорна-белая</string>
     <string name="preference_custom_colors_corepalette">Колеры прылады</string>
     <string name="preference_mdy_color_source">Крыніца дынамічных колераў</string>
     <string name="preference_mdy_color_source_system">Сістэма</string>
     <string name="preference_mdy_color_source_wallpaper">Шпалеры</string>
-    <string name="preference_shapes_default">Прадвызначанная</string>
-    <string name="preference_transparencies_default">Прадвызначанная</string>
+    <string name="preference_screen_shapes">Фігуры</string>
+    <string name="preference_shapes_default">Прадвызначаныя</string>
+    <string name="preference_shapes_extra_round">Вельмі скругленыя</string>
+    <string name="preference_shapes_rect">Прамавугольныя</string>
+    <string name="preference_shapes_base">Стандартная фігура</string>
+    <string name="preference_screen_typography">Тыпаграфія</string>
+    <string name="preference_screen_transparencies">Празрыстасць</string>
+    <string name="preference_transparencies_default">Прадвызначана</string>
+    <string name="preference_transparencies_semi_transparent">Паўпразрыста</string>
     <string name="preference_font">Шрыфт</string>
     <string name="preference_font_system">Сістэмны</string>
     <string name="preference_screen_about">Аб праграме</string>
@@ -440,6 +463,7 @@
     <string name="preference_location_managed">Кіруецца плагінам</string>
     <string name="preference_location_managed_summary">Месцазнаходжанне для гэтага пастаўшчыку кіруецца плагінам</string>
     <string name="preference_location">Месцазнаходжанне</string>
+    <string name="preference_location_breezy">Кіраванне месцазнаходжаннем у Breezy Weather</string>
     <string name="preference_imperial_units_summary">Выкарыстоўваць градусы Фарэнгейта й мілі ў гадзіну</string>
     <string name="preference_imperial_units">Імперыяльныя адзінкі</string>
     <string name="widget_config_weather_compact">Кампактны рэжым</string>
@@ -539,8 +563,12 @@
     <string name="preference_category_grid">Сетка</string>
     <string name="preference_grid_icon_size">Памер значкоў</string>
     <string name="preference_grid_column_count">Колькасць слупкоў</string>
+    <string name="preference_grid_list_style">Паказваць праграмы спісам</string>
+    <string name="preference_grid_list_icons">Паказваць значкі праграм спісам</string>
     <string name="preference_grid_labels">Паказваць подпісы</string>
     <string name="preference_grid_labels_summary">Паказваць назву праграмы пад значком</string>
+    <string name="preference_grid_list_style_summary">Паказваць праграмы спісам замест сеткі</string>
+    <string name="preference_grid_list_icons_summary">Паказваць значкі пры праглядзе спісам</string>
     <string name="preference_screen_debug">Адладка</string>
     <string name="preference_screen_debug_summary">Інструменты для устранення праблем</string>
     <string name="preference_category_widgets">Віджэты</string>
