@@ -318,6 +318,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s กำลังเล่นสื่อ</string>
     <string name="music_widget_no_data">ยังไม่มีสื่อใดที่ถูกเล่น</string>
+    <string name="music_widget_interactive_progress_bar">แถบเวลาแบบควบคุมได้</string>
     <string name="weather_condition_sleetshowers">ฝนน้ำแข็งตกบางแห่ง</string>
     <string name="weather_condition_heavysleet">ฝนน้ำแข็งตกหนัก</string>
     <string name="weather_condition_lightrainshowersandthunder">ฝนตกเล็กน้อยบางแห่งและมีท้องฟ้าคำราม</string>
@@ -639,6 +640,9 @@
     <string name="preference_screen_buildinfo_summary">ข้อมูลเพิ่มเติมเกี่ยวกับบิลด์นี้ของแอป</string>
     <string name="preference_search_bar_style">รูปแบบ</string>
     <string name="preference_search_bar_style_summary">ปรับแต่งลักษณะแถบค้นหา</string>
+    <string name="preference_search_bar_style_transparent">โปร่งใส</string>
+    <string name="preference_search_bar_style_solid">สีทึบ</string>
+    <string name="preference_search_bar_style_hidden">ซ่อน</string>
     <string name="preference_search_bar_color">สี</string>
     <string name="preference_search_bar_auto_focus">เปิดคีย์บอร์ด</string>
     <string name="preference_search_bar_auto_focus_summary">แสดงคีย์บอร์ดอัตโนมัติเมื่อเปิดลิ้นชักรวมแอป</string>
@@ -857,6 +861,7 @@
     <string name="clock_style_empty">ไม่แสดงนาฬิกา</string>
     <string name="clock_style_custom">วิดเจ็ตแบบกำหนดเอง</string>
     <string name="clock_variant_outlined">ใช้เส้นรอบนอก</string>
+    <string name="clock_variant_analog_ticks">ขีด</string>
     <string name="menu_show_filters">แสดงตัวกรอง</string>
     <string name="menu_hide_filters">ซ่อนตัวกรอง</string>
     <string name="search_filter_tools">เครื่องมือ</string>
