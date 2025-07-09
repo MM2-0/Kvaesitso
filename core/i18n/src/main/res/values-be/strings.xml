@@ -188,13 +188,13 @@
     <string name="weather_no_data">Няма даных аб надвор\'і.</string>
     <string name="weather_widget_set_location">Абраць месцазнаходжанне</string>
     <string name="weather_location_search_no_result">Месцазнаходжанне ня знойдзена.</string>
-    <string name="missing_permission_contact_search_settings">Доступ да кантактаў патрэбны для іх пошуку</string>
-    <string name="missing_permission_calendar_search_settings">Доступ да календара патрэбны для пошуку праз каляндар</string>
-    <string name="missing_permission_auto_location">Доступ да месцазнаходжання патрэбны для яго аўтаматычнага вызначэння</string>
-    <string name="missing_permission_music_widget">Доступ да апавяшчэнняў патрэбны для кіравання прайграваннем медыя</string>
+    <string name="missing_permission_contact_search_settings">Для пошуку кантактаў патрэбны доступ да кантактнай кнігі</string>
+    <string name="missing_permission_calendar_search_settings">Для пошуку праз каляндар патрэбны доступ да календара</string>
+    <string name="missing_permission_auto_location">Для аўтаматычнага вызначэння лакацыі патрэбны доступ да месцазнаходжання</string>
+    <string name="missing_permission_music_widget">Для кіравання прайграваннем медыя патрэбны доступ да апавяшчэнняў</string>
     <string name="widget_config_calendar_missing_calendars_hint">Не можаце знайсці свае календары?</string>
     <string name="missing_permission_appshortcuts_search_settings">%1$s павінна быць стандартнай праграмай галоўнага экрана для пошуку ярлыкоў</string>
-    <string name="missing_permission_file_search_settings">Доступ да файлаў патрэбны для пошуку праз лакальныя файлы</string>
+    <string name="missing_permission_file_search_settings">Для пошуку праз лакальныя файлы патрэбны доступ да файлаў</string>
     <string name="missing_permission_calendar_widget_settings">Гэтаму віджэту патрэбны доступ да календара</string>
     <string name="disclaimer">Адмова ад адказнасці</string>
     <string name="show_all">Паказаць усе</string>
@@ -217,8 +217,8 @@
         <item quantity="many">+%1$d бягучых падзей з тых часоў</item>
         <item quantity="other">+%1$d бягучых падзей з тых часоў</item>
     </plurals>
-    <string name="missing_permission_file_search_settings_android10">Доступ да ўсіх файлаў патрэбны для пошуку праз лакальныя файлы</string>
-    <string name="missing_permission_notification_badges">Доступ да апавяшчэнняў патрэбны для адлюстроўвання бэйджаў апавяшчэнняў на значках</string>
+    <string name="missing_permission_file_search_settings_android10">Для пошуку праз лакальныя файлы патрэбны доступ да ўсіх файлаў</string>
+    <string name="missing_permission_notification_badges">Для адлюстравання бэйджаў апавяшчэнняў на значках патрэбны доступ да апавяшчэнняў</string>
     <string name="missing_permission_calendar_widget">Дайце дазвол на доступ да календару, каб тут паказваліся будучыя сустрэчы і падзеі.</string>
     <string name="missing_permission_calendar_search">Дайце дазвол на доступ да календару, каб выконваць пошук праз ваш каляндар.</string>
     <string name="missing_permission_location_search">Дайце дазвол на доступ да месцазнаходжання, каб шукаць праз бліжайшыя месцы.</string>
@@ -801,4 +801,35 @@
     </plurals>
     <string name="weather_widget_no_provider">Правайдара надвор\'я не выбрана, альбо выбраны правайдар недаступны</string>
     <string name="widget_removed">Віджэт выдалены</string>
+    <string name="preference_screen_shapes">Фігуры</string>
+    <string name="preference_shapes_rect">Прамавугольныя</string>
+    <string name="preference_shapes_extra_round">Вельмі скругленыя</string>
+    <string name="preference_shapes_base">Стандартная фігура</string>
+    <string name="weather_condition_thunder">Гром</string>
+    <string name="weather_condition_haze">Смуга</string>
+    <string name="preference_location_breezy">Кіраванне месцазнаходжаннем у Breezy Weather</string>
+    <string name="provider_breezy">Breezy Weather</string>
+    <string name="action_install">Усталяваць</string>
+    <string name="preference_colors_high_contrast">Высокі кантраст</string>
+    <string name="music_widget_interactive_progress_bar">Інтэрактыўная панэль выканання</string>
+    <string name="missing_permission_tasks_integration">Для інтэграцыі з задачамі патрэбны доступ да заданняў</string>
+    <string name="preference_shapes_default">Прадвызначаныя</string>
+    <string name="preference_grid_list_style">Паказваць праграмы спісам</string>
+    <string name="preference_transparencies_default">Прадвызначана</string>
+    <string name="preference_transparencies_semi_transparent">Паўпразрыста</string>
+    <string name="preference_screen_transparencies">Празрыстасць</string>
+    <string name="no_selection">Не выбрана</string>
+    <string name="save_as_file">Захаваць у файл</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d незавершаная задача</item>
+        <item quantity="few">+%1$d незавершаныя задачы</item>
+        <item quantity="many">+%1$d незавершаных задач</item>
+        <item quantity="other">+%1$d незавершаных задач</item>
+    </plurals>
+    <string name="missing_permission_tasks_search_settings">Для пошуку праз заданні патрэбны доступ да заданняў</string>
+    <string name="preference_screen_typography">Тыпаграфія</string>
+    <string name="preference_grid_list_icons">Паказваць значкі праграм спісам</string>
+    <string name="preference_grid_list_style_summary">Паказваць праграмы спісам замест сеткі</string>
+    <string name="preference_grid_list_icons_summary">Паказваць значкі пры праглядзе спісам</string>
+    <string name="missing_permission_call_contacts_settings">Для выканання выклікаў патрэбны доступ да тэлефону</string>
 </resources>
