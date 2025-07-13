@@ -24,10 +24,10 @@ import androidx.compose.material.icons.rounded.AlignVerticalBottom
 import androidx.compose.material.icons.rounded.AlignVerticalCenter
 import androidx.compose.material.icons.rounded.AlignVerticalTop
 import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.AvTimer
 import androidx.compose.material.icons.rounded.BatteryFull
 import androidx.compose.material.icons.rounded.ColorLens
 import androidx.compose.material.icons.rounded.DarkMode
+import androidx.compose.material.icons.rounded.Height
 import androidx.compose.material.icons.rounded.HorizontalSplit
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.MusicNote
@@ -363,6 +363,7 @@ fun ConfigureClockWidgetSheet(
     val color by viewModel.color.collectAsState()
     val style by viewModel.clockStyle.collectAsState()
     val fillHeight by viewModel.fillHeight.collectAsState()
+    val widgetsOnHome by viewModel.widgetsOnHome.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
     val showSeconds by viewModel.showSeconds.collectAsState()
     val timeFormat by viewModel.timeFormat.collectAsState()
@@ -564,71 +565,79 @@ fun ConfigureClockWidgetSheet(
                     }
                 }
             }
-            if (fillHeight == true) {
-                OutlinedCard(
-                    modifier = Modifier.padding(top = 16.dp),
+            OutlinedCard(
+                modifier = Modifier.padding(top = 16.dp),
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        var showDropdown by remember { mutableStateOf(false) }
-                        Preference(
-                            title = stringResource(R.string.preference_clock_widget_alignment),
-                            summary = when (alignment) {
-                                ClockWidgetAlignment.Top -> stringResource(R.string.preference_clock_widget_alignment_top)
-                                ClockWidgetAlignment.Center -> stringResource(R.string.preference_clock_widget_alignment_center)
-                                else -> stringResource(R.string.preference_clock_widget_alignment_bottom)
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_clock_widget_fill_height),
+                        icon = Icons.Rounded.Height,
+                        value = fillHeight == true || widgetsOnHome == false,
+                        onValueChanged = {
+                            viewModel.setFillHeight(it)
+                        },
+                        enabled = widgetsOnHome == true,
+                    )
+                    var showDropdown by remember { mutableStateOf(false) }
+                    Preference(
+                        title = stringResource(R.string.preference_clock_widget_alignment),
+                        summary = when (alignment) {
+                            ClockWidgetAlignment.Top -> stringResource(R.string.preference_clock_widget_alignment_top)
+                            ClockWidgetAlignment.Center -> stringResource(R.string.preference_clock_widget_alignment_center)
+                            else -> stringResource(R.string.preference_clock_widget_alignment_bottom)
+                        },
+                        icon = when (alignment) {
+                            ClockWidgetAlignment.Top -> Icons.Rounded.AlignVerticalTop
+                            ClockWidgetAlignment.Center -> Icons.Rounded.AlignVerticalCenter
+                            else -> Icons.Rounded.AlignVerticalBottom
+                        },
+                        onClick = {
+                            showDropdown = true
+                        },
+                        enabled = fillHeight == true,
+                    )
+                    DropdownMenu(
+                        expanded = showDropdown,
+                        onDismissRequest = { showDropdown = false }) {
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Rounded.AlignVerticalTop,
+                                    null
+                                )
                             },
-                            icon = when (alignment) {
-                                ClockWidgetAlignment.Top -> Icons.Rounded.AlignVerticalTop
-                                ClockWidgetAlignment.Center -> Icons.Rounded.AlignVerticalCenter
-                                else -> Icons.Rounded.AlignVerticalBottom
-                            },
+                            text = { Text(stringResource(R.string.preference_clock_widget_alignment_top)) },
                             onClick = {
-                                showDropdown = true
+                                viewModel.setAlignment(ClockWidgetAlignment.Top)
+                                showDropdown = false
                             }
                         )
-                        DropdownMenu(
-                            expanded = showDropdown,
-                            onDismissRequest = { showDropdown = false }) {
-                            DropdownMenuItem(
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Rounded.AlignVerticalTop,
-                                        null
-                                    )
-                                },
-                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_top)) },
-                                onClick = {
-                                    viewModel.setAlignment(ClockWidgetAlignment.Top)
-                                    showDropdown = false
-                                }
-                            )
-                            DropdownMenuItem(
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Rounded.AlignVerticalCenter,
-                                        null
-                                    )
-                                },
-                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_center)) },
-                                onClick = {
-                                    viewModel.setAlignment(ClockWidgetAlignment.Center)
-                                    showDropdown = false
-                                })
-                            DropdownMenuItem(
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Rounded.AlignVerticalBottom,
-                                        null
-                                    )
-                                },
-                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_bottom)) },
-                                onClick = {
-                                    viewModel.setAlignment(ClockWidgetAlignment.Bottom)
-                                    showDropdown = false
-                                })
-                        }
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Rounded.AlignVerticalCenter,
+                                    null
+                                )
+                            },
+                            text = { Text(stringResource(R.string.preference_clock_widget_alignment_center)) },
+                            onClick = {
+                                viewModel.setAlignment(ClockWidgetAlignment.Center)
+                                showDropdown = false
+                            })
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Rounded.AlignVerticalBottom,
+                                    null
+                                )
+                            },
+                            text = { Text(stringResource(R.string.preference_clock_widget_alignment_bottom)) },
+                            onClick = {
+                                viewModel.setAlignment(ClockWidgetAlignment.Bottom)
+                                showDropdown = false
+                            })
                     }
                 }
             }

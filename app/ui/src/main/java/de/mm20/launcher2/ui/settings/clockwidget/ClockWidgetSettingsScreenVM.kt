@@ -7,6 +7,7 @@ import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -15,6 +16,8 @@ import org.koin.core.component.inject
 
 class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     private val settings: ClockWidgetSettings by inject()
+    private val uiSettings: UiSettings by inject()
+
     val compact = settings.compact
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setCompact(compact: Boolean) {
@@ -68,8 +71,15 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setUseThemeColor(boolean)
     }
 
+    val widgetsOnHome = uiSettings.homeScreenWidgets
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     val fillHeight = settings.fillHeight
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setFillHeight(fillHeight: Boolean) {
+        settings.setFillHeight(fillHeight)
+    }
 
     val parts = settings.parts
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)

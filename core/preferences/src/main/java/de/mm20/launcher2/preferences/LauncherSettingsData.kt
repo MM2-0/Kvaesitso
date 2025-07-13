@@ -51,7 +51,6 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetBatteryPart: Boolean = true,
     val clockWidgetMusicPart: Boolean = true,
     val clockWidgetDatePart: Boolean = true,
-    @Deprecated("Use homeScreenWidgets")
     val clockWidgetFillHeight: Boolean = true,
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
 
