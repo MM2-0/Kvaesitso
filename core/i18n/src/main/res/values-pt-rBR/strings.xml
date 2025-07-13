@@ -867,4 +867,9 @@
     <string name="font_name_device_headline">Fonte padrão do título</string>
     <string name="font_name_device_body">Fonte de texto do dispositivo</string>
     <string name="font_category_generic">Genérico</string>
+    <string name="preference_search_bar_style_transparent">Transparente</string>
+    <string name="preference_search_bar_style_hidden">Oculto</string>
+    <string name="preference_search_bar_style_solid">Sólido</string>
+    <string name="clock_variant_analog_ticks">Tique-taques</string>
+    <string name="music_widget_interactive_progress_bar">Barra de progresso interativa</string>
 </resources>
