@@ -4,7 +4,7 @@
         <item quantity="other">米</item>
     </plurals>
     <plurals name="unit_kilometer">
-        <item quantity="other">公里</item>
+        <item quantity="other">千米</item>
     </plurals>
     <plurals name="unit_centimeter">
         <item quantity="other">厘米</item>
@@ -119,28 +119,28 @@
         <item quantity="other">吉位字节</item>
     </plurals>
     <plurals name="unit_tebibyte">
-        <item quantity="other">万亿位字节</item>
+        <item quantity="other">太位字节</item>
     </plurals>
     <plurals name="unit_kilobit">
         <item quantity="other">千比特</item>
     </plurals>
-    <string name="unit_kilobit_symbol">kbit</string>
-    <string name="unit_megabit_symbol">Mbit</string>
+    <string name="unit_kilobit_symbol">kb</string>
+    <string name="unit_megabit_symbol">Mb</string>
     <plurals name="unit_megabit">
         <item quantity="other">兆比特</item>
     </plurals>
-    <string name="unit_gigabit_symbol">Gbit</string>
+    <string name="unit_gigabit_symbol">Gb</string>
     <plurals name="unit_gigabit">
         <item quantity="other">吉比特</item>
     </plurals>
-    <string name="unit_terabit_symbol">万亿比特</string>
+    <string name="unit_terabit_symbol">TB</string>
     <plurals name="unit_terabit">
-        <item quantity="other">terabits</item>
+        <item quantity="other">太比特</item>
     </plurals>
     <string name="unit_meter_per_second_symbol">m/s</string>
     <string name="unit_kilometer_per_hour_symbol">km/h</string>
     <plurals name="unit_kilometer_per_hour">
-        <item quantity="other">公里每小时</item>
+        <item quantity="other">千米每小时</item>
     </plurals>
     <string name="unit_mile_per_hour_symbol">mph</string>
     <plurals name="unit_mile_per_hour">
@@ -160,7 +160,7 @@
     </plurals>
     <string name="unit_metric_ton_symbol">t</string>
     <plurals name="unit_metric_ton">
-        <item quantity="other">公吨</item>
+        <item quantity="other">吨</item>
     </plurals>
     <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
@@ -192,7 +192,7 @@
         <item quantity="other">开</item>
     </plurals>
     <plurals name="unit_terabyte">
-        <item quantity="other">万亿字节</item>
+        <item quantity="other">太字节</item>
     </plurals>
     <string name="unit_kibibyte_symbol">kiB</string>
     <plurals name="unit_kibibyte">
