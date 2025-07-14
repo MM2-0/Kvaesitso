@@ -836,6 +836,7 @@
     <string name="clock_style_empty">Keine Uhr</string>
     <string name="clock_style_custom">Eigenes Widget</string>
     <string name="clock_variant_outlined">Umriss</string>
+    <string name="clock_variant_analog_ticks">Striche</string>
     <string name="menu_show_filters">Filter anzeigen</string>
     <string name="menu_hide_filters">Filter ausblenden</string>
     <string name="search_filter_tools">Werkzeuge</string>
