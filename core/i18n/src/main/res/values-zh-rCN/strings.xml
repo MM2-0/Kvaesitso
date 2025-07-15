@@ -37,6 +37,7 @@
     <string name="action_done">完成</string>
     <string name="action_more_actions">更多行动</string>
     <string name="action_clear">清除</string>
+    <string name="action_install">安装</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">删除</string>
     <string name="menu_remove">移除</string>
@@ -237,7 +238,9 @@
     <string name="easter_egg_text">好吧, 你找到我了. 祝贺. 值得不？</string>
     <!-- Close a dialog -->
     <string name="close">关闭</string>
+    <string name="no_selection">未选</string>
     <string name="save">保存</string>
+    <string name="save_as_file">保存为文件</string>
     <string name="duplicate">复制</string>
     <string name="edit">编辑</string>
     <string name="skip">跳过</string>
@@ -304,6 +307,9 @@
     <plurals name="calendar_widget_running_events">
         <item quantity="other">过去日期运行了 %1$d 个事件</item>
     </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="other">+%1$d 个未完成任务</item>
+    </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">全天</string>
     <string name="task_due_time">到期时间%1$s</string>
@@ -312,6 +318,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s正在播放媒体</string>
     <string name="music_widget_no_data">尚未播放任何媒体</string>
+    <string name="music_widget_interactive_progress_bar">可交互进度条</string>
     <string name="weather_condition_sleetshowers">阵雨夹雪</string>
     <string name="weather_condition_heavysleet">重度雨夹雪</string>
     <string name="weather_condition_lightrainshowersandthunder">轻度雷阵雨</string>
@@ -331,6 +338,7 @@
     <string name="weather_condition_snow">雪</string>
     <string name="weather_condition_hail">冰雹</string>
     <string name="weather_condition_thunderstorm">雷暴</string>
+    <string name="weather_condition_thunder">雷雨</string>
     <string name="weather_condition_heavysnowshowers">重度阵雪</string>
     <string name="weather_condition_heavyrainshowers">大雨</string>
     <string name="weather_condition_rainshowersandthunder">雷阵雨</string>
@@ -342,6 +350,7 @@
     <string name="weather_condition_heavyrainshowersandthunder">重度雷阵雨</string>
     <string name="weather_condition_fair">转晴</string>
     <string name="weather_condition_fog">雾</string>
+    <string name="weather_condition_haze">雾霾</string>
     <string name="weather_condition_sleetshowersandthunder">雷阵雨夹雪</string>
     <string name="weather_condition_rainandthunder">雷雨</string>
     <string name="weather_condition_lightsleet">轻度雨夹雪</string>
@@ -375,6 +384,8 @@
     <string name="missing_permission_call_contacts_settings">需要通话权限才能开始通话</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">需要日历权限以便搜索日历</string>
+    <string name="missing_permission_tasks_search_settings">需要 Tasks 应用权限来搜索任务</string>
+    <string name="missing_permission_tasks_integration">需要 Tasks 权限来接入 Tasks 应用</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">此组件需要日历权限</string>
     <string name="widget_config_calendar_missing_calendars_hint">找不到你的日历了吗？</string>
@@ -411,13 +422,21 @@
     <string name="preference_theme_dark">深色</string>
     <string name="preference_screen_colors">配色方案</string>
     <string name="preference_colors_default">默认</string>
+    <string name="preference_colors_high_contrast">高对比度</string>
     <string name="preference_colors_bw">黑白</string>
     <string name="preference_custom_colors_corepalette">调色板</string>
     <string name="preference_mdy_color_source">动态配色来源</string>
     <string name="preference_mdy_color_source_system">系统</string>
     <string name="preference_mdy_color_source_wallpaper">壁纸</string>
+    <string name="preference_screen_shapes">形状</string>
     <string name="preference_shapes_default">默认</string>
+    <string name="preference_shapes_extra_round">大圆角</string>
+    <string name="preference_shapes_rect">直角</string>
+    <string name="preference_shapes_base">基础形状</string>
+    <string name="preference_screen_typography">文字</string>
+    <string name="preference_screen_transparencies">透明度</string>
     <string name="preference_transparencies_default">默认</string>
+    <string name="preference_transparencies_semi_transparent">半透明</string>
     <string name="preference_font">字体</string>
     <string name="preference_font_system">系统默认</string>
     <string name="preference_screen_about">关于</string>
@@ -439,6 +458,7 @@
     <string name="preference_location_managed">由插件管理</string>
     <string name="preference_location_managed_summary">此提供商的位置由插件应用管理</string>
     <string name="preference_location">位置</string>
+    <string name="preference_location_breezy">在 Breezy Weather 中管理位置</string>
     <string name="preference_imperial_units_summary">使用华氏度和英里/小时</string>
     <string name="preference_imperial_units">英制单位</string>
     <string name="widget_config_weather_compact">紧凑模式</string>
@@ -592,6 +612,8 @@
     <string name="preference_search_calendar">日历</string>
     <string name="preference_search_calendar_summary">搜索即将到来的约会和事件</string>
     <string name="preference_search_local_calendar_summary">在此设备搜索日历</string>
+    <string name="preference_search_tasks">任务</string>
+    <string name="preference_search_tasks_summary">搜索在 Tasks 应用中的任务</string>
     <string name="preference_search_appshortcuts">应用快捷方式</string>
     <string name="preference_search_appshortcuts_summary">搜索应用快捷方式</string>
     <string name="preference_search_calculator">计算器</string>
@@ -617,6 +639,9 @@
     <string name="preference_screen_buildinfo_summary">有关此版本应用的更多信息</string>
     <string name="preference_search_bar_style">风格</string>
     <string name="preference_search_bar_style_summary">自定义搜索栏外观</string>
+    <string name="preference_search_bar_style_transparent">透明</string>
+    <string name="preference_search_bar_style_solid">填充</string>
+    <string name="preference_search_bar_style_hidden">隐藏</string>
     <string name="preference_search_bar_color">颜色</string>
     <string name="preference_search_bar_auto_focus">打开键盘</string>
     <string name="preference_search_bar_auto_focus_summary">打开搜索时自动显示键盘</string>
@@ -637,13 +662,22 @@
     <string name="preference_compact_tags">紧凑型标签</string>
     <string name="preference_compact_tags_summary">隐藏标签标签或图标以减少标签占用的空间</string>
     <string name="preference_widgets_edit_button_summary">显示一个按钮以添加、移除和重新排列组件</string>
+    <string name="preference_widgets_on_home_screen">直达组件</string>
+    <string name="preference_widgets_on_home_screen_summary">在主屏幕而不是组件页显示组件</string>
     <string name="preference_screen_homescreen">主屏幕</string>
     <string name="preference_screen_homescreen_summary">时钟, 搜索栏, 壁纸, 系统栏</string>
     <string name="preference_screen_icons">网格&amp;图标</string>
     <string name="preference_screen_icons_summary">网格, 图标尺寸, 图标包, 角标</string>
     <string name="preference_weather_integration">天气</string>
     <string name="preference_media_integration">媒体控制</string>
+    <string name="preference_tasks_integration">任务</string>
     <!-- %1$s: app name (Kvaesitso) -->
+    <string name="preference_tasks_integration_description">Tasks 是一个免费的开源 to-do 及提醒事项应用。如果已经安装，%1$s 可以显示并搜索在 Tasks 应用中的任务。</string>
+    <string name="preference_tasks_integration_ready">已成功接入 Tasks 并可以开始使用了。</string>
+    <string name="preference_launch_tasks_app">打开 Tasks 应用</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather 是一款免费的开源天气应用。安装后 %1$s 可将其作为天气数据的数据源。</string>
+    <string name="preference_breezyweather_integration_instructions">要使用 Breezy Weather 作为天气数据源：\n\n1. 启用 Breezy Weather &gt; 设置 &gt; 微件与动态壁纸 &gt; 发送天气数据到 Gadgetbridge 中的 %1$s\n\n2. 在 %1$s 中将 Breezy Weather 设为天气数据源</string>
+    <string name="preference_launch_breezyweather_app">打开 Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">点击呼叫</string>
     <string name="preference_contacts_call_on_tap_summary">点击电话号码即可立即拨打电话</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -705,6 +739,7 @@
     <string name="tag_exists_error">以此命名的标签已经存在.</string>
     <string name="tag_exists_message">以此命名的标签已经存在.如果你执意而为，两个标签将会被合并.</string>
     <string name="tag_no_items_message">没有项目被分配给此标签.如果你执意而为,此标签将会被删除.</string>
+    <string name="tag_empty_name">标签必须拥有一个名字。如果继续设为空，这个标签会被删除。</string>
     <string name="tag_select_items">选择项目:</string>
     <string name="tag_name">标签名字</string>
     <plurals name="tag_selected_items">
@@ -729,12 +764,13 @@
     <string name="preference_gesture_swipe_down">下滑</string>
     <string name="preference_gesture_swipe_left">左滑</string>
     <string name="preference_gesture_swipe_right">右滑</string>
+    <string name="preference_gesture_swipe_up">向上滑动</string>
     <string name="preference_gesture_double_tap">双击</string>
     <string name="preference_gesture_long_press">长按</string>
     <string name="preference_gesture_home_button">首页建/手势</string>
     <string name="gesture_action_none">无</string>
     <string name="gesture_action_open_search">打开搜索</string>
-    <string name="gesture_action_widgets">组件</string>
+    <string name="gesture_action_widgets">组件页</string>
     <string name="gesture_action_launch_app">打开应用</string>
     <string name="gesture_action_notifications">打开通知栏</string>
     <string name="gesture_action_lock_screen">关闭屏幕</string>
@@ -769,16 +805,22 @@
     <string name="note_widget_conflict_local_version">最后保存的版本：</string>
     <string name="note_widget_conflict_file_version">当前文件内容：</string>
     <string name="note_widget_file_read_error">错误读取注释</string>
-    <string name="note_widget_file_read_error_description">无法读取链接文件。可能已被移动或删除。已从启动器的内部存储中恢复副本。如果您编辑笔记，链接文件可能会被覆盖</string>
+    <string name="note_widget_file_read_error_description">无法读取链接的文件，可能其已被移动或删除。已从启动器的存储中恢复副本。如果您编辑笔记，链接的文件可能会被覆盖。</string>
     <string name="note_widget_file_write_error">保存笔记时出错</string>
     <string name="note_widget_file_write_error_description">无法将注释写入链接文件。可能已被移动或删除。副本已保存到启动器的内部存储中。</string>
     <string name="confirmation_delete_color_scheme">您确实要删除颜色方案 %1$s 吗？</string>
+    <string name="confirmation_delete_shapes_scheme">删除形状预设“%1$s”吗？</string>
+    <string name="confirmation_delete_typography_scheme">删除字体预设“%1$s”吗？</string>
+    <string name="confirmation_delete_transparencies_scheme">删除透明度预设“%1$s”吗？</string>
+    <string name="new_theme_name">(新建)</string>
     <string name="theme_color_scheme_system_default">使用系统默认</string>
     <string name="theme_color_scheme_autogenerate">从原色开始</string>
     <string name="theme_color_scheme_palette_color">调色板</string>
     <string name="theme_color_scheme_custom_color">自定义</string>
     <string name="preference_restore_default">恢复默认</string>
+    <string name="import_theme_contents">文件包含</string>
     <string name="import_theme_apply">应用主题</string>
+    <string name="import_theme_exists">已有的样式将会被覆盖</string>
     <string name="import_theme_error">无法读取所选文件。请确保您选择的是有效的主题文件 (*.kvtheme)，并且该文件未损坏。</string>
     <string name="shortcut_label_unavailable">不可用</string>
     <string name="app_label_locked_profile">已锁定</string>
@@ -801,7 +843,7 @@
     <string name="menu_bugreport">Bug 报告</string>
     <string name="location_open_24_7">24/7开</string>
     <string name="plugin_state_error">此插件未正常运行</string>
-    <string name="plugin_state_setup_required">您需要先设置该插件</string>
+    <string name="plugin_state_setup_required">您需要先设置此插件</string>
     <string name="plugin_action_setup">配置</string>
     <string name="plugin_type_filesearch">文件</string>
     <string name="plugin_type_contacts">联系人</string>
@@ -818,6 +860,7 @@
     <string name="clock_style_empty">无时钟</string>
     <string name="clock_style_custom">自定义组件</string>
     <string name="clock_variant_outlined">概述</string>
+    <string name="clock_variant_analog_ticks">刻度</string>
     <string name="menu_show_filters">显示过滤器</string>
     <string name="menu_hide_filters">隐藏过滤器</string>
     <string name="search_filter_tools">工具</string>
@@ -973,5 +1016,15 @@
         <item quantity="other">%1$d分钟内</item>
     </plurals>
     <string name="departure_time_departed">已离开</string>
+    <string name="bad_configuration_title">恭喜！你给你自个儿锁里头了！</string>
+    <string name="bad_configuration_summary">你探索出了一套访问不了搜索和组件页的配置，使你无法进入设置 — 让启动器桌面变成了启动弃。</string>
+    <string name="theme_export_title">导出样式</string>
+    <string name="theme_import_title">导入样式</string>
     <string name="theme_bundle_name">名称</string>
+    <string name="theme_bundle_author">作者</string>
+    <string name="preference_typography_fonts">字体</string>
+    <string name="font_category_device_default">设备默认的</string>
+    <string name="font_name_device_headline">标题字体</string>
+    <string name="font_name_device_body">正文字体</string>
+    <string name="font_category_generic">常规字体</string>
 </resources>
