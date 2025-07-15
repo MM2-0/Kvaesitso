@@ -22,7 +22,7 @@
         <item quantity="other">米</item>
     </plurals>
     <plurals name="unit_kilometer">
-        <item quantity="other">公里</item>
+        <item quantity="other">千米</item>
     </plurals>
     <plurals name="unit_decimeter">
         <item quantity="other">分米</item>
@@ -110,7 +110,7 @@
         <item quantity="other">吉字节</item>
     </plurals>
     <plurals name="unit_terabyte">
-        <item quantity="other">万亿字节</item>
+        <item quantity="other">太字节</item>
     </plurals>
     <plurals name="unit_kibibyte">
         <item quantity="other">千位字节</item>
@@ -122,27 +122,33 @@
         <item quantity="other">吉位字节</item>
     </plurals>
     <plurals name="unit_tebibyte">
-        <item quantity="other">万亿位字节</item>
+        <item quantity="other">太位字节</item>
     </plurals>
     <plurals name="unit_bit">
         <item quantity="other">比特</item>
     </plurals>
+    <string name="unit_kilobit_symbol">kb</string>
     <plurals name="unit_kilobit">
         <item quantity="other">千比特</item>
     </plurals>
+    <string name="unit_megabit_symbol">Mb</string>
     <plurals name="unit_megabit">
         <item quantity="other">兆比特</item>
     </plurals>
+    <string name="unit_gigabit_symbol">Gb</string>
     <plurals name="unit_gigabit">
         <item quantity="other">吉比特</item>
     </plurals>
-    <string name="unit_terabit_symbol">万亿比特</string>
+    <string name="unit_terabit_symbol">TB</string>
+    <plurals name="unit_terabit">
+        <item quantity="other">太比特</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
         <item quantity="other">米每秒</item>
     </plurals>
     <plurals name="unit_kilometer_per_hour">
-        <item quantity="other">公里每小时</item>
+        <item quantity="other">千米每小时</item>
     </plurals>
     <plurals name="unit_mile_per_hour">
         <item quantity="other">英里每小时</item>
@@ -158,7 +164,7 @@
         <item quantity="other">克</item>
     </plurals>
     <plurals name="unit_metric_ton">
-        <item quantity="other">公吨</item>
+        <item quantity="other">吨</item>
     </plurals>
     <plurals name="unit_long_ton">
         <item quantity="other">英吨</item>
