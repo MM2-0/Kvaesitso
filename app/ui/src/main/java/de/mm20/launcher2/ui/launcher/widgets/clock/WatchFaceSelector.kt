@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.appwidget.AppWidgetManager
 import android.content.Context
+import android.content.ContextWrapper
 import android.os.Build
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateContentSize
@@ -146,7 +147,9 @@ fun WatchFaceSelector(
 
                 Box {
                     androidx.compose.animation.AnimatedVisibility(
-                        selected is ClockWidgetStyle.Digital1 || (selected is ClockWidgetStyle.Custom && selected.widgetId != null),
+                        selected is ClockWidgetStyle.Digital1 ||
+                                selected is ClockWidgetStyle.Analog ||
+                                (selected is ClockWidgetStyle.Custom && selected.widgetId != null),
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .zIndex(1f),
@@ -175,6 +178,21 @@ fun WatchFaceSelector(
                                         },
                                         onClick = {
                                             onSelect(selected.copy(outlined = !selected.outlined))
+                                        }
+                                    )
+                                }
+                                if (selected is ClockWidgetStyle.Analog) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.clock_variant_analog_ticks)) },
+                                        leadingIcon = {
+                                            Icon(
+                                                if (selected.showTicks) Icons.Rounded.CheckCircle
+                                                else Icons.Rounded.RadioButtonUnchecked,
+                                                null
+                                            )
+                                        },
+                                        onClick = {
+                                            onSelect(selected.copy(showTicks = !selected.showTicks))
                                         }
                                     )
                                 }
@@ -210,7 +228,7 @@ fun WatchFaceSelector(
                                             },
                                             onClick = {
                                                 appWidgetHost.startAppWidgetConfigureActivityForResult(
-                                                    context as Activity,
+                                                    getActivityFromContext(context) ?: return@DropdownMenuItem,
                                                     selected.widgetId ?: return@DropdownMenuItem,
                                                     0,
                                                     0,
@@ -219,9 +237,6 @@ fun WatchFaceSelector(
                                                     } else {
                                                         ActivityOptions.makeBasic()
                                                             .setPendingIntentBackgroundActivityStartMode(
-                                                                ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
-                                                            )
-                                                            .setPendingIntentCreatorBackgroundActivityStartMode(
                                                                 ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
                                                             )
                                                             .toBundle()
@@ -588,4 +603,18 @@ private fun ResizeCustomWidget(
             }
         }
     }
+}
+
+private fun getActivityFromContext(context: Context): Activity? {
+    var activity = context
+
+    while (activity is ContextWrapper) {
+        if (activity is Activity) {
+            return activity
+        }
+
+        activity = activity.baseContext
+    }
+
+    return null
 }

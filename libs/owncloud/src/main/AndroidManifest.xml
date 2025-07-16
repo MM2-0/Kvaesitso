@@ -3,14 +3,10 @@
     <application>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/preference_nextcloud"
-            android:taskAffinity="de.mm20.launcher2.nextcloud"
-            android:parentActivityName="de.mm20.launcher2.ui.settings.SettingsActivity"
-            android:theme="@style/OwncloudLoginTheme" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.mm20.launcher2.ui.settings.SettingsActivity" />
-        </activity>
+            android:enableOnBackInvokedCallback="true"
+            android:label="@string/preference_owncloud"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
     </application>
 
 </manifest>

@@ -31,8 +31,8 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2024122400
-        versionName = "1.34.1"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2025070400
+        versionName = "1.37.0"
         signingConfig = signingConfigs.getByName("debug")
     }
 
@@ -84,11 +84,6 @@ android {
             }
         }
     }
-    configurations.all {
-        //Fixes Error: Duplicate class: com.google.common.util.concurrent.ListenableFuture
-        exclude(group = "com.google.guava", module = "listenablefuture")
-        exclude(group = "org.apache.httpcomponents", module = "httpclient")
-    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -110,20 +105,10 @@ dependencies {
 
     //Android Jetpack
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.browser)
-    implementation(libs.androidx.palette)
     implementation(libs.androidx.core)
-    implementation(libs.androidx.exifinterface)
-    implementation(libs.materialcomponents.core)
-    implementation(libs.androidx.constraintlayout.views)
-
-    implementation(libs.bundles.androidx.lifecycle)
-
-    implementation(libs.androidx.work)
 
     implementation(libs.coil.core)
     implementation(libs.coil.svg)
-
 
     implementation(libs.koin.android)
 
@@ -143,7 +128,6 @@ dependencies {
     implementation(project(":data:plugins"))
     implementation(project(":data:themes"))
     implementation(project(":data:files"))
-    implementation(project(":libs:g-services"))
     implementation(project(":core:i18n"))
     implementation(project(":services:icons"))
     implementation(project(":core:ktx"))
@@ -171,6 +155,6 @@ dependencies {
     implementation(project(":services:plugins"))
     implementation(project(":core:devicepose"))
 
-    // Uncomment this if you want annoying notifications in your debug builds yelling at you how terrible your code is
+    // Uncomment this if you want annoying notifications in your debug builds
     //debugImplementation(libs.leakcanary)
 }

@@ -288,7 +288,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         locationResults.mergeWith(
                             results.locations?.filterNot { hiddenKeys.contains(it.key) }
                                 ?.let { locations ->
-                                    devicePoseProvider.lastLocation?.let {
+                                    devicePoseProvider.lastCachedLocation?.let {
                                         locations.asSequence()
                                             .sortedWith { a, b ->
                                                 a.distanceTo(it).compareTo(b.distanceTo(it))
@@ -347,7 +347,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val missingContactsPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Contacts),
-        contactSearchSettings.enabled
+        contactSearchSettings.isProviderEnabled("local")
     ) { perm, enabled -> !perm && enabled }
 
     fun requestContactsPermission(context: AppCompatActivity) {
@@ -355,7 +355,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun disableContactsSearch() {
-        contactSearchSettings.setEnabled(false)
+        contactSearchSettings.setProviderEnabled("local", false)
     }
 
     val missingLocationPermission = combine(

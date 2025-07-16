@@ -72,7 +72,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.search.calendar.CalendarListType
-import de.mm20.launcher2.themes.atTone
+import de.mm20.launcher2.themes.colors.atTone
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.component.BottomSheetDialog
@@ -95,7 +95,7 @@ import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import kotlinx.coroutines.flow.map
-import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
@@ -119,7 +119,7 @@ fun ConfigureWidgetSheet(
                 is AppWidget -> ConfigureAppWidget(widget, onWidgetUpdated)
                 is CalendarWidget -> ConfigureCalendarWidget(widget, onWidgetUpdated)
                 is FavoritesWidget -> ConfigureFavoritesWidget(widget, onWidgetUpdated)
-                is MusicWidget -> ConfigureMusicWidget()
+                is MusicWidget -> ConfigureMusicWidget(widget, onWidgetUpdated)
                 is NotesWidget -> ConfigureNotesWidget(widget, onWidgetUpdated)
             }
         }
@@ -232,9 +232,26 @@ fun ColumnScope.ConfigureFavoritesWidget(
 
 @Composable
 fun ColumnScope.ConfigureMusicWidget(
+    widget: MusicWidget,
+    onWidgetUpdated: (MusicWidget) -> Unit,
 
 ) {
     val context = LocalContext.current
+
+    OutlinedCard {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            SwitchPreference(
+                title = stringResource(R.string.music_widget_interactive_progress_bar),
+                iconPadding = false,
+                value = widget.config.interactiveProgressBar,
+                onValueChanged = {
+                    onWidgetUpdated(widget.copy(config = widget.config.copy(interactiveProgressBar = it)))
+                }
+            )
+        }
+    }
 
     TextButton(
         modifier = Modifier
@@ -478,9 +495,6 @@ fun ColumnScope.ConfigureAppWidget(
                                 .setPendingIntentBackgroundActivityStartMode(
                                     ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
                                 )
-                                .setPendingIntentCreatorBackgroundActivityStartMode(
-                                    ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
-                                )
                                 .toBundle()
                         }
                     )
@@ -504,9 +518,9 @@ fun ColumnScope.ConfigureCalendarWidget(
     widget: CalendarWidget,
     onWidgetUpdated: (CalendarWidget) -> Unit
 ) {
-    val calendarRepository: CalendarRepository = get()
-    val permissionsManager: PermissionsManager = get()
-    val pluginRepository: PluginRepository = get()
+    val calendarRepository: CalendarRepository = koinInject()
+    val permissionsManager: PermissionsManager = koinInject()
+    val pluginRepository: PluginRepository = koinInject()
     val calendars by remember {
         calendarRepository.getCalendars().map {
             it.sortedBy { it.name }
@@ -557,6 +571,7 @@ fun ColumnScope.ConfigureCalendarWidget(
         for (group in groups) {
             val pluginName = remember(plugins, group.key) {
                 if (group.key == "local") context.getString(R.string.preference_calendar_calendars)
+                else if (group.key == "tasks.org") context.getString(R.string.preference_search_tasks)
                 else plugins.find { it.authority == group.key }?.label
             }
             if (pluginName != null) {

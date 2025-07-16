@@ -52,11 +52,12 @@ fun SegmentClock(
     time: Long,
     compact: Boolean,
     showSeconds: Boolean,
+    twentyFourHours: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
 ) {
     val parsed = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault())
-    val hour = if (DateFormat.is24HourFormat(LocalContext.current)) parsed.hour else (((parsed.hour + 11) % 12) + 1)
+    val hour = if (twentyFourHours) parsed.hour else (((parsed.hour + 11) % 12) + 1)
     val minute = parsed.minute
     val second = parsed.second
 

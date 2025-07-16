@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="NextcloudLoginTheme" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="colorAccent">#0082c9</item>
-        <item name="colorPrimary">#0082c9</item>
-        <item name="colorPrimaryDark">@color/settings_color_primary_dark</item>
-    </style>
-</resources>

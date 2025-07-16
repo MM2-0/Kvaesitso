@@ -127,13 +127,6 @@ fun LocationsSettingsScreen() {
                         viewModel.setImperialUnits(it)
                     }
                 )
-                AnimatedVisibility(5000 < radius) {
-                    Banner(
-                        modifier = Modifier.padding(16.dp),
-                        icon = Icons.Rounded.WarningAmber,
-                        text = stringResource(R.string.preference_search_locations_radius_large_radius_warning)
-                    )
-                }
                 SliderPreference(
                     title = stringResource(R.string.preference_search_locations_radius),
                     value = radius,

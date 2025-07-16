@@ -1,6 +1,5 @@
 package de.mm20.launcher2.preferences.ui
 
-import de.mm20.launcher2.preferences.BaseLayout
 import de.mm20.launcher2.preferences.ColorScheme
 import de.mm20.launcher2.preferences.Font
 import de.mm20.launcher2.preferences.IconShape
@@ -8,16 +7,13 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.ScreenOrientation
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
-import de.mm20.launcher2.preferences.SurfaceShape
 import de.mm20.launcher2.preferences.SystemBarColors
-import de.mm20.launcher2.preferences.ThemeDescriptor
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import java.util.UUID
 
 data class CardStyle(
     val opacity: Float = 1f,
-    val cornerRadius: Int = 0,
-    val shape: SurfaceShape = SurfaceShape.Rounded,
     val borderWidth: Int = 0,
 )
 
@@ -25,6 +21,8 @@ data class GridSettings(
     val columnCount: Int = 5,
     val iconSize: Int = 48,
     val showLabels: Boolean = true,
+    val showList: Boolean = false,
+    val showListIcons: Boolean = true,
 )
 
 class UiSettings internal constructor(
@@ -48,6 +46,8 @@ class UiSettings internal constructor(
         get() = launcherDataStore.data.map {
             GridSettings(
                 showLabels = it.gridLabels,
+                showList = it.gridList,
+                showListIcons = it.gridListIcons,
                 iconSize = it.gridIconSize,
                 columnCount = it.gridColumnCount,
             )
@@ -71,13 +71,22 @@ class UiSettings internal constructor(
         }
     }
 
+    fun setGridShowList(showList: Boolean) {
+        launcherDataStore.update {
+            it.copy(gridList = showList)
+        }
+    }
+
+    fun setGridShowListIcons(showIcons: Boolean) {
+        launcherDataStore.update {
+            it.copy(gridListIcons = showIcons)
+        }
+    }
 
     val cardStyle
         get() = launcherDataStore.data.map {
             CardStyle(
                 opacity = it.surfacesOpacity,
-                cornerRadius = it.surfacesRadius,
-                shape = it.surfacesShape,
                 borderWidth = it.surfacesBorderWidth,
             )
         }
@@ -88,21 +97,9 @@ class UiSettings internal constructor(
         }
     }
 
-    fun setCardRadius(radius: Int) {
-        launcherDataStore.update {
-            it.copy(surfacesRadius = radius)
-        }
-    }
-
     fun setCardBorderWidth(borderWidth: Int) {
         launcherDataStore.update {
             it.copy(surfacesBorderWidth = borderWidth)
-        }
-    }
-
-    fun setCardShape(shape: SurfaceShape) {
-        launcherDataStore.update {
-            it.copy(surfacesShape = shape)
         }
     }
 
@@ -210,20 +207,9 @@ class UiSettings internal constructor(
         }
     }
 
-    val baseLayout
-        get() = launcherDataStore.data.map {
-            it.uiBaseLayout
-        }.distinctUntilChanged()
-
-    fun setBaseLayout(baseLayout: BaseLayout) {
-        launcherDataStore.update {
-            it.copy(uiBaseLayout = baseLayout)
-        }
-    }
-
     val clockFillScreen
         get() = launcherDataStore.data.map {
-            it.clockWidgetFillHeight
+            it.homeScreenWidgets
         }.distinctUntilChanged()
 
     val searchBarStyle
@@ -299,14 +285,47 @@ class UiSettings internal constructor(
     }
 
 
-    val theme
+    val colorsId
         get() = launcherDataStore.data.map {
-            it.uiTheme
+            it.uiColorsId
         }.distinctUntilChanged()
 
-    fun setTheme(theme: ThemeDescriptor) {
+    fun setColorsId(colorsId: UUID) {
         launcherDataStore.update {
-            it.copy(uiTheme = theme)
+            it.copy(uiColorsId = colorsId)
+        }
+    }
+
+    val shapesId
+        get() = launcherDataStore.data.map {
+            it.uiShapesId
+        }.distinctUntilChanged()
+
+    fun setShapesId(shapesId: UUID) {
+        launcherDataStore.update {
+            it.copy(uiShapesId = shapesId)
+        }
+    }
+
+    val transparenciesId
+        get() = launcherDataStore.data.map {
+            it.uiTransparenciesId
+        }.distinctUntilChanged()
+
+    fun setTransparenciesId(transparenciesId: UUID) {
+        launcherDataStore.update {
+            it.copy(uiTransparenciesId = transparenciesId)
+        }
+    }
+
+    val typographyId
+        get() = launcherDataStore.data.map {
+            it.uiTypographyId
+        }.distinctUntilChanged()
+
+    fun setTypographyId(typographyId: UUID) {
+        launcherDataStore.update {
+            it.copy(uiTypographyId = typographyId)
         }
     }
 
@@ -331,6 +350,23 @@ class UiSettings internal constructor(
         get() = launcherDataStore.data.map {
             it.homeScreenDock
         }.distinctUntilChanged()
+
+    fun setDock(dock: Boolean) {
+        launcherDataStore.update {
+            it.copy(homeScreenDock = dock)
+        }
+    }
+
+    val homeScreenWidgets
+        get() = launcherDataStore.data.map {
+            it.homeScreenWidgets
+        }.distinctUntilChanged()
+
+    fun setHomeScreenWidgets(widgets: Boolean) {
+        launcherDataStore.update {
+            it.copy(homeScreenWidgets = widgets)
+        }
+    }
 
     val widgetEditButton
         get() = launcherDataStore.data.map {

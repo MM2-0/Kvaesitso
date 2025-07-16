@@ -108,21 +108,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://mathparser.org/"
     ),
     OpenSourceLibrary(
-        name = "Google Auth Library",
-        description = "Open source authentication client library for Java.",
-        licenseName = R.string.bsd_3clause_name,
-        licenseText = R.raw.license_bsd_3clause,
-        copyrightNote = "Copyright 2014, Google Inc. All rights reserved.",
-        url = "https://github.com/googleapis/google-auth-library-java"
-    ),
-    OpenSourceLibrary(
-        name = "Google APIs Client Library for Android",
-        description = "The Google APIs Client Library for Java is a flexible, efficient, and powerful Java client library for accessing any HTTP-based API on the web, not just Google APIs.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        url = "https://github.com/googleapis/google-api-java-client"
-    ),
-    OpenSourceLibrary(
         name = "CrashReporter",
         description = "CrashReporter is a handy tool to capture app crashes and save them in a file.",
         licenseName = R.string.apache_license_name,
@@ -191,14 +176,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://source.android.com/"
     ),
     OpenSourceLibrary(
-        name = "Protobuf",
-        copyrightNote = "Copyright 2008 Google Inc.  All rights reserved.",
-        description = "Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.",
-        licenseName = R.string.bsd_3clause_name,
-        licenseText = R.raw.license_bsd_3clause,
-        url = "https://developers.google.com/protocol-buffers"
-    ),
-    OpenSourceLibrary(
         name = "AndroidSVG",
         description = "AndroidSVG is a SVG parser and renderer for Android.",
         licenseName = R.string.apache_license_name,
@@ -235,5 +212,13 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_mit,
         url = "https://github.com/westnordost/osm-opening-hours",
         copyrightNote = "Copyright (c) 2024 Tobias Zwick",
+    ),
+    OpenSourceLibrary(
+        name = "Haze",
+        description = "Haze is a library providing a 'glassmorphism' style blur for Compose.",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://chrisbanes.github.io/haze",
+        copyrightNote = "Copyright 2024 Chris Banes",
     )
 )

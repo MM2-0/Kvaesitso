@@ -5,7 +5,7 @@ the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.locations/-location-pr
 class:
 
 ```kt
-class MyplaceSearchPlugin : LocationProvider(
+class MyplaceSearchPlugin() : LocationProvider(
     QueryPluginConfig()
 )
 
@@ -28,10 +28,10 @@ suspend fun search(query: LocationQuery, params: SearchParams): List<Location>
 ```
 
 - `query` includes the query parameters:
-    - `query`: The search term
-    - `userLatitude`: The latitude of the user's current location
-    - `userLongitude`: The longitude of the user's current location
-    - `radius`: The search radius in meters
+  - `query`: The search term
+  - `userLatitude`: The latitude of the user's current location
+  - `userLongitude`: The longitude of the user's current location
+  - `radius`: The search radius in meters
 
 <!--@include: ./common/_search_params.md-->
 
@@ -56,28 +56,28 @@ A `Location` has the following properties:
 - `phoneNumber`: The phone number of the location
 - `emailAddress`: The email address of the location
 - `openingSchedule`: Either
-    - `OpeningSchedule.TwentyFourSeven` if the location is open at all times
-    - `OpeningSchedule.Hours(openingHours: List<OpeningHours>)` if the location has specific opening
-      hours, with each `OpeningHours` object containing:
-        - `dayOfWeek`: The day of the week, as `DayOfWeek` enum value. If a location is open past
-          midnight, `dayOfWeek` should refer to the day when the opening hours start.
-        - `startTime`: The time the location opens, as a `LocalTime` object
-        - `duration`: The duration the location is open, as a `Duration` object
+  - `OpeningSchedule.TwentyFourSeven` if the location is open at all times
+  - `OpeningSchedule.Hours(openingHours: List<OpeningHours>)` if the location has specific opening
+    hours, with each `OpeningHours` object containing:
+    - `dayOfWeek`: The day of the week, as `DayOfWeek` enum value. If a location is open past
+      midnight, `dayOfWeek` should refer to the day when the opening hours start.
+    - `startTime`: The time the location opens, as a `LocalTime` object
+    - `duration`: The duration the location is open, as a `Duration` object
 - `departures`: If the place is a public transport station, this field contains the next departures
   from this station. This is a list of `Departure` objects, each containing:
-    - `time`: The scheduled departure time as `ZonedDateTime`
-    - `delay`: The delay as `Duration`. If the departure is on time, this must be `Duration.ZERO`.
-      If no real-time data is available, this should be `null`.
-    - `line`: The line name (e.g. _"S1"_, _"U2"_, or _"73"_)
-    - `lastStop`: The destination of the line
-    - `type`: The type of the line, as `LineType` enum value
-    - `lineColor`: The color of the line, as a `Color`
-    - `userRating`: A user rating of this location, on a scale from 0 to 1. This is multiplied by 5
-      and shown as a star rating bar in the launcher.
-    - `userRatingCount`: The number of user ratings that were used to calculate the `userRating`
-    - `fixMeUrl`: A URL where users can report incorrect data for this location.
-    - `attribution`: Attribution that should be shown alongside the search result (read the data
-      provider's terms of service to find out if this is required).
+  - `time`: The scheduled departure time as `ZonedDateTime`
+  - `delay`: The delay as `Duration`. If the departure is on time, this must be `Duration.ZERO`.
+    If no real-time data is available, this should be `null`.
+  - `line`: The line name (e.g. _"S1"_, _"U2"_, or _"73"_)
+  - `lastStop`: The destination of the line
+  - `type`: The type of the line, as `LineType` enum value
+  - `lineColor`: The color of the line, as a `Color`
+  - `userRating`: A user rating of this location, on a scale from 0 to 1. This is multiplied by 5
+    and shown as a star rating bar in the launcher.
+  - `userRatingCount`: The number of user ratings that were used to calculate the `userRating`
+  - `fixMeUrl`: A URL where users can report incorrect data for this location.
+  - `attribution`: Attribution that should be shown alongside the search result (read the data
+    provider's terms of service to find out if this is required).
 
 ## Refresh a place
 
@@ -122,3 +122,4 @@ return `null`. In this case, the launcher will remove it from its database.
 
 - [Foursquare plugin](https://github.com/Kvaesitso/Plugin-Foursquare)
 - [HERE plugin](https://github.com/Kvaesitso/Plugin-HERE)
+- [Public transport plugin](https://github.com/shtrophic/KvaesitsoPlugin-PublicTransport)

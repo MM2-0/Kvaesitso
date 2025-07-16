@@ -1,6 +1,10 @@
 package de.mm20.launcher2.ui.base
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.ui.CardStyle
 import de.mm20.launcher2.preferences.ui.GridSettings
@@ -13,21 +17,15 @@ import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import org.koin.androidx.compose.inject
+import org.koin.compose.koinInject
 
 @Composable
 fun ProvideSettings(
     content: @Composable () -> Unit
 ) {
-    val settings: UiSettings by inject()
-    val widgetRepository: WidgetRepository by inject()
+    val settings: UiSettings = koinInject()
+    val widgetRepository: WidgetRepository = koinInject()
 
-    val cardStyle by remember {
-        settings.cardStyle.distinctUntilChanged()
-    }.collectAsState(
-        CardStyle()
-    )
     val iconShape by remember {
         settings.iconShape.distinctUntilChanged()
     }.collectAsState(IconShape.Circle)
@@ -44,7 +42,6 @@ fun ProvideSettings(
     }.collectAsState(GridSettings())
 
     CompositionLocalProvider(
-        LocalCardStyle provides cardStyle,
         LocalFavoritesEnabled provides favoritesEnabled,
         LocalGridSettings provides gridSettings,
     ) {

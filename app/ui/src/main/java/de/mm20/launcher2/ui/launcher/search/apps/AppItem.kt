@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
@@ -84,11 +85,15 @@ import kotlinx.coroutines.launch
 fun AppItem(
     modifier: Modifier = Modifier,
     app: Application,
+    showDetails: Boolean,
     onBack: () -> Unit
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${app.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp
     val iconSizePixel = iconSize.toPixels().toInt()
+
+    val badge by viewModel.badge.collectAsStateWithLifecycle(null)
+    val icon by viewModel.icon.collectAsStateWithLifecycle()
 
     LaunchedEffect(app) {
         viewModel.init(app, iconSizePixel)
@@ -97,386 +102,440 @@ fun AppItem(
     val context = LocalContext.current
 
     val scope = rememberCoroutineScope()
-    Column(
-        modifier = modifier.verticalScroll(rememberScrollState())
-    ) {
-        Row {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp)
-            ) {
-                Text(
-                    text = app.labelOverride ?: app.label,
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                if (!app.isPrivate) {
-
-                    val tags by viewModel.tags.collectAsState(emptyList())
-                    if (tags.isNotEmpty()) {
-                        Text(
-                            modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
-                            text = tags.joinToString(separator = " #", prefix = "#"),
-                            color = MaterialTheme.colorScheme.secondary,
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                    }
-
-
-                    app.versionName?.let {
-                        Text(
-                            text = stringResource(R.string.app_info_version, it),
-                            style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.padding(top = 4.dp),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                    Text(
-                        text = app.componentName.packageName,
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(top = 1.dp),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                } else {
-                    Text(
-                        stringResource(R.string.profile_private_profile_state_locked),
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(top = 8.dp),
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                }
-
-            }
-            val badge by viewModel.badge.collectAsStateWithLifecycle(null)
-            val icon by viewModel.icon.collectAsStateWithLifecycle()
-            ShapedLauncherIcon(
-                size = iconSize,
-                modifier = Modifier
-                    .padding(16.dp),
-                badge = { badge },
-                icon = { icon },
-            )
-        }
-        val notifications by viewModel.notifications.collectAsState(emptyList())
-
-        AnimatedVisibility(notifications.isNotEmpty()) {
-            var showAllNotifications by remember { mutableStateOf(false) }
-            AnimatedContent(
-                showAllNotifications || notifications.size == 1,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 12.dp)
-                    .border(
-                        1.dp,
-                        MaterialTheme.colorScheme.outlineVariant,
-                        MaterialTheme.shapes.small
-                    )
-                    .clip(MaterialTheme.shapes.small)
-            ) { showAll ->
-                if (showAll) {
-                    Column(
-                        modifier = Modifier.animateContentSize()
-                    ) {
-                        for ((i, not) in notifications.withIndex()) {
-                            val icon =
-                                remember(not.smallIcon) { not.smallIcon?.loadDrawable(context) }
-
-                            if (not.title == null && not.text == null) continue
-
-                            if (i > 0) {
-                                HorizontalDivider()
-                            }
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
+    SharedTransitionLayout(modifier = modifier) {
+        AnimatedContent(showDetails) { showDetails ->
+            if (showDetails) {
+                Column(
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                ) {
+                    Row {
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                text = app.labelOverride ?: app.label,
+                                style = MaterialTheme.typography.titleMedium,
                                 modifier = Modifier
-                                    .clickable {
-                                        try {
-                                            not.contentIntent?.sendWithBackgroundPermission(context)
-                                        } catch (e: PendingIntent.CanceledException) {
-                                            CrashReporter.logException(e)
-                                        }
-                                    }
-                                    .padding(vertical = 4.dp)
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .padding(horizontal = 12.dp)
-                                        .clip(CircleShape)
-                                        .background(Color(not.color))
-                                        .size(32.dp)
-                                        .padding(8.dp),
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    AsyncImage(
-                                        modifier = Modifier.fillMaxSize(),
-                                        model = icon,
-                                        contentDescription = null
+                                    .sharedBounds(
+                                        rememberSharedContentState("label"),
+                                        this@AnimatedContent,
+                                    ),
+                            )
+
+                            if (!app.isPrivate) {
+
+                                val tags by viewModel.tags.collectAsState(emptyList())
+                                if (tags.isNotEmpty()) {
+                                    Text(
+                                        modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
+                                        text = tags.joinToString(separator = " #", prefix = "#"),
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        style = MaterialTheme.typography.labelSmall
                                     )
                                 }
-                                Column(
-                                    modifier = Modifier.weight(1f)
-                                ) {
-                                    if (not.title != null) {
-                                        Text(
-                                            not.title!!,
-                                            style = MaterialTheme.typography.titleSmall,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
-                                    }
 
-                                    if (not.text != null) {
-                                        Text(
-                                            not.text!!,
-                                            modifier = Modifier.padding(top = 2.dp),
-                                            style = MaterialTheme.typography.bodySmall,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
+
+                                app.versionName?.let {
+                                    Text(
+                                        text = stringResource(R.string.app_info_version, it),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        modifier = Modifier.padding(top = 4.dp),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
+                                Text(
+                                    text = app.componentName.packageName,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    modifier = Modifier.padding(top = 1.dp),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            } else {
+                                Text(
+                                    stringResource(R.string.profile_private_profile_state_locked),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    modifier = Modifier.padding(top = 8.dp),
+                                    color = MaterialTheme.colorScheme.secondary,
+                                )
+                            }
+
+                        }
+                        ShapedLauncherIcon(
+                            size = iconSize,
+                            modifier = Modifier
+                                .padding(16.dp),
+                            badge = { badge },
+                            icon = { icon },
+                        )
+                    }
+                    val notifications by viewModel.notifications.collectAsState(emptyList())
+
+                    AnimatedVisibility(notifications.isNotEmpty()) {
+                        var showAllNotifications by remember { mutableStateOf(false) }
+                        AnimatedContent(
+                            showAllNotifications || notifications.size == 1,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(bottom = 12.dp)
+                                .border(
+                                    1.dp,
+                                    MaterialTheme.colorScheme.outlineVariant,
+                                    MaterialTheme.shapes.small
+                                )
+                                .clip(MaterialTheme.shapes.small)
+                        ) { showAll ->
+                            if (showAll) {
+                                Column(
+                                    modifier = Modifier.animateContentSize()
+                                ) {
+                                    for ((i, not) in notifications.withIndex()) {
+                                        val icon =
+                                            remember(not.smallIcon) {
+                                                not.smallIcon?.loadDrawable(
+                                                    context
+                                                )
+                                            }
+
+                                        if (not.title == null && not.text == null) continue
+
+                                        if (i > 0) {
+                                            HorizontalDivider()
+                                        }
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            modifier = Modifier
+                                                .clickable {
+                                                    try {
+                                                        not.contentIntent?.sendWithBackgroundPermission(
+                                                            context
+                                                        )
+                                                    } catch (e: PendingIntent.CanceledException) {
+                                                        CrashReporter.logException(e)
+                                                    }
+                                                }
+                                                .padding(vertical = 4.dp)
+                                        ) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .padding(horizontal = 12.dp)
+                                                    .clip(CircleShape)
+                                                    .background(Color(not.color))
+                                                    .size(32.dp)
+                                                    .padding(8.dp),
+                                                contentAlignment = Alignment.Center,
+                                            ) {
+                                                AsyncImage(
+                                                    modifier = Modifier.fillMaxSize(),
+                                                    model = icon,
+                                                    contentDescription = null
+                                                )
+                                            }
+                                            Column(
+                                                modifier = Modifier.weight(1f)
+                                            ) {
+                                                if (not.title != null) {
+                                                    Text(
+                                                        not.title!!,
+                                                        style = MaterialTheme.typography.titleSmall,
+                                                        maxLines = 1,
+                                                        overflow = TextOverflow.Ellipsis
+                                                    )
+                                                }
+
+                                                if (not.text != null) {
+                                                    Text(
+                                                        not.text!!,
+                                                        modifier = Modifier.padding(top = 2.dp),
+                                                        style = MaterialTheme.typography.bodySmall,
+                                                        maxLines = 1,
+                                                        overflow = TextOverflow.Ellipsis
+                                                    )
+                                                }
+                                            }
+                                            if (not.isClearable) {
+                                                IconButton(
+                                                    onClick = {
+                                                        viewModel.clearNotification(not)
+                                                    }
+                                                ) {
+                                                    Icon(Icons.Rounded.Clear, null)
+                                                }
+                                            }
+                                        }
                                     }
                                 }
-                                if (not.isClearable) {
+                            } else {
+                                Row(
+                                    modifier = Modifier
+                                        .clickable {
+                                            showAllNotifications = true
+                                        }
+                                        .padding(vertical = 12.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        Icons.Rounded.Notifications,
+                                        null,
+                                        modifier = Modifier.padding(horizontal = 16.dp)
+                                    )
+                                    Text(
+                                        pluralStringResource(
+                                            R.plurals.app_info_notifications,
+                                            notifications.size,
+                                            notifications.size
+                                        ),
+                                        style = MaterialTheme.typography.titleSmall,
+                                        modifier = Modifier.weight(1f),
+                                    )
+                                    Icon(
+                                        Icons.AutoMirrored.Rounded.NavigateNext,
+                                        null,
+                                        modifier = Modifier.padding(horizontal = 12.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    val shortcuts by viewModel.children.collectAsState(emptyList())
+                    if (shortcuts.isNotEmpty()) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(bottom = 12.dp)
+                                .border(
+                                    1.dp,
+                                    MaterialTheme.colorScheme.outlineVariant,
+                                    MaterialTheme.shapes.small
+                                )
+                                .clip(MaterialTheme.shapes.small)
+                        ) {
+                            for ((i, shortcut) in shortcuts.withIndex()) {
+                                val isPinned by remember(shortcut) {
+                                    viewModel.isChildPinned(
+                                        shortcut
+                                    )
+                                }.collectAsState(
+                                    false
+                                )
+
+                                val iconSizePx = 32.dp.toPixels()
+
+                                val icon by
+                                remember {
+                                    viewModel.getChildIcon(
+                                        shortcut,
+                                        iconSizePx.toInt()
+                                    )
+                                }.collectAsState(null)
+                                if (i > 0) {
+                                    HorizontalDivider()
+                                }
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .clickable {
+                                            viewModel.launchChild(context, shortcut)
+                                        }
+                                        .padding(vertical = 4.dp)
+                                ) {
+                                    ShapedLauncherIcon(
+                                        size = 32.dp,
+                                        icon = { icon },
+                                        shape = CircleShape,
+                                        modifier = Modifier
+                                            .padding(horizontal = 12.dp)
+                                            .size(32.dp),
+                                    )
+
+                                    Text(
+                                        shortcut.labelOverride ?: shortcut.label,
+                                        modifier = Modifier.weight(1f),
+                                        style = MaterialTheme.typography.titleSmall,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
                                     IconButton(
                                         onClick = {
-                                            viewModel.clearNotification(not)
+                                            if (isPinned) {
+                                                viewModel.unpinChild(shortcut)
+                                            } else {
+                                                viewModel.pinChild(shortcut)
+                                            }
                                         }
                                     ) {
-                                        Icon(Icons.Rounded.Clear, null)
+                                        Icon(
+                                            if (isPinned) Icons.Rounded.Star else Icons.Rounded.StarOutline,
+                                            stringResource(if (isPinned) R.string.menu_favorites_unpin else R.string.menu_favorites_pin),
+                                        )
                                     }
                                 }
+
                             }
                         }
                     }
-                } else {
-                    Row(
-                        modifier = Modifier
-                            .clickable {
-                                showAllNotifications = true
-                            }
-                            .padding(vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            Icons.Rounded.Notifications,
-                            null,
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                        )
-                        Text(
-                            pluralStringResource(
-                                R.plurals.app_info_notifications,
-                                notifications.size,
-                                notifications.size
-                            ),
-                            style = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.weight(1f),
-                        )
-                        Icon(
-                            Icons.AutoMirrored.Rounded.NavigateNext,
-                            null,
-                            modifier = Modifier.padding(horizontal = 12.dp)
-                        )
-                    }
-                }
-            }
-        }
 
-        val shortcuts by viewModel.children.collectAsState(emptyList())
-        if (shortcuts.isNotEmpty()) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 12.dp)
-                    .border(
-                        1.dp,
-                        MaterialTheme.colorScheme.outlineVariant,
-                        MaterialTheme.shapes.small
-                    )
-                    .clip(MaterialTheme.shapes.small)
-            ) {
-                for ((i, shortcut) in shortcuts.withIndex()) {
-                    val isPinned by remember(shortcut) { viewModel.isChildPinned(shortcut) }.collectAsState(
-                        false
+                    val toolbarActions = mutableListOf<ToolbarAction>()
+
+                    if (LocalFavoritesEnabled.current) {
+                        val isPinned by viewModel.isPinned.collectAsState(false)
+                        val favAction = if (isPinned) {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_favorites_unpin),
+                                icon = Icons.Rounded.Star,
+                                action = {
+                                    viewModel.unpin()
+                                }
+                            )
+                        } else {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_favorites_pin),
+                                icon = Icons.Rounded.StarOutline,
+                                action = {
+                                    viewModel.pin()
+                                })
+                        }
+                        toolbarActions.add(favAction)
+                    }
+
+                    if (!app.isPrivate) {
+                        toolbarActions.add(
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_app_info),
+                                icon = Icons.Rounded.Info
+                            ) {
+                                app.openAppDetails(context)
+                            })
+                    }
+
+                    toolbarActions.add(
+                        DefaultToolbarAction(
+                            label = stringResource(R.string.menu_launch),
+                            icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                            action = {
+                                viewModel.launch(context)
+                            }
+                        )
                     )
 
-                    val iconSizePx = 32.dp.toPixels()
-
-                    val icon by
-                    remember {
-                        viewModel.getChildIcon(
-                            shortcut,
-                            iconSizePx.toInt()
-                        )
-                    }.collectAsState(null)
-                    if (i > 0) {
-                        HorizontalDivider()
+                    val sheetManager = LocalBottomSheetManager.current
+                    if (!app.isPrivate) {
+                        toolbarActions.add(
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_customize),
+                                icon = Icons.Rounded.Tune,
+                                action = { sheetManager.showCustomizeSearchableModal(app) }
+                            ))
                     }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .clickable {
-                                viewModel.launchChild(context, shortcut)
-                            }
-                            .padding(vertical = 4.dp)
-                    ) {
-                        ShapedLauncherIcon(
-                            size = 32.dp,
-                            icon = { icon },
-                            shape = CircleShape,
-                            modifier = Modifier
-                                .padding(horizontal = 12.dp)
-                                .size(32.dp),
-                        )
 
-                        Text(
-                            shortcut.labelOverride ?: shortcut.label,
-                            modifier = Modifier.weight(1f),
-                            style = MaterialTheme.typography.titleSmall,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        IconButton(
-                            onClick = {
-                                if (isPinned) {
-                                    viewModel.unpinChild(shortcut)
-                                } else {
-                                    viewModel.pinChild(shortcut)
+                    if (!app.isPrivate) {
+                        val storeDetails = remember(app) { app.getStoreDetails(context) }
+                        val shareAction = if (storeDetails == null) {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_share),
+                                icon = Icons.Rounded.Share
+                            ) {
+                                scope.launch {
+                                    app.shareApkFile(context)
                                 }
                             }
-                        ) {
-                            Icon(
-                                if (isPinned) Icons.Rounded.Star else Icons.Rounded.StarOutline,
-                                stringResource(if (isPinned) R.string.menu_favorites_unpin else R.string.menu_favorites_pin),
+                        } else {
+                            SubmenuToolbarAction(
+                                label = stringResource(R.string.menu_share),
+                                icon = Icons.Rounded.Share,
+                                children = listOf(
+                                    DefaultToolbarAction(
+                                        label = stringResource(
+                                            R.string.menu_share_store_link,
+                                            storeDetails.label
+                                        ),
+                                        icon = Icons.Rounded.Link,
+                                        action = {
+                                            val shareIntent = Intent(Intent.ACTION_SEND)
+                                            shareIntent.putExtra(
+                                                Intent.EXTRA_TEXT,
+                                                storeDetails.url
+                                            )
+                                            shareIntent.type = "text/plain"
+                                            context.startActivity(
+                                                Intent.createChooser(
+                                                    shareIntent,
+                                                    null
+                                                )
+                                            )
+                                        }
+                                    ),
+                                    DefaultToolbarAction(
+                                        label = stringResource(R.string.menu_share_apk_file),
+                                        icon = Icons.Rounded.Android
+                                    ) {
+                                        scope.launch {
+                                            app.shareApkFile(context)
+                                        }
+                                    }
+                                )
                             )
                         }
+                        toolbarActions.add(shareAction)
                     }
 
-                }
-            }
-        }
-
-        val toolbarActions = mutableListOf<ToolbarAction>()
-
-        if (LocalFavoritesEnabled.current) {
-            val isPinned by viewModel.isPinned.collectAsState(false)
-            val favAction = if (isPinned) {
-                DefaultToolbarAction(
-                    label = stringResource(R.string.menu_favorites_unpin),
-                    icon = Icons.Rounded.Star,
-                    action = {
-                        viewModel.unpin()
+                    if (app.canUninstall) {
+                        toolbarActions.add(
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_uninstall),
+                                icon = Icons.Rounded.Delete,
+                            ) {
+                                app.uninstall(context)
+                                onBack()
+                            }
+                        )
                     }
-                )
-            } else {
-                DefaultToolbarAction(
-                    label = stringResource(R.string.menu_favorites_pin),
-                    icon = Icons.Rounded.StarOutline,
-                    action = {
-                        viewModel.pin()
-                    })
-            }
-            toolbarActions.add(favAction)
-        }
 
-        if (!app.isPrivate) {
-            toolbarActions.add(
-                DefaultToolbarAction(
-                    label = stringResource(R.string.menu_app_info),
-                    icon = Icons.Rounded.Info
-                ) {
-                    app.openAppDetails(context)
-                })
-        }
-
-        toolbarActions.add(
-            DefaultToolbarAction(
-                label = stringResource(R.string.menu_launch),
-                icon = Icons.AutoMirrored.Rounded.OpenInNew,
-                action = {
-                    viewModel.launch(context)
-                }
-            )
-        )
-
-        val sheetManager = LocalBottomSheetManager.current
-        if (!app.isPrivate) {
-            toolbarActions.add(DefaultToolbarAction(
-                label = stringResource(R.string.menu_customize),
-                icon = Icons.Rounded.Tune,
-                action = { sheetManager.showCustomizeSearchableModal(app) }
-            ))
-        }
-
-        if (!app.isPrivate) {
-            val storeDetails = remember(app) { app.getStoreDetails(context) }
-            val shareAction = if (storeDetails == null) {
-                DefaultToolbarAction(
-                    label = stringResource(R.string.menu_share),
-                    icon = Icons.Rounded.Share
-                ) {
-                    scope.launch {
-                        app.shareApkFile(context)
-                    }
-                }
-            } else {
-                SubmenuToolbarAction(
-                    label = stringResource(R.string.menu_share),
-                    icon = Icons.Rounded.Share,
-                    children = listOf(
-                        DefaultToolbarAction(
-                            label = stringResource(
-                                R.string.menu_share_store_link,
-                                storeDetails.label
-                            ),
-                            icon = Icons.Rounded.Link,
-                            action = {
-                                val shareIntent = Intent(Intent.ACTION_SEND)
-                                shareIntent.putExtra(Intent.EXTRA_TEXT, storeDetails.url)
-                                shareIntent.type = "text/plain"
-                                context.startActivity(Intent.createChooser(shareIntent, null))
+                    Toolbar(
+                        leftActions = listOf(
+                            DefaultToolbarAction(
+                                label = stringResource(id = R.string.menu_back),
+                                icon = Icons.AutoMirrored.Rounded.ArrowBack
+                            ) {
+                                onBack()
                             }
                         ),
-                        DefaultToolbarAction(
-                            label = stringResource(R.string.menu_share_apk_file),
-                            icon = Icons.Rounded.Android
-                        ) {
-                            scope.launch {
-                                app.shareApkFile(context)
-                            }
-                        }
+                        rightActions = toolbarActions
                     )
-                )
+                }
+            } else {
+                Row(
+                    modifier = Modifier.padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    if (LocalGridSettings.current.showListIcons) {
+                        ShapedLauncherIcon(
+                            size = LocalGridSettings.current.iconSize.dp,
+                            modifier = Modifier
+                                .padding(end = 16.dp),
+                            badge = { badge },
+                            icon = { icon },
+                        )
+                    }
+                    Text(
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        text = app.labelOverride ?: app.label,
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier
+                            .sharedBounds(
+                                rememberSharedContentState("label"),
+                                this@AnimatedContent,
+                            ),
+                    )
+                }
             }
-            toolbarActions.add(shareAction)
         }
-
-        if (app.canUninstall) {
-            toolbarActions.add(
-                DefaultToolbarAction(
-                    label = stringResource(R.string.menu_uninstall),
-                    icon = Icons.Rounded.Delete,
-                ) {
-                    app.uninstall(context)
-                    onBack()
-                }
-            )
-        }
-
-        Toolbar(
-            leftActions = listOf(
-                DefaultToolbarAction(
-                    label = stringResource(id = R.string.menu_back),
-                    icon = Icons.AutoMirrored.Rounded.ArrowBack
-                ) {
-                    onBack()
-                }
-            ),
-            rightActions = toolbarActions
-        )
     }
 }
 
@@ -507,6 +566,7 @@ fun AppItemGridPopup(
                     y = lerp(-16.dp, 0.dp, animationProgress)
                 ),
             app = app,
+            showDetails = true,
             onBack = onDismiss
         )
     }

@@ -14,6 +14,7 @@
             android:resumeWhilePausing="true"
             android:stateNotNeeded="true"
             android:theme="@style/LauncherTheme"
+            android:enableOnBackInvokedCallback="true"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,11 +38,13 @@
             android:name=".assistant.AssistantActivity"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
+            android:taskAffinity="de.mm20.launcher2.assistant"
             android:resumeWhilePausing="true"
             android:stateNotNeeded="true"
-            android:theme="@style/LauncherTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:theme="@style/AssistantTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:enableOnBackInvokedCallback="true">
             <intent-filter>
                 <action android:name="android.intent.action.ASSIST" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -54,8 +57,7 @@
             android:label="@string/settings"
             android:launchMode="singleTop"
             android:parentActivityName=".launcher.LauncherActivity"
-            android:taskAffinity="de.mm20.launcher2.settings"
-            android:theme="@style/SettingsTheme.NoActionBar"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:enableOnBackInvokedCallback="true"
             >
             <intent-filter>

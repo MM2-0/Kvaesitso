@@ -366,7 +366,7 @@ fun CalendarItemGridPopup(
 
 private fun CalendarEvent.formatTime(context: Context): String {
     val startTime = startTime
-    if (startTime == null) {
+    if (startTime == null || isTask) {
         if (allDay) {
             return DateUtils.formatDateRange(
                 context,
@@ -400,7 +400,7 @@ private fun CalendarEvent.formatTime(context: Context): String {
 
 private fun CalendarEvent.getSummary(context: Context): String {
     val startTime = startTime
-    if (startTime == null) {
+    if (isTask || startTime == null) {
         val isToday = DateUtils.isToday(endTime)
         if (isToday) {
             if (allDay) {

@@ -8,8 +8,6 @@
     <string name="menu_app_info">Informações</string>
     <string name="menu_launch">Iniciar</string>
     <string name="menu_open_file">Abrir</string>
-    <string name="menu_hide">Ocultar</string>
-    <string name="menu_unhide">Não ocultar</string>
     <string name="action_undo">Desfazer</string>
     <string name="action_import">Importar</string>
     <string name="menu_delete">Eliminar</string>
@@ -74,8 +72,6 @@
     <string name="notes_widget_export_filename">Nota_%1$s</string>
     <string name="notes_widget_action_dismiss">Rejeitar</string>
     <string name="notes_widget_dismissed">Nota rejeitada</string>
-    <string name="easter_egg_2">Por favor, pare. Está a perder tempo...</string>
-    <string name="easter_egg_3">Não volto a dizer: aqui não existem quaisquer presentes ocultos</string>
     <string name="close">Fechar</string>
     <string name="save">Guardar</string>
     <string name="duplicate">Duplicar</string>
@@ -89,7 +85,6 @@
     <string name="edit_favorites_dialog_tags">Etiquetas</string>
     <string name="edit_favorites_dialog_tag_section_empty">As etiquetas afixadas aparecem aqui</string>
     <string name="edit_favorites_dialog_new_tag">Criar etiqueta…</string>
-    <string name="nextcloud_server_url_empty">O URL do servidor não pode estar vazio</string>
     <string name="owncloud_server_url">URL do servidor Owncloud</string>
     <string name="owncloud_username">Nome de utilizador</string>
     <string name="wallpaper">Papel de parede</string>
@@ -104,7 +99,6 @@
     <string name="turn_off">Desligar</string>
     <string name="menu_share_apk_file">Ficheiro</string>
     <string name="menu_customize">Personalizar</string>
-    <string name="msg_item_hidden">%1$s foi ocultada.</string>
     <string name="settings">Definições</string>
     <string name="menu_share">Partilhar</string>
     <string name="menu_contacts_open_externally">Abrir nos contactos</string>
@@ -129,7 +123,6 @@
     <string name="owncloud_server_invalid_url">Este URL aponta para uma instalação Owncloud inválida</string>
     <string name="alert_delete_shortcut">O atalho %1$s será eliminado permanentemente. Continuar?</string>
     <string name="notes_widget_action_save">Guardar</string>
-    <string name="easter_egg_1">Aqui não existem presentes... a menos que tenha trazido um consigo :-)</string>
     <string name="nextcloud_server_url">URL do servidor Nextcloud</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="owncloud_password">Palavra-passe</string>
@@ -137,7 +130,6 @@
     <string name="edit_favorites_dialog_pinned_sorted">Afixados - ordenados manualmente</string>
     <string name="nextcloud_server_invalid_url">Este URL aponta para uma instalação Nextcloud inválida</string>
     <string name="owncloud_login_failed">Falha ao iniciar: nome de utilizador ou palavra-passe inválida.</string>
-    <string name="owncloud_password_empty">Palavra-passe não pode estar vazia</string>
     <string name="login_flow_continue">Continuar</string>
     <string name="disclaimer">Aviso</string>
     <string name="show_all">Mostrar tudo</string>
@@ -180,7 +172,6 @@
     <string name="weather_condition_heavyrain">Chuva intensa</string>
     <string name="weather_condition_rainshowers">Aguaceiros</string>
     <string name="weather_condition_heavyrainandthunder">Chuva intensa e trovoada</string>
-    <string name="owncloud_username_empty">Nome de utilizador não pode estar vazio</string>
     <string name="calendar_widget_next_events">Próximo evento</string>
     <plurals name="calendar_widget_running_events">
         <item quantity="one">+%1$d evento de datas passadas</item>
@@ -282,7 +273,6 @@
     <string name="preference_hide_status_bar">Ocultar barra de estado</string>
     <string name="preference_hide_nav_bar">Ocultar barra de navegação</string>
     <string name="preference_screen_integrations_summary">Gerir contas e serviços conectados</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Sessão iniciada como %1$s</string>
     <string name="preference_summary_not_logged_in">Atualmente, não tem sessão iniciada</string>
     <string name="preference_icon_shape_pentagon">Pentágono</string>
@@ -394,12 +384,10 @@
     <string name="gesture_action_notifications">Abrir barra de notificações</string>
     <string name="gesture_action_lock_screen">Desligar ecrã</string>
     <string name="gesture_action_power_menu">Menu energia</string>
-    <string name="preference_search_result_ordering_weighted">Utilização</string>
     <string name="plugin_type_weather">Serviço de meteorologia</string>
     <string name="location_closes_other_day">fecha %1$s, às %2$s</string>
     <string name="plugin_state_setup_required">Tem que configurar o plugin para o utilizar</string>
     <string name="connect_account">Conectar conta</string>
-    <string name="icon_picker_no_packs_installed">Não tem pacotes instalados</string>
     <string name="preference_screen_search_actions">Ações rápidas</string>
     <string name="widget_pick_widget">Escolha o widget</string>
     <string name="note_widget_conflict">Conflito</string>
@@ -418,8 +406,6 @@
     <string name="battery_part_charging">Carregamento</string>
     <string name="apps_profile_main">Pessoal</string>
     <string name="apps_profile_work">Profissional</string>
-    <string name="create_app_shortcut">Criar atalho</string>
-    <string name="customize_tags_placeholder">Etiquetas</string>
     <string name="search_action_call">Ligar</string>
     <string name="search_action_alarm">Definir alarme</string>
     <string name="search_action_timer">Iniciar temporizador</string>
@@ -429,18 +415,14 @@
     <string name="preference_icon_shape_squircle">Círculo arredondado</string>
     <string name="preference_icon_shape_triangle">Triângulo de Reuleaux</string>
     <string name="preference_icon_shape_pebble">Pedra</string>
-    <string name="new_color_scheme_name">Novo esquema</string>
     <string name="theme_color_scheme_system_default">Predefinição do sistema</string>
     <string name="plugin_weather_provider_enable">Definir como serviço de meteorologia</string>
     <string name="preference_nextcloud_signin_summary">Inicie sessão para pesquisar no servidor Nextcloud</string>
     <string name="widget_config_appwidget_resize">Redimensionar</string>
     <string name="preference_search_websites_summary">Pré-visualização de sites se o termo de pesquisa for um URL</string>
     <string name="preference_search_localfiles">Ficheiros locais</string>
-    <string name="preference_search_gdrive_summary">Pesquisar ficheiros de %1$s no Google Drive</string>
     <string name="preference_search_cloud_summary">Pesquisar ficheiros de %1$s</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">Iniciar sessão via Google</string>
-    <string name="preference_google_signin_summary">Inicie sessão para pesquisar no Google Drive</string>
     <string name="preference_weather_integration">Meteorologia</string>
     <string name="preference_search_bar_launch_on_enter">Abrir ao entrar</string>
     <string name="preference_search_bar_auto_focus_summary">Mostrar teclado ao abrir o menu de aplicações</string>
@@ -462,8 +444,6 @@
     <string name="preference_gesture_swipe_right">Deslize à direita</string>
     <string name="preference_gesture_double_tap">Dois toques</string>
     <string name="gesture_action_quick_settings">Definições rápidas</string>
-    <string name="preference_search_result_ordering">Ordem dos resultados</string>
-    <string name="preference_search_result_ordering_alphabetic">Alfabética</string>
     <string name="preference_search_result_ordering_weight_factor">Precisão da avaliação</string>
     <string name="note_widget_file_write_error">Erro ao guardar</string>
     <string name="tag_select_items">Selecionar itens:</string>
@@ -471,7 +451,6 @@
     <string name="preference_search_appshortcuts_summary">Pesquisar atalhos de aplicações</string>
     <string name="preference_calendar_calendars">Calendários</string>
     <string name="preference_screen_buildinfo">Informação de compilação</string>
-    <string name="preference_calendar_hide_allday">Ocultar eventos \"Dia completo\"</string>
     <string name="preference_search_bar_launch_on_enter_summary">Iniciar ocorrência destacada ou a ação rápida ao tocar</string>
     <string name="backup_complete">O backup foi efetuado.</string>
     <string name="restore_invalid_file">O ficheiro selecionado não perece ser de um backup. Tem a certeza de que escolheu o ficheiro correto?</string>
@@ -501,12 +480,10 @@
     <string name="preference_hidden_items">Resultados ocultos</string>
     <string name="tag_name">Nome da etiqueta</string>
     <string name="open_search_swipe_right">Deslize à direita</string>
-    <string name="create_search_action_title">Nova ação rápida</string>
     <string name="location_closes">fecha às %1$s</string>
     <string name="location_opens">abre às %1$s</string>
     <string name="location_opens_other_day">abre %1$s, às %2$s</string>
     <string name="icon_picker_default_icon">Padrão</string>
-    <string name="icon_picker_title">Escolher ícone</string>
     <string name="search_action_email">Enviar e-mail</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variável</string>
     <string name="plugin_type_locationsearch">Pesquisa em locais</string>
@@ -543,7 +520,6 @@
     <string name="preference_search_locations_radius">Raio de pesquisa</string>
     <string name="preference_search_locations_summary">Pesquisar lojas e outros locais na área</string>
     <string name="preference_search_localfiles_summary">Pesquisar documentos, fotos e outros ficheiros guardados no dispositivo</string>
-    <string name="preference_search_gdrive">Google Drive</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_calendar_hide_completed">Ocultar tarefas terminadas</string>
     <string name="preference_screen_buildinfo_summary">Mais informações acerca desta versão</string>
@@ -558,11 +534,9 @@
     <string name="preference_screen_homescreen_summary">Relógio, barra de pesquisa, papel de parede e barras</string>
     <string name="preference_screen_icons">Grelha e ícones</string>
     <string name="preference_screen_icons_summary">Grelha, ícones e indicadores</string>
-    <string name="preference_category_accounts">Contas</string>
     <string name="preference_media_integration">Controlo multimédia</string>
     <string name="no_account_nextcloud">Ainda não está conectado a uma conta Nextcloud</string>
     <string name="no_account_owncloud">Ainda não está conectado a uma conta Owncloud</string>
-    <string name="no_account_google">Ainda não está conectado a uma conta Google</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Totalmente carregado dentro de %1$s minuto</item>
         <item quantity="many">Totalmente carregado dentro de %1$s minutos</item>
@@ -574,7 +548,6 @@
     <string name="preference_search_search_actions_summary">Configurar ações rápidas e atalhos de pesquisa</string>
     <string name="create_search_action_type_web">Pesquisar nos sites</string>
     <string name="create_search_action_type_intent">\'Intent\' personalizado</string>
-    <string name="edit_search_action_title">Editar ação rápida</string>
     <string name="create_search_action_pick_app">Aplicação para pesquisar:</string>
     <string name="create_search_action_website_url">Introduza o endereço do site:</string>
     <string name="search_action_label">Nome</string>
@@ -583,8 +556,6 @@
     <string name="preference_plugin_enable">Ativar plugin</string>
     <string name="plugin_type_filesearch">Pesquisa de ficheiros</string>
     <string name="experimental_feature">Experimental</string>
-    <string name="create_tag_title">Nova etiqueta</string>
-    <string name="edit_tag_title">Editar etiqueta</string>
     <string name="tag_exists_error">Já existe uma etiqueta com este nome.</string>
     <string name="tag_exists_message">Já existe uma etiqueta com este nome. Se continuar, as etiquetas serão combinadas.</string>
     <string name="tag_no_items_message">Não existem itens associados a esta etiqueta. Se continuar, a etiqueta será eliminada.</string>
@@ -621,8 +592,6 @@
     <string name="poi_category_basketball">Campo de basquetebol</string>
     <string name="poi_category_mosque">Mesquita</string>
     <string name="poi_category_government_building">Edifício governamental</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Mostrar aplicações profissionais num separador distinto</string>
-    <string name="preference_search_bar_separate_work_profile">Separar aplicações pessoais e profissionais</string>
     <string name="menu_show_filters">Mostrar filtros</string>
     <string name="poi_category_place_of_worship">Local de oração</string>
     <string name="poi_category_park">Parque</string>
@@ -653,7 +622,7 @@
     <string name="clock_style_digital1">Negrito</string>
     <string name="clock_style_orbit">Órbita</string>
     <string name="clock_style_binary">Binário</string>
-    <string name="clock_style_analog">Mãos</string>
+    <string name="clock_style_analog">Ponteiros</string>
     <string name="clock_style_empty">Não usar</string>
     <string name="preference_search_osm_locations_summary">Procurar lojas e outros locais através de OpenStreetMap</string>
     <string name="poi_category_restaurant">Restaurante</string>
@@ -769,7 +738,6 @@
         <item quantity="many">%1$s notificações</item>
         <item quantity="other">%1$s notificações</item>
     </plurals>
-    <string name="preference_search_locations_radius_large_radius_warning">Um grande raio de pesquisa pode afetar o desempenho da pesquisa.</string>
     <string name="customize_item_tags">Etiquetas</string>
     <string name="customize_item_visibility">Mostrar em</string>
     <plurals name="contact_phone_numbers">
@@ -805,5 +773,30 @@
     <string name="weather_condition_rainshowersandthunder">Aguaceiros e trovoada</string>
     <string name="weather_condition_heavyrainshowersandthunder">Aguaceiros intensos e trovoada</string>
     <string name="weather_condition_heavyrainshowers">Aguaceiros intensos</string>
-    <string name="reset_icon">Repor ícone</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">dentro de um minuto</item>
+        <item quantity="many">dentro de %1$d minutos</item>
+        <item quantity="other">dentro de %1$d minutos</item>
+    </plurals>
+    <string name="departure_time_now">agora</string>
+    <string name="departure_time_departed">partida</string>
+    <string name="weather_forecast_wind">Vento</string>
+    <string name="weather_forecast_humidity">Humidade</string>
+    <string name="weather_forecast_precipitation">Precipitação</string>
+    <string name="widget_removed">Widget removido</string>
+    <string name="missing_permission_call_contacts_settings">Requer permissão para iniciar as chamadas</string>
+    <string name="preference_contacts_call_on_tap">Toque para ligar</string>
+    <string name="preference_contacts_call_on_tap_summary">Iniciar automatcamente a chamada ao tocar no número de telefone</string>
+    <string name="preference_compact_tags">Etiquetas compactas</string>
+    <string name="preference_grid_list_style">Mostrar aplicações em lista</string>
+    <string name="preference_grid_list_icons">Mostrar ícones em lista</string>
+    <string name="preference_grid_list_style_summary">Mostrar aplicações em lista e não em grelha</string>
+    <string name="preference_grid_list_icons_summary">Mostrar ícones em lista e não em grelha</string>
+    <string name="preference_search_local_calendar_summary">Pesquisar calendários no dispositivo</string>
+    <string name="tag_empty_name">Não pode criar uma etiqueta sem nome. Se continuar, a etiqueta será eliminada.</string>
+    <string name="preference_compact_tags_summary">Ocultar texto ou ícones das etiquetas para reduzir o espaço ocupado</string>
+    <string name="preference_clock_widget_time_format">Formato de hora</string>
+    <string name="preference_clock_widget_time_format_24h">24 horas</string>
+    <string name="preference_clock_widget_time_format_12h">12 horas</string>
+    <string name="preference_clock_widget_time_format_system">Padrão do sistema</string>
 </resources>

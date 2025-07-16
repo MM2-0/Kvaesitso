@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Contact
@@ -30,6 +32,7 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.apps.AppItem
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarItem
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactItem
@@ -80,6 +83,25 @@ fun ListItem(
             LocalContentColor provides MaterialTheme.colorScheme.onSurface
         ) {
             when (item) {
+                is Application -> {
+                    AppItem(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = 9999.dp) // we have infinite space, but there is an inner scroll that needs a constraint
+                            .combinedClickable(
+                                enabled = !showDetails,
+                                onClick = {
+                                    if (!viewModel.launch(context, bounds)) {
+                                        onShowDetails(true)
+                                    }
+                                },
+                                onLongClick = { onShowDetails(true) }
+                            ),
+                        app = item,
+                        showDetails = showDetails,
+                        onBack = { onShowDetails(false) }
+                    )
+                }
                 is Contact -> {
                     ContactItem(
                         modifier = Modifier

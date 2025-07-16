@@ -1,7 +1,6 @@
 package de.mm20.launcher2.files
 
 import android.content.Context
-import de.mm20.launcher2.files.providers.GDriveFileProvider
 import de.mm20.launcher2.files.providers.LocalFileProvider
 import de.mm20.launcher2.files.providers.NextcloudFileProvider
 import de.mm20.launcher2.files.providers.OwncloudFileProvider
@@ -64,7 +63,6 @@ internal class FileRepository(
                         permissionsManager
                     ) else null
 
-                    "gdrive" -> GDriveFileProvider(context)
                     "nextcloud" -> NextcloudFileProvider(nextcloudClient)
                     "owncloud" -> OwncloudFileProvider(owncloudClient)
                     else -> PluginFileProvider(context, it)

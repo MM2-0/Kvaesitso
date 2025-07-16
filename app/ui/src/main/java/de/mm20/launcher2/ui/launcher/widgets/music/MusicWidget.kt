@@ -86,8 +86,8 @@ import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
 import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
-import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalWindowSize
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.widgets.MusicWidget
 import kotlin.math.min
 
@@ -168,7 +168,7 @@ fun MusicWidget(widget: MusicWidget) {
                         var seekPosition by remember { mutableStateOf<Float?>(null) }
 
                         if (pos != null && dur != null && dur > 0) {
-                            if (playbackState != PlaybackState.Stopped || supportedActions.seekTo) {
+                            if (playbackState != PlaybackState.Stopped && supportedActions.seekTo && widget.config.interactiveProgressBar) {
                                 Slider(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -352,7 +352,7 @@ fun MusicWidget(widget: MusicWidget) {
             ) {
                 FilledTonalIconButton(
                     colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = MaterialTheme.transparency.surface),
                     ),
                     onClick = { viewModel.togglePause() },
                 ) {
@@ -530,9 +530,19 @@ fun NoData() {
     }
 }
 
+@Suppress("DefaultLocale")
 private fun formatTimestamp(timestamp: Long?): String {
     if (timestamp == null) return "--:--"
-    val minutes = timestamp / 1000 / 60
-    val seconds = timestamp / 1000 % 60
-    return String.format("%02d:%02d", minutes, seconds)
+
+    val totalSeconds = timestamp / 1000
+    val days = totalSeconds / 86_400
+    val hours = (totalSeconds % 86_400) / 3600
+    val minutes = (totalSeconds % 3600) / 60
+    val seconds = totalSeconds % 60
+
+    return when {
+        days > 0 -> String.format("%d:%02d:%02d:%02d", days, hours, minutes, seconds)
+        hours > 0 -> String.format("%d:%02d:%02d", hours, minutes, seconds)
+        else -> String.format("%02d:%02d", minutes, seconds)
+    }
 }

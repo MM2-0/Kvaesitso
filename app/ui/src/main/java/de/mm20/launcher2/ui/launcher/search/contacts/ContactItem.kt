@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.launcher.search.contacts
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.compose.animation.AnimatedContent
@@ -62,12 +61,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Contact
-import de.mm20.launcher2.search.ContactInfoType
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -80,9 +77,11 @@ import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import androidx.core.net.toUri
+import de.mm20.launcher2.ktx.checkPermission
+import de.mm20.launcher2.ktx.getApplicationIconOrNull
+import de.mm20.launcher2.ktx.getApplicationInfoOrNull
+import de.mm20.launcher2.search.contact.ContactInfoType
 
 @Composable
 fun ContactItem(
@@ -101,6 +100,7 @@ fun ContactItem(
     }
 
     val icon by viewModel.icon.collectAsStateWithLifecycle()
+    val callOnTap by viewModel.callOnTap.collectAsStateWithLifecycle(false)
     val badge by viewModel.badge.collectAsState(null)
 
     SharedTransitionLayout {
@@ -163,6 +163,7 @@ fun ContactItem(
                                     .fillMaxWidth(),
                                 secondaryAction = {
                                     IconButton(onClick = {
+                                        viewModel.reportUsage(contact)
                                         context.tryStartActivity(
                                             Intent(Intent.ACTION_SENDTO).apply {
                                                 data = Uri.parse("smsto:${it.number}")
@@ -180,10 +181,14 @@ fun ContactItem(
                                     expandedSection = if (it) 0 else -1
                                 },
                                 onContact = {
+                                    viewModel.reportUsage(contact)
                                     context.tryStartActivity(
-                                        Intent(Intent.ACTION_DIAL).apply {
-                                            data = Uri.parse("tel:${it.number}")
-                                        }
+                                        Intent(
+                                            if (callOnTap)
+                                                Intent.ACTION_CALL
+                                            else
+                                                Intent.ACTION_DIAL
+                                        ).setData("tel:${it.number}".toUri())
                                     )
                                 },
                                 copyText = { it.number },
@@ -208,6 +213,7 @@ fun ContactItem(
                                     expandedSection = if (it) 1 else -1
                                 },
                                 onContact = {
+                                    viewModel.reportUsage(contact)
                                     context.tryStartActivity(
                                         Intent(Intent.ACTION_SENDTO).apply {
                                             data = Uri.parse("mailto:${it.address}")
@@ -231,6 +237,7 @@ fun ContactItem(
                                 secondaryAction = if (canNavigate) {
                                     {
                                         IconButton(onClick = {
+                                            viewModel.reportUsage(contact)
                                             context.tryStartActivity(
                                                 Intent(Intent.ACTION_VIEW).apply {
                                                     data =
@@ -254,6 +261,7 @@ fun ContactItem(
                                     expandedSection = if (it) 2 else -1
                                 },
                                 onContact = {
+                                    viewModel.reportUsage(contact)
                                     context.tryStartActivity(
                                         Intent(Intent.ACTION_VIEW).apply {
                                             data = Uri.parse("geo:0,0?q=${it.address}")
@@ -264,42 +272,39 @@ fun ContactItem(
                             )
                         }
                         val apps = remember(contact) {
-                            contact.contactApps.groupBy { it.packageName }
+                            contact.customActions.groupBy { it.packageName }
                         }
                         for ((i, app) in apps.entries.withIndex()) {
-                            val packageName = remember(app) {
-                                context.packageManager.queryIntentActivities(
-                                    Intent(Intent.ACTION_VIEW).apply {
-                                        setDataAndType(
-                                            app.value.first().uri,
-                                            app.value.first().mimeType
-                                        )
-                                    },
-                                    0,
-                                ).firstOrNull()?.activityInfo?.packageName
+                            val packageName = app.key
+                            val packageInfo = remember(packageName) {
+                                context.packageManager.getApplicationInfoOrNull(packageName)
                             } ?: continue
-                            val appIcon by remember(app) {
-                                flow {
-                                    try {
-                                        emit(context.packageManager.getApplicationIcon(packageName))
-                                    } catch (e: PackageManager.NameNotFoundException) {
-                                        emit(null)
-                                    }
-                                }.flowOn(Dispatchers.IO)
-                            }.collectAsState(null)
+
+                            val appIcon = remember(packageName) {
+                                context.packageManager.getApplicationIconOrNull(packageName)
+                            }
                             val label = remember(app) {
-                                try {
-                                    context.packageManager.getApplicationInfo(packageName, 0)
-                                        .loadLabel(context.packageManager).toString()
-                                } catch (e: PackageManager.NameNotFoundException) {
-                                    app.key
+                                packageInfo.loadLabel(context.packageManager).toString()
+                            }
+                            val itemsWithPermission = remember(app) {
+                                app.value.filter {
+                                    // exclude activities we have no permission for
+                                    val resolvedActivityInfo = context.packageManager.resolveActivity(
+                                        Intent(Intent.ACTION_VIEW).setPackage(it.packageName).setDataAndType(it.uri, it.mimeType),
+                                        0
+                                    )?.activityInfo ?: return@filter false
+
+                                    resolvedActivityInfo.permission == null || context.checkPermission(resolvedActivityInfo.permission)
                                 }
                             }
+
+                            if (itemsWithPermission.isEmpty()) continue
+
                             ContactInfo(
                                 icon = Icons.AutoMirrored.Rounded.OpenInNew,
                                 customIcon = appIcon,
                                 label = label,
-                                items = app.value,
+                                items = itemsWithPermission,
                                 itemLabel = { it.label },
                                 expanded = expandedSection == 3 + i,
                                 modifier = Modifier
@@ -309,8 +314,10 @@ fun ContactItem(
                                     expandedSection = if (it) 3 + i else -1
                                 },
                                 onContact = {
+                                    viewModel.reportUsage(contact)
                                     context.tryStartActivity(
                                         Intent(Intent.ACTION_VIEW).apply {
+                                            setPackage(packageName)
                                             setDataAndType(
                                                 it.uri,
                                                 it.mimeType

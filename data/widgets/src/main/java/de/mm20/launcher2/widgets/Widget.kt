@@ -32,7 +32,11 @@ sealed class Widget {
                             ?: WeatherWidgetConfig()
                     WeatherWidget(entity.id, config)
                 }
-                MusicWidget.Type -> MusicWidget(entity.id)
+                MusicWidget.Type -> MusicWidget(
+                    entity.id,
+                    Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
+                        ?: MusicWidgetConfig(),
+                )
                 CalendarWidget.Type -> {
                     val config: CalendarWidgetConfig =
                         Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
@@ -64,23 +68,6 @@ sealed class Widget {
                 else -> null
             }
         }
-    }
-}
-
-
-data class MusicWidget(
-    override val id: UUID,
-) : Widget() {
-    override fun toDatabaseEntity(): PartialWidgetEntity {
-        return PartialWidgetEntity(
-            id = id,
-            type = Type,
-            config = null
-        )
-    }
-
-    companion object {
-        const val Type = "music"
     }
 }
 

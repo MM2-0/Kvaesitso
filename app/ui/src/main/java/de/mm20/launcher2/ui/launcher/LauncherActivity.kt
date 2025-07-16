@@ -2,34 +2,25 @@ package de.mm20.launcher2.ui.launcher
 
 import android.content.Intent
 import com.android.launcher3.GestureNavContract
+import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldPage
 
 
 class LauncherActivity: SharedLauncherActivity(LauncherActivityMode.Launcher) {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        val navContract = intent?.let { GestureNavContract.fromIntent(it) }
+        val navContract = intent.let { GestureNavContract.fromIntent(it) }
         if (navContract != null) {
-            enterHomeTransitionManager.resolve(navContract, window)
-        } else if (System.currentTimeMillis() - pausedAt < 50) {
-            // If the onPause was called less than 50ms ago, we assume that the app was already
-            // in the foreground when the user pressed the home button. In this case, we dispatch
-            // the home button press event to the gesture detector.
-            gestureDetector.dispatchHomeButtonPress()
+            val page = if (System.currentTimeMillis() - pauseTime > 5000L || pauseOnHome) {
+                ScaffoldPage.Home
+            } else {
+                ScaffoldPage.Secondary
+            }
+            enterHomeTransitionManager.resolve(navContract, window, page)
         }
     }
-
-    private var pausedAt: Long = 0
 
     override fun onPause() {
         super.onPause()
         enterHomeTransitionManager.clear()
-        pausedAt = System.currentTimeMillis()
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (onBackPressedDispatcher.hasEnabledCallbacks()) {
-            onBackPressedDispatcher.onBackPressed()
-        }
     }
 }

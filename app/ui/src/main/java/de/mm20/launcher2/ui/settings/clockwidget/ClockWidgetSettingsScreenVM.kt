@@ -5,27 +5,30 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     private val settings: ClockWidgetSettings by inject()
+    private val uiSettings: UiSettings by inject()
+
     val compact = settings.compact
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setCompact(compact: Boolean) {
         settings.setCompact(compact)
     }
 
-    val availableClockStyles = combine(settings.digital1, settings.custom) {digital1, custom ->
+    val availableClockStyles = combine(settings.digital1, settings.analog, settings.custom) { digital1, analog, custom ->
         listOf(
             digital1,
             ClockWidgetStyle.Digital2,
-            ClockWidgetStyle.Analog,
+            analog,
             ClockWidgetStyle.Orbit,
             ClockWidgetStyle.Segment,
             ClockWidgetStyle.Binary,
@@ -54,6 +57,13 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setShowSeconds(showSeconds)
     }
 
+    val timeFormat = settings.timeFormat
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), TimeFormat.System)
+
+    fun setTimeFormat(timeFormat: TimeFormat) {
+        settings.setTimeFormat(timeFormat)
+    }
+
     val useThemeColor = settings.useThemeColor
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
@@ -61,8 +71,12 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setUseThemeColor(boolean)
     }
 
+    val widgetsOnHome = uiSettings.homeScreenWidgets
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     val fillHeight = settings.fillHeight
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setFillHeight(fillHeight: Boolean) {
         settings.setFillHeight(fillHeight)
     }

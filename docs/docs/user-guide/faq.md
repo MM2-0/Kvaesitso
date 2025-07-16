@@ -8,13 +8,29 @@ sidebar_position: 2
 
 There are two options:
 
-1. Go to Settings > Home screen > Clock and enable "Favorites". This will display the first row of
-   pinned items
-   as part of the clock widget.
+1. Enable Settings > Home screen > Dock.
 
 2. Scroll down to the end of the widgets list, select "Edit widgets" > "Add widget" > "Favorites" to
    add
    the favorites widget to the home screen.
+
+## What are these categories "Personal", "Private", and "Work" above the app grid?
+
+These categories aren't a feature of the launcher, but just a representation of Android's different
+profiles. Profiles are isolated spaces on your device that allow you to have separate apps, accounts,
+and data, independent of the main profile.
+
+**Personal** is the main profile.
+
+**Work** is a work profile. Learn more about work
+profiles [here](https://www.android.com/enterprise/work-profile/).
+You can also use an app
+like [Insular](https://f-droid.org/de/packages/com.oasisfeng.island.fdroid/)
+or [Shelter](https://f-droid.org/de/packages/net.typeblog.shelter/) to create and manage a work
+profile.
+
+**Private** is the private space profile, available on Android 15 and higher. Learn more about
+private spaces [here](https://support.google.com/android/answer/15341885?hl=en).
 
 ## Can I remove / customize the clock?
 
@@ -33,7 +49,8 @@ Please refer to [this page](/docs/user-guide/troubleshooting/granted-permissions
 
 ## I can't update to the latest version
 
-Please refer to the [Launcher Cannot Be Updated](/docs/user-guide/troubleshooting/update-not-installed) page.
+Please refer to
+the [Launcher Cannot Be Updated](/docs/user-guide/troubleshooting/update-not-installed) page.
 
 ## Why is wallpaper blur not supported on my device?
 

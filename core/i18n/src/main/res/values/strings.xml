@@ -29,17 +29,15 @@
     <string name="menu_customize">Customize</string>
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Open</string>
-    <string name="menu_hide">Hide</string>
     <string name="menu_map">View on map</string>
     <string name="menu_website">Open website</string>
-    <string name="menu_unhide">Don\'t hide</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
-    <string name="msg_item_hidden">%1$s has been hidden.</string>
     <string name="action_undo">Undo</string>
     <string name="action_import">Import</string>
     <string name="action_done">Done</string>
     <string name="action_more_actions">More actions</string>
     <string name="action_clear">Clear</string>
+    <string name="action_install">Install</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
     <string name="menu_remove">Remove</string>
@@ -229,6 +227,7 @@
     <string name="widget_name_notes">Note</string>
     <string name="widget_name_unknown">Unknown app widget</string>
     <string name="widget_add_widget">Add widget</string>
+    <string name="widget_removed">Widget removed</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Write a note…</string>
     <string name="notes_widget_action_new">New note</string>
@@ -240,18 +239,13 @@
     <string name="notes_widget_dismissed">Note dismissed.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">By %1$s</string>
-    <!-- Progress of the installation of another app. %1$s: the formatted percentage of the installation progress -->
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_1">There are no easter eggs here, unless you brought them with you.</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_2">Please, stop it, you are wasting your time</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_3">I won\'t say it again: there are absolutely no easter eggs hidden here</string>
     <!-- Wait, we have easter eggs? No way! -->
     <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it\?</string>
     <!-- Close a dialog -->
     <string name="close">Close</string>
+    <string name="no_selection">No selection</string>
     <string name="save">Save</string>
+    <string name="save_as_file">Save as file</string>
     <string name="duplicate">Duplicate</string>
     <string name="edit">Edit</string>
     <string name="skip">Skip</string>
@@ -274,7 +268,6 @@
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud server URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
-    <string name="nextcloud_server_url_empty">Server URL must not be empty</string>
     <!-- Nextcloud login flow, error invalid URL-->
     <string name="nextcloud_server_invalid_url">This URL does not point to a valid Nextcloud installation</string>
     <!-- Owncloud login flow, UR-->
@@ -290,9 +283,7 @@
     <!-- Owncloud login flow, login failed -->
     <string name="owncloud_login_failed">Login failed: incorrect username or password.</string>
     <!-- Owncloud login flow, error: username empty -->
-    <string name="owncloud_username_empty">User name must not be empty</string>
     <!-- Owncloud login flow, error: password empty -->
-    <string name="owncloud_password_empty">Password must not be empty</string>
     <!-- Nextcloud/Owncloud login flow, continue button -->
     <string name="login_flow_continue">Continue</string>
     <!-- Nextcloud/Owncloud login flow, login button -->
@@ -322,6 +313,10 @@
         <item quantity="one">+%1$d running event from past days</item>
         <item quantity="other">+%1$d running events from past days</item>
     </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d unfinished task</item>
+        <item quantity="other">+%1$d unfinished tasks</item>
+    </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">all-day</string>
     <string name="task_due_time">Due at %1$s</string>
@@ -330,6 +325,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s is playing media</string>
     <string name="music_widget_no_data">No media has been played yet</string>
+    <string name="music_widget_interactive_progress_bar">Interactive progress bar</string>
     <string name="weather_condition_sleetshowers">Sleet showers</string>
     <string name="weather_condition_heavysleet">Heavy sleet</string>
     <string name="weather_condition_lightrainshowersandthunder">Light rain showers and thunder</string>
@@ -349,6 +345,7 @@
     <string name="weather_condition_snow">Snow</string>
     <string name="weather_condition_hail">Hail</string>
     <string name="weather_condition_thunderstorm">Thunderstorm</string>
+    <string name="weather_condition_thunder">Thunder</string>
     <string name="weather_condition_heavysnowshowers">Heavy snow showers</string>
     <string name="weather_condition_heavyrainshowers">Heavy rain showers</string>
     <string name="weather_condition_rainshowersandthunder">Rain showers and thunder</string>
@@ -360,6 +357,7 @@
     <string name="weather_condition_heavyrainshowersandthunder">Heavy rain showers and thunder</string>
     <string name="weather_condition_fair">Fair</string>
     <string name="weather_condition_fog">Fog</string>
+    <string name="weather_condition_haze">Haze</string>
     <string name="weather_condition_sleetshowersandthunder">Sleet showers and thunder</string>
     <string name="weather_condition_rainandthunder">Rain and thunder</string>
     <string name="weather_condition_lightsleet">Light sleet</string>
@@ -389,8 +387,12 @@
     <string name="missing_permission_music_widget">Notification access is required to control media playback</string>
     <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">Contact permission is required to search contacts</string>
+    <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">Call permission is required to start calls</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
+    <string name="missing_permission_tasks_search_settings">Tasks permission is required to search tasks</string>
+    <string name="missing_permission_tasks_integration">Tasks permission is required to use the Tasks integration</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">This widget requires calendar permission</string>
     <string name="widget_config_calendar_missing_calendars_hint">Can\'t find your calendars?</string>
@@ -427,11 +429,21 @@
     <string name="preference_theme_dark">Dark</string>
     <string name="preference_screen_colors">Color scheme</string>
     <string name="preference_colors_default">Default</string>
+    <string name="preference_colors_high_contrast">High contrast</string>
     <string name="preference_colors_bw">Black and White</string>
     <string name="preference_custom_colors_corepalette">Color palette</string>
     <string name="preference_mdy_color_source">Source for dynamic colors</string>
     <string name="preference_mdy_color_source_system">System</string>
     <string name="preference_mdy_color_source_wallpaper">Wallpaper</string>
+    <string name="preference_screen_shapes">Shapes</string>
+    <string name="preference_shapes_default">Default</string>
+    <string name="preference_shapes_extra_round">Extra round</string>
+    <string name="preference_shapes_rect">Rectangular</string>
+    <string name="preference_shapes_base">Base shape</string>
+    <string name="preference_screen_typography">Typography</string>
+    <string name="preference_screen_transparencies">Transparency</string>
+    <string name="preference_transparencies_default">Default</string>
+    <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
     <string name="preference_font">Font</string>
     <string name="preference_font_system">System default</string>
     <string name="preference_screen_about">About</string>
@@ -448,12 +460,14 @@
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (Germany only)</string>
     <string name="provider_here">HERE</string>
+    <string name="provider_breezy">Breezy Weather</string>
     <string name="preference_category_location">Location</string>
     <string name="preference_automatic_location">Automatic location</string>
     <string name="preference_automatic_location_summary">Use GPS and location services to determine location automatically</string>
     <string name="preference_location_managed">Managed by plugin</string>
     <string name="preference_location_managed_summary">The location for this provider is managed by the plugin app</string>
     <string name="preference_location">Location</string>
+    <string name="preference_location_breezy">Manage location in Breezy Weather</string>
     <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
     <string name="preference_imperial_units">Imperial units</string>
     <string name="widget_config_weather_compact">Compact mode</string>
@@ -514,7 +528,6 @@
     <string name="preference_hide_status_bar">Hide status bar</string>
     <string name="preference_hide_nav_bar">Hide navigation bar</string>
     <string name="preference_screen_integrations_summary">Manage connected accounts and services</string>
-    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Signed in as %1$s</string>
     <string name="preference_signout">Sign out</string>
     <string name="preference_summary_not_logged_in">You are currently not logged in</string>
@@ -554,8 +567,12 @@
     <string name="preference_category_grid">Grid</string>
     <string name="preference_grid_icon_size">Icon size</string>
     <string name="preference_grid_column_count">Number of columns</string>
+    <string name="preference_grid_list_style">Show apps in a list</string>
+    <string name="preference_grid_list_icons">Show app icons in list</string>
     <string name="preference_grid_labels">Show labels</string>
     <string name="preference_grid_labels_summary">Show the app name below the icon</string>
+    <string name="preference_grid_list_style_summary">Show applications in a list instead of a grid</string>
+    <string name="preference_grid_list_icons_summary">Show icons in the list view</string>
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Troubleshooting tools</string>
     <string name="preference_category_widgets">Widgets</string>
@@ -566,6 +583,10 @@
     <string name="preference_clockwidget_layout_vertical">Default</string>
     <string name="preference_clockwidget_layout_horizontal">Compact</string>
     <string name="preference_clock_widget_show_seconds">Show seconds</string>
+    <string name="preference_clock_widget_time_format">Time format</string>
+    <string name="preference_clock_widget_time_format_24h">24-hour</string>
+    <string name="preference_clock_widget_time_format_12h">12-hour</string>
+    <string name="preference_clock_widget_time_format_system">System default</string>
     <string name="widget_use_theme_colors">Use theme color</string>
     <string name="preference_clock_widget_fill_height">Fill screen height</string>
     <string name="preference_clock_widget_alignment">Alignment</string>
@@ -603,6 +624,9 @@
     <string name="preference_search_contacts_summary">Search contacts on this device</string>
     <string name="preference_search_calendar">Calendar</string>
     <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
+    <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
+    <string name="preference_search_tasks">Tasks</string>
+    <string name="preference_search_tasks_summary">Search tasks in the Tasks app</string>
     <string name="preference_search_appshortcuts">App shortcuts</string>
     <string name="preference_search_appshortcuts_summary">Search app shortcuts</string>
     <string name="preference_search_calculator">Calculator</string>
@@ -621,20 +645,18 @@
     <string name="preference_search_locations_summary">Search the local area for shops and other places</string>
     <string name="preference_search_localfiles">Local files</string>
     <string name="preference_search_localfiles_summary">Search documents, photos and other files stored on this device</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">Search %1$s\'s files on Google Drive</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Search %1$s\'s files</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">Sign in with Google</string>
-    <string name="preference_google_signin_summary">Sign in to search Google Drive</string>
     <string name="preference_calendar_calendars">Calendars</string>
-    <string name="preference_calendar_hide_allday">Hide all-day events</string>
     <string name="preference_calendar_hide_completed">Hide completed tasks</string>
     <string name="preference_screen_buildinfo">Build information</string>
     <string name="preference_screen_buildinfo_summary">More information about this build of this app</string>
     <string name="preference_search_bar_style">Style</string>
     <string name="preference_search_bar_style_summary">Customize search bar appearance</string>
+    <string name="preference_search_bar_style_transparent">Transparent</string>
+    <string name="preference_search_bar_style_solid">Solid</string>
+    <string name="preference_search_bar_style_hidden">Hidden</string>
     <string name="preference_search_bar_color">Color</string>
     <string name="preference_search_bar_auto_focus">Open keyboard</string>
     <string name="preference_search_bar_auto_focus_summary">Automatically show the keyboard when opening the app drawer</string>
@@ -655,19 +677,30 @@
     <string name="preference_compact_tags">Compact tags</string>
     <string name="preference_compact_tags_summary">Hide tag labels or icons to reduce the space occupied by tags</string>
     <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
+    <string name="preference_widgets_on_home_screen">Widgets on home screen</string>
+    <string name="preference_widgets_on_home_screen_summary">Show widgets on the home screen instead of an extra page</string>
     <string name="preference_screen_homescreen">Home screen</string>
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
     <string name="preference_screen_icons">Grid &amp; icons</string>
     <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
-    <string name="preference_category_accounts">Accounts</string>
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
+    <string name="preference_tasks_integration">Tasks</string>
+    <!-- %1$s: app name (Kvaesitso) -->
+    <string name="preference_tasks_integration_description">Tasks is a free and open source to-do list and reminders app. If installed, %1$s can display and search your tasks from the Tasks app.</string>
+    <string name="preference_tasks_integration_ready">Tasks integration is fully set up and ready to use.</string>
+    <string name="preference_launch_tasks_app">Open Tasks app</string>
+    <string name="preference_breezyweather_integration">Breezy Weather</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather is a free and open source weather app. If installed, %1$s can use Breezy Weather as a data source for weather data.</string>
+    <string name="preference_breezyweather_integration_instructions">To use Breezy Weather as weather provider:\n\n1. Go to Breezy Weather &gt; Settings &gt; Widgets &amp; Live wallpaper &gt; Send Gadgetbridge data &gt; Enable %1$s\n\n2. In %1$s, select Breezy Weather as weather provider</string>
+    <string name="preference_launch_breezyweather_app">Open Breezy Weather</string>
+    <string name="preference_contacts_call_on_tap">Tap to call</string>
+    <string name="preference_contacts_call_on_tap_summary">Immediately start a call when tapping a phone number</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
     <string name="no_account_owncloud">You haven\'t connected an Owncloud account yet</string>
     <!-- Used in an info banner if a specific feature requires a Google account -->
-    <string name="no_account_google">You haven\'t connected a Google account yet</string>
     <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
     <string name="connect_account">Connect account</string>
     <string name="battery_part_charging">Charging</string>
@@ -684,11 +717,9 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">Created %1$s on %2$s with %3$s.</string>
     <string name="restore_complete">The backup has been restored.</string>
-    <string name="icon_picker_title">Pick icon</string>
     <string name="icon_picker_default_icon">Default</string>
     <string name="icon_picker_suggestions">Suggestions</string>
     <string name="icon_picker_search_icon">Search in icon packs</string>
-    <string name="icon_picker_no_packs_installed">No icon packs installed</string>
     <string name="icon_picker_filter_all_packs">All icon packs</string>
     <string name="apps_profile_main">Personal</string>
     <string name="apps_profile_work">Work</string>
@@ -696,10 +727,8 @@
     <string name="favorites">Favorites</string>
     <string name="favorites_empty">Pinned and frequently used items will appear here</string>
     <string name="favorites_empty_tag">There are no items with this tag</string>
-    <string name="create_app_shortcut">Create shortcut</string>
     <string name="frequently_used_show_in_favorites">Show in favorites</string>
     <string name="frequently_used_rows">Number of rows</string>
-    <string name="customize_tags_placeholder">Tags</string>
     <string name="preference_screen_search_actions">Quick actions</string>
     <string name="preference_search_search_actions_summary">Configure quick actions and search shortcuts</string>
     <string name="search_action_call">Call</string>
@@ -716,8 +745,6 @@
     <string name="create_search_action_type_web">Search on a website</string>
     <string name="create_search_action_type_app">Search in an app</string>
     <string name="create_search_action_type_intent">Custom intent</string>
-    <string name="create_search_action_title">New quick action</string>
-    <string name="edit_search_action_title">Edit quick action</string>
     <string name="create_search_action_pick_app">Pick an app to search:</string>
     <string name="create_search_action_website_url">Enter the address of the website:</string>
     <string name="create_search_action_website_invalid_url">The given website cannot automatically be imported as a web search. You can try a different website or enter the required data manually in the next step.</string>
@@ -727,8 +754,6 @@
     <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term, e.g. https://google.com/search?q=${1}.</string>
     <string name="more_information">More information</string>
     <string name="experimental_feature">Experimental</string>
-    <string name="create_tag_title">New tag</string>
-    <string name="edit_tag_title">Edit tag</string>
     <string name="tag_exists_error">A tag with this name already exists.</string>
     <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged.</string>
     <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted.</string>
@@ -758,11 +783,13 @@
     <string name="preference_gesture_swipe_down">Swipe down</string>
     <string name="preference_gesture_swipe_left">Swipe left</string>
     <string name="preference_gesture_swipe_right">Swipe right</string>
+    <string name="preference_gesture_swipe_up">Swipe up</string>
     <string name="preference_gesture_double_tap">Double tap</string>
     <string name="preference_gesture_long_press">Long press</string>
     <string name="preference_gesture_home_button">Home button/gesture</string>
     <string name="gesture_action_none">Do nothing</string>
     <string name="gesture_action_open_search">Open search</string>
+    <string name="gesture_action_widgets">Widgets</string>
     <string name="gesture_action_launch_app">Launch app</string>
     <string name="gesture_action_notifications">Open notification drawer</string>
     <string name="gesture_action_lock_screen">Turn off screen</string>
@@ -772,9 +799,6 @@
     <string name="gesture_failed_message">You have performed a \"%1$s\" gesture. This gesture is currently set to trigger a \"%2$s\" action. However, the action could not be performed for the following reason:</string>
     <string name="missing_permission_accessibility_gesture_failed">The launcher\'s accessibility service needs to be enabled to perform this action.</string>
     <string name="missing_permission_accessibility_gesture_settings">This action requires the launcher\'s accessibility service to be enabled.</string>
-    <string name="preference_search_result_ordering">Order of search results</string>
-    <string name="preference_search_result_ordering_alphabetic">Alphabetic</string>
-    <string name="preference_search_result_ordering_weighted">Usage</string>
     <string name="preference_search_result_ordering_weight_factor">Ranking flexibility</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stable</string>
     <string name="preference_search_result_ordering_weight_factor_default">Balanced</string>
@@ -804,13 +828,18 @@
     <string name="note_widget_file_write_error">Error saving note</string>
     <string name="note_widget_file_write_error_description">The note could not be written to the linked file. Possibly, it has been moved or deleted. A copy has been saved to the launcher\'s internal storage.</string>
     <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s\?</string>
-    <string name="new_color_scheme_name">New color scheme</string>
+    <string name="confirmation_delete_shapes_scheme">Do you really want to delete the shape scheme %1$s?</string>
+    <string name="confirmation_delete_typography_scheme">Do you really want to delete the typography scheme %1$s?</string>
+    <string name="confirmation_delete_transparencies_scheme">Do you really want to delete the transparency scheme %1$s?</string>
+    <string name="new_theme_name">(untitled)</string>
     <string name="theme_color_scheme_system_default">Use system default</string>
     <string name="theme_color_scheme_autogenerate">From primary color</string>
     <string name="theme_color_scheme_palette_color">Palette</string>
     <string name="theme_color_scheme_custom_color">Custom</string>
     <string name="preference_restore_default">Restore default</string>
+    <string name="import_theme_contents">Contents</string>
     <string name="import_theme_apply">Apply theme</string>
+    <string name="import_theme_exists">Theme already exists and will be updated</string>
     <string name="import_theme_error">The selected file could not be read. Please make sure that you selected a valid theme file (*.kvtheme), and that the file is not corrupt.</string>
     <string name="shortcut_label_unavailable">Unavailable</string>
     <string name="app_label_locked_profile">Locked</string>
@@ -835,13 +864,12 @@
     <string name="plugin_state_error">This plugin isn\'t working correctly</string>
     <string name="plugin_state_setup_required">You need to setup this plugin first</string>
     <string name="plugin_action_setup">Set up</string>
-    <string name="plugin_type_filesearch">File search</string>
+    <string name="plugin_type_filesearch">Files</string>
+    <string name="plugin_type_contacts">Contacts</string>
     <string name="plugin_type_weather">Weather provider</string>
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
     <string name="unavailable_searchable">This item does not exist anymore.</string>
-    <string name="preference_search_bar_separate_work_profile">Separate work profile apps</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Shows work profile apps in a separate tab</string>
     <string name="clock_style_digital1">Bold</string>
     <string name="clock_style_digital2">Simple</string>
     <string name="clock_style_orbit">Orbit</string>
@@ -851,6 +879,7 @@
     <string name="clock_style_empty">No clock</string>
     <string name="clock_style_custom">Custom widget</string>
     <string name="clock_variant_outlined">Outlined</string>
+    <string name="clock_variant_analog_ticks">Ticks</string>
     <string name="menu_show_filters">Show filters</string>
     <string name="menu_hide_filters">Hide filters</string>
     <string name="search_filter_tools">Tools</string>
@@ -957,7 +986,6 @@
     <string name="poi_category_fire_station">Fire station</string>
     <string name="poi_category_courthouse">Courthouse</string>
     <string name="poi_category_townhall">Townhall</string>
-    <string name="preference_search_locations_radius_large_radius_warning">Large search radius can significantly slow down the search.</string>
     <string name="customize_item_label">Label</string>
     <string name="customize_item_tags">Tags</string>
     <string name="customize_item_visibility">Show in</string>
@@ -1005,8 +1033,24 @@
         <item quantity="one">%1$s list selected</item>
         <item quantity="other">%1$s lists selected</item>
     </plurals>
-    <string name="reset_icon">Reset icon</string>
     <string name="weather_forecast_humidity">Humidity</string>
     <string name="weather_forecast_wind">Wind</string>
     <string name="weather_forecast_precipitation">Precipitation</string>
+    <string name="departure_time_now">now</string>
+    <plurals name="departure_time_in">
+        <item quantity="one">in one minute</item>
+        <item quantity="other">in %1$d minutes</item>
+    </plurals>
+    <string name="departure_time_departed">departed</string>
+    <string name="bad_configuration_title">Congratulations, you\'ve locked yourself out!</string>
+    <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher.</string>
+    <string name="theme_export_title">Export theme</string>
+    <string name="theme_import_title">Import theme</string>
+    <string name="theme_bundle_name">Name</string>
+    <string name="theme_bundle_author">Author</string>
+    <string name="preference_typography_fonts">Fonts</string>
+    <string name="font_category_device_default">Device default</string>
+    <string name="font_name_device_headline">Default headline font</string>
+    <string name="font_name_device_body">Device text font</string>
+    <string name="font_category_generic">Generic</string>
 </resources>

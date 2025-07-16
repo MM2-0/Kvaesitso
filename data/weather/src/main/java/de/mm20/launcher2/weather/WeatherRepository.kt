@@ -14,6 +14,7 @@ import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.preferences.LatLon
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.preferences.weather.WeatherSettings
+import de.mm20.launcher2.weather.breezy.BreezyWeatherProvider
 import de.mm20.launcher2.weather.brightsky.BrightSkyProvider
 import de.mm20.launcher2.weather.here.HereProvider
 import de.mm20.launcher2.weather.metno.MetNoProvider
@@ -71,13 +72,6 @@ internal class WeatherRepositoryImpl(
     }
 
     init {
-        val weatherRequest =
-            PeriodicWorkRequestBuilder<WeatherUpdateWorker>(Duration.ofMinutes(60))
-                .build()
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            "weather",
-            ExistingPeriodicWorkPolicy.UPDATE, weatherRequest
-        )
 
         scope.launch {
             hasLocationPermission.collectLatest {
@@ -86,6 +80,14 @@ internal class WeatherRepositoryImpl(
         }
         scope.launch {
             settings.collectLatest {
+                val provider =  WeatherProvider.getInstance(it.provider)
+                val weatherRequest =
+                    PeriodicWorkRequestBuilder<WeatherUpdateWorker>(Duration.ofMillis(provider.getUpdateInterval()))
+                        .build()
+                WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+                    "weather",
+                    ExistingPeriodicWorkPolicy.UPDATE, weatherRequest
+                )
                 requestUpdate()
             }
         }
@@ -188,6 +190,15 @@ internal class WeatherRepositoryImpl(
                 )
             )
         }
+        if (BreezyWeatherProvider.isAvailable(context)) {
+            providers.add(
+                WeatherProviderInfo(
+                    BreezyWeatherProvider.Id,
+                    context.getString(R.string.provider_breezy),
+                    managedLocation = true
+                )
+            )
+        }
         val pluginProviders = pluginRepository.findMany(type = PluginType.Weather, enabled = true)
         return pluginProviders.map {
             providers + it.mapNotNull {
@@ -250,8 +261,9 @@ class WeatherUpdateWorker(
     }
 
     @OptIn(FlowPreview::class)
-    private suspend fun getLastKnownLocation(): LatLon? =
-        locationProvider.getLocation().timeout(10.minutes).firstOrNull().or {
-            locationProvider.lastLocation
-        }?.let { LatLon(it.latitude, it.longitude) }
+    private suspend fun getLastKnownLocation(): LatLon? = locationProvider.getLocation(skipCache = true)
+        .timeout(10.minutes)
+        .firstOrNull()
+        .or { locationProvider.lastCachedLocation }
+        ?.let { LatLon(it.latitude, it.longitude) }
 }

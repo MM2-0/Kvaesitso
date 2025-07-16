@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.settings.appearance
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.preferences.ColorScheme
 import de.mm20.launcher2.preferences.Font
 import de.mm20.launcher2.preferences.ui.UiSettings
@@ -26,11 +25,32 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         uiSettings.setColorScheme(colorScheme)
     }
 
-    val themeName = uiSettings.theme.flatMapLatest {
-            themeRepository.getThemeOrDefault(it)
-        }.map {
-            it.name
-        }
+    val colorThemeName = uiSettings.colorsId.flatMapLatest {
+        themeRepository.colors.getOrDefault(it)
+    }.map {
+        it.name
+    }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val shapeThemeName = uiSettings.shapesId.flatMapLatest {
+        themeRepository.shapes.getOrDefault(it)
+    }.map {
+        it.name
+    }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val typographyThemeName = uiSettings.typographyId.flatMapLatest {
+        themeRepository.typographies.getOrDefault(it)
+    }.map {
+        it.name
+    }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val transparencyThemeName = uiSettings.transparenciesId.flatMapLatest {
+        themeRepository.transparencies.getOrDefault(it)
+    }.map {
+        it.name
+    }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val compatModeColors = uiSettings.compatModeColors

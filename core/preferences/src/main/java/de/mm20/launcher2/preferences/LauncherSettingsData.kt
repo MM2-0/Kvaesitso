@@ -1,19 +1,29 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
-import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.SearchFilters
+import de.mm20.launcher2.serialization.UUIDSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.util.UUID
 
 @Serializable
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 2,
+    val schemaVersion: Int = 5,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
-    val uiTheme: ThemeDescriptor = ThemeDescriptor.Default,
+    @Serializable(with = UUIDSerializer::class)
+    val uiColorsId: UUID = UUID(0L, 0L),
+    @Serializable(with = UUIDSerializer::class)
+    val uiShapesId: UUID = UUID(0L, 0L),
+    @Serializable(with = UUIDSerializer::class)
+    val uiTransparenciesId: UUID = UUID(0L, 0L),
+    @Serializable(with = UUIDSerializer::class)
+    val uiTypographyId: UUID = UUID(0L, 0L),
+
     val uiCompatModeColors: Boolean = false,
     val uiFont: Font = Font.Outfit,
+    @Deprecated("No longer in use, only used for migration")
     val uiBaseLayout: BaseLayout = BaseLayout.PullDown,
     val uiOrientation: ScreenOrientation = ScreenOrientation.Auto,
 
@@ -31,9 +41,11 @@ data class LauncherSettingsData internal constructor(
     @SerialName("clockWidgetStyle2")
     internal val clockWidgetStyle: ClockWidgetStyleEnum = ClockWidgetStyleEnum.Digital1,
     val clockWidgetDigital1: ClockWidgetStyle.Digital1 = ClockWidgetStyle.Digital1(),
+    val clockWidgetAnalog: ClockWidgetStyle.Analog = ClockWidgetStyle.Analog(),
     val clockWidgetCustom: ClockWidgetStyle.Custom = ClockWidgetStyle.Custom(),
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
     val clockWidgetShowSeconds: Boolean = false,
+    val clockWidgetTimeFormat: TimeFormat = TimeFormat.System,
     val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
     val clockWidgetBatteryPart: Boolean = true,
@@ -43,6 +55,7 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
 
     val homeScreenDock: Boolean = false,
+    val homeScreenWidgets: Boolean = false,
 
     val favoritesEnabled: Boolean = true,
     val favoritesFrequentlyUsed: Boolean = true,
@@ -52,7 +65,10 @@ data class LauncherSettingsData internal constructor(
 
     val fileSearchProviders: Set<String> = setOf("local"),
 
+    @Deprecated("Use contactSearchProviders `local` instead")
     val contactSearchEnabled: Boolean = true,
+    val contactSearchProviders: Set<String> = setOf("local"),
+    val contactSearchCallOnTap: Boolean = false,
 
     @Deprecated("Use calendarSearchProviders `local` instead")
     val calendarSearchEnabled: Boolean = true,
@@ -81,6 +97,8 @@ data class LauncherSettingsData internal constructor(
     val gridColumnCount: Int = 5,
     val gridIconSize: Int = 48,
     val gridLabels: Boolean = true,
+    val gridList: Boolean = false,
+    val gridListIcons: Boolean = true,
 
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Transparent,
     val searchBarColors: SearchBarColors = SearchBarColors.Auto,
@@ -112,15 +130,18 @@ data class LauncherSettingsData internal constructor(
     val systemBarsNavColors: SystemBarColors = SystemBarColors.Auto,
 
     val surfacesOpacity: Float = 1f,
+    @Deprecated("Replaces with shape schemes")
     val surfacesRadius: Int = 24,
     val surfacesBorderWidth: Int = 0,
+    @Deprecated("Replaces with shape schemes")
     val surfacesShape: SurfaceShape = SurfaceShape.Rounded,
 
     val widgetsEditButton: Boolean = true,
 
-    val gesturesSwipeDown: GestureAction = GestureAction.Notifications,
+    val gesturesSwipeDown: GestureAction = GestureAction.Search,
     val gesturesSwipeLeft: GestureAction = GestureAction.NoAction,
     val gesturesSwipeRight: GestureAction = GestureAction.NoAction,
+    val gesturesSwipeUp: GestureAction = GestureAction.Widgets,
     val gesturesDoubleTap: GestureAction = GestureAction.ScreenLock,
     val gesturesLongPress: GestureAction = GestureAction.NoAction,
     val gesturesHomeButton: GestureAction = GestureAction.NoAction,
@@ -190,24 +211,6 @@ enum class Font {
     System,
 }
 
-
-@Serializable
-sealed interface ThemeDescriptor {
-    @Serializable
-    @SerialName("default")
-    data object Default : ThemeDescriptor
-
-    @Serializable
-    @SerialName("bw")
-    data object BlackAndWhite : ThemeDescriptor
-
-    @Serializable
-    @SerialName("custom")
-    data class Custom(
-        val id: String,
-    ) : ThemeDescriptor
-}
-
 internal enum class ClockWidgetStyleEnum {
     Digital1,
     Digital2,
@@ -246,7 +249,9 @@ sealed interface ClockWidgetStyle {
 
     @Serializable
     @SerialName("analog")
-    data object Analog : ClockWidgetStyle
+    data class Analog(
+        val showTicks: Boolean = false
+    ) : ClockWidgetStyle
 
     @Serializable
     @SerialName("binary")
@@ -362,6 +367,10 @@ sealed interface GestureAction {
     data object Search : GestureAction
 
     @Serializable
+    @SerialName("widgets")
+    data object Widgets : GestureAction
+
+    @Serializable
     @SerialName("power_menu")
     data object PowerMenu : GestureAction
 
@@ -408,4 +417,11 @@ enum class KeyboardFilterBarItem {
     @SerialName("events") Events,
     @SerialName("tools") Tools,
     @SerialName("hidden") HiddenResults,
+}
+
+@Serializable
+enum class TimeFormat {
+    @SerialName("system") System,
+    @SerialName("12h") TwelveHour,
+    @SerialName("24h") TwentyFourHour
 }
