@@ -137,11 +137,11 @@
     <!-- Excel spreadsheet -->
     <string name="file_type_spreadsheet">Spreadsheet</string>
     <!-- Audio file -->
-    <string name="file_type_music">Music file</string>
+    <string name="file_type_music">Audio</string>
     <!-- Video file -->
     <string name="file_type_video">Video</string>
-    <!-- Picture file -->
-    <string name="file_type_image">Picture</string>
+    <!-- Image file -->
+    <string name="file_type_image">Image</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">File</string>
     <!-- Powerpoint presentation -->
@@ -222,14 +222,14 @@
     <string name="menu_edit_widgets">Edit widgets</string>
     <string name="widget_name_weather">Weather</string>
     <string name="widget_name_calendar">Calendar</string>
-    <string name="widget_name_music">Music</string>
+    <string name="widget_name_music">Media</string>
     <string name="widget_name_favorites">Favorites</string>
     <string name="widget_name_notes">Note</string>
-    <string name="widget_name_unknown">Unknown app widget</string>
+    <string name="widget_name_unknown">Unknown</string>
     <string name="widget_add_widget">Add widget</string>
     <string name="widget_removed">Widget removed</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Write a note…</string>
+    <string name="notes_widget_placeholder">Write a note</string>
     <string name="notes_widget_action_new">New note</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Save</string>
@@ -264,7 +264,7 @@
     <string name="edit_favorites_dialog_empty_section">Drag items here</string>
     <string name="edit_favorites_dialog_tags">Tags</string>
     <string name="edit_favorites_dialog_tag_section_empty">Pinned tags will appear here</string>
-    <string name="edit_favorites_dialog_new_tag">Create tag…</string>
+    <string name="edit_favorites_dialog_new_tag">Create tag</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud server URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -318,7 +318,7 @@
         <item quantity="other">+%1$d unfinished tasks</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">all-day</string>
+    <string name="calendar_event_allday">All day</string>
     <string name="task_due_time">Due at %1$s</string>
     <string name="task_due_date">Due on %1$s</string>
     <string name="task_due_today">Due today</string>
@@ -413,7 +413,7 @@
     <!-- Missing location permission, used in location search results -->
     <string name="missing_permission_location_search">Location permission is required to search nearby locations</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Storage permission is required to search documents, images, and videos</string>
+    <string name="missing_permission_files_search">Storage permission is required to search audio, documents, images, and videos</string>
     <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">Contacts permission is required to search your contacts</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
@@ -741,7 +741,7 @@
     <string name="search_action_contact">Add to contacts</string>
     <string name="search_action_open_url">View website</string>
     <string name="search_action_event">Schedule event</string>
-    <string name="create_search_action_type">What kind of action do you want to create?</string>
+    <string name="create_search_action_type">What type of action do you want to create?</string>
     <string name="create_search_action_type_web">Search on a website</string>
     <string name="create_search_action_type_app">Search in an app</string>
     <string name="create_search_action_type_intent">Custom intent</string>
