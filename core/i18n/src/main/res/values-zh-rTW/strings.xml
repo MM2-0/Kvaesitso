@@ -66,7 +66,7 @@
     <string name="wind_west_north_west">西北偏西</string>
     <string name="wind_north_west">西北</string>
     <string name="wind_north_north_west">西北偏北</string>
-    <string name="wikipedia_url">https://en.wikipedia.org</string>
+    <string name="wikipedia_url">https://zh.wikipedia.org/zh-tw/</string>
     <string name="wikipedia_source">來自維基百科</string>
     <string name="file_meta_title">標題：%1$s</string>
     <string name="file_meta_artist">藝術家：%1$s</string>
@@ -620,7 +620,7 @@
     <string name="search_filter_online">線上結果</string>
     <string name="search_filter_apps">應用程式</string>
     <string name="preference_clock_widget_alignment_center">中間</string>
-    <string name="preference_clock_widget_show_seconds">顯示秒</string>
+    <string name="preference_clock_widget_show_seconds">顯示秒數</string>
     <string name="preference_clock_widget_alignment_bottom">底部</string>
     <string name="preference_clockwidget_dynamic_zone">動態區域</string>
     <string name="preference_customize_filter_bar">自訂篩選器列</string>
@@ -845,4 +845,9 @@
     <string name="preference_gesture_swipe_up">向上滑動</string>
     <string name="gesture_action_widgets">小工具</string>
     <string name="preference_launch_tasks_app">開啟 Tasks 應用程式</string>
+    <string name="preference_search_bar_style_solid">不透明</string>
+    <string name="preference_search_bar_style_hidden">隱藏</string>
+    <string name="preference_search_bar_style_transparent">透明</string>
+    <string name="clock_variant_analog_ticks">時鐘標記</string>
+    <string name="music_widget_interactive_progress_bar">互動式播放器進度條</string>
 </resources>
