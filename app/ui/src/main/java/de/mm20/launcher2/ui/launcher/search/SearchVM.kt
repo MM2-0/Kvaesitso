@@ -250,10 +250,10 @@ class SearchVM : ViewModel(), KoinComponent {
                         previousResults = SearchResults(apps = apps)
 
                         searchActionResults.clear()
-                        appResults.mergeWith(apps)
-                        workAppResults.mergeWith(workApps)
-                        privateSpaceAppResults.mergeWith(privateApps)
-                        hiddenResults.mergeWith(hiddenItems)
+                        appResults.updateItems(apps)
+                        workAppResults.updateItems(workApps)
+                        privateSpaceAppResults.updateItems(privateApps)
+                        hiddenResults.updateItems(hiddenItems)
                     }
 
             } else {
@@ -273,19 +273,31 @@ class SearchVM : ViewModel(), KoinComponent {
                         workAppResults.clear()
                         privateSpaceAppResults.clear()
 
-                        appResults.mergeWith(results.apps, hiddenKeys, query)
-                        appShortcutResults.mergeWith(results.shortcuts, hiddenKeys, query)
-                        fileResults.mergeWith(results.files, hiddenKeys, query)
+                        appResults.updateItems(
+                            results.apps
+                            ?.filterNot { hiddenKeys.contains(it.key) }
+                            ?.applyRanking(query)
+                        )
+                        appShortcutResults.updateItems(
+                            results.shortcuts
+                            ?.filterNot { hiddenKeys.contains(it.key) }
+                            ?.applyRanking(query)
+                        )
+                        fileResults.updateItems(
+                            results.files
+                            ?.filterNot { hiddenKeys.contains(it.key) }
+                            ?.applyRanking(query)
+                        )
 
-                        contactResults.mergeWith(
+                        contactResults.updateItems(
                             results.contacts?.filterNot { hiddenKeys.contains(it.key) }
                                 ?.applyRanking(query)
                         )
-                        calendarResults.mergeWith(
+                        calendarResults.updateItems(
                             results.calendars?.filterNot { hiddenKeys.contains(it.key) }
                                 ?.applyRanking(query)
                         )
-                        locationResults.mergeWith(
+                        locationResults.updateItems(
                             results.locations?.filterNot { hiddenKeys.contains(it.key) }
                                 ?.let { locations ->
                                     devicePoseProvider.lastCachedLocation?.let {
@@ -298,17 +310,17 @@ class SearchVM : ViewModel(), KoinComponent {
                                     } ?: locations.applyRanking(query)
                                 }
                         )
-                        articleResults.mergeWith(
+                        articleResults.updateItems(
                             results.wikipedia?.applyRanking(query)
                         )
-                        websiteResults.mergeWith(
+                        websiteResults.updateItems(
                             results.websites?.applyRanking(query)
                         )
-                        calculatorResults.mergeWith(results.calculators)
-                        unitConverterResults.mergeWith(results.unitConverters)
+                        calculatorResults.updateItems(results.calculators)
+                        unitConverterResults.updateItems(results.unitConverters)
 
                         if (results.searchActions != null) {
-                            searchActionResults.mergeWith(results.searchActions!!)
+                            searchActionResults.updateItems(results.searchActions!!)
                         }
 
                         if (launchOnEnter.value) {
@@ -429,24 +441,18 @@ class SearchVM : ViewModel(), KoinComponent {
         return sorted.distinctBy { it.key }.toList()
     }
 
-    private fun <T> SnapshotStateList<T>.mergeWith(newItems: List<T>?) {
-        val items = newItems ?: emptyList()
-        val diff = toSet() subtract items.toSet()
-        removeAll(diff)
-        for ((i, item) in items.withIndex()) {
-            if (i < size)
-                set(i, item)
-            else
-                add(item)
-        }
+    /**
+     * Merges a list of new items into the current SnapshotStateList.
+     * It removes items that are in the current list but not in the new list.
+     * Then, it updates existing items or adds new items from the new list.
+     *
+     * @param T The type of items in the list.
+     * @param newItems The list of new items to merge with. If null, an empty list is used.
+     */
+    private fun <T> SnapshotStateList<T>.updateItems(newItems: List<T>?) {
+        clear()
+        addAll(newItems ?: emptyList())
     }
-
-    private suspend fun <T : SavableSearchable> SnapshotStateList<T>.mergeWith(
-        newItems: List<T>?,
-        hiddenKeys: List<String>,
-        query: String
-    ) = this.mergeWith((newItems ?: emptyList()).filterNot { hiddenKeys.contains(it.key) }
-        .applyRanking(query))
 }
 
 
