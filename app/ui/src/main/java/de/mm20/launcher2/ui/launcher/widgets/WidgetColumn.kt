@@ -66,7 +66,7 @@ fun WidgetColumn(
 
 
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxWidth()
     ) {
         val scope = rememberCoroutineScope()
         Column {
