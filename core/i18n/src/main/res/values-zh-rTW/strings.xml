@@ -92,6 +92,7 @@
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
       a fallback that is suited best for most users of this language should be used
       (English in most cases) -->
+    <string name="wikipedia_url">https://zh.wikipedia.org/zh-tw/</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">來自維基百科</string>
     <!-- File meta data, title of audio tracks -->
@@ -314,6 +315,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s正在播放媒體</string>
     <string name="music_widget_no_data">尚未播放任何媒體</string>
+    <string name="music_widget_interactive_progress_bar">互動式播放器進度條</string>
     <string name="weather_condition_sleetshowers">陣雨夾雪</string>
     <string name="weather_condition_heavysleet">重度雨夾雪</string>
     <string name="weather_condition_lightrainshowersandthunder">輕度雷陣雨</string>
@@ -563,7 +565,7 @@
     <string name="preference_screen_clockwidget_summary">配置時鐘樣式與組件</string>
     <string name="preference_clockwidget_layout_vertical">預設</string>
     <string name="preference_clockwidget_layout_horizontal">簡潔</string>
-    <string name="preference_clock_widget_show_seconds">顯示秒</string>
+    <string name="preference_clock_widget_show_seconds">顯示秒數</string>
     <string name="preference_clock_widget_time_format">時間格式</string>
     <string name="preference_clock_widget_time_format_24h">24 小時制</string>
     <string name="preference_clock_widget_time_format_12h">12 小時制</string>
@@ -632,6 +634,9 @@
     <string name="preference_screen_buildinfo_summary">有關此版本應用程式的更多資訊</string>
     <string name="preference_search_bar_style">風格</string>
     <string name="preference_search_bar_style_summary">自訂搜尋欄外觀</string>
+    <string name="preference_search_bar_style_transparent">透明</string>
+    <string name="preference_search_bar_style_solid">不透明</string>
+    <string name="preference_search_bar_style_hidden">隱藏</string>
     <string name="preference_search_bar_color">顏色</string>
     <string name="preference_search_bar_auto_focus">開啟鍵盤</string>
     <string name="preference_search_bar_auto_focus_summary">開啟應用程式抽屜時自動顯示鍵盤</string>
@@ -846,6 +851,7 @@
     <string name="clock_style_empty">無時鐘</string>
     <string name="clock_style_custom">自訂小工具</string>
     <string name="clock_variant_outlined">輪廓</string>
+    <string name="clock_variant_analog_ticks">時鐘標記</string>
     <string name="menu_show_filters">顯示篩選器</string>
     <string name="menu_hide_filters">隱藏篩選器</string>
     <string name="search_filter_tools">工具</string>
