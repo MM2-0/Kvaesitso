@@ -357,6 +357,17 @@ class UiSettings internal constructor(
         }
     }
 
+    val dockRows
+        get() = launcherDataStore.data.map {
+            it.homeScreenDockRows
+        }.distinctUntilChanged()
+
+    fun setDockRows(rows: Int) {
+        launcherDataStore.update {
+            it.copy(homeScreenDockRows = rows)
+        }
+    }
+
     val homeScreenWidgets
         get() = launcherDataStore.data.map {
             it.homeScreenWidgets
