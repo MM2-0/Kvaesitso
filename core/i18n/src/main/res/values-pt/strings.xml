@@ -239,9 +239,9 @@
     <string name="easter_egg_text">Bem, você me achou. Parabéns. Valeu a pena?</string>
     <!-- Close a dialog -->
     <string name="close">Fechar</string>
-    <string name="no_selection">Nenhuma seleção</string>
+    <string name="no_selection">Nada selecionado</string>
     <string name="save">Salvar</string>
-    <string name="save_as_file">Salvar como arquivo</string>
+    <string name="save_as_file">Guardar como ficheiro</string>
     <string name="duplicate">Duplicar</string>
     <string name="edit">Editar</string>
     <string name="skip">Pular</string>
@@ -308,8 +308,8 @@
         <item quantity="other">+%1$d eventos em andamento nos últimos dias</item>
     </plurals>
     <plurals name="calendar_widget_running_tasks">
-        <item quantity="one">+%1$d tarefa inacabada</item>
-        <item quantity="other">+%1$d tarefas inacabadas</item>
+        <item quantity="one">+%1$d tarefa por realizar</item>
+        <item quantity="other">+%1$d tarefas por realizar</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">todo o dia</string>
@@ -319,6 +319,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s está reproduzindo mídia</string>
     <string name="music_widget_no_data">Nenhuma mídia foi reproduzida ainda</string>
+    <string name="music_widget_interactive_progress_bar">Barra de progresso interativa</string>
     <string name="weather_condition_sleetshowers">Chuva de granizo</string>
     <string name="weather_condition_heavysleet">Chuva de granizo intensa</string>
     <string name="weather_condition_lightrainshowersandthunder">Chuvas leves e trovões</string>
@@ -384,8 +385,8 @@
     <string name="missing_permission_call_contacts_settings">A permissão de telefone é necessária para iniciar chamadas</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">A permissão de calendário é necessária para pesquisar o calendário</string>
-    <string name="missing_permission_tasks_search_settings">Permissão para o Tasks é necessária para procurar tarefas</string>
-    <string name="missing_permission_tasks_integration">Permissão para o Tasks é necessária para usar integração com Tasks</string>
+    <string name="missing_permission_tasks_search_settings">A permissão Tasks é necessária para pesquisar tarefas</string>
+    <string name="missing_permission_tasks_integration">A permissão Tasks é necessária para a integração Tasks</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Esse widget requer a permissão de calendário</string>
     <string name="widget_config_calendar_missing_calendars_hint">Não consegue encontrar seus calendários\?</string>
@@ -430,7 +431,7 @@
     <string name="preference_mdy_color_source_wallpaper">Papel de parede</string>
     <string name="preference_screen_shapes">Formas</string>
     <string name="preference_shapes_default">Padrão</string>
-    <string name="preference_shapes_extra_round">Extra arrendondado</string>
+    <string name="preference_shapes_extra_round">Super redonda</string>
     <string name="preference_shapes_rect">Retangular</string>
     <string name="preference_shapes_base">Forma base</string>
     <string name="preference_screen_typography">Tipografia</string>
@@ -456,7 +457,7 @@
     <string name="preference_location_managed">Gerenciado por extensão</string>
     <string name="preference_location_managed_summary">A localização para esse provedor é gerenciada pelo aplicativo de extensão</string>
     <string name="preference_location">Localização</string>
-    <string name="preference_location_breezy">Gerenciar localização no Breezy Weather</string>
+    <string name="preference_location_breezy">Gerir localização em Breezy Weather</string>
     <string name="preference_imperial_units_summary">Use graus Fahrenheit e milhas por hora</string>
     <string name="preference_imperial_units">Unidades imperiais</string>
     <string name="widget_config_weather_compact">Modo compacto</string>
@@ -611,7 +612,7 @@
     <string name="preference_search_calendar_summary">Pesquisa compromissos e eventos futuros</string>
     <string name="preference_search_local_calendar_summary">Procurar calendários no dispositivo</string>
     <string name="preference_search_tasks">Tarefas</string>
-    <string name="preference_search_tasks_summary">Procurar tarefas no aplicativo Tasks</string>
+    <string name="preference_search_tasks_summary">Pesquisar tarefas na aplicação Tasks</string>
     <string name="preference_search_appshortcuts">Atalhos de aplicativos</string>
     <string name="preference_search_appshortcuts_summary">Pesquisa atalhos de aplicativos</string>
     <string name="preference_search_calculator">Calculadora</string>
@@ -637,6 +638,9 @@
     <string name="preference_screen_buildinfo_summary">Mais informações sobre esta compilação deste aplicativo</string>
     <string name="preference_search_bar_style">Estilo</string>
     <string name="preference_search_bar_style_summary">Personalize a aparência da barra de pesquisa</string>
+    <string name="preference_search_bar_style_transparent">Transparente</string>
+    <string name="preference_search_bar_style_solid">Sólida</string>
+    <string name="preference_search_bar_style_hidden">Oculta</string>
     <string name="preference_search_bar_color">Cor</string>
     <string name="preference_search_bar_auto_focus">Abrir o teclado</string>
     <string name="preference_search_bar_auto_focus_summary">Mostra o teclado automaticamente ao abrir a gaveta de aplicativos</string>
@@ -657,8 +661,8 @@
     <string name="preference_compact_tags">Tags compactas</string>
     <string name="preference_compact_tags_summary">Esconde etiquetas ou ícones para reduzir o espaço ocupado pelas tags</string>
     <string name="preference_widgets_edit_button_summary">Mostra um botão para adicionar, remover e reorganizar widgets</string>
-    <string name="preference_widgets_on_home_screen">Widgets na tela inicial</string>
-    <string name="preference_widgets_on_home_screen_summary">Exibir widgets na tela inicial em vez de uma página extra</string>
+    <string name="preference_widgets_on_home_screen">Widgets no ecrã principal</string>
+    <string name="preference_widgets_on_home_screen_summary">Mostrar widgets no ecrã principal e não em página secundária</string>
     <string name="preference_screen_homescreen">Tela inicial</string>
     <string name="preference_screen_homescreen_summary">Relógio, barra de pesquisa, papel de parede,barras de sistema</string>
     <string name="preference_screen_icons">Gride &amp; ícones</string>
@@ -667,11 +671,11 @@
     <string name="preference_media_integration">Controle de mídia</string>
     <string name="preference_tasks_integration">Tarefas</string>
     <!-- %1$s: app name (Kvaesitso) -->
-    <string name="preference_tasks_integration_description">Tasks é um aplicativo gratuito e open source de lista de tarefas e lembretes. Se instalado, %1$s poderá exibir e procurar suas tarefas do aplicativo Tasks.</string>
-    <string name="preference_tasks_integration_ready">A integração com Tasks está totalmente configurada e pronta para uso.</string>
-    <string name="preference_launch_tasks_app">Abrir aplicativo Tasks</string>
-    <string name="preference_breezyweather_integration_description">Breezy Weather é um aplicativo de clima gratuito e open source. Se instalado, %1$s poderá usar Breezy Weather como uma fonte de dados para dados de clima.</string>
-    <string name="preference_breezyweather_integration_instructions">Para usar o Breezy Weather como provedor de clima:\n\n1. Vá para Breezy Weather &gt; Configurações &gt; Widgets e papel de parede animado &gt; Enviar dados meteorológicos para Gadgetbridge &gt; Ativar %1$s\n\n2. No %1$s, selecione Breezy Weather como provedor de clima</string>
+    <string name="preference_tasks_integration_description">Tasks é uma aplicação open souce para gerir tarefas, listas e lembretes. Se instalada, %1$s pode mostrar e pesquisar as tarefas na aplicação.</string>
+    <string name="preference_tasks_integration_ready">Integração com Tasks finalizada e pronta para utilização.</string>
+    <string name="preference_launch_tasks_app">Abrir Tasks</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather é uma aplicação open source de meteorologia. Se instalada, %1$s pode utilizar Breezy Weather com a fonte de dados meteorológicos.</string>
+    <string name="preference_breezyweather_integration_instructions">Para utilizar Breezy Weather como serviço meteorológico:\n\n1. Aceda a Breezy Weather &gt; Definições &gt; Widgets &amp; Papel de parede &gt; Enviara dados Gadgetbridge &gt; Ativar%1$s\n\n2. Em %1$s, selecione Breezy Weather como servoço de meteorologia.</string>
     <string name="preference_launch_breezyweather_app">Abrir Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">Toque para chamar</string>
     <string name="preference_contacts_call_on_tap_summary">Iniciar a chamada imediatamente ao tocar em um número de telefone</string>
@@ -761,7 +765,7 @@
     <string name="preference_gesture_swipe_down">Deslize para baixo</string>
     <string name="preference_gesture_swipe_left">Deslize para a esquerda</string>
     <string name="preference_gesture_swipe_right">Deslize para a direita</string>
-    <string name="preference_gesture_swipe_up">Deslize para cima</string>
+    <string name="preference_gesture_swipe_up">Deslize acima</string>
     <string name="preference_gesture_double_tap">Toque duplo</string>
     <string name="preference_gesture_long_press">Toque longo</string>
     <string name="preference_gesture_home_button">Botão Home/Gesto</string>
@@ -805,18 +809,18 @@
     <string name="note_widget_file_write_error">Erro ao salvar anotação</string>
     <string name="note_widget_file_write_error_description">A nota não pôde ser escrita no ficheiro conectado. Possivelmente, foi movida ou eliminada. Foi guardada uma cópia no armazenamento interno do iniciador.</string>
     <string name="confirmation_delete_color_scheme">Tem certeza que quer apagar o esquema de cor %1$s?</string>
-    <string name="confirmation_delete_shapes_scheme">Tem certeza que quer apagar o esquema de forma %1$s?</string>
-    <string name="confirmation_delete_typography_scheme">Tem certeza que deseja excluir o esquema de tipografia %1$s?</string>
-    <string name="confirmation_delete_transparencies_scheme">Tem certeza que deseja excluir o esquema de transparência %1$s?</string>
-    <string name="new_theme_name">(sem título)</string>
+    <string name="confirmation_delete_shapes_scheme">Tem a certeza de que deseja eliminar o esquema de formas %1$s?</string>
+    <string name="confirmation_delete_typography_scheme">Tem a certeza de que deseja eliminar o esquema tipográfico %1$s?</string>
+    <string name="confirmation_delete_transparencies_scheme">Tem a certeza de que deseja eliminar o esquema de transparência %1$s?</string>
+    <string name="new_theme_name">(sem nome)</string>
     <string name="theme_color_scheme_system_default">Usar o padrão do sistema</string>
     <string name="theme_color_scheme_autogenerate">A partir da cor primária</string>
     <string name="theme_color_scheme_palette_color">Palheta</string>
     <string name="theme_color_scheme_custom_color">Personalizado</string>
     <string name="preference_restore_default">Restaurar ao padrão</string>
-    <string name="import_theme_contents">Conteúdos</string>
+    <string name="import_theme_contents">Conteúdo</string>
     <string name="import_theme_apply">Aplicar tema</string>
-    <string name="import_theme_exists">Tema já existe e será atualizado</string>
+    <string name="import_theme_exists">O tema já existe e será atualizado</string>
     <string name="import_theme_error">O arquivo selecionado não pode ser lido. Por favor confira se você tem um arquivo de tema válido (*.kvtheme), e que o arquivo não está corrupto.</string>
     <string name="shortcut_label_unavailable">Indisponível</string>
     <string name="app_label_locked_profile">Trancado</string>
@@ -840,8 +844,8 @@
     <string name="plugin_state_error">Esse plugin não está funcionando corretamente</string>
     <string name="plugin_state_setup_required">Você precisa configurar o plugin primeiro</string>
     <string name="plugin_action_setup">Configurar</string>
-    <string name="plugin_type_filesearch">Arquivos</string>
-    <string name="plugin_type_contacts">Contatos</string>
+    <string name="plugin_type_filesearch">Ficheiros</string>
+    <string name="plugin_type_contacts">Contactos</string>
     <string name="plugin_type_weather">Provedor de clima</string>
     <string name="plugin_weather_provider_enable">Definir como provedor de clima</string>
     <string name="plugin_weather_provider_enabled">Definido como o provedor de clima</string>
@@ -855,6 +859,7 @@
     <string name="clock_style_empty">Sem relógio</string>
     <string name="clock_style_custom">Widget personalizado</string>
     <string name="clock_variant_outlined">Contornado</string>
+    <string name="clock_variant_analog_ticks">Ponteiros</string>
     <string name="menu_show_filters">Mostrar filtros</string>
     <string name="menu_hide_filters">Esconder filtros</string>
     <string name="search_filter_tools">Ferramentas</string>
@@ -1014,15 +1019,15 @@
         <item quantity="other">em %1$d minutos</item>
     </plurals>
     <string name="departure_time_departed">partiu</string>
-    <string name="bad_configuration_title">Parabéns, você se bloqueou!</string>
-    <string name="bad_configuration_summary">Voce descobriu uma combinação de configurações que faz tanto a busca quanto as configurações inacessíveis — efetivamente o bloqueando do launcher.</string>
+    <string name="bad_configuration_title">Parabéns, acabou de se bloquear!</string>
+    <string name="bad_configuration_summary">Você conseguir encontrar uma combinação de definições em não é possível aceder às pesquisas e às definições. Acabou de se bloquear.</string>
     <string name="theme_export_title">Exportar tema</string>
     <string name="theme_import_title">Importar tema</string>
     <string name="theme_bundle_name">Nome</string>
     <string name="theme_bundle_author">Autor</string>
-    <string name="preference_typography_fonts">Fontes</string>
-    <string name="font_category_device_default">Padrão do dispositivo</string>
-    <string name="font_name_device_headline">Fonte padrão do título</string>
-    <string name="font_name_device_body">Fonte de texto do dispositivo</string>
-    <string name="font_category_generic">Genérico</string>
+    <string name="preference_typography_fonts">Tipo de letra</string>
+    <string name="font_category_device_default">Definições do dispositivo</string>
+    <string name="font_name_device_headline">Tipo de letra padrão</string>
+    <string name="font_name_device_body">Tipo de letra do dispositivo</string>
+    <string name="font_category_generic">Genérica</string>
 </resources>
