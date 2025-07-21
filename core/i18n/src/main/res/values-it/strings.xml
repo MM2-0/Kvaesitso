@@ -847,7 +847,7 @@
     <string name="clock_style_digital2">Semplice</string>
     <string name="clock_style_orbit">Orbita</string>
     <string name="clock_style_binary">Binario</string>
-    <string name="clock_style_analog">Mani</string>
+    <string name="clock_style_analog">Lancette</string>
     <string name="clock_style_segment">7 segmenti</string>
     <string name="clock_style_empty">Nessun orologio</string>
     <string name="clock_style_custom">Widget personalizzato</string>
