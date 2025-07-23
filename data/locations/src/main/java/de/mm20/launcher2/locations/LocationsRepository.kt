@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
-import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 internal class LocationsRepository(
     private val context: Context,
@@ -43,7 +43,7 @@ internal class LocationsRepository(
             // 3rd location: live location from LocationManager.requestLocationUpdates() that is better than any of the previous
             .take(3)
             // only request locations for one minute
-            .timeout(1.minutes),
+            .timeout(30.seconds),
         permissionsManager.hasPermission(PermissionGroup.Location),
         settings.data
     ) { userLocation, hasPermission, settingsData ->
