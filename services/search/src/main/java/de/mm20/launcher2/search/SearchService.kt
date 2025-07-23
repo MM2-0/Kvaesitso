@@ -233,7 +233,7 @@ internal class SearchServiceImpl(
                         }
                 }
             }
-            if (filters.places) {
+            if (filters.places && query.isNotBlank() && query.length > 1) {
                 launch {
                     locationRepository.search(query, filters.allowNetwork)
                         .combine(customAttrResults) { locations, customAttrs ->
