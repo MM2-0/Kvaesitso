@@ -42,7 +42,7 @@ internal class LocationsRepository(
             // 2nd location: LocationManager.getLastKnownLocation(), if available and better than lastCachedLocation
             // 3rd location: live location from LocationManager.requestLocationUpdates() that is better than any of the previous
             .take(3)
-            // only request locations for one minute
+            // only request locations for 30 seconds
             .timeout(30.seconds),
         permissionsManager.hasPermission(PermissionGroup.Location),
         settings.data
