@@ -231,8 +231,12 @@ class NextcloudApiHelper(val context: Context) {
             .url("$server/ocs/v2.php/core/apppassword")
             .build()
         withContext(Dispatchers.IO) {
-            val response = httpClient.newCall(request).execute()
-            response
+            try {
+                val response = httpClient.newCall(request).execute()
+                response
+            } catch (e: IOException) {
+                Log.e("NextcloudApiHelper", "Error during Nextcloud logout", e)
+            }
         }
         preferences.edit {
             putString("server", null)
