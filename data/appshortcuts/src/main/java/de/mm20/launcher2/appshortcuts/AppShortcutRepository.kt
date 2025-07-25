@@ -13,6 +13,7 @@ import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
+import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SearchableRepository
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -54,6 +56,7 @@ internal class AppShortcutRepositoryImpl(
     private val context: Context,
     private val permissionsManager: PermissionsManager,
     private val settings: ShortcutSearchSettings,
+    private val profileManager: ProfileManager,
 ) : AppShortcutRepository {
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
@@ -213,9 +216,9 @@ internal class AppShortcutRepositoryImpl(
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return emptyList()
         val results = mutableListOf<AppShortcutConfigActivity>()
-        val profiles = launcherApps.profiles
+        val profiles = profileManager.activeProfiles.first()
         for (profile in profiles) {
-            val activities = launcherApps.getShortcutConfigActivityList(null, profile)
+            val activities = launcherApps.getShortcutConfigActivityList(null, profile.userHandle)
             results.addAll(
                 activities.map {
                     AppShortcutConfigActivity(it)
