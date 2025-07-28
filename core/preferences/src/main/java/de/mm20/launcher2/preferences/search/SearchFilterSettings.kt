@@ -34,4 +34,23 @@ class SearchFilterSettings internal constructor(
             it.copy(searchFilterBarItems = items)
         }
     }
+
+    val onlineResultsWiFi
+        get() = launcherDataStore.data.map { it.onlineResultsWifi }
+
+    fun setOnlineResultsWiFi(wifi: Boolean) {
+        launcherDataStore.update {
+            it.copy(onlineResultsWifi = wifi)
+        }
+    }
+
+    val onlineResultsMobile
+        get() = launcherDataStore.data.map { it.onlineResultsMobile }
+
+    fun setOnlineResultsMobile(mobile: Boolean) {
+        launcherDataStore.update {
+            it.copy(onlineResultsMobile = mobile)
+        }
+    }
+
 }

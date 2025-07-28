@@ -16,11 +16,13 @@ import androidx.compose.material.icons.rounded.Loop
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Public
+import androidx.compose.material.icons.rounded.SignalCellularAlt
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material.icons.rounded.Wifi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -37,7 +39,6 @@ import de.mm20.launcher2.icons.Wikipedia
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
-import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.SmallMessage
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
@@ -87,6 +88,9 @@ fun SearchSettingsScreen() {
     val launchOnEnter by viewModel.launchOnEnter.collectAsStateWithLifecycle(null)
     val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
     val filterBar by viewModel.filterBar.collectAsStateWithLifecycle(null)
+
+    val onlineResultsWiFi by viewModel.onlineResultsWiFi.collectAsStateWithLifecycle(null)
+    val onlineResultsMobile by viewModel.onlineResultsMobile.collectAsStateWithLifecycle(null)
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_search)) {
         item {
@@ -341,6 +345,30 @@ fun SearchSettingsScreen() {
                 }
             }
         }
+
+        item {
+            PreferenceCategory {
+                SwitchPreference(
+                    title = stringResource(R.string.automatically_search_online_on_wifi),
+                    icon = Icons.Rounded.Wifi,
+                    value = onlineResultsWiFi == true,
+                    onValueChanged = {
+                        viewModel.setOnlineResultsWiFi(it)
+                    }
+                )
+                AnimatedVisibility(onlineResultsWiFi == true) {
+                    SwitchPreference(
+                        title = stringResource(R.string.automatically_search_online_on_mobile_data),
+                        icon = Icons.Rounded.SignalCellularAlt,
+                        value = onlineResultsMobile == true,
+                        onValueChanged = {
+                            viewModel.setOnlineResultsMobile(it)
+                        }
+                    )
+                }
+            }
+        }
+
         item {
             PreferenceCategory {
                 SwitchPreference(

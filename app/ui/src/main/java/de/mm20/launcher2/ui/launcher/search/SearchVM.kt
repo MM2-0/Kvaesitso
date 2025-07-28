@@ -139,6 +139,18 @@ class SearchVM : ViewModel(), KoinComponent {
     val filterBar = searchFilterSettings.filterBar
     val filterBarItems = searchFilterSettings.filterBarItems
 
+    val onlineResultsWiFi = searchFilterSettings.onlineResultsWiFi.stateIn(
+        viewModelScope,
+        SharingStarted.Eagerly,
+        false
+    )
+    val onlineResultsMobile = searchFilterSettings.onlineResultsMobile.stateIn(
+        viewModelScope,
+        SharingStarted.Eagerly,
+        false
+    )
+    val allowNetwork = mutableStateOf(false)
+
     val bestMatch = mutableStateOf<Searchable?>(null)
 
     init {
@@ -159,6 +171,11 @@ class SearchVM : ViewModel(), KoinComponent {
 
     fun setFilters(filters: SearchFilters) {
         this.filters.value = filters
+        search(searchQuery.value, forceRestart = true)
+    }
+
+    fun setAllowNetwork(allowNetwork: Boolean) {
+        this.allowNetwork.value = allowNetwork
         search(searchQuery.value, forceRestart = true)
     }
 
@@ -185,6 +202,7 @@ class SearchVM : ViewModel(), KoinComponent {
         isSearchEmpty.value = query.isEmpty()
 
         val filters = filters.value
+        val allowNetwork = allowNetwork.value
 
         if (filters.enabledCategories == 1) {
             expandedCategory.value = when {
@@ -263,6 +281,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 searchService.search(
                     query,
                     filters = filters,
+                    allowNetwork = allowNetwork,
                     previousResults,
                 )
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }

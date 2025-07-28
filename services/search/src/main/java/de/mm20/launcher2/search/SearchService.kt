@@ -30,6 +30,7 @@ interface SearchService {
     fun search(
         query: String,
         filters: SearchFilters,
+        allowNetwork: Boolean,
         initialResults: SearchResults? = null,
     ): Flow<SearchResults>
 
@@ -55,6 +56,7 @@ internal class SearchServiceImpl(
     override fun search(
         query: String,
         filters: SearchFilters,
+        allowNetwork: Boolean,
         initialResults: SearchResults?,
     ): Flow<SearchResults> = flow {
         supervisorScope {
@@ -125,7 +127,7 @@ internal class SearchServiceImpl(
             }
             if (filters.apps) {
                 launch {
-                    appRepository.search(query, filters.allowNetwork)
+                    appRepository.search(query, allowNetwork)
                         .combine(customAttrResults) { apps, customAttrs ->
                             if (customAttrs.apps != null) apps + customAttrs.apps
                             else apps
@@ -140,7 +142,7 @@ internal class SearchServiceImpl(
             }
             if (filters.shortcuts) {
                 launch {
-                    appShortcutRepository.search(query, filters.allowNetwork)
+                    appShortcutRepository.search(query, allowNetwork)
                         .combine(customAttrResults) { shortcuts, customAttrs ->
                             if (customAttrs.shortcuts != null) shortcuts + customAttrs.shortcuts
                             else shortcuts
@@ -155,7 +157,7 @@ internal class SearchServiceImpl(
             }
             if (filters.contacts) {
                 launch {
-                    contactRepository.search(query, filters.allowNetwork)
+                    contactRepository.search(query, allowNetwork)
                         .combine(customAttrResults) { contacts, customAttrs ->
                             if (customAttrs.contacts != null) contacts + customAttrs.contacts
                             else contacts
@@ -170,7 +172,7 @@ internal class SearchServiceImpl(
             }
             if (filters.events) {
                 launch {
-                    calendarRepository.search(query, filters.allowNetwork)
+                    calendarRepository.search(query, allowNetwork)
                         .combine(customAttrResults) { calendars, customAttrs ->
                             if (customAttrs.calendars != null) calendars + customAttrs.calendars
                             else calendars
@@ -204,7 +206,7 @@ internal class SearchServiceImpl(
             }
             if (filters.websites) {
                 launch {
-                    websiteRepository.search(query, filters.allowNetwork)
+                    websiteRepository.search(query, allowNetwork)
                         .combine(customAttrResults) { websites, customAttrs ->
                             if (customAttrs.websites != null) websites + customAttrs.websites
                             else websites
@@ -220,7 +222,7 @@ internal class SearchServiceImpl(
             if (filters.articles) {
                 launch {
                     delay(750)
-                    articleRepository.search(query, filters.allowNetwork)
+                    articleRepository.search(query, allowNetwork)
                         .combine(customAttrResults) { articles, customAttrs ->
                             if (customAttrs.wikipedia != null) articles + customAttrs.wikipedia
                             else articles
@@ -235,7 +237,7 @@ internal class SearchServiceImpl(
             }
             if (filters.places) {
                 launch {
-                    locationRepository.search(query, filters.allowNetwork)
+                    locationRepository.search(query, allowNetwork)
                         .combine(customAttrResults) { locations, customAttrs ->
                             if (customAttrs.locations != null) locations + customAttrs.locations
                             else locations
@@ -252,7 +254,7 @@ internal class SearchServiceImpl(
                 launch {
                     fileRepository.search(
                         query,
-                        filters.allowNetwork
+                        allowNetwork
                     )
                         .combine(customAttrResults) { files, customAttrs ->
                             if (customAttrs.files != null) files + customAttrs.files

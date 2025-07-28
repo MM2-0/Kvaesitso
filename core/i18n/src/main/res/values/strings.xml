@@ -1053,4 +1053,6 @@
     <string name="font_name_device_headline">Default headline font</string>
     <string name="font_name_device_body">Device text font</string>
     <string name="font_category_generic">Generic</string>
+    <string name="automatically_search_online_on_wifi">Automatically search online when on Wi-Fi</string>
+    <string name="automatically_search_online_on_mobile_data">Automatically search online when on Mobile Data</string>
 </resources>

@@ -174,7 +174,6 @@ data class LauncherSettingsData internal constructor(
     val searchFilter: SearchFilters = SearchFilters(),
     val searchFilterBar: Boolean = true,
     val searchFilterBarItems: List<KeyboardFilterBarItem> = listOf(
-        KeyboardFilterBarItem.OnlineResults,
         KeyboardFilterBarItem.Apps,
         KeyboardFilterBarItem.Shortcuts,
         KeyboardFilterBarItem.Events,
@@ -187,6 +186,8 @@ data class LauncherSettingsData internal constructor(
         KeyboardFilterBarItem.HiddenResults,
     ),
 
+    val onlineResultsWifi: Boolean = true,
+    val onlineResultsMobile: Boolean = false,
 
     ) {
     constructor(
@@ -406,7 +407,6 @@ data class ProviderSettings(
 
 @Serializable
 enum class KeyboardFilterBarItem {
-    @SerialName("online") OnlineResults,
     @SerialName("apps") Apps,
     @SerialName("websites") Websites,
     @SerialName("articles") Articles,

@@ -162,6 +162,20 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         searchFilterSettings.setDefaultFilter(searchFilters)
     }
 
+    val onlineResultsWiFi = searchFilterSettings.onlineResultsWiFi
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setOnlineResultsWiFi(wifi: Boolean) {
+        searchFilterSettings.setOnlineResultsWiFi(wifi)
+    }
+
+    val onlineResultsMobile = searchFilterSettings.onlineResultsMobile
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setOnlineResultsMobile(mobile: Boolean) {
+        searchFilterSettings.setOnlineResultsMobile(mobile)
+    }
+
     val plugins = pluginService.getPluginsWithState(enabled = true)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

@@ -11,7 +11,6 @@ import androidx.compose.material.icons.rounded.AppShortcut
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.Handyman
-import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Public
@@ -26,9 +25,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.icons.Wikipedia
 import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.icons.Wikipedia
 
 @Composable
 fun SearchFilters(
@@ -43,21 +42,6 @@ fun SearchFilters(
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 4.dp),
     ) {
-        FilterChip(
-            selected = filters.allowNetwork,
-            onClick = {
-                onFiltersChange(filters.copy(allowNetwork = !filters.allowNetwork))
-            },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Rounded.Language,
-                    contentDescription = null,
-                    modifier = Modifier.size(FilterChipDefaults.IconSize)
-                )
-            },
-            label = { Text(stringResource(R.string.search_filter_online)) }
-        )
-        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
         FlowRow {
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
