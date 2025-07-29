@@ -38,7 +38,7 @@ import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
-import de.mm20.launcher2.ui.launcher.search.SearchfVM
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 
 @Composable
