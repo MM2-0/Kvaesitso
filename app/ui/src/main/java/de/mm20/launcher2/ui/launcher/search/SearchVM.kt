@@ -128,8 +128,6 @@ class SearchVM : ViewModel(), KoinComponent {
     val favoritesEnabled = searchUiSettings.favorites
     val hideFavorites = mutableStateOf(false)
 
-    val showFilters = mutableStateOf(false)
-
     private val defaultFilters = searchFilterSettings.defaultFilter.stateIn(
         viewModelScope,
         SharingStarted.Eagerly,
@@ -179,12 +177,7 @@ class SearchVM : ViewModel(), KoinComponent {
         search(searchQuery.value, forceRestart = true)
     }
 
-    fun closeFilters() {
-        showFilters.value = false
-    }
-
     fun reset() {
-        closeFilters()
         filters.value = defaultFilters.value
         search("")
     }
@@ -192,9 +185,6 @@ class SearchVM : ViewModel(), KoinComponent {
     private var searchJob: Job? = null
     fun search(query: String, forceRestart: Boolean = false) {
         if (searchQuery.value == query && !forceRestart) return
-        if (searchQuery.value != query) {
-            showFilters.value = false
-        }
         if (query.isEmpty() && searchQuery.value.isNotEmpty()) {
             filters.value = defaultFilters.value
         }
@@ -230,14 +220,10 @@ class SearchVM : ViewModel(), KoinComponent {
 
         searchJob = viewModelScope.launch {
             if (query.isEmpty()) {
-                val hiddenItemKeys = if (!filters.hiddenItems) {
-                    searchableRepository.getKeys(
-                        maxVisibility = VisibilityLevel.SearchOnly,
-                        includeTypes = listOf("app"),
-                    )
-                } else {
-                    flowOf(emptyList())
-                }
+                val hiddenItemKeys = searchableRepository.getKeys(
+                    maxVisibility = VisibilityLevel.SearchOnly,
+                    includeTypes = listOf("app")
+                )
                 val allApps = searchService.getAllApps()
 
                 allApps
@@ -275,9 +261,7 @@ class SearchVM : ViewModel(), KoinComponent {
                     }
 
             } else {
-                val hiddenItemKeys = if (!filters.hiddenItems) searchableRepository.getKeys(
-                    maxVisibility = VisibilityLevel.Hidden,
-                ) else flowOf(emptyList())
+                val hiddenItemKeys = searchableRepository.getKeys(maxVisibility = VisibilityLevel.Hidden)
                 searchService.search(
                     query,
                     filters = filters,

@@ -41,7 +41,6 @@ import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.search.filters.getLabel
 import de.mm20.launcher2.ui.launcher.search.filters.icon
-import de.mm20.launcher2.ui.launcher.search.filters.isCategory
 import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
@@ -131,11 +130,6 @@ fun FilterBarSettingsScreen() {
             for (i in 0 until KeyboardFilterBarItem.entries.size) {
                 val item = enabledItems!!.getOrNull(i) ?: disabledItems[i - enabledItems!!.size]
                 val prevItem = enabledItems!!.getOrNull(i - 1) ?: disabledItems.getOrNull(i - enabledItems!!.size - 1)
-                if (prevItem != null && prevItem.isCategory != item.isCategory) {
-                    item(key = "divider-$i") {
-                        HorizontalDivider()
-                    }
-                }
                 item(key = item) {
                     DraggableItem(state = listState, key = item) {
                         val elevation by animateDpAsState(if (it) 4.dp else 0.dp)

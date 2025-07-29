@@ -127,43 +127,16 @@ fun LauncherSearchBar(
                     enter = scaleIn(tween(100)),
                     exit = scaleOut(tween(100))
                 ) {
-                    Row {
-                        IconToggleButton(
-                            checked = searchVM.showFilters.value,
-                            onCheckedChange = {
-                                searchVM.showFilters.value = it
-                            },
-                        ) {
-                            Box {
-                                Icon(imageVector = Icons.Rounded.FilterAlt, contentDescription = stringResource(
-                                    if (searchVM.showFilters.value) R.string.menu_hide_filters else R.string.menu_show_filters
-                                ))
-                                androidx.compose.animation.AnimatedVisibility(
-                                    !searchVM.filters.value.allCategoriesEnabled,
-                                    enter = scaleIn(tween(100)),
-                                    exit = scaleOut(tween(100)),
-                                    modifier = Modifier
-                                        .align(Alignment.BottomEnd)
-                                        .offset(-3.dp, -3.dp)
-                                ) {
-                                    Badge(
-                                        containerColor = MaterialTheme.colorScheme.tertiary,
-                                    )
-                                }
-                            }
-                        }
-
-                        FilledIconToggleButton(
-                            checked = searchVM.allowNetwork.value,
-                            onCheckedChange = {
-                                searchVM.setAllowNetwork(it)
-                            },
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.Language,
-                                contentDescription = stringResource(R.string.search_filter_online)
-                            )
-                        }
+                    FilledIconToggleButton(
+                        checked = searchVM.allowNetwork.value,
+                        onCheckedChange = {
+                            searchVM.setAllowNetwork(it)
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Language,
+                            contentDescription = stringResource(R.string.search_filter_online)
+                        )
                     }
                 }
                 SearchBarMenu(searchBarValue = value, onInputClear = {
