@@ -1521,17 +1521,21 @@ internal fun LauncherScaffold(
                     val allowArticles by searchVM.wikipediaSearchEnabled.collectAsState(false)
                     val allowPlaces by searchVM.placeSearchEnabled.collectAsState(true)
 
-                    KeyboardFilterBar(
-                        filters = filters,
-                        onFiltersChange = { searchVM.setFilters(it) },
-                        items = buildList {
-                            if (allowEvents) add(KeyboardFilterBarItem.Events)
-                            if (allowFiles) add(KeyboardFilterBarItem.Files)
-                            if (allowWebsites) add(KeyboardFilterBarItem.Websites)
-                            if (allowArticles) add(KeyboardFilterBarItem.Articles)
-                            if (allowPlaces) add(KeyboardFilterBarItem.Places)
-                        }
-                    )
+                    val allowedItems = buildList {
+                        if (allowEvents) add(KeyboardFilterBarItem.Events)
+                        if (allowFiles) add(KeyboardFilterBarItem.Files)
+                        if (allowWebsites) add(KeyboardFilterBarItem.Websites)
+                        if (allowArticles) add(KeyboardFilterBarItem.Articles)
+                        if (allowPlaces) add(KeyboardFilterBarItem.Places)
+                    }
+
+                    if (allowedItems.isNotEmpty()) {
+                        KeyboardFilterBar(
+                            filters = filters,
+                            onFiltersChange = { searchVM.setFilters(it) },
+                            items = allowedItems,
+                        )
+                    }
                 }
             }
         }
