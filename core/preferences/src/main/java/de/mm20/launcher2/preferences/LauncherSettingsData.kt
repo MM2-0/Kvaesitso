@@ -172,7 +172,6 @@ data class LauncherSettingsData internal constructor(
     val locationSearchThemeMap: Boolean = true,
 
     val searchFilter: SearchFilters = SearchFilters(),
-    val searchFilterBar: Boolean = true,
     val searchFilterBarItems: List<KeyboardFilterBarItem> = listOf(
         KeyboardFilterBarItem.Events,
         KeyboardFilterBarItem.Files,

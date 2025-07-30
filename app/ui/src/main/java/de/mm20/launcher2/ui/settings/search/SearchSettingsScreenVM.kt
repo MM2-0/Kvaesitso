@@ -148,20 +148,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }
 
-    val filterBar = searchFilterSettings.filterBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setFilterBar(filterBar: Boolean) {
-        searchFilterSettings.setFilterBar(filterBar)
-    }
-
-    val searchFilters = searchFilterSettings.defaultFilter
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchFilters())
-
-    fun setSearchFilters(searchFilters: SearchFilters) {
-        searchFilterSettings.setDefaultFilter(searchFilters)
-    }
-
     val onlineResultsWiFi = searchFilterSettings.onlineResultsWiFi
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

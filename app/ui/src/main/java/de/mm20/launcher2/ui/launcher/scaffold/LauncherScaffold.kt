@@ -1109,7 +1109,6 @@ internal fun LauncherScaffold(
     val searchActions = searchVM.searchActionResults
     val highlightedResult by searchVM.bestMatch
     val filters by searchVM.filters
-    val filterBar by searchVM.filterBar.collectAsState(false)
     val filterBarItems by searchVM.filterBarItems.collectAsState(emptyList())
     val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
 
@@ -1197,7 +1196,7 @@ internal fun LauncherScaffold(
         val isFilterBarVisible =
             (state.currentProgress == 1f && state.currentComponent is SearchComponent ||
                     state.currentProgress == 0f && config.homeComponent is SearchComponent) &&
-                    filterBar && WindowInsets.isImeVisible
+                    WindowInsets.isImeVisible
 
 
         val imeCurrent = WindowInsets.ime.getBottom(LocalDensity.current).toFloat()

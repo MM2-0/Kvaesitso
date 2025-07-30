@@ -73,7 +73,6 @@ fun SearchSettingsScreen() {
     val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
     val launchOnEnter by viewModel.launchOnEnter.collectAsStateWithLifecycle(null)
     val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
-    val filterBar by viewModel.filterBar.collectAsStateWithLifecycle(null)
 
     val onlineResultsWiFi by viewModel.onlineResultsWiFi.collectAsStateWithLifecycle(null)
     val onlineResultsMobile by viewModel.onlineResultsMobile.collectAsStateWithLifecycle(null)
@@ -304,29 +303,6 @@ fun SearchSettingsScreen() {
                         navController?.navigate("settings/search/tags")
                     }
                 )
-            }
-        }
-        item {
-            PreferenceCategory {
-                SwitchPreference(
-                    title = stringResource(R.string.preference_filter_bar),
-                    iconPadding = true,
-                    summary = stringResource(R.string.preference_filter_bar_summary),
-                    value = filterBar == true,
-                    onValueChanged = {
-                        viewModel.setFilterBar(it)
-                    }
-                )
-                AnimatedVisibility(filterBar == true) {
-                    Preference(
-                        title = stringResource(R.string.preference_customize_filter_bar),
-                        iconPadding = true,
-                        summary = stringResource(R.string.preference_customize_filter_bar_summary),
-                        onClick = {
-                            navController?.navigate("settings/search/filterbar")
-                        }
-                    )
-                }
             }
         }
 

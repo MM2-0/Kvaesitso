@@ -138,7 +138,6 @@ class SearchVM : ViewModel(), KoinComponent {
         SearchFilters()
     )
     val filters = mutableStateOf(defaultFilters.value)
-    val filterBar = searchFilterSettings.filterBar
     val filterBarItems = searchFilterSettings.filterBarItems
 
     val onlineResultsWiFi = searchFilterSettings.onlineResultsWiFi.stateIn(

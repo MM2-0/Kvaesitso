@@ -58,7 +58,6 @@ import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
 import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
-import de.mm20.launcher2.ui.settings.filterbar.FilterBarSettingsScreen
 import de.mm20.launcher2.ui.settings.gestures.GestureSettingsScreen
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
 import de.mm20.launcher2.ui.settings.homescreen.HomescreenSettingsScreen
@@ -255,9 +254,6 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/search/tags") {
                                     TagsSettingsScreen()
-                                }
-                                composable("settings/search/filterbar") {
-                                    FilterBarSettingsScreen()
                                 }
                                 composable(ROUTE_WEATHER_INTEGRATION) {
                                     WeatherIntegrationSettingsScreen()
