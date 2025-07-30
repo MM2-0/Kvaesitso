@@ -1,7 +1,6 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
-import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.serialization.UUIDSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -170,15 +169,6 @@ data class LauncherSettingsData internal constructor(
     val locationSearchShowMap: Boolean = true,
     val locationSearchShowPositionOnMap: Boolean = false,
     val locationSearchThemeMap: Boolean = true,
-
-    val searchFilter: SearchFilters = SearchFilters(),
-    val searchFilterBarItems: List<KeyboardFilterBarItem> = listOf(
-        KeyboardFilterBarItem.Events,
-        KeyboardFilterBarItem.Files,
-        KeyboardFilterBarItem.Articles,
-        KeyboardFilterBarItem.Websites,
-        KeyboardFilterBarItem.Places,
-    ),
 
     val onlineResultsWifi: Boolean = true,
     val onlineResultsMobile: Boolean = false,

@@ -1109,7 +1109,6 @@ internal fun LauncherScaffold(
     val searchActions = searchVM.searchActionResults
     val highlightedResult by searchVM.bestMatch
     val filters by searchVM.filters
-    val filterBarItems by searchVM.filterBarItems.collectAsState(emptyList())
     val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
 
     val hazeState = rememberHazeState(blurEnabled = isAtLeastApiLevel(33))

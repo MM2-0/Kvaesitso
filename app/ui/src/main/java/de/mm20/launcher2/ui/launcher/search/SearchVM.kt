@@ -132,13 +132,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val favoritesEnabled = searchUiSettings.favorites
     val hideFavorites = mutableStateOf(false)
 
-    private val defaultFilters = searchFilterSettings.defaultFilter.stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        SearchFilters()
-    )
-    val filters = mutableStateOf(defaultFilters.value)
-    val filterBarItems = searchFilterSettings.filterBarItems
+    val filters = mutableStateOf(SearchFilters())
 
     val onlineResultsWiFi = searchFilterSettings.onlineResultsWiFi.stateIn(
         viewModelScope,
@@ -181,7 +175,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun reset() {
-        filters.value = defaultFilters.value
+        filters.value = SearchFilters()
         search("")
     }
 
@@ -189,7 +183,7 @@ class SearchVM : ViewModel(), KoinComponent {
     fun search(query: String, forceRestart: Boolean = false) {
         if (searchQuery.value == query && !forceRestart) return
         if (query.isEmpty() && searchQuery.value.isNotEmpty()) {
-            filters.value = defaultFilters.value
+            filters.value = SearchFilters()
         }
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
