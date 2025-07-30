@@ -60,22 +60,7 @@ internal class SearchServiceImpl(
         initialResults: SearchResults?,
     ): Flow<SearchResults> = flow {
         supervisorScope {
-            val results = MutableStateFlow(
-                initialResults?.let {
-                    it.copy(
-                        apps = if (filters.apps) it.apps else null,
-                        shortcuts = if (filters.shortcuts) it.shortcuts else null,
-                        contacts = if (filters.contacts) it.contacts else null,
-                        calendars = if (filters.events) it.calendars else null,
-                        files = if (filters.files) it.files else null,
-                        calculators = if (filters.tools) it.calculators else null,
-                        unitConverters = if (filters.tools) it.unitConverters else null,
-                        websites = if (filters.websites) it.websites else null,
-                        wikipedia = if (filters.articles) it.wikipedia else null,
-                        locations = if (filters.places) it.locations else null,
-                    )
-                }
-                    ?: SearchResults())
+            val results = MutableStateFlow(initialResults ?: SearchResults())
 
             val customAttrResults = customAttributesRepository.search(query)
                 .map { items ->
@@ -91,15 +76,15 @@ internal class SearchServiceImpl(
                     val searchActions = mutableListOf<SearchAction>()
                     for (it in items) {
                         when (it) {
-                            is Application -> if (filters.apps) apps.add(it)
-                            is AppShortcut -> if (filters.shortcuts) shortcuts.add(it)
-                            is Contact -> if (filters.contacts) contacts.add(it)
-                            is CalendarEvent -> if (filters.events) events.add(it)
-                            is File -> if (filters.files) files.add(it)
-                            is UnitConverter -> if (filters.tools) unitConverters.add(it)
-                            is Website -> if (filters.websites) websites.add(it)
-                            is Article -> if (filters.articles) wikipedia.add(it)
-                            is Location -> if (filters.places) locations.add(it)
+                            is Application -> apps.add(it)
+                            is AppShortcut -> shortcuts.add(it)
+                            is Contact -> contacts.add(it)
+                            is CalendarEvent -> events.add(it)
+                            is File -> files.add(it)
+                            is UnitConverter -> unitConverters.add(it)
+                            is Website -> websites.add(it)
+                            is Article -> wikipedia.add(it)
+                            is Location -> locations.add(it)
                             is SearchAction -> searchActions.add(it)
                         }
                     }
@@ -125,7 +110,10 @@ internal class SearchServiceImpl(
                         }
                     }
             }
-            if (filters.apps) {
+            if (!filters.events && !filters.files && !filters.articles && !filters.places && !filters.websites) {
+                /**
+                 * Apps
+                 */
                 launch {
                     appRepository.search(query, allowNetwork)
                         .combine(customAttrResults) { apps, customAttrs ->
@@ -139,53 +127,10 @@ internal class SearchServiceImpl(
                             }
                         }
                 }
-            }
-            if (filters.shortcuts) {
-                launch {
-                    appShortcutRepository.search(query, allowNetwork)
-                        .combine(customAttrResults) { shortcuts, customAttrs ->
-                            if (customAttrs.shortcuts != null) shortcuts + customAttrs.shortcuts
-                            else shortcuts
-                        }
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(shortcuts = r)
-                            }
-                        }
-                }
-            }
-            if (filters.contacts) {
-                launch {
-                    contactRepository.search(query, allowNetwork)
-                        .combine(customAttrResults) { contacts, customAttrs ->
-                            if (customAttrs.contacts != null) contacts + customAttrs.contacts
-                            else contacts
-                        }
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(contacts = r)
-                            }
-                        }
-                }
-            }
-            if (filters.events) {
-                launch {
-                    calendarRepository.search(query, allowNetwork)
-                        .combine(customAttrResults) { calendars, customAttrs ->
-                            if (customAttrs.calendars != null) calendars + customAttrs.calendars
-                            else calendars
-                        }
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(calendars = r)
-                            }
-                        }
-                }
-            }
-            if (filters.tools) {
+
+                /**
+                 * Tools
+                 */
                 launch {
                     calculatorRepository.search(query).collectLatest { r ->
                         results.update {
@@ -203,7 +148,71 @@ internal class SearchServiceImpl(
                             }
                         }
                 }
+
+                /**
+                 * Shortcuts
+                 */
+                launch {
+                    appShortcutRepository.search(query, allowNetwork)
+                        .combine(customAttrResults) { shortcuts, customAttrs ->
+                            if (customAttrs.shortcuts != null) shortcuts + customAttrs.shortcuts
+                            else shortcuts
+                        }
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(shortcuts = r)
+                            }
+                        }
+                }
+
+                /**
+                 * Contacts
+                 */
+
+                launch {
+                    contactRepository.search(query, allowNetwork)
+                        .combine(customAttrResults) { contacts, customAttrs ->
+                            if (customAttrs.contacts != null) contacts + customAttrs.contacts
+                            else contacts
+                        }
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(contacts = r)
+                            }
+                        }
+                }
+            } else {
+                launch {
+                    results.update {
+                        it.copy(apps = null, unitConverters = null, calculators = null, shortcuts = null, contacts = null)
+                    }
+                }
             }
+
+            if (filters.events) {
+                launch {
+                    calendarRepository.search(query, allowNetwork)
+                        .combine(customAttrResults) { calendars, customAttrs ->
+                            if (customAttrs.calendars != null) calendars + customAttrs.calendars
+                            else calendars
+                        }
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(calendars = r)
+                            }
+                        }
+                }
+            } else {
+                launch {
+                    results.update {
+                        it.copy(calendars = null)
+                    }
+                }
+            }
+
             if (filters.websites) {
                 launch {
                     websiteRepository.search(query, allowNetwork)
@@ -217,6 +226,12 @@ internal class SearchServiceImpl(
                                 it.copy(websites = r)
                             }
                         }
+                }
+            } else {
+                launch {
+                    results.update {
+                        it.copy(websites = null)
+                    }
                 }
             }
             if (filters.articles) {
@@ -234,7 +249,14 @@ internal class SearchServiceImpl(
                             }
                         }
                 }
+            } else {
+                launch {
+                    results.update {
+                        it.copy(wikipedia = null)
+                    }
+                }
             }
+
             if (filters.places) {
                 launch {
                     locationRepository.search(query, allowNetwork)
@@ -248,6 +270,12 @@ internal class SearchServiceImpl(
                                 it.copy(locations = r)
                             }
                         }
+                }
+            }  else {
+                launch {
+                    results.update {
+                        it.copy(locations = null)
+                    }
                 }
             }
             if (filters.files) {
@@ -267,7 +295,14 @@ internal class SearchServiceImpl(
                             }
                         }
                 }
+            } else {
+                launch {
+                    results.update {
+                        it.copy(files = null)
+                    }
+                }
             }
+
             emitAll(results)
         }
     }

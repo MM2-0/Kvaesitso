@@ -194,6 +194,7 @@ class SearchVM : ViewModel(), KoinComponent {
         val filters = filters.value
         val allowNetwork = allowNetwork.value
 
+        /*
         if (filters.enabledCategories == 1) {
             expandedCategory.value = when {
                 filters.apps -> SearchCategory.Apps
@@ -209,6 +210,7 @@ class SearchVM : ViewModel(), KoinComponent {
         } else {
             expandedCategory.value = null
         }
+        */
 
         if (isSearchEmpty.value)
             bestMatch.value = null
