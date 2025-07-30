@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.CancellationSignal
 import android.util.Log
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
-import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import kotlinx.coroutines.Dispatchers

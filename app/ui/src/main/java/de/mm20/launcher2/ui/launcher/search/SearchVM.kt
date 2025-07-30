@@ -128,7 +128,6 @@ class SearchVM : ViewModel(), KoinComponent {
     val hiddenResults = mutableStateListOf<SavableSearchable>()
 
     val favoritesEnabled = searchUiSettings.favorites
-    val hideFavorites = mutableStateOf(false)
 
     val filters = mutableStateOf(SearchFilters())
 
@@ -167,7 +166,7 @@ class SearchVM : ViewModel(), KoinComponent {
             filters.value = SearchFilters()
         }
         searchQuery.value = query
-        isSearchEmpty.value = query.isEmpty()
+        isSearchEmpty.value = query.isBlank()
 
         val filters = filters.value
 
@@ -190,7 +189,6 @@ class SearchVM : ViewModel(), KoinComponent {
             searchJob?.cancel()
         } catch (_: CancellationException) {
         }
-        hideFavorites.value = query.isNotEmpty() || filters.enabledCategories != 0
 
         searchJob = viewModelScope.launch {
             if (query.isEmpty() && filters.enabledCategories == 0) {

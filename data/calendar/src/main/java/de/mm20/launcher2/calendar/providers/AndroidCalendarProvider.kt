@@ -4,7 +4,6 @@ import android.content.ContentUris
 import android.content.Context
 import android.provider.CalendarContract
 import androidx.core.database.getStringOrNull
-import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.calendar.CalendarListType
 import kotlinx.coroutines.Dispatchers

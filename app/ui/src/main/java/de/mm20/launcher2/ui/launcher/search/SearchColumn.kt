@@ -63,7 +63,6 @@ fun SearchColumn(
     val favoritesVM: SearchFavoritesVM = viewModel()
     val favorites by favoritesVM.favorites.collectAsState(emptyList())
 
-    val hideFavs by viewModel.hideFavorites
     val favoritesEnabled by viewModel.favoritesEnabled.collectAsState(false)
 
     val apps = viewModel.appResults
@@ -87,6 +86,7 @@ fun SearchColumn(
 
     val query by viewModel.searchQuery
     val isSearchEmpty by viewModel.isSearchEmpty
+    val filters by viewModel.filters
 
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)
@@ -120,66 +120,89 @@ fun SearchColumn(
         reverseLayout = reverse,
         modifier = modifier.padding(horizontal = 8.dp),
     ) {
-        if (!hideFavs && favoritesEnabled) {
-            SearchFavorites(
-                favorites = favorites,
-                selectedTag = selectedTag,
-                pinnedTags = pinnedTags,
-                tagsExpanded = favoritesTagsExpanded,
-                onSelectTag = { favoritesVM.selectTag(it) },
-                reverse = reverse,
-                onExpandTags = {
-                    favoritesVM.setTagsExpanded(it)
-                },
-                compactTags = compactTags,
-                editButton = favoritesEditButton
-            )
-        } else {
-            // Empty item to maintain scroll position
-            item(key = "favorites") {
+        if (isSearchEmpty) {
+            if (filters.enabledCategories == 0) {
+                if (favoritesEnabled) {
+                    SearchFavorites(
+                        favorites = favorites,
+                        selectedTag = selectedTag,
+                        pinnedTags = pinnedTags,
+                        tagsExpanded = favoritesTagsExpanded,
+                        onSelectTag = { favoritesVM.selectTag(it) },
+                        reverse = reverse,
+                        onExpandTags = {
+                            favoritesVM.setTagsExpanded(it)
+                        },
+                        compactTags = compactTags,
+                        editButton = favoritesEditButton
+                    )
+                } else {
+                    // Empty item to maintain scroll position
+                    item(key = "favorites") {
+                    }
+                }
+
+                if (profiles.size > 1) {
+                    AppResults(
+                        apps = when (profiles.getOrNull(selectedAppProfileIndex)?.type) {
+                            Profile.Type.Private -> privateApps
+                            Profile.Type.Work -> workApps
+                            else -> apps
+                        },
+                        highlightedItem = bestMatch as? Application,
+                        profiles = profiles,
+                        selectedProfileIndex = selectedAppProfileIndex,
+                        onProfileSelected = {
+                            selectedAppProfileIndex = it
+                        },
+                        isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true,
+                        onProfileLockChange = { p, l ->
+                            viewModel.setProfileLock(p, l)
+                        },
+                        columns = columns,
+                        reverse = reverse,
+                        showProfileLockControls = hasProfilesPermission,
+                        showList = showList,
+                        selectedIndex = selectedAppIndex,
+                        onSelect = { selectedAppIndex = it },
+                    )
+                } else {
+                    AppResults(
+                        apps = apps,
+                        highlightedItem = bestMatch as? Application,
+                        onProfileSelected = {
+                            selectedAppProfileIndex = it
+                        },
+                        columns = columns,
+                        reverse = reverse,
+                        showList = showList,
+                        selectedIndex = selectedAppIndex,
+                        onSelect = { selectedAppIndex = it },
+                    )
+                }
+            } else if (filters.files) {
+                /**
+                 * TODO: File search UI
+                 */
+            } else if (filters.events) {
+                /**
+                 * TODO: Calendar search UI
+                 */
+            } else if (filters.websites) {
+                /**
+                 * TODO: Website search UI
+                 */
+            } else if (filters.articles) {
+                /**
+                 * TODO: Wikipedia search UI
+                 */
+            } else if (filters.places) {
+                /**
+                 * TODO: Location search UI
+                 */
             }
         }
-
-        if (isSearchEmpty && profiles.size > 1) {
-            AppResults(
-                apps = when(profiles.getOrNull(selectedAppProfileIndex)?.type) {
-                    Profile.Type.Private -> privateApps
-                    Profile.Type.Work -> workApps
-                    else -> apps
-                },
-                highlightedItem = bestMatch as? Application,
-                profiles = profiles,
-                selectedProfileIndex = selectedAppProfileIndex,
-                onProfileSelected = {
-                    selectedAppProfileIndex = it
-                },
-                isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true,
-                onProfileLockChange = { p, l ->
-                    viewModel.setProfileLock(p, l)
-                },
-                columns = columns,
-                reverse = reverse,
-                showProfileLockControls = hasProfilesPermission,
-                showList = showList,
-                selectedIndex = selectedAppIndex,
-                onSelect = { selectedAppIndex = it },
-            )
-        } else {
-            AppResults(
-                apps = apps,
-                highlightedItem = bestMatch as? Application,
-                onProfileSelected = {
-                    selectedAppProfileIndex = it
-                },
-                columns = columns,
-                reverse = reverse,
-                showList = showList,
-                selectedIndex = selectedAppIndex,
-                onSelect = { selectedAppIndex = it },
-            )
-        }
-
-        if (!isSearchEmpty) {
+        else {
 
             ShortcutResults(
                 shortcuts = appShortcuts,
