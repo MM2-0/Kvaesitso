@@ -11,7 +11,6 @@ import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 
 data class SearchParams(
-    val allowNetwork: Boolean,
     val lang: String?,
 )
 
@@ -165,12 +164,8 @@ abstract class QueryPluginProvider<TQuery, TResult>(
     }
 
     private fun getSearchParams(uri: Uri): SearchParams {
-        val allowNetwork =
-            uri.getQueryParameter(SearchPluginContract.Params.AllowNetwork)?.toBoolean()
-                ?: false
         val lang = uri.getQueryParameter(SearchPluginContract.Params.Lang)
         return SearchParams(
-            allowNetwork = allowNetwork,
             lang = lang,
         )
     }

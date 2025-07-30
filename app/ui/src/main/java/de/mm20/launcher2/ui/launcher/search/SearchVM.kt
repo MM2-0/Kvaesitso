@@ -15,7 +15,6 @@ import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.FileSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
-import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
@@ -72,7 +71,6 @@ class SearchVM : ViewModel(), KoinComponent {
     private val searchUiSettings: SearchUiSettings by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val devicePoseProvider: DevicePoseProvider by inject()
-    private val searchFilterSettings: SearchFilterSettings by inject()
     private val websiteSearchSettings: WebsiteSearchSettings by inject ()
     private val wikipediaSearchSettings: WikipediaSearchSettings by inject()
 
@@ -134,18 +132,6 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val filters = mutableStateOf(SearchFilters())
 
-    val onlineResultsWiFi = searchFilterSettings.onlineResultsWiFi.stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        false
-    )
-    val onlineResultsMobile = searchFilterSettings.onlineResultsMobile.stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        false
-    )
-    val allowNetwork = mutableStateOf(false)
-
     val bestMatch = mutableStateOf<Searchable?>(null)
 
     init {
@@ -169,11 +155,6 @@ class SearchVM : ViewModel(), KoinComponent {
         search(searchQuery.value, forceRestart = true)
     }
 
-    fun setAllowNetwork(allowNetwork: Boolean) {
-        this.allowNetwork.value = allowNetwork
-        search(searchQuery.value, forceRestart = true)
-    }
-
     fun reset() {
         filters.value = SearchFilters()
         search("")
@@ -189,7 +170,6 @@ class SearchVM : ViewModel(), KoinComponent {
         isSearchEmpty.value = query.isEmpty()
 
         val filters = filters.value
-        val allowNetwork = allowNetwork.value
 
         if (filters.enabledCategories == 1) {
             expandedCategory.value = when {
@@ -259,7 +239,6 @@ class SearchVM : ViewModel(), KoinComponent {
                 searchService.search(
                     query,
                     filters = filters,
-                    allowNetwork = allowNetwork,
                     previousResults,
                 )
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }

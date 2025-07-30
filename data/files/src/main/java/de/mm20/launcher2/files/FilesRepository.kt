@@ -40,10 +40,7 @@ internal class FileRepository(
         OwncloudClient(context)
     }
 
-    override fun search(
-        query: String,
-        allowNetwork: Boolean,
-    ): Flow<ImmutableList<File>> {
+    override fun search(query: String): Flow<ImmutableList<File>> {
         if (query.isBlank()) {
             return flowOf(persistentListOf())
         }
@@ -74,10 +71,7 @@ internal class FileRepository(
 
                 for (provider in providers) {
                     launch {
-                        val r = provider.search(
-                            query,
-                            allowNetwork,
-                        )
+                        val r = provider.search(query)
                         result.update {
                             (it + r).toPersistentList()
                         }

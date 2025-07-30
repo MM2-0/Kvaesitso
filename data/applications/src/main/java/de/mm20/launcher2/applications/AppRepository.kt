@@ -10,7 +10,6 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
-import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.Application
@@ -30,8 +29,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import org.apache.commons.text.similarity.FuzzyScore
-import java.util.Locale
 
 interface AppRepository : SearchableRepository<Application> {
     fun findOne(
@@ -239,7 +236,7 @@ internal class AppRepositoryImpl(
         return installedApps.map { it.toImmutableList() }
     }
 
-    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<LauncherApp>> {
+    override fun search(query: String): Flow<ImmutableList<LauncherApp>> {
         return installedApps.map { apps ->
             withContext(Dispatchers.Default) {
                 val appResults = mutableListOf<LauncherApp>()

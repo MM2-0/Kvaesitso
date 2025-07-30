@@ -60,7 +60,6 @@ fun LauncherSearchBar(
     val focusRequester = remember { FocusRequester() }
 
     val searchVM: SearchVM = viewModel()
-    val context = LocalContext.current
     val hiddenItemsButtonEnabled by searchVM.hiddenResultsButton.collectAsState(false)
     val hiddenItems = searchVM.hiddenResults
 
@@ -72,31 +71,6 @@ fun LauncherSearchBar(
     }
 
     val value by searchVM.searchQuery
-
-    val allowNetwork by searchVM.allowNetwork
-    val onlineResultsWiFi by searchVM.onlineResultsWiFi.collectAsState()
-    val onlineResultsMobile by searchVM.onlineResultsMobile.collectAsState()
-    val networkType = NetworkUtils.currentNetworkType(context).collectAsState(NetworkUtils.NetworkType.Offline)
-
-    LaunchedEffect(networkType.value, onlineResultsWiFi, onlineResultsMobile) {
-        if (networkType.value == NetworkUtils.NetworkType.Offline) {
-            searchVM.setAllowNetwork(false)
-        } else if (!allowNetwork &&
-            (
-                (networkType.value == NetworkUtils.NetworkType.NotMetered && onlineResultsWiFi) ||
-                (networkType.value == NetworkUtils.NetworkType.Metered && onlineResultsMobile)
-            ))
-        {
-            searchVM.setAllowNetwork(true)
-        } else if (allowNetwork &&
-            (
-                (networkType.value == NetworkUtils.NetworkType.NotMetered && !onlineResultsWiFi) ||
-                (networkType.value == NetworkUtils.NetworkType.Metered && !onlineResultsMobile)
-            ))
-        {
-            searchVM.setAllowNetwork(false)
-        }
-    }
 
     Box(modifier = modifier) {
         SearchBar(
@@ -120,23 +94,6 @@ fun LauncherSearchBar(
                         onCheckedChange = { if (it) sheetManager.showHiddenItemsSheet() },
                     ) {
                         Icon(imageVector = Icons.Rounded.VisibilityOff, contentDescription = null)
-                    }
-                }
-                AnimatedVisibility(
-                    isSearchOpen,
-                    enter = scaleIn(tween(100)),
-                    exit = scaleOut(tween(100))
-                ) {
-                    FilledIconToggleButton(
-                        checked = searchVM.allowNetwork.value,
-                        onCheckedChange = {
-                            searchVM.setAllowNetwork(it)
-                        },
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Language,
-                            contentDescription = stringResource(R.string.search_filter_online)
-                        )
                     }
                 }
                 SearchBarMenu(searchBarValue = value, onInputClear = {

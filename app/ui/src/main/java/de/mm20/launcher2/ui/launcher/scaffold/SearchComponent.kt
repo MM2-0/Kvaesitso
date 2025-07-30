@@ -46,7 +46,7 @@ internal class SearchComponent(
             }
         }
 
-        LaunchedEffect(searchVM.searchQuery.value, searchVM.filters.value, searchVM.allowNetwork.value) {
+        LaunchedEffect(searchVM.searchQuery.value, searchVM.filters.value) {
             lazyListState.requestScrollToItem(0, 0)
         }
 

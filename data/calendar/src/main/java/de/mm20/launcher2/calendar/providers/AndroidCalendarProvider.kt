@@ -20,7 +20,6 @@ class AndroidCalendarProvider(
         to: Long,
         excludedCalendars: List<String>,
         excludeAllDayEvents: Boolean,
-        allowNetwork: Boolean
     ): List<CalendarEvent> {
         val results = withContext(Dispatchers.IO) {
             val results = mutableListOf<AndroidCalendarEvent>()

@@ -53,8 +53,8 @@ internal class WikipediaRepository(
     private lateinit var wikipediaService: WikipediaApi
 
 
-    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Wikipedia>> {
-        if (query.length < 4 || !allowNetwork) return flowOf(persistentListOf())
+    override fun search(query: String): Flow<ImmutableList<Wikipedia>> {
+        if (query.length < 4) return flowOf(persistentListOf())
 
         return settings.enabled.transformLatest {
             emit(persistentListOf())

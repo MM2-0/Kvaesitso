@@ -48,7 +48,7 @@ internal class CalendarRepositoryImpl(
     private val settings: CalendarSearchSettings,
 ) : CalendarRepository {
 
-    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<CalendarEvent>> {
+    override fun search(query: String): Flow<ImmutableList<CalendarEvent>> {
         if (query.isBlank() || query.length < 2) {
             return flow {
                 emit(persistentListOf())
@@ -83,7 +83,6 @@ internal class CalendarRepositoryImpl(
                     providers = providers,
                     intervalStart = now,
                     intervalEnd = now + 730.days.inWholeMilliseconds,
-                    allowNetwork = allowNetwork,
                 )
             )
         }
@@ -120,7 +119,6 @@ internal class CalendarRepositoryImpl(
                     excludeAllDayEvents = excludeAllDayEvents,
                     excludeCalendars = excludeCalendars,
                     providers = providers,
-                    allowNetwork = false,
                 ).debounce(500)
             )
         }
@@ -132,7 +130,6 @@ internal class CalendarRepositoryImpl(
         intervalEnd: Long,
         excludeAllDayEvents: Boolean = false,
         excludeCalendars: List<String> = emptyList(),
-        allowNetwork: Boolean = false,
         providers: List<CalendarProvider>,
     ): Flow<ImmutableList<CalendarEvent>> = flow {
         supervisorScope {
@@ -149,7 +146,6 @@ internal class CalendarRepositoryImpl(
                             if (namespace == provider.namespace) id else null
                         },
                         excludeAllDayEvents = excludeAllDayEvents,
-                        allowNetwork = allowNetwork,
                     )
                     result.update {
                         (it + r).toPersistentList()

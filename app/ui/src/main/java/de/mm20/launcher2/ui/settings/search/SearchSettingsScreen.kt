@@ -74,9 +74,6 @@ fun SearchSettingsScreen() {
     val launchOnEnter by viewModel.launchOnEnter.collectAsStateWithLifecycle(null)
     val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
 
-    val onlineResultsWiFi by viewModel.onlineResultsWiFi.collectAsStateWithLifecycle(null)
-    val onlineResultsMobile by viewModel.onlineResultsMobile.collectAsStateWithLifecycle(null)
-
     PreferenceScreen(title = stringResource(R.string.preference_screen_search)) {
         item {
             PreferenceCategory (
@@ -305,30 +302,6 @@ fun SearchSettingsScreen() {
                 )
             }
         }
-
-        item {
-            PreferenceCategory {
-                SwitchPreference(
-                    title = stringResource(R.string.automatically_search_online_on_wifi),
-                    icon = Icons.Rounded.Wifi,
-                    value = onlineResultsWiFi == true,
-                    onValueChanged = {
-                        viewModel.setOnlineResultsWiFi(it)
-                    }
-                )
-                AnimatedVisibility(onlineResultsWiFi == true) {
-                    SwitchPreference(
-                        title = stringResource(R.string.automatically_search_online_on_mobile_data),
-                        icon = Icons.Rounded.SignalCellularAlt,
-                        value = onlineResultsMobile == true,
-                        onValueChanged = {
-                            viewModel.setOnlineResultsMobile(it)
-                        }
-                    )
-                }
-            }
-        }
-
         item {
             PreferenceCategory {
                 SwitchPreference(

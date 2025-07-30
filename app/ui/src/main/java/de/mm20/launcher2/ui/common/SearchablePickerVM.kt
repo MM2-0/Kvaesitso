@@ -42,7 +42,6 @@ class SearchablePickerVM : ViewModel(), KoinComponent {
             searchService.search(
                 query = query,
                 filters = SearchFilters(),
-                allowNetwork = true
             ).collectLatest {
                 if (searchQuery != query) return@collectLatest
                 items = withContext(Dispatchers.Default) {

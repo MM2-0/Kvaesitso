@@ -21,7 +21,6 @@ internal class TasksCalendarProvider(
         to: Long,
         excludedCalendars: List<String>,
         excludeAllDayEvents: Boolean,
-        allowNetwork: Boolean
     ): List<CalendarEvent> {
         return withContext(Dispatchers.IO) {
             val startOfDay = Instant.ofEpochMilli(from)

@@ -26,14 +26,10 @@ internal class PluginLocationProvider(
     override suspend fun search(
         query: String,
         userLocation: AndroidLocation,
-        allowNetwork: Boolean,
         searchRadiusMeters: Int,
         hideUncategorized: Boolean
     ): List<Location> {
-        return search(
-            query = Triple(query, userLocation, searchRadiusMeters),
-            allowNetwork = allowNetwork,
-        )
+        return search(Triple(query, userLocation, searchRadiusMeters))
     }
 
     override fun Uri.Builder.appendQueryParameters(query: Triple<String, AndroidLocation, Int>): Uri.Builder {

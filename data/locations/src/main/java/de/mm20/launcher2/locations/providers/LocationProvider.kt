@@ -9,7 +9,6 @@ internal interface LocationProvider<TId> {
     suspend fun search(
         query: String,
         userLocation: AndroidLocation,
-        allowNetwork: Boolean,
         searchRadiusMeters: Int,
         hideUncategorized: Boolean
     ): List<Location>

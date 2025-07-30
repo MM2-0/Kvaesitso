@@ -14,7 +14,7 @@ internal class LocalFileProvider(
     private val context: Context,
     private val permissionsManager: PermissionsManager
 ): FileProvider {
-    override suspend fun search(query: String, allowNetwork: Boolean): List<File> = withContext(Dispatchers.IO) {
+    override suspend fun search(query: String): List<File> = withContext(Dispatchers.IO) {
         if (!permissionsManager.checkPermissionOnce(PermissionGroup.ExternalStorage)) {
             return@withContext emptyList()
         }

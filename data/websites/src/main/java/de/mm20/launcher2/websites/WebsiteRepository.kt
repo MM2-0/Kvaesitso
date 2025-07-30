@@ -37,8 +37,7 @@ internal class WebsiteRepository(
         .writeTimeout(1000, TimeUnit.MILLISECONDS)
         .build()
 
-    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Website>> {
-        if (!allowNetwork) return flowOf(persistentListOf())
+    override fun search(query: String): Flow<ImmutableList<Website>> {
         return settings.enabled.transformLatest { enabled ->
             emit(persistentListOf())
             withContext(Dispatchers.IO) {

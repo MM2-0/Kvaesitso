@@ -98,13 +98,10 @@ internal class OsmLocationProvider(
     override suspend fun search(
         query: String,
         userLocation: AndroidLocation,
-        allowNetwork: Boolean,
         searchRadiusMeters: Int,
         hideUncategorized: Boolean,
     ): List<Location> {
-        if (!allowNetwork || query.length < 2) {
-            return emptyList()
-        }
+        if (query.length < 2) return emptyList()
 
         withContext(Dispatchers.IO) {
             HttpClient.dispatcher.cancelAll()

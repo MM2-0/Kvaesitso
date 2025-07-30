@@ -30,7 +30,6 @@ interface SearchService {
     fun search(
         query: String,
         filters: SearchFilters,
-        allowNetwork: Boolean,
         initialResults: SearchResults? = null,
     ): Flow<SearchResults>
 
@@ -56,7 +55,6 @@ internal class SearchServiceImpl(
     override fun search(
         query: String,
         filters: SearchFilters,
-        allowNetwork: Boolean,
         initialResults: SearchResults?,
     ): Flow<SearchResults> = flow {
         supervisorScope {
@@ -115,7 +113,7 @@ internal class SearchServiceImpl(
                  * Apps
                  */
                 launch {
-                    appRepository.search(query, allowNetwork)
+                    appRepository.search(query)
                         .combine(customAttrResults) { apps, customAttrs ->
                             if (customAttrs.apps != null) apps + customAttrs.apps
                             else apps
@@ -153,7 +151,7 @@ internal class SearchServiceImpl(
                  * Shortcuts
                  */
                 launch {
-                    appShortcutRepository.search(query, allowNetwork)
+                    appShortcutRepository.search(query)
                         .combine(customAttrResults) { shortcuts, customAttrs ->
                             if (customAttrs.shortcuts != null) shortcuts + customAttrs.shortcuts
                             else shortcuts
@@ -171,7 +169,7 @@ internal class SearchServiceImpl(
                  */
 
                 launch {
-                    contactRepository.search(query, allowNetwork)
+                    contactRepository.search(query)
                         .combine(customAttrResults) { contacts, customAttrs ->
                             if (customAttrs.contacts != null) contacts + customAttrs.contacts
                             else contacts
@@ -193,7 +191,7 @@ internal class SearchServiceImpl(
 
             if (filters.events) {
                 launch {
-                    calendarRepository.search(query, allowNetwork)
+                    calendarRepository.search(query)
                         .combine(customAttrResults) { calendars, customAttrs ->
                             if (customAttrs.calendars != null) calendars + customAttrs.calendars
                             else calendars
@@ -215,7 +213,7 @@ internal class SearchServiceImpl(
 
             if (filters.websites) {
                 launch {
-                    websiteRepository.search(query, allowNetwork)
+                    websiteRepository.search(query)
                         .combine(customAttrResults) { websites, customAttrs ->
                             if (customAttrs.websites != null) websites + customAttrs.websites
                             else websites
@@ -237,7 +235,7 @@ internal class SearchServiceImpl(
             if (filters.articles) {
                 launch {
                     delay(750)
-                    articleRepository.search(query, allowNetwork)
+                    articleRepository.search(query)
                         .combine(customAttrResults) { articles, customAttrs ->
                             if (customAttrs.wikipedia != null) articles + customAttrs.wikipedia
                             else articles
@@ -259,7 +257,7 @@ internal class SearchServiceImpl(
 
             if (filters.places) {
                 launch {
-                    locationRepository.search(query, allowNetwork)
+                    locationRepository.search(query)
                         .combine(customAttrResults) { locations, customAttrs ->
                             if (customAttrs.locations != null) locations + customAttrs.locations
                             else locations
@@ -280,10 +278,7 @@ internal class SearchServiceImpl(
             }
             if (filters.files) {
                 launch {
-                    fileRepository.search(
-                        query,
-                        allowNetwork
-                    )
+                    fileRepository.search(query)
                         .combine(customAttrResults) { files, customAttrs ->
                             if (customAttrs.files != null) files + customAttrs.files
                             else files
@@ -312,7 +307,7 @@ internal class SearchServiceImpl(
             val standardProfile = profiles.find { it.type == Profile.Type.Personal }
             val workProfile = profiles.find { it.type == Profile.Type.Work }
             val privateSpace = profiles.find { it.type == Profile.Type.Private }
-            appRepository.search("", false)
+            appRepository.search("")
                 .withCustomLabels(customAttributesRepository)
                 .map { apps ->
                     val standardProfileApps = mutableListOf<Application>()

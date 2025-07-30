@@ -170,9 +170,6 @@ data class LauncherSettingsData internal constructor(
     val locationSearchShowPositionOnMap: Boolean = false,
     val locationSearchThemeMap: Boolean = true,
 
-    val onlineResultsWifi: Boolean = true,
-    val onlineResultsMobile: Boolean = false,
-
     ) {
     constructor(
         context: Context,
