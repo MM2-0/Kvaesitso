@@ -90,6 +90,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBarLevel
@@ -1515,10 +1516,22 @@ internal fun LauncherScaffold(
                         .alpha(imeProgress),
                     contentAlignment = Alignment.BottomCenter,
                 ) {
+                    val allowEvents by searchVM.calendarSearchEnabled.collectAsState(true)
+                    val allowFiles by searchVM.fileSearchEnabled.collectAsState(true)
+                    val allowWebsites by searchVM.websiteSearchEnabled.collectAsState(false)
+                    val allowArticles by searchVM.wikipediaSearchEnabled.collectAsState(false)
+                    val allowPlaces by searchVM.placeSearchEnabled.collectAsState(true)
+
                     KeyboardFilterBar(
                         filters = filters,
                         onFiltersChange = { searchVM.setFilters(it) },
-                        items = filterBarItems
+                        items = buildList {
+                            if (allowEvents) add(KeyboardFilterBarItem.Events)
+                            if (allowFiles) add(KeyboardFilterBarItem.Files)
+                            if (allowWebsites) add(KeyboardFilterBarItem.Websites)
+                            if (allowArticles) add(KeyboardFilterBarItem.Articles)
+                            if (allowPlaces) add(KeyboardFilterBarItem.Places)
+                        }
                     )
                 }
             }

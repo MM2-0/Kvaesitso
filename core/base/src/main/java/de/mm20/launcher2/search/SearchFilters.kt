@@ -9,4 +9,8 @@ data class SearchFilters(
     val articles: Boolean = false,
     val places: Boolean = false,
     val files: Boolean = false,
-)
+) {
+    private val categories = listOf(websites, articles, places, files, events)
+    val enabledCategories: Int
+        get() = categories.count { it }
+}

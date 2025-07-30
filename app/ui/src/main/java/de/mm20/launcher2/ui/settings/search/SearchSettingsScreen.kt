@@ -70,7 +70,6 @@ fun SearchSettingsScreen() {
     val wikipedia by viewModel.wikipedia.collectAsStateWithLifecycle(null)
     val websites by viewModel.websites.collectAsStateWithLifecycle(null)
 
-
     val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
     val launchOnEnter by viewModel.launchOnEnter.collectAsStateWithLifecycle(null)
     val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
@@ -81,7 +80,9 @@ fun SearchSettingsScreen() {
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_search)) {
         item {
-            PreferenceCategory {
+            PreferenceCategory (
+                title = "Search result providers"
+            ) {
                 PreferenceWithSwitch(
                     title = stringResource(R.string.preference_search_favorites),
                     summary = stringResource(R.string.preference_search_favorites_summary),
@@ -92,15 +93,6 @@ fun SearchSettingsScreen() {
                     },
                     onClick = {
                         navController?.navigate("settings/favorites")
-                    }
-                )
-
-                Preference(
-                    title = stringResource(R.string.preference_search_files),
-                    summary = stringResource(R.string.preference_search_files_summary),
-                    icon = Icons.Rounded.Description,
-                    onClick = {
-                        navController?.navigate("settings/search/files")
                     }
                 )
 
@@ -133,40 +125,6 @@ fun SearchSettingsScreen() {
                                 navController?.navigate("settings/search/contacts")
                             },
                             enabled = hasContactsPermission == true
-                        )
-                    }
-                }
-
-                if (hasCalendarPlugins != false || isTasksAppInstalled != false) {
-                    Preference(
-                        title = stringResource(R.string.preference_search_calendar),
-                        summary = stringResource(R.string.preference_search_calendar_summary),
-                        icon = Icons.Rounded.Today,
-                        onClick = {
-                            navController?.navigate("settings/search/calendar")
-                        },
-                    )
-                } else {
-
-                    GuardedPreference(
-                        locked = hasCalendarPermission == false,
-                        onUnlock = {
-                            viewModel.requestCalendarPermission(context as AppCompatActivity)
-                        },
-                        description = stringResource(R.string.missing_permission_calendar_search_settings),
-                    ) {
-                        PreferenceWithSwitch(
-                            title = stringResource(R.string.preference_search_calendar),
-                            summary = stringResource(R.string.preference_search_calendar_summary),
-                            switchValue = calendar == true,
-                            onSwitchChanged = {
-                                viewModel.setCalendarSearch(it)
-                            },
-                            icon = Icons.Rounded.Today,
-                            enabled = hasCalendarPermission == true,
-                            onClick = {
-                                navController?.navigate("settings/search/calendar/local")
-                            }
                         )
                     }
                 }
@@ -215,6 +173,62 @@ fun SearchSettingsScreen() {
                     }
                 )
 
+                Preference(
+                    title = stringResource(R.string.preference_screen_search_actions),
+                    summary = stringResource(R.string.preference_search_search_actions_summary),
+                    icon = Icons.Rounded.ArrowOutward,
+                    onClick = {
+                        navController?.navigate("settings/search/searchactions")
+                    }
+                )
+            }
+        }
+
+        item {
+            PreferenceCategory (
+                title = "Special search result providers"
+            ) {
+                Preference(
+                    title = stringResource(R.string.preference_search_files),
+                    summary = stringResource(R.string.preference_search_files_summary),
+                    icon = Icons.Rounded.Description,
+                    onClick = {
+                        navController?.navigate("settings/search/files")
+                    }
+                )
+                if (hasCalendarPlugins != false || isTasksAppInstalled != false) {
+                    Preference(
+                        title = stringResource(R.string.preference_search_calendar),
+                        summary = stringResource(R.string.preference_search_calendar_summary),
+                        icon = Icons.Rounded.Today,
+                        onClick = {
+                            navController?.navigate("settings/search/calendar")
+                        },
+                    )
+                } else {
+
+                    GuardedPreference(
+                        locked = hasCalendarPermission == false,
+                        onUnlock = {
+                            viewModel.requestCalendarPermission(context as AppCompatActivity)
+                        },
+                        description = stringResource(R.string.missing_permission_calendar_search_settings),
+                    ) {
+                        PreferenceWithSwitch(
+                            title = stringResource(R.string.preference_search_calendar),
+                            summary = stringResource(R.string.preference_search_calendar_summary),
+                            switchValue = calendar == true,
+                            onSwitchChanged = {
+                                viewModel.setCalendarSearch(it)
+                            },
+                            icon = Icons.Rounded.Today,
+                            enabled = hasCalendarPermission == true,
+                            onClick = {
+                                navController?.navigate("settings/search/calendar/local")
+                            }
+                        )
+                    }
+                }
                 PreferenceWithSwitch(
                     title = stringResource(R.string.preference_search_wikipedia),
                     summary = stringResource(R.string.preference_search_wikipedia_summary),
@@ -227,7 +241,6 @@ fun SearchSettingsScreen() {
                         navController?.navigate("settings/search/wikipedia")
                     }
                 )
-
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_websites),
                     summary = stringResource(R.string.preference_search_websites_summary),
@@ -271,14 +284,6 @@ fun SearchSettingsScreen() {
                     }
                 }
 
-                Preference(
-                    title = stringResource(R.string.preference_screen_search_actions),
-                    summary = stringResource(R.string.preference_search_search_actions_summary),
-                    icon = Icons.Rounded.ArrowOutward,
-                    onClick = {
-                        navController?.navigate("settings/search/searchactions")
-                    }
-                )
             }
         }
         item {
