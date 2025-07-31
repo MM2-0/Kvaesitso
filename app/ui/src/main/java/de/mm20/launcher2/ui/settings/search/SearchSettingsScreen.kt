@@ -73,6 +73,18 @@ fun SearchSettingsScreen() {
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_search)) {
         item {
+            PreferenceCategory {
+                Preference(
+                    title = stringResource(R.string.preference_screen_search_actions),
+                    summary = stringResource(R.string.preference_search_search_actions_summary),
+                    icon = Icons.Rounded.ArrowOutward,
+                    onClick = {
+                        navController?.navigate("settings/search/searchactions")
+                    }
+                )
+            }
+        }
+        item {
             PreferenceCategory (
                 title = "Search result providers"
             ) {
@@ -163,15 +175,6 @@ fun SearchSettingsScreen() {
                     },
                     onClick = {
                         navController?.navigate("settings/search/unitconverter")
-                    }
-                )
-
-                Preference(
-                    title = stringResource(R.string.preference_screen_search_actions),
-                    summary = stringResource(R.string.preference_search_search_actions_summary),
-                    icon = Icons.Rounded.ArrowOutward,
-                    onClick = {
-                        navController?.navigate("settings/search/searchactions")
                     }
                 )
             }
