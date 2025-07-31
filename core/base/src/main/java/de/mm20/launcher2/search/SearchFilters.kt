@@ -13,4 +13,10 @@ data class SearchFilters(
     private val categories = listOf(websites, articles, places, files, events)
     val enabledCategories: Int
         get() = categories.count { it }
+
+    fun toggleWebsites(): SearchFilters = SearchFilters(websites = !websites)
+    fun toggleArticles(): SearchFilters = SearchFilters(articles = !articles)
+    fun togglePlaces(): SearchFilters = SearchFilters(places = !places)
+    fun toggleFiles(): SearchFilters = SearchFilters(files = !files)
+    fun toggleEvents(): SearchFilters = SearchFilters(events = !events)
 }
