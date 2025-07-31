@@ -162,26 +162,11 @@ class SearchVM : ViewModel(), KoinComponent {
     private var searchJob: Job? = null
     fun search(query: String, forceRestart: Boolean = false) {
         if (searchQuery.value == query && !forceRestart) return
-        if (query.isEmpty() && searchQuery.value.isNotEmpty()) {
-            filters.value = SearchFilters()
-        }
         searchQuery.value = query
         isSearchEmpty.value = query.isBlank()
 
         val filters = filters.value
-
-        if (filters.enabledCategories == 1) {
-            expandedCategory.value = when {
-                filters.events -> SearchCategory.Calendar
-                filters.files -> SearchCategory.Files
-                filters.websites -> SearchCategory.Website
-                filters.articles -> SearchCategory.Articles
-                filters.places -> SearchCategory.Location
-                else -> null
-            }
-        } else {
-            expandedCategory.value = null
-        }
+        expandedCategory.value = null
 
         if (isSearchEmpty.value)
             bestMatch.value = null

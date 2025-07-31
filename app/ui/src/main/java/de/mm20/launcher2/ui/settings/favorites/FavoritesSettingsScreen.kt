@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.favorites
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Insights
@@ -56,17 +57,19 @@ fun FavoritesSettingsScreen() {
                     icon = Icons.Rounded.Insights
                 )
                 val frequentlyUsedRows by viewModel.frequentlyUsedRows.collectAsState()
-                SliderPreference(
-                    title = stringResource(R.string.frequently_used_rows),
-                    value = frequentlyUsedRows,
-                    enabled = frequentlyUsed == true,
-                    min = 1,
-                    max = 4,
-                    onValueChanged = {
-                        viewModel.setFrequentlyUsedRows(it)
-                    },
-                    icon = Icons.Rounded.TableRows
-                )
+                AnimatedVisibility(frequentlyUsed == true) {
+                    SliderPreference(
+                        title = stringResource(R.string.frequently_used_rows),
+                        value = frequentlyUsedRows,
+                        enabled = frequentlyUsed == true,
+                        min = 1,
+                        max = 4,
+                        onValueChanged = {
+                            viewModel.setFrequentlyUsedRows(it)
+                        },
+                        icon = Icons.Rounded.TableRows
+                    )
+                }
                 val searchResultWeightFactor by viewModel.searchResultWeightFactor.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_search_result_ordering_weight_factor),
