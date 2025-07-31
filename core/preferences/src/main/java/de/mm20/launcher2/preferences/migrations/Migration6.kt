@@ -17,12 +17,12 @@ class Migration6 : DataMigration<LauncherSettingsData>, KoinComponent  {
         return currentData.copy(
             schemaVersion = 6,
             calendarSearchProviders =
-                if (permissionsManager.checkPermissionOnce(PermissionGroup.Calendar))
+                if (!permissionsManager.checkPermissionOnce(PermissionGroup.Calendar))
                     currentData.calendarSearchProviders - "local"
                 else
                     currentData.calendarSearchProviders,
             fileSearchProviders =
-                if (permissionsManager.checkPermissionOnce(PermissionGroup.ExternalStorage))
+                if (!permissionsManager.checkPermissionOnce(PermissionGroup.ExternalStorage))
                     currentData.fileSearchProviders - "local"
                 else
                     currentData.fileSearchProviders,
