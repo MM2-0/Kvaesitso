@@ -6,9 +6,6 @@ import kotlinx.coroutines.flow.map
 class CalendarSearchSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
-    val providers
-        get() = dataStore.data.map { it.calendarSearchProviders }
-
     val enabledProviders
         get() = dataStore.data.map { it.calendarSearchProviders }
 

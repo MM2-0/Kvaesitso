@@ -47,7 +47,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -132,6 +131,12 @@ class SearchVM : ViewModel(), KoinComponent {
     val filters = mutableStateOf(SearchFilters())
 
     val bestMatch = mutableStateOf<Searchable?>(null)
+
+    val calendarSearchEnabled = calendarSearchSettings.enabledProviders.map { !it.isEmpty() }
+    val fileSearchEnabled = fileSearchSettings.enabledProviders.map { !it.isEmpty() }
+    val websiteSearchEnabled = websiteSearchSettings.enabled
+    val wikipediaSearchEnabled = wikipediaSearchSettings.enabled
+    val placeSearchEnabled = locationSearchSettings.enabledProviders.map { !it.isEmpty() }
 
     init {
         search("", forceRestart = true)
@@ -303,19 +308,6 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
-    val missingCalendarPermission = combine(
-        permissionsManager.hasPermission(PermissionGroup.Calendar),
-        calendarSearchSettings.providers,
-    ) { perm, providers -> !perm && providers.contains("local") }
-
-    fun requestCalendarPermission(context: AppCompatActivity) {
-        permissionsManager.requestPermission(context, PermissionGroup.Calendar)
-    }
-
-    fun disableCalendarSearch() {
-        calendarSearchSettings.setProviderEnabled("local", false)
-    }
-
     val missingContactsPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Contacts),
         contactSearchSettings.isProviderEnabled("local")
@@ -329,32 +321,6 @@ class SearchVM : ViewModel(), KoinComponent {
         contactSearchSettings.setProviderEnabled("local", false)
     }
 
-    val missingLocationPermission = combine(
-        permissionsManager.hasPermission(PermissionGroup.Location),
-        locationSearchSettings.osmLocations.distinctUntilChanged()
-    ) { perm, enabled -> !perm && enabled }
-
-    fun requestLocationPermission(context: AppCompatActivity) {
-        permissionsManager.requestPermission(context, PermissionGroup.Location)
-    }
-
-    fun disableLocationSearch() {
-        locationSearchSettings.setOsmLocations(false)
-    }
-
-    val missingFilesPermission = combine(
-        permissionsManager.hasPermission(PermissionGroup.ExternalStorage),
-        fileSearchSettings.localFiles
-    ) { perm, enabled -> !perm && enabled }
-
-    fun requestFilesPermission(context: AppCompatActivity) {
-        permissionsManager.requestPermission(context, PermissionGroup.ExternalStorage)
-    }
-
-    fun disableFilesSearch() {
-        fileSearchSettings.setLocalFiles(false)
-    }
-
     val missingAppShortcutPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.AppShortcuts),
         shortcutSearchSettings.enabled,
@@ -363,12 +329,6 @@ class SearchVM : ViewModel(), KoinComponent {
     fun requestAppShortcutPermission(context: AppCompatActivity) {
         permissionsManager.requestPermission(context, PermissionGroup.AppShortcuts)
     }
-
-    val calendarSearchEnabled = calendarSearchSettings.enabledProviders.map { !it.isEmpty() }
-    val fileSearchEnabled = fileSearchSettings.enabledProviders.map { !it.isEmpty() }
-    val websiteSearchEnabled = websiteSearchSettings.enabled
-    val wikipediaSearchEnabled = wikipediaSearchSettings.enabled
-    val placeSearchEnabled = locationSearchSettings.enabledProviders.map { !it.isEmpty() }
 
     fun disableAppShortcutSearch() {
         shortcutSearchSettings.setEnabled(false)

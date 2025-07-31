@@ -88,11 +88,8 @@ fun SearchColumn(
     val isSearchEmpty by viewModel.isSearchEmpty
     val filters by viewModel.filters
 
-    val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)
     val missingContactsPermission by viewModel.missingContactsPermission.collectAsState(false)
-    val missingLocationPermission by viewModel.missingLocationPermission.collectAsState(false)
-    val missingFilesPermission by viewModel.missingFilesPermission.collectAsState(false)
     val hasProfilesPermission by viewModel.hasProfilesPermission.collectAsState(false)
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
@@ -262,13 +259,6 @@ fun SearchColumn(
 
         CalendarResults(
             events = events,
-            missingPermission = missingCalendarPermission,
-            onPermissionRequest = {
-                viewModel.requestCalendarPermission(context as AppCompatActivity)
-            },
-            onPermissionRequestRejected = {
-                viewModel.disableCalendarSearch()
-            },
             reverse = reverse,
             selectedIndex = selectedCalendarIndex,
             onSelect = { selectedCalendarIndex = it },
@@ -279,13 +269,6 @@ fun SearchColumn(
 
         LocationResults(
             locations = locations,
-            missingPermission = missingLocationPermission,
-            onPermissionRequest = {
-                viewModel.requestLocationPermission(context as AppCompatActivity)
-            },
-            onPermissionRequestRejected = {
-                viewModel.disableLocationSearch()
-            },
             reverse = reverse,
             selectedIndex = selectedLocationIndex,
             onSelect = { selectedLocationIndex = it },
@@ -309,15 +292,8 @@ fun SearchColumn(
         )
         FileResults(
             files = files,
-            onPermissionRequest = {
-                viewModel.requestFilesPermission(context as AppCompatActivity)
-            },
-            onPermissionRequestRejected = {
-                viewModel.disableFilesSearch()
-            },
             reverse = reverse,
             highlightedItem = bestMatch as? File,
-            missingPermission = missingFilesPermission,
             selectedIndex = selectedFileIndex,
             onSelect = {
                 selectedFileIndex = it

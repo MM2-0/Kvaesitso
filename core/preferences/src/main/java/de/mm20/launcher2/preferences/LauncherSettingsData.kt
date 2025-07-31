@@ -62,7 +62,7 @@ data class LauncherSettingsData internal constructor(
     val favoritesEditButton: Boolean = true,
     val favoritesCompactTags: Boolean = false,
 
-    val fileSearchProviders: Set<String> = setOf("local"),
+    val fileSearchProviders: Set<String> = setOf(),
 
     @Deprecated("Use contactSearchProviders `local` instead")
     val contactSearchEnabled: Boolean = true,
@@ -71,7 +71,7 @@ data class LauncherSettingsData internal constructor(
 
     @Deprecated("Use calendarSearchProviders `local` instead")
     val calendarSearchEnabled: Boolean = true,
-    val calendarSearchProviders: Set<String> = setOf("local"),
+    val calendarSearchProviders: Set<String> = setOf(),
     val calendarSearchExcludedCalendars: Set<String> = setOf(),
 
     val shortcutSearchEnabled: Boolean = true,

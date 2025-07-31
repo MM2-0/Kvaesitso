@@ -57,7 +57,7 @@ internal class CalendarRepositoryImpl(
 
         val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
         val hasTasksPermission = permissionsManager.hasPermission(PermissionGroup.Tasks)
-        val providerIds = settings.providers
+        val providerIds = settings.enabledProviders
         val excludedCalendars = settings.excludedCalendars
 
         return combineTransform(

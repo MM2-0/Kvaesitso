@@ -1514,11 +1514,11 @@ internal fun LauncherScaffold(
                         .alpha(imeProgress),
                     contentAlignment = Alignment.BottomCenter,
                 ) {
-                    val allowEvents by searchVM.calendarSearchEnabled.collectAsState(true)
-                    val allowFiles by searchVM.fileSearchEnabled.collectAsState(true)
+                    val allowEvents by searchVM.calendarSearchEnabled.collectAsState(false)
+                    val allowFiles by searchVM.fileSearchEnabled.collectAsState(false)
                     val allowWebsites by searchVM.websiteSearchEnabled.collectAsState(false)
                     val allowArticles by searchVM.wikipediaSearchEnabled.collectAsState(false)
-                    val allowPlaces by searchVM.placeSearchEnabled.collectAsState(true)
+                    val allowPlaces by searchVM.placeSearchEnabled.collectAsState(false)
 
                     val allowedItems = buildList {
                         if (allowEvents) add(KeyboardFilterBarItem.Events)
