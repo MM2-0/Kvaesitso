@@ -8,7 +8,7 @@ import java.util.UUID
 
 @Serializable
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 5,
+    val schemaVersion: Int = 6,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     @Serializable(with = UUIDSerializer::class)
