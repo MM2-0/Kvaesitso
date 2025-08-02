@@ -675,7 +675,7 @@
     <string name="preference_tasks_integration_ready">Integração com Tasks finalizada e pronta para utilização.</string>
     <string name="preference_launch_tasks_app">Abrir Tasks</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather é uma aplicação open source de meteorologia. Se instalada, %1$s pode utilizar Breezy Weather com a fonte de dados meteorológicos.</string>
-    <string name="preference_breezyweather_integration_instructions">Para utilizar Breezy Weather como serviço meteorológico:\n\n1. Aceda a Breezy Weather &gt; Definições &gt; Widgets &amp; Papel de parede &gt; Enviara dados Gadgetbridge &gt; Ativar%1$s\n\n2. Em %1$s, selecione Breezy Weather como servoço de meteorologia.</string>
+    <string name="preference_breezyweather_integration_instructions">Para utilizar Breezy Weather como serviço meteorológico:\n\n1. Aceda a Breezy Weather &gt; Definições &gt; Widgets &amp; Papel de parede &gt; Enviara dados Gadgetbridge &gt; Ativar%1$s\n\n2. Em %1$s, selecione Breezy Weather como serviço de meteorologia.</string>
     <string name="preference_launch_breezyweather_app">Abrir Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">Toque para chamar</string>
     <string name="preference_contacts_call_on_tap_summary">Iniciar a chamada imediatamente ao tocar em um número de telefone</string>
@@ -859,7 +859,7 @@
     <string name="clock_style_empty">Sem relógio</string>
     <string name="clock_style_custom">Widget personalizado</string>
     <string name="clock_variant_outlined">Contornado</string>
-    <string name="clock_variant_analog_ticks">Ponteiros</string>
+    <string name="clock_variant_analog_ticks">Ponteiros 2</string>
     <string name="menu_show_filters">Mostrar filtros</string>
     <string name="menu_hide_filters">Esconder filtros</string>
     <string name="search_filter_tools">Ferramentas</string>
