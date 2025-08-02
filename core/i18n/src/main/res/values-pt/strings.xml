@@ -805,7 +805,7 @@
     <string name="preference_search_bar_style_solid">Sólida</string>
     <string name="preference_search_bar_style_hidden">Oculta</string>
     <string name="import_theme_contents">Conteúdo</string>
-    <string name="clock_variant_analog_ticks">Ponteiros</string>
+    <string name="clock_variant_analog_ticks">Ponteiros 2</string>
     <string name="theme_export_title">Exportar tema</string>
     <string name="preference_colors_high_contrast">Alto contraste</string>
     <string name="theme_bundle_name">Nome</string>
@@ -823,7 +823,7 @@
     <string name="preference_transparencies_semi_transparent">Semi-transparente</string>
     <string name="provider_breezy">Breezy Weather</string>
     <string name="new_theme_name">(sem nome)</string>
-    <string name="preference_breezyweather_integration_instructions">Para utilizar Breezy Weather como serviço meteorológico:\n\n1. Aceda a Breezy Weather &gt; Definições &gt; Widgets &amp; Papel de parede &gt; Enviara dados Gadgetbridge &gt; Ativar%1$s\n\n2. Em %1$s, selecione Breezy Weather como servoço de meteorologia.</string>
+    <string name="preference_breezyweather_integration_instructions">Para utilizar Breezy Weather como serviço meteorológico:\n\n1. Aceda a Breezy Weather &gt; Definições &gt; Widgets &amp; Papel de parede &gt; Enviara dados Gadgetbridge &gt; Ativar%1$s\n\n2. Em %1$s, selecione Breezy Weather como serviço de meteorologia.</string>
     <string name="music_widget_interactive_progress_bar">Barra de progresso interativa</string>
     <string name="missing_permission_tasks_integration">A permissão Tasks é necessária para a integração Tasks</string>
     <string name="preference_location_breezy">Gerir localização em Breezy Weather</string>
