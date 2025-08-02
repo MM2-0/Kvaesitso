@@ -1,7 +1,6 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
-import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.serialization.UUIDSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -9,7 +8,7 @@ import java.util.UUID
 
 @Serializable
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 5,
+    val schemaVersion: Int = 6,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     @Serializable(with = UUIDSerializer::class)
@@ -63,7 +62,7 @@ data class LauncherSettingsData internal constructor(
     val favoritesEditButton: Boolean = true,
     val favoritesCompactTags: Boolean = false,
 
-    val fileSearchProviders: Set<String> = setOf("local"),
+    val fileSearchProviders: Set<String> = setOf(),
 
     @Deprecated("Use contactSearchProviders `local` instead")
     val contactSearchEnabled: Boolean = true,
@@ -72,7 +71,7 @@ data class LauncherSettingsData internal constructor(
 
     @Deprecated("Use calendarSearchProviders `local` instead")
     val calendarSearchEnabled: Boolean = true,
-    val calendarSearchProviders: Set<String> = setOf("local"),
+    val calendarSearchProviders: Set<String> = setOf(),
     val calendarSearchExcludedCalendars: Set<String> = setOf(),
 
     val shortcutSearchEnabled: Boolean = true,
@@ -170,23 +169,6 @@ data class LauncherSettingsData internal constructor(
     val locationSearchShowMap: Boolean = true,
     val locationSearchShowPositionOnMap: Boolean = false,
     val locationSearchThemeMap: Boolean = true,
-
-    val searchFilter: SearchFilters = SearchFilters(),
-    val searchFilterBar: Boolean = true,
-    val searchFilterBarItems: List<KeyboardFilterBarItem> = listOf(
-        KeyboardFilterBarItem.OnlineResults,
-        KeyboardFilterBarItem.Apps,
-        KeyboardFilterBarItem.Shortcuts,
-        KeyboardFilterBarItem.Events,
-        KeyboardFilterBarItem.Contacts,
-        KeyboardFilterBarItem.Files,
-        KeyboardFilterBarItem.Articles,
-        KeyboardFilterBarItem.Websites,
-        KeyboardFilterBarItem.Places,
-        KeyboardFilterBarItem.Tools,
-        KeyboardFilterBarItem.HiddenResults,
-    ),
-
 
     ) {
     constructor(
@@ -406,17 +388,11 @@ data class ProviderSettings(
 
 @Serializable
 enum class KeyboardFilterBarItem {
-    @SerialName("online") OnlineResults,
-    @SerialName("apps") Apps,
     @SerialName("websites") Websites,
     @SerialName("articles") Articles,
     @SerialName("places") Places,
     @SerialName("files") Files,
-    @SerialName("shortcuts") Shortcuts,
-    @SerialName("contacts") Contacts,
     @SerialName("events") Events,
-    @SerialName("tools") Tools,
-    @SerialName("hidden") HiddenResults,
 }
 
 @Serializable

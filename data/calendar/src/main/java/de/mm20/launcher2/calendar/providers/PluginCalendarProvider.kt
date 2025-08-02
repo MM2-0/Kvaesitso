@@ -33,7 +33,6 @@ class PluginCalendarProvider(
         to: Long,
         excludedCalendars: List<String>,
         excludeAllDayEvents: Boolean,
-        allowNetwork: Boolean
     ): List<CalendarEvent> {
         return search(
             CalendarQuery(
@@ -41,8 +40,7 @@ class PluginCalendarProvider(
                 start = from,
                 end = to,
                 excludedCalendars = excludedCalendars,
-            ),
-            allowNetwork,
+            )
         )
     }
 

@@ -61,12 +61,6 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
         fileSearchSettings.setNextcloudFiles(nextcloud)
     }
 
-    val gdrive = fileSearchSettings.gdriveFiles
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    fun setGdrive(gdrive: Boolean) {
-        fileSearchSettings.setGdriveFiles(gdrive)
-    }
-
     val owncloud = fileSearchSettings.owncloudFiles
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setOwncloud(owncloud: Boolean) {

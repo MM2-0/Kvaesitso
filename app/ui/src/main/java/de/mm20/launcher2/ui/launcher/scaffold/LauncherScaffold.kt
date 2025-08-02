@@ -90,6 +90,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBarLevel
@@ -1108,8 +1109,6 @@ internal fun LauncherScaffold(
     val searchActions = searchVM.searchActionResults
     val highlightedResult by searchVM.bestMatch
     val filters by searchVM.filters
-    val filterBar by searchVM.filterBar.collectAsState(false)
-    val filterBarItems by searchVM.filterBarItems.collectAsState(emptyList())
     val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
 
     val hazeState = rememberHazeState(blurEnabled = isAtLeastApiLevel(33))
@@ -1196,7 +1195,7 @@ internal fun LauncherScaffold(
         val isFilterBarVisible =
             (state.currentProgress == 1f && state.currentComponent is SearchComponent ||
                     state.currentProgress == 0f && config.homeComponent is SearchComponent) &&
-                    filterBar && WindowInsets.isImeVisible
+                    WindowInsets.isImeVisible
 
 
         val imeCurrent = WindowInsets.ime.getBottom(LocalDensity.current).toFloat()
@@ -1515,11 +1514,27 @@ internal fun LauncherScaffold(
                         .alpha(imeProgress),
                     contentAlignment = Alignment.BottomCenter,
                 ) {
-                    KeyboardFilterBar(
-                        filters = filters,
-                        onFiltersChange = { searchVM.setFilters(it) },
-                        items = filterBarItems
-                    )
+                    val allowEvents by searchVM.calendarSearchEnabled.collectAsState(false)
+                    val allowFiles by searchVM.fileSearchEnabled.collectAsState(false)
+                    val allowWebsites by searchVM.websiteSearchEnabled.collectAsState(false)
+                    val allowArticles by searchVM.wikipediaSearchEnabled.collectAsState(false)
+                    val allowPlaces by searchVM.placeSearchEnabled.collectAsState(false)
+
+                    val allowedItems = buildList {
+                        if (allowEvents) add(KeyboardFilterBarItem.Events)
+                        if (allowFiles) add(KeyboardFilterBarItem.Files)
+                        if (allowWebsites) add(KeyboardFilterBarItem.Websites)
+                        if (allowArticles) add(KeyboardFilterBarItem.Articles)
+                        if (allowPlaces) add(KeyboardFilterBarItem.Places)
+                    }
+
+                    if (allowedItems.isNotEmpty()) {
+                        KeyboardFilterBar(
+                            filters = filters,
+                            onFiltersChange = { searchVM.setFilters(it) },
+                            items = allowedItems,
+                        )
+                    }
                 }
             }
         }

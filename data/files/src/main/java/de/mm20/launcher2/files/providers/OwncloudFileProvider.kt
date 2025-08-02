@@ -1,6 +1,5 @@
 package de.mm20.launcher2.files.providers
 
-import de.mm20.launcher2.files.R
 import de.mm20.launcher2.owncloud.OwncloudClient
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.FileMetaType
@@ -9,8 +8,8 @@ import kotlinx.collections.immutable.persistentMapOf
 internal class OwncloudFileProvider(
     private val owncloudClient: OwncloudClient
 ) : FileProvider {
-    override suspend fun search(query: String, allowNetwork: Boolean): List<File> {
-        if (query.length < 4 || !allowNetwork) return emptyList()
+    override suspend fun search(query: String): List<File> {
+        if (query.length < 4) return emptyList()
         val server = owncloudClient.getServer() ?: return emptyList()
         return owncloudClient.files.query(query).map {
             OwncloudFile(

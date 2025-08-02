@@ -15,8 +15,9 @@ import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.FileSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
-import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
+import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
+import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
@@ -46,10 +47,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -70,7 +70,8 @@ class SearchVM : ViewModel(), KoinComponent {
     private val searchUiSettings: SearchUiSettings by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val devicePoseProvider: DevicePoseProvider by inject()
-    private val searchFilterSettings: SearchFilterSettings by inject()
+    private val websiteSearchSettings: WebsiteSearchSettings by inject ()
+    private val wikipediaSearchSettings: WikipediaSearchSettings by inject()
 
     val launchOnEnter = searchUiSettings.launchOnEnter
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -126,20 +127,16 @@ class SearchVM : ViewModel(), KoinComponent {
     val hiddenResults = mutableStateListOf<SavableSearchable>()
 
     val favoritesEnabled = searchUiSettings.favorites
-    val hideFavorites = mutableStateOf(false)
 
-    val showFilters = mutableStateOf(false)
-
-    private val defaultFilters = searchFilterSettings.defaultFilter.stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        SearchFilters()
-    )
-    val filters = mutableStateOf(defaultFilters.value)
-    val filterBar = searchFilterSettings.filterBar
-    val filterBarItems = searchFilterSettings.filterBarItems
+    val filters = mutableStateOf(SearchFilters())
 
     val bestMatch = mutableStateOf<Searchable?>(null)
+
+    val calendarSearchEnabled = calendarSearchSettings.enabledProviders.map { !it.isEmpty() }
+    val fileSearchEnabled = fileSearchSettings.enabledProviders.map { !it.isEmpty() }
+    val websiteSearchEnabled = websiteSearchSettings.enabled
+    val wikipediaSearchEnabled = wikipediaSearchSettings.enabled
+    val placeSearchEnabled = locationSearchSettings.enabledProviders.map { !it.isEmpty() }
 
     init {
         search("", forceRestart = true)
@@ -162,45 +159,19 @@ class SearchVM : ViewModel(), KoinComponent {
         search(searchQuery.value, forceRestart = true)
     }
 
-    fun closeFilters() {
-        showFilters.value = false
-    }
-
     fun reset() {
-        closeFilters()
-        filters.value = defaultFilters.value
+        filters.value = SearchFilters()
         search("")
     }
 
     private var searchJob: Job? = null
     fun search(query: String, forceRestart: Boolean = false) {
         if (searchQuery.value == query && !forceRestart) return
-        if (searchQuery.value != query) {
-            showFilters.value = false
-        }
-        if (query.isEmpty() && searchQuery.value.isNotEmpty()) {
-            filters.value = defaultFilters.value
-        }
         searchQuery.value = query
-        isSearchEmpty.value = query.isEmpty()
+        isSearchEmpty.value = query.isBlank()
 
         val filters = filters.value
-
-        if (filters.enabledCategories == 1) {
-            expandedCategory.value = when {
-                filters.apps -> SearchCategory.Apps
-                filters.events -> SearchCategory.Calendar
-                filters.contacts -> SearchCategory.Contacts
-                filters.files -> SearchCategory.Files
-                filters.websites -> SearchCategory.Website
-                filters.articles -> SearchCategory.Articles
-                filters.places -> SearchCategory.Location
-                filters.shortcuts -> SearchCategory.Shortcuts
-                else -> null
-            }
-        } else {
-            expandedCategory.value = null
-        }
+        expandedCategory.value = null
 
         if (isSearchEmpty.value)
             bestMatch.value = null
@@ -208,18 +179,13 @@ class SearchVM : ViewModel(), KoinComponent {
             searchJob?.cancel()
         } catch (_: CancellationException) {
         }
-        hideFavorites.value = query.isNotEmpty()
 
         searchJob = viewModelScope.launch {
-            if (query.isEmpty()) {
-                val hiddenItemKeys = if (!filters.hiddenItems) {
-                    searchableRepository.getKeys(
-                        maxVisibility = VisibilityLevel.SearchOnly,
-                        includeTypes = listOf("app"),
-                    )
-                } else {
-                    flowOf(emptyList())
-                }
+            if (query.isEmpty() && filters.enabledCategories == 0) {
+                val hiddenItemKeys = searchableRepository.getKeys(
+                    maxVisibility = VisibilityLevel.SearchOnly,
+                    includeTypes = listOf("app")
+                )
                 val allApps = searchService.getAllApps()
 
                 allApps
@@ -257,9 +223,7 @@ class SearchVM : ViewModel(), KoinComponent {
                     }
 
             } else {
-                val hiddenItemKeys = if (!filters.hiddenItems) searchableRepository.getKeys(
-                    maxVisibility = VisibilityLevel.Hidden,
-                ) else flowOf(emptyList())
+                val hiddenItemKeys = searchableRepository.getKeys(maxVisibility = VisibilityLevel.Hidden)
                 searchService.search(
                     query,
                     filters = filters,
@@ -344,19 +308,6 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
-    val missingCalendarPermission = combine(
-        permissionsManager.hasPermission(PermissionGroup.Calendar),
-        calendarSearchSettings.providers,
-    ) { perm, providers -> !perm && providers.contains("local") }
-
-    fun requestCalendarPermission(context: AppCompatActivity) {
-        permissionsManager.requestPermission(context, PermissionGroup.Calendar)
-    }
-
-    fun disableCalendarSearch() {
-        calendarSearchSettings.setProviderEnabled("local", false)
-    }
-
     val missingContactsPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Contacts),
         contactSearchSettings.isProviderEnabled("local")
@@ -368,32 +319,6 @@ class SearchVM : ViewModel(), KoinComponent {
 
     fun disableContactsSearch() {
         contactSearchSettings.setProviderEnabled("local", false)
-    }
-
-    val missingLocationPermission = combine(
-        permissionsManager.hasPermission(PermissionGroup.Location),
-        locationSearchSettings.osmLocations.distinctUntilChanged()
-    ) { perm, enabled -> !perm && enabled }
-
-    fun requestLocationPermission(context: AppCompatActivity) {
-        permissionsManager.requestPermission(context, PermissionGroup.Location)
-    }
-
-    fun disableLocationSearch() {
-        locationSearchSettings.setOsmLocations(false)
-    }
-
-    val missingFilesPermission = combine(
-        permissionsManager.hasPermission(PermissionGroup.ExternalStorage),
-        fileSearchSettings.localFiles
-    ) { perm, enabled -> !perm && enabled }
-
-    fun requestFilesPermission(context: AppCompatActivity) {
-        permissionsManager.requestPermission(context, PermissionGroup.ExternalStorage)
-    }
-
-    fun disableFilesSearch() {
-        fileSearchSettings.setLocalFiles(false)
     }
 
     val missingAppShortcutPermission = combine(
