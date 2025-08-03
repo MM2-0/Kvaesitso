@@ -77,7 +77,6 @@ import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
-import kotlin.math.pow
 
 
 abstract class SharedLauncherActivity(
@@ -195,7 +194,10 @@ abstract class SharedLauncherActivity(
                                     if (it != null) {
                                         enterTransitionProgress.value = 0f
                                         enterTransition = it
-                                        enterTransitionProgress.animateTo(100f, animationSpec = animMotionSpec)
+                                        enterTransitionProgress.animateTo(
+                                            100f,
+                                            animationSpec = animMotionSpec
+                                        )
                                         enterTransition = null
                                     }
                                 }
@@ -275,10 +277,15 @@ abstract class SharedLauncherActivity(
                                                 },
                                             )
 
-                                            is GestureAction.Widgets -> ScaffoldGesture(
-                                                component = widgetComponent,
-                                                animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
-                                            )
+                                            is GestureAction.Widgets ->
+                                                if (widgetsOnHomeScreen == true) {
+                                                    null
+                                                } else {
+                                                    ScaffoldGesture(
+                                                        component = widgetComponent,
+                                                        animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                                    )
+                                                }
 
                                             is GestureAction.Notifications -> ScaffoldGesture(
                                                 component = NotificationsComponent,

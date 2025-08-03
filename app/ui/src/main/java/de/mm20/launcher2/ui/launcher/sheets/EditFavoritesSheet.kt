@@ -119,10 +119,13 @@ fun EditFavoritesSheet(
                         .align(Alignment.Center)
                 )
             }
-        } else if (createShortcutTarget != null) {
-            ShortcutPicker(viewModel, it)
         } else {
             ReorderFavoritesGrid(viewModel, it)
+            if (createShortcutTarget != null) {
+                BottomSheetDialog({viewModel.cancelPickShortcut()}) {
+                    ShortcutPicker(viewModel, it)
+                }
+            }
         }
     }
 }

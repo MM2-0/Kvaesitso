@@ -34,6 +34,9 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val allowWidgetGesture = uiSettings.homeScreenWidgets.map { it == false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     val swipeDown = gestureSettings.swipeDown
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val swipeLeft = gestureSettings.swipeLeft

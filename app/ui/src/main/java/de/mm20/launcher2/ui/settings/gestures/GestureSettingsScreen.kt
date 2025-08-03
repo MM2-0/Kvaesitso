@@ -52,6 +52,7 @@ fun GestureSettingsScreen() {
     val viewModel: GestureSettingsScreenVM = viewModel()
 
     val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle(null)
+    val allowWidgetGesture by viewModel.allowWidgetGesture.collectAsStateWithLifecycle(null)
 
     val options = buildList {
         add(stringResource(R.string.gesture_action_none) to GestureAction.NoAction)
@@ -61,7 +62,7 @@ fun GestureSettingsScreen() {
         add(stringResource(R.string.gesture_action_recents) to GestureAction.Recents)
         add(stringResource(R.string.gesture_action_power_menu) to GestureAction.PowerMenu)
         add(stringResource(R.string.gesture_action_open_search) to GestureAction.Search)
-        add(stringResource(R.string.gesture_action_widgets) to GestureAction.Widgets)
+        if (allowWidgetGesture == true) add(stringResource(R.string.gesture_action_widgets) to GestureAction.Widgets)
         add(stringResource(R.string.gesture_action_launch_app) to GestureAction.Launch(null))
     }
 
@@ -265,7 +266,7 @@ fun GesturePreference(
                 icon = icon,
                 items = options,
                 value = value,
-                summary = options.find { value?.javaClass == it.second.javaClass }?.first,
+                summary = options.find { value?.javaClass == it.second.javaClass }?.first ?: stringResource(R.string.gesture_action_none),
                 onValueChanged = { if (it != null) onValueChanged(it) }
             )
         }
