@@ -202,59 +202,57 @@ fun SearchColumn(
                 )
             }
 
-            if (!isSearchEmpty) {
-                ShortcutResults(
-                    shortcuts = appShortcuts,
-                    missingPermission = missingShortcutsPermission,
-                    onPermissionRequest = {
-                        viewModel.requestAppShortcutPermission(context as AppCompatActivity)
-                    },
-                    onPermissionRequestRejected = {
-                        viewModel.disableAppShortcutSearch()
-                    },
-                    reverse = reverse,
-                    selectedIndex = selectedShortcutIndex,
-                    onSelect = { selectedShortcutIndex = it },
-                    highlightedItem = bestMatch as? AppShortcut,
-                    truncate = expandedCategory != SearchCategory.Shortcuts,
-                    onShowAll = {
-                        viewModel.expandCategory(SearchCategory.Shortcuts)
-                    },
-                )
+            ShortcutResults(
+                shortcuts = appShortcuts,
+                missingPermission = missingShortcutsPermission,
+                onPermissionRequest = {
+                    viewModel.requestAppShortcutPermission(context as AppCompatActivity)
+                },
+                onPermissionRequestRejected = {
+                    viewModel.disableAppShortcutSearch()
+                },
+                reverse = reverse,
+                selectedIndex = selectedShortcutIndex,
+                onSelect = { selectedShortcutIndex = it },
+                highlightedItem = bestMatch as? AppShortcut,
+                truncate = expandedCategory != SearchCategory.Shortcuts,
+                onShowAll = {
+                    viewModel.expandCategory(SearchCategory.Shortcuts)
+                },
+            )
 
-                UnitConverterResults(
-                    converters = unitConverter,
-                    reverse = reverse,
-                    truncate = expandedCategory != SearchCategory.UnitConverter,
-                    onShowAll = {
-                        viewModel.expandCategory(SearchCategory.UnitConverter)
-                    }
-                )
+            UnitConverterResults(
+                converters = unitConverter,
+                reverse = reverse,
+                truncate = expandedCategory != SearchCategory.UnitConverter,
+                onShowAll = {
+                    viewModel.expandCategory(SearchCategory.UnitConverter)
+                }
+            )
 
-                CalculatorResults(
-                    calculator,
-                    reverse = reverse
-                )
+            CalculatorResults(
+                calculator,
+                reverse = reverse
+            )
 
-                ContactResults(
-                    contacts = contacts,
-                    missingPermission = missingContactsPermission,
-                    onPermissionRequest = {
-                        viewModel.requestContactsPermission(context as AppCompatActivity)
-                    },
-                    onPermissionRequestRejected = {
-                        viewModel.disableContactsSearch()
-                    },
-                    reverse = reverse,
-                    selectedIndex = selectedContactIndex,
-                    onSelect = { selectedContactIndex = it },
-                    highlightedItem = bestMatch as? Contact,
-                    truncate = expandedCategory != SearchCategory.Contacts,
-                    onShowAll = {
-                        viewModel.expandCategory(SearchCategory.Contacts)
-                    },
-                )
-            }
+            ContactResults(
+                contacts = contacts,
+                missingPermission = missingContactsPermission,
+                onPermissionRequest = {
+                    viewModel.requestContactsPermission(context as AppCompatActivity)
+                },
+                onPermissionRequestRejected = {
+                    viewModel.disableContactsSearch()
+                },
+                reverse = reverse,
+                selectedIndex = selectedContactIndex,
+                onSelect = { selectedContactIndex = it },
+                highlightedItem = bestMatch as? Contact,
+                truncate = expandedCategory != SearchCategory.Contacts,
+                onShowAll = {
+                    viewModel.expandCategory(SearchCategory.Contacts)
+                },
+            )
         }
 
         CalendarResults(
