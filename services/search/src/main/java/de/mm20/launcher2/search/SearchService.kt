@@ -108,7 +108,7 @@ internal class SearchServiceImpl(
                         }
                     }
             }
-            if (!filters.events && !filters.files && !filters.articles && !filters.places && !filters.websites) {
+            if (filters.enabledCategories == 0) {
                 /**
                  * Apps
                  */
