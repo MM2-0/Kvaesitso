@@ -162,98 +162,96 @@ fun SearchColumn(
         }
 
 
-        if (filters.enabledCategories == 0) {
-            if (profiles.size > 1) {
-                AppResults(
-                    apps = when (profiles.getOrNull(selectedAppProfileIndex)?.type) {
-                        Profile.Type.Private -> privateApps
-                        Profile.Type.Work -> workApps
-                        else -> apps
-                    },
-                    highlightedItem = bestMatch as? Application,
-                    profiles = profiles,
-                    selectedProfileIndex = selectedAppProfileIndex,
-                    onProfileSelected = {
-                        selectedAppProfileIndex = it
-                    },
-                    isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true,
-                    onProfileLockChange = { p, l ->
-                        viewModel.setProfileLock(p, l)
-                    },
-                    columns = columns,
-                    reverse = reverse,
-                    showProfileLockControls = hasProfilesPermission,
-                    showList = showList,
-                    selectedIndex = selectedAppIndex,
-                    onSelect = { selectedAppIndex = it },
-                )
-            } else {
-                AppResults(
-                    apps = apps,
-                    highlightedItem = bestMatch as? Application,
-                    onProfileSelected = {
-                        selectedAppProfileIndex = it
-                    },
-                    columns = columns,
-                    reverse = reverse,
-                    showList = showList,
-                    selectedIndex = selectedAppIndex,
-                    onSelect = { selectedAppIndex = it },
-                )
-            }
-
-            ShortcutResults(
-                shortcuts = appShortcuts,
-                missingPermission = missingShortcutsPermission,
-                onPermissionRequest = {
-                    viewModel.requestAppShortcutPermission(context as AppCompatActivity)
+        if (profiles.size > 1) {
+            AppResults(
+                apps = when (profiles.getOrNull(selectedAppProfileIndex)?.type) {
+                    Profile.Type.Private -> privateApps
+                    Profile.Type.Work -> workApps
+                    else -> apps
                 },
-                onPermissionRequestRejected = {
-                    viewModel.disableAppShortcutSearch()
+                highlightedItem = bestMatch as? Application,
+                profiles = profiles,
+                selectedProfileIndex = selectedAppProfileIndex,
+                onProfileSelected = {
+                    selectedAppProfileIndex = it
                 },
+                isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true,
+                onProfileLockChange = { p, l ->
+                    viewModel.setProfileLock(p, l)
+                },
+                columns = columns,
                 reverse = reverse,
-                selectedIndex = selectedShortcutIndex,
-                onSelect = { selectedShortcutIndex = it },
-                highlightedItem = bestMatch as? AppShortcut,
-                truncate = expandedCategory != SearchCategory.Shortcuts,
-                onShowAll = {
-                    viewModel.expandCategory(SearchCategory.Shortcuts)
-                },
+                showProfileLockControls = hasProfilesPermission,
+                showList = showList,
+                selectedIndex = selectedAppIndex,
+                onSelect = { selectedAppIndex = it },
             )
-
-            UnitConverterResults(
-                converters = unitConverter,
+        } else {
+            AppResults(
+                apps = apps,
+                highlightedItem = bestMatch as? Application,
+                onProfileSelected = {
+                    selectedAppProfileIndex = it
+                },
+                columns = columns,
                 reverse = reverse,
-                truncate = expandedCategory != SearchCategory.UnitConverter,
-                onShowAll = {
-                    viewModel.expandCategory(SearchCategory.UnitConverter)
-                }
-            )
-
-            CalculatorResults(
-                calculator,
-                reverse = reverse
-            )
-
-            ContactResults(
-                contacts = contacts,
-                missingPermission = missingContactsPermission,
-                onPermissionRequest = {
-                    viewModel.requestContactsPermission(context as AppCompatActivity)
-                },
-                onPermissionRequestRejected = {
-                    viewModel.disableContactsSearch()
-                },
-                reverse = reverse,
-                selectedIndex = selectedContactIndex,
-                onSelect = { selectedContactIndex = it },
-                highlightedItem = bestMatch as? Contact,
-                truncate = expandedCategory != SearchCategory.Contacts,
-                onShowAll = {
-                    viewModel.expandCategory(SearchCategory.Contacts)
-                },
+                showList = showList,
+                selectedIndex = selectedAppIndex,
+                onSelect = { selectedAppIndex = it },
             )
         }
+
+        ShortcutResults(
+            shortcuts = appShortcuts,
+            missingPermission = missingShortcutsPermission,
+            onPermissionRequest = {
+                viewModel.requestAppShortcutPermission(context as AppCompatActivity)
+            },
+            onPermissionRequestRejected = {
+                viewModel.disableAppShortcutSearch()
+            },
+            reverse = reverse,
+            selectedIndex = selectedShortcutIndex,
+            onSelect = { selectedShortcutIndex = it },
+            highlightedItem = bestMatch as? AppShortcut,
+            truncate = expandedCategory != SearchCategory.Shortcuts,
+            onShowAll = {
+                viewModel.expandCategory(SearchCategory.Shortcuts)
+            },
+        )
+
+        UnitConverterResults(
+            converters = unitConverter,
+            reverse = reverse,
+            truncate = expandedCategory != SearchCategory.UnitConverter,
+            onShowAll = {
+                viewModel.expandCategory(SearchCategory.UnitConverter)
+            }
+        )
+
+        CalculatorResults(
+            calculator,
+            reverse = reverse
+        )
+
+        ContactResults(
+            contacts = contacts,
+            missingPermission = missingContactsPermission,
+            onPermissionRequest = {
+                viewModel.requestContactsPermission(context as AppCompatActivity)
+            },
+            onPermissionRequestRejected = {
+                viewModel.disableContactsSearch()
+            },
+            reverse = reverse,
+            selectedIndex = selectedContactIndex,
+            onSelect = { selectedContactIndex = it },
+            highlightedItem = bestMatch as? Contact,
+            truncate = expandedCategory != SearchCategory.Contacts,
+            onShowAll = {
+                viewModel.expandCategory(SearchCategory.Contacts)
+            },
+        )
 
         CalendarResults(
             events = events,
@@ -264,7 +262,6 @@ fun SearchColumn(
             truncate = false,
             onShowAll = {}
         )
-
         LocationResults(
             locations = locations,
             reverse = reverse,
