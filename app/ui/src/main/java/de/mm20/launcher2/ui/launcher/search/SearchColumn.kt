@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,7 +25,6 @@ import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.Website
-import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorResults
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarResults
@@ -43,7 +40,6 @@ import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleResults
 import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import de.mm20.launcher2.ui.theme.transparency.transparency
 
 @Composable
 fun SearchColumn(
@@ -260,8 +256,6 @@ fun SearchColumn(
                 selectedIndex = selectedCalendarIndex,
                 onSelect = { selectedCalendarIndex = it },
                 highlightedItem = bestMatch as? CalendarEvent,
-                truncate = false,
-                onShowAll = {}
             )
         } else if (filters.places) {
             LocationResults(
@@ -270,8 +264,6 @@ fun SearchColumn(
                 selectedIndex = selectedLocationIndex,
                 onSelect = { selectedLocationIndex = it },
                 highlightedItem = bestMatch as? Location,
-                truncate = false,
-                onShowAll = {}
             )
         } else if (filters.articles) {
             ArticleResults(
@@ -298,8 +290,6 @@ fun SearchColumn(
                 onSelect = {
                     selectedFileIndex = it
                 },
-                truncate = false,
-                onShowAll = {}
             )
         }
     }
@@ -312,25 +302,3 @@ fun SearchColumn(
             onDismiss = { sheetManager.dismissHiddenItemsSheet() })
     }
 }
-
-
-fun LazyListScope.SingleResult(
-    highlight: Boolean = false,
-    content: @Composable (() -> Unit)?
-) {
-    if (content == null) return
-    item {
-        LauncherCard(
-            modifier = Modifier
-                .padding(
-                    horizontal = 8.dp,
-                    vertical = 4.dp,
-                ),
-            color = if (highlight) MaterialTheme.colorScheme.secondaryContainer
-            else MaterialTheme.colorScheme.surface.copy(MaterialTheme.transparency.surface)
-        ) {
-            content()
-        }
-    }
-}
-
