@@ -113,6 +113,9 @@ fun SearchColumn(
         reverseLayout = reverse,
         modifier = modifier.padding(horizontal = 8.dp),
     ) {
+        // Empty item to maintain scroll position
+        item(key = "scroll_holder") {
+        }
         if (isSearchEmpty) {
             if (filters.enabledCategories == 0) {
                 if (favoritesEnabled) {
@@ -129,10 +132,6 @@ fun SearchColumn(
                         compactTags = compactTags,
                         editButton = favoritesEditButton
                     )
-                } else {
-                    // Empty item to maintain scroll position
-                    item(key = "favorites") {
-                    }
                 }
             } else if (filters.files) {
                 /**
@@ -156,7 +155,6 @@ fun SearchColumn(
                  */
             }
         }
-
 
         if (filters.enabledCategories == 0) { // Check not necessary, but this reduces stutter
             if (profiles.size > 1) {
@@ -295,7 +293,6 @@ fun SearchColumn(
             )
         }
     }
-
 
     val sheetManager = LocalBottomSheetManager.current
     if (sheetManager.hiddenItemsSheetShown.value) {
