@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.DirectionsBike
 import androidx.compose.material.icons.rounded.AccountBalance
+import androidx.compose.material.icons.rounded.AttachFile
 import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material.icons.rounded.Attractions
 import androidx.compose.material.icons.rounded.BakeryDining
@@ -106,6 +107,7 @@ import androidx.compose.material.icons.rounded.Synagogue
 import androidx.compose.material.icons.rounded.TakeoutDining
 import androidx.compose.material.icons.rounded.TempleBuddhist
 import androidx.compose.material.icons.rounded.TempleHindu
+import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material.icons.rounded.TheaterComedy
 import androidx.compose.material.icons.rounded.Theaters
 import androidx.compose.material.icons.rounded.Train
@@ -133,6 +135,8 @@ import de.mm20.launcher2.search.location.PaymentMethod
 import java.time.LocalDateTime
 import java.time.temporal.TemporalAdjusters
 import android.location.Location as AndroidLocation
+import androidx.core.net.toUri
+import de.mm20.launcher2.icons.Climbing
 
 interface Location : SavableSearchable {
 
@@ -167,7 +171,7 @@ interface Location : SavableSearchable {
         return context.tryStartActivity(
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("geo:$latitude,$longitude?q=${Uri.encode(label)}")
+                "geo:$latitude,$longitude?q=${Uri.encode(label)}".toUri()
             ),
             options
         )
@@ -246,6 +250,7 @@ interface Location : SavableSearchable {
             LocationIcon.Pharmacy -> Icons.Rounded.LocalPharmacy to R.color.indigo
             LocationIcon.HairSalon -> Icons.Rounded.ContentCut to R.color.indigo
             LocationIcon.Laundromat -> Icons.Rounded.LocalLaundryService to R.color.indigo
+            LocationIcon.Stationery -> Icons.Rounded.AttachFile to R.color.indigo
             // purple: sports and recreation
             LocationIcon.Sports -> Icons.Rounded.Sports to R.color.purple
             LocationIcon.FitnessCenter -> Icons.Rounded.FitnessCenter to R.color.purple
@@ -266,12 +271,14 @@ interface Location : SavableSearchable {
             LocationIcon.Kayaking -> Icons.Rounded.Kayaking to R.color.purple
             LocationIcon.Skateboarding -> Icons.Rounded.Skateboarding to R.color.purple
             LocationIcon.Cricket -> Icons.Rounded.SportsCricket to R.color.purple
+            LocationIcon.Climbing -> Icons.Rounded.Climbing to R.color.purple
             LocationIcon.MartialArts -> Icons.Rounded.SportsMartialArts to R.color.purple
             LocationIcon.NordicWalking -> Icons.Rounded.NordicWalking to R.color.purple
             LocationIcon.Paragliding -> Icons.Rounded.Paragliding to R.color.purple
             LocationIcon.Gymnastics -> Icons.Rounded.SportsGymnastics to R.color.purple
             LocationIcon.Snowboarding -> Icons.Rounded.Snowboarding to R.color.purple
             LocationIcon.Hockey -> Icons.Rounded.SportsHockey to R.color.purple
+            LocationIcon.Hackerspace -> Icons.Rounded.Terminal to R.color.purple
             // green: finances
             LocationIcon.Bank -> Icons.Rounded.AttachMoney to R.color.green
             LocationIcon.Atm -> Icons.Rounded.LocalAtm to R.color.green
