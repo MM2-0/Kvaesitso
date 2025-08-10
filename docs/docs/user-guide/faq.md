@@ -84,3 +84,7 @@ You can now enjoy the daily update in Obtainium :)
 ### Manual download
 
 [Here](https://fdroid.mm20.de/app/de.mm20.launcher2.nightly)
+
+## Will Kvaesitso ever be available on the Play Store?
+
+No, probably not. It's not worth the hassle of dealing with Google's policies and restrictions.
