@@ -55,6 +55,7 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
 
     val homeScreenDock: Boolean = false,
+    val homeScreenDockRows: Int = 1,
     val homeScreenWidgets: Boolean = false,
 
     val favoritesEnabled: Boolean = true,
