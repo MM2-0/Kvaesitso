@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":core:i18n"))
     implementation(project(":core:base"))
     implementation(project(":core:crashreporter"))
+    implementation(project(":core:permissions"))
     implementation(project(":libs:material-color-utilities"))
 
 }

@@ -144,7 +144,7 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
         locationSearchSettings.setPluginEnabled(authority, enabled)
     }
 
-    val enabledCalendarSearchPlugins = calendarSearchSettings.providers
+    val enabledCalendarSearchPlugins = calendarSearchSettings.enabledProviders
     fun setCalendarSearchPluginEnabled(authority: String, enabled: Boolean) {
         calendarSearchSettings.setProviderEnabled(authority, enabled)
     }
