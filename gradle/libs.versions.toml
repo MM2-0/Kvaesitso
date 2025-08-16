@@ -65,7 +65,6 @@ androidx-compose-foundation = { group = "androidx.compose.foundation", name = "f
 androidx-compose-foundationlayout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "androidx-compose" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "androidx-compose" }
 androidx-compose-uitooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "androidx-compose" }
-androidx-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "androidx-compose" }
 androidx-compose-materialicons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "androidx-compose-materialicons" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "androidx-compose" }
 androidx-compose-animationgraphics = { group = "androidx.compose.animation", name = "animation-graphics", version.ref = "androidx-compose" }

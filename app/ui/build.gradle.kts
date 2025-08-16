@@ -77,7 +77,6 @@ dependencies {
     implementation(libs.androidx.compose.foundationlayout)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uitooling)
-    implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.materialicons)
     implementation(libs.androidx.compose.animation)
