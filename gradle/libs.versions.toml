@@ -102,7 +102,7 @@ androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name 
 androidx-transition = { group = "androidx.transition", name = "transition", version = "1.6.0" }
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version = "1.4.1" }
 androidx-securitycrypto = { group = "androidx.security", name = "security-crypto", version = "1.1.0-alpha07" }
-androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.1.6" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.1.7" }
 androidx-emojipicker = { group = "androidx.emoji2", name = "emoji2-emojipicker", version.ref = "androidx-emojipicker" }
 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.0" }
