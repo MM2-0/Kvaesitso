@@ -35,6 +35,7 @@ fun DigitalClock1(
     compact: Boolean,
     twentyFourHours: Boolean,
     showSeconds: Boolean,
+    monospaced: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
 ) {
@@ -75,6 +76,7 @@ fun DigitalClock1(
     val textStyle = MaterialTheme.typography.displayLarge.copy(
         fontSize = if (verticalLayout) 100.sp else 48.sp,
         fontWeight = FontWeight.Black,
+        fontFeatureSettings = if (monospaced) "tnum" else null,
         textAlign = TextAlign.Center,
         lineHeight = 0.8.em,
         drawStyle = if (style.outlined) Stroke(width = 2.dp.toPixels()) else Fill,
