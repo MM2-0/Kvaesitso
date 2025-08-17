@@ -27,6 +27,7 @@ import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.BatteryFull
 import androidx.compose.material.icons.rounded.ColorLens
 import androidx.compose.material.icons.rounded.DarkMode
+import androidx.compose.material.icons.rounded.FormatColorText
 import androidx.compose.material.icons.rounded.Height
 import androidx.compose.material.icons.rounded.HorizontalSplit
 import androidx.compose.material.icons.rounded.LightMode
@@ -272,6 +273,7 @@ fun Clock(
     val context = LocalContext.current
     val clockSettings: ClockWidgetSettings = koinInject()
     val showSeconds by clockSettings.showSeconds.collectAsState(initial = false)
+    val monospaced by clockSettings.monospaced.collectAsState(initial = false)
     val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = false)
     val timeFormat by clockSettings.timeFormat.collectAsState(null)
 
@@ -285,6 +287,7 @@ fun Clock(
             compact = compact,
             showSeconds = showSeconds,
             twentyFourHours = isTwentyFourHours,
+            monospaced = monospaced,
             useThemeColor = useThemeColor,
             darkColors = darkColors,
             style = style,
@@ -295,6 +298,7 @@ fun Clock(
             compact = compact,
             showSeconds = showSeconds,
             twentyFourHours = isTwentyFourHours,
+            monospaced = monospaced,
             useThemeColor = useThemeColor,
             darkColors = darkColors,
         )
@@ -322,6 +326,7 @@ fun Clock(
             compact = compact,
             showSeconds = showSeconds,
             twentyFourHours = isTwentyFourHours,
+            monospaced = monospaced,
             useThemeColor = useThemeColor,
             darkColors = darkColors,
         )
@@ -366,6 +371,7 @@ fun ConfigureClockWidgetSheet(
     val widgetsOnHome by viewModel.widgetsOnHome.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
     val showSeconds by viewModel.showSeconds.collectAsState()
+    val monospaced by viewModel.monospaced.collectAsState()
     val timeFormat by viewModel.timeFormat.collectAsState()
     val useAccentColor by viewModel.useThemeColor.collectAsState()
     val parts by viewModel.parts.collectAsState()
@@ -510,6 +516,20 @@ fun ConfigureClockWidgetSheet(
                             value = showSeconds,
                             onValueChanged = {
                                 viewModel.setShowSeconds(it)
+                            }
+                        )
+                    }
+                    AnimatedVisibility(
+                        style is ClockWidgetStyle.Digital1 ||
+                                style is ClockWidgetStyle.Digital2 ||
+                                style is ClockWidgetStyle.Orbit
+                    ) {
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_clock_widget_monospaced),
+                            icon = Icons.Rounded.FormatColorText,
+                            value = monospaced,
+                            onValueChanged = {
+                                viewModel.setMonospaced(it)
                             }
                         )
                     }
