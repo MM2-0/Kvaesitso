@@ -22,6 +22,7 @@ fun DigitalClock2(
     compact: Boolean,
     showSeconds: Boolean,
     twentyFourHours: Boolean,
+    monospaced: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
 ) {
@@ -64,6 +65,7 @@ fun DigitalClock2(
         text = formatter.format(time),
         style = MaterialTheme.typography.displaySmall.copy(
             fontWeight = FontWeight.Normal,
+            fontFeatureSettings = if (monospaced) "tnum" else null,
             color = color
         )
     )
