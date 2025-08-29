@@ -852,4 +852,8 @@
     <string name="preference_search_bar_style_hidden">ซ่อน</string>
     <string name="clock_variant_analog_ticks">ขีด</string>
     <string name="music_widget_interactive_progress_bar">แถบเวลาแบบควบคุมได้</string>
+    <string name="preference_clock_widget_monospaced">ตัวเลขแบบความกว้างคงที่</string>
+    <string name="poi_category_climbing_gym">ยิมปีนผา</string>
+    <string name="poi_category_hackerspace">แฮกเกอร์สเปซ</string>
+    <string name="poi_category_stationery">ร้านขายเครื่องเขียน</string>
 </resources>
