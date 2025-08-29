@@ -863,4 +863,8 @@
     <string name="preference_search_bar_style_solid">Homogén</string>
     <string name="clock_variant_analog_ticks">Tickek</string>
     <string name="music_widget_interactive_progress_bar">Interaktív folyamatsáv</string>
+    <string name="preference_clock_widget_monospaced">Azonos szélességű számjegyek</string>
+    <string name="poi_category_climbing_gym">Mászóterem</string>
+    <string name="poi_category_hackerspace">Hackespace</string>
+    <string name="poi_category_stationery">Papír, írószer</string>
 </resources>
