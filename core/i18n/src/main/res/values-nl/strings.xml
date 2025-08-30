@@ -863,4 +863,5 @@
     <string name="preference_search_bar_style_solid">Massief</string>
     <string name="clock_variant_analog_ticks">Streepjes</string>
     <string name="music_widget_interactive_progress_bar">Interactieve voortgangsbalk</string>
+    <string name="preference_clock_widget_monospaced">Alle cijfers even breed</string>
 </resources>
