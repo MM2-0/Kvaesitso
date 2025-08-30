@@ -563,6 +563,7 @@
     <string name="preference_clockwidget_layout_vertical">Predefinito</string>
     <string name="preference_clockwidget_layout_horizontal">Compatto</string>
     <string name="preference_clock_widget_show_seconds">Mostra secondi</string>
+    <string name="preference_clock_widget_monospaced">Cifre a larghezza fissa</string>
     <string name="preference_clock_widget_time_format">Formato ora</string>
     <string name="preference_clock_widget_time_format_24h">24 ore</string>
     <string name="preference_clock_widget_time_format_12h">12 ore</string>
@@ -953,6 +954,9 @@
     <string name="poi_category_fire_station">Caserma dei pompieri</string>
     <string name="poi_category_courthouse">Tribunale</string>
     <string name="poi_category_townhall">Municipio</string>
+    <string name="poi_category_stationery">Cartoleria</string>
+    <string name="poi_category_climbing_gym">Palestra di arrampicata</string>
+    <string name="poi_category_hackerspace">Hackerspazio</string>
     <string name="customize_item_label">Etichetta</string>
     <string name="customize_item_tags">Tag</string>
     <string name="customize_item_visibility">Mostra in</string>
