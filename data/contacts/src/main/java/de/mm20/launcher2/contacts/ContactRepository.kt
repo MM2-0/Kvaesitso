@@ -24,7 +24,7 @@ internal class ContactRepository(
     private val settings: ContactSearchSettings,
 ) : SearchableRepository<Contact> {
 
-    override fun search(query: String, allowNetwork: Boolean): Flow<List<Contact>> {
+    override fun search(query: String): Flow<List<Contact>> {
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
 
         if (query.length < 2) {
@@ -46,10 +46,7 @@ internal class ContactRepository(
 
                 for (provider in providers) {
                     launch {
-                        val r = provider.search(
-                            query,
-                            allowNetwork = allowNetwork,
-                        )
+                        val r = provider.search(query)
                         result.update { it + r }
                     }
                 }

@@ -16,7 +16,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +32,6 @@ fun KeyboardFilterBar(
     items: List<KeyboardFilterBarItem>,
 ) {
     val context = LocalContext.current
-    val allCategoriesEnabled = filters.allCategoriesEnabled
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,14 +49,6 @@ fun KeyboardFilterBar(
         ) {
             for (i in items.indices) {
                 val item = items[i]
-                val prevItem = items.getOrNull(i - 1)
-                if (prevItem != null && prevItem.isCategory != item.isCategory) {
-                    VerticalDivider(
-                        modifier = Modifier
-                            .height(36.dp)
-                            .padding(end = 8.dp)
-                    )
-                }
                 FilterChip(
                     modifier = Modifier.padding(end = if (i == items.lastIndex) 0.dp else 8.dp),
                     selected = filters.isSelected(item),

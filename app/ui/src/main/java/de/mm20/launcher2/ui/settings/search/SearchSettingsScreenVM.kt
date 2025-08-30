@@ -12,13 +12,11 @@ import de.mm20.launcher2.preferences.search.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
-import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.search.UnitConverterSettings
 import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
-import de.mm20.launcher2.search.SearchFilters
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -35,7 +33,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val unitConverterSettings: UnitConverterSettings by inject()
     private val calculatorSearchSettings: CalculatorSearchSettings by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
-    private val searchFilterSettings: SearchFilterSettings by inject()
 
     private val appRepository: AppRepository by inject()
 
@@ -146,20 +143,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun requestAppShortcutsPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
-    }
-
-    val filterBar = searchFilterSettings.filterBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setFilterBar(filterBar: Boolean) {
-        searchFilterSettings.setFilterBar(filterBar)
-    }
-
-    val searchFilters = searchFilterSettings.defaultFilter
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchFilters())
-
-    fun setSearchFilters(searchFilters: SearchFilters) {
-        searchFilterSettings.setDefaultFilter(searchFilters)
     }
 
     val plugins = pluginService.getPluginsWithState(enabled = true)
