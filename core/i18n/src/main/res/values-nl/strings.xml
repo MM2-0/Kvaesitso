@@ -556,6 +556,7 @@
     <string name="preference_screen_clockwidget_summary">Klokstijl en -componenten instellen</string>
     <string name="preference_clockwidget_layout_vertical">Standaard</string>
     <string name="preference_clock_widget_show_seconds">Seconden tonen</string>
+    <string name="preference_clock_widget_monospaced">Alle cijfers even breed</string>
     <string name="preference_clock_widget_time_format">Tijdformaat</string>
     <string name="preference_clock_widget_time_format_24h">24-uur</string>
     <string name="preference_clock_widget_time_format_12h">12-uur</string>
