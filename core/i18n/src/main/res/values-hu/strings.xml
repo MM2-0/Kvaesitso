@@ -569,6 +569,7 @@
     <string name="preference_clockwidget_layout_vertical">Alapértelmezett</string>
     <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
     <string name="preference_clock_widget_show_seconds">Másodperc megjelenítése</string>
+    <string name="preference_clock_widget_monospaced">Azonos szélességű számjegyek</string>
     <string name="preference_clock_widget_time_format">Időformátum</string>
     <string name="preference_clock_widget_time_format_24h">24 órás</string>
     <string name="preference_clock_widget_time_format_12h">12 órás</string>
@@ -964,6 +965,9 @@
     <string name="poi_category_fire_station">Tűzoltóállomás</string>
     <string name="poi_category_courthouse">Bíróság</string>
     <string name="poi_category_townhall">Városháza</string>
+    <string name="poi_category_stationery">Papír, írószer</string>
+    <string name="poi_category_climbing_gym">Mászóterem</string>
+    <string name="poi_category_hackerspace">Hackespace</string>
     <string name="customize_item_label">Név szerkesztése</string>
     <string name="customize_item_tags">Címkék</string>
     <string name="customize_item_visibility">Megjelenítés ebben</string>
