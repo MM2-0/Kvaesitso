@@ -571,6 +571,7 @@
     <string name="preference_clockwidget_layout_vertical">ค่าเริ่มต้น</string>
     <string name="preference_clockwidget_layout_horizontal">กะทัดรัด</string>
     <string name="preference_clock_widget_show_seconds">แสดงวินาที</string>
+    <string name="preference_clock_widget_monospaced">ตัวเลขแบบความกว้างคงที่</string>
     <string name="preference_clock_widget_time_format">รูปแบบเวลา</string>
     <string name="preference_clock_widget_time_format_24h">24 ชั่วโมง</string>
     <string name="preference_clock_widget_time_format_12h">12 ชั่วโมง</string>
@@ -967,6 +968,9 @@
     <string name="poi_category_fire_station">สถานีดับเพลิง</string>
     <string name="poi_category_courthouse">ศาล</string>
     <string name="poi_category_townhall">ศาลากลางจังหวัด</string>
+    <string name="poi_category_stationery">ร้านขายเครื่องเขียน</string>
+    <string name="poi_category_climbing_gym">ยิมปีนผา</string>
+    <string name="poi_category_hackerspace">แฮกเกอร์สเปซ</string>
     <string name="customize_item_label">ป้าย</string>
     <string name="customize_item_tags">แท็ก</string>
     <string name="customize_item_visibility">แสดงใน</string>
