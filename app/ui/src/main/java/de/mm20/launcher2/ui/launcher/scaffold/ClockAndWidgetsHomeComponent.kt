@@ -100,14 +100,19 @@ internal object ClockAndWidgetsHomeComponent : ScaffoldComponent() {
                 .padding(top = topPadding)
                 .padding(insets),
         ) {
+            val bottomPadding by animateDpAsState(
+                if (fillHeight == true && scrollState.value == 0) insets.calculateBottomPadding()
+                else 0.dp
+            )
+
             ClockWidget(
                 modifier = Modifier
                     .fillMaxWidth()
-                    then if (fillHeight == true) Modifier.height(
-                        state.size.height.toDp() - insets.calculateTopPadding()
-                    ).padding(
-                        bottom = insets.calculateBottomPadding()
-                    ) else Modifier,
+                    then if (fillHeight == true) {
+                        Modifier
+                            .padding(bottom = bottomPadding)
+                            .height(state.size.height.toDp() - insets.calculateTopPadding() - insets.calculateBottomPadding())
+                } else Modifier,
                 editMode = editMode,
                 fillScreenHeight = fillHeight == true,
             )

@@ -49,7 +49,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.innerShadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.shadow.InnerShadow
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -268,8 +268,10 @@ private fun ThemePreview(
             )
             .innerShadow(
                 MaterialTheme.shapes.medium,
-                InnerShadow(8.dp, color = Color(0f, 0f, 0f, 0.2f))
-            )
+            ) {
+                color = Color(0f, 0f, 0f, 0.2f)
+                radius = with(density) { 8.dp.toPx() }
+            }
     ) {
         SearchBar(
             style = SearchBarStyle.Solid,

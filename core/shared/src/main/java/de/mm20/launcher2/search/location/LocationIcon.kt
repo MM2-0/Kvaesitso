@@ -70,6 +70,7 @@ enum class LocationIcon {
     Pharmacy,
     HairSalon,
     Laundromat,
+    Stationery,
 
     Sports,
     FitnessCenter,
@@ -89,12 +90,14 @@ enum class LocationIcon {
     Kayaking,
     Skateboarding,
     Cricket,
+    Climbing,
     MartialArts,
     NordicWalking,
     Paragliding,
     Gymnastics,
     Snowboarding,
     Hockey,
+    Hackerspace,
     Rugby,
 
     Bank,

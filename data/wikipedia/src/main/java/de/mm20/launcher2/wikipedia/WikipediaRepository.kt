@@ -22,11 +22,18 @@ internal class WikipediaRepository(
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
+    private val appVersion by lazy {
+        context.packageManager.getPackageInfo(context.packageName, 0).versionName
+    }
+
     private val httpClient = OkHttpClient
         .Builder()
         .connectTimeout(200, TimeUnit.MILLISECONDS)
         .readTimeout(3000, TimeUnit.MILLISECONDS)
         .writeTimeout(1000, TimeUnit.MILLISECONDS)
+        .addInterceptor {
+            it.proceed(it.request().newBuilder().addHeader("user-agent", "${context.packageName}/v$appVersion").build())
+        }
         .build()
 
     private lateinit var retrofit: Retrofit

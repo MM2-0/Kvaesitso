@@ -136,6 +136,15 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
+    val monospaced
+        get() = launcherDataStore.data.map { it.clockWidgetMonospaced }
+
+    fun setMonospaced(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(clockWidgetMonospaced = enabled)
+        }
+    }
+
     val timeFormat
         get() = launcherDataStore.data.map { it.clockWidgetTimeFormat }
 

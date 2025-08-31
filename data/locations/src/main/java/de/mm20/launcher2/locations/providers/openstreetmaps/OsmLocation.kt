@@ -224,6 +224,7 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                     "optician" -> R.string.poi_category_optician to LocationIcon.Optician
                     "hairdresser" -> R.string.poi_category_hairdresser to LocationIcon.HairSalon
                     "laundry" -> R.string.poi_category_laundry to LocationIcon.Laundromat
+                    "stationery" -> R.string.poi_category_stationery to LocationIcon.Stationery
 
                     else -> R.string.poi_category_shopping to LocationIcon.Shopping
                 }
@@ -308,7 +309,7 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                     "stadium" -> R.string.poi_category_stadium to LocationIcon.Stadium
                     "fitness_centre" -> R.string.poi_category_fitness_center to LocationIcon.FitnessCenter
                     "swimming_pool" -> R.string.poi_category_swimming to LocationIcon.Swimming
-                    "pitch", "sports_centre" -> matchAnyTag<Int, LocationIcon>("sport") {
+                    "pitch", "sports_centre", "sports_hall" -> matchAnyTag<Int, LocationIcon>("sport") {
                         "soccer" with (R.string.poi_category_soccer to LocationIcon.Soccer)
                         "tennis" with (R.string.poi_category_tennis to LocationIcon.Tennis)
                         "basketball" with (R.string.poi_category_basketball to LocationIcon.Basketball)
@@ -321,10 +322,12 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                         "volleyball" with (R.string.poi_category_volleyball to LocationIcon.Volleyball)
                         "skiing" with (R.string.poi_category_skiing to LocationIcon.Skiing)
                         "cricket" with (R.string.poi_category_cricket to LocationIcon.Cricket)
+                        "climbing" with (R.string.poi_category_climbing_gym to LocationIcon.Climbing)
                     }
 
                     "golf_course" -> R.string.poi_category_golf to LocationIcon.Golf
                     "park" -> R.string.poi_category_park to LocationIcon.Park
+                    "hackerspace" -> R.string.poi_category_hackerspace to LocationIcon.Hackerspace
                     else -> null
                 }
             }
