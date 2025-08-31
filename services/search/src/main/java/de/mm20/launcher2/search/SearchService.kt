@@ -235,6 +235,7 @@ internal class SearchServiceImpl(
             }
             if (filters.places) {
                 launch {
+                    delay(250)
                     locationRepository.search(query, filters.allowNetwork)
                         .combine(customAttrResults) { locations, customAttrs ->
                             if (customAttrs.locations != null) locations + customAttrs.locations
