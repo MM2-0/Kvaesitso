@@ -37,7 +37,7 @@ internal class LocationsRepository(
         query: String,
         allowNetwork: Boolean
     ): Flow<ImmutableList<Location>> {
-        if (query.isBlank() && query.length > 1) {
+        if (query.isBlank() || query.length <= 1) {
             return flowOf(persistentListOf())
         }
         return combineTransform(
