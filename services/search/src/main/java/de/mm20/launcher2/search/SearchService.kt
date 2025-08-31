@@ -233,7 +233,7 @@ internal class SearchServiceImpl(
                         }
                 }
             }
-            if (filters.places && query.isNotBlank() && query.length > 1) {
+            if (filters.places) {
                 launch {
                     delay(250)
                     locationRepository.search(query, filters.allowNetwork)

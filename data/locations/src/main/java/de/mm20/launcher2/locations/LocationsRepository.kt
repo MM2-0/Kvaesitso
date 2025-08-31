@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.flow.update
@@ -35,49 +36,54 @@ internal class LocationsRepository(
     override fun search(
         query: String,
         allowNetwork: Boolean
-    ): Flow<ImmutableList<Location>> = combineTransform(
-        poseProvider
-            .getLocation(minTimeMs = 2000, minDistanceM = 50.0f)
-            // 1st location: lastCachedLocation of poseProvider, if available
-            // 2nd location: LocationManager.getLastKnownLocation(), if available and better than lastCachedLocation
-            // 3rd location: live location from LocationManager.requestLocationUpdates() that is better than any of the previous
-            .take(3)
-            // only request locations for 30 seconds
-            .timeout(30.seconds),
-        permissionsManager.hasPermission(PermissionGroup.Location),
-        settings.data
-    ) { userLocation, hasPermission, settingsData ->
-        emit(persistentListOf())
-
-        if (!hasPermission || settingsData.providers.isEmpty()) {
-            return@combineTransform
+    ): Flow<ImmutableList<Location>> {
+        if (query.isBlank() && query.length > 1) {
+            return flowOf(persistentListOf())
         }
+        return combineTransform(
+            poseProvider
+                .getLocation(minTimeMs = 2000, minDistanceM = 50.0f)
+                // 1st location: lastCachedLocation of poseProvider, if available
+                // 2nd location: LocationManager.getLastKnownLocation(), if available and better than lastCachedLocation
+                // 3rd location: live location from LocationManager.requestLocationUpdates() that is better than any of the previous
+                .take(3)
+                // only request locations for 30 seconds
+                .timeout(30.seconds),
+            permissionsManager.hasPermission(PermissionGroup.Location),
+            settings.data
+        ) { userLocation, hasPermission, settingsData ->
+            emit(persistentListOf())
 
-        val providers = settingsData.providers.map {
-            when (it) {
-                "openstreetmaps" -> OsmLocationProvider(context, settings)
-                else -> PluginLocationProvider(context, it)
+            if (!hasPermission || settingsData.providers.isEmpty()) {
+                return@combineTransform
             }
-        }
 
-        supervisorScope {
-            val result = MutableStateFlow(persistentListOf<Location>())
-
-            for (provider in providers) {
-                launch {
-                    val r = provider.search(
-                        query,
-                        userLocation,
-                        allowNetwork,
-                        settingsData.searchRadius,
-                        settingsData.hideUncategorized
-                    )
-                    result.update {
-                        (it + r).toPersistentList()
-                    }
+            val providers = settingsData.providers.map {
+                when (it) {
+                    "openstreetmaps" -> OsmLocationProvider(context, settings)
+                    else -> PluginLocationProvider(context, it)
                 }
             }
-            emitAll(result)
+
+            supervisorScope {
+                val result = MutableStateFlow(persistentListOf<Location>())
+
+                for (provider in providers) {
+                    launch {
+                        val r = provider.search(
+                            query,
+                            userLocation,
+                            allowNetwork,
+                            settingsData.searchRadius,
+                            settingsData.hideUncategorized
+                        )
+                        result.update {
+                            (it + r).toPersistentList()
+                        }
+                    }
+                }
+                emitAll(result)
+            }
         }
     }
 }
