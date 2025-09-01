@@ -574,6 +574,7 @@
     <string name="preference_clockwidget_layout_vertical">Vertikální</string>
     <string name="preference_clockwidget_layout_horizontal">Horizontální</string>
     <string name="preference_clock_widget_show_seconds">Zobrazit sekundy</string>
+    <string name="preference_clock_widget_monospaced">Neproporcionální číslice</string>
     <string name="preference_clock_widget_time_format">Formát času</string>
     <string name="preference_clock_widget_time_format_24h">24hodinový</string>
     <string name="preference_clock_widget_time_format_12h">12hodinový</string>
@@ -973,6 +974,8 @@
     <string name="poi_category_fire_station">Požární stanice</string>
     <string name="poi_category_courthouse">Soud</string>
     <string name="poi_category_townhall">Radnice</string>
+    <string name="poi_category_stationery">Papírnictví</string>
+    <string name="poi_category_climbing_gym">Lezecká stěna</string>
     <string name="customize_item_label">Značka</string>
     <string name="customize_item_tags">Štítky</string>
     <string name="customize_item_visibility">Zobrazit v</string>
