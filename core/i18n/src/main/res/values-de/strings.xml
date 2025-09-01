@@ -555,6 +555,7 @@
     <string name="preference_clockwidget_layout_vertical">Standard</string>
     <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
     <string name="preference_clock_widget_show_seconds">Sekunden anzeigen</string>
+    <string name="preference_clock_widget_monospaced">Monospace Ziffern</string>
     <string name="preference_clock_widget_time_format">Zeitformat</string>
     <string name="preference_clock_widget_time_format_24h">24-Stunden</string>
     <string name="preference_clock_widget_time_format_12h">12-Stunden</string>
