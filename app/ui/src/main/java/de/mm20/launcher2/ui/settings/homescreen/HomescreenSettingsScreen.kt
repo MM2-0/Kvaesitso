@@ -75,6 +75,7 @@ fun HomescreenSettingsScreen() {
     val context = LocalContext.current
 
     val dock by viewModel.dock.collectAsStateWithLifecycle(null)
+    val dockRows by viewModel.dockRows.collectAsStateWithLifecycle(1)
     val fixedRotation by viewModel.fixedRotation.collectAsStateWithLifecycle(null)
     val widgetsOnHomeScreen by viewModel.widgetsOnHomeScreen.collectAsStateWithLifecycle(null)
     val editButton by viewModel.widgetEditButton.collectAsStateWithLifecycle(null)
@@ -123,6 +124,17 @@ fun HomescreenSettingsScreen() {
                         viewModel.setDock(it)
                     },
                 )
+                AnimatedVisibility(dock == true) {
+                    SliderPreference(
+                        title = stringResource(R.string.preference_clockwidget_dock_rows),
+                        value = dockRows,
+                        min = 1,
+                        max = 4,
+                        onValueChanged = {
+                            viewModel.setDockRows(it)
+                        }
+                    )
+                }
                 SwitchPreference(
                     title = stringResource(R.string.preference_widgets_on_home_screen),
                     summary = stringResource(R.string.preference_widgets_on_home_screen_summary),
