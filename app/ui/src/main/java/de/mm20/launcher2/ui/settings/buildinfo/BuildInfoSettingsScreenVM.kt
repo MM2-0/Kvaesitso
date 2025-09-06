@@ -13,7 +13,6 @@ class BuildInfoSettingsScreenVM : ViewModel(), KoinComponent {
 
     val buildFeatures = availableWeatherProviders.map {
         mapOf(
-            "Weather providers: HERE" to it.any { it.id == "here" },
             "Weather providers: Met No" to it.any { it.id == "metno" },
             "Weather providers: OpenWeatherMap" to it.any { it.id == "owm" },
         )
