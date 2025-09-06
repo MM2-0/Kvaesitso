@@ -11,6 +11,7 @@ import de.mm20.launcher2.icons.BreezyWeather
 import de.mm20.launcher2.icons.Google
 import de.mm20.launcher2.icons.Nextcloud
 import de.mm20.launcher2.icons.Owncloud
+import de.mm20.launcher2.icons.Wikipedia
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -55,6 +56,13 @@ fun IntegrationsSettingsScreen() {
                     icon = Icons.Rounded.Owncloud,
                     onClick = {
                         navController?.navigate("settings/integrations/owncloud")
+                    }
+                )
+                Preference(
+                    title = stringResource(R.string.preference_search_wikipedia),
+                    icon = Icons.Rounded.Wikipedia,
+                    onClick = {
+                        navController?.navigate("settings/search/wikipedia")
                     }
                 )
                 Preference(
