@@ -41,6 +41,7 @@ haze = "1.6.10"
 coil = "2.7.0"
 koin = "4.1.1"
 retrofit = "2.11.0"
+ktor = "3.2.3"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -104,6 +105,11 @@ androidx-securitycrypto = { group = "androidx.security", name = "security-crypto
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.2.0-alpha02" }
 androidx-emojipicker = { group = "androidx.emoji2", name = "emoji2-emojipicker", version.ref = "androidx-emojipicker" }
 
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.0" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version = "4.12.0" }
 
@@ -136,6 +142,7 @@ osmopeninghours = { group = "de.westnordost", name = "osm-opening-hours", versio
 kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]
 androidx-lifecycle = ["androidx-lifecycle-viewmodel", "androidx-lifecycle-common", "androidx-lifecycle-runtime", "androidx-lifecycle-viewmodelcompose", "androidx-lifecycle-runtimecompose"]
 retrofit = ["retrofit-core", "retrofit-gson"]
+ktor = ["ktor-client-core", "ktor-client-okhttp", "ktor-serialization-kotlinx-json", "ktor-client-content-negotiation"]
 tests = ["junit"]
 
 [plugins]
