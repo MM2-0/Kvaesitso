@@ -126,8 +126,6 @@ mathparser = { group = "org.mariuszgromada.math", name = "MathParser.org-mXparse
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidxcompose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
-emoji4j = { group = "com.sigpwned", name = "emoji4j-core", version = "16.0.0" }
-
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

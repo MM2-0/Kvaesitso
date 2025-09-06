@@ -87,7 +87,6 @@ import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropRow
 import de.mm20.launcher2.ui.component.dragndrop.LazyVerticalDragAndDropGrid
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
-import de.mm20.launcher2.ui.ktx.splitLeadingEmoji
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlin.math.roundToInt
@@ -480,22 +479,11 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     expanded = showAddMenu,
                                     onDismissRequest = { showAddMenu = false }) {
                                     for (tag in availableTags) {
-                                        val (emoji, tagName) = remember(tag.tag) {
-                                            tag.tag.splitLeadingEmoji()
-                                        }
                                         DropdownMenuItem(
                                             leadingIcon = {
-                                                if (emoji != null) {
-                                                    Text(
-                                                        emoji,
-                                                        modifier = Modifier.width(FilterChipDefaults.IconSize),
-                                                        textAlign = TextAlign.Center,
-                                                    )
-                                                } else {
-                                                    Icon(Icons.Rounded.Tag, null)
-                                                }
+                                                Icon(Icons.Rounded.Tag, null)
                                             },
-                                            text = { Text(tagName ?: "") },
+                                            text = { Text(tag.tag) },
                                             onClick = {
                                                 viewModel.pinTag(tag)
                                                 showAddMenu = false

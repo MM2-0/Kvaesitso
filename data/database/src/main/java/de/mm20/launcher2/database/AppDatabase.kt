@@ -39,7 +39,6 @@ import de.mm20.launcher2.database.migrations.Migration_22_23
 import de.mm20.launcher2.database.migrations.Migration_23_24
 import de.mm20.launcher2.database.migrations.Migration_24_25
 import de.mm20.launcher2.database.migrations.Migration_25_26
-import de.mm20.launcher2.database.migrations.Migration_26_27
 import de.mm20.launcher2.database.migrations.Migration_27_28
 import de.mm20.launcher2.database.migrations.Migration_28_29
 import de.mm20.launcher2.database.migrations.Migration_29_30
@@ -164,7 +163,6 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_23_24(),
                         Migration_24_25(),
                         Migration_25_26(),
-                        Migration_26_27(),
                         Migration_27_28(),
                         Migration_28_29(),
                         Migration_29_30(),
