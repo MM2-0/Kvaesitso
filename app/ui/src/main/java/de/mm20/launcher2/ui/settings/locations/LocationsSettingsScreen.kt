@@ -1,16 +1,12 @@
 package de.mm20.launcher2.ui.settings.locations
 
 import android.app.PendingIntent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,7 +22,7 @@ import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.Banner
+import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -74,41 +70,35 @@ fun LocationsSettingsScreen() {
                         navController?.navigate("settings/search/locations/osm")
                     }
                 )
-                AnimatedVisibility(plugins.isNotEmpty()) {
-                    Column {
-                        for (plugin in plugins) {
-                            val state = plugin.state
-                            if (state is PluginState.SetupRequired) {
-                                Banner(
-                                    modifier = Modifier.padding(16.dp),
-                                    text = state.message
-                                        ?: stringResource(id = R.string.plugin_state_setup_required),
-                                    icon = Icons.Rounded.ErrorOutline,
-                                    primaryAction = {
-                                        TextButton(onClick = {
-                                            try {
-                                                state.setupActivity.sendWithBackgroundPermission(context)
-                                            } catch (e: PendingIntent.CanceledException) {
-                                                CrashReporter.logException(e)
-                                            }
-                                        }) {
-                                            Text(stringResource(id = R.string.plugin_action_setup))
-                                        }
-                                    }
+                for (plugin in plugins) {
+                    val state = plugin.state
+                    GuardedPreference(
+                        locked = state is PluginState.SetupRequired,
+                        onUnlock = {
+                            try {
+                                (state as PluginState.SetupRequired).setupActivity.sendWithBackgroundPermission(
+                                    context
                                 )
+                            } catch (e: PendingIntent.CanceledException) {
+                                CrashReporter.logException(e)
                             }
-                            SwitchPreference(
-                                title = plugin.plugin.label,
-                                enabled = enabledPlugins != null && state is PluginState.Ready,
-                                summary = (state as? PluginState.Ready)?.text
-                                    ?: (state as? PluginState.SetupRequired)?.message
-                                    ?: plugin.plugin.description,
-                                value = enabledPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
-                                onValueChanged = {
-                                    viewModel.setPluginEnabled(plugin.plugin.authority, it)
-                                },
-                            )
-                        }
+                        },
+                        description = (state as? PluginState.SetupRequired)?.message
+                            ?: stringResource(id = R.string.plugin_state_setup_required),
+                        icon = Icons.Rounded.ErrorOutline,
+                        unlockLabel = stringResource(id = R.string.plugin_action_setup),
+                    ) {
+                        SwitchPreference(
+                            title = plugin.plugin.label,
+                            enabled = enabledPlugins != null && state is PluginState.Ready,
+                            summary = (state as? PluginState.Ready)?.text
+                                ?: (state as? PluginState.SetupRequired)?.message
+                                ?: plugin.plugin.description,
+                            value = enabledPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                            onValueChanged = {
+                                viewModel.setPluginEnabled(plugin.plugin.authority, it)
+                            },
+                        )
                     }
                 }
             }
