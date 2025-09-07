@@ -35,6 +35,9 @@ internal class MetNoProvider(
     private val context: Context,
     private val weatherSettings: WeatherSettings,
 ): GeocoderWeatherProvider(context) {
+
+    private val metNoApi = MetNoApi()
+
     override suspend fun getWeatherData(location: WeatherLocation): List<Forecast>? {
         return when (location) {
             is WeatherLocation.LatLon -> withContext(Dispatchers.IO) {
@@ -57,61 +60,49 @@ internal class MetNoProvider(
     @WorkerThread
     private suspend fun getWeatherData(lat: Double, lon: Double, locationName: String): List<Forecast>? {
         val lastUpdate = weatherSettings.lastUpdate.first()
-        val httpDateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ROOT)
-        val ifModifiedSince = httpDateFormat.format(Date(lastUpdate))
         try {
             val forecasts = mutableListOf<Forecast>()
 
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
             dateFormat.timeZone = TimeZone.getTimeZone(ZoneId.ofOffset("UTC", ZoneOffset.UTC))
 
-            val httpClient = OkHttpClient()
+            val data = try {
+                metNoApi.locationForecast(lat, lon, getUserAgent() ?: return null, lastUpdate)
+            } catch (e: Exception) {
+                CrashReporter.logException(e)
+                return null
+            }
 
-            val latParam = String.format(Locale.ROOT, "%.4f", lat)
-            val lonParam = String.format(Locale.ROOT, "%.4f", lon)
-
-            val forecastRequest = Request.Builder()
-                .url("https://api.met.no/weatherapi/locationforecast/2.0/?lat=$latParam&lon=$lonParam")
-                .addHeader("User-Agent", getUserAgent() ?: return null)
-                .addHeader("If-Modified-Since", ifModifiedSince)
-                .get()
-                .build()
-
-            val response = httpClient.newCall(forecastRequest).execute()
-            val responseBody = response.body?.string() ?: return null
-
-            val json = JSONObject(responseBody)
-            val properties = json.getJSONObject("properties")
-            val meta = properties.getJSONObject("meta")
-            val updatedAt = dateFormat.parse(meta.getString("updated_at"))?.time
+            val properties = data.properties
+            val meta = properties.meta
+            val updatedAt = dateFormat.parse(meta.updatedAt)?.time
                 ?: System.currentTimeMillis()
-            val timeseries = properties.getJSONArray("timeseries")
+            val timeseries = properties.timeseries
 
-            for (i in 0 until timeseries.length()) {
-                val fc = timeseries.getJSONObject(i)
-                val data = fc.getJSONObject("data")
-                val timestamp = dateFormat.parse(fc.getString("time"))?.time ?: continue
-                val details = data.getJSONObject("instant").getJSONObject("details")
+            for (i in 0 until timeseries.size) {
+                val fc = timeseries[i]
+                val data = fc.data
+                val timestamp = dateFormat.parse(fc.time)?.time ?: continue
+                val details = data.instant.details
                 var hours = 0
-                val nextHours = data.optJSONObject("next_1_hours")?.also { hours = 1 }
-                    ?: data.optJSONObject("next_6_hours")?.also { hours = 6 }
-                    ?: data.optJSONObject("next_12_hours")?.also { hours = 12 }
+                val nextHours = data.next1Hours?.also { hours = 1 }
+                    ?: data.next6Hours?.also { hours = 6 }
+                    ?: data.next12Hours?.also { hours = 12 }
                     ?: continue
-                val symbolCode = nextHours.optJSONObject("summary")?.getString("symbol_code")
+                val symbolCode = nextHours.summary?.symbolCode
                     ?: continue
                 val precipitationAmount =
-                    (nextHours.optJSONObject("details")?.optDouble("precipitation_amount")
-                        ?: 0.0) / hours
+                    (nextHours.details?.precipitationAmount ?: 0.0) / hours
                 forecasts.add(
                     Forecast(
                         timestamp = timestamp,
-                        temperature = details.getDouble("air_temperature") + 273.15,
+                        temperature = details.airTemperature + 273.15,
                         updateTime = updatedAt,
-                        clouds = details.getDouble("cloud_area_fraction").roundToInt(),
-                        humidity = details.getDouble("relative_humidity"),
-                        windDirection = details.getDouble("wind_from_direction"),
-                        windSpeed = details.getDouble("wind_speed"),
-                        pressure = details.getDouble("air_pressure_at_sea_level"),
+                        clouds = details.cloudAreaFraction.roundToInt(),
+                        humidity = details.relativeHumidity,
+                        windDirection = details.windFromDirection,
+                        windSpeed = details.windSpeed,
+                        pressure = details.airPressureAtSeaLevel,
                         location = locationName,
                         provider = context.getString(R.string.provider_metno),
                         providerUrl = "https://www.yr.no/",

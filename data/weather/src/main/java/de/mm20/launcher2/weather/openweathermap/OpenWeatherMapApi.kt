@@ -1,9 +1,18 @@
 package de.mm20.launcher2.weather.openweathermap
 
-import com.google.gson.annotations.SerializedName
-import retrofit2.http.GET
-import retrofit2.http.Query
+import de.mm20.launcher2.serialization.Json
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import io.ktor.http.path
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class CurrentWeatherResult(
     val coord: WeatherResultCoords?,
     val weather: Array<WeatherResultWeather>?,
@@ -19,11 +28,13 @@ data class CurrentWeatherResult(
     val name: String?,
 )
 
+@Serializable
 data class WeatherResultCoords(
     val lon: Double?,
     val lat: Double?,
 )
 
+@Serializable
 data class WeatherResultWeather(
     val id: Int?,
     val main: String?,
@@ -31,49 +42,57 @@ data class WeatherResultWeather(
     val icon: String?,
 )
 
+@Serializable
 data class WeatherResultMain(
     val temp: Double?,
-    @SerializedName("feels_like") val feelsLike: Double?,
+    @SerialName("feels_like") val feelsLike: Double?,
     val pressure: Double?,
     val humidity: Double?,
-    @SerializedName("temp_min") val tempMin: Double?,
-    @SerializedName("temp_max") val tempMax: Double?,
-    @SerializedName("sea_level") val seaLevel: Double?,
-    @SerializedName("grnd_level") val grndLevel: Double?,
+    @SerialName("temp_min") val tempMin: Double?,
+    @SerialName("temp_max") val tempMax: Double?,
+    @SerialName("sea_level") val seaLevel: Double?,
+    @SerialName("grnd_level") val grndLevel: Double?,
 )
 
+@Serializable
 data class WeatherResultWind(
     val speed: Double?,
     val deg: Double?,
     val gust: Double?
 )
 
+@Serializable
 data class WeatherResultClouds(
     val all: Int?
 )
 
+@Serializable
 data class CurrentWeatherResultRain(
-    @SerializedName("1h") val oneHour: Double,
-    @SerializedName("3h") val threeHours: Double,
+    @SerialName("1h") val oneHour: Double,
+    @SerialName("3h") val threeHours: Double,
 )
 
+@Serializable
 data class CurrentWeatherResultSnow(
-    @SerializedName("1h") val oneHour: Double,
-    @SerializedName("3h") val threeHours: Double,
+    @SerialName("1h") val oneHour: Double,
+    @SerialName("3h") val threeHours: Double,
 )
 
+@Serializable
 data class WeatherResultSys(
     val country: String?,
     val sunrise: Long?,
     val sunset: Long?,
 )
 
+@Serializable
 data class ForecastResult(
     val cnt: Int?,
     val list: Array<ForecastResultList>?,
     val city: ForecastResultCity?,
 )
 
+@Serializable
 data class ForecastResultList(
     val dt: Long?,
     val main: WeatherResultMain?,
@@ -83,21 +102,25 @@ data class ForecastResultList(
     val rain: ForecastResultRain?,
     val snow: ForecastResultSnow?,
     val sys: ForecastResultSys?,
-    @SerializedName("dt_txt") val dtTxt: String?,
+    @SerialName("dt_txt") val dtTxt: String?,
 )
 
+@Serializable
 data class ForecastResultRain(
-    @SerializedName("3h") val threeHours: Double?,
+    @SerialName("3h") val threeHours: Double?,
 )
 
+@Serializable
 data class ForecastResultSnow(
-    @SerializedName("3h") val threeHours: Double?,
+    @SerialName("3h") val threeHours: Double?,
 )
 
+@Serializable
 data class ForecastResultSys(
     val pod: String,
 )
 
+@Serializable
 data class ForecastResultCity(
     val id: Int?,
     val name: String?,
@@ -106,6 +129,7 @@ data class ForecastResultCity(
     val timezone: Long?,
 )
 
+@Serializable
 data class GeocodeResult(
     val name: String?,
     val local_names: Map<String, String>?,
@@ -114,32 +138,74 @@ data class GeocodeResult(
     val country: String?,
     val state: String?,
 )
-interface OpenWeatherMapApi {
 
-    @GET("data/2.5/weather")
+internal class OpenWeatherMapApi {
+
+    private val httpClient by lazy {
+        HttpClient {
+            install(ContentNegotiation) {
+                json(Json.Lenient)
+            }
+            defaultRequest {
+                url("https://api.openweathermap.org/")
+            }
+        }
+    }
+
     suspend fun currentWeather(
-        @Query("q") q: String? = null,
-        @Query("id") id: Int? = null,
-        @Query("lat") lat: Double? = null,
-        @Query("lon") lon: Double? = null,
-        @Query("appid") appid: String,
-        @Query("lang") lang: String,
-    ): CurrentWeatherResult
+        q: String? = null,
+        id: Int? = null,
+        lat: Double? = null,
+        lon: Double? = null,
+        appid: String,
+        lang: String,
+    ): CurrentWeatherResult {
+        return httpClient.get {
+            url {
+                path("data", "2.5", "weather")
+                parameter("q", q)
+                parameter("id", id)
+                parameter("lat", lat)
+                parameter("lon", lon)
+                parameter("appid", appid)
+                parameter("lang", lang)
+            }
+        }.body()
+    }
 
-    @GET("data/2.5/forecast")
     suspend fun forecast5Day3Hour(
-        @Query("q") q: String? = null,
-        @Query("id") id: Int? = null,
-        @Query("lat") lat: Double? = null,
-        @Query("lon") lon: Double? = null,
-        @Query("appid") appid: String,
-        @Query("lang") lang: String,
-    ): ForecastResult
+        q: String? = null,
+        id: Int? = null,
+        lat: Double? = null,
+        lon: Double? = null,
+        appid: String,
+        lang: String,
+    ): ForecastResult {
+        return httpClient.get {
+            url {
+                path("data", "2.5", "forecast")
+                parameter("q", q)
+                parameter("id", id)
+                parameter("lat", lat)
+                parameter("lon", lon)
+                parameter("appid", appid)
+                parameter("lang", lang)
+            }
+        }.body()
+    }
 
-    @GET("geo/1.0/direct")
     suspend fun geocode(
-        @Query("q") q: String,
-        @Query("appid") appid: String,
-        @Query("limit") limit: Int = 5,
-    ): Array<GeocodeResult>
+        q: String,
+        appid: String,
+        limit: Int = 5,
+    ): Array<GeocodeResult> {
+        return httpClient.get {
+            url {
+                path("geo", "1.0", "direct")
+                parameter("q", q)
+                parameter("appid", appid)
+                parameter("limit", limit)
+            }
+        }.body()
+    }
 }
