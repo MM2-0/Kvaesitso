@@ -28,7 +28,7 @@ class CurrencyConverter(
     private val topCurrencies = arrayOf("USD", "EUR", "JPY", "GBP", "AUD")
 
     override suspend fun isValidUnit(symbol: String): Boolean {
-        return repository.isValidCurrency(symbol)
+        return repository.isValidCurrency(symbol.uppercase())
     }
 
 
@@ -76,7 +76,7 @@ class CurrencyConverter(
         value: Double,
         toUnit: String?
     ): UnitConverter {
-        val fromIsoCode = repository.resolveAlias(fromUnit)
+        val fromIsoCode = repository.resolveAlias(fromUnit.uppercase())
         val toIsoCode = toUnit?.let { repository.resolveAlias(it) }
 
         val values = repository.convertCurrency(fromIsoCode, value, toIsoCode).map {
