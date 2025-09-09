@@ -83,6 +83,7 @@ fun SearchSettingsScreen() {
     val websites by viewModel.websites.collectAsStateWithLifecycle(null)
 
 
+    val hidePrivateSpace by viewModel.hidePrivateSpace.collectAsStateWithLifecycle(null)
     val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
     val launchOnEnter by viewModel.launchOnEnter.collectAsStateWithLifecycle(null)
     val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
@@ -298,6 +299,15 @@ fun SearchSettingsScreen() {
                     icon = Icons.Rounded.VisibilityOff,
                     onClick = {
                         navController?.navigate("settings/search/hiddenitems")
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_hide_private_space),
+                    iconPadding = true,
+                    summary = stringResource(R.string.preference_hide_private_space_summary),
+                    value = hidePrivateSpace == true,
+                    onValueChanged = {
+                        viewModel.setHidePrivateSpace(it)
                     }
                 )
                 Preference(

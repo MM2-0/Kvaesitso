@@ -168,4 +168,11 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     val isTasksAppInstalled = appRepository.findOne("org.tasks", Process.myUserHandle())
         .map { it != null }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val hidePrivateSpace = searchUiSettings.hidePrivateSpace
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setHidePrivateSpace(hidePrivateSpace: Boolean) {
+        searchUiSettings.setHidePrivateSpace(hidePrivateSpace)
+    }
 }
