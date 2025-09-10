@@ -83,7 +83,7 @@ fun SearchSettingsScreen() {
     val websites by viewModel.websites.collectAsStateWithLifecycle(null)
 
 
-    val hidePrivateSpace by viewModel.hidePrivateSpace.collectAsStateWithLifecycle(null)
+    val hidePrivateProfile by viewModel.hidePrivateProfile.collectAsStateWithLifecycle(null)
     val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
     val launchOnEnter by viewModel.launchOnEnter.collectAsStateWithLifecycle(null)
     val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
@@ -302,12 +302,12 @@ fun SearchSettingsScreen() {
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_hide_private_space),
+                    title = stringResource(R.string.preference_hide_private_profile),
                     iconPadding = true,
-                    summary = stringResource(R.string.preference_hide_private_space_summary),
-                    value = hidePrivateSpace == true,
+                    summary = stringResource(R.string.preference_hide_private_profile_summary),
+                    value = hidePrivateProfile == true,
                     onValueChanged = {
-                        viewModel.setHidePrivateSpace(it)
+                        viewModel.setHidePrivateProfile(it)
                     }
                 )
                 Preference(

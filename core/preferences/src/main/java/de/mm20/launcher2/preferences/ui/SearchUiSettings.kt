@@ -61,12 +61,12 @@ class SearchUiSettings internal constructor(
         }
     }
 
-    val hidePrivateSpace
-        get() = launcherDataStore.data.map { it.hidePrivateSpace }
+    val hidePrivateProfile
+        get() = launcherDataStore.data.map { it.hidePrivateProfile }
 
-    fun setHidePrivateSpace(hidePrivateSpace: Boolean) {
+    fun setHidePrivateProfile(hidePrivateProfile: Boolean) {
         launcherDataStore.update {
-            it.copy(hidePrivateSpace = hidePrivateSpace)
+            it.copy(hidePrivateProfile = hidePrivateProfile)
         }
     }
 }

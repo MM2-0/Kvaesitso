@@ -66,6 +66,12 @@ class ProfileManager(
         it.mapNotNull { it?.profile }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
 
+    val isPrivateProfileLocked: Flow<Boolean> = profileStates.map {
+        it.any {
+            it?.state?.locked == true && it.profile.type == Profile.Type.Private
+        }
+    }
+
     init {
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {

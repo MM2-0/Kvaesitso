@@ -169,10 +169,10 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         .map { it != null }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val hidePrivateSpace = searchUiSettings.hidePrivateSpace
+    val hidePrivateProfile = searchUiSettings.hidePrivateProfile
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    fun setHidePrivateSpace(hidePrivateSpace: Boolean) {
-        searchUiSettings.setHidePrivateSpace(hidePrivateSpace)
+    fun setHidePrivateProfile(hidePrivateProfile: Boolean) {
+        searchUiSettings.setHidePrivateProfile(hidePrivateProfile)
     }
 }

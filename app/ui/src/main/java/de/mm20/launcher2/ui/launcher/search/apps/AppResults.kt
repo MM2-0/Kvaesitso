@@ -3,8 +3,10 @@ package de.mm20.launcher2.ui.launcher.search.apps
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -17,11 +19,13 @@ import androidx.compose.material.icons.rounded.Work
 import androidx.compose.material.icons.rounded.WorkOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,8 +59,12 @@ fun LazyListScope.AppResults(
     columns: Int,
     reverse: Boolean,
     showList: Boolean,
+    hidePrivateProfile: Boolean = false,
+    isPrivateProfileLocked: Boolean = false,
+    showUnlockPrivateProfile: Boolean = false,
+    privateProfileIndex: Int = -1
 ) {
-    val before = if (profiles.size > 1) {
+    val before = if (profiles.size > 1 && privateProfileIndex == -1) {
          @Composable {
             Column(
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top,
@@ -68,6 +76,9 @@ fun LazyListScope.AppResults(
                     divider = {}
                 ) {
                     for ((i, profile) in profiles.withIndex()) {
+                        if (hidePrivateProfile && profile.type == Profile.Type.Private && isPrivateProfileLocked) {
+                            continue
+                        }
                         LeadingIconTab(
                             selected = selectedProfileIndex == profiles.indexOf(profile),
                             text = {
@@ -201,7 +212,77 @@ fun LazyListScope.AppResults(
                 }
             }
         }
-    } else null
+    } else {
+        if (hidePrivateProfile && isPrivateProfileLocked && showUnlockPrivateProfile) {
+            @Composable {
+                OutlinedCard(
+                    modifier = Modifier.padding(8.dp),
+                    colors = CardDefaults.outlinedCardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                        contentColor = MaterialTheme.colorScheme.secondary,
+                    ),
+                    shape = MaterialTheme.shapes.small,
+                ) {
+                    Column {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                modifier = Modifier.padding(end = 16.dp),
+                                imageVector = Icons.Rounded.Lock,
+                                contentDescription = null
+                            )
+                            Text(
+                                text = stringResource(R.string.profile_private_profile_state_locked),
+                                modifier = Modifier.padding(top = 8.dp),
+                                color = MaterialTheme.colorScheme.secondary,
+                                style = MaterialTheme.typography.titleSmall,
+                            )
+                        }
+                        FlowRow(
+                            Modifier
+                                .align(Alignment.End)
+                                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+                            horizontalArrangement = Arrangement.End,
+                            verticalArrangement = Arrangement.Bottom,
+                            itemVerticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Box(modifier = Modifier.padding(start = 8.dp)) {
+                                if (showProfileLockControls) {
+                                    Button(
+//                                        modifier = Modifier.padding(top = 32.dp),
+                                        onClick = {
+                                            onProfileLockChange?.invoke(
+                                                profiles[privateProfileIndex],
+                                                false
+                                            )
+                                        },
+                                        contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
+                                    ) {
+                                        Icon(
+                                            Icons.Rounded.LockOpen,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .padding(end = ButtonDefaults.IconSpacing)
+                                                .size(ButtonDefaults.IconSize)
+                                        )
+                                        Text(
+                                            stringResource(
+                                                R.string.profile_private_profile_action_unlock
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else null
+    }
     if (showList) {
         ListResults(
             key = "apps",

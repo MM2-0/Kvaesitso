@@ -110,7 +110,7 @@ data class LauncherSettingsData internal constructor(
 
     val searchResultsReversed: Boolean = false,
     val separateWorkProfile: Boolean = true,
-    val hidePrivateSpace: Boolean = false,
+    val hidePrivateProfile: Boolean = false,
 
     val rankingWeightFactor: WeightFactor = WeightFactor.Default,
 

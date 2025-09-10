@@ -73,6 +73,9 @@ fun SearchColumn(
     val favoritesVM: SearchFavoritesVM = viewModel()
     val favorites by favoritesVM.favorites.collectAsState(emptyList())
 
+    val hidePrivateProfile by viewModel.hidePrivateProfile.collectAsState()
+    val showUnlockPrivateProfile by viewModel.showUnlockPrivateProfile
+    val isPrivateProfileLocked by viewModel.isPrivateProfileLocked.collectAsState(false)
     val hideFavs by viewModel.hideFavorites
     val favoritesEnabled by viewModel.favoritesEnabled.collectAsState(false)
 
@@ -204,19 +207,33 @@ fun SearchColumn(
                         showList = showList,
                         selectedIndex = selectedAppIndex,
                         onSelect = { selectedAppIndex = it },
+                        hidePrivateProfile = hidePrivateProfile,
+                        isPrivateProfileLocked = isPrivateProfileLocked,
+                        showUnlockPrivateProfile = showUnlockPrivateProfile
                     )
                 } else {
+                    val privateProfileIndex = profiles.indexOfFirst { it.type == Profile.Type.Private };
                     AppResults(
                         apps = apps,
                         highlightedItem = bestMatch as? Application,
+                        profiles = profiles,
                         onProfileSelected = {
                             selectedAppProfileIndex = it
                         },
+                        onProfileLockChange = { p, l ->
+                            viewModel.setProfileLock(p, l)
+                            viewModel.reset()
+                        },
                         columns = columns,
                         reverse = reverse,
+                        showProfileLockControls = hasProfilesPermission,
                         showList = showList,
                         selectedIndex = selectedAppIndex,
                         onSelect = { selectedAppIndex = it },
+                        hidePrivateProfile = hidePrivateProfile,
+                        isPrivateProfileLocked = isPrivateProfileLocked,
+                        showUnlockPrivateProfile = showUnlockPrivateProfile,
+                        privateProfileIndex = privateProfileIndex
                     )
                 }
 
