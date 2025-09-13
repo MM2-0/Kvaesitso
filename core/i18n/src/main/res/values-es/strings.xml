@@ -842,4 +842,6 @@
     <string name="preference_gesture_swipe_up">Deslizar arriba</string>
     <string name="gesture_action_widgets">Widgets</string>
     <string name="bad_configuration_summary">Has descubierto una combinación de configuraciones que hace que no se pueda acceder a la búsqueda ni a las configuraciones — haciendo que te quedes fuera del lanzador.</string>
+    <string name="no_selection">Sin selección</string>
+    <string name="save_as_file">Guardar como archivo</string>
 </resources>
