@@ -54,11 +54,12 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
 
-    implementation(libs.okhttp)
+    implementation(libs.bundles.ktor)
 
     api(project(":libs:webdav"))
     implementation(project(":core:crashreporter"))
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))
+    implementation(project(":core:base"))
 
 }

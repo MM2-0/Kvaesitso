@@ -14,12 +14,8 @@ import de.mm20.launcher2.weather.GeocoderWeatherProvider
 import de.mm20.launcher2.weather.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONException
-import org.json.JSONObject
+import kotlinx.serialization.SerializationException
 import org.shredzone.commons.suncalc.SunTimes
 import java.io.IOException
 import java.security.MessageDigest
@@ -34,7 +30,7 @@ import kotlin.math.roundToInt
 internal class MetNoProvider(
     private val context: Context,
     private val weatherSettings: WeatherSettings,
-): GeocoderWeatherProvider(context) {
+) : GeocoderWeatherProvider(context) {
 
     private val metNoApi = MetNoApi()
 
@@ -43,6 +39,7 @@ internal class MetNoProvider(
             is WeatherLocation.LatLon -> withContext(Dispatchers.IO) {
                 getWeatherData(location.lat, location.lon, location.name)
             }
+
             else -> {
                 Log.e("MetNoProvider", "Unsupported location type: $location")
                 null
@@ -58,7 +55,11 @@ internal class MetNoProvider(
     }
 
     @WorkerThread
-    private suspend fun getWeatherData(lat: Double, lon: Double, locationName: String): List<Forecast>? {
+    private suspend fun getWeatherData(
+        lat: Double,
+        lon: Double,
+        locationName: String
+    ): List<Forecast>? {
         val lastUpdate = weatherSettings.lastUpdate.first()
         try {
             val forecasts = mutableListOf<Forecast>()
@@ -115,7 +116,7 @@ internal class MetNoProvider(
                 )
             }
             return forecasts
-        } catch (e: JSONException) {
+        } catch (e: SerializationException) {
             CrashReporter.logException(e)
         } catch (e: IOException) {
             CrashReporter.logException(e)
@@ -180,7 +181,6 @@ internal class MetNoProvider(
     }
 
 
-
     private fun conditionForCode(code: String): String {
         return context.getString(
             when (code.substringBefore("_")) {
@@ -240,17 +240,22 @@ internal class MetNoProvider(
             "rainshowersandthunder", "snowandthunder", "snowshowersandthunder",
             "lightssnowshowersandthunder", "lightsleetandthunder",
             "lightsnowandthunder" -> Forecast.THUNDERSTORM
+
             "sleetshowers", "sleet", "lightsleetshowers", "heavysleetshowers", "lightsleet",
             "heavysleet" -> Forecast.SLEET
+
             "snowshowers", "snow", "lightsnowshowers", "heavysnowshowers", "lightsnow",
             "heavysnow" -> Forecast.SNOW
+
             "heavyrain", "heavyrainshowers" -> Forecast.SHOWERS
             "heavyrainandthunder", "sleetshowersandthunder", "rainandthunder", "sleetandthunder",
             "lightrainshowersandthunder", "heavyrainshowersandthunder",
             "lightssleetshowersandthunder", "lightrainandthunder" -> Forecast.THUNDERSTORM_WITH_RAIN
+
             "fog" -> Forecast.FOG
             "heavysleetshowersandthunder",
             "heavysleetandthunder" -> Forecast.HEAVY_THUNDERSTORM_WITH_RAIN
+
             "heavysnowshowersandthunder", "heavysnowandthunder" -> Forecast.HEAVY_THUNDERSTORM
             else -> Forecast.NONE
         }

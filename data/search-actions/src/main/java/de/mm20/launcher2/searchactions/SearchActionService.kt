@@ -16,6 +16,11 @@ import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.SearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomWebsearchActionBuilder
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.request.url
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.utils.io.jvm.javaio.toInputStream
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -24,8 +29,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.jsoup.Jsoup
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
@@ -138,16 +141,14 @@ internal class SearchActionServiceImpl(
         iconSize: Int
     ): CustomWebsearchActionBuilder? {
         try {
-            val httpClient = OkHttpClient()
-            val request = Request.Builder()
-                .url(openSearchHref)
-                .build()
-            val response = httpClient.newCall(request).execute()
-            val inputStream = response.body?.byteStream() ?: return null
+            val httpClient = HttpClient()
+            val response = httpClient.get {
+                url(openSearchHref)
+            }
+            val inputStream = response.bodyAsChannel().toInputStream()
 
             var label: String? = null
             var urlTemplate: String? = null
-            var icon: String? = null
             var largestIconSize: Int = 0
             var largestIcon: String? = null
 

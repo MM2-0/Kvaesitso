@@ -69,20 +69,11 @@ val OpenSourceLicenses = arrayOf(
         url = "https://square.github.io/okhttp/"
     ),
     OpenSourceLibrary(
-        name = "Retrofit",
-        description = "A type-safe HTTP client for Android and Java",
+        name = "Ktor Client",
+        description = "A multiplatform asynchronous HTTP client",
         licenseName = R.string.apache_license_name,
         licenseText = R.raw.license_apache_2,
-        copyrightNote = "Copyright 2013 Square, Inc.",
-        url = "https://square.github.io/retrofit/"
-    ),
-    OpenSourceLibrary(
-        name = "Gson",
-        description = "Gson is a Java library that can be used to convert Java Objects into their JSON representation.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        copyrightNote = "Copyright 2008 Google Inc.",
-        url = "https://github.com/google/gson/"
+        url = "https://ktor.io/"
     ),
     OpenSourceLibrary(
         name = "commons-suncalc",

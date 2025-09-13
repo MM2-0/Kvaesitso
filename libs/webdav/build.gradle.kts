@@ -42,7 +42,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
 
-    implementation(libs.okhttp)
+    implementation(libs.bundles.ktor)
 
     implementation(project(":core:crashreporter"))
     implementation(project(":core:ktx"))
