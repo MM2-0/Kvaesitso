@@ -795,9 +795,9 @@
     <string name="import_theme_exists">即將更新已存在之主題</string>
     <string name="theme_bundle_author">作者</string>
     <string name="import_theme_contents">內容</string>
-    <string name="theme_export_title">導出主題</string>
+    <string name="theme_export_title">匯出主題</string>
     <string name="theme_bundle_name">名稱</string>
-    <string name="theme_import_title">導入主題</string>
+    <string name="theme_import_title">匯入主題</string>
     <string name="preference_colors_high_contrast">高對比</string>
     <string name="preference_shapes_extra_round">圓形</string>
     <string name="preference_screen_shapes">形狀</string>
