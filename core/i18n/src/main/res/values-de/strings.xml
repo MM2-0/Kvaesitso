@@ -865,4 +865,6 @@
     <string name="preference_search_bar_style_hidden">Versteckt</string>
     <string name="music_widget_interactive_progress_bar">Interaktiver Fortschrittsbalken</string>
     <string name="clock_variant_analog_ticks">Striche</string>
+    <string name="preference_clock_widget_monospaced">Monospace Ziffern</string>
+    <string name="poi_category_hackerspace">Hackerspace</string>
 </resources>
