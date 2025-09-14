@@ -1008,8 +1008,8 @@
     <string name="departure_time_departed">已離開</string>
     <string name="bad_configuration_title">恭喜，您將您自己鎖在外面！</string>
     <string name="bad_configuration_summary">您成功的找到了能讓搜尋與設定同時不可取用的設定組合—讓您成功地鎖在啟動器外。</string>
-    <string name="theme_export_title">導出主題</string>
-    <string name="theme_import_title">導入主題</string>
+    <string name="theme_export_title">匯出主題</string>
+    <string name="theme_import_title">匯入主題</string>
     <string name="theme_bundle_name">名稱</string>
     <string name="theme_bundle_author">作者</string>
     <string name="preference_typography_fonts">字體</string>
