@@ -238,7 +238,9 @@
     <string name="easter_egg_text">Bueno, me encontraste. Felicidades. ¿Valió la pena\?</string>
     <!-- Close a dialog -->
     <string name="close">Cerrar</string>
+    <string name="no_selection">Sin selección</string>
     <string name="save">Guardar</string>
+    <string name="save_as_file">Guardar como archivo</string>
     <string name="duplicate">Duplicar</string>
     <string name="edit">Editar</string>
     <string name="skip">Omitir</string>
