@@ -173,7 +173,11 @@ fun rememberSplashScreenData(searchable: SavableSearchable?): SplashScreenData {
                 )
 
                 val brandingIcon = if (typedValue.resourceId != 0) {
-                    ContextCompat.getDrawable(ctx, typedValue.resourceId)
+                    try {
+                        ContextCompat.getDrawable(ctx, typedValue.resourceId)
+                    } catch (e: Resources.NotFoundException) {
+                        null
+                    }
                 } else {
                     null
                 }
