@@ -50,8 +50,7 @@ fun SearchResultGrid(
                             key(item.key) {
                                 GridItem(
                                     modifier = Modifier
-                                        .weight(1f)
-                                        .padding(4.dp),
+                                        .weight(1f),
                                     item = item,
                                     showLabels = showLabels,
                                     highlight = item.key == highlightedItem?.key

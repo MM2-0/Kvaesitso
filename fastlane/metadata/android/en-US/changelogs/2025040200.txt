@@ -1,0 +1,8 @@
+Full changelog: https://github.com/MM2-0/Kvaesitso/releases/tag/v1.35.0
+
+- Improve OSM search performance (thanks to @leekleak) and results (thanks to @shtrophic)
+- Add preference to clock widget to choose between 12h and 24h format
+- Add option to call contacts directly, skipping the dialer screen (thanks to @shtrophic)
+- Add option to show apps in a list instead of a grid (thanks to @KorigamiK)
+- Remove Google Drive support
+- Bug fixes

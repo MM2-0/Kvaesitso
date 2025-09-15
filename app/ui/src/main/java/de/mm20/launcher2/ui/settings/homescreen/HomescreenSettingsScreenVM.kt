@@ -13,13 +13,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.ScreenOrientation
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
+import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -29,6 +32,7 @@ import org.koin.core.component.get
 class HomescreenSettingsScreenVM(
     private val uiSettings: UiSettings,
     private val clockWidgetSettings: ClockWidgetSettings,
+    private val gestureSettings: GestureSettings,
 ) : ViewModel() {
 
     var showClockWidgetSheet by mutableStateOf(false)
@@ -120,11 +124,11 @@ class HomescreenSettingsScreenVM(
         uiSettings.setBottomSearchBar(bottomSearchBar)
     }
 
-    val dock = clockWidgetSettings.dock
+    val dock = uiSettings.dock
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setDock(dock: Boolean) {
-        clockWidgetSettings.setDock(dock)
+        uiSettings.setDock(dock)
     }
 
     val fixedRotation = uiSettings.orientation.map { it != ScreenOrientation.Auto }
@@ -148,12 +152,20 @@ class HomescreenSettingsScreenVM(
         uiSettings.setChargingAnimation(chargingAnimation)
     }
 
+    val widgetsOnHomeScreen = uiSettings.homeScreenWidgets
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setWidgetsOnHomeScreen(widgetsOnHomeScreen: Boolean) {
+        uiSettings.setHomeScreenWidgets(widgetsOnHomeScreen)
+    }
+
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {
                 HomescreenSettingsScreenVM(
                     uiSettings = get(),
                     clockWidgetSettings = get(),
+                    gestureSettings = get(),
                 )
             }
         }

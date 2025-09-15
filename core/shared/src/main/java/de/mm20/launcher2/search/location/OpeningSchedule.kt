@@ -26,5 +26,18 @@ data class OpeningHours(
 sealed interface OpeningSchedule {
     data object TwentyFourSeven : OpeningSchedule
     @Serializable
-    data class Hours(@Serializable val openingHours: List<OpeningHours>) : OpeningSchedule
+    data class Hours(@Serializable val openingHours: Set<OpeningHours>) : OpeningSchedule {
+        @Deprecated("Use the constructor with Set<OpeningHours> instead.")
+        constructor(openingHours: List<OpeningHours>) : this(openingHours.toSet())
+    }
+}
+
+/**
+ * Checks whether the [OpeningSchedule] has at least one opening hour.
+ */
+fun OpeningSchedule.isNotEmpty(): Boolean {
+    return when (this) {
+        is OpeningSchedule.Hours -> openingHours.isNotEmpty()
+        OpeningSchedule.TwentyFourSeven -> true
+    }
 }

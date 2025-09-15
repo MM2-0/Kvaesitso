@@ -11,11 +11,8 @@
     <string name="menu_app_info">Tətbiq məlumatı</string>
     <string name="menu_launch">İşə sal</string>
     <string name="menu_customize">Fərdiləşdir</string>
-    <string name="menu_hide">Gizlət</string>
     <string name="menu_map">Xəritədə göstər</string>
     <string name="menu_website">Vebsaytı aç</string>
-    <string name="menu_unhide">Gizlətmə</string>
-    <string name="msg_item_hidden">%1$s gizlədildi.</string>
     <string name="action_undo">Dəyişikliyi ləğv et</string>
     <string name="action_import">İdxal et</string>
     <string name="menu_delete">Sil</string>

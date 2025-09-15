@@ -69,20 +69,11 @@ val OpenSourceLicenses = arrayOf(
         url = "https://square.github.io/okhttp/"
     ),
     OpenSourceLibrary(
-        name = "Retrofit",
-        description = "A type-safe HTTP client for Android and Java",
+        name = "Ktor Client",
+        description = "A multiplatform asynchronous HTTP client",
         licenseName = R.string.apache_license_name,
         licenseText = R.raw.license_apache_2,
-        copyrightNote = "Copyright 2013 Square, Inc.",
-        url = "https://square.github.io/retrofit/"
-    ),
-    OpenSourceLibrary(
-        name = "Gson",
-        description = "Gson is a Java library that can be used to convert Java Objects into their JSON representation.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        copyrightNote = "Copyright 2008 Google Inc.",
-        url = "https://github.com/google/gson/"
+        url = "https://ktor.io/"
     ),
     OpenSourceLibrary(
         name = "commons-suncalc",
@@ -176,26 +167,11 @@ val OpenSourceLicenses = arrayOf(
         url = "https://source.android.com/"
     ),
     OpenSourceLibrary(
-        name = "Protobuf",
-        copyrightNote = "Copyright 2008 Google Inc.  All rights reserved.",
-        description = "Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.",
-        licenseName = R.string.bsd_3clause_name,
-        licenseText = R.raw.license_bsd_3clause,
-        url = "https://developers.google.com/protocol-buffers"
-    ),
-    OpenSourceLibrary(
         name = "AndroidSVG",
         description = "AndroidSVG is a SVG parser and renderer for Android.",
         licenseName = R.string.apache_license_name,
         licenseText = R.raw.license_apache_2,
         url = "https://bigbadaboom.github.io/androidsvg/"
-    ),
-    OpenSourceLibrary(
-        name = "emoji4j",
-        description = "Emoji4j is a high-performance, standards-compliant emoji processor supporting Unicode 15 for Java 8 or later.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        url = "https://github.com/sigpwned/emoji4j"
     ),
     OpenSourceLibrary(
         name = "AndroidAddressFormatter",
@@ -220,5 +196,13 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_mit,
         url = "https://github.com/westnordost/osm-opening-hours",
         copyrightNote = "Copyright (c) 2024 Tobias Zwick",
+    ),
+    OpenSourceLibrary(
+        name = "Haze",
+        description = "Haze is a library providing a 'glassmorphism' style blur for Compose.",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://chrisbanes.github.io/haze",
+        copyrightNote = "Copyright 2024 Chris Banes",
     )
 )

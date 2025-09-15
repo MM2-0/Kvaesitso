@@ -44,7 +44,7 @@ object OpeningScheduleSerializer : KSerializer<OpeningSchedule> {
                 )
             } catch (e: SerializationException) {
                 Log.e("MM20", "Failed to deserialize OpeningSchedule.Hours", e)
-                return OpeningSchedule.Hours(openingHours = emptyList())
+                return OpeningSchedule.Hours(openingHours = emptySet())
             }
         }
 

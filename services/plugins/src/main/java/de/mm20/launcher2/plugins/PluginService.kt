@@ -47,6 +47,9 @@ interface PluginService {
         enabled: Boolean? = null,
     ): Flow<List<PluginWithState>>
 
+    /**
+     * Get a plugin with its current state or null if the plugin is not found.
+     */
     fun getPluginWithState(
         authority: String,
     ): Flow<PluginWithState?>

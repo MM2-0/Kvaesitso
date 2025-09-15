@@ -45,28 +45,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.themes.ColorRef
-import de.mm20.launcher2.themes.CorePaletteColor
-import de.mm20.launcher2.themes.FullCorePalette
-import de.mm20.launcher2.themes.StaticColor
-import de.mm20.launcher2.themes.atTone
-import de.mm20.launcher2.themes.get
+import de.mm20.launcher2.themes.colors.ColorRef
+import de.mm20.launcher2.themes.colors.CorePaletteColor
+import de.mm20.launcher2.themes.colors.FullCorePalette
+import de.mm20.launcher2.themes.colors.StaticColor
+import de.mm20.launcher2.themes.colors.atTone
+import de.mm20.launcher2.themes.colors.get
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
-import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.colorpicker.HctColorPicker
 import de.mm20.launcher2.ui.component.colorpicker.rememberHctColorPickerState
 import de.mm20.launcher2.ui.ktx.hct
 import hct.Hct
 import kotlin.math.roundToInt
-import de.mm20.launcher2.themes.Color as ThemeColor
+import de.mm20.launcher2.themes.colors.Color as ThemeColor
 
 @Composable
 fun ThemeColorPreference(
     title: String,
-    value: de.mm20.launcher2.themes.Color?,
+    value: ThemeColor?,
     corePalette: FullCorePalette,
     onValueChange: (ThemeColor?) -> Unit,
     defaultValue: ThemeColor,
@@ -74,16 +75,27 @@ fun ThemeColorPreference(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    Tooltip(
-        tooltipText = title
+    Row(
+        modifier = modifier.fillMaxWidth()
+            .clip(MaterialTheme.shapes.extraSmall)
+            .clickable(
+                onClick = { showDialog = true },
+            )
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         ColorSwatch(
             color = Color((value ?: defaultValue).get(corePalette)),
-            modifier = modifier
-                .size(48.dp)
-                .clickable(
-                    onClick = { showDialog = true },
-                ),
+            modifier = Modifier.padding(end = 20.dp).size(48.dp),
+        )
+
+        Text(
+            title,
+            style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+            textAlign = TextAlign.Center,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1,
         )
     }
 

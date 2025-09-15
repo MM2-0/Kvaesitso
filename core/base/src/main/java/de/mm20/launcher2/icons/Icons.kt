@@ -1682,3 +1682,626 @@ private val _PrivateSpace = materialIcon("Icons.Rounded.PrivateSpace") {
 
 val Icons.Rounded.PrivateSpace
     get() = _PrivateSpace
+
+private val _BreezyWeather = materialIcon("Icons.Rounded.BreezyWeather") {
+    materialPath {
+        moveTo(11.51596f, 15.483644f)
+        curveToRelative(-0.270954f, 0.445157f, -0.619347f, 0.870954f, -1.006439f, 1.258046f)
+        curveToRelative(-0.5806338f, 0.580637f, -1.1999812f, 1.02579f, -1.8967447f, 1.354821f)
+        curveToRelative(0.8709544f, 0.483862f, 1.8580387f, 0.793534f, 2.9031837f, 0.851599f)
+        close()
+        moveTo(8.5160015f, 11.51596f)
+        curveTo(8.0708487f, 11.245006f, 7.6450471f, 10.896616f, 7.2579555f, 10.509525f)
+        curveTo(6.6966767f, 9.9482422f, 6.2515202f, 9.3288948f, 5.9224934f, 8.6514863f)
+        curveTo(5.4386307f, 9.5224406f, 5.1483101f, 10.49017f, 5.070894f, 11.535315f)
+        horizontalLineToRelative(3.4451075f)
+        close()
+        moveToRelative(6.9676425f, 0.967729f)
+        curveToRelative(0.445153f, 0.270955f, 0.870954f, 0.619344f, 1.258046f, 1.006436f)
+        curveToRelative(0.580634f, 0.580637f, 1.02579f, 1.199984f, 1.354817f, 1.877393f)
+        curveToRelative(0.483863f, -0.870954f, 0.774184f, -1.858038f, 0.8516f, -2.903184f)
+        horizontalLineTo(15.483644f)
+        close()
+        moveTo(12.483685f, 8.5160053f)
+        curveTo(12.75464f, 8.0708488f, 13.103033f, 7.6450509f, 13.490125f, 7.2579593f)
+        curveTo(14.051407f, 6.6966767f, 14.670751f, 6.251524f, 15.348159f, 5.9224934f)
+        curveTo(14.49656f, 5.4579857f, 13.509479f, 5.1483139f, 12.483685f, 5.090249f)
+        close()
+        moveTo(5.7483025f, 17.76748f)
+        curveToRelative(1.6064278f, 0f, 2.9225387f, -0.561279f, 4.0644549f, -1.703199f)
+        curveToRelative(1.0257906f, -1.02579f, 1.5677176f, -2.20642f, 1.6838476f, -3.580592f)
+        horizontalLineTo(0f)
+        curveToRelative(0.096756f, 1.393527f, 0.6580535f, 2.554802f, 1.6838476f, 3.580592f)
+        curveToRelative(1.1419162f, 1.14192f, 2.4580271f, 1.703199f, 4.0644549f, 1.703199f)
+        close()
+        moveTo(7.9353678f, 9.8127613f)
+        curveTo(8.961158f, 10.838552f, 10.141784f, 11.380479f, 11.51596f, 11.496605f)
+        verticalLineTo(0f)
+        curveTo(10.122429f, 0.096756f, 8.961158f, 0.6580573f, 7.9353678f, 1.6838476f)
+        curveTo(6.7934477f, 2.8257677f, 6.2321652f, 4.1612297f, 6.2321652f, 5.7483025f)
+        curveToRelative(0f, 1.5870766f, 0.5612825f, 2.9225387f, 1.7032026f, 4.0644588f)
+        close()
+        moveToRelative(4.5483172f, 2.6902827f)
+        verticalLineToRelative(11.51596f)
+        curveToRelative(1.393531f, -0.09676f, 2.593512f, -0.677412f, 3.580593f, -1.683848f)
+        curveToRelative(1.14192f, -1.14192f, 1.703202f, -2.477382f, 1.703202f, -4.083809f)
+        curveToRelative(0f, -1.606428f, -0.561282f, -2.922539f, -1.703202f, -4.064459f)
+        curveToRelative(-1.025791f, -1.02579f, -2.206417f, -1.587073f, -3.580593f, -1.683844f)
+        close()
+        moveToRelative(5.767658f, -6.270875f)
+        curveToRelative(-1.606428f, 0f, -2.922539f, 0.5612825f, -4.064455f, 1.7031988f)
+        curveTo(13.161098f, 8.9611581f, 12.61917f, 10.141788f, 12.50304f, 11.51596f)
+        horizontalLineTo(23.999646f)
+        curveTo(23.90289f, 10.122433f, 23.341592f, 8.9611581f, 22.315798f, 7.9353678f)
+        curveTo(21.173882f, 6.7934515f, 19.838416f, 6.232169f, 18.251343f, 6.232169f)
+        close()
+
+    }
+}
+
+val Icons.Rounded.BreezyWeather
+    get() = _BreezyWeather
+
+private val _TollOff = materialIcon("Icons.Rounded.TollOff") {
+    materialPath {
+        moveTo(2.8066406f, 3.2207031f)
+        curveToRelative(-0.2556191f, 0f, -0.5111625f, 0.099053f, -0.7070312f, 0.2949219f)
+        curveToRelative(-0.3917371f, 0.3917372f, -0.3917371f, 1.0223253f, 0f, 1.4140625f)
+        lineToRelative(1.3339844f, 1.3320312f)
+        verticalLineToRelative(0.00195f)
+        curveTo(1.933574f, 7.7156369f, 0.99999996f, 9.7483802f, 1f, 12f)
+        curveToRelative(3e-7f, 3.23f, 1.9196876f, 6.009532f, 4.6796875f, 7.269531f)
+        curveTo(6.2896876f, 19.549531f, 7.0000003f, 19.129219f, 7f, 18.449219f)
+        verticalLineToRelative(-0.179688f)
+        curveToRelative(-3e-7f, -0.37f, -0.2303127f, -0.689609f, -0.5703125f, -0.849609f)
+        curveTo(4.399687f, 16.459922f, 2.9999999f, 14.39f, 3f, 12f)
+        curveToRelative(-2e-7f, -1.698485f, 0.7060878f, -3.2344795f, 1.84375f, -4.3261719f)
+        lineToRelative(2.3925781f, 2.3906249f)
+        verticalLineToRelative(0.002f)
+        curveTo(7.0825208f, 10.685478f, 6.9999996f, 11.333026f, 7f, 12f)
+        curveToRelative(0f, 4.42f, 3.58f, 8f, 8f, 8f)
+        curveToRelative(0.666973f, 0f, 1.314475f, -0.08252f, 1.933594f, -0.236328f)
+        horizontalLineToRelative(0.002f)
+        lineToRelative(2.134765f, 2.136719f)
+        curveToRelative(0.391737f, 0.391737f, 1.022326f, 0.391737f, 1.414063f, 0f)
+        curveToRelative(0.391737f, -0.391738f, 0.391737f, -1.024279f, 0f, -1.416016f)
+        lineTo(18.955078f, 18.955078f)
+        lineTo(17.46875f, 17.46875f)
+        lineTo(9.53125f, 9.53125f)
+        lineTo(8.0449219f, 8.0449219f)
+        lineTo(6.5273437f, 6.5273437f)
+        lineTo(5.0507812f, 5.0507812f)
+        lineTo(3.515625f, 3.515625f)
+        curveTo(3.3197565f, 3.3197565f, 3.0622597f, 3.2207031f, 2.8066406f, 3.2207031f)
+        close()
+        moveTo(15f, 4f)
+        curveToRelative(-2.25366f, 2e-7f, -4.288489f, 0.9314658f, -5.7421875f, 2.4296875f)
+        lineTo(10.673828f, 7.8457031f)
+        curveTo(11.766133f, 6.7086818f, 13.30143f, 6.0000002f, 15f, 6f)
+        curveToRelative(3.31f, 4e-7f, 6f, 2.6899997f, 6f, 6f)
+        curveToRelative(0f, 1.69857f, -0.708682f, 3.233867f, -1.845703f, 4.326172f)
+        lineToRelative(1.416015f, 1.416015f)
+        curveTo(22.068533f, 16.288488f, 23f, 14.25366f, 23f, 12f)
+        curveTo(23f, 7.5799994f, 19.42f, 3.9999997f, 15f, 4f)
+        close()
+        moveToRelative(-5.9980469f, 7.832031f)
+        lineToRelative(6.1660159f, 6.166016f)
+        curveTo(15.112392f, 17.999575f, 15.055942f, 18f, 15f, 18f)
+        curveTo(11.69f, 18f, 9.0000004f, 15.31f, 9f, 12f)
+        curveToRelative(2e-7f, -0.05594f, 0.0004292f, -0.112391f, 0.00195f, -0.167969f)
+        close()
+    }
+}
+
+val Icons.Outlined.TollOff
+    get() = _TollOff
+
+val _CutCorner = materialIcon("Icons.Rounded.CutCorner") {
+    materialPath {
+        moveTo(2f, 3f)
+        verticalLineTo(22f)
+        horizontalLineTo(21f)
+        verticalLineTo(11.585938f)
+        lineTo(12.414063f, 3f)
+        close()
+        moveToRelative(2f, 2f)
+        horizontalLineToRelative(7.585938f)
+        lineTo(19f, 12.414063f)
+        verticalLineTo(20f)
+        horizontalLineTo(4f)
+        close()
+    }
+}
+
+val Icons.Rounded.CutCorner
+    get() = _CutCorner
+
+val _RoundedCornerAlt = materialIcon("Icons.Rounded.RoundedCornerAlt") {
+    materialPath {
+        moveTo(2f, 3f)
+        verticalLineTo(22f)
+        horizontalLineTo(21f)
+        verticalLineTo(12f)
+        curveTo(21f, 7.0412819f, 16.958718f, 3f, 12f, 3f)
+        close()
+        moveToRelative(2f, 2f)
+        horizontalLineToRelative(8f)
+        curveToRelative(3.877838f, 0f, 7f, 3.1221621f, 7f, 7f)
+        verticalLineToRelative(8f)
+        horizontalLineTo(4f)
+        close()
+    }
+}
+
+val Icons.Rounded.RoundedCornerAlt
+    get() = _RoundedCornerAlt
+
+private val _LetterSpacing2 = materialIcon("Icons.Rounded.LetterSpacing2") {
+    materialPath {
+        moveTo(6.7f, 21.5125f)
+        quadToRelative(-0.275f, 0.275f, -0.7f, 0.275f)
+        quadToRelative(-0.425f, 0f, -0.7f, -0.275f)
+        lineToRelative(-2.6f, -2.6f)
+        quadToRelative(-0.3f, -0.3f, -0.3f, -0.7f)
+        quadToRelative(0f, -0.4f, 0.3f, -0.7f)
+        lineToRelative(2.6f, -2.6f)
+        quadToRelative(0.275f, -0.275f, 0.6875f, -0.275f)
+        quadToRelative(0.4125f, 0f, 0.7125f, 0.275f)
+        quadToRelative(0.3f, 0.3f, 0.3f, 0.7125f)
+        quadToRelative(0f, 0.4125f, -0.3f, 0.7125f)
+        lineToRelative(-0.875f, 0.875f)
+        horizontalLineToRelative(12.35f)
+        lineToRelative(-0.9f, -0.9f)
+        quadTo(17f, 16.0375f, 17f, 15.625f)
+        quadToRelative(0f, -0.4125f, 0.3f, -0.7125f)
+        quadToRelative(0.275f, -0.275f, 0.7f, -0.275f)
+        quadToRelative(0.425f, 0f, 0.7f, 0.275f)
+        lineToRelative(2.6f, 2.6f)
+        quadToRelative(0.3f, 0.3f, 0.3f, 0.7f)
+        quadToRelative(0f, 0.4f, -0.3f, 0.7f)
+        lineToRelative(-2.6f, 2.6f)
+        quadToRelative(-0.275f, 0.275f, -0.6875f, 0.275f)
+        quadToRelative(-0.4125f, 0f, -0.7125f, -0.275f)
+        quadToRelative(-0.3f, -0.3f, -0.3f, -0.7125f)
+        quadToRelative(0f, -0.4125f, 0.3f, -0.7125f)
+        lineToRelative(0.875f, -0.875f)
+        horizontalLineTo(5.825f)
+        lineToRelative(0.9f, 0.9f)
+        quadTo(7f, 20.3875f, 7f, 20.8f)
+        quadTo(7f, 21.2125f, 6.7f, 21.5125f)
+        close()
+        moveToRelative(0.65f, -9.5f)
+        lineToRelative(3.425f, -9.2f)
+        quadTo(10.875f, 2.5375f, 11.1125f, 2.375f)
+        quadTo(11.35f, 2.2125f, 11.65f, 2.2125f)
+        horizontalLineToRelative(0.7f)
+        quadToRelative(0.3f, 0f, 0.5375f, 0.1625f)
+        quadToRelative(0.2375f, 0.1625f, 0.3375f, 0.4375f)
+        lineToRelative(3.425f, 9.225f)
+        quadToRelative(0.15f, 0.425f, -0.1f, 0.8f)
+        quadToRelative(-0.25f, 0.375f, -0.7f, 0.375f)
+        quadToRelative(-0.275f, 0f, -0.5125f, -0.1625f)
+        quadTo(15.1f, 12.8875f, 15f, 12.6125f)
+        lineToRelative(-0.75f, -2.2f)
+        horizontalLineTo(9.8f)
+        lineTo(9f, 12.6375f)
+        quadToRelative(-0.1f, 0.275f, -0.325f, 0.425f)
+        quadToRelative(-0.225f, 0.15f, -0.5f, 0.15f)
+        quadToRelative(-0.475f, 0f, -0.7375f, -0.3875f)
+        quadTo(7.175f, 12.4375f, 7.35f, 12.0125f)
+        close()
+        moveToRelative(3f, -3.2f)
+        horizontalLineToRelative(3.3f)
+        lineToRelative(-1.6f, -4.55f)
+        horizontalLineToRelative(-0.1f)
+        close()
+    }
+}
+
+val Icons.Rounded.LetterSpacing2
+    get() = _LetterSpacing2
+
+// adapted from: https://www.flaticon.com/free-icons/climb
+private val _Climbing = materialIcon("Icons.Rounded.Climbing") {
+    materialPath {
+        moveTo(x = 12.9f, y = 23.92f)
+        curveToRelative(
+            dx1 = -0.78f,
+            dy1 = -0.36f,
+            dx2 = -0.78f,
+            dy2 = -0.5f,
+            dx3 = -0.07f,
+            dy3 = -3.8f,
+        )
+        curveToRelative(
+            dx1 = 0.8f,
+            dy1 = -3.7f,
+            dx2 = 0.19f,
+            dy2 = -5.73f,
+            dx3 = -1.73f,
+            dy3 = -5.73f,
+        )
+        curveToRelative(
+            dx1 = -1.1f,
+            dy1 = 0.0f,
+            dx2 = -3.13f,
+            dy2 = 0.35f,
+            dx3 = -3.36f,
+            dy3 = 0.58f,
+        )
+        curveToRelative(
+            dx1 = -0.01f,
+            dy1 = 0.01f,
+            dx2 = 0.22f,
+            dy2 = 0.65f,
+            dx3 = 0.5f,
+            dy3 = 1.42f,
+        )
+        curveToRelative(
+            dx1 = 0.73f,
+            dy1 = 1.93f,
+            dx2 = 0.7f,
+            dy2 = 2.46f,
+            dx3 = -0.19f,
+            dy3 = 2.7f,
+        )
+        curveTo(
+            x1 = 7.15f,
+            y1 = 19.31f,
+            x2 = 7.0f,
+            y2 = 19.13f,
+            x3 = 6.0f,
+            y3 = 16.44f,
+        )
+        curveToRelative(
+            dx1 = -0.81f,
+            dy1 = -2.16f,
+            dx2 = -0.84f,
+            dy2 = -2.26f,
+            dx3 = -0.66f,
+            dy3 = -2.65f,
+        )
+        curveToRelative(
+            dx1 = 0.21f,
+            dy1 = -0.46f,
+            dx2 = 0.26f,
+            dy2 = -0.49f,
+            dx3 = 2.71f,
+            dy3 = -1.12f,
+        )
+        curveToRelative(
+            dx1 = 1.6f,
+            dy1 = -0.42f,
+            dx2 = 1.6f,
+            dy2 = -0.42f,
+            dx3 = 1.6f,
+            dy3 = -2.73f,
+        )
+        reflectiveCurveToRelative(
+            dx1 = 0.0f,
+            dy1 = -2.31f,
+            dx2 = -1.8f,
+            dy2 = -2.31f,
+        )
+        curveToRelative(
+            dx1 = -2.12f,
+            dy1 = 0.0f,
+            dx2 = -2.17f,
+            dy2 = -0.01f,
+            dx3 = -2.42f,
+            dy3 = -0.54f,
+        )
+        curveTo(
+            x1 = 5.28f,
+            y1 = 6.8f,
+            x2 = 5.3f,
+            y2 = 6.73f,
+            x3 = 6.06f,
+            y3 = 4.48f,
+        )
+        curveToRelative(
+            dx1 = 0.96f,
+            dy1 = -2.85f,
+            dx2 = 1.06f,
+            dy2 = -3.0f,
+            dx3 = 1.84f,
+            dy3 = -2.75f,
+        )
+        curveTo(
+            x1 = 8.66f,
+            y1 = 1.97f,
+            x2 = 8.67f,
+            y2 = 2.31f,
+            x3 = 8.0f,
+            y3 = 4.28f,
+        )
+        arcToRelative(
+            a = 24.0f,
+            b = 24.0f,
+            theta = 0.0f,
+            isMoreThanHalf = false,
+            isPositiveArc = false,
+            dx1 = -0.5f,
+            dy1 = 1.56f,
+        )
+        curveToRelative(
+            dx1 = 0.03f,
+            dy1 = 0.03f,
+            dx2 = 9.0f,
+            dy2 = 0.08f,
+            dx3 = 9.0f,
+            dy3 = 0.05f,
+        )
+        lineToRelative(dx = -0.52f, dy = -1.55f)
+        curveTo(
+            x1 = 15.36f,
+            y1 = 2.5f,
+            x2 = 15.34f,
+            y2 = 2.37f,
+            x3 = 15.69f,
+            y3 = 2.0f,
+        )
+        curveToRelative(
+            dx1 = 0.34f,
+            dy1 = -0.37f,
+            dx2 = 0.93f,
+            dy2 = -0.38f,
+            dx3 = 1.26f,
+            dy3 = -0.03f,
+        )
+        curveToRelative(
+            dx1 = 0.16f,
+            dy1 = 0.18f,
+            dx2 = 0.2f,
+            dy2 = 0.3f,
+            dx3 = 0.95f,
+            dy3 = 2.5f,
+        )
+        curveToRelative(
+            dx1 = 0.82f,
+            dy1 = 2.43f,
+            dx2 = 0.84f,
+            dy2 = 2.53f,
+            dx3 = 0.48f,
+            dy3 = 2.9f,
+        )
+        curveToRelative(
+            dx1 = -0.28f,
+            dy1 = 0.3f,
+            dx2 = -0.24f,
+            dy2 = 0.3f,
+            dx3 = -2.23f,
+            dy3 = 0.3f,
+        )
+        curveToRelative(
+            dx1 = -1.81f,
+            dy1 = 0.02f,
+            dx2 = -1.81f,
+            dy2 = 0.02f,
+            dx3 = -1.81f,
+            dy3 = 3.05f,
+        )
+        reflectiveCurveToRelative(
+            dx1 = 0.0f,
+            dy1 = 3.03f,
+            dx2 = 0.58f,
+            dy2 = 4.72f,
+        )
+        curveToRelative(
+            dx1 = 0.33f,
+            dy1 = 0.94f,
+            dx2 = 0.6f,
+            dy2 = 1.8f,
+            dx3 = 0.62f,
+            dy3 = 1.9f,
+        )
+        arcToRelative(
+            a = 78.0f,
+            b = 78.0f,
+            theta = 0.0f,
+            isMoreThanHalf = false,
+            isPositiveArc = true,
+            dx1 = -1.3f,
+            dy1 = 6.1f,
+        )
+        arcToRelative(
+            a = 1.1f,
+            b = 1.1f,
+            theta = 0.0f,
+            isMoreThanHalf = false,
+            isPositiveArc = true,
+            dx1 = -1.33f,
+            dy1 = 0.48f,
+        )
+        moveToRelative(dx = -5.86f, dy = -2.37f)
+        curveToRelative(
+            dx1 = -1.37f,
+            dy1 = -0.39f,
+            dx2 = -1.95f,
+            dy2 = -1.85f,
+            dx3 = -0.8f,
+            dy3 = -2.03f,
+        )
+        curveToRelative(
+            dx1 = 0.19f,
+            dy1 = -0.02f,
+            dx2 = 0.24f,
+            dy2 = 0.0f,
+            dx3 = 0.43f,
+            dy3 = 0.12f,
+        )
+        arcToRelative(
+            a = 1.9f,
+            b = 1.9f,
+            theta = 0.0f,
+            isMoreThanHalf = false,
+            isPositiveArc = false,
+            dx1 = 2.37f,
+            dy1 = -0.17f,
+        )
+        curveToRelative(
+            dx1 = 0.33f,
+            dy1 = -0.3f,
+            dx2 = 0.76f,
+            dy2 = 0.61f,
+            dx3 = 0.54f,
+            dy3 = 1.13f,
+        )
+        curveToRelative(
+            dx1 = -0.26f,
+            dy1 = 0.63f,
+            dx2 = -1.72f,
+            dy2 = 1.18f,
+            dx3 = -2.54f,
+            dy3 = 0.95f,
+        )
+        moveToRelative(dx = 9.6f, dy = -2.34f)
+        curveToRelative(
+            dx1 = -0.78f,
+            dy1 = -0.52f,
+            dx2 = -0.45f,
+            dy2 = -1.53f,
+            dx3 = 0.67f,
+            dy3 = -2.07f,
+        )
+        quadToRelative(
+            dx1 = 1.52f,
+            dy1 = -0.73f,
+            dx2 = 2.52f,
+            dy2 = 0.25f,
+        )
+        curveToRelative(
+            dx1 = 0.81f,
+            dy1 = 0.8f,
+            dx2 = 0.43f,
+            dy2 = 1.34f,
+            dx3 = -1.04f,
+            dy3 = 1.45f,
+        )
+        arcToRelative(
+            a = 3.0f,
+            b = 3.0f,
+            theta = 0.0f,
+            isMoreThanHalf = false,
+            isPositiveArc = false,
+            dx1 = -1.09f,
+            dy1 = 0.26f,
+        )
+        curveToRelative(
+            dx1 = -0.62f,
+            dy1 = 0.25f,
+            dx2 = -0.83f,
+            dy2 = 0.27f,
+            dx3 = -1.07f,
+            dy3 = 0.11f,
+        )
+        moveTo(x = 4.28f, y = 10.89f)
+        curveToRelative(
+            dx1 = -1.0f,
+            dy1 = -0.65f,
+            dx2 = 0.04f,
+            dy2 = -2.17f,
+            dx3 = 1.38f,
+            dy3 = -2.0f,
+        )
+        curveToRelative(
+            dx1 = 2.0f,
+            dy1 = 0.26f,
+            dx2 = 2.11f,
+            dy2 = 1.86f,
+            dx3 = 0.13f,
+            dy3 = 1.99f,
+        )
+        lineToRelative(dx = -1.0f, dy = 0.06f)
+        curveToRelative(
+            dx1 = -0.31f,
+            dy1 = 0.03f,
+            dx2 = -0.4f,
+            dy2 = 0.02f,
+            dx3 = -0.5f,
+            dy3 = -0.05f,
+        )
+        moveToRelative(dx = 7.16f, dy = -5.68f)
+        arcToRelative(
+            a = 1.82f,
+            b = 1.82f,
+            theta = 0.0f,
+            isMoreThanHalf = true,
+            isPositiveArc = true,
+            dx1 = 2.37f,
+            dy1 = -2.03f,
+        )
+        arcToRelative(
+            a = 1.84f,
+            b = 1.84f,
+            theta = 0.0f,
+            isMoreThanHalf = false,
+            isPositiveArc = true,
+            dx1 = -2.37f,
+            dy1 = 2.03f,
+        )
+        moveToRelative(dx = 6.5f, dy = -3.2f)
+        curveToRelative(
+            dx1 = -0.47f,
+            dy1 = -1.16f,
+            dx2 = -1.85f,
+            dy2 = -1.53f,
+            dx3 = -2.74f,
+            dy3 = -0.74f,
+        )
+        arcToRelative(
+            a = 1.0f,
+            b = 1.0f,
+            theta = 0.0f,
+            isMoreThanHalf = false,
+            isPositiveArc = true,
+            dx1 = -0.23f,
+            dy1 = 0.17f,
+        )
+        arcTo(
+            horizontalEllipseRadius = 1.6f,
+            verticalEllipseRadius = 1.6f,
+            theta = 0.0f,
+            isMoreThanHalf = false,
+            isPositiveArc = true,
+            x1 = 14.8f,
+            y1 = 0.4f,
+        )
+        curveToRelative(
+            dx1 = 0.17f,
+            dy1 = -0.5f,
+            dx2 = 0.68f,
+            dy2 = -0.52f,
+            dx3 = 1.62f,
+            dy3 = -0.07f,
+        )
+        arcToRelative(
+            a = 3.0f,
+            b = 3.0f,
+            theta = 0.0f,
+            isMoreThanHalf = false,
+            isPositiveArc = false,
+            dx1 = 0.84f,
+            dy1 = 0.28f,
+        )
+        curveToRelative(
+            dx1 = 1.22f,
+            dy1 = 0.18f,
+            dx2 = 1.34f,
+            dy2 = 0.26f,
+            dx3 = 1.33f,
+            dy3 = 0.9f,
+        )
+        curveToRelative(
+            dx1 = 0.0f,
+            dy1 = 0.7f,
+            dx2 = -0.43f,
+            dy2 = 1.05f,
+            dx3 = -0.64f,
+            dy3 = 0.52f,
+        )
+    }
+}
+
+val Icons.Rounded.Climbing
+    get() = _Climbing

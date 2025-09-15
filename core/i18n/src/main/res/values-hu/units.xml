@@ -65,12 +65,12 @@
         <item quantity="one">négyzethüvelyk</item>
         <item quantity="other">négyzethüvelyk</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqfoot_symbol">ft²</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">négyzetláb</item>
         <item quantity="other">négyzetláb</item>
     </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_sqyard_symbol">yd²</string>
     <plurals name="unit_sqyard">
         <item quantity="one">négyzetyard</item>
         <item quantity="other">négyzetyard</item>
@@ -264,7 +264,7 @@
         <item quantity="other">kilóméter per óra</item>
     </plurals>
     <string name="unit_degree_celsius_symbol">°C</string>
-    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_sqinch_symbol">in²</string>
     <string name="unit_decimeter_symbol">dm</string>
     <plurals name="unit_decimeter">
         <item quantity="one">deciméter</item>

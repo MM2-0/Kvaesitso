@@ -1,9 +1,7 @@
 package de.mm20.launcher2.ui.settings.icons
 
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -17,9 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.FormatPaint
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -42,13 +38,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.icons.StaticIconLayer
-import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.ui.R
@@ -116,6 +109,26 @@ fun IconsSettingsScreen() {
                         viewModel.setShowLabels(it)
                     }
                 )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_grid_list_style),
+                    summary = stringResource(R.string.preference_grid_list_style_summary),
+                    value = grid.showList,
+                    onValueChanged = {
+                        viewModel.setShowList(it)
+                    }
+                )
+                AnimatedVisibility(
+                    grid.showList
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_grid_list_icons),
+                        summary = stringResource(R.string.preference_grid_list_icons_summary),
+                        value = grid.showListIcons,
+                        onValueChanged = {
+                            viewModel.setShowListIcons(it)
+                        }
+                    )
+                }
                 SliderPreference(
                     title = stringResource(R.string.preference_grid_column_count),
                     value = grid.columnCount,
@@ -130,24 +143,20 @@ fun IconsSettingsScreen() {
         item {
             PreferenceCategory(stringResource(R.string.preference_category_icons)) {
                 if (previewIcons.value.isNotEmpty()) {
-                    Surface(
+                    Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        shape = MaterialTheme.shapes.medium,
-                        color = MaterialTheme.colorScheme.surfaceContainer,
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                            .background(
+                                MaterialTheme.colorScheme.surfaceContainerLowest,
+                                MaterialTheme.shapes.extraSmall
+                            )
+                            .padding(vertical = 24.dp, horizontal = 8.dp)
                     ) {
-                        Row(
-                            modifier = Modifier.padding(vertical = 24.dp, horizontal = 8.dp)
-                        ) {
-                            for (icon in previewIcons.value) {
-                                Box(
-                                    modifier = Modifier.weight(1f),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    ShapedLauncherIcon(size = grid.iconSize.dp, icon = { icon })
-                                }
+                        for (icon in previewIcons.value) {
+                            Box(
+                                modifier = Modifier.weight(1f),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ShapedLauncherIcon(size = grid.iconSize.dp, icon = { icon })
                             }
                         }
                     }
@@ -430,30 +439,15 @@ fun IconShapePreference(
                                     .padding(8.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                val context = LocalContext.current
-                                ShapedLauncherIcon(
-                                    size = 48.dp,
-                                    icon = {
-                                        StaticLauncherIcon(
-                                            foregroundLayer = StaticIconLayer(
-                                                icon = ContextCompat.getDrawable(
-                                                    context,
-                                                    R.mipmap.ic_launcher_foreground
-                                                )!!,
-                                                scale = 1.5f,
-                                            ),
-                                            backgroundLayer = StaticIconLayer(
-                                                icon = ColorDrawable(
-                                                    context.getColor(R.color.ic_launcher_background)
-                                                )
-                                            )
-                                        )
-                                    },
-                                    modifier = Modifier.clickable {
-                                        onValueChanged(it)
-                                        showDialog = false
-                                    },
-                                    shape = getShape(it)
+                                Box(
+                                    modifier = Modifier
+                                        .clip(getShape(it))
+                                        .size(48.dp)
+                                        .background(MaterialTheme.colorScheme.primary)
+                                        .clickable {
+                                            onValueChanged(it)
+                                            showDialog = false
+                                        }
                                 )
                                 Text(
                                     getShapeName(it) ?: "",

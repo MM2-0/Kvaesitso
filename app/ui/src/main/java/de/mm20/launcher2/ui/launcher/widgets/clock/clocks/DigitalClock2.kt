@@ -21,6 +21,8 @@ fun DigitalClock2(
     time: Long,
     compact: Boolean,
     showSeconds: Boolean,
+    twentyFourHours: Boolean,
+    monospaced: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
 ) {
@@ -40,14 +42,14 @@ fun DigitalClock2(
     }
 
     val formatString = if (verticalLayout && showSeconds) {
-        if (DateFormat.is24HourFormat(LocalContext.current)) {
+        if (twentyFourHours) {
             "HH:mm:ss"
         }
         else {
             "hh:mm:ss"
         }
     } else {
-        if (DateFormat.is24HourFormat(LocalContext.current)) {
+        if (twentyFourHours) {
             "HH:mm"
         }
         else {
@@ -63,6 +65,7 @@ fun DigitalClock2(
         text = formatter.format(time),
         style = MaterialTheme.typography.displaySmall.copy(
             fontWeight = FontWeight.Normal,
+            fontFeatureSettings = if (monospaced) "tnum" else null,
             color = color
         )
     )

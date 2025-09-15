@@ -20,6 +20,7 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.tryStartActivity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import androidx.core.net.toUri
 
 interface PermissionsManager {
     fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup)
@@ -58,6 +59,7 @@ interface PermissionsManager {
 
 enum class PermissionGroup {
     Calendar,
+    Tasks,
     Location,
     Contacts,
     ExternalStorage,
@@ -65,6 +67,7 @@ enum class PermissionGroup {
     AppShortcuts,
     Accessibility,
     ManageProfiles,
+    Call,
 }
 
 internal class PermissionsManagerImpl(
@@ -75,6 +78,9 @@ internal class PermissionsManagerImpl(
 
     private val calendarPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Calendar)
+    )
+    private val tasksPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.Tasks)
     )
     private val contactsPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Contacts)
@@ -93,6 +99,9 @@ internal class PermissionsManagerImpl(
     private val manageProfilesPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.ManageProfiles)
     )
+    private val callPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.Call)
+    )
 
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
         when (permissionGroup) {
@@ -100,6 +109,14 @@ internal class PermissionsManagerImpl(
                 ActivityCompat.requestPermissions(
                     context,
                     calendarPermissions,
+                    permissionGroup.ordinal
+                )
+            }
+
+            PermissionGroup.Tasks -> {
+                ActivityCompat.requestPermissions(
+                    context,
+                    taskPermissions,
                     permissionGroup.ordinal
                 )
             }
@@ -124,7 +141,7 @@ internal class PermissionsManagerImpl(
                 if (isAtLeastApiLevel(Build.VERSION_CODES.R)) {
                     val intent =
                         Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
-                            it.data = Uri.parse("package:${context.packageName}")
+                            it.data = "package:${context.packageName}".toUri()
                         }
                     context.tryStartActivity(intent)
                     pendingPermissionRequests.add(PermissionGroup.ExternalStorage)
@@ -167,6 +184,14 @@ internal class PermissionsManagerImpl(
                     CrashReporter.logException(e)
                 }
             }
+
+            PermissionGroup.Call -> {
+                ActivityCompat.requestPermissions(
+                    context,
+                    callPermissions,
+                    permissionGroup.ordinal
+                )
+            }
         }
     }
 
@@ -174,6 +199,10 @@ internal class PermissionsManagerImpl(
         return when (permissionGroup) {
             PermissionGroup.Calendar -> {
                 calendarPermissions.all { context.checkPermission(it) }
+            }
+
+            PermissionGroup.Tasks -> {
+                taskPermissions.all { context.checkPermission(it) }
             }
 
             PermissionGroup.Location -> {
@@ -209,12 +238,17 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Accessibility -> {
                 accessibilityPermissionState.value
             }
+
+            PermissionGroup.Call -> {
+                callPermissions.all { context.checkPermission(it) }
+            }
         }
     }
 
     override fun hasPermission(permissionGroup: PermissionGroup): Flow<Boolean> {
         return when (permissionGroup) {
             PermissionGroup.Calendar -> calendarPermissionState
+            PermissionGroup.Tasks -> tasksPermissionState
             PermissionGroup.Location -> locationPermissionState
             PermissionGroup.Contacts -> contactsPermissionState
             PermissionGroup.ExternalStorage -> externalStoragePermissionState
@@ -222,6 +256,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState
             PermissionGroup.Accessibility -> accessibilityPermissionState
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState
+            PermissionGroup.Call -> callPermissionState
         }
     }
 
@@ -234,6 +269,7 @@ internal class PermissionsManagerImpl(
         val granted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
         when (permissionGroup) {
             PermissionGroup.Calendar -> calendarPermissionState.value = granted
+            PermissionGroup.Tasks -> tasksPermissionState.value = granted
             PermissionGroup.Location -> locationPermissionState.value = granted
             PermissionGroup.Contacts -> contactsPermissionState.value = granted
             PermissionGroup.ExternalStorage -> externalStoragePermissionState.value = granted
@@ -241,6 +277,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState.value = granted
             PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState.value = granted
+            PermissionGroup.Call -> callPermissionState.value = granted
         }
     }
 
@@ -260,6 +297,7 @@ internal class PermissionsManagerImpl(
 
     companion object {
         private val calendarPermissions = arrayOf(Manifest.permission.READ_CALENDAR)
+        private val taskPermissions = arrayOf("org.tasks.permission.READ_TASKS")
         private val locationPermissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -269,5 +307,6 @@ internal class PermissionsManagerImpl(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
+        private val callPermissions = arrayOf(Manifest.permission.CALL_PHONE)
     }
 }

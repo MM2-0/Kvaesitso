@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="badge_text">#8A000000</color>
-
     <color name="red">#E53935</color>
     <color name="pink">#D81B60</color>
     <color name="purple">#9C27B0</color>
@@ -18,7 +16,4 @@
     <color name="deeporange">#F4511E</color>
     <color name="brown">#6D4C41</color>
     <color name="bluegrey">#546E7A</color>
-
-    <color name="settings_color_primary_dark">#ccc</color>
-
 </resources>

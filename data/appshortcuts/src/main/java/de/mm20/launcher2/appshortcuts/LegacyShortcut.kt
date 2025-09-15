@@ -4,9 +4,11 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ShortcutIconResource
+import android.content.pm.PackageManager
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.Bundle
 import android.util.Log
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getDrawableOrNull
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -42,7 +44,12 @@ internal data class LegacyShortcut(
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
         if (iconResource == null) return null
-        val resources = context.packageManager.getResourcesForApplication(iconResource.packageName)
+        val resources = try {
+            context.packageManager.getResourcesForApplication(iconResource.packageName)
+        } catch (e: PackageManager.NameNotFoundException) {
+            CrashReporter.logException(e)
+            return null
+        }
         val drawableId =
             resources.getIdentifier(iconResource.resourceName, "drawable", iconResource.packageName)
         if (drawableId == 0) return null

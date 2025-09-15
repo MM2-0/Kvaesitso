@@ -48,6 +48,8 @@ fun OrbitClock(
     time: Long,
     compact: Boolean,
     showSeconds: Boolean,
+    twentyFourHours: Boolean,
+    monospaced: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
 ) {
@@ -59,7 +61,7 @@ fun OrbitClock(
     val minute = parsed.minute
     val hour = parsed.hour
     val formattedHour = (
-            if (DateFormat.is24HourFormat(LocalContext.current))
+            if (twentyFourHours)
                 hour
             else {
                 ((hour + 11) % 12) + 1
@@ -125,8 +127,12 @@ fun OrbitClock(
     val contentColor = LocalContentColor.current
 
     val textMeasurer = rememberTextMeasurer()
-    val minuteStyle = MaterialTheme.typography.labelMedium
-    val hourStyle = MaterialTheme.typography.labelLarge
+    val minuteStyle = MaterialTheme.typography.labelMedium.copy(
+        fontFeatureSettings = if (monospaced) "tnum" else null
+    )
+    val hourStyle = MaterialTheme.typography.labelLarge.copy(
+        fontFeatureSettings = if (monospaced) "tnum" else null
+    )
 
     val strokeWidth = if (verticalLayout) 2.dp else 1.dp
 

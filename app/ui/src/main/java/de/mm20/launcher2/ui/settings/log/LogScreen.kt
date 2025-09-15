@@ -5,11 +5,13 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDownward
@@ -119,6 +121,7 @@ fun LogScreen() {
                 Icon(Icons.Rounded.Share, contentDescription = null)
             }
         },
+        verticalArrangement = Arrangement.spacedBy(2.dp),
         floatingActionButton = {
             AnimatedVisibility(
                 listState.canScrollForward,
@@ -139,30 +142,36 @@ fun LogScreen() {
         },
         lazyColumnState = listState,
     ) {
-        items(lines) {
+        itemsIndexed(lines) { i, it ->
+            val xs = MaterialTheme.shapes.extraSmall
+            val md = MaterialTheme.shapes.medium
+            val shape = xs.copy(
+                topStart = if (i == 0) md.topStart else xs.topStart,
+                topEnd = if (i == 0) md.topEnd else xs.topEnd,
+                bottomStart = if (i == lines.lastIndex) md.bottomStart else xs.bottomStart,
+                bottomEnd = if (i == lines.lastIndex) md.bottomEnd else xs.bottomEnd,
+            )
+
             if (it is RawLogcatLine) {
                 Text(
-                    modifier = Modifier.padding(16.dp),
-                    text = it.line ?: "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface, shape)
+                        .padding(16.dp),
+                    text = it.line,
                     style = MaterialTheme.typography.bodySmall
                 )
             } else if (it is FormattedLogcatLine) {
                 val contentColor = when (it.level) {
-                    "E" -> MaterialTheme.colorScheme.onErrorContainer
-                    "W" -> MaterialTheme.colorScheme.onPrimaryContainer
+                    "E" -> MaterialTheme.colorScheme.error
+                    "W" -> MaterialTheme.colorScheme.primary
                     "D" -> MaterialTheme.colorScheme.onSurfaceVariant
                     else -> MaterialTheme.colorScheme.onSurface
-                }
-                val bgColor = when (it.level) {
-                    "E" -> MaterialTheme.colorScheme.errorContainer
-                    "W" -> MaterialTheme.colorScheme.primaryContainer
-                    "D" -> MaterialTheme.colorScheme.surfaceVariant
-                    else -> MaterialTheme.colorScheme.surface
                 }
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(bgColor)
+                        .background(MaterialTheme.colorScheme.surface, shape)
                         .padding(16.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -187,7 +196,7 @@ fun LogScreen() {
                         modifier = Modifier.padding(top = 8.dp),
                         text = it.message,
                         style = MaterialTheme.typography.bodySmall,
-                        color = contentColor
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
             }

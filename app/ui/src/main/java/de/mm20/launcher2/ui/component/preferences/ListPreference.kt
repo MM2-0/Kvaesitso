@@ -17,7 +17,7 @@ import androidx.compose.ui.window.Dialog
 fun <T> ListPreference(
     title: String,
     icon: ImageVector? = null,
-    iconPadding: Boolean = true,
+    iconPadding: Boolean = icon != null,
     items: List<ListPreferenceItem<T>>,
     value: T,
     summary: String? = items.firstOrNull { value == it.value }?.label,

@@ -11,9 +11,6 @@
     <string name="menu_launch">চালু করুন</string>
     <string name="menu_customize">কাস্টোমাইজ করুন</string>
     <string name="menu_open_file">খুলুন</string>
-    <string name="menu_hide">লুকান</string>
-    <string name="menu_unhide">লুকানো বাদ দিন</string>
-    <string name="msg_item_hidden">%1$s লুকানো হয়েছে।</string>
     <string name="wind_east_north_east">পূর্ব উত্তর-পূর্ব</string>
     <string name="wind_south_south_west">দক্ষিণ দক্ষিণ-পশ্চিম</string>
     <string name="widget_name_notes">নোট</string>
@@ -107,8 +104,6 @@
     <string name="notes_widget_action_dismiss">বাদ দিন</string>
     <string name="notes_widget_dismissed">নোটটি বাদ দেয়া হয়েছে।</string>
     <string name="shortcut_summary">%1$s এর শর্টকাট</string>
-    <string name="easter_egg_1">এখানে কোনো ইস্টার এগ নেই, যদি না সেগুলো আপনি নিজে এনে থাকেন।</string>
-    <string name="easter_egg_2">আহহা, বললাম তো থামুন। অযথাই সময় নষ্ট করছেন</string>
     <string name="easter_egg_text">আহ্। আপনি আমাকে খুঁজে পেলেন। অভিনন্দন। খুব মজা, তাই না?</string>
     <string name="save">সংরক্ষণ করুন</string>
     <string name="duplicate">অনুলিপি তৈরি</string>
@@ -129,8 +124,6 @@
     <string name="owncloud_server_url">Owncloud সার্ভার লিংক</string>
     <string name="owncloud_password">পাসওয়ার্ড</string>
     <string name="owncloud_username">ইউজার নাম</string>
-    <string name="owncloud_username_empty">ইউজার নাম খালি থাকতে পারবে না</string>
-    <string name="owncloud_password_empty">পাসওয়ার্ড খালি থাকতে পারবে না</string>
     <string name="login_flow_continue">চালিয়ে যান</string>
     <string name="login_flow_login">লগইন</string>
     <string name="disclaimer">ডিসক্লেইমার</string>
@@ -182,7 +175,6 @@
     <string name="file_type_drawing">আঁকাবুকি ফাইল</string>
     <string name="alert_delete_shortcut">%1$s শর্টকাটটি স্থায়ীভাবে মুছে ফেলা হবে৷ আপনি নিশ্চিত?</string>
     <string name="notes_widget_action_save">সংরক্ষণ করুন</string>
-    <string name="easter_egg_3">আমি আর বলব না, এখানে নিশ্চিতভাবেই কোনো ইস্টার এগ লুকানো নেই</string>
     <string name="turn_off">বন্ধ করুন</string>
     <string name="menu_delete">মুছুন</string>
     <string name="file_meta_app_min_sdk">ন্যূনতম SDK ভার্সন: %1$s</string>
@@ -194,7 +186,6 @@
     <string name="weather_condition_heavysnowandthunder">প্রচণ্ড তুষার এবং বজ্রপাত</string>
     <string name="menu_calendar_open_externally">ক্যালেন্ডার অ্যাপে খুলুন</string>
     <string name="alert_delete_directory">ডিরেক্টরি %1$s এবং এর সমস্ত সামগ্রী স্থায়ীভাবে মুছে ফেলা হবে৷ আগাবেন?</string>
-    <string name="nextcloud_server_url_empty">সার্ভারের লিংক খালি থাকতে পারবে না</string>
     <string name="weather_condition_lightsleet">হালকা তুষার বৃষ্টি</string>
     <string name="task_due_time">শেষ সময় %1$s</string>
     <string name="task_due_date">শেষ তারিখ %1$s</string>

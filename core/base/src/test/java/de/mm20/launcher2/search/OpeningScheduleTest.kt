@@ -28,7 +28,7 @@ class OpeningScheduleTest(val date: LocalDateTime, val expected: Boolean) {
              * Saturday: 12:00 - 12:30
              * Sunday: 23:00 - Mon. 01:00
              */
-            openingHours = persistentListOf(
+            openingHours = setOf(
                 OpeningHours(
                     dayOfWeek = DayOfWeek.MONDAY,
                     startTime = LocalTime.of(18, 0),

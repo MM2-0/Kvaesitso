@@ -1,6 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
 android {
@@ -27,12 +31,14 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+        }
     }
 
     buildFeatures {
-        viewBinding = true
+        compose = true
     }
     namespace = "de.mm20.launcher2.owncloud"
 }
@@ -40,19 +46,20 @@ android {
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
+    implementation(libs.androidx.activitycompose)
+    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.appcompat)
-    implementation(libs.materialcomponents.core)
     implementation(libs.androidx.browser)
-    implementation(libs.androidx.constraintlayout.views)
     implementation(libs.androidx.securitycrypto)
 
     implementation(libs.bundles.androidx.lifecycle)
 
-    implementation(libs.okhttp)
+    implementation(libs.bundles.ktor)
 
     api(project(":libs:webdav"))
     implementation(project(":core:crashreporter"))
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))
+    implementation(project(":core:base"))
 
 }

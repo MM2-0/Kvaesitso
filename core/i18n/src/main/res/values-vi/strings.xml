@@ -28,7 +28,6 @@
         <item quantity="other">+%1$d sự kiện đang chạy từ ngày trước</item>
     </plurals>
     <string name="menu_open_file">Mở</string>
-    <string name="msg_item_hidden">%1$s đã bị ẩn.</string>
     <string name="menu_calendar_open_externally">Mở trong ứng dụng lịch</string>
     <string name="wind_west_south_west">Tây tây nam</string>
     <string name="wikipedia_url">https://en.wikipedia.org</string>
@@ -59,14 +58,12 @@
     <plurals name="debug_cleanup_database_result">
         <item quantity="other">Mục nhập %1$d đã bị loại bỏ.</item>
     </plurals>
-    <string name="preference_google">Google</string>
     <string name="preference_signout">Đăng xuất</string>
     <string name="preference_clockwidget_date_part">Ngày</string>
     <string name="preference_clockwidget_date_part_summary">Hiển thị ngày hiện tại</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_search_cloud_summary">Tìm kiếm tệp tin của %1$s\\</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_google_signin">Đăng nhập bằng Google</string>
     <string name="preference_weather_integration">Thời tiết</string>
     <string name="preference_media_integration">Kiểm soát phương tiện</string>
     <plurals name="battery_part_remaining_charge_time">
@@ -113,10 +110,8 @@
     <string name="menu_app_info">Thông tin ứng dụng</string>
     <string name="menu_launch">Khởi chạy</string>
     <string name="menu_customize">Tùy chỉnh</string>
-    <string name="menu_hide">Ẩn</string>
     <string name="menu_map">Xem trên bản đồ</string>
     <string name="menu_website">Mở trang web</string>
-    <string name="menu_unhide">Đừng ẩn</string>
     <string name="action_undo">Hoàn tác</string>
     <string name="action_import">Nhập</string>
     <string name="menu_delete">Xóa</string>
@@ -189,9 +184,6 @@
     <string name="notes_widget_action_dismiss">Bỏ qua</string>
     <string name="notes_widget_dismissed">Đã bỏ qua ghi chú.</string>
     <string name="shortcut_summary">Bởi %1$s</string>
-    <string name="easter_egg_1">Ở đây không có trứng Phục sinh trừ khi bạn mang chúng theo.</string>
-    <string name="easter_egg_2">Làm ơn dừng lại đi, bạn đang lãng phí thời gian</string>
-    <string name="easter_egg_3">Tôi sẽ không nói lại lần nữa: hoàn toàn không có quả trứng Phục sinh nào được giấu ở đây</string>
     <string name="easter_egg_text">Vâng, bạn đã tìm thấy tôi. Chúc mừng. Có đáng không?</string>
     <string name="close">Đóng</string>
     <string name="save">Lưu</string>
@@ -210,7 +202,6 @@
     <string name="edit_favorites_dialog_tag_section_empty">Thẻ được ghim sẽ xuất hiện ở đây</string>
     <string name="edit_favorites_dialog_new_tag">Tạo thẻ…</string>
     <string name="nextcloud_server_url">URL máy chủ Nextcloud</string>
-    <string name="nextcloud_server_url_empty">URL máy chủ không được để trống</string>
     <string name="nextcloud_server_invalid_url">URL này không trỏ đến cài đặt Nextcloud hợp lệ</string>
     <string name="owncloud_server_url">URL máy chủ Owncloud</string>
     <string name="owncloud_server_invalid_url">URL này không trỏ tới cài đặt Owncloud hợp lệ</string>
@@ -218,8 +209,6 @@
     <string name="owncloud_username">Tên người dùng</string>
     <string name="owncloud_login_2fa_hint">Nếu bạn đã bật xác thực hai yếu tố, bạn phải sử dụng mật khẩu ứng dụng tại đây.</string>
     <string name="owncloud_login_failed">Đăng nhập thất bại: tên người dùng hoặc mật khẩu không chính xác.</string>
-    <string name="owncloud_username_empty">Tên người dùng không được để trống</string>
-    <string name="owncloud_password_empty">Mật khẩu không được để trống</string>
     <string name="login_flow_login">Đăng nhập</string>
     <string name="disclaimer">Tuyên bố miễn trừ trách nhiệm</string>
     <string name="disclaimer_currency_converter">Tỷ giá hối đoái được Ngân hàng Trung ương Châu Âu công bố một lần mỗi ngày. Tất cả thông tin được cung cấp \"nguyên trạng\" mà không có bất kỳ hình thức đảm bảo nào. Không có trách nhiệm pháp lý nào được giả định đối với những thông tin này.
@@ -463,12 +452,8 @@
     <string name="preference_search_locations_summary">Tìm kiếm các cửa hàng và địa điểm khác trong khu vực địa phương</string>
     <string name="preference_search_localfiles">Tệp cục bộ</string>
     <string name="preference_search_localfiles_summary">Tìm kiếm tài liệu, ảnh và các tệp khác được lưu trữ trên thiết bị này</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">Tìm kiếm tệp của %1$s trên Google Drive</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="preference_google_signin_summary">Đăng nhập để tìm kiếm trên Google Drive</string>
     <string name="preference_calendar_calendars">Lịch</string>
-    <string name="preference_calendar_hide_allday">Ẩn các sự kiện cả ngày</string>
     <string name="preference_screen_buildinfo">Xây dựng thông tin</string>
     <string name="preference_screen_buildinfo_summary">Thông tin thêm về bản dựng của ứng dụng này</string>
     <string name="preference_search_bar_style">Phong cách</string>
@@ -495,10 +480,8 @@
     <string name="preference_screen_homescreen_summary">Đồng hồ, thanh tìm kiếm, hình nền, thanh hệ thống</string>
     <string name="preference_screen_icons">Lưới &amp; biểu tượng</string>
     <string name="preference_screen_icons_summary">Lưới, kích thước biểu tượng, gói biểu tượng, dấu hiệu</string>
-    <string name="preference_category_accounts">Tài khoản</string>
     <string name="no_account_nextcloud">Bạn chưa kết nối tài khoản Nextcloud</string>
     <string name="no_account_owncloud">Bạn chưa kết nối tài khoản Owncloud</string>
-    <string name="no_account_google">Bạn chưa kết nối tài khoản Google</string>
     <string name="connect_account">Kết nối tài khoản</string>
     <string name="battery_part_charging">Sạc</string>
     <string name="backup_complete">Việc sao lưu đã hoàn tất.</string>
@@ -506,21 +489,17 @@
     <string name="restore_incompatible_file">Bản sao lưu này đã được tạo bằng phiên bản khác của %1$s và không thể khôi phục bằng phiên bản này.</string>
     <string name="restore_different_minor_version">Bản sao lưu này đã được tạo bằng một phiên bản khác của %1$s. Một số dữ liệu có thể không được khôi phục chính xác.</string>
     <string name="restore_meta">Đã tạo %1$s trên %2$s với %3$s.</string>
-    <string name="icon_picker_title">Chọn biểu tượng</string>
     <string name="icon_picker_default_icon">Mặc định</string>
     <string name="icon_picker_suggestions">Đề xuất</string>
     <string name="icon_picker_search_icon">Tìm kiếm trong gói biểu tượng</string>
-    <string name="icon_picker_no_packs_installed">Không có gói biểu tượng nào được cài đặt</string>
     <string name="icon_picker_filter_all_packs">Tất cả các gói biểu tượng</string>
     <string name="apps_profile_main">Cá nhân</string>
     <string name="apps_profile_work">Công việc</string>
     <string name="favorites">Yêu thích</string>
     <string name="favorites_empty">Các mục được ghim và sử dụng thường xuyên sẽ xuất hiện ở đây</string>
     <string name="favorites_empty_tag">Không có mục nào có thẻ này</string>
-    <string name="create_app_shortcut">Tạo lối tắt</string>
     <string name="frequently_used_show_in_favorites">Hiển thị trong mục yêu thích</string>
     <string name="frequently_used_rows">Số hàng</string>
-    <string name="customize_tags_placeholder">Thẻ</string>
     <string name="preference_screen_search_actions">Hành động nhanh</string>
     <string name="preference_search_search_actions_summary">Định cấu hình các thao tác nhanh và lối tắt tìm kiếm</string>
     <string name="search_action_call">Gọi</string>
@@ -533,8 +512,6 @@
     <string name="search_action_contact">Thêm vào danh bạ</string>
     <string name="create_search_action_type_web">Tìm kiếm trên một trang web</string>
     <string name="create_search_action_type_app">Tìm kiếm trong một ứng dụng</string>
-    <string name="create_search_action_title">Hành động nhanh mới</string>
-    <string name="edit_search_action_title">Chỉnh sửa hành động nhanh</string>
     <string name="create_search_action_pick_app">Chọn ứng dụng để tìm kiếm:</string>
     <string name="create_search_action_website_url">Nhập địa chỉ của trang web:</string>
     <string name="create_search_action_website_invalid_url">Trang web đã cho không thể được nhập tự động dưới dạng tìm kiếm trên web. Bạn có thể thử một trang web khác hoặc nhập dữ liệu cần thiết theo cách thủ công ở bước tiếp theo.</string>
@@ -544,8 +521,6 @@
     <string name="search_action_websearch_url_hint">Mẫu URL được sử dụng để xây dựng URL tìm kiếm trên web. Sử dụng ‘${1}’ làm phần giữ chỗ cho cụm từ tìm kiếm thực tế, ví dụ: https://google.com/search?q=${1}.</string>
     <string name="more_information">Thêm thông tin</string>
     <string name="experimental_feature">Thử nghiệm</string>
-    <string name="create_tag_title">Thẻ mới</string>
-    <string name="edit_tag_title">Chỉnh sửa thẻ</string>
     <string name="tag_exists_error">Thẻ có tên này đã tồn tại.</string>
     <string name="tag_exists_message">Thẻ có tên này đã tồn tại. Nếu bạn tiếp tục, hai thẻ sẽ được hợp nhất.</string>
     <string name="tag_no_items_message">Không có mục nào được gán cho thẻ này. Nếu bạn tiếp tục, thẻ sẽ bị xóa.</string>
@@ -583,9 +558,6 @@
     <string name="gesture_failed_message">Bạn đã thực hiện cử chỉ \"%1$s\". Cử chỉ này hiện được đặt để kích hoạt hành động \"%2$s\". Tuy nhiên, hành động này không thể thực hiện được vì lý do sau:</string>
     <string name="missing_permission_accessibility_gesture_failed">Dịch vụ trợ năng của trình khởi chạy cần được bật để thực hiện hành động này.</string>
     <string name="missing_permission_accessibility_gesture_settings">Hành động này yêu cầu bật dịch vụ trợ năng của trình khởi chạy.</string>
-    <string name="preference_search_result_ordering">Thứ tự kết quả tìm kiếm</string>
-    <string name="preference_search_result_ordering_alphabetic">Bảng chữ cái</string>
-    <string name="preference_search_result_ordering_weighted">Cách sử dụng</string>
     <string name="preference_search_result_ordering_weight_factor">Xếp hạng linh hoạt</string>
     <string name="preference_search_result_ordering_weight_factor_low">Ổn định</string>
     <string name="preference_search_result_ordering_weight_factor_default">Cân bằng</string>
@@ -615,7 +587,6 @@
     <string name="note_widget_file_write_error">Lỗi lưu ghi chú</string>
     <string name="note_widget_file_write_error_description">Không thể ghi ghi chú vào tệp được liên kết. Có thể nó đã bị di chuyển hoặc bị xóa. Một bản sao đã được lưu vào bộ nhớ trong của trình khởi chạy.</string>
     <string name="confirmation_delete_color_scheme">Bạn có thực sự muốn xóa bảng màu %1$s?</string>
-    <string name="new_color_scheme_name">Bảng màu mới</string>
     <string name="theme_color_scheme_system_default">Sử dụng mặc định của hệ thống</string>
     <string name="theme_color_scheme_autogenerate">Từ màu cơ bản</string>
     <string name="theme_color_scheme_palette_color">Bảng màu</string>
@@ -648,8 +619,6 @@
     <string name="plugin_weather_provider_enable">Đặt làm nhà cung cấp thời tiết</string>
     <string name="plugin_weather_provider_enabled">Hiện được đặt làm nhà cung cấp thời tiết</string>
     <string name="unavailable_searchable">Mục này không còn tồn tại nữa.</string>
-    <string name="preference_search_bar_separate_work_profile">Các ứng dụng hồ sơ công việc riêng biệt</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Hiển thị các ứng dụng hồ sơ công việc trong một tab riêng</string>
     <string name="clock_style_digital1">Đậm</string>
     <string name="clock_style_digital2">Đơn giản</string>
     <string name="clock_style_orbit">Quỹ đạo</string>
@@ -758,7 +727,6 @@
     <string name="poi_category_fire_station">Trạm cứu hỏa</string>
     <string name="poi_category_courthouse">Tòa án</string>
     <string name="poi_category_townhall">Tòa thị chính</string>
-    <string name="preference_search_locations_radius_large_radius_warning">Bán kính tìm kiếm lớn có thể làm chậm đáng kể việc tìm kiếm.</string>
     <string name="customize_item_label">Nhãn</string>
     <string name="customize_item_tags">Thẻ</string>
     <string name="customize_item_visibility">Hiển thị trong</string>

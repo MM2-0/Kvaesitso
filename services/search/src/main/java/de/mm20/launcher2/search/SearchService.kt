@@ -70,6 +70,7 @@ internal class SearchServiceImpl(
                         unitConverters = if (filters.tools) it.unitConverters else null,
                         websites = if (filters.websites) it.websites else null,
                         wikipedia = if (filters.articles) it.wikipedia else null,
+                        locations = if (filters.places) it.locations else null,
                     )
                 }
                     ?: SearchResults())
@@ -234,6 +235,7 @@ internal class SearchServiceImpl(
             }
             if (filters.places) {
                 launch {
+                    delay(250)
                     locationRepository.search(query, filters.allowNetwork)
                         .combine(customAttrResults) { locations, customAttrs ->
                             if (customAttrs.locations != null) locations + customAttrs.locations

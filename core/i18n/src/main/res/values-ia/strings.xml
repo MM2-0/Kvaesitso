@@ -8,8 +8,6 @@
     <string name="menu_app_info">Information del application</string>
     <string name="menu_customize">Personalisar</string>
     <string name="menu_open_file">Aperir</string>
-    <string name="menu_hide">Celar</string>
-    <string name="menu_unhide">Non celar</string>
     <string name="action_undo">Disfacer</string>
     <string name="action_import">Importar</string>
     <string name="menu_remove">Remover</string>
@@ -35,7 +33,6 @@
     <string name="file_type_generic">File %1$s</string>
     <string name="search_action_message">Message</string>
     <string name="search_action_websearch">Recerca web</string>
-    <string name="edit_tag_title">Modificar le etiquetta</string>
     <string name="import_theme_apply">Applicar le thema</string>
     <string name="menu_launch">Lancear</string>
     <string name="file_meta_album">Album: %1$s</string>
@@ -79,7 +76,6 @@
     <string name="widget_action_remove">Remover</string>
     <string name="menu_item_edit_favs">Modificar le favoritos</string>
     <string name="nextcloud_server_url">URL de servitor Nextcloud</string>
-    <string name="nextcloud_server_url_empty">Le URL de servitor non pote esser vacue</string>
     <string name="owncloud_password">Contrasigno</string>
     <string name="owncloud_username">Nomine de usator</string>
     <string name="login_flow_continue">Continuar</string>
@@ -113,10 +109,7 @@
     <string name="gesture_action_notifications">Aperir tiratorio de notificationes</string>
     <string name="gesture_action_quick_settings">Aperir le parametros rapide</string>
     <string name="gesture_action_recents">Aperir recentes</string>
-    <string name="preference_search_result_ordering_alphabetic">Alphabetic</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabile</string>
-    <string name="new_color_scheme_name">Nove schema de color</string>
-    <string name="preference_search_result_ordering">Ordine del resultatos de recerca</string>
     <string name="widget_name_weather">Tempore</string>
     <string name="widget_add_widget">Adder un widget</string>
     <string name="edit">Modificar</string>
@@ -127,9 +120,7 @@
     <string name="notes_widget_action_save">Salveguardar</string>
     <string name="turn_off">Disactivar</string>
     <string name="gesture_action_launch_app">Lancear application</string>
-    <string name="preference_search_result_ordering_weighted">Uso</string>
     <string name="shortcut_summary">Per %1$s</string>
-    <string name="owncloud_username_empty">Le nomine de usator non pote esser vacue</string>
     <string name="preference_theme">Thema</string>
     <string name="close">Clauder</string>
     <string name="edit_favorites_dialog_tags">Etiquettas</string>
@@ -141,13 +132,11 @@
     <string name="calendar_widget_next_events">Proxime evento</string>
     <string name="preference_colors_default">Predefinite</string>
     <string name="preference_mdy_color_source_system">Systema</string>
-    <string name="owncloud_password_empty">Le contrasigno non pote esser vacue</string>
     <string name="music_widget_default_title">%1$s es in reproduction de medio</string>
     <string name="grant_permission">Conceder</string>
     <string name="widget_config_weather_compact">Modo compacte</string>
     <string name="preference_debug_reinstall_iconpacks">Reinstallar pacchettos de icones</string>
     <string name="plugin_type_weather">Fornitor de tempore</string>
-    <string name="create_tag_title">Nove etiquetta</string>
     <string name="more_information">Plus de information</string>
     <string name="tag_exists_message">Jam existe un etiquetta con iste nomine. Si tu continua, ambe etiquettas essera fusionate.</string>
 </resources>
