@@ -44,7 +44,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.work)
 
-    implementation(libs.okhttp)
+    implementation(libs.bundles.ktor)
 
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))

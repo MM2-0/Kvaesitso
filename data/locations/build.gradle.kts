@@ -46,8 +46,7 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
 
-    implementation(libs.okhttp)
-    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.ktor)
 
     implementation(libs.koin.android)
 

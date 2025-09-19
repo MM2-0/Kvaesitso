@@ -16,6 +16,7 @@ fun knownWebsearchByHostname(hostname: String): CustomWebsearchActionBuilder? {
         "amazon.cn" -> CustomWebsearchActionBuilder(label = "Amazon CN", urlTemplate = "https://www.amazon.cn/s?k=\${1}")
         "duckduckgo.com" -> CustomWebsearchActionBuilder(label = "DuckDuckGo", urlTemplate = "https://duckduckgo.com/?q=\${1}")
         "yahoo.com" -> CustomWebsearchActionBuilder(label = "Yahoo", urlTemplate = "https://search.yahoo.com/search?p=\${1}")
+        "ecosia.org" -> CustomWebsearchActionBuilder(label = "Ecosia", urlTemplate = "https://www.ecosia.org/search?q=\${1}")
         else -> null
     }
 }

@@ -4,16 +4,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -22,7 +19,6 @@ import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.InputChipDefaults
@@ -48,10 +44,8 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
-import de.mm20.launcher2.ui.ktx.splitLeadingEmoji
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 
@@ -151,30 +145,19 @@ fun OutlinedTagsInputField(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             for ((i, tag) in tags.withIndex()) {
-                                val (emoji, tagName) = remember(tag) {
-                                    tag.splitLeadingEmoji()
-                                }
                                 InputChip(
                                     selected = i == tags.lastIndex && lastTagFocused,
                                     modifier = Modifier.padding(end = 12.dp),
                                     onClick = { },
                                     leadingIcon = {
-                                        if (emoji != null && tagName != null) {
-                                            Text(
-                                                emoji,
-                                                modifier = Modifier.width(FilterChipDefaults.IconSize),
-                                                textAlign = TextAlign.Center,
-                                            )
-                                        } else if (tagName != null) {
-                                            Icon(
-                                                modifier = Modifier
-                                                    .size(InputChipDefaults.IconSize),
-                                                imageVector = Icons.Rounded.Tag,
-                                                contentDescription = null
-                                            )
-                                        }
+                                        Icon(
+                                            modifier = Modifier
+                                                .size(InputChipDefaults.IconSize),
+                                            imageVector = Icons.Rounded.Tag,
+                                            contentDescription = null
+                                        )
                                     },
-                                    label = { Text(tagName ?: emoji ?: "") },
+                                    label = { Text(tag) },
                                     trailingIcon = {
                                         Icon(
                                             modifier = Modifier

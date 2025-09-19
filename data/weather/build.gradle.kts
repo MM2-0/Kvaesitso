@@ -43,8 +43,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.work)
-    implementation(libs.okhttp)
-    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.ktor)
     implementation(libs.suncalc)
     implementation(libs.koin.android)
 

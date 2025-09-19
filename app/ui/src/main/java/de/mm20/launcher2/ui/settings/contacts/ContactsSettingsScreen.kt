@@ -50,15 +50,6 @@ fun ContactsSettingsScreen() {
     ) {
         item {
             PreferenceCategory {
-                AnimatedVisibility(hasContactsPermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_contact_search_settings),
-                        onClick = {
-                            viewModel.requestContactsPermission(context as AppCompatActivity)
-                        },
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
                 GuardedPreference(
                     locked = hasContactsPermission == false,
                     onUnlock = {

@@ -13,5 +13,5 @@ The following libraries are commonly used:
 - **KotlinX serialization** for JSON serialization
 - **AndroidX Room** to store launcher data in an SQLite database
 - **AndroidX Datastore** to store additional user preferences
-- **OkHttp and Retrofit** for HTTP requests
+- **Ktor** for HTTP requests
 - Several other **AndroidX** libraries (Work, Lifecycle, AppCompat, …)
