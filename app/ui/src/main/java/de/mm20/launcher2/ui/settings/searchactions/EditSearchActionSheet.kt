@@ -109,80 +109,96 @@ fun EditSearchActionSheet(
         onDismissRequest = {
             viewModel.onDismiss()
             onDismiss()
-        },
-        footerItems = when (page) {
-            EditSearchActionPage.CustomizeAppSearch,
-            EditSearchActionPage.CustomizeWebSearch,
-            EditSearchActionPage.CustomizeCustomIntent -> {
-                {
-                    Button(onClick = {
-                        if (viewModel.validate()) {
-                            viewModel.onSave()
-                            searchAction?.let { onSave(it) }
-                        }
-                    }, enabled = !searchAction?.label.isNullOrBlank()) {
-                        Text(stringResource(R.string.save))
-                    }
-                }
+        }
+    ) {
+        Column(
+            modifier = when (page) {
+                EditSearchActionPage.InitAppSearch, EditSearchActionPage.PickIcon -> Modifier
+                else -> Modifier.verticalScroll(rememberScrollState()).padding(it)
+            }
+        ) {
+            when (page) {
+                EditSearchActionPage.SelectType -> SelectTypePage(viewModel)
+                EditSearchActionPage.InitWebSearch -> InitWebSearchPage(viewModel)
+                EditSearchActionPage.InitAppSearch -> InitAppSearchPage(viewModel, it)
+                EditSearchActionPage.CustomizeWebSearch -> CustomizeWebSearch(viewModel)
+                EditSearchActionPage.CustomizeCustomIntent -> CustomizeCustomIntent(viewModel)
+                EditSearchActionPage.CustomizeAppSearch -> CustomizeAppSearch(viewModel)
+                EditSearchActionPage.PickIcon -> PickIcon(viewModel, it)
             }
 
-            EditSearchActionPage.InitWebSearch -> {
-                {
-                    val density = LocalDensity.current
-                    Button(
-                        onClick = {
-                            if (viewModel.skipWebsearchImport.value) {
-                                viewModel.skipWebsearchImport()
-                            } else {
-                                viewModel.importWebsearch(density)
+            val button: (@Composable () -> Unit)? = when (page) {
+                EditSearchActionPage.CustomizeAppSearch,
+                EditSearchActionPage.CustomizeWebSearch,
+                EditSearchActionPage.CustomizeCustomIntent -> {
+                    {
+                        Button(onClick = {
+                            if (viewModel.validate()) {
+                                viewModel.onSave()
+                                searchAction?.let { onSave(it) }
                             }
-                        },
-                        enabled = !viewModel.loadingWebsearch.value
-                    ) {
-                        Text(
-                            stringResource(
+                        }, enabled = !searchAction?.label.isNullOrBlank()) {
+                            Text(stringResource(R.string.save))
+                        }
+                    }
+                }
+
+                EditSearchActionPage.InitWebSearch -> {
+                    {
+                        val density = LocalDensity.current
+                        Button(
+                            onClick = {
                                 if (viewModel.skipWebsearchImport.value) {
-                                    R.string.skip
+                                    viewModel.skipWebsearchImport()
                                 } else {
-                                    R.string.action_next
+                                    viewModel.importWebsearch(density)
                                 }
+                            },
+                            enabled = !viewModel.loadingWebsearch.value
+                        ) {
+                            Text(
+                                stringResource(
+                                    if (viewModel.skipWebsearchImport.value) {
+                                        R.string.skip
+                                    } else {
+                                        R.string.action_next
+                                    }
+                                )
                             )
-                        )
+                        }
                     }
                 }
-            }
 
-            EditSearchActionPage.PickIcon -> {
-                {
-                    OutlinedButton(onClick = {
-                        viewModel.applyIcon()
-                    }) {
-                        Text(stringResource(R.string.ok))
+                EditSearchActionPage.PickIcon -> {
+                    {
+                        OutlinedButton(onClick = {
+                            viewModel.applyIcon()
+                        }) {
+                            Text(stringResource(R.string.ok))
+                        }
                     }
                 }
+
+                else -> null
             }
 
-            else -> null
-        }) {
-        when (page) {
-            EditSearchActionPage.SelectType -> SelectTypePage(viewModel, it)
-            EditSearchActionPage.InitWebSearch -> InitWebSearchPage(viewModel, it)
-            EditSearchActionPage.InitAppSearch -> InitAppSearchPage(viewModel, it)
-            EditSearchActionPage.CustomizeWebSearch -> CustomizeWebSearch(viewModel, it)
-            EditSearchActionPage.CustomizeCustomIntent -> CustomizeCustomIntent(viewModel, it)
-            EditSearchActionPage.CustomizeAppSearch -> CustomizeAppSearch(viewModel, it)
-            EditSearchActionPage.PickIcon -> PickIcon(viewModel, it)
+            if (button != null) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                    horizontalArrangement = Arrangement.End,
+                ) {
+                    button()
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun SelectTypePage(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
+private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-            .padding(paddingValues)
     ) {
         Text(
             text = stringResource(R.string.create_search_action_type),
@@ -293,7 +309,7 @@ private fun InitAppSearchPage(viewModel: EditSearchActionSheetVM, paddingValues:
                         SearchActionIcon(
                             size = 24.dp,
                             componentName = it.componentName,
-                            icon = de.mm20.launcher2.searchactions.actions.SearchActionIcon.Custom,
+                            icon = SearchActionIcon.Custom,
                             color = 1,
                         )
                         Text(
@@ -309,15 +325,13 @@ private fun InitAppSearchPage(viewModel: EditSearchActionSheetVM, paddingValues:
 }
 
 @Composable
-private fun InitWebSearchPage(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
+private fun InitWebSearchPage(viewModel: EditSearchActionSheetVM) {
     var url by viewModel.initWebsearchUrl
     val importError by viewModel.websearchImportError
     val loading by viewModel.loadingWebsearch
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-            .padding(paddingValues)
     ) {
         Text(
             text = stringResource(R.string.create_search_action_website_url),
@@ -359,14 +373,12 @@ private fun InitWebSearchPage(viewModel: EditSearchActionSheetVM, paddingValues:
 }
 
 @Composable
-fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
+fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
     val searchAction by viewModel.searchAction
 
     Column(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
             .fillMaxWidth()
-            .padding(paddingValues)
     ) {
 
         if (searchAction != null && searchAction is CustomWebsearchActionBuilder) {
@@ -486,7 +498,7 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM, paddingValues: Paddin
 }
 
 @Composable
-fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
+fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
     val searchAction by viewModel.searchAction
     val context = LocalContext.current
 
@@ -503,9 +515,7 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM, paddingValues: Paddin
 
     Column(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
             .fillMaxWidth()
-            .padding(paddingValues)
     ) {
 
         if (searchAction != null) {
@@ -606,7 +616,7 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM, paddingValues: Paddin
 }
 
 @Composable
-fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
+fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
     val searchAction by viewModel.searchAction
 
     val action = searchAction
@@ -614,9 +624,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM, paddingValues: Pad
     if (action is CustomIntentActionBuilder) {
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
-                .padding(paddingValues)
         ) {
             Row(
                 verticalAlignment = Alignment.Bottom
@@ -1099,6 +1107,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                     label = { Text("Key") },
                     value = newKey,
                     onValueChange = { newKey = it },
+                    singleLine = true,
                 )
                 FilledIconButton(
                     modifier = Modifier.padding(start = 8.dp),
