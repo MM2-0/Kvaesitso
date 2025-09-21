@@ -57,7 +57,8 @@ interface SearchActionBuilder {
                         iconColor = entity.color ?: 0,
                         icon = SearchActionIcon.fromInt(entity.icon),
                         customIcon = entity.customIcon,
-                        queryKey = options?.getString("extra")?.takeIf { it.isNotEmpty() } ?: return null
+                        queryKey = options?.optString("extra"),
+                        queryTemplate = options?.optString("template")?.takeIf { it.isNotBlank() }
                     )
                 }
                 "call" -> return CallActionBuilder(context)
@@ -107,7 +108,8 @@ interface SearchActionBuilder {
                     icon = builder.icon.toInt(),
                     customIcon = builder.customIcon,
                     options = jsonObjectOf(
-                        "extra" to builder.queryKey
+                        "extra" to builder.queryKey,
+                        "template" to builder.queryTemplate,
                     ).toString()
                 )
                 else -> SearchActionEntity(

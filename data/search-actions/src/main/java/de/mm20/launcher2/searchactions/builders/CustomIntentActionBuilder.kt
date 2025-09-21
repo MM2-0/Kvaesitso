@@ -9,7 +9,11 @@ import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 
 data class CustomIntentActionBuilder(
     override val label: String,
-    val queryKey: String,
+    /**
+     * The extra of the intent to put the query in. If null, the query will be passed in the data URI.
+     */
+    val queryKey: String?,
+    val queryTemplate: String? = null,
     val baseIntent: Intent,
     override val icon: SearchActionIcon = SearchActionIcon.Custom,
     override val iconColor: Int = 1,
@@ -20,7 +24,7 @@ data class CustomIntentActionBuilder(
 
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction {
         return CustomIntentAction(
-            label, classifiedQuery.text, queryKey, baseIntent, icon, iconColor, customIcon
+            label, classifiedQuery.text, queryKey, queryTemplate, baseIntent, icon, iconColor, customIcon
         )
     }
 }

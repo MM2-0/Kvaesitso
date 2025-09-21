@@ -51,6 +51,9 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -65,6 +68,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -114,7 +118,9 @@ fun EditSearchActionSheet(
         Column(
             modifier = when (page) {
                 EditSearchActionPage.InitAppSearch, EditSearchActionPage.PickIcon -> Modifier
-                else -> Modifier.verticalScroll(rememberScrollState()).padding(it)
+                else -> Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(it)
             }
         ) {
             when (page) {
@@ -184,7 +190,9 @@ fun EditSearchActionSheet(
 
             if (button != null) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
                     horizontalArrangement = Arrangement.End,
                 ) {
                     button()
@@ -400,6 +408,7 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
                     value = searchAction!!.label,
                     onValueChange = { viewModel.setLabel(it) },
                     label = { Text(stringResource(R.string.search_action_label)) },
+                    singleLine = true,
                 )
             }
 
@@ -490,7 +499,8 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
                     onValueChanged = {
                         viewModel.setQueryEncoding(it)
                     },
-                    iconPadding = false
+                    iconPadding = false,
+                    containerColor = Color.Transparent
                 )
             }
         }
@@ -538,13 +548,15 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
                     value = searchAction!!.label,
                     onValueChange = { viewModel.setLabel(it) },
                     label = { Text(stringResource(R.string.search_action_label)) },
+                    singleLine = true,
                 )
             }
 
             var showAppDropdown by remember { mutableStateOf(false) }
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .clickable { showAppDropdown = !showAppDropdown }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { showAppDropdown = !showAppDropdown }) {
                 OutlinedTextFieldDefaults.DecorationBox(
                     value = selectedApp?.label ?: "",
                     enabled = true,
@@ -563,7 +575,7 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
                             SearchActionIcon(
                                 size = 24.dp,
                                 componentName = selectedApp.componentName,
-                                icon = de.mm20.launcher2.searchactions.actions.SearchActionIcon.Custom,
+                                icon = SearchActionIcon.Custom,
                                 color = 1,
                             )
                         }
@@ -586,7 +598,7 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
                                 SearchActionIcon(
                                     size = 24.dp,
                                     componentName = app.componentName,
-                                    icon = de.mm20.launcher2.searchactions.actions.SearchActionIcon.Custom,
+                                    icon = SearchActionIcon.Custom,
                                     color = 1,
                                 )
                             }
@@ -619,80 +631,179 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
 fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
     val searchAction by viewModel.searchAction
 
-    val action = searchAction
+    val action = (searchAction as? CustomIntentActionBuilder) ?: return
 
-    if (action is CustomIntentActionBuilder) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Row(
+            verticalAlignment = Alignment.Bottom
         ) {
-            Row(
-                verticalAlignment = Alignment.Bottom
-            ) {
-                SearchActionIconTile(onClick = {
-                    viewModel.openIconPicker()
-                }) {
-                    SearchActionIcon(
-                        builder = searchAction!!, size = 24.dp
-                    )
-                }
-                OutlinedTextField(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 16.dp),
-                    value = action.label,
-                    onValueChange = { viewModel.setLabel(it) },
-                    label = { Text(stringResource(R.string.search_action_label)) },
+            SearchActionIconTile(onClick = {
+                viewModel.openIconPicker()
+            }) {
+                SearchActionIcon(
+                    builder = searchAction!!, size = 24.dp
                 )
             }
-
-
             OutlinedTextField(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                value = action.baseIntent.action ?: "",
-                onValueChange = { viewModel.setIntentAction(it) },
-                label = { Text("Action") },
+                    .weight(1f)
+                    .padding(start = 16.dp),
+                value = action.label,
+                onValueChange = { viewModel.setLabel(it) },
+                label = { Text(stringResource(R.string.search_action_label)) },
+                singleLine = true,
             )
+        }
 
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
-                value = action.baseIntent.categories?.firstOrNull() ?: "",
-                onValueChange = { viewModel.setIntentCategory(it) },
-                label = { Text("Category") },
-            )
+        Text(
+            text = "Query",
+            modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
+            style = MaterialTheme.typography.titleSmall,
+        )
 
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
-                value = action.queryKey,
-                onValueChange = { viewModel.setIntentQueryExtra(it) },
-                label = { Text("Extra key") },
-                supportingText = {
-                    Text("The key of the string extra that the search term is passed as.")
+        SingleChoiceSegmentedButtonRow(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            SegmentedButton(
+                selected = action.queryKey == null,
+                onClick = {
+                    viewModel.setQueryKey(null)
                 },
+                shape = SegmentedButtonDefaults.itemShape(0, 2)
+            ) {
+                Text("Data")
+            }
+            SegmentedButton(
+                selected = action.queryKey != null,
+                onClick = {
+                    viewModel.setQueryKey("")
+                },
+                shape = SegmentedButtonDefaults.itemShape(1, 2)
+            ) {
+                Text("String extra")
+            }
+        }
+
+        if (action.queryKey != null) {
+
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                value = action.queryKey ?: "",
+                onValueChange = { viewModel.setQueryKey(it) },
+                label = { Text("Extra key") },
+                singleLine = true,
                 isError = viewModel.customIntentKeyError.value
             )
+        }
 
-            var showAdvanced by remember {
-                mutableStateOf(false)
-            }
+        val placeholderBackground = MaterialTheme.colorScheme.tertiary
+        val placeholderColor = MaterialTheme.colorScheme.onTertiary
 
-            AnimatedVisibility(!showAdvanced) {
-                TextButton(
-                    modifier = Modifier.padding(top = 16.dp),
-                    onClick = { showAdvanced = true }) {
-                    Text(stringResource(id = R.string.websearch_dialog_advanced))
-                }
-            }
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            value = action.queryTemplate ?: "",
+            onValueChange = { viewModel.setIntentQueryTemplate(it) },
+            label = { Text(if (action.queryKey == null) "Data template" else "String extra template") },
+            supportingText = {
+                Text(
+                    if (action.queryKey == null) {
+                        "The URI template that is used to construct the intent\\'s data URI. Use ‘\${1}’ as a placeholder for the actual search term, e.g. geo:0,0?q=,\${1}"
+                    } else {
+                        "The template that is used to construct the string that is passed to the intent as a string extra. Use ‘\${1}’ as a placeholder for the actual search term"
+                    }
+                )
+            },
+            singleLine = true,
+            visualTransformation = {
+                TransformedText(buildAnnotatedString {
+                    append(it)
+                    val placeholderIndex = it.indexOf("\${1}")
+                    if (placeholderIndex != -1) {
+                        addStyle(
+                            SpanStyle(
+                                fontWeight = FontWeight.Bold,
+                                color = placeholderColor,
+                                background = placeholderBackground,
+                            ),
+                            placeholderIndex, placeholderIndex + 4
+                        )
+                    }
+                }, OffsetMapping.Identity)
+            },
+            isError = viewModel.customIntentTemplateError.value
+        )
 
-            AnimatedVisibility(showAdvanced) {
-                IntentExtrasEditor(viewModel)
+        Text(
+            text = "Base intent",
+            modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
+            style = MaterialTheme.typography.titleSmall,
+        )
+
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+            value = action.baseIntent.action ?: "",
+            onValueChange = { viewModel.setIntentAction(it) },
+            label = { Text("Action") },
+            singleLine = true,
+        )
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            value = action.baseIntent.categories?.firstOrNull() ?: "",
+            onValueChange = { viewModel.setIntentCategory(it) },
+            label = { Text("Category") },
+            singleLine = true,
+        )
+
+        if (action.queryKey != null) {
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                value = action.baseIntent.dataString ?: "",
+                onValueChange = { viewModel.setIntentData(it) },
+                label = { Text("Data") },
+                singleLine = true,
+            )
+        }
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            value = action.baseIntent.type ?: "",
+            onValueChange = { viewModel.setIntentType(it) },
+            label = { Text("Type") },
+            singleLine = true,
+        )
+
+
+        var showAdvanced by remember {
+            mutableStateOf(false)
+        }
+
+        AnimatedVisibility(!showAdvanced) {
+            TextButton(
+                modifier = Modifier.padding(top = 16.dp),
+                onClick = { showAdvanced = true }) {
+                Text(stringResource(id = R.string.websearch_dialog_advanced))
             }
+        }
+
+        AnimatedVisibility(showAdvanced) {
+            IntentExtrasEditor(viewModel)
         }
     }
 }
@@ -765,7 +876,9 @@ fun PickIcon(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
     } else {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(paddingValues).fillMaxWidth()
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxWidth()
 
         ) {
             SearchActionIconTile {
