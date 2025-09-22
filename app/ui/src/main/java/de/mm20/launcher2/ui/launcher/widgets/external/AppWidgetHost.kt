@@ -68,25 +68,22 @@ fun AppWidgetHost(
                         } else {
                             it.resetColorResources()
                         }
+                        it.updateAppWidgetSize(
+                            Bundle(),
+                            arrayListOf(SizeF(maxWidth.value, maxHeight.value))
+                        )
+                    } else {
+                        it.updateAppWidgetSize(
+                            null,
+                            maxWidth.value.roundToInt(),
+                            maxHeight.value.roundToInt(),
+                            maxWidth.value.roundToInt(),
+                            maxHeight.value.roundToInt(),
+                        )
+                        // Workaround to force update of the widget view
+                        it.updateAppWidgetOptions(Bundle())
                     }
-
-                    it.updateAppWidgetSize(
-                        null,
-                        maxWidth.value.roundToInt(),
-                        maxHeight.value.roundToInt(),
-                        maxWidth.value.roundToInt(),
-                        maxHeight.value.roundToInt(),
-                    )
                     it.setPadding(padding)
-
-                    it.updateAppWidgetOptions(Bundle().apply {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            putParcelableArrayList(
-                                AppWidgetManager.OPTION_APPWIDGET_SIZES,
-                                ArrayList(arrayListOf(SizeF(maxWidth.value, maxHeight.value)))
-                            )
-                        }
-                    })
                 }
             )
         }
