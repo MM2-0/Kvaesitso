@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.calendar
 
 import android.content.Context
+import android.text.Html
 import android.text.format.DateUtils
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -177,7 +178,7 @@ fun CalendarItem(
                                 contentDescription = null
                             )
                             Text(
-                                text = calendar.description!!,
+                                text = Html.fromHtml(calendar.description!!, Html.FROM_HTML_MODE_COMPACT).toString(),
                                 style = MaterialTheme.typography.bodySmall,
                                 maxLines = 8,
                                 overflow = TextOverflow.Ellipsis,
