@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets.external
 
-import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.os.Build
 import android.os.Bundle
