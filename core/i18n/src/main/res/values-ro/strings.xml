@@ -37,6 +37,7 @@
     <string name="action_done">Terminat</string>
     <string name="action_more_actions">Mai multe acțiuni</string>
     <string name="action_clear">Goliți</string>
+    <string name="action_install">Instalează</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Șterge</string>
     <string name="menu_remove">Înlătură</string>
@@ -215,6 +216,7 @@
     <string name="widget_name_notes">Notiță</string>
     <string name="widget_name_unknown">Widget necunoscut</string>
     <string name="widget_add_widget">Adaugă widget</string>
+    <string name="widget_removed">Widget eliminat</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Scrieți o notiță…</string>
     <string name="notes_widget_action_new">Notiță nouă</string>
@@ -230,6 +232,7 @@
     <string name="easter_egg_text">Ei bine, m-ai găsit. Felicitări. A meritat\?</string>
     <!-- Close a dialog -->
     <string name="close">Închide</string>
+    <string name="no_selection">Nicio selecție</string>
     <string name="save">Salvați</string>
     <string name="duplicate">Duplicați</string>
     <string name="edit">Editați</string>
@@ -307,6 +310,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s redă media</string>
     <string name="music_widget_no_data">Nu a fost redată media încă</string>
+    <string name="music_widget_interactive_progress_bar">Bară de progres interactivă</string>
     <string name="weather_condition_sleetshowers">Lapoviță</string>
     <string name="weather_condition_heavysleet">Lapoviță grea</string>
     <string name="weather_condition_lightrainshowersandthunder">Averse ușoare de ploaie și tunete</string>
@@ -326,6 +330,7 @@
     <string name="weather_condition_snow">Zăpadă</string>
     <string name="weather_condition_hail">Grindină</string>
     <string name="weather_condition_thunderstorm">Furtună</string>
+    <string name="weather_condition_thunder">Fulger</string>
     <string name="weather_condition_heavysnowshowers">Averse abundente de zăpadă</string>
     <string name="weather_condition_heavyrainshowers">Ploi torențiale</string>
     <string name="weather_condition_rainshowersandthunder">Averse de ploaie și tunete</string>
@@ -337,6 +342,7 @@
     <string name="weather_condition_heavyrainshowersandthunder">Averse torențiale de ploaie și tunete</string>
     <string name="weather_condition_fair">Bună</string>
     <string name="weather_condition_fog">Ceață</string>
+    <string name="weather_condition_haze">ceaţă</string>
     <string name="weather_condition_sleetshowersandthunder">Averse de zăpadă și tunete</string>
     <string name="weather_condition_rainandthunder">Ploaie și tunete</string>
     <string name="weather_condition_lightsleet">Ninsori ușoare</string>
@@ -405,13 +411,20 @@
     <string name="preference_theme_dark">Întunecat</string>
     <string name="preference_screen_colors">Schema de culori</string>
     <string name="preference_colors_default">Implicit</string>
+    <string name="preference_colors_high_contrast">contrast ridicat</string>
     <string name="preference_colors_bw">Alb-Negru</string>
     <string name="preference_custom_colors_corepalette">Paleta de culori</string>
     <string name="preference_mdy_color_source">Sursa pentru culori dinamice</string>
     <string name="preference_mdy_color_source_system">Utilizați culorile Material You sugerate de sistem</string>
     <string name="preference_mdy_color_source_wallpaper">Imagine fundal</string>
+    <string name="preference_screen_shapes">Forme</string>
     <string name="preference_shapes_default">Implicit</string>
+    <string name="preference_shapes_extra_round">Mai rotund</string>
+    <string name="preference_shapes_rect">Dreptunghiular</string>
+    <string name="preference_screen_typography">Tipografie</string>
+    <string name="preference_screen_transparencies">Transparenţă</string>
     <string name="preference_transparencies_default">Implicit</string>
+    <string name="preference_transparencies_semi_transparent">Semitransparent</string>
     <string name="preference_font_system">Font implicit</string>
     <string name="preference_screen_about">Despre</string>
     <string name="preference_version">Versiune</string>
@@ -521,8 +534,10 @@
     <string name="preference_category_grid">Grilă</string>
     <string name="preference_grid_icon_size">Dimensiune pictogramă</string>
     <string name="preference_grid_column_count">Numărul de coloane</string>
+    <string name="preference_grid_list_style">Afișează aplicațiile ca și lista</string>
     <string name="preference_grid_labels">Arată etichete</string>
     <string name="preference_grid_labels_summary">Arată numele aplicației sub iconiță</string>
+    <string name="preference_grid_list_style_summary">Afișează aplicatii intr-o lista in loc de o grila</string>
     <string name="preference_screen_debug">Depanare</string>
     <string name="preference_screen_debug_summary">Instrumente de depanare</string>
     <string name="preference_category_widgets">Widget-uri</string>
@@ -533,6 +548,7 @@
     <string name="preference_clockwidget_layout_vertical">Vertical</string>
     <string name="preference_clockwidget_layout_horizontal">Orizontal</string>
     <string name="preference_clock_widget_show_seconds">Arată secundele</string>
+    <string name="preference_clock_widget_time_format">Formatul orei</string>
     <string name="preference_clock_widget_time_format_system">Font implicit</string>
     <string name="widget_use_theme_colors">Folosește temă colorată</string>
     <string name="preference_clock_widget_fill_height">Umpleți înălțimea ecranului</string>
@@ -559,6 +575,7 @@
     <string name="preference_search_contacts">Contacte</string>
     <string name="preference_search_contacts_summary">Caută contactele de pe acest dispozitiv</string>
     <string name="preference_search_calendar_summary">Caută programări și evenimente viitoare</string>
+    <string name="preference_search_local_calendar_summary">Căutați calendare pe acest dispozitiv</string>
     <string name="preference_search_appshortcuts">Scurtături aplicație</string>
     <string name="preference_search_appshortcuts_summary">Caută scurtături aplicație</string>
     <string name="preference_search_calculator_summary">Evaluează termeni matematici</string>
@@ -568,7 +585,10 @@
     <string name="preference_search_currencyconverter_summary">Descarcă periodic cursurile de schimb pentru a converti valute</string>
     <string name="preference_search_wikipedia_summary">Caută în enciclopedia liberă</string>
     <string name="preference_search_websites">Site-uri web</string>
+    <string name="preference_search_locations">Locuri</string>
+    <string name="preference_search_locations_radius">Raza de căutare</string>
     <string name="preference_search_websites_summary">Afișează previzualizarea unui site web dacă interogarea de căutare este o adresă URL</string>
+    <string name="preference_search_locations_summary">Căutați magazine și alte locuri în zona locală</string>
     <string name="preference_search_localfiles">Fișiere locale</string>
     <string name="preference_search_localfiles_summary">Căutați documente, fotografii și alte fișiere stocate pe acest dispozitiv</string>
     <string name="preference_search_cloud_summary">Căutați fișiere %1$s</string>
@@ -577,18 +597,30 @@
     <string name="preference_screen_buildinfo_summary">Mai multe informații despre această subversiune a aplicației</string>
     <string name="preference_search_bar_style">Stil</string>
     <string name="preference_search_bar_style_summary">Particularizarea aspectului barei de căutare</string>
+    <string name="preference_search_bar_style_hidden">Ascuns</string>
+    <string name="preference_search_bar_color">Culoare</string>
     <string name="preference_search_bar_auto_focus">Lansarea tastaturii</string>
     <string name="preference_search_bar_auto_focus_summary">Afișarea automată a tastaturii la deschiderea căutării</string>
+    <string name="preference_search_bar_launch_on_enter">Lansare la intrare</string>
     <string name="preference_hidden_items">Rezultate de căutare ascunse</string>
     <string name="preference_hidden_items_summary">Gestionarea aplicațiilor ascunse și a rezultatelor căutării</string>
+    <string name="preference_hidden_items_reveal_button">Afișează butonul de dezvăluire</string>
     <string name="preference_screen_tags">Etichete</string>
+    <string name="preference_screen_tags_summary">Gestionați etichetele și elementele etichetate</string>
     <string name="preference_wikipedia_customurl">Url-ul Wikipedia</string>
+    <string name="preference_category_favorites_frequently_used">Utilizat frecvent</string>
+    <string name="preference_favorites_frequently_used_summary">Afișează elementele utilizate frecvent în favorite</string>
+    <string name="preference_favorites_edit_button_summary">Afișează buton pentru rearanjarea favoritelor</string>
+    <string name="preference_widgets_on_home_screen">Widgeturi pe ecranul de pornire</string>
+    <string name="preference_widgets_on_home_screen_summary">Afisează widgeturile pe ecranul de pornire în loc de o pagină suplimentară</string>
     <string name="preference_screen_homescreen">Ecran de pornire</string>
     <string name="preference_screen_homescreen_summary">Ceas, bară de căutare, fundal, bare de sistem</string>
     <string name="preference_screen_icons">Grilă &amp; iconițe</string>
     <string name="preference_screen_icons_summary">Grilă, dimensiune pictograme, pachete de iconițe, insigne</string>
     <string name="preference_weather_integration">Vreme</string>
     <!-- %1$s: app name (Kvaesitso) -->
+    <string name="preference_contacts_call_on_tap">Atinge pentru a apela</string>
+    <string name="preference_contacts_call_on_tap_summary">Inițiați imediat un apel când atingeți un număr de telefon</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Nu ai conectat încă un cont Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -602,21 +634,68 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="icon_picker_default_icon">Implicit</string>
     <string name="favorites">Favorite</string>
+    <string name="frequently_used_show_in_favorites">Afișează în favorite</string>
+    <string name="frequently_used_rows">Număr de rânduri</string>
+    <string name="preference_screen_search_actions">Acțiuni rapide</string>
+    <string name="search_action_message">Mesaj</string>
+    <string name="search_action_alarm">Setare alarma</string>
+    <string name="search_action_timer">Start cronometru</string>
     <string name="search_action_share">Distribuie</string>
+    <string name="search_action_contact">Contact nou</string>
+    <string name="search_action_open_url">Vizualizați website-ul</string>
+    <string name="search_action_event">Programați evenimentul</string>
+    <string name="create_search_action_type">Ce fel de acțiune vrei să creezi?</string>
+    <string name="create_search_action_type_web">Caută pe un site</string>
+    <string name="create_search_action_type_app">Căutare cu aplicație</string>
+    <string name="create_search_action_pick_app">Alegeți o aplicație pentru căutare:</string>
+    <string name="create_search_action_website_url">Introduceți adresa site-ului web:</string>
+    <string name="create_search_action_website_invalid_url">Site-ul dat nu poate fi importat automat ca o căutare web. Puteți încerca un alt site web sau puteți introduce manual datele necesare în pasul următor.</string>
+    <string name="search_action_label">Nume</string>
+    <string name="more_information">Mai multe informații</string>
+    <string name="open_search_pull_down">Glisează în jos</string>
+    <string name="open_search_swipe_left">Glisează stânga</string>
+    <string name="open_search_swipe_right">Glisează dreapta</string>
     <string name="preference_layout_search_bar_position">Poziția barei de căutare</string>
     <string name="search_bar_position_top">Sus</string>
     <string name="search_bar_position_bottom">Jos</string>
+    <string name="search_results_order_top_down">De sus în jos</string>
+    <string name="search_results_order_bottom_up">De jos in sus</string>
     <string name="preference_layout_fixed_search_bar">Bară de căutare fixă</string>
     <string name="preference_layout_fixed_search_bar_summary">Nu derula bara de căutare din vedere</string>
     <string name="preference_layout_fixed_rotation">Rotire ecran blocată</string>
     <string name="preference_layout_fixed_rotation_summary">Blochează rotirea ecranului la modul portret</string>
     <string name="preference_screen_gestures">Gesturi</string>
     <string name="preference_screen_gestures_summary">Gesturi și acțiuni prin gesturi</string>
-    <string name="gesture_action_widgets">Widget-uri</string>
+    <string name="preference_gesture_swipe_down">Glisează jos</string>
+    <string name="preference_gesture_swipe_left">Glisează stânga</string>
+    <string name="preference_gesture_swipe_right">Glisează dreapta</string>
+    <string name="preference_gesture_swipe_up">Glisează sus</string>
+    <string name="preference_gesture_double_tap">Atingeți de două ori</string>
+    <string name="preference_gesture_long_press">Apăsare lungă</string>
+    <string name="gesture_action_none">Nu face nimic</string>
+    <string name="gesture_action_widgets">Widgeturi</string>
+    <string name="gesture_action_launch_app">Lansează aplicație</string>
+    <string name="gesture_action_notifications">Deschide panoul de notificări</string>
+    <string name="gesture_action_lock_screen">Dezactiva ecranul</string>
+    <string name="gesture_action_quick_settings">Deschide setările rapide</string>
+    <string name="gesture_action_power_menu">Afișează meniu alimentare</string>
+    <string name="gesture_action_recents">Deschide recentele</string>
+    <string name="missing_permission_accessibility_gesture_failed">Serviciul de accesibilitate al lansatorului trebuie să fie activat pentru a efectua această acțiune.</string>
+    <string name="missing_permission_accessibility_gesture_settings">Această acțiune necesită activarea serviciului de accesibilitate al lansatorului.</string>
+    <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
+    <string name="preference_search_result_ordering_weight_factor_default">Echilibrat</string>
+    <string name="preference_search_result_ordering_weight_factor_high">Variabilă</string>
+    <string name="widget_config_appwidget_borderless">Fără margini</string>
+    <string name="widget_config_appwidget_configure">Configurați widgetul</string>
+    <string name="widget_config_appwidget_resize">Redimensionare</string>
+    <string name="widget_config_calendar_no_calendars">Niciun calendar gasit</string>
+    <string name="widget_pick_widget">Alege widgetul</string>
+    <string name="app_widget_loading_failed">Widgetul nu s-a putut încărca.</string>
     <!-- %1$s: app name -->
     <string name="plugin_type_filesearch">Fișiere</string>
     <string name="plugin_type_contacts">Contacte</string>
     <string name="search_filter_tools">Instrumente</string>
     <string name="customize_item_tags">Etichete</string>
     <string name="weather_forecast_wind">Vânt</string>
+    <string name="theme_bundle_name">Nume</string>
 </resources>
