@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.widgets.external
 import android.appwidget.AppWidgetProviderInfo
 import android.os.Build
 import android.os.Bundle
+import android.util.SizeF
 import android.util.SparseIntArray
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import android.widget.ScrollView
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -67,18 +67,22 @@ fun AppWidgetHost(
                         } else {
                             it.resetColorResources()
                         }
+                        it.updateAppWidgetSize(
+                            Bundle(),
+                            arrayListOf(SizeF(maxWidth.value, maxHeight.value))
+                        )
+                    } else {
+                        it.updateAppWidgetSize(
+                            null,
+                            maxWidth.value.roundToInt(),
+                            maxHeight.value.roundToInt(),
+                            maxWidth.value.roundToInt(),
+                            maxHeight.value.roundToInt(),
+                        )
+                        // Workaround to force update of the widget view
+                        it.updateAppWidgetOptions(Bundle())
                     }
-
-                    it.updateAppWidgetSize(
-                        null,
-                        maxWidth.value.roundToInt(),
-                        maxHeight.value.roundToInt(),
-                        maxWidth.value.roundToInt(),
-                        maxHeight.value.roundToInt(),
-                    )
                     it.setPadding(padding)
-                    // Workaround to force update of the widget view
-                    it.updateAppWidgetOptions(Bundle())
                 }
             )
         }
