@@ -598,7 +598,8 @@
     <string name="preference_clockwidget_date_part">Date</string>
     <string name="preference_clockwidget_date_part_summary">Show the current date</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Show the first row of pinned items</string>
+    <string name="preference_clockwidget_favorites_part_summary">Show pinned items in dock</string>
+    <string name="preference_clockwidget_dock_rows">Dock rows</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Show media controls when there is an active media session</string>
     <string name="preference_clockwidget_battery_part">Battery</string>
