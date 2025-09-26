@@ -19,10 +19,10 @@ kotlinx-serialization = "1.9.0"
 
 jetbrains-markdown = "0.7.3"
 
-androidx-compose = "1.10.0-alpha03"
+androidx-compose = "1.10.0-alpha04"
 androidx-compose-material3 = "1.5.0-alpha04"
 androidx-compose-materialicons = "1.7.8"
-androidx-lifecycle = "2.9.3"
+androidx-lifecycle = "2.9.4"
 androidx-core = "1.17.0"
 androidx-appcompat = "1.7.1"
 androidx-activity = "1.11.0"
@@ -32,7 +32,7 @@ androidx-work = "2.9.0"
 androidx-browser = "1.9.0"
 androidx-palette = "1.0.0"
 androidx-media2 = "1.3.0"
-androidx-room = "2.8.0"
+androidx-room = "2.8.1"
 androidx-constraint-layout = "1.1.1"
 androidx-emojipicker = "1.6.0"
 
@@ -40,7 +40,7 @@ accompanist = "0.36.0"
 haze = "1.6.10"
 coil = "2.7.0"
 koin = "4.1.1"
-ktor = "3.2.3"
+ktor = "3.3.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -100,7 +100,7 @@ haze = {group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "androidx-constraint-layout" }
 androidx-transition = { group = "androidx.transition", name = "transition", version = "1.6.0" }
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version = "1.4.1" }
-androidx-securitycrypto = { group = "androidx.security", name = "security-crypto", version = "1.1.0-alpha07" }
+androidx-securitycrypto = { group = "androidx.security", name = "security-crypto", version = "1.1.0" }
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.2.0-alpha02" }
 androidx-emojipicker = { group = "androidx.emoji2", name = "emoji2-emojipicker", version.ref = "androidx-emojipicker" }
 
@@ -109,7 +109,7 @@ ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.r
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.0" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.5" }
 
 coil-core = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
@@ -121,7 +121,7 @@ jsoup = { group = "org.jsoup", name = "jsoup", version = "1.21.2" }
 commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.14.0" }
 stringsimilarity = { group = "com.aallam.similarity", name = "string-similarity-kotlin", version = "0.1.0" }
 
-# 4.4.2 is the last GPL compatible version, don't update to 5.x
+#noinspection NewerVersionAvailable 4.4.2 is the last GPL compatible version, don't update to 5.x
 mathparser = { group = "org.mariuszgromada.math", name = "MathParser.org-mXparser", version = "4.4.2" }
 
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
