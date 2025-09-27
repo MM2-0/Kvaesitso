@@ -47,8 +47,9 @@ internal class TextClassifierImpl : TextClassifier {
         val dateTimeFormat = SimpleDateFormat(
             DateFormat.getBestDateTimePattern(
                 Locale.getDefault(),
-                "yyyy-MM-dd, HH:mm"
-            )
+                "yMd, H:m"
+            ),
+            context.resources.configuration.locales[0]
         )
         try {
             dateTimeFormat.parse(query)?.let {
@@ -76,7 +77,13 @@ internal class TextClassifierImpl : TextClassifier {
         } catch (_: ParseException) {
             // Not a date either
         }
-        val timeFormat = DateFormat.getTimeFormat(context)
+        val timeFormat = SimpleDateFormat(
+            DateFormat.getBestDateTimePattern(
+                Locale.getDefault(),
+                if (DateFormat.is24HourFormat(context)) "H:m" else "h:m a"
+            ),
+            context.resources.configuration.locales[0]
+        )
         try {
             timeFormat.parse(query)?.let {
                 return TextClassificationResult(
