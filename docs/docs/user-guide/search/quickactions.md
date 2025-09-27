@@ -130,10 +130,8 @@ as data (URI) or as an extra:
   that
   is used
   to store the search term in the intent's extras. For example, you could use the key
-  `android.intent.extra.TEXT` to create an intent that shares the search term as text. You can
-  also
-  provide a template to format the extra value. Again, use the placeholder `${1}` to include the
-  search term in the template.
+  `android.intent.extra.TEXT`. You can also provide a template to format the extra value. Again, use
+  the placeholder `${1}` to include the search term in the template.
 
 #### Base intent
 
@@ -151,6 +149,12 @@ The base intent defines the action.
 - **Data**:
   The [data URI](https://developer.android.com/reference/android/content/Intent#setData(android.net.Uri))
   of the intent. Only used if the search term is not passed as data.
+- **Package**:
+  The [package](https://developer.android.com/reference/android/content/Intent#setPackage(java.lang.String))
+  of the intent.
+- **Class name**: 
+  The [component class name](https://developer.android.com/reference/android/content/Intent#setClassName(java.lang.String,%20java.lang.String), java.lang.String))
+  of the intent. Requires a package to be set.
 
 #### Advanced settings
 

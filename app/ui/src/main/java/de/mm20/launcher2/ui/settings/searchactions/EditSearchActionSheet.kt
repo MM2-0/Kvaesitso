@@ -789,6 +789,30 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
             singleLine = true,
         )
 
+        val packageName = action.baseIntent.component?.packageName ?: action.baseIntent.`package`
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            value = packageName ?: "",
+            onValueChange = { viewModel.setIntentPackage(it) },
+            label = { Text("Package") },
+            singleLine = true,
+        )
+
+        AnimatedVisibility(packageName != null) {
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                value = action.baseIntent.component?.className ?: "",
+                onValueChange = { viewModel.setIntentClassName(it) },
+                label = { Text("Class name") },
+                singleLine = true,
+            )
+        }
+
 
         var showAdvanced by remember {
             mutableStateOf(false)

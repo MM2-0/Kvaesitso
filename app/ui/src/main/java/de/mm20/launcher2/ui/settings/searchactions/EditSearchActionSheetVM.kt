@@ -521,6 +521,49 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
         }
     }
 
+    fun setIntentPackage(pkg: String) {
+        val searchAction = searchAction.value ?: return
+        this.searchAction.value = when (searchAction) {
+            is CustomIntentActionBuilder -> searchAction.copy(
+                baseIntent = searchAction.baseIntent.cloneFilter().also {
+                    val extras = searchAction.baseIntent.extras?.deepCopy() ?: Bundle()
+                    it.replaceExtras(extras)
+                    if (pkg.isBlank()) {
+                        it.`package` = null
+                        it.component = null
+                    } else if (it.component != null) {
+                        it.component = ComponentName(pkg, it.component!!.className)
+                    } else {
+                        it.`package` = pkg
+                    }
+                },
+            )
+            else -> searchAction
+        }
+    }
+    fun setIntentClassName(className: String) {
+        val searchAction = searchAction.value ?: return
+        this.searchAction.value = when (searchAction) {
+            is CustomIntentActionBuilder -> searchAction.copy(
+                baseIntent = searchAction.baseIntent.cloneFilter().also {
+                    val extras = searchAction.baseIntent.extras?.deepCopy() ?: Bundle()
+                    it.replaceExtras(extras)
+
+                    val pkg = it.component?.packageName ?: it.`package`
+
+                    if (className.isBlank()) {
+                        it.`package` = pkg
+                        it.component = null
+                    } else if (pkg != null) {
+                        it.`package` = null
+                        it.component = ComponentName(pkg, className)
+                    }
+                },
+            )
+            else -> searchAction
+        }
+    }
+
     fun setQueryKey(key: String?) {
         val action = searchAction.value ?: return
         searchAction.value = when (action) {
