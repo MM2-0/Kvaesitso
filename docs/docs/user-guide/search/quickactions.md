@@ -22,7 +22,7 @@ actions.
   term is an email address
 - **Add to contacts**: Create a new contact, only shown if the search term is an email address or a
   phone number
-- **Set alarm**: Set an alarm, only shown if the search term is a time (e.g. `11:39`)
+- **Set alarm**: Set an alarm, only shown if the search term is a time (e.g. `16:39` or `2:20 am`)
 - **Start timer**: Start a timer, only shown if the search term is a timespan (e.g. `11 min` or
   `30 s`).
 - **Schedule event**: Create a new event, only shown if the search term is a date or a date with a
