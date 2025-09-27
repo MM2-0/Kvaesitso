@@ -75,6 +75,10 @@ class SearchVM : ViewModel(), KoinComponent {
     val launchOnEnter = searchUiSettings.launchOnEnter
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
+    val hidePrivateProfile = searchUiSettings.hidePrivateProfile
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    var showUnlockPrivateProfile = mutableStateOf(false)
+
     private val searchService: SearchService by inject()
 
     val searchQuery = mutableStateOf("")
@@ -92,6 +96,11 @@ class SearchVM : ViewModel(), KoinComponent {
             it.toList()
         }
     }
+    val isPrivateProfileLocked = profileManager.isPrivateProfileLocked.shareIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        replay = 1
+    )
 
     val hasProfilesPermission = permissionsManager.hasPermission(PermissionGroup.ManageProfiles)
 
@@ -257,6 +266,13 @@ class SearchVM : ViewModel(), KoinComponent {
                     }
 
             } else {
+                if (hidePrivateProfile.value) {
+                    val score = ResultScore(
+                        query = query,
+                        primaryFields = listOf("Private Space")
+                    )
+                    showUnlockPrivateProfile.value = score.isPrefix && query.length >= 3
+                }
                 val hiddenItemKeys = if (!filters.hiddenItems) searchableRepository.getKeys(
                     maxVisibility = VisibilityLevel.Hidden,
                 ) else flowOf(emptyList())
