@@ -153,7 +153,7 @@ The base intent defines the action.
   The [package](https://developer.android.com/reference/android/content/Intent#setPackage(java.lang.String))
   of the intent.
 - **Class name**: 
-  The [component class name](https://developer.android.com/reference/android/content/Intent#setClassName(java.lang.String,%20java.lang.String), java.lang.String))
+  The [component class name](https://developer.android.com/reference/android/content/Intent#setClassName(java.lang.String,%20java.lang.String))
   of the intent. Requires a package to be set.
 
 #### Advanced settings
