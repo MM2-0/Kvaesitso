@@ -122,7 +122,7 @@ class CurrencyRepository(
      * @return The resolved currency symbol or the original symbol if no alias was found
      */
     fun resolveAlias(symbol: String): String {
-        return currencySymbolAliases[symbol] ?: symbol
+        return currencySymbolAliases[symbol] ?: symbol.uppercase()
     }
 
     suspend fun convertCurrency(
@@ -168,7 +168,7 @@ class CurrencyRepository(
     }
 
     suspend fun isValidCurrency(symbol: String): Boolean {
-        val isoSymbol = currencySymbolAliases[symbol] ?: symbol
+        val isoSymbol = currencySymbolAliases[symbol] ?: symbol.uppercase()
         return withContext(Dispatchers.IO) {
             AppDatabase.getInstance(context).currencyDao().exists(isoSymbol)
         }
