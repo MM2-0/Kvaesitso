@@ -413,7 +413,7 @@
     <!-- Missing location permission, used in location search results -->
     <string name="missing_permission_location_search">Location permission is required to search nearby locations</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Storage permission is required to search audio, documents, images, and videos</string>
+    <string name="missing_permission_files_search">Storage permission is required to search local files</string>
     <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">Contacts permission is required to search your contacts</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
@@ -696,7 +696,7 @@
     <string name="preference_breezyweather_integration_instructions">To use Breezy Weather as weather provider:\n\n1. Go to Breezy Weather &gt; Settings &gt; Widgets &amp; Live wallpaper &gt; Send Gadgetbridge data &gt; Enable %1$s\n\n2. In %1$s, select Breezy Weather as weather provider</string>
     <string name="preference_launch_breezyweather_app">Open Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">Tap to call</string>
-    <string name="preference_contacts_call_on_tap_summary">Start a call when tapping a phone number</string>
+    <string name="preference_contacts_call_on_tap_summary">Start a call without confirmation when tapping a phone number</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -1046,7 +1046,7 @@
         <item quantity="other">in %1$d minutes</item>
     </plurals>
     <string name="departure_time_departed">departed</string>
-    <string name="bad_configuration_title">You\'ve locked yourself out</string>
+    <string name="bad_configuration_title">Congratulations, you\'ve locked yourself out!</string>
     <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher</string>
     <string name="theme_export_title">Export theme</string>
     <string name="theme_import_title">Import theme</string>
