@@ -450,11 +450,11 @@
     <string name="search_action_timer">Uruchom licznik czasu</string>
     <string name="search_action_contact">Dodaj do kontaktów</string>
     <string name="search_action_open_url">Zobacz stronę</string>
-    <string name="create_search_action_type">Jaką akcję chcesz stworzyć\?</string>
+    <string name="create_search_action_type">Jaką akcję chcesz stworzyć?</string>
     <string name="create_search_action_type_web">Wyszukiwanie na stronie internetowej</string>
     <string name="search_action_app">Aplikacja</string>
     <string name="search_action_websearch_url">Wzorzec URL</string>
-    <string name="search_action_websearch_url_hint">Wzorzec URL, który jest używany do konstruowania adresu URL wyszukiwania w sieci. Użyj \'${1}\' jako placeholder dla rzeczywistego terminu wyszukiwania, np. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Wzorzec URL, który jest używany do konstruowania adresu URL wyszukiwania w sieci. Użyj \'${1}\' jako placeholder dla rzeczywistego terminu wyszukiwania, np. https://google.com/search?q=${1}.</string>
     <string name="more_information">Więcej informacji</string>
     <string name="experimental_feature">Eksperymentalne</string>
     <string name="gesture_action_quick_settings">Otwórz szybkie ustawienia</string>
