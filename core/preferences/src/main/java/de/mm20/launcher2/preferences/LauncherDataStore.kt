@@ -13,7 +13,7 @@ internal class LauncherDataStore(
 ): BaseSettings<LauncherSettingsData>(
     context,
     fileName = "settings.json",
-    serializer = LauncherSettingsDataSerializer,
+    serializer = LauncherSettingsDataSerializer(context),
     migrations = listOf(
         Migration2(),
         Migration3(),
