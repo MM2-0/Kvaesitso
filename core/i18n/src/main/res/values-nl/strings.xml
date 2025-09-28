@@ -92,62 +92,62 @@
     <string name="wikipedia_url">https://nl.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Via Wikipedia</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Titel: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Artiest: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Duurtijd: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Jaar: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Grootte: %1$s</string>
     <!-- File path -->
     <string name="file_meta_path">Pad: %1$s</string>
     <!-- File type (MIME type) -->
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Afmetingen: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Applicatienaam: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Versie: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Pakketnaam: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Min SDK-versie: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Eigenaar: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Locatie: %1$s</string>
     <string name="file_type_directory">Map</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Archiefbestand</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Android pakketbestand</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Broncodebestand</string>
-    <!-- Word document -->
-    <!-- Excel spreadsheet -->
+    <!-- Document -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Rekenblad</string>
     <!-- Audio file -->
     <string name="file_type_music">Muziekbestand</string>
     <!-- Video file -->
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">Afbeelding</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Bestand</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Presentatie</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Gecomprimeerd bestand</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Tekstbestand</string>
     <!-- E-book file -->
     <string name="file_type_ebook">E-boek</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Tekening</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Formulier</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s reservekopie</string>
@@ -706,7 +706,7 @@
     <string name="search_action_contact">Contact maken</string>
     <string name="search_action_open_url">Website bekijken</string>
     <string name="search_action_event">Afspraak plannen</string>
-    <string name="create_search_action_type">Welke actie wil je maken\?</string>
+    <string name="create_search_action_type">Welke actie wil je maken?</string>
     <string name="create_search_action_type_web">Zoeken op website</string>
     <string name="create_search_action_type_app">Zoeken in applicatie</string>
     <string name="create_search_action_type_intent">Aangepaste indent</string>
@@ -716,7 +716,7 @@
     <string name="search_action_label">Naam</string>
     <string name="search_action_app">Applicatie</string>
     <string name="search_action_websearch_url">URL-sjabloon</string>
-    <string name="search_action_websearch_url_hint">Het URL-sjabloon dat gebruikt wordt om de zoek-URL te maken. Gebruik ‘${1}’ op de plaats waar de echte zoekterm moet komen, bv. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Het URL-sjabloon dat gebruikt wordt om de zoek-URL te maken. Gebruik ‘${1}’ op de plaats waar de echte zoekterm moet komen, bv. https://google.com/search?q=${1}.</string>
     <string name="more_information">Meer informatie</string>
     <string name="experimental_feature">Experimenteel</string>
     <string name="tag_exists_error">Er bestaat al een tag met deze naam.</string>
