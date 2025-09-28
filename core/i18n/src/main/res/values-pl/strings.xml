@@ -91,14 +91,14 @@
     <string name="wikipedia_url">https://pl.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Z Wikipedii</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Tytuł: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Artysta: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Czas: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Rok: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Rozmiar: %1$s</string>
@@ -106,49 +106,49 @@
     <string name="file_meta_path">Ścieżka: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Typ: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Rozdzielczość: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Nazwa aplikacji: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Wersja: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Nazwa pakietu: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Minimalna wersja SDK: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Właściciel: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Lokalizacja: %1$s</string>
     <string name="file_type_directory">Folder</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Plik archiwum</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Plik pakietu Android</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Plik kodu źródłowego</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Dokument</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Arkusz</string>
     <!-- Audio file -->
     <string name="file_type_music">Plik muzyczny</string>
     <!-- Video file -->
     <string name="file_type_video">Wideo</string>
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">Zdjęcie</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Plik</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Prezentacja</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Plik skompresowany</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Plik tekstowy</string>
     <!-- E-book file -->
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Rysunek</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Formularz</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">Kopia zapasowa %1$s</string>
@@ -666,7 +666,7 @@
     <string name="search_action_contact">Dodaj do kontaktów</string>
     <string name="search_action_open_url">Zobacz stronę</string>
     <string name="search_action_event">Zaplanuj wydarzenie</string>
-    <string name="create_search_action_type">Jaką akcję chcesz stworzyć\?</string>
+    <string name="create_search_action_type">Jaką akcję chcesz stworzyć?</string>
     <string name="create_search_action_type_web">Wyszukiwanie na stronie internetowej</string>
     <string name="create_search_action_type_app">Wyszukiwanie w aplikacji</string>
     <string name="create_search_action_type_intent">Niestandardowy intent</string>
@@ -676,7 +676,7 @@
     <string name="search_action_label">Nazwa</string>
     <string name="search_action_app">Aplikacja</string>
     <string name="search_action_websearch_url">Wzorzec URL</string>
-    <string name="search_action_websearch_url_hint">Wzorzec URL, który jest używany do konstruowania adresu URL wyszukiwania w sieci. Użyj \'${1}\' jako placeholder dla rzeczywistego terminu wyszukiwania, np. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Wzorzec URL, który jest używany do konstruowania adresu URL wyszukiwania w sieci. Użyj \'${1}\' jako placeholder dla rzeczywistego terminu wyszukiwania, np. https://google.com/search?q=${1}.</string>
     <string name="more_information">Więcej informacji</string>
     <string name="experimental_feature">Eksperymentalne</string>
     <string name="tag_exists_error">Tag o tej nazwie już istnieje.</string>
