@@ -372,7 +372,6 @@
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s برای جستجوی در میانبرهای برنامه لازم است به عنوان برنامه خانه انتخاب شود</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">دسترسی حافظه برای جستجو در پرونده های محلی لازم است</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
