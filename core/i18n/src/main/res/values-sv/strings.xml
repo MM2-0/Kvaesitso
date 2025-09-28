@@ -77,13 +77,13 @@
     <string name="wikipedia_url">https://sv.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Från Wikipedia</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Titel: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
-    <!-- File meta data, album of audio tracks -->
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Längd: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">År: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Storlek: %1$s</string>
@@ -91,47 +91,45 @@
     <string name="file_meta_path">Sökväg: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Typ: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Dimensioner: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Appnamn: %1$s</string>
-    <!-- File meta, version name of APK files -->
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, version name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Paketnamn: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Lägsta SDK-version: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Ägare: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Plats: %1$s</string>
     <string name="file_type_directory">Katalog</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Arkivfil</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Android-paketfil</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Källkodfil</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Dokument</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Kalkylark</string>
     <!-- Audio file -->
-    <string name="file_type_music">Musikfil</string>
     <!-- Video file -->
-    <!-- Picture file -->
-    <string name="file_type_image">Bild</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">Fil</string>
-    <!-- Powerpoint presentation -->
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Presentation -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Komprimerad fil</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Textfil</string>
     <!-- E-book file -->
     <string name="file_type_ebook">E-bok</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Ritning</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <!-- Launcher backup, %1$s: app name -->
     <!-- Launcher theme, %1$s: app name -->
     <!-- Generic file , %1$s is the file extension -->
@@ -187,7 +185,7 @@
     <string name="menu_edit_widgets">Redigera widgets</string>
     <string name="widget_name_weather">Väder</string>
     <string name="widget_name_calendar">Kalender</string>
-    <string name="widget_name_music">Musik</string>
+    <string name="widget_name_unknown">Okänt</string>
     <string name="widget_add_widget">Lägg till widget</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
@@ -255,7 +253,6 @@
         <item quantity="other">+%1$d pågående aktiviteter</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">Hela dagen</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s spelar upp media</string>
     <string name="music_widget_no_data">Ingen media har spelats ännu</string>
@@ -306,7 +303,6 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Ingen väderdata tillgänglig.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Ställ in plats</string>
@@ -315,30 +311,23 @@
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Notifikationsåtkomst krävs för att styra uppspelning av media</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Kontaktåtkomst krävs för att söka kontakter</string>
     <!-- Missing call permission in contacts settings screen -->
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Kalenderåtkomst krävs för att söka i kalender</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">Denna widget kräver kalenderåtkomst</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <!-- Missing file permission in search settings screen -->
     <string name="missing_permission_file_search_settings">Lagringsåtkomst krävs för att söka bland lokala filer</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Filhanteringsåtkomst krävs för att söka bland lokala filer</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Notifikationsåtkomst krävs för att visa aviseringsprickar</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Tillåt kalenderåtkomst för att visa kommande aktiviteter här.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Tillåt kalenderåtkomst för att söka i din kalender.</string>
     <!-- Missing location permission, used in location search results -->
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Tillåt lagringsåtkomst för att söka bland foton, media och dokument på den här enheten.</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Tillåt kontaktåtkomst för att söka bland dina kontakter.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <!-- Grant a permission, shown in permission banners -->
@@ -350,7 +339,6 @@
     <string name="preference_theme_dark">Mörkt</string>
     <string name="preference_screen_colors">Färgschema</string>
     <string name="preference_colors_default">Standard</string>
-    <string name="preference_colors_bw">Svartvitt</string>
     <string name="preference_mdy_color_source_wallpaper">Bakgrund</string>
     <string name="preference_shapes_default">Standard</string>
     <string name="preference_transparencies_default">Standard</string>
@@ -360,12 +348,10 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Öppna hemsida</string>
     <string name="preference_screen_about_summary">App- och licensinformation</string>
-    <string name="preference_screen_appearance_summary">Anpassa utseendet och känslan</string>
     <string name="preference_weather_provider">Leverantör</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (endast Tyskland)</string>
     <string name="preference_category_location">Plats</string>
     <string name="preference_automatic_location">Automatisk plats</string>
-    <string name="preference_automatic_location_summary">Använd GPS- och platstjänster för att automatiskt ange plats</string>
     <string name="preference_location">Plats</string>
     <string name="preference_imperial_units_summary">Använd Fahrenheit och miles per hour</string>
     <string name="preference_imperial_units">Brittiska måttenheter</string>
@@ -397,7 +383,6 @@
     <string name="preference_hide_nav_bar">Göm navigationsfält</string>
     <string name="preference_screen_integrations_summary">Hantera anslutna konton och tjänster</string>
     <string name="preference_signin_user">Inloggad som %1$s</string>
-    <string name="preference_summary_not_logged_in">Du är för närvarande inte inloggad</string>
     <string name="preference_category_wallpaper">Bakgrund</string>
     <string name="preference_dim_wallpaper">Dämpa bakgrund</string>
     <string name="preference_dim_wallpaper_summary">Dämpa bakgrunden i mörka teman</string>
