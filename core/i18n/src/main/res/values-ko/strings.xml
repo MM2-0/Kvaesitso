@@ -91,15 +91,15 @@
     <string name="wikipedia_url">https://ko.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">위키백과에서 발췌</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">제목: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">아티스트: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">앨범: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">길이: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">연도: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">크기: %1$s</string>
@@ -107,50 +107,50 @@
     <string name="file_meta_path">경로: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">형식: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">해상도: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">앱 이름: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">버전: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">패키지 이름: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">최소 SDK 버전: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">소유자: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">위치: %1$s</string>
     <string name="file_type_directory">디렉터리</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">압축 파일</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Android 패키지 파일</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">소스 코드 파일</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">문서</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">스프레드시트</string>
     <!-- Audio file -->
     <string name="file_type_music">음악 파일</string>
     <!-- Video file -->
     <string name="file_type_video">동영상</string>
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">사진</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">파일</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">프레젠테이션</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">압축 파일</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">텍스트 파일</string>
     <!-- E-book file -->
     <string name="file_type_ebook">전자책</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">드로잉</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">폼</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s 백업</string>
@@ -581,7 +581,7 @@
     <string name="search_action_contact">연락처에 추가</string>
     <string name="search_action_open_url">웹사이트 보기</string>
     <string name="search_action_event">일정 추가</string>
-    <string name="create_search_action_type">어떤 종류의 동작을 만드시겠습니까\?</string>
+    <string name="create_search_action_type">어떤 종류의 동작을 만드시겠습니까?</string>
     <string name="create_search_action_type_web">웹사이트에서 검색</string>
     <string name="create_search_action_type_app">앱에서 검색</string>
     <string name="create_search_action_type_intent">사용자 정의 인텐트</string>
@@ -591,7 +591,7 @@
     <string name="search_action_label">이름</string>
     <string name="search_action_app">앱</string>
     <string name="search_action_websearch_url">URL 템플릿</string>
-    <string name="search_action_websearch_url_hint">웹 검색 URL을 구성할 때 사용하는 URL 템플릿입니다. 실제 검색어 대신 ‘${1}’을 사용하세요. 예: https://google.com/search\?q=${1}</string>
+    <string name="search_action_websearch_url_hint">웹 검색 URL을 구성할 때 사용하는 URL 템플릿입니다. 실제 검색어 대신 ‘${1}’을 사용하세요. 예: https://google.com/search?q=${1}</string>
     <string name="more_information">추가 정보</string>
     <string name="tag_exists_error">같은 이름의 태그가 이미 있습니다.</string>
     <string name="tag_exists_message">같은 이름의 태그가 이미 있습니다. 계속 진행하면 두 태그를 하나로 합칩니다.</string>
