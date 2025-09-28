@@ -68,8 +68,8 @@
     <string name="file_type_presentation">Präsentation</string>
     <string name="file_type_compressed">Komprimierte Datei</string>
     <string name="file_type_text">Text-Datei</string>
-    <string name="alert_delete_directory">Das Verzeichnis %1$s wird samt Inhalt unwideruflich gelöscht. Fortfahren\?</string>
-    <string name="alert_delete_file">Die Datei %1$s wird unwideruflich gelöscht. Fortfahren\?</string>
+    <string name="alert_delete_directory">Das Verzeichnis %1$s wird samt Inhalt unwiderruflich gelöscht. Fortfahren?</string>
+    <string name="alert_delete_file">Die Datei %1$s wird unwiderruflich gelöscht. Fortfahren?</string>
     <string name="file_meta_title">Titel: %1$s</string>
     <string name="file_meta_artist">Künstler: %1$s</string>
     <string name="file_meta_album">Album: %1$s</string>
@@ -277,7 +277,7 @@
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Die freie Enzyklopädie durchsuchen</string>
     <string name="preference_search_websites">Webseiten</string>
-    <string name="preference_search_websites_summary">Vorschau einer Webseite anzeigen wenn die Suchanfrage eine URL ist</string>
+    <string name="preference_search_websites_summary">Vorschau einer Webseite anzeigen, wenn die Suchanfrage eine URL ist</string>
     <string name="preference_screen_buildinfo">Build-Information</string>
     <string name="preference_screen_buildinfo_summary">Weitere Informationen über diesen Build dieser App</string>
     <string name="preference_search_localfiles">Lokale Dateien</string>
@@ -289,16 +289,16 @@
     <string name="preference_search_bar_style">Stil</string>
     <string name="preference_search_bar_style_summary">Erscheinungsbild der Suchleiste anpassen</string>
     <string name="preference_search_bar_auto_focus">Tastatur öffnen</string>
-    <string name="preference_search_bar_auto_focus_summary">Bildschirmtastatur beim Öffnen der Appübersicht automatisch einblenden</string>
+    <string name="preference_search_bar_auto_focus_summary">Bildschirmtastatur beim Öffnen der App-Übersicht automatisch einblenden</string>
     <string name="preference_search_bar_launch_on_enter">Eingabe zum Starten</string>
     <string name="preference_search_bar_launch_on_enter_summary">Hervorgehobenes Suchergebnis mit der Eingabetaste aufrufen</string>
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
     <string name="music_widget_default_title">%1$s spielt Medien</string>
     <string name="music_widget_no_data">Bisher wurden keine Medien abgespielt</string>
-    <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt um Termine abzurufen</string>
-    <string name="missing_permission_file_search_settings">Speicher-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
+    <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt, um Termine abzurufen</string>
+    <string name="missing_permission_file_search_settings">Speicher-Berechtigung wird benötigt, um Dateien auf diesem Gerät zu durchsuchen</string>
     <string name="missing_permission_file_search_settings_android10">Alle Dateien verwalten-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
-    <string name="missing_permission_notification_badges">Benachrichtigungszugriff wird benötigt um Benachrichtigungsplaketten anzuzeigen</string>
+    <string name="missing_permission_notification_badges">Benachrichtigungszugriff wird benötigt, um Benachrichtigungsplaketten anzuzeigen</string>
     <string name="no_account_nextcloud">Sie haben noch kein Nextcloud-Konto verbunden</string>
     <string name="no_account_owncloud">Sie haben noch kein Owncloud-Konto verbunden</string>
     <string name="connect_account">Konto verbinden</string>
@@ -315,7 +315,7 @@
         <item quantity="other">Voll in %1$s Minuten</item>
     </plurals>
     <string name="preference_clockwidget_date_part_summary">Das aktuelle Datum anzeigen</string>
-    <string name="preference_clockwidget_battery_part_summary">Den Akkustand anzeigen wenn der Akku fast leer ist oder geladen wird</string>
+    <string name="preference_clockwidget_battery_part_summary">Den Akkustand anzeigen, wenn der Akku fast leer ist oder geladen wird</string>
     <string name="preference_search_appshortcuts">App-Shortcuts</string>
     <string name="missing_permission_appshortcuts_search_settings">%1$s muss als Standard-Start-App gesetzt sein, um App-Shortcuts durchsuchen zu können</string>
     <string name="missing_permission_appshortcuts_search">%1$s als Standard-Start-App festlegen, um App-Shortcuts durchsuchen zu können.</string>
@@ -324,8 +324,8 @@
     <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_clockwidget_favorites_part_summary">Die erste Zeile der Favoriten anzeigen</string>
     <string name="preference_grid_icon_size">Symbolgröße</string>
-    <string name="preference_search_currencyconverter">Währungsumrechner</string>
-    <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen um Währungen umzurechnen</string>
+    <string name="preference_search_currencyconverter">Währungsrechner</string>
+    <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen, um Währungen umzurechnen</string>
     <string name="action_undo">Rückgängig</string>
     <string name="calendar_widget_next_events">Nächstes Ereignis</string>
     <string name="preference_hidden_items">Ausgeblendete Suchergebnisse</string>
@@ -407,7 +407,7 @@
     <string name="search_action_event">Termin planen</string>
     <string name="create_search_action_type_intent">Benutzerdefinierter Intent</string>
     <string name="create_search_action_website_invalid_url">Die angegebene Webseite kann nicht automatisch als Websuche importiert werden. Sie können es mit einer anderen Webseite versuchen oder die benötigten Daten im nächsten Schritt manuell eingeben</string>
-    <string name="search_action_websearch_url_hint">Die URL-Vorlage, die verwendet wird um die Websuch-URL zusammenzusetzen. Verwenden Sie „${1}“ als Platzhalter für den eigentlichen Suchbegriff</string>
+    <string name="search_action_websearch_url_hint">Die URL-Vorlage, die verwendet wird, um die Websuch-URL zusammenzusetzen. Verwenden Sie „${1}“ als Platzhalter für den eigentlichen Suchbegriff</string>
     <string name="help">Hilfe</string>
     <string name="skip">Überspringen</string>
     <string name="preference_screen_search_actions">Schnellaktionen</string>
@@ -472,7 +472,7 @@
     <string name="preference_screen_gestures_summary">Gesten und Gestenaktionen</string>
     <string name="gesture_failed_message">Sie haben eine „%1$s“-Geste ausgeführt. Diese Geste ist momentan konfiguriert, eine „%2$s“-Aktion auszulösen. Diese Aktion konnte aus dem folgenden Grund nicht durchgeführt werden:</string>
     <string name="preference_layout_fixed_search_bar">Angeheftete Suchleiste</string>
-    <string name="preference_layout_fixed_search_bar_summary">Suchleiste nicht aus dem Sichtbereich herausscrollen</string>
+    <string name="preference_layout_fixed_search_bar_summary">Suchleiste nicht aus dem Sichtbereich heraus scrollen</string>
     <string name="preference_layout_fixed_rotation">Feste Bildschirmausrichtung</string>
     <string name="preference_layout_fixed_rotation_summary">Porträtmodus erzwingen</string>
     <string name="preference_search_result_ordering_weight_factor">Ranking-Flexibilität</string>
@@ -544,7 +544,7 @@
     <string name="action_import">Importieren</string>
     <string name="file_type_launchertheme">%1$s-Design</string>
     <string name="import_theme_apply">Design anwenden</string>
-    <string name="preference_blur_wallpaper_radius">Blur-Radius</string>
+    <string name="preference_blur_wallpaper_radius">Unschärfe-Radius</string>
     <string name="import_theme_error">Die ausgewählte Datei konnte nicht gelesen werden. Bitte stellen Sie sicher, dass sie eine gültige Design-Datei (*.kvtheme) ausgewählt haben, und dass die Datei nicht beschädigt ist.</string>
     <string name="preference_clock_widget_alignment">Ausrichtung</string>
     <string name="preference_clock_widget_alignment_top">Oben</string>
@@ -612,7 +612,7 @@
     <string name="preference_default_filter_summary">Standardfilter für Suchen anpassen</string>
     <string name="preference_filter_bar">Filterleiste anzeigen</string>
     <string name="preference_default_filter">Standardfilter</string>
-    <string name="preference_filter_bar_summary">Schellfilter über der Tastatur anzeigen</string>
+    <string name="preference_filter_bar_summary">Schnellfilter über der Tastatur anzeigen</string>
     <string name="filter_settings_network_warning">Mit dem aktuellen Filter sind Online-Suchen standardmäßig aktiviert. Ihre Suchanfragen könnten unbeabsichtigt an externe Webdienste gesendet werden. Aus Datenschutzgründen ist dies nicht empfohlen.</string>
     <string name="preference_customize_filter_bar">Filterleiste anpassen</string>
     <string name="preference_customize_filter_bar_summary">Die in der Filterleiste enthaltenen Elemente anpassen</string>
@@ -695,7 +695,7 @@
     <string name="poi_category_pet">Zoofachgeschäft</string>
     <string name="poi_category_shopping">Geschäft</string>
     <string name="poi_category_swimming">Schwimmbecken</string>
-    <string name="poi_category_martial_arts">Martial Arts</string>
+    <string name="poi_category_martial_arts">Kampfsport</string>
     <string name="poi_category_golf">Golfplatz</string>
     <string name="poi_category_skiing">Ski</string>
     <string name="poi_category_cricket">Cricket-Feld</string>
@@ -781,7 +781,7 @@
         <item quantity="other">%1$s Listen ausgewählt</item>
     </plurals>
     <string name="preference_compact_tags">Kompakte Tags</string>
-    <string name="preference_compact_tags_summary">Beschriftungen oder Symbole von Tags ausblenden um den von Tags eingenommenen Platz zu reduzieren</string>
+    <string name="preference_compact_tags_summary">Beschriftungen oder Symbole von Tags ausblenden, um den von Tags eingenommenen Platz zu reduzieren</string>
     <string name="departure_time_now">jetzt</string>
     <plurals name="departure_time_in">
         <item quantity="one">in einer Minute</item>
@@ -813,7 +813,7 @@
     <string name="preference_tasks_integration">Tasks</string>
     <string name="plugin_type_contacts">Kontakte</string>
     <string name="preference_tasks_integration_ready">Die Tasks-Integration ist fertig eingerichtet und bereit zur Verwendung.</string>
-    <string name="preference_tasks_integration_description">Tasks ist eine freie und quelloffene ToDo-Listen- und Erinnerungs-App. Wenn installiert kann %1$s Ihre Aufgaben aus der Tasks-App anzeigen und durchsuchen.</string>
+    <string name="preference_tasks_integration_description">Tasks ist eine freie und quelloffene To-do-Listen- und Erinnerungs-App. Wenn installiert kann %1$s Ihre Aufgaben aus der Tasks-App anzeigen und durchsuchen.</string>
     <string name="weather_condition_haze">Dunst</string>
     <string name="weather_condition_thunder">Gewitter</string>
     <string name="preference_location_breezy">Standort in Breezy Weather verwalten</string>
@@ -835,7 +835,7 @@
     <string name="bad_configuration_summary">Sie haben eine Kombination von Einstellungen entdeckt, durch die sowohl die Suche, als auch die Einstellungen unerreichbar sind, wodurch Sie sich praktisch ausgesperrt haben</string>
     <string name="preference_screen_shapes">Formen</string>
     <string name="preference_shapes_default">Standard</string>
-    <string name="preference_shapes_extra_round">Extrarund</string>
+    <string name="preference_shapes_extra_round">Extra rund</string>
     <string name="preference_shapes_rect">Rechteckig</string>
     <string name="preference_shapes_base">Grundform</string>
     <string name="confirmation_delete_shapes_scheme">Möchten Sie das Formschema %1$s wirklich löschen?</string>
@@ -854,7 +854,7 @@
     <string name="confirmation_delete_transparencies_scheme">Möchten Sie das Transparenzschema %1$s wirklich löschen?</string>
     <string name="new_theme_name">(unbenannt)</string>
     <string name="preference_screen_typography">Typografie</string>
-    <string name="confirmation_delete_typography_scheme">Möchten Sie das Typografie-Scheme %1$s wirklich löschen?</string>
+    <string name="confirmation_delete_typography_scheme">Möchten Sie das Typografie-Schema %1$s wirklich löschen?</string>
     <string name="preference_typography_fonts">Schriften</string>
     <string name="font_category_device_default">Gerätestandard</string>
     <string name="font_name_device_headline">Standard-Überschriften-Schrift</string>
@@ -865,6 +865,6 @@
     <string name="preference_search_bar_style_hidden">Versteckt</string>
     <string name="music_widget_interactive_progress_bar">Interaktiver Fortschrittsbalken</string>
     <string name="clock_variant_analog_ticks">Striche</string>
-    <string name="preference_clock_widget_monospaced">Monospace Ziffern</string>
+    <string name="preference_clock_widget_monospaced">Ziffern mit fester Breite</string>
     <string name="poi_category_hackerspace">Hackerspace</string>
 </resources>
