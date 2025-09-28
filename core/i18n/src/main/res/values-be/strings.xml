@@ -95,15 +95,15 @@
     <string name="wikipedia_url">https://be.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">З Вікіпедыі</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Назва: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Выканаўца: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Альбом: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Працягласць: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Год: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Памер: %1$s</string>
@@ -111,50 +111,48 @@
     <string name="file_meta_path">Шлях: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Тып: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Памеры: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Назва праграмы: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Версія: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Назва пакета: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Патрэбная версія SDK: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Уладальнік: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Месца: %1$s</string>
     <string name="file_type_directory">Каталог</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Архіў</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Файл пакета Android</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Файл з зыходным кодам</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Дакумент</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Табліца</string>
     <!-- Audio file -->
-    <string name="file_type_music">Файл музыкі</string>
     <!-- Video file -->
     <string name="file_type_video">Відэа</string>
-    <!-- Picture file -->
-    <string name="file_type_image">Выява</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">Файл</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Прэзентацыя</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Сціснуты файл</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Тэкставы файл</string>
     <!-- E-book file -->
     <string name="file_type_ebook">Электронная кніга</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Рысунак</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Форма</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">Рэзервовая копія %1$s</string>
@@ -220,21 +218,19 @@
     <string name="menu_edit_widgets">Рэдагаваць віджэты</string>
     <string name="widget_name_weather">Надвор\'е</string>
     <string name="widget_name_calendar">Каляндар</string>
-    <string name="widget_name_music">Музыка</string>
+    <string name="widget_name_music">Медыя</string>
     <string name="widget_name_favorites">Абраныя</string>
     <string name="widget_name_notes">Нататка</string>
-    <string name="widget_name_unknown">Віджэт невядомай праграмы</string>
+    <string name="widget_name_unknown">Невядома</string>
     <string name="widget_add_widget">Дадаць віджэт</string>
     <string name="widget_removed">Віджэт выдалены</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Напішыце нататку…</string>
     <string name="notes_widget_action_new">Новая нататка</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Захаваць</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Нататка_%1$s</string>
     <string name="notes_widget_action_dismiss">Адхіліць</string>
-    <string name="notes_widget_dismissed">Нататка адхілена.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Ад %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -262,7 +258,6 @@
     <string name="edit_favorites_dialog_empty_section">Перацягніце ярлыкі сюды</string>
     <string name="edit_favorites_dialog_tags">Цэтлікі</string>
     <string name="edit_favorites_dialog_tag_section_empty">Замацаваныя цэтлікі з\'явяцца тут</string>
-    <string name="edit_favorites_dialog_new_tag">Стварыць цэтлік…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL сервера Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -318,7 +313,6 @@
         <item quantity="other">+%1$d незавершаных задач</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">увесь дзень</string>
     <string name="task_due_time">Час выканання: %1$s</string>
     <string name="task_due_date">Дата выканання: %1$s</string>
     <string name="task_due_today">Выканаць сёння</string>
@@ -376,25 +370,19 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Няма даных аб надвор\'і.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Абраць месцазнаходжанне</string>
-    <string name="weather_location_search_no_result">Месцазнаходжанне ня знойдзена.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Для аўтаматычнага вызначэння лакацыі патрэбны доступ да месцазнаходжання</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Для кіравання прайграваннем медыя патрэбны доступ да апавяшчэнняў</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Для пошуку кантактаў патрэбны доступ да кантактнай кнігі</string>
     <!-- Missing call permission in contacts settings screen -->
-    <string name="missing_permission_call_contacts_settings">Для выканання выклікаў патрэбны доступ да тэлефону</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Для пошуку праз каляндар патрэбны доступ да календара</string>
-    <string name="missing_permission_tasks_search_settings">Для пошуку праз заданні патрэбны доступ да заданняў</string>
     <string name="missing_permission_tasks_integration">Для інтэграцыі з задачамі патрэбны доступ да заданняў</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">Гэтаму віджэту патрэбны доступ да календара</string>
     <string name="widget_config_calendar_missing_calendars_hint">Не можаце знайсці свае календары?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s павінна быць стандартнай праграмай галоўнага экрана для пошуку ярлыкоў</string>
@@ -403,19 +391,13 @@
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Для пошуку праз лакальныя файлы патрэбны доступ да ўсіх файлаў</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Для адлюстравання бэйджаў апавяшчэнняў на значках патрэбны доступ да апавяшчэнняў</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Дайце дазвол на доступ да календару, каб тут паказваліся будучыя сустрэчы і падзеі.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Дайце дазвол на доступ да календару, каб выконваць пошук праз ваш каляндар.</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Дайце дазвол на доступ да месцазнаходжання, каб шукаць праз бліжайшыя месцы.</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Дайце дазвол на доступ да ўсіх файлаў, каб праглядваць фота, медыя і дакументы на гэтай прыладе.</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Дайце дазвол на доступ да кантактаў, каб выконваць пошук праз вашы кантакты.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Зрабіце %1$s стандартным дамашнім экранам, каб шукаць праграмы.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -430,7 +412,6 @@
     <string name="preference_screen_colors">Колеравая схема</string>
     <string name="preference_colors_default">Прадвызначанная</string>
     <string name="preference_colors_high_contrast">Высокі кантраст</string>
-    <string name="preference_colors_bw">Чорна-белая</string>
     <string name="preference_custom_colors_corepalette">Колеры прылады</string>
     <string name="preference_mdy_color_source">Крыніца дынамічных колераў</string>
     <string name="preference_mdy_color_source_system">Сістэма</string>
@@ -454,12 +435,10 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Адкрыць вэбсайт</string>
     <string name="preference_screen_about_summary">Інфармацыя аб праграме й ліцэнзіях</string>
-    <string name="preference_screen_appearance_summary">Дапасаваць знешні выгляд</string>
     <string name="preference_weather_provider">Пастаўшчык</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (толькі Германія)</string>
     <string name="preference_category_location">Месцазнаходжанне</string>
     <string name="preference_automatic_location">Аўтаматычны выбар</string>
-    <string name="preference_automatic_location_summary">Скарыстацца GPS і сэрвісамі месцазнаходжання, каб аўтаматычна вызначыць месцазнаходжанне</string>
     <string name="preference_location_managed">Кіруецца плагінам</string>
     <string name="preference_location_managed_summary">Месцазнаходжанне для гэтага пастаўшчыку кіруецца плагінам</string>
     <string name="preference_location">Месцазнаходжанне</string>
@@ -476,12 +455,6 @@
     <string name="preference_debug_cleanup_database_summary">Выдаліць зламаныя і неўжываныя пункты з базы даных праграмы запуску</string>
     <string name="preference_debug_reinstall_iconpacks">Пераўсталяваць пакеты значкоў</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Ачысціць і стварыць нанава кэш пакетаў значкоў</string>
-    <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d пункт быў выдалены.</item>
-        <item quantity="few">%1$d пункты былі выдалены.</item>
-        <item quantity="many">%1$d пунктаў было выдалена.</item>
-        <item quantity="other">%1$d пунктаў было выдалена.</item>
-    </plurals>
     <string name="preference_category_icons">Значкі</string>
     <string name="preference_cards">Карткі</string>
     <string name="preference_cards_summary">Дапасаваць выгляд картак</string>
@@ -528,7 +501,6 @@
     <string name="preference_screen_integrations_summary">Кіраванне злучаннамі уліковымі запісамі і сэрвісамі</string>
     <string name="preference_signin_user">Увайшлі як %1$s</string>
     <string name="preference_signout">Выйсці</string>
-    <string name="preference_summary_not_logged_in">Зараз няма злучаннага ўліковага запісу</string>
     <string name="preference_icon_shape_pentagon">Пяцівугольнік</string>
     <string name="preference_category_wallpaper">Шпалеры</string>
     <string name="preference_dim_wallpaper">Зацямніць шпалеры</string>
@@ -600,7 +572,6 @@
     <string name="preference_clockwidget_battery_part_summary">Адлюстроўвае бягучы зарад батарэі, калі ён нізкі, або калі прылада зараджаецца</string>
     <string name="preference_clockwidget_alarm_part">Будзільнікі</string>
     <string name="preference_clockwidget_alarm_part_summary">Адлюстроўвае будзільнікі, якія празвоняць меньш чым праз 8 гадзін</string>
-    <string name="preference_screen_backup">Рэзэрвовае капіраванне і аднаўленне</string>
     <string name="preference_screen_backup_summary">Экспарт і імпарт даных праграмы запуску</string>
     <string name="preference_backup">Рэзервовае капіраванне</string>
     <string name="preference_backup_summary">Экспартаваць налады і даныя праграмы запуску</string>
@@ -672,10 +643,8 @@
     <string name="preference_compact_tags_summary">Схаваць назвы або значкі цэтлікаў, каб паменшыць месца, якое яны займаюць</string>
     <string name="preference_widgets_edit_button_summary">Адлюстроўваць кнопку для дадавання, выдалення і змянення парадку віджэтаў</string>
     <string name="preference_widgets_on_home_screen">Віджэты на галоўным экране</string>
-    <string name="preference_widgets_on_home_screen_summary">Паказваць віджэты на галоўным экране, не на дадатковай старонцы</string>
     <string name="preference_screen_homescreen">Галоўны экран</string>
     <string name="preference_screen_homescreen_summary">Гадзіннік, поле пошуку, шпалеры, сістэмныя панэлі</string>
-    <string name="preference_screen_icons">Сетка і значкі</string>
     <string name="preference_screen_icons_summary">Сетка, памер і пакеты значкоў, бэйджы</string>
     <string name="preference_weather_integration">Надвор\'е</string>
     <string name="preference_media_integration">Кіраванне медыя</string>
@@ -688,7 +657,6 @@
     <string name="preference_breezyweather_integration_instructions">Каб выкарыстоўваць Breezy Weather як пастаўшчыка даных аб надвор\'і:\n\n1. Перайдзіце ў Breezy Weather &gt; Налады &gt; Віджэты і жывыя шпалеры &gt; Адпраўляць даныя пра надвор’е ў Gadgetbridge &gt; Уключыць %1$s\n\n2. Выберыце Breezy Weather як пастаўшчыка надвор\'я ў %1$s</string>
     <string name="preference_launch_breezyweather_app">Адкрыць Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">Націсніце, каб выклікнуць</string>
-    <string name="preference_contacts_call_on_tap_summary">Выклікаць адразу пасля націскання на нумар</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Вы яшчэ не далучылі ўліковы запіс Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -736,23 +704,16 @@
     <string name="search_action_contact">Стварыць кантакт</string>
     <string name="search_action_open_url">Праглядзець вэб-сайт</string>
     <string name="search_action_event">Запланаваць падзею</string>
-    <string name="create_search_action_type">Якое дзеянне вы жадаеце стварыць?</string>
     <string name="create_search_action_type_web">Шукаць на вэб-сайце</string>
     <string name="create_search_action_type_app">Шукаць у праграме</string>
     <string name="create_search_action_type_intent">Наладжвальны намер</string>
     <string name="create_search_action_pick_app">Выберыце праграму, дзе шукаць:</string>
     <string name="create_search_action_website_url">Увядзіце адрас вэб-сайта:</string>
-    <string name="create_search_action_website_invalid_url">Дадзены вэб-сайт не можа быць аўтаматычна імпартаваны як сродак пошуку. Вы можаце паспрабаваць іншы сайт або ўвсеці ўсе патрэбныя даныя ў наступным кроку.</string>
     <string name="search_action_label">Назва</string>
     <string name="search_action_app">Праграма</string>
     <string name="search_action_websearch_url">Шаблон спасылкі</string>
-    <string name="search_action_websearch_url_hint">Шаблон спасылкі, які выкарыстоўваецца для будавання спасылкі пошуку. Выкарыстоўвайце ‘${1}’ у якасці пошукавага запыта, напрыклад https://google.com/search?q=${1}.</string>
     <string name="more_information">Больш інфармацыі</string>
     <string name="experimental_feature">Эксперыментальная</string>
-    <string name="tag_exists_error">Тэг з такой назвай ужо існуе.</string>
-    <string name="tag_exists_message">Тэг з такой назвай ужо існуе. Калі вы працягніце, гэтыя два цэтліка будуць аб\'яднаныя.</string>
-    <string name="tag_no_items_message">Няма ярлыкоў з гэтым цэтлікам. Калі вы працягніце, цэтлік будзе выдалены.</string>
-    <string name="tag_empty_name">Цэтлік не можа існаваць без назвы. Калі вы працягніце, цэтлік будзе выдалены.</string>
     <string name="tag_select_items">Выберыце ярлыкі:</string>
     <string name="tag_name">Назва цэтліка</string>
     <plurals name="tag_selected_items">
@@ -761,7 +722,6 @@
         <item quantity="many">Выбраныя %1$d ярлыкоў</item>
         <item quantity="other">Выбраныя %1$d ярлыкоў</item>
     </plurals>
-    <string name="preference_layout_open_search">Пошук / меню праграм</string>
     <string name="open_search_pull_down">Чырканне ўніз</string>
     <string name="open_search_swipe_left">Чырканне ўлева</string>
     <string name="open_search_swipe_right">Чырканне ўправа</string>
@@ -792,7 +752,6 @@
     <string name="gesture_action_lock_screen">Выключыць экран</string>
     <string name="gesture_action_quick_settings">Адкрыць хуткія налады</string>
     <string name="gesture_action_power_menu">Паказаць меню сілкавання</string>
-    <string name="gesture_action_recents">Адкрыць нядаўнія</string>
     <string name="gesture_failed_message">Вы зрабілі жэст \"%1$s\". Гэты жэст наладжаны на дзеянне \"%2$s\". Але гэта дзеянне не было выканана па наступнай прычыне:</string>
     <string name="missing_permission_accessibility_gesture_failed">Сэрвісы спецыяльных магчымасцяў для праграмы запуску павінны быць уключаны, каб выканаць гэтае дзеянне.</string>
     <string name="missing_permission_accessibility_gesture_settings">Для гэтага дзеяння павінны быць уключаны сэрвіс спецыяльных магчымасцяў праграмы запуску.</string>
@@ -807,7 +766,6 @@
     <string name="widget_config_weather_integration_settings">Налады інтыэграцыі надвор\'я</string>
     <string name="widget_config_calendar_no_calendars">Календароў не знойдзена</string>
     <string name="widget_pick_widget">Выбраць віджэт</string>
-    <string name="app_widget_loading_failed">Не ўдалося загрузіць віджэт.</string>
     <string name="widget_config_music_integration_settings">Налады інтэграцыі кіравання мультымедыя</string>
     <string name="note_widget_link_file">Спасылка на файл</string>
     <string name="note_widget_link_file_summary">Звязаць змесціва гэтага віджэта са знешнім файлам</string>
@@ -821,9 +779,7 @@
     <string name="note_widget_conflict_local_version">Апошняя захаваная версія:</string>
     <string name="note_widget_conflict_file_version">Змесціва бягучага файла:</string>
     <string name="note_widget_file_read_error">Памылка пры чытанні нататкі</string>
-    <string name="note_widget_file_read_error_description">Немагчыма прачытаць звязаны файл. Мабыць, ён быў перамешчаны або выдалены. Копія была адноўлена з унутранага сховішча праграмы запуску. Калі вы адрэдагуйце нататку, звязаны файл, хутчэй за ўсё, будзе перазапісаны.</string>
     <string name="note_widget_file_write_error">Памылка пры захаванні нататкі</string>
-    <string name="note_widget_file_write_error_description">Нататка не можа быць запісана ў звязаны файл. Мабыць, ён быў перамешчаны або выдалены. Копія была захована ў унутраным сховішчы праграмы запуску.</string>
     <string name="confirmation_delete_color_scheme">Вы сапраўды хочаце выдаліць колеравую схему %1$s?</string>
     <string name="confirmation_delete_shapes_scheme">Вы сапраўды хочаце выдаліць схему фігур \"%1$s\"?</string>
     <string name="confirmation_delete_typography_scheme">Вы сапраўды хочаце выдаліць схему тыпаграфіі \"%1$s\"?</string>
@@ -859,14 +815,12 @@
     <string name="menu_bugreport">Справаздача аб памылцы</string>
     <string name="location_open_24_7">Кругласутачна</string>
     <string name="plugin_state_error">Гэты плагін працуе некарэктна</string>
-    <string name="plugin_state_setup_required">Спачатку вам трэба наладзіць гэты плагін</string>
     <string name="plugin_action_setup">Наладзіць</string>
     <string name="plugin_type_filesearch">Файлы</string>
     <string name="plugin_type_contacts">Кантакты</string>
     <string name="plugin_type_weather">Правайдар надвор\'я</string>
     <string name="plugin_weather_provider_enable">Задаць правайдарам надвор\'я</string>
     <string name="plugin_weather_provider_enabled">Бягучы правайдар надвор\'я</string>
-    <string name="unavailable_searchable">Гэты элемент болей не існуе.</string>
     <string name="clock_style_digital1">Тоўсты</string>
     <string name="clock_style_digital2">Просты</string>
     <string name="clock_style_orbit">Арбітальны</string>
@@ -1026,10 +980,8 @@
     <string name="calendar_widget_next_day">Наступны дзень</string>
     <string name="calendar_widget_create_event">Стварыць новую падзею</string>
     <string name="calendar_widget_open_calendar">Адкрыць праграму календара</string>
-    <string name="profile_work_profile_state_locked">Працоўныя праграмы прыпыненыя.</string>
     <string name="profile_work_profile_action_unlock">Зняць</string>
     <string name="profile_work_profile_action_lock">Прыпыніць працоўныя праграмы</string>
-    <string name="profile_private_profile_state_locked">Private space замкнутае.</string>
     <string name="profile_private_profile_action_unlock">Разблакіраваць</string>
     <string name="profile_private_profile_action_lock">Заблакіраваць Private space</string>
     <string name="hint_drag_and_drop_reorder">Утрымлівайце і перацягвайце элементы, каб змяніць іх парадак</string>
@@ -1051,7 +1003,6 @@
     </plurals>
     <string name="departure_time_departed">адправіўся</string>
     <string name="bad_configuration_title">Віншую, вы закрылі самі сябе!</string>
-    <string name="bad_configuration_summary">Вы знайшлі канфігурацыю, пры якой нельга адкрыць ні пошук, ні налады, тым самым зрабіўшы праграму не прыгоднай для выкарыстання.</string>
     <string name="theme_export_title">Экспартаваць тэму</string>
     <string name="theme_import_title">Імпартаваць тэму</string>
     <string name="theme_bundle_name">Назва</string>
