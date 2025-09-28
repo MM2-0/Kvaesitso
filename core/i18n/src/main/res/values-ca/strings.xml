@@ -94,15 +94,15 @@
     <string name="wikipedia_url">https://ca.wikipedia.org/</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Font: Wikipedia</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Títol: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Artista: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Àlbum: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Duració: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Any: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Mida de l\'arxiu: %1$s</string>
@@ -110,48 +110,48 @@
     <string name="file_meta_path">Camí: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Tipus de fitxer: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Mida: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Nom: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Versió: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Nom del paquet: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Versió SDK: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Propietari: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Localització: %1$s</string>
     <string name="file_type_directory">Directori</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Nom del fitxer</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Fitxer APK</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">fitxer de codi font</string>
-    <!-- Word document -->
-    <!-- Excel spreadsheet -->
+    <!-- Document -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Fulla de càlcul</string>
     <!-- Audio file -->
     <string name="file_type_music">Fitxer de música</string>
     <!-- Video file -->
     <string name="file_type_video">Vídeo</string>
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">Fotografía</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Fitxer</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Presentació</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Fitxer comprimit</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Fitxer de text</string>
     <!-- E-book file -->
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Dibuix</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Formulari</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s copia de seguretat</string>
@@ -678,7 +678,7 @@
     <string name="search_action_contact">Afegir a contactes</string>
     <string name="search_action_open_url">Veure lloc web</string>
     <string name="search_action_event">Programar esdeveniment</string>
-    <string name="create_search_action_type">Quin tipus d\'acció voleu crear\?</string>
+    <string name="create_search_action_type">Quin tipus d\'acció voleu crear?</string>
     <string name="create_search_action_type_web">Cerca en un lloc web</string>
     <string name="create_search_action_type_app">Cerca en una aplicació</string>
     <string name="create_search_action_type_intent">Intent personalitzat</string>
@@ -688,7 +688,7 @@
     <string name="search_action_label">Nom</string>
     <string name="search_action_app">Aplicació</string>
     <string name="search_action_websearch_url">Plantilla d\'URL</string>
-    <string name="search_action_websearch_url_hint">La plantilla d\'URL que s\'utilitza per construir l\'URL de cerca web. Utilitzeu \"${1}\" com a marcador de posició per al terme de cerca real, p. ex. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">La plantilla d\'URL que s\'utilitza per construir l\'URL de cerca web. Utilitzeu \"${1}\" com a marcador de posició per al terme de cerca real, p. ex. https://google.com/search?q=${1}.</string>
     <string name="more_information">Més informació</string>
     <string name="tag_exists_error">Ja existeix una etiqueta amb aquest nom.</string>
     <string name="tag_exists_message">Ja existeix una etiqueta amb aquest nom. Si continueu, les dues etiquetes es fusionaran.</string>
