@@ -95,15 +95,15 @@
     <string name="wikipedia_url">https://th.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">โดยวิกิพีเดีย</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">เพลง: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">ศิลปิน: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">อัลบั้ม: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">ระยะเวลา: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">ปี: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">ขนาด: %1$s</string>
@@ -111,50 +111,50 @@
     <string name="file_meta_path">ตำแหน่งไฟล์: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">ชนิด: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">ความละเอียด: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">ชื่อแอป: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">เวอร์ชั่น: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">ชื่อแพ็กเกจ: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">เวอร์ชั่น SDK ขั้นต่ำ: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">เจ้าของ: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">สถานที่: %1$s</string>
     <string name="file_type_directory">โฟลเดอร์</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">ไฟล์เก็บถาวร</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">ไฟล์แพ็กเกจแอนดรอยด์</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">ไฟล์โค้ดโปรแกรม</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">เอกสาร</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">ตารางคำนวณ</string>
     <!-- Audio file -->
     <string name="file_type_music">ไฟล์เพลง</string>
     <!-- Video file -->
     <string name="file_type_video">วิดีโอ</string>
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">รูปภาพ</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">ไฟล์</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">การนำเสนอ</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">ไฟล์บีบอัด</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">ไฟล์ข้อความ</string>
     <!-- E-book file -->
     <string name="file_type_ebook">อีบุ๊ก</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">รูปวาด</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">แบบฟอร์ม</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">ข้อมูลสำรอง %1$s</string>
@@ -726,7 +726,7 @@
     <string name="search_action_contact">เพิ่มผู้ติดต่อ</string>
     <string name="search_action_open_url">เปิดเว็บไซต์</string>
     <string name="search_action_event">เขียนกำหนดการกิจกรรม</string>
-    <string name="create_search_action_type">คุณอยากสร้างแอ็กชั่นแบบไหน\?</string>
+    <string name="create_search_action_type">คุณอยากสร้างแอ็กชั่นแบบไหน?</string>
     <string name="create_search_action_type_web">ค้นหาบนเว็บไซต์</string>
     <string name="create_search_action_type_app">ค้นหาในแอป</string>
     <string name="create_search_action_type_intent">Intent แบบกำหนดเอง</string>
@@ -736,7 +736,7 @@
     <string name="search_action_label">ชื่อ</string>
     <string name="search_action_app">แอป</string>
     <string name="search_action_websearch_url">แม่แบบลิงก์</string>
-    <string name="search_action_websearch_url_hint">แม่แบบลิงก์ที่จะนำไปใช้สร้างลิงก์ค้นหาผ่านเว็บ ใช้ ‘${1}’ เป็นตัวยึดตำแหน่งสำหรับคำค้นหาจริง เช่น https://google.com/search\?q=${1}</string>
+    <string name="search_action_websearch_url_hint">แม่แบบลิงก์ที่จะนำไปใช้สร้างลิงก์ค้นหาผ่านเว็บ ใช้ ‘${1}’ เป็นตัวยึดตำแหน่งสำหรับคำค้นหาจริง เช่น https://google.com/search?q=${1}</string>
     <string name="more_information">ข้อมูลเพิ่มเติม</string>
     <string name="experimental_feature">ฟีเจอร์ทดลองใช้</string>
     <string name="tag_exists_error">มีแท็กชื่อนี้อยู่แล้ว</string>
