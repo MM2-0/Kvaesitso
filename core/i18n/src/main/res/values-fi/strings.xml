@@ -91,15 +91,15 @@
     <string name="wikipedia_url">https://fi.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Wikipediasta</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Kappale: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Artisti: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Albumi: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Kesto: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Vuosi: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Koko: %1$s</string>
@@ -107,49 +107,49 @@
     <string name="file_meta_path">Polku: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Tyyppi: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Mitat: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Sovelluksen nimi: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Versio: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Paketin nimi: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Minimi SDK-versio: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Omistaja: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Sijainti: %1$s</string>
     <string name="file_type_directory">Hakemisto</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Arkisto</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Androidin pakettitiedosto</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Lähdekooditiedosto</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Asiakirja</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Laskentataulukko</string>
     <!-- Audio file -->
     <string name="file_type_music">Musiikkitiedosto</string>
     <!-- Video file -->
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">Kuva</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Tiedosto</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Esitys</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Pakattu tiedosto</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Tekstitiedosto</string>
     <!-- E-book file -->
     <string name="file_type_ebook">E-kirja</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Piirros</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Lomake</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s-varmuuskopio</string>
@@ -653,7 +653,7 @@
     <string name="search_action_contact">Luo yhteystieto</string>
     <string name="search_action_open_url">Näytä verkkosivu</string>
     <string name="search_action_event">Luo tapahtuma</string>
-    <string name="create_search_action_type">Millaisen toiminnon haluat luoda\?</string>
+    <string name="create_search_action_type">Millaisen toiminnon haluat luoda?</string>
     <string name="create_search_action_type_web">Hae verkkosivulta</string>
     <string name="create_search_action_type_app">Hae sovelluksesta</string>
     <string name="create_search_action_type_intent">Oma intent</string>
@@ -663,7 +663,7 @@
     <string name="search_action_label">Nimi</string>
     <string name="search_action_app">Sovellus</string>
     <string name="search_action_websearch_url">URL-pohja</string>
-    <string name="search_action_websearch_url_hint">URL-pohja, jota käytetään verkkohaun osoitteena. Käytä \'${1}\' osoittamaan varsinaisen hakutermin paikkaa osoitteessa, esimerkiksi https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">URL-pohja, jota käytetään verkkohaun osoitteena. Käytä \'${1}\' osoittamaan varsinaisen hakutermin paikkaa osoitteessa, esimerkiksi https://google.com/search?q=${1}.</string>
     <string name="more_information">Lisätietoja</string>
     <string name="experimental_feature">Kokeellinen</string>
     <string name="tag_exists_error">Avainsana on jo olemassa.</string>
