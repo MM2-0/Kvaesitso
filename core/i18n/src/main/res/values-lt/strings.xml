@@ -86,15 +86,15 @@
     <string name="wikipedia_url">https://lt.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Iš Vikipedijos</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Pavadinimas: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Artistas: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Albumas: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Ilgumas: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Metai: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Dydis: %1$s</string>
@@ -102,50 +102,50 @@
     <string name="file_meta_path">Failas ,aplankas: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Tipas: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Dimensijos: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Programos pavadinimas: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Versija: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Apk pavadinimas: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Min SDK versija: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Savininkas: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Vietovė: %1$s</string>
     <string name="file_type_directory">Aplankas</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Archyvinis failas (zip,rar...)</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">APK</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Šaltininis kodo failas</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Dokumentas</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Skaičiuoklė\?(spreadsheet ,nžn.)</string>
     <!-- Audio file -->
     <string name="file_type_music">Muzikos failas</string>
     <!-- Video file -->
     <string name="file_type_video">Vaizdelis</string>
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">Nuotrauka</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Failas</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Presentacija</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Kompresuotas failas</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Teksto failas</string>
     <!-- E-book file -->
     <string name="file_type_ebook">E-knyga</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Piešinys</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Forma</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s atsarginė kopija</string>
@@ -656,7 +656,7 @@
     <string name="search_action_contact">Naujas kontaktas</string>
     <string name="search_action_open_url">Peržiurėti puslapį</string>
     <string name="search_action_event">Planuoti įvykį</string>
-    <string name="create_search_action_type">Kokį veiksmą norite sukurti\?</string>
+    <string name="create_search_action_type">Kokį veiksmą norite sukurti?</string>
     <string name="create_search_action_type_web">Ieškoti puslapyje</string>
     <string name="create_search_action_type_app">Ieškoti programėlėje</string>
     <string name="create_search_action_type_intent">Custom intent(techninis dalykas)</string>
@@ -666,7 +666,7 @@
     <string name="search_action_label">Pavadinimas</string>
     <string name="search_action_app">Programa</string>
     <string name="search_action_websearch_url">URL pavizdys</string>
-    <string name="search_action_websearch_url_hint">Šis URL pavizdys yra naudojamas ,kad sukurti paieškos URL. Naudokite \'${1}\' kaip vieta paieškos terminui pvz. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Šis URL pavizdys yra naudojamas ,kad sukurti paieškos URL. Naudokite \'${1}\' kaip vieta paieškos terminui pvz. https://google.com/search?q=${1}.</string>
     <string name="more_information">Daugiau informacijos</string>
     <string name="experimental_feature">Expermentinis</string>
     <string name="tag_exists_error">Žyma su šiuo pavadinimu jau egzistuoja.</string>
