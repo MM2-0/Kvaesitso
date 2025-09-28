@@ -95,15 +95,15 @@
     <string name="wikipedia_url">https://ru.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Из Википедии</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Название: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Исполнитель: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Альбом: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Длительность: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Год: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Размер: %1$s</string>
@@ -111,50 +111,50 @@
     <string name="file_meta_path">Путь: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Тип файла: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Разрешение: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Имя приложения: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Версия: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Имя пакета: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Минимальная версия SDK: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Владелец: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Местоположение: %1$s</string>
     <string name="file_type_directory">Каталог</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Файл архива</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Файл пакета Android</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Файл исходного кода</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Документ</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Таблица</string>
     <!-- Audio file -->
     <string name="file_type_music">Аудиофайл</string>
     <!-- Video file -->
     <string name="file_type_video">Видеофайл</string>
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">Изображение</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Файл</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Презентация</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Сжатый файл</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Текстовый файл</string>
     <!-- E-book file -->
     <string name="file_type_ebook">Электронная книга</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Рисунок</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Форма</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">Резервная копия %1$s</string>
@@ -723,7 +723,7 @@
     <string name="search_action_contact">Добавить в контакты</string>
     <string name="search_action_open_url">Открыть веб-сайт</string>
     <string name="search_action_event">Запланировать событие</string>
-    <string name="create_search_action_type">Какое действие вы хотите создать\?</string>
+    <string name="create_search_action_type">Какое действие вы хотите создать?</string>
     <string name="create_search_action_type_web">Поиск по веб-сайту</string>
     <string name="create_search_action_type_app">Поиск в приложении</string>
     <string name="create_search_action_type_intent">Пользовательский intent</string>
