@@ -374,7 +374,7 @@
     <string name="search_action_contact">Afegir a contactes</string>
     <string name="search_action_open_url">Veure lloc web</string>
     <string name="search_action_event">Programar esdeveniment</string>
-    <string name="create_search_action_type">Quin tipus d\'acció voleu crear\?</string>
+    <string name="create_search_action_type">Quin tipus d\'acció voleu crear?</string>
     <string name="create_search_action_type_web">Cerca en un lloc web</string>
     <string name="create_search_action_type_app">Cerca en una aplicació</string>
     <string name="create_search_action_type_intent">Intent personalitzat</string>
@@ -383,7 +383,7 @@
     <string name="search_action_label">Nom</string>
     <string name="search_action_app">Aplicació</string>
     <string name="search_action_websearch_url">Plantilla d\'URL</string>
-    <string name="search_action_websearch_url_hint">La plantilla d\'URL que s\'utilitza per construir l\'URL de cerca web. Utilitzeu \"${1}\" com a marcador de posició per al terme de cerca real, p. ex. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">La plantilla d\'URL que s\'utilitza per construir l\'URL de cerca web. Utilitzeu \"${1}\" com a marcador de posició per al terme de cerca real, p. ex. https://google.com/search?q=${1}.</string>
     <string name="more_information">Més informació</string>
     <string name="experimental_feature">Experimental</string>
     <string name="tag_exists_error">Ja existeix una etiqueta amb aquest nom.</string>
@@ -505,6 +505,7 @@
     <string name="gesture_action_launch_app">Inicia l\'aplicació</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">L\'entrada %1$d s\'ha eliminat.</item>
+        <item quantity="many"></item>
         <item quantity="other">Les entrades %1$d s\'han eliminat.</item>
     </plurals>
     <string name="missing_permission_file_search_settings">Es requereix permís d\'accés a l\'emmagatzematge extern per cercar fitxers locals</string>
