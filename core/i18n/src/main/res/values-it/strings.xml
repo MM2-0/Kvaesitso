@@ -95,14 +95,14 @@
     <string name="wikipedia_url">https://it.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Da Wikipedia</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Titolo: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Autore: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Durata: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Anno: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Dimensione: %1$s</string>
@@ -110,47 +110,47 @@
     <string name="file_meta_path">Percorso: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Tipo: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Dimensioni: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Nome app: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Versione: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Nome pacchetto: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Versione minima SDK: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Proprietario: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Posizione: %1$s</string>
     <string name="file_type_directory">Cartella</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">File archivio</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">File pacchetto Android</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">File codice sorgente</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Documento</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Foglio di calcolo</string>
     <!-- Audio file -->
     <string name="file_type_music">File musicale</string>
     <!-- Video file -->
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">Immagine</string>
     <!-- Generic file without file extension -->
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Presentazione</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">File compresso</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">File di testo</string>
     <!-- E-book file -->
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Disegno</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Modulo</string>
     <!-- Launcher backup, %1$s: app name -->
     <!-- Launcher theme, %1$s: app name -->
@@ -716,7 +716,7 @@
     <string name="search_action_contact">Crea contatto</string>
     <string name="search_action_open_url">Visualizza sito web</string>
     <string name="search_action_event">Pianifica evento</string>
-    <string name="create_search_action_type">Che tipo di azione vuoi creare\?</string>
+    <string name="create_search_action_type">Che tipo di azione vuoi creare?</string>
     <string name="create_search_action_type_web">Cerca su un sito web</string>
     <string name="create_search_action_type_app">Cerca in un\'app</string>
     <string name="create_search_action_type_intent">Intent personalizzato</string>
