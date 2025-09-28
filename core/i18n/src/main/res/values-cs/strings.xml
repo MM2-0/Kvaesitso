@@ -400,13 +400,13 @@
     <string name="search_action_contact">Přidat do kontaktů</string>
     <string name="search_action_open_url">Zobrazit web</string>
     <string name="search_action_event">Naplánovat událost</string>
-    <string name="create_search_action_type">Jaký typ akce chcete vytvořit\?</string>
+    <string name="create_search_action_type">Jaký typ akce chcete vytvořit?</string>
     <string name="create_search_action_type_web">Vyhledat na webu</string>
     <string name="create_search_action_type_app">Vyhledat v aplikaci</string>
     <string name="create_search_action_type_intent">Vlastní intent</string>
     <string name="create_search_action_pick_app">Vyberte aplikaci k hledání:</string>
     <string name="search_action_websearch_url">Šablona URL</string>
-    <string name="search_action_websearch_url_hint">Šablona adresy URL použitá k vytvoření adresy vyhledávání. Použijte ‚${1}‘ jako proměnnou vyhledávaného termínu, např. https://google.cz/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Šablona adresy URL použitá k vytvoření adresy vyhledávání. Použijte ‚${1}‘ jako proměnnou vyhledávaného termínu, např. https://google.cz/search?q=${1}.</string>
     <string name="more_information">Další informace</string>
     <string name="alert_delete_shortcut">Zkratka %1$s bude nenávratně odstraněna. Pokračovat\?</string>
     <string name="experimental_feature">Experimentální</string>
