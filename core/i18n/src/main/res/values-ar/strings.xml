@@ -94,15 +94,15 @@
     <string name="wikipedia_url">https://ar.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">من ويكيبيديا</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">العنوان: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">الفنان: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">الألبوم: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">المدة: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">السنة: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">الحجم: %1$s</string>
@@ -110,50 +110,50 @@
     <string name="file_meta_path">المسار: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">النوع: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">الأبعاد: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">اسم التطبيق: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">الإصدار: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">اسم الحزمة: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">أقل اصدار SDK: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">المالك: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">المكان: %1$s</string>
     <string name="file_type_directory">مسار</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">ملف أرشيف</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">ملف حزمة أندرويد</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">ملف الكود المصدري</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">وثيقة</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">ملف إيكسل</string>
     <!-- Audio file -->
     <string name="file_type_music">ملف موسيقى</string>
     <!-- Video file -->
     <string name="file_type_video">فيديو</string>
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">صورة</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">ملف</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">ملف باور بوينت</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">ملف مضغوط</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">ملف نصي</string>
     <!-- E-book file -->
     <string name="file_type_ebook">كتاب الكتروني</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">ملف رسم غوغل</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">استمارة</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">نسخة %1$s احتياطية</string>
