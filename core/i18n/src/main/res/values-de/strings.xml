@@ -158,9 +158,9 @@
     <!-- Generic file , %1$s is the file extension -->
     <string name="file_type_generic">%1$s-Datei</string>
     <!-- Warning message that is shown when a user attempts to delete a directory -->
-    <string name="alert_delete_directory">Das Verzeichnis %1$s wird samt Inhalt unwiderruflich gelöscht. Fortfahren\?</string>
+    <string name="alert_delete_directory">Das Verzeichnis %1$s wird samt Inhalt unwiderruflich gelöscht. Fortfahren?</string>
     <!-- Warning message that is shown when a user attempts to delete a file -->
-    <string name="alert_delete_file">Die Datei %1$s wird unwiderruflich gelöscht. Fortfahren\?</string>
+    <string name="alert_delete_file">Die Datei %1$s wird unwiderruflich gelöscht. Fortfahren?</string>
     <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
     <string name="alert_delete_shortcut">Der Shortcut %1$s wird unwiderruflich gelöscht. Fortfahren\?</string>
     <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
@@ -382,12 +382,12 @@
     <string name="missing_permission_tasks_search_settings">Tasks-Berechtigung ist erforderlich, um Aufgaben in der Tasks-App durchsuchen zu können</string>
     <string name="missing_permission_tasks_integration">Aufgaben-Berechtigung wird benötigt, um die Tasks-Integration zu verwenden</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt um Termine abzurufen</string>
+    <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt, um Termine abzurufen</string>
     <string name="widget_config_calendar_missing_calendars_hint">Sie können Ihre Kalender nicht finden\?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s muss als Standard-Start-App gesetzt sein, um App-Shortcuts durchsuchen zu können</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">Speicher-Berechtigung wird benötigt, um lokale Dateien zu durchsuchen</string>
+    <string name="missing_permission_file_search_settings">Speicher-Berechtigung wird benötigt, um Dateien auf diesem Gerät zu durchsuchen</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
@@ -555,7 +555,7 @@
     <string name="preference_clockwidget_layout_vertical">Standard</string>
     <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
     <string name="preference_clock_widget_show_seconds">Sekunden anzeigen</string>
-    <string name="preference_clock_widget_monospaced">Monospace Ziffern</string>
+    <string name="preference_clock_widget_monospaced">Ziffern mit fester Breite</string>
     <string name="preference_clock_widget_time_format">Zeitformat</string>
     <string name="preference_clock_widget_time_format_24h">24-Stunden</string>
     <string name="preference_clock_widget_time_format_12h">12-Stunden</string>
@@ -714,7 +714,7 @@
     <string name="create_search_action_website_url">Adresse der Webseite eingeben:</string>
     <string name="create_search_action_website_invalid_url">Die angegebene Webseite kann nicht automatisch als Websuche importiert werden. Sie können es mit einer anderen Webseite versuchen oder die benötigten Daten im nächsten Schritt manuell eingeben</string>
     <string name="search_action_websearch_url">URL-Vorlage</string>
-    <string name="search_action_websearch_url_hint">Die URL-Vorlage, die verwendet wird um die Websuch-URL zusammenzusetzen. Verwenden Sie „${1}“ als Platzhalter für den eigentlichen Suchbegriff</string>
+    <string name="search_action_websearch_url_hint">Die URL-Vorlage, die verwendet wird, um die Websuch-URL zusammenzusetzen. Verwenden Sie „${1}“ als Platzhalter für den eigentlichen Suchbegriff</string>
     <string name="more_information">Mehr Informationen</string>
     <string name="experimental_feature">Experimentell</string>
     <string name="tag_exists_error">Ein Tag mit diesem Namen existiert bereits</string>
@@ -791,7 +791,7 @@
     <string name="note_widget_file_write_error_description">Die Notiz konnte nicht in die verknüpfte Datei geschrieben werden. Eine Kopie wurde in den internen Speicher des Launchers gespeichert</string>
     <string name="confirmation_delete_color_scheme">Möchten Sie das Farbschema %1$s wirklich löschen\?</string>
     <string name="confirmation_delete_shapes_scheme">Möchten Sie das Formschema %1$s wirklich löschen?</string>
-    <string name="confirmation_delete_typography_scheme">Möchten Sie das Typografie-Scheme %1$s wirklich löschen?</string>
+    <string name="confirmation_delete_typography_scheme">Möchten Sie das Typografie-Schema %1$s wirklich löschen?</string>
     <string name="confirmation_delete_transparencies_scheme">Möchten Sie das Transparenzschema %1$s wirklich löschen?</string>
     <string name="new_theme_name">(unbenannt)</string>
     <string name="theme_color_scheme_system_default">Systemstandard verwenden</string>
@@ -847,7 +847,7 @@
     <string name="preference_default_filter">Standardfilter</string>
     <string name="preference_default_filter_summary">Standardfilter für Suchen anpassen</string>
     <string name="preference_filter_bar">Filterleiste anzeigen</string>
-    <string name="preference_filter_bar_summary">Schellfilter über der Tastatur anzeigen</string>
+    <string name="preference_filter_bar_summary">Schnellfilter über der Tastatur anzeigen</string>
     <string name="preference_customize_filter_bar">Filterleiste anpassen</string>
     <string name="preference_customize_filter_bar_summary">Die in der Filterleiste enthaltenen Elemente anpassen</string>
     <string name="filter_settings_network_warning">Mit dem aktuellen Filter sind Online-Suchen standardmäßig aktiviert. Ihre Suchanfragen könnten unbeabsichtigt an externe Webdienste gesendet werden. Aus Datenschutzgründen ist dies nicht empfohlen.</string>
