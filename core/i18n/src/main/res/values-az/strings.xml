@@ -91,15 +91,15 @@
     <string name="wikipedia_url">https://az.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Vikipediyadan</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Başlıq: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Sənətkar: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Albom: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Müddət: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">İl: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Ölçü: %1$s</string>
@@ -107,48 +107,46 @@
     <string name="file_meta_path">Yol: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Tip: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Ölçülər: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Tətbiq adı: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Versiya: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Paket adı: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Min SDK versiyası: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Sahibi: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Yer: %1$s</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Arxiv faylı</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Android paket faylı</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Qaynaq kodu faylı</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Sənəd</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Elektron cədvəl</string>
     <!-- Audio file -->
-    <string name="file_type_music">Musiqi faylı</string>
     <!-- Video file -->
-    <!-- Picture file -->
-    <string name="file_type_image">Şəkil</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">Fayl</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Təqdimat</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Sıxılmış fayl</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Mətn faylı</string>
     <!-- E-book file -->
     <string name="file_type_ebook">E-kitab</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Rəsm</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Forma</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s ehtiyat nüsxəsi</string>
