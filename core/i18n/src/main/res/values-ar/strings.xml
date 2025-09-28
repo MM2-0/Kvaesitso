@@ -721,10 +721,10 @@
     <plurals name="debug_cleanup_database_result">
         <item quantity="zero">تمت إزالة %1$d مُدخل.</item>
         <item quantity="one">تمت إزالة %1$d مدخلات.</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="menu_dial">اتصال</string>
     <string name="plugin_action_setup">إعداد</string>
