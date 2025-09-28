@@ -87,15 +87,15 @@
     <string name="wikipedia_url">https://eu.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Wikipediatik</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Izenburua: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Artista: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Albuma: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Iraupena: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Urtea: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Tamaina: %1$s</string>
@@ -103,49 +103,49 @@
     <string name="file_meta_path">Kokalekua: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Mota: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Neurriak: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Aplikazioaren izena: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Bertsioa: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Paketearen izena: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">SDK gutxieneko bertsioa: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Jabea: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Kokapena: %1$s</string>
     <string name="file_type_directory">Karpeta</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Fitxategia</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Android pakete fitxategia</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Iturburu-kode fitxategia</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Dokumentua</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Kalkulu orria</string>
     <!-- Audio file -->
     <string name="file_type_music">Musika fitxategia</string>
     <!-- Video file -->
     <string name="file_type_video">Bideoa</string>
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">Irudia</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Fitxategia</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Aurkezpena</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Fitxategi konprimatua</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Testu fitxategia</string>
     <!-- E-book file -->
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Marrazkia</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Inprimakia</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s-(r)en segurtasun kopia</string>
@@ -668,7 +668,7 @@
     <string name="search_action_contact">Kontaktuetara gehitu</string>
     <string name="search_action_open_url">Webgunea ikusi</string>
     <string name="search_action_event">Ekitaldia programatu</string>
-    <string name="create_search_action_type">Zein ekintza mota sortu nahi dituzu\?</string>
+    <string name="create_search_action_type">Zein ekintza mota sortu nahi dituzu?</string>
     <string name="create_search_action_type_web">Webgune batean bilatu</string>
     <string name="create_search_action_type_app">Aplikazio batean bilatu</string>
     <string name="create_search_action_type_intent">Intent pertsonalizatua</string>
