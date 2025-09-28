@@ -83,15 +83,15 @@
     <string name="wikipedia_url">https://el.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Από τη Wikipedia</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Τίτλος: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Καλλιτέχνης: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Άλμπουμ: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Διάρκεια: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Έτος: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Μέγεθος: %1$s</string>
@@ -99,50 +99,48 @@
     <string name="file_meta_path">Διαδρομή: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Τύπος: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Διαστάσεις: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Όνομα εφαρμογής: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Έκδοση: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Όνομα πακέτου: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Ελ. έκδοση SDK: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Ιδιοκτήτης: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Τοποθεσία: %1$s</string>
     <string name="file_type_directory">Φάκελος</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Αρχείο</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Αρχείο εφαρμογής Android</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Αρχείο πηγαίου κώδικα</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Έγγραφο</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Υπολογιστικό φύλλο</string>
     <!-- Audio file -->
-    <string name="file_type_music">Ήχος</string>
     <!-- Video file -->
     <string name="file_type_video">Βίντεο</string>
-    <!-- Picture file -->
-    <string name="file_type_image">Εικόνα</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">Αρχείο</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Παρουσίαση</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Συμπιεσμένο αρχείο</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Αρχείο κειμένου</string>
     <!-- E-book file -->
     <string name="file_type_ebook">Ηλ. Βιβλίο</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Ζωγραφιά</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Φόρμα</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s αντίγραφο ασφαλείας</string>
@@ -205,20 +203,18 @@
     <string name="menu_edit_widgets">Επεξεργασία γραφικών στοιχείων</string>
     <string name="widget_name_weather">Καιρός</string>
     <string name="widget_name_calendar">Ημερολόγιο</string>
-    <string name="widget_name_music">Μουσική</string>
+    <string name="widget_name_music">Πολυμέσα</string>
     <string name="widget_name_favorites">Αγαπημένα</string>
     <string name="widget_name_notes">Ένα γραφικό στοιχείο που αποθηκεύει μία μόνο σημείωση</string>
-    <string name="widget_name_unknown">Ετικέτα που χρησιμοποιείται για μη έγκυρα γραφικά στοιχεία εφαρμογών</string>
+    <string name="widget_name_unknown">Άγνωστο</string>
     <string name="widget_add_widget">Προσθήκη γραφικού στοιχείου</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Γράψε μια σημείωση…</string>
     <string name="notes_widget_action_new">Νέα σημείωση</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Αποθήκευση</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Σημείωση_%1$s</string>
     <string name="notes_widget_action_dismiss">Απόρριψη</string>
-    <string name="notes_widget_dismissed">Η σημείωση απορρίφθηκε.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Από %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -244,7 +240,6 @@
     <string name="edit_favorites_dialog_empty_section">Σύρετε στοιχεία εδώ</string>
     <string name="edit_favorites_dialog_tags">Ετικέτες</string>
     <string name="edit_favorites_dialog_tag_section_empty">Οι καρφιτσωμένες ετικέτες θα εμφανίζονται εδώ</string>
-    <string name="edit_favorites_dialog_new_tag">Δημιουργία ετικέτας…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL διακομιστή Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -294,7 +289,6 @@
         <item quantity="other">%1$d εκτελούμενες εκδηλώσεις από προηγούμενες ημέρες</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">ολοήμερη</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">Το %1$s αναπαράγει πολυμέσα</string>
     <string name="music_widget_no_data">Δεν έχει αναπαραχθεί ακόμα κανένα μέσο</string>
@@ -345,22 +339,18 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Δεν υπάρχουν διαθέσιμα δεδομένα καιρού.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Ορισμός τοποθεσίας</string>
-    <string name="weather_location_search_no_result">Η τοποθεσία δε βρέθηκε.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Απαιτείται πρόσβαση τοποθεσίας για να προσδιοριστεί αυτόματα</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Απαιτείται πρόσβαση στις ειδοποιήσεις για τον έλεγχο της αναπαραγωγής πολυμέσων</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Απαιτείται άδεια πρόσβασης στις επαφές για την αναζήτησή τους</string>
     <!-- Missing call permission in contacts settings screen -->
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Απαιτείται άδεια πρόσβασης στο ημερολόγιο για αναζήτηση εκδηλώσεων</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">Αυτό το γραφικό στοιχείο απαιτεί άδεια πρόσβασης στο ημερολόγιο</string>
     <string name="widget_config_calendar_missing_calendars_hint">Δεν μπορείτε να βρείτε τα ημερολόγια σας;</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">Το %1$s πρέπει να οριστεί ως προεπιλεγμένη εφαρμογή αρχικής οθόνης για αναζήτηση συντομεύσεων εφαρμογών</string>
@@ -369,18 +359,13 @@
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Για την αναζήτηση τοπικών αρχείων απαιτείται άδεια διαχείρισης όλων των αρχείων</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Απαιτείται πρόσβαση στις ειδοποιήσεις για την εμφάνιση σημάτων ειδοποιήσεων</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Παραχωρήστε άδεια στο ημερολόγιο για την εμφάνιση προσεχών συναντήσεων και εκδηλώσεων.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Παραχωρήστε άδεια στο ημερολόγιο για αναζήτηση εκδηλώσεων ημερολογίου.</string>
     <!-- Missing location permission, used in location search results -->
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Παραχωρήστε άδεια αποθηκευτικού χώρου για αναζήτηση φωτογραφιών, πολυμέσων και εγγράφων σε αυτήν τη συσκευή.</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Παραχωρήστε άδεια στις επαφές για αναζήτηση επαφών.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Ορίστε το %1$s ως προεπιλεγμένη εφαρμογή αρχικής οθόνης, για αναζήτηση συντομεύσεων εφαρμογών.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -394,7 +379,6 @@
     <string name="preference_theme_dark">Σκοτεινό</string>
     <string name="preference_screen_colors">Χρωματικός συνδυασμός</string>
     <string name="preference_colors_default">Προεπιλεγμένο</string>
-    <string name="preference_colors_bw">Ασπρόμαυρο</string>
     <string name="preference_custom_colors_corepalette">Παλέτα χρωμάτων</string>
     <string name="preference_mdy_color_source_wallpaper">Φόντο</string>
     <string name="preference_shapes_default">Προεπιλεγμένο</string>
@@ -409,12 +393,10 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Άνοιγμα σελίδας</string>
     <string name="preference_screen_about_summary">Πληροφορίες εφαρμογής και άδειας χρήσης</string>
-    <string name="preference_screen_appearance_summary">Προσαρμογή εμφάνισης και αίσθησης</string>
     <string name="preference_weather_provider">Πάροχος</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (Γερμανία μόνο)</string>
     <string name="preference_category_location">Τοποθεσία</string>
     <string name="preference_automatic_location">Αυτόματη τοποθεσία</string>
-    <string name="preference_automatic_location_summary">Χρησιμοποιήστε τις υπηρεσίες GPS και τοποθεσίας για να προσδιορίσετε αυτόματα την τοποθεσία</string>
     <string name="preference_location">Τοποθεσία</string>
     <string name="preference_imperial_units_summary">Χρησιμοποιήστε βαθμούς Φαρενάιτ και μίλια ανά ώρα</string>
     <string name="preference_imperial_units">Αγγλικό σύστημα μέτρησης</string>
@@ -428,10 +410,6 @@
     <string name="preference_debug_cleanup_database_summary">Καταργήστε κατεστραμμένες και αχρησιμοποίητες εγγραφές από τη βάση δεδομένων της εφαρμογής</string>
     <string name="preference_debug_reinstall_iconpacks">Επανεγκατάσταση πακέτων εικονιδίων</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Εκκαθαρίστε και δημιουργήστε ξανά την προσωρινή μνήμη του πακέτου εικονιδίων</string>
-    <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d καταχώριση έχει αφαιρεθεί.</item>
-        <item quantity="other">%1$d καταχωρίσεις έχουν αφαιρεθεί.</item>
-    </plurals>
     <string name="preference_category_icons">Εικονίδια</string>
     <string name="preference_cards">Κάρτες</string>
     <string name="preference_cards_summary">Παραμετροποίηση εμφάνισης κάρτας</string>
@@ -474,7 +452,6 @@
     <string name="preference_hide_nav_bar">Απόκρυψη γραμμής πλοήγησης</string>
     <string name="preference_screen_integrations_summary">Διαχείριση συνδεδεμένων λογαριασμών και υπηρεσιών</string>
     <string name="preference_signin_user">Συνδεδεμένος ως %1$s</string>
-    <string name="preference_summary_not_logged_in">Αυτή την στιγμή δεν έχετε συνδεθεί</string>
     <string name="preference_icon_shape_pentagon">Πεντάγωνο</string>
     <string name="preference_category_wallpaper">Ταπετσαρία</string>
     <string name="preference_dim_wallpaper">Σκοτείνιασμα ταπετσαρίας</string>
@@ -537,7 +514,6 @@
     <string name="preference_clockwidget_battery_part_summary">Εμφάνιση του τρέχοντος επιπέδου μπαταρίας όταν είναι χαμηλή ή φορτίζει</string>
     <string name="preference_clockwidget_alarm_part">Ξυπνητήρια</string>
     <string name="preference_clockwidget_alarm_part_summary">Εμφάνιση ξυπνητηριών που θα χτυπήσουν μέσα στα επόμενα 15 λεπτά</string>
-    <string name="preference_screen_backup">Αντίγραφα ασφαλείας &amp; Επαναφορά</string>
     <string name="preference_screen_backup_summary">Εξαγωγή και εισαγωγή δεδομένων εφαρμογής εκκίνησης</string>
     <string name="preference_backup">Αντίγραφα ασφαλείας</string>
     <string name="preference_backup_summary">Εξαγωγή προτιμήσεων και δεδομένων εφαρμογής εκκίνησης</string>
@@ -593,7 +569,6 @@
     <string name="preference_widgets_edit_button_summary">Εμφάνιση ενός πλήκτρου για προσθήκη, αφαίρεση και αναδιάταξη γραφικών στοιχείων</string>
     <string name="preference_screen_homescreen">Αρχική οθόνη</string>
     <string name="preference_screen_homescreen_summary">Ρολόι, γραμμή αναζήτησης, ταπετσαρία, γραμμές συστήματος</string>
-    <string name="preference_screen_icons">Πλέγμα και εικονίδια</string>
     <string name="preference_screen_icons_summary">Πλέγμα, μέγεθος εικονιδίου, πακέτα εικονιδίων, σήματα</string>
     <string name="preference_weather_integration">Καιρός</string>
     <string name="preference_media_integration">Έλεγχος πολυμέσων</string>
@@ -640,17 +615,14 @@
     <string name="search_action_contact">Δημιουργία επαφής</string>
     <string name="search_action_open_url">Προβολή ιστότοπου</string>
     <string name="search_action_event">Προγραμματισμός εκδήλωσης</string>
-    <string name="create_search_action_type">Τι είδους δράση θέλετε να δημιουργήσετε;</string>
     <string name="create_search_action_type_web">Αναζήτηση σε έναν ιστότοπο</string>
     <string name="create_search_action_type_app">Αναζήτηση σε μία εφαρμογή</string>
     <string name="create_search_action_type_intent">Προσαρμοσμένη πρόθεση</string>
     <string name="create_search_action_pick_app">Επιλέξτε μια εφαρμογή για αναζήτηση:</string>
     <string name="create_search_action_website_url">Εισαγάγετε τη διεύθυνση του ιστότοπου:</string>
-    <string name="create_search_action_website_invalid_url">Ο συγκεκριμένος ιστότοπος δεν μπορεί να εισαχθεί αυτόματα ως αναζήτηση ιστού. Μπορείτε να δοκιμάσετε έναν διαφορετικό ιστότοπο ή να εισαγάγετε τα απαιτούμενα δεδομένα με μη αυτόματο τρόπο στο επόμενο βήμα.</string>
     <string name="search_action_label">Όνομα</string>
     <string name="search_action_app">Εφαρμογή</string>
     <string name="search_action_websearch_url">Πρότυπο URL</string>
-    <string name="search_action_websearch_url_hint">Το πρότυπο URL που χρησιμοποιείται για τη δημιουργία της διεύθυνσης URL αναζήτησης ιστού. Χρησιμοποιήστε το \"${1}\" ως σύμβολο κράτησης θέσης για τον πραγματικό όρο αναζήτησης, π.χ. https://google.com/search?q=${1}.</string>
     <string name="more_information">Περισσότερες πληροφορίες</string>
     <string name="experimental_feature">Πειραματικό</string>
     <string name="search_bar_position_top">Πάνω</string>
