@@ -380,7 +380,6 @@
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">A(z) %1$s alkalmazást alapértelmezett indítóként kell beállítani az telepített alkalmazások kereséséhez</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">A helyi fájlok kereséséhez, tárhely engedélyre van szükség</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
