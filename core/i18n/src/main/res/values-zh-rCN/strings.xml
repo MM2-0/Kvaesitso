@@ -416,7 +416,7 @@
     <string name="search_action_websearch_url_hint">URL模板用于构建搜索引擎的URL.使用‘${1}’作为实际搜索字词的占位符，例如 https://google.com/search?q=${1}。</string>
     <string name="more_information">更多信息</string>
     <string name="experimental_feature">实验性的</string>
-    <string name="create_search_action_type">你想创建哪种操作\?</string>
+    <string name="create_search_action_type">你想创建哪种操作?</string>
     <string name="create_search_action_type_web">在网站上搜索</string>
     <string name="create_search_action_type_app">在应用程序中搜索</string>
     <string name="create_search_action_type_intent">Custom intent</string>
