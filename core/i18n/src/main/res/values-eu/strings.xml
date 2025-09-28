@@ -296,7 +296,7 @@
     <string name="preference_search_files_summary">Tokiko fitxategiak eta hodeiko fitxategiak bilatu</string>
     <string name="preference_search_websites_summary">Erakutsi webgune baten aurrebista bilaketa-kontsulta URL bat bada</string>
     <string name="icon_picker_suggestions">Iradokizunak</string>
-    <string name="create_search_action_type">Zein ekintza mota sortu nahi dituzu\?</string>
+    <string name="create_search_action_type">Zein ekintza mota sortu nahi dituzu?</string>
     <string name="weather_condition_lightrainshowersandthunder">Euri-zaparrada arinak eta trumoiak</string>
     <string name="weather_condition_lightsnowandthunder">Elur arina eta trumoiak</string>
     <string name="weather_condition_lightrain">Euri arina</string>
