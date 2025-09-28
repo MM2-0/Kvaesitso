@@ -95,13 +95,13 @@
     <string name="wikipedia_url">https://ro.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Din Wikipedia</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Titlu: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
-    <!-- File meta data, album of audio tracks -->
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Durată: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">An: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Dimensiune: %1$s</string>
@@ -109,47 +109,45 @@
     <string name="file_meta_path">Cale de acces: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Tip: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Dimensiuni: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Denumire aplicatie: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Versiune: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Nume pachet: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Versiune minima SDK: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Proprietar: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Locatie: %1$s</string>
     <string name="file_type_directory">Director</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Fișier arhivă</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Fișier pachet Android</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Fișier cod sursă</string>
-    <!-- Word document -->
-    <!-- Excel spreadsheet -->
+    <!-- Document -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Tabel</string>
     <!-- Audio file -->
-    <string name="file_type_music">Fișier audio</string>
     <!-- Video file -->
-    <!-- Picture file -->
-    <string name="file_type_image">Imagine</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">Fișier</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Prezentare</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Fișier arhivat</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Fișier text</string>
     <!-- E-book file -->
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Desen</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Formular</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">Backup %1$s</string>
@@ -211,21 +209,18 @@
     <string name="websearch_dialog_query_encoding_none">Niciuna</string>
     <string name="menu_edit_widgets">Editează widget-uri</string>
     <string name="widget_name_weather">Vreme</string>
-    <string name="widget_name_music">Muzică</string>
     <string name="widget_name_favorites">Favorite</string>
     <string name="widget_name_notes">Notiță</string>
-    <string name="widget_name_unknown">Widget necunoscut</string>
+    <string name="widget_name_unknown">Necunoscut</string>
     <string name="widget_add_widget">Adaugă widget</string>
     <string name="widget_removed">Widget eliminat</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Scrieți o notiță…</string>
     <string name="notes_widget_action_new">Notiță nouă</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Salvați</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Notiță_%1$s</string>
     <string name="notes_widget_action_dismiss">Înlăturați</string>
-    <string name="notes_widget_dismissed">Notă înlăturată.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">al %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -252,7 +247,6 @@
     <string name="edit_favorites_dialog_empty_section">Trageți elemente aici</string>
     <string name="edit_favorites_dialog_tags">Etichete</string>
     <string name="edit_favorites_dialog_tag_section_empty">Etichetele fixate vor apărea aici</string>
-    <string name="edit_favorites_dialog_new_tag">Creați o etichetă…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Adresa URL a serverului Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -303,7 +297,6 @@
         <item quantity="other">+%1$d de elemente în desfăşurare din zilele trecute</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">Toată ziua</string>
     <string name="task_due_time">Din cauză la %1$s</string>
     <string name="task_due_date">Cauza la %1$s</string>
     <string name="task_due_today">Cauza azi</string>
@@ -361,22 +354,18 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Nu există date meteorologice disponibile.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Setați locația</string>
-    <string name="weather_location_search_no_result">Locație negăsită.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Accesul la locație este necesar pentru a determina automat locația</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Accesul la notificări este necesar pentru a controla redarea media</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Permisiunea contactelor este necesară pentru a căuta persoane de contact</string>
     <!-- Missing call permission in contacts settings screen -->
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Permisiunea la calendar este necesară pentru a căuta în calendar</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">Acest widget necesită permisiunea la calendar</string>
     <string name="widget_config_calendar_missing_calendars_hint">Nu vă puteți găsi calendarele?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s trebuie setată ca aplicație de pornire implicită pentru a căuta comenzi rapide în aplicație</string>
@@ -385,19 +374,13 @@
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Este necesară permisiunea de gestionare a tuturor fișierelor pentru a căuta fișiere locale</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Accesul la notificare este necesar pentru a afișa ecusoane de notificare</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Acordați permisiunea de calendar pentru a afișa rezervările și evenimentele viitoare aici.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Acorda permisiunea de calendar pentru a căuta în calendarul tău.</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Acordați permisiunea la locație pentru a căuta locații în apropiere.</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Acordați permisiunea de stocare pentru a căuta fotografii, fişiere media și documente pe acest dispozitiv.</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Acordați permisiunea de contacte pentru a căuta contactul dorit.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Seteaza %1$s ca aplicație de pornire implicită pentru a căuta comenzi rapide pentru aplicații.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -412,7 +395,6 @@
     <string name="preference_screen_colors">Schema de culori</string>
     <string name="preference_colors_default">Implicit</string>
     <string name="preference_colors_high_contrast">contrast ridicat</string>
-    <string name="preference_colors_bw">Alb-Negru</string>
     <string name="preference_custom_colors_corepalette">Paleta de culori</string>
     <string name="preference_mdy_color_source">Sursa pentru culori dinamice</string>
     <string name="preference_mdy_color_source_system">Utilizați culorile Material You sugerate de sistem</string>
@@ -434,12 +416,10 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Deschide website</string>
     <string name="preference_screen_about_summary">Informații despre aplicație și licențe</string>
-    <string name="preference_screen_appearance_summary">Personalizați aspectul</string>
     <string name="preference_weather_provider">Furnizor</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (doar Germania)</string>
     <string name="preference_category_location">Locație</string>
     <string name="preference_automatic_location">Locație automată</string>
-    <string name="preference_automatic_location_summary">Utilizați GPS-ul și serviciile de localizare pentru a determina locația în mod automat</string>
     <string name="preference_location_managed">Gestionat de plugin</string>
     <string name="preference_location_managed_summary">Locația pentru acest furnizor este gestionată de aplicația plugin</string>
     <string name="preference_location">Locație</string>
@@ -500,7 +480,6 @@
     <string name="preference_screen_integrations_summary">Gestionează conturile și serviciile conectate</string>
     <string name="preference_signin_user">Conectat ca %1$s</string>
     <string name="preference_signout">Deconectați-vă</string>
-    <string name="preference_summary_not_logged_in">În prezent, nu sunteți conectat</string>
     <string name="preference_category_wallpaper">Fundal</string>
     <string name="preference_dim_wallpaper">Întunecă imaginea de fundal</string>
     <string name="preference_dim_wallpaper_summary">La teme întunecate, fundal întunecat</string>
@@ -562,7 +541,6 @@
     <string name="preference_clockwidget_battery_part_summary">Afișează nivelul curent al bateriei atunci când bateria este scăzută sau se încarcă</string>
     <string name="preference_clockwidget_alarm_part">Alarme</string>
     <string name="preference_clockwidget_alarm_part_summary">Afișează alarme care vor suna în următoarele 15 minute</string>
-    <string name="preference_screen_backup">Backup &amp; Restaurare</string>
     <string name="preference_screen_backup_summary">Exportă și importă informații despre lansator</string>
     <string name="preference_crash_reporter">Reporter de cădere</string>
     <string name="preference_crash_reporter_summary">Rapoarte de eroare și de cădere</string>
@@ -612,15 +590,12 @@
     <string name="preference_favorites_frequently_used_summary">Afișează elementele utilizate frecvent în favorite</string>
     <string name="preference_favorites_edit_button_summary">Afișează buton pentru rearanjarea favoritelor</string>
     <string name="preference_widgets_on_home_screen">Widgeturi pe ecranul de pornire</string>
-    <string name="preference_widgets_on_home_screen_summary">Afisează widgeturile pe ecranul de pornire în loc de o pagină suplimentară</string>
     <string name="preference_screen_homescreen">Ecran de pornire</string>
     <string name="preference_screen_homescreen_summary">Ceas, bară de căutare, fundal, bare de sistem</string>
-    <string name="preference_screen_icons">Grilă &amp; iconițe</string>
     <string name="preference_screen_icons_summary">Grilă, dimensiune pictograme, pachete de iconițe, insigne</string>
     <string name="preference_weather_integration">Vreme</string>
     <!-- %1$s: app name (Kvaesitso) -->
     <string name="preference_contacts_call_on_tap">Atinge pentru a apela</string>
-    <string name="preference_contacts_call_on_tap_summary">Inițiați imediat un apel când atingeți un număr de telefon</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Nu ai conectat încă un cont Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -644,12 +619,10 @@
     <string name="search_action_contact">Contact nou</string>
     <string name="search_action_open_url">Vizualizați website-ul</string>
     <string name="search_action_event">Programați evenimentul</string>
-    <string name="create_search_action_type">Ce fel de acțiune vrei să creezi?</string>
     <string name="create_search_action_type_web">Caută pe un site</string>
     <string name="create_search_action_type_app">Căutare cu aplicație</string>
     <string name="create_search_action_pick_app">Alegeți o aplicație pentru căutare:</string>
     <string name="create_search_action_website_url">Introduceți adresa site-ului web:</string>
-    <string name="create_search_action_website_invalid_url">Site-ul dat nu poate fi importat automat ca o căutare web. Puteți încerca un alt site web sau puteți introduce manual datele necesare în pasul următor.</string>
     <string name="search_action_label">Nume</string>
     <string name="more_information">Mai multe informații</string>
     <string name="open_search_pull_down">Glisează în jos</string>
@@ -679,7 +652,6 @@
     <string name="gesture_action_lock_screen">Dezactiva ecranul</string>
     <string name="gesture_action_quick_settings">Deschide setările rapide</string>
     <string name="gesture_action_power_menu">Afișează meniu alimentare</string>
-    <string name="gesture_action_recents">Deschide recentele</string>
     <string name="missing_permission_accessibility_gesture_failed">Serviciul de accesibilitate al lansatorului trebuie să fie activat pentru a efectua această acțiune.</string>
     <string name="missing_permission_accessibility_gesture_settings">Această acțiune necesită activarea serviciului de accesibilitate al lansatorului.</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
@@ -690,7 +662,6 @@
     <string name="widget_config_appwidget_resize">Redimensionare</string>
     <string name="widget_config_calendar_no_calendars">Niciun calendar gasit</string>
     <string name="widget_pick_widget">Alege widgetul</string>
-    <string name="app_widget_loading_failed">Widgetul nu s-a putut încărca.</string>
     <!-- %1$s: app name -->
     <string name="plugin_type_filesearch">Fișiere</string>
     <string name="plugin_type_contacts">Contacte</string>
