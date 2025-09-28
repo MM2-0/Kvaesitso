@@ -505,7 +505,7 @@
     <string name="gesture_action_launch_app">Inicia l\'aplicació</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">L\'entrada %1$d s\'ha eliminat.</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Les entrades %1$d s\'han eliminat.</item>
     </plurals>
     <string name="missing_permission_file_search_settings">Es requereix permís d\'accés a l\'emmagatzematge extern per cercar fitxers locals</string>
