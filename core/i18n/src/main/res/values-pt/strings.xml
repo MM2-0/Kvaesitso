@@ -95,15 +95,15 @@
     <string name="wikipedia_url">https://pt.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">de Wikipédia</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Título: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Artista: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Álbum: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Duração: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Ano: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Tamanho: %1$s</string>
@@ -111,49 +111,47 @@
     <string name="file_meta_path">Caminho: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Tipo: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Dimensões: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Nome do app: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Versão: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Nome do pacote: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Versão mínima do SDK : %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Proprietário: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Localização: %1$s</string>
     <string name="file_type_directory">Diretório</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Arquivo</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Arquivo de pacote Android</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Arquivo de código-fonte</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Documento</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Planilha</string>
     <!-- Audio file -->
-    <string name="file_type_music">Arquivo de música</string>
     <!-- Video file -->
     <string name="file_type_video">Vídeo</string>
-    <!-- Picture file -->
-    <string name="file_type_image">Imagem</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">Arquivo</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Apresentação</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Arquivo comprimido</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Arquivo de texto</string>
     <!-- E-book file -->
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Desenho</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Formulário</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">Backup do %1$s</string>
@@ -218,21 +216,19 @@
     <string name="menu_edit_widgets">Editar widgets</string>
     <string name="widget_name_weather">Tempo</string>
     <string name="widget_name_calendar">Calendário</string>
-    <string name="widget_name_music">Música</string>
+    <string name="widget_name_music">Mídia</string>
     <string name="widget_name_favorites">Favoritos</string>
     <string name="widget_name_notes">Nota</string>
-    <string name="widget_name_unknown">Aplicativo de widget desconhecido</string>
+    <string name="widget_name_unknown">Desconhecido</string>
     <string name="widget_add_widget">Adicionar widget</string>
     <string name="widget_removed">Widget removido</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Faça uma nota…</string>
     <string name="notes_widget_action_new">Nova nota</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Salvar</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Nota_%1$s</string>
     <string name="notes_widget_action_dismiss">Descartar</string>
-    <string name="notes_widget_dismissed">Nota descartada.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">De %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -260,7 +256,6 @@
     <string name="edit_favorites_dialog_empty_section">Arraste itens aqui</string>
     <string name="edit_favorites_dialog_tags">Etiquetas</string>
     <string name="edit_favorites_dialog_tag_section_empty">Etiquetas fixadas vão aparecer aqui</string>
-    <string name="edit_favorites_dialog_new_tag">Criar etiqueta…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL de servidor Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -312,7 +307,6 @@
         <item quantity="other">+%1$d tarefas por realizar</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">todo o dia</string>
     <string name="task_due_time">Vence às %1$s</string>
     <string name="task_due_date">Vence em %1$s</string>
     <string name="task_due_today">Vence hoje</string>
@@ -370,25 +364,19 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Não há dados meteorológicos disponíveis.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Definir localização</string>
-    <string name="weather_location_search_no_result">Localização não encontrada.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">O acesso à localização é necessário para determinar o local automaticamente</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">O acesso às notificações é necessário para controlar a reprodução de mídia</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">O acesso aos contatos é necessário para pesquisar contatos</string>
     <!-- Missing call permission in contacts settings screen -->
-    <string name="missing_permission_call_contacts_settings">A permissão de telefone é necessária para iniciar chamadas</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">A permissão de calendário é necessária para pesquisar o calendário</string>
-    <string name="missing_permission_tasks_search_settings">A permissão Tasks é necessária para pesquisar tarefas</string>
     <string name="missing_permission_tasks_integration">A permissão Tasks é necessária para a integração Tasks</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">Esse widget requer a permissão de calendário</string>
     <string name="widget_config_calendar_missing_calendars_hint">Não consegue encontrar seus calendários\?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s deve ser definido como aplicativo de tela inicial padrão para pesquisar atalhos de aplicativos</string>
@@ -397,19 +385,13 @@
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">A permissão gerenciar todos os arquivos é necessária para pesquisar arquivos locais</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Acesso a notificações é necessário para mostrar selos de notificação</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Conceda permissão de calendário para exibir compromissos e eventos futuros aqui.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Conceda permissão de calendário para pesquisar o seu calendário.</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Conceda permissão de localização para que se possa pesquisar ao redor.</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Conceda permissão de armazenamento para pesquisar fotos, mídia e documentos neste dispositivo.</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Conceda permissão de contato para pesquisar seus contatos.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Defina %1$s como aplicativo de tela inicial padrão para pesquisar atalhos de aplicativos.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -424,7 +406,6 @@
     <string name="preference_screen_colors">Esquema de cores</string>
     <string name="preference_colors_default">Padrão</string>
     <string name="preference_colors_high_contrast">Alto contraste</string>
-    <string name="preference_colors_bw">Preto e Branco</string>
     <string name="preference_custom_colors_corepalette">Palheta de cores</string>
     <string name="preference_mdy_color_source">Fonte para cores dinâmicas</string>
     <string name="preference_mdy_color_source_system">Sistema</string>
@@ -448,12 +429,10 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Abrir site</string>
     <string name="preference_screen_about_summary">Informações sobre o aplicativo e licenças</string>
-    <string name="preference_screen_appearance_summary">Personalizar a aparência</string>
     <string name="preference_weather_provider">Provedor</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (apenas Alemanha)</string>
     <string name="preference_category_location">Localização</string>
     <string name="preference_automatic_location">Localização automática</string>
-    <string name="preference_automatic_location_summary">Use GPS e serviços de localização para determinar a localização automaticamente</string>
     <string name="preference_location_managed">Gerenciado por extensão</string>
     <string name="preference_location_managed_summary">A localização para esse provedor é gerenciada pelo aplicativo de extensão</string>
     <string name="preference_location">Localização</string>
@@ -470,10 +449,6 @@
     <string name="preference_debug_cleanup_database_summary">Remove entradas quebradas e não utilizadas do banco de dados do iniciador</string>
     <string name="preference_debug_reinstall_iconpacks">Reinstalar pacote de ícones</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Limpar e reconstruir o cache do pacote de ícones</string>
-    <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d entrada foi removida.</item>
-        <item quantity="other">%1$d entradas foram removidas.</item>
-    </plurals>
     <string name="preference_category_icons">Ícones</string>
     <string name="preference_cards">Cartões</string>
     <string name="preference_cards_summary">Personalizar aparência dos cartões</string>
@@ -520,7 +495,6 @@
     <string name="preference_screen_integrations_summary">Gerenciar as contas e serviços conectados</string>
     <string name="preference_signin_user">Autenticado como %1$s</string>
     <string name="preference_signout">Desconectar</string>
-    <string name="preference_summary_not_logged_in">Você não está logado</string>
     <string name="preference_icon_shape_pentagon">Pentágono</string>
     <string name="preference_category_wallpaper">Papel de parede</string>
     <string name="preference_dim_wallpaper">Escurecer papel de parede</string>
@@ -591,7 +565,6 @@
     <string name="preference_clockwidget_battery_part_summary">Mostra o nível atual da bateria quando a bateria está fraca ou carregando</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra alarmes que tocarão nas próximas 8 horas</string>
-    <string name="preference_screen_backup">Backup e Restauração</string>
     <string name="preference_screen_backup_summary">Exportar e importar dados do iniciador</string>
     <string name="preference_backup_summary">Exportar preferências e dados do iniciador</string>
     <string name="preference_restore">Restauração</string>
@@ -662,10 +635,8 @@
     <string name="preference_compact_tags_summary">Esconde etiquetas ou ícones para reduzir o espaço ocupado pelas tags</string>
     <string name="preference_widgets_edit_button_summary">Mostra um botão para adicionar, remover e reorganizar widgets</string>
     <string name="preference_widgets_on_home_screen">Widgets no ecrã principal</string>
-    <string name="preference_widgets_on_home_screen_summary">Mostrar widgets no ecrã principal e não em página secundária</string>
     <string name="preference_screen_homescreen">Tela inicial</string>
     <string name="preference_screen_homescreen_summary">Relógio, barra de pesquisa, papel de parede,barras de sistema</string>
-    <string name="preference_screen_icons">Gride &amp; ícones</string>
     <string name="preference_screen_icons_summary">Gride, tamanho do ícone, pacotes de ícones, emblemas</string>
     <string name="preference_weather_integration">Tempo</string>
     <string name="preference_media_integration">Controle de mídia</string>
@@ -678,7 +649,6 @@
     <string name="preference_breezyweather_integration_instructions">Para utilizar Breezy Weather como serviço meteorológico:\n\n1. Aceda a Breezy Weather &gt; Definições &gt; Widgets &amp; Papel de parede &gt; Enviara dados Gadgetbridge &gt; Ativar%1$s\n\n2. Em %1$s, selecione Breezy Weather como serviço de meteorologia.</string>
     <string name="preference_launch_breezyweather_app">Abrir Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">Toque para chamar</string>
-    <string name="preference_contacts_call_on_tap_summary">Iniciar a chamada imediatamente ao tocar em um número de telefone</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Você ainda não conectou uma conta Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -724,29 +694,21 @@
     <string name="search_action_contact">Adicionar aos contatos</string>
     <string name="search_action_open_url">Ver site</string>
     <string name="search_action_event">Agendar evento</string>
-    <string name="create_search_action_type">Que tipo de ação você deseja criar\?</string>
     <string name="create_search_action_type_web">Pesquisar em um site</string>
     <string name="create_search_action_type_app">Pesquisar em um aplicativo</string>
     <string name="create_search_action_type_intent">Intenção personalizada</string>
     <string name="create_search_action_pick_app">Escolha um aplicativo para pesquisar:</string>
     <string name="create_search_action_website_url">Digite o endereço do site:</string>
-    <string name="create_search_action_website_invalid_url">O site fornecido não pode ser importado automaticamente como uma pesquisa na web. Você pode tentar um site diferente ou inserir os dados necessários manualmente na próxima etapa.</string>
     <string name="search_action_label">Nome</string>
     <string name="search_action_app">Aplicativo</string>
     <string name="search_action_websearch_url">Modelo de URL</string>
-    <string name="search_action_websearch_url_hint">O modelo de URL é usado para construir o URL de pesquisa na web. Use \'${1}\' como espaço reservado para o termo de pesquisa real, por exemplo https://google.com/search\?q=${1}.</string>
     <string name="more_information">Mais Informações</string>
-    <string name="tag_exists_error">Já existe uma etiqueta com este nome.</string>
-    <string name="tag_exists_message">Já existe uma etiqueta com este nome. Se você continuar, as duas etiquetas serão mescladas.</string>
-    <string name="tag_no_items_message">Nenhum item foi atribuído a essa etiqueta. Se você continuar, ela será excluída.</string>
-    <string name="tag_empty_name">Uma etiqueta não pode existir sem um nome. Se você continuar, a etiqueta será deletada.</string>
     <string name="tag_select_items">Selecione itens:</string>
     <string name="tag_name">Nome da etiqueta</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item selecionado</item>
         <item quantity="other">%1$d itens selecionados</item>
     </plurals>
-    <string name="preference_layout_open_search">Pesquisa / gaveta de aplicativos</string>
     <string name="open_search_pull_down">Deslize para baixo</string>
     <string name="open_search_swipe_left">Deslize para a esquerda</string>
     <string name="open_search_swipe_right">Deslize para a direita</string>
@@ -776,7 +738,6 @@
     <string name="gesture_action_lock_screen">Desligar a tela</string>
     <string name="gesture_action_quick_settings">Abrir as configurações rápidas</string>
     <string name="gesture_action_power_menu">Mostrar o menu de energia</string>
-    <string name="gesture_action_recents">Abrir os recentes</string>
     <string name="gesture_failed_message">Você executou o gesto \"%1$s\". Este gesto está definido para acionar a ação \"%2$s\". No entanto, a ação não pôde ser executada pelo seguinte motivo:</string>
     <string name="missing_permission_accessibility_gesture_failed">O serviço de acessibilidade do iniciador precisa estar ativado para executar esta ação.</string>
     <string name="missing_permission_accessibility_gesture_settings">Esta ação requer que o serviço de acessibilidade do iniciador esteja ativado.</string>
@@ -791,7 +752,6 @@
     <string name="widget_config_weather_integration_settings">Definições de integração meteorológica</string>
     <string name="widget_config_calendar_no_calendars">Nenhum calendário encontrado</string>
     <string name="widget_pick_widget">Escolher widget</string>
-    <string name="app_widget_loading_failed">Falha no carregamento do widget da aplicação.</string>
     <string name="widget_config_music_integration_settings">Configurações de controle de integração de mídia</string>
     <string name="note_widget_link_file">Ligar a um arquivo</string>
     <string name="note_widget_link_file_summary">Sincronizar o conteúdo deste widget com um ficheiro externo</string>
@@ -805,9 +765,7 @@
     <string name="note_widget_conflict_local_version">Ultima versão salva:</string>
     <string name="note_widget_conflict_file_version">Conteúdo do atual arquivo:</string>
     <string name="note_widget_file_read_error">Erro ao ler anotação</string>
-    <string name="note_widget_file_read_error_description">O ficheiro ligado não pôde ser lido. Possivelmente, foi movido ou eliminado. Foi restaurada uma cópia a partir do armazenamento interno do iniciador. Se editar a nota, o ficheiro ligado será possivelmente substituído.</string>
     <string name="note_widget_file_write_error">Erro ao salvar anotação</string>
-    <string name="note_widget_file_write_error_description">A nota não pôde ser escrita no ficheiro conectado. Possivelmente, foi movida ou eliminada. Foi guardada uma cópia no armazenamento interno do iniciador.</string>
     <string name="confirmation_delete_color_scheme">Tem certeza que quer apagar o esquema de cor %1$s?</string>
     <string name="confirmation_delete_shapes_scheme">Tem a certeza de que deseja eliminar o esquema de formas %1$s?</string>
     <string name="confirmation_delete_typography_scheme">Tem a certeza de que deseja eliminar o esquema tipográfico %1$s?</string>
@@ -842,14 +800,12 @@
     <string name="menu_bugreport">Reportar bugs</string>
     <string name="location_open_24_7">Aberto 24/7</string>
     <string name="plugin_state_error">Esse plugin não está funcionando corretamente</string>
-    <string name="plugin_state_setup_required">Você precisa configurar o plugin primeiro</string>
     <string name="plugin_action_setup">Configurar</string>
     <string name="plugin_type_filesearch">Ficheiros</string>
     <string name="plugin_type_contacts">Contactos</string>
     <string name="plugin_type_weather">Provedor de clima</string>
     <string name="plugin_weather_provider_enable">Definir como provedor de clima</string>
     <string name="plugin_weather_provider_enabled">Definido como o provedor de clima</string>
-    <string name="unavailable_searchable">Esse item não existe mais.</string>
     <string name="clock_style_digital1">Negrito</string>
     <string name="clock_style_digital2">Simples</string>
     <string name="clock_style_orbit">Órbita</string>
@@ -999,10 +955,8 @@
     <string name="calendar_widget_next_day">Próximo dia</string>
     <string name="calendar_widget_create_event">Criar novo evento</string>
     <string name="calendar_widget_open_calendar">Abrir aplicativo de calendário</string>
-    <string name="profile_work_profile_state_locked">Aplicativos de trabalho estão pausados.</string>
     <string name="profile_work_profile_action_unlock">Despausar</string>
     <string name="profile_work_profile_action_lock">Pausar aplicativos de trabalho</string>
-    <string name="profile_private_profile_state_locked">Espaço Privado está bloqueado.</string>
     <string name="profile_private_profile_action_unlock">Desbloquear</string>
     <string name="profile_private_profile_action_lock">Bloquear Espaço Privado</string>
     <string name="hint_drag_and_drop_reorder">Segure e arraste itens para reordená-los</string>
@@ -1020,7 +974,6 @@
     </plurals>
     <string name="departure_time_departed">partiu</string>
     <string name="bad_configuration_title">Parabéns, acabou de se bloquear!</string>
-    <string name="bad_configuration_summary">Você conseguir encontrar uma combinação de definições em não é possível aceder às pesquisas e às definições. Acabou de se bloquear.</string>
     <string name="theme_export_title">Exportar tema</string>
     <string name="theme_import_title">Importar tema</string>
     <string name="theme_bundle_name">Nome</string>
