@@ -94,15 +94,15 @@
       (English in most cases) -->
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">来自维基百科</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">标题: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">艺术家: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">专辑: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">时间: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">年份: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">大小: %1$s</string>
@@ -110,50 +110,50 @@
     <string name="file_meta_path">路径: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">类别: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">尺寸: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">应用名称: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">版本: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">安装包名称: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">最小 SDK 版本: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">所有者: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">地理位置: %1$s</string>
     <string name="file_type_directory">目录</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">存档文件</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Android安装包文件</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">源代码文件</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">文档</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">电子表格</string>
     <!-- Audio file -->
     <string name="file_type_music">音乐文件</string>
     <!-- Video file -->
     <string name="file_type_video">视频</string>
-    <!-- Picture file -->
+    <!-- Image file -->
     <string name="file_type_image">图片</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">文件</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">演示文稿</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">压缩文件</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">文本文件</string>
     <!-- E-book file -->
     <string name="file_type_ebook">电子书</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">绘图</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">表格</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s备份</string>
@@ -725,7 +725,7 @@
     <string name="search_action_contact">新建联系人</string>
     <string name="search_action_open_url">浏览网站</string>
     <string name="search_action_event">日程事件</string>
-    <string name="create_search_action_type">你想创建哪种操作\?</string>
+    <string name="create_search_action_type">你想创建哪种操作?</string>
     <string name="create_search_action_type_web">在网站上搜索</string>
     <string name="create_search_action_type_app">在应用程序中搜索</string>
     <string name="create_search_action_pick_app">固定一个应用程序到搜索栏:</string>
