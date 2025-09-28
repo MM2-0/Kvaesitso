@@ -438,7 +438,7 @@
     <string name="search_action_message">Message</string>
     <string name="search_action_email">Mail</string>
     <string name="search_action_event">Planifier un évènement</string>
-    <string name="create_search_action_type">Quel type d\'action voulez-vous créer \?</string>
+    <string name="create_search_action_type">Quel type d\'action voulez-vous créer ?</string>
     <string name="search_action_app">Application</string>
     <string name="search_action_label">Nom</string>
     <string name="duplicate">Dupliquer</string>
@@ -446,7 +446,7 @@
     <string name="preference_screen_tags">Étiquettes</string>
     <string name="preference_screen_tags_summary">Gérer les étiquettes et les éléments étiquetés</string>
     <string name="tag_exists_message">Une étiquette avec ce nom existe déjà. Si vous continuez, les deux étiquettes seront fusionnées.</string>
-    <string name="search_action_websearch_url_hint">Le modèle d\'URL est utilisé pour construire une URL de recherche. Utilisez ‘${1}’ comme remplacement pour la recherche entrée, par exemple https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Le modèle d\'URL est utilisé pour construire une URL de recherche. Utilisez ‘${1}’ comme remplacement pour la recherche entrée, par exemple https://google.com/search?q=${1}.</string>
     <string name="search_action_open_url">Voir le site</string>
     <string name="create_search_action_website_url">Entrez l\'adresse du site :</string>
     <string name="more_information">Plus d\'informations</string>
