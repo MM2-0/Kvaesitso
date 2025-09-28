@@ -413,7 +413,7 @@
     <!-- Missing location permission, used in location search results -->
     <string name="missing_permission_location_search">Location permission is required to search nearby locations</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Storage permission is required to search local files</string>
+    <string name="missing_permission_files_search">Storage permission is required to search files on this device</string>
     <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">Contacts permission is required to search your contacts</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
