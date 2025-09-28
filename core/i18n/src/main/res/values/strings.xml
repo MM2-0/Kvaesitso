@@ -95,15 +95,15 @@
     <string name="wikipedia_url">https://en.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">From Wikipedia</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Title: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Artist: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Album: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Duration: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Year: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Size: %1$s</string>
@@ -111,50 +111,50 @@
     <string name="file_meta_path">Path: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Type: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Dimensions: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">App name: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Version: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Package name: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Min SDK version: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Owner: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Location: %1$s</string>
     <string name="file_type_directory">Directory</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Archive file</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Android package file</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Source code file</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Document</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Spreadsheet</string>
     <!-- Audio file -->
-    <string name="file_type_music">Music file</string>
+    <string name="file_type_music">Audio</string>
     <!-- Video file -->
     <string name="file_type_video">Video</string>
-    <!-- Picture file -->
-    <string name="file_type_image">Picture</string>
+    <!-- Image file -->
+    <string name="file_type_image">Image</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">File</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Presentation</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Compressed file</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Text file</string>
     <!-- E-book file -->
     <string name="file_type_ebook">E-book</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Drawing</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Form</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s backup</string>
@@ -222,21 +222,21 @@
     <string name="menu_edit_widgets">Edit widgets</string>
     <string name="widget_name_weather">Weather</string>
     <string name="widget_name_calendar">Calendar</string>
-    <string name="widget_name_music">Music</string>
+    <string name="widget_name_music">Media</string>
     <string name="widget_name_favorites">Favorites</string>
     <string name="widget_name_notes">Note</string>
-    <string name="widget_name_unknown">Unknown app widget</string>
+    <string name="widget_name_unknown">Unknown</string>
     <string name="widget_add_widget">Add widget</string>
     <string name="widget_removed">Widget removed</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Write a note…</string>
+    <string name="notes_widget_placeholder">Write a note</string>
     <string name="notes_widget_action_new">New note</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Save</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Note_%1$s</string>
     <string name="notes_widget_action_dismiss">Dismiss</string>
-    <string name="notes_widget_dismissed">Note dismissed.</string>
+    <string name="notes_widget_dismissed">Note dismissed</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">By %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -264,7 +264,7 @@
     <string name="edit_favorites_dialog_empty_section">Drag items here</string>
     <string name="edit_favorites_dialog_tags">Tags</string>
     <string name="edit_favorites_dialog_tag_section_empty">Pinned tags will appear here</string>
-    <string name="edit_favorites_dialog_new_tag">Create tag…</string>
+    <string name="edit_favorites_dialog_new_tag">Create tag</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud server URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -318,7 +318,7 @@
         <item quantity="other">+%1$d unfinished tasks</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">all-day</string>
+    <string name="calendar_event_allday">All day</string>
     <string name="task_due_time">Due at %1$s</string>
     <string name="task_due_date">Due on %1$s</string>
     <string name="task_due_today">Due today</string>
@@ -376,25 +376,25 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">No weather data available.</string>
+    <string name="weather_no_data">No weather data available</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Set location</string>
-    <string name="weather_location_search_no_result">Location not found.</string>
+    <string name="weather_location_search_no_result">Location not found</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Location access is required to determine the location automatically</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Notification access is required to control media playback</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Contact permission is required to search contacts</string>
+    <string name="missing_permission_contact_search_settings">Contacts permission is required to search contacts</string>
     <!-- Missing call permission in contacts settings screen -->
-    <string name="missing_permission_call_contacts_settings">Call permission is required to start calls</string>
+    <string name="missing_permission_call_contacts_settings">Phone permission is required to start calls</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
-    <string name="missing_permission_tasks_search_settings">Tasks permission is required to search tasks</string>
+    <string name="missing_permission_tasks_search_settings">Tasks permission is required to search tasks in the Tasks app</string>
     <string name="missing_permission_tasks_integration">Tasks permission is required to use the Tasks integration</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">This widget requires calendar permission</string>
+    <string name="missing_permission_calendar_widget_settings">This widget requires the calendar permission</string>
     <string name="widget_config_calendar_missing_calendars_hint">Can\'t find your calendars?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s must be set as default home app to search app shortcuts</string>
@@ -403,19 +403,19 @@
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Manage all files permission is required to search local files</string>
+    <string name="missing_permission_file_search_settings_android10">All files access is required to search local files</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Notification access is required to display notification badges</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Grant calendar permission to display upcoming appointments and events here.</string>
+    <string name="missing_permission_calendar_widget">Calendar permission is required to display upcoming events here</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Grant calendar permission to search your calendar.</string>
+    <string name="missing_permission_calendar_search">Calendar permission is required to search your calendar</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Grant location permission to search nearby locations.</string>
+    <string name="missing_permission_location_search">Location permission is required to search nearby locations</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Grant storage permission to search photos, media and document on this device.</string>
+    <string name="missing_permission_files_search">Storage permission is required to search audio, documents, images, and videos</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Grant contact permission to search your contact.</string>
+    <string name="missing_permission_contact_search">Contacts permission is required to search your contacts</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Set %1$s as default home app to search app shortcuts.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -430,7 +430,7 @@
     <string name="preference_screen_colors">Color scheme</string>
     <string name="preference_colors_default">Default</string>
     <string name="preference_colors_high_contrast">High contrast</string>
-    <string name="preference_colors_bw">Black and White</string>
+    <string name="preference_colors_bw">Black and white</string>
     <string name="preference_custom_colors_corepalette">Color palette</string>
     <string name="preference_mdy_color_source">Source for dynamic colors</string>
     <string name="preference_mdy_color_source_system">System</string>
@@ -454,7 +454,7 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Open website</string>
     <string name="preference_screen_about_summary">App and license information</string>
-    <string name="preference_screen_appearance_summary">Customize the look-and-feel</string>
+    <string name="preference_screen_appearance_summary">Customize the look and feel</string>
     <string name="preference_weather_provider">Provider</string>
     <string name="provider_metno">MET Norway</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
@@ -463,7 +463,7 @@
     <string name="provider_breezy">Breezy Weather</string>
     <string name="preference_category_location">Location</string>
     <string name="preference_automatic_location">Automatic location</string>
-    <string name="preference_automatic_location_summary">Use GPS and location services to determine location automatically</string>
+    <string name="preference_automatic_location_summary">Use location services to determine location automatically</string>
     <string name="preference_location_managed">Managed by plugin</string>
     <string name="preference_location_managed_summary">The location for this provider is managed by the plugin app</string>
     <string name="preference_location">Location</string>
@@ -481,8 +481,8 @@
     <string name="preference_debug_reinstall_iconpacks">Reinstall icon packs</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Clear and rebuild the icon pack cache</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d entry has been removed.</item>
-        <item quantity="other">%1$d entries have been removed.</item>
+        <item quantity="one">%1$d entry has been removed</item>
+        <item quantity="other">%1$d entries have been removed</item>
     </plurals>
     <string name="preference_category_icons">Icons</string>
     <string name="preference_cards">Cards</string>
@@ -530,7 +530,7 @@
     <string name="preference_screen_integrations_summary">Manage connected accounts and services</string>
     <string name="preference_signin_user">Signed in as %1$s</string>
     <string name="preference_signout">Sign out</string>
-    <string name="preference_summary_not_logged_in">You are currently not logged in</string>
+    <string name="preference_summary_not_logged_in">You are not logged in</string>
     <string name="preference_icon_shape_pentagon">Pentagon</string>
     <string name="preference_category_wallpaper">Wallpaper</string>
     <string name="preference_dim_wallpaper">Dim wallpaper</string>
@@ -605,7 +605,7 @@
     <string name="preference_clockwidget_battery_part_summary">Show the current battery level when the battery is low or charging</string>
     <string name="preference_clockwidget_alarm_part">Alarms</string>
     <string name="preference_clockwidget_alarm_part_summary">Show alarms that will ring within the next 8 hours</string>
-    <string name="preference_screen_backup">Backup &amp; Restore</string>
+    <string name="preference_screen_backup">Backup and restore</string>
     <string name="preference_screen_backup_summary">Export and import launcher data</string>
     <string name="preference_backup">Backup</string>
     <string name="preference_backup_summary">Export preferences and launcher data</string>
@@ -679,10 +679,10 @@
     <string name="preference_compact_tags_summary">Hide tag labels or icons to reduce the space occupied by tags</string>
     <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
     <string name="preference_widgets_on_home_screen">Widgets on home screen</string>
-    <string name="preference_widgets_on_home_screen_summary">Show widgets on the home screen instead of an extra page</string>
+    <string name="preference_widgets_on_home_screen_summary">Show widgets on the home screen instead of a separate page</string>
     <string name="preference_screen_homescreen">Home screen</string>
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
-    <string name="preference_screen_icons">Grid &amp; icons</string>
+    <string name="preference_screen_icons">Grid and icons</string>
     <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
@@ -696,7 +696,7 @@
     <string name="preference_breezyweather_integration_instructions">To use Breezy Weather as weather provider:\n\n1. Go to Breezy Weather &gt; Settings &gt; Widgets &amp; Live wallpaper &gt; Send Gadgetbridge data &gt; Enable %1$s\n\n2. In %1$s, select Breezy Weather as weather provider</string>
     <string name="preference_launch_breezyweather_app">Open Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">Tap to call</string>
-    <string name="preference_contacts_call_on_tap_summary">Immediately start a call when tapping a phone number</string>
+    <string name="preference_contacts_call_on_tap_summary">Start a call when tapping a phone number</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -742,30 +742,30 @@
     <string name="search_action_contact">Add to contacts</string>
     <string name="search_action_open_url">View website</string>
     <string name="search_action_event">Schedule event</string>
-    <string name="create_search_action_type">What kind of action do you want to create?</string>
+    <string name="create_search_action_type">What type of action do you want to create?</string>
     <string name="create_search_action_type_web">Search on a website</string>
     <string name="create_search_action_type_app">Search in an app</string>
     <string name="create_search_action_type_intent">Custom intent</string>
     <string name="create_search_action_pick_app">Pick an app to search:</string>
     <string name="create_search_action_website_url">Enter the address of the website:</string>
-    <string name="create_search_action_website_invalid_url">The given website cannot automatically be imported as a web search. You can try a different website or enter the required data manually in the next step.</string>
+    <string name="create_search_action_website_invalid_url">The given website cannot automatically be imported as a web search. You can try a different website or enter the required data manually in the next step</string>
     <string name="search_action_label">Name</string>
     <string name="search_action_app">App</string>
     <string name="search_action_websearch_url">URL template</string>
-    <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term, e.g. https://google.com/search?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term</string>
     <string name="more_information">More information</string>
     <string name="experimental_feature">Experimental</string>
-    <string name="tag_exists_error">A tag with this name already exists.</string>
-    <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged.</string>
-    <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted.</string>
-    <string name="tag_empty_name">A tag cannot exist without a name. If you continue, the tag will be deleted.</string>
+    <string name="tag_exists_error">A tag with this name already exists</string>
+    <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged</string>
+    <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted</string>
+    <string name="tag_empty_name">A tag cannot exist without a name. If you continue, the tag will be deleted</string>
     <string name="tag_select_items">Select items:</string>
     <string name="tag_name">Tag name</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item selected</item>
         <item quantity="other">%1$d items selected</item>
     </plurals>
-    <string name="preference_layout_open_search">Search / app drawer</string>
+    <string name="preference_layout_open_search">Search and app drawer</string>
     <string name="open_search_pull_down">Swipe down</string>
     <string name="open_search_swipe_left">Swipe left</string>
     <string name="open_search_swipe_right">Swipe right</string>
@@ -796,7 +796,7 @@
     <string name="gesture_action_lock_screen">Turn off screen</string>
     <string name="gesture_action_quick_settings">Open quick settings</string>
     <string name="gesture_action_power_menu">Show power menu</string>
-    <string name="gesture_action_recents">Open recents</string>
+    <string name="gesture_action_recents">Open recent apps</string>
     <string name="gesture_failed_message">You have performed a \"%1$s\" gesture. This gesture is currently set to trigger a \"%2$s\" action. However, the action could not be performed for the following reason:</string>
     <string name="missing_permission_accessibility_gesture_failed">The launcher\'s accessibility service needs to be enabled to perform this action.</string>
     <string name="missing_permission_accessibility_gesture_settings">This action requires the launcher\'s accessibility service to be enabled.</string>
@@ -811,7 +811,7 @@
     <string name="widget_config_weather_integration_settings">Weather integration settings</string>
     <string name="widget_config_calendar_no_calendars">No calendars found</string>
     <string name="widget_pick_widget">Pick widget</string>
-    <string name="app_widget_loading_failed">App widget failed to load.</string>
+    <string name="app_widget_loading_failed">App widget failed to load</string>
     <string name="widget_config_music_integration_settings">Media control integration settings</string>
     <string name="note_widget_link_file">Link to file</string>
     <string name="note_widget_link_file_summary">Sync the contents of this widget with an external file</string>
@@ -825,9 +825,9 @@
     <string name="note_widget_conflict_local_version">Last saved version:</string>
     <string name="note_widget_conflict_file_version">Current file content:</string>
     <string name="note_widget_file_read_error">Error reading note</string>
-    <string name="note_widget_file_read_error_description">The linked file could not be read. Possibly, it has been moved or deleted. A copy has been restored from the launcher\'s internal storage. If you edit the note, the linked file will possibly be overwritten.</string>
+    <string name="note_widget_file_read_error_description">The linked file could not be read. A copy has been restored from the launcher\'s internal storage. If you edit the note, the linked file will possibly be overwritten</string>
     <string name="note_widget_file_write_error">Error saving note</string>
-    <string name="note_widget_file_write_error_description">The note could not be written to the linked file. Possibly, it has been moved or deleted. A copy has been saved to the launcher\'s internal storage.</string>
+    <string name="note_widget_file_write_error_description">The note could not be written to the linked file. A copy has been saved to the launcher\'s internal storage</string>
     <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s\?</string>
     <string name="confirmation_delete_shapes_scheme">Do you really want to delete the shape scheme %1$s?</string>
     <string name="confirmation_delete_typography_scheme">Do you really want to delete the typography scheme %1$s?</string>
@@ -863,14 +863,14 @@
     <string name="menu_bugreport">Bug Report</string>
     <string name="location_open_24_7">Open 24/7</string>
     <string name="plugin_state_error">This plugin isn\'t working correctly</string>
-    <string name="plugin_state_setup_required">You need to setup this plugin first</string>
+    <string name="plugin_state_setup_required">You need to set up this plugin first</string>
     <string name="plugin_action_setup">Set up</string>
     <string name="plugin_type_filesearch">Files</string>
     <string name="plugin_type_contacts">Contacts</string>
     <string name="plugin_type_weather">Weather provider</string>
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
-    <string name="unavailable_searchable">This item does not exist anymore.</string>
+    <string name="unavailable_searchable">This item does not exist anymore</string>
     <string name="clock_style_digital1">Bold</string>
     <string name="clock_style_digital2">Simple</string>
     <string name="clock_style_orbit">Orbit</string>
@@ -1026,10 +1026,10 @@
     <string name="calendar_widget_next_day">Next day</string>
     <string name="calendar_widget_create_event">Create new event</string>
     <string name="calendar_widget_open_calendar">Open calendar app</string>
-    <string name="profile_work_profile_state_locked">Work apps are paused.</string>
+    <string name="profile_work_profile_state_locked">Work apps are paused</string>
     <string name="profile_work_profile_action_unlock">Unpause</string>
     <string name="profile_work_profile_action_lock">Pause work apps</string>
-    <string name="profile_private_profile_state_locked">Private space is locked.</string>
+    <string name="profile_private_profile_state_locked">Private space is locked</string>
     <string name="profile_private_profile_action_unlock">Unlock</string>
     <string name="profile_private_profile_action_lock">Lock private space</string>
     <string name="hint_drag_and_drop_reorder">Hold and drag items to rearrange them</string>
@@ -1046,8 +1046,8 @@
         <item quantity="other">in %1$d minutes</item>
     </plurals>
     <string name="departure_time_departed">departed</string>
-    <string name="bad_configuration_title">Congratulations, you\'ve locked yourself out!</string>
-    <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher.</string>
+    <string name="bad_configuration_title">You\'ve locked yourself out</string>
+    <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher</string>
     <string name="theme_export_title">Export theme</string>
     <string name="theme_import_title">Import theme</string>
     <string name="theme_bundle_name">Name</string>
