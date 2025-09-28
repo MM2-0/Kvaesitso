@@ -326,7 +326,7 @@
     <string name="create_search_action_pick_app">Elige una aplicación para buscar:</string>
     <string name="create_search_action_website_url">Introduce la dirección de la página web:</string>
     <string name="create_search_action_website_invalid_url">La página introducida no se puede importar automáticamente como una búsqueda web. Puedes intentar introducir otra página web o introducir los datos necesarios en el siguiente paso.</string>
-    <string name="search_action_websearch_url_hint">La plantilla de URL que se usa para construir la búsqueda web. Usa ‘${1}’ en el sitio del término de búsqueda que se vaya a introducir, p.ej. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">La plantilla de URL que se usa para construir la búsqueda web. Usa ‘${1}’ en el sitio del término de búsqueda que se vaya a introducir, p.ej. https://google.com/search?q=${1}.</string>
     <string name="more_information">Información adicional</string>
     <string name="tag_exists_error">Ya existe una etiqueta con este nombre.</string>
     <string name="tag_exists_message">Ya existe una etiqueta con este nombre. Si continuas, se combinarán las dos etiquetas.</string>
@@ -368,7 +368,7 @@
     <string name="gesture_action_quick_settings">Abrir ajustes rápidos</string>
     <string name="gesture_action_power_menu">Mostrar menú de apagado</string>
     <string name="gesture_action_recents">Abrir recientes</string>
-    <string name="create_search_action_type">¿Qué tipo de acción quieres crear\?</string>
+    <string name="create_search_action_type">¿Qué tipo de acción quieres crear?</string>
     <string name="gesture_failed_message">Has realizado el gesto \"%1$s\". Este gesto esta configurado actualmente para realizar la acción \"%2$s\". Sin embargo, la acción no se ha podido realizar por la siguiente razón:</string>
     <string name="missing_permission_accessibility_gesture_failed">El servicio de accesibilidad del lanzador debe activarse para realizar esta acción.</string>
     <string name="missing_permission_accessibility_gesture_settings">Esta acción requiere que el servicio de accesibilidad del lanzador esté activado.</string>
