@@ -95,15 +95,15 @@
     <string name="wikipedia_url">https://he.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">מוויקיפדיה</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">כותרת: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">אמן: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">אלבום: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">אורך: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">שנה: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">גודל: %1$s</string>
@@ -111,50 +111,48 @@
     <string name="file_meta_path">נתיב: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">סוג: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">מידות: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">שם יישומון: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">גרסה: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">שם חבילה: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">גרסת SDK מינימלית: ‍%1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">בעלים: ‌%1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">מיקום: %1$s</string>
     <string name="file_type_directory">תיקייה</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">קובץ ארכיון</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">קובץ חבילת אנדרואיד</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">קובץ קוד מקור</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">מסמך</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">גיליון נתונים</string>
     <!-- Audio file -->
-    <string name="file_type_music">­קובץ מוזיקה</string>
     <!-- Video file -->
     <string name="file_type_video">וידאו</string>
-    <!-- Picture file -->
-    <string name="file_type_image">תמונה</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">קובץ</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">מצגת</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">קובץ דחוס</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">קובץ טקסט</string>
     <!-- E-book file -->
     <string name="file_type_ebook">ספר אלקטרוני</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">ציור</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">טופס</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">גיבוי %1$s</string>
@@ -222,21 +220,19 @@
     <string name="menu_edit_widgets">ערוך ווידג\'ט</string>
     <string name="widget_name_weather">מזג אוויר</string>
     <string name="widget_name_calendar">לוח שנה</string>
-    <string name="widget_name_music">מוזיקה</string>
+    <string name="widget_name_music">מדיה</string>
     <string name="widget_name_favorites">מועדפים</string>
     <string name="widget_name_notes">פתק</string>
-    <string name="widget_name_unknown">ווידג\'ט יישומון לא ידוע</string>
+    <string name="widget_name_unknown">לא ידוע</string>
     <string name="widget_add_widget">הוסף ווידג\'ט</string>
     <string name="widget_removed">ווידג\'ט הוסר</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">כתוב פתק…</string>
     <string name="notes_widget_action_new">פתק חדש</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">שמור</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">פתק_%1$s</string>
     <string name="notes_widget_action_dismiss">בטל</string>
-    <string name="notes_widget_dismissed">פתק בוטל.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">מ%1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -264,7 +260,6 @@
     <string name="edit_favorites_dialog_empty_section">גרור פריטים לכאן</string>
     <string name="edit_favorites_dialog_tags">תגיות</string>
     <string name="edit_favorites_dialog_tag_section_empty">תגיות נעוצות יופיעו כאן</string>
-    <string name="edit_favorites_dialog_new_tag">צור תגית…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">כתובת URL שרת Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -320,7 +315,6 @@
         <item quantity="other">+%1$d משימות שלא הושלמו</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">כל היום</string>
     <string name="task_due_time">לסיום עד %1$s</string>
     <string name="task_due_date">לסיום ב-%1$s</string>
     <string name="task_due_today">לסיום היום</string>
@@ -378,25 +372,19 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">אין נתוני מזג אוויר זמינים.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">קבע מיקום</string>
-    <string name="weather_location_search_no_result">מיקום לא נמצא.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">נדרשת גישה למיקום כדי לקבוע את המיקום באופן אוטומטי</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">נדרשת גישה להתראות כדי לשלוט בהפעלת מדיה</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">נדרשת הרשאת איש קשר כדי לחפש אנשי קשר</string>
     <!-- Missing call permission in contacts settings screen -->
-    <string name="missing_permission_call_contacts_settings">נדרשת הרשאת שיחה כדי להתחיל שיחות</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">נדרשת הרשאת לוח שנה כדי לחפש בלוח השנה</string>
-    <string name="missing_permission_tasks_search_settings">נדרשת הרשאת משימות כדי לחפש משימות</string>
     <string name="missing_permission_tasks_integration">נדרשת הרשאת משימות כדי להשתמש באינטגרציית המשימות</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">ווידג\'ט זה דורש הרשאת לוח שנה</string>
     <string name="widget_config_calendar_missing_calendars_hint">לא מצליח למצוא את לוח השנה שלך?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">יש להגדיר את %1$s כיישומון בית המוגדר כברירת מחדל כדי לחפש קיצורי דרך ליישומונים</string>
@@ -405,19 +393,13 @@
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">נדרשת הרשאת ניהול כל הקבצים כדי לחפש קבצים מקומיים</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">נדרשת גישה להתראות כדי להציג תגי התראה</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">הענק הרשאת לוח שנה כדי להציג כאן פגישות ואירועים קרובים.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">הענק הרשאת לוח שנה כדי לחפש בלוח השנה שלך.</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">הענק הרשאת מיקום כדי לחפש מקומות קרובים.</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">הענק הרשאת אחסון כדי לחפש תמונות, מדיה וקבצים במכשיר זה.</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">הענק הרשאת איש קשר כדי לחפש את איש הקשר שלך.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">הגדר את %1$s כיישומון בית המוגדר כברירת מחדל כדי לחפש קיצורי דרך ליישומונים.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -432,7 +414,6 @@
     <string name="preference_screen_colors">ערכת צבעים</string>
     <string name="preference_colors_default">ברירת מחדל</string>
     <string name="preference_colors_high_contrast">ניגודיות גבוהה</string>
-    <string name="preference_colors_bw">שחור ולבן</string>
     <string name="preference_custom_colors_corepalette">פלטת צבעים</string>
     <string name="preference_mdy_color_source">מקור לצבעים דינמיים</string>
     <string name="preference_mdy_color_source_system">מערכת</string>
@@ -456,7 +437,6 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">פתח אתר</string>
     <string name="preference_screen_about_summary">מידע על יישומון ורשיון</string>
-    <string name="preference_screen_appearance_summary">התאם אישית את המראה והתחושה</string>
     <string name="preference_weather_provider">סַפָּק</string>
     <string name="provider_metno">המכון המטאורולוגי הנורווגי</string>
     <string name="provider_openweathermap">מפת מזג אוויר פתוחה (OpenWeatherMap)</string>
@@ -464,7 +444,6 @@
     <string name="provider_here">כאן</string>
     <string name="preference_category_location">מיקום</string>
     <string name="preference_automatic_location">מיקום אוטומטי</string>
-    <string name="preference_automatic_location_summary">השתמש ב-GPS ושירותי מיקום כדי לקבוע מיקום באופן אוטומטי</string>
     <string name="preference_location_managed">מנוהל על ידי פלאגין</string>
     <string name="preference_location_managed_summary">המיקום עבור ספק זה מנוהל על ידי יישומון הפלאגין</string>
     <string name="preference_location">מיקום</string>
@@ -481,12 +460,6 @@
     <string name="preference_debug_cleanup_database_summary">הסר ערכים שבורים ולא בשימוש ממסד הנתונים של הלאנצ\'ר</string>
     <string name="preference_debug_reinstall_iconpacks">התקן מחדש חבילות אייקונים</string>
     <string name="preference_debug_reinstall_iconpacks_summary">נקה ובנה מחדש את מטמון חבילת האייקונים</string>
-    <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d ערך הוסר.</item>
-        <item quantity="two">%1$d ערכים הוסרו.</item>
-        <item quantity="many">%1$d ערכים הוסרו.</item>
-        <item quantity="other">%1$d ערכים הוסרו.</item>
-    </plurals>
     <string name="preference_category_icons">אייקונים</string>
     <string name="preference_cards">כרטיסים</string>
     <string name="preference_cards_summary">התאם אישית מראה כרטיס</string>
@@ -533,7 +506,6 @@
     <string name="preference_screen_integrations_summary">נהל חשבונות ושירותים מחוברים</string>
     <string name="preference_signin_user">מחובר בתור %1$s</string>
     <string name="preference_signout">יציאה</string>
-    <string name="preference_summary_not_logged_in">אינך מחובר כרגע</string>
     <string name="preference_icon_shape_pentagon">מחומש</string>
     <string name="preference_category_wallpaper">רקע</string>
     <string name="preference_dim_wallpaper">עמעם רקע</string>
@@ -605,7 +577,6 @@
     <string name="preference_clockwidget_battery_part_summary">הצג רמת סוללה נוכחית כאשר הסוללה חלשה או בהטענה</string>
     <string name="preference_clockwidget_alarm_part">שעונים מעוררים</string>
     <string name="preference_clockwidget_alarm_part_summary">הצג שעונים מעוררים שיצלצלו ב-8 השעות הקרובות</string>
-    <string name="preference_screen_backup">גיבוי ושחזור</string>
     <string name="preference_screen_backup_summary">ייצוא וייבוא של נתוני הלאנצ\'ר</string>
     <string name="preference_backup">גיבוי</string>
     <string name="preference_backup_summary">ייצוא העדפות ונתוני לאנצ\'ר</string>
@@ -677,10 +648,8 @@
     <string name="preference_compact_tags_summary">הסתר תוויות או אייקונים של תגיות כדי לצמצם את השטח שתופסות תגיות</string>
     <string name="preference_widgets_edit_button_summary">הצג כפתור להוספת, הסרת או סידור מחדש של ווידג\'טים</string>
     <string name="preference_widgets_on_home_screen">ווידג\'טים במסך הבית</string>
-    <string name="preference_widgets_on_home_screen_summary">הצג ווידג\'טים במסך הבית במקום בעמוד נוסף</string>
     <string name="preference_screen_homescreen">מסך הבית</string>
     <string name="preference_screen_homescreen_summary">שעון, שורת חיפוש, רקע, שורות מערכת</string>
-    <string name="preference_screen_icons">רשת ואייקונים</string>
     <string name="preference_screen_icons_summary">רשת, גודל אייקונים, חבילות אייקונים, תגים</string>
     <string name="preference_weather_integration">מזג אוויר</string>
     <string name="preference_media_integration">בקרת מדיה</string>
@@ -693,7 +662,6 @@
     <string name="preference_breezyweather_integration_instructions">כדי להשתמש ב-Breezy Weather כספק מזג אוויר:\n\n1. לך ל-Breezy Weather &gt; הגדרות &gt; ווידג\'טים ורקע חי &gt; שלח נתוני Gadgetbridge &gt; אפשר %1$s\n\n2. ב-%1$s, בחר ב-Breezy Weather כספק מזג אוויר</string>
     <string name="preference_launch_breezyweather_app">פתח את Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">לחץ כדי להתקשר</string>
-    <string name="preference_contacts_call_on_tap_summary">התחל שיחה באופן מיידי בעת לחיצה על מספר טלפון</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">טרם חיברת חשבון Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -741,23 +709,16 @@
     <string name="search_action_contact">הוסף כאיש קשר</string>
     <string name="search_action_open_url">צפה באתר האינטרנט</string>
     <string name="search_action_event">זַמן אירוע</string>
-    <string name="create_search_action_type">איזה סוג פעולה תרצה ליצור?</string>
     <string name="create_search_action_type_web">חפש באתר אינטרנט</string>
     <string name="create_search_action_type_app">חפש ביישומון</string>
     <string name="create_search_action_type_intent">כוונה מותאמת אישית</string>
     <string name="create_search_action_pick_app">בחר יישומון לחיפוש:</string>
     <string name="create_search_action_website_url">הזן את כתובת אתר האינטרנט:</string>
-    <string name="create_search_action_website_invalid_url">לא ניתן לייבא את האתר האינטרנט הנתון לא יכול כחיפוש ברשת. ניתן לנסות אתר אינטרנט אחר או להזין את הנתונים הנדרשים באופן ידני בשלב הבא.</string>
     <string name="search_action_label">שם</string>
     <string name="search_action_app">יישומון</string>
     <string name="search_action_websearch_url">תבנית כתובת URL</string>
-    <string name="search_action_websearch_url_hint">תבנית כתובת ה-URL שמשמשת ליצור את כתובת ה-URL לחיפוש ברשת. השתמש ב-‘${1}’ כמציין מקום עבור מונח החיפוש בפועל, לדוגמה https://google.com/search?q=${1}.</string>
     <string name="more_information">מידע נוסף</string>
     <string name="experimental_feature">ניסיוני</string>
-    <string name="tag_exists_error">תגית עם שם זה כבר קיימת.</string>
-    <string name="tag_exists_message">תגית עם שם זה כבר קיימת. אם תמשיך, שתי התגיות ימוזגו.</string>
-    <string name="tag_no_items_message">לא הוקצו פריטים לתגית זו. אם תמשיך, התגית תימחק.</string>
-    <string name="tag_empty_name">תגית לא יכולה להתקיים ללא שם. אם תמשיך, התגית תימחק.</string>
     <string name="tag_select_items">בחר פריטים:</string>
     <string name="tag_name">שם תגית</string>
     <plurals name="tag_selected_items">
@@ -766,7 +727,6 @@
         <item quantity="many">%1$d פריטים נבחרו</item>
         <item quantity="other">%1$d פריטים נבחרו</item>
     </plurals>
-    <string name="preference_layout_open_search">מגירת חיפוש / יישומון</string>
     <string name="open_search_pull_down">החלקה מטה</string>
     <string name="open_search_swipe_left">החלקה שמאלה</string>
     <string name="open_search_swipe_right">החלקה ימינה</string>
@@ -797,7 +757,6 @@
     <string name="gesture_action_lock_screen">כבה מסך</string>
     <string name="gesture_action_quick_settings">פתח הגדרות מהירות</string>
     <string name="gesture_action_power_menu">הצג תפריט הפעלה</string>
-    <string name="gesture_action_recents">פתח אחרונים</string>
     <string name="gesture_failed_message">ביצעת מחווה של \"%1$s\". מחווה זו מוגדרת כעת להפעלת פעולת \"%2$s\". עם זאת, לא ניתן היה לבצע את הפעולה מהסיבה הבאה:</string>
     <string name="missing_permission_accessibility_gesture_failed">שירות הנגישות של הלאנצ\'ר צריך להיות מופעל כדי לבצע פעולה זו.</string>
     <string name="missing_permission_accessibility_gesture_settings">פעולה זו דורשת הפעלת שירות הנגישות של הלאנצ\'ר.</string>
@@ -812,7 +771,6 @@
     <string name="widget_config_weather_integration_settings">הגדרות אינטגרציית מזג אוויר</string>
     <string name="widget_config_calendar_no_calendars">לא נמצאו לוחות שנה</string>
     <string name="widget_pick_widget">בחר ווידג\'ט</string>
-    <string name="app_widget_loading_failed">טעינת ווידג\'ט היישומון נכשלה.</string>
     <string name="widget_config_music_integration_settings">הגדרות אינטגרציית בקרת מדיה</string>
     <string name="note_widget_link_file">קישור לקובץ</string>
     <string name="note_widget_link_file_summary">סנכרן את תוכן ווידג\'ט זה עם קובץ חיצוני</string>
@@ -826,9 +784,7 @@
     <string name="note_widget_conflict_local_version">גרסה שמורה אחרונה:</string>
     <string name="note_widget_conflict_file_version">תוכן קובץ נוכחי:</string>
     <string name="note_widget_file_read_error">שגיאה בקריאת פתק</string>
-    <string name="note_widget_file_read_error_description">לא ניתן היה לקרוא את הקובץ המקושר. ייתכן שהוא הועבר או נמחק. עותק שוחזר מהאחסון הפנימי של הלאנצ\'ר. אם תערוך את הפתק, ייתכן שהקובץ המקושר יידרס.</string>
     <string name="note_widget_file_write_error">שגיאה בשמירת פתק</string>
-    <string name="note_widget_file_write_error_description">הפתק לא יכול להיכתב לקובץ המקושר. ייתכן שהוא הועבר או נמחק. עותק נשמר לאחסון הפנימי של הלאנצ\'ר.</string>
     <string name="confirmation_delete_color_scheme">האם אתה באמת רוצה למחוק את ערכת הצבעים %1$s?</string>
     <string name="confirmation_delete_shapes_scheme">האם אתה באמת רוצה למחוק את ערכת הצורות %1$s?</string>
     <string name="confirmation_delete_typography_scheme">האם אתה באמת רוצה למחוק את סכמת הטיפוגרפיה ‌%1$s?</string>
@@ -863,14 +819,12 @@
     <string name="menu_bugreport">דיווח על תקלות</string>
     <string name="location_open_24_7">פתוח 24/7</string>
     <string name="plugin_state_error">הפלאגין לא עובד כראוי</string>
-    <string name="plugin_state_setup_required">עליך להגדיר תחילה את תוסף זה</string>
     <string name="plugin_action_setup">הגדר</string>
     <string name="plugin_type_filesearch">קבצים</string>
     <string name="plugin_type_contacts">אנשי קשר</string>
     <string name="plugin_type_weather">ספק מזג אוויר</string>
     <string name="plugin_weather_provider_enable">הגדר כספק מזג אוויר</string>
     <string name="plugin_weather_provider_enabled">מוגדר כעת כספק מזג אוויר</string>
-    <string name="unavailable_searchable">פריט זה אינו קיים עוד.</string>
     <string name="clock_style_digital1">מודגש</string>
     <string name="clock_style_digital2">פשוט</string>
     <string name="clock_style_orbit">מסלול</string>
@@ -1031,10 +985,8 @@
     <string name="calendar_widget_next_day">יום הבא</string>
     <string name="calendar_widget_create_event">צור אירוע חדש</string>
     <string name="calendar_widget_open_calendar">פתח יישומון לוח שנה</string>
-    <string name="profile_work_profile_state_locked">יישומוני העבודה מושהים.</string>
     <string name="profile_work_profile_action_unlock">בטל השהיה</string>
     <string name="profile_work_profile_action_lock">השהה יישומוני עבודה</string>
-    <string name="profile_private_profile_state_locked">המרחב הפרטי נעול.</string>
     <string name="profile_private_profile_action_unlock">בטל נעילה</string>
     <string name="profile_private_profile_action_lock">נעל מרחב פרטי</string>
     <string name="hint_drag_and_drop_reorder">החזק וגרור פריטים כדי לסדר אותם מחדש</string>
@@ -1056,7 +1008,6 @@
     </plurals>
     <string name="departure_time_departed">עזבה</string>
     <string name="bad_configuration_title">כל הכבוד, נעלת את עצמך בחוץ!</string>
-    <string name="bad_configuration_summary">גילית שילוב של הגדרות שהופך גם את החיפוש וגם את ההגדרות לבלתי נגישים — ובכך למעשה נועל אותך מחוץ ללאנצ\'ר.</string>
     <string name="theme_export_title">ייצא ערכת נושא</string>
     <string name="theme_import_title">ייבא ערכת נושא</string>
     <string name="theme_bundle_name">שם</string>
