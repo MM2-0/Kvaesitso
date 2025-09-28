@@ -375,7 +375,7 @@
     <string name="preference_screen_plugins_summary">Tvarkyti instaliuotus priedus</string>
     <string name="restore_invalid_file">Pasirinktas failas atrodo ,kad nėra atsarginė kopija. Ar esate tikri ,kad čia teisingas failas\?</string>
     <string name="preference_search_localfiles_summary">Ieškoti dokumentus ,nuotraukas ir kitus failus šiame prietaise</string>
-    <string name="search_action_websearch_url_hint">Šis URL pavizdys yra naudojamas ,kad sukurti paieškos URL. Naudokite \'${1}\' kaip vieta paieškos terminui pvz. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Šis URL pavizdys yra naudojamas ,kad sukurti paieškos URL. Naudokite \'${1}\' kaip vieta paieškos terminui pvz. https://google.com/search?q=${1}.</string>
     <string name="preference_gesture_home_button">Namų mygtukas / gestas</string>
     <string name="gesture_action_lock_screen">Išjungti ekraną</string>
     <string name="gesture_failed_message">Jūs %1$s gestą. Šis gestas nustatytas padaryti %2$s veiksmą. Bet jis negali būti įvykdįtas dėl šios priežasties:</string>
@@ -514,7 +514,7 @@
     <string name="search_action_contact">Naujas kontaktas</string>
     <string name="search_action_open_url">Peržiurėti puslapį</string>
     <string name="search_action_event">Planuoti įvykį</string>
-    <string name="create_search_action_type">Kokį veiksmą norite sukurti\?</string>
+    <string name="create_search_action_type">Kokį veiksmą norite sukurti?</string>
     <string name="create_search_action_type_intent">Custom intent(techninis dalykas)</string>
     <string name="create_search_action_pick_app">Parinkti porgramėle ieškojimui:</string>
     <string name="search_action_websearch_url">URL pavizdys</string>
