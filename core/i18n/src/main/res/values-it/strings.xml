@@ -414,7 +414,7 @@
     <string name="search_action_contact">Crea contatto</string>
     <string name="search_action_open_url">Visualizza sito web</string>
     <string name="search_action_event">Pianifica evento</string>
-    <string name="create_search_action_type">Che tipo di azione vuoi creare\?</string>
+    <string name="create_search_action_type">Che tipo di azione vuoi creare?</string>
     <string name="create_search_action_type_web">Cerca su un sito web</string>
     <string name="create_search_action_type_app">Cerca in un\'app</string>
     <string name="create_search_action_type_intent">Intent personalizzato</string>
