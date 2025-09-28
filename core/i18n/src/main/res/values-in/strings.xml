@@ -93,14 +93,14 @@
     <string name="wikipedia_url">https://id.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Dari Wikipedia</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Judul: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Artis: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Durasi: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Tahun: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Ukuran: %1$s</string>
@@ -108,49 +108,47 @@
     <string name="file_meta_path">Jalur: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Tipe: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Dimensi: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Nama aplikasi: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Versi: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Nama paket: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Versi SDK minimal: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Pemilik: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Lokasi: %1$s</string>
     <string name="file_type_directory">Direktori</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">Berkas arsip</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Berkas paket Android</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">Dokumen kode sumber</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">Dokumen</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Lembar kerja</string>
     <!-- Audio file -->
-    <string name="file_type_music">Musik</string>
     <!-- Video file -->
-    <!-- Picture file -->
-    <string name="file_type_image">Gambar</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">Berkas</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Presentasi</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Berkas terkompres</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Berkas teks</string>
     <!-- E-book file -->
     <string name="file_type_ebook">Buku elektronik</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">Gambar</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">Formulir</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s cadangan</string>
@@ -213,20 +211,17 @@
     <string name="menu_edit_widgets">Sunting widget</string>
     <string name="widget_name_weather">Cuaca</string>
     <string name="widget_name_calendar">Kalender</string>
-    <string name="widget_name_music">Musik</string>
     <string name="widget_name_favorites">Favorit</string>
     <string name="widget_name_notes">Catatan</string>
-    <string name="widget_name_unknown">Aplikasi widget tidak diketahui</string>
+    <string name="widget_name_unknown">Tidak diketahui</string>
     <string name="widget_add_widget">Tambahkan widget</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Tulis catatan…</string>
     <string name="notes_widget_action_new">Catatan baru</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Simpan</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Catatan_%1$s</string>
     <string name="notes_widget_action_dismiss">Buang</string>
-    <string name="notes_widget_dismissed">Catatan dibuang.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Oleh %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -252,7 +247,6 @@
     <string name="edit_favorites_dialog_empty_section">Seret item kesini</string>
     <string name="edit_favorites_dialog_tags">Label</string>
     <string name="edit_favorites_dialog_tag_section_empty">Label yang tersemat akan muncul di sini</string>
-    <string name="edit_favorites_dialog_new_tag">Buat label…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL server Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -298,7 +292,6 @@
         running events that neither started nor will end on the selected day.
         -->
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">seharian</string>
     <string name="task_due_today">Jatuh tempo hari ini</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s sedang memutar media</string>
@@ -351,22 +344,18 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Data cuaca tidak tersedia.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Atur lokasi</string>
-    <string name="weather_location_search_no_result">Lokasi tidak ditemukan.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Akses lokasi diperlukan untuk menentukan lokasi secara otomatis</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Akses notifikasi diperlukan untuk mengontrol pemutaran media</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Izin kontak diperlukan untuk mencari daftar kontak</string>
     <!-- Missing call permission in contacts settings screen -->
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Pengizinan kalender diperlukan untuk mencari kalender</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">Widget ini memerlukan izin kalender</string>
     <string name="widget_config_calendar_missing_calendars_hint">Tidak menemukan kalender kamu\?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s harus diatur sebagai aplikasi layar utama untuk mencari pintasan aplikasi</string>
@@ -375,19 +364,13 @@
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Izin mengelola semua berkas diperlukan untuk mencari berkas lokal</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Akses notifikasi diperlukan untuk menampilkan lencana notifikasi</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Berikan izin kalender untuk menampilkan janji temu dan acara mendatang di sini.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Berikan izin kalender untuk mencari kalender kamu.</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Berikan izin lokasi untuk mencari lokasi terdekat.</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Setujui izin penyimpanan untuk mencari foto, media, dan dokumen di perangkat ini.</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Berikan izin kontak untuk mencari kontak kamu.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Atur %1$s sebagai aplikasi layar utama untuk mencari pintasan aplikasi.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -400,7 +383,6 @@
     <string name="preference_theme_light">Cerah</string>
     <string name="preference_theme_dark">Gelap</string>
     <string name="preference_screen_colors">Skema warna</string>
-    <string name="preference_colors_bw">Hitam dan Putih</string>
     <string name="preference_custom_colors_corepalette">Palet warna</string>
     <string name="preference_mdy_color_source">Sumber warna dinamis</string>
     <string name="preference_mdy_color_source_system">Sistem</string>
@@ -414,14 +396,12 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Buka laman web</string>
     <string name="preference_screen_about_summary">Informasi aplikasi dan lisensi</string>
-    <string name="preference_screen_appearance_summary">Sesuaikan tampilan dan suasana</string>
     <string name="preference_weather_provider">Penyedia</string>
     <string name="provider_metno">MET Norwegia</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (khusus Jerman)</string>
     <string name="provider_here">DISINI</string>
     <string name="preference_category_location">Lokasi</string>
     <string name="preference_automatic_location">Lokasi otomatis</string>
-    <string name="preference_automatic_location_summary">Gunakan GPS dan layanan lokasi untuk menentukan lokasi secara otomatis</string>
     <string name="preference_location_managed">Dikelola oleh plugin</string>
     <string name="preference_location_managed_summary">Lokasi untuk penyedia ini dikelola oleh aplikasi plugin</string>
     <string name="preference_location">Lokasi</string>
@@ -437,9 +417,6 @@
     <string name="preference_debug_cleanup_database_summary">Bersihkan entri rusak dan yang tidak digunakan dari database launcher</string>
     <string name="preference_debug_reinstall_iconpacks">Pasang ulang paket ikon</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Bersihkan dan bangun ulang cache paket ikon</string>
-    <plurals name="debug_cleanup_database_result">
-        <item quantity="other">Entri %1$d telah dibersihkan.</item>
-    </plurals>
     <string name="preference_category_icons">Ikon</string>
     <string name="preference_cards">Kartu</string>
     <string name="preference_cards_summary">Sesuaikan penampilan kartu</string>
@@ -486,7 +463,6 @@
     <string name="preference_screen_integrations_summary">Mengelola akun dan layanan yang tesambung</string>
     <string name="preference_signin_user">Masuk sebagai %1$s</string>
     <string name="preference_signout">Keluar</string>
-    <string name="preference_summary_not_logged_in">Anda sedang tidak masuk</string>
     <string name="preference_icon_shape_pentagon">Segi lima</string>
     <string name="preference_dim_wallpaper">Redupkan wallpaper</string>
     <string name="preference_dim_wallpaper_summary">Di mode gelap, wallpaper akan sedikit lebih gelap</string>
@@ -595,8 +571,6 @@
     <string name="search_action_label">Nama</string>
     <string name="search_action_app">Aplikasi</string>
     <string name="more_information">Informasi lebih</string>
-    <string name="tag_exists_error">Label dengan nama ini sudah ada.</string>
-    <string name="tag_exists_message">Label dengan nama ini sudah ada. Jika anda melanjutkan, dua label akan digabungkan.</string>
     <string name="open_search_pull_down">Geser ke bawah</string>
     <string name="open_search_swipe_left">Geser ke kiri</string>
     <string name="open_search_swipe_right">Geser ke kanan</string>
