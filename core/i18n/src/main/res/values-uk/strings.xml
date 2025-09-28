@@ -72,15 +72,15 @@
     <string name="wikipedia_url">https://uk.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">З Вікіпедії</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Назва: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">Виконавець: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">Альбом: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">Довжина: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">Рік: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">Розмір: %1$s</string>
@@ -88,45 +88,43 @@
     <string name="file_meta_path">Шлях: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Тип: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Розмір кадру: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">Назва додатку: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Версія: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Назва пакета: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">Мін. версія SDK: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">Власник: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">Розташування: %1$s</string>
     <string name="file_type_directory">Шлях</string>
-    <!-- ZIP, TAR, … archive files  -->
-    <!-- APK file  -->
-    <!-- Code file (source code in a programming language) -->
-    <!-- Word document -->
+    <!-- Archive file  -->
+    <!-- Android package file  -->
+    <!-- Source code file -->
+    <!-- Document -->
     <string name="file_type_document">Документ</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <!-- Audio file -->
-    <string name="file_type_music">Аудіо файл</string>
     <!-- Video file -->
     <string name="file_type_video">Відео файл</string>
-    <!-- Picture file -->
-    <string name="file_type_image">Зображення</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">Файл</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Презентація</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">Стиснутий файл</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">Текстовий файл</string>
     <!-- E-book file -->
     <string name="file_type_ebook">Файл електронної книги</string>
-    <!-- Google Drawings file -->
-    <!-- Google Forms file -->
+    <!-- Drawing file -->
+    <!-- Form file -->
     <!-- Launcher backup, %1$s: app name -->
     <!-- Launcher theme, %1$s: app name -->
     <!-- Generic file , %1$s is the file extension -->
