@@ -55,41 +55,40 @@
       a fallback that is suited best for most users of this language should be used
       (English in most cases) -->
     <!-- Shown in Wikipedia results to indicate where they come from -->
-    <!-- File meta data, title of audio tracks -->
-    <!-- File meta data, artist of audio tracks -->
-    <!-- File meta data, album of audio tracks -->
-    <!-- File meta data, duration of audio tracks -->
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <!-- File size -->
     <!-- File path -->
     <!-- File type (MIME type) -->
-    <!-- File meta, image/video dimensions -->
-    <!-- File meta, app name of APK files -->
-    <!-- File meta, version name of APK files -->
-    <!-- File meta, package name of APK files -->
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
-    <!-- File meta, owner (for files that are stored in a cloud) -->
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, image/video dimensions -->
+    <!-- File metadata, app name of APK files -->
+    <!-- File metadata, version name of APK files -->
+    <!-- File metadata, package name of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
+    <!-- File metadata, owner (for cloud files) -->
+    <!-- File metadata, location -->
     <string name="file_type_directory">Adreslibro</string>
-    <!-- ZIP, TAR, … archive files  -->
-    <!-- APK file  -->
-    <!-- Code file (source code in a programming language) -->
-    <!-- Word document -->
+    <!-- Archive file  -->
+    <!-- Android package file  -->
+    <!-- Source code file -->
+    <!-- Document -->
     <string name="file_type_document">Dokumento</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <!-- Audio file -->
     <!-- Video file -->
-    <!-- Picture file -->
-    <string name="file_type_image">Figuro</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">Dosiero</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">Prezentado</string>
-    <!-- BZIP, GZIP, … compressed file -->
-    <!-- Plain text (TXT) file -->
+    <!-- Compressed file -->
+    <!-- Plain text file -->
     <!-- E-book file -->
-    <!-- Google Drawings file -->
-    <!-- Google Forms file -->
+    <!-- Drawing file -->
+    <!-- Form file -->
     <string name="file_type_form">Formo</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s restaŭrokopio</string>
@@ -139,7 +138,7 @@
     <string name="websearch_dialog_query_encoding_none">Neniom</string>
     <string name="widget_name_weather">Vetero</string>
     <string name="widget_name_calendar">Kalendaro</string>
-    <string name="widget_name_music">Muziko</string>
+    <string name="widget_name_unknown">Nekonata</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
