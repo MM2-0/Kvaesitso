@@ -411,7 +411,7 @@
     <string name="search_action_contact">Contact maken</string>
     <string name="search_action_open_url">Website bekijken</string>
     <string name="search_action_event">Afspraak plannen</string>
-    <string name="create_search_action_type">Welke actie wil je maken\?</string>
+    <string name="create_search_action_type">Welke actie wil je maken?</string>
     <string name="create_search_action_type_web">Zoeken op website</string>
     <string name="create_search_action_type_app">Zoeken in applicatie</string>
     <string name="create_search_action_type_intent">Aangepaste indent</string>
@@ -421,7 +421,7 @@
     <string name="search_action_label">Naam</string>
     <string name="search_action_app">Applicatie</string>
     <string name="search_action_websearch_url">URL-sjabloon</string>
-    <string name="search_action_websearch_url_hint">Het URL-sjabloon dat gebruikt wordt om de zoek-URL te maken. Gebruik ‘${1}’ op de plaats waar de echte zoekterm moet komen, bv. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Het URL-sjabloon dat gebruikt wordt om de zoek-URL te maken. Gebruik ‘${1}’ op de plaats waar de echte zoekterm moet komen, bv. https://google.com/search?q=${1}.</string>
     <string name="more_information">Meer informatie</string>
     <string name="experimental_feature">Experimenteel</string>
     <string name="help">Hulp</string>
