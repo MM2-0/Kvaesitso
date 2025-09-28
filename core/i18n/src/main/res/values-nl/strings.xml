@@ -385,7 +385,6 @@
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s moet ingesteld worden als de standaard startscherm-app om applicatiesnelkoppelingen te zoeken</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">Om locale bestanden te doorzoeken is toegang tot externe bestanden nodig</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
