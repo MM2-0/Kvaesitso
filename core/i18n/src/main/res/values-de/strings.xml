@@ -60,7 +60,7 @@
     <string name="file_type_document">Dokument</string>
     <string name="file_type_spreadsheet">Kalkulationstabelle</string>
     <string name="file_type_video">Video</string>
-    <string name="file_type_music">Musik-Datei</string>
+    <string name="file_type_music">Audio</string>
     <string name="file_type_image">Bild</string>
     <string name="file_type_none">Datei</string>
     <string name="file_type_generic">%1$s-Datei</string>
@@ -105,7 +105,7 @@
     <string name="preference_category_system_bars">Systemleisten</string>
     <string name="preference_hide_status_bar">Statusleiste ausblenden</string>
     <string name="preference_hide_nav_bar">Navigationsleiste ausblenden</string>
-    <string name="widget_name_music">Musik</string>
+    <string name="widget_name_music">Medien</string>
     <string name="menu_contacts_open_externally">In Kontakte-App anzeigen</string>
     <string name="menu_favorites_pin">An Favoriten anheften</string>
     <string name="menu_favorites_unpin">Aus Favoriten entfernen</string>
@@ -169,9 +169,9 @@
     <string name="weather_condition_wind">Wind</string>
     <string name="weather_condition_unknown">Unbekannt</string>
     <string name="easter_egg_text">Tja, da sind Sie. Herzlichen Glückwunsch. War es das wert\?</string>
-    <string name="missing_permission_calendar_widget">Kalender-Berechtigung gewähren, um Ihre nächsten Termine hier anzuzeigen.</string>
-    <string name="missing_permission_calendar_search">Kalender-Berechtigung gewähren, um Termine zu durchsuchen.</string>
-    <string name="missing_permission_location_search">Standortzugriff gewähren, um Orte zu finden.</string>
+    <string name="missing_permission_calendar_widget">Kalender-Berechtigung wird benötigt, um Ihre nächsten Termine hier anzuzeigen</string>
+    <string name="missing_permission_calendar_search">Kalender-Berechtigung wird benötigt, um Termine zu durchsuchen.</string>
+    <string name="missing_permission_location_search">Standortzugriff wird benötigt, um Orte zu finden</string>
     <string name="missing_permission_contact_search">Kontakt-Berechtigung gewähren, um Kontakte zu durchsuchen.</string>
     <string name="missing_permission_files_search">Speicher-Berechtigung gewähren, um Fotos, Medien und Dokumente auf diesem Gerät zu durchsuchen.</string>
     <string name="close">Schließen</string>
@@ -241,13 +241,13 @@
     </plurals>
     <string name="preference_themed_icons">Eingefärbte Symbole</string>
     <string name="preference_themed_icons_summary">Symbole an das Farbschema der App anpassen</string>
-    <string name="weather_no_data">Keine Wetterdaten verfügbar.</string>
+    <string name="weather_no_data">Keine Wetterdaten verfügbar</string>
     <string name="preference_category_grid">Raster</string>
     <string name="preference_grid_column_count">Spaltenanzahl</string>
     <string name="grant_permission">Gewähren</string>
     <string name="missing_permission_auto_location">Standortzugriff wird benötigt, um den Standort automatisch zu ermitteln</string>
     <string name="missing_permission_music_widget">Benachrichtigungszugriff wird benötigt, um Medienwiedergabe zu steuern</string>
-    <string name="missing_permission_contact_search_settings">Kontakteberechtigung ist erforderlich, um Kontakte durchsuchen zu können</string>
+    <string name="missing_permission_contact_search_settings">Kontaktberechtigung ist erforderlich, um Kontakte durchsuchen zu können</string>
     <string name="missing_permission_calendar_search_settings">Kalenderberechtigung ist erforderlich, um Kalender durchsuchen zu können</string>
     <string name="weather_widget_set_location">Standort festlegen</string>
     <string name="preference_screen_debug">Debug</string>
@@ -345,7 +345,7 @@
     <string name="preference_cards_shape">Form</string>
     <string name="preference_cards_shape_rounded">Abgerundet</string>
     <string name="preference_cards_shape_cut">Abgeschnitten</string>
-    <string name="weather_location_search_no_result">Standort nicht gefunden.</string>
+    <string name="weather_location_search_no_result">Standort nicht gefunden</string>
     <string name="save">Speichern</string>
     <string name="file_type_launcherbackup">%1$s-Backup</string>
     <string name="preference_enforce_icon_shape">Form erzwingen</string>
@@ -385,7 +385,7 @@
     <string name="favorites_empty_tag">Es gibt keine Elemente mit diesem Tag</string>
     <string name="edit_favorites_dialog_tag_section_empty">Angeheftete Tags werden hier angezeigt</string>
     <string name="favorites_empty">Angeheftete und häufig genutzte Elemente werden hier angezeigt</string>
-    <string name="edit_favorites_dialog_new_tag">Tag erstellen…</string>
+    <string name="edit_favorites_dialog_new_tag">Tag erstellen</string>
     <string name="websearch_dialog_query_encoding_url">URL-Encoding</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="websearch_dialog_query_encoding_none">Keine</string>
@@ -489,7 +489,7 @@
     <string name="preference_weather_integration">Wetter</string>
     <string name="preference_media_integration">Mediensteuerung</string>
     <string name="widget_config_calendar_no_calendars">Keine Kalender gefunden</string>
-    <string name="widget_name_unknown">Unbekanntes App-Widget</string>
+    <string name="widget_name_unknown">Unbekannt</string>
     <string name="widget_action_replace">Ersetzen</string>
     <string name="widget_config_appwidget_borderless">Randlos</string>
     <string name="widget_config_appwidget_configure">Widget einrichten</string>
@@ -500,12 +500,12 @@
     <string name="preference_debug_reinstall_iconpacks">Symbolpakete neu installieren</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Symbolpaketecache leeren und neu erstellen</string>
     <string name="widget_name_notes">Notiz</string>
-    <string name="notes_widget_placeholder">Notiz schreiben…</string>
+    <string name="notes_widget_placeholder">Notiz schreiben</string>
     <string name="notes_widget_action_new">Neue Notiz</string>
     <string name="notes_widget_action_save">Speichern</string>
     <string name="notes_widget_export_filename">Notiz_%1$s</string>
     <string name="notes_widget_action_dismiss">Verwerfen</string>
-    <string name="notes_widget_dismissed">Notiz verworfen.</string>
+    <string name="notes_widget_dismissed">Notiz verworfen</string>
     <string name="preference_hidden_items_reveal_button">Einblenden-Button anzeigen</string>
     <string name="preference_hidden_items_reveal_button_summary">Eine Schaltfläche zum Einblenden ausgeblendeter Suchergebnisse anzeigen</string>
     <string name="widget_config_appwidget_background">Hintergrundkarte</string>
@@ -808,7 +808,7 @@
     <string name="action_install">Installieren</string>
     <string name="missing_permission_tasks_integration">Aufgaben-Berechtigung wird benötigt, um die Tasks-Integration zu verwenden</string>
     <string name="preference_search_tasks">Aufgaben</string>
-    <string name="missing_permission_tasks_search_settings">Aufgabenberechtigung ist erforderlich, um Aufgaben durchsuchen zu können</string>
+    <string name="missing_permission_tasks_search_settings">Tasks-Berechtigung ist erforderlich, um Aufgaben in der Tasks-App durchsuchen zu können</string>
     <string name="preference_search_tasks_summary">Aufgaben in der Tasks-App durchsuchen</string>
     <string name="preference_tasks_integration">Tasks</string>
     <string name="plugin_type_contacts">Kontakte</string>
