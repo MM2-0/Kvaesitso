@@ -90,15 +90,15 @@
     <string name="wikipedia_url">https://ja.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">Wikipedia から</string>
-    <!-- File meta data, title of audio tracks -->
+    <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">タイトル: %1$s</string>
-    <!-- File meta data, artist of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
     <string name="file_meta_artist">アーティスト: %1$s</string>
-    <!-- File meta data, album of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">アルバム: %1$s</string>
-    <!-- File meta data, duration of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
     <string name="file_meta_duration">長さ: %1$s</string>
-    <!-- File meta data, year of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">年: %1$s</string>
     <!-- File size -->
     <string name="file_meta_size">サイズ: %1$s</string>
@@ -106,50 +106,48 @@
     <string name="file_meta_path">パス: %1$s</string>
     <!-- File type (MIME type) -->
     <string name="file_meta_type">タイプ: %1$s</string>
-    <!-- File meta, image/video dimensions -->
+    <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">解像度: %1$s</string>
-    <!-- File meta, app name of APK files -->
+    <!-- File metadata, app name of APK files -->
     <string name="file_meta_app_name">アプリ名: %1$s</string>
-    <!-- File meta, version name of APK files -->
+    <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">バージョン: %1$s</string>
-    <!-- File meta, package name of APK files -->
+    <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">パッケージ名: %1$s</string>
-    <!-- File meta, min SDK version (=lowest Android version this APK file is compatible with) of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">最小 SDK バージョン: %1$s</string>
-    <!-- File meta, owner (for files that are stored in a cloud) -->
+    <!-- File metadata, owner (for cloud files) -->
     <string name="file_meta_owner">所有者: %1$s</string>
-    <!-- File meta, location (e.g. location where a photo has been taken) -->
+    <!-- File metadata, location -->
     <string name="file_meta_location">場所: %1$s</string>
     <string name="file_type_directory">ディレクトリ</string>
-    <!-- ZIP, TAR, … archive files  -->
+    <!-- Archive file  -->
     <string name="file_type_archive">アーカイブファイル</string>
-    <!-- APK file  -->
+    <!-- Android package file  -->
     <string name="file_type_android">Android パッケージファイル</string>
-    <!-- Code file (source code in a programming language) -->
+    <!-- Source code file -->
     <string name="file_type_source_code">ソースコードファイル</string>
-    <!-- Word document -->
+    <!-- Document -->
     <string name="file_type_document">文書ファイル</string>
-    <!-- Excel spreadsheet -->
+    <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">表計算ファイル</string>
     <!-- Audio file -->
-    <string name="file_type_music">音楽</string>
     <!-- Video file -->
     <string name="file_type_video">動画</string>
-    <!-- Picture file -->
-    <string name="file_type_image">画像</string>
+    <!-- Image file -->
     <!-- Generic file without file extension -->
     <string name="file_type_none">ファイル</string>
-    <!-- Powerpoint presentation -->
+    <!-- Presentation -->
     <string name="file_type_presentation">プレゼンテーション</string>
-    <!-- BZIP, GZIP, … compressed file -->
+    <!-- Compressed file -->
     <string name="file_type_compressed">圧縮ファイル</string>
-    <!-- Plain text (TXT) file -->
+    <!-- Plain text file -->
     <string name="file_type_text">テキストファイル</string>
     <!-- E-book file -->
     <string name="file_type_ebook">電子ブック</string>
-    <!-- Google Drawings file -->
+    <!-- Drawing file -->
     <string name="file_type_drawing">図形描画</string>
-    <!-- Google Forms file -->
+    <!-- Form file -->
     <string name="file_type_form">フォーム</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s バックアップ</string>
@@ -213,20 +211,17 @@
     <string name="menu_edit_widgets">ウィジェットを編集</string>
     <string name="widget_name_weather">天気</string>
     <string name="widget_name_calendar">カレンダー</string>
-    <string name="widget_name_music">音楽</string>
     <string name="widget_name_favorites">お気に入り</string>
     <string name="widget_name_notes">メモ</string>
-    <string name="widget_name_unknown">不明なアプリウィジェット</string>
+    <string name="widget_name_unknown">不明</string>
     <string name="widget_add_widget">ウィジェットを追加</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">メモを書く…</string>
     <string name="notes_widget_action_new">新しいメモ</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">保存</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">メモ_%1$s</string>
     <string name="notes_widget_action_dismiss">閉じる</string>
-    <string name="notes_widget_dismissed">メモは閉じられました。</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">%1$s から</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -252,7 +247,6 @@
     <string name="edit_favorites_dialog_empty_section">ここにアイコンをドラッグアンドドロップ</string>
     <string name="edit_favorites_dialog_tags">タグ</string>
     <string name="edit_favorites_dialog_tag_section_empty">ピン留めしたタグはここに表示されます</string>
-    <string name="edit_favorites_dialog_new_tag">タグを作成…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud サーバーの URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -301,7 +295,6 @@
         <item quantity="other">%1$d 件の継続しているイベント</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">終日</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s がメディアを再生しています</string>
     <string name="music_widget_no_data">メディアは再生されていません</string>
@@ -348,11 +341,9 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">天気データが利用できません。</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">場所を設定</string>
-    <string name="weather_location_search_no_result">場所が見つかりません。</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <!-- Missing notification permission in music widget settings -->
     <!-- Missing contact permission in search settings screen -->
@@ -380,7 +371,6 @@
     <string name="preference_theme_dark">ダーク</string>
     <string name="preference_screen_colors">配色</string>
     <string name="preference_colors_default">デフォルト</string>
-    <string name="preference_colors_bw">黒と白</string>
     <string name="preference_mdy_color_source_wallpaper">壁紙</string>
     <string name="preference_shapes_default">デフォルト</string>
     <string name="preference_transparencies_default">デフォルト</string>
@@ -394,7 +384,6 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">WEBサイトを開く</string>
     <string name="preference_screen_about_summary">アプリ情報、ライセンス情報</string>
-    <string name="preference_screen_appearance_summary">外観のカスタマイズ</string>
     <string name="preference_category_icons">アイコン</string>
     <string name="preference_cards">カード</string>
     <string name="preference_cards_summary">カードの外観をカスタマイズ</string>
@@ -435,7 +424,6 @@
     <string name="preference_clock_widget_time_format_system">システムのデフォルト</string>
     <string name="preference_clockwidget_battery_part">電池</string>
     <string name="preference_clockwidget_alarm_part">アラーム</string>
-    <string name="preference_screen_backup">バックアップと復元</string>
     <string name="preference_screen_backup_summary">ランチャーのデータをインポート/エクスポート</string>
     <string name="preference_backup">バックアップ</string>
     <string name="preference_backup_summary">設定とランチャーのデータをエクスポートします</string>
@@ -449,7 +437,6 @@
     <string name="preference_screen_tags">タグ</string>
     <string name="preference_screen_homescreen">ホーム画面</string>
     <string name="preference_screen_homescreen_summary">時計、検索バー、壁紙、システムバー</string>
-    <string name="preference_screen_icons">グリッド、アイコン</string>
     <string name="preference_screen_icons_summary">グリッド、アイコンのサイズ、アイコンパック、バッジ</string>
     <string name="preference_weather_integration">天気</string>
     <!-- %1$s: app name (Kvaesitso) -->
@@ -481,10 +468,8 @@
     <string name="calendar_widget_next_day">翌日</string>
     <string name="calendar_widget_create_event">新イベント作成</string>
     <string name="calendar_widget_open_calendar">カレンダーアプリを開く</string>
-    <string name="profile_work_profile_state_locked">仕事用アプリは一時停止されています。</string>
     <string name="profile_work_profile_action_unlock">一時停止を解除</string>
     <string name="profile_work_profile_action_lock">仕事用アプリを停止</string>
-    <string name="profile_private_profile_state_locked">プライベートスペースはロックされています。</string>
     <string name="profile_private_profile_action_unlock">ロック解除</string>
     <string name="profile_private_profile_action_lock">プライベートスペースをロック</string>
     <string name="hint_drag_and_drop_reorder">アイテムを押しながらドラッグして並べ替えてください</string>
