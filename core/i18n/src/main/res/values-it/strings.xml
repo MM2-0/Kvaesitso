@@ -17,7 +17,7 @@
     <string name="weather_widget_set_location">Imposta posizione</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="missing_permission_calendar_search_settings">È necessaria l\'autorizzazione Calendario per cercare nel calendario</string>
-    <string name="missing_permission_file_search_settings_android10">È necessaria l\'autorizzazione Gestisci tutti i file per cercare i file locali</string>
+    <string name="missing_permission_file_search_settings_android10">È necessario l\'accesso a tutti i file per cercare i file locali</string>
     <string name="missing_permission_contact_search">Concedi l\'autorizzazione Contatti per cercare all\'interno dei tuoi contatti.</string>
     <string name="open_webpage">Apri sito web</string>
     <string name="preference_automatic_location_summary">Usa il GPS e i servizi di localizzazione per determinare automaticamente la tua posizione</string>
@@ -92,7 +92,7 @@
     <string name="file_type_android">File pacchetto Android</string>
     <string name="file_type_document">Documento</string>
     <string name="file_type_spreadsheet">Foglio di calcolo</string>
-    <string name="file_type_music">File musicale</string>
+    <string name="file_type_music">Audio</string>
     <string name="file_type_video">Video</string>
     <string name="file_type_image">Immagine</string>
     <string name="file_type_none">File</string>
@@ -114,7 +114,7 @@
     <string name="menu_edit_widgets">Modifica widget</string>
     <string name="widget_name_weather">Meteo</string>
     <string name="widget_name_calendar">Calendario</string>
-    <string name="widget_name_music">Musica</string>
+    <string name="widget_name_music">Media</string>
     <string name="widget_add_widget">Aggiungi widget</string>
     <string name="shortcut_summary">Da %1$s</string>
     <string name="easter_egg_text">Bene, mi hai trovato. Congratulazioni. Ne valeva la pena\?</string>
@@ -136,7 +136,7 @@
     <string name="date_tomorrow">Domani</string>
     <string name="calendar_widget_pinned_events">In arrivo</string>
     <string name="calendar_widget_no_events">Nessun evento oggi</string>
-    <string name="calendar_event_allday">tutto il giorno</string>
+    <string name="calendar_event_allday">Tutto il giorno</string>
     <string name="music_widget_default_title">%1$s sta riproducendo file multimediali</string>
     <string name="music_widget_no_data">Nessun file multimediale è stato ancora riprodotto</string>
     <string name="weather_condition_sleetshowers">Rovesci di nevischio</string>
@@ -164,13 +164,13 @@
     <string name="weather_condition_heavysnowandthunder">Nevicate abbondanti e tuoni</string>
     <string name="weather_condition_wind">Vento</string>
     <string name="weather_condition_unknown">Sconosciuto</string>
-    <string name="weather_no_data">Nessun dato meteo disponibile.</string>
+    <string name="weather_no_data">Nessun dato meteo disponibile</string>
     <string name="missing_permission_auto_location">È necessaria l\'autorizzazione Geolocalizzazione per determinare automaticamente la posizione</string>
     <string name="missing_permission_music_widget">È necessario Accesso alle notifiche per controllare la riproduzione multimediale</string>
     <string name="missing_permission_contact_search_settings">È necessaria l\'autorizzazione Contatti per cercare i contatti</string>
     <string name="missing_permission_calendar_widget_settings">Questo widget richiede l\'autorizzazione Calendario</string>
-    <string name="missing_permission_file_search_settings">È necessaria l\'autorizzazione Archiviazione per cercare i file locali</string>
-    <string name="missing_permission_notification_badges">È necessario Accesso alle notifiche visualizzare gli indicatori di notifica</string>
+    <string name="missing_permission_file_search_settings">È necessaria l\'autorizzazione Archiviazione per cercare file su questo dispositivo</string>
+    <string name="missing_permission_notification_badges">È necessario Accesso alle notifiche per visualizzare gli indicatori di notifica</string>
     <string name="missing_permission_calendar_widget">Concedi l\'autorizzazione Calendario per visualizzare gli appuntamenti e gli eventi imminenti qui.</string>
     <string name="missing_permission_calendar_search">Concedi l\'autorizzazione Calendario per cercare all\'interno del tuo calendario.</string>
     <string name="missing_permission_files_search">Concedi l\'autorizzazione Archiviazione per cercare foto, file multimediali e documenti su questo dispositivo.</string>
@@ -338,7 +338,7 @@
     <string name="preference_backup">Backup</string>
     <string name="preference_screen_backup">Backup e ripristino</string>
     <string name="action_undo">Annulla</string>
-    <string name="weather_location_search_no_result">Posizione non trovata.</string>
+    <string name="weather_location_search_no_result">Posizione non trovata</string>
     <string name="preference_font">Carattere</string>
     <string name="restore_complete">Il backup è stato ripristinato.</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
@@ -383,7 +383,7 @@
     <string name="edit_favorites_dialog_tag_section_empty">I tag aggiunti verranno visualizzati qui</string>
     <string name="favorites_empty">Gli elementi appuntati e usati di frequente appariranno qui</string>
     <string name="favorites_empty_tag">Non ci sono elementi con questo tag</string>
-    <string name="edit_favorites_dialog_new_tag">Crea tag…</string>
+    <string name="edit_favorites_dialog_new_tag">Crea tag</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="websearch_dialog_query_encoding_none">Nessuna</string>
     <string name="websearch_dialog_query_encoding">Codifica ricerche</string>
@@ -493,7 +493,7 @@
     <string name="preference_media_integration">Controllo multimediale</string>
     <string name="widget_config_calendar_no_calendars">Nessun calendario trovato</string>
     <string name="preference_category_media_apps">App multimediali</string>
-    <string name="widget_name_unknown">Widget app sconosciuta</string>
+    <string name="widget_name_unknown">Sconosciuto</string>
     <string name="widget_action_replace">Sostituisci</string>
     <string name="app_widget_loading_failed">Impossibile caricare il widget dell\'app.</string>
     <string name="widget_config_music_integration_settings">Impostazioni integrazione controllo multimediale</string>
@@ -504,10 +504,10 @@
     <string name="preference_debug_reinstall_iconpacks_summary">Svuota e ricostruisci la cache del pacchetto icone</string>
     <string name="widget_name_notes">Nota</string>
     <string name="notes_widget_action_save">Salva</string>
-    <string name="notes_widget_placeholder">Scrivi una nota…</string>
+    <string name="notes_widget_placeholder">Scrivi una nota</string>
     <string name="notes_widget_action_new">Nuova nota</string>
     <string name="notes_widget_export_filename">Nota_%1$s</string>
-    <string name="notes_widget_dismissed">Note respinte.</string>
+    <string name="notes_widget_dismissed">Nota respinta</string>
     <string name="notes_widget_action_dismiss">Respingi</string>
     <string name="preference_hidden_items_reveal_button">Mostra pulsante rivelazione</string>
     <string name="preference_hidden_items_reveal_button_summary">Mostra un pulsante per rivelare i risultati di ricerca nascosti</string>
@@ -813,10 +813,10 @@
     <string name="preference_grid_list_icons_summary">Mostra le icone delle app nella lista</string>
     <string name="preference_contacts_call_on_tap">Clicca per chiamare</string>
     <string name="preference_contacts_call_on_tap_summary">Fai partire la chiamata appena viene cliccato un numero di telefono invece di aprire la schermata del telefono</string>
-    <string name="missing_permission_call_contacts_settings">Il permesso alle chiamate è necessario per effettuare la chiamata</string>
+    <string name="missing_permission_call_contacts_settings">È necessaria l\'autorizzazione Telefono per avviare le chiamate</string>
     <string name="weather_condition_haze">Foschia</string>
     <string name="weather_condition_thunder">Tuoni</string>
-    <string name="missing_permission_tasks_integration">Per usare l\'integrazione delle attività è necessaria l\'autorizzazione delle attività</string>
+    <string name="missing_permission_tasks_integration">È necessaria l\'autorizzazione Attività per utilizzare l\'integrazione delle Attività</string>
     <string name="preference_location_breezy">Gestisci la posizione in Breezy Weather</string>
     <string name="provider_breezy">Breezy Weather</string>
     <string name="preference_search_tasks">Attività</string>
@@ -825,7 +825,7 @@
     <string name="preference_breezyweather_integration_instructions">Per utilizzare Breezy Weather come fornitore di servizi meteo:\n\n1. Vai su Breezy Weather &gt; Impostazioni &gt; Widget e sfondi animati &gt; Invia dati Gadgetbridge &gt; Abilita %1$s\n\n2. In %1$s, seleziona Breezy Weather come fornitore di servizi meteo</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather è un\'app meteo gratuita e open source. Se installata, %1$s può utilizzare Breezy Weather come fonte di dati meteo.</string>
     <string name="action_install">Installa</string>
-    <string name="missing_permission_tasks_search_settings">Per cercare le attività è necessaria l\'autorizzazione delle attività</string>
+    <string name="missing_permission_tasks_search_settings">È necessaria l\'autorizzazione all\'app Attività per cercare attività nell\'app Attività</string>
     <string name="preference_tasks_integration">Tasks</string>
     <string name="preference_tasks_integration_ready">L\'integrazione con Tasks è completamente configurata e pronta all\'uso.</string>
     <string name="preference_tasks_integration_description">Tasks è un\'app gratuita e open source per liste di cose da fare e promemoria. Se installata, %1$s può visualizzare e cercare le tue attività dall\'app Tasks.</string>
