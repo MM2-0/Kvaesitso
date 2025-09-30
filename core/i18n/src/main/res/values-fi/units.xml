@@ -136,10 +136,6 @@
         <item quantity="one">gibitavu</item>
         <item quantity="other">gibitavua</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="one">tebitavu</item>
-        <item quantity="other">tebitavua</item>
-    </plurals>
     <plurals name="unit_bit">
         <item quantity="one">bitti</item>
         <item quantity="other">bittiä</item>
