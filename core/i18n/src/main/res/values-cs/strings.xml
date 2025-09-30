@@ -135,7 +135,7 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Tabulka</string>
     <!-- Audio file -->
-    <string name="file_type_music">Hudební soubor</string>
+    <string name="file_type_music">Zvuk</string>
     <!-- Video file -->
     <!-- Image file -->
     <string name="file_type_image">Obrázek</string>
@@ -214,21 +214,21 @@
     <string name="menu_edit_widgets">Upravit widgety</string>
     <string name="widget_name_weather">Počasí</string>
     <string name="widget_name_calendar">Kalendář</string>
-    <string name="widget_name_music">Hudba</string>
+    <string name="widget_name_music">Média</string>
     <string name="widget_name_favorites">Oblíbené</string>
     <string name="widget_name_notes">Poznámka</string>
-    <string name="widget_name_unknown">Neznámý widget aplikace</string>
+    <string name="widget_name_unknown">Neznámý</string>
     <string name="widget_add_widget">Přidat widget</string>
     <string name="widget_removed">Widget odstraněn</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Napište poznámku…</string>
+    <string name="notes_widget_placeholder">Napište poznámku</string>
     <string name="notes_widget_action_new">Nová poznámka</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Uložit</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Poznamka_%1$s</string>
     <string name="notes_widget_action_dismiss">Zavřít</string>
-    <string name="notes_widget_dismissed">Poznámka zavřena.</string>
+    <string name="notes_widget_dismissed">Poznámka zavřena</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Od %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -256,7 +256,7 @@
     <string name="edit_favorites_dialog_empty_section">Sem přesuňte položky</string>
     <string name="edit_favorites_dialog_tags">Štítky</string>
     <string name="edit_favorites_dialog_tag_section_empty">Zde se zobrazí připnuté štítky</string>
-    <string name="edit_favorites_dialog_new_tag">Vytvořit štítek…</string>
+    <string name="edit_favorites_dialog_new_tag">Vytvořit štítek</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL serveru Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -314,7 +314,7 @@
         <item quantity="other">+%1$d nedokončených úkolů</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">celý den</string>
+    <string name="calendar_event_allday">Celý den</string>
     <string name="task_due_time">Dokončit do %1$s</string>
     <string name="task_due_date">Dokončit do %1$s</string>
     <string name="task_due_today">Dokončit dnes</string>
@@ -372,11 +372,11 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Nejsou dostupná žádná data o počasí.</string>
+    <string name="weather_no_data">Data o počasí nejsou dostupná</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Nastavit polohu</string>
-    <string name="weather_location_search_no_result">Poloha nenalezena.</string>
+    <string name="weather_location_search_no_result">Poloha nenalezena</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Pro automatické určení polohy je vyžadován přístup k poloze</string>
     <!-- Missing notification permission in music widget settings -->
@@ -387,7 +387,7 @@
     <string name="missing_permission_call_contacts_settings">Pro provádění hovorů je vyžadováno oprávnění k telefonu</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Pro prohledávání kalendáře je vyžadován přístup ke kalendáři</string>
-    <string name="missing_permission_tasks_search_settings">Pro prohledávání úkolů je vyžadován přístup k úkolům</string>
+    <string name="missing_permission_tasks_search_settings">Pro prohledávání úkolů je vyžadován přístup k úkolům v aplikaci Tasks</string>
     <string name="missing_permission_tasks_integration">Pro použití integrace Tasks je vyžadován přístup k úkolům</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Tento widget vyžaduje přístup ke kalendáři</string>
@@ -395,22 +395,23 @@
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s musí být nastaven jako výchozí aplikace pro domácnost pro prohledávání záložek aplikací</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">Pro prohledávání souborů na tomto zařízení je vyžadován přístup k externímu úložišti</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Pro prohledávání místních souborů je vyžadováno oprávnění ke správě všech souborů</string>
+    <string name="missing_permission_file_search_settings_android10">Pro prohledávání místních souborů je vyžadován přístup ke všem souborům</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Pro zobrazování puntíků oznámení je vyžadován přístup k oznámením</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Pro zobrazování nadcházejících schůzek a událostí zde udělte aplikaci přístup ke kalendáři.</string>
+    <string name="missing_permission_calendar_widget">Pro zobrazování nadcházejících schůzek a událostí zde je vyžadován přístup ke kalendáři</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Pro prohledávání vašeho kalendáře udělte aplikaci přístup ke kalendáři.</string>
+    <string name="missing_permission_calendar_search">Pro prohledávání vašeho kalendáře je vyžadován přístup ke kalendáři</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Udělte oprávnění k přístupu k poloze pro vyhledání lokací v okolí.</string>
+    <string name="missing_permission_location_search">Pro vyhledávání lokací v okolí je vyžadován přístup k poloze</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Pro prohledávání fotek, médií a dokumentů na tomto zařízení udělte aplikaci přístup k úložišti.</string>
+    <string name="missing_permission_files_search">Pro prohledávání souborů na tomto zařízení je vyžadováno oprávnění k úložišti</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Pro prohledávání vašich kontaktů udělte aplikaci přístup ke kontaktům.</string>
+    <string name="missing_permission_contact_search">Pro prohledávání vašich kontaktů je vyžadován přístup ke kontaktům</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Pro prohledávání záložek aplikací nastavte %1$s jako výchozí spouštěč.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -425,7 +426,7 @@
     <string name="preference_screen_colors">Barevné schéma</string>
     <string name="preference_colors_default">Výchozí</string>
     <string name="preference_colors_high_contrast">Vysoký kontrast</string>
-    <string name="preference_colors_bw">Černé a bílé</string>
+    <string name="preference_colors_bw">Černá a bílá</string>
     <string name="preference_custom_colors_corepalette">Barevná paleta</string>
     <string name="preference_mdy_color_source">Zdroj dynamických barev</string>
     <string name="preference_mdy_color_source_system">Systém</string>
@@ -454,7 +455,7 @@
     <string name="provider_brightsky">Deutscher Wetterdienst (pouze Německo)</string>
     <string name="preference_category_location">Poloha</string>
     <string name="preference_automatic_location">Automatická poloha</string>
-    <string name="preference_automatic_location_summary">Použít GPS a polohové služby pro automatické zjištění polohy</string>
+    <string name="preference_automatic_location_summary">Použít polohové služby pro automatické zjištění polohy</string>
     <string name="preference_location_managed">Spravování doplňkem</string>
     <string name="preference_location_managed_summary">Umístění tohoto poskytovatele je spravováno doplňkovou aplikací</string>
     <string name="preference_location">Poloha</string>
@@ -472,10 +473,10 @@
     <string name="preference_debug_reinstall_iconpacks">Znovu nainstalovat balíčky ikon</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Vymazat a znovu sestavit mezipaměť balíčků ikon</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">Odebrána %1$d položka.</item>
-        <item quantity="few">Odebrány %1$d položky.</item>
-        <item quantity="many">Odebráno %1$d položek.</item>
-        <item quantity="other">Odebráno %1$d položek.</item>
+        <item quantity="one">Odebrána %1$d položka</item>
+        <item quantity="few">Odebrány %1$d položky</item>
+        <item quantity="many">Odebráno %1$d položek</item>
+        <item quantity="other">Odebráno %1$d položek</item>
     </plurals>
     <string name="preference_category_icons">Ikony</string>
     <string name="preference_cards">Karty</string>
@@ -523,7 +524,7 @@
     <string name="preference_screen_integrations_summary">Spravovat připojené účty a služby</string>
     <string name="preference_signin_user">Přihlášen jako %1$s</string>
     <string name="preference_signout">Odhlásit se</string>
-    <string name="preference_summary_not_logged_in">Momentálně nejste přihlášeni</string>
+    <string name="preference_summary_not_logged_in">Nejste přihlášeni</string>
     <string name="preference_category_wallpaper">Pozadí</string>
     <string name="preference_dim_wallpaper">Ztmavit pozadí</string>
     <string name="preference_dim_wallpaper_summary">Na tmavých motivech ztmavit pozadí</string>
@@ -667,7 +668,7 @@
     <string name="preference_compact_tags_summary">Skrýt popisky nebo ikony štítků, aby se zmenšilo místo jimi zabrané</string>
     <string name="preference_widgets_edit_button_summary">Zobrazit tlačítko k přidání, odebrání a uspořádání widgetů</string>
     <string name="preference_widgets_on_home_screen">Widgety na domovské obrazovce</string>
-    <string name="preference_widgets_on_home_screen_summary">Zobrazit widgety na domovské stránce namísto další stránky</string>
+    <string name="preference_widgets_on_home_screen_summary">Zobrazit widgety na domovské stránce namísto vlastní stránky</string>
     <string name="preference_screen_homescreen">Domovská obrazovka</string>
     <string name="preference_screen_homescreen_summary">Hodiny, vyhledávací lišta, pozadí, systémové lišty</string>
     <string name="preference_screen_icons">Mřížka a ikony</string>
@@ -683,7 +684,7 @@
     <string name="preference_breezyweather_integration_instructions">Pro použití Breezy Weather jako poskytovatele počasí:\n\n1. Přejděte do Breezy Weather &gt; Nastavení &gt; Widgety a živá tapeta &gt; Posílat data o počasí do Gadgetbridge &gt; Povolte %1$s\n\n2. V aplikaci %1$s zvolte Breezy Weather jako poskytovatele počasí</string>
     <string name="preference_launch_breezyweather_app">Otevřít Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">Klepněte pro vytočení</string>
-    <string name="preference_contacts_call_on_tap_summary">Po klepnutí na telefonní číslo okamžitě zahájit hovor</string>
+    <string name="preference_contacts_call_on_tap_summary">Po klepnutí na telefonní číslo zahájit hovor bez potvrzení</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Zatím jste nepřipojili svůj účet Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -737,17 +738,17 @@
     <string name="create_search_action_type_intent">Vlastní intent</string>
     <string name="create_search_action_pick_app">Vyberte aplikaci k hledání:</string>
     <string name="create_search_action_website_url">Zadejte adresu webu:</string>
-    <string name="create_search_action_website_invalid_url">Zadaný web nelze automaticky importovat jako webový vyhledávač. Můžete vyzkoušet jiný web nebo zadat požadovaná data ručně v dalším kroku.</string>
+    <string name="create_search_action_website_invalid_url">Zadaný web nelze automaticky importovat jako webový vyhledávač. Můžete vyzkoušet jiný web nebo zadat požadovaná data ručně v dalším kroku</string>
     <string name="search_action_label">Název</string>
     <string name="search_action_app">Aplikace</string>
     <string name="search_action_websearch_url">Šablona URL</string>
-    <string name="search_action_websearch_url_hint">Šablona adresy URL použitá k vytvoření adresy vyhledávání. Použijte ‚${1}‘ jako proměnnou vyhledávaného termínu, např. https://google.cz/search?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Šablona adresy URL použitá k vytvoření adresy vyhledávání. Použijte „${1}“ jako proměnnou hledaného termínu</string>
     <string name="more_information">Další informace</string>
     <string name="experimental_feature">Experimentální</string>
-    <string name="tag_exists_error">Štítek s tímto názvem již existuje.</string>
-    <string name="tag_exists_message">Štítek s tímto názvem již existuje. Pokud budete pokračovat, budou oba štítky spojeny.</string>
-    <string name="tag_no_items_message">K tomuto štítku nejsou přiřazeny žádné položky. Pokud budete pokračovat, štítek bude odstraněn.</string>
-    <string name="tag_empty_name">Štítek nemůže existovat bez názvu. Pokud budete pokračovat, bude štítek odstraněn.</string>
+    <string name="tag_exists_error">Štítek s tímto názvem již existuje</string>
+    <string name="tag_exists_message">Štítek s tímto názvem již existuje. Pokud budete pokračovat, budou oba štítky spojeny</string>
+    <string name="tag_no_items_message">K tomuto štítku nejsou přiřazeny žádné položky. Pokud budete pokračovat, štítek bude odstraněn</string>
+    <string name="tag_empty_name">Štítek nemůže existovat bez názvu. Pokud budete pokračovat, bude štítek odstraněn</string>
     <string name="tag_select_items">Vybrané položky:</string>
     <string name="tag_name">Název štítku</string>
     <plurals name="tag_selected_items">
@@ -756,7 +757,7 @@
         <item quantity="many">Vybráno %1$d položek</item>
         <item quantity="other">Vybráno %1$d položek</item>
     </plurals>
-    <string name="preference_layout_open_search">Vyhledávání / šuplík s aplikacemi</string>
+    <string name="preference_layout_open_search">Vyhledávání a šuplík s aplikacemi</string>
     <string name="open_search_pull_down">Posunutí dolů</string>
     <string name="open_search_swipe_left">Posunutí vlevo</string>
     <string name="open_search_swipe_right">Posunutí vpravo</string>
@@ -787,7 +788,7 @@
     <string name="gesture_action_lock_screen">Vypnout obrazovku</string>
     <string name="gesture_action_quick_settings">Otevřít rychlá nastavení</string>
     <string name="gesture_action_power_menu">Zobrazit menu napájení</string>
-    <string name="gesture_action_recents">Otevřít nedávné</string>
+    <string name="gesture_action_recents">Otevřít nedávné aplikace</string>
     <string name="gesture_failed_message">Provedli jste gesto „%1$s“. Toto gesto je momentálně nastaveno na vykonání akce „%2$s“. Akci nicméně nelze provést z následujícího důvodu:</string>
     <string name="missing_permission_accessibility_gesture_failed">Pro vykonání této akce musí být povolena služba přístupnosti spouštěče.</string>
     <string name="missing_permission_accessibility_gesture_settings">Tato akce vyžaduje povolení akce přístupnosti spouštěče.</string>
@@ -802,7 +803,7 @@
     <string name="widget_config_weather_integration_settings">Nastavení integrace počasí</string>
     <string name="widget_config_calendar_no_calendars">Nenalezeny žádné kalendáře</string>
     <string name="widget_pick_widget">Vyberte widget</string>
-    <string name="app_widget_loading_failed">Nepodařilo se načíst widget aplikace.</string>
+    <string name="app_widget_loading_failed">Nepodařilo se načíst widget aplikace</string>
     <string name="widget_config_music_integration_settings">Nastavení integrace ovládání médií</string>
     <string name="note_widget_link_file">Propojit se souborem</string>
     <string name="note_widget_link_file_summary">Synchronizovat obsah tohoto widgetu s externím souborem</string>
@@ -816,9 +817,9 @@
     <string name="note_widget_conflict_local_version">Naposledy uložená verze:</string>
     <string name="note_widget_conflict_file_version">Aktuální obsah souboru:</string>
     <string name="note_widget_file_read_error">Chyba při čtení poznámky</string>
-    <string name="note_widget_file_read_error_description">Nepodařilo se přečíst propojený soubor. Možná byl přesunut nebo odstraněn. Z interního úložiště spouštěče byla obnovena kopie. Pokud poznámku upravíte, propojený soubor nejspíš bude přepsán.</string>
+    <string name="note_widget_file_read_error_description">Nepodařilo se přečíst propojený soubor. Z interního úložiště spouštěče byla obnovena kopie. Pokud poznámku upravíte, propojený soubor nejspíš bude přepsán</string>
     <string name="note_widget_file_write_error">Chyba při ukládání poznámky</string>
-    <string name="note_widget_file_write_error_description">Nepodařilo se zapsat poznámku do propojeného souboru. Možná byl přesunut nebo odstraněn. Z interního úložiště spouštěče byla obnovena kopie.</string>
+    <string name="note_widget_file_write_error_description">Nepodařilo se zapsat poznámku do propojeného souboru. Z interního úložiště spouštěče byla obnovena kopie</string>
     <string name="confirmation_delete_color_scheme">Opravdu chcete odstranit barevné schéma %1$s\?</string>
     <string name="confirmation_delete_shapes_scheme">Opravdu chcete odstranit schéma tvaru %1$s?</string>
     <string name="confirmation_delete_typography_scheme">Opravdu chcete odstranit schéma typografie %1$s?</string>
@@ -861,7 +862,7 @@
     <string name="plugin_type_weather">Poskytovatel počasí</string>
     <string name="plugin_weather_provider_enable">Nastavit jako poskytovatele počasí</string>
     <string name="plugin_weather_provider_enabled">Momentálně nastaven jako poskytovatel počasí</string>
-    <string name="unavailable_searchable">Tato položka již neexistuje.</string>
+    <string name="unavailable_searchable">Tato položka již neexistuje</string>
     <string name="clock_style_digital1">Tučné</string>
     <string name="clock_style_digital2">Jednoduché</string>
     <string name="clock_style_orbit">Kruh</string>
@@ -1019,10 +1020,10 @@
     <string name="calendar_widget_next_day">Další den</string>
     <string name="calendar_widget_create_event">Vytvořit novou událost</string>
     <string name="calendar_widget_open_calendar">Otevřít aplikaci kalendáře</string>
-    <string name="profile_work_profile_state_locked">Pracovní aplikace jsou pozastaveny.</string>
+    <string name="profile_work_profile_state_locked">Pracovní aplikace jsou pozastaveny</string>
     <string name="profile_work_profile_action_unlock">Zrušit pozastavení</string>
     <string name="profile_work_profile_action_lock">Pozastavit pracovní aplikace</string>
-    <string name="profile_private_profile_state_locked">Soukromý prostor je uzamčen.</string>
+    <string name="profile_private_profile_state_locked">Soukromý prostor je uzamčen</string>
     <string name="profile_private_profile_action_unlock">Odemknout</string>
     <string name="profile_private_profile_action_lock">Zamknout soukromý prostor</string>
     <string name="hint_drag_and_drop_reorder">Přeskládejte položky jejich podržením a přesunutím</string>
@@ -1044,7 +1045,7 @@
     </plurals>
     <string name="departure_time_departed">odjel</string>
     <string name="bad_configuration_title">Gratulujeme, uzamkli jste se!</string>
-    <string name="bad_configuration_summary">Objevili jste kombinaci nastavení, kvůli které není dostupné ani vyhledávání, ani nastavení, čímž jste se prakticky uzamkli z launcheru.</string>
+    <string name="bad_configuration_summary">Objevili jste kombinaci nastavení, kvůli které není dostupné ani vyhledávání, ani nastavení, čímž jste se prakticky uzamkli z launcheru</string>
     <string name="theme_export_title">Exportovat motiv</string>
     <string name="theme_import_title">Importovat motiv</string>
     <string name="theme_bundle_name">Název</string>
