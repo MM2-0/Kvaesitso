@@ -37,6 +37,7 @@
     <string name="action_done">Fet</string>
     <string name="action_more_actions">Més accions</string>
     <string name="action_clear">Borra el camp</string>
+    <string name="action_install">Instal·la</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Borrar</string>
     <string name="menu_remove">Moure</string>
@@ -139,7 +140,7 @@
     <!-- Video file -->
     <string name="file_type_video">Vídeo</string>
     <!-- Image file -->
-    <string name="file_type_image">Fotografía</string>
+    <string name="file_type_image">Imatge</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Fitxer</string>
     <!-- Presentation -->
@@ -217,25 +218,27 @@
     <string name="widget_name_music">Música</string>
     <string name="widget_name_favorites">Preferits</string>
     <string name="widget_name_notes">Nota</string>
-    <string name="widget_name_unknown">Giny desconegut</string>
+    <string name="widget_name_unknown">Desconegut</string>
     <string name="widget_add_widget">Afegeix un giny</string>
     <string name="widget_removed">S\'ha eliminat el widget</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Escriu una nota…</string>
+    <string name="notes_widget_placeholder">Escriu una nota</string>
     <string name="notes_widget_action_new">Crea una nota nova</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Guarda</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Nota_%1$s</string>
     <string name="notes_widget_action_dismiss">Elimina</string>
-    <string name="notes_widget_dismissed">Nota eliminada.</string>
+    <string name="notes_widget_dismissed">Nota ignorada</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">De %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
     <string name="easter_egg_text">Bé, m\'has trobat. Moltes Felicitats. Ha valgut la pena\?</string>
     <!-- Close a dialog -->
     <string name="close">Tanca</string>
+    <string name="no_selection">Sense selecció</string>
     <string name="save">Guarda</string>
+    <string name="save_as_file">Desa com a fitxer</string>
     <string name="duplicate">Duplica</string>
     <string name="edit">Edita</string>
     <string name="skip">Omet</string>
@@ -254,7 +257,7 @@
     <string name="edit_favorites_dialog_empty_section">Arrossega els elements aquí</string>
     <string name="edit_favorites_dialog_tags">Etiquetes</string>
     <string name="edit_favorites_dialog_tag_section_empty">Les etiquetes fixades apareixeràn aquí</string>
-    <string name="edit_favorites_dialog_new_tag">Crea una etiqueta…</string>
+    <string name="edit_favorites_dialog_new_tag">Crea una etiqueta</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL del servidor Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -303,6 +306,10 @@
         <item quantity="one">+%1$d esdeveniment en curs</item>
         <item quantity="other">+%1$d esdeveniments en curs</item>
     </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d tasca inacabada</item>
+        <item quantity="other">+%1$d tasques inacabades</item>
+    </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">Tot el dia</string>
     <string name="task_due_time">Realitzat a %1$s</string>
@@ -311,6 +318,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s està reproduint música</string>
     <string name="music_widget_no_data">No s\'ha reproduit cap fitxer multimèdia encara</string>
+    <string name="music_widget_interactive_progress_bar">Barra de progrés interactiva</string>
     <string name="weather_condition_sleetshowers">Xàfecs de neu</string>
     <string name="weather_condition_heavysleet">Pedregada</string>
     <string name="weather_condition_lightrainshowersandthunder">Pluja lleugera i trons</string>
@@ -330,6 +338,7 @@
     <string name="weather_condition_snow">Neu</string>
     <string name="weather_condition_hail">Calamarsa</string>
     <string name="weather_condition_thunderstorm">Tempesta</string>
+    <string name="weather_condition_thunder">Trons</string>
     <string name="weather_condition_heavysnowshowers">Ruixats de neu intensos</string>
     <string name="weather_condition_heavyrainshowers">Pluja intensa</string>
     <string name="weather_condition_rainshowersandthunder">Ruixats de pluja i trons</string>
@@ -341,6 +350,7 @@
     <string name="weather_condition_heavyrainshowersandthunder">Ruixats de pluja intensa i trons</string>
     <string name="weather_condition_fair">Bon temps</string>
     <string name="weather_condition_fog">Boira</string>
+    <string name="weather_condition_haze">Enboirat</string>
     <string name="weather_condition_sleetshowersandthunder">Xàfecs i trons</string>
     <string name="weather_condition_rainandthunder">Pluja i trons</string>
     <string name="weather_condition_lightsleet">Pluja suau</string>
@@ -359,42 +369,46 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Informació del temps no disponible.</string>
+    <string name="weather_no_data">Informació del temps no disponible</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Estableix la ubicació</string>
-    <string name="weather_location_search_no_result">Ubicació desconeguda.</string>
+    <string name="weather_location_search_no_result">Ubicació desconeguda</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">L\'accés a la ubicació és necessari per determinar la ubicació automàticament</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Cal accedir a les notificacions per controlar la reproducció multimèdia</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Es requereix permís d\'accés a l\'agenda per cercar contactes</string>
+    <string name="missing_permission_contact_search_settings">Cal permís d\'accés als contactes per cercar contactes</string>
     <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">Cal permís d\'accés al telèfon per iniciar trucades</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Cal permís d\'accés al calendari per cercar</string>
+    <string name="missing_permission_tasks_search_settings">Cal permís de Tasques per cercar tasques a l\'aplicació Tasques</string>
+    <string name="missing_permission_tasks_integration">Cal permís de Tasks per utilitzar la integració de Tasks</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Aquest giny requereix permís d\'accés al calendari</string>
     <string name="widget_config_calendar_missing_calendars_hint">No trobeu els vostres calendaris\?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s s\'ha de configurar com a aplicació d\'inici predeterminada per cercar dreceres d\'aplicacions</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">Cal permís d\'emmagatzematge extern per cercar fitxers en aquest dispositiu</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Es requereix permís de gestió per cercar fitxers locals</string>
+    <string name="missing_permission_file_search_settings_android10">Cal accés a tots els fitxers per cercar fitxers locals</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Cal tenir permís d\'accés a les notificacions per mostrar les insígnies de notificació</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Doneu permís al calendari per mostrar les properes cites i esdeveniments aquí.</string>
+    <string name="missing_permission_calendar_widget">Cal permís de calendari per mostrar els propers esdeveniments aquí</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Doneu permís d\'accés per cercar al vostre calendari.</string>
+    <string name="missing_permission_calendar_search">Cal permís de Calendar per cercar al calendari</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Doneu permís a la ubicació per cercar ubicacions properes.</string>
+    <string name="missing_permission_location_search">Doneu permís d\'ubicació per cercar ubicacions properes</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Concediu permís d\'emmagatzematge per cercar fotos, media i documents en aquest dispositiu.</string>
+    <string name="missing_permission_files_search">Cal permís d\'emmagatzematge per cercar fitxers en aquest dispositiu</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Doneu permís d\'accés per cercar els vostres contactes.</string>
+    <string name="missing_permission_contact_search">Doneu permís d\'accés per cercar els vostres contactes</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Configura %1$s com a aplicació d\'inici predeterminada per cercar dreceres d\'aplicacions.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -408,13 +422,20 @@
     <string name="preference_theme_dark">Fosc</string>
     <string name="preference_screen_colors">Esquema de colors</string>
     <string name="preference_colors_default">Per defecte</string>
+    <string name="preference_colors_high_contrast">Alt contrast</string>
     <string name="preference_colors_bw">Negre i Blanc</string>
     <string name="preference_custom_colors_corepalette">Paleta de colors</string>
     <string name="preference_mdy_color_source">Font de Colors dinàmics</string>
     <string name="preference_mdy_color_source_system">Colors del Sistema</string>
     <string name="preference_mdy_color_source_wallpaper">Colors del Fons de Pantalla</string>
+    <string name="preference_screen_shapes">Formes</string>
     <string name="preference_shapes_default">Per defecte</string>
+    <string name="preference_shapes_extra_round">Més arrodonit</string>
+    <string name="preference_shapes_base">Forma bàsica</string>
+    <string name="preference_screen_typography">Tipografia</string>
+    <string name="preference_screen_transparencies">Transparència</string>
     <string name="preference_transparencies_default">Per defecte</string>
+    <string name="preference_transparencies_semi_transparent">Semitransparent</string>
     <string name="preference_font_system">Sistema predeterminat</string>
     <string name="preference_screen_about">Sobre</string>
     <string name="preference_version">Versió</string>
@@ -430,10 +451,11 @@
     <string name="provider_brightsky">Servei meteorològic alemany (només Alemanya)</string>
     <string name="preference_category_location">Ubicació</string>
     <string name="preference_automatic_location">Ubicació automàtica</string>
-    <string name="preference_automatic_location_summary">Utilitzeu el GPS i els serveis d\'ubicació per determinar la ubicació automàticament</string>
+    <string name="preference_automatic_location_summary">Utilitzeu els serveis de localització per determinar la ubicació automàticament</string>
     <string name="preference_location_managed">Gestionat pel connector</string>
     <string name="preference_location_managed_summary">La ubicació d\'aquest proveïdor la gestiona l\'aplicació del connector</string>
     <string name="preference_location">Ubicació</string>
+    <string name="preference_location_breezy">Gestiona la ubicació a Breezy Weather</string>
     <string name="preference_imperial_units_summary">Utilitzeu graus Fahrenheit i milles per hora</string>
     <string name="preference_imperial_units">Unitats imperials</string>
     <string name="widget_config_weather_compact">Mode compacte</string>
@@ -496,7 +518,7 @@
     <string name="preference_screen_integrations_summary">Gestioneu els comptes i serveis connectats</string>
     <string name="preference_signin_user">S\'ha iniciat la sessió com a %1$s</string>
     <string name="preference_signout">Tanca sessió</string>
-    <string name="preference_summary_not_logged_in">Actualment no heu iniciat sessió</string>
+    <string name="preference_summary_not_logged_in">No has iniciat la sessió</string>
     <string name="preference_icon_shape_pentagon">Pentàgon</string>
     <string name="preference_category_wallpaper">Fons de pantalla</string>
     <string name="preference_dim_wallpaper">Fons de pantalla enfosquit</string>
@@ -531,8 +553,12 @@
     <string name="preference_category_grid">Quadrícula</string>
     <string name="preference_grid_icon_size">Mida de la icona</string>
     <string name="preference_grid_column_count">Nombre de columnes</string>
+    <string name="preference_grid_list_style">Mostrar aplicacions en una llista</string>
+    <string name="preference_grid_list_icons">Mostra les icones de les aplicacions a la llista</string>
     <string name="preference_grid_labels">Mostra les etiquetes</string>
     <string name="preference_grid_labels_summary">Mostra el nom de l\'aplicació a sota de la icona</string>
+    <string name="preference_grid_list_style_summary">Mostra les aplicacions en una llista en comptes d\'una quadrícula</string>
+    <string name="preference_grid_list_icons_summary">Mostra les icones a la vista de llista</string>
     <string name="preference_screen_debug">Depuració</string>
     <string name="preference_screen_debug_summary">Eines de resolució de problemes</string>
     <string name="preference_category_widgets">Ginys</string>
@@ -543,6 +569,7 @@
     <string name="preference_clockwidget_layout_vertical">Per defecte</string>
     <string name="preference_clockwidget_layout_horizontal">Compacte</string>
     <string name="preference_clock_widget_show_seconds">Mostra els segons</string>
+    <string name="preference_clock_widget_monospaced">Dígits monoespaiats</string>
     <string name="preference_clock_widget_time_format">Format horari</string>
     <string name="preference_clock_widget_time_format_24h">24h</string>
     <string name="preference_clock_widget_time_format_12h">12h</string>
@@ -562,7 +589,7 @@
     <string name="preference_clockwidget_battery_part_summary">Mostra el nivell actual de la bateria quan la bateria està baixa o s\'està carregant</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra les alarmes que sonaran en les properes 8 hores</string>
-    <string name="preference_screen_backup">Fes una còpia de seguretat &amp; restaura</string>
+    <string name="preference_screen_backup">Fes una còpia de seguretat i restaura</string>
     <string name="preference_screen_backup_summary">Exporta i importa les dades del llançador</string>
     <string name="preference_backup">Còpia de seguretat</string>
     <string name="preference_backup_summary">Exporta les preferències i les dades del llançador</string>
@@ -583,6 +610,8 @@
     <string name="preference_search_calendar">Calendari</string>
     <string name="preference_search_calendar_summary">Cerca properes cites i esdeveniments</string>
     <string name="preference_search_local_calendar_summary">Cerca calendaris en aquest dispositiu</string>
+    <string name="preference_search_tasks">Tasques</string>
+    <string name="preference_search_tasks_summary">Cercar tasques a l\'aplicació Tasques</string>
     <string name="preference_search_appshortcuts">Dreceres d\'aplicacions</string>
     <string name="preference_search_appshortcuts_summary">Cerca dreceres d\'aplicacions</string>
     <string name="preference_search_calculator">Calculadora</string>
@@ -607,6 +636,8 @@
     <string name="preference_screen_buildinfo_summary">Més informació sobre aquesta compilació</string>
     <string name="preference_search_bar_style">Estil</string>
     <string name="preference_search_bar_style_summary">Personalitza l\'aparença de la barra de cerca</string>
+    <string name="preference_search_bar_style_solid">Sòlid</string>
+    <string name="preference_search_bar_style_hidden">Ocult</string>
     <string name="preference_search_bar_auto_focus">Mostrar el teclat</string>
     <string name="preference_search_bar_auto_focus_summary">Mostra automàticament el teclat en obrir el calaix d\'aplicacions</string>
     <string name="preference_search_bar_launch_on_enter">Llançar a l\'entrar</string>
@@ -626,13 +657,24 @@
     <string name="preference_compact_tags">Etiquetes compactes</string>
     <string name="preference_compact_tags_summary">Amaga les etiquetes o icones d\'etiquetes per reduir l\'espai que ocupen les etiquetes</string>
     <string name="preference_widgets_edit_button_summary">Mostra un botó per afegir, eliminar i reorganitzar ginys</string>
+    <string name="preference_widgets_on_home_screen">Widgets a la pantalla d\'inici</string>
+    <string name="preference_widgets_on_home_screen_summary">Mostra els widgets a la pantalla d\'inici en comptes d\'una pàgina separada</string>
     <string name="preference_screen_homescreen">Pantalla inicial</string>
     <string name="preference_screen_homescreen_summary">Rellotge, barra de cerca, fons de pantalla, barres del sistema</string>
     <string name="preference_screen_icons">Quadrícula i icones</string>
     <string name="preference_screen_icons_summary">Quadrícula, mida d\'icones, paquets d\'icones, insígnies</string>
     <string name="preference_weather_integration">El temps</string>
     <string name="preference_media_integration">Controls multimèdia</string>
+    <string name="preference_tasks_integration">Tasques</string>
     <!-- %1$s: app name (Kvaesitso) -->
+    <string name="preference_tasks_integration_description">Tasks és una aplicació gratuïta i de codi obert de llistes de tasques pendents i recordatoris. Si està instal·lada, %1$s pot mostrar i cercar les teves tasques des de l\'aplicació Tasks.</string>
+    <string name="preference_tasks_integration_ready">La integració de tasques està completament configurada i llesta per utilitzar.</string>
+    <string name="preference_launch_tasks_app">Obre l\'aplicació Tasques</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather és una aplicació meteorològica gratuïta i de codi obert. Si està instal·lada, %1$s pot utilitzar Breezy Weather com a font de dades per a les dades meteorològiques.</string>
+    <string name="preference_breezyweather_integration_instructions">Per utilitzar Breezy Weather com a proveïdor meteorològic:\n\n1. Aneu a Breezy Weather &gt; Configuració &gt; Widgets i fons de pantalla animats &gt; Envia dades de Gadgetbridge &gt; Activa %1$s\n\n2. A %1$s, seleccioneu Breezy Weather com a proveïdor meteorològic</string>
+    <string name="preference_launch_breezyweather_app">Obre Breezy Weather</string>
+    <string name="preference_contacts_call_on_tap">Toca per trucar</string>
+    <string name="preference_contacts_call_on_tap_summary">Iniciar una trucada sense confirmació en tocar un número de telèfon</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Encara no has connectat cap compte de Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -683,23 +725,23 @@
     <string name="create_search_action_type_intent">Intent personalitzat</string>
     <string name="create_search_action_pick_app">Tria una aplicació per cercar:</string>
     <string name="create_search_action_website_url">Introduïu l\'adreça del lloc web:</string>
-    <string name="create_search_action_website_invalid_url">El lloc web indicat no es pot importar automàticament com a cerca web. Podeu provar un lloc web diferent o introduir les dades necessàries manualment al pas següent.</string>
+    <string name="create_search_action_website_invalid_url">El lloc web indicat no es pot importar automàticament com a cerca web. Podeu provar un lloc web diferent o introduir les dades necessàries manualment al pas següent</string>
     <string name="search_action_label">Nom</string>
     <string name="search_action_app">Aplicació</string>
     <string name="search_action_websearch_url">Plantilla d\'URL</string>
-    <string name="search_action_websearch_url_hint">La plantilla d\'URL que s\'utilitza per construir l\'URL de cerca web. Utilitzeu \"${1}\" com a marcador de posició per al terme de cerca real, p. ex. https://google.com/search?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">La plantilla d\'URL que s\'utilitza per construir l\'URL de cerca web. Utilitzeu \"${1}\" com a marcador de posició per al terme de cerca real</string>
     <string name="more_information">Més informació</string>
-    <string name="tag_exists_error">Ja existeix una etiqueta amb aquest nom.</string>
-    <string name="tag_exists_message">Ja existeix una etiqueta amb aquest nom. Si continueu, les dues etiquetes es fusionaran.</string>
-    <string name="tag_no_items_message">No s\'ha assignat cap element a aquesta etiqueta. Si continueu, l\'etiqueta se suprimirà.</string>
-    <string name="tag_empty_name">Una etiqueta no pot existir sense un nom. Si continueu, l\'etiqueta se suprimirà.</string>
+    <string name="tag_exists_error">Ja existeix una etiqueta amb aquest nom</string>
+    <string name="tag_exists_message">Ja existeix una etiqueta amb aquest nom. Si continueu, les dues etiquetes es fusionaran</string>
+    <string name="tag_no_items_message">No s\'ha assignat cap element a aquesta etiqueta. Si continueu, l\'etiqueta se suprimirà</string>
+    <string name="tag_empty_name">Una etiqueta no pot existir sense un nom. Si continueu, l\'etiqueta se suprimirà</string>
     <string name="tag_select_items">Seleccioneu elements:</string>
     <string name="tag_name">Nom de l\'etiqueta</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d element seleccionat</item>
         <item quantity="other">%1$d elements seleccionats</item>
     </plurals>
-    <string name="preference_layout_open_search">Cerca / calaix d\'aplicacions</string>
+    <string name="preference_layout_open_search">Cerca al calaix d\'aplicacions</string>
     <string name="open_search_pull_down">Llisca cap avall</string>
     <string name="open_search_swipe_left">Llisca cap a l\'esquerra</string>
     <string name="open_search_swipe_right">Llisca cap a la dreta</string>
@@ -718,6 +760,7 @@
     <string name="preference_gesture_swipe_down">Llisca cap avall</string>
     <string name="preference_gesture_swipe_left">Llisca cap a l\'esquerra</string>
     <string name="preference_gesture_swipe_right">Llisca cap a la dreta</string>
+    <string name="preference_gesture_swipe_up">Llisca cap amunt</string>
     <string name="preference_gesture_double_tap">Doble toc</string>
     <string name="preference_gesture_long_press">Mantenir pulsat</string>
     <string name="preference_gesture_home_button">Botó d\'inici/gest</string>
@@ -743,7 +786,7 @@
     <string name="widget_config_weather_integration_settings">Configuració del giny del temps</string>
     <string name="widget_config_calendar_no_calendars">No s\'han trobat calendaris</string>
     <string name="widget_pick_widget">Trieu el giny</string>
-    <string name="app_widget_loading_failed">El giny de l\'aplicació no s\'ha pogut carregar.</string>
+    <string name="app_widget_loading_failed">El giny de l\'aplicació no s\'ha pogut carregar</string>
     <string name="widget_config_music_integration_settings">Configuració multimèdia</string>
     <string name="note_widget_link_file">Enllaç al fitxer</string>
     <string name="note_widget_link_file_summary">Sincronitza el contingut d\'aquest giny amb un fitxer extern</string>
@@ -757,16 +800,22 @@
     <string name="note_widget_conflict_local_version">Última versió desada:</string>
     <string name="note_widget_conflict_file_version">Contingut actual del fitxer:</string>
     <string name="note_widget_file_read_error">Error en llegir la nota</string>
-    <string name="note_widget_file_read_error_description">No s\'ha pogut llegir el fitxer enllaçat. Possiblement, s\'ha mogut o esborrat. S\'ha restaurat una còpia de l\'emmagatzematge intern del llançador. Si editeu la nota, possiblement es sobreescriurà el fitxer enllaçat.</string>
+    <string name="note_widget_file_read_error_description">No s\'ha pogut llegir el fitxer enllaçat. S\'ha restaurat una còpia des de l\'emmagatzematge intern del llançador. Si editeu la nota, és possible que el fitxer enllaçat se sobreescrigui</string>
     <string name="note_widget_file_write_error">S\'ha produït un error en desar la nota</string>
-    <string name="note_widget_file_write_error_description">La nota no s\'ha pogut escriure al fitxer enllaçat. Possiblement, s\'ha mogut o esborrat. S\'ha desat una còpia a l\'emmagatzematge intern del llançador.</string>
+    <string name="note_widget_file_write_error_description">No s\'ha pogut escriure la nota al fitxer enllaçat. S\'ha desat una còpia a l\'emmagatzematge intern del llançador</string>
     <string name="confirmation_delete_color_scheme">Realment voleu suprimir l\'esquema de colors %1$s\?</string>
+    <string name="confirmation_delete_shapes_scheme">De veritat voleu suprimir l\'esquema de forma %1$s?</string>
+    <string name="confirmation_delete_typography_scheme">De veritat voleu suprimir l\'esquema tipogràfic %1$s?</string>
+    <string name="confirmation_delete_transparencies_scheme">De veritat voleu suprimir l\'esquema de transparència %1$s?</string>
+    <string name="new_theme_name">(sense títol)</string>
     <string name="theme_color_scheme_system_default">Sistema predeterminat</string>
     <string name="theme_color_scheme_autogenerate">Colors primaris</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Personalitzat</string>
     <string name="preference_restore_default">Restaura el valor predeterminat</string>
+    <string name="import_theme_contents">Contingut</string>
     <string name="import_theme_apply">Aplica el tema</string>
+    <string name="import_theme_exists">El tema ja existeix i s\'actualitzarà</string>
     <string name="import_theme_error">No s\'ha pogut llegir el fitxer seleccionat. Assegureu-vos que heu seleccionat un fitxer de tema vàlid (*.kvtheme) i que el fitxer no està malmès.</string>
     <string name="shortcut_label_unavailable">No disponible</string>
     <string name="app_label_locked_profile">Bloquejat</string>
@@ -788,14 +837,14 @@
     <string name="menu_bugreport">Informe d\'error</string>
     <string name="location_open_24_7">Obert 24/7</string>
     <string name="plugin_state_error">Aquest connector no funciona correctament</string>
-    <string name="plugin_state_setup_required">Primer heu de configurar aquest connector</string>
+    <string name="plugin_state_setup_required">Primer cal configurar aquest complement</string>
     <string name="plugin_action_setup">Configurar</string>
-    <string name="plugin_type_filesearch">Cerca de fitxers</string>
+    <string name="plugin_type_filesearch">Fitxers</string>
     <string name="plugin_type_contacts">Contactes</string>
     <string name="plugin_type_weather">Proveïdor de dades climatològiques</string>
     <string name="plugin_weather_provider_enable">Estableix com a proveïdor meteorològic</string>
     <string name="plugin_weather_provider_enabled">Actualment establert com a proveïdor meteorològic</string>
-    <string name="unavailable_searchable">Aquest element ja no existeix.</string>
+    <string name="unavailable_searchable">Aquest element ja no existeix</string>
     <string name="clock_style_digital1">Negreta</string>
     <string name="clock_style_binary">Digital</string>
     <string name="clock_style_analog">Analògic</string>
@@ -901,6 +950,9 @@
     <string name="poi_category_fire_station">Estació de bombers</string>
     <string name="poi_category_courthouse">Jutjats</string>
     <string name="poi_category_townhall">Ajuntament</string>
+    <string name="poi_category_stationery">Papereria</string>
+    <string name="poi_category_climbing_gym">Gimnàs d\'escalada</string>
+    <string name="poi_category_hackerspace">Espai hacker</string>
     <string name="customize_item_label">Etiqueta</string>
     <string name="customize_item_tags">Etiquetes</string>
     <string name="customize_item_visibility">Mostra a</string>
@@ -937,10 +989,10 @@
     <string name="calendar_widget_next_day">L\'endemà</string>
     <string name="calendar_widget_create_event">Crea un nou esdeveniment</string>
     <string name="calendar_widget_open_calendar">Obre l\'aplicació de calendari</string>
-    <string name="profile_work_profile_state_locked">Les aplicacions de treball estan en pausa.</string>
+    <string name="profile_work_profile_state_locked">Les aplicacions de treball estan en pausa</string>
     <string name="profile_work_profile_action_unlock">Reactivar</string>
     <string name="profile_work_profile_action_lock">Posa en pausa les aplicacions de treball</string>
-    <string name="profile_private_profile_state_locked">L\'espai privat està tancat</string>
+    <string name="profile_private_profile_state_locked">L\'espai privat està bloquejat</string>
     <string name="profile_private_profile_action_unlock">Desbloqueja</string>
     <string name="profile_private_profile_action_lock">Tanca l\'espai privat</string>
     <string name="hint_drag_and_drop_reorder">Manteniu premut i arrossegueu els elements per reordenar-los</string>
@@ -956,5 +1008,15 @@
         <item quantity="one">en un minut</item>
         <item quantity="other">d\'aquí a %1$d minuts</item>
     </plurals>
+    <string name="departure_time_departed">El vol ha sortit</string>
+    <string name="bad_configuration_title">Felicitats, t\'has tancat fora!</string>
+    <string name="bad_configuration_summary">Has descobert una combinació de configuracions que fa que tant la cerca com la configuració siguin inaccessibles, cosa que et bloqueja l\'accés al llançador</string>
+    <string name="theme_export_title">Exporta el tema</string>
+    <string name="theme_import_title">Importa el tema</string>
     <string name="theme_bundle_name">Nom</string>
+    <string name="theme_bundle_author">Autor</string>
+    <string name="font_category_device_default">Dispositiu per defecte</string>
+    <string name="font_name_device_headline">Font predeterminada del títol</string>
+    <string name="font_name_device_body">Font del text del dispositiu</string>
+    <string name="font_category_generic">Genèric</string>
 </resources>
