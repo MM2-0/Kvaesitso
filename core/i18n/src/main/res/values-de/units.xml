@@ -165,8 +165,8 @@
     </plurals>
     <string name="unit_tebibyte_symbol">TiB</string>
     <plurals name="unit_tebibyte">
-        <item quantity="one">Tebiyte</item>
-        <item quantity="other">Tebiyte</item>
+        <item quantity="one">Tebibyte</item>
+        <item quantity="other">Tebibyte</item>
     </plurals>
     <string name="unit_bit_symbol">bit</string>
     <plurals name="unit_bit">
