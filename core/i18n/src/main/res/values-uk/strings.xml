@@ -60,4 +60,10 @@
     <string name="file_type_source_code">Файл вихідного коду</string>
     <string name="file_type_spreadsheet">Таблиця</string>
     <string name="file_type_archive">Архів</string>
+    <string name="location_open">Відкрито</string>
+    <string name="location_closed">Закрито</string>
+    <string name="location_closes">закриється через %1$s</string>
+    <string name="location_closes_other_day">Закриється у %1$s, о %2$s</string>
+    <string name="location_opens">Відкриється о %1$s</string>
+    <string name="location_opens_other_day">Відкриється у %1$s, о %2$s</string>
 </resources>
