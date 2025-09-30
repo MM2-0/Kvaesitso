@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="uk">
+    <string name="location_open">Відкрито</string>
+    <string name="location_closed">Закрито</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_closes">закриється через %1$s</string>
     <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_closes_other_day">Закриється у %1$s, о %2$s</string>
     <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_opens">Відкриється о %1$s</string>
     <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_opens_other_day">Відкриється у %1$s, о %2$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Поділитися</string>
@@ -28,6 +34,8 @@
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="action_undo">Скасувати</string>
     <string name="action_import">Імпорт</string>
+    <string name="action_done">Готово</string>
+    <string name="action_more_actions">Більше</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Видалити</string>
     <string name="menu_remove">Прибрати</string>
@@ -104,15 +112,20 @@
     <string name="file_meta_location">Розташування: %1$s</string>
     <string name="file_type_directory">Шлях</string>
     <!-- Archive file  -->
+    <string name="file_type_archive">Архів</string>
     <!-- Android package file  -->
     <!-- Source code file -->
+    <string name="file_type_source_code">Файл вихідного коду</string>
     <!-- Document -->
     <string name="file_type_document">Документ</string>
     <!-- Spreadsheet -->
+    <string name="file_type_spreadsheet">Таблиця</string>
     <!-- Audio file -->
+    <string name="file_type_music">Аудіо</string>
     <!-- Video file -->
     <string name="file_type_video">Відео файл</string>
     <!-- Image file -->
+    <string name="file_type_image">Зображення</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Файл</string>
     <!-- Presentation -->
@@ -126,6 +139,7 @@
     <!-- Drawing file -->
     <!-- Form file -->
     <!-- Launcher backup, %1$s: app name -->
+    <string name="file_type_launcherbackup">Резервна копія %1$s</string>
     <!-- Launcher theme, %1$s: app name -->
     <!-- Generic file , %1$s is the file extension -->
     <!-- Warning message that is shown when a user attempts to delete a directory -->
