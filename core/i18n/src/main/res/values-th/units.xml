@@ -139,9 +139,6 @@
     <plurals name="unit_gibibyte">
         <item quantity="other">กิบิไบต์</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="other">เทบิไบต์</item>
-    </plurals>
     <plurals name="unit_bit">
         <item quantity="other">บิต</item>
     </plurals>
