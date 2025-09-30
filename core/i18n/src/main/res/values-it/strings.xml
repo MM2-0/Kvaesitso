@@ -371,42 +371,42 @@
     <string name="weather_widget_set_location">Imposta posizione</string>
     <string name="weather_location_search_no_result">Posizione non trovata</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
-    <string name="missing_permission_auto_location">È necessaria l\'autorizzazione Geolocalizzazione per determinare automaticamente la posizione</string>
+    <string name="missing_permission_auto_location">È richiesto l\'accesso alla Posizione per determinarla automaticamente</string>
     <!-- Missing notification permission in music widget settings -->
-    <string name="missing_permission_music_widget">È necessario Accesso alle notifiche per controllare la riproduzione multimediale</string>
+    <string name="missing_permission_music_widget">È richiesto l\'accesso alle Notifiche per controllare la riproduzione multimediale</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">È necessaria l\'autorizzazione Contatti per cercare i contatti</string>
+    <string name="missing_permission_contact_search_settings">È richiesta l\'autorizzazione Contatti per cercare i contatti</string>
     <!-- Missing call permission in contacts settings screen -->
-    <string name="missing_permission_call_contacts_settings">È necessaria l\'autorizzazione Telefono per avviare le chiamate</string>
+    <string name="missing_permission_call_contacts_settings">È richiesta l\'autorizzazione Telefono per avviare le chiamate</string>
     <!-- Missing calendar permission in search settings screen -->
-    <string name="missing_permission_calendar_search_settings">È necessaria l\'autorizzazione Calendario per cercare nel calendario</string>
-    <string name="missing_permission_tasks_search_settings">È necessaria l\'autorizzazione all\'app Attività per cercare attività nell\'app Attività</string>
-    <string name="missing_permission_tasks_integration">È necessaria l\'autorizzazione Attività per utilizzare l\'integrazione delle Attività</string>
+    <string name="missing_permission_calendar_search_settings">È richiesta l\'autorizzazione Calendario per cercare nel calendario</string>
+    <string name="missing_permission_tasks_search_settings">È richiesta l\'autorizzazione Attività per cercare le attività nell\'app Attività</string>
+    <string name="missing_permission_tasks_integration">È richiesta l\'autorizzazione Attività per utilizzare l\'integrazione Attività</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Questo widget richiede l\'autorizzazione Calendario</string>
-    <string name="widget_config_calendar_missing_calendars_hint">Non trovi i tuoi calendari\?</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Non riesci a trovare i tuoi calendari?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search_settings">%1$s deve essere impostato come app home predefinita per poter cercare le scorciatoie delle app</string>
+    <string name="missing_permission_appshortcuts_search_settings">\'%1$s deve essere impostata come app Home predefinita per cercare le scorciatoie delle app</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">È necessaria l\'autorizzazione Archiviazione per cercare file su questo dispositivo</string>
+    <string name="missing_permission_file_search_settings">È richiesta l\'autorizzazione Spazio di archiviazione esterno per cercare i file su questo dispositivo</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">È necessario l\'accesso a tutti i file per cercare i file locali</string>
+    <string name="missing_permission_file_search_settings_android10">È richiesto l\'accesso a tutti i file per cercare i file locali</string>
     <!-- Missing notification permission, used in badge settings screen -->
-    <string name="missing_permission_notification_badges">È necessario Accesso alle notifiche per visualizzare gli indicatori di notifica</string>
+    <string name="missing_permission_notification_badges">È richiesto l\'accesso alle Notifiche per visualizzare i badge di notifica</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Concedi l\'autorizzazione Calendario per visualizzare gli appuntamenti e gli eventi imminenti qui.</string>
+    <string name="missing_permission_calendar_widget">È richiesta l\'autorizzazione Calendario per visualizzare gli eventi imminenti qui</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Concedi l\'autorizzazione Calendario per cercare all\'interno del tuo calendario.</string>
+    <string name="missing_permission_calendar_search">È richiesta l\'autorizzazione Calendario per cercare nel tuo calendario</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Concedi l\'autorizzazione alla posizione per cercare luoghi nelle vicinanze.</string>
+    <string name="missing_permission_location_search">È richiesta l\'autorizzazione Posizione per cercare luoghi vicini</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Concedi l\'autorizzazione Archiviazione per cercare foto, file multimediali e documenti su questo dispositivo.</string>
+    <string name="missing_permission_files_search">È richiesta l\'autorizzazione Spazio di archiviazione per cercare i file su questo dispositivo</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Concedi l\'autorizzazione Contatti per cercare all\'interno dei tuoi contatti.</string>
+    <string name="missing_permission_contact_search">È richiesta l\'autorizzazione Contatti per cercare i tuoi contatti</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search">Imposta %1$s come app home predefinita per poter cercare le scorciatoie delle app.</string>
+    <string name="missing_permission_appshortcuts_search">Imposta %1$s come app Home predefinita per cercare le scorciatoie delle app.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">Imposta %1$s come app home predefinita per creare scorciatoie.</string>
     <!-- Grant a permission, shown in permission banners -->
@@ -448,7 +448,7 @@
     <string name="provider_brightsky">Deutscher Wetterdienst (solo Germania)</string>
     <string name="preference_category_location">Posizione</string>
     <string name="preference_automatic_location">Posizione automatica</string>
-    <string name="preference_automatic_location_summary">Usa il GPS e i servizi di localizzazione per determinare automaticamente la tua posizione</string>
+    <string name="preference_automatic_location_summary">Usa i servizi di localizzazione per determinare la posizione automaticamente</string>
     <string name="preference_location_managed">Gestito dal plugin</string>
     <string name="preference_location_managed_summary">La posizione di questo provider è gestita dall\'app plugin</string>
     <string name="preference_location">Posizione</string>
@@ -465,8 +465,8 @@
     <string name="preference_debug_reinstall_iconpacks">Reinstalla pacchetti icone</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Svuota e ricostruisci la cache del pacchetto icone</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d voce è stata rimossa.</item>
-        <item quantity="other">%1$d voci sono state rimosse.</item>
+        <item quantity="one">%1$d voce è stata rimossa</item>
+        <item quantity="other">%1$d voci sono state rimosse</item>
     </plurals>
     <string name="preference_category_icons">Icone</string>
     <string name="preference_cards">Schede</string>
@@ -654,7 +654,7 @@
     <string name="preference_compact_tags_summary">Nascondi le etichette o le icone dei tag per ridurre lo spazio occupato dai tag</string>
     <string name="preference_widgets_edit_button_summary">Mostra un pulsante per aggiungere, rimuovere e riorganizzare i widget</string>
     <string name="preference_widgets_on_home_screen">Widget nella schermata home</string>
-    <string name="preference_widgets_on_home_screen_summary">Mostra i widget nella schermata home invece che in una pagina aggiuntiva</string>
+    <string name="preference_widgets_on_home_screen_summary">Mostra i widget sulla schermata Home anziché su una pagina separata</string>
     <string name="preference_screen_homescreen">Schermata home</string>
     <string name="preference_screen_homescreen_summary">Orologio, barra di ricerca, sfondo, barre di sistema</string>
     <string name="preference_screen_icons">Griglia e icone</string>
@@ -670,7 +670,7 @@
     <string name="preference_breezyweather_integration_instructions">Per utilizzare Breezy Weather come fornitore di servizi meteo:\n\n1. Vai su Breezy Weather &gt; Impostazioni &gt; Widget e sfondi animati &gt; Invia dati Gadgetbridge &gt; Abilita %1$s\n\n2. In %1$s, seleziona Breezy Weather come fornitore di servizi meteo</string>
     <string name="preference_launch_breezyweather_app">Apri Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">Clicca per chiamare</string>
-    <string name="preference_contacts_call_on_tap_summary">Fai partire la chiamata appena viene cliccato un numero di telefono invece di aprire la schermata del telefono</string>
+    <string name="preference_contacts_call_on_tap_summary">Avvia una chiamata senza conferma quando tocchi un numero di telefono</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Non hai ancora collegato un account Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -722,23 +722,23 @@
     <string name="create_search_action_type_intent">Intent personalizzato</string>
     <string name="create_search_action_pick_app">Scegli un\'app per la ricerca:</string>
     <string name="create_search_action_website_url">Inserisci l\'indirizzo del sito web:</string>
-    <string name="create_search_action_website_invalid_url">Il sito web specificato non può essere importato automaticamente come ricerca web. Puoi provare un altro sito web o inserire manualmente i dati richiesti nel passaggio successivo.</string>
+    <string name="create_search_action_website_invalid_url">Il sito web specificato non può essere importato automaticamente come ricerca web. Puoi provare un altro sito web o inserire manualmente i dati richiesti nel passaggio successivo</string>
     <string name="search_action_label">Nome</string>
     <string name="search_action_websearch_url">Modello dell\'URL</string>
-    <string name="search_action_websearch_url_hint">Il modello di URL usato per creare l\'URL della ricerca web. Usa \'${1}\' come segnaposto per il termine di ricerca effettivo, ad es. https://google.com/search?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Il modello di URL usato per creare l\'URL della ricerca web. Usa \'${1}\' come segnaposto per il termine di ricerca effettivo</string>
     <string name="more_information">Maggiori informazioni</string>
     <string name="experimental_feature">Sperimentale</string>
-    <string name="tag_exists_error">Esiste già un tag con questo nome.</string>
-    <string name="tag_exists_message">Esiste già un tag con questo nome. Se continui, i due tag verranno uniti.</string>
-    <string name="tag_no_items_message">Nessun elemento è assegnato a questo tag. Se continui, il tag verrà eliminato.</string>
-    <string name="tag_empty_name">Un tag non può esistere senza un nome. Se continui, il tag verrà eliminato.</string>
+    <string name="tag_exists_error">Esiste già un tag con questo nome</string>
+    <string name="tag_exists_message">Esiste già un tag con questo nome. Se continui, i due tag verranno uniti</string>
+    <string name="tag_no_items_message">Nessun elemento è assegnato a questo tag. Se continui, il tag verrà eliminato</string>
+    <string name="tag_empty_name">Un tag non può esistere senza un nome. Se continui, il tag verrà eliminato</string>
     <string name="tag_select_items">Seleziona elementi:</string>
     <string name="tag_name">Nome tag</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d elemento selezionato</item>
         <item quantity="other">%1$d elementi selezionati</item>
     </plurals>
-    <string name="preference_layout_open_search">Ricerca / cassetto app</string>
+    <string name="preference_layout_open_search">Ricerca e cassetto app</string>
     <string name="open_search_pull_down">Scorri in basso</string>
     <string name="open_search_swipe_left">Scorri a sinistra</string>
     <string name="open_search_swipe_right">Scorri a destra</string>
@@ -769,7 +769,7 @@
     <string name="gesture_action_lock_screen">Spegni schermo</string>
     <string name="gesture_action_quick_settings">Apri il pannello Impostazioni rapide di Android</string>
     <string name="gesture_action_power_menu">Mostra menu alimentazione</string>
-    <string name="gesture_action_recents">Apri la schermata App recenti di Android (Panoramica)</string>
+    <string name="gesture_action_recents">Apri app recenti</string>
     <string name="gesture_failed_message">Hai eseguito un gesto \"%1$s\". Questo gesto è attualmente impostato per attivare un\'azione \"%2$s\". Tuttavia, l\'azione non può essere eseguita per il seguente motivo:</string>
     <string name="missing_permission_accessibility_gesture_failed">Il servizio di accessibilità del launcher deve essere abilitato per eseguire questa azione.</string>
     <string name="missing_permission_accessibility_gesture_settings">Questa azione richiede che il servizio di accessibilità del launcher sia abilitato.</string>
@@ -784,7 +784,7 @@
     <string name="widget_config_weather_integration_settings">Impostazioni integrazione meteo</string>
     <string name="widget_config_calendar_no_calendars">Nessun calendario trovato</string>
     <string name="widget_pick_widget">Scegli widget</string>
-    <string name="app_widget_loading_failed">Impossibile caricare il widget dell\'app.</string>
+    <string name="app_widget_loading_failed">Impossibile caricare il widget dell\'app</string>
     <string name="widget_config_music_integration_settings">Impostazioni integrazione controllo multimediale</string>
     <string name="note_widget_link_file">Collegamento al file</string>
     <string name="note_widget_link_file_summary">Sincronizza il contenuto di questo widget con un file esterno</string>
@@ -798,9 +798,9 @@
     <string name="note_widget_conflict_local_version">Ultima versione salvata:</string>
     <string name="note_widget_conflict_file_version">Contenuto attuale del file:</string>
     <string name="note_widget_file_read_error">Errore durante la lettura della nota</string>
-    <string name="note_widget_file_read_error_description">Impossibile leggere il file collegato. Forse è stato spostato o cancellato. È stata ripristinata una copia dalla memoria interna del programma di avvio. Se modifichi la nota, il file collegato potrebbe essere sovrascritto.</string>
+    <string name="note_widget_file_read_error_description">Impossibile leggere il file collegato. Una copia è stata ripristinata dalla memoria interna del launcher. Se modifichi la nota, il file collegato potrebbe essere sovrascritto</string>
     <string name="note_widget_file_write_error">Errore durante il salvataggio della nota</string>
-    <string name="note_widget_file_write_error_description">Non è stato possibile scrivere la nota nel file collegato. Forse è stato spostato o cancellato. Una copia è stata salvata nella memoria interna del launcher.</string>
+    <string name="note_widget_file_write_error_description">Impossibile scrivere la nota nel file collegato. Una copia è stata salvata nella memoria interna del launcher</string>
     <string name="confirmation_delete_color_scheme">Vuoi davvero eliminare la combinazione di colori %1$s\?</string>
     <string name="confirmation_delete_shapes_scheme">Vuoi davvero eliminare lo schema di forme %1$s?</string>
     <string name="confirmation_delete_typography_scheme">Vuoi davvero eliminare lo schema tipografico %1$s?</string>
@@ -843,7 +843,7 @@
     <string name="plugin_type_weather">Provider meteo</string>
     <string name="plugin_weather_provider_enable">Imposta come provider meteo</string>
     <string name="plugin_weather_provider_enabled">Attualmente impostato come provider meteo</string>
-    <string name="unavailable_searchable">Questo elemento non esiste più.</string>
+    <string name="unavailable_searchable">Questo elemento non esiste più</string>
     <string name="clock_style_digital1">Grassetto</string>
     <string name="clock_style_digital2">Semplice</string>
     <string name="clock_style_orbit">Orbita</string>
@@ -993,10 +993,10 @@
     <string name="calendar_widget_next_day">Giorno successivo</string>
     <string name="calendar_widget_create_event">Crea nuovo evento</string>
     <string name="calendar_widget_open_calendar">Apri app calendario</string>
-    <string name="profile_work_profile_state_locked">Le app di lavoro sono in pausa.</string>
+    <string name="profile_work_profile_state_locked">Le app di lavoro sono in pausa</string>
     <string name="profile_work_profile_action_unlock">Riattiva</string>
     <string name="profile_work_profile_action_lock">Metti in pausa app di lavoro</string>
-    <string name="profile_private_profile_state_locked">Lo spazio privato è bloccato.</string>
+    <string name="profile_private_profile_state_locked">Lo spazio privato è bloccato</string>
     <string name="profile_private_profile_action_unlock">Sblocca</string>
     <string name="profile_private_profile_action_lock">Blocca spazio privato</string>
     <string name="hint_drag_and_drop_reorder">Tieni premuto e trascina gli elementi per riorganizzarli</string>
@@ -1014,7 +1014,7 @@
     </plurals>
     <string name="departure_time_departed">Partito</string>
     <string name="bad_configuration_title">Congratulazioni, ti sei chiuso fuori!</string>
-    <string name="bad_configuration_summary">Hai scoperto una combinazione di impostazioni che rende inaccessibili sia la ricerca sia le impostazioni, impedendoti di fatto di accedere al launcher.</string>
+    <string name="bad_configuration_summary">Hai scoperto una combinazione di impostazioni che rende inaccessibili sia la ricerca sia le impostazioni, impedendoti di fatto di accedere al launcher</string>
     <string name="theme_export_title">Esporta tema</string>
     <string name="theme_import_title">Importa tema</string>
     <string name="theme_bundle_name">Nome</string>
