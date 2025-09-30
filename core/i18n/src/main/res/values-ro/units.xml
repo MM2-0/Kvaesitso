@@ -66,11 +66,6 @@
         <item quantity="few">gibiocteți</item>
         <item quantity="other">de gibiocteți</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="one">tebioctet</item>
-        <item quantity="few">tebiocteți</item>
-        <item quantity="other">de tebiocteți</item>
-    </plurals>
     <string name="unit_kilobit_symbol">kilobit</string>
     <string name="unit_megabit_symbol">Megabit</string>
     <string name="unit_gigabit_symbol">Gigabit</string>
