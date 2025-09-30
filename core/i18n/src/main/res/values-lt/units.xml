@@ -204,12 +204,6 @@
         <item quantity="many">Gibibaitų</item>
         <item quantity="other">Gibibaitų</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="one">Tebibaitas</item>
-        <item quantity="few">Tebibaitai</item>
-        <item quantity="many">Tebibaitų</item>
-        <item quantity="other">Tebibaitų</item>
-    </plurals>
     <plurals name="unit_bit">
         <item quantity="one">bitas</item>
         <item quantity="few">bitai</item>
