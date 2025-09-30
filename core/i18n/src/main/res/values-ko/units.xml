@@ -104,9 +104,6 @@
     <plurals name="unit_gibibyte">
         <item quantity="other">기비바이트</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="other">테비바이트</item>
-    </plurals>
     <plurals name="unit_bit">
         <item quantity="other">비트</item>
     </plurals>
