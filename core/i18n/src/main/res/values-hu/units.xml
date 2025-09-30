@@ -152,10 +152,6 @@
         <item quantity="one">gibibájt</item>
         <item quantity="other">gibibájt</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="one">tebibájt</item>
-        <item quantity="other">tebibájt</item>
-    </plurals>
     <plurals name="unit_kilobit">
         <item quantity="one">kilóbit</item>
         <item quantity="other">kilóbit</item>
