@@ -4,12 +4,55 @@
     Important note: Unit symbols may not contain spaces.
     -->
     <!-- DIMENSIONS -->
+    <string name="dimension_length">Довжина</string>
+    <string name="dimension_mass">Маса</string>
+    <string name="dimension_velocity">Швидкість</string>
+    <string name="dimension_volume">Об’єм</string>
+    <string name="dimension_area">Площа</string>
+    <string name="dimension_currency">Валюта</string>
+    <string name="dimension_data">Дані</string>
+    <string name="dimension_bitrate">Бітрейт</string>
+    <string name="dimension_pressure">Тиск</string>
+    <string name="dimension_energy">Енергія</string>
+    <string name="dimension_frequency">Частота</string>
+    <string name="dimension_temperature">Температура</string>
+    <string name="dimension_time">Час</string>
     <!-- UNITS OF LENGTH -->
     <string name="unit_meter_symbol">м.</string>
+    <plurals name="unit_meter">
+        <item quantity="one">Метр</item>
+        <item quantity="few">Метри</item>
+        <item quantity="many">Метрів</item>
+        <item quantity="other">Метрів</item>
+    </plurals>
     <string name="unit_kilometer_symbol">км</string>
+    <plurals name="unit_kilometer">
+        <item quantity="one">Кілометр</item>
+        <item quantity="few">Кілометри</item>
+        <item quantity="many">Кілометрів</item>
+        <item quantity="other">Кілометрів</item>
+    </plurals>
     <string name="unit_decimeter_symbol">дм</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">Дециметр</item>
+        <item quantity="few">Дециметри</item>
+        <item quantity="many">Дециметрів</item>
+        <item quantity="other">Дециметрів</item>
+    </plurals>
     <string name="unit_centimeter_symbol">см</string>
+    <plurals name="unit_centimeter">
+        <item quantity="one">сантиметр</item>
+        <item quantity="few">сантиметри</item>
+        <item quantity="many">сантиметрів</item>
+        <item quantity="other">сантиметрів</item>
+    </plurals>
     <string name="unit_millimeter_symbol">мм</string>
+    <plurals name="unit_millimeter">
+        <item quantity="one">міліметр</item>
+        <item quantity="few">міліметри</item>
+        <item quantity="many">міліметрів</item>
+        <item quantity="other">міліметрів</item>
+    </plurals>
     <string name="unit_inch_symbol">дюйм</string>
     <string name="unit_foot_symbol">фут</string>
     <string name="unit_yard_symbol">ярд</string>
@@ -18,7 +61,18 @@
     <string name="unit_hectare_symbol">га</string>
     <string name="unit_acre_symbol">акр</string>
     <!-- UNITS OF TIME -->
+    <plurals name="unit_year">
+        <item quantity="one">рік</item>
+        <item quantity="few">роки</item>
+        <item quantity="many">років</item>
+        <item quantity="other">років</item>
+    </plurals>
     <!-- UNITS OF DATA SIZES -->
+    <string name="unit_megabyte_symbol">МБ</string>
+    <string name="unit_gigabyte_symbol">ГБ</string>
+    <string name="unit_terabyte_symbol">ТБ</string>
+    <string name="unit_bit_symbol">біт</string>
+    <string name="unit_kilobit_symbol">кбіт</string>
     <!-- UNITS OF VELOCITY -->
     <!-- UNITS OF MASS -->
     <!-- UNITS OF TEMPERATURE -->
