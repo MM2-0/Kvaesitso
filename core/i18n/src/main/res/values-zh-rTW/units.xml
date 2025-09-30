@@ -123,9 +123,6 @@
     <plurals name="unit_gibibyte">
         <item quantity="other">吉比位元組</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="other">特比位元組</item>
-    </plurals>
     <plurals name="unit_bit">
         <item quantity="other">位元</item>
     </plurals>
