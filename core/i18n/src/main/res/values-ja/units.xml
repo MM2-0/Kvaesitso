@@ -124,9 +124,6 @@
     <plurals name="unit_gibibyte">
         <item quantity="other">ギビバイト</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="other">テビバイト</item>
-    </plurals>
     <plurals name="unit_bit">
         <item quantity="other">ビット</item>
     </plurals>
