@@ -55,4 +55,9 @@
     <string name="file_type_text">Текстовий файл</string>
     <string name="action_import">Імпорт</string>
     <string name="file_type_launcherbackup">Резервна копія %1$s</string>
+    <string name="action_done">Готово</string>
+    <string name="action_more_actions">Більше</string>
+    <string name="file_type_source_code">Файл вихідного коду</string>
+    <string name="file_type_spreadsheet">Таблиця</string>
+    <string name="file_type_archive">Архів</string>
 </resources>
