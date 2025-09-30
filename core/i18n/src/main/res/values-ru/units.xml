@@ -253,12 +253,6 @@
         <item quantity="other">гибибайт</item>
     </plurals>
     <string name="unit_tebibyte_symbol">ТиБ</string>
-    <plurals name="unit_tebibyte">
-        <item quantity="one">тебибайт</item>
-        <item quantity="few">тебибайта</item>
-        <item quantity="many">тебибайт</item>
-        <item quantity="other">тебибайт</item>
-    </plurals>
     <string name="unit_bit_symbol">бит</string>
     <plurals name="unit_bit">
         <item quantity="one">бит</item>
