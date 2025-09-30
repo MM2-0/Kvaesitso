@@ -319,14 +319,6 @@
         <item quantity="other">غيغابيبايت</item>
     </plurals>
     <string name="unit_tebibyte_symbol">تيب</string>
-    <plurals name="unit_tebibyte">
-        <item quantity="zero">تيرابيبايت</item>
-        <item quantity="one">تيرابيبايت</item>
-        <item quantity="two">تيرابيبايتان</item>
-        <item quantity="few">تيرابيبايتات</item>
-        <item quantity="many">تيىابيبايت</item>
-        <item quantity="other">تيرابيبايت</item>
-    </plurals>
     <string name="unit_bit_symbol">بت</string>
     <plurals name="unit_bit">
         <item quantity="zero">بت</item>
