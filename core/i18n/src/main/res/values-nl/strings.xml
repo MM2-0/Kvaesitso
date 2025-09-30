@@ -131,7 +131,7 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Rekenblad</string>
     <!-- Audio file -->
-    <string name="file_type_music">Muziekbestand</string>
+    <string name="file_type_music">Geluid</string>
     <!-- Video file -->
     <!-- Image file -->
     <string name="file_type_image">Afbeelding</string>
@@ -213,18 +213,18 @@
     <string name="widget_name_music">Muziek</string>
     <string name="widget_name_favorites">Favorieten</string>
     <string name="widget_name_notes">Notitie</string>
-    <string name="widget_name_unknown">Onbekend applicatiewidget</string>
+    <string name="widget_name_unknown">Onbekend</string>
     <string name="widget_add_widget">Widget toevoegen</string>
     <string name="widget_removed">Widget verwijderd</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Notitie maken…</string>
+    <string name="notes_widget_placeholder">Notitie maken</string>
     <string name="notes_widget_action_new">Nieuwe notitie</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Opslaan</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Notitie_%1$s</string>
     <string name="notes_widget_action_dismiss">Weggooien</string>
-    <string name="notes_widget_dismissed">Notitie weggegooid.</string>
+    <string name="notes_widget_dismissed">Notitie weggegooid</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Via %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -252,7 +252,7 @@
     <string name="edit_favorites_dialog_empty_section">Sleep items naar hier</string>
     <string name="edit_favorites_dialog_tags">Labels</string>
     <string name="edit_favorites_dialog_tag_section_empty">Vastgezette labels zullen hier getoond worden</string>
-    <string name="edit_favorites_dialog_new_tag">Label aanmaken…</string>
+    <string name="edit_favorites_dialog_new_tag">Label aanmaken</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL van Nextcloud server</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -305,7 +305,7 @@
         <item quantity="other">+%1$d onvoltooide taken</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">hele dag</string>
+    <string name="calendar_event_allday">Hele dag</string>
     <string name="task_due_time">Gepland voor %1$s</string>
     <string name="task_due_date">Gepland voor %1$s</string>
     <string name="task_due_today">Voor vandaag</string>
@@ -362,11 +362,11 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Geen weergegevens beschikbaar.</string>
+    <string name="weather_no_data">Geen weergegevens beschikbaar</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Locatie instellen</string>
-    <string name="weather_location_search_no_result">Locatie niet gevonden.</string>
+    <string name="weather_location_search_no_result">Locatie niet gevonden</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Om uw locatie automatisch te bepalen is toestemming tot uw locatie nodig</string>
     <!-- Missing notification permission in music widget settings -->
@@ -377,7 +377,7 @@
     <string name="missing_permission_call_contacts_settings">Telefonierechten zijn vereist om oproepen te starten</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Om de kalender te doorzoeken is toegang tot de kalender nodig</string>
-    <string name="missing_permission_tasks_search_settings">Toestemming voor taken is vereist om taken te zoeken</string>
+    <string name="missing_permission_tasks_search_settings">Toestemming voor taken is vereist om taken te zoeken in de Tasks-applicatitie</string>
     <string name="missing_permission_tasks_integration">Toestemming voor taken is vereist om de takenintegratie te gebruiken</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Het widget heeft toegang tot de kalender nodig</string>
@@ -385,22 +385,23 @@
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s moet ingesteld worden als de standaard startscherm-app om applicatiesnelkoppelingen te zoeken</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">Om bestanden op dit toestel te doorzoeken is toegang tot externe bestanden nodig</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Om locale bestanden te doorzoeken is toegang tot alle bestanden nodig</string>
+    <string name="missing_permission_file_search_settings_android10">Om lokale bestanden te doorzoeken is toegang tot alle bestanden nodig</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Toegang tot meldingen is nodig om meldingsstipjes te tonen</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Geef toegang tot de kalender om hier toekomstige afspraken te tonen.</string>
+    <string name="missing_permission_calendar_widget">Geef toegang tot de kalender om hier toekomstige afspraken te tonen</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Geef toegang tot de kalender om afspraken te doorzoeken.</string>
+    <string name="missing_permission_calendar_search">Geef toegang tot de kalender om afspraken te doorzoeken</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Geef locatietoestemming om plaatsen in de buurt te zoeken.</string>
+    <string name="missing_permission_location_search">Geef locatietoestemming om plaatsen in de buurt te zoeken</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Geef toegang tot bestanden en media om foto\'s, media en documenten op dit apparaat te doorzoeken.</string>
+    <string name="missing_permission_files_search">Geef toegang tot bestanden en media om bestanden op dit apparaat te doorzoeken</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Geef toegang tot contacten om contactpersonen te zoeken.</string>
+    <string name="missing_permission_contact_search">Geef toegang tot contacten om contactpersonen te zoeken</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Stel %1$s in als standaard startschermapplicatie om applicatiesnelkoppelingen te doorzoeken.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -444,7 +445,7 @@
     <string name="provider_brightsky">Deutscher Wetterdienst (Alleen Duitsland)</string>
     <string name="preference_category_location">Locatie</string>
     <string name="preference_automatic_location">Automatische locatie</string>
-    <string name="preference_automatic_location_summary">Gebruik GPS en locatieservices om automatisch de locatie te bepalen</string>
+    <string name="preference_automatic_location_summary">Gebruik locatieservices om automatisch de locatie te bepalen</string>
     <string name="preference_location_managed">Door plug-in beheerd</string>
     <string name="preference_location_managed_summary">De locatie voor deze aanbieder wordt beheerd door de app van de plug-in</string>
     <string name="preference_location">Locatie</string>
@@ -461,8 +462,8 @@
     <string name="preference_debug_reinstall_iconpacks">Pictogrampaketten opnieuw installeren</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Pictogrampakettencache ledigen en opnieuw bouwen</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d entry verwijderd.</item>
-        <item quantity="other">%1$d entries verwijderd.</item>
+        <item quantity="one">%1$d entry verwijderd</item>
+        <item quantity="other">%1$d entries verwijderd</item>
     </plurals>
     <string name="preference_category_icons">Pictogrammen</string>
     <string name="preference_cards">Kaarten</string>
@@ -575,7 +576,7 @@
     <string name="preference_clockwidget_battery_part_summary">Batterijniveau tonen wanneer het niveau laag is of de batterij aan het opladen is</string>
     <string name="preference_clockwidget_alarm_part">Alarmen</string>
     <string name="preference_clockwidget_alarm_part_summary">Alarmen tonen die binnen 8 uur zullen afgaan</string>
-    <string name="preference_screen_backup">Backup &amp; Herstel</string>
+    <string name="preference_screen_backup">Backup en herstel</string>
     <string name="preference_screen_backup_summary">Launchergegevens exporteren en importeren</string>
     <string name="preference_backup_summary">Voorkeuren en launchergegevens exporteren</string>
     <string name="preference_restore">Herstellen</string>
@@ -643,10 +644,10 @@
     <string name="preference_compact_tags_summary">Labels of pictogrammen verbergen om de ruimte die door labels wordt ingenomen te verkleinen</string>
     <string name="preference_widgets_edit_button_summary">Knop tonen om widgets toe te voegen, te verwijderen of te verplaatsen</string>
     <string name="preference_widgets_on_home_screen">Widgets op het thuisscherm</string>
-    <string name="preference_widgets_on_home_screen_summary">Toon widgets op het thuisscherm in plaats van op een extra pagina</string>
+    <string name="preference_widgets_on_home_screen_summary">Toon widgets op het thuisscherm in plaats van op een aparte pagina</string>
     <string name="preference_screen_homescreen">Thuisscherm</string>
     <string name="preference_screen_homescreen_summary">Klok, zoekbalk, achtergrond, systeembalken</string>
-    <string name="preference_screen_icons">Raster &amp; pictogrammen</string>
+    <string name="preference_screen_icons">Raster en pictogrammen</string>
     <string name="preference_screen_icons_summary">Raster, pictogramgrootte, pictogrampaketten, badges</string>
     <string name="preference_weather_integration">Weer</string>
     <string name="preference_media_integration">Mediabeheer</string>
@@ -659,7 +660,7 @@
     <string name="preference_breezyweather_integration_instructions">Om Breezy Weather te gebruiken als leverancier van weergegevens:\n\n1. Ga naar Breezy Weather &gt; Settings &gt; Widgets &amp; Live wallpaper &gt; Send Gadgetbridge data &gt; Enable %1$s\n\n2. Selecteer in %1$s Breezy Weather als leverancier van weergegevens</string>
     <string name="preference_launch_breezyweather_app">Breezy Weather openen</string>
     <string name="preference_contacts_call_on_tap">Tik om te bellen</string>
-    <string name="preference_contacts_call_on_tap_summary">Start direct een gesprek bij het tikken op een telefoonnummer</string>
+    <string name="preference_contacts_call_on_tap_summary">Start direct, zonder bevestiging, een gesprek bij het tikken op een telefoonnummer</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Je bent nog niet ingelogd bij Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -705,30 +706,30 @@
     <string name="search_action_contact">Contact maken</string>
     <string name="search_action_open_url">Website bekijken</string>
     <string name="search_action_event">Afspraak plannen</string>
-    <string name="create_search_action_type">Welke actie wil je maken?</string>
+    <string name="create_search_action_type">Welk soort actie wil je maken?</string>
     <string name="create_search_action_type_web">Zoeken op website</string>
     <string name="create_search_action_type_app">Zoeken in applicatie</string>
     <string name="create_search_action_type_intent">Aangepaste indent</string>
     <string name="create_search_action_pick_app">Kies een zoekapplicatie:</string>
     <string name="create_search_action_website_url">Adres van de website:</string>
-    <string name="create_search_action_website_invalid_url">De opgegeven website kan niet automatisch worden geïmporteerd als een websearch. Je kunt een andere website proberen of de vereiste gegevens handmatig invoeren in de volgende stap.</string>
+    <string name="create_search_action_website_invalid_url">De opgegeven website kan niet automatisch worden geïmporteerd als een websearch. Je kunt een andere website proberen of de vereiste gegevens handmatig invoeren in de volgende stap</string>
     <string name="search_action_label">Naam</string>
     <string name="search_action_app">Applicatie</string>
     <string name="search_action_websearch_url">URL-sjabloon</string>
-    <string name="search_action_websearch_url_hint">Het URL-sjabloon dat gebruikt wordt om de zoek-URL te maken. Gebruik ‘${1}’ op de plaats waar de echte zoekterm moet komen, bv. https://google.com/search?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Het URL-sjabloon dat gebruikt wordt om de zoek-URL te maken. Gebruik ‘${1}’ op de plaats waar de echte zoekterm moet komen</string>
     <string name="more_information">Meer informatie</string>
     <string name="experimental_feature">Experimenteel</string>
-    <string name="tag_exists_error">Er bestaat al een tag met deze naam.</string>
-    <string name="tag_exists_message">Er bestaat al een tag met deze naam. Als je doorgaat worden de twee tags samengevoegd.</string>
-    <string name="tag_no_items_message">Deze tag bevat geen items. Als je doorgaat wordt de tag verwijderd.</string>
-    <string name="tag_empty_name">Een label kan niet bestaan zonder een naam. Als je doorgaat, wordt het label verwijderd.</string>
+    <string name="tag_exists_error">Er bestaat al een label met deze naam</string>
+    <string name="tag_exists_message">Er bestaat al een label met deze naam. Als je doorgaat worden de twee labels samengevoegd</string>
+    <string name="tag_no_items_message">Dit label bevat geen items. Als je doorgaat wordt het label verwijderd</string>
+    <string name="tag_empty_name">Een label kan niet bestaan zonder een naam. Als je doorgaat, wordt het label verwijderd</string>
     <string name="tag_select_items">Kies items:</string>
     <string name="tag_name">Labelnaam</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item geselecteerd</item>
         <item quantity="other">%1$d</item>
     </plurals>
-    <string name="preference_layout_open_search">Zoeken / applicatielijst</string>
+    <string name="preference_layout_open_search">Zoeken en applicatielijst</string>
     <string name="open_search_pull_down">Omlaag vegen</string>
     <string name="open_search_swipe_left">Naar links vegen</string>
     <string name="open_search_swipe_right">Naar rechts vegen</string>
@@ -773,7 +774,7 @@
     <string name="widget_config_weather_integration_settings">Weerintegratie-instellingen</string>
     <string name="widget_config_calendar_no_calendars">Geen kalenders gevonden</string>
     <string name="widget_pick_widget">Widget kiezen</string>
-    <string name="app_widget_loading_failed">Applicatiewidget kon niet geladen worden.</string>
+    <string name="app_widget_loading_failed">Applicatiewidget kon niet geladen worden</string>
     <string name="widget_config_music_integration_settings">Mediabeheerintegratie-instellingen</string>
     <string name="note_widget_link_file">Inhoud van een bestand linken aan het widget. Als dit aan staat zal de inhoud van het widget gesynchroniseerd worden met de bestandsinhoud</string>
     <string name="note_widget_link_file_summary">Inhoud van dit widget synchroniseren met extern bestand</string>
@@ -786,9 +787,9 @@
     <string name="note_widget_conflict_local_version">Laatst opgeslagen versie:</string>
     <string name="note_widget_conflict_file_version">Huidige bestandsinhoud:</string>
     <string name="note_widget_file_read_error">Fout bij het lezen van notitie</string>
-    <string name="note_widget_file_read_error_description">Het gelinkte bestand kon niet gelezen worden. Misschien is het verwijderd of verplaatst. Een kopie uit de interne opslag van de launcher is teruggezet. Als je de notitie bewerkt, wordt het gelinkte bestand mogelijk overschreven.</string>
+    <string name="note_widget_file_read_error_description">Het gelinkte bestand kon niet gelezen worden. Een kopie uit de interne opslag van de launcher is teruggezet. Als je de notitie bewerkt, wordt het gelinkte bestand mogelijk overschreven</string>
     <string name="note_widget_file_write_error">Fout bij het opslaan van de notitie</string>
-    <string name="note_widget_file_write_error_description">De notitie kon niet naar het gelinkte bestand geschreven worden. Mogelijk is het bestand verplaatst of verwijderd. Een kopie is opgeslagen in de interne opslag van de launcher.</string>
+    <string name="note_widget_file_write_error_description">De notitie kon niet naar het gelinkte bestand geschreven worden. Mogelijk is het bestand verplaatst of verwijderd. Een kopie is opgeslagen in de interne opslag van de launcher</string>
     <string name="confirmation_delete_color_scheme">Ben je zeker dat je kleurenschema %1$s wil verwijderen\?</string>
     <string name="confirmation_delete_shapes_scheme">Weet je zeker dat je de vorm %1$s wil verwijderen?</string>
     <string name="confirmation_delete_typography_scheme">Weet je zeker dat je het typografieschema %1$s wil verwijderen?</string>
@@ -830,7 +831,7 @@
     <string name="plugin_type_weather">Aanbieder van weergegevens</string>
     <string name="plugin_weather_provider_enable">Instellen als aanbieder van weer</string>
     <string name="plugin_weather_provider_enabled">Momenteel ingesteld als aanbieder van weer</string>
-    <string name="unavailable_searchable">Dit item bestaat niet meer.</string>
+    <string name="unavailable_searchable">Dit item bestaat niet meer</string>
     <string name="clock_style_digital1">Vet</string>
     <string name="clock_style_digital2">Eenvoudig</string>
     <string name="clock_style_orbit">Omloopbaan</string>
@@ -929,6 +930,8 @@
     <string name="poi_category_fire_station">Brandweerkazerne</string>
     <string name="poi_category_courthouse">Gerechtshof</string>
     <string name="poi_category_townhall">Gemeentehuis</string>
+    <string name="poi_category_stationery">Briefpapier</string>
+    <string name="poi_category_climbing_gym">Klimhal</string>
     <string name="customize_item_tags">Labels</string>
     <string name="customize_item_visibility">Weergeven in</string>
     <string name="item_visibility_app_default">App-raster &amp; Zoekresultaten</string>
@@ -964,10 +967,10 @@
     <string name="calendar_widget_next_day">Volgende dag</string>
     <string name="calendar_widget_create_event">Nieuwe afspraak aanmaken</string>
     <string name="calendar_widget_open_calendar">Kalender-app openen</string>
-    <string name="profile_work_profile_state_locked">Werk-apps zijn onderbroken.</string>
+    <string name="profile_work_profile_state_locked">Werk-apps zijn onderbroken</string>
     <string name="profile_work_profile_action_unlock">Pauze onderbreken</string>
     <string name="profile_work_profile_action_lock">Werk-apps pauzeren</string>
-    <string name="profile_private_profile_state_locked">Privégedeelte is vergrendeld.</string>
+    <string name="profile_private_profile_state_locked">Privégedeelte is vergrendeld</string>
     <string name="profile_private_profile_action_unlock">Ontgrendelen</string>
     <string name="profile_private_profile_action_lock">Privégedeelte vergrendelen</string>
     <string name="hint_drag_and_drop_reorder">Houd items vast en sleep ze om ze opnieuw te rangschikken</string>
@@ -984,7 +987,7 @@
     </plurals>
     <string name="departure_time_departed">overleden</string>
     <string name="bad_configuration_title">Proficiat, je hebt jezelf buiten gesloten!</string>
-    <string name="bad_configuration_summary">Je hebt een combinatie van instellingen ontdekt die zowel zoeken als de instellingen onbereikbaar maakt - je bent nu volledig uit de startschermapp gesloten.</string>
+    <string name="bad_configuration_summary">Je hebt een combinatie van instellingen ontdekt die zowel zoeken als de instellingen onbereikbaar maakt - je bent nu volledig uit de startschermapp gesloten</string>
     <string name="theme_export_title">Thema exporteren</string>
     <string name="theme_import_title">Thema importeren</string>
     <string name="theme_bundle_name">Naam</string>
