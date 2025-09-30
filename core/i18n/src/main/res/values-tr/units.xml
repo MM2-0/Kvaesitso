@@ -153,10 +153,6 @@
         <item quantity="one">gibibayt</item>
         <item quantity="other">gibibayt</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="one">tebibayt</item>
-        <item quantity="other">tebibayt</item>
-    </plurals>
     <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
         <item quantity="one">metre/saniye</item>
