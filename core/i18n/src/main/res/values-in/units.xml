@@ -111,9 +111,6 @@
     <plurals name="unit_gibibyte">
         <item quantity="other">gibibita</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="other">tebibita</item>
-    </plurals>
     <plurals name="unit_bit">
         <item quantity="other">bit</item>
     </plurals>
