@@ -117,10 +117,6 @@
         <item quantity="other">anos</item>
     </plurals>
     <!-- UNITS OF DATA SIZES -->
-    <plurals name="unit_tebibyte">
-        <item quantity="one">tebibyte</item>
-        <item quantity="other">tebibytes</item>
-    </plurals>
     <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
         <item quantity="one">metro por segundo</item>
