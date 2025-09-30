@@ -223,12 +223,6 @@
         <item quantity="many">gibibajtów</item>
         <item quantity="other">gibibajtów</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="one">tebibajt</item>
-        <item quantity="few">tebibajty</item>
-        <item quantity="many">tebibajtów</item>
-        <item quantity="other">tebibajtów</item>
-    </plurals>
     <string name="unit_kilobit_symbol">kbity</string>
     <string name="unit_megabit_symbol">Mbity</string>
     <string name="unit_gigabit_symbol">Gbity</string>
