@@ -11,4 +11,28 @@
     <string name="unit_inch_symbol">дюйм</string>
     <string name="unit_yard_symbol">ярд</string>
     <string name="unit_sqmillimeter_symbol">мм²</string>
+    <string name="unit_terabyte_symbol">ТБ</string>
+    <string name="unit_bit_symbol">біт</string>
+    <string name="dimension_mass">Маса</string>
+    <string name="dimension_length">Довжина</string>
+    <string name="dimension_velocity">Швидкість</string>
+    <string name="dimension_volume">Об’єм</string>
+    <string name="dimension_area">Площа</string>
+    <string name="dimension_currency">Валюта</string>
+    <string name="dimension_data">Дані</string>
+    <string name="dimension_bitrate">Бітрейт</string>
+    <string name="dimension_pressure">Тиск</string>
+    <string name="dimension_energy">Енергія</string>
+    <string name="dimension_frequency">Частота</string>
+    <string name="dimension_temperature">Температура</string>
+    <string name="dimension_time">Час</string>
+    <plurals name="unit_year">
+        <item quantity="one">рік</item>
+        <item quantity="few">роки</item>
+        <item quantity="many">років</item>
+        <item quantity="other">років</item>
+    </plurals>
+    <string name="unit_megabyte_symbol">МБ</string>
+    <string name="unit_gigabyte_symbol">ГБ</string>
+    <string name="unit_kilobit_symbol">кбіт</string>
 </resources>
