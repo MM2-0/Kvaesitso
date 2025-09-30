@@ -213,12 +213,6 @@
         <item quantity="many">gibibajtů</item>
         <item quantity="other">gibibajtů</item>
     </plurals>
-    <plurals name="unit_tebibyte">
-        <item quantity="one">tebibajt</item>
-        <item quantity="few">tebibajty</item>
-        <item quantity="many">tebibajtů</item>
-        <item quantity="other">tebibajtů</item>
-    </plurals>
     <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
         <item quantity="one">metr za sekundu</item>
