@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="request_permission_message"><![CDATA[<b>%1$s</b> хоче отримати доступ до даних з <b>%2$s</b>.]]></string>
+    <string name="request_permission_deny_button">Заборонити</string>
+    <string name="request_permission_allow_button">Дозволити</string>
+</resources>
