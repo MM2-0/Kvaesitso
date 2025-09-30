@@ -154,8 +154,8 @@
         <item quantity="other">Gibibyte</item>
     </plurals>
     <plurals name="unit_tebibyte">
-        <item quantity="one">Tebiyte</item>
-        <item quantity="other">Tebiyte</item>
+        <item quantity="one">Tebibyte</item>
+        <item quantity="other">Tebibyte</item>
     </plurals>
     <plurals name="unit_bit">
         <item quantity="one">Bit</item>
