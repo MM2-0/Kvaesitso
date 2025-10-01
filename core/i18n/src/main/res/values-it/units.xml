@@ -77,9 +77,9 @@
     </plurals>
     <string name="unit_sqmeter_symbol">m²</string>
     <plurals name="unit_sqmeter">
-        <item quantity="one">metro quadro</item>
-        <item quantity="many">metri quadri</item>
-        <item quantity="other">metri quadri</item>
+        <item quantity="one">metro quadrato</item>
+        <item quantity="many">metri quadrati</item>
+        <item quantity="other">metri quadrati</item>
     </plurals>
     <string name="unit_sqkilometer_symbol">km²</string>
     <string name="unit_sqcentimeter_symbol">cm²</string>
@@ -267,9 +267,9 @@
     </plurals>
     <string name="unit_tebibyte_symbol">TiB</string>
     <plurals name="unit_tebibyte">
-        <item quantity="one">tebiyte</item>
-        <item quantity="many">tebiyte</item>
-        <item quantity="other">tebiyte</item>
+        <item quantity="one">tebibyte</item>
+        <item quantity="many">tebibyte</item>
+        <item quantity="other">tebibyte</item>
     </plurals>
     <string name="unit_bit_symbol">bit</string>
     <plurals name="unit_bit">
@@ -305,8 +305,8 @@
     <string name="unit_stone_symbol">st.</string>
     <plurals name="unit_megabyte">
         <item quantity="one">megabyte</item>
-        <item quantity="many">megabytes</item>
-        <item quantity="other">megabytes</item>
+        <item quantity="many">megabyte</item>
+        <item quantity="other">megabyte</item>
     </plurals>
     <plurals name="unit_mebibyte">
         <item quantity="one">mebibyte</item>
@@ -331,7 +331,7 @@
     <string name="dimension_area">Area</string>
     <string name="dimension_currency">Valuta</string>
     <string name="dimension_data">Dati</string>
-    <string name="dimension_bitrate">Velocità in bit</string>
+    <string name="dimension_bitrate">Bitrate</string>
     <string name="dimension_pressure">Pressione</string>
     <string name="dimension_energy">Energia</string>
     <string name="dimension_frequency">Frequenza</string>
