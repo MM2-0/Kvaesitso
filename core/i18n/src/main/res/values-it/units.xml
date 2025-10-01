@@ -58,8 +58,8 @@
     </plurals>
     <!-- UNITS OF AREA -->
     <plurals name="unit_sqmeter">
-        <item quantity="one">metro quadro</item>
-        <item quantity="other">metri quadri</item>
+        <item quantity="one">metro quadrato</item>
+        <item quantity="other">metri quadrati</item>
     </plurals>
     <plurals name="unit_sqkilometer">
         <item quantity="one">chilometro quadrato</item>
