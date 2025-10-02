@@ -75,4 +75,7 @@
     <string name="default_websearch_3_name">Google Play</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
     <string name="websearch_dialog_url_error">В цьому URL відсутній заповнювач \'${1}\'</string>
+    <string name="wind_east">Східний</string>
+    <string name="action_clear">Стерти</string>
+    <string name="action_install">Встановити</string>
 </resources>
