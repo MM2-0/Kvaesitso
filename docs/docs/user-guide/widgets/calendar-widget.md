@@ -34,7 +34,7 @@ Proton Calendar does not support syncing with the Android calendar provider. Unf
 see this as a privacy feature, so it is unlikely that this will change in the future. For that reason,
 this widget cannot display Proton Calendar events. As a workaround, if you are on a paid Proton Calendar
 plan, you can [share your calendar via link](https://proton.me/support/share-calendar-via-link) and
-then sync that calendar link using [ICSx⁵](https://f-droid.org/de/packages/at.bitfire.icsdroid/). However,
+then sync that calendar link using [ICSx⁵](https://f-droid.org/en/packages/at.bitfire.icsdroid/). However,
 this solution has some drawbacks:
 
 - The synced calendar is read-only, if you need to make changes, you need to do that in the Proton Calendar app
@@ -50,7 +50,7 @@ calendars in Fossify Calendar. Unfortunately, Fossify Calendar cannot act as a c
 you need to rely on another calendar provider app.
 
 If you want an offline solution, you
-can use [Etar](https://f-droid.org/de/packages/ws.xsoh.etar/) (which is a full-blown calendar app by
+can use [Etar](https://f-droid.org/en/packages/ws.xsoh.etar/) (which is a full-blown calendar app by
 its own, but it has the capability to create offline calendars) or
 Offline Calendar (`org.sufficientlysecure.localcalendar`) in F-Droid Archive repo (which is
 just a calendar provider but no [longer maintained](https://github.com/SufficientlySecure/offline-calendar)).
