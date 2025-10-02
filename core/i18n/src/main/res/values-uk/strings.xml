@@ -99,7 +99,7 @@
     <!-- File metadata, image/video dimensions -->
     <string name="file_meta_dimensions">Розмір кадру: %1$s</string>
     <!-- File metadata, app name of APK files -->
-    <string name="file_meta_app_name">Назва додатку: %1$s</string>
+    <string name="file_meta_app_name">Назва застосунку: %1$s</string>
     <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Версія: %1$s</string>
     <!-- File metadata, package name of APK files -->
@@ -171,6 +171,7 @@
         Usually YouTube, but can be substituted with something else if YouTube is not available in
         the region of the language or not commonly used.
        -->
+    <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
     <!--
         When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
         This is the name of the third one. Must be in sync with [default_websearch_3_url].
@@ -183,6 +184,12 @@
         Usually Google Play, but can be substituted with something else if Google Play is not available in
         the region of the language or not commonly used.
        -->
+    <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
+    <string name="websearch_dialog_url_error">В цьому URL відсутній заповнювач \'${1}\'</string>
+    <string name="websearch_dialog_replace_icon">Замінити значок</string>
+    <string name="websearch_dialog_delete_icon">Видалити значок</string>
+    <string name="websearch_dialog_custom_icon">Кастомний значок</string>
+    <string name="websearch_dialog_advanced">Розширений</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
@@ -247,6 +254,7 @@
     <!-- Grant a permission, shown in permission banners -->
     <!-- Appearance preference title -->
     <string name="preference_mdy_color_source_wallpaper">Фон</string>
+    <string name="preference_category_advanced">Розширений</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Відкрити веб-сторінку</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
