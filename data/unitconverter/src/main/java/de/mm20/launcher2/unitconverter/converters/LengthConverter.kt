@@ -34,6 +34,16 @@ internal class LengthConverter(context: Context) : SimpleFactorConverter() {
                     R.plurals.unit_millimeter
             ),
             MeasureUnitWithFactor(
+                    1000_000.0,
+                    context.getString(R.string.unit_nanometer_symbol),
+                    R.plurals.unit_nanometer
+            ),
+            MeasureUnitWithFactor(
+                    1_000_000_000.0,
+                    context.getString(R.string.unit_picometer_symbol),
+                    R.plurals.unit_picometer
+            ),
+            MeasureUnitWithFactor(
                     100 / 2.54,
                     context.getString(R.string.unit_inch_symbol),
                     R.plurals.unit_inch
@@ -57,6 +67,11 @@ internal class LengthConverter(context: Context) : SimpleFactorConverter() {
                     1 / 1852.0,
                     context.getString(R.string.unit_nautic_mile_symbol),
                     R.plurals.unit_nautic_mile
+            ),
+            MeasureUnitWithFactor(
+                    1.616255e-35,
+                    context.getString(R.string.unit_planck_distance_symbol),
+                    R.plurals.unit_planck_distance
             )
     )
 

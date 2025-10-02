@@ -43,6 +43,16 @@
         <item quantity="one">millimeter</item>
         <item quantity="other">millimeters</item>
     </plurals>
+    <string name="unit_nanometer_symbol">nm</string>
+    <plurals name="unit_nanometer">
+        <item quantity="one">nanometer</item>
+        <item quantity="other">nanometers</item>
+    </plurals>
+    <string name="unit_picometer_symbol">pm</string>
+    <plurals name="unit_picometer">
+        <item quantity="one">picometer</item>
+        <item quantity="other">picometers</item>
+    </plurals>
     <string name="unit_inch_symbol">in</string>
     <plurals name="unit_inch">
         <item quantity="one">inch</item>
@@ -67,6 +77,11 @@
     <plurals name="unit_nautic_mile">
         <item quantity="one">nautical mile</item>
         <item quantity="other">nautical miles</item>
+    </plurals>
+    <string name="unit_planck_distance_symbol">lP</string>
+    <plurals name="unit_planck_distance">
+        <item quantity="one">Planck</item>
+        <item quantity="other">Planck</item>
     </plurals>
     <!-- UNITS OF AREA -->
     <string name="unit_sqmeter_symbol">m²</string>
@@ -144,6 +159,11 @@
     <plurals name="unit_year">
         <item quantity="one">year</item>
         <item quantity="other">years</item>
+    </plurals>
+    <string name="unit_planck_time_symbol">tP</string>
+    <plurals name="unit_planck_time">
+        <item quantity="one">Planck time</item>
+        <item quantity="other">Planck time</item>
     </plurals>
     <!-- UNITS OF DATA SIZES -->
     <string name="unit_byte_symbol">B</string>
@@ -278,6 +298,11 @@
         <item quantity="one">short ton</item>
         <item quantity="other">short tons</item>
     </plurals>
+    <string name="unit_planck_mass_symbol">mP</string>
+    <plurals name="unit_planck_mass">
+        <item quantity="one">Planck mass</item>
+        <item quantity="other">Planck mass</item>
+    </plurals>
     <!-- UNITS OF TEMPERATURE -->
     <string name="unit_degree_celsius_symbol">°C</string>
     <plurals name="unit_degree_celsius">
@@ -293,5 +318,10 @@
     <plurals name="unit_kelvin">
         <item quantity="one">kelvin</item>
         <item quantity="other">kelvins</item>
+    </plurals>
+    <string name="unit_planck_temperature_symbol">TP</string>
+    <plurals name="unit_planck_temperature">
+        <item quantity="one">Planck temperature</item>
+        <item quantity="other">Planck temperature</item>
     </plurals>
 </resources>

@@ -23,6 +23,11 @@ internal class TemperatureConverter(context: Context) : Converter {
             R.plurals.unit_kelvin,
             TemperatureUnit.Kelvin
         ),
+        TemperatureMeasureUnit(
+            context.getString(R.string.unit_planck_temperature_symbol),
+            R.plurals.unit_planck_temperature,
+            TemperatureUnit.Planck
+        )
     )
 
     override suspend fun isValidUnit(symbol: String): Boolean {
@@ -91,13 +96,32 @@ internal class TemperatureConverter(context: Context) : Converter {
         if (from === TemperatureUnit.DegreeFahrenheit && to == TemperatureUnit.DegreeCelsius) {
             return (value - 32.0) * (5.0 / 9.0)
         }
-
         if (from === TemperatureUnit.Kelvin && to == TemperatureUnit.DegreeFahrenheit) {
             return (value - 273.15) * (9.0 / 5.0) + 32.0
         }
         if (from === TemperatureUnit.DegreeFahrenheit && to == TemperatureUnit.Kelvin) {
             return (value - 32.0) * (5.0 / 9.0) + 273.15
         }
+        if (from === TemperatureUnit.Kelvin && to == TemperatureUnit.Planck) {
+            return value * 1.416833e32
+        }
+        if (from === TemperatureUnit.Planck && to == TemperatureUnit.Kelvin) {
+            return value / 1.416833e32
+        }
+        if (from === TemperatureUnit.DegreeCelsius && to == TemperatureUnit.Planck) {
+            return (value - 273.15) * 1.416833e32
+        }
+        if (from === TemperatureUnit.Planck && to == TemperatureUnit.DegreeCelsius) {
+            return value / 1.416833e32 + 273.15
+        }
+        if (from === TemperatureUnit.DegreeFahrenheit && to == TemperatureUnit.Planck) {
+            return ((value - 32.0) * (5.0 / 9.0) + 273.15) * 1.416833e32
+        }
+        if (from === TemperatureUnit.Planck && to == TemperatureUnit.DegreeFahrenheit) {
+            return ((value / 1.416833e32) - 273.15) * (9.0 / 5.0) + 32.0
+        }
+
+        
         throw IllegalArgumentException()
     }
 
@@ -120,4 +144,5 @@ enum class TemperatureUnit {
     DegreeCelsius,
     DegreeFahrenheit,
     Kelvin,
+    Planck,
 }
