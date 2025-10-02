@@ -60,7 +60,48 @@
     <string name="unit_sqmillimeter_symbol">мм²</string>
     <string name="unit_hectare_symbol">га</string>
     <string name="unit_acre_symbol">акр</string>
+    <plurals name="unit_acre">
+        <item quantity="one">акр</item>
+        <item quantity="few">акри</item>
+        <item quantity="many">акрів</item>
+        <item quantity="other">акрів</item>
+    </plurals>
     <!-- UNITS OF TIME -->
+    <string name="unit_second_symbol">с</string>
+    <plurals name="unit_second">
+        <item quantity="one">секунда</item>
+        <item quantity="few">секунди</item>
+        <item quantity="many">секунд</item>
+        <item quantity="other">секунд</item>
+    </plurals>
+    <string name="unit_millisecond_symbol">мс</string>
+    <plurals name="unit_millisecond">
+        <item quantity="one">мілісекунда</item>
+        <item quantity="few">мілісекунди</item>
+        <item quantity="many">мілісекунд</item>
+        <item quantity="other">мілісекунд</item>
+    </plurals>
+    <string name="unit_minute_symbol">хв</string>
+    <plurals name="unit_minute">
+        <item quantity="one">хвилина</item>
+        <item quantity="few">хвилини</item>
+        <item quantity="many">хвилин</item>
+        <item quantity="other">хвилин</item>
+    </plurals>
+    <string name="unit_hour_symbol">г</string>
+    <plurals name="unit_hour">
+        <item quantity="one">година</item>
+        <item quantity="few">години</item>
+        <item quantity="many">годин</item>
+        <item quantity="other">годин</item>
+    </plurals>
+    <string name="unit_day_symbol">д</string>
+    <plurals name="unit_day">
+        <item quantity="one">день</item>
+        <item quantity="few">дні</item>
+        <item quantity="many">днів</item>
+        <item quantity="other">днів</item>
+    </plurals>
     <plurals name="unit_year">
         <item quantity="one">рік</item>
         <item quantity="few">роки</item>
@@ -73,7 +114,55 @@
     <string name="unit_terabyte_symbol">ТБ</string>
     <string name="unit_bit_symbol">біт</string>
     <string name="unit_kilobit_symbol">кбіт</string>
+    <plurals name="unit_kilobit">
+        <item quantity="one">кілобіт</item>
+        <item quantity="few">кілобіти</item>
+        <item quantity="many">кілобітів</item>
+        <item quantity="other">кілобітів</item>
+    </plurals>
+    <string name="unit_megabit_symbol">Мбіт</string>
+    <plurals name="unit_megabit">
+        <item quantity="one">мегабіт</item>
+        <item quantity="few">мегабіти</item>
+        <item quantity="many">мегабітів</item>
+        <item quantity="other">мегабітів</item>
+    </plurals>
+    <string name="unit_gigabit_symbol">Гбіт</string>
+    <plurals name="unit_gigabit">
+        <item quantity="one">гігабіт</item>
+        <item quantity="few">гігабіти</item>
+        <item quantity="many">гігабітів</item>
+        <item quantity="other">гігабітів</item>
+    </plurals>
+    <string name="unit_terabit_symbol">Тбіт</string>
+    <plurals name="unit_terabit">
+        <item quantity="one">терабіт</item>
+        <item quantity="few">терабіти</item>
+        <item quantity="many">терабітів</item>
+        <item quantity="other">терабітів</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
+    <string name="unit_meter_per_second_symbol">м/с</string>
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">метр за секунду</item>
+        <item quantity="few">метри за секунду</item>
+        <item quantity="many">метрів за секунду</item>
+        <item quantity="other">метрів за секунду</item>
+    </plurals>
+    <string name="unit_kilometer_per_hour_symbol">км/г</string>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">кілометр за годину</item>
+        <item quantity="few">кілометри за годину</item>
+        <item quantity="many">кілометрів за годину</item>
+        <item quantity="other">кілометрів за годину</item>
+    </plurals>
+    <string name="unit_mile_per_hour_symbol">м/г</string>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">миля за годину</item>
+        <item quantity="few">милі за годину</item>
+        <item quantity="many">миль за годину</item>
+        <item quantity="other">миль за годину</item>
+    </plurals>
     <!-- UNITS OF MASS -->
     <!-- UNITS OF TEMPERATURE -->
 </resources>
