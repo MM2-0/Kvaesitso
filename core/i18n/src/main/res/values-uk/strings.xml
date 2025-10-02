@@ -30,7 +30,7 @@
     <string name="file_meta_path">Шлях: %1$s</string>
     <string name="file_meta_type">Тип: %1$s</string>
     <string name="file_meta_dimensions">Розмір кадру: %1$s</string>
-    <string name="file_meta_app_name">Назва додатку: %1$s</string>
+    <string name="file_meta_app_name">Назва застосунку: %1$s</string>
     <string name="file_meta_app_version">Версія: %1$s</string>
     <string name="file_meta_app_pkgname">Назва пакета: %1$s</string>
     <string name="file_meta_owner">Власник: %1$s</string>
@@ -66,4 +66,13 @@
     <string name="location_closes_other_day">Закриється у %1$s, о %2$s</string>
     <string name="location_opens">Відкриється о %1$s</string>
     <string name="location_opens_other_day">Відкриється у %1$s, о %2$s</string>
+    <string name="default_websearch_2_name">YouTube</string>
+    <string name="websearch_dialog_replace_icon">Замінити значок</string>
+    <string name="websearch_dialog_advanced">Розширений</string>
+    <string name="websearch_dialog_delete_icon">Видалити значок</string>
+    <string name="websearch_dialog_custom_icon">Кастомний значок</string>
+    <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
+    <string name="default_websearch_3_name">Google Play</string>
+    <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
+    <string name="websearch_dialog_url_error">В цьому URL відсутній заповнювач \'${1}\'</string>
 </resources>
