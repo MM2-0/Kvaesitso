@@ -21,9 +21,9 @@
     <string name="settings">Налаштування</string>
     <string name="help">Допомога</string>
     <string name="wallpaper">Фон</string>
-    <string name="wind_north">Північ</string>
-    <string name="wind_north_east">Північний Схід</string>
-    <string name="wind_north_north_east">Північний Схід</string>
+    <string name="wind_north">Північний</string>
+    <string name="wind_north_east">Північно-східний</string>
+    <string name="wind_north_north_east">Північно-північно-східний</string>
     <string name="file_meta_duration">Тривалість: %1$s</string>
     <string name="file_meta_year">Рік: %1$s</string>
     <string name="file_meta_size">Розмір: %1$s</string>
@@ -168,7 +168,7 @@
     <string name="task_due_date">Виконати до %1$s</string>
     <string name="weather_condition_lightrain">Легкий дощ</string>
     <string name="weather_condition_lightsnowandthunder">Легкий сніг із грозою</string>
-    <string name="task_due_today">Виконати до кінця дня</string>
+    <string name="task_due_today">Виконати сьогодні</string>
     <string name="weather_condition_lightsnow">Легкий сніг</string>
     <string name="weather_condition_lightrainshowers">Легка злива</string>
     <string name="weather_condition_lightssnowshowersandthunder">Легка сніжна злива з грозою</string>
@@ -201,4 +201,11 @@
     <string name="wind_south_west">Південно-західний</string>
     <string name="wind_north_west">Північно-західний</string>
     <string name="wind_south">Південний</string>
+    <string name="wind_east_north_east">Східно-північно-східний</string>
+    <string name="wind_east_south_east">Східно-південно-східний</string>
+    <string name="file_type_android">Файл APK</string>
+    <string name="file_type_drawing">Малюнок</string>
+    <string name="file_type_form">Форма</string>
+    <string name="wind_south_east">Південно-східний</string>
+    <string name="wind_south_south_east">Південно-південно-східний</string>
 </resources>
