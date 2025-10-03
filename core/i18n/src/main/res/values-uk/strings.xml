@@ -30,12 +30,14 @@
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Відкрити</string>
     <string name="menu_map">Показати на мапі</string>
-    <string name="menu_website">Відкрити веб-сторінку</string>
+    <string name="menu_website">Відкрити сайт</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="action_undo">Скасувати</string>
     <string name="action_import">Імпорт</string>
     <string name="action_done">Готово</string>
     <string name="action_more_actions">Більше</string>
+    <string name="action_clear">Стерти</string>
+    <string name="action_install">Встановити</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Видалити</string>
     <string name="menu_remove">Прибрати</string>
@@ -61,6 +63,7 @@
     <string name="wind_north_north_east">Північний Схід</string>
     <!-- Wind direction, used in weather widget -->
     <!-- Wind direction, used in weather widget -->
+    <string name="wind_east">Східний</string>
     <!-- Wind direction, used in weather widget -->
     <!-- Wind direction, used in weather widget -->
     <!-- Wind direction, used in weather widget -->
@@ -190,49 +193,161 @@
     <string name="websearch_dialog_delete_icon">Видалити значок</string>
     <string name="websearch_dialog_custom_icon">Кастомний значок</string>
     <string name="websearch_dialog_advanced">Розширений</string>
+    <string name="widget_name_unknown">Невідомо</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
+    <string name="notes_widget_export_filename">Нотатка_%1$s</string>
+    <string name="notes_widget_action_dismiss">Відхилити</string>
+    <string name="notes_widget_dismissed">Нотатку відхилено</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
+    <string name="shortcut_summary">Від %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
+    <string name="easter_egg_text">Ну, ти мене знайшов. Вітаю. А це було того варте?</string>
     <!-- Close a dialog -->
+    <string name="close">Закрити</string>
+    <string name="no_selection">Немає вибору</string>
+    <string name="save">Зберегти</string>
+    <string name="save_as_file">Зберегти як файл</string>
+    <string name="duplicate">Дублювати</string>
+    <string name="edit">Редагувати</string>
+    <string name="skip">Пропустити</string>
+    <string name="action_next">Далі</string>
     <!-- Turn something off / disable a functionality of the launcher -->
+    <string name="turn_off">Вимкнути</string>
     <string name="widget_action_remove">Прибрати</string>
+    <string name="widget_action_replace">Замінити</string>
+    <string name="menu_item_edit_favs">Редагувати улюблені</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
+    <string name="edit_favorites_dialog_unpinned">Не закріплені – часто використовуються</string>
     <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
+    <string name="edit_favorites_dialog_pinned_unsorted">Закріплені – відсортовані автоматично</string>
     <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
+    <string name="edit_favorites_dialog_pinned_sorted">Закріплені – відсортовані вручну</string>
+    <string name="edit_favorites_dialog_empty_section">Перетягуйте значки сюди</string>
+    <string name="edit_favorites_dialog_tags">Теги</string>
+    <string name="edit_favorites_dialog_tag_section_empty">Закріплені теги з’являться тут</string>
+    <string name="edit_favorites_dialog_new_tag">Створити тег</string>
     <!-- Nextcloud login flow, URL-->
+    <string name="nextcloud_server_url">URL сервера Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
     <!-- Nextcloud login flow, error invalid URL-->
+    <string name="nextcloud_server_invalid_url">Цей URL не веде на Nextcloud</string>
     <!-- Owncloud login flow, UR-->
+    <string name="owncloud_server_url">URL сервера Owncloud</string>
     <!-- Owncloud login flow, error invalid URL-->
+    <string name="owncloud_server_invalid_url">Цей URL не веде на Owncloud</string>
     <!-- Owncloud login flow, password-->
+    <string name="owncloud_password">Пароль</string>
     <!-- Owncloud login flow, user name-->
+    <string name="owncloud_username">Ім’я користувача</string>
     <!-- Owncloud login flow -->
+    <string name="owncloud_login_2fa_hint">Якщо у вас увімкнено двофакторну автентифікацію, ви повинні тут ввести пароль.</string>
     <!-- Owncloud login flow, login failed -->
+    <string name="owncloud_login_failed">Не вдалося увійти: неправильне ім’я користувача або пароль.</string>
     <!-- Owncloud login flow, error: username empty -->
     <!-- Owncloud login flow, error: password empty -->
     <!-- Nextcloud/Owncloud login flow, continue button -->
+    <string name="login_flow_continue">Продовжити</string>
     <!-- Nextcloud/Owncloud login flow, login button -->
+    <string name="login_flow_login">Увійти</string>
+    <string name="disclaimer">Застереження</string>
     <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
+    <string name="disclaimer_currency_converter">Курси валют публікуються один раз на день Європейським центральним банком. Вся інформація надається «як є», без будь-яких гарантій. Ми не несемо відповідальності за цю інформацію.\n\nОстаннє оновлення: %1$s</string>
+    <string name="show_all">Показати все</string>
     <!-- Used in calendar widget date selector. -->
+    <string name="date_today">Сьогодні</string>
     <!-- Used in calendar widget date selector. -->
+    <string name="date_tomorrow">Завтра</string>
     <!-- Headline used in calendar widget for pinned events -->
+    <string name="calendar_widget_pinned_events">Найближчі події</string>
     <!-- Headline used in calendar widget for the next event, if there is no event today -->
+    <string name="calendar_widget_next_events">Наступна подія</string>
+    <string name="calendar_widget_no_events">Сьогодні немає подій</string>
     <!--
         In the calendar widget, only events that start or end at the selected date are shown.
         If an event runs for three days, it won't be listed if the second day is selected.
         Instead, the following text will be shown, %1$d being the total number of
         running events that neither started nor will end on the selected day.
         -->
+    <plurals name="calendar_widget_running_events">
+        <item quantity="one">+%1$d поточна подія з минулих днів</item>
+        <item quantity="few">+%1$d поточні події з минулих днів</item>
+        <item quantity="many">+%1$d поточних подій з минулих днів</item>
+        <item quantity="other">+%1$d поточних подій з минулих днів</item>
+    </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d незавершене завдання</item>
+        <item quantity="few">+%1$d незавершені завдання</item>
+        <item quantity="many">+%1$d незавершених завдань</item>
+        <item quantity="other">+%1$d незавершених завдань</item>
+    </plurals>
     <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">Весь день</string>
+    <string name="task_due_time">Виконати до %1$s</string>
+    <string name="task_due_date">Виконати до %1$s</string>
+    <string name="task_due_today">Виконати до кінця дня</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
+    <string name="music_widget_default_title">%1$s відтворює медіа</string>
+    <string name="music_widget_no_data">Поки не відтворено жодного медіа</string>
+    <string name="music_widget_interactive_progress_bar">Інтерактивний індикатор виконання</string>
+    <string name="weather_condition_sleetshowers">Зливи з мокрим снігом</string>
+    <string name="weather_condition_heavysleet">Сильний мокрий сніг</string>
+    <string name="weather_condition_lightrainshowersandthunder">Легка злива з грозою</string>
+    <string name="weather_condition_heavyrain">Сильний дощ</string>
+    <string name="weather_condition_lightsnowandthunder">Легкий сніг із грозою</string>
+    <string name="weather_condition_lightrain">Легкий дощ</string>
+    <string name="weather_condition_lightrainshowers">Легка злива</string>
+    <string name="weather_condition_lightsnow">Легкий сніг</string>
+    <string name="weather_condition_heavysleetshowersandthunder">Сильні зливи з мокрим снігом та грозою</string>
+    <string name="weather_condition_lightsnowshowers">Легкі сніжні зливи</string>
+    <string name="weather_condition_lightssleetshowersandthunder">Легкі зливи з мокрим снігом з грозою</string>
+    <string name="weather_condition_snowandthunder">Сніг із грозою</string>
+    <string name="weather_condition_heavysleetshowers">Сильні зливи з мокрим снігом</string>
+    <string name="weather_condition_heavysnow">Сильний сніг</string>
+    <string name="weather_condition_cloudy">Хмарно</string>
+    <string name="weather_condition_lightrainandthunder">Легкий дощ із грозою</string>
+    <string name="weather_condition_snow">Сніг</string>
+    <string name="weather_condition_hail">Град</string>
+    <string name="weather_condition_thunderstorm">Гроза</string>
+    <string name="weather_condition_thunder">Грім</string>
+    <string name="weather_condition_heavysnowshowers">Сильні сніжні зливи</string>
+    <string name="weather_condition_heavyrainshowers">Сильні зливи</string>
+    <string name="weather_condition_rainshowersandthunder">Злива з грозою</string>
+    <string name="weather_condition_clearsky">Ясне небо</string>
+    <string name="weather_condition_sleet">Мокрий сніг</string>
+    <string name="weather_condition_rain">Дощ</string>
+    <string name="weather_condition_sleetandthunder">Мокрий сніг із грозою</string>
+    <string name="weather_condition_lightssnowshowersandthunder">Легка сніжна злива з грозою</string>
+    <string name="weather_condition_heavyrainshowersandthunder">Сильні зливи з грозою</string>
+    <string name="weather_condition_fair">Ясно</string>
+    <string name="weather_condition_fog">Туман</string>
+    <string name="weather_condition_haze">Імла</string>
+    <string name="weather_condition_sleetshowersandthunder">Зливи з мокрим снігом та грозою</string>
+    <string name="weather_condition_rainandthunder">Дощ із грозою</string>
+    <string name="weather_condition_lightsleet">Легкий мокрий сніг</string>
+    <string name="weather_condition_heavysleetandthunder">Сильний мокрий сніг із грозою</string>
+    <string name="weather_condition_partlycloudy">Місцями хмарно</string>
+    <string name="weather_condition_heavysnowandthunder">Сильний сніг із грозою</string>
+    <string name="weather_condition_rainshowers">Зливи</string>
+    <string name="weather_condition_lightsleetandthunder">Легкий мокрий сніг із грозою</string>
+    <string name="weather_condition_heavysnowshowersandthunder">Сильна сніжна злива з грозою</string>
+    <string name="weather_condition_lightsleetshowers">Легкі зливи з мокрим снігом</string>
+    <string name="weather_condition_snowshowersandthunder">Сніжні зливи з грозою</string>
+    <string name="weather_condition_snowshowers">Сніжні зливи</string>
+    <string name="weather_condition_heavyrainandthunder">Сильний дощ із грозою</string>
+    <string name="weather_condition_wind">Вітер</string>
+    <string name="weather_condition_unknown">Невідомо</string>
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <string name="weather_no_data">Немає даних про погоду</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
+    <string name="weather_widget_set_location">Обрати локацію</string>
+    <string name="weather_location_search_no_result">Локацію не знайдено</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
+    <string name="missing_permission_auto_location">Для автоматичного визначення місцезнаходження потрібен дозвіл</string>
     <!-- Missing notification permission in music widget settings -->
     <!-- Missing contact permission in search settings screen -->
     <!-- Missing call permission in contacts settings screen -->
@@ -253,13 +368,16 @@
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <!-- Grant a permission, shown in permission banners -->
     <!-- Appearance preference title -->
+    <string name="preference_theme_light">Світла</string>
     <string name="preference_mdy_color_source_wallpaper">Фон</string>
     <string name="preference_category_advanced">Розширений</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Відкрити веб-сторінку</string>
+    <string name="open_webpage">Відкрити сайт</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="preference_system_bar_icons_light">Світлий</string>
     <string name="preference_category_wallpaper">Фон</string>
     <string name="preference_screen_search">Пошук</string>
+    <string name="preference_screen_tags">Теги</string>
     <!-- %1$s: app name (Kvaesitso) -->
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -270,4 +388,6 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="search_action_share">Поділитися</string>
     <!-- %1$s: app name -->
+    <string name="customize_item_tags">Теги</string>
+    <string name="weather_forecast_wind">Вітер</string>
 </resources>
