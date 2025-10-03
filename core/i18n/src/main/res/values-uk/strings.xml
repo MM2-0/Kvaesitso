@@ -24,12 +24,12 @@
     <string name="wind_north">Північ</string>
     <string name="wind_north_east">Північний Схід</string>
     <string name="wind_north_north_east">Північний Схід</string>
-    <string name="file_meta_duration">Довжина: %1$s</string>
+    <string name="file_meta_duration">Тривалість: %1$s</string>
     <string name="file_meta_year">Рік: %1$s</string>
     <string name="file_meta_size">Розмір: %1$s</string>
     <string name="file_meta_path">Шлях: %1$s</string>
     <string name="file_meta_type">Тип: %1$s</string>
-    <string name="file_meta_dimensions">Розмір кадру: %1$s</string>
+    <string name="file_meta_dimensions">Роздільна здатність : %1$s</string>
     <string name="file_meta_app_name">Назва застосунку: %1$s</string>
     <string name="file_meta_app_version">Версія: %1$s</string>
     <string name="file_meta_app_pkgname">Назва пакета: %1$s</string>
@@ -192,4 +192,13 @@
     <string name="weather_condition_snowandthunder">Сніг із грозою</string>
     <string name="weather_condition_fair">Ясно</string>
     <string name="preference_theme_light">Світла</string>
+    <string name="file_type_launchertheme">%1$s тема</string>
+    <string name="wind_west">Західний</string>
+    <string name="alert_delete_directory">Каталог %1$s і весь його вміст буде видалено назавжди. Продовжити?</string>
+    <string name="file_type_generic">%1$s файл</string>
+    <string name="alert_delete_file">Файл %1$s буде видалено остаточно. Продовжити?</string>
+    <string name="alert_delete_shortcut">Ярлик %1$s буде видалено назавжди. Продовжити?</string>
+    <string name="wind_south_west">Південно-західний</string>
+    <string name="wind_north_west">Північно-західний</string>
+    <string name="wind_south">Південний</string>
 </resources>
