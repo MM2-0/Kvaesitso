@@ -74,15 +74,19 @@
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south">Південний</string>
     <!-- Wind direction, used in weather widget -->
+    <string name="wind_south_south_west">Південно-південно-західний</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south_west">Південно-західний</string>
     <!-- Wind direction, used in weather widget -->
+    <string name="wind_west_south_west">Західно-південно-західний</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_west">Західний</string>
     <!-- Wind direction, used in weather widget -->
+    <string name="wind_west_north_west">Західно-північно-західний</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_west">Північно-західний</string>
     <!-- Wind direction, used in weather widget -->
+    <string name="wind_north_north_west">Північно-північно-західний</string>
     <!-- No rain or snow, used in weather widget -->
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
@@ -209,9 +213,23 @@
     <string name="websearch_dialog_delete_icon">Видалити значок</string>
     <string name="websearch_dialog_custom_icon">Кастомний значок</string>
     <string name="websearch_dialog_advanced">Розширений</string>
-    <string name="widget_name_unknown">Невідомо</string>
+    <string name="websearch_dialog_query_encoding">Кодування запиту</string>
+    <string name="websearch_dialog_query_encoding_url">Відсоткове кодування</string>
+    <string name="websearch_dialog_query_encoding_none">Нема</string>
+    <string name="menu_edit_widgets">Налаштувати віджети</string>
+    <string name="widget_name_weather">Погода</string>
+    <string name="widget_name_calendar">Календар</string>
+    <string name="widget_name_music">Медіа</string>
+    <string name="widget_name_favorites">Улюблені</string>
+    <string name="widget_name_notes">Нотатка</string>
+    <string name="widget_name_unknown">Віджет зник</string>
+    <string name="widget_add_widget">Додати віджет</string>
+    <string name="widget_removed">Віджет видалено</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
+    <string name="notes_widget_placeholder">Напишіть нотатку...</string>
+    <string name="notes_widget_action_new">Нова нотатка</string>
     <!-- Save / export the current note content as markdown file -->
+    <string name="notes_widget_action_save">Зберегти</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Нотатка_%1$s</string>
     <string name="notes_widget_action_dismiss">Відхилити</string>
@@ -365,35 +383,84 @@
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Для автоматичного визначення місцезнаходження потрібен дозвіл</string>
     <!-- Missing notification permission in music widget settings -->
+    <string name="missing_permission_music_widget">Для керування відтворенням медіа потрібен доступ до сповіщень</string>
     <!-- Missing contact permission in search settings screen -->
+    <string name="missing_permission_contact_search_settings">Для пошуку контактів потрібен дозвіл</string>
     <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">Для здійснення дзвінків потрібен дозвіл</string>
     <!-- Missing calendar permission in search settings screen -->
+    <string name="missing_permission_calendar_search_settings">Для пошуку в календарі потрібен дозвіл</string>
+    <string name="missing_permission_tasks_search_settings">Для пошуку завдань у Tasks потрібен дозвіл</string>
+    <string name="missing_permission_tasks_integration">Для інтеграції Tasks потрібен дозвіл</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
+    <string name="missing_permission_calendar_widget_settings">Цьому віджету потрібен доступ до календаря</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Не можете знайти свої календарі?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
+    <string name="missing_permission_appshortcuts_search_settings">%1$s має бути встановлено як застосунок головного екрана за замовчуванням</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">Для пошуку локальних файлів потрібен дозвіл</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <string name="missing_permission_file_search_settings_android10">Для пошуку локальних файлів потрібен доступ до всіх файлів</string>
     <!-- Missing notification permission, used in badge settings screen -->
+    <string name="missing_permission_notification_badges">Для відображення значків сповіщень потрібен доступ до сповіщень</string>
     <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">Для відображення майбутніх подій потрібен доступ до календаря</string>
     <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">Для пошуку в календарі потрібен дозвіл</string>
     <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">Для пошуку локацій поряд потрібен дозвіл</string>
     <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">Для пошуку локальних файлів потрібен доступ</string>
     <!-- Missing files permission, used in contact search results -->
+    <string name="missing_permission_contact_search">Для пошуку контактів потрібен дозвіл</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
+    <string name="missing_permission_appshortcuts_search">Встановіть %1$s як застосунок головного екрана, щоби шукати застосунки.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
+    <string name="missing_permission_appshortcuts_create">Встановіть %1$s як застосунок головного екрана, щоби створювати ярлики.</string>
     <!-- Grant a permission, shown in permission banners -->
+    <string name="grant_permission">Надати</string>
     <!-- Appearance preference title -->
+    <string name="preference_screen_appearance">Зовнішній вигляд</string>
+    <string name="preference_theme">Тема</string>
     <string name="preference_theme_light">Світла</string>
-    <string name="preference_mdy_color_source_wallpaper">Фон</string>
+    <string name="preference_theme_dark">Темна</string>
+    <string name="preference_screen_colors">Колірна схема</string>
+    <string name="preference_colors_default">За замовчуванням</string>
+    <string name="preference_colors_high_contrast">Висока контрастність</string>
+    <string name="preference_colors_bw">Чорно-біла</string>
+    <string name="preference_custom_colors_corepalette">Колірна палітра</string>
+    <string name="preference_mdy_color_source">Джерело динамічних кольорів</string>
+    <string name="preference_mdy_color_source_system">Система</string>
+    <string name="preference_mdy_color_source_wallpaper">Шпалери</string>
+    <string name="preference_screen_shapes">Фігури</string>
+    <string name="preference_shapes_default">За замовчуванням</string>
+    <string name="preference_shapes_extra_round">Більш скруглені</string>
+    <string name="preference_shapes_rect">Прямокутні</string>
+    <string name="preference_shapes_base">Основна фігура</string>
+    <string name="preference_transparencies_default">За замовчуванням</string>
     <string name="preference_category_advanced">Розширений</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Відкрити сайт</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
     <string name="preference_system_bar_icons_light">Світлий</string>
+    <string name="preference_system_bar_icons_dark">Темна</string>
     <string name="preference_category_wallpaper">Фон</string>
+    <string name="preference_screen_weatherwidget">Погода</string>
+    <string name="preference_clockwidget_layout_vertical">За замовчуванням</string>
+    <string name="preference_clockwidget_favorites_part">Док-панель</string>
+    <string name="preference_clockwidget_favorites_part_summary">Показувати перший рядок закріплених значків</string>
     <string name="preference_screen_search">Пошук</string>
+    <string name="preference_search_favorites">Улюблені</string>
+    <string name="preference_search_favorites_summary">Показувати закріплені та часто використовувані значки над усіма застосунками</string>
+    <string name="preference_search_calendar">Календар</string>
     <string name="preference_screen_tags">Теги</string>
+    <string name="preference_edit_favorites_summary">Змінити порядок закріплених значків</string>
+    <string name="preference_category_favorites_frequently_used">Часто використовувані</string>
+    <string name="preference_favorites_frequently_used_summary">Показувати часто використовувані значки в улюблених</string>
+    <string name="preference_favorites_edit_button_summary">Показувати кнопку для перегрупування улюблених</string>
+    <string name="preference_weather_integration">Погода</string>
     <!-- %1$s: app name (Kvaesitso) -->
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -402,8 +469,14 @@
     <!-- %1$s: app name -->
     <!-- %1$s: app name -->
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
+    <string name="icon_picker_default_icon">За замовчуванням</string>
+    <string name="favorites">Улюблені</string>
+    <string name="favorites_empty">Закріплені та часто використовувані елементи з’являться тут</string>
+    <string name="favorites_empty_tag">Немає значків з цим тегом</string>
+    <string name="frequently_used_show_in_favorites">Показувати в улюблених</string>
     <string name="search_action_share">Поділитися</string>
     <!-- %1$s: app name -->
+    <string name="plugin_type_calendar">Календар</string>
     <string name="customize_item_tags">Теги</string>
     <string name="weather_forecast_wind">Вітер</string>
 </resources>
