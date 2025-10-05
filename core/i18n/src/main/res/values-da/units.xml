@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="da">
-    <!--
-    Important note: Unit symbols may not contain spaces.
-    -->
     <!-- DIMENSIONS -->
     <string name="dimension_length">Længde</string>
     <string name="dimension_mass">Masse</string>
@@ -30,7 +27,6 @@
         <item quantity="one">mil</item>
         <item quantity="other">mil</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">sømil</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">sømil</item>
         <item quantity="other">sømil</item>
@@ -52,12 +48,10 @@
         <item quantity="one">kvadratmillimeter</item>
         <item quantity="other">kvadratmillimeter</item>
     </plurals>
-    <string name="unit_sqinch_symbol">cm²</string>
     <plurals name="unit_sqinch">
         <item quantity="one">kvadratcentimeter</item>
         <item quantity="other">kvadratcentimeter</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">m²</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">kvadratmeter</item>
         <item quantity="other">kvadratmeter</item>
