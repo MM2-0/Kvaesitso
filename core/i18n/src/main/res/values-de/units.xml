@@ -289,4 +289,28 @@
     <string name="dimension_temperature">Temperatur</string>
     <string name="dimension_time">Zeit</string>
     <string name="dimension_data">Daten</string>
+    <string name="unit_milliliter_symbol">ml</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">Milliliter</item>
+        <item quantity="other">Milliliter</item>
+    </plurals>
+    <string name="unit_cubic_meter_symbol">m³</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">Kubikmeter</item>
+        <item quantity="other">Kubikmeter</item>
+    </plurals>
+    <string name="unit_cubic_millimeter_symbol">mm³</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">Kubikmillimeter</item>
+        <item quantity="other">Kubikmillimeter</item>
+    </plurals>
+    <plurals name="unit_liter">
+        <item quantity="one">Liter</item>
+        <item quantity="other">Liter</item>
+    </plurals>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">Kubikzentimeter</item>
+        <item quantity="other">Kubikzentimeter</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">cm³</string>
 </resources>
