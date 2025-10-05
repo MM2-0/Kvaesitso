@@ -381,6 +381,7 @@
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">يجب تعيين %1$s كتطبيق رئيسي افتراضي للبحث في اختصارات التطبيقات</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">أذونات التخزين مطلوبة للوصول الى الملفات المحلية</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
