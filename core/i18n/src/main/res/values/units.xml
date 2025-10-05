@@ -354,8 +354,8 @@
     </plurals>
     <string name="unit_fluid_ounce_us_symbol">fl oz US</string>
     <plurals name="unit_fluid_ounce_us">
-        <item quantity="one">US fluid ounce</item>
-        <item quantity="other">US fluid ounces</item>
+        <item quantity="one">fluid ounce (US)</item>
+        <item quantity="other">fluid ounces (US)</item>
     </plurals>
     <string name="unit_fluid_ounce_imp_symbol">fl oz imp</string>
     <plurals name="unit_fluid_ounce_imp">

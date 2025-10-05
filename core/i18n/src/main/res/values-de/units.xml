@@ -339,24 +339,24 @@
         <item quantity="other">Kubikyard</item>
     </plurals>
     <plurals name="unit_gallon_us">
-        <item quantity="one">US-Gallone</item>
-        <item quantity="other">US-Gallonen</item>
+        <item quantity="one">Gallone (US)</item>
+        <item quantity="other">Gallonen (US)</item>
     </plurals>
     <plurals name="unit_gallon_imp">
         <item quantity="one">imperiale Gallone</item>
         <item quantity="other">imperiale Gallonen</item>
     </plurals>
     <plurals name="unit_pint_us">
-        <item quantity="one">US-Pinte</item>
-        <item quantity="other">US-Pinten</item>
+        <item quantity="one">Pinte (US)</item>
+        <item quantity="other">Pinten (US)</item>
     </plurals>
     <plurals name="unit_pint_imp">
         <item quantity="one">imperiale Pinte</item>
         <item quantity="other">imperiale Pinten</item>
     </plurals>
     <plurals name="unit_fluid_ounce_us">
-        <item quantity="one">US-Flüssigunze</item>
-        <item quantity="other">US-Flüssigunzen</item>
+        <item quantity="one">Flüssigunze (US)</item>
+        <item quantity="other">Flüssigunzen (US)</item>
     </plurals>
     <plurals name="unit_fluid_ounce_imp">
         <item quantity="one">imperiale Flüssigunze</item>
