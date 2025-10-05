@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="de">
-    <!--
-    Important note: Unit symbols may not contain spaces.
-    -->
     <!-- DIMENSIONS -->
     <string name="dimension_length">Länge</string>
     <string name="dimension_mass">Masse</string>
@@ -75,14 +72,17 @@
         <item quantity="one">Quadratmillimeter</item>
         <item quantity="other">Quadratmillimeter</item>
     </plurals>
+    <string name="unit_sqinch_symbol">in²</string>
     <plurals name="unit_sqinch">
         <item quantity="one">Quadratzoll</item>
         <item quantity="other">Quadratzoll</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">ft²</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">Quadratfuß</item>
         <item quantity="other">Quadratfuß</item>
     </plurals>
+    <string name="unit_sqyard_symbol">yd²</string>
     <plurals name="unit_sqyard">
         <item quantity="one">Quadratyard</item>
         <item quantity="other">Quadratyard</item>
@@ -207,22 +207,27 @@
         <item quantity="one">Tonne</item>
         <item quantity="other">Tonnen</item>
     </plurals>
+    <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
         <item quantity="one">Long Ton</item>
         <item quantity="other">Long Tons</item>
     </plurals>
+    <string name="unit_stone_symbol">st.</string>
     <plurals name="unit_stone">
         <item quantity="one">Stone</item>
         <item quantity="other">Stones</item>
     </plurals>
+    <string name="unit_pound_symbol">lb.</string>
     <plurals name="unit_pound">
         <item quantity="one">Pfund</item>
         <item quantity="other">Pfund</item>
     </plurals>
+    <string name="unit_ounce_symbol">oz.</string>
     <plurals name="unit_ounce">
         <item quantity="one">Unze</item>
         <item quantity="other">Unzen</item>
     </plurals>
+    <string name="unit_short_ton_symbol">tn.sh.</string>
     <plurals name="unit_short_ton">
         <item quantity="one">Short Ton</item>
         <item quantity="other">Short Tons</item>
@@ -241,4 +246,79 @@
         <item quantity="other">Kelvin</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
+    <string name="unit_liter_symbol">l</string>
+    <plurals name="unit_liter">
+        <item quantity="one">Liter</item>
+        <item quantity="other">Liter</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">ml</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">Milliliter</item>
+        <item quantity="other">Milliliter</item>
+    </plurals>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">Kubikmeter</item>
+        <item quantity="other">Kubikmeter</item>
+    </plurals>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">Kubikzentimeter</item>
+        <item quantity="other">Kubikzentimeter</item>
+    </plurals>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">Kubikmillimeter</item>
+        <item quantity="other">Kubikmillimeter</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">in³</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">Kubikzoll</item>
+        <item quantity="other">Kubikzoll</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">ft³</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">Kubikfuß</item>
+        <item quantity="other">Kubikfuß</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">yd³</string>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">Kubikyard</item>
+        <item quantity="other">Kubikyard</item>
+    </plurals>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">Gallone (US)</item>
+        <item quantity="other">Gallonen (US)</item>
+    </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">imperiale Gallone</item>
+        <item quantity="other">imperiale Gallonen</item>
+    </plurals>
+    <plurals name="unit_pint_us">
+        <item quantity="one">Pinte (US)</item>
+        <item quantity="other">Pinten (US)</item>
+    </plurals>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">imperiale Pinte</item>
+        <item quantity="other">imperiale Pinten</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">Flüssigunze (US)</item>
+        <item quantity="other">Flüssigunzen (US)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">imperiale Flüssigunze</item>
+        <item quantity="other">imperiale Flüssigunzen</item>
+    </plurals>
+    <plurals name="unit_cup">
+        <item quantity="one">Tasse (US)</item>
+        <item quantity="other">Tassen (US)</item>
+    </plurals>
+    <string name="unit_tablespoon_symbol">EL</string>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">Esslöffel (US)</item>
+        <item quantity="other">Esslöffel (US)</item>
+    </plurals>
+    <string name="unit_teaspoon_symbol">TL</string>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">Teelöffel (US)</item>
+        <item quantity="other">Teelöffel (US)</item>
+    </plurals>
 </resources>
