@@ -55,4 +55,5 @@
     <string name="unit_short_ton_symbol">تن کوتاه</string>
     <!-- UNITS OF TEMPERATURE -->
     <string name="unit_kelvin_symbol">کلوین</string>
+    <!-- UNITS OF VOLUME -->
 </resources>
