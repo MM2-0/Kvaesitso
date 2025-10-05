@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="id">
-    <!--
-    Important note: Unit symbols may not contain spaces.
-    -->
     <!-- DIMENSIONS -->
     <string name="dimension_length">Panjang</string>
     <string name="dimension_mass">Massa</string>
@@ -158,7 +155,6 @@
     <plurals name="unit_pound">
         <item quantity="other">pon</item>
     </plurals>
-    <string name="unit_ounce_symbol">ons</string>
     <plurals name="unit_ounce">
         <item quantity="other">ons</item>
     </plurals>
