@@ -100,4 +100,5 @@
         <item quantity="one">grau fahrenheit</item>
         <item quantity="other">graus fahrenheit</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
