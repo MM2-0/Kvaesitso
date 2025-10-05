@@ -399,4 +399,5 @@
         <item quantity="many">кельвінів</item>
         <item quantity="other">кельвінів</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
