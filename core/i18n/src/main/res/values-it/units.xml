@@ -187,4 +187,5 @@
         <item quantity="one">grado kelvin</item>
         <item quantity="other">gradi kelvin</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
