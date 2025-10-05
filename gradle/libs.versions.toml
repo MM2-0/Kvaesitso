@@ -10,7 +10,7 @@ pluginSdk = "2.2.0"
 
 gradle = "8.1.2"
 android-gradle-plugin = "8.12.0"
-ksp-gradle-plugin = "2.2.10-2.0.2"
+ksp-gradle-plugin = "2.2.20-2.0.3"
 
 kotlin = "2.2.20"
 kotlinx-coroutines = "1.10.2"
