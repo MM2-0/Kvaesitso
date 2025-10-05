@@ -264,7 +264,7 @@
     <plurals name="unit_tebibyte">
         <item quantity="one">tebibyte</item>
         <item quantity="many">tebibytes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_mile_per_hour">
         <item quantity="one">milha por hora</item>
