@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="fr">
-    <!--
-    Important note: Unit symbols may not contain spaces.
-    -->
     <!-- DIMENSIONS -->
     <string name="dimension_length">Longueur</string>
     <string name="dimension_mass">Masse</string>
