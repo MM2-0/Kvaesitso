@@ -190,4 +190,5 @@
     <plurals name="unit_kelvin">
         <item quantity="other">ケルビン</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
