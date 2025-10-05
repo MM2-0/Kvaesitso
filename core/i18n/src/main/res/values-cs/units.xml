@@ -288,4 +288,5 @@
         <item quantity="many">stupňů fahrenheita</item>
         <item quantity="other">stupňů fahrenheita</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
