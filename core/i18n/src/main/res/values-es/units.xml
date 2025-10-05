@@ -190,4 +190,5 @@
         <item quantity="one">grado Kelvin</item>
         <item quantity="other">grados Kelvin</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
