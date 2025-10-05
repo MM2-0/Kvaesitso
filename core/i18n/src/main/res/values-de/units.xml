@@ -66,17 +66,17 @@
         <item quantity="one">Quadratmillimeter</item>
         <item quantity="other">Quadratmillimeter</item>
     </plurals>
-    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_sqinch_symbol">in²</string>
     <plurals name="unit_sqinch">
         <item quantity="one">Quadratzoll</item>
         <item quantity="other">Quadratzoll</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqfoot_symbol">ft²</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">Quadratfuß</item>
         <item quantity="other">Quadratfuß</item>
     </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_sqyard_symbol">yd²</string>
     <plurals name="unit_sqyard">
         <item quantity="one">Quadratyard</item>
         <item quantity="other">Quadratyard</item>
@@ -235,17 +235,17 @@
         <item quantity="one">Long Ton</item>
         <item quantity="other">Long Tons</item>
     </plurals>
-    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_stone_symbol">st</string>
     <plurals name="unit_stone">
         <item quantity="one">Stone</item>
         <item quantity="other">Stones</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">lb</string>
     <plurals name="unit_pound">
         <item quantity="one">Pfund</item>
         <item quantity="other">Pfund</item>
     </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">oz</string>
     <plurals name="unit_ounce">
         <item quantity="one">Unze</item>
         <item quantity="other">Unzen</item>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="unit_short_ton_symbol">ton</string>
     <string name="unit_gallon_us_symbol">gal</string>
     <plurals name="unit_gallon_us">
         <item quantity="one">gallon</item>

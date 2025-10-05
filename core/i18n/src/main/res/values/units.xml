@@ -60,7 +60,7 @@
         <item quantity="one">mile</item>
         <item quantity="other">miles</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_nautic_mile_symbol">nmi</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">nautical mile</item>
         <item quantity="other">nautical miles</item>
@@ -86,17 +86,17 @@
         <item quantity="one">square millimeter</item>
         <item quantity="other">square millimeters</item>
     </plurals>
-    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_sqinch_symbol">sq in</string>
     <plurals name="unit_sqinch">
         <item quantity="one">square inch</item>
         <item quantity="other">square inches</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqfoot_symbol">sq ft</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">square foot</item>
         <item quantity="other">square feet</item>
     </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_sqyard_symbol">sq yd</string>
     <plurals name="unit_sqyard">
         <item quantity="one">square yard</item>
         <item quantity="other">square yards</item>
@@ -250,27 +250,27 @@
         <item quantity="one">metric ton</item>
         <item quantity="other">metric tons</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_long_ton_symbol">long ton</string>
     <plurals name="unit_long_ton">
         <item quantity="one">long ton</item>
         <item quantity="other">long tons</item>
     </plurals>
-    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_stone_symbol">st</string>
     <plurals name="unit_stone">
         <item quantity="one">stone</item>
         <item quantity="other">stones</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">lb</string>
     <plurals name="unit_pound">
         <item quantity="one">pound</item>
         <item quantity="other">pounds</item>
     </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">oz</string>
     <plurals name="unit_ounce">
         <item quantity="one">ounce</item>
         <item quantity="other">ounces</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">short ton</string>
     <plurals name="unit_short_ton">
         <item quantity="one">short ton</item>
         <item quantity="other">short tons</item>
@@ -292,12 +292,12 @@
         <item quantity="other">kelvins</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
-    <string name="unit_liter_symbol">l</string>
+    <string name="unit_liter_symbol">L</string>
     <plurals name="unit_liter">
         <item quantity="one">liter</item>
         <item quantity="other">liters</item>
     </plurals>
-    <string name="unit_milliliter_symbol">ml</string>
+    <string name="unit_milliliter_symbol">mL</string>
     <plurals name="unit_milliliter">
         <item quantity="one">milliliter</item>
         <item quantity="other">milliliters</item>
@@ -322,12 +322,12 @@
         <item quantity="one">cubic inch</item>
         <item quantity="other">cubic inches</item>
     </plurals>
-    <string name="unit_cubic_foot_symbol">cuft</string>
+    <string name="unit_cubic_foot_symbol">cu ft</string>
     <plurals name="unit_cubic_foot">
         <item quantity="one">cubic foot</item>
         <item quantity="other">cubic feet</item>
     </plurals>
-    <string name="unit_cubic_yard_symbol">cuyd</string>
+    <string name="unit_cubic_yard_symbol">cu yd</string>
     <plurals name="unit_cubic_yard">
         <item quantity="one">cubic yard</item>
         <item quantity="other">cubic yards</item>
@@ -352,12 +352,12 @@
         <item quantity="one">pint (imperial)</item>
         <item quantity="other">pints (imperial)</item>
     </plurals>
-    <string name="unit_fluid_ounce_us_symbol">fl.oz.US</string>
+    <string name="unit_fluid_ounce_us_symbol">fl oz US</string>
     <plurals name="unit_fluid_ounce_us">
         <item quantity="one">US fluid ounce</item>
         <item quantity="other">US fluid ounces</item>
     </plurals>
-    <string name="unit_fluid_ounce_imp_symbol">fl.oz.imp</string>
+    <string name="unit_fluid_ounce_imp_symbol">fl oz imp</string>
     <plurals name="unit_fluid_ounce_imp">
         <item quantity="one">fluid ounce (imperial)</item>
         <item quantity="other">fluid ounces (imperial)</item>
