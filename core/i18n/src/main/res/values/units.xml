@@ -320,7 +320,7 @@
         <item quantity="one">cubic millimeter</item>
         <item quantity="other">cubic millimeters</item>
     </plurals>
-    <string name="unit_cubic_inch_symbol">cuin</string>
+    <string name="unit_cubic_inch_symbol">cu in</string>
     <plurals name="unit_cubic_inch">
         <item quantity="one">cubic inch</item>
         <item quantity="other">cubic inches</item>
@@ -380,6 +380,4 @@
         <item quantity="one">teaspoon (US)</item>
         <item quantity="other">teaspoons (US)</item>
     </plurals>
-
-
 </resources>
