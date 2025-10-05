@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="be">
-    <!--
-    Important note: Unit symbols may not contain spaces.
-    -->
     <!-- DIMENSIONS -->
     <string name="dimension_length">Даўжыня</string>
     <string name="dimension_mass">Маса</string>
@@ -81,7 +78,6 @@
         <item quantity="many">міляў</item>
         <item quantity="other">міляў</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">ММ</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">марская міля</item>
         <item quantity="few">марскіх мілі</item>
@@ -117,21 +113,18 @@
         <item quantity="many">квадратных міліметраў</item>
         <item quantity="other">квадратных міліметраў</item>
     </plurals>
-    <string name="unit_sqinch_symbol">кв.ца</string>
     <plurals name="unit_sqinch">
         <item quantity="one">квадратная цаля</item>
         <item quantity="few">квадратныя цалі</item>
         <item quantity="many">квадратных цаляў</item>
         <item quantity="other">квадратных цаляў</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">кв.фут</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">квадратны фут</item>
         <item quantity="few">квадратных фута</item>
         <item quantity="many">квадратных футаў</item>
         <item quantity="other">квадратных футаў</item>
     </plurals>
-    <string name="unit_sqyard_symbol">кв.ярд</string>
     <plurals name="unit_sqyard">
         <item quantity="one">квадратны ярд</item>
         <item quantity="few">квадратных ярда</item>
@@ -339,35 +332,30 @@
         <item quantity="many">метрычных тон</item>
         <item quantity="other">метрычных тон</item>
     </plurals>
-    <string name="unit_long_ton_symbol">доўг.т.</string>
     <plurals name="unit_long_ton">
         <item quantity="one">доўгая тона</item>
         <item quantity="few">доўгія тоны</item>
         <item quantity="many">доугіх тон</item>
         <item quantity="other">доугіх тон</item>
     </plurals>
-    <string name="unit_stone_symbol">ст.</string>
     <plurals name="unit_stone">
         <item quantity="one">стоўн</item>
         <item quantity="few">стоўна</item>
         <item quantity="many">стоўнаў</item>
         <item quantity="other">стоўнаў</item>
     </plurals>
-    <string name="unit_pound_symbol">фт.</string>
     <plurals name="unit_pound">
         <item quantity="one">фунт</item>
         <item quantity="few">фунта</item>
         <item quantity="many">фунтаў</item>
         <item quantity="other">фунтаў</item>
     </plurals>
-    <string name="unit_ounce_symbol">ун.</string>
     <plurals name="unit_ounce">
         <item quantity="one">унцыя</item>
         <item quantity="few">унцыі</item>
         <item quantity="many">унцый</item>
         <item quantity="other">унцый</item>
     </plurals>
-    <string name="unit_short_ton_symbol">кар.т.</string>
     <plurals name="unit_short_ton">
         <item quantity="one">кароткая тона</item>
         <item quantity="few">кароткіх тоны</item>
