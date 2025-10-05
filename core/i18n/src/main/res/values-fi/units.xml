@@ -211,4 +211,5 @@
         <item quantity="one">aste fahrenheitia</item>
         <item quantity="other">astetta fahrenheitia</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
