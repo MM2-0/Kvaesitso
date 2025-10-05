@@ -313,4 +313,65 @@
         <item quantity="other">Kubikzentimeter</item>
     </plurals>
     <string name="unit_cubic_centimeter_symbol">cm³</string>
+    <string name="unit_liter_symbol">l</string>
+    <string name="unit_cubic_inch_symbol">in³</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">Kubikzoll</item>
+        <item quantity="other">Kubikzoll</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">ft³</string>
+    <string name="unit_cubic_yard_symbol">yd³</string>
+    <string name="unit_gallon_us_symbol">gal US</string>
+    <string name="unit_gallon_imp_symbol">gal imp</string>
+    <string name="unit_pint_us_symbol">pt US</string>
+    <string name="unit_pint_imp_symbol">pt imp</string>
+    <string name="unit_fluid_ounce_us_symbol">fl oz US</string>
+    <string name="unit_fluid_ounce_imp_symbol">fl oz imp</string>
+    <string name="unit_cup_symbol">cup</string>
+    <string name="unit_tablespoon_symbol">EL</string>
+    <string name="unit_teaspoon_symbol">TL</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">Kubikfuß</item>
+        <item quantity="other">Kubikfuß</item>
+    </plurals>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">Kubikyard</item>
+        <item quantity="other">Kubikyard</item>
+    </plurals>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">US-Gallone</item>
+        <item quantity="other">US-Gallonen</item>
+    </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">imperiale Gallone</item>
+        <item quantity="other">imperiale Gallonen</item>
+    </plurals>
+    <plurals name="unit_pint_us">
+        <item quantity="one">US-Pinte</item>
+        <item quantity="other">US-Pinten</item>
+    </plurals>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">imperiale Pinte</item>
+        <item quantity="other">imperiale Pinten</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">US-Flüssigunze</item>
+        <item quantity="other">US-Flüssigunzen</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">imperiale Flüssigunze</item>
+        <item quantity="other">imperiale Flüssigunzen</item>
+    </plurals>
+    <plurals name="unit_cup">
+        <item quantity="one">Tasse (US)</item>
+        <item quantity="other">Tassen (US)</item>
+    </plurals>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">Esslöffel (US)</item>
+        <item quantity="other">Esslöffel (US)</item>
+    </plurals>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">Teelöffel (US)</item>
+        <item quantity="other">Teelöffel (US)</item>
+    </plurals>
 </resources>
