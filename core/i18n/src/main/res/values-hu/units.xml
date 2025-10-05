@@ -215,4 +215,5 @@
         <item quantity="one">fahrenheit-fok</item>
         <item quantity="other">fahrenheit-fok</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
