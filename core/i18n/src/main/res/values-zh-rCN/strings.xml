@@ -217,21 +217,21 @@
     <string name="menu_edit_widgets">编辑组件</string>
     <string name="widget_name_weather">天气</string>
     <string name="widget_name_calendar">日历</string>
-    <string name="widget_name_music">音乐</string>
+    <string name="widget_name_music">媒体</string>
     <string name="widget_name_favorites">收藏夹</string>
     <string name="widget_name_notes">笔记</string>
-    <string name="widget_name_unknown">未知的应用组件</string>
+    <string name="widget_name_unknown">未知</string>
     <string name="widget_add_widget">添加组件</string>
     <string name="widget_removed">组件已删除</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">写个笔记…</string>
+    <string name="notes_widget_placeholder">写个笔记</string>
     <string name="notes_widget_action_new">新建笔记</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">保存</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">笔记_%1$s</string>
     <string name="notes_widget_action_dismiss">删除</string>
-    <string name="notes_widget_dismissed">笔记已删除.</string>
+    <string name="notes_widget_dismissed">笔记已删除</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">由 %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -259,7 +259,7 @@
     <string name="edit_favorites_dialog_empty_section">拖动项目到此</string>
     <string name="edit_favorites_dialog_tags">标签</string>
     <string name="edit_favorites_dialog_tag_section_empty">被固定的标签将出现在这里</string>
-    <string name="edit_favorites_dialog_new_tag">创建标签…</string>
+    <string name="edit_favorites_dialog_new_tag">创建标签</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud服务器 URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -369,11 +369,11 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">无可用的天气数据.</string>
+    <string name="weather_no_data">无可用的天气数据</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">设置位置</string>
-    <string name="weather_location_search_no_result">位置未找到.</string>
+    <string name="weather_location_search_no_result">位置未找到</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">需要位置访问权限以便自动确定位置</string>
     <!-- Missing notification permission in music widget settings -->
@@ -384,7 +384,7 @@
     <string name="missing_permission_call_contacts_settings">需要通话权限才能开始通话</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">需要日历权限以便搜索日历</string>
-    <string name="missing_permission_tasks_search_settings">需要 Tasks 应用权限来搜索任务</string>
+    <string name="missing_permission_tasks_search_settings">需要 Tasks 应用权限来在 Tasks app 中搜索任务</string>
     <string name="missing_permission_tasks_integration">需要 Tasks 权限来接入 Tasks 应用</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">此组件需要日历权限</string>
@@ -392,7 +392,7 @@
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s必须设置成默认桌面以搜索应用快捷方式</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">需要外部存储权限以便搜索本地文件</string>
+    <string name="missing_permission_file_search_settings">需要外部存储权限以便搜索此设备上的文件</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
