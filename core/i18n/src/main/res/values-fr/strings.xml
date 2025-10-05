@@ -389,6 +389,7 @@
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s doit être défini comme appli d\'accueil par défaut pour rechercher les raccourcis des applications</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">La permission d\'accès au stockage externe est nécessaire pour rechercher des fichiers locaux</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
