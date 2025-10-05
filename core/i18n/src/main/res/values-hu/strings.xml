@@ -135,9 +135,11 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Táblázat</string>
     <!-- Audio file -->
+    <string name="file_type_music">Hang</string>
     <!-- Video file -->
     <string name="file_type_video">Videó</string>
     <!-- Image file -->
+    <string name="file_type_image">Kép</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Fájl</string>
     <!-- Presentation -->
@@ -216,16 +218,18 @@
     <string name="widget_name_music">Média</string>
     <string name="widget_name_favorites">Kedvencek</string>
     <string name="widget_name_notes">Jegyzet</string>
-    <string name="widget_name_unknown">Ismeretlen</string>
+    <string name="widget_name_unknown">Érvénytelen alkalmazásmodulokhoz használt címke</string>
     <string name="widget_add_widget">Modul hozzáadása</string>
     <string name="widget_removed">Modul törölve</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
+    <string name="notes_widget_placeholder">Jegyzet írása</string>
     <string name="notes_widget_action_new">Új jegyzet</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Mentés</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Jegyzet_%1$s</string>
     <string name="notes_widget_action_dismiss">Elvetés</string>
+    <string name="notes_widget_dismissed">Jegyzet elvetve</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Készítette: %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -253,6 +257,7 @@
     <string name="edit_favorites_dialog_empty_section">Húzza ide az elemeket</string>
     <string name="edit_favorites_dialog_tags">Címkék</string>
     <string name="edit_favorites_dialog_tag_section_empty">A kitűzött címkék itt fognak megjelenni</string>
+    <string name="edit_favorites_dialog_new_tag">Címke készítése</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud kiszolgáló webcíme</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -306,6 +311,7 @@
         <item quantity="other">+%1$d befejezetlen feladat</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">Egész nap</string>
     <string name="task_due_time">Ekkor esedékes: %1$s</string>
     <string name="task_due_date">Ekkor esedékes: %1$s</string>
     <string name="task_due_today">Ekkor esedékes: Ma</string>
@@ -363,33 +369,46 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <string name="weather_no_data">Az időjárás adatok nem állnak rendelkezésre</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
-    <string name="weather_widget_set_location">Helyszín kiválasztása</string>
+    <string name="weather_widget_set_location">Hely kiválasztása</string>
+    <string name="weather_location_search_no_result">A hely nem található</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
-    <string name="missing_permission_auto_location">A helyszín automatikus meghatározásához helyhozzáférés szükséges</string>
+    <string name="missing_permission_auto_location">A tartózkodási hely automatikus meghatározásához helyhozzáférés szükséges</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">A médialejátszás vezérléséhez értesítési hozzáférés szükséges</string>
     <!-- Missing contact permission in search settings screen -->
+    <string name="missing_permission_contact_search_settings">A névjegyek kereséséhez névjegyengedély szükséges</string>
     <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">A hívások indításához hívásengedély szükséges</string>
     <!-- Missing calendar permission in search settings screen -->
-    <string name="missing_permission_calendar_search_settings">A naptárban való kereséshez, naptár engedélyre van szükség</string>
-    <string name="missing_permission_tasks_integration">A feladatok-integráció használatához hozzáférési engedélyre van szükség a feladatokhoz</string>
+    <string name="missing_permission_calendar_search_settings">A naptárban való kereséshez naptárengedély szükséges</string>
+    <string name="missing_permission_tasks_search_settings">A feladatok kereséséhez hozzáférési engedély szükséges a feladatokhoz a Feladatok alkalmazásban</string>
+    <string name="missing_permission_tasks_integration">A feladatok-integráció használatához hozzáférési engedély szükséges a feladatokhoz</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
+    <string name="missing_permission_calendar_widget_settings">Ehhez a modulhoz naptár-engedély szükséges</string>
     <string name="widget_config_calendar_missing_calendars_hint">Nem találja a naptárakat?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">A(z) %1$s alkalmazást alapértelmezett indítóként kell beállítani az telepített alkalmazások kereséséhez</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">A fájlok kereséséhez tárhelyengedély szükséges ezen az eszközön</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <string name="missing_permission_file_search_settings_android10">A helyi fájlok kereséséhez az összes fájlhoz való hozzáférés szükséges</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Az értesítési jelvények megjelenítéséhez értesítési hozzáférés szükséges</string>
     <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">A közelgő események megjelenítéséhez naptárengedély szükséges</string>
     <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">A naptárban való kereséshez naptárengedély szükséges</string>
     <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">A közeli helyek kereséséhez helymeghatározási engedély szükséges</string>
     <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">A fájlok kereséséhez tárhelyengedély szükséges ezen az eszközön</string>
     <!-- Missing files permission, used in contact search results -->
+    <string name="missing_permission_contact_search">A névjegyek kereséséhez névjegyengedély szükséges</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Állítsa be a(z) %1$s alkalmazást alapértelmezett indítóként a telepített alkalmazások kereséséhez.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -404,6 +423,7 @@
     <string name="preference_screen_colors">Színösszeállítás</string>
     <string name="preference_colors_default">Alapértelmezett</string>
     <string name="preference_colors_high_contrast">Nagy kontraszt</string>
+    <string name="preference_colors_bw">Fekete-fehér</string>
     <string name="preference_custom_colors_corepalette">Színpaletta</string>
     <string name="preference_mdy_color_source">Dinamikus színek forrása</string>
     <string name="preference_mdy_color_source_system">Rendszer</string>
@@ -427,14 +447,16 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Weboldal megnyitása</string>
     <string name="preference_screen_about_summary">Alkalmazás- és licencinformációk</string>
+    <string name="preference_screen_appearance_summary">Megjelenés testreszabása</string>
     <string name="preference_weather_provider">Szolgáltató</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (csak Németország)</string>
-    <string name="preference_category_location">Tartózkodási helyszín</string>
-    <string name="preference_automatic_location">Automatikus helyszín meghatározás</string>
+    <string name="preference_category_location">Tartózkodási hely</string>
+    <string name="preference_automatic_location">Automatikus helymeghatározás</string>
+    <string name="preference_automatic_location_summary">Helymeghatározó szolgáltatások használata a tartózkodási hely automatikus meghatározásához</string>
     <string name="preference_location_managed">Bővítmény által kezelt</string>
-    <string name="preference_location_managed_summary">A helyszínszolgáltatót a bővítmény-alkalmazás kezeli</string>
-    <string name="preference_location">Tartózkodási helyszín</string>
-    <string name="preference_location_breezy">Helyszín kezelése ezzel: Breezy Weather</string>
+    <string name="preference_location_managed_summary">A helyet ehhez a szolgáltatóhoz a bővítmény-alkalmazás kezeli</string>
+    <string name="preference_location">Tartózkodási hely</string>
+    <string name="preference_location_breezy">Hely kezelése ebben: Breezy Weather</string>
     <string name="preference_imperial_units_summary">Fahrenheit fok és mérföld per óra használata</string>
     <string name="preference_imperial_units">Birodalmi mértékegységek</string>
     <string name="widget_config_weather_compact">Kompakt mód</string>
@@ -447,6 +469,10 @@
     <string name="preference_debug_cleanup_database_summary">Hibás- és nem használt bejegyzések eltávolítása az indító adatbázisából</string>
     <string name="preference_debug_reinstall_iconpacks">Ikoncsomagok újratelepítése</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Ikoncsomag gyorsítótárának törlése és újraépítése</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$d bejegyzés eltávolítva</item>
+        <item quantity="other">%1$d bejegyzés eltávolítva</item>
+    </plurals>
     <string name="preference_category_icons">Ikonok</string>
     <string name="preference_cards">Kártyák</string>
     <string name="preference_cards_summary">Kártyák megjelenésének testreszabása</string>
@@ -493,6 +519,7 @@
     <string name="preference_screen_integrations_summary">Fiókok és szolgáltatások kezelése</string>
     <string name="preference_signin_user">Bejelentkezve %1$s néven</string>
     <string name="preference_signout">Kijelentkezés</string>
+    <string name="preference_summary_not_logged_in">Ön nincs bejelentkezve</string>
     <string name="preference_icon_shape_pentagon">Ötszög</string>
     <string name="preference_category_wallpaper">Háttérkép</string>
     <string name="preference_dim_wallpaper">Háttérkép sötétítése</string>
@@ -564,6 +591,7 @@
     <string name="preference_clockwidget_battery_part_summary">Akkumulátor jelenlegi töltöttségi szintjének megjelenítése, amikor az akkumulátor lemerült vagy töltődik</string>
     <string name="preference_clockwidget_alarm_part">Riasztások</string>
     <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 8 órán belül megszólalnak</string>
+    <string name="preference_screen_backup">Biztonsági mentés és visszaállítás</string>
     <string name="preference_screen_backup_summary">Indító alkalmazás adatainak exportálása és importálása</string>
     <string name="preference_backup">Biztonsági mentés</string>
     <string name="preference_backup_summary">Indító alkalmazás adatainak és beállításainak exportálása</string>
@@ -598,10 +626,10 @@
     <string name="preference_search_wikipedia">Wikipédia</string>
     <string name="preference_search_wikipedia_summary">Keresés a Wikipédián</string>
     <string name="preference_search_websites">Weboldalak</string>
-    <string name="preference_search_locations">Helyszínek</string>
+    <string name="preference_search_locations">Helyek</string>
     <string name="preference_search_locations_radius">Keresési sugár</string>
     <string name="preference_search_websites_summary">Egy weboldal előnézetének megjelenítése, ha a keresési lekérdezés egy webcím</string>
-    <string name="preference_search_locations_summary">Közelben lévő üzletek és egyéb helyszínek keresése</string>
+    <string name="preference_search_locations_summary">Közelben lévő üzletek és egyéb helyek keresése</string>
     <string name="preference_search_localfiles">Helyi fájlok</string>
     <string name="preference_search_localfiles_summary">Dokumentumok, fényképek és egyéb, ezen az eszközön tárolt fájlok keresése ezen az eszközön</string>
     <string name="preference_search_cloud_summary">Keresés a(z) %1$s fájljai között</string>
@@ -635,8 +663,10 @@
     <string name="preference_compact_tags_summary">Címkenevek vagy ikonok elrejtése a címkék által elfoglalt hely csökkentése érdekében</string>
     <string name="preference_widgets_edit_button_summary">Egy gomb megjelenítése a modulok hozzáadásához, eltávolításához és átrendezéséhez</string>
     <string name="preference_widgets_on_home_screen">Modulok a kezdőképernyőn</string>
+    <string name="preference_widgets_on_home_screen_summary">Modulok megjelenítése a kezdőképernyőn további oldal helyett</string>
     <string name="preference_screen_homescreen">Kezdőképernyő</string>
     <string name="preference_screen_homescreen_summary">Óra, keresősáv, háttérkép, rendszersávok</string>
+    <string name="preference_screen_icons">Rács és ikonok</string>
     <string name="preference_screen_icons_summary">Rács, ikonméret, ikoncsomagok, jelvények</string>
     <string name="preference_weather_integration">Időjárás</string>
     <string name="preference_media_integration">Médiavezérlés</string>
@@ -649,6 +679,7 @@
     <string name="preference_breezyweather_integration_instructions">A Breezy Weather időjárásszolgáltatóként való használatához:\n\n1. Menjen a Breezy Weather &gt; Beállítások &gt; Modulok és élő háttérképek &gt; Gadgetbridge adatok küldése &gt; %1$s engedélyezése\n\n2. A(z) %1$s mezőben válassza ki a Breezy Weathert időjárásszolgáltatóként</string>
     <string name="preference_launch_breezyweather_app">Breezy Weather megnyitása</string>
     <string name="preference_contacts_call_on_tap">Koppintson a híváshoz</string>
+    <string name="preference_contacts_call_on_tap_summary">Hívás azonnali indítása megerősítés kérése nélkül egy telefonszámra való koppintáskor</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Még nem kapcsolódik egyetlen Nextcloud fiókhoz sem</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -694,22 +725,30 @@
     <string name="search_action_contact">Hozzáadás a névjegyekhez</string>
     <string name="search_action_open_url">Weboldal meglátogatása</string>
     <string name="search_action_event">Esemény ütemezése</string>
+    <string name="create_search_action_type">Milyen típusú műveletet szeretne létrehozni?</string>
     <string name="create_search_action_type_web">Keresés egy weboldalon</string>
     <string name="create_search_action_type_app">Keresés egy alkalmazásban</string>
     <string name="create_search_action_type_intent">Egyéni intent</string>
     <string name="create_search_action_pick_app">Válasszon egy alkalmazást a kereséshez:</string>
     <string name="create_search_action_website_url">Adja meg a weboldal címét:</string>
+    <string name="create_search_action_website_invalid_url">Az adott weboldal nem importálható automatikusan webes keresésként. A következő lépésben megpróbálhat egy másik webhelyet, vagy manuálisan megadhatja a szükséges adatokat</string>
     <string name="search_action_label">Név</string>
     <string name="search_action_app">Alkalmazás</string>
     <string name="search_action_websearch_url">Webcím sablon</string>
+    <string name="search_action_websearch_url_hint">A webcím-sablon, az internetes keresés webcímének létrehozásához használatos. Használja a(z) „${1}” kulcsot a tényleges keresési kifejezés helyőrzőjeként</string>
     <string name="more_information">További információ</string>
     <string name="experimental_feature">Kísérleti</string>
+    <string name="tag_exists_error">Egy ilyen nevű címke már létezik</string>
+    <string name="tag_exists_message">Egy ilyen nevű címke már létezik. Ha folytatja, a két címke egyesül</string>
+    <string name="tag_no_items_message">Ehhez a címkéhez nincsenek elemek hozzárendelve. Ha folytatja, a címke törlődik</string>
+    <string name="tag_empty_name">Egy címke nem létezhet név nélkül. Ha folytatja, a címke törlődik</string>
     <string name="tag_select_items">Elemek kiválasztása:</string>
     <string name="tag_name">Címkenév</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d kiválasztott elem</item>
         <item quantity="other">%1$d kiválasztott elem</item>
     </plurals>
+    <string name="preference_layout_open_search">Keresés és alkalmazásfiók</string>
     <string name="open_search_pull_down">Lefelé húzás</string>
     <string name="open_search_swipe_left">Balra húzás</string>
     <string name="open_search_swipe_right">Jobbra húzás</string>
@@ -740,6 +779,7 @@
     <string name="gesture_action_lock_screen">Képernyő kikapcsolása</string>
     <string name="gesture_action_quick_settings">Gyorsbeállítások megnyitása</string>
     <string name="gesture_action_power_menu">Kikapcsolási menü megjelenítése</string>
+    <string name="gesture_action_recents">Legutóbbi alkalmazások megnyitása</string>
     <string name="gesture_failed_message">Egy „%1$s” gesztust hajtott végre. Ez a gesztus jelenleg egy „%2$s” művelet kiváltására van beállítva. Az akciót azonban a következő okból nem lehetett végrehajtani:</string>
     <string name="missing_permission_accessibility_gesture_failed">A művelet végrehajtásához engedélyezni kell a Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
     <string name="missing_permission_accessibility_gesture_settings">Ehhez a művelethez engedélyezni kell az Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
@@ -754,6 +794,7 @@
     <string name="widget_config_weather_integration_settings">Időjárás-integráció beállításai</string>
     <string name="widget_config_calendar_no_calendars">Nem található naptár</string>
     <string name="widget_pick_widget">Modul kiválasztása</string>
+    <string name="app_widget_loading_failed">Az alkalmazásmodult nem sikerült betölteni</string>
     <string name="widget_config_music_integration_settings">Médiavezérlő-integráció beállításai</string>
     <string name="note_widget_link_file">Hivatkozás a fájlra</string>
     <string name="note_widget_link_file_summary">Szinkronizálja a modul tartalmát egy külső fájllal</string>
@@ -767,7 +808,9 @@
     <string name="note_widget_conflict_local_version">Utolsó mentett verzió:</string>
     <string name="note_widget_conflict_file_version">Jelenlegi fájl tartalma:</string>
     <string name="note_widget_file_read_error">Hiba a jegyzet olvasásakor</string>
+    <string name="note_widget_file_read_error_description">A hivatkozott fájlt nem lehetett beolvasni. A másolat visszaállításra került az indító alkalmazás belső tárolójából. Ha szerkeszti a jegyzetet, a hivatkozott fájl valószínűleg felülírásra kerül</string>
     <string name="note_widget_file_write_error">Hiba a jegyzet mentésekor</string>
+    <string name="note_widget_file_write_error_description">A jegyzetet nem lehetett a kapcsolódó fájlba írni. A másolat el lett mentve az indító alkalmazás belső tárolójába</string>
     <string name="confirmation_delete_color_scheme">Biztosan törölni szeretné a(z) %1$s nevű színösszeállítást?</string>
     <string name="confirmation_delete_shapes_scheme">Biztosan törölni szeretné a(z) %1$s nevű alakzatsémát?</string>
     <string name="confirmation_delete_typography_scheme">Valóban el szeretné távolítani a(z) %1$s tipográfiai sémát?</string>
@@ -791,10 +834,10 @@
     <string name="imperial">Birodalmi</string>
     <string name="metric">Metrikus</string>
     <string name="preference_search_location_custom_overpass_url">Overpass webcím</string>
-    <string name="preference_search_locations_hide_uncategorized">Kategorizálatlan helyszínek elrejtése</string>
+    <string name="preference_search_locations_hide_uncategorized">Kategorizálatlan helyek elrejtése</string>
     <string name="preference_search_locations_hide_uncategorized_summary">Csak jól meghatározott kategóriák, például kávézók, vagy éttermek eredményeit jeleníti meg</string>
     <string name="preference_search_locations_show_map">Térkép</string>
-    <string name="preference_search_locations_show_map_summary">Térkép-előnézet megjelenítése a helyszínekhez</string>
+    <string name="preference_search_locations_show_map_summary">Térképelőnézet megjelenítése a helyekhez</string>
     <string name="preference_search_locations_theme_map">Térkép témája</string>
     <string name="preference_search_locations_theme_map_summary">Indító alkalmazás színösszeállításának alkalmazása a térképre</string>
     <string name="preference_search_location_custom_tile_server_url">Csempekiszolgáló webcíme</string>
@@ -803,12 +846,14 @@
     <string name="menu_bugreport">Hiba bejelentése</string>
     <string name="location_open_24_7">Nyitva 24/7</string>
     <string name="plugin_state_error">Ez a bővítmény nem működik megfelelően</string>
+    <string name="plugin_state_setup_required">Először be kell állítani ezt a bővítményt</string>
     <string name="plugin_action_setup">Beállítás</string>
     <string name="plugin_type_filesearch">Fájlok</string>
     <string name="plugin_type_contacts">Névjegyek</string>
     <string name="plugin_type_weather">Időjáráselőrejelzési szolgáltató</string>
     <string name="plugin_weather_provider_enable">Beállítás időjáráselőrejelzési szolgáltatónak</string>
     <string name="plugin_weather_provider_enabled">Jelenleg időjáráselőrejelzési szolgáltatóként van beállítva</string>
+    <string name="unavailable_searchable">Ez az elem már nem létezik</string>
     <string name="clock_style_digital1">Félkövér</string>
     <string name="clock_style_digital2">Egyszerű</string>
     <string name="clock_style_orbit">Orbitális</string>
@@ -824,7 +869,7 @@
     <string name="search_filter_tools">Eszközök</string>
     <string name="search_filter_online">Internetes keresési találat</string>
     <string name="search_filter_apps">Alkalmazások</string>
-    <string name="plugin_type_locationsearch">Helyszínek keresése</string>
+    <string name="plugin_type_locationsearch">Helyek keresése</string>
     <string name="plugin_type_calendar">Naptár</string>
     <string name="preference_default_filter">Alapértelmezett szűrő</string>
     <string name="preference_default_filter_summary">Keresések alapértelmezett szűrőjének testreszabása</string>
@@ -833,7 +878,7 @@
     <string name="preference_customize_filter_bar">Szűrősáv testreszabása</string>
     <string name="preference_customize_filter_bar_summary">Adja meg, hogy mely elemek szerepeljenek a szűrősávon</string>
     <string name="filter_settings_network_warning">A jelenlegi szűrő alapértelmezés szerint lehetővé teszi az internetes keresési találatokat. A keresési lekérdezések véletlenül külső webes szolgáltatásokra kerülhetnek. Adatvédelmi okokból ez nem ajánlott.</string>
-    <string name="preference_search_osm_locations_summary">Üzletek és más helyszínek keresése a közelben az OpenStreetMapen</string>
+    <string name="preference_search_osm_locations_summary">Üzletek és más helyek keresése a közelben az OpenStreetMapen</string>
     <string name="poi_category_restaurant">Étterem</string>
     <string name="poi_category_fast_food">Gyorsétterem</string>
     <string name="poi_category_bar">Bár</string>
@@ -959,8 +1004,10 @@
     <string name="calendar_widget_next_day">Következő nap</string>
     <string name="calendar_widget_create_event">Új esemény létrehozása</string>
     <string name="calendar_widget_open_calendar">Naptáralkalmazás megnyitása</string>
+    <string name="profile_work_profile_state_locked">A munka-alkalmazások szünetelnek</string>
     <string name="profile_work_profile_action_unlock">Szüneteltetés feloldása</string>
     <string name="profile_work_profile_action_lock">Munkaalkalmazások szüneteltetése</string>
+    <string name="profile_private_profile_state_locked">Privát szféra lezárva</string>
     <string name="profile_private_profile_action_unlock">Feloldás</string>
     <string name="profile_private_profile_action_lock">Privát szféra lezárása</string>
     <string name="hint_drag_and_drop_reorder">Tartsa lenyomva és húzza az elemeket az átrendezésükhöz</string>
@@ -978,6 +1025,7 @@
     </plurals>
     <string name="departure_time_departed">elindult</string>
     <string name="bad_configuration_title">Gratulálunk, kizárta saját magát!</string>
+    <string name="bad_configuration_summary">Felfedezte a beállítások olyan kombinációját, amely a keresést és a beállításokat is elérhetetlenné teszi — gyakorlatilag kizárja Önt az indítóból</string>
     <string name="theme_export_title">Téma exportálása</string>
     <string name="theme_import_title">Téma importálása</string>
     <string name="theme_bundle_name">Név</string>
