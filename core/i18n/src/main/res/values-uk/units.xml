@@ -11,4 +11,384 @@
     <string name="unit_inch_symbol">дюйм</string>
     <string name="unit_yard_symbol">ярд</string>
     <string name="unit_sqmillimeter_symbol">мм²</string>
+    <string name="unit_terabyte_symbol">ТБ</string>
+    <string name="unit_bit_symbol">біт</string>
+    <string name="dimension_mass">Маса</string>
+    <string name="dimension_length">Довжина</string>
+    <string name="dimension_velocity">Швидкість</string>
+    <string name="dimension_volume">Об’єм</string>
+    <string name="dimension_area">Площа</string>
+    <string name="dimension_currency">Валюта</string>
+    <string name="dimension_data">Дані</string>
+    <string name="dimension_bitrate">Бітрейт</string>
+    <string name="dimension_pressure">Тиск</string>
+    <string name="dimension_energy">Енергія</string>
+    <string name="dimension_frequency">Частота</string>
+    <string name="dimension_temperature">Температура</string>
+    <string name="dimension_time">Час</string>
+    <plurals name="unit_year">
+        <item quantity="one">рік</item>
+        <item quantity="few">роки</item>
+        <item quantity="many">років</item>
+        <item quantity="other">років</item>
+    </plurals>
+    <string name="unit_megabyte_symbol">МБ</string>
+    <string name="unit_gigabyte_symbol">ГБ</string>
+    <string name="unit_kilobit_symbol">кбіт</string>
+    <plurals name="unit_kilometer">
+        <item quantity="one">Кілометр</item>
+        <item quantity="few">Кілометри</item>
+        <item quantity="many">Кілометрів</item>
+        <item quantity="other">Кілометрів</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">Дециметр</item>
+        <item quantity="few">Дециметри</item>
+        <item quantity="many">Дециметрів</item>
+        <item quantity="other">Дециметрів</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">сантиметр</item>
+        <item quantity="few">сантиметри</item>
+        <item quantity="many">сантиметрів</item>
+        <item quantity="other">сантиметрів</item>
+    </plurals>
+    <plurals name="unit_meter">
+        <item quantity="one">Метр</item>
+        <item quantity="few">Метри</item>
+        <item quantity="many">Метрів</item>
+        <item quantity="other">Метрів</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">міліметр</item>
+        <item quantity="few">міліметри</item>
+        <item quantity="many">міліметрів</item>
+        <item quantity="other">міліметрів</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">акр</item>
+        <item quantity="few">акри</item>
+        <item quantity="many">акрів</item>
+        <item quantity="other">акрів</item>
+    </plurals>
+    <string name="unit_second_symbol">с</string>
+    <plurals name="unit_second">
+        <item quantity="one">секунда</item>
+        <item quantity="few">секунди</item>
+        <item quantity="many">секунд</item>
+        <item quantity="other">секунд</item>
+    </plurals>
+    <string name="unit_millisecond_symbol">мс</string>
+    <plurals name="unit_millisecond">
+        <item quantity="one">мілісекунда</item>
+        <item quantity="few">мілісекунди</item>
+        <item quantity="many">мілісекунд</item>
+        <item quantity="other">мілісекунд</item>
+    </plurals>
+    <string name="unit_minute_symbol">хв</string>
+    <plurals name="unit_minute">
+        <item quantity="one">хвилина</item>
+        <item quantity="few">хвилини</item>
+        <item quantity="many">хвилин</item>
+        <item quantity="other">хвилин</item>
+    </plurals>
+    <string name="unit_hour_symbol">г</string>
+    <plurals name="unit_hour">
+        <item quantity="one">година</item>
+        <item quantity="few">години</item>
+        <item quantity="many">годин</item>
+        <item quantity="other">годин</item>
+    </plurals>
+    <string name="unit_day_symbol">д</string>
+    <plurals name="unit_day">
+        <item quantity="one">день</item>
+        <item quantity="few">дні</item>
+        <item quantity="many">днів</item>
+        <item quantity="other">днів</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="one">кілобіт</item>
+        <item quantity="few">кілобіти</item>
+        <item quantity="many">кілобітів</item>
+        <item quantity="other">кілобітів</item>
+    </plurals>
+    <string name="unit_megabit_symbol">Мбіт</string>
+    <plurals name="unit_megabit">
+        <item quantity="one">мегабіт</item>
+        <item quantity="few">мегабіти</item>
+        <item quantity="many">мегабітів</item>
+        <item quantity="other">мегабітів</item>
+    </plurals>
+    <string name="unit_gigabit_symbol">Гбіт</string>
+    <plurals name="unit_gigabit">
+        <item quantity="one">гігабіт</item>
+        <item quantity="few">гігабіти</item>
+        <item quantity="many">гігабітів</item>
+        <item quantity="other">гігабітів</item>
+    </plurals>
+    <string name="unit_terabit_symbol">Тбіт</string>
+    <plurals name="unit_terabit">
+        <item quantity="one">терабіт</item>
+        <item quantity="few">терабіти</item>
+        <item quantity="many">терабітів</item>
+        <item quantity="other">терабітів</item>
+    </plurals>
+    <string name="unit_meter_per_second_symbol">м/с</string>
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">метр за секунду</item>
+        <item quantity="few">метри за секунду</item>
+        <item quantity="many">метрів за секунду</item>
+        <item quantity="other">метрів за секунду</item>
+    </plurals>
+    <string name="unit_kilometer_per_hour_symbol">км/г</string>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">кілометр за годину</item>
+        <item quantity="few">кілометри за годину</item>
+        <item quantity="many">кілометрів за годину</item>
+        <item quantity="other">кілометрів за годину</item>
+    </plurals>
+    <string name="unit_mile_per_hour_symbol">м/г</string>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">миля за годину</item>
+        <item quantity="few">милі за годину</item>
+        <item quantity="many">миль за годину</item>
+        <item quantity="other">миль за годину</item>
+    </plurals>
+    <string name="unit_mile_symbol">мил.</string>
+    <string name="unit_kibibyte_symbol">кіБ</string>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">кібібайт</item>
+        <item quantity="few">кібібайти</item>
+        <item quantity="many">кібібайтів</item>
+        <item quantity="other">кібібайтів</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="one">терабайт</item>
+        <item quantity="few">терабайти</item>
+        <item quantity="many">терабайтів</item>
+        <item quantity="other">терабайтів</item>
+    </plurals>
+    <string name="unit_tebibyte_symbol">ТіБ</string>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">тебібайт</item>
+        <item quantity="few">тебібайти</item>
+        <item quantity="many">тебібайтів</item>
+        <item quantity="other">тебібайтів</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">гібібайт</item>
+        <item quantity="few">гібібайти</item>
+        <item quantity="many">гібібайтів</item>
+        <item quantity="other">гібібайтів</item>
+    </plurals>
+    <string name="unit_degree_fahrenheit_symbol">°F</string>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">градус Фаренгейта</item>
+        <item quantity="few">градуси Фаренгейта</item>
+        <item quantity="many">градусів Фаренгейта</item>
+        <item quantity="other">градусів Фаренгейта</item>
+    </plurals>
+    <string name="unit_kelvin_symbol">К</string>
+    <plurals name="unit_kelvin">
+        <item quantity="one">кельвін</item>
+        <item quantity="few">кельвіни</item>
+        <item quantity="many">кельвінів</item>
+        <item quantity="other">кельвінів</item>
+    </plurals>
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">градус Цельсія</item>
+        <item quantity="few">градуси Цельсія</item>
+        <item quantity="many">градусів Цельсія</item>
+        <item quantity="other">градусів Цельсія</item>
+    </plurals>
+    <plurals name="unit_megabyte">
+        <item quantity="one">мегабайт</item>
+        <item quantity="few">мегабайти</item>
+        <item quantity="many">мегабайтів</item>
+        <item quantity="other">мегабайтів</item>
+    </plurals>
+    <string name="unit_year_symbol">р</string>
+    <string name="unit_byte_symbol">Б</string>
+    <plurals name="unit_byte">
+        <item quantity="one">байт</item>
+        <item quantity="few">байти</item>
+        <item quantity="many">байтів</item>
+        <item quantity="other">байтів</item>
+    </plurals>
+    <string name="unit_kilobyte_symbol">кБ</string>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">кілобайт</item>
+        <item quantity="few">кілобайти</item>
+        <item quantity="many">кілобайтів</item>
+        <item quantity="other">кілобайтів</item>
+    </plurals>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">гігабайт</item>
+        <item quantity="few">гігабайти</item>
+        <item quantity="many">гігабайтів</item>
+        <item quantity="other">гігабайтів</item>
+    </plurals>
+    <string name="unit_mebibyte_symbol">МіБ</string>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">мебібайт</item>
+        <item quantity="few">мебібайти</item>
+        <item quantity="many">мебібайтів</item>
+        <item quantity="other">мебібайтів</item>
+    </plurals>
+    <string name="unit_gibibyte_symbol">ГіБ</string>
+    <plurals name="unit_bit">
+        <item quantity="one">біт</item>
+        <item quantity="few">біти</item>
+        <item quantity="many">бітів</item>
+        <item quantity="other">бітів</item>
+    </plurals>
+    <string name="unit_knot_symbol">вуз.</string>
+    <plurals name="unit_knot">
+        <item quantity="one">вузол</item>
+        <item quantity="few">вузли</item>
+        <item quantity="many">вузлів</item>
+        <item quantity="other">вузлів</item>
+    </plurals>
+    <string name="unit_kilogram_symbol">кг</string>
+    <plurals name="unit_kilogram">
+        <item quantity="one">кілограм</item>
+        <item quantity="few">кілограми</item>
+        <item quantity="many">кілограмів</item>
+        <item quantity="other">кілограмів</item>
+    </plurals>
+    <string name="unit_gram_symbol">г</string>
+    <plurals name="unit_gram">
+        <item quantity="one">грам</item>
+        <item quantity="few">грами</item>
+        <item quantity="many">грамів</item>
+        <item quantity="other">грамів</item>
+    </plurals>
+    <string name="unit_metric_ton_symbol">т</string>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">тонна</item>
+        <item quantity="few">тонни</item>
+        <item quantity="many">тонн</item>
+        <item quantity="other">тонн</item>
+    </plurals>
+    <string name="unit_long_ton_symbol">дов. т.</string>
+    <plurals name="unit_long_ton">
+        <item quantity="one">довга тонна</item>
+        <item quantity="few">довгих тонни</item>
+        <item quantity="many">довгих тонн</item>
+        <item quantity="other">довгих тонн</item>
+    </plurals>
+    <string name="unit_stone_symbol">ст.</string>
+    <plurals name="unit_short_ton">
+        <item quantity="one">коротка тонна</item>
+        <item quantity="few">короткі тонни</item>
+        <item quantity="many">коротких тонн</item>
+        <item quantity="other">коротких тонн</item>
+    </plurals>
+    <string name="unit_degree_celsius_symbol">°C</string>
+    <plurals name="unit_stone">
+        <item quantity="one">стоун</item>
+        <item quantity="few">стоуни</item>
+        <item quantity="many">стоунів</item>
+        <item quantity="other">стоунів</item>
+    </plurals>
+    <string name="unit_pound_symbol">lb.</string>
+    <plurals name="unit_pound">
+        <item quantity="one">фунт</item>
+        <item quantity="few">фунти</item>
+        <item quantity="many">фунтів</item>
+        <item quantity="other">фунтів</item>
+    </plurals>
+    <string name="unit_ounce_symbol">унц.</string>
+    <plurals name="unit_ounce">
+        <item quantity="one">унція</item>
+        <item quantity="few">унції</item>
+        <item quantity="many">унцій</item>
+        <item quantity="other">унцій</item>
+    </plurals>
+    <string name="unit_short_ton_symbol">кор. т.</string>
+    <plurals name="unit_mile">
+        <item quantity="one">миля</item>
+        <item quantity="few">милі</item>
+        <item quantity="many">миль</item>
+        <item quantity="other">миль</item>
+    </plurals>
+    <string name="unit_nautic_mile_symbol">мор. м.</string>
+    <plurals name="unit_yard">
+        <item quantity="one">ярд</item>
+        <item quantity="few">ярди</item>
+        <item quantity="many">ярдів</item>
+        <item quantity="other">ярдів</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">квадратний ярд</item>
+        <item quantity="few">квадратних ярди</item>
+        <item quantity="many">квадратних ярдів</item>
+        <item quantity="other">квадратних ярдів</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">гектар</item>
+        <item quantity="few">гектари</item>
+        <item quantity="many">гектарів</item>
+        <item quantity="other">гектарів</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">Дюйм</item>
+        <item quantity="few">Дюйми</item>
+        <item quantity="many">Дюймів</item>
+        <item quantity="other">Дюймів</item>
+    </plurals>
+    <plurals name="unit_sqmeter">
+        <item quantity="one">квадратний метр</item>
+        <item quantity="few">квадратних метри</item>
+        <item quantity="many">квадратних метрів</item>
+        <item quantity="other">квадратних метрів</item>
+    </plurals>
+    <string name="unit_sqfoot_symbol">кв. фут</string>
+    <plurals name="unit_foot">
+        <item quantity="one">фут</item>
+        <item quantity="few">фути</item>
+        <item quantity="many">футів</item>
+        <item quantity="other">футів</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">морська миля</item>
+        <item quantity="few">морські милі</item>
+        <item quantity="many">морських миль</item>
+        <item quantity="other">морських миль</item>
+    </plurals>
+    <string name="unit_sqmeter_symbol">м²</string>
+    <string name="unit_sqkilometer_symbol">км²</string>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">квадратний кілометр</item>
+        <item quantity="few">квадратних кілометри</item>
+        <item quantity="many">квадратних кілометрів</item>
+        <item quantity="other">квадратних кілометрів</item>
+    </plurals>
+    <string name="unit_sqcentimeter_symbol">см²</string>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">квадратний сантиметр</item>
+        <item quantity="few">квадратних сантиметри</item>
+        <item quantity="many">квадратних сантиметрів</item>
+        <item quantity="other">квадратних сантиметрів</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">квадратний міліметр</item>
+        <item quantity="few">квадратних міліметри</item>
+        <item quantity="many">квадратних міліметрів</item>
+        <item quantity="other">квадратних міліметрів</item>
+    </plurals>
+    <string name="unit_sqinch_symbol">кв. дюйм</string>
+    <plurals name="unit_sqinch">
+        <item quantity="one">квадратний дюйм</item>
+        <item quantity="few">квадратних дюйми</item>
+        <item quantity="many">квадратних дюймів</item>
+        <item quantity="other">квадратних дюймів</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">квадратний фут</item>
+        <item quantity="few">квадратних фути</item>
+        <item quantity="many">квадратних футів</item>
+        <item quantity="other">квадратних футів</item>
+    </plurals>
+    <string name="unit_sqyard_symbol">кв. ярд</string>
 </resources>

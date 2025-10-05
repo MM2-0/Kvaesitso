@@ -168,7 +168,7 @@
     <string name="preference_enforce_icon_shape_summary">Käytä muotoa kaikkiin kuvakkeisiin, myös niihin, jotka eivät tue sitä</string>
     <string name="preference_clockwidget_layout_horizontal">Tiivis</string>
     <string name="preference_search_search_actions_summary">Säädä pikatoimintoja ja hakuoikoteitä</string>
-    <string name="search_action_websearch_url_hint">URL-pohja, jota käytetään verkkohaun osoitteena. Käytä \'${1}\' osoittamaan varsinaisen hakutermin paikkaa osoitteessa, esimerkiksi https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">URL-pohja, jota käytetään verkkohaun osoitteena. Käytä \'${1}\' osoittamaan varsinaisen hakutermin paikkaa osoitteessa, esimerkiksi https://google.com/search?q=${1}.</string>
     <string name="open_search_swipe_left">Vasemmalle pyyhkäisy</string>
     <string name="preference_logs_summary">Näytä tai vie sovelluksen lokit</string>
     <string name="open_search_pull_down">Alas pyyhkäisy</string>
@@ -252,7 +252,7 @@
     <string name="search_action_email">Sähköposti</string>
     <string name="search_action_open_url">Näytä verkkosivu</string>
     <string name="search_action_event">Luo tapahtuma</string>
-    <string name="create_search_action_type">Millaisen toiminnon haluat luoda\?</string>
+    <string name="create_search_action_type">Millaisen toiminnon haluat luoda?</string>
     <string name="create_search_action_type_app">Hae sovelluksesta</string>
     <string name="create_search_action_website_invalid_url">Annetulle verkkosivulle ei voida luoda hakua automaattisesti. Yritä toista verkkosivua tai syötä vaaditut tiedot käsin seuraavassa kohdassa.</string>
     <string name="search_action_label">Nimi</string>

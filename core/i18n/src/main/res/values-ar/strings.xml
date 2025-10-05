@@ -847,10 +847,10 @@
     <string name="save_as_file">اهلا</string>
     <plurals name="calendar_widget_running_tasks">
         <item quantity="zero">السلام</item>
-        <item quantity="one"></item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="one"/>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
 </resources>

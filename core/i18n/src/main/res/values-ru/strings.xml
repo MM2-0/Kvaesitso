@@ -359,7 +359,7 @@
     <string name="preference_screen_search_actions">Быстрые действия</string>
     <string name="search_action_alarm">Установить будильник</string>
     <string name="create_search_action_type_app">Поиск в приложении</string>
-    <string name="create_search_action_type">Какое действие вы хотите создать\?</string>
+    <string name="create_search_action_type">Какое действие вы хотите создать?</string>
     <string name="create_search_action_type_web">Поиск по веб-сайту</string>
     <string name="create_search_action_website_url">Введите адрес веб-сайта:</string>
     <string name="preference_layout_search_bar_position">Расположение строки поиска</string>

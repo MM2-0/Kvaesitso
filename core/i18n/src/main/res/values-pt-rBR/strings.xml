@@ -450,12 +450,12 @@
     <string name="search_action_timer">Iniciar cronômetro</string>
     <string name="search_action_contact">Adicionar aos contatos</string>
     <string name="search_action_open_url">Ver site</string>
-    <string name="create_search_action_type">Que tipo de ação você deseja criar\?</string>
+    <string name="create_search_action_type">Que tipo de ação você deseja criar?</string>
     <string name="create_search_action_type_web">Pesquisar em um site</string>
     <string name="create_search_action_type_app">Pesquisar em um aplicativo</string>
     <string name="create_search_action_type_intent">Intenção personalizada</string>
     <string name="create_search_action_pick_app">Escolha um aplicativo para pesquisar:</string>
-    <string name="search_action_websearch_url_hint">O modelo de URL é usado para construir o URL de pesquisa na web. Use \'${1}\' como espaço reservado para o termo de pesquisa real, por exemplo https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">O modelo de URL é usado para construir o URL de pesquisa na web. Use \'${1}\' como espaço reservado para o termo de pesquisa real, por exemplo https://google.com/search?q=${1}.</string>
     <string name="more_information">Mais Informações</string>
     <string name="experimental_feature">Experimental</string>
     <string name="tag_no_items_message">Nenhum item foi atribuído a essa etiqueta. Se você continuar, ela será excluída.</string>

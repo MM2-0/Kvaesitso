@@ -387,13 +387,13 @@
     <string name="preference_force_themed_icons">테마 강제 적용</string>
     <string name="tag_exists_message">같은 이름의 태그가 이미 있습니다. 계속 진행하면 두 태그를 하나로 합칩니다.</string>
     <string name="search_action_websearch">웹 검색</string>
-    <string name="create_search_action_type">어떤 종류의 동작을 만드시겠습니까\?</string>
+    <string name="create_search_action_type">어떤 종류의 동작을 만드시겠습니까?</string>
     <string name="tag_no_items_message">이 태그를 지정한 항목이 없습니다. 계속 진행하면 태그를 삭제합니다.</string>
     <string name="backup_complete">백업을 완료했습니다.</string>
     <string name="favorites_empty_tag">이 태그를 지정한 항목이 없습니다.</string>
     <string name="create_search_action_pick_app">검색할 앱 선택:</string>
     <string name="create_search_action_website_url">웹사이트 주소 입력:</string>
-    <string name="search_action_websearch_url_hint">웹 검색 URL을 구성할 때 사용하는 URL 템플릿입니다. 실제 검색어 대신 ‘${1}’을 사용하세요. 예: https://google.com/search\?q=${1}</string>
+    <string name="search_action_websearch_url_hint">웹 검색 URL을 구성할 때 사용하는 URL 템플릿입니다. 실제 검색어 대신 ‘${1}’을 사용하세요. 예: https://google.com/search?q=${1}</string>
     <string name="preference_gesture_swipe_down">아래로 스와이프</string>
     <string name="preference_screen_gestures_summary">제스처 및 제스처 동작</string>
     <string name="create_search_action_type_intent">사용자 정의 인텐트</string>

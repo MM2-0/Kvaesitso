@@ -77,20 +77,20 @@
     <string name="file_meta_app_min_sdk">最小 SDK 版本: %1$s</string>
     <string name="file_meta_owner">所有者: %1$s</string>
     <string name="file_meta_location">地理位置: %1$s</string>
-    <string name="file_type_directory">目录</string>
-    <string name="file_type_android">Android安装包文件</string>
-    <string name="file_type_source_code">源代码文件</string>
+    <string name="file_type_directory">文件夹</string>
+    <string name="file_type_android">Android 档案</string>
+    <string name="file_type_source_code">源代码</string>
     <string name="file_type_document">文档</string>
-    <string name="file_type_spreadsheet">电子表格</string>
-    <string name="file_type_music">音乐文件</string>
+    <string name="file_type_spreadsheet">表格</string>
+    <string name="file_type_music">音频</string>
     <string name="file_type_video">视频</string>
     <string name="file_type_image">图片</string>
     <string name="file_type_presentation">演示文稿</string>
     <string name="file_type_compressed">压缩文件</string>
-    <string name="file_type_archive">存档文件</string>
-    <string name="file_type_text">文本文件</string>
+    <string name="file_type_archive">归档文件</string>
+    <string name="file_type_text">文本</string>
     <string name="file_type_ebook">电子书</string>
-    <string name="file_type_drawing">绘图</string>
+    <string name="file_type_drawing">图画</string>
     <string name="file_type_form">表格</string>
     <string name="alert_delete_file">文件 %1$s 将被永久删除. 继续\?</string>
     <string name="default_websearch_2_name">YouTube</string>
@@ -103,7 +103,7 @@
     <string name="menu_edit_widgets">编辑组件</string>
     <string name="widget_name_weather">天气</string>
     <string name="widget_name_calendar">日历</string>
-    <string name="widget_name_music">音乐</string>
+    <string name="widget_name_music">媒体</string>
     <string name="widget_add_widget">添加组件</string>
     <string name="shortcut_summary">由 %1$s</string>
     <string name="easter_egg_text">好吧, 你找到我了. 祝贺. 值得不？</string>
@@ -172,12 +172,12 @@
     <string name="weather_condition_heavyrainandthunder">重度雷雨</string>
     <string name="weather_condition_wind">刮风</string>
     <string name="weather_condition_unknown">未知</string>
-    <string name="weather_no_data">无可用的天气数据.</string>
+    <string name="weather_no_data">无可用的天气数据</string>
     <string name="missing_permission_music_widget">需要通知访问权限以便控制媒体播放</string>
     <string name="missing_permission_contact_search_settings">需要联系人权限以便搜索联系人</string>
     <string name="missing_permission_calendar_search_settings">需要日历权限以便搜索日历</string>
     <string name="missing_permission_calendar_widget_settings">此组件需要日历权限</string>
-    <string name="missing_permission_file_search_settings">需要外部存储权限以便搜索本地文件</string>
+    <string name="missing_permission_file_search_settings">需要外部存储权限以便搜索此设备上的文件</string>
     <string name="missing_permission_notification_badges">需要通知访问权限以便显示通知角标</string>
     <string name="missing_permission_calendar_widget">授予日历权限以在此处显示即将到来的约会和事件。</string>
     <string name="missing_permission_calendar_search">授予日历搜索日历的权限。</string>
@@ -335,7 +335,7 @@
     <string name="restore_different_minor_version">此备份在不一致的版本%1$s下创建.一些数据可能不会被正确恢复。</string>
     <string name="restore_meta">由%3$s于%1$s在%2$s中创建.</string>
     <string name="restore_complete">备份已恢复.</string>
-    <string name="weather_location_search_no_result">位置未找到.</string>
+    <string name="weather_location_search_no_result">位置未找到</string>
     <string name="save">保存</string>
     <string name="preference_cards_shape_rounded">圆角</string>
     <string name="preference_cards_shape_cut">切角</string>
@@ -381,7 +381,7 @@
     <string name="favorites_empty">被固定的和常用的项目会出现在这里</string>
     <string name="favorites_empty_tag">此标签里没有项目</string>
     <string name="frequently_used_rows">行数</string>
-    <string name="edit_favorites_dialog_new_tag">创建标签…</string>
+    <string name="edit_favorites_dialog_new_tag">创建标签</string>
     <string name="preference_category_debug_tools">工具</string>
     <string name="apps_profile_work">工作</string>
     <string name="preference_icon_shape_teardrop">泪滴形</string>
@@ -416,7 +416,7 @@
     <string name="search_action_websearch_url_hint">URL模板用于构建搜索引擎的URL.使用‘${1}’作为实际搜索字词的占位符，例如 https://google.com/search?q=${1}。</string>
     <string name="more_information">更多信息</string>
     <string name="experimental_feature">实验性的</string>
-    <string name="create_search_action_type">你想创建哪种操作\?</string>
+    <string name="create_search_action_type">你想创建哪种操作?</string>
     <string name="create_search_action_type_web">在网站上搜索</string>
     <string name="create_search_action_type_app">在应用程序中搜索</string>
     <string name="create_search_action_type_intent">Custom intent</string>
@@ -489,12 +489,12 @@
     <string name="preference_screen_clockwidget_summary">配置时钟风格和组件</string>
     <string name="widget_config_appwidget_borderless">无边框</string>
     <string name="widget_config_appwidget_configure">配置组件</string>
-    <string name="widget_name_unknown">未知的应用组件</string>
-    <string name="notes_widget_dismissed">笔记已删除.</string>
+    <string name="widget_name_unknown">未知</string>
+    <string name="notes_widget_dismissed">笔记已删除</string>
     <string name="preference_hidden_items_reveal_button_summary">显示一个按钮展示隐藏搜索结果</string>
     <string name="widget_config_appwidget_background">背景卡片</string>
     <string name="widget_name_notes">笔记</string>
-    <string name="notes_widget_placeholder">写个笔记…</string>
+    <string name="notes_widget_placeholder">写个笔记</string>
     <string name="notes_widget_action_new">新建笔记</string>
     <string name="notes_widget_action_save">保存</string>
     <string name="notes_widget_export_filename">笔记_%1$s</string>
@@ -842,7 +842,7 @@
     <plurals name="calendar_widget_running_tasks">
         <item quantity="other">+%1$d 个未完成任务</item>
     </plurals>
-    <string name="missing_permission_tasks_search_settings">需要 Tasks 应用权限来搜索任务</string>
+    <string name="missing_permission_tasks_search_settings">需要 Tasks 应用权限来在 Tasks app 中搜索任务</string>
     <string name="preference_screen_typography">文字</string>
     <string name="preference_typography_fonts">字体</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather 是一款免费的开源天气应用。安装后 %1$s 可将其作为天气数据的数据源。</string>
