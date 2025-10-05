@@ -185,4 +185,5 @@
         <item quantity="one">derece fahrenhayt</item>
         <item quantity="other">derece fahrenhayt</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
