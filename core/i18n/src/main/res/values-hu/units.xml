@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="hu">
-    <!--
-    Important note: Unit symbols may not contain spaces.
-    -->
     <!-- DIMENSIONS -->
     <string name="dimension_length">Hosszúság</string>
     <string name="dimension_mass">Tömeg</string>
@@ -71,17 +68,14 @@
         <item quantity="one">négyzetmilliméter</item>
         <item quantity="other">négyzetmilliméter</item>
     </plurals>
-    <string name="unit_sqinch_symbol">in²</string>
     <plurals name="unit_sqinch">
         <item quantity="one">négyzethüvelyk</item>
         <item quantity="other">négyzethüvelyk</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">ft²</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">négyzetláb</item>
         <item quantity="other">négyzetláb</item>
     </plurals>
-    <string name="unit_sqyard_symbol">yd²</string>
     <plurals name="unit_sqyard">
         <item quantity="one">négyzetyard</item>
         <item quantity="other">négyzetyard</item>
