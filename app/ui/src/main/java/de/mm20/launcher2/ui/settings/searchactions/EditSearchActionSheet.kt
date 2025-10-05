@@ -714,7 +714,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
             supportingText = {
                 Text(
                     if (action.queryKey == null) {
-                        "The URI template that is used to construct the intent\\'s data URI. Use ‘\${1}’ as a placeholder for the actual search term, e.g. geo:0,0?q=,\${1}"
+                        "The URI template that is used to construct the intent\\'s data URI. Use ‘\${1}’ as a placeholder for the actual search term"
                     } else {
                         "The template that is used to construct the string that is passed to the intent as a string extra. Use ‘\${1}’ as a placeholder for the actual search term"
                     }

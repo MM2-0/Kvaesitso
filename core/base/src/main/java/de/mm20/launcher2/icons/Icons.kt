@@ -2305,3 +2305,47 @@ private val _Climbing = materialIcon("Icons.Rounded.Climbing") {
 
 val Icons.Rounded.Climbing
     get() = _Climbing
+
+private val _Cube = materialIcon("Icons.Rounded.Cube") {
+    materialPath {
+        moveTo(11f, 19.425f)
+        verticalLineToRelative(-6.85f)
+        lineTo(5f, 9.1f)
+        verticalLineToRelative(6.85f)
+        close()
+        moveToRelative(2f, 0f)
+        lineToRelative(6f, -3.475f)
+        verticalLineTo(9.1f)
+        lineToRelative(-6f, 3.475f)
+        close()
+        moveTo(12f, 10.85f)
+        lineTo(17.925f, 7.425f)
+        lineTo(12f, 4f)
+        lineTo(6.075f, 7.425f)
+        close()
+        moveTo(4f, 17.7f)
+        quadTo(3.525f, 17.425f, 3.2625f, 16.975f)
+        quadTo(3f, 16.525f, 3f, 15.975f)
+        verticalLineToRelative(-7.95f)
+        quadToRelative(0f, -0.55f, 0.2625f, -1f)
+        quadTo(3.525f, 6.575f, 4f, 6.3f)
+        lineTo(11f, 2.275f)
+        quadTo(11.475f, 2f, 12f, 2f)
+        quadTo(12.525f, 2f, 13f, 2.275f)
+        lineTo(20f, 6.3f)
+        quadTo(20.475f, 6.575f, 20.7375f, 7.025f)
+        quadTo(21f, 7.475f, 21f, 8.025f)
+        verticalLineToRelative(7.95f)
+        quadToRelative(0f, 0.55f, -0.2625f, 1f)
+        quadTo(20.475f, 17.425f, 20f, 17.7f)
+        lineToRelative(-7f, 4.025f)
+        quadTo(12.525f, 22f, 12f, 22f)
+        quadTo(11.475f, 22f, 11f, 21.725f)
+        close()
+        moveTo(12f, 12f)
+        close()
+    }
+}
+
+val Icons.Rounded.Cube
+    get() = _Cube
