@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="pt-rPT">
-    <!--
-    Important note: Unit symbols may not contain spaces.
-    -->
     <!-- DIMENSIONS -->
     <string name="dimension_length">Comprimento</string>
     <string name="dimension_mass">Massa</string>
@@ -56,7 +53,6 @@
         <item quantity="one">milha</item>
         <item quantity="other">milhas</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">nm</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">milha náutica</item>
         <item quantity="other">milhas náuticas</item>
@@ -79,14 +75,10 @@
     <!-- UNITS OF DATA SIZES -->
     <!-- UNITS OF VELOCITY -->
     <!-- UNITS OF MASS -->
-    <string name="unit_stone_symbol">st</string>
-    <string name="unit_pound_symbol">lb</string>
-    <string name="unit_ounce_symbol">on.</string>
     <plurals name="unit_ounce">
         <item quantity="one">onça</item>
         <item quantity="other">onças</item>
     </plurals>
-    <string name="unit_short_ton_symbol">ton. red.</string>
     <plurals name="unit_short_ton">
         <item quantity="one">tonelada reduzida</item>
         <item quantity="other">toneladas reduzidas</item>
