@@ -118,4 +118,5 @@
         <item quantity="one">graad Fahrenheit</item>
         <item quantity="other">graden Fahrenheit</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
