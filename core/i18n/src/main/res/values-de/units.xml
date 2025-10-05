@@ -240,4 +240,5 @@
         <item quantity="one">Kelvin</item>
         <item quantity="other">Kelvin</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
