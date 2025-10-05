@@ -395,4 +395,5 @@
         <item quantity="many">кельвинов</item>
         <item quantity="other">кельвинов</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
