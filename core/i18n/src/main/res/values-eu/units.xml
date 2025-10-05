@@ -175,4 +175,5 @@
         <item quantity="one">fahrenheit gradu</item>
         <item quantity="other">fahrenheit gradu</item>
     </plurals>
+    <!-- UNITS OF VOLUME -->
 </resources>
