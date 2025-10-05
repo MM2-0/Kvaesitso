@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="lt">
-    <!--
-    Important note: Unit symbols may not contain spaces.
-    -->
     <!-- DIMENSIONS -->
     <string name="dimension_length">Ilgis</string>
     <string name="dimension_mass">Masė</string>
@@ -278,7 +275,6 @@
         <item quantity="many">metrinių tonų</item>
         <item quantity="other">metrinių tonų</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l</string>
     <plurals name="unit_long_ton">
         <item quantity="one">ilga tona</item>
         <item quantity="few">ilgos tonos</item>
