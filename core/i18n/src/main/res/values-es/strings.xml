@@ -224,14 +224,14 @@
     <string name="widget_add_widget">Añadir widget</string>
     <string name="widget_removed">Widget eliminado</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Escribir una nota…</string>
+    <string name="notes_widget_placeholder">Escribir una nota</string>
     <string name="notes_widget_action_new">Nueva nota</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Guardar</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Nota_%1$s</string>
     <string name="notes_widget_action_dismiss">Eliminar</string>
-    <string name="notes_widget_dismissed">Nota eliminada.</string>
+    <string name="notes_widget_dismissed">Nota eliminada</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">De %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -259,7 +259,7 @@
     <string name="edit_favorites_dialog_empty_section">Arrastra elementos aquí</string>
     <string name="edit_favorites_dialog_tags">Etiquetas</string>
     <string name="edit_favorites_dialog_tag_section_empty">Las etiquetas ancladas aparecerán aquí</string>
-    <string name="edit_favorites_dialog_new_tag">Crear etiqueta…</string>
+    <string name="edit_favorites_dialog_new_tag">Crear etiqueta</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL del servidor Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -313,13 +313,14 @@
         <item quantity="other">+%1$d tareas sin terminar</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">todo el día</string>
+    <string name="calendar_event_allday">Todo el día</string>
     <string name="task_due_time">Comienza a las %1$s</string>
     <string name="task_due_date">Comienza en %1$s</string>
     <string name="task_due_today">Comienza hoy</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s está reproduciendo música</string>
     <string name="music_widget_no_data">Aún no se ha reproducido música</string>
+    <string name="music_widget_interactive_progress_bar">Barra de progreso interactiva</string>
     <string name="weather_condition_sleetshowers">Chubascos de aguanieve</string>
     <string name="weather_condition_heavysleet">Aguanieve pesada</string>
     <string name="weather_condition_lightrainshowersandthunder">Chubascos ligeros y truenos</string>
@@ -370,30 +371,30 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">No hay datos meteorológicos disponibles.</string>
+    <string name="weather_no_data">No hay datos meteorológicos disponibles</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Escoger localización</string>
-    <string name="weather_location_search_no_result">Ubicación no encontrada.</string>
+    <string name="weather_location_search_no_result">Ubicación no encontrada</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Se requiere acceso a la ubicación para determinar la ubicación automáticamente</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Se requiere el acceso a las notificaciones para controlar la reproducción multimedia</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">Se requiere permiso de contacto para buscar contactos</string>
+    <string name="missing_permission_contact_search_settings">Se requiere permiso de contactos para buscar contactos</string>
     <!-- Missing call permission in contacts settings screen -->
     <string name="missing_permission_call_contacts_settings">Se requiere el permiso de llamadas para marcar</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Se requiere permiso de calendario para buscar en el calendario</string>
-    <string name="missing_permission_tasks_search_settings">Se requiere permiso de Tasks para buscar tareas</string>
+    <string name="missing_permission_tasks_search_settings">Se requiere permiso de Tasks para buscar tareas en la aplicación Tasks</string>
     <string name="missing_permission_tasks_integration">Se requiere permiso de Tasks para utilizar la integración con Tasks</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">Este widget requiere permiso de calendario</string>
+    <string name="missing_permission_calendar_widget_settings">Este widget requiere el permiso de calendario</string>
     <string name="widget_config_calendar_missing_calendars_hint">¿No encuentras tus calendarios\?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s debe ser definida como app de inicio predeterminada para buscar accesos directos</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">Se requiere permiso de almacenamiento externo para buscar archivos locales</string>
+    <string name="missing_permission_file_search_settings">Se requiere permiso de almacenamiento externo para buscar archivos en este dispositivo</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
@@ -401,13 +402,13 @@
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Se requiere acceso a notificaciones para mostrar globos de notificación</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Otorgue permiso de calendario para mostrar las próximas citas y eventos aquí.</string>
+    <string name="missing_permission_calendar_widget">Se requiere el permiso de calendario para mostrar las próximas citas y eventos aquí.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Otorgue permiso de calendario para buscar en su calendario.</string>
+    <string name="missing_permission_calendar_search">Se requiere el permiso de calendario para buscar en su calendario.</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Otorgue el permiso de ubicación para buscar lugares cercanos.</string>
+    <string name="missing_permission_location_search">Se requiere el permiso de ubicación para buscar lugares cercanos.</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Otorgue permiso de almacenamiento para buscar fotos, media y documentos en este dispositivo.</string>
+    <string name="missing_permission_files_search">Otorgue permiso de almacenamiento para buscar archivos en este dispositivo</string>
     <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">Otorgue permiso de contacto para buscar en su contactos.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
@@ -429,6 +430,7 @@
     <string name="preference_mdy_color_source_system">Sistema</string>
     <string name="preference_mdy_color_source_wallpaper">Fondo de pantalla</string>
     <string name="preference_shapes_default">Por defecto</string>
+    <string name="preference_screen_transparencies">Transparencia</string>
     <string name="preference_transparencies_default">Por defecto</string>
     <string name="preference_font">Fuente</string>
     <string name="preference_font_system">Predeterminado del sistema</string>
@@ -445,7 +447,7 @@
     <string name="provider_brightsky">Deutscher Wetterdienst (solo Alemania)</string>
     <string name="preference_category_location">Ubicación</string>
     <string name="preference_automatic_location">Ubicación automática</string>
-    <string name="preference_automatic_location_summary">Utilizar el GPS y los servicios de localización para determinar la ubicación automáticamente</string>
+    <string name="preference_automatic_location_summary">Utilizar los servicios de localización para determinar la ubicación automáticamente</string>
     <string name="preference_location_managed">Manejado por complemento</string>
     <string name="preference_location_managed_summary">La ubicación para este proveedor es gestionado por el complemento de la app</string>
     <string name="preference_location">Ubicación</string>
@@ -462,8 +464,8 @@
     <string name="preference_debug_reinstall_iconpacks">Reinstalar paquete de iconos</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Limpiar y reiniciar la caché del paquete de iconos</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d entrada ha sido eliminada.</item>
-        <item quantity="other">%1$d entradas han sido eliminadas.</item>
+        <item quantity="one">%1$d entrada ha sido eliminada</item>
+        <item quantity="other">%1$d entradas han sido eliminadas</item>
     </plurals>
     <string name="preference_category_icons">Iconos</string>
     <string name="preference_cards">Tarjetas</string>
@@ -581,7 +583,7 @@
     <string name="preference_clockwidget_battery_part_summary">Mostrar el nivel actual de batería cuando el nivel de batería sea bajo o esté cargando</string>
     <string name="preference_clockwidget_alarm_part">Alarmas</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostrar alarmas que suenen en las próximas 8 horas</string>
-    <string name="preference_screen_backup">Copia de Seguridad y Restauración</string>
+    <string name="preference_screen_backup">Copia de seguridad y restauración</string>
     <string name="preference_screen_backup_summary">Exportar e importar datos del lanzador</string>
     <string name="preference_backup">Copia de seguridad</string>
     <string name="preference_backup_summary">Exportar preferencias y datos del lanzador</string>
@@ -629,6 +631,9 @@
     <string name="preference_screen_buildinfo_summary">Más información sobre esta versión de aplicación</string>
     <string name="preference_search_bar_style">Estilo</string>
     <string name="preference_search_bar_style_summary">Personalizar apariencia de barra de búsqueda</string>
+    <string name="preference_search_bar_style_transparent">Transparente</string>
+    <string name="preference_search_bar_style_solid">Sólido</string>
+    <string name="preference_search_bar_style_hidden">Escondida</string>
     <string name="preference_search_bar_auto_focus">Abrir teclado</string>
     <string name="preference_search_bar_auto_focus_summary">Mostrar el teclado automáticamente al abrir la lista de aplicaciones</string>
     <string name="preference_search_bar_launch_on_enter">Iniciar al entrar</string>
@@ -649,7 +654,7 @@
     <string name="preference_compact_tags_summary">Ocultar nombres de etiquetas o iconos para reducir el espacio ocupado por las etiquetas</string>
     <string name="preference_widgets_edit_button_summary">Mostar botón para añadir, eliminar y reordenar widgets</string>
     <string name="preference_widgets_on_home_screen">Widgets en la pantalla principal</string>
-    <string name="preference_widgets_on_home_screen_summary">Mostrar widgets en la pantalla principal en lugar de en una página extra</string>
+    <string name="preference_widgets_on_home_screen_summary">Mostrar widgets en la pantalla principal en lugar de en una página por separado</string>
     <string name="preference_screen_homescreen">Pantalla de inicio</string>
     <string name="preference_screen_homescreen_summary">Reloj, barra de búsqueda, fondo de pantalla, barras del sistema</string>
     <string name="preference_screen_icons">Cuadrícula e ícono</string>
@@ -722,8 +727,8 @@
     <string name="search_action_websearch_url">Plantilla de URL</string>
     <string name="search_action_websearch_url_hint">La plantilla de URL que se usa para construir la búsqueda web. Usa ‘${1}’ en el sitio del término de búsqueda que se vaya a introducir, p.ej. https://google.com/search?q=${1}.</string>
     <string name="more_information">Información adicional</string>
-    <string name="tag_exists_error">Ya existe una etiqueta con este nombre.</string>
-    <string name="tag_exists_message">Ya existe una etiqueta con este nombre. Si continuas, se combinarán las dos etiquetas.</string>
+    <string name="tag_exists_error">Ya existe una etiqueta con este nombre</string>
+    <string name="tag_exists_message">Ya existe una etiqueta con este nombre. Si continuas, se combinarán las dos etiquetas</string>
     <string name="tag_no_items_message">No hay ningún elemento asociado a esta etiqueta. Si continuas, se eliminará la etiqueta.</string>
     <string name="tag_empty_name">Una etiqueta sin nombre no puede existir. Si continuas, la etiqueta será eliminada.</string>
     <string name="tag_select_items">Selecciona elementos:</string>
