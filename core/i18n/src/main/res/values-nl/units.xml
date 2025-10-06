@@ -80,6 +80,10 @@
         <item quantity="other">jaren</item>
     </plurals>
     <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebiyte</item>
+        <item quantity="other">tebiytes</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
         <item quantity="one">meter per seconde</item>
@@ -116,4 +120,38 @@
         <item quantity="other">graden Fahrenheit</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
+    <string name="unit_liter_symbol">l</string>
+    <string name="unit_milliliter_symbol">ml</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">kubieke meter</item>
+        <item quantity="other">kubieke meter</item>
+    </plurals>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">kubieke centimer</item>
+        <item quantity="other">kubieke centimer</item>
+    </plurals>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">kubieke millimeter</item>
+        <item quantity="other">kubieke millimeter</item>
+    </plurals>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">kubieke inch</item>
+        <item quantity="other">kubieke inches</item>
+    </plurals>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">kubieke voet</item>
+        <item quantity="other">kubieke voeten</item>
+    </plurals>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">kubieke yard</item>
+        <item quantity="other">kubieke yards</item>
+    </plurals>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">eetlepel</item>
+        <item quantity="other">eetlepels</item>
+    </plurals>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">theelepel</item>
+        <item quantity="other">theelepels</item>
+    </plurals>
 </resources>
