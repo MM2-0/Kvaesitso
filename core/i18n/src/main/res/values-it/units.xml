@@ -185,4 +185,75 @@
         <item quantity="other">gradi kelvin</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
+    <plurals name="unit_liter">
+        <item quantity="one">litro</item>
+        <item quantity="other">litri</item>
+    </plurals>
+    <plurals name="unit_milliliter">
+        <item quantity="one">millilitro</item>
+        <item quantity="other">millilitri</item>
+    </plurals>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">metro cubo</item>
+        <item quantity="other">metri cubi</item>
+    </plurals>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">centimetro cubo</item>
+        <item quantity="other">centimetri cubi</item>
+    </plurals>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">millimetro cubo</item>
+        <item quantity="other">millimetri cubi</item>
+    </plurals>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">pollice cubo</item>
+        <item quantity="other">pollici cubi</item>
+    </plurals>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">piede cubo</item>
+        <item quantity="other">piedi cubi</item>
+    </plurals>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">iarda cubica</item>
+        <item quantity="other">iarde cubiche</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">gal USA</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">gallone (USA)</item>
+        <item quantity="other">galloni (USA)</item>
+    </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">gallone (imperiale)</item>
+        <item quantity="other">galloni (imperiali)</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">pt USA</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">pinta (USA)</item>
+        <item quantity="other">pinte (USA)</item>
+    </plurals>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">pinta (imperiale)</item>
+        <item quantity="other">pinte (imperiali)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">fl oz USA</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">oncia fluida (USA)</item>
+        <item quantity="other">once fluide (USA)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">oncia fluida (imperiale)</item>
+        <item quantity="other">once fluide (imperiali)</item>
+    </plurals>
+    <plurals name="unit_cup">
+        <item quantity="one">tazza (USA)</item>
+        <item quantity="other">tazze (USA)</item>
+    </plurals>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">cucchiaio (USA)</item>
+        <item quantity="other">cucchiai (USA)</item>
+    </plurals>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">cucchiaino (USA)</item>
+        <item quantity="other">cucchiaini (USA)</item>
+    </plurals>
 </resources>
