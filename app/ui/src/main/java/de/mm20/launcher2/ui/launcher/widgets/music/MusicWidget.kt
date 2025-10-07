@@ -120,8 +120,8 @@ fun MusicWidget(widget: MusicWidget) {
                 }
             )
         }
-        if (title == null && artist == null) {
-            NoData()
+        if (title == null && artist == null || playbackState == PlaybackState.Stopped) {
+            NotPlaying()
         } else {
             Row(
                 modifier = Modifier.height(IntrinsicSize.Min)
@@ -318,77 +318,77 @@ fun MusicWidget(widget: MusicWidget) {
                     }
                 }
             }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
 
-            ) {
-            if (supportedActions.skipToPrevious) {
-                Tooltip(
-                    tooltipText = stringResource(R.string.music_widget_previous_track)
                 ) {
-                    IconButton(
-                        onClick = {
-                            viewModel.skipPrevious()
-                        }) {
-                        Icon(
-                            imageVector = Icons.Rounded.SkipPrevious,
-                            stringResource(R.string.music_widget_previous_track)
-                        )
+                if (supportedActions.skipToPrevious) {
+                    Tooltip(
+                        tooltipText = stringResource(R.string.music_widget_previous_track)
+                    ) {
+                        IconButton(
+                            onClick = {
+                                viewModel.skipPrevious()
+                            }) {
+                            Icon(
+                                imageVector = Icons.Rounded.SkipPrevious,
+                                stringResource(R.string.music_widget_previous_track)
+                            )
+                        }
                     }
                 }
-            }
-            val playPauseIcon =
-                AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
-            Tooltip(
-                tooltipText = stringResource(
-                    if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
-                    else R.string.music_widget_play
-                )
-            ) {
-                FilledTonalIconButton(
-                    colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = MaterialTheme.transparency.surface),
-                    ),
-                    onClick = { viewModel.togglePause() },
-                ) {
-                    Icon(
-                        painter = rememberAnimatedVectorPainter(
-                            playPauseIcon,
-                            atEnd = playbackState == PlaybackState.Playing
-                        ),
-                        contentDescription = stringResource(
-                            if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
-                            else R.string.music_widget_play
-                        )
+                val playPauseIcon =
+                    AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
+                Tooltip(
+                    tooltipText = stringResource(
+                        if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
+                        else R.string.music_widget_play
                     )
-                }
-            }
-            if (supportedActions.skipToNext) {
-                Tooltip(
-                    tooltipText = stringResource(R.string.music_widget_next_track)
                 ) {
-                    IconButton(onClick = {
-                        viewModel.skipNext()
-                    }) {
+                    FilledTonalIconButton(
+                        colors = IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = MaterialTheme.transparency.surface),
+                        ),
+                        onClick = { viewModel.togglePause() },
+                    ) {
                         Icon(
-                            imageVector = Icons.Rounded.SkipNext,
-                            stringResource(R.string.music_widget_next_track)
+                            painter = rememberAnimatedVectorPainter(
+                                playPauseIcon,
+                                atEnd = playbackState == PlaybackState.Playing
+                            ),
+                            contentDescription = stringResource(
+                                if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
+                                else R.string.music_widget_play
+                            )
                         )
                     }
                 }
+                if (supportedActions.skipToNext) {
+                    Tooltip(
+                        tooltipText = stringResource(R.string.music_widget_next_track)
+                    ) {
+                        IconButton(onClick = {
+                            viewModel.skipNext()
+                        }) {
+                            Icon(
+                                imageVector = Icons.Rounded.SkipNext,
+                                stringResource(R.string.music_widget_next_track)
+                            )
+                        }
+                    }
+                }
+                CustomActions(
+                    actions = supportedActions,
+                    onActionSelected = {
+                        viewModel.performCustomAction(it)
+                    },
+                    playerPackage = viewModel.currentPlayerPackage,
+                )
             }
-            CustomActions(
-                actions = supportedActions,
-                onActionSelected = {
-                    viewModel.performCustomAction(it)
-                },
-                playerPackage = viewModel.currentPlayerPackage,
-            )
         }
     }
 }
@@ -508,7 +508,7 @@ fun CustomActionIcon(action: CustomAction, playerPackage: String?) {
 }
 
 @Composable
-fun NoData() {
+fun NotPlaying() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -524,7 +524,7 @@ fun NoData() {
             tint = MaterialTheme.colorScheme.secondary
         )
         Text(
-            text = stringResource(id = R.string.music_widget_no_data),
+            text = stringResource(id = R.string.music_widget_not_playing),
             style = MaterialTheme.typography.bodySmall
         )
     }
