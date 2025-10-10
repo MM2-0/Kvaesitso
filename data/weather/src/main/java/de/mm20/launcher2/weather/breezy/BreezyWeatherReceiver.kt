@@ -12,11 +12,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.io.IOException
 import kotlinx.serialization.SerializationException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.util.zip.GZIPInputStream
 
-class BreezyWeatherReceiver: BroadcastReceiver(), KoinComponent {
+class BreezyWeatherReceiver : BroadcastReceiver(), KoinComponent {
 
     private val settings: WeatherSettings by inject()
 
@@ -28,17 +30,38 @@ class BreezyWeatherReceiver: BroadcastReceiver(), KoinComponent {
             if (provider != BreezyWeatherProvider.Id) {
                 return@launch
             }
-            val weatherJson = intent.getStringExtra("WeatherJson")
+            val weatherData = if (intent.hasExtra("WeatherGz")) {
+                val gz = intent.getByteArrayExtra("WeatherGz") ?: return@launch
 
-            if (weatherJson == null) {
-                Log.e("BreezyWeatherPlugin", "Broadcast was received but WeatherJson was null")
-                return@launch
+
+                val json = try {
+                    val inputStream = GZIPInputStream(gz.inputStream())
+                    inputStream.bufferedReader().use { it.readText() }
+                } catch (e: IOException) {
+                    CrashReporter.logException(e)
+                    return@launch
+                }
+
+                try {
+                    Json.Lenient.decodeFromString<List<BreezyWeatherData>>(json).firstOrNull()
+                } catch (e: SerializationException) {
+                    CrashReporter.logException(e)
+                    return@launch
+                }
+            } else if (intent.hasExtra("WeatherJson")) {
+                val json = intent.getStringExtra("WeatherJson") ?: return@launch
+                try {
+                    Json.Lenient.decodeFromString<BreezyWeatherData>(json)
+                } catch (e: SerializationException) {
+                    CrashReporter.logException(e)
+                    return@launch
+                }
+            } else {
+                null
             }
 
-            val weatherData = try {
-                Json.Lenient.decodeFromString<BreezyWeatherData>(weatherJson)
-            } catch (e: SerializationException) {
-                CrashReporter.logException(e)
+            if (weatherData == null) {
+                Log.e("BreezyWeatherReceiver", "Broadcast was received but it did not contain weather data")
                 return@launch
             }
 
