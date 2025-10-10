@@ -210,6 +210,12 @@
         <item quantity="many">gibibajtů</item>
         <item quantity="other">gibibajtů</item>
     </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebibajt</item>
+        <item quantity="few">tebibajty</item>
+        <item quantity="many">tebibajtů</item>
+        <item quantity="other">tebibajtů</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
         <item quantity="one">metr za sekundu</item>
@@ -242,6 +248,7 @@
         <item quantity="many">tun</item>
         <item quantity="other">tun</item>
     </plurals>
+    <string name="unit_long_ton_symbol">l/t</string>
     <plurals name="unit_long_ton">
         <item quantity="one">imperiální tuna</item>
         <item quantity="few">imperiální tuny</item>
@@ -266,6 +273,7 @@
         <item quantity="many">uncí</item>
         <item quantity="other">uncí</item>
     </plurals>
+    <string name="unit_short_ton_symbol">s/t</string>
     <plurals name="unit_short_ton">
         <item quantity="one">krátká tuna</item>
         <item quantity="few">krátké tuny</item>
@@ -286,4 +294,46 @@
         <item quantity="other">stupňů fahrenheita</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
+    <plurals name="unit_liter">
+        <item quantity="one">litr</item>
+        <item quantity="few">litry</item>
+        <item quantity="many">litrů</item>
+        <item quantity="other">litrů</item>
+    </plurals>
+    <plurals name="unit_milliliter">
+        <item quantity="one">mililitr</item>
+        <item quantity="few">mililitry</item>
+        <item quantity="many">mililitrů</item>
+        <item quantity="other">mililitrů</item>
+    </plurals>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">metr krychlový</item>
+        <item quantity="few">metry krychlové</item>
+        <item quantity="many">metrů krychlových</item>
+        <item quantity="other">metrů krychlových</item>
+    </plurals>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">centimetr krychlový</item>
+        <item quantity="few">centimetry krychlové</item>
+        <item quantity="many">centimetrů krychlových</item>
+        <item quantity="other">centimetrů krychlových</item>
+    </plurals>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">milimetr krychlový</item>
+        <item quantity="few">milimetry krychlové</item>
+        <item quantity="many">milimetrů krychlových</item>
+        <item quantity="other">milimetrů krychlových</item>
+    </plurals>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">palec krychlový</item>
+        <item quantity="few">palce krychlové</item>
+        <item quantity="many">palců krychlových</item>
+        <item quantity="other">palců krychlových</item>
+    </plurals>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">stopa krychlová</item>
+        <item quantity="few">stopy krychlové</item>
+        <item quantity="many">stop krychlových</item>
+        <item quantity="other">stop krychlových</item>
+    </plurals>
 </resources>
