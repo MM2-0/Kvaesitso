@@ -175,8 +175,8 @@ internal class OpenWeatherMapProvider(
             771, 781, in 900..902, in 958..962 -> Forecast.STORM
             800 -> Forecast.CLEAR
             801 -> Forecast.PARTLY_CLOUDY
-            802 -> Forecast.MOSTLY_CLOUDY
-            803 -> Forecast.BROKEN_CLOUDS
+            802 -> Forecast.BROKEN_CLOUDS
+            803 -> Forecast.MOSTLY_CLOUDY
             804, 951 -> Forecast.CLOUDY
             903 -> Forecast.COLD
             904 -> Forecast.HOT

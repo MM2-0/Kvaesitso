@@ -132,8 +132,8 @@ class BreezyWeatherProvider(
             771, 781, in 900..902, in 958..962 -> WeatherIcon.Storm
             800 -> WeatherIcon.Clear
             801 -> WeatherIcon.PartlyCloudy
-            802 -> WeatherIcon.MostlyCloudy
-            803 -> WeatherIcon.BrokenClouds
+            802 -> WeatherIcon.BrokenClouds
+            803 -> WeatherIcon.MostlyCloudy
             804, 951 -> WeatherIcon.Cloudy
             903 -> WeatherIcon.Cold
             904 -> WeatherIcon.Hot
