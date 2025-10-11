@@ -42,9 +42,11 @@ data class LauncherSettingsData internal constructor(
     internal val clockWidgetStyle: ClockWidgetStyleEnum = ClockWidgetStyleEnum.Digital1,
     val clockWidgetDigital1: ClockWidgetStyle.Digital1 = ClockWidgetStyle.Digital1(),
     val clockWidgetAnalog: ClockWidgetStyle.Analog = ClockWidgetStyle.Analog(),
+    val clockWidgetBinary: ClockWidgetStyle.Binary = ClockWidgetStyle.Binary(),
     val clockWidgetCustom: ClockWidgetStyle.Custom = ClockWidgetStyle.Custom(),
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
     val clockWidgetShowSeconds: Boolean = false,
+    val clockWidgetUseEightBits: Boolean = false,
     val clockWidgetMonospaced: Boolean = false,
     val clockWidgetTimeFormat: TimeFormat = TimeFormat.System,
     val clockWidgetUseThemeColor: Boolean = false,
@@ -256,7 +258,9 @@ sealed interface ClockWidgetStyle {
 
     @Serializable
     @SerialName("binary")
-    data object Binary : ClockWidgetStyle
+    data class Binary(
+        val useEightBits: Boolean = false
+    ) : ClockWidgetStyle
 
     @Serializable
     @SerialName("segment")
