@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.settings.weather
 
 import android.app.PendingIntent
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
@@ -9,7 +8,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -26,8 +31,12 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
-import de.mm20.launcher2.ui.component.preferences.*
-import de.mm20.launcher2.weather.WeatherProviderInfo
+import de.mm20.launcher2.ui.component.preferences.GuardedPreference
+import de.mm20.launcher2.ui.component.preferences.ListPreference
+import de.mm20.launcher2.ui.component.preferences.Preference
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
+import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.weather.breezy.BreezyWeatherProvider
 
 @Composable
@@ -57,7 +66,8 @@ fun WeatherIntegrationSettingsScreen() {
                 if (state is PluginState.SetupRequired) {
                     Banner(
                         modifier = Modifier.padding(16.dp),
-                        text = state.message ?: stringResource(R.string.plugin_state_setup_required),
+                        text = state.message
+                            ?: stringResource(R.string.plugin_state_setup_required),
                         icon = Icons.Rounded.Info,
                         primaryAction = {
                             TextButton(onClick = {
@@ -74,7 +84,7 @@ fun WeatherIntegrationSettingsScreen() {
                 }
                 ListPreference(
                     title = stringResource(R.string.preference_weather_provider),
-                    items = availableProviders.map{
+                    items = availableProviders.map {
                         it.name to it.id
                     },
                     onValueChanged = {
@@ -101,7 +111,9 @@ fun WeatherIntegrationSettingsScreen() {
                         title = stringResource(R.string.preference_location),
                         summary = stringResource(R.string.preference_location_breezy),
                         onClick = {
-                            val intent = context.packageManager.getLaunchIntentForPackage("org.breezyweather") ?: return@Preference
+                            val intent =
+                                context.packageManager.getLaunchIntentForPackage("org.breezyweather")
+                                    ?: return@Preference
                             context.tryStartActivity(intent)
                         }
                     )
@@ -113,24 +125,23 @@ fun WeatherIntegrationSettingsScreen() {
                     )
                 } else {
                     val hasPermission by viewModel.hasLocationPermission.collectAsState()
-                    AnimatedVisibility(hasPermission == false) {
-                        MissingPermissionBanner(
-                            text = stringResource(R.string.missing_permission_auto_location),
-                            onClick = {
-                                viewModel.requestLocationPermission(context as AppCompatActivity)
-                            },
-                            modifier = Modifier.padding(16.dp)
+                    val autoLocation by viewModel.autoLocation.collectAsState()
+                    GuardedPreference(
+                        locked = hasPermission == false,
+                        description = stringResource(R.string.missing_permission_auto_location),
+                        onUnlock = {
+                            viewModel.requestLocationPermission(context as AppCompatActivity)
+                        }
+                    ) {
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_automatic_location),
+                            summary = stringResource(R.string.preference_automatic_location_summary),
+                            value = autoLocation,
+                            onValueChanged = {
+                                viewModel.setAutoLocation(it)
+                            }
                         )
                     }
-                    val autoLocation by viewModel.autoLocation.collectAsState()
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_automatic_location),
-                        summary = stringResource(R.string.preference_automatic_location_summary),
-                        value = autoLocation,
-                        onValueChanged = {
-                            viewModel.setAutoLocation(it)
-                        }
-                    )
                     val location by viewModel.location.collectAsStateWithLifecycle()
                     LocationPreference(
                         title = stringResource(R.string.preference_location),

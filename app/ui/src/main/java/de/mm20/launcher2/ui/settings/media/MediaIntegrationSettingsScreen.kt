@@ -1,10 +1,11 @@
 package de.mm20.launcher2.ui.settings.media
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -57,15 +58,18 @@ fun MediaIntegrationSettingsScreen() {
             }
         }
         item {
-            AnimatedVisibility(hasPermission == false) {
-                MissingPermissionBanner(
-                    text = stringResource(R.string.missing_permission_music_widget),
-                    onClick = {
-                        viewModel.requestNotificationPermission(context as AppCompatActivity)
-                    },
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
+            MissingPermissionBanner(
+                text = stringResource(R.string.missing_permission_music_widget),
+                onClick = {
+                    viewModel.requestNotificationPermission(context as AppCompatActivity)
+                },
+                modifier = Modifier
+                    .background(
+                        MaterialTheme.colorScheme.surface,
+                        MaterialTheme.shapes.medium
+                    )
+                    .padding(16.dp)
+            )
             PreferenceCategory(
                 stringResource(R.string.preference_category_media_apps)
             ) {

@@ -49,6 +49,7 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
+import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -218,24 +219,23 @@ fun IconsSettingsScreen() {
             PreferenceCategory(
                 title = stringResource(R.string.preference_category_badges),
             ) {
-                AnimatedVisibility(hasNotificationsPermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_notification_badges),
-                        onClick = {
-                            viewModel.requestNotificationsPermission(context as AppCompatActivity)
-                        },
-                        modifier = Modifier.padding(16.dp)
+                GuardedPreference(
+                    locked = hasNotificationsPermission == false,
+                    description = stringResource(R.string.missing_permission_notification_badges),
+                    onUnlock = {
+                        viewModel.requestNotificationsPermission(context as AppCompatActivity)
+                    }
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_notification_badges),
+                        summary = stringResource(R.string.preference_notification_badges_summary),
+                        enabled = hasNotificationsPermission != false,
+                        value = notificationBadges == true && hasNotificationsPermission == true,
+                        onValueChanged = {
+                            viewModel.setNotifications(it)
+                        }
                     )
                 }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_notification_badges),
-                    summary = stringResource(R.string.preference_notification_badges_summary),
-                    enabled = hasNotificationsPermission != false,
-                    value = notificationBadges == true && hasNotificationsPermission == true,
-                    onValueChanged = {
-                        viewModel.setNotifications(it)
-                    }
-                )
                 SwitchPreference(
                     title = stringResource(R.string.preference_cloud_badges),
                     summary = stringResource(R.string.preference_cloud_badges_summary),
