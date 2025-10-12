@@ -106,7 +106,7 @@
         <item quantity="few">míle</item>
         <item quantity="other">mil</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_nautic_mile_symbol">nmi</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">námořní míle</item>
         <item quantity="few">námořní míle</item>
@@ -126,14 +126,14 @@
         <item quantity="other">centimetrů čtverečních</item>
     </plurals>
     <string name="unit_sqmillimeter_symbol">mm²</string>
-    <string name="unit_sqinch_symbol">sqin</string>
-    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqinch_symbol">sq in</string>
+    <string name="unit_sqfoot_symbol">sq ft</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">stopa čtvereční</item>
         <item quantity="few">stopy čtvereční</item>
         <item quantity="other">stop čtverečních</item>
     </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_sqyard_symbol">sq yd</string>
     <string name="unit_hectare_symbol">ha</string>
     <string name="unit_acre_symbol">ac</string>
     <plurals name="unit_acre">
@@ -280,26 +280,26 @@
         <item quantity="few">tuny</item>
         <item quantity="other">tun</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
-    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_long_ton_symbol">l/t</string>
+    <string name="unit_stone_symbol">st</string>
     <plurals name="unit_stone">
         <item quantity="one">kámen</item>
         <item quantity="few">kameny</item>
         <item quantity="other">kamenů</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">lb</string>
     <plurals name="unit_pound">
         <item quantity="one">libra</item>
         <item quantity="few">libry</item>
         <item quantity="other">liber</item>
     </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">oz</string>
     <plurals name="unit_ounce">
         <item quantity="one">unce</item>
         <item quantity="few">unce</item>
         <item quantity="other">uncí</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">s/t</string>
     <plurals name="unit_short_ton">
         <item quantity="one">krátká tuna</item>
         <item quantity="few">krátké tuny</item>
@@ -337,4 +337,47 @@
     <string name="dimension_frequency">Frekvence</string>
     <string name="dimension_temperature">Teplota</string>
     <string name="dimension_time">Čas</string>
+    <string name="unit_liter_symbol">L</string>
+    <string name="unit_cubic_meter_symbol">m³</string>
+    <string name="unit_cubic_centimeter_symbol">cm³</string>
+    <string name="unit_cubic_millimeter_symbol">mm³</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">milimetr krychlový</item>
+        <item quantity="few">milimetry krychlové</item>
+        <item quantity="other">milimetrů krychlových</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">cu ft</string>
+    <string name="unit_cubic_yard_symbol">cu yd</string>
+    <string name="unit_cubic_inch_symbol">cu in</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">mililitr</item>
+        <item quantity="few">mililitry</item>
+        <item quantity="other">mililitrů</item>
+    </plurals>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">centimetr krychlový</item>
+        <item quantity="few">centimetry krychlové</item>
+        <item quantity="other">centimetrů krychlových</item>
+    </plurals>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">palec krychlový</item>
+        <item quantity="few">palce krychlové</item>
+        <item quantity="other">palců krychlových</item>
+    </plurals>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">metr krychlový</item>
+        <item quantity="few">metry krychlové</item>
+        <item quantity="other">metrů krychlových</item>
+    </plurals>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">stopa krychlová</item>
+        <item quantity="few">stopy krychlové</item>
+        <item quantity="other">stop krychlových</item>
+    </plurals>
+    <plurals name="unit_liter">
+        <item quantity="one">litr</item>
+        <item quantity="few">litry</item>
+        <item quantity="other">litrů</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">mL</string>
 </resources>
