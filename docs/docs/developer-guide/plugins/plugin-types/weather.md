@@ -55,7 +55,7 @@ There are three types of locations:
 - <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-managed/index.html" target="_blank">`WeatherLocation.Managed`</a>:
   a special location that indicates that the plugin should determine the location itself.
 
-## Featch weather data
+## Fetch weather data
 
 Implement both `getWeatherData` methods:
 
@@ -80,6 +80,11 @@ Both methods return a list
 of <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-forecast/index.html" target="_blank">`Forecast`</a>
 s. If an error occurs, you can throw an exception or return `null`, in this case the launcher will
 keep the old data and start another attempt at a later time.
+
+> [!NOTE]
+> You should at most return weather data for the next 7 days. Everything after will be dismissed by
+> the launcher.
+
 
 `Forecast` objects need at least a `timestamp` (unix time in millis), a `temperature`,
 a `condition`, an `icon`, a `location` name, and a `provider` name.
