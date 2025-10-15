@@ -315,6 +315,7 @@
     <string name="preference_wikipedia_customurl">URL Wikipédia</string>
     <string name="music_widget_default_title">%1$s joue un média</string>
     <string name="music_widget_no_data">Aucun média n\'a encore été joué</string>
+    <string name="music_widget_not_playing">Aucun média en cours de lecture</string>
     <string name="no_account_nextcloud">Vous n\'avez pas connecté de compte Nextcloud pour le moment</string>
     <string name="no_account_owncloud">Vous n\'avez pas connecté de compte Owncloud pour le moment</string>
     <string name="connect_account">Connecter un compte</string>
