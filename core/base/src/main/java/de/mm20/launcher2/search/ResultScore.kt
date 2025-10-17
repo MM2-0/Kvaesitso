@@ -43,9 +43,10 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
 
     /**
      * A total score for the result, combining the similarity with additional factors.
+     * The score is normalized to be between 0 and 1.
      */
     val score: Float
-        get() = (similarity + (if (isPrefix) 0.8f else 0f) + (if (isSubstring) 0.8f else 0f)) * (if (isPrimary) 1f else 0.8f)
+        get() = (similarity + (if (isPrefix) 0.2f else 0f) + (if (isSubstring) 0.8f else 0f)).coerceIn(0f, 1f) * (if (isPrimary) 1f else 0.8f)
 
     override fun compareTo(other: ResultScore): Int {
         return score.compareTo(other.score)
