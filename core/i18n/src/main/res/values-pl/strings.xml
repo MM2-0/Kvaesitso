@@ -548,7 +548,6 @@
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Pokaż aktualną datę</string>
     <string name="preference_clockwidget_favorites_part">Główny dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Pokaż pierwszy rząd przypiętych rzeczy</string>
     <string name="preference_clockwidget_music_part_summary">Pokaż elementy sterujące mediów, gdy jest aktywna sesja multimedialna</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
     <string name="preference_clockwidget_battery_part_summary">Pokaż aktualny poziom baterii kiedy jest bliska wyczerpaniu lub gdy się ładuje</string>
