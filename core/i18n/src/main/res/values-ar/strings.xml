@@ -563,7 +563,6 @@
     <string name="preference_clockwidget_date_part">التاريخ</string>
     <string name="preference_clockwidget_date_part_summary">إظهار التاريخ الحالي</string>
     <string name="preference_clockwidget_favorites_part">قاعدة التثبيت</string>
-    <string name="preference_clockwidget_favorites_part_summary">إظهار الصف الأول من العناصر المثبتة</string>
     <string name="preference_clockwidget_music_part">الوسائط</string>
     <string name="preference_clockwidget_music_part_summary">إظهار عناصر التحكم في الوسائط عندما تكون هناك جلسة وسائط نشطة</string>
     <string name="preference_clockwidget_battery_part">البطارية</string>
