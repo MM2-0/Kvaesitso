@@ -472,7 +472,6 @@
     <string name="preference_clockwidget_date_part">날짜</string>
     <string name="preference_clockwidget_date_part_summary">오늘 날짜 표시</string>
     <string name="preference_clockwidget_favorites_part">즐겨찾기</string>
-    <string name="preference_clockwidget_favorites_part_summary">고정된 항목의 첫째 줄 표시</string>
     <string name="preference_clockwidget_music_part">미디어</string>
     <string name="preference_clockwidget_music_part_summary">활성 미디어 세션이 있을 경우 미디어 제어 기능 표시</string>
     <string name="preference_clockwidget_battery_part">배터리</string>
