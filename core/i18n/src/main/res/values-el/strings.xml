@@ -506,7 +506,6 @@
     <string name="preference_clockwidget_date_part">Ημερομηνία</string>
     <string name="preference_clockwidget_date_part_summary">Εμφάνιση τωρινής ημερομηνίας</string>
     <string name="preference_clockwidget_favorites_part">Αγαπημένα</string>
-    <string name="preference_clockwidget_favorites_part_summary">Εμφάνιση της πρώτης σειράς καρφιτσωμένων στοιχείων</string>
     <string name="preference_clockwidget_music_part">Πολυμέσα</string>
     <string name="preference_clockwidget_music_part_summary">Εμφάνιση ελέγχου πολυμέσων όταν υπάρχει ενεργή περίοδος λειτουργίας</string>
     <string name="preference_clockwidget_battery_part">Μπαταρία</string>
