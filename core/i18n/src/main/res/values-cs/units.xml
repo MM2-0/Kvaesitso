@@ -380,4 +380,63 @@
         <item quantity="other">litrů</item>
     </plurals>
     <string name="unit_milliliter_symbol">mL</string>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">lžička (US)</item>
+        <item quantity="few">lžičky (US)</item>
+        <item quantity="other">lžiček (US)</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">gal (US)</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">galon (US)</item>
+        <item quantity="few">galony (US)</item>
+        <item quantity="other">galonů (US)</item>
+    </plurals>
+    <string name="unit_pint_imp_symbol">pt (imp.)</string>
+    <string name="unit_pint_us_symbol">pt (US)</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">pint (US)</item>
+        <item quantity="few">pinty (US)</item>
+        <item quantity="other">pintů (US)</item>
+    </plurals>
+    <string name="unit_gallon_imp_symbol">gal (imp.)</string>
+    <string name="unit_fluid_ounce_us_symbol">fl oz (US)</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">pint (imperiální)</item>
+        <item quantity="few">pinty (imperiální)</item>
+        <item quantity="other">pintů (imperiálních)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">fl oz (imp.)</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">objemová unce (US)</item>
+        <item quantity="few">objemové unce (US)</item>
+        <item quantity="other">objemových uncí (US)</item>
+    </plurals>
+    <string name="unit_cup_symbol">cup</string>
+    <string name="unit_tablespoon_symbol">pol. lž.</string>
+    <string name="unit_teaspoon_symbol">lž.</string>
+    <plurals name="unit_cup">
+        <item quantity="one">cup (US)</item>
+        <item quantity="few">cupy (US)</item>
+        <item quantity="other">cupů (US)</item>
+    </plurals>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">polévková lžíce (US)</item>
+        <item quantity="few">polévkové lžíce (US)</item>
+        <item quantity="other">polévkových lžic (US)</item>
+    </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">galon (imperiální)</item>
+        <item quantity="few">galony (imperiální)</item>
+        <item quantity="other">galonů (imperiálních)</item>
+    </plurals>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">yard krychlový</item>
+        <item quantity="few">yardy krychlové</item>
+        <item quantity="other">yardů krychlových</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">objemová unce (imperiální)</item>
+        <item quantity="few">objemové unce (imperiální)</item>
+        <item quantity="other">objemových uncí (imperiálních)</item>
+    </plurals>
 </resources>
