@@ -539,7 +539,6 @@
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Rodyti dabartinę data</string>
     <string name="preference_clockwidget_favorites_part">Užduočių juosta</string>
-    <string name="preference_clockwidget_favorites_part_summary">Rodyti pirmą eilę prisegtų daiktų</string>
     <string name="preference_clockwidget_music_part">Medija</string>
     <string name="preference_clockwidget_music_part_summary">Rodyti medijos kontrolę kai yra aktyvi medijos sesija</string>
     <string name="preference_clockwidget_battery_part">Baterija</string>
