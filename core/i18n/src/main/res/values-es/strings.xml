@@ -576,7 +576,6 @@
     <string name="preference_clockwidget_date_part">Fecha</string>
     <string name="preference_clockwidget_date_part_summary">Mostrar la fecha actual</string>
     <string name="preference_clockwidget_favorites_part">Barra</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostrar la primera fila de items fijados</string>
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_music_part_summary">Mostrar controles multimedia cuando haya una sesión multimedia activa</string>
     <string name="preference_clockwidget_battery_part">Batería</string>
