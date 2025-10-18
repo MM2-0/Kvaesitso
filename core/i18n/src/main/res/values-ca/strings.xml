@@ -583,7 +583,6 @@
     <string name="preference_clockwidget_dynamic_zone">Zona dinàmica</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Mostra la data actual</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostra la primera fila d\'elements fixats</string>
     <string name="preference_clockwidget_music_part_summary">Mostra els controls multimèdia quan hi ha una sessió multimèdia activa</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
     <string name="preference_clockwidget_battery_part_summary">Mostra el nivell actual de la bateria quan la bateria està baixa o s\'està carregant</string>
