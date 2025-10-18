@@ -586,7 +586,6 @@
     <string name="preference_clockwidget_date_part">Дата</string>
     <string name="preference_clockwidget_date_part_summary">Показывать текущую дату</string>
     <string name="preference_clockwidget_favorites_part">Быстрый доступ</string>
-    <string name="preference_clockwidget_favorites_part_summary">Показывать первую строку избранных</string>
     <string name="preference_clockwidget_music_part">Медиа</string>
     <string name="preference_clockwidget_music_part_summary">Показать управление медиа, если активна медиа-сессия</string>
     <string name="preference_clockwidget_battery_part">Батарея</string>
