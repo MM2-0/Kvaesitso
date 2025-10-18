@@ -539,7 +539,6 @@
     <string name="preference_clockwidget_date_part">Päiväys</string>
     <string name="preference_clockwidget_date_part_summary">Näytä päiväys</string>
     <string name="preference_clockwidget_favorites_part">Telakka</string>
-    <string name="preference_clockwidget_favorites_part_summary">Näytä ensimmäinen rivi kiinnitettyjä kohteita</string>
     <string name="preference_clockwidget_music_part_summary">Näytä mediaohjaimet, kun mediaa on aktiivisena</string>
     <string name="preference_clockwidget_battery_part">Akku</string>
     <string name="preference_clockwidget_battery_part_summary">Näytä akun varaustaso, kun akku on vähissä tai latauksessa</string>
