@@ -541,7 +541,6 @@
     <string name="preference_clockwidget_date_part">تاریخ</string>
     <string name="preference_clockwidget_date_part_summary">نمایش تاریخ کنونی</string>
     <string name="preference_clockwidget_favorites_part">نوار ابزار</string>
-    <string name="preference_clockwidget_favorites_part_summary">نمایش اولین ردیف موارد دلخواه</string>
     <string name="preference_clockwidget_music_part">رسانه</string>
     <string name="preference_clockwidget_music_part_summary">هنگامی که جلسه رسانه‌ای فعال است، نمایش کنترل‌های رسانه‌ای</string>
     <string name="preference_clockwidget_battery_part">باتری</string>
