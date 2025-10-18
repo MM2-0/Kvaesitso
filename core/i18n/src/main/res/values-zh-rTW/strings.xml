@@ -553,7 +553,6 @@
     <string name="preference_clockwidget_dynamic_zone">動態區域</string>
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">顯示當前日期</string>
-    <string name="preference_clockwidget_favorites_part_summary">顯示已釘選項目的第一行</string>
     <string name="preference_clockwidget_music_part">媒體</string>
     <string name="preference_clockwidget_music_part_summary">在有活動媒體會話時顯示媒體控制元件</string>
     <string name="preference_clockwidget_battery_part">電池</string>
