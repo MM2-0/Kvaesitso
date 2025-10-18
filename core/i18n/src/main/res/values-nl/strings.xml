@@ -570,7 +570,6 @@
     <string name="preference_clockwidget_dynamic_zone">Dynamische zone</string>
     <string name="preference_clockwidget_date_part">Datum</string>
     <string name="preference_clockwidget_date_part_summary">Huidige datum tonen</string>
-    <string name="preference_clockwidget_favorites_part_summary">Eerste rij van de vastgezette items tonen</string>
     <string name="preference_clockwidget_music_part_summary">Bedieningselementen voor media tonen als er media wordt afgespeeld</string>
     <string name="preference_clockwidget_battery_part">Batterij</string>
     <string name="preference_clockwidget_battery_part_summary">Batterijniveau tonen wanneer het niveau laag is of de batterij aan het opladen is</string>
