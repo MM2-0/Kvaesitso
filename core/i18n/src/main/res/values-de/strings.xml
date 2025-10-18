@@ -322,7 +322,8 @@
     <string name="preference_search_appshortcuts_summary">App-Shortcuts durchsuchen</string>
     <string name="widget_name_favorites">Favoriten</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Die erste Zeile der Favoriten anzeigen</string>
+    <string name="preference_clockwidget_favorites_part_summary">Favoriten im Dock anzeigen</string>
+    <string name="preference_clockwidget_dock_rows">Dock-Zeilen</string>
     <string name="preference_grid_icon_size">Symbolgröße</string>
     <string name="preference_search_currencyconverter">Währungsrechner</string>
     <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen, um Währungen umzurechnen</string>
