@@ -522,7 +522,6 @@
     <string name="preference_clockwidget_dynamic_zone">Vùng động</string>
     <string name="preference_clockwidget_date_part">Ngày</string>
     <string name="preference_clockwidget_date_part_summary">Hiển thị ngày hiện tại</string>
-    <string name="preference_clockwidget_favorites_part_summary">Hiển thị hàng đầu tiên của các mục được ghim</string>
     <string name="preference_clockwidget_music_part">Phương tiện</string>
     <string name="preference_clockwidget_music_part_summary">Hiển thị các điều khiển phương tiện khi có phiên phương tiện đang hoạt động</string>
     <string name="preference_clockwidget_battery_part">Pin</string>
