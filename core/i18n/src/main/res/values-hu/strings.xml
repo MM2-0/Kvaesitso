@@ -584,7 +584,6 @@
     <string name="preference_clockwidget_date_part">Dátum</string>
     <string name="preference_clockwidget_date_part_summary">Jelenlegi dátum megjelenítése</string>
     <string name="preference_clockwidget_favorites_part">Dokk</string>
-    <string name="preference_clockwidget_favorites_part_summary">Kitűzött elemek első sorának megjelenítése</string>
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_music_part_summary">Médiavezérlők megjelenítése, ha aktív médiamunkamenet van</string>
     <string name="preference_clockwidget_battery_part">Akkumulátor</string>
