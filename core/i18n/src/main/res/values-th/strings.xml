@@ -586,7 +586,6 @@
     <string name="preference_clockwidget_date_part">วันที่</string>
     <string name="preference_clockwidget_date_part_summary">แสดงวันที่ปัจจุบัน</string>
     <string name="preference_clockwidget_favorites_part">แถบใช้งาน</string>
-    <string name="preference_clockwidget_favorites_part_summary">แสดงแถวแรกของรายการที่ปักหมุดไว้</string>
     <string name="preference_clockwidget_music_part">สื่อ</string>
     <string name="preference_clockwidget_music_part_summary">แสดงตัวควบคุมสื่อเมื่อมีสื่อกำลังเล่น</string>
     <string name="preference_clockwidget_battery_part">แบตเตอรี่</string>
