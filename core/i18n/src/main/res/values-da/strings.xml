@@ -521,7 +521,6 @@
     <string name="preference_clockwidget_dynamic_zone">Dynamisk zone</string>
     <string name="preference_clockwidget_date_part">Dato</string>
     <string name="preference_clockwidget_date_part_summary">Vis nuværende dato</string>
-    <string name="preference_clockwidget_favorites_part_summary">Vis den første række af fastgjorte elementer</string>
     <string name="preference_clockwidget_music_part">Medier</string>
     <string name="preference_clockwidget_music_part_summary">Vis mediekontrol, når der er en aktiv mediesession</string>
     <string name="preference_clockwidget_battery_part">Batteri</string>
