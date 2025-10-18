@@ -569,7 +569,8 @@
     <string name="preference_clockwidget_dynamic_zone">Dynamische Zone</string>
     <string name="preference_clockwidget_date_part">Datum</string>
     <string name="preference_clockwidget_date_part_summary">Das aktuelle Datum anzeigen</string>
-    <string name="preference_clockwidget_favorites_part_summary">Die erste Zeile der Favoriten anzeigen</string>
+    <string name="preference_clockwidget_favorites_part_summary">Favoriten im Dock anzeigen</string>
+    <string name="preference_clockwidget_dock_rows">Dock-Zeilen</string>
     <string name="preference_clockwidget_music_part">Medien</string>
     <string name="preference_clockwidget_music_part_summary">Mediensteuerung anzeigen, wenn Medien wiedergegeben werden</string>
     <string name="preference_clockwidget_battery_part">Akku</string>
