@@ -585,7 +585,6 @@
     <string name="preference_clockwidget_dynamic_zone">动态区域</string>
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">显示当前日期</string>
-    <string name="preference_clockwidget_favorites_part_summary">显示已固定项目的第一行</string>
     <string name="preference_clockwidget_music_part">媒体</string>
     <string name="preference_clockwidget_music_part_summary">在有活动媒体会话时显示媒体控件</string>
     <string name="preference_clockwidget_battery_part">电池</string>
