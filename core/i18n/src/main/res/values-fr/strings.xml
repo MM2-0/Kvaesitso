@@ -571,7 +571,6 @@
     <string name="preference_clock_widget_alignment_bottom">Bas</string>
     <string name="preference_clockwidget_dynamic_zone">Zone dynamique</string>
     <string name="preference_clockwidget_date_part_summary">Afficher la date actuelle</string>
-    <string name="preference_clockwidget_favorites_part_summary">Afficher la première ligne d\'éléments épinglés</string>
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_music_part_summary">Afficher les contrôles du média lorsqu\'il y a une session média active</string>
     <string name="preference_clockwidget_battery_part">Batterie</string>
