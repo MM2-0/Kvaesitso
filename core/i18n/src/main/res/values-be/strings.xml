@@ -564,7 +564,6 @@
     <string name="preference_clockwidget_date_part">Дата</string>
     <string name="preference_clockwidget_date_part_summary">Адлюстроўвае дату</string>
     <string name="preference_clockwidget_favorites_part">Док-панэль</string>
-    <string name="preference_clockwidget_favorites_part_summary">Адлюстроўвае первы рад замацаваных ярлыкоў</string>
     <string name="preference_clockwidget_music_part">Медыя</string>
     <string name="preference_clockwidget_music_part_summary">Адлюстроўвае кнопкі для кіравання мультымедыя, калі ёсць актыўны сеанс медыя</string>
     <string name="preference_clockwidget_battery_part">Батарэя</string>
