@@ -569,7 +569,6 @@
     <string name="preference_clockwidget_date_part">תאריך</string>
     <string name="preference_clockwidget_date_part_summary">הצג את התאריך הנוכחי</string>
     <string name="preference_clockwidget_favorites_part">עגינה</string>
-    <string name="preference_clockwidget_favorites_part_summary">הצג את השורה הראשונה של הפריטים הנעוצים</string>
     <string name="preference_clockwidget_music_part">מדיה</string>
     <string name="preference_clockwidget_music_part_summary">הצג בקרות מדיה כאשר ישנה הפעלת מדיה פעילה</string>
     <string name="preference_clockwidget_battery_part">סוללה</string>
