@@ -557,7 +557,6 @@
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Mostra a data atual</string>
     <string name="preference_clockwidget_favorites_part">Gaveta de aplicativos</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostra a primeira linha de itens fixados</string>
     <string name="preference_clockwidget_music_part">Mídia</string>
     <string name="preference_clockwidget_music_part_summary">Mostra controles de mídia quando houver uma sessão de mídia ativa</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
