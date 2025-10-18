@@ -537,7 +537,6 @@
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Erakutsi uneko data</string>
     <string name="preference_clockwidget_favorites_part">Gogokoak</string>
-    <string name="preference_clockwidget_favorites_part_summary">Erakutsi ainguratutako elementuen lehen ilara</string>
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_music_part_summary">Multimedia-kontrolak erakutsi multimedia-saio aktibo bat dagoenean</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
