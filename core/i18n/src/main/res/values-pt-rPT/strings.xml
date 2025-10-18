@@ -519,7 +519,6 @@
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Mostrar data atual</string>
     <string name="preference_clockwidget_favorites_part">Doca</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostrar primeira linha dos itens afixados</string>
     <string name="preference_clockwidget_music_part">Multimédia</string>
     <string name="preference_clockwidget_music_part_summary">Mostrar controlos multimédia se existir uma sessão ativa</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
