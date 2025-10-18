@@ -534,7 +534,6 @@
     <string name="preference_clockwidget_date_part">Dată</string>
     <string name="preference_clockwidget_date_part_summary">Afișează data curentă</string>
     <string name="preference_clockwidget_favorites_part">Favorite</string>
-    <string name="preference_clockwidget_favorites_part_summary">Afișează primul rând de elemente fixate</string>
     <string name="preference_clockwidget_music_part_summary">Afișează controale media atunci când există o sesiune media activă</string>
     <string name="preference_clockwidget_battery_part">Baterie</string>
     <string name="preference_clockwidget_battery_part_summary">Afișează nivelul curent al bateriei atunci când bateria este scăzută sau se încarcă</string>
