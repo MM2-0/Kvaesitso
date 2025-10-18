@@ -450,7 +450,6 @@
     <string name="preference_screen_weatherwidget">Погода</string>
     <string name="preference_clockwidget_layout_vertical">За замовчуванням</string>
     <string name="preference_clockwidget_favorites_part">Док-панель</string>
-    <string name="preference_clockwidget_favorites_part_summary">Показувати перший рядок закріплених значків</string>
     <string name="preference_screen_search">Пошук</string>
     <string name="preference_search_favorites">Улюблені</string>
     <string name="preference_search_favorites_summary">Показувати закріплені та часто використовувані значки над усіма застосунками</string>
