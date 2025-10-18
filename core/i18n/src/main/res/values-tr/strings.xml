@@ -557,7 +557,6 @@
     <string name="preference_clockwidget_dynamic_zone">Dinamik bölge</string>
     <string name="preference_clockwidget_date_part">Tarih</string>
     <string name="preference_clockwidget_date_part_summary">Geçerli tarihi göster</string>
-    <string name="preference_clockwidget_favorites_part_summary">Sabitlenmiş öğelerin ilk sırasını göster</string>
     <string name="preference_clockwidget_music_part">Medya</string>
     <string name="preference_clockwidget_music_part_summary">Aktif bir medya oturumu olduğunda medya kontrollerini göster</string>
     <string name="preference_clockwidget_battery_part">Pil</string>
