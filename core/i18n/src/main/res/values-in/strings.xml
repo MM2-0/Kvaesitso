@@ -512,7 +512,6 @@
     <string name="preference_clockwidget_date_part">Tanggal</string>
     <string name="preference_clockwidget_date_part_summary">Tampilkan tanggal saat ini</string>
     <string name="preference_clockwidget_favorites_part">Favorit</string>
-    <string name="preference_clockwidget_favorites_part_summary">Tampilkan baris pertama item yang tersemat</string>
     <string name="preference_clockwidget_music_part_summary">Tampilkan kontrol media ketika ada sesi media yang aktif</string>
     <string name="preference_clockwidget_battery_part">Baterai</string>
     <string name="preference_clockwidget_battery_part_summary">Tampilkan level baterai ketika baterai lemah atau sedang mengisi daya</string>
