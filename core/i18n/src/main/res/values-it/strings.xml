@@ -577,7 +577,6 @@
     <string name="preference_clockwidget_dynamic_zone">Zona dinamica</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Mostra la data corrente</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostra la prima riga di elementi appuntati</string>
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_music_part_summary">Mostra i controlli multimediali quando c\'è una riproduzione attiva</string>
     <string name="preference_clockwidget_battery_part">Batteria</string>
