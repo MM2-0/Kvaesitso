@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 import java.util.UUID
 
 @Serializable
+@ConsistentCopyVisibility
 data class LauncherSettingsData internal constructor(
     val schemaVersion: Int = 5,
 
@@ -52,7 +53,7 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetBatteryPart: Boolean = true,
     val clockWidgetMusicPart: Boolean = true,
     val clockWidgetDatePart: Boolean = true,
-    val clockWidgetFillHeight: Boolean = true,
+    val clockWidgetFillHeight: Boolean = false,
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
 
     val homeScreenDock: Boolean = false,
