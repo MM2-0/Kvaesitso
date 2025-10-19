@@ -295,7 +295,7 @@
     <string name="websearch_dialog_query_encoding_url">Percent-encodering</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="edit_favorites_dialog_new_tag">Label aanmaken</string>
-    <string name="preference_clockwidget_favorites_part_summary">Eerste rij van de vastgezette items tonen</string>
+    <string name="preference_clockwidget_favorites_part_summary">Vastgezette items tonen in dock</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_alarm_part_summary">Alarmen tonen die binnen 8 uur zullen afgaan</string>
     <string name="preference_screen_backup_summary">Launchergegevens exporteren en importeren</string>
@@ -867,4 +867,5 @@
     <string name="poi_category_stationery">Briefpapier</string>
     <string name="poi_category_climbing_gym">Klimhal</string>
     <string name="poi_category_hackerspace">Hackerspace</string>
+    <string name="preference_clockwidget_dock_rows">Rijen in dock</string>
 </resources>
