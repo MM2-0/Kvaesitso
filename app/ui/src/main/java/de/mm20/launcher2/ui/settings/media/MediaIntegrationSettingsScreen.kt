@@ -35,6 +35,7 @@ fun MediaIntegrationSettingsScreen() {
     val viewModel: MediaIntegrationSettingsScreenVM = viewModel()
     val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle(null)
     val loading by viewModel.loading
+    val appList by viewModel.appList
 
     val density = LocalDensity.current
 
@@ -57,37 +58,41 @@ fun MediaIntegrationSettingsScreen() {
                 )
             }
         }
-        item {
-            MissingPermissionBanner(
-                text = stringResource(R.string.missing_permission_music_widget),
-                onClick = {
-                    viewModel.requestNotificationPermission(context as AppCompatActivity)
-                },
-                modifier = Modifier
-                    .background(
-                        MaterialTheme.colorScheme.surface,
-                        MaterialTheme.shapes.medium
-                    )
-                    .padding(16.dp)
-            )
-            PreferenceCategory(
-                stringResource(R.string.preference_category_media_apps)
-            ) {
-                val apps by viewModel.appList
-                for (app in apps) {
-                    val icon by app.icon.collectAsState(null)
-                    CheckboxPreference(
-                        icon = {
-                            ShapedLauncherIcon(size = 32.dp, icon = { icon })
-                        },
-                        title = app.label,
-                        value = app.isChecked,
-                        onValueChanged = {
-                            viewModel.onAppChecked(app, it)
-                        }
-                    )
-                }
+        if (hasPermission == false) {
+            item {
+                MissingPermissionBanner(
+                    text = stringResource(R.string.missing_permission_music_widget),
+                    onClick = {
+                        viewModel.requestNotificationPermission(context as AppCompatActivity)
+                    },
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.surface,
+                            MaterialTheme.shapes.medium
+                        )
+                        .padding(16.dp)
+                )
             }
+        }
+        item {
+            PreferenceCategory(stringResource(R.string.preference_category_media_apps)) {}
+        }
+        items(
+            count = appList.size,
+            key = { index -> appList[index].packageName }
+        ) { index ->
+            val app = appList[index]
+            val icon by app.icon.collectAsState(null)
+            CheckboxPreference(
+                icon = {
+                    ShapedLauncherIcon(size = 32.dp, icon = { icon })
+                },
+                title = app.label,
+                value = app.isChecked,
+                onValueChanged = { newValue ->
+                    viewModel.onAppChecked(app, newValue)
+                }
+            )
         }
         if (BuildConfig.DEBUG) {
             item {
