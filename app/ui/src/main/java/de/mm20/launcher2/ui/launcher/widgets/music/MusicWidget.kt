@@ -232,21 +232,7 @@ fun MusicWidget(widget: MusicWidget) {
                         }
                     }
                 }
-                AnimatedContent(
-                    albumArt,
-                    transitionSpec = {
-                        if (targetState != null && initialState == null) {
-                            fadeIn() togetherWith fadeOut()
-                        } else {
-                            (fadeIn(animationSpec = tween(220, delayMillis = 90)) +
-                                    scaleIn(
-                                        initialScale = 0.92f,
-                                        animationSpec = tween(220, delayMillis = 90)
-                                    ))
-                                .togetherWith(fadeOut(animationSpec = tween(90)))
-                        }
-                    }
-                ) { art ->
+                AnimatedContent(albumArt) { art ->
                     Box(
                         modifier = Modifier
                             .padding(top = 16.dp, end = 16.dp)

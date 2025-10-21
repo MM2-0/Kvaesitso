@@ -320,6 +320,7 @@ internal class MusicServiceImpl(
 
     override val albumArt: Flow<Bitmap?> = channelFlow {
         val size = context.resources.getDimensionPixelSize(R.dimen.album_art_size)
+        var lastBitmap: Bitmap? = null
         currentMetadata.collectLatest { metadata ->
             if (metadata == null) {
                 val isNull = preferences.getString(PREFS_KEY_ALBUM_ART, "null") == "null"
@@ -345,6 +346,9 @@ internal class MusicServiceImpl(
                         ?.let { loadBitmapFromUri(Uri.parse(it), size) }
                     ?: metadata.getString(MediaMetadata.METADATA_KEY_ART_URI)
                         ?.let { loadBitmapFromUri(Uri.parse(it), size) }
+
+            if (lastBitmap != null && lastBitmap!!.sameAs(bitmap))
+                return@collectLatest
             withContext(Dispatchers.IO) {
                 if (bitmap == null) {
                     preferences.edit {
@@ -359,6 +363,7 @@ internal class MusicServiceImpl(
                 }
             }
             send(bitmap)
+            lastBitmap = bitmap
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
 
