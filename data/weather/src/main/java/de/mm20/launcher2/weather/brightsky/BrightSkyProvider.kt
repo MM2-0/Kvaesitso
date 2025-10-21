@@ -9,22 +9,12 @@ import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.GeocoderWeatherProvider
 import de.mm20.launcher2.weather.R
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import kotlin.math.roundToInt
 
 internal class BrightSkyProvider(
     private val context: Context,
 ) : GeocoderWeatherProvider(context) {
-    private val apiClient by lazy {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.brightsky.dev/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        retrofit.create<BrightSkyApi>()
-    }
-
+    private val brightSkyApi = BrightSkyApi()
 
     override suspend fun getWeatherData(location: WeatherLocation): List<Forecast>? {
         return when (location) {
@@ -53,7 +43,7 @@ internal class BrightSkyProvider(
             val startDate = format.format(date.timeInMillis)
             date.timeInMillis += 1000 * 60 * 60 * 24 * 14
             val endDate = format.format(date.timeInMillis)
-            apiClient.weather(
+            brightSkyApi.weather(
                 date = startDate,
                 lastDate = endDate,
                 lat = lat,

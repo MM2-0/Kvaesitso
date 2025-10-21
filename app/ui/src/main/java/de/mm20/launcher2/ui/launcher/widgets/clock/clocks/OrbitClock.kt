@@ -49,6 +49,7 @@ fun OrbitClock(
     compact: Boolean,
     showSeconds: Boolean,
     twentyFourHours: Boolean,
+    monospaced: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
 ) {
@@ -126,8 +127,12 @@ fun OrbitClock(
     val contentColor = LocalContentColor.current
 
     val textMeasurer = rememberTextMeasurer()
-    val minuteStyle = MaterialTheme.typography.labelMedium
-    val hourStyle = MaterialTheme.typography.labelLarge
+    val minuteStyle = MaterialTheme.typography.labelMedium.copy(
+        fontFeatureSettings = if (monospaced) "tnum" else null
+    )
+    val hourStyle = MaterialTheme.typography.labelLarge.copy(
+        fontFeatureSettings = if (monospaced) "tnum" else null
+    )
 
     val strokeWidth = if (verticalLayout) 2.dp else 1.dp
 

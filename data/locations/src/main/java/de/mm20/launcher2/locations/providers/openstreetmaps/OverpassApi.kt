@@ -1,13 +1,20 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.Converter
-import retrofit2.Retrofit
-import retrofit2.http.Body
-import retrofit2.http.POST
-import java.lang.reflect.Type
+import de.mm20.launcher2.serialization.Json
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.path
+import io.ktor.http.takeFrom
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.Serializable
 import kotlin.math.cos
+
+internal sealed interface OverpassQuery {
+    fun toQueryString(): String
+}
 
 /**
  * Overpass API query builder
@@ -15,7 +22,7 @@ import kotlin.math.cos
  * - match the query string in their name or brand tag
  * - match one of the given tag groups
  */
-data class OverpassFuzzyRadiusQuery(
+internal data class OverpassFuzzyRadiusQuery(
     /**
      * Free text query to search for.
      */
@@ -31,41 +38,9 @@ data class OverpassFuzzyRadiusQuery(
     val radius: Int,
     val latitude: Double,
     val longitude: Double,
-)
-
-data class OverpassIdQuery(
-    val id: Long,
-)
-
-data class OverpassResponse(
-    val elements: List<OverpassResponseElement>,
-)
-
-data class OverpassResponseElementCenter(
-    val lat: Double,
-    val lon: Double,
-)
-
-data class OverpassResponseElement(
-    val type: String,
-    val id: Long,
-    val lat: Double?,
-    val lon: Double?,
-    val center: OverpassResponseElementCenter?,
-    val tags: Map<String, String>?,
-)
-
-interface OverpassApi {
-    @POST("api/interpreter")
-    suspend fun search(@Body data: OverpassFuzzyRadiusQuery): OverpassResponse
-
-    @POST("api/interpreter")
-    suspend fun search(@Body data: OverpassIdQuery): OverpassResponse
-}
-
-class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, RequestBody> {
-    override fun convert(value: OverpassFuzzyRadiusQuery): RequestBody {
-        val encodedQuery = value.query.split(' ')
+) : OverpassQuery {
+    override fun toQueryString(): String {
+        val encodedQuery = query.split(' ')
             .joinToString(
                 separator = ".*",
                 prefix = "\"",
@@ -73,18 +48,18 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
             ) { Regex.escapeReplacement(it) }
 
         val overpassQlBuilder = StringBuilder()
-        val latDegreeChange = value.radius * 0.00001 / 1.11
-        val lonDegreeChange = latDegreeChange / cos(Math.toRadians(value.latitude))
+        val latDegreeChange = radius * 0.00001 / 1.11
+        val lonDegreeChange = latDegreeChange / cos(Math.toRadians(latitude))
         val boundingBox = arrayOf(
-            value.latitude - latDegreeChange, value.longitude - lonDegreeChange,
-            value.latitude + latDegreeChange, value.longitude + lonDegreeChange
+            latitude - latDegreeChange, longitude - lonDegreeChange,
+            latitude + latDegreeChange, longitude + lonDegreeChange
         )
         overpassQlBuilder.append("[out:json][timeout:10][bbox:" + boundingBox.joinToString(",") + "];")
 
         overpassQlBuilder.append("(")
         overpassQlBuilder.append("nw[name~$encodedQuery,i];")
         overpassQlBuilder.append("nw[brand~$encodedQuery,i];")
-        for (tag in value.tagGroups) {
+        for (tag in tagGroups) {
             val tags = tag.split(',')
 
             if (tags.isEmpty()) continue
@@ -95,32 +70,67 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
         // center to add the center coordinate of a way to the result, if applicable
         overpassQlBuilder.append("out center;")
 
-        return overpassQlBuilder.toString().toRequestBody()
+        return overpassQlBuilder.toString()
     }
 }
 
-class OverpassIdQueryConverter : Converter<OverpassIdQuery, RequestBody> {
-    override fun convert(value: OverpassIdQuery): RequestBody = """
-        [out:json];
-        nw(${value.id});
-        out center;
-    """.trimIndent().toRequestBody()
-}
-
-class OverpassQueryConverterFactory : Converter.Factory() {
-    override fun requestBodyConverter(
-        type: Type,
-        parameterAnnotations: Array<out Annotation>,
-        methodAnnotations: Array<out Annotation>,
-        retrofit: Retrofit
-    ): Converter<*, RequestBody>? {
-        if (type == OverpassFuzzyRadiusQuery::class.java)
-            return OverpassFuzzyRadiusQueryConverter()
-
-        if (type == OverpassIdQuery::class.java)
-            return OverpassIdQueryConverter()
-
-        return null
+internal data class OverpassIdQuery(
+    val id: Long,
+) : OverpassQuery {
+    override fun toQueryString(): String {
+        return """
+            [out:json];
+            nw($id);
+            out center;
+        """.trimIndent()
     }
 }
+
+@Serializable
+internal data class OverpassResponse(
+    val elements: List<OverpassResponseElement>,
+)
+
+@Serializable
+internal data class OverpassResponseElementCenter(
+    val lat: Double,
+    val lon: Double,
+)
+
+@Serializable
+internal data class OverpassResponseElement(
+    val type: String,
+    val id: Long,
+    val lat: Double?,
+    val lon: Double?,
+    val center: OverpassResponseElementCenter?,
+    val tags: Map<String, String>?,
+)
+
+internal class OverpassApi {
+
+    private val httpClient by lazy {
+        HttpClient {
+            install(ContentNegotiation) {
+                json(Json.Lenient)
+            }
+        }
+    }
+
+    suspend fun interpreter(
+        baseUrl: String,
+        query: OverpassQuery,
+    ): OverpassResponse {
+        return httpClient.post {
+            url {
+                takeFrom(baseUrl)
+                if (pathSegments.isEmpty()) {
+                    path("api", "interpreter")
+                }
+            }
+            setBody(query.toQueryString())
+        }.body()
+    }
+}
+
 

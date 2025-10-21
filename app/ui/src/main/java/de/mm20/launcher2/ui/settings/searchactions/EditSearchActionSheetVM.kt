@@ -9,6 +9,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.romanize
@@ -16,8 +17,8 @@ import de.mm20.launcher2.searchactions.SearchActionService
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.AppSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomIntentActionBuilder
-import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomWebsearchActionBuilder
+import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -182,6 +183,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
     private val invalidWebsearchUrl = mutableStateOf<String?>(null)
     val websearchInvalidUrlError =
         derivedStateOf { invalidWebsearchUrl.value == (searchAction.value as? CustomWebsearchActionBuilder)?.urlTemplate }
+    val customIntentTemplateError = mutableStateOf(false)
     val customIntentKeyError = mutableStateOf(false)
     fun validate(): Boolean {
         val action = searchAction.value ?: return false
@@ -192,9 +194,9 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
             return valid
         }
         if (action is CustomIntentActionBuilder) {
-            val valid = action.queryKey.isNotBlank()
-            customIntentKeyError.value = !valid
-            return valid
+            customIntentTemplateError.value = !(action.queryTemplate.isNullOrEmpty() || action.queryTemplate!!.contains("\${1}"))
+            customIntentKeyError.value = action.queryKey != null && action.queryKey!!.isEmpty()
+            return !customIntentTemplateError.value && !customIntentKeyError.value
         }
         return true
     }
@@ -218,7 +220,12 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
             deleteCustomIcon(action.customIcon)
         }
         searchAction.value = when (action) {
-            is CustomWebsearchActionBuilder -> action.copy(icon = icon, customIcon = null, iconColor = 0)
+            is CustomWebsearchActionBuilder -> action.copy(
+                icon = icon,
+                customIcon = null,
+                iconColor = 0
+            )
+
             is CustomIntentActionBuilder -> action.copy(
                 icon = icon,
                 customIcon = null,
@@ -484,11 +491,95 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
         }
     }
 
-    fun setIntentQueryExtra(key: String) {
+    fun setIntentType(type: String) {
+        val searchAction = searchAction.value ?: return
+        this.searchAction.value = when (searchAction) {
+            is CustomIntentActionBuilder -> searchAction.copy(
+                baseIntent = searchAction.baseIntent.cloneFilter().also {
+                    val extras = searchAction.baseIntent.extras?.deepCopy() ?: Bundle()
+                    it.replaceExtras(extras)
+                    it.setDataAndType(it.data, type.takeIf { it.isNotBlank() })
+                },
+            )
+
+            else -> searchAction
+        }
+    }
+
+    fun setIntentData(data: String) {
+        val searchAction = searchAction.value ?: return
+        this.searchAction.value = when (searchAction) {
+            is CustomIntentActionBuilder -> searchAction.copy(
+                baseIntent = searchAction.baseIntent.cloneFilter().also {
+                    val extras = searchAction.baseIntent.extras?.deepCopy() ?: Bundle()
+                    it.replaceExtras(extras)
+                    it.setDataAndType(data.takeIf { it.isNotEmpty() }?.toUri(), it.type)
+                },
+            )
+
+            else -> searchAction
+        }
+    }
+
+    fun setIntentPackage(pkg: String) {
+        val searchAction = searchAction.value ?: return
+        this.searchAction.value = when (searchAction) {
+            is CustomIntentActionBuilder -> searchAction.copy(
+                baseIntent = searchAction.baseIntent.cloneFilter().also {
+                    val extras = searchAction.baseIntent.extras?.deepCopy() ?: Bundle()
+                    it.replaceExtras(extras)
+                    if (pkg.isBlank()) {
+                        it.`package` = null
+                        it.component = null
+                    } else if (it.component != null) {
+                        it.component = ComponentName(pkg, it.component!!.className)
+                    } else {
+                        it.`package` = pkg
+                    }
+                },
+            )
+            else -> searchAction
+        }
+    }
+    fun setIntentClassName(className: String) {
+        val searchAction = searchAction.value ?: return
+        this.searchAction.value = when (searchAction) {
+            is CustomIntentActionBuilder -> searchAction.copy(
+                baseIntent = searchAction.baseIntent.cloneFilter().also {
+                    val extras = searchAction.baseIntent.extras?.deepCopy() ?: Bundle()
+                    it.replaceExtras(extras)
+
+                    val pkg = it.component?.packageName ?: it.`package`
+
+                    if (className.isBlank()) {
+                        it.`package` = pkg
+                        it.component = null
+                    } else if (pkg != null) {
+                        it.`package` = null
+                        it.component = ComponentName(pkg, className)
+                    }
+                },
+            )
+            else -> searchAction
+        }
+    }
+
+    fun setQueryKey(key: String?) {
         val action = searchAction.value ?: return
         searchAction.value = when (action) {
             is CustomIntentActionBuilder -> action.copy(
                 queryKey = key,
+            )
+
+            else -> action
+        }
+    }
+
+    fun setIntentQueryTemplate(template: String) {
+        val action = searchAction.value ?: return
+        searchAction.value = when (action) {
+            is CustomIntentActionBuilder -> action.copy(
+                queryTemplate = template.takeIf { it.isNotEmpty() },
             )
 
             else -> action

@@ -23,6 +23,6 @@ hero:
   <img src="/img/screenshot-5.png"></img>
   <img src="/img/screenshot-6.png"></img>
 
-  <div class="credits">Wallpaper by Allec Gomes on <a href="https://unsplash.com/de/fotos/ein-grunes-blatt-das-auf-einem-gewasser-schwimmt-UcWUMqIsld8" target="_blank">Unspash.com</a></div>
+  <div class="credits">Wallpaper by Allec Gomes on <a href="https://unsplash.com/de/fotos/ein-grunes-blatt-das-auf-einem-gewasser-schwimmt-UcWUMqIsld8" target="_blank">Unsplash.com</a></div>
 </div>
 <Footer></Footer>

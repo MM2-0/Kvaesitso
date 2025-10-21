@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
+import android.app.WallpaperManager
 import android.view.animation.PathInterpolator
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.PredictiveBackHandler
@@ -16,6 +17,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.draggable2D
 import androidx.compose.foundation.gestures.rememberDraggable2DState
@@ -74,6 +76,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
@@ -1099,6 +1102,8 @@ internal fun LauncherScaffold(
     val activity = LocalActivity.current as AppCompatActivity
     val view = LocalView.current
 
+    val wallpaperManager = remember(activity) { WallpaperManager.getInstance(activity) }
+
     val density = LocalDensity.current
     val systemBarInsets = WindowInsets.displayCutout
         .union(WindowInsets.waterfall)
@@ -1422,19 +1427,26 @@ internal fun LauncherScaffold(
                 config.homeComponent.Component(
                     Modifier
                         .fillMaxSize()
-                        .combinedClickable(
-                            enabled = config.longPress != null || config.doubleTap != null,
-                            onClick = {},
-                            onLongClick = if (config.longPress != null) {
-                                { scope.launch { state.onLongPress() } }
-                            } else null,
-                            onDoubleClick = if (config.doubleTap != null) {
-                                { scope.launch { state.onDoubleTap() } }
-                            } else null,
-                            hapticFeedbackEnabled = false,
-                            indication = null,
-                            interactionSource = null,
-                        )
+                        .pointerInput(wallpaperManager, config.doubleTap) {
+                            detectTapGestures(
+                                onDoubleTap = config.doubleTap?.let {
+                                    { scope.launch { state.onDoubleTap() } }
+                                },
+                                onLongPress = config.longPress?.let {
+                                    { scope.launch { state.onLongPress() } }
+                                },
+                                onTap = {
+                                    wallpaperManager.sendWallpaperCommand(
+                                        view.windowToken,
+                                        WallpaperManager.COMMAND_TAP,
+                                        it.x.toInt(),
+                                        it.y.toInt(),
+                                        0,
+                                        null
+                                    )
+                                }
+                            )
+                        }
                         .homePageAnimation(
                             state,
                             if (config.homeComponent.drawBackground) {

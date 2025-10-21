@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import de.mm20.launcher2.preferences.migrations.Migration2
 import de.mm20.launcher2.preferences.migrations.Migration3
 import de.mm20.launcher2.preferences.migrations.Migration4
@@ -13,7 +14,7 @@ internal class LauncherDataStore(
 ): BaseSettings<LauncherSettingsData>(
     context,
     fileName = "settings.json",
-    serializer = LauncherSettingsDataSerializer,
+    serializer = LauncherSettingsDataSerializer(context),
     migrations = listOf(
         Migration2(),
         Migration3(),
@@ -21,6 +22,7 @@ internal class LauncherDataStore(
         Migration5(),
         Migration6(),
     ),
+    corruptionHandler = ReplaceFileCorruptionHandler { LauncherSettingsData() }
 ) {
 
     val data

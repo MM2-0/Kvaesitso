@@ -16,7 +16,6 @@ import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.weather.breezy.BreezyWeatherProvider
 import de.mm20.launcher2.weather.brightsky.BrightSkyProvider
-import de.mm20.launcher2.weather.here.HereProvider
 import de.mm20.launcher2.weather.metno.MetNoProvider
 import de.mm20.launcher2.weather.openweathermap.OpenWeatherMapProvider
 import kotlinx.coroutines.*
@@ -182,14 +181,6 @@ internal class WeatherRepositoryImpl(
                 )
             )
         }
-        if (HereProvider.isAvailable(context)) {
-            providers.add(
-                WeatherProviderInfo(
-                    HereProvider.Id,
-                    context.getString(R.string.provider_here)
-                )
-            )
-        }
         if (BreezyWeatherProvider.isAvailable(context)) {
             providers.add(
                 WeatherProviderInfo(
@@ -253,8 +244,9 @@ class WeatherUpdateWorker(
             Result.retry()
         } else {
             Log.i("WeatherUpdateWorker", "Weather update succeeded")
+            val in7Days = System.currentTimeMillis() + Duration.ofDays(7).toMillis()
             appDatabase.weatherDao()
-                .replaceAll(weatherData.map { it.toDatabaseEntity() })
+                .replaceAll(weatherData.takeWhile { it.timestamp < in7Days  }.map { it.toDatabaseEntity() })
             settings.setLastUpdate(System.currentTimeMillis())
             Result.success()
         }

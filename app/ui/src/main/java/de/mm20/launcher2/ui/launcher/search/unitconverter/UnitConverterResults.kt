@@ -39,6 +39,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.icons.Cube
 import de.mm20.launcher2.search.data.CurrencyUnitConverter
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.ui.R
@@ -220,7 +221,7 @@ fun getDimensionIcon(dimension: Dimension): ImageVector {
         Dimension.Mass -> Icons.Rounded.FitnessCenter
         Dimension.Length -> Icons.Rounded.Straighten
         Dimension.Velocity -> Icons.Rounded.Speed
-        Dimension.Volume -> TODO()
+        Dimension.Volume -> Icons.Rounded.Cube
         Dimension.Area -> Icons.Rounded.SquareFoot
         Dimension.Currency -> Icons.Rounded.Toll
         Dimension.Data -> Icons.Rounded.Storage

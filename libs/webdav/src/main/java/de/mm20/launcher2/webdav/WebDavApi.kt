@@ -1,25 +1,30 @@
 package de.mm20.launcher2.webdav
 
 import com.balsikandar.crashreporter.CrashReporter
-import de.mm20.launcher2.ktx.castToOrNull
 import de.mm20.launcher2.ktx.decodeUrl
+import io.ktor.client.HttpClient
+import io.ktor.client.request.request
+import io.ktor.client.request.setBody
+import io.ktor.client.request.url
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.http.ContentType
+import io.ktor.http.HttpMethod
+import io.ktor.http.appendPathSegments
+import io.ktor.http.contentType
+import io.ktor.http.takeFrom
+import io.ktor.utils.io.jvm.javaio.toInputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.w3c.dom.Element
-import org.xml.sax.SAXException
-import java.io.IOException
-import java.io.InputStream
-import java.lang.Exception
-import java.net.URLDecoder
 import javax.xml.parsers.DocumentBuilderFactory
-import javax.xml.parsers.ParserConfigurationException
 
 object WebDavApi {
-    suspend fun search(webDavUrl: String, username: String, query: String, client: OkHttpClient): List<WebDavFile> {
+    suspend fun search(
+        webDavUrl: String,
+        username: String,
+        query: String,
+        client: HttpClient
+    ): List<WebDavFile> {
         val requestBody = """
             <?xml version="1.0" encoding="UTF-8"?>
              <d:searchrequest xmlns:d="DAV:" xmlns:oc="http://owncloud.org/ns">
@@ -52,54 +57,55 @@ object WebDavApi {
                 </d:basicsearch>
             </d:searchrequest>
         """.trimIndent()
-        val request = Request.Builder()
-                .url(webDavUrl)
-                .method("SEARCH", requestBody.toRequestBody("text/xml".toMediaType()))
-                .build()
         return withContext(Dispatchers.IO) {
             val results = mutableListOf<WebDavFile>()
             try {
-                val response = client.newCall(request).execute()
-                val document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(response.body?.byteStream()
-                        ?: return@withContext emptyList<WebDavFile>())
+                val response = client.request {
+                    method = HttpMethod("SEARCH")
+                    url(webDavUrl)
+                    setBody(requestBody)
+                    contentType(ContentType.Text.Xml)
+                }
+                val document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                    .parse(response.bodyAsChannel().toInputStream())
                 val responses = document.getElementsByTagName("d:response")
                 for (i in 0 until responses.length) {
                     val res = responses.item(i) as? Element ?: continue
                     val url = res.getElementsByTagName("d:href")
-                            .takeIf { it.length > 0 }?.item(0)
-                            ?.textContent?.takeIf { it.isNotEmpty() } ?: continue
+                        .takeIf { it.length > 0 }?.item(0)
+                        ?.textContent?.takeIf { it.isNotEmpty() } ?: continue
                     val fileId = res.getElementsByTagName("oc:fileid")
-                            .takeIf { it.length > 0 }?.item(0)
-                            ?.textContent?.toLongOrNull() ?: continue
+                        .takeIf { it.length > 0 }?.item(0)
+                        ?.textContent?.toLongOrNull() ?: continue
 
                     val displayName = res.getElementsByTagName("d:displayname")
-                            .takeIf { it.length > 0 }?.item(0)?.textContent
-                            ?.takeIf { it.isNotEmpty() }
-                            ?: url.trimEnd('/').substringAfterLast("/").decodeUrl("utf8")
-                            ?: continue
+                        .takeIf { it.length > 0 }?.item(0)?.textContent
+                        ?.takeIf { it.isNotEmpty() }
+                        ?: url.trimEnd('/').substringAfterLast("/").decodeUrl("utf8")
+                        ?: continue
 
                     val isDirectory = res.getElementsByTagName("d:resourcetype")
-                            .takeIf { it.length > 0 }
-                            ?.item(0)?.childNodes?.length == 1
+                        .takeIf { it.length > 0 }
+                        ?.item(0)?.childNodes?.length == 1
                     val mimeType = res.getElementsByTagName("d:getcontenttype")
-                            .takeIf { it.length > 0 }?.item(0)?.textContent?.takeIf { it.isNotEmpty() }
-                            ?: if (isDirectory) "inode/directory" else "application/octet-stream"
+                        .takeIf { it.length > 0 }?.item(0)?.textContent?.takeIf { it.isNotEmpty() }
+                        ?: if (isDirectory) "inode/directory" else "application/octet-stream"
                     val size = res.getElementsByTagName("oc:size")
-                            .takeIf { it.length > 0 }?.item(0)?.textContent?.toLongOrNull()
-                            ?: 0L
+                        .takeIf { it.length > 0 }?.item(0)?.textContent?.toLongOrNull()
+                        ?: 0L
                     val owner = res.getElementsByTagName("oc:owner-display-name")
-                            .takeIf { it.length > 0 }?.item(0)?.textContent
-                            ?.takeIf { it.isNotEmpty() }
+                        .takeIf { it.length > 0 }?.item(0)?.textContent
+                        ?.takeIf { it.isNotEmpty() }
 
 
                     results += WebDavFile(
-                            name = displayName,
-                            id = fileId,
-                            isDirectory = isDirectory,
-                            mimeType = mimeType,
-                            size = size,
-                            owner = owner,
-                            url = url
+                        name = displayName,
+                        id = fileId,
+                        isDirectory = isDirectory,
+                        mimeType = mimeType,
+                        size = size,
+                        owner = owner,
+                        url = url
                     )
                 }
             } catch (e: Exception) {
@@ -131,56 +137,65 @@ object WebDavApi {
         """.trimIndent()
     }
 
-    suspend fun searchReport(webDavUrl: String, username: String, query: String, client: OkHttpClient): List<WebDavFile> {
+    suspend fun searchReport(
+        webDavUrl: String,
+        username: String,
+        query: String,
+        client: HttpClient
+    ): List<WebDavFile> {
         val requestBody = getSearchRequestBody(query)
-        val request = Request.Builder()
-                .url("${webDavUrl}files/$username")
-                .method("REPORT", requestBody.toRequestBody())
-                .build()
         return withContext(Dispatchers.IO) {
             val results = mutableListOf<WebDavFile>()
             try {
-                val response = client.newCall(request).execute()
-                val document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(response.body?.byteStream()
-                        ?: return@withContext emptyList<WebDavFile>())
+                val response = client.request {
+                    method = HttpMethod("REPORT")
+                    url {
+                        takeFrom(webDavUrl)
+                        appendPathSegments("files", username)
+                    }
+                    setBody(requestBody)
+                    contentType(ContentType.Text.Xml)
+                }
+                val document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                    .parse(response.bodyAsChannel().toInputStream())
                 val responses = document.getElementsByTagName("d:response")
                 for (i in 0 until responses.length) {
                     val res = responses.item(i) as? Element ?: continue
                     val url = res.getElementsByTagName("d:href")
-                            .takeIf { it.length > 0 }?.item(0)
-                            ?.textContent?.takeIf { it.isNotEmpty() } ?: continue
+                        .takeIf { it.length > 0 }?.item(0)
+                        ?.textContent?.takeIf { it.isNotEmpty() } ?: continue
                     val fileId = res.getElementsByTagName("oc:fileid")
-                            .takeIf { it.length > 0 }?.item(0)
-                            ?.textContent?.toLongOrNull() ?: continue
+                        .takeIf { it.length > 0 }?.item(0)
+                        ?.textContent?.toLongOrNull() ?: continue
 
                     val displayName = res.getElementsByTagName("d:displayname")
-                            .takeIf { it.length > 0 }?.item(0)?.textContent
-                            ?.takeIf { it.isNotEmpty() }
-                            ?: url.trimEnd('/').substringAfterLast("/").decodeUrl("utf8")
-                            ?: continue
+                        .takeIf { it.length > 0 }?.item(0)?.textContent
+                        ?.takeIf { it.isNotEmpty() }
+                        ?: url.trimEnd('/').substringAfterLast("/").decodeUrl("utf8")
+                        ?: continue
 
                     val isDirectory = res.getElementsByTagName("d:resourcetype")
-                            .takeIf { it.length > 0 }
-                            ?.item(0)?.childNodes?.length == 1
+                        .takeIf { it.length > 0 }
+                        ?.item(0)?.childNodes?.length == 1
                     val mimeType = res.getElementsByTagName("d:getcontenttype")
-                            .takeIf { it.length > 0 }?.item(0)?.textContent?.takeIf { it.isNotEmpty() }
-                            ?: if (isDirectory) "inode/directory" else "application/octet-stream"
+                        .takeIf { it.length > 0 }?.item(0)?.textContent?.takeIf { it.isNotEmpty() }
+                        ?: if (isDirectory) "inode/directory" else "application/octet-stream"
                     val size = res.getElementsByTagName("oc:size")
-                            .takeIf { it.length > 0 }?.item(0)?.textContent?.toLongOrNull()
-                            ?: 0L
+                        .takeIf { it.length > 0 }?.item(0)?.textContent?.toLongOrNull()
+                        ?: 0L
                     val owner = res.getElementsByTagName("oc:owner-display-name")
-                            .takeIf { it.length > 0 }?.item(0)?.textContent
-                            ?.takeIf { it.isNotEmpty() }
+                        .takeIf { it.length > 0 }?.item(0)?.textContent
+                        ?.takeIf { it.isNotEmpty() }
 
 
                     results += WebDavFile(
-                            name = displayName,
-                            id = fileId,
-                            isDirectory = isDirectory,
-                            mimeType = mimeType,
-                            size = size,
-                            owner = owner,
-                            url = url
+                        name = displayName,
+                        id = fileId,
+                        isDirectory = isDirectory,
+                        mimeType = mimeType,
+                        size = size,
+                        owner = owner,
+                        url = url
                     )
                 }
             } catch (e: Exception) {

@@ -504,12 +504,12 @@
     <string name="search_action_alarm">ตั้งปลุก</string>
     <string name="search_action_timer">เริ่มจับเวลา</string>
     <string name="search_action_event">เขียนกำหนดการกิจกรรม</string>
-    <string name="create_search_action_type">คุณอยากสร้างแอ็กชั่นแบบไหน\?</string>
+    <string name="create_search_action_type">คุณอยากสร้างแอ็กชั่นแบบไหน?</string>
     <string name="create_search_action_type_intent">Intent แบบกำหนดเอง</string>
     <string name="create_search_action_pick_app">เลือกแอปที่จะค้นหา:</string>
     <string name="create_search_action_website_invalid_url">ไม่สามารถใช้เว็บไซต์ที่ระบุเป็นเครื่องค้นหาบนเว็บแบบอัตโนมัติได้ คุณสามารถลองเว็บไซต์อื่นๆหรือป้อนข้อมูลที่จำเป็นด้วยตัวคุณเองในขั้นตอนต่อไป</string>
     <string name="search_action_websearch_url">แม่แบบลิงก์</string>
-    <string name="search_action_websearch_url_hint">แม่แบบลิงก์ที่จะนำไปใช้สร้างลิงก์ค้นหาผ่านเว็บ ใช้ ‘${1}’ เป็นตัวยึดตำแหน่งสำหรับคำค้นหาจริง เช่น https://google.com/search\?q=${1}</string>
+    <string name="search_action_websearch_url_hint">แม่แบบลิงก์ที่จะนำไปใช้สร้างลิงก์ค้นหาผ่านเว็บ ใช้ ‘${1}’ เป็นตัวยึดตำแหน่งสำหรับคำค้นหาจริง เช่น https://google.com/search?q=${1}</string>
     <string name="tag_exists_error">มีแท็กชื่อนี้อยู่แล้ว</string>
     <string name="tag_exists_message">มีแท็กชื่อนี้อยู่แล้ว ถ้าคุณไปต่อ ทั้งสองแท็กจะถูกนำมารวมกัน</string>
     <string name="tag_select_items">สิ่งที่ถูกเลือก:</string>
@@ -852,4 +852,8 @@
     <string name="preference_search_bar_style_hidden">ซ่อน</string>
     <string name="clock_variant_analog_ticks">ขีด</string>
     <string name="music_widget_interactive_progress_bar">แถบเวลาแบบควบคุมได้</string>
+    <string name="preference_clock_widget_monospaced">ตัวเลขแบบความกว้างคงที่</string>
+    <string name="poi_category_climbing_gym">ยิมปีนผา</string>
+    <string name="poi_category_hackerspace">แฮกเกอร์สเปซ</string>
+    <string name="poi_category_stationery">ร้านขายเครื่องเขียน</string>
 </resources>

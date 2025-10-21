@@ -18,9 +18,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
+import kotlin.time.Duration.Companion.seconds
 
 internal class LocationsRepository(
     private val context: Context,
@@ -33,19 +36,24 @@ internal class LocationsRepository(
     override fun search(
         query: String
     ): Flow<ImmutableList<Location>> {
-        if (query.isBlank()) {
+        if (query.isBlank() || query.length <= 1) {
             return flowOf(persistentListOf())
         }
-
-        val hasPermission = permissionsManager.hasPermission(PermissionGroup.Location)
-
         return combineTransform(
-            poseProvider.getLocation(minDistanceM = 50.0f),
-            settings.data,
-            hasPermission
-        ) { userLocation, settingsData, permission ->
+            poseProvider
+                .getLocation(minTimeMs = 2000, minDistanceM = 50.0f)
+                // 1st location: lastCachedLocation of poseProvider, if available
+                // 2nd location: LocationManager.getLastKnownLocation(), if available and better than lastCachedLocation
+                // 3rd location: live location from LocationManager.requestLocationUpdates() that is better than any of the previous
+                .take(3)
+                // only request locations for 30 seconds
+                .timeout(30.seconds),
+            permissionsManager.hasPermission(PermissionGroup.Location),
+            settings.data
+        ) { userLocation, hasPermission, settingsData ->
             emit(persistentListOf())
-            if (!permission || settingsData.providers.isEmpty()) {
+
+            if (!hasPermission || settingsData.providers.isEmpty()) {
                 return@combineTransform
             }
 

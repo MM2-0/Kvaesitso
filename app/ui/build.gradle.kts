@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -37,27 +39,25 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs = listOf(
-            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-            "-opt-in=androidx.compose.ui.text.ExperimentalTextApi",
-            "-opt-in=androidx.compose.ui.unit.ExperimentalUnitApi",
-            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
-            "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
-            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-            "-opt-in=androidx.compose.material3.ExperimentalMaterial3ExpressiveApi",
-            "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
-            "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-            "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
-            "-opt-in=androidx.compose.animation.ExperimentalSharedTransitionApi",
-            "-Xwhen-guards",
-        )
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+            optIn.add("androidx.compose.ui.ExperimentalComposeUiApi")
+            optIn.add("androidx.compose.foundation.ExperimentalFoundationApi")
+            optIn.add("androidx.compose.ui.text.ExperimentalTextApi")
+            optIn.add("androidx.compose.ui.unit.ExperimentalUnitApi")
+            optIn.add("androidx.compose.foundation.layout.ExperimentalLayoutApi")
+            optIn.add("androidx.compose.material.ExperimentalMaterialApi")
+            optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
+            optIn.add("androidx.compose.material3.ExperimentalMaterial3ExpressiveApi")
+            optIn.add("androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi")
+            optIn.add("androidx.compose.animation.ExperimentalAnimationApi")
+            optIn.add("com.google.accompanist.pager.ExperimentalPagerApi")
+            optIn.add("androidx.compose.animation.ExperimentalSharedTransitionApi")
+        }
     }
 
     buildFeatures {
-        // Enables Jetpack Compose for this module
         compose = true
         viewBinding = true
     }
@@ -68,6 +68,7 @@ android {
     namespace = "de.mm20.launcher2.ui"
 }
 
+
 dependencies {
     implementation(libs.bundles.kotlin)
 
@@ -76,7 +77,6 @@ dependencies {
     implementation(libs.androidx.compose.foundationlayout)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uitooling)
-    implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.materialicons)
     implementation(libs.androidx.compose.animation)
@@ -117,8 +117,6 @@ dependencies {
 
     implementation(libs.coil.core)
     implementation(libs.coil.compose)
-
-    implementation(libs.emoji4j)
 
     implementation(project(":libs:material-color-utilities"))
 

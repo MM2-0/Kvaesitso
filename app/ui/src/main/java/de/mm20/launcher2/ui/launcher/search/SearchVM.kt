@@ -358,8 +358,8 @@ class SearchVM : ViewModel(), KoinComponent {
                 b.score.score
             }
 
-            val aTotal = aScore * 0.7f + aWeight.toFloat() * 0.3f
-            val bTotal = bScore * 0.7f + bWeight.toFloat() * 0.3f
+            val aTotal = aScore * 0.6f + aWeight.toFloat() * 0.4f
+            val bTotal = bScore * 0.6f + bWeight.toFloat() * 0.4f
 
             bTotal.compareTo(aTotal)
         }

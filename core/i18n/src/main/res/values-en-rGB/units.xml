@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unit_gallon_imp_symbol">gal</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">gallon</item>
+        <item quantity="other">gallons</item>
+    </plurals>
+    <string name="unit_pint_imp_symbol">pt</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">pint</item>
+        <item quantity="other">pints</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">fl oz</string>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">fluid ounce</item>
+        <item quantity="other">fluid ounces</item>
+    </plurals>
+</resources>

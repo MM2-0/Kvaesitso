@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 android {
@@ -27,8 +30,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+        }
     }
     namespace = "de.mm20.launcher2.wikipedia"
 }
@@ -41,8 +46,7 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
 
-    implementation(libs.okhttp)
-    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.ktor)
 
     implementation(libs.koin.android)
 

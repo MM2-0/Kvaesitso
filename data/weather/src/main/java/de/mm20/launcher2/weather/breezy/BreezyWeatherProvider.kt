@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.time.Duration
 import kotlin.time.Duration.Companion.days
 
 class BreezyWeatherProvider(
@@ -112,8 +113,9 @@ class BreezyWeatherProvider(
         }
 
         withContext(Dispatchers.IO) {
+            val in7Days = System.currentTimeMillis() + Duration.ofDays(7).toMillis()
             database.weatherDao()
-                .replaceAll(result.map { it.toDatabaseEntity() })
+                .replaceAll(result.takeWhile { it.timestamp < in7Days  }.map { it.toDatabaseEntity() })
         }
     }
 
@@ -132,8 +134,8 @@ class BreezyWeatherProvider(
             771, 781, in 900..902, in 958..962 -> WeatherIcon.Storm
             800 -> WeatherIcon.Clear
             801 -> WeatherIcon.PartlyCloudy
-            802 -> WeatherIcon.MostlyCloudy
-            803 -> WeatherIcon.BrokenClouds
+            802 -> WeatherIcon.BrokenClouds
+            803 -> WeatherIcon.MostlyCloudy
             804, 951 -> WeatherIcon.Cloudy
             903 -> WeatherIcon.Cold
             904 -> WeatherIcon.Hot

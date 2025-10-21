@@ -304,4 +304,29 @@
         <item quantity="other">de iarzi</item>
     </plurals>
     <string name="unit_megabit_symbol">Megabit</string>
+    <plurals name="unit_ounce">
+        <item quantity="one">uncie</item>
+        <item quantity="few">uncii</item>
+        <item quantity="other">uncii</item>
+    </plurals>
+    <string name="dimension_length">Lungime</string>
+    <string name="dimension_mass">masă</string>
+    <string name="dimension_velocity">Viteză</string>
+    <string name="dimension_volume">Volum</string>
+    <string name="dimension_currency">valută</string>
+    <string name="dimension_bitrate">Bitrate</string>
+    <string name="dimension_pressure">Presiune</string>
+    <string name="dimension_energy">Energie</string>
+    <string name="dimension_frequency">frecvență</string>
+    <string name="dimension_temperature">Temperatură</string>
+    <plurals name="unit_knot">
+        <item quantity="one">nod</item>
+        <item quantity="few">noduri</item>
+        <item quantity="other">noduri</item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="one">Piatră</item>
+        <item quantity="few">Pietre</item>
+        <item quantity="other">Pietre</item>
+    </plurals>
 </resources>

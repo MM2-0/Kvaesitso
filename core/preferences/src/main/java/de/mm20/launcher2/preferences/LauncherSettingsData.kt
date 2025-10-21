@@ -44,6 +44,7 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetCustom: ClockWidgetStyle.Custom = ClockWidgetStyle.Custom(),
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
     val clockWidgetShowSeconds: Boolean = false,
+    val clockWidgetMonospaced: Boolean = false,
     val clockWidgetTimeFormat: TimeFormat = TimeFormat.System,
     val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
@@ -54,6 +55,7 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
 
     val homeScreenDock: Boolean = false,
+    val homeScreenDockRows: Int = 1,
     val homeScreenWidgets: Boolean = false,
 
     val favoritesEnabled: Boolean = true,

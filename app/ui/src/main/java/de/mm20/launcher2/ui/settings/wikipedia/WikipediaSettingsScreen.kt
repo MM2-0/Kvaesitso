@@ -18,8 +18,6 @@ fun WikipediaSettingsScreen() {
         item {
             PreferenceCategory {
                 val wikipedia by viewModel.wikipedia.collectAsState()
-                val customUrl by viewModel.customUrl.collectAsState()
-
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_wikipedia),
                     summary = stringResource(R.string.preference_search_wikipedia_summary),
@@ -28,6 +26,7 @@ fun WikipediaSettingsScreen() {
                         viewModel.setWikipedia(it)
                     }
                 )
+                val customUrl by viewModel.customUrl.collectAsState()
                 TextPreference(
                     title = stringResource(R.string.preference_wikipedia_customurl),
                     value = customUrl ?: "",

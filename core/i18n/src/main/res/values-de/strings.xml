@@ -38,7 +38,7 @@
     <string name="preference_screen_appearance_summary">Personalisierung des Launchers</string>
     <string name="preference_category_location">Standort</string>
     <string name="preference_automatic_location">Automatischer Standort</string>
-    <string name="preference_automatic_location_summary">GPS und Ortungsdienste verwenden, um Standort automatisch zu ermitteln</string>
+    <string name="preference_automatic_location_summary">Ortungsdienste verwenden, um den Standort automatisch zu ermitteln</string>
     <string name="preference_location">Standort</string>
     <string name="preference_imperial_units_summary">Grad Fahrenheit und Meilen pro Stunde verwenden</string>
     <string name="preference_imperial_units">Imperiale Einheiten</string>
@@ -60,7 +60,7 @@
     <string name="file_type_document">Dokument</string>
     <string name="file_type_spreadsheet">Kalkulationstabelle</string>
     <string name="file_type_video">Video</string>
-    <string name="file_type_music">Musik-Datei</string>
+    <string name="file_type_music">Audio</string>
     <string name="file_type_image">Bild</string>
     <string name="file_type_none">Datei</string>
     <string name="file_type_generic">%1$s-Datei</string>
@@ -68,8 +68,8 @@
     <string name="file_type_presentation">Präsentation</string>
     <string name="file_type_compressed">Komprimierte Datei</string>
     <string name="file_type_text">Text-Datei</string>
-    <string name="alert_delete_directory">Das Verzeichnis %1$s wird samt Inhalt unwideruflich gelöscht. Fortfahren\?</string>
-    <string name="alert_delete_file">Die Datei %1$s wird unwideruflich gelöscht. Fortfahren\?</string>
+    <string name="alert_delete_directory">Das Verzeichnis %1$s wird samt Inhalt unwiderruflich gelöscht. Fortfahren?</string>
+    <string name="alert_delete_file">Die Datei %1$s wird unwiderruflich gelöscht. Fortfahren?</string>
     <string name="file_meta_title">Titel: %1$s</string>
     <string name="file_meta_artist">Künstler: %1$s</string>
     <string name="file_meta_album">Album: %1$s</string>
@@ -105,7 +105,7 @@
     <string name="preference_category_system_bars">Systemleisten</string>
     <string name="preference_hide_status_bar">Statusleiste ausblenden</string>
     <string name="preference_hide_nav_bar">Navigationsleiste ausblenden</string>
-    <string name="widget_name_music">Musik</string>
+    <string name="widget_name_music">Medien</string>
     <string name="menu_contacts_open_externally">In Kontakte-App anzeigen</string>
     <string name="menu_favorites_pin">An Favoriten anheften</string>
     <string name="menu_favorites_unpin">Aus Favoriten entfernen</string>
@@ -169,11 +169,11 @@
     <string name="weather_condition_wind">Wind</string>
     <string name="weather_condition_unknown">Unbekannt</string>
     <string name="easter_egg_text">Tja, da sind Sie. Herzlichen Glückwunsch. War es das wert\?</string>
-    <string name="missing_permission_calendar_widget">Kalender-Berechtigung gewähren, um Ihre nächsten Termine hier anzuzeigen.</string>
-    <string name="missing_permission_calendar_search">Kalender-Berechtigung gewähren, um Termine zu durchsuchen.</string>
-    <string name="missing_permission_location_search">Standortzugriff gewähren, um Orte zu finden.</string>
-    <string name="missing_permission_contact_search">Kontakt-Berechtigung gewähren, um Kontakte zu durchsuchen.</string>
-    <string name="missing_permission_files_search">Speicher-Berechtigung gewähren, um Fotos, Medien und Dokumente auf diesem Gerät zu durchsuchen.</string>
+    <string name="missing_permission_calendar_widget">Kalender-Berechtigung wird benötigt, um Ihre nächsten Termine hier anzuzeigen</string>
+    <string name="missing_permission_calendar_search">Kalender-Berechtigung wird benötigt, um Termine zu durchsuchen.</string>
+    <string name="missing_permission_location_search">Standortzugriff wird benötigt, um Orte zu finden</string>
+    <string name="missing_permission_contact_search">Kontakt-Berechtigung wird benötigt, um Kontakte zu durchsuchen.</string>
+    <string name="missing_permission_files_search">Speicher-Berechtigung wird benötigt, um Dateien auf diesem Gerät zu durchsuchen</string>
     <string name="close">Schließen</string>
     <string name="websearch_dialog_custom_icon">Eigenes Symbol</string>
     <string name="widget_action_remove">Entfernen</string>
@@ -241,13 +241,13 @@
     </plurals>
     <string name="preference_themed_icons">Eingefärbte Symbole</string>
     <string name="preference_themed_icons_summary">Symbole an das Farbschema der App anpassen</string>
-    <string name="weather_no_data">Keine Wetterdaten verfügbar.</string>
+    <string name="weather_no_data">Keine Wetterdaten verfügbar</string>
     <string name="preference_category_grid">Raster</string>
     <string name="preference_grid_column_count">Spaltenanzahl</string>
     <string name="grant_permission">Gewähren</string>
     <string name="missing_permission_auto_location">Standortzugriff wird benötigt, um den Standort automatisch zu ermitteln</string>
     <string name="missing_permission_music_widget">Benachrichtigungszugriff wird benötigt, um Medienwiedergabe zu steuern</string>
-    <string name="missing_permission_contact_search_settings">Kontakteberechtigung ist erforderlich, um Kontakte durchsuchen zu können</string>
+    <string name="missing_permission_contact_search_settings">Kontaktberechtigung ist erforderlich, um Kontakte durchsuchen zu können</string>
     <string name="missing_permission_calendar_search_settings">Kalenderberechtigung ist erforderlich, um Kalender durchsuchen zu können</string>
     <string name="weather_widget_set_location">Standort festlegen</string>
     <string name="preference_screen_debug">Debug</string>
@@ -277,7 +277,7 @@
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Die freie Enzyklopädie durchsuchen</string>
     <string name="preference_search_websites">Webseiten</string>
-    <string name="preference_search_websites_summary">Vorschau einer Webseite anzeigen wenn die Suchanfrage eine URL ist</string>
+    <string name="preference_search_websites_summary">Vorschau einer Webseite anzeigen, wenn die Suchanfrage eine URL ist</string>
     <string name="preference_screen_buildinfo">Build-Information</string>
     <string name="preference_screen_buildinfo_summary">Weitere Informationen über diesen Build dieser App</string>
     <string name="preference_search_localfiles">Lokale Dateien</string>
@@ -285,20 +285,20 @@
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">%1$ss Dateien durchsuchen</string>
-    <string name="preference_summary_not_logged_in">Sie sind im Moment nicht angemeldet</string>
+    <string name="preference_summary_not_logged_in">Sie sind nicht angemeldet</string>
     <string name="preference_search_bar_style">Stil</string>
     <string name="preference_search_bar_style_summary">Erscheinungsbild der Suchleiste anpassen</string>
     <string name="preference_search_bar_auto_focus">Tastatur öffnen</string>
-    <string name="preference_search_bar_auto_focus_summary">Bildschirmtastatur beim Öffnen der Appübersicht automatisch einblenden</string>
+    <string name="preference_search_bar_auto_focus_summary">Bildschirmtastatur beim Öffnen der App-Übersicht automatisch einblenden</string>
     <string name="preference_search_bar_launch_on_enter">Eingabe zum Starten</string>
     <string name="preference_search_bar_launch_on_enter_summary">Hervorgehobenes Suchergebnis mit der Eingabetaste aufrufen</string>
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
     <string name="music_widget_default_title">%1$s spielt Medien</string>
     <string name="music_widget_no_data">Bisher wurden keine Medien abgespielt</string>
-    <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt um Termine abzurufen</string>
-    <string name="missing_permission_file_search_settings">Speicher-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
+    <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt, um Termine abzurufen</string>
+    <string name="missing_permission_file_search_settings">Speicher-Berechtigung wird benötigt, um Dateien auf diesem Gerät zu durchsuchen</string>
     <string name="missing_permission_file_search_settings_android10">Alle Dateien verwalten-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
-    <string name="missing_permission_notification_badges">Benachrichtigungszugriff wird benötigt um Benachrichtigungsplaketten anzuzeigen</string>
+    <string name="missing_permission_notification_badges">Benachrichtigungszugriff wird benötigt, um Benachrichtigungsplaketten anzuzeigen</string>
     <string name="no_account_nextcloud">Sie haben noch kein Nextcloud-Konto verbunden</string>
     <string name="no_account_owncloud">Sie haben noch kein Owncloud-Konto verbunden</string>
     <string name="connect_account">Konto verbinden</string>
@@ -315,17 +315,18 @@
         <item quantity="other">Voll in %1$s Minuten</item>
     </plurals>
     <string name="preference_clockwidget_date_part_summary">Das aktuelle Datum anzeigen</string>
-    <string name="preference_clockwidget_battery_part_summary">Den Akkustand anzeigen wenn der Akku fast leer ist oder geladen wird</string>
+    <string name="preference_clockwidget_battery_part_summary">Den Akkustand anzeigen, wenn der Akku fast leer ist oder geladen wird</string>
     <string name="preference_search_appshortcuts">App-Shortcuts</string>
     <string name="missing_permission_appshortcuts_search_settings">%1$s muss als Standard-Start-App gesetzt sein, um App-Shortcuts durchsuchen zu können</string>
     <string name="missing_permission_appshortcuts_search">%1$s als Standard-Start-App festlegen, um App-Shortcuts durchsuchen zu können.</string>
     <string name="preference_search_appshortcuts_summary">App-Shortcuts durchsuchen</string>
     <string name="widget_name_favorites">Favoriten</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Die erste Zeile der Favoriten anzeigen</string>
+    <string name="preference_clockwidget_favorites_part_summary">Favoriten im Dock anzeigen</string>
+    <string name="preference_clockwidget_dock_rows">Dock-Zeilen</string>
     <string name="preference_grid_icon_size">Symbolgröße</string>
-    <string name="preference_search_currencyconverter">Währungsumrechner</string>
-    <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen um Währungen umzurechnen</string>
+    <string name="preference_search_currencyconverter">Währungsrechner</string>
+    <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen, um Währungen umzurechnen</string>
     <string name="action_undo">Rückgängig</string>
     <string name="calendar_widget_next_events">Nächstes Ereignis</string>
     <string name="preference_hidden_items">Ausgeblendete Suchergebnisse</string>
@@ -333,7 +334,7 @@
     <string name="preference_backup_summary">Einstellungen und Launcherdaten exportieren</string>
     <string name="preference_restore">Wiederherstellen</string>
     <string name="preference_restore_summary">Eine zuvor erstellte Sicherung importieren</string>
-    <string name="preference_screen_backup">Sichern &amp; Wiederherstellen</string>
+    <string name="preference_screen_backup">Sichern und Wiederherstellen</string>
     <string name="preference_screen_backup_summary">Launcherdaten exportieren und importieren</string>
     <string name="preference_backup">Sichern</string>
     <string name="restore_meta">Erstellt um %1$s auf %2$s mit %3$s.</string>
@@ -345,7 +346,7 @@
     <string name="preference_cards_shape">Form</string>
     <string name="preference_cards_shape_rounded">Abgerundet</string>
     <string name="preference_cards_shape_cut">Abgeschnitten</string>
-    <string name="weather_location_search_no_result">Standort nicht gefunden.</string>
+    <string name="weather_location_search_no_result">Standort nicht gefunden</string>
     <string name="save">Speichern</string>
     <string name="file_type_launcherbackup">%1$s-Backup</string>
     <string name="preference_enforce_icon_shape">Form erzwingen</string>
@@ -375,8 +376,8 @@
     <string name="preference_debug_cleanup_database">Datenbank aufräumen</string>
     <string name="preference_debug_cleanup_database_summary">Ungültige und nicht verwendete Einträge aus der Launcher-Datenbank entfernen</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d Eintrag wurde entfernt.</item>
-        <item quantity="other">%1$d Einträge wurden entfernt.</item>
+        <item quantity="one">%1$d Eintrag wurde entfernt</item>
+        <item quantity="other">%1$d Einträge wurden entfernt</item>
     </plurals>
     <string name="frequently_used_rows">Anzahl Zeilen</string>
     <string name="frequently_used_show_in_favorites">In Favoriten anzeigen</string>
@@ -385,7 +386,7 @@
     <string name="favorites_empty_tag">Es gibt keine Elemente mit diesem Tag</string>
     <string name="edit_favorites_dialog_tag_section_empty">Angeheftete Tags werden hier angezeigt</string>
     <string name="favorites_empty">Angeheftete und häufig genutzte Elemente werden hier angezeigt</string>
-    <string name="edit_favorites_dialog_new_tag">Tag erstellen…</string>
+    <string name="edit_favorites_dialog_new_tag">Tag erstellen</string>
     <string name="websearch_dialog_query_encoding_url">URL-Encoding</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="websearch_dialog_query_encoding_none">Keine</string>
@@ -406,8 +407,8 @@
     <string name="preference_search_bar_color">Farbe</string>
     <string name="search_action_event">Termin planen</string>
     <string name="create_search_action_type_intent">Benutzerdefinierter Intent</string>
-    <string name="create_search_action_website_invalid_url">Die angegebene Webseite kann nicht automatisch als Websuche importiert werden. Sie können es mit einer anderen Webseite versuchen oder die benötigten Daten im nächsten Schritt manuell eingeben.</string>
-    <string name="search_action_websearch_url_hint">Die URL-Vorlage, die verwendet wird um die Websuch-URL zusammenzusetzen. Verwenden Sie „${1}“ als Platzhalter für den eigentlichen Suchbegriff, z.B. https://google.com/search\?q=${1}.</string>
+    <string name="create_search_action_website_invalid_url">Die angegebene Webseite kann nicht automatisch als Websuche importiert werden. Sie können es mit einer anderen Webseite versuchen oder die benötigten Daten im nächsten Schritt manuell eingeben</string>
+    <string name="search_action_websearch_url_hint">Die URL-Vorlage, die verwendet wird, um die Websuch-URL zusammenzusetzen. Verwenden Sie „${1}“ als Platzhalter für den eigentlichen Suchbegriff</string>
     <string name="help">Hilfe</string>
     <string name="skip">Überspringen</string>
     <string name="preference_screen_search_actions">Schnellaktionen</string>
@@ -419,7 +420,7 @@
     <string name="search_action_timer">Timer starten</string>
     <string name="search_action_contact">Neuer Kontakt</string>
     <string name="search_action_open_url">Website öffnen</string>
-    <string name="create_search_action_type">Welche Art von Aktion möchten Sie erstellen\?</string>
+    <string name="create_search_action_type">Welche Art von Aktion möchten Sie erstellen?</string>
     <string name="create_search_action_type_web">Auf einer Webseite suchen</string>
     <string name="create_search_action_type_app">In einer App suchen</string>
     <string name="create_search_action_pick_app">App zum Durchsuchen auswählen:</string>
@@ -435,9 +436,9 @@
     <string name="preference_screen_tags_summary">Tags und getaggte Elemente verwalten</string>
     <string name="duplicate">Duplizieren</string>
     <string name="action_next">Weiter</string>
-    <string name="tag_exists_error">Ein Tag mit diesem Namen existiert bereits.</string>
-    <string name="tag_exists_message">Ein Tag mit diesem Namen existiert bereits. Wenn Sie fortfahren, werden die beiden Tags zusammengeführt.</string>
-    <string name="tag_no_items_message">Diesem Tag sind keine Elemente zugeordnet. Wenn Sie fortfahren, wird der Tag gelöscht.</string>
+    <string name="tag_exists_error">Ein Tag mit diesem Namen existiert bereits</string>
+    <string name="tag_exists_message">Ein Tag mit diesem Namen existiert bereits. Wenn Sie fortfahren, werden die beiden Tags zusammengeführt</string>
+    <string name="tag_no_items_message">Diesem Tag sind keine Elemente zugeordnet. Wenn Sie fortfahren, wird der Tag gelöscht</string>
     <string name="tag_select_items">Elemente auswählen:</string>
     <string name="tag_name">Tag-Name</string>
     <plurals name="tag_selected_items">
@@ -452,7 +453,7 @@
     <string name="preference_layout_search_results">Anordnung der Suchergebnisse</string>
     <string name="search_results_order_top_down">Von oben nach unten</string>
     <string name="search_results_order_bottom_up">Von unten nach oben</string>
-    <string name="preference_layout_open_search">Suche / App-Übersicht</string>
+    <string name="preference_layout_open_search">Suche und App-Übersicht</string>
     <string name="preference_layout_search_bar_position">Position der Suchleiste</string>
     <string name="preference_screen_gestures">Gesten</string>
     <string name="preference_gesture_swipe_down">Nach unten wischen</string>
@@ -472,7 +473,7 @@
     <string name="preference_screen_gestures_summary">Gesten und Gestenaktionen</string>
     <string name="gesture_failed_message">Sie haben eine „%1$s“-Geste ausgeführt. Diese Geste ist momentan konfiguriert, eine „%2$s“-Aktion auszulösen. Diese Aktion konnte aus dem folgenden Grund nicht durchgeführt werden:</string>
     <string name="preference_layout_fixed_search_bar">Angeheftete Suchleiste</string>
-    <string name="preference_layout_fixed_search_bar_summary">Suchleiste nicht aus dem Sichtbereich herausscrollen</string>
+    <string name="preference_layout_fixed_search_bar_summary">Suchleiste nicht aus dem Sichtbereich heraus scrollen</string>
     <string name="preference_layout_fixed_rotation">Feste Bildschirmausrichtung</string>
     <string name="preference_layout_fixed_rotation_summary">Porträtmodus erzwingen</string>
     <string name="preference_search_result_ordering_weight_factor">Ranking-Flexibilität</string>
@@ -484,28 +485,28 @@
     <string name="preference_screen_clockwidget_summary">Uhrenstil und -Komponenten konfigurieren</string>
     <string name="preference_screen_homescreen">Startbildschirm</string>
     <string name="preference_screen_homescreen_summary">Uhr, Suchleiste, Hintergrundbild, Systemleisten</string>
-    <string name="preference_screen_icons">Raster &amp; Symbole</string>
+    <string name="preference_screen_icons">Raster und Symbole</string>
     <string name="preference_screen_icons_summary">Raster, Symbolgröße, Symbolpakete, Plaketten</string>
     <string name="preference_weather_integration">Wetter</string>
     <string name="preference_media_integration">Mediensteuerung</string>
     <string name="widget_config_calendar_no_calendars">Keine Kalender gefunden</string>
-    <string name="widget_name_unknown">Unbekanntes App-Widget</string>
+    <string name="widget_name_unknown">Unbekannt</string>
     <string name="widget_action_replace">Ersetzen</string>
     <string name="widget_config_appwidget_borderless">Randlos</string>
     <string name="widget_config_appwidget_configure">Widget einrichten</string>
     <string name="widget_config_music_integration_settings">Einstellungen für die Mediensteuerungsintegration</string>
     <string name="widget_config_weather_integration_settings">Einstellungen für die Wetter-Integration</string>
-    <string name="app_widget_loading_failed">App-Widget konnte nicht geladen werden.</string>
+    <string name="app_widget_loading_failed">App-Widget konnte nicht geladen werden</string>
     <string name="preference_category_media_apps">Medienapps</string>
     <string name="preference_debug_reinstall_iconpacks">Symbolpakete neu installieren</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Symbolpaketecache leeren und neu erstellen</string>
     <string name="widget_name_notes">Notiz</string>
-    <string name="notes_widget_placeholder">Notiz schreiben…</string>
+    <string name="notes_widget_placeholder">Notiz schreiben</string>
     <string name="notes_widget_action_new">Neue Notiz</string>
     <string name="notes_widget_action_save">Speichern</string>
     <string name="notes_widget_export_filename">Notiz_%1$s</string>
     <string name="notes_widget_action_dismiss">Verwerfen</string>
-    <string name="notes_widget_dismissed">Notiz verworfen.</string>
+    <string name="notes_widget_dismissed">Notiz verworfen</string>
     <string name="preference_hidden_items_reveal_button">Einblenden-Button anzeigen</string>
     <string name="preference_hidden_items_reveal_button_summary">Eine Schaltfläche zum Einblenden ausgeblendeter Suchergebnisse anzeigen</string>
     <string name="widget_config_appwidget_background">Hintergrundkarte</string>
@@ -523,8 +524,8 @@
     <string name="note_widget_link_file_summary">Die Inhalte dieses Widgets mit einer externen Datei synchronisieren</string>
     <string name="note_widget_conflict_keep_selected">Auswahl behalten</string>
     <string name="note_widget_conflict_description">Die verknüpfte Datei ist nicht leer und ihr Inhalt stimmt nicht mit der zuletzt gespeicherten Version dieser Notiz überein. Welche Version möchten Sie behalten\?</string>
-    <string name="note_widget_file_read_error_description">Die verknüpfte Datei konnte nicht gelesen werden. Möglicherweise wurde sie verschoben oder gelöscht. Eine Kopie wurde aus dem internen Speicher des Launchers wiederhergestellt. Wenn Sie die Notiz bearbeiten, wird die verknüpfte Datei möglicherweise überschrieben.</string>
-    <string name="note_widget_file_write_error_description">Die Notiz konnte nicht in die verknüpfte Datei geschrieben werden. Möglicherweise wurde sie verschoben oder gelöscht. Eine Kopie wurde in den internen Speicher des Launchers gespeichert.</string>
+    <string name="note_widget_file_read_error_description">Die verknüpfte Datei konnte nicht gelesen werden. Eine Kopie wurde aus dem internen Speicher des Launchers wiederhergestellt. Wenn Sie die Notiz bearbeiten, wird die verknüpfte Datei möglicherweise überschrieben</string>
+    <string name="note_widget_file_write_error_description">Die Notiz konnte nicht in die verknüpfte Datei geschrieben werden. Eine Kopie wurde in den internen Speicher des Launchers gespeichert</string>
     <string name="preference_gesture_home_button">Start-Button/-Geste</string>
     <string name="preference_debug_dump_heap_summary">Ein Speicherabbild zur Analyse der Nutzung des Arbeitsspeichers erstellen. Die App wird bis zum Abschluss dieses Prozesses einfrieren.</string>
     <string name="preference_debug_dump_heap_in_progress">Abbild wird erstellt…</string>
@@ -544,7 +545,7 @@
     <string name="action_import">Importieren</string>
     <string name="file_type_launchertheme">%1$s-Design</string>
     <string name="import_theme_apply">Design anwenden</string>
-    <string name="preference_blur_wallpaper_radius">Blur-Radius</string>
+    <string name="preference_blur_wallpaper_radius">Unschärfe-Radius</string>
     <string name="import_theme_error">Die ausgewählte Datei konnte nicht gelesen werden. Bitte stellen Sie sicher, dass sie eine gültige Design-Datei (*.kvtheme) ausgewählt haben, und dass die Datei nicht beschädigt ist.</string>
     <string name="preference_clock_widget_alignment">Ausrichtung</string>
     <string name="preference_clock_widget_alignment_top">Oben</string>
@@ -591,7 +592,7 @@
     <string name="preference_search_locations_show_map">Karte</string>
     <string name="preference_search_locations_hide_uncategorized">Unkategorisierte Orte ausblenden</string>
     <string name="location_open_24_7">24/7 geöffnet</string>
-    <string name="unavailable_searchable">Dieses Element existiert nicht mehr.</string>
+    <string name="unavailable_searchable">Dieses Element existiert nicht mehr</string>
     <string name="preference_clock_widget_show_seconds">Sekunden anzeigen</string>
     <string name="widget_use_theme_colors">Design-Farbe verwenden</string>
     <string name="clock_style_digital1">Fett</string>
@@ -612,7 +613,7 @@
     <string name="preference_default_filter_summary">Standardfilter für Suchen anpassen</string>
     <string name="preference_filter_bar">Filterleiste anzeigen</string>
     <string name="preference_default_filter">Standardfilter</string>
-    <string name="preference_filter_bar_summary">Schellfilter über der Tastatur anzeigen</string>
+    <string name="preference_filter_bar_summary">Schnellfilter über der Tastatur anzeigen</string>
     <string name="filter_settings_network_warning">Mit dem aktuellen Filter sind Online-Suchen standardmäßig aktiviert. Ihre Suchanfragen könnten unbeabsichtigt an externe Webdienste gesendet werden. Aus Datenschutzgründen ist dies nicht empfohlen.</string>
     <string name="preference_customize_filter_bar">Filterleiste anpassen</string>
     <string name="preference_customize_filter_bar_summary">Die in der Filterleiste enthaltenen Elemente anpassen</string>
@@ -695,7 +696,7 @@
     <string name="poi_category_pet">Zoofachgeschäft</string>
     <string name="poi_category_shopping">Geschäft</string>
     <string name="poi_category_swimming">Schwimmbecken</string>
-    <string name="poi_category_martial_arts">Martial Arts</string>
+    <string name="poi_category_martial_arts">Kampfsport</string>
     <string name="poi_category_golf">Golfplatz</string>
     <string name="poi_category_skiing">Ski</string>
     <string name="poi_category_cricket">Cricket-Feld</string>
@@ -717,6 +718,8 @@
     <string name="poi_category_fire_station">Feuerwache</string>
     <string name="poi_category_courthouse">Gerichtsgebäude</string>
     <string name="poi_category_townhall">Rathaus</string>
+    <string name="poi_category_stationery">Schreibwarenladen</string>
+    <string name="poi_category_climbing_gym">Kletterhalle</string>
     <string name="preference_signout">Abmelden</string>
     <string name="customize_item_label">Beschriftung</string>
     <string name="customize_item_visibility">Anzeigen in</string>
@@ -762,11 +765,11 @@
     <string name="calendar_widget_open_calendar">Kalender-App öffnen</string>
     <string name="profile_work_profile_action_unlock">Nicht mehr pausieren</string>
     <string name="profile_work_profile_action_lock">Geschäftliche Apps pausieren</string>
-    <string name="profile_private_profile_state_locked">Der private Bereich ist gesperrt.</string>
+    <string name="profile_private_profile_state_locked">Der private Bereich ist gesperrt</string>
     <string name="profile_private_profile_action_unlock">Entsperren</string>
     <string name="profile_private_profile_action_lock">Privaten Bereich sperren</string>
     <string name="plugin_type_calendar">Kalender</string>
-    <string name="profile_work_profile_state_locked">Geschäftliche Apps sind pausiert.</string>
+    <string name="profile_work_profile_state_locked">Geschäftliche Apps sind pausiert</string>
     <string name="hint_drag_and_drop_reorder">Zum Anordnen Elemente halten und ziehen</string>
     <string name="preference_search_supportedunits">Unterstützte Einheiten</string>
     <string name="app_label_locked_profile">Gesperrt</string>
@@ -779,14 +782,14 @@
         <item quantity="other">%1$s Listen ausgewählt</item>
     </plurals>
     <string name="preference_compact_tags">Kompakte Tags</string>
-    <string name="preference_compact_tags_summary">Beschriftungen oder Symbole von Tags ausblenden um den von Tags eingenommenen Platz zu reduzieren</string>
+    <string name="preference_compact_tags_summary">Beschriftungen oder Symbole von Tags ausblenden, um den von Tags eingenommenen Platz zu reduzieren</string>
     <string name="departure_time_now">jetzt</string>
     <plurals name="departure_time_in">
         <item quantity="one">in einer Minute</item>
         <item quantity="other">in %1$d Minuten</item>
     </plurals>
     <string name="preference_contacts_call_on_tap">Zum Anrufen tippen</string>
-    <string name="preference_contacts_call_on_tap_summary">Beim Antippen einer Telefonnummer sofort einen Anruf starten</string>
+    <string name="preference_contacts_call_on_tap_summary">Beim Antippen einer Telefonnummer ohne Bestätigung einen Anruf starten</string>
     <string name="departure_time_departed">abgefahren</string>
     <string name="preference_search_local_calendar_summary">Kalender auf diesem Gerät durchsuchen</string>
     <string name="weather_forecast_wind">Wind</string>
@@ -796,7 +799,7 @@
     <string name="preference_grid_list_style_summary">Apps als Liste statt als Raster darstellen</string>
     <string name="preference_grid_list_icons_summary">Icons in der App-Liste anzeigen</string>
     <string name="weather_forecast_precipitation">Niederschlag</string>
-    <string name="tag_empty_name">Unbenannte Tags werden nicht unterstützt. Wenn Sie fortfahren, wird der Tag gelöscht.</string>
+    <string name="tag_empty_name">Unbenannte Tags werden nicht unterstützt. Wenn Sie fortfahren, wird der Tag gelöscht</string>
     <string name="preference_clock_widget_time_format">Zeitformat</string>
     <string name="preference_clock_widget_time_format_24h">24-Stunden</string>
     <string name="preference_clock_widget_time_format_12h">12-Stunden</string>
@@ -806,12 +809,12 @@
     <string name="action_install">Installieren</string>
     <string name="missing_permission_tasks_integration">Aufgaben-Berechtigung wird benötigt, um die Tasks-Integration zu verwenden</string>
     <string name="preference_search_tasks">Aufgaben</string>
-    <string name="missing_permission_tasks_search_settings">Aufgabenberechtigung ist erforderlich, um Aufgaben durchsuchen zu können</string>
+    <string name="missing_permission_tasks_search_settings">Tasks-Berechtigung ist erforderlich, um Aufgaben in der Tasks-App durchsuchen zu können</string>
     <string name="preference_search_tasks_summary">Aufgaben in der Tasks-App durchsuchen</string>
     <string name="preference_tasks_integration">Tasks</string>
     <string name="plugin_type_contacts">Kontakte</string>
     <string name="preference_tasks_integration_ready">Die Tasks-Integration ist fertig eingerichtet und bereit zur Verwendung.</string>
-    <string name="preference_tasks_integration_description">Tasks ist eine freie und quelloffene ToDo-Listen- und Erinnerungs-App. Wenn installiert kann %1$s Ihre Aufgaben aus der Tasks-App anzeigen und durchsuchen.</string>
+    <string name="preference_tasks_integration_description">Tasks ist eine freie und quelloffene To-do-Listen- und Erinnerungs-App. Wenn installiert kann %1$s Ihre Aufgaben aus der Tasks-App anzeigen und durchsuchen.</string>
     <string name="weather_condition_haze">Dunst</string>
     <string name="weather_condition_thunder">Gewitter</string>
     <string name="preference_location_breezy">Standort in Breezy Weather verwalten</string>
@@ -830,10 +833,10 @@
     <string name="preference_gesture_swipe_up">Nach oben wischen</string>
     <string name="gesture_action_widgets">Widgets</string>
     <string name="bad_configuration_title">Herzlichen Glückwunsch, Sie haben sich ausgesperrt!</string>
-    <string name="bad_configuration_summary">Sie haben eine Kombination von Einstellungen entdeckt, durch die sowohl die Suche, als auch die Einstellungen unerreichbar sind, wodurch Sie sich praktisch ausgesperrt haben.</string>
+    <string name="bad_configuration_summary">Sie haben eine Kombination von Einstellungen entdeckt, durch die sowohl die Suche, als auch die Einstellungen unerreichbar sind, wodurch Sie sich praktisch ausgesperrt haben</string>
     <string name="preference_screen_shapes">Formen</string>
     <string name="preference_shapes_default">Standard</string>
-    <string name="preference_shapes_extra_round">Extrarund</string>
+    <string name="preference_shapes_extra_round">Extra rund</string>
     <string name="preference_shapes_rect">Rechteckig</string>
     <string name="preference_shapes_base">Grundform</string>
     <string name="confirmation_delete_shapes_scheme">Möchten Sie das Formschema %1$s wirklich löschen?</string>
@@ -852,7 +855,7 @@
     <string name="confirmation_delete_transparencies_scheme">Möchten Sie das Transparenzschema %1$s wirklich löschen?</string>
     <string name="new_theme_name">(unbenannt)</string>
     <string name="preference_screen_typography">Typografie</string>
-    <string name="confirmation_delete_typography_scheme">Möchten Sie das Typografie-Scheme %1$s wirklich löschen?</string>
+    <string name="confirmation_delete_typography_scheme">Möchten Sie das Typografie-Schema %1$s wirklich löschen?</string>
     <string name="preference_typography_fonts">Schriften</string>
     <string name="font_category_device_default">Gerätestandard</string>
     <string name="font_name_device_headline">Standard-Überschriften-Schrift</string>
@@ -863,4 +866,6 @@
     <string name="preference_search_bar_style_hidden">Versteckt</string>
     <string name="music_widget_interactive_progress_bar">Interaktiver Fortschrittsbalken</string>
     <string name="clock_variant_analog_ticks">Striche</string>
+    <string name="preference_clock_widget_monospaced">Ziffern mit fester Breite</string>
+    <string name="poi_category_hackerspace">Hackerspace</string>
 </resources>

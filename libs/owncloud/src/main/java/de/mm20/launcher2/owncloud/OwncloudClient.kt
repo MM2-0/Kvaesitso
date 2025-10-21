@@ -8,13 +8,24 @@ import android.util.Log
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import androidx.security.crypto.MasterKeys
+import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.serialization.Json
 import de.mm20.launcher2.webdav.WebDavApi
 import de.mm20.launcher2.webdav.WebDavFile
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.*
-import org.json.JSONObject
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.basicAuth
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.request.parameter
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.appendPathSegments
+import io.ktor.http.path
+import io.ktor.http.takeFrom
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.SerializationException
 import java.io.File
 import java.io.IOException
 
@@ -22,18 +33,18 @@ class OwncloudClient(val context: Context) {
 
 
     private val httpClient by lazy {
-        OkHttpClient.Builder()
-                .authenticator(object : Authenticator {
-                    override fun authenticate(route: Route?, response: Response): Request? {
-                        if (response.priorResponse?.priorResponse != null) return null
-                        return response.request
-                                .newBuilder()
-                                .addHeader("Authorization", getAuthorization() ?: return null)
-                                .build()
-                    }
-
-                })
-                .build()
+        HttpClient {
+            install(ContentNegotiation) {
+                json(Json.Lenient)
+            }
+            defaultRequest {
+                val user = getUserName()
+                val token = getToken()
+                if (user != null && token != null) {
+                    basicAuth(user, token)
+                }
+            }
+        }
     }
 
     private val preferences by lazy {
@@ -42,7 +53,8 @@ class OwncloudClient(val context: Context) {
 
     private fun createPreferences(catchErrors: Boolean = true): SharedPreferences {
         try {
-            val masterKey = MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
+            val masterKey =
+                MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
             return EncryptedSharedPreferences.create(
                 context,
                 "owncloud",
@@ -71,34 +83,42 @@ class OwncloudClient(val context: Context) {
         if (!url.startsWith("http://") && !url.startsWith("https://")) {
             url = "https://$url"
         }
-        val request = Request.Builder()
-                .url("$url/remote.php/webdav")
-                .build()
-        val response = runCatching {
-            withContext(Dispatchers.IO) {
-                httpClient.newCall(request).execute()
-            }
-        }.getOrNull() ?: return false
-        return response.code == 200 || response.code == 401
-    }
-
-    internal suspend fun checkOwncloudCredentials(server: String, username: String, password: String): Boolean {
-        val request = Request.Builder()
-            .addHeader("authorization", Credentials.basic(username, password))
-            .url("$server/ocs/v1.php/cloud/user?format=json")
-            .build()
 
         val response = try {
-            withContext(Dispatchers.IO) {
-                httpClient.newCall(request).execute()
+            httpClient.get {
+                url {
+                    takeFrom(url)
+                    appendPathSegments("remote.php", "webdav")
+                }
+            }
+        } catch (e: Exception) {
+            return false
+        }
+
+        return response.status == HttpStatusCode.OK || response.status == HttpStatusCode.Unauthorized
+    }
+
+    internal suspend fun checkOwncloudCredentials(
+        server: String,
+        username: String,
+        password: String
+    ): Boolean {
+        val response = try {
+            httpClient.get {
+                url {
+                    takeFrom(server)
+                    path("ocs", "v1.php", "cloud", "user")
+                    parameter("format", "json")
+                }
+                basicAuth(username, password)
             }
         } catch (e: IOException) {
             Log.e("OwncloudClient", "HTTP error", e)
             return false
         }
 
-        if (response.code != 200) {
-            Log.e("OwncloudClient", "HTTP error: ${response.code}")
+        if (response.status != HttpStatusCode.OK) {
+            Log.e("OwncloudClient", "HTTP error: ${response.status}")
             return false
         }
 
@@ -118,8 +138,8 @@ class OwncloudClient(val context: Context) {
         val displayName = getDisplayName() ?: return null
 
         return OcUser(
-                displayName,
-                username
+            displayName,
+            username
         )
     }
 
@@ -134,36 +154,31 @@ class OwncloudClient(val context: Context) {
         }
 
         val server = getServer() ?: return null
-
-        val request = Request.Builder()
-                .addHeader("OCS-APIRequest", "true")
-                .url("$server/ocs/v1.php/cloud/user?format=json")
-                .build()
-
-        val response = runCatching {
-            withContext(Dispatchers.IO) {
-                httpClient.newCall(request).execute()
+        val response = try {
+            httpClient.get {
+                url {
+                    takeFrom(server)
+                    path("ocs", "v1.php", "cloud", "user")
+                    parameter("format", "json")
+                }
+                header("OCS-APIRequest", "true")
             }
-        }.getOrNull() ?: return getUserName()
+        } catch (e: Exception) {
+            CrashReporter.logException(e)
+            return getUserName()
+        }
 
-        if (response.code != 200) {
+        if (response.status != HttpStatusCode.OK) {
             logout()
             return null
         }
-        val body = response.body ?: return getUserName()
-
-        return withContext(Dispatchers.IO) {
-            val json = JSONObject(body.string())
-
-            return@withContext json.optJSONObject("ocs")
-                    ?.optJSONObject("data")
-                    ?.optString("display-name")
-                    ?: getUserName()
+        val body = try {
+            response.body<UserReponse>()
+        } catch (e: SerializationException) {
+            CrashReporter.logException(e)
+            return getUserName()
         }
-    }
-
-    private fun getAuthorization(): String? {
-        return Credentials.basic(getUserName() ?: return null, getToken() ?: return null)
+        return body.ocs.data.displayName ?: getUserName()
     }
 
     fun getServer(): String? {

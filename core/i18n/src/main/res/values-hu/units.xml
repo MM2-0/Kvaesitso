@@ -40,7 +40,7 @@
         <item quantity="one">mérföld</item>
         <item quantity="other">mérföld</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_nautic_mile_symbol">nmi</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">tengeri mérföld</item>
         <item quantity="other">tengeri mérföld</item>
@@ -216,27 +216,27 @@
         <item quantity="one">metrikus tonna</item>
         <item quantity="other">metrikus tonna</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_long_ton_symbol">hosszú tonna</string>
     <plurals name="unit_long_ton">
         <item quantity="one">hosszú tonna</item>
         <item quantity="other">hosszú tonna</item>
     </plurals>
-    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_stone_symbol">st</string>
     <plurals name="unit_stone">
         <item quantity="one">kő</item>
         <item quantity="other">kő</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">lb</string>
     <plurals name="unit_pound">
         <item quantity="one">font</item>
         <item quantity="other">font</item>
     </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">oz</string>
     <plurals name="unit_ounce">
         <item quantity="one">uncia</item>
         <item quantity="other">uncia</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">rövid tonna</string>
     <plurals name="unit_short_ton">
         <item quantity="one">rövid tonna</item>
         <item quantity="other">rövid tonna</item>
@@ -283,4 +283,89 @@
     <string name="dimension_bitrate">Bitsebesség</string>
     <string name="dimension_volume">Térfogat</string>
     <string name="dimension_time">Idő</string>
+    <string name="unit_cubic_inch_symbol">cu in</string>
+    <string name="unit_milliliter_symbol">mL</string>
+    <string name="unit_cubic_meter_symbol">m³</string>
+    <string name="unit_liter_symbol">L</string>
+    <plurals name="unit_liter">
+        <item quantity="one">liter</item>
+        <item quantity="other">liter</item>
+    </plurals>
+    <plurals name="unit_milliliter">
+        <item quantity="one">milliliter</item>
+        <item quantity="other">milliliter</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">cm³</string>
+    <string name="unit_cubic_foot_symbol">cu ft</string>
+    <string name="unit_cubic_millimeter_symbol">mm³</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">köbmilliméter</item>
+        <item quantity="other">köbmilliméter</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">cu yd</string>
+    <string name="unit_gallon_us_symbol">gal US</string>
+    <string name="unit_gallon_imp_symbol">gal imp</string>
+    <string name="unit_pint_imp_symbol">pt imp</string>
+    <string name="unit_fluid_ounce_us_symbol">fl oz US</string>
+    <string name="unit_pint_us_symbol">pt US</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">pint (US)</item>
+        <item quantity="other">pint (US)</item>
+    </plurals>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">pint (imperial)</item>
+        <item quantity="other">pint (imperial)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">folyadék uncia (US)</item>
+        <item quantity="other">folyadék uncia (US)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">fl oz imp</string>
+    <string name="unit_tablespoon_symbol">evőkanál</string>
+    <string name="unit_cup_symbol">bögre</string>
+    <string name="unit_teaspoon_symbol">tsp</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">cubic inch</item>
+        <item quantity="other">cubic inch</item>
+    </plurals>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">köbláb</item>
+        <item quantity="other">köbláb</item>
+    </plurals>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">köbyard</item>
+        <item quantity="other">köbyard</item>
+    </plurals>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">köbméter</item>
+        <item quantity="other">köbméter</item>
+    </plurals>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">köbcentiméter</item>
+        <item quantity="other">köbcentiméter</item>
+    </plurals>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">teáskanál (US)</item>
+        <item quantity="other">teáskanál (US)</item>
+    </plurals>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">gallon (US)</item>
+        <item quantity="other">gallon (US)</item>
+    </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">gallon (imperial)</item>
+        <item quantity="other">gallon (imperial)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">folyadék uncia (imperial)</item>
+        <item quantity="other">folyadék uncia (imperial)</item>
+    </plurals>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">evőkanál (US)</item>
+        <item quantity="other">evőkanál (US)</item>
+    </plurals>
+    <plurals name="unit_cup">
+        <item quantity="one">bögre (US)</item>
+        <item quantity="other">bögre (US)</item>
+    </plurals>
 </resources>
