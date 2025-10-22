@@ -589,6 +589,8 @@
     <string name="preference_clockwidget_date_part">Datum</string>
     <string name="preference_clockwidget_date_part_summary">Zobrazit aktuální datum</string>
     <string name="preference_clockwidget_favorites_part">Dok</string>
+    <string name="preference_clockwidget_favorites_part_summary">Zobrazit připnuté položky v doku</string>
+    <string name="preference_clockwidget_dock_rows">Řádky doku</string>
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_music_part_summary">Zobrazit ovládání médií, když je aktivní jejich přehrávání</string>
     <string name="preference_clockwidget_battery_part">Baterie</string>
