@@ -37,12 +37,6 @@ abstract class LocationPluginContract {
          * Type: Long
          */
         const val SearchRadius = "search_radius"
-
-        /**
-         * Whether to allow network requests.
-         * Type: Boolean
-         */
-        const val AllowNetwork = "network"
     }
 
     object GetParams {

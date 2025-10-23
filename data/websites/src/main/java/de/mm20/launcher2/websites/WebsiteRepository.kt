@@ -43,8 +43,7 @@ internal class WebsiteRepository(
         }
     }
 
-    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Website>> {
-        if (!allowNetwork) return flowOf(persistentListOf())
+    override fun search(query: String): Flow<ImmutableList<Website>> {
         return settings.enabled.transformLatest { enabled ->
             emit(persistentListOf())
             if (!enabled || query.isBlank()) return@transformLatest
