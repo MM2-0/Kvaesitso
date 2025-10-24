@@ -1,7 +1,6 @@
 package de.mm20.launcher2.badges.providers
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Work
 import de.mm20.launcher2.badges.Badge
@@ -34,7 +33,6 @@ class ProfileBadgeProvider : BadgeProvider, KoinComponent {
                     when(it?.type) {
                         Profile.Type.Work -> WorkProfile
                         Profile.Type.Private -> PrivateProfile
-                        Profile.Type.Cloned -> ClonedProfile
                         else -> null
                     }
                 }
@@ -51,10 +49,6 @@ class ProfileBadgeProvider : BadgeProvider, KoinComponent {
 
         private val PrivateProfile = Badge(
             icon = BadgeIcon(Icons.Rounded.PrivateSpace)
-        )
-
-        private val ClonedProfile = Badge(
-            icon = BadgeIcon(Icons.Rounded.ContentCopy)
         )
     }
 }
