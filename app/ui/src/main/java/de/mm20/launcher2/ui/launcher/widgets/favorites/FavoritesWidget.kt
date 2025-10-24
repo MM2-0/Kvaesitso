@@ -30,15 +30,19 @@ import de.mm20.launcher2.widgets.FavoritesWidget
 fun FavoritesWidget(widget: FavoritesWidget) {
     val viewModel: FavoritesWidgetVM = viewModel(key = "favorites-widget-${widget.id}")
     val favorites by remember { viewModel.favorites }.collectAsState(emptyList())
-    val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)
     val compactTags by viewModel.compactTags.collectAsState(false)
+    val showFavorites by viewModel.showFavorites.collectAsState(false)
+    val showTags by viewModel.showTags.collectAsState(false)
+    val combinedTags by remember { viewModel.combinedTags }.collectAsState(emptyList())
     val favoritesEditButton = widget.config.editButton
 
     val tagsExpanded by viewModel.tagsExpanded.collectAsState(false)
 
-    LaunchedEffect(widget) {
-        viewModel.updateWidget(widget)
+    // there's probably a better way to do this instead of sending combinedTags
+    // back to the viewmodel
+    LaunchedEffect(widget, combinedTags) {
+        viewModel.updateWidget(widget, combinedTags)
     }
 
     Column(
@@ -55,9 +59,10 @@ fun FavoritesWidget(widget: FavoritesWidget) {
                 icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
             )
         }
-        if (pinnedTags.isNotEmpty() || favoritesEditButton) {
+        if(favoritesEditButton || (showTags && (showFavorites ||
+                    (combinedTags.isNotEmpty() && combinedTags.size > 1)))) {
             FavoritesTagSelector(
-                tags = pinnedTags,
+                tags = combinedTags,
                 selectedTag = selectedTag,
                 editButton = favoritesEditButton,
                 reverse = false,
@@ -65,7 +70,8 @@ fun FavoritesWidget(widget: FavoritesWidget) {
                 scrollState = rememberScrollState(),
                 expanded = tagsExpanded,
                 compact = compactTags,
-                onExpand = { viewModel.setTagsExpanded(it) }
+                onExpand = { viewModel.setTagsExpanded(it) },
+                showFavorites = showFavorites
             )
         }
     }
