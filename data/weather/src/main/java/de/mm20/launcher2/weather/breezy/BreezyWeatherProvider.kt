@@ -46,28 +46,7 @@ class BreezyWeatherProvider(
     internal suspend fun pushWeatherData(data: BreezyWeatherData) {
         val result = mutableListOf<Forecast>()
 
-        val lastUpdate = System.currentTimeMillis()
-
-        result += Forecast(
-            timestamp = data.timestamp?.times(1000L) ?: return,
-            temperature = data.currentTemp ?: return,
-            icon = iconForId(data.currentConditionCode ?: return).id,
-            condition = data.currentCondition ?: return,
-            location = data.location ?: return,
-            provider = "Breezy Weather",
-            clouds = data.cloudCover,
-            humidity = data.currentHumidity?.toDouble(),
-            pressure = data.pressure?.toDouble(),
-            windSpeed = data.windSpeed?.toDouble()?.div(3.6),
-            precipProbability = data.precipProbability,
-            windDirection = data.windDirection?.toDouble(),
-            night = isNight(
-                data.timestamp.times(1000L),
-                data.sunRise?.times(1000L),
-                data.sunSet?.times(1000L)
-            ),
-            updateTime = lastUpdate,
-        )
+        val lastUpdate = data.timestamp?.times(1000L) ?: return
 
         val sunrises = buildList {
             if (data.sunRise != null) add(data.sunRise.times(1000L))
@@ -101,7 +80,7 @@ class BreezyWeatherProvider(
                 temperature = hourly.temp?.toDouble() ?: continue,
                 icon = iconForId(hourly.conditionCode ?: continue).id,
                 condition = textForId(hourly.conditionCode) ?: continue,
-                location = data.location,
+                location = data.location ?: return,
                 provider = "Breezy Weather",
                 humidity = hourly.humidity?.toDouble(),
                 windSpeed = hourly.windSpeed?.toDouble()?.div(3.6),
@@ -162,10 +141,6 @@ class BreezyWeatherProvider(
             else -> R.string.weather_condition_unknown
         }
         return context.getString(resId)
-    }
-
-    private fun isNight(timestamp: Long, sunrise: Long?, sunset: Long?): Boolean {
-        return (sunrise != null && timestamp < sunrise) || (sunset != null && timestamp > sunset)
     }
 
     companion object {

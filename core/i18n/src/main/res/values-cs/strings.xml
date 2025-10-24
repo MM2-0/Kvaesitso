@@ -299,7 +299,7 @@
     <string name="preference_clockwidget_layout_horizontal">Horizontální</string>
     <string name="preference_clockwidget_date_part">Datum</string>
     <string name="preference_clockwidget_favorites_part">Dok</string>
-    <string name="preference_clockwidget_favorites_part_summary">Zobrazit první řádek připnutých položek</string>
+    <string name="preference_clockwidget_favorites_part_summary">Zobrazit připnuté položky v doku</string>
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_music_part_summary">Zobrazit ovládání médií, když je aktivní jejich přehrávání</string>
     <string name="preference_clockwidget_battery_part">Baterie</string>
@@ -878,4 +878,5 @@
     <string name="poi_category_stationery">Papírnictví</string>
     <string name="poi_category_climbing_gym">Lezecká stěna</string>
     <string name="poi_category_hackerspace">Hackerspace</string>
+    <string name="preference_clockwidget_dock_rows">Řádky doku</string>
 </resources>
