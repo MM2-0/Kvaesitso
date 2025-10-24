@@ -37,6 +37,11 @@ data class Profile(
          * The private space profile (Android 15+)
          */
         Private,
+
+        /**
+         * Cloned apps profile
+         */
+        Cloned,
     }
 
     data class State(

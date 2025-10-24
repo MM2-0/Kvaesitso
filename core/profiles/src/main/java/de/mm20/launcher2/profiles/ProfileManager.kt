@@ -43,15 +43,16 @@ class ProfileManager(
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
     /**
-     * An array of exactly 3 profiles with their states.
+     * An array of exactly 4 profiles with their states.
      * - Index 0: Personal profile
      * - Index 1: Work profile
      * - Index 2: Private profile
+     * - Index 3: Cloned profile
      *
      * Profiles that don't exist are null.
      */
     private val profileStates: MutableStateFlow<Array<ProfileWithState?>> =
-        MutableStateFlow(arrayOf(null, null, null))
+        MutableStateFlow(arrayOf(null, null, null, null))
 
     /**
      * List of profiles that are active and unlocked.
@@ -116,6 +117,7 @@ class ProfileManager(
                     Profile.Type.Personal -> 0
                     Profile.Type.Work -> 1
                     Profile.Type.Private -> 2
+                    Profile.Type.Cloned -> 3
                 }
 
                 if (profiles[index] == null) {
@@ -151,6 +153,7 @@ class ProfileManager(
             return when (launcherUserInfo?.userType) {
                 UserManager.USER_TYPE_PROFILE_PRIVATE -> Profile.Type.Private
                 UserManager.USER_TYPE_PROFILE_MANAGED -> Profile.Type.Work
+                UserManager.USER_TYPE_PROFILE_CLONE -> Profile.Type.Cloned
                 else -> Profile.Type.Personal
 
             }

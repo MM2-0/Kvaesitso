@@ -276,6 +276,7 @@ internal class SearchServiceImpl(
             val standardProfile = profiles.find { it.type == Profile.Type.Personal }
             val workProfile = profiles.find { it.type == Profile.Type.Work }
             val privateSpace = profiles.find { it.type == Profile.Type.Private }
+            val clonedProfile = profiles.find { it.type == Profile.Type.Cloned }
             appRepository.search("", false)
                 .withCustomLabels(customAttributesRepository)
                 .map { apps ->
@@ -285,6 +286,9 @@ internal class SearchServiceImpl(
                     for (app in apps) {
                         when {
                             standardProfile != null && app.user == standardProfile.userHandle -> standardProfileApps.add(
+                                app
+                            )
+                            clonedProfile != null && app.user == clonedProfile.userHandle -> standardProfileApps.add(
                                 app
                             )
 
