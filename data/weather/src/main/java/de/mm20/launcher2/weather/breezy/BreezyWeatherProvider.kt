@@ -100,26 +100,18 @@ class BreezyWeatherProvider(
 
     private fun iconForId(id: Int): WeatherIcon {
         return when (id) {
-            200, 201, in 230..232 -> WeatherIcon.ThunderstormWithRain
-            202 -> WeatherIcon.ThunderstormWithRain
-            210, 211 -> WeatherIcon.Thunderstorm
-            212, 221 -> WeatherIcon.HeavyThunderstorm
-            in 300..302, in 310..312 -> WeatherIcon.Drizzle
-            313, 314, 321, in 500..504, 511, in 520..522, 531 -> WeatherIcon.Showers
-            in 600..602 -> WeatherIcon.Snow
-            611, 612, 615, 616, in 620..622 -> WeatherIcon.Sleet
-            701, 711, 731, 741, 761, 762 -> WeatherIcon.Fog
-            721 -> WeatherIcon.Haze
-            771, 781, in 900..902, in 958..962 -> WeatherIcon.Storm
             800 -> WeatherIcon.Clear
             801 -> WeatherIcon.PartlyCloudy
-            802 -> WeatherIcon.BrokenClouds
-            803 -> WeatherIcon.MostlyCloudy
-            804, 951 -> WeatherIcon.Cloudy
-            903 -> WeatherIcon.Cold
-            904 -> WeatherIcon.Hot
-            905, in 952..957 -> WeatherIcon.Wind
-            906 -> WeatherIcon.Hail
+            803 -> WeatherIcon.Cloudy
+            500 -> WeatherIcon.Showers
+            600 -> WeatherIcon.Snow
+            771 -> WeatherIcon.Wind
+            741 -> WeatherIcon.Fog
+            751 -> WeatherIcon.Haze
+            611 -> WeatherIcon.Sleet
+            511 -> WeatherIcon.Hail
+            210 -> WeatherIcon.Thunderstorm
+            211 -> WeatherIcon.ThunderstormWithRain
             else -> WeatherIcon.Unknown
         }
     }
