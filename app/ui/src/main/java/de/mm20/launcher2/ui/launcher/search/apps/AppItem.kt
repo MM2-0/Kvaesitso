@@ -89,13 +89,14 @@ fun AppItem(
     onBack: () -> Unit
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${app.key}")
-    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+    val iconSize = LocalGridSettings.current.iconSize.dp
+    val iconSizePixel = iconSize.toPixels().toInt()
 
     val badge by viewModel.badge.collectAsStateWithLifecycle(null)
     val icon by viewModel.icon.collectAsStateWithLifecycle()
 
     LaunchedEffect(app) {
-        viewModel.init(app, iconSize.toInt())
+        viewModel.init(app, iconSizePixel)
     }
 
     val context = LocalContext.current
@@ -163,7 +164,7 @@ fun AppItem(
 
                         }
                         ShapedLauncherIcon(
-                            size = 48.dp,
+                            size = iconSize,
                             modifier = Modifier
                                 .padding(16.dp),
                             badge = { badge },
