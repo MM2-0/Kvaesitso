@@ -168,4 +168,11 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     val isTasksAppInstalled = appRepository.findOne("org.tasks", Process.myUserHandle())
         .map { it != null }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val hidePrivateProfile = searchUiSettings.hidePrivateProfile
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setHidePrivateProfile(hidePrivateProfile: Boolean) {
+        searchUiSettings.setHidePrivateProfile(hidePrivateProfile)
+    }
 }
