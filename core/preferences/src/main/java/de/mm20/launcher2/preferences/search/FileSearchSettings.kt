@@ -23,19 +23,6 @@ class FileSearchSettings internal constructor(
         }
     }
 
-    val gdriveFiles
-        get() = launcherDataStore.data.map { it.fileSearchProviders.contains("gdrive") }
-
-    fun setGdriveFiles(gdriveFiles: Boolean) {
-        launcherDataStore.update {
-            if (gdriveFiles) {
-                it.copy(fileSearchProviders = it.fileSearchProviders + "gdrive")
-            } else {
-                it.copy(fileSearchProviders = it.fileSearchProviders - "gdrive")
-            }
-        }
-    }
-
     val nextcloudFiles
         get() = launcherDataStore.data.map { it.fileSearchProviders.contains("nextcloud") }
 
@@ -63,7 +50,7 @@ class FileSearchSettings internal constructor(
     }
 
     val enabledPlugins: Flow<Set<String>>
-        get() = launcherDataStore.data.map { it.fileSearchProviders - "local" - "gdrive" - "nextcloud" - "owncloud" }
+        get() = launcherDataStore.data.map { it.fileSearchProviders - "local" - "nextcloud" - "owncloud" }
 
     fun setPluginEnabled(authority: String, enabled: Boolean) {
         launcherDataStore.update {

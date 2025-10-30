@@ -51,13 +51,10 @@ internal class OsmLocationProvider(
     override suspend fun search(
         query: String,
         userLocation: AndroidLocation,
-        allowNetwork: Boolean,
         searchRadiusMeters: Int,
         hideUncategorized: Boolean,
     ): List<Location> {
-        if (!allowNetwork || query.length < 2) {
-            return emptyList()
-        }
+        if (query.length < 2) return emptyList()
 
         val baseUrl = settings.overpassUrl.first()?.takeIf { it.isNotBlank() }
             ?: LocationSearchSettings.DefaultOverpassUrl

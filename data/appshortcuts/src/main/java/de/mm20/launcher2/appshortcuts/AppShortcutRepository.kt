@@ -115,7 +115,7 @@ internal class AppShortcutRepositoryImpl(
         return flags
     }
 
-    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<AppShortcut>> {
+    override fun search(query: String): Flow<ImmutableList<AppShortcut>> {
         if (query.length < 3) {
             return flowOf(persistentListOf())
         }

@@ -23,10 +23,7 @@ import kotlinx.coroutines.withContext
 internal class AndroidContactProvider(
     private val context: Context,
 ) : ContactProvider {
-    override suspend fun search(
-        query: String,
-        allowNetwork: Boolean
-    ): List<Contact> {
+    override suspend fun search(query: String): List<Contact> {
         val results = withContext(Dispatchers.IO) {
             val proj = arrayOf(
                 ContactsContract.RawContacts.CONTACT_ID,
