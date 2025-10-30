@@ -25,6 +25,7 @@ import androidx.compose.material.icons.rounded.AlignVerticalCenter
 import androidx.compose.material.icons.rounded.AlignVerticalTop
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.BatteryFull
+import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.ColorLens
 import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.FormatColorText
@@ -273,6 +274,7 @@ fun Clock(
     val context = LocalContext.current
     val clockSettings: ClockWidgetSettings = koinInject()
     val showSeconds by clockSettings.showSeconds.collectAsState(initial = false)
+    val useEightBits by clockSettings.useEightBits.collectAsState(initial = false)
     val monospaced by clockSettings.monospaced.collectAsState(initial = false)
     val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = false)
     val timeFormat by clockSettings.timeFormat.collectAsState(null)
@@ -307,6 +309,7 @@ fun Clock(
             time = time,
             compact = compact,
             showSeconds = showSeconds,
+            useEightBits = useEightBits,
             twentyFourHours = isTwentyFourHours,
             useThemeColor = useThemeColor,
             darkColors = darkColors,
@@ -371,6 +374,7 @@ fun ConfigureClockWidgetSheet(
     val widgetsOnHome by viewModel.widgetsOnHome.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
     val showSeconds by viewModel.showSeconds.collectAsState()
+    val useEightBits by viewModel.useEightBits.collectAsState()
     val monospaced by viewModel.monospaced.collectAsState()
     val timeFormat by viewModel.timeFormat.collectAsState()
     val useAccentColor by viewModel.useThemeColor.collectAsState()
@@ -516,6 +520,16 @@ fun ConfigureClockWidgetSheet(
                             value = showSeconds,
                             onValueChanged = {
                                 viewModel.setShowSeconds(it)
+                            }
+                        )
+                    }
+                    AnimatedVisibility(compact == false && style is ClockWidgetStyle.Binary) {
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_clock_widget_use_eight_bits),
+                            icon = Icons.Rounded.Build,
+                            value = useEightBits,
+                            onValueChanged = {
+                                viewModel.setUseEightBits(it)
                             }
                         )
                     }

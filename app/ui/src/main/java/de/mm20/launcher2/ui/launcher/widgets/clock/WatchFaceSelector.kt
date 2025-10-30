@@ -196,6 +196,21 @@ fun WatchFaceSelector(
                                         }
                                     )
                                 }
+//                                if (selected is ClockWidgetStyle.Binary) {
+//                                    DropdownMenuItem(
+//                                        text = { Text(stringResource(R.string.clock_variant_analog_ticks)) },
+//                                        leadingIcon = {
+//                                            Icon(
+//                                                if (selected.useEightBits) Icons.Rounded.CheckCircle
+//                                                else Icons.Rounded.RadioButtonUnchecked,
+//                                                null
+//                                            )
+//                                        },
+//                                        onClick = {
+//                                            onSelect(selected.copy(useEightBits = !selected.useEightBits))
+//                                        }
+//                                    )
+//                                }
                                 if (selected is ClockWidgetStyle.Custom) {
                                     DropdownMenuItem(
                                         text = { Text(stringResource(R.string.widget_pick_widget)) },
