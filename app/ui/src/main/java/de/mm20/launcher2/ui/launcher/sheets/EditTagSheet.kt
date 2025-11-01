@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -31,6 +30,7 @@ import androidx.compose.material.icons.rounded.EmojiEmotions
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -146,26 +146,21 @@ fun PickItems(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
 
     Scaffold (
         contentWindowInsets = WindowInsets(0.dp),
-        modifier = Modifier.padding(paddingValues),
         containerColor = Color.Transparent,
         bottomBar = {
-            Surface (
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
-                shape = MaterialTheme.shapes.medium
+            Box (
+              modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+              contentAlignment = Alignment.CenterEnd
             ) {
-                Box {
-                    Button(
-                        onClick = { viewModel.closeItemPicker() },
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .padding(all = 8.dp)
-                            .padding(end = 12.dp)
-                    ) {
-                        Text(stringResource(R.string.action_next))
-                    }
+
+                ExtendedFloatingActionButton (
+                    modifier = Modifier.padding(paddingValues),
+                    onClick = {viewModel.closeItemPicker()}
+                ) {
+                    Text(stringResource(R.string.action_next))
                 }
             }
+
         }
     ) {
         LazyVerticalGrid(
