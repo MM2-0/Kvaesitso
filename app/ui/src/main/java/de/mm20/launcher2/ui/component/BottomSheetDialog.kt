@@ -30,7 +30,7 @@ fun BottomSheetDialog(
         contentWindowInsets = { windowInsets }
     ) {
         content(PaddingValues(
-            bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current).toDp(),
+            bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current).toDp() + 8.dp,
         ))
     }
 }
