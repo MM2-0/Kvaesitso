@@ -282,8 +282,8 @@ fun WidgetPickerSheet(
     ) {
         val builtIn by viewModel.builtInWidgets.collectAsState(emptyList())
         LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = it
         ) {
             stickyHeader {
                 SearchBar(
@@ -297,7 +297,7 @@ fun WidgetPickerSheet(
                                 )
                             )
                         }
-                        .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+                        .padding(bottom = 16.dp),
                     windowInsets = WindowInsets(0.dp),
                     query = query,
                     onQueryChange = { viewModel.search(it) },
@@ -325,7 +325,7 @@ fun WidgetPickerSheet(
                     OutlinedCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+                            .padding(bottom = 16.dp),
                         onClick = {
                             val id = UUID.randomUUID()
                             val widget = when (it.type) {
@@ -380,7 +380,7 @@ fun WidgetPickerSheet(
                     )
                     Row(
                         modifier = Modifier
-                            .padding(horizontal = 16.dp, vertical = 4.dp)
+                            .padding(vertical = 4.dp)
                             .clip(MaterialTheme.shapes.small)
                             .background(background)
                             .clickable(enabled = !expandAllGroups) {
@@ -416,7 +416,7 @@ fun WidgetPickerSheet(
                         OutlinedCard(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 4.dp)
+                                .padding(vertical = 4.dp)
                                 .animateItem(),
                             onClick = {
                                 bindAppWidgetStarter.launch(it)

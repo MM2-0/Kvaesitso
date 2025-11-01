@@ -18,6 +18,7 @@ import de.mm20.launcher2.ui.ktx.toDp
 fun BottomSheetDialog(
     onDismissRequest: () -> Unit,
     bottomSheetState: SheetState = rememberModalBottomSheetState(),
+    windowInsets: WindowInsets = WindowInsets(left = 24.dp, right = 24.dp),
     content: @Composable (paddingValues: PaddingValues) -> Unit,
 ) {
     ModalBottomSheet(
@@ -26,7 +27,7 @@ fun BottomSheetDialog(
             .padding(top = 8.dp),
         sheetState = bottomSheetState,
         onDismissRequest = onDismissRequest,
-        contentWindowInsets = { WindowInsets(left = 24.dp, right = 24.dp) }
+        contentWindowInsets = { windowInsets }
     ) {
         content(PaddingValues(
             bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current).toDp(),
