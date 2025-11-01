@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -96,7 +97,7 @@ fun EditTagSheet(
                 onTagSaved(viewModel.tagName)
             }
             onDismiss()
-        }
+        },
     ) {
         when (viewModel.page) {
             EditTagSheetPage.CreateTag -> CreateNewTagPage(viewModel, it)
@@ -424,9 +425,7 @@ fun PickIcon(
         )
     }
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(paddingValues)
+        modifier = Modifier.fillMaxWidth()
     ) {
         SingleChoiceSegmentedButtonRow(
             modifier = Modifier.fillMaxWidth(),
@@ -455,6 +454,7 @@ fun PickIcon(
                     IconPicker(
                         searchable = tag,
                         onSelect = { viewModel.selectIcon(it) },
+                        contentPadding = paddingValues
                     )
                 }
 
@@ -466,6 +466,7 @@ fun PickIcon(
                         onEmojiSelected = {
                             viewModel.selectIcon(CustomTextIcon(text = it))
                         },
+                        contentPadding = paddingValues
                     )
                 }
             }
