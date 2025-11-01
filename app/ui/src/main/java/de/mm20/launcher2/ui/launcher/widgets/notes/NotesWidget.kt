@@ -553,7 +553,7 @@ fun NoteReadWriteErrorSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(top = 8.dp, bottom = 16.dp)
+                .padding(it)
         ) {
             Text(
                 text = message,
