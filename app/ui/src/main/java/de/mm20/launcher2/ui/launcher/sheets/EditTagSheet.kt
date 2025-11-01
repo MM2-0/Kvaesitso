@@ -30,6 +30,7 @@ import androidx.compose.material.icons.rounded.EmojiEmotions
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -96,7 +97,7 @@ fun EditTagSheet(
                 onTagSaved(viewModel.tagName)
             }
             onDismiss()
-        }
+        },
     ) {
         when (viewModel.page) {
             EditTagSheetPage.CreateTag -> CreateNewTagPage(viewModel, it)
@@ -145,26 +146,21 @@ fun PickItems(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
 
     Scaffold (
         contentWindowInsets = WindowInsets(0.dp),
-        modifier = Modifier.padding(paddingValues),
         containerColor = Color.Transparent,
         bottomBar = {
-            Surface (
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
-                shape = MaterialTheme.shapes.medium
+            Box (
+              modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+              contentAlignment = Alignment.CenterEnd
             ) {
-                Box {
-                    Button(
-                        onClick = { viewModel.closeItemPicker() },
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .padding(all = 8.dp)
-                            .padding(end = 12.dp)
-                    ) {
-                        Text(stringResource(R.string.action_next))
-                    }
+
+                ExtendedFloatingActionButton (
+                    modifier = Modifier.padding(paddingValues),
+                    onClick = {viewModel.closeItemPicker()}
+                ) {
+                    Text(stringResource(R.string.action_next))
                 }
             }
+
         }
     ) {
         LazyVerticalGrid(
@@ -424,9 +420,7 @@ fun PickIcon(
         )
     }
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(paddingValues)
+        modifier = Modifier.fillMaxWidth()
     ) {
         SingleChoiceSegmentedButtonRow(
             modifier = Modifier.fillMaxWidth(),
@@ -455,6 +449,7 @@ fun PickIcon(
                     IconPicker(
                         searchable = tag,
                         onSelect = { viewModel.selectIcon(it) },
+                        contentPadding = paddingValues
                     )
                 }
 
@@ -466,6 +461,7 @@ fun PickIcon(
                         onEmojiSelected = {
                             viewModel.selectIcon(CustomTextIcon(text = it))
                         },
+                        contentPadding = paddingValues
                     )
                 }
             }

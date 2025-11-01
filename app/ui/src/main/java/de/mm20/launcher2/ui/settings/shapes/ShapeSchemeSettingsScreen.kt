@@ -504,7 +504,8 @@ fun ShapePreference(
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
-                    .padding(it),
+                    .padding(it)
+                    .padding(bottom = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 val previewShape = if ((currentCornerStyle ?: baseShape.corners
