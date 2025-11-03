@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="th">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="th-rTH">
     <string name="location_open">เปิดอยู่</string>
     <string name="location_closed">ปิดแล้ว</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
@@ -137,7 +137,7 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">ตารางคำนวณ</string>
     <!-- Audio file -->
-    <string name="file_type_music">ไฟล์เพลง</string>
+    <string name="file_type_music">ไฟล์เสียง</string>
     <!-- Video file -->
     <string name="file_type_video">วิดีโอ</string>
     <!-- Image file -->
@@ -217,14 +217,14 @@
     <string name="menu_edit_widgets">แก้ไขวิดเจ็ต</string>
     <string name="widget_name_weather">สภาพอากาศ</string>
     <string name="widget_name_calendar">ปฏิทิน</string>
-    <string name="widget_name_music">ดนตรี</string>
+    <string name="widget_name_music">สื่อ</string>
     <string name="widget_name_favorites">รายการโปรด</string>
     <string name="widget_name_notes">โน้ต</string>
-    <string name="widget_name_unknown">วิดเจ็ตที่ไม่รู้จัก</string>
+    <string name="widget_name_unknown">ไม่รู้จัก</string>
     <string name="widget_add_widget">เพิ่มวิดเจ็ต</string>
     <string name="widget_removed">ลบวิดเจ็ตแล้ว</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">เขียนโน้ต…</string>
+    <string name="notes_widget_placeholder">เขียนโน้ต</string>
     <string name="notes_widget_action_new">สร้างโน้ต</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">บันทึก</string>
@@ -259,7 +259,7 @@
     <string name="edit_favorites_dialog_empty_section">ลากรายการต่างๆมาที่นี่</string>
     <string name="edit_favorites_dialog_tags">แท็ก</string>
     <string name="edit_favorites_dialog_tag_section_empty">แท็กที่ถูกปักหมุดจะถูกแสดงที่นี่</string>
-    <string name="edit_favorites_dialog_new_tag">สร้างแท็ก…</string>
+    <string name="edit_favorites_dialog_new_tag">สร้างแท็ก</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">ลิงก์เซิร์ฟเวอร์ Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -392,7 +392,7 @@
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">คุณต้องกำหนดให้แอป %1$s เป็นตัวใช้งานเริ่มต้นจึงจะค้นหาทางลัดแอปได้</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลภายนอกเพื่อค้นหาไฟล์</string>
+    <string name="missing_permission_file_search_settings">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลภายนอกเพื่อค้นหาไฟล์บนอุปกรณ์นี้</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
@@ -406,7 +406,7 @@
     <!-- Missing location permission, used in location search results -->
     <string name="missing_permission_location_search">คุณต้องอนุญาตให้แอปเข้าถึงตำแหน่งเพื่อค้นหาสถานที่ใกล้เคียง</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลเพื่อค้นหารูปภาพ สื่อและเอกสารบนอุปกรณ์นี้</string>
+    <string name="missing_permission_files_search">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลเพื่อค้นหาไฟล์บนอุปกรณ์นี้</string>
     <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">คุณต้องอนุญาตให้แอปเข้าถึงรายชื่อผู้ติดต่อเพื่อค้นหาในรายชื่อผู้ติดต่อ</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
@@ -454,7 +454,7 @@
     <string name="provider_here">ที่นี่</string>
     <string name="preference_category_location">ตำแหน่ง</string>
     <string name="preference_automatic_location">ตำแหน่งอัตโนมัติ</string>
-    <string name="preference_automatic_location_summary">ใช้ GPS และบริการเข้าถึงตำแหน่งเพื่อกำหนดตำแหน่งอัตโนมัติ</string>
+    <string name="preference_automatic_location_summary">ใช้บริการตำแหน่งเพื่อกำหนดตำแหน่งอัตโนมัติ</string>
     <string name="preference_location_managed">จัดการโดยปลั๊กอิน</string>
     <string name="preference_location_managed_summary">ตำแหน่งของผู้ให้บริการนี้ถูกควบคุมโดยปลั๊กอิน</string>
     <string name="preference_location">ตำแหน่ง</string>
@@ -586,13 +586,15 @@
     <string name="preference_clockwidget_date_part">วันที่</string>
     <string name="preference_clockwidget_date_part_summary">แสดงวันที่ปัจจุบัน</string>
     <string name="preference_clockwidget_favorites_part">แถบใช้งาน</string>
+    <string name="preference_clockwidget_favorites_part_summary">แสดงแถวแรกของรายการที่ปักหมุดไว้</string>
+    <string name="preference_clockwidget_dock_rows">แถบปักหมุด</string>
     <string name="preference_clockwidget_music_part">สื่อ</string>
     <string name="preference_clockwidget_music_part_summary">แสดงตัวควบคุมสื่อเมื่อมีสื่อกำลังเล่น</string>
     <string name="preference_clockwidget_battery_part">แบตเตอรี่</string>
     <string name="preference_clockwidget_battery_part_summary">แสดงระดับแบตเตอรี่ปัจจุบันเมื่อแบตเตอรี่เหลือน้อยหรือกำลังถูกชาร์จอยู่</string>
     <string name="preference_clockwidget_alarm_part">การตั้งปลุก</string>
     <string name="preference_clockwidget_alarm_part_summary">แสดงการตั้งปลุกที่กำลังจะปลุกในอีก 8 ชั่วโมงข้างหน้า</string>
-    <string name="preference_screen_backup">สำรองข้อมูลและกู้คืนข้อมูล</string>
+    <string name="preference_screen_backup">สำรองและกู้คืนข้อมูล</string>
     <string name="preference_screen_backup_summary">ส่งออกและนำเข้าข้อมูลแอปหน้าแรก</string>
     <string name="preference_backup">สำรองข้อมูล</string>
     <string name="preference_backup_summary">ส่งออกการตั้งค่าและข้อมูลแอปหน้าแรก</string>
@@ -664,7 +666,7 @@
     <string name="preference_compact_tags_summary">ซ่อนชื่อหรือไอคอนของแท็กเพื่อทำให้แท็กใช้พื้นที่น้อยลง</string>
     <string name="preference_widgets_edit_button_summary">แสดงปุ่มสำหรับการเพิ่ม ลบ และจัดเรียงวิดเจ็ต</string>
     <string name="preference_widgets_on_home_screen">วิดเจ็ตบนหน้าจอหลัก</string>
-    <string name="preference_widgets_on_home_screen_summary">แสดงวิดเจ็ตบนหน้าจอหลักแทนการใช้หน้าจอเสริม</string>
+    <string name="preference_widgets_on_home_screen_summary">แสดงวิดเจ็ตบนหน้าจอหลักแทนการใช้อีกหน้าหนึ่ง</string>
     <string name="preference_screen_homescreen">หน้าจอหลัก</string>
     <string name="preference_screen_homescreen_summary">นาฬิกา แถบค้นหา ภาพพื้นหลัง แถบระบบ</string>
     <string name="preference_screen_icons">ลิ้นชักและไอคอน</string>
@@ -680,7 +682,7 @@
     <string name="preference_breezyweather_integration_instructions">ขั้นตอนการตั้งแอป Breezy Weather เป็นแหล่งข้อมูลสภาพอากาศ\n\n1. เปิดแอป Breezy Weather &gt; การตั้งค่า &gt; วิดเจ็ตและภาพพื้นหลังแบบเคลื่อนไหว &gt; ส่งข้อมูล Gadgetbridge &gt; เปิดใช้งาน %1$s \n\n2. เปิดการตั้งค่า %1$s และเลือก Breezy Weather เป็นผู้ให้บริการข้อมูลสภาพอากาศ</string>
     <string name="preference_launch_breezyweather_app">เปิด Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">แตะเพื่อโทรฯ</string>
-    <string name="preference_contacts_call_on_tap_summary">เริ่มการโทรฯทันทีที่แตะเบอร์โทรศัพท์</string>
+    <string name="preference_contacts_call_on_tap_summary">เริ่มการโทรฯทันทีที่แตะเบอร์โทรศัพท์โดยไม่ต้องยืนยัน</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">คุณยังไม่ได้เชื่อมต่อกับบัญชี Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -725,7 +727,7 @@
     <string name="search_action_contact">เพิ่มผู้ติดต่อ</string>
     <string name="search_action_open_url">เปิดเว็บไซต์</string>
     <string name="search_action_event">เขียนกำหนดการกิจกรรม</string>
-    <string name="create_search_action_type">คุณอยากสร้างแอ็กชั่นแบบไหน?</string>
+    <string name="create_search_action_type">คุณอยากสร้างแอ็กชั่นแบบใด?</string>
     <string name="create_search_action_type_web">ค้นหาบนเว็บไซต์</string>
     <string name="create_search_action_type_app">ค้นหาในแอป</string>
     <string name="create_search_action_type_intent">Intent แบบกำหนดเอง</string>
@@ -735,7 +737,7 @@
     <string name="search_action_label">ชื่อ</string>
     <string name="search_action_app">แอป</string>
     <string name="search_action_websearch_url">แม่แบบลิงก์</string>
-    <string name="search_action_websearch_url_hint">แม่แบบลิงก์ที่จะนำไปใช้สร้างลิงก์ค้นหาผ่านเว็บ ใช้ ‘${1}’ เป็นตัวยึดตำแหน่งสำหรับคำค้นหาจริง เช่น https://google.com/search?q=${1}</string>
+    <string name="search_action_websearch_url_hint">แม่แบบลิงก์ที่จะนำไปใช้สร้างลิงก์ค้นหาผ่านเว็บ ใช้ ‘${1}’ เป็นตัวยึดตำแหน่งสำหรับคำค้นหาจริง</string>
     <string name="more_information">ข้อมูลเพิ่มเติม</string>
     <string name="experimental_feature">ฟีเจอร์ทดลองใช้</string>
     <string name="tag_exists_error">มีแท็กชื่อนี้อยู่แล้ว</string>
@@ -747,7 +749,7 @@
     <plurals name="tag_selected_items">
         <item quantity="other">เลือกแล้ว %1$d อย่าง</item>
     </plurals>
-    <string name="preference_layout_open_search">ค้นหา / ลิ้นชักรวมแอป</string>
+    <string name="preference_layout_open_search">ค้นหาและลิ้นชักรวมแอป</string>
     <string name="open_search_pull_down">ปัดลง</string>
     <string name="open_search_swipe_left">ปัดซ้าย</string>
     <string name="open_search_swipe_right">ปัดขวา</string>
