@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="th">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="th-rTH">
     <!-- DIMENSIONS -->
     <string name="dimension_length">ความยาว</string>
     <string name="dimension_mass">มวล</string>
