@@ -61,4 +61,12 @@ class SearchUiSettings internal constructor(
         }
     }
 
+    val hidePrivateProfile
+        get() = launcherDataStore.data.map { it.hidePrivateProfile }
+
+    fun setHidePrivateProfile(hidePrivateProfile: Boolean) {
+        launcherDataStore.update {
+            it.copy(hidePrivateProfile = hidePrivateProfile)
+        }
+    }
 }
