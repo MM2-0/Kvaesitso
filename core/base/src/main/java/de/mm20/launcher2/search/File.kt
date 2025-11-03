@@ -26,32 +26,32 @@ interface File : SavableSearchable {
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val (resId, bgColor) = when {
-            isDirectory -> R.drawable.ic_file_folder to R.color.lightblue
-            mimeType.startsWith("image/") -> R.drawable.ic_file_picture to R.color.teal
-            mimeType.startsWith("audio/") -> R.drawable.ic_file_music to R.color.orange
-            mimeType.startsWith("video/") -> R.drawable.ic_file_video to R.color.purple
+            isDirectory -> R.drawable.folder_24px to R.color.lightblue
+            mimeType.startsWith("image/") -> R.drawable.photo_24px to R.color.teal
+            mimeType.startsWith("audio/") -> R.drawable.music_note_24px to R.color.orange
+            mimeType.startsWith("video/") -> R.drawable.movie_24px to R.color.purple
             else -> when (mimeType) {
                 "application/zip", "application/x-gtar", "application/x-tar",
                 "application/java-archive", "application/x-7z-compressed",
-                "application/x-compressed-tar", "application/x-gzip", "application/x-bzip2" -> R.drawable.ic_file_archive to R.color.brown
-                "application/pdf" -> R.drawable.ic_file_pdf to R.color.red
+                "application/x-compressed-tar", "application/x-gzip", "application/x-bzip2" -> R.drawable.folder_zip_24px to R.color.brown
+                "application/pdf" -> R.drawable.docs_24px to R.color.red
                 "application/vnd.oasis.opendocument.text",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "application/msword", "text/plain", "application/vnd.google-apps.document" -> R.drawable.ic_file_document to R.color.blue
+                "application/msword", "text/plain", "application/vnd.google-apps.document" -> R.drawable.article_24px to R.color.blue
                 "application/vnd.oasis.opendocument.spreadsheet",
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "application/vnd.ms-excel", "application/vnd.google-apps.spreadsheet" -> R.drawable.ic_file_spreadsheet to R.color.green
+                "application/vnd.ms-excel", "application/vnd.google-apps.spreadsheet" -> R.drawable.table_24px to R.color.green
                 "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                "application/vnd.ms-powerpoint", "application/vnd.google-apps.presentation" -> R.drawable.ic_file_presentation to R.color.amber
+                "application/vnd.ms-powerpoint", "application/vnd.google-apps.presentation" -> R.drawable.slideshow_24px to R.color.amber
                 "text/x-asm", "text/x-c", "text/x-java-source", "text/x-script.phyton", "text/x-pascal",
-                "text/x-script.perl", "text/javascript", "application/json" -> R.drawable.ic_file_code to R.color.pink
-                "text/xml", "text/html" -> R.drawable.ic_file_markup to R.color.deeporange
-                "application/vnd.android.package-archive" -> R.drawable.ic_file_android to R.color.lightgreen
-                "application/vnd.google-apps.form" -> R.drawable.ic_file_form to R.color.deeppurple
-                "application/vnd.google-apps.drawing" -> R.drawable.ic_file_picture to R.color.teal
-                "application/vnd.de.mm20.launcher2.backup" -> R.drawable.ic_file_backup to R.color.brown
-                "application/vnd.de.mm20.launcher2.theme" -> R.drawable.ic_file_theme to R.color.amber
-                else -> R.drawable.ic_file_generic to R.color.bluegrey
+                "text/x-script.perl", "text/javascript", "application/json" -> R.drawable.data_object_24px to R.color.pink
+                "text/xml", "text/html" -> R.drawable.code_24px to R.color.deeporange
+                "application/vnd.android.package-archive" -> R.drawable.android_24px to R.color.lightgreen
+                "application/vnd.google-apps.form" -> R.drawable.ballot_24px to R.color.deeppurple
+                "application/vnd.google-apps.drawing" -> R.drawable.shape_line_24px to R.color.teal
+                "application/vnd.de.mm20.launcher2.backup" -> R.drawable.settings_24px to R.color.brown
+                "application/vnd.de.mm20.launcher2.theme" -> R.drawable.palette_24px to R.color.amber
+                else -> R.drawable.draft_24px to R.color.bluegrey
             }
         }
         return StaticLauncherIcon(
