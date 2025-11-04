@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.CancellationSignal
 import android.util.Log
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
-import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import kotlinx.coroutines.Dispatchers
@@ -41,17 +40,13 @@ abstract class QueryPluginApi<TQuery, TResult>(
         return QueryPluginConfig(configBundle)
     }
 
-    suspend fun search(query: TQuery, allowNetwork: Boolean): List<TResult> = withContext(Dispatchers.IO) {
+    suspend fun search(query: TQuery): List<TResult> = withContext(Dispatchers.IO) {
             val lang = getLanguage()
             val uri = Uri.Builder()
                 .scheme("content")
                 .authority(pluginAuthority)
                 .path(SearchPluginContract.Paths.Search)
                 .appendQueryParameters(query)
-                .appendQueryParameter(
-                    SearchPluginContract.Params.AllowNetwork,
-                    allowNetwork.toString()
-                )
                 .appendQueryParameter(
                     SearchPluginContract.Params.Lang,
                     lang

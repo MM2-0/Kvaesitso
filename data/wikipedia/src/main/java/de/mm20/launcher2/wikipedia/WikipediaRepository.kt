@@ -19,8 +19,8 @@ internal class WikipediaRepository(
 
     private val wikipediaApi = WikipediaApi(context, null)
 
-    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Wikipedia>> {
-        if (query.length < 4 || !allowNetwork) return flowOf(persistentListOf())
+    override fun search(query: String): Flow<ImmutableList<Wikipedia>> {
+        if (query.length < 4) return flowOf(persistentListOf())
 
         return combineTransform(settings.enabled, settings.customUrl) { enabled, url ->
             emit(persistentListOf())

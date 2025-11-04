@@ -34,8 +34,7 @@ internal class LocationsRepository(
 
     @OptIn(FlowPreview::class)
     override fun search(
-        query: String,
-        allowNetwork: Boolean
+        query: String
     ): Flow<ImmutableList<Location>> {
         if (query.isBlank() || query.length <= 1) {
             return flowOf(persistentListOf())
@@ -73,7 +72,6 @@ internal class LocationsRepository(
                         val r = provider.search(
                             query,
                             userLocation,
-                            allowNetwork,
                             settingsData.searchRadius,
                             settingsData.hideUncategorized
                         )
