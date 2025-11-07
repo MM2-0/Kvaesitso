@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,6 +18,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -113,7 +115,7 @@ fun Preference(
 @Composable
 fun Preference(
     title: String,
-    icon: ImageVector? = null,
+    @DrawableRes icon: Int? = null,
     iconPadding: Boolean = icon != null,
     summary: String? = null,
     onClick: () -> Unit = {},
@@ -126,7 +128,7 @@ fun Preference(
         icon = {
             if (icon != null) {
                 Icon(
-                    imageVector = icon,
+                    painter = painterResource(icon),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                 )

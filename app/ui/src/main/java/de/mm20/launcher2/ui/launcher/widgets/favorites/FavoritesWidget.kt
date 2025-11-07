@@ -1,16 +1,8 @@
 package de.mm20.launcher2.ui.launcher.widgets.favorites
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -52,7 +44,7 @@ fun FavoritesWidget(widget: FavoritesWidget) {
                 text = stringResource(
                     if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
                 ),
-                icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
+                icon = if (selectedTag == null) R.drawable.star_24px else R.drawable.tag_24px,
             )
         }
         if (pinnedTags.isNotEmpty() || favoritesEditButton) {

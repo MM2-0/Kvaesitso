@@ -12,10 +12,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -37,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -87,7 +84,7 @@ fun ImportThemeSheet(
                 contentAlignment = Alignment.Center
             ) {
                 LargeMessage(
-                    icon = Icons.Rounded.ErrorOutline,
+                    icon = R.drawable.error_48px,
                     text = stringResource(R.string.import_theme_error),
                 )
             }
@@ -157,14 +154,14 @@ fun ThemePreview(
                     selected = !darkTheme,
                     onClick = { darkTheme = false }
                 ) {
-                    Icon(Icons.Rounded.LightMode, null)
+                    Icon(painterResource(R.drawable.light_mode_24px), null)
                 }
                 SegmentedButton(
                     shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
                     selected = darkTheme,
                     onClick = { darkTheme = true }
                 ) {
-                    Icon(Icons.Rounded.DarkMode, null)
+                    Icon(painterResource(R.drawable.dark_mode_24px), null)
                 }
             }
         }

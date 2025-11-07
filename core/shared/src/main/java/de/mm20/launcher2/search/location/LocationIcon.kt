@@ -14,6 +14,7 @@ enum class LocationIcon {
     Train,
     Subway,
     CableCar,
+    AerialTramway,
     Airport,
     Boat,
     Taxi,

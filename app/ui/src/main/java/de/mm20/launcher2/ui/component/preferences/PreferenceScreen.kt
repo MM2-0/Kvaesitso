@@ -15,11 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.HelpOutline
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,12 +35,13 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalViewConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.locals.LocalNavController
 
 
 @Composable
@@ -134,7 +131,7 @@ fun PreferenceScreen(
                         }
                     }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                            painter = painterResource(R.drawable.arrow_back_24px),
                             contentDescription = "Back"
                         )
                     }
@@ -152,7 +149,7 @@ fun PreferenceScreen(
                                 .build().launchUrl(context, helpUrl.toUri())
                         }) {
                             Icon(
-                                imageVector = Icons.Rounded.HelpOutline,
+                                painter = painterResource(R.drawable.help_24px),
                                 contentDescription = stringResource(R.string.help)
                             )
                         }

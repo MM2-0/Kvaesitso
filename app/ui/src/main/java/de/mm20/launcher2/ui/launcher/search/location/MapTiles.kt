@@ -29,9 +29,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Navigation
-import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -53,6 +50,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
@@ -76,6 +74,7 @@ import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.search.location.PaymentMethod
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.DegreesConverter
 import de.mm20.launcher2.ui.ktx.contrast
 import de.mm20.launcher2.ui.ktx.hue
@@ -219,7 +218,7 @@ fun MapTiles(
                 )
 
                 Icon(
-                    imageVector = Icons.Rounded.Place,
+                    painterResource(R.drawable.location_on_24px_filled),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.tertiary,
                     modifier = Modifier
@@ -238,47 +237,46 @@ fun MapTiles(
                             zoom
                         ).let {
                             Offset(
-                                (it.x - start.x) * tileSize.value - 8f,
-                                (it.y - start.y) * tileSize.value - 8f
+                                (it.x - start.x) * tileSize.value - 10f,
+                                (it.y - start.y) * tileSize.value - 10f
                             )
                         },
                         animationSpec = tween()
                     )
 
-                    if (userLocation.heading != null) {
-                        val headingAnim by animateValueAsState(
-                            targetValue = userLocation.heading,
-                            typeConverter = Float.DegreesConverter
-                        )
-
-                        Icon(
-                            imageVector = Icons.Rounded.Navigation,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.tertiary,
-                            modifier = Modifier
-                                .align(Alignment.TopStart)
-                                .size(16.dp)
-                                .absoluteOffset(
-                                    userIndicatorOffset.x.dp,
-                                    userIndicatorOffset.y.dp
-                                )
-                                .rotate(headingAnim)
-                                .absoluteOffset(y = -8.dp)
-                        )
-                    }
-
                     Box(
                         modifier = Modifier
                             .align(Alignment.TopStart)
-                            .size(16.dp)
+                            .size(20.dp)
                             .absoluteOffset(
                                 userIndicatorOffset.x.dp,
                                 userIndicatorOffset.y.dp
                             )
-                            .background(MaterialTheme.colorScheme.tertiary, CircleShape)
-                            .border(2.dp, MaterialTheme.colorScheme.onTertiary, CircleShape)
+                            .background(MaterialTheme.colorScheme.onTertiary, CircleShape)
                             .shadow(1.dp, CircleShape)
-                    )
+                    ) {
+                        if (userLocation.heading != null) {
+                            val headingAnim by animateValueAsState(
+                                targetValue = userLocation.heading,
+                                typeConverter = Float.DegreesConverter
+                            )
+                            Icon(
+                                painterResource(R.drawable.assistant_navigation_20px),
+                                null,
+                                tint = MaterialTheme.colorScheme.tertiary,
+                                modifier = Modifier
+                                    .size(20.dp)
+                                    .rotate(headingAnim)
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .padding(2.dp)
+                                    .size(16.dp)
+                                    .background(MaterialTheme.colorScheme.tertiary, CircleShape)
+                            )
+                        }
+                    }
 
                     if (osmAttribution != null) {
                         Text(

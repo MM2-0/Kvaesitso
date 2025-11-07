@@ -7,9 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.BugReport
-import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -21,9 +18,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.crashreporter.CrashReportType
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 
 @Composable
@@ -39,11 +38,11 @@ fun CrashReportScreen(fileName: String) {
         },
         topBarActions = {
             IconButton(onClick = { crashReport?.let { viewModel.shareCrashReport(context, it) } }) {
-                Icon(imageVector = Icons.Rounded.Share, contentDescription = null)
+                Icon(painterResource(R.drawable.share_24px), contentDescription = null)
             }
             if (crashReport?.type == CrashReportType.Crash) {
                 IconButton(onClick = { crashReport?.let { viewModel.createIssue(context, it) } }) {
-                    Icon(imageVector = Icons.Rounded.BugReport, contentDescription = null)
+                    Icon(painterResource(R.drawable.bug_report_24px), contentDescription = null)
                 }
             }
         }

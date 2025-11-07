@@ -2,10 +2,7 @@ package de.mm20.launcher2.ui.settings.weather
 
 import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -30,7 +27,6 @@ import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.Banner
-import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
@@ -68,7 +64,7 @@ fun WeatherIntegrationSettingsScreen() {
                         modifier = Modifier.padding(16.dp),
                         text = state.message
                             ?: stringResource(R.string.plugin_state_setup_required),
-                        icon = Icons.Rounded.Info,
+                        icon = R.drawable.error_24px,
                         primaryAction = {
                             TextButton(onClick = {
                                 try {

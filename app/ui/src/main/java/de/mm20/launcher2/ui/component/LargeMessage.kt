@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -13,13 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
+/**
+ * @param icon the icon resource id. Should be an icon with optical size 48px.
+ */
 @Composable
 fun LargeMessage(
     modifier: Modifier = Modifier,
-    icon: ImageVector,
+    @DrawableRes icon: Int,
     text: String,
     color: Color = LocalContentColor.current
 ) {
@@ -29,7 +34,7 @@ fun LargeMessage(
         verticalArrangement = Arrangement.Center,
     ) {
         Icon(
-            imageVector = icon,
+            painter = painterResource(icon),
             contentDescription = null,
             modifier = Modifier
                 .padding(bottom = 24.dp)

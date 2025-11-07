@@ -3,8 +3,6 @@ package de.mm20.launcher2.ui.settings.locations
 import android.app.PendingIntent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -85,7 +83,7 @@ fun LocationsSettingsScreen() {
                         },
                         description = (state as? PluginState.SetupRequired)?.message
                             ?: stringResource(id = R.string.plugin_state_setup_required),
-                        icon = Icons.Rounded.ErrorOutline,
+                        icon = R.drawable.error_24px,
                         unlockLabel = stringResource(id = R.string.plugin_action_setup),
                     ) {
                         SwitchPreference(

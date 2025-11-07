@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Slider
@@ -11,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import java.text.DecimalFormat
@@ -21,7 +23,7 @@ import kotlin.math.roundToInt
 @Composable
 fun SliderPreference(
     title: String,
-    icon: ImageVector? = null,
+    @DrawableRes icon: Int? = null,
     iconPadding: Boolean = icon != null,
     value: Float,
     min: Float = 0f,
@@ -52,7 +54,7 @@ fun SliderPreference(
             ) {
                 if (icon != null) {
                     Icon(
-                        imageVector = icon,
+                        painter = painterResource(icon),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                     )
@@ -106,7 +108,7 @@ fun SliderPreference(
 @Composable
 fun SliderPreference(
     title: String,
-    icon: ImageVector? = null,
+    @DrawableRes icon: Int? = null,
     value: Int,
     min: Int = 0,
     max: Int = 100,
@@ -135,7 +137,7 @@ fun SliderPreference(
 @Composable
 inline fun <reified T: Enum<T>> SliderPreference(
     title: String,
-    icon: ImageVector? = null,
+    @DrawableRes icon: Int? = null,
     value: T,
     enabled: Boolean = true,
     labels: List<EnumLocalization<T>>? = null,

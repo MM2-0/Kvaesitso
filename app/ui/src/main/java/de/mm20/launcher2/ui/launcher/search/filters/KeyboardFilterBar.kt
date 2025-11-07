@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.search.SearchFilters
@@ -67,7 +68,7 @@ fun KeyboardFilterBar(
                     },
                     leadingIcon = {
                         Icon(
-                            imageVector = item.icon,
+                            painter = painterResource(item.iconMedium),
                             contentDescription = null,
                             modifier = Modifier.size(FilterChipDefaults.IconSize)
                         )

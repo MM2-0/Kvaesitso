@@ -53,7 +53,6 @@ dependencies {
     implementation(libs.androidx.palette)
     runtimeOnly(libs.androidx.compose.ui)
     runtimeOnly(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.materialicons)
 
     implementation(libs.stringsimilarity)
 

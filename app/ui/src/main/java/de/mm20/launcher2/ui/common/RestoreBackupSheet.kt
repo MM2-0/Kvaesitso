@@ -9,11 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircleOutline
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -48,7 +43,7 @@ fun RestoreBackupSheet(
     val compatibility by viewModel.compatibility
 
     BottomSheetDialog(onDismissRequest) {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(it),
@@ -67,13 +62,15 @@ fun RestoreBackupSheet(
                         )
                     }
                 }
+
                 RestoreBackupState.InvalidFile -> {
                     LargeMessage(
                         modifier = Modifier.aspectRatio(1f),
-                        icon = Icons.Rounded.ErrorOutline,
+                        icon = R.drawable.error_48px,
                         text = stringResource(id = R.string.restore_invalid_file)
                     )
                 }
+
                 RestoreBackupState.Ready -> {
                     val metadata by viewModel.metadata
 
@@ -84,7 +81,7 @@ fun RestoreBackupSheet(
                                     .fillMaxWidth()
                                     .wrapContentHeight()
                                     .padding(bottom = 16.dp),
-                                icon = Icons.Rounded.Info,
+                                icon = R.drawable.info_24px,
                                 text = stringResource(
                                     R.string.restore_meta,
                                     DateUtils.formatDateTime(
@@ -99,7 +96,7 @@ fun RestoreBackupSheet(
                             if (compatibility == BackupCompatibility.Incompatible) {
                                 LargeMessage(
                                     modifier = Modifier.aspectRatio(1f),
-                                    icon = Icons.Rounded.ErrorOutline,
+                                    icon = R.drawable.error_48px,
                                     text = stringResource(
                                         id = R.string.restore_incompatible_file,
                                         stringResource(R.string.app_name)
@@ -112,18 +109,19 @@ fun RestoreBackupSheet(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(bottom = 16.dp),
-                                        icon = Icons.Rounded.Warning,
+                                        icon = R.drawable.warning_24px,
                                         text =
-                                        stringResource(
-                                            R.string.restore_different_minor_version,
-                                            stringResource(R.string.app_name)
-                                        )
+                                            stringResource(
+                                                R.string.restore_different_minor_version,
+                                                stringResource(R.string.app_name)
+                                            )
                                     )
                                 }
                             }
                         }
                     }
                 }
+
                 RestoreBackupState.Restoring -> {
                     Box(
                         modifier = Modifier
@@ -136,10 +134,11 @@ fun RestoreBackupSheet(
                         )
                     }
                 }
+
                 RestoreBackupState.Restored -> {
                     LargeMessage(
                         modifier = Modifier.aspectRatio(1f),
-                        icon = Icons.Rounded.CheckCircleOutline,
+                        icon = R.drawable.check_circle_48px,
                         text = stringResource(
                             id = R.string.restore_complete
                         )

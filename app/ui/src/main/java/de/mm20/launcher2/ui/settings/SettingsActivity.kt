@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.settings
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -48,7 +47,6 @@ import de.mm20.launcher2.ui.settings.breezyweather.BreezyWeatherSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsScreen
-import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemeSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemesSettingsScreen
 import de.mm20.launcher2.ui.settings.contacts.ContactsSettingsScreen
@@ -211,9 +209,6 @@ class SettingsActivity : BaseActivity() {
                                     val route: TypographySettingsRoute = it.toRoute()
                                         ?: return@composable
                                     TypographySettingsScreen(UUID.fromString(route.id))
-                                }
-                                composable("settings/appearance/cards") {
-                                    CardsSettingsScreen()
                                 }
                                 composable("settings/search") {
                                     SearchSettingsScreen()

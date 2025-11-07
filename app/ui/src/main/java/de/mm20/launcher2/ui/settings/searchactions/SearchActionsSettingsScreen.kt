@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings.searchactions
 
 import android.net.Uri
+import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
@@ -14,14 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.HelpOutline
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -43,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -72,7 +66,7 @@ fun SearchActionsSettingsScreen() {
 
     val colorScheme = MaterialTheme.colorScheme
 
-    val activity = LocalContext.current as? AppCompatActivity
+    val activity = LocalActivity.current as? AppCompatActivity
 
     val listState = rememberLazyDragAndDropListState(
         onDragStart = {
@@ -85,11 +79,6 @@ fun SearchActionsSettingsScreen() {
     val disabledActions by viewModel.disabledActions.collectAsState()
 
     Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.createAction() }) {
-                Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
-            }
-        },
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -106,10 +95,15 @@ fun SearchActionsSettingsScreen() {
                             activity?.onBackPressed()
                         }
                     }) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
                     }
                 },
                 actions = {
+                    IconButton(onClick = { viewModel.createAction() }) {
+                        Icon(
+                            painterResource(R.drawable.add_24px),
+                            contentDescription = null)
+                    }
                     IconButton(onClick = {
                         CustomTabsIntent.Builder()
                             .setDefaultColorSchemeParams(
@@ -124,7 +118,7 @@ fun SearchActionsSettingsScreen() {
                             )
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.HelpOutline,
+                            painterResource(R.drawable.help_24px),
                             contentDescription = "Help"
                         )
                     }
@@ -147,8 +141,11 @@ fun SearchActionsSettingsScreen() {
                         .padding(start = 28.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(Icons.Outlined.Info, null,
-                        modifier = Modifier.padding(end = 24.dp).size(16.dp),
+                    Icon(
+                        painterResource(R.drawable.info_20px), null,
+                        modifier = Modifier
+                            .padding(end = 24.dp)
+                            .size(16.dp),
                         tint = MaterialTheme.colorScheme.secondary
                     )
                     Text(
@@ -189,7 +186,7 @@ fun SearchActionsSettingsScreen() {
                                             showDropdown = true
                                         }
                                     ) {
-                                        Icon(Icons.Rounded.MoreVert, stringResource(R.string.edit))
+                                        Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.edit))
                                         DropdownMenu(
                                             expanded = showDropdown,
                                             onDismissRequest = { showDropdown = false }
@@ -197,7 +194,7 @@ fun SearchActionsSettingsScreen() {
                                             DropdownMenuItem(
                                                 leadingIcon = {
                                                     Icon(
-                                                        Icons.Rounded.Edit,
+                                                        painterResource(R.drawable.edit_24px),
                                                         contentDescription = null
                                                     )
                                                 },
@@ -212,7 +209,7 @@ fun SearchActionsSettingsScreen() {
                                             DropdownMenuItem(
                                                 leadingIcon = {
                                                     Icon(
-                                                        Icons.Rounded.Delete,
+                                                        painterResource(R.drawable.delete_24px),
                                                         contentDescription = null
                                                     )
                                                 },

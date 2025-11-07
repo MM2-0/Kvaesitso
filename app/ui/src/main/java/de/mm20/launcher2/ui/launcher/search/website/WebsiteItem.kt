@@ -14,12 +14,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Share
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +29,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.roundToIntRect
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import de.mm20.launcher2.search.Website
@@ -226,7 +219,7 @@ fun WebsiteItem(
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
+                                icon = R.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                     onBack?.invoke()
@@ -235,7 +228,7 @@ fun WebsiteItem(
                         } else {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
+                                icon = R.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                     onBack?.invoke()
@@ -247,7 +240,7 @@ fun WebsiteItem(
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(R.string.menu_share),
-                            icon = Icons.Rounded.Share,
+                            icon = R.drawable.share_24px,
                             action = {
                                 website.share(context)
                             }
@@ -255,9 +248,10 @@ fun WebsiteItem(
                     )
 
                     val sheetManager = LocalBottomSheetManager.current
-                    toolbarActions.add(DefaultToolbarAction(
+                    toolbarActions.add(
+                        DefaultToolbarAction(
                         label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Tune,
+                        icon = R.drawable.tune_24px,
                         action = { sheetManager.showCustomizeSearchableModal(website) }
                     ))
 
@@ -265,7 +259,7 @@ fun WebsiteItem(
                         leftActions = if (onBack != null) listOf(
                             DefaultToolbarAction(
                                 stringResource(id = R.string.menu_back),
-                                icon = Icons.AutoMirrored.Rounded.ArrowBack,
+                                icon = R.drawable.arrow_back_24px,
                                 action = onBack
                             )
                         ) else emptyList(),

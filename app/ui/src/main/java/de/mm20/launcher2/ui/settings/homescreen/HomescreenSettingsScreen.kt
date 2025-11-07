@@ -17,12 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Circle
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,23 +24,21 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
@@ -310,7 +302,8 @@ fun SearchBarStylePreference(
             SearchBarStyle.entries
         }
 
-        val darkColors = LocalPreferDarkContentOverWallpaper.current && colors == SearchBarColors.Auto || colors == SearchBarColors.Dark
+        val darkColors =
+            LocalPreferDarkContentOverWallpaper.current && colors == SearchBarColors.Auto || colors == SearchBarColors.Dark
 
         BottomSheetDialog(
             onDismissRequest = {
@@ -334,7 +327,7 @@ fun SearchBarStylePreference(
                             ) {
                                 Text(
                                     text = stringResource(
-                                        when(style) {
+                                        when (style) {
                                             SearchBarStyle.Transparent -> R.string.preference_search_bar_style_transparent
                                             SearchBarStyle.Solid -> R.string.preference_search_bar_style_solid
                                             SearchBarStyle.Hidden -> R.string.preference_search_bar_style_hidden
@@ -350,7 +343,10 @@ fun SearchBarStylePreference(
                                     }
                                 ) {
                                     Icon(
-                                        if (style == value) Icons.Rounded.CheckCircle else Icons.Outlined.Circle,
+                                        painterResource(
+                                            if (style == value) R.drawable.check_circle_24px_filled
+                                            else R.drawable.circle_24px
+                                        ),
                                         contentDescription = null,
                                         tint = if (style == value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                                     )
@@ -365,7 +361,7 @@ fun SearchBarStylePreference(
                                     )
                                     .clip(MaterialTheme.shapes.medium)
                                     .background(
-                                        when  {
+                                        when {
                                             style != SearchBarStyle.Transparent -> MaterialTheme.colorScheme.inverseSurface
                                             LocalDarkTheme.current != darkColors -> MaterialTheme.colorScheme.surfaceContainer
                                             else -> MaterialTheme.colorScheme.inverseSurface
@@ -393,7 +389,9 @@ fun SearchBarStylePreference(
                             }
                             if (style == SearchBarStyle.Transparent) {
                                 SingleChoiceSegmentedButtonRow(
-                                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 16.dp),
                                 ) {
                                     SegmentedButton(
                                         selected = colors == SearchBarColors.Auto,
@@ -406,7 +404,7 @@ fun SearchBarStylePreference(
                                         ),
                                     ) {
                                         Icon(
-                                            imageVector = Icons.Rounded.AutoAwesome,
+                                            painterResource(R.drawable.auto_awesome_20dp),
                                             contentDescription = null,
                                             modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                                         )
@@ -422,7 +420,7 @@ fun SearchBarStylePreference(
                                         ),
                                     ) {
                                         Icon(
-                                            imageVector = Icons.Rounded.LightMode,
+                                            painterResource(R.drawable.light_mode_20px),
                                             contentDescription = null,
                                             modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                                         )
@@ -438,7 +436,7 @@ fun SearchBarStylePreference(
                                         ),
                                     ) {
                                         Icon(
-                                            imageVector = Icons.Rounded.DarkMode,
+                                            painterResource(R.drawable.dark_mode_20px),
                                             contentDescription = null,
                                             modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                                         )

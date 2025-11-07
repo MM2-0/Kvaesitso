@@ -637,7 +637,7 @@
     <string name="poi_category_hospital">Krankenhaus</string>
     <string name="poi_category_post_office">Post</string>
     <string name="poi_category_police">Polizei</string>
-    <string name="poi_category_dentist">Zahnarzt</string>
+    <string name="poi_category_dentist">Zahnarztpraxis</string>
     <string name="poi_category_library">Bücherei</string>
     <string name="poi_category_ice_cream">Eisdiele</string>
     <string name="poi_category_theater">Theater</string>
@@ -646,7 +646,7 @@
     <string name="poi_category_clinic">Klinik</string>
     <string name="poi_category_clothes">Bekleidungsgeschäft</string>
     <string name="poi_category_convenience">Lebensmittelgeschäft</string>
-    <string name="poi_category_hairdresser">Friseur</string>
+    <string name="poi_category_hairdresser">Friseur:in</string>
     <string name="poi_category_books">Buchhandlung</string>
     <string name="poi_category_bakery">Bäckerei</string>
     <string name="poi_category_mobile_phone">Handygeschäft</string>
@@ -655,7 +655,7 @@
     <string name="poi_category_florist">Blumenhandlung</string>
     <string name="poi_category_mall">Einkaufszentrum</string>
     <string name="poi_category_optician">Augenoptiker:in</string>
-    <string name="poi_category_jewelry">Juwelier</string>
+    <string name="poi_category_jewelry">Juwelier:in</string>
     <string name="poi_category_laundry">Wäscherei</string>
     <string name="poi_category_bank">Bank</string>
     <string name="poi_category_soccer">Fußballplatz</string>
@@ -665,7 +665,7 @@
     <string name="poi_category_museum">Museum</string>
     <string name="poi_category_fitness_center">Fitnesscenter</string>
     <string name="poi_category_fast_food">Fast Food</string>
-    <string name="poi_category_doctors">Arzt</string>
+    <string name="poi_category_doctors">Arztpraxis</string>
     <string name="poi_category_parking">Parkplatz</string>
     <string name="poi_category_university">Universität</string>
     <string name="poi_category_basketball">Basketballfeld</string>

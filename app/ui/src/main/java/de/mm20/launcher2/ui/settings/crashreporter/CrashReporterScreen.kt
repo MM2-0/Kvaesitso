@@ -4,11 +4,6 @@ import android.text.format.DateUtils
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.Warning
-import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -17,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -49,7 +45,7 @@ fun CrashReporterScreen() {
                         viewModel.setShowExceptions(value)
                     }) {
                         Icon(
-                            imageVector = if (showExceptions) Icons.Rounded.Warning else Icons.Rounded.WarningAmber,
+                            painterResource(if (showExceptions) R.drawable.warning_24px_filled else R.drawable.warning_24px),
                             contentDescription = null,
                             modifier = Modifier.alpha(if (showExceptions) 1f else 0.5f)
                         )
@@ -58,7 +54,7 @@ fun CrashReporterScreen() {
                         viewModel.setShowCrashes(value)
                     }) {
                         Icon(
-                            imageVector = if (showCrashes) Icons.Rounded.Error else Icons.Rounded.ErrorOutline,
+                            painterResource(if (showCrashes) R.drawable.error_24px_filled else R.drawable.error_24px),
                             contentDescription = null,
                             modifier = Modifier.alpha(if (showCrashes) 1f else 0.5f)
                         )
@@ -95,7 +91,9 @@ fun CrashReporterScreen() {
                             ) {
                                 Icon(
                                     modifier = Modifier.padding(end = 8.dp),
-                                    imageVector = if (it.type == CrashReportType.Exception) Icons.Rounded.Warning else Icons.Rounded.Error,
+                                    painter = painterResource(
+                                        if (it.type == CrashReportType.Exception) R.drawable.warning_24px else R.drawable.error_24px
+                                    ),
                                     contentDescription = null
                                 )
                                 Text(

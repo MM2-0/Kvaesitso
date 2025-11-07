@@ -1,8 +1,7 @@
 package de.mm20.launcher2.search
 
 import android.content.Context
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Person
+import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
@@ -39,7 +38,7 @@ interface Contact : SavableSearchable {
         }
 
         return StaticLauncherIcon(
-            foregroundLayer = VectorLayer(Icons.Rounded.Person),
+            foregroundLayer = VectorLayer(R.drawable.person_24px),
             backgroundLayer = ColorLayer(0xFF2364AA.toInt())
         )
     }

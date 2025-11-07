@@ -18,19 +18,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Circle
-import androidx.compose.material.icons.rounded.Notes
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.People
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
-import androidx.compose.material.icons.rounded.Schedule
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -97,11 +85,11 @@ fun CalendarItem(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            when (calendar.isCompleted) {
-                                true -> Icons.Rounded.CheckCircle
-                                false -> Icons.Rounded.RadioButtonUnchecked
-                                null -> Icons.Rounded.Circle
-                            },
+                            painterResource(when (calendar.isCompleted) {
+                                true -> R.drawable.check_circle_24px_filled
+                                false -> R.drawable.radio_button_unchecked_24px
+                                null -> R.drawable.circle_24px_filled
+                            }),
                             null,
                             modifier = Modifier
                                 .padding(horizontal = 14.dp, vertical = 20.dp)
@@ -152,7 +140,7 @@ fun CalendarItem(
                     ) {
                         Icon(
                             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                            imageVector = Icons.Rounded.Schedule,
+                            painter = painterResource(R.drawable.schedule_24px),
                             contentDescription = null
                         )
                         Text(
@@ -174,7 +162,7 @@ fun CalendarItem(
                         ) {
                             Icon(
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                imageVector = Icons.Rounded.Notes,
+                                painter = painterResource(R.drawable.notes_24px),
                                 contentDescription = null
                             )
                             Text(
@@ -194,7 +182,7 @@ fun CalendarItem(
                         ) {
                             Icon(
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                imageVector = Icons.Rounded.People,
+                                painter = painterResource(R.drawable.group_24px),
                                 contentDescription = null
                             )
                             Text(
@@ -217,7 +205,7 @@ fun CalendarItem(
                         ) {
                             Icon(
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                imageVector = Icons.Rounded.Place,
+                                painter = painterResource(R.drawable.location_on_24px),
                                 contentDescription = null
                             )
                             Text(
@@ -233,7 +221,7 @@ fun CalendarItem(
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
+                                icon = R.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
@@ -241,7 +229,7 @@ fun CalendarItem(
                         } else {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
+                                icon = R.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -252,7 +240,7 @@ fun CalendarItem(
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(R.string.menu_calendar_open_externally),
-                            icon = Icons.Rounded.OpenInNew,
+                            icon = R.drawable.open_in_new_24px,
                             action = {
                                 viewModel.launch(context)
                                 onBack()
@@ -263,7 +251,7 @@ fun CalendarItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(DefaultToolbarAction(
                         label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Tune,
+                        icon = R.drawable.tune_24px,
                         action = { sheetManager.showCustomizeSearchableModal(calendar) }
                     ))
 
@@ -271,7 +259,7 @@ fun CalendarItem(
                         leftActions = listOf(
                             DefaultToolbarAction(
                                 label = stringResource(id = R.string.menu_back),
-                                icon = Icons.AutoMirrored.Rounded.ArrowBack
+                                icon = R.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }
@@ -286,11 +274,11 @@ fun CalendarItem(
                         .padding(16.dp)
                 ) {
                     Icon(
-                        when (calendar.isCompleted) {
-                            true -> Icons.Rounded.CheckCircle
-                            false -> Icons.Rounded.RadioButtonUnchecked
-                            null -> Icons.Rounded.Circle
-                        },
+                        painterResource(when (calendar.isCompleted) {
+                            true -> R.drawable.check_circle_24px_filled
+                            false -> R.drawable.radio_button_unchecked_24px
+                            null -> R.drawable.circle_24px_filled
+                        }),
                         null,
                         modifier = Modifier
                             .padding(end = 16.dp)

@@ -6,10 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Extension
-import androidx.compose.material.icons.rounded.Verified
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,7 +48,7 @@ fun PluginsSettingsScreen() {
                         verticalArrangement = Arrangement.Center,
                     ) {
                         LargeMessage(
-                            icon = Icons.Rounded.Extension,
+                            icon = R.drawable.extension_48px,
                             text = stringResource(R.string.no_plugins_installed),
                             color = MaterialTheme.colorScheme.secondary
                         )

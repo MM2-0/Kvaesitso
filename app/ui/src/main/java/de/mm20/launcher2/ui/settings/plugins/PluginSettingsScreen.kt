@@ -16,14 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -40,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -143,7 +136,7 @@ fun PluginSettingsScreen(pluginId: String) {
                         }
                     }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                            painterResource(R.drawable.arrow_back_24px),
                             contentDescription = "Back"
                         )
                     }
@@ -156,7 +149,7 @@ fun PluginSettingsScreen(pluginId: String) {
                             }
                         }) {
                             Icon(
-                                imageVector = Icons.Rounded.Settings,
+                                painterResource(R.drawable.settings_24px),
                                 contentDescription = null
                             )
                         }
@@ -165,7 +158,7 @@ fun PluginSettingsScreen(pluginId: String) {
                         viewModel.openAppInfo(context)
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.Info,
+                            painterResource(R.drawable.info_24px),
                             contentDescription = null
                         )
                     }
@@ -174,7 +167,7 @@ fun PluginSettingsScreen(pluginId: String) {
                         navController?.navigateUp()
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.Delete,
+                            painterResource(R.drawable.delete_24px),
                             contentDescription = null
                         )
                     }
@@ -226,7 +219,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     )
                                     if (pluginPackage?.isVerified == true) {
                                         Icon(
-                                            Icons.Rounded.Verified, null,
+                                            painterResource(R.drawable.verified_20px), null,
                                             modifier = Modifier
                                                 .padding(start = 4.dp)
                                                 .size(16.dp),
@@ -290,7 +283,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) Icons.Rounded.Error else Icons.Rounded.Info,
+                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
                                                 stringResource(R.string.plugin_state_error)
@@ -345,7 +338,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) Icons.Rounded.Error else Icons.Rounded.Info,
+                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
                                                 stringResource(R.string.plugin_state_error)
@@ -399,7 +392,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) Icons.Rounded.Error else Icons.Rounded.Info,
+                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
                                                 stringResource(R.string.plugin_state_error)
@@ -471,7 +464,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                         }
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) Icons.Rounded.Error else Icons.Rounded.Info,
+                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
                                                 stringResource(R.string.plugin_state_error)
@@ -536,7 +529,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) Icons.Rounded.Error else Icons.Rounded.Info,
+                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
                                                 stringResource(R.string.plugin_state_error)
@@ -579,7 +572,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                 }
                                 Preference(
                                     title = stringResource(R.string.widget_config_weather_integration_settings),
-                                    icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                                    icon = R.drawable.open_in_new_24px,
                                     onClick = {
                                         navController?.navigate("settings/integrations/weather")
                                     }

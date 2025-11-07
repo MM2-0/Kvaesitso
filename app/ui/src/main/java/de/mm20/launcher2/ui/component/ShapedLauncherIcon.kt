@@ -10,7 +10,6 @@ import android.graphics.RectF
 import android.graphics.drawable.AdaptiveIconDrawable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -214,15 +213,15 @@ fun ShapedLauncherIcon(
 
                     is VectorLayer -> {
                         Icon(
-                            imageVector = fg.vector, contentDescription = null,
+                            painter = painterResource(fg.icon), contentDescription = null,
                             tint = if (fg.color == 0) {
                                 Color(renderSettings.fgThemeColor)
                             } else {
                                 Color(getTone(fg.color, renderSettings.fgTone))
                             },
+                            modifier = Modifier.size(size / 2f),
                         )
                     }
-
                     else -> {}
                 }
             } else {
@@ -268,7 +267,7 @@ fun ShapedLauncherIcon(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(size / 24),
-                            imageVector = badgeIcon.imageVector,
+                            painter = painterResource(badgeIcon.iconRes),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onTertiary,
                         )

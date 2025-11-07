@@ -4,7 +4,6 @@ import android.content.Context
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
@@ -17,13 +16,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.ChevronLeft
-import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -42,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -87,7 +80,7 @@ fun CalendarWidget(
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 4.dp)
         ) {
             IconButton(onClick = { viewModel.previousDay() }) {
-                Icon(imageVector = Icons.Rounded.ChevronLeft, contentDescription = stringResource(R.string.calendar_widget_previous_day))
+                Icon(painter = painterResource(R.drawable.chevron_backward_24px), contentDescription = stringResource(R.string.calendar_widget_previous_day))
             }
             Box(
                 modifier = Modifier.weight(1f),
@@ -103,7 +96,7 @@ fun CalendarWidget(
                         overflow = TextOverflow.Ellipsis
                     )
                     Icon(
-                        imageVector = Icons.Rounded.ArrowDropDown,
+                        painterResource(R.drawable.arrow_drop_down_24px),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
@@ -121,13 +114,13 @@ fun CalendarWidget(
                 }
             }
             IconButton(onClick = { viewModel.nextDay() }) {
-                Icon(imageVector = Icons.Rounded.ChevronRight, contentDescription = stringResource(R.string.calendar_widget_next_day))
+                Icon(painter = painterResource(R.drawable.chevron_forward_24px), contentDescription = stringResource(R.string.calendar_widget_next_day))
             }
             IconButton(onClick = { viewModel.createEvent(context) }) {
-                Icon(imageVector = Icons.Rounded.Add, contentDescription = stringResource(R.string.calendar_widget_create_event))
+                Icon(painter = painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.calendar_widget_create_event))
             }
             IconButton(onClick = { viewModel.openCalendarApp(context) }) {
-                Icon(imageVector = Icons.AutoMirrored.Rounded.OpenInNew, contentDescription = stringResource(R.string.calendar_widget_open_calendar))
+                Icon(painter = painterResource(R.drawable.open_in_new_24px), contentDescription = stringResource(R.string.calendar_widget_open_calendar))
             }
         }
         val events by viewModel.calendarEvents

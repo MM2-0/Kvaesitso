@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings.typography
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -19,16 +20,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.FormatBold
-import androidx.compose.material.icons.rounded.FormatLineSpacing
-import androidx.compose.material.icons.rounded.FormatSize
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.RestartAlt
-import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material.icons.rounded.Work
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -58,6 +49,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.capitalize
@@ -71,7 +63,6 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.icons.LetterSpacing2
 import de.mm20.launcher2.themes.typography.DefaultEmphasizedTextStyles
 import de.mm20.launcher2.themes.typography.DefaultTextStyles
 import de.mm20.launcher2.themes.typography.FontManager
@@ -292,7 +283,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                         ) },
                         leadingIcon = {
                             Icon(
-                                Icons.Rounded.Tag,
+                                painterResource(R.drawable.tag_20px),
                                 contentDescription = null,
                                 modifier = Modifier.size(FilterChipDefaults.IconSize)
                             )
@@ -411,8 +402,8 @@ fun TypographySettingsScreen(themeId: UUID) {
                             text = { Text(previewTexts.Short1) },
                             icon = {
                                 Icon(
-                                    Icons.Rounded.Person,
-                                    contentDescription = null
+                                    painterResource(R.drawable.person_24px_filled),
+                                    contentDescription = null,
                                 )
                             },
                             onClick = {}
@@ -422,7 +413,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                             text = { Text(previewTexts.Short2) },
                             icon = {
                                 Icon(
-                                    Icons.Rounded.Work,
+                                    painterResource(R.drawable.enterprise_24px),
                                     contentDescription = null
                                 )
                             },
@@ -900,7 +891,7 @@ private fun getFontSummary(context: Context, fontFamily: ThemeFontFamily?): Stri
 
 @Composable
 private fun SliderRow(
-    icon: ImageVector,
+    @DrawableRes icon: Int,
     min: Float,
     max: Float,
     step: Float = 1f,
@@ -916,7 +907,7 @@ private fun SliderRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
     ) {
         Icon(
-            imageVector = icon,
+            painter = painterResource(icon),
             contentDescription = null,
             modifier = Modifier.padding(end = 8.dp),
             tint = MaterialTheme.colorScheme.primary
@@ -1108,7 +1099,7 @@ private fun TextStylePreference(
                 }
 
                 SliderRow(
-                    icon = Icons.Rounded.FormatBold,
+                    icon = R.drawable.format_bold_24px,
                     min = 100f,
                     max = 900f,
                     step = 100f,
@@ -1119,7 +1110,7 @@ private fun TextStylePreference(
                     }
                 )
                 SliderRow(
-                    icon = Icons.Rounded.FormatSize,
+                    icon = R.drawable.format_size_24px,
                     min = floor((defaultValue?.fontSize ?: defaultValueParent?.fontSize)!! / 2f),
                     max = ceil((defaultValue?.fontSize ?: defaultValueParent?.fontSize)!! * 2f),
                     value = actualFontSize.toFloat(),
@@ -1131,7 +1122,7 @@ private fun TextStylePreference(
                     }
                 )
                 SliderRow(
-                    icon = Icons.Rounded.FormatLineSpacing,
+                    icon = R.drawable.format_line_spacing_24px,
                     min = 0.5f,
                     max = 2f,
                     step = 0.05f,
@@ -1142,7 +1133,7 @@ private fun TextStylePreference(
                     }
                 )
                 SliderRow(
-                    icon = Icons.Rounded.LetterSpacing2,
+                    icon = R.drawable.format_letter_spacing_24px,
                     min = -0.25f,
                     max = 1f,
                     step = 0.01f,
@@ -1172,7 +1163,7 @@ private fun TextStylePreference(
                     }
                 ) {
                     Icon(
-                        Icons.Rounded.RestartAlt, null,
+                        painterResource(R.drawable.restart_alt_20px), null,
                         modifier = Modifier
                             .padding(ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize)

@@ -12,9 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AutoFixHigh
-import androidx.compose.material.icons.rounded.SettingsSuggest
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -31,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -88,7 +86,7 @@ fun CorePaletteColorPreference(
                     .padding(it)
             ) {
                 SwitchPreference(
-                    icon = Icons.Rounded.SettingsSuggest,
+                    icon = R.drawable.rule_settings_24px,
                     title = stringResource(R.string.theme_color_scheme_system_default),
                     value = currentValue == null,
                     onValueChanged = {
@@ -141,7 +139,7 @@ fun CorePaletteColorPreference(
                                 }
                             ) {
                                 Icon(
-                                    Icons.Rounded.AutoFixHigh, null,
+                                    painterResource(R.drawable.wand_stars_20px), null,
                                     modifier = Modifier
                                         .padding(ButtonDefaults.IconSpacing)
                                         .size(ButtonDefaults.IconSize)

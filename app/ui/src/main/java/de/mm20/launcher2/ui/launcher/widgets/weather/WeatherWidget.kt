@@ -33,14 +33,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Air
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.LocationCity
-import androidx.compose.material.icons.rounded.MyLocation
-import androidx.compose.material.icons.rounded.North
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -64,6 +56,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -76,8 +69,6 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.icons.HumidityPercentage
-import de.mm20.launcher2.icons.Rain
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
@@ -129,7 +120,7 @@ fun WeatherWidget(widget: WeatherWidget) {
                     .fillMaxWidth()
                     .padding(16.dp),
                 text = stringResource(R.string.weather_widget_no_provider),
-                icon = Icons.Rounded.ErrorOutline,
+                icon = R.drawable.error_24px,
                 primaryAction = {
                     Button(
                         onClick = {
@@ -138,7 +129,7 @@ fun WeatherWidget(widget: WeatherWidget) {
                         contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                     ) {
                         Icon(
-                            Icons.AutoMirrored.Rounded.OpenInNew,
+                            painterResource(R.drawable.open_in_new_24px),
                             null,
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
@@ -271,20 +262,12 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                val latLonRegexp =
-                    remember { Regex("^\\d{1,2}°\\d{1,2}'[NS] \\d{1,3}°\\d{1,2}'[EW]\$") }
-                val isLatLon = latLonRegexp.matches(forecast.location)
                 Row(
                     modifier = Modifier
                         .weight(1f)
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(
-                        imageVector = if (isLatLon) Icons.Rounded.MyLocation else Icons.Rounded.LocationCity,
-                        contentDescription = null
-                    )
-                    Spacer(modifier = Modifier.padding(4.dp))
                     Text(
                         text = forecast.location,
                         style = MaterialTheme.typography.titleMedium
@@ -363,7 +346,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = Icons.Rounded.HumidityPercentage,
+                            painter = painterResource(R.drawable.humidity_percentage_20px),
                             modifier = Modifier.size(20.dp),
                             tint = MaterialTheme.colorScheme.secondary,
                             contentDescription = null
@@ -388,7 +371,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                             // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
                             val angle by animateFloatAsState(forecast.windDirection!!.toFloat() + 180f)
                             Icon(
-                                imageVector = Icons.Rounded.North,
+                                painter = painterResource(R.drawable.north_20px),
                                 modifier = Modifier
                                     .rotate(angle)
                                     .size(20.dp),
@@ -397,7 +380,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                             )
                         } else {
                             Icon(
-                                imageVector = Icons.Rounded.Air,
+                                painter = painterResource(R.drawable.air_20px),
                                 contentDescription = null,
                                 modifier = Modifier.size(20.dp),
                                 tint = MaterialTheme.colorScheme.secondary,
@@ -423,7 +406,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = Icons.Rounded.Rain,
+                            painter = painterResource(R.drawable.rainy_20px),
                             modifier = Modifier.size(20.dp),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.secondary,
@@ -693,7 +676,7 @@ fun NoData() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = Icons.Rounded.LightMode,
+            painter = painterResource(R.drawable.light_mode_24px),
             contentDescription = "",
             modifier = Modifier
                 .padding(24.dp)

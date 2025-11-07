@@ -6,17 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AppShortcut
-import androidx.compose.material.icons.rounded.Apps
-import androidx.compose.material.icons.rounded.Description
-import androidx.compose.material.icons.rounded.Handyman
-import androidx.compose.material.icons.rounded.Language
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.Public
-import androidx.compose.material.icons.rounded.Today
-import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -24,11 +13,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.icons.Wikipedia
 
 @Composable
 fun SearchFilters(
@@ -50,7 +39,7 @@ fun SearchFilters(
             },
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Rounded.Language,
+                    painter = painterResource(R.drawable.language_20px),
                     contentDescription = null,
                     modifier = Modifier.size(FilterChipDefaults.IconSize)
                 )
@@ -71,7 +60,7 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.Apps,
+                        painter = painterResource(R.drawable.apps_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
@@ -90,7 +79,7 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.Description,
+                        painter = painterResource(R.drawable.description_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
@@ -109,7 +98,7 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.Person,
+                        painter = painterResource(R.drawable.person_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
@@ -128,7 +117,7 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.Today,
+                        painter = painterResource(R.drawable.today_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
@@ -147,7 +136,7 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.AppShortcut,
+                        painter = painterResource(R.drawable.mobile_arrow_up_right_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
@@ -166,7 +155,7 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.Wikipedia,
+                        painter = painterResource(R.drawable.wikipedia),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
@@ -185,7 +174,7 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.Public,
+                        painter = painterResource(R.drawable.public_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
@@ -204,7 +193,7 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.Place,
+                        painter = painterResource(R.drawable.location_on_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
@@ -222,7 +211,7 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.Handyman,
+                        painter = painterResource(R.drawable.handyman_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
@@ -238,7 +227,7 @@ fun SearchFilters(
             },
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Rounded.VisibilityOff,
+                    painter = painterResource(R.drawable.visibility_off_20px),
                     contentDescription = null,
                     modifier = Modifier.size(FilterChipDefaults.IconSize)
                 )

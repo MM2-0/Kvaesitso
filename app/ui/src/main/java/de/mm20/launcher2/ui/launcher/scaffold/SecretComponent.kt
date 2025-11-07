@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -71,7 +70,7 @@ internal object SecretComponent : ScaffoldComponent() {
                 context.startActivity(Intent(context, SettingsActivity::class.java))
             }, modifier = Modifier.padding(top = 24.dp)) {
                 Icon(
-                    Icons.Rounded.Settings,
+                    painterResource(R.drawable.settings_20px),
                     contentDescription = null,
                     modifier = Modifier.padding(ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
                 )

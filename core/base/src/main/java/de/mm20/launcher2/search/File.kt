@@ -6,6 +6,7 @@ import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
+import de.mm20.launcher2.icons.VectorLayer
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -55,9 +56,8 @@ interface File : SavableSearchable {
             }
         }
         return StaticLauncherIcon(
-            foregroundLayer = TintedIconLayer(
-                icon = ContextCompat.getDrawable(context, resId)!!,
-                scale = 0.5f,
+            foregroundLayer = VectorLayer(
+                icon = resId,
                 color = ContextCompat.getColor(context, bgColor)
             ),
             backgroundLayer = ColorLayer(ContextCompat.getColor(context, bgColor))

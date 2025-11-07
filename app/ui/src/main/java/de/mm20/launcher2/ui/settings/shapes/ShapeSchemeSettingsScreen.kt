@@ -19,12 +19,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.RestartAlt
-import androidx.compose.material.icons.rounded.RoundedCorner
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
@@ -54,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -64,8 +59,6 @@ import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.icons.CutCorner
-import de.mm20.launcher2.icons.RoundedCornerAlt
 import de.mm20.launcher2.themes.shapes.CornerStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
@@ -202,7 +195,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                         ) {
                             DropdownMenuItem(
                                 leadingIcon = {
-                                    Icon(Icons.Rounded.OpenInNew, null)
+                                    Icon(painterResource(R.drawable.more_vert_24px), null)
                                 },
                                 text = { Text("Menu") },
                                 onClick = { })
@@ -264,7 +257,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                             )
                     ) {
                         Icon(
-                            Icons.Rounded.Search,
+                            painterResource(R.drawable.search_24px),
                             null,
                             modifier = Modifier.padding(12.dp)
                         )
@@ -289,7 +282,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     previewShapes = previewShapes,
                 ) {
                     FloatingActionButton(onClick = {}) {
-                        Icon(Icons.Rounded.Edit, null)
+                        Icon(painterResource(R.drawable.edit_24px), null)
                     }
                 }
                 ShapePreference(
@@ -551,7 +544,11 @@ fun ShapePreference(
                             SegmentedButtonDefaults.Icon(
                                 active = actualCornerStyle == CornerStyle.Rounded,
                             ) {
-                                Icon(Icons.Rounded.RoundedCornerAlt, null)
+                                Icon(
+                                    painterResource(R.drawable.rounded_corner_alt_24px),
+                                    null,
+                                    modifier = Modifier.size(SegmentedButtonDefaults.IconSize),
+                                )
                             }
                         }
                     ) {
@@ -567,7 +564,10 @@ fun ShapePreference(
                             SegmentedButtonDefaults.Icon(
                                 active = actualCornerStyle == CornerStyle.Cut,
                             ) {
-                                Icon(Icons.Rounded.CutCorner, null)
+                                Icon(
+                                    painterResource(R.drawable.cut_corner_20px),
+                                    null,
+                                    modifier = Modifier.size(SegmentedButtonDefaults.IconSize),)
                             }
                         }
                     ) {
@@ -580,7 +580,7 @@ fun ShapePreference(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        Icons.Rounded.RoundedCorner,
+                        painterResource(R.drawable.rounded_corner_24px),
                         null,
                         modifier = Modifier
                             .padding(end = 8.dp)
@@ -607,7 +607,7 @@ fun ShapePreference(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        Icons.Rounded.RoundedCorner,
+                        painterResource(R.drawable.rounded_corner_24px),
                         null,
                         modifier = Modifier.padding(end = 8.dp)
                     )
@@ -632,7 +632,7 @@ fun ShapePreference(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        Icons.Rounded.RoundedCorner,
+                        painterResource(R.drawable.rounded_corner_24px),
                         null,
                         modifier = Modifier
                             .padding(end = 8.dp)
@@ -659,7 +659,7 @@ fun ShapePreference(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        Icons.Rounded.RoundedCorner,
+                        painterResource(R.drawable.rounded_corner_24px),
                         null,
                         modifier = Modifier
                             .padding(end = 8.dp)
@@ -703,7 +703,7 @@ fun ShapePreference(
                     }
                 ) {
                     Icon(
-                        Icons.Rounded.RestartAlt, null,
+                        painterResource(R.drawable.restart_alt_20px), null,
                         modifier = Modifier
                             .padding(ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize)

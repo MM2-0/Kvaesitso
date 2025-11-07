@@ -10,14 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.Lock
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.PlayArrow
-import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material.icons.rounded.StarBorder
-import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -49,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -377,7 +370,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         .align(Alignment.CenterVertically),
                     onClick = { }
                 ) {
-                    Icon(Icons.Rounded.Edit, null)
+                    Icon(painterResource(R.drawable.edit_24px), null)
                 }
                 ShapedLauncherIcon(
                     size = 48.dp,
@@ -512,7 +505,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     label = { Text("Tag") },
                     leadingIcon = {
                         Icon(
-                            Icons.Rounded.Tag,
+                            painterResource(R.drawable.tag_20px),
                             contentDescription = null,
                             modifier = Modifier.size(FilterChipDefaults.IconSize)
                         )
@@ -526,7 +519,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         .align(Alignment.CenterVertically),
                     onClick = { },
                 ) {
-                    Icon(Icons.Rounded.PlayArrow, null)
+                    Icon(painterResource(R.drawable.play_arrow_24px), null)
                 }
             }
         }
@@ -788,7 +781,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Icon(Icons.Rounded.Search, null, tint = MaterialTheme.colorScheme.onSurface)
+                        Icon(painterResource(R.drawable.search_24px), null, tint = MaterialTheme.colorScheme.onSurface)
                     }
                 }
             }
@@ -946,7 +939,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         .align(Alignment.CenterVertically)
                         .width(240.dp),
                     text = "Banner",
-                    icon = Icons.Rounded.Lock
+                    icon = R.drawable.lock_24px,
                 )
                 Switch(
                     modifier = Modifier
@@ -1078,12 +1071,12 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                 }
 
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = {  },
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .align(Alignment.CenterVertically),
                 ) {
-                    Icon(Icons.Rounded.StarBorder, null)
+                    Icon(painterResource(R.drawable.star_24px), null)
                 }
 
                 Surface(
@@ -1100,7 +1093,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     ) {
                         DropdownMenuItem(
                             leadingIcon = {
-                                Icon(Icons.Rounded.OpenInNew, null)
+                                Icon(painterResource(R.drawable.open_in_new_24px), null)
                             },
                             text = { Text("Menu") },
                             onClick = { })
@@ -1170,7 +1163,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     label = { Text("Tag") },
                     leadingIcon = {
                         Icon(
-                            Icons.Rounded.Tag,
+                            painterResource(R.drawable.tag_20px),
                             contentDescription = null,
                             modifier = Modifier.size(FilterChipDefaults.IconSize)
                         )
