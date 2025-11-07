@@ -57,19 +57,23 @@ fun MediaIntegrationSettingsScreen() {
                 )
             }
         }
+        if (hasPermission == false) {
+            item {
+                MissingPermissionBanner(
+                    text = stringResource(R.string.missing_permission_music_widget),
+                    onClick = {
+                        viewModel.requestNotificationPermission(context as AppCompatActivity)
+                    },
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.surface,
+                            MaterialTheme.shapes.medium
+                        )
+                        .padding(16.dp)
+                )
+            }
+        }
         item {
-            MissingPermissionBanner(
-                text = stringResource(R.string.missing_permission_music_widget),
-                onClick = {
-                    viewModel.requestNotificationPermission(context as AppCompatActivity)
-                },
-                modifier = Modifier
-                    .background(
-                        MaterialTheme.colorScheme.surface,
-                        MaterialTheme.shapes.medium
-                    )
-                    .padding(16.dp)
-            )
             PreferenceCategory(
                 stringResource(R.string.preference_category_media_apps)
             ) {
@@ -89,6 +93,7 @@ fun MediaIntegrationSettingsScreen() {
                 }
             }
         }
+
         if (BuildConfig.DEBUG) {
             item {
                 PreferenceCategory(stringResource(R.string.preference_category_debug)) {
