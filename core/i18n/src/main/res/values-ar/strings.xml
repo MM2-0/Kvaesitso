@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ar">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ar-rSA">
     <string name="location_open">مفتوح</string>
     <string name="location_closed">مغلق</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
@@ -640,7 +640,6 @@
     <string name="preference_screen_homescreen">الشاشة الرئيسية</string>
     <string name="preference_screen_homescreen_summary">الساعة، شريط البحث، خلفية الشاشة، أشرطة النظام</string>
     <string name="preference_screen_icons">الشبكة والرموز</string>
-    <string name="preference_screen_icons_summary">الشبكة، حجم الرمز، حزم الرموز، الشارات</string>
     <string name="preference_weather_integration">الطقس</string>
     <string name="preference_media_integration">التحكم في الوسائط</string>
     <!-- %1$s: app name (Kvaesitso) -->
