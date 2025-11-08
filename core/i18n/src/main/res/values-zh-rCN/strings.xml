@@ -667,7 +667,6 @@
     <string name="preference_screen_homescreen">主屏幕</string>
     <string name="preference_screen_homescreen_summary">时钟, 搜索栏, 壁纸, 系统栏</string>
     <string name="preference_screen_icons">网格&amp;图标</string>
-    <string name="preference_screen_icons_summary">网格, 图标尺寸, 图标包, 角标</string>
     <string name="preference_weather_integration">天气</string>
     <string name="preference_media_integration">媒体控制</string>
     <string name="preference_tasks_integration">任务</string>
