@@ -488,7 +488,7 @@
     <string name="preference_screen_homescreen">Domovská obrazovka</string>
     <string name="preference_screen_homescreen_summary">Hodiny, vyhledávací lišta, pozadí, systémové lišty</string>
     <string name="preference_screen_icons">Mřížka a ikony</string>
-    <string name="preference_screen_icons_summary">Mřížka, velikost ikon, balíčky ikon, odznaky</string>
+    <string name="preference_screen_icons_summary">Velikost mřížky, ikony, odznaky</string>
     <string name="preference_weather_integration">Počasí</string>
     <string name="preference_media_integration">Ovládání médií</string>
     <string name="widget_config_calendar_no_calendars">Nenalezeny žádné kalendáře</string>
