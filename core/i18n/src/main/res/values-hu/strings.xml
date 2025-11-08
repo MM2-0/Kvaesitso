@@ -326,7 +326,7 @@
     <string name="preference_search_bar_launch_on_enter">Keresés enterrel</string>
     <string name="preference_hidden_items_summary">Rejtett alkalmazások és keresési eredmények kezelése</string>
     <string name="preference_wikipedia_customurl">Wikipédia-webcím</string>
-    <string name="preference_screen_icons_summary">Rács, ikonméret, ikoncsomagok, jelvények</string>
+    <string name="preference_screen_icons_summary">Rácsméret, ikonok, jelvények</string>
     <string name="apps_profile_main">Személyes</string>
     <string name="favorites_empty">A kitűzött és gyakran használt elemek itt jelennek meg</string>
     <string name="frequently_used_show_in_favorites">Megjelenítés a kedvencekben</string>
