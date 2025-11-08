@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ro">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ro-rRO">
     <string name="location_open">Deschis</string>
     <string name="location_closed">Închis</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
@@ -590,7 +590,6 @@
     <string name="preference_widgets_on_home_screen">Widgeturi pe ecranul de pornire</string>
     <string name="preference_screen_homescreen">Ecran de pornire</string>
     <string name="preference_screen_homescreen_summary">Ceas, bară de căutare, fundal, bare de sistem</string>
-    <string name="preference_screen_icons_summary">Grilă, dimensiune pictograme, pachete de iconițe, insigne</string>
     <string name="preference_weather_integration">Vreme</string>
     <!-- %1$s: app name (Kvaesitso) -->
     <string name="preference_contacts_call_on_tap">Atinge pentru a apela</string>
