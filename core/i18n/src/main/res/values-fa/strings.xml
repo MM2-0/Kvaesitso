@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="fa">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="fa-rIR">
     <string name="location_open">باز</string>
     <string name="location_closed">بسته</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
@@ -616,7 +616,6 @@
     <string name="preference_widgets_edit_button_summary">نمایش دکمه‌ای برای افزودن، پاک‌کردن و بازچینی ابزارک‌ها</string>
     <string name="preference_screen_homescreen">صفحه خانگی</string>
     <string name="preference_screen_homescreen_summary">ساعت، نوار جستجو، تصویر زمینه، نوارهای سامانه</string>
-    <string name="preference_screen_icons_summary">شبکه، اندازه نماد، بسته‌های نماد، نشان‌ها</string>
     <string name="preference_weather_integration">آب و هوا</string>
     <string name="preference_media_integration">هدایت رسانه</string>
     <!-- %1$s: app name (Kvaesitso) -->
