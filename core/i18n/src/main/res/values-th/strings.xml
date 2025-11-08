@@ -670,7 +670,6 @@
     <string name="preference_screen_homescreen">หน้าจอหลัก</string>
     <string name="preference_screen_homescreen_summary">นาฬิกา แถบค้นหา ภาพพื้นหลัง แถบระบบ</string>
     <string name="preference_screen_icons">ลิ้นชักและไอคอน</string>
-    <string name="preference_screen_icons_summary">ลิ้นชักแอป ขนาดไอคอน ชุดไอคอน ป้าย</string>
     <string name="preference_weather_integration">สภาพอากาศ</string>
     <string name="preference_media_integration">ตัวควบคุมสื่อ</string>
     <string name="preference_tasks_integration">งาน</string>
