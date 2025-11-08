@@ -668,7 +668,6 @@
     <string name="preference_screen_homescreen">Tela inicial</string>
     <string name="preference_screen_homescreen_summary">Relógio, barra de pesquisa, papel de parede,barras de sistema</string>
     <string name="preference_screen_icons">Grelha e ícones</string>
-    <string name="preference_screen_icons_summary">Gride, tamanho do ícone, pacotes de ícones, emblemas</string>
     <string name="preference_weather_integration">Tempo</string>
     <string name="preference_media_integration">Controle de mídia</string>
     <string name="preference_tasks_integration">Tarefas</string>
