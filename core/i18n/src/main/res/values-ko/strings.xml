@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ko">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ko-rKR">
     <string name="location_open">영업 중</string>
     <string name="location_closed">영업 종료</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
@@ -536,7 +536,6 @@
     <string name="preference_screen_homescreen">홈 화면</string>
     <string name="preference_screen_homescreen_summary">시계, 검색 표시줄, 배경화면, 시스템 표시줄</string>
     <string name="preference_screen_icons">격자 및 아이콘</string>
-    <string name="preference_screen_icons_summary">격자, 아이콘 크기, 아이콘 팩, 배지</string>
     <string name="preference_weather_integration">날씨</string>
     <string name="preference_media_integration">미디어 제어</string>
     <!-- %1$s: app name (Kvaesitso) -->
