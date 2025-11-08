@@ -590,7 +590,6 @@
     <string name="preference_widgets_edit_button_summary">Mostrar botão para adicionar, remover ou editar widgets</string>
     <string name="preference_screen_homescreen">Ecrã inicial</string>
     <string name="preference_screen_homescreen_summary">Relógio, barra de pesquisa, papel de parede e barras</string>
-    <string name="preference_screen_icons_summary">Grelha, ícones e indicadores</string>
     <string name="preference_weather_integration">Meteorologia</string>
     <string name="preference_media_integration">Controlo multimédia</string>
     <!-- %1$s: app name (Kvaesitso) -->
