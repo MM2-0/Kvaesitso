@@ -657,7 +657,6 @@
     <string name="preference_screen_homescreen">Pantalla de inicio</string>
     <string name="preference_screen_homescreen_summary">Reloj, barra de búsqueda, fondo de pantalla, barras del sistema</string>
     <string name="preference_screen_icons">Cuadrícula e ícono</string>
-    <string name="preference_screen_icons_summary">Cuadrícula, tamaño de íconos, paquete de íconos, insignias</string>
     <string name="preference_weather_integration">Clima</string>
     <string name="preference_media_integration">Control de medios</string>
     <string name="preference_tasks_integration">Tareas</string>
