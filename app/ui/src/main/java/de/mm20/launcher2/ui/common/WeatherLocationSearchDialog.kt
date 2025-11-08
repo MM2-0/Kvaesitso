@@ -42,9 +42,7 @@ fun WeatherLocationSearchDialog(
     BottomSheetDialog(onDismissRequest) {
         var query by remember { mutableStateOf("") }
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
+            modifier = Modifier.fillMaxSize()
         ) {
             SearchBar(
                 modifier = Modifier.padding(bottom = 8.dp),
@@ -79,8 +77,8 @@ fun WeatherLocationSearchDialog(
                 )
             } else if (locations.isNotEmpty()) {
                 LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = it
                 ) {
                     items(locations) {
                         Text(

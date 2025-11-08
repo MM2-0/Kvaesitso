@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,6 +42,7 @@ import kotlinx.coroutines.launch
 fun EmojiPicker(
     modifier: Modifier = Modifier,
     onEmojiSelected: (String) -> Unit = {},
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     val context = LocalContext.current
 
@@ -105,6 +107,7 @@ fun EmojiPicker(
     LazyVerticalGrid(
         GridCells.Adaptive(48.dp),
         modifier = modifier,
+        contentPadding = contentPadding
     ) {
         stickyHeader {
             Row(

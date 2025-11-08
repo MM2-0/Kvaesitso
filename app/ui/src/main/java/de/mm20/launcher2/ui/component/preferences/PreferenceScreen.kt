@@ -164,13 +164,15 @@ fun PreferenceScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .padding(it),
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
             state = lazyColumnState,
             content = content,
             verticalArrangement = verticalArrangement,
             contentPadding = PaddingValues(
-                12.dp
+                top = it.calculateTopPadding(),
+                bottom = it.calculateBottomPadding() + 4.dp,
+                start = 12.dp,
+                end = 12.dp
             )
         )
     }

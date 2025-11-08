@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -100,13 +101,16 @@ fun ConfigureWidgetSheet(
     onWidgetUpdated: (Widget) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    BottomSheetDialog(onDismissRequest = onDismiss) {
+    BottomSheetDialog(
+        onDismissRequest = onDismiss,
+        windowInsets = WindowInsets()
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = if (widget is AppWidget) 8.dp else 16.dp)
+                .padding(it)
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = 8.dp)
         ) {
             when (widget) {
                 is WeatherWidget -> ConfigureWeatherWidget(widget, onWidgetUpdated)
