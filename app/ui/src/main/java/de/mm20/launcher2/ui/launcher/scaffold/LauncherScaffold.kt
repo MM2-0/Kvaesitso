@@ -45,6 +45,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.waterfall
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -1493,6 +1494,7 @@ internal fun LauncherScaffold(
             ) {
                 LauncherSearchBar(
                     modifier = Modifier
+                        .widthIn(max = 916.dp)
                         .align(
                             if (config.searchBarPosition == SearchBarPosition.Top) Alignment.TopCenter
                             else Alignment.BottomCenter
@@ -1522,7 +1524,6 @@ internal fun LauncherScaffold(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .safeDrawingPadding()
                         .offset(y = (1f - imeProgress) * 50.dp)
                         .alpha(imeProgress),
                     contentAlignment = Alignment.BottomCenter,
