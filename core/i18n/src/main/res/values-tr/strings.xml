@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="tr">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="tr-rTR">
     <string name="location_open">Açık</string>
     <string name="location_closed">Kapalı</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
@@ -636,7 +636,6 @@
     <string name="preference_widgets_on_home_screen">Ana ekrandaki araçlar</string>
     <string name="preference_screen_homescreen">Ana ekran</string>
     <string name="preference_screen_homescreen_summary">Saat, arama çubuğu, duvar kağıdı, sistem çubukları</string>
-    <string name="preference_screen_icons_summary">Izgara, simge boyutu, simge paketleri, rozetler</string>
     <string name="preference_weather_integration">Hava Durumu</string>
     <string name="preference_media_integration">Medya kontrolü</string>
     <string name="preference_tasks_integration">Görevler</string>
