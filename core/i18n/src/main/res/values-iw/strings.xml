@@ -683,7 +683,6 @@
     <string name="preference_screen_homescreen">מסך הבית</string>
     <string name="preference_screen_homescreen_summary">שעון, שורת חיפוש, רקע, סרגלי מערכת</string>
     <string name="preference_screen_icons">רשת ואייקונים</string>
-    <string name="preference_screen_icons_summary">רשת, גודל הסמלים, חבילות סמלים, תגים</string>
     <string name="preference_weather_integration">מזג אוויר</string>
     <string name="preference_media_integration">בקרת מדיה</string>
     <string name="preference_tasks_integration">מטלות</string>
