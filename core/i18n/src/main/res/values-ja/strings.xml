@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ja">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ja-rJP">
     <string name="location_open">オープン</string>
     <string name="location_closed">クローズド</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
@@ -437,7 +437,6 @@
     <string name="preference_screen_tags">タグ</string>
     <string name="preference_screen_homescreen">ホーム画面</string>
     <string name="preference_screen_homescreen_summary">時計、検索バー、壁紙、システムバー</string>
-    <string name="preference_screen_icons_summary">グリッド、アイコンのサイズ、アイコンパック、バッジ</string>
     <string name="preference_weather_integration">天気</string>
     <!-- %1$s: app name (Kvaesitso) -->
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
