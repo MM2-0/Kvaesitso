@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
@@ -29,13 +30,18 @@ import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.TextPreference
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.osm.OsmSettingsRoute
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object LocationsSettingsRoute: NavKey
 
 @Composable
 fun LocationsSettingsScreen() {
     val viewModel: LocationsSettingsScreenVM = viewModel()
 
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val context = LocalContext.current
 
     val osmLocations by viewModel.osmLocations.collectAsState()
@@ -65,7 +71,7 @@ fun LocationsSettingsScreen() {
                         viewModel.setOsmLocations(it)
                     },
                     onClick = {
-                        navController?.navigate("settings/search/locations/osm")
+                        backStack.add(OsmSettingsRoute)
                     }
                 )
                 for (plugin in plugins) {

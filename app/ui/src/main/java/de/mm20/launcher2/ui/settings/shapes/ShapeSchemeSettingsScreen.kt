@@ -59,6 +59,8 @@ import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.serialization.UUIDSerializer
 import de.mm20.launcher2.themes.shapes.CornerStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
@@ -66,10 +68,16 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.ktx.withCorners
 import de.mm20.launcher2.ui.theme.shapes.shapesOf
+import kotlinx.serialization.Serializable
 import java.util.UUID
 import kotlin.math.max
 import kotlin.math.min
 import de.mm20.launcher2.themes.shapes.Shape as ThemeShape
+
+@Serializable
+data class ShapeSchemeSettingsRoute(
+    @Serializable(with = UUIDSerializer::class) val id: UUID
+): NavKey
 
 @Composable
 fun ShapeSchemeSettingsScreen(themeId: UUID) {

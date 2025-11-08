@@ -43,7 +43,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.preferences.SearchBarStyle
+import de.mm20.launcher2.serialization.UriSerializer
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.SearchBar
@@ -66,7 +68,9 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ImportThemeSettingsRoute(val fromUri: String)
+data class ImportThemeSettingsRoute(
+    @Serializable(with = UriSerializer::class) val fromUri: Uri
+): NavKey
 
 @Composable
 fun ImportThemeSettingsScreen(

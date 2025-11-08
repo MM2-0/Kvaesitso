@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.ColorScheme
 import de.mm20.launcher2.ui.R
@@ -15,14 +16,21 @@ import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemesSettingsRoute
+import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.typography.TypographiesSettingsRoute
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object AppearanceSettingsRoute: NavKey
 
 @Composable
 fun AppearanceSettingsScreen() {
     val viewModel: AppearanceSettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val colorThemeName by viewModel.colorThemeName.collectAsStateWithLifecycle(null)
     val typographyThemeName by viewModel.typographyThemeName.collectAsStateWithLifecycle(null)
     val shapeThemeName by viewModel.shapeThemeName.collectAsStateWithLifecycle(null)
@@ -33,7 +41,7 @@ fun AppearanceSettingsScreen() {
         if (it == null) {
             return@rememberLauncherForActivityResult
         }
-        navController?.navigate(ImportThemeSettingsRoute(it.toString()))
+        backStack.add(ImportThemeSettingsRoute(it))
     }
 
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
@@ -61,7 +69,7 @@ fun AppearanceSettingsScreen() {
                     title = stringResource(id = R.string.preference_screen_colors),
                     summary = colorThemeName,
                     onClick = {
-                        navController?.navigate("settings/appearance/colors")
+                        backStack.add(ColorSchemesSettingsRoute)
                     },
                     icon = R.drawable.palette_24px,
                 )
@@ -69,7 +77,7 @@ fun AppearanceSettingsScreen() {
                     title = stringResource(id = R.string.preference_screen_typography),
                     summary = typographyThemeName,
                     onClick = {
-                        navController?.navigate(TypographiesSettingsRoute)
+                        backStack.add(TypographiesSettingsRoute)
                     },
                     icon = R.drawable.text_fields_24px,
                 )
@@ -77,7 +85,7 @@ fun AppearanceSettingsScreen() {
                     title = stringResource(id = R.string.preference_screen_shapes),
                     summary = shapeThemeName,
                     onClick = {
-                        navController?.navigate("settings/appearance/shapes")
+                        backStack.add(ShapeSchemesSettingsRoute)
                     },
                     icon = R.drawable.crop_square_24px,
                 )
@@ -85,7 +93,7 @@ fun AppearanceSettingsScreen() {
                     title = stringResource(id = R.string.preference_screen_transparencies),
                     summary = transparencyThemeName,
                     onClick = {
-                        navController?.navigate(TransparencySchemesSettingsRoute)
+                        backStack.add(TransparencySchemesSettingsRoute)
                     },
                     icon = R.drawable.opacity_24px,
                 )
@@ -105,7 +113,7 @@ fun AppearanceSettingsScreen() {
                     title = stringResource(R.string.theme_export_title),
                     icon = R.drawable.arrow_circle_up_24px,
                     onClick = {
-                        navController?.navigate("settings/appearance/export")
+                        backStack.add(ExportThemeSettingsRoute)
                     }
                 )
             }

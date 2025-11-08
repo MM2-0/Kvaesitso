@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.preferences.IconShape
@@ -55,6 +56,10 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object IconsSettingsRoute: NavKey
 
 @Composable
 fun IconsSettingsScreen() {

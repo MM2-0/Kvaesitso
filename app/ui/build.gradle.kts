@@ -82,7 +82,9 @@ dependencies {
     implementation(libs.androidx.compose.animationgraphics)
     implementation(libs.androidx.constraintlayout.compose)
 
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.compose.material3adaptive.navigation3)
 
     implementation(libs.jsoup)
     implementation(libs.markdown)
@@ -94,7 +96,6 @@ dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pagerindicators)
     implementation(libs.accompanist.flowlayout)
-    implementation(libs.accompanist.navigationanimation)
 
     implementation(libs.haze)
 

@@ -41,7 +41,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
 
 
 @Composable
@@ -82,7 +82,7 @@ fun PreferenceScreen(
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(12.dp),
     content: LazyListScope.() -> Unit,
 ) {
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
 
     val context = LocalContext.current
 
@@ -126,8 +126,10 @@ fun PreferenceScreen(
                 ),
                 navigationIcon = {
                     IconButton(onClick = {
-                        if (navController?.navigateUp() != true) {
+                        if (backStack.size <= 1) {
                             activity?.onBackPressed()
+                        } else {
+                            backStack.removeLastOrNull()
                         }
                     }) {
                         Icon(

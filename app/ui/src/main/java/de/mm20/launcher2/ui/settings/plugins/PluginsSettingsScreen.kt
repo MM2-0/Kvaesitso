@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.ui.R
@@ -24,7 +25,11 @@ import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object PluginsSettingsRoute: NavKey
 
 @Composable
 fun PluginsSettingsScreen() {
@@ -82,7 +87,7 @@ fun PluginsSettingsScreen() {
 
 @Composable
 private fun PluginPreference(viewModel: PluginsSettingsScreenVM, plugin: PluginPackage) {
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val icon by remember(plugin.packageName) {
         viewModel.getIcon(plugin)
     }.collectAsState(null)
@@ -103,7 +108,7 @@ private fun PluginPreference(viewModel: PluginsSettingsScreenVM, plugin: PluginP
             )
         },
         onClick = {
-            navController?.navigate("settings/plugins/${plugin.packageName}")
+            backStack.add(PluginSettingsRoute(pluginId = plugin.packageName))
         }
     )
 }

@@ -1,17 +1,18 @@
 package de.mm20.launcher2.ui.locals
 
-import android.appwidget.AppWidgetHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.geometry.Size
-import androidx.navigation.NavController
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.preferences.ui.CardStyle
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.ui.theme.WallpaperColors
 
 val LocalWindowSize = compositionLocalOf { Size(0f, 0f) }
 
-val LocalNavController = compositionLocalOf<NavController?> { null }
+val LocalBackStack = staticCompositionLocalOf< NavBackStack<NavKey>> { throw IllegalStateException("No backstack provided") }
 
 val LocalCardStyle = compositionLocalOf { CardStyle() }
 

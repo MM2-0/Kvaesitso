@@ -63,6 +63,8 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.serialization.UUIDSerializer
 import de.mm20.launcher2.themes.typography.DefaultEmphasizedTextStyles
 import de.mm20.launcher2.themes.typography.DefaultTextStyles
 import de.mm20.launcher2.themes.typography.FontManager
@@ -86,8 +88,8 @@ import de.mm20.launcher2.themes.typography.TextStyle as ThemeTextStyle
 
 @Serializable
 data class TypographySettingsRoute(
-    val id: String
-)
+    @Serializable(with = UUIDSerializer::class) val id: UUID
+): NavKey
 
 @Composable
 fun TypographySettingsScreen(themeId: UUID) {

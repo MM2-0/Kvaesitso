@@ -28,18 +28,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.themes.shapes.CornerStyle
 import de.mm20.launcher2.themes.shapes.Shapes
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object ShapeSchemesSettingsRoute: NavKey
 
 @Composable
 fun ShapeSchemesSettingsScreen() {
     val viewModel: ShapeSchemesSettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val context = LocalContext.current
 
     val selectedTheme by viewModel.selectedShapesId.collectAsStateWithLifecycle(null)
@@ -126,7 +131,7 @@ fun ShapeSchemesSettingsScreen() {
                                             },
                                             text = { Text(stringResource(R.string.edit)) },
                                             onClick = {
-                                                navController?.navigate("settings/appearance/shapes/${theme.id}")
+                                                backStack.add(ShapeSchemeSettingsRoute(id = theme.id))
                                                 showMenu = false
                                             }
                                         )

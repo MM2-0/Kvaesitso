@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.ui.R
@@ -41,12 +42,16 @@ import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.search.filters.getLabel
 import de.mm20.launcher2.ui.launcher.search.filters.iconMedium
 import de.mm20.launcher2.ui.launcher.search.filters.isCategory
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object FilterBarSettingsRoute: NavKey
 
 @Composable
 fun FilterBarSettingsScreen() {
     val viewModel: FilterBarSettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
     systemUiController.setNavigationBarColor(Color.Black)
@@ -88,8 +93,10 @@ fun FilterBarSettingsScreen() {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        if (navController?.navigateUp() != true) {
+                        if (backStack.size <= 1) {
                             activity?.onBackPressed()
+                        } else {
+                            backStack.removeLastOrNull()
                         }
                     }) {
                         Icon(

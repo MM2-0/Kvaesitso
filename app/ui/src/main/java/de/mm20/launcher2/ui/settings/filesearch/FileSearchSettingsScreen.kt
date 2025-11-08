@@ -16,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.accounts.AccountType
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -26,6 +27,10 @@ import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object FileSearchSettingsRoute: NavKey
 
 @Composable
 fun FileSearchSettingsScreen() {

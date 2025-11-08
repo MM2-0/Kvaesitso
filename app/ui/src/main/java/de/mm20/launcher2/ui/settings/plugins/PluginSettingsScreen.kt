@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
@@ -49,11 +50,17 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsRoute
+import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsRoute
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PluginSettingsRoute(val pluginId: String): NavKey
 
 @Composable
 fun PluginSettingsScreen(pluginId: String) {
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val activity = LocalActivity.current
     val context = LocalContext.current
     val viewModel: PluginSettingsScreenVM = viewModel()
@@ -131,8 +138,10 @@ fun PluginSettingsScreen(pluginId: String) {
                 ),
                 navigationIcon = {
                     IconButton(onClick = {
-                        if (navController?.navigateUp() != true) {
+                        if (backStack.size <= 1) {
                             activity?.onBackPressed()
+                        } else {
+                            backStack.removeLastOrNull()
                         }
                     }) {
                         Icon(
@@ -164,7 +173,11 @@ fun PluginSettingsScreen(pluginId: String) {
                     }
                     IconButton(onClick = {
                         viewModel.uninstall(context)
-                        navController?.navigateUp()
+                        if (backStack.size <= 1) {
+                            activity?.onBackPressed()
+                        } else {
+                            backStack.removeLastOrNull()
+                        }
                     }) {
                         Icon(
                             painterResource(R.drawable.delete_24px),
@@ -513,7 +526,9 @@ fun PluginSettingsScreen(pluginId: String) {
                                             },
                                             iconPadding = false,
                                             onClick = {
-                                                navController?.navigate("settings/search/calendar/${plugin.plugin.authority}")
+                                                backStack.add(CalendarProviderSettingsRoute(
+                                                    providerId = plugin.plugin.authority
+                                                ))
                                             }
                                         )
                                     }
@@ -574,7 +589,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     title = stringResource(R.string.widget_config_weather_integration_settings),
                                     icon = R.drawable.open_in_new_24px,
                                     onClick = {
-                                        navController?.navigate("settings/integrations/weather")
+                                        backStack.add(WeatherIntegrationSettingsRoute)
                                     }
                                 )
                             }

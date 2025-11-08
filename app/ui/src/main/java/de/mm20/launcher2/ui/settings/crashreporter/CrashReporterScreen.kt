@@ -17,16 +17,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.crashreporter.CrashReportType
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalNavController
-import java.net.URLEncoder
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object CrashReporterRoute: NavKey
 
 @Composable
 fun CrashReporterScreen() {
     val viewModel: CrashReporterScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val reports by viewModel.reports
     val showExceptions by viewModel.showExceptions
     val showCrashes by viewModel.showCrashes
@@ -69,7 +73,7 @@ fun CrashReporterScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                navController?.navigate("settings/debug/crashreporter/report?fileName=${it.filePath}")
+                                backStack.add(CrashReportRoute(it.filePath))
                             }
                             .padding(16.dp)
                     ) {

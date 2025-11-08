@@ -25,22 +25,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.themes.typography.Typography
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.theme.typography.typographyOf
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object TypographiesSettingsRoute
+data object TypographiesSettingsRoute: NavKey
 
 @Composable
 fun TypographiesSettingsScreen() {
     val viewModel: TypographySettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val context = LocalContext.current
 
     val selectedTheme by viewModel.selectedTypography.collectAsStateWithLifecycle(null)
@@ -158,9 +159,7 @@ fun TypographiesSettingsScreen() {
                                             },
                                             text = { Text(stringResource(R.string.edit)) },
                                             onClick = {
-                                                navController?.navigate(
-                                                    TypographySettingsRoute(theme.id.toString())
-                                                )
+                                                backStack.add(TypographySettingsRoute(theme.id))
                                                 showMenu = false
                                             }
                                         )

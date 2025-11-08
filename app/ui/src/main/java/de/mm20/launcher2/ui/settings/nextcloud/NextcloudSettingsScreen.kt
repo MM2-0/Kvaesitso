@@ -28,19 +28,24 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object NextcloudSettingsRoute: NavKey
 
 @Composable
 fun NextcloudSettingsScreen() {
 
     val viewModel: NextcloudSettingsScreenVM = viewModel()
     val lifecycleOwner = LocalLifecycleOwner.current
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
 
     val nextcloudUser by viewModel.nextcloudUser
     val loading by viewModel.loading

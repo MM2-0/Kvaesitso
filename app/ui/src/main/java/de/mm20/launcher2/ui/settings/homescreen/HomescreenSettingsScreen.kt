@@ -39,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
@@ -54,15 +55,17 @@ import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.widgets.clock.ConfigureClockWidgetSheet
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object HomescreenSettingsRoute: NavKey
 
 @Composable
 fun HomescreenSettingsScreen() {
     val viewModel: HomescreenSettingsScreenVM =
         viewModel(factory = HomescreenSettingsScreenVM.Factory)
-
-    val navController = LocalNavController.current
 
     val context = LocalContext.current
 

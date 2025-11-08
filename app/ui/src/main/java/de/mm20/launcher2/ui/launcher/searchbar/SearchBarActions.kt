@@ -77,7 +77,7 @@ fun ColumnScope.SearchBarActions(
                     onClick = {
                         context.startActivity(
                             Intent(context, SettingsActivity::class.java).apply {
-                                putExtra(SettingsActivity.EXTRA_ROUTE, "settings/search/searchactions")
+                                putExtra(SettingsActivity.EXTRA_ROUTE, SettingsActivity.ROUTE_SEARCH_ACTIONS)
                             }
                         )
                     }

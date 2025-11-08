@@ -33,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.debug.DebugInformationDumper
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
@@ -41,9 +42,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 import java.io.File
 import java.io.IOException
 import java.util.regex.Pattern
+
+@Serializable
+data object LogRoute: NavKey
 
 @Composable
 fun LogScreen() {

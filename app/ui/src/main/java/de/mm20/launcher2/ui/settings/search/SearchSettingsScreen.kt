@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
@@ -28,7 +29,23 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsRoute
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsRoute
+import de.mm20.launcher2.ui.settings.contacts.ContactsSettingsRoute
+import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsRoute
+import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsRoute
+import de.mm20.launcher2.ui.settings.filterbar.FilterBarSettingsRoute
+import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsRoute
+import de.mm20.launcher2.ui.settings.locations.LocationsSettingsRoute
+import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsRoute
+import de.mm20.launcher2.ui.settings.tags.TagsSettingsRoute
+import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsRoute
+import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsRoute
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object SearchSettingsRoute: NavKey
 
 @Composable
 fun SearchSettingsScreen() {
@@ -36,7 +53,7 @@ fun SearchSettingsScreen() {
     val viewModel: SearchSettingsScreenVM = viewModel()
     val context = LocalContext.current
 
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
 
     var showFilterEditor by remember { mutableStateOf(false) }
 
@@ -81,7 +98,7 @@ fun SearchSettingsScreen() {
                         viewModel.setFavorites(it)
                     },
                     onClick = {
-                        navController?.navigate("settings/favorites")
+                        backStack.add(FavoritesSettingsRoute)
                     }
                 )
 
@@ -90,7 +107,7 @@ fun SearchSettingsScreen() {
                     summary = stringResource(R.string.preference_search_files_summary),
                     icon = R.drawable.description_24px,
                     onClick = {
-                        navController?.navigate("settings/search/files")
+                        backStack.add(FileSearchSettingsRoute)
                     }
                 )
 
@@ -100,7 +117,7 @@ fun SearchSettingsScreen() {
                         summary = stringResource(R.string.preference_search_contacts_summary),
                         icon = R.drawable.person_24px,
                         onClick = {
-                            navController?.navigate("settings/search/contacts")
+                            backStack.add(ContactsSettingsRoute)
                         },
                     )
                 } else {
@@ -120,7 +137,7 @@ fun SearchSettingsScreen() {
                                 viewModel.setContacts(it)
                             },
                             onClick = {
-                                navController?.navigate("settings/search/contacts")
+                                backStack.add(ContactsSettingsRoute)
                             },
                             enabled = hasContactsPermission == true
                         )
@@ -133,7 +150,7 @@ fun SearchSettingsScreen() {
                         summary = stringResource(R.string.preference_search_calendar_summary),
                         icon = R.drawable.today_24px,
                         onClick = {
-                            navController?.navigate("settings/search/calendar")
+                            backStack.add(CalendarSearchSettingsRoute)
                         },
                     )
                 } else {
@@ -155,7 +172,7 @@ fun SearchSettingsScreen() {
                             icon = R.drawable.today_24px,
                             enabled = hasCalendarPermission == true,
                             onClick = {
-                                navController?.navigate("settings/search/calendar/local")
+                                backStack.add(CalendarProviderSettingsRoute(providerId = "local"))
                             }
                         )
                     }
@@ -201,7 +218,7 @@ fun SearchSettingsScreen() {
                         viewModel.setUnitConverter(it)
                     },
                     onClick = {
-                        navController?.navigate("settings/search/unitconverter")
+                        backStack.add(UnitConverterSettingsRoute)
                     }
                 )
 
@@ -214,7 +231,7 @@ fun SearchSettingsScreen() {
                         viewModel.setWikipedia(it)
                     },
                     onClick = {
-                        navController?.navigate("settings/search/wikipedia")
+                        backStack.add(WikipediaSettingsRoute)
                     }
                 )
 
@@ -241,7 +258,7 @@ fun SearchSettingsScreen() {
                             icon = R.drawable.location_on_24px,
                             enabled = hasLocationPermission == true,
                             onClick = {
-                                navController?.navigate("settings/search/locations")
+                                backStack.add(LocationsSettingsRoute)
                             }
                         )
                     } else {
@@ -250,7 +267,7 @@ fun SearchSettingsScreen() {
                             summary = stringResource(R.string.preference_search_locations_summary),
                             icon = R.drawable.location_on_24px,
                             onClick = {
-                                navController?.navigate("settings/search/locations")
+                                backStack.add(LocationsSettingsRoute)
                             },
                             switchValue = places == true,
                             onSwitchChanged = {
@@ -266,7 +283,7 @@ fun SearchSettingsScreen() {
                     summary = stringResource(R.string.preference_search_search_actions_summary),
                     icon = R.drawable.arrow_outward_24px,
                     onClick = {
-                        navController?.navigate("settings/search/searchactions")
+                        backStack.add(SearchActionsSettingsRoute)
                     }
                 )
             }
@@ -278,7 +295,7 @@ fun SearchSettingsScreen() {
                     summary = stringResource(R.string.preference_hidden_items_summary),
                     icon = R.drawable.visibility_off_24px,
                     onClick = {
-                        navController?.navigate("settings/search/hiddenitems")
+                        backStack.add(HiddenItemsSettingsRoute)
                     }
                 )
                 Preference(
@@ -286,7 +303,7 @@ fun SearchSettingsScreen() {
                     summary = stringResource(R.string.preference_screen_tags_summary),
                     icon = R.drawable.tag_24px,
                     onClick = {
-                        navController?.navigate("settings/search/tags")
+                        backStack.add(TagsSettingsRoute)
                     }
                 )
             }
@@ -316,7 +333,7 @@ fun SearchSettingsScreen() {
                         iconPadding = true,
                         summary = stringResource(R.string.preference_customize_filter_bar_summary),
                         onClick = {
-                            navController?.navigate("settings/search/filterbar")
+                            backStack.add(FilterBarSettingsRoute)
                         }
                     )
                 }

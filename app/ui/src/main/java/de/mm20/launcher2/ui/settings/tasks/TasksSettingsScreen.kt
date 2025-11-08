@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
@@ -21,13 +22,18 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsRoute
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object TasksIntegrationSettingsRoute: NavKey
 
 @Composable
 fun TasksIntegrationSettingsScreen() {
     val viewModel: TasksSettingsScreenVM = viewModel()
     val activity = LocalActivity.current
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
 
     val isTasksInstalled by viewModel.isTasksAppInstalled.collectAsStateWithLifecycle(null)
     val hasTasksPermission by viewModel.hasTasksPermission.collectAsStateWithLifecycle(null)
@@ -91,7 +97,7 @@ fun TasksIntegrationSettingsScreen() {
                             },
                             enabled = hasTasksPermission == true,
                             onClick = {
-                                navController?.navigate("settings/search/calendar/tasks.org")
+                                backStack.add(CalendarProviderSettingsRoute(providerId = "tasks.org"))
                             }
                         )
                     }

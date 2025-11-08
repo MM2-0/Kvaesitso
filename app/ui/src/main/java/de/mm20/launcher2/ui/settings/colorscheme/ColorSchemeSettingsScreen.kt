@@ -47,10 +47,12 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
+import de.mm20.launcher2.serialization.UUIDSerializer
 import de.mm20.launcher2.themes.colors.DefaultDarkColorScheme
 import de.mm20.launcher2.themes.colors.DefaultLightColorScheme
 import de.mm20.launcher2.themes.colors.merge
@@ -63,8 +65,15 @@ import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
 import de.mm20.launcher2.ui.theme.colorscheme.lightColorSchemeOf
 import de.mm20.launcher2.ui.theme.colorscheme.systemCorePalette
+import kotlinx.serialization.Serializable
 import palettes.CorePalette
 import java.util.UUID
+import kotlin.uuid.Uuid
+
+@Serializable
+data class ColorSchemeSettingsRoute(
+    @Serializable(with = UUIDSerializer::class) val id: UUID
+): NavKey
 
 @Composable
 fun ColorSchemeSettingsScreen(themeId: UUID) {

@@ -32,20 +32,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.themes.colors.Colors
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
-import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
 import de.mm20.launcher2.ui.theme.colorscheme.lightColorSchemeOf
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object ColorSchemesSettingsRoute: NavKey
 
 @Composable
 fun ColorSchemesSettingsScreen() {
     val viewModel: ColorSchemesSettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val context = LocalContext.current
 
     val selectedTheme by viewModel.selectedColors.collectAsStateWithLifecycle(null)
@@ -133,7 +138,7 @@ fun ColorSchemesSettingsScreen() {
                                             },
                                             text = { Text(stringResource(R.string.edit)) },
                                             onClick = {
-                                                navController?.navigate("settings/appearance/colors/${theme.id}")
+                                                backStack.add(ColorSchemeSettingsRoute(id = theme.id))
                                                 showMenu = false
                                             }
                                         )

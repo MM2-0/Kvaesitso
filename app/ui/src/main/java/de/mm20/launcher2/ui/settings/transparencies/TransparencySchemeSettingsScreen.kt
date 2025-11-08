@@ -37,6 +37,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.serialization.UUIDSerializer
 import de.mm20.launcher2.themes.transparencies.Transparencies
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LocalIconShape
@@ -53,8 +55,8 @@ import kotlin.math.round
 
 @Serializable
 data class TransparencySchemeSettingsRoute(
-    val id: String
-)
+    @Serializable(with = UUIDSerializer::class) val id: UUID
+): NavKey
 
 @Composable
 fun TransparencySchemeSettingsScreen(themeId: UUID) {

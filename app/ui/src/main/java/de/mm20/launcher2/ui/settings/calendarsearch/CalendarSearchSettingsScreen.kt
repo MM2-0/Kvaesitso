@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
@@ -18,13 +19,17 @@ import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object CalendarSearchSettingsRoute: NavKey
 
 @Composable
 fun CalendarSearchSettingsScreen() {
     val viewModel: CalendarSearchSettingsScreenVM = viewModel()
     val context = LocalContext.current
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
 
     val hasCalendarPermission by viewModel.hasCalendarPermission.collectAsState(null)
     val hasTasksPermission by viewModel.hasTasksPermission.collectAsState(null)
@@ -54,7 +59,7 @@ fun CalendarSearchSettingsScreen() {
                         },
                         enabled = hasCalendarPermission == true,
                         onClick = {
-                            navController?.navigate("settings/search/calendar/local")
+                            backStack.add(CalendarProviderSettingsRoute(providerId = "local"))
                         }
                     )
                 }
@@ -75,7 +80,7 @@ fun CalendarSearchSettingsScreen() {
                             },
                             enabled = hasTasksPermission == true,
                             onClick = {
-                                navController?.navigate("settings/search/calendar/tasks.org")
+                                backStack.add(CalendarProviderSettingsRoute(providerId = "tasks.org"))
                             }
                         )
                     }
@@ -109,7 +114,7 @@ fun CalendarSearchSettingsScreen() {
                                 viewModel.setProviderEnabled(plugin.plugin.authority, it)
                             },
                             onClick = {
-                                navController?.navigate("settings/search/calendar/${plugin.plugin.authority}")
+                                backStack.add(CalendarProviderSettingsRoute(providerId = plugin.plugin.authority))
                             }
                         )
                     }

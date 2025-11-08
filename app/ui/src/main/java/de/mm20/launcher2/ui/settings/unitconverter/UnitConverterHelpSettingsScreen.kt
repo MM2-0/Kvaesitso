@@ -22,11 +22,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.launcher.search.unitconverter.getDimensionIcon
 import de.mm20.launcher2.unitconverter.Dimension
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object UnitConverterHelpSettingsRoute: NavKey
 
 @Composable
 fun UnitConverterHelpSettingsScreen() {
