@@ -1,35 +1,38 @@
 package de.mm20.launcher2.ui.launcher.search.filters
 
 import android.content.Context
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AppShortcut
-import androidx.compose.material.icons.rounded.Apps
-import androidx.compose.material.icons.rounded.Description
-import androidx.compose.material.icons.rounded.Handyman
-import androidx.compose.material.icons.rounded.Language
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.Public
-import androidx.compose.material.icons.rounded.Today
-import androidx.compose.material.icons.rounded.VisibilityOff
 import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.icons.Wikipedia
 
-val KeyboardFilterBarItem.icon
+val KeyboardFilterBarItem.iconMedium
     get() = when (this) {
-        KeyboardFilterBarItem.Apps -> Icons.Rounded.Apps
-        KeyboardFilterBarItem.Events -> Icons.Rounded.Today
-        KeyboardFilterBarItem.Contacts -> Icons.Rounded.Person
-        KeyboardFilterBarItem.Places -> Icons.Rounded.Place
-        KeyboardFilterBarItem.Files -> Icons.Rounded.Description
-        KeyboardFilterBarItem.Tools -> Icons.Rounded.Handyman
-        KeyboardFilterBarItem.Articles -> Icons.Rounded.Wikipedia
-        KeyboardFilterBarItem.Websites -> Icons.Rounded.Public
-        KeyboardFilterBarItem.Shortcuts -> Icons.Rounded.AppShortcut
-        KeyboardFilterBarItem.HiddenResults -> Icons.Rounded.VisibilityOff
-        KeyboardFilterBarItem.OnlineResults -> Icons.Rounded.Language
+        KeyboardFilterBarItem.Apps -> R.drawable.apps_24px
+        KeyboardFilterBarItem.Events -> R.drawable.today_24px
+        KeyboardFilterBarItem.Contacts -> R.drawable.person_24px
+        KeyboardFilterBarItem.Places -> R.drawable.location_on_24px
+        KeyboardFilterBarItem.Files -> R.drawable.description_24px
+        KeyboardFilterBarItem.Tools -> R.drawable.handyman_24px
+        KeyboardFilterBarItem.Articles -> R.drawable.wikipedia
+        KeyboardFilterBarItem.Websites -> R.drawable.public_24px
+        KeyboardFilterBarItem.Shortcuts -> R.drawable.mobile_arrow_up_right_24px
+        KeyboardFilterBarItem.HiddenResults -> R.drawable.visibility_off_24px
+        KeyboardFilterBarItem.OnlineResults -> R.drawable.language_24px
+    }
+
+val KeyboardFilterBarItem.iconSmall
+    get() = when (this) {
+        KeyboardFilterBarItem.Apps -> R.drawable.apps_20px
+        KeyboardFilterBarItem.Events -> R.drawable.today_20px
+        KeyboardFilterBarItem.Contacts -> R.drawable.person_20px
+        KeyboardFilterBarItem.Places -> R.drawable.location_on_20px
+        KeyboardFilterBarItem.Files -> R.drawable.description_20px
+        KeyboardFilterBarItem.Tools -> R.drawable.handyman_20px
+        KeyboardFilterBarItem.Articles -> R.drawable.wikipedia
+        KeyboardFilterBarItem.Websites -> R.drawable.public_20px
+        KeyboardFilterBarItem.Shortcuts -> R.drawable.mobile_arrow_up_right_20px
+        KeyboardFilterBarItem.HiddenResults -> R.drawable.visibility_off_20px
+        KeyboardFilterBarItem.OnlineResults -> R.drawable.language_20px
     }
 
 fun KeyboardFilterBarItem.getLabel(context: Context): String {

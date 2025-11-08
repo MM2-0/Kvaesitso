@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +18,7 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun <T> ListPreference(
     title: String,
-    icon: ImageVector? = null,
+    @DrawableRes icon: Int? = null,
     iconPadding: Boolean = icon != null,
     items: List<ListPreferenceItem<T>>,
     value: T,

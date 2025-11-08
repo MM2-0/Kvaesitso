@@ -1,17 +1,8 @@
 package de.mm20.launcher2.ui.settings.integrations
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.PlayCircleOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.icons.BreezyWeather
-import de.mm20.launcher2.icons.Google
-import de.mm20.launcher2.icons.Nextcloud
-import de.mm20.launcher2.icons.Owncloud
-import de.mm20.launcher2.icons.Wikipedia
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -28,14 +19,14 @@ fun IntegrationsSettingsScreen() {
             PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.preference_weather_integration),
-                    icon = Icons.Rounded.LightMode,
+                    icon = R.drawable.light_mode_24px,
                     onClick = {
                         navController?.navigate("settings/integrations/weather")
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_media_integration),
-                    icon = Icons.Rounded.PlayCircleOutline,
+                    icon = R.drawable.play_circle_24px,
                     onClick = {
                         navController?.navigate("settings/integrations/media")
                     }
@@ -46,35 +37,35 @@ fun IntegrationsSettingsScreen() {
             PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.preference_nextcloud),
-                    icon = Icons.Rounded.Nextcloud,
+                    icon = R.drawable.nextcloud,
                     onClick = {
                         navController?.navigate("settings/integrations/nextcloud")
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_owncloud),
-                    icon = Icons.Rounded.Owncloud,
+                    icon = R.drawable.owncloud,
                     onClick = {
                         navController?.navigate("settings/integrations/owncloud")
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_search_wikipedia),
-                    icon = Icons.Rounded.Wikipedia,
+                    icon = R.drawable.wikipedia,
                     onClick = {
                         navController?.navigate("settings/search/wikipedia")
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_tasks_integration),
-                    icon = Icons.Default.Check,
+                    icon = R.drawable.check_24px_sharp,
                     onClick = {
                         navController?.navigate("settings/integrations/tasks")
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_breezyweather_integration),
-                    icon = Icons.Rounded.BreezyWeather,
+                    icon = R.drawable.breezy_weather,
                     onClick = {
                         navController?.navigate("settings/integrations/breezyweather")
                     }

@@ -21,8 +21,6 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.UnfoldMore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -37,10 +35,12 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
+import de.mm20.launcher2.ui.R
 
 enum class ResizeAxis {
     Horizontal,
@@ -135,7 +135,7 @@ fun DragResizeHandle(
                             .padding(8.dp)
                             .rotate(90f)
                             .align(Alignment.Center),
-                        imageVector = Icons.Rounded.UnfoldMore,
+                        painter = painterResource(R.drawable.unfold_more_24px),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onPrimary,
                     )
@@ -191,7 +191,7 @@ fun DragResizeHandle(
                             .background(MaterialTheme.colorScheme.primary, CircleShape)
                             .padding(8.dp)
                             .align(Alignment.Center),
-                        imageVector = Icons.Rounded.UnfoldMore,
+                        painter = painterResource(R.drawable.unfold_more_24px),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onPrimary,
                     )

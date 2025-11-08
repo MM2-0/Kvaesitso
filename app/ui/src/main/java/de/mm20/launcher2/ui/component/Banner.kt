@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,13 +18,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun Banner(
     modifier: Modifier = Modifier,
     text: String,
-    icon: ImageVector,
+    @DrawableRes icon: Int,
     color: Color = MaterialTheme.colorScheme.surfaceContainer,
     primaryAction: (@Composable () -> Unit)? = null,
     secondaryAction: (@Composable () -> Unit)? = null,
@@ -45,7 +47,7 @@ fun Banner(
             ) {
                 Icon(
                     modifier = Modifier.padding(end = 16.dp),
-                    imageVector = icon,
+                    painter = painterResource(icon),
                     contentDescription = null
                 )
                 Text(

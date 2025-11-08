@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import androidx.annotation.DrawableRes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
@@ -9,7 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 @Composable
 fun SwitchPreference(
     title: String,
-    icon: ImageVector? = null,
+    @DrawableRes icon: Int? = null,
     iconPadding: Boolean = icon != null,
     summary: String? = null,
     value: Boolean,

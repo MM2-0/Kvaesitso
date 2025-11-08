@@ -35,7 +35,7 @@
     <string name="file_type_archive">ไฟล์เก็บถาวร</string>
     <string name="file_type_document">เอกสาร</string>
     <string name="file_type_spreadsheet">ตารางคำนวณ</string>
-    <string name="file_type_music">ไฟล์เพลง</string>
+    <string name="file_type_music">ไฟล์เสียง</string>
     <string name="file_type_video">วิดีโอ</string>
     <string name="file_type_image">รูปภาพ</string>
     <string name="file_type_none">ไฟล์</string>
@@ -54,11 +54,11 @@
     <string name="websearch_dialog_query_encoding_none">ไม่ใช้</string>
     <string name="widget_name_weather">สภาพอากาศ</string>
     <string name="widget_name_calendar">ปฏิทิน</string>
-    <string name="widget_name_music">ดนตรี</string>
+    <string name="widget_name_music">สื่อ</string>
     <string name="widget_name_favorites">รายการโปรด</string>
     <string name="widget_name_notes">โน้ต</string>
-    <string name="widget_name_unknown">วิดเจ็ตที่ไม่รู้จัก</string>
-    <string name="notes_widget_placeholder">เขียนโน้ต…</string>
+    <string name="widget_name_unknown">ไม่รู้จัก</string>
+    <string name="notes_widget_placeholder">เขียนโน้ต</string>
     <string name="notes_widget_action_new">สร้างโน้ต</string>
     <string name="notes_widget_action_dismiss">ลบโน้ต</string>
     <string name="notes_widget_dismissed">โน้ตถูกลบแล้ว</string>
@@ -76,7 +76,7 @@
     <string name="menu_item_edit_favs">แก้ไขรายการโปรด</string>
     <string name="edit_favorites_dialog_pinned_sorted">ปักหมุด - เรียงด้วยตัวเอง</string>
     <string name="edit_favorites_dialog_tags">แท็ก</string>
-    <string name="edit_favorites_dialog_new_tag">สร้างแท็ก…</string>
+    <string name="edit_favorites_dialog_new_tag">สร้างแท็ก</string>
     <string name="edit_favorites_dialog_empty_section">ลากรายการต่างๆมาที่นี่</string>
     <string name="nextcloud_server_invalid_url">ลิงก์นี้ไม่ได้ชี้ไปที่เซิร์ฟเวอร์ Nextcloud ที่ถูกต้อง</string>
     <string name="owncloud_server_url">ลิงก์เซิร์ฟเวอร์ Owncloud</string>
@@ -211,7 +211,7 @@
     <string name="preference_clockwidget_battery_part">แบตเตอรี่</string>
     <string name="preference_clockwidget_alarm_part">การตั้งปลุก</string>
     <string name="preference_clockwidget_alarm_part_summary">แสดงการตั้งปลุกที่กำลังจะปลุกในอีก 8 ชั่วโมงข้างหน้า</string>
-    <string name="preference_screen_backup">สำรองข้อมูลและกู้คืนข้อมูล</string>
+    <string name="preference_screen_backup">สำรองและกู้คืนข้อมูล</string>
     <string name="preference_backup">สำรองข้อมูล</string>
     <string name="preference_restore_summary">นำเข้าข้อมูลสำรองที่เคยสร้างไว้</string>
     <string name="preference_crash_reporter_summary">ดูข้อผิดพลาดและรายงานแอปล่ม</string>
@@ -407,7 +407,7 @@
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="owncloud_server_invalid_url">ลิงก์นี้ไม่ได้ชี้ไปที่เซิร์ฟเวอร์ Owncloud ที่ถูกต้อง</string>
     <string name="music_widget_default_title">%1$s กำลังเล่นสื่อ</string>
-    <string name="preference_automatic_location_summary">ใช้ GPS และบริการเข้าถึงตำแหน่งเพื่อกำหนดตำแหน่งอัตโนมัติ</string>
+    <string name="preference_automatic_location_summary">ใช้บริการตำแหน่งเพื่อกำหนดตำแหน่งอัตโนมัติ</string>
     <string name="owncloud_password">รหัสผ่าน</string>
     <string name="weather_condition_sleetshowers">ฝนน้ำแข็งตกบางแห่ง</string>
     <string name="preference_imperial_units_summary">ใช้องศาฟาเรนไฮต์และไมล์ต่อชั่วโมง</string>
@@ -464,7 +464,7 @@
     <string name="missing_permission_appshortcuts_search_settings">คุณต้องกำหนดให้แอป %1$s เป็นตัวใช้งานเริ่มต้นจึงจะค้นหาทางลัดแอปได้</string>
     <string name="preference_search_favorites_summary">แสดงสิ่งที่ถูกปักหมุดและสิ่งที่ถูกใช้งานบ่อยข้างบนลิ้นชักแอป</string>
     <string name="preference_widgets_edit_button_summary">แสดงปุ่มสำหรับการเพิ่ม ลบ และจัดเรียงวิดเจ็ต</string>
-    <string name="missing_permission_file_search_settings">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลภายนอกเพื่อค้นหาไฟล์</string>
+    <string name="missing_permission_file_search_settings">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลภายนอกเพื่อค้นหาไฟล์บนอุปกรณ์นี้</string>
     <string name="preference_search_files_summary">ค้นหาไฟล์บนเครื่องและบนคลาวด์</string>
     <string name="preference_favorites_edit_button_summary">แสดงปุ่มจัดเรียงรายการโปรด</string>
     <string name="missing_permission_file_search_settings_android10">คุณต้องอนุญาตให้แอปจัดการไฟล์ทั้งหมดเพื่อค้นหาไฟล์</string>
@@ -476,7 +476,7 @@
     <string name="missing_permission_calendar_search">คุณต้องอนุญาตให้แอปเข้าถึงปฏิทินเพื่อค้นหาในปฏิทินของคุณ</string>
     <string name="preference_search_calendar_summary">ค้นหานัดหมายและกิจกรรมที่กำลังมาถึง</string>
     <string name="preference_weather_integration">สภาพอากาศ</string>
-    <string name="missing_permission_files_search">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลเพื่อค้นหารูปภาพ สื่อและเอกสารบนอุปกรณ์นี้</string>
+    <string name="missing_permission_files_search">คุณต้องอนุญาตให้แอปเข้าถึงพื้นที่จัดเก็บข้อมูลเพื่อค้นหาไฟล์บนอุปกรณ์นี้</string>
     <string name="preference_search_calculator_summary">คำนวณและดำเนินการทางคณิตศาสตร์</string>
     <string name="missing_permission_appshortcuts_create">กำหนดให้แอป %1$s เป็นตัวใช้งานเริ่มต้นเพื่อสร้างทางลัด</string>
     <string name="preference_search_currencyconverter_summary">ดาวน์โหลดอัตราแรกเปลี่ยนเพื่อแปลงสกุลเงินเป็นระยะๆ</string>
@@ -504,17 +504,17 @@
     <string name="search_action_alarm">ตั้งปลุก</string>
     <string name="search_action_timer">เริ่มจับเวลา</string>
     <string name="search_action_event">เขียนกำหนดการกิจกรรม</string>
-    <string name="create_search_action_type">คุณอยากสร้างแอ็กชั่นแบบไหน?</string>
+    <string name="create_search_action_type">คุณอยากสร้างแอ็กชั่นแบบใด?</string>
     <string name="create_search_action_type_intent">Intent แบบกำหนดเอง</string>
     <string name="create_search_action_pick_app">เลือกแอปที่จะค้นหา:</string>
     <string name="create_search_action_website_invalid_url">ไม่สามารถใช้เว็บไซต์ที่ระบุเป็นเครื่องค้นหาบนเว็บแบบอัตโนมัติได้ คุณสามารถลองเว็บไซต์อื่นๆหรือป้อนข้อมูลที่จำเป็นด้วยตัวคุณเองในขั้นตอนต่อไป</string>
     <string name="search_action_websearch_url">แม่แบบลิงก์</string>
-    <string name="search_action_websearch_url_hint">แม่แบบลิงก์ที่จะนำไปใช้สร้างลิงก์ค้นหาผ่านเว็บ ใช้ ‘${1}’ เป็นตัวยึดตำแหน่งสำหรับคำค้นหาจริง เช่น https://google.com/search?q=${1}</string>
+    <string name="search_action_websearch_url_hint">แม่แบบลิงก์ที่จะนำไปใช้สร้างลิงก์ค้นหาผ่านเว็บ ใช้ ‘${1}’ เป็นตัวยึดตำแหน่งสำหรับคำค้นหาจริง</string>
     <string name="tag_exists_error">มีแท็กชื่อนี้อยู่แล้ว</string>
     <string name="tag_exists_message">มีแท็กชื่อนี้อยู่แล้ว ถ้าคุณไปต่อ ทั้งสองแท็กจะถูกนำมารวมกัน</string>
     <string name="tag_select_items">สิ่งที่ถูกเลือก:</string>
     <string name="tag_name">ชื่อแท็ก</string>
-    <string name="preference_layout_open_search">ค้นหา / ลิ้นชักรวมแอป</string>
+    <string name="preference_layout_open_search">ค้นหาและลิ้นชักรวมแอป</string>
     <string name="search_bar_position_bottom">ด้านล่าง</string>
     <string name="preference_layout_search_results">การจัดเรียงของผลการค้นหา</string>
     <string name="preference_layout_fixed_search_bar_summary">ไม่เลื่อนแถบค้นหาออกไปจากหน้าจอ</string>
@@ -791,7 +791,7 @@
     <string name="preference_grid_list_style_summary">แสดงแอปแบบเรียงรายการ แทนการแสดงแอปแบบเรียงเป็นตาราง</string>
     <string name="preference_grid_list_icons_summary">แสดงไอคอนในรายการแอป</string>
     <string name="preference_contacts_call_on_tap">แตะเพื่อโทรฯ</string>
-    <string name="preference_contacts_call_on_tap_summary">เริ่มการโทรฯทันทีที่แตะเบอร์โทรศัพท์</string>
+    <string name="preference_contacts_call_on_tap_summary">เริ่มการโทรฯทันทีที่แตะเบอร์โทรศัพท์โดยไม่ต้องยืนยัน</string>
     <string name="preference_grid_list_style">แสดงแอปแบบเรียงรายการ</string>
     <string name="missing_permission_call_contacts_settings">คุณต้องอนุญาตให้แอปเข้าถึงโทรศัพท์เพื่อเริ่มการโทรฯ</string>
     <string name="import_theme_exists">ธีมนี้ถูกติดตั้งไว้แล้วและจะถูกอัปเดต</string>
@@ -829,7 +829,7 @@
     <string name="preference_search_tasks_summary">ค้นหางานในแอป Tasks</string>
     <string name="preference_breezyweather_integration">Breezy Weather</string>
     <string name="preference_widgets_on_home_screen">วิดเจ็ตบนหน้าจอหลัก</string>
-    <string name="preference_widgets_on_home_screen_summary">แสดงวิดเจ็ตบนหน้าจอหลักแทนการใช้หน้าจอเสริม</string>
+    <string name="preference_widgets_on_home_screen_summary">แสดงวิดเจ็ตบนหน้าจอหลักแทนการใช้อีกหน้าหนึ่ง</string>
     <string name="preference_gesture_swipe_up">ปัดขึ้น</string>
     <string name="gesture_action_widgets">วิดเจ็ต</string>
     <string name="preference_launch_tasks_app">เปิดแอป Tasks</string>
@@ -856,4 +856,5 @@
     <string name="poi_category_climbing_gym">ยิมปีนผา</string>
     <string name="poi_category_hackerspace">แฮกเกอร์สเปซ</string>
     <string name="poi_category_stationery">ร้านขายเครื่องเขียน</string>
+    <string name="preference_clockwidget_dock_rows">แถบปักหมุด</string>
 </resources>

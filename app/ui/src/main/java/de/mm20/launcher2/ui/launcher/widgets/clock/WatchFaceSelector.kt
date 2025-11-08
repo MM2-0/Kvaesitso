@@ -26,19 +26,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.ChevronLeft
-import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material.icons.rounded.PhotoSizeSelectSmall
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
-import androidx.compose.material.icons.rounded.RestartAlt
-import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.icons.rounded.SwapHoriz
-import androidx.compose.material.icons.rounded.Tune
-import androidx.compose.material.icons.rounded.Widgets
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -65,6 +52,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -162,7 +150,7 @@ fun WatchFaceSelector(
                             modifier = Modifier
                                 .padding(4.dp)
                         ) {
-                            Icon(Icons.Rounded.Tune, null)
+                            Icon(painterResource(R.drawable.tune_24px), null)
                             DropdownMenu(
                                 expanded = showStyleSettings,
                                 onDismissRequest = { showStyleSettings = false }) {
@@ -171,8 +159,10 @@ fun WatchFaceSelector(
                                         text = { Text(stringResource(R.string.clock_variant_outlined)) },
                                         leadingIcon = {
                                             Icon(
-                                                if (selected.outlined) Icons.Rounded.CheckCircle
-                                                else Icons.Rounded.RadioButtonUnchecked,
+                                                painterResource(
+                                                    if (selected.outlined) R.drawable.check_circle_24px_filled
+                                                    else R.drawable.circle_24px,
+                                                ),
                                                 null
                                             )
                                         },
@@ -186,8 +176,10 @@ fun WatchFaceSelector(
                                         text = { Text(stringResource(R.string.clock_variant_analog_ticks)) },
                                         leadingIcon = {
                                             Icon(
-                                                if (selected.showTicks) Icons.Rounded.CheckCircle
-                                                else Icons.Rounded.RadioButtonUnchecked,
+                                                painterResource(
+                                                    if (selected.showTicks) R.drawable.check_circle_24px_filled
+                                                    else R.drawable.circle_24px,
+                                                ),
                                                 null
                                             )
                                         },
@@ -200,7 +192,7 @@ fun WatchFaceSelector(
                                     DropdownMenuItem(
                                         text = { Text(stringResource(R.string.widget_pick_widget)) },
                                         leadingIcon = {
-                                            Icon(Icons.Rounded.SwapHoriz, null)
+                                            Icon(painterResource(R.drawable.swap_horiz_24px), null)
                                         },
                                         onClick = {
                                             showWidgetPicker = true
@@ -209,7 +201,7 @@ fun WatchFaceSelector(
                                     )
                                     DropdownMenuItem(
                                         leadingIcon = {
-                                            Icon(Icons.Rounded.PhotoSizeSelectSmall, null)
+                                            Icon(painterResource(R.drawable.resize_24px), null)
                                         },
                                         text = { Text(stringResource(R.string.widget_config_appwidget_resize)) },
                                         onClick = { resizeCustomWidget = true }
@@ -224,7 +216,7 @@ fun WatchFaceSelector(
                                         DropdownMenuItem(
                                             text = { Text(stringResource(R.string.widget_config_appwidget_configure)) },
                                             leadingIcon = {
-                                                Icon(Icons.Rounded.Settings, null)
+                                                Icon(painterResource(R.drawable.settings_24px), null)
                                             },
                                             onClick = {
                                                 appWidgetHost.startAppWidgetConfigureActivityForResult(
@@ -248,7 +240,7 @@ fun WatchFaceSelector(
                                     if (BuildConfig.DEBUG) {
                                         DropdownMenuItem(
                                             leadingIcon = {
-                                                Icon(Icons.Rounded.RestartAlt, null)
+                                                Icon(painterResource(R.drawable.restart_alt_24px), null)
                                             },
                                             text = { Text("Reset") },
                                             onClick = {
@@ -307,7 +299,7 @@ fun WatchFaceSelector(
                                             modifier = Modifier
                                                 .padding(end = ButtonDefaults.IconSpacing)
                                                 .size(ButtonDefaults.IconSize),
-                                            imageVector = Icons.Rounded.Widgets,
+                                            painter = painterResource(R.drawable.widgets_20px),
                                             contentDescription = null,
                                         )
                                         Text(stringResource(R.string.widget_pick_widget))
@@ -352,7 +344,7 @@ fun WatchFaceSelector(
                                 )
                             }
                         }) {
-                        Icon(Icons.Rounded.ChevronLeft, null)
+                        Icon(painterResource(R.drawable.chevron_backward_24px), null)
                     }
                     var showStyleDropdown by remember { mutableStateOf(false) }
                     TextButton(
@@ -378,7 +370,7 @@ fun WatchFaceSelector(
                             textAlign = TextAlign.Center,
                         )
                         Icon(
-                            Icons.Rounded.ArrowDropDown,
+                            painterResource(R.drawable.arrow_drop_down_20px),
                             null,
                             modifier = Modifier
                                 .padding(ButtonDefaults.IconSpacing)
@@ -417,7 +409,7 @@ fun WatchFaceSelector(
                                 )
                             }
                         }) {
-                        Icon(Icons.Rounded.ChevronRight, null)
+                        Icon(painterResource(R.drawable.chevron_forward_24px), null)
                     }
                 }
             }
@@ -599,7 +591,7 @@ private fun ResizeCustomWidget(
                     .offset(y = 64.dp),
                 onClick = onExit
             ) {
-                Icon(Icons.Rounded.Done, null)
+                Icon(painterResource(R.drawable.check_24px), null)
             }
         }
     }

@@ -24,20 +24,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.NavigateNext
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Android
-import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.Notifications
-import androidx.compose.material.icons.rounded.Share
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -56,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -261,7 +248,7 @@ fun AppItem(
                                                         viewModel.clearNotification(not)
                                                     }
                                                 ) {
-                                                    Icon(Icons.Rounded.Clear, null)
+                                                    Icon(painterResource(R.drawable.close_24px), null)
                                                 }
                                             }
                                         }
@@ -277,7 +264,7 @@ fun AppItem(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(
-                                        Icons.Rounded.Notifications,
+                                        painterResource(R.drawable.notifications_24px),
                                         null,
                                         modifier = Modifier.padding(horizontal = 16.dp)
                                     )
@@ -291,7 +278,7 @@ fun AppItem(
                                         modifier = Modifier.weight(1f),
                                     )
                                     Icon(
-                                        Icons.AutoMirrored.Rounded.NavigateNext,
+                                        painterResource(R.drawable.chevron_forward_24px),
                                         null,
                                         modifier = Modifier.padding(horizontal = 12.dp)
                                     )
@@ -369,7 +356,10 @@ fun AppItem(
                                         }
                                     ) {
                                         Icon(
-                                            if (isPinned) Icons.Rounded.Star else Icons.Rounded.StarOutline,
+                                            painterResource(
+                                                if (isPinned) R.drawable.star_24px_filled
+                                                else R.drawable.star_24px
+                                            ),
                                             stringResource(if (isPinned) R.string.menu_favorites_unpin else R.string.menu_favorites_pin),
                                         )
                                     }
@@ -386,7 +376,7 @@ fun AppItem(
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
+                                icon = R.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
@@ -394,7 +384,7 @@ fun AppItem(
                         } else {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
+                                icon = R.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -406,7 +396,7 @@ fun AppItem(
                         toolbarActions.add(
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_app_info),
-                                icon = Icons.Rounded.Info
+                                icon = R.drawable.info_24px,
                             ) {
                                 app.openAppDetails(context)
                             })
@@ -415,7 +405,7 @@ fun AppItem(
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(R.string.menu_launch),
-                            icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                            icon = R.drawable.open_in_new_24px,
                             action = {
                                 viewModel.launch(context)
                             }
@@ -427,7 +417,7 @@ fun AppItem(
                         toolbarActions.add(
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_customize),
-                                icon = Icons.Rounded.Tune,
+                                icon = R.drawable.tune_24px,
                                 action = { sheetManager.showCustomizeSearchableModal(app) }
                             ))
                     }
@@ -437,7 +427,7 @@ fun AppItem(
                         val shareAction = if (storeDetails == null) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_share),
-                                icon = Icons.Rounded.Share
+                                icon = R.drawable.share_24px,
                             ) {
                                 scope.launch {
                                     app.shareApkFile(context)
@@ -446,14 +436,14 @@ fun AppItem(
                         } else {
                             SubmenuToolbarAction(
                                 label = stringResource(R.string.menu_share),
-                                icon = Icons.Rounded.Share,
+                                icon = R.drawable.share_24px,
                                 children = listOf(
                                     DefaultToolbarAction(
                                         label = stringResource(
                                             R.string.menu_share_store_link,
                                             storeDetails.label
                                         ),
-                                        icon = Icons.Rounded.Link,
+                                        icon = R.drawable.link_24px,
                                         action = {
                                             val shareIntent = Intent(Intent.ACTION_SEND)
                                             shareIntent.putExtra(
@@ -471,7 +461,7 @@ fun AppItem(
                                     ),
                                     DefaultToolbarAction(
                                         label = stringResource(R.string.menu_share_apk_file),
-                                        icon = Icons.Rounded.Android
+                                        icon = R.drawable.apk_document_24px,
                                     ) {
                                         scope.launch {
                                             app.shareApkFile(context)
@@ -487,7 +477,7 @@ fun AppItem(
                         toolbarActions.add(
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_uninstall),
-                                icon = Icons.Rounded.Delete,
+                                icon = R.drawable.delete_24px,
                             ) {
                                 app.uninstall(context)
                                 onBack()
@@ -499,7 +489,7 @@ fun AppItem(
                         leftActions = listOf(
                             DefaultToolbarAction(
                                 label = stringResource(id = R.string.menu_back),
-                                icon = Icons.AutoMirrored.Rounded.ArrowBack
+                                icon = R.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }

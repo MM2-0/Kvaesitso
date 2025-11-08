@@ -14,9 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -42,10 +39,12 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
+import de.mm20.launcher2.ui.R
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 
@@ -153,7 +152,7 @@ fun OutlinedTagsInputField(
                                         Icon(
                                             modifier = Modifier
                                                 .size(InputChipDefaults.IconSize),
-                                            imageVector = Icons.Rounded.Tag,
+                                            painter = painterResource(R.drawable.tag_20px),
                                             contentDescription = null
                                         )
                                     },
@@ -165,7 +164,7 @@ fun OutlinedTagsInputField(
                                                 .clickable {
                                                     onTagsChange(tags.filterIndexed { index, _ -> index != i })
                                                 },
-                                            imageVector = Icons.Rounded.Clear,
+                                            painter = painterResource(R.drawable.close_20px),
                                             contentDescription = null
                                         )
                                     },

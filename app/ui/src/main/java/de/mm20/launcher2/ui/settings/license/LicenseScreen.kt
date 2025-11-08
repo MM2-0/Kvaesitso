@@ -6,9 +6,6 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.OpenInBrowser
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -45,7 +43,7 @@ fun LicenseScreen(library: OpenSourceLibrary) {
                     IconButton(onClick = {
                         navController?.navigateUp()
                     }) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
                     }
                 },
                 scrollBehavior = scrollBehavior,
@@ -60,7 +58,7 @@ fun LicenseScreen(library: OpenSourceLibrary) {
                             .launchUrl(context, Uri.parse(library.url))
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.OpenInBrowser,
+                            painterResource(R.drawable.open_in_browser_24px),
                             contentDescription = stringResource(
                                 R.string.open_webpage
                             )

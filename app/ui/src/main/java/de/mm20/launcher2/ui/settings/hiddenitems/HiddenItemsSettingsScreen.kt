@@ -8,13 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Visibility
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Visibility
-import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -31,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -224,7 +219,7 @@ private fun VisibilityDropdown(
         DropdownMenuItem(
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Rounded.Visibility,
+                    painterResource(R.drawable.visibility_24px_filled),
                     contentDescription = null
                 )
             },
@@ -243,7 +238,7 @@ private fun VisibilityDropdown(
             trailingIcon = {
                 if (value == VisibilityLevel.Default) {
                     Icon(
-                        imageVector = Icons.Rounded.Check,
+                        painterResource(R.drawable.check_24px),
                         tint = MaterialTheme.colorScheme.primary,
                         contentDescription = null
                     )
@@ -254,7 +249,7 @@ private fun VisibilityDropdown(
             DropdownMenuItem(
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Outlined.Visibility,
+                        painterResource(R.drawable.visibility_24px),
                         contentDescription = null
                     )
                 },
@@ -267,7 +262,7 @@ private fun VisibilityDropdown(
                 trailingIcon = {
                     if (value == VisibilityLevel.SearchOnly) {
                         Icon(
-                            imageVector = Icons.Rounded.Check,
+                            painterResource(R.drawable.check_24px),
                             tint = MaterialTheme.colorScheme.primary,
                             contentDescription = null
                         )
@@ -278,7 +273,7 @@ private fun VisibilityDropdown(
         DropdownMenuItem(
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Rounded.VisibilityOff,
+                    painterResource(R.drawable.visibility_off_24px),
                     contentDescription = null
                 )
             },
@@ -291,7 +286,7 @@ private fun VisibilityDropdown(
             trailingIcon = {
                 if (value == VisibilityLevel.Hidden) {
                     Icon(
-                        imageVector = Icons.Rounded.Check,
+                        painterResource(R.drawable.check_24px),
                         tint = MaterialTheme.colorScheme.primary,
                         contentDescription = null
                     )
@@ -326,11 +321,12 @@ private fun HiddenItem(
         if (visibility != null) {
             Icon(
                 modifier = Modifier.alpha(if (visibility == VisibilityLevel.Hidden) 0.3f else 1f),
-                imageVector = when (visibility) {
-                    VisibilityLevel.Hidden -> Icons.Rounded.VisibilityOff
-                    VisibilityLevel.Default -> Icons.Rounded.Visibility
-                    VisibilityLevel.SearchOnly -> Icons.Outlined.Visibility
-                },
+                painter = painterResource(
+                    when (visibility) {
+                    VisibilityLevel.Hidden -> R.drawable.visibility_off_24px
+                    VisibilityLevel.Default -> R.drawable.visibility_24px_filled
+                    VisibilityLevel.SearchOnly -> R.drawable.visibility_24px
+                }),
                 tint = if (visibility == VisibilityLevel.Default) MaterialTheme.colorScheme.primary
                 else MaterialTheme.colorScheme.onSurfaceVariant,
                 contentDescription = null

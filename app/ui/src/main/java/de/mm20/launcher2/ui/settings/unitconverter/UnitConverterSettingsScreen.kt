@@ -1,7 +1,5 @@
 package de.mm20.launcher2.ui.settings.unitconverter
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -50,7 +48,7 @@ fun UnitConverterSettingsScreen() {
             PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.preference_search_supportedunits),
-                    icon = Icons.AutoMirrored.Default.Help,
+                    icon = R.drawable.help_24px,
                     onClick = {
                         navController?.navigate("settings/search/unitconverter/help")
                     }

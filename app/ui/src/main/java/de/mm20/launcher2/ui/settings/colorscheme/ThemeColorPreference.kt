@@ -16,10 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Colorize
-import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -44,6 +40,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -127,7 +124,7 @@ fun ThemeColorPreference(
                                 active = actualValue is ColorRef,
                             ) {
                                 Icon(
-                                    Icons.Rounded.Palette,
+                                    painterResource(R.drawable.palette_20px),
                                     null,
                                     modifier = Modifier
                                         .size(SegmentedButtonDefaults.IconSize)
@@ -148,7 +145,7 @@ fun ThemeColorPreference(
                                 active = actualValue is StaticColor,
                             ) {
                                 Icon(
-                                    Icons.Rounded.Colorize,
+                                    painterResource(R.drawable.colorize_20px),
                                     null,
                                     modifier = Modifier
                                         .size(SegmentedButtonDefaults.IconSize)
@@ -424,7 +421,8 @@ fun ThemeColorPreference(
                             onClick = { currentValue = null }
                         ) {
                             Icon(
-                                Icons.Rounded.RestartAlt, null,
+                                painterResource(R.drawable.restart_alt_20px),
+                                null,
                                 modifier = Modifier
                                     .padding(ButtonDefaults.IconSpacing)
                                     .size(ButtonDefaults.IconSize)

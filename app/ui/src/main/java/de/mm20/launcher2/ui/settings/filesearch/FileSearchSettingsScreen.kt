@@ -3,13 +3,7 @@ package de.mm20.launcher2.ui.settings.filesearch
 import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccountBox
-import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -18,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
@@ -29,7 +22,6 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -93,7 +85,7 @@ fun FileSearchSettingsScreen() {
                     onUnlock = {
                         viewModel.login(context as AppCompatActivity, AccountType.Nextcloud)
                     },
-                    icon = Icons.Rounded.AccountBox,
+                    icon = R.drawable.account_box_24px,
                     description = stringResource(R.string.no_account_nextcloud),
                     unlockLabel = stringResource(R.string.connect_account),
                 ) {
@@ -117,7 +109,7 @@ fun FileSearchSettingsScreen() {
                     onUnlock = {
                         viewModel.login(context as AppCompatActivity, AccountType.Owncloud)
                     },
-                    icon = Icons.Rounded.AccountBox,
+                    icon = R.drawable.account_box_24px,
                     description = stringResource(R.string.no_account_owncloud),
                     unlockLabel = stringResource(R.string.connect_account),
                 ) {
@@ -149,7 +141,7 @@ fun FileSearchSettingsScreen() {
                         },
                         description = (state as? PluginState.SetupRequired)?.message
                             ?: stringResource(id = R.string.plugin_state_setup_required),
-                        icon = Icons.Rounded.ErrorOutline,
+                        icon = R.drawable.error_24px,
                         unlockLabel = stringResource(id = R.string.plugin_action_setup),
                     ) {
                         SwitchPreference(

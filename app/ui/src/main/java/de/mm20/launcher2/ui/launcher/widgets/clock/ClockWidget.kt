@@ -16,26 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.rounded.AccessTime
-import androidx.compose.material.icons.rounded.Alarm
-import androidx.compose.material.icons.rounded.AlignVerticalBottom
-import androidx.compose.material.icons.rounded.AlignVerticalCenter
-import androidx.compose.material.icons.rounded.AlignVerticalTop
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.BatteryFull
-import androidx.compose.material.icons.rounded.ColorLens
-import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.FormatColorText
-import androidx.compose.material.icons.rounded.Height
-import androidx.compose.material.icons.rounded.HorizontalSplit
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.MusicNote
-import androidx.compose.material.icons.rounded.Timer
-import androidx.compose.material.icons.rounded.Today
-import androidx.compose.material.icons.rounded.Tune
-import androidx.compose.material.icons.rounded.VerticalSplit
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -61,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -152,7 +133,7 @@ fun ClockWidget(
                             configure = true
                         }) {
                             Icon(
-                                imageVector = Icons.Rounded.Tune,
+                                painterResource(R.drawable.tune_24px),
                                 contentDescription = stringResource(R.string.settings)
                             )
                         }
@@ -397,13 +378,13 @@ fun ConfigureClockWidgetSheet(
                             active = compact == false,
                             activeContent = {
                                 Icon(
-                                    imageVector = Icons.Filled.Check,
+                                    painterResource(R.drawable.check_20px),
                                     contentDescription = null,
                                 )
                             }
                         ) {
                             Icon(
-                                imageVector = Icons.Rounded.HorizontalSplit,
+                                painterResource(R.drawable.splitscreen_top_20px),
                                 contentDescription = null,
                             )
                         }
@@ -422,13 +403,13 @@ fun ConfigureClockWidgetSheet(
                             active = compact == true,
                             activeContent = {
                                 Icon(
-                                    imageVector = Icons.Filled.Check,
+                                    painterResource(R.drawable.check_20px),
                                     contentDescription = null,
                                 )
                             }
                         ) {
                             Icon(
-                                imageVector = Icons.Rounded.VerticalSplit,
+                                painterResource(R.drawable.splitscreen_right_20px),
                                 contentDescription = null,
                             )
                         }
@@ -463,7 +444,7 @@ fun ConfigureClockWidgetSheet(
                     shape = SegmentedButtonDefaults.itemShape(index = 0, count = 3),
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.AutoAwesome,
+                        painterResource(R.drawable.auto_awesome_20dp),
                         contentDescription = null,
                         modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                     )
@@ -476,7 +457,7 @@ fun ConfigureClockWidgetSheet(
                     shape = SegmentedButtonDefaults.itemShape(index = 1, count = 3),
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.LightMode,
+                        painterResource(R.drawable.light_mode_20px),
                         contentDescription = null,
                         modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                     )
@@ -489,7 +470,7 @@ fun ConfigureClockWidgetSheet(
                     shape = SegmentedButtonDefaults.itemShape(index = 2, count = 3),
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.DarkMode,
+                        painterResource(R.drawable.dark_mode_20px),
                         contentDescription = null,
                         modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                     )
@@ -503,7 +484,7 @@ fun ConfigureClockWidgetSheet(
                 ) {
                     SwitchPreference(
                         title = stringResource(R.string.widget_use_theme_colors),
-                        icon = Icons.Rounded.ColorLens,
+                        icon = R.drawable.palette_24px,
                         value = useAccentColor,
                         onValueChanged = {
                             viewModel.setUseThemeColor(it)
@@ -512,7 +493,7 @@ fun ConfigureClockWidgetSheet(
                     AnimatedVisibility(compact == false && style !is ClockWidgetStyle.Custom) {
                         SwitchPreference(
                             title = stringResource(R.string.preference_clock_widget_show_seconds),
-                            icon = Icons.Rounded.Timer,
+                            icon = R.drawable.timer_24px,
                             value = showSeconds,
                             onValueChanged = {
                                 viewModel.setShowSeconds(it)
@@ -526,7 +507,7 @@ fun ConfigureClockWidgetSheet(
                     ) {
                         SwitchPreference(
                             title = stringResource(R.string.preference_clock_widget_monospaced),
-                            icon = Icons.Rounded.FormatColorText,
+                            icon = R.drawable._123_24px,
                             value = monospaced,
                             onValueChanged = {
                                 viewModel.setMonospaced(it)
@@ -546,7 +527,7 @@ fun ConfigureClockWidgetSheet(
                                 TimeFormat.TwentyFourHour -> stringResource(R.string.preference_clock_widget_time_format_24h)
                                 TimeFormat.System -> stringResource(R.string.preference_clock_widget_time_format_system)
                             },
-                            icon = Icons.Rounded.AccessTime,
+                            icon = R.drawable.schedule_24px,
                             onClick = {
                                 showDropdown = true
                             }
@@ -593,7 +574,7 @@ fun ConfigureClockWidgetSheet(
                 ) {
                     SwitchPreference(
                         title = stringResource(R.string.preference_clock_widget_fill_height),
-                        icon = Icons.Rounded.Height,
+                        icon = R.drawable.fit_page_height_24px,
                         value = fillHeight == true || widgetsOnHome == false,
                         onValueChanged = {
                             viewModel.setFillHeight(it)
@@ -609,9 +590,9 @@ fun ConfigureClockWidgetSheet(
                             else -> stringResource(R.string.preference_clock_widget_alignment_bottom)
                         },
                         icon = when (alignment) {
-                            ClockWidgetAlignment.Top -> Icons.Rounded.AlignVerticalTop
-                            ClockWidgetAlignment.Center -> Icons.Rounded.AlignVerticalCenter
-                            else -> Icons.Rounded.AlignVerticalBottom
+                            ClockWidgetAlignment.Top -> R.drawable.align_vertical_top_24px
+                            ClockWidgetAlignment.Center -> R.drawable.align_vertical_center_24px
+                            else -> R.drawable.align_vertical_bottom_24px
                         },
                         onClick = {
                             showDropdown = true
@@ -624,7 +605,7 @@ fun ConfigureClockWidgetSheet(
                         DropdownMenuItem(
                             leadingIcon = {
                                 Icon(
-                                    Icons.Rounded.AlignVerticalTop,
+                                    painterResource(R.drawable.align_vertical_top_24px),
                                     null
                                 )
                             },
@@ -637,7 +618,7 @@ fun ConfigureClockWidgetSheet(
                         DropdownMenuItem(
                             leadingIcon = {
                                 Icon(
-                                    Icons.Rounded.AlignVerticalCenter,
+                                    painterResource(R.drawable.align_vertical_center_24px),
                                     null
                                 )
                             },
@@ -649,7 +630,7 @@ fun ConfigureClockWidgetSheet(
                         DropdownMenuItem(
                             leadingIcon = {
                                 Icon(
-                                    Icons.Rounded.AlignVerticalBottom,
+                                    painterResource(R.drawable.align_vertical_bottom_24px),
                                     null
                                 )
                             },
@@ -676,7 +657,7 @@ fun ConfigureClockWidgetSheet(
                     SwitchPreference(
                         title = stringResource(R.string.preference_clockwidget_date_part),
                         summary = stringResource(R.string.preference_clockwidget_date_part_summary),
-                        icon = Icons.Rounded.Today,
+                        icon = R.drawable.today_24px,
                         value = parts?.date == true,
                         onValueChanged = {
                             viewModel.setDatePart(it)
@@ -685,7 +666,7 @@ fun ConfigureClockWidgetSheet(
                     SwitchPreference(
                         title = stringResource(R.string.preference_clockwidget_music_part),
                         summary = stringResource(R.string.preference_clockwidget_music_part_summary),
-                        icon = Icons.Rounded.MusicNote,
+                        icon = R.drawable.music_note_24px,
                         value = parts?.music == true,
                         onValueChanged = {
                             viewModel.setMusicPart(it)
@@ -694,7 +675,7 @@ fun ConfigureClockWidgetSheet(
                     SwitchPreference(
                         title = stringResource(R.string.preference_clockwidget_alarm_part),
                         summary = stringResource(R.string.preference_clockwidget_alarm_part_summary),
-                        icon = Icons.Rounded.Alarm,
+                        icon = R.drawable.alarm_24px,
                         value = parts?.alarm == true,
                         onValueChanged = {
                             viewModel.setAlarmPart(it)
@@ -703,7 +684,7 @@ fun ConfigureClockWidgetSheet(
                     SwitchPreference(
                         title = stringResource(R.string.preference_clockwidget_battery_part),
                         summary = stringResource(R.string.preference_clockwidget_battery_part_summary),
-                        icon = Icons.Rounded.BatteryFull,
+                        icon = R.drawable.battery_full_24px,
                         value = parts?.battery == true,
                         onValueChanged = {
                             viewModel.setBatteryPart(it)

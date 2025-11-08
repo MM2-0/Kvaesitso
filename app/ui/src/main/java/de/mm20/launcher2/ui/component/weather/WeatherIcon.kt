@@ -3,28 +3,16 @@ package de.mm20.launcher2.ui.component.weather
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AcUnit
-import androidx.compose.material.icons.rounded.Air
-import androidx.compose.material.icons.rounded.Bolt
-import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.Thermostat
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.icons.WeatherCloud
-import de.mm20.launcher2.icons.WeatherFog
-import de.mm20.launcher2.icons.WeatherHail
-import de.mm20.launcher2.icons.WeatherLightRain
-import de.mm20.launcher2.icons.WeatherRain
-import de.mm20.launcher2.icons.WeatherSleetRain
-import de.mm20.launcher2.icons.WeatherSleetSnow
+import de.mm20.launcher2.ui.R
 
 @Composable
 fun WeatherIcon(
@@ -82,7 +70,7 @@ private fun SunMoon(icon: WeatherIcon, night: Boolean, colors: WeatherIconColors
     }
 
     Icon(
-        if (night) Icons.Rounded.DarkMode else Icons.Rounded.LightMode,
+        painterResource(if (night) R.drawable.dark_mode_24px_filled else R.drawable.light_mode_24px_filled),
         null,
         modifier = Modifier
             .size(24.dp)
@@ -176,7 +164,7 @@ private fun Cloud1(icon: WeatherIcon, colors: WeatherIconColors) {
     }
 
     Icon(
-        Icons.Rounded.WeatherCloud,
+        WeatherCloud,
         null,
         modifier = Modifier
             .size(20.dp)
@@ -263,7 +251,7 @@ private fun Cloud2(icon: WeatherIcon, colors: WeatherIconColors) {
     }
 
     Icon(
-        Icons.Rounded.WeatherCloud,
+        WeatherCloud,
         null,
         modifier = Modifier
             .size(20.dp)
@@ -325,7 +313,7 @@ private fun Cloud3(icon: WeatherIcon, colors: WeatherIconColors) {
     }
 
     Icon(
-        Icons.Rounded.WeatherCloud,
+        WeatherCloud,
         null,
         modifier = Modifier
             .size(32.dp)
@@ -341,7 +329,7 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
             modifier = Modifier
                 .offset(y = 2.dp)
                 .size(32.dp),
-            imageVector = Icons.Rounded.WeatherSleetSnow,
+            imageVector = WeatherSleetSnow,
             contentDescription = null,
             tint = colors.snow
         )
@@ -349,7 +337,7 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
             modifier = Modifier
                 .offset(y = 2.dp)
                 .size(32.dp),
-            imageVector = Icons.Rounded.WeatherSleetRain,
+            imageVector = WeatherSleetRain,
             contentDescription = null,
             tint = colors.rain
         )
@@ -368,13 +356,13 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
         else -> return
     }
     val vector = when (icon) {
-        WeatherIcon.Drizzle -> Icons.Rounded.WeatherLightRain
+        WeatherIcon.Drizzle -> WeatherLightRain
         WeatherIcon.Showers,
         WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstormWithRain -> Icons.Rounded.WeatherRain
+        WeatherIcon.HeavyThunderstormWithRain -> WeatherRain
 
-        WeatherIcon.Hail, WeatherIcon.Snow -> Icons.Rounded.WeatherHail
-        else -> Icons.Rounded.WeatherLightRain
+        WeatherIcon.Hail, WeatherIcon.Snow -> WeatherHail
+        else -> WeatherLightRain
     }
     val color = when (icon) {
         WeatherIcon.Drizzle,
@@ -402,7 +390,7 @@ private fun HotCold(icon: WeatherIcon, colors: WeatherIconColors) {
         Icon(
             modifier = Modifier
                 .size(32.dp),
-            imageVector = Icons.Rounded.Thermostat,
+            painter = painterResource(R.drawable.heat_24px),
             contentDescription = null,
             tint = colors.hot
         )
@@ -411,7 +399,7 @@ private fun HotCold(icon: WeatherIcon, colors: WeatherIconColors) {
         Icon(
             modifier = Modifier
                 .size(32.dp),
-            imageVector = Icons.Rounded.AcUnit,
+            painter = painterResource(R.drawable.severe_cold_24px),
             contentDescription = null,
             tint = colors.cold
         )
@@ -425,7 +413,7 @@ private fun Wind(icon: WeatherIcon, colors: WeatherIconColors) {
             modifier = Modifier
                 .offset(x = 4.dp, y = 0.dp)
                 .size(24.dp),
-            imageVector = Icons.Rounded.Air,
+            painter = painterResource(R.drawable.air_24px),
             contentDescription = null,
             tint = colors.windDark
         )
@@ -434,7 +422,7 @@ private fun Wind(icon: WeatherIcon, colors: WeatherIconColors) {
         Icon(
             modifier = Modifier
                 .size(if (icon == WeatherIcon.Wind) 32.dp else 24.dp),
-            imageVector = Icons.Rounded.Air,
+            painter = painterResource(R.drawable.air_24px),
             contentDescription = null,
             tint = colors.wind
         )
@@ -452,7 +440,7 @@ private fun Fog(icon: WeatherIcon, colors: WeatherIconColors) {
         modifier = Modifier
             .size(24.dp)
             .offset(x = 3.dp, y = 4.dp),
-        imageVector = Icons.Rounded.WeatherFog,
+        imageVector = WeatherFog,
         contentDescription = null,
         tint = colors.fog
     )
@@ -476,7 +464,7 @@ private fun LightningBolts(icon: WeatherIcon, colors: WeatherIconColors) {
         modifier = Modifier
             .size(12.dp)
             .offset(x = if (isHeavy) 4.dp else 1.dp, y = 6.dp),
-        imageVector = Icons.Rounded.Bolt,
+        painter = painterResource(R.drawable.bolt_24px_filled),
         contentDescription = null,
         tint = colors.lightningBolt
     )
@@ -486,7 +474,7 @@ private fun LightningBolts(icon: WeatherIcon, colors: WeatherIconColors) {
             modifier = Modifier
                 .size(10.dp)
                 .offset(x = -3.dp, y = 6.dp),
-            imageVector = Icons.Rounded.Bolt,
+            painter = painterResource(R.drawable.bolt_24px_filled),
             contentDescription = null,
             tint = colors.lightningBolt
         )

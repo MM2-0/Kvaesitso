@@ -60,11 +60,32 @@ fun EmojiPicker(
         }
     }
     val categoryNames = stringArrayResource(R.array.category_names)
+
     val categoryIcons = remember {
-        val typedArray = context.resources.obtainTypedArray(R.array.emoji_categories_icons)
-        IntArray(typedArray.length()) { typedArray.getResourceId(it, 0) }.also {
-            typedArray.recycle()
-        }
+        listOf(
+            R.drawable.mood_24px,
+            R.drawable.emoji_people_24px,
+            R.drawable.emoji_nature_24px,
+            R.drawable.emoji_food_beverage_24px,
+            R.drawable.emoji_transportation_24px,
+            R.drawable.trophy_24px,
+            R.drawable.emoji_objects_24px,
+            R.drawable.emoji_symbols_24px,
+            R.drawable.flag_24px,
+        )
+    }
+    val categoryIconsFilled = remember {
+        listOf(
+            R.drawable.mood_24px_filled,
+            R.drawable.emoji_people_24px_filled,
+            R.drawable.emoji_nature_24px_filled,
+            R.drawable.emoji_food_beverage_24px_filled,
+            R.drawable.emoji_transportation_24px_filled,
+            R.drawable.trophy_24px_filled,
+            R.drawable.emoji_objects_24px_filled,
+            R.drawable.emoji_symbols_24px_filled,
+            R.drawable.flag_24px_filled,
+        )
     }
 
     val emojis = remember {
@@ -109,7 +130,10 @@ fun EmojiPicker(
                     ) {
                         if (i < categoryIcons.size && categoryIcons[i] != 0) {
                             Icon(
-                                painterResource(id = categoryIcons[i]),
+                                painterResource(
+                                    if (selectedCategory.intValue == i) categoryIconsFilled[i]
+                                    else categoryIcons[i]
+                                ),
                                 contentDescription = categoryNames[i]
                             )
                         }

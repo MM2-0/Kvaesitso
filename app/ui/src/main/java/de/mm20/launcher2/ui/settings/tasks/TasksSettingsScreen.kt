@@ -4,11 +4,6 @@ import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.TaskAlt
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -49,7 +44,7 @@ fun TasksIntegrationSettingsScreen() {
                             R.string.preference_tasks_integration_description,
                             stringResource(R.string.app_name)
                         ),
-                        icon = Icons.Rounded.Info,
+                        icon = R.drawable.info_24px,
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.surface)
                             .padding(16.dp),
@@ -70,7 +65,7 @@ fun TasksIntegrationSettingsScreen() {
                     if (hasTasksPermission == true) {
                         Banner(
                             text = stringResource(R.string.preference_tasks_integration_ready),
-                            icon = Icons.Rounded.CheckCircle,
+                            icon = R.drawable.check_circle_24px,
                             modifier = Modifier
                                 .background(
                                     MaterialTheme.colorScheme.surface,
@@ -87,7 +82,7 @@ fun TasksIntegrationSettingsScreen() {
                         description = stringResource(R.string.missing_permission_tasks_integration),
                     ) {
                         PreferenceWithSwitch(
-                            icon = Icons.Rounded.TaskAlt,
+                            icon = R.drawable.task_alt_24px,
                             title = stringResource(R.string.preference_search_tasks),
                             summary = stringResource(R.string.preference_search_tasks_summary),
                             switchValue = isTasksSearchEnabled == true && hasTasksPermission == true,
@@ -102,7 +97,7 @@ fun TasksIntegrationSettingsScreen() {
                     }
                     Preference(
                         title = stringResource(R.string.preference_launch_tasks_app),
-                        icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                        icon = R.drawable.open_in_new_24px,
                         onClick = {
                             viewModel.launchTasksApp(activity as AppCompatActivity)
                         }

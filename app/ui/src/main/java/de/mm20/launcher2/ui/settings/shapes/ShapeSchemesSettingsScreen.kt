@@ -7,14 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ContentCopy
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.RadioButtonChecked
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -31,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -60,7 +53,7 @@ fun ShapeSchemesSettingsScreen() {
         title = stringResource(R.string.preference_screen_shapes),
         topBarActions = {
             IconButton(onClick = { viewModel.createNew(context) }) {
-                Icon(Icons.Rounded.Add, null)
+                Icon(painterResource(R.drawable.add_24px), null)
             }
         },
     ) {
@@ -69,7 +62,7 @@ fun ShapeSchemesSettingsScreen() {
                 for (theme in builtin) {
                     var showMenu by remember { mutableStateOf(false) }
                     Preference(
-                        icon = if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
+                        icon = if (theme.id == selectedTheme) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px,
                         title = theme.name,
                         controls = {
                             Row(
@@ -79,7 +72,7 @@ fun ShapeSchemesSettingsScreen() {
                                 IconButton(
                                     modifier = Modifier.padding(start = 12.dp),
                                     onClick = { showMenu = true }) {
-                                    Icon(Icons.Rounded.MoreVert, null)
+                                    Icon(painterResource(R.drawable.more_vert_24px), null)
                                 }
                                 DropdownMenu(
                                     expanded = showMenu,
@@ -87,7 +80,7 @@ fun ShapeSchemesSettingsScreen() {
                                 ) {
                                     DropdownMenuItem(
                                         leadingIcon = {
-                                            Icon(Icons.Rounded.ContentCopy, null)
+                                            Icon(painterResource(R.drawable.content_copy_24px), null)
                                         },
                                         text = { Text(stringResource(R.string.duplicate)) },
                                         onClick = {
@@ -111,7 +104,7 @@ fun ShapeSchemesSettingsScreen() {
                     for (theme in user) {
                         var showMenu by remember { mutableStateOf(false) }
                         Preference(
-                            icon = if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
+                            icon = if (theme.id == selectedTheme) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px,
                             title = theme.name,
                             controls = {
                                 Row(
@@ -121,7 +114,7 @@ fun ShapeSchemesSettingsScreen() {
                                     IconButton(
                                         modifier = Modifier.padding(start = 12.dp),
                                         onClick = { showMenu = true }) {
-                                        Icon(Icons.Rounded.MoreVert, null)
+                                        Icon(painterResource(R.drawable.more_vert_24px), null)
                                     }
                                     DropdownMenu(
                                         expanded = showMenu,
@@ -129,7 +122,7 @@ fun ShapeSchemesSettingsScreen() {
                                     ) {
                                         DropdownMenuItem(
                                             leadingIcon = {
-                                                Icon(Icons.Rounded.Edit, null)
+                                                Icon(painterResource(R.drawable.edit_24px), null)
                                             },
                                             text = { Text(stringResource(R.string.edit)) },
                                             onClick = {
@@ -139,7 +132,7 @@ fun ShapeSchemesSettingsScreen() {
                                         )
                                         DropdownMenuItem(
                                             leadingIcon = {
-                                                Icon(Icons.Rounded.ContentCopy, null)
+                                                Icon(painterResource(R.drawable.content_copy_24px), null)
                                             },
                                             text = { Text(stringResource(R.string.duplicate)) },
                                             onClick = {
@@ -149,7 +142,7 @@ fun ShapeSchemesSettingsScreen() {
                                         )
                                         DropdownMenuItem(
                                             leadingIcon = {
-                                                Icon(Icons.Rounded.Delete, null)
+                                                Icon(painterResource(R.drawable.delete_24px), null)
                                             },
                                             text = { Text(stringResource(R.string.menu_delete)) },
                                             onClick = {

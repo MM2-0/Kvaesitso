@@ -13,10 +13,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.FilterAlt
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -36,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -98,7 +95,7 @@ fun IconPicker(
                         SearchBarDefaults.InputField(
                             leadingIcon = {
                                 Icon(
-                                    imageVector = Icons.Rounded.Search,
+                                    painterResource(R.drawable.search_24px),
                                     contentDescription = null
                                 )
                             },
@@ -164,7 +161,7 @@ fun IconPicker(
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize),
-                            imageVector = Icons.Rounded.FilterAlt,
+                            painter = painterResource(R.drawable.filter_alt_20px),
                             contentDescription = null
                         )
                     } else {
@@ -218,7 +215,7 @@ fun IconPicker(
                         modifier = Modifier.animateContentSize()
                     )
                     Icon(
-                        Icons.Rounded.ArrowDropDown,
+                        painterResource(R.drawable.arrow_drop_down_20px),
                         modifier = Modifier
                             .padding(start = ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize),

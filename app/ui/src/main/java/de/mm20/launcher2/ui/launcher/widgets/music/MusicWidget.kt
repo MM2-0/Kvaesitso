@@ -6,6 +6,7 @@ import android.media.session.PlaybackState.CustomAction
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -35,12 +36,6 @@ import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Audiotrack
-import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.MusicNote
-import androidx.compose.material.icons.rounded.SkipNext
-import androidx.compose.material.icons.rounded.SkipPrevious
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalIconButton
@@ -60,12 +55,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -309,7 +306,7 @@ fun MusicWidget(widget: MusicWidget) {
                             }
                         } else {
                             Icon(
-                                imageVector = Icons.Rounded.MusicNote,
+                                painterResource(R.drawable.music_note_48px),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
                                 modifier = Modifier.size(48.dp)
@@ -336,7 +333,7 @@ fun MusicWidget(widget: MusicWidget) {
                             viewModel.skipPrevious()
                         }) {
                         Icon(
-                            imageVector = Icons.Rounded.SkipPrevious,
+                            painter = painterResource(R.drawable.skip_previous_24px),
                             stringResource(R.string.music_widget_previous_track)
                         )
                     }
@@ -356,16 +353,30 @@ fun MusicWidget(widget: MusicWidget) {
                     ),
                     onClick = { viewModel.togglePause() },
                 ) {
-                    Icon(
-                        painter = rememberAnimatedVectorPainter(
-                            playPauseIcon,
-                            atEnd = playbackState == PlaybackState.Playing
-                        ),
-                        contentDescription = stringResource(
-                            if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
-                            else R.string.music_widget_play
+                    AnimatedContent(
+                        playbackState == PlaybackState.Playing,
+                        transitionSpec = {
+                            fadeIn().togetherWith(fadeOut())
+                        },
+                        modifier = Modifier.rotate(
+                            animateFloatAsState(
+                                if (playbackState == PlaybackState.Playing) 90f else 0f
+                            ).value
                         )
-                    )
+                    ) {
+                        if (it) {
+                            Icon(
+                                painterResource(R.drawable.pause_24px),
+                                stringResource(R.string.music_widget_pause),
+                                modifier = Modifier.rotate(-90f)
+                            )
+                        } else {
+                            Icon(
+                                painterResource(R.drawable.play_arrow_24px),
+                                stringResource(R.string.music_widget_play),
+                            )
+                        }
+                    }
                 }
             }
             if (supportedActions.skipToNext) {
@@ -376,7 +387,7 @@ fun MusicWidget(widget: MusicWidget) {
                         viewModel.skipNext()
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.SkipNext,
+                            painter = painterResource(R.drawable.skip_next_24px),
                             stringResource(R.string.music_widget_next_track)
                         )
                     }
@@ -423,7 +434,10 @@ fun CustomActions(
                 tooltipText = stringResource(R.string.action_more_actions)
             ) {
                 IconButton(onClick = { showOverflowMenu = true }) {
-                    Icon(imageVector = Icons.Rounded.MoreVert, contentDescription = null)
+                    Icon(
+                        painterResource(R.drawable.more_vert_24px),
+                        contentDescription = null
+                    )
                 }
             }
             DropdownMenu(
@@ -452,7 +466,7 @@ fun CustomActions(
         }
     } else if (slots == actions.customActions.size) {
         val action = actions.customActions.last()
-        Tooltip (
+        Tooltip(
             tooltipText = action.name.toString()
         ) {
             IconButton(
@@ -516,7 +530,7 @@ fun NoData() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = Icons.Rounded.Audiotrack,
+            painter = painterResource(R.drawable.music_note_24px),
             contentDescription = "",
             modifier = Modifier
                 .padding(24.dp)

@@ -44,30 +44,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.NavigateNext
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.outlined.CreditCardOff
-import androidx.compose.material.icons.outlined.CreditScore
-import androidx.compose.material.icons.outlined.Toll
-import androidx.compose.material.icons.rounded.AirplanemodeActive
-import androidx.compose.material.icons.rounded.BugReport
-import androidx.compose.material.icons.rounded.Commute
-import androidx.compose.material.icons.rounded.Directions
-import androidx.compose.material.icons.rounded.DirectionsBoat
-import androidx.compose.material.icons.rounded.DirectionsBus
-import androidx.compose.material.icons.rounded.DirectionsRailway
-import androidx.compose.material.icons.rounded.DirectionsTransit
-import androidx.compose.material.icons.rounded.Language
-import androidx.compose.material.icons.rounded.Navigation
-import androidx.compose.material.icons.rounded.Phone
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.Subway
-import androidx.compose.material.icons.rounded.Train
-import androidx.compose.material.icons.rounded.Tram
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.FilterChipDefaults
@@ -95,6 +71,7 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -112,9 +89,6 @@ import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import blend.Blend.harmonize
 import coil.compose.AsyncImage
-import de.mm20.launcher2.i18n.R
-import de.mm20.launcher2.icons.CableCar
-import de.mm20.launcher2.icons.TollOff
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.isOpen
@@ -126,6 +100,7 @@ import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.search.location.PaymentMethod
 import de.mm20.launcher2.search.location.isNotEmpty
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.MarqueeText
@@ -368,10 +343,12 @@ fun LocationItem(
                                     )
                                     for ((method, available) in acceptedPaymentMethods) {
                                         Icon(
-                                            when (method) {
-                                                PaymentMethod.Cash -> if (available) Icons.Outlined.Toll else Icons.Outlined.TollOff
-                                                PaymentMethod.Card -> if (available) Icons.Outlined.CreditScore else Icons.Outlined.CreditCardOff
-                                            },
+                                            painterResource(
+                                                when (method) {
+                                                    PaymentMethod.Cash -> if (available) R.drawable.toll_20px else R.drawable.toll_off_20px
+                                                    PaymentMethod.Card -> if (available) R.drawable.credit_card_20px else R.drawable.credit_card_off_20px
+                                                }
+                                            ),
                                             contentDescription = null,
                                             tint = MaterialTheme.colorScheme.secondary,
                                             modifier = Modifier
@@ -493,7 +470,7 @@ fun LocationItem(
                                 label = { Text(stringResource(R.string.menu_navigation)) },
                                 leadingIcon = {
                                     Icon(
-                                        Icons.Rounded.Directions, null,
+                                        painterResource(R.drawable.directions_20px), null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
@@ -513,7 +490,7 @@ fun LocationItem(
                                 label = { Text(stringResource(R.string.menu_dial)) },
                                 leadingIcon = {
                                     Icon(
-                                        Icons.Rounded.Phone, null,
+                                        painterResource(R.drawable.call_20px), null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
@@ -533,7 +510,7 @@ fun LocationItem(
                                 label = { Text(stringResource(R.string.menu_website)) },
                                 leadingIcon = {
                                     Icon(
-                                        Icons.Rounded.Language, null,
+                                        painterResource(R.drawable.language_20px), null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
@@ -549,7 +526,7 @@ fun LocationItem(
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
+                                icon = R.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
@@ -557,7 +534,7 @@ fun LocationItem(
                         } else {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
+                                icon = R.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -567,7 +544,7 @@ fun LocationItem(
 
                     toolbarActions += DefaultToolbarAction(
                         label = stringResource(id = R.string.menu_map),
-                        icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                        icon = R.drawable.open_in_new_24px,
                     ) {
                         viewModel.launch(context)
                     }
@@ -577,14 +554,14 @@ fun LocationItem(
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(R.string.menu_customize),
-                            icon = Icons.Rounded.Tune,
+                            icon = R.drawable.tune_24px,
                             action = { sheetManager.showCustomizeSearchableModal(location) }
                         ))
 
                     if (location.fixMeUrl != null) {
                         toolbarActions += DefaultToolbarAction(
                             label = stringResource(id = R.string.menu_bugreport),
-                            icon = Icons.Rounded.BugReport,
+                            icon = R.drawable.bug_report_24px,
                         ) {
                             context.tryStartActivity(
                                 Intent(
@@ -599,7 +576,7 @@ fun LocationItem(
                         leftActions = listOf(
                             DefaultToolbarAction(
                                 label = stringResource(id = R.string.menu_back),
-                                icon = Icons.AutoMirrored.Rounded.ArrowBack
+                                icon = R.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }),
@@ -667,7 +644,7 @@ private fun Departures(
                             style = MaterialTheme.typography.labelSmall,
                             modifier = Modifier.padding(end = 12.dp)
                         )
-                        Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                        Icon(painterResource(R.drawable.chevron_forward_24px), null)
                     }
                 } else {
                     val (lines, groupedDepartures) = remember(departures) {
@@ -894,7 +871,7 @@ private fun OpeningSchedule(
                                 modifier = Modifier.weight(1f)
                             )
 
-                            Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                            Icon(painterResource(R.drawable.chevron_forward_24px), null)
                         }
                     }
                 }
@@ -967,7 +944,7 @@ private fun Compass(
     ) {
         if (targetHeading != null) {
             Icon(
-                Icons.Rounded.Navigation,
+                painterResource(R.drawable.assistant_navigation_24px),
                 null,
                 modifier = Modifier
                     .size(20f / 48f * size)
@@ -1078,18 +1055,21 @@ fun LineTypeIcon(
     tint: Color,
     modifier: Modifier = Modifier
 ) = Icon(
-    imageVector = when (lineType) {
-        LineType.Bus -> Icons.Rounded.DirectionsBus
-        LineType.Tram -> Icons.Rounded.Tram
-        LineType.Subway -> Icons.Rounded.Subway
-        LineType.Monorail -> Icons.Rounded.DirectionsTransit
-        LineType.CommuterTrain -> Icons.Rounded.DirectionsRailway
-        LineType.Train, LineType.RegionalTrain, LineType.HighSpeedTrain -> Icons.Rounded.Train
-        LineType.Boat -> Icons.Rounded.DirectionsBoat
-        LineType.CableCar -> Icons.Rounded.CableCar
-        LineType.Airplane -> Icons.Rounded.AirplanemodeActive
-        null -> Icons.Rounded.Commute
-    },
+    painter = painterResource(
+        when (lineType) {
+            LineType.Bus -> R.drawable.directions_bus_20px
+            LineType.Tram -> R.drawable.tram_20px
+            LineType.Subway -> R.drawable.subway_20px
+            LineType.Monorail -> R.drawable.monorail_20px
+            LineType.CommuterTrain -> R.drawable.directions_railway_20px
+            LineType.Train, LineType.RegionalTrain, LineType.HighSpeedTrain -> R.drawable.train_20px
+            LineType.Boat -> R.drawable.directions_boat_20px
+            LineType.CableCar -> R.drawable.cable_car_20px
+            LineType.AerialTramway -> R.drawable.gondola_lift_20px
+            LineType.Airplane -> R.drawable.flight_20px
+            null -> R.drawable.commute_20px
+        }
+    ),
     contentDescription = lineType?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
     modifier = modifier,
     tint = tint
@@ -1131,7 +1111,7 @@ fun LineFilterChip(
                     tint = color.atTone(if (dark) 20 else 100),
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(4.dp)
+                        .padding(2.dp)
                 )
             }
         },

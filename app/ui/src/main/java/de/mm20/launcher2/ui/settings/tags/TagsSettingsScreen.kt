@@ -1,10 +1,5 @@
 package de.mm20.launcher2.ui.settings.tags
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ContentCopy
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
@@ -17,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,9 +31,9 @@ fun TagsSettingsScreen() {
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_tags),
-        floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.createTag.value = true }) {
-                Icon(Icons.Rounded.Add, null)
+        topBarActions = {
+            IconButton(onClick = { viewModel.createTag.value = true }) {
+                Icon(painterResource(R.drawable.add_24px), stringResource(R.string.edit_favorites_dialog_new_tag))
             }
         },
         helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/concepts/tags"
@@ -62,14 +58,14 @@ fun TagsSettingsScreen() {
                         },
                         controls = {
                             IconButton(onClick = { showMenu = true }) {
-                                Icon(Icons.Rounded.MoreVert, null)
+                                Icon(painterResource(R.drawable.more_vert_24px), null)
                             }
                             DropdownMenu(
                                 expanded = showMenu,
                                 onDismissRequest = { showMenu = false }) {
                                 DropdownMenuItem(
                                     text = { Text(stringResource(R.string.duplicate)) },
-                                    leadingIcon = { Icon(Icons.Rounded.ContentCopy, null) },
+                                    leadingIcon = { Icon(painterResource(R.drawable.content_copy_24px), null) },
                                     onClick = {
                                         viewModel.duplicateTag(tag)
                                         showMenu = false
@@ -77,7 +73,7 @@ fun TagsSettingsScreen() {
                                 )
                                 DropdownMenuItem(
                                     text = { Text(stringResource(R.string.menu_delete)) },
-                                    leadingIcon = { Icon(Icons.Rounded.Delete, null) },
+                                    leadingIcon = { Icon(painterResource(R.drawable.delete_24px), null) },
                                     onClick = {
                                         viewModel.deleteTag(tag)
                                         showMenu = false

@@ -28,13 +28,6 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Build
-import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.HelpOutline
-import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.LinkOff
-import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -59,6 +52,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -178,7 +172,7 @@ fun ColumnScope.ConfigureWeatherWidget(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
-            imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
         )
     }
 }
@@ -229,7 +223,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
-            imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
         )
     }
 }
@@ -282,7 +276,7 @@ fun ColumnScope.ConfigureMusicWidget(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
-            imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
         )
     }
 }
@@ -309,7 +303,7 @@ fun ColumnScope.ConfigureAppWidget(
             contentAlignment = Alignment.Center
         ) {
             LargeMessage(
-                icon = Icons.Rounded.Error,
+                icon = R.drawable.error_48px,
                 text = stringResource(id = R.string.app_widget_loading_failed)
             )
         }
@@ -320,7 +314,7 @@ fun ColumnScope.ConfigureAppWidget(
             contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
             onClick = { replaceWidget = true }) {
             Icon(
-                Icons.Rounded.Build,
+                painterResource(R.drawable.build_20px),
                 null,
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
@@ -510,7 +504,7 @@ fun ColumnScope.ConfigureAppWidget(
                     modifier = Modifier
                         .padding(start = ButtonDefaults.IconSpacing)
                         .requiredSize(ButtonDefaults.IconSize),
-                    imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+                    painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
                 )
             }
         }
@@ -663,7 +657,7 @@ fun ColumnScope.ConfigureCalendarWidget(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .requiredSize(ButtonDefaults.IconSize),
-                imageVector = Icons.Rounded.HelpOutline, contentDescription = null
+                painter = painterResource(R.drawable.help_20px), contentDescription = null
             )
             Text(stringResource(R.string.widget_config_calendar_missing_calendars_hint))
         }
@@ -710,7 +704,7 @@ fun ConfigureNotesWidget(
     OutlinedCard {
         if (widget.config.linkedFile != null) {
             Preference(
-                icon = { Icon(Icons.Rounded.LinkOff, null) },
+                icon = { Icon(painterResource(R.drawable.link_off_24px), null) },
                 title = { Text(stringResource(R.string.note_widget_action_unlink_file)) },
                 summary = {
                     Text(
@@ -736,7 +730,7 @@ fun ConfigureNotesWidget(
             Preference(
                 title = stringResource(R.string.note_widget_link_file),
                 summary = stringResource(R.string.note_widget_link_file_summary),
-                icon = Icons.Rounded.Link,
+                icon = R.drawable.link_24px,
                 onClick = {
                     linkFileLauncher.launch(
                         context.getString(

@@ -79,6 +79,7 @@ enum class LineType {
     Boat,
     Monorail,
     CableCar,
+    AerialTramway,
     CommuterTrain,
     RegionalTrain,
     Train,

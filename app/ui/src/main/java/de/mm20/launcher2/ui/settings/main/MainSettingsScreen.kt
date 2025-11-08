@@ -1,17 +1,5 @@
 package de.mm20.launcher2.ui.settings.main
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Apps
-import androidx.compose.material.icons.rounded.BugReport
-import androidx.compose.material.icons.rounded.Extension
-import androidx.compose.material.icons.rounded.Gesture
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.Power
-import androidx.compose.material.icons.rounded.Science
-import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material.icons.rounded.SettingsBackupRestore
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import de.mm20.launcher2.ui.R
@@ -29,7 +17,7 @@ fun MainSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    icon = Icons.Rounded.Palette,
+                    icon = R.drawable.palette_24px,
                     title = stringResource(id = R.string.preference_screen_appearance),
                     summary = stringResource(id = R.string.preference_screen_appearance_summary),
                     onClick = {
@@ -37,7 +25,7 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = Icons.Rounded.Home,
+                    icon = R.drawable.home_24px,
                     title = stringResource(id = R.string.preference_screen_homescreen),
                     summary = stringResource(id = R.string.preference_screen_homescreen_summary),
                     onClick = {
@@ -45,7 +33,7 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = Icons.Rounded.Apps,
+                    icon = R.drawable.apps_24px,
                     title = stringResource(id = R.string.preference_screen_icons),
                     summary = stringResource(id = R.string.preference_screen_icons_summary),
                     onClick = {
@@ -53,7 +41,7 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = Icons.Rounded.Search,
+                    icon = R.drawable.search_24px,
                     title = stringResource(id = R.string.preference_screen_search),
                     summary = stringResource(id = R.string.preference_screen_search_summary),
                     onClick = {
@@ -61,7 +49,7 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = Icons.Rounded.Gesture,
+                    icon = R.drawable.gesture_24px,
                     title = stringResource(id = R.string.preference_screen_gestures),
                     summary = stringResource(id = R.string.preference_screen_gestures_summary),
                     onClick = {
@@ -69,7 +57,7 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = Icons.Rounded.Power,
+                    icon = R.drawable.power_24px,
                     title = stringResource(id = R.string.preference_screen_integrations),
                     summary = stringResource(id = R.string.preference_screen_integrations_summary),
                     onClick = {
@@ -77,7 +65,7 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = Icons.Rounded.Extension,
+                    icon = R.drawable.extension_24px,
                     title = stringResource(id = R.string.preference_screen_plugins),
                     summary = stringResource(id = R.string.preference_screen_plugins_summary),
                     onClick = {
@@ -85,7 +73,7 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = Icons.Rounded.SettingsBackupRestore,
+                    icon = R.drawable.settings_backup_restore_24px,
                     title = stringResource(id = R.string.preference_screen_backup),
                     summary = stringResource(id = R.string.preference_screen_backup_summary),
                     onClick = {
@@ -93,7 +81,7 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = Icons.Rounded.BugReport,
+                    icon = R.drawable.bug_report_24px,
                     title = stringResource(id = R.string.preference_screen_debug),
                     summary = stringResource(id = R.string.preference_screen_debug_summary),
                     onClick = {
@@ -101,7 +89,7 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = Icons.Rounded.Info,
+                    icon = R.drawable.info_24px,
                     title = stringResource(id = R.string.preference_screen_about),
                     summary = stringResource(id = R.string.preference_screen_about_summary),
                     onClick = {

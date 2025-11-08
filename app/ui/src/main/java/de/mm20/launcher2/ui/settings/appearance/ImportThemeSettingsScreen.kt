@@ -11,18 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ChangeCircle
-import androidx.compose.material.icons.rounded.CropSquare
-import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.Opacity
-import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.TextFields
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChip
@@ -49,8 +37,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.innerShadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -103,7 +91,7 @@ fun ImportThemeSettingsScreen(
                 PreferenceCategory {
                     Banner(
                         text = stringResource(R.string.import_theme_error),
-                        icon = Icons.Rounded.ErrorOutline,
+                        icon = R.drawable.error_24px,
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.surface)
                             .padding(16.dp),
@@ -126,9 +114,12 @@ fun ImportThemeSettingsScreen(
                         if (darkModePreview) darkColorSchemeOf(it) else lightColorSchemeOf(it)
                     } ?: MaterialTheme.colorScheme,
                     shapes = themeBundle.shapes?.let { shapesOf(it) } ?: MaterialTheme.shapes,
-                    typography = themeBundle.typography?.let { typographyOf(it) } ?: MaterialTheme.typography,
+                    typography = themeBundle.typography?.let { typographyOf(it) }
+                        ?: MaterialTheme.typography,
                 ) {
-                    val transparencies = themeBundle.transparencies?.let { transparencySchemeOf(it) } ?: MaterialTheme.transparency
+                    val transparencies =
+                        themeBundle.transparencies?.let { transparencySchemeOf(it) }
+                            ?: MaterialTheme.transparency
                     CompositionLocalProvider(
                         LocalTransparencyScheme provides transparencies
                     ) {
@@ -143,13 +134,13 @@ fun ImportThemeSettingsScreen(
                 PreferenceCategory(stringResource(R.string.import_theme_contents)) {
                     if (themeBundle.colors != null) {
                         Preference(
-                            icon = Icons.Rounded.Palette,
+                            icon = R.drawable.palette_24px,
                             title = stringResource(R.string.preference_screen_colors),
                             summary = themeBundle.colors?.name,
                             controls = if (viewModel.colorsExists) {
                                 {
                                     Icon(
-                                        Icons.Rounded.ChangeCircle,
+                                        painterResource(R.drawable.change_circle_24px),
                                         stringResource(R.string.import_theme_exists)
                                     )
                                 }
@@ -158,13 +149,13 @@ fun ImportThemeSettingsScreen(
                     }
                     if (themeBundle.typography != null) {
                         Preference(
-                            icon = Icons.Rounded.TextFields,
+                            icon = R.drawable.text_fields_24px,
                             title = stringResource(R.string.preference_screen_typography),
                             summary = themeBundle.typography?.name,
                             controls = if (viewModel.typographyExists) {
                                 {
                                     Icon(
-                                        Icons.Rounded.ChangeCircle,
+                                        painterResource(R.drawable.change_circle_24px),
                                         stringResource(R.string.import_theme_exists)
                                     )
                                 }
@@ -173,13 +164,13 @@ fun ImportThemeSettingsScreen(
                     }
                     if (themeBundle.shapes != null) {
                         Preference(
-                            icon = Icons.Rounded.CropSquare,
+                            icon = R.drawable.crop_square_24px,
                             title = stringResource(R.string.preference_screen_shapes),
                             summary = themeBundle.shapes?.name,
                             controls = if (viewModel.shapesExists) {
                                 {
                                     Icon(
-                                        Icons.Rounded.ChangeCircle,
+                                        painterResource(R.drawable.change_circle_24px),
                                         stringResource(R.string.import_theme_exists)
                                     )
                                 }
@@ -187,20 +178,20 @@ fun ImportThemeSettingsScreen(
                         )
                     }
                     if (themeBundle.transparencies != null) {
-                    Preference(
-                        icon = Icons.Rounded.Opacity,
-                        title = stringResource(R.string.preference_screen_transparencies),
-                        summary = themeBundle.transparencies?.name,
-                        controls = if (viewModel.transparenciesExists) {
-                            {
-                                Icon(
-                                    Icons.Rounded.ChangeCircle,
-                                    stringResource(R.string.import_theme_exists)
-                                )
-                            }
-                        } else null,
-                    )
-                }
+                        Preference(
+                            icon = R.drawable.opacity_24px,
+                            title = stringResource(R.string.preference_screen_transparencies),
+                            summary = themeBundle.transparencies?.name,
+                            controls = if (viewModel.transparenciesExists) {
+                                {
+                                    Icon(
+                                        painterResource(R.drawable.change_circle_24px),
+                                        stringResource(R.string.import_theme_exists)
+                                    )
+                                }
+                            } else null,
+                        )
+                    }
                     if (viewModel.colorsExists || viewModel.shapesExists) {
                         Banner(
                             modifier = Modifier
@@ -209,7 +200,7 @@ fun ImportThemeSettingsScreen(
                                     MaterialTheme.shapes.extraSmall
                                 )
                                 .padding(16.dp),
-                            icon = Icons.Rounded.ChangeCircle,
+                            icon = R.drawable.change_circle_24px,
                             text = stringResource(R.string.import_theme_exists)
                         )
                     }
@@ -284,7 +275,7 @@ private fun ThemePreview(
             readOnly = true,
             menu = {
                 IconButton(onClick = {}) {
-                    Icon(Icons.Rounded.MoreVert, null)
+                    Icon(painterResource(R.drawable.more_vert_24px), null)
                 }
             }
         )
@@ -341,7 +332,7 @@ private fun ThemePreview(
                     label = { Text(previewTexts.Short1) },
                     leadingIcon = {
                         Icon(
-                            Icons.Rounded.Star, null,
+                            painterResource(R.drawable.star_20px), null,
                             modifier = Modifier.size(FilterChipDefaults.IconSize)
                         )
                     },
@@ -352,7 +343,7 @@ private fun ThemePreview(
                     label = { Text(previewTexts.Short2) },
                     leadingIcon = {
                         Icon(
-                            Icons.Rounded.Star, null,
+                            painterResource(R.drawable.star_20px), null,
                             modifier = Modifier.size(FilterChipDefaults.IconSize)
                         )
                     },
@@ -360,7 +351,7 @@ private fun ThemePreview(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 FilledTonalIconButton(onClick = {}) {
-                    Icon(Icons.Rounded.Edit, null)
+                    Icon(painterResource(R.drawable.edit_24px), null)
                 }
             }
             HorizontalDivider(
@@ -386,14 +377,14 @@ private fun ThemePreview(
                     selected = !darkMode,
                     onClick = { onDarkModeChanged(false) }
                 ) {
-                    Icon(Icons.Rounded.LightMode, null)
+                    Icon(painterResource(R.drawable.light_mode_24px), null)
                 }
                 SegmentedButton(
                     shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
                     selected = darkMode,
                     onClick = { onDarkModeChanged(true) }
                 ) {
-                    Icon(Icons.Rounded.DarkMode, null)
+                    Icon(painterResource(R.drawable.dark_mode_24px), null)
                 }
             }
         }

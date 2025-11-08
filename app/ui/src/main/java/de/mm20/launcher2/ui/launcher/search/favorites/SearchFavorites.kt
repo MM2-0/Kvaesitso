@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
@@ -62,7 +59,7 @@ fun LazyListScope.SearchFavorites(
                         text = stringResource(
                             if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
                         ),
-                        icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
+                        icon = if (selectedTag == null) R.drawable.star_24px else R.drawable.tag_24px,
                     )
                 }
                 if (pinnedTags.isNotEmpty() || editButton) {

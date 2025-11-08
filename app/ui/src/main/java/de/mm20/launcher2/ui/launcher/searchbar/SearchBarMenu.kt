@@ -8,11 +8,6 @@ import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.HelpOutline
-import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.icons.rounded.Wallpaper
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -21,13 +16,13 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
@@ -74,7 +69,7 @@ fun RowScope.SearchBarMenu(
                 Text(stringResource(R.string.wallpaper))
             },
             leadingIcon = {
-                Icon(imageVector = Icons.Rounded.Wallpaper, contentDescription = null)
+                Icon(painterResource(R.drawable.wallpaper_24px), contentDescription = null)
             }
         )
         DropdownMenuItem(
@@ -86,7 +81,7 @@ fun RowScope.SearchBarMenu(
                 Text(stringResource(R.string.settings))
             },
             leadingIcon = {
-                Icon(imageVector = Icons.Rounded.Settings, contentDescription = null)
+                Icon(painterResource(R.drawable.settings_24px), contentDescription = null)
             }
         )
         val colorScheme = MaterialTheme.colorScheme
@@ -107,7 +102,7 @@ fun RowScope.SearchBarMenu(
                 Text(stringResource(R.string.help))
             },
             leadingIcon = {
-                Icon(imageVector = Icons.Rounded.HelpOutline, contentDescription = null)
+                Icon(painterResource(R.drawable.help_24px), contentDescription = null)
             }
         )
     }

@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -21,8 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.searchactions.actions.SearchAction
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchActionIcon
 import de.mm20.launcher2.ui.modifier.consumeAllScrolling
 import de.mm20.launcher2.ui.settings.SettingsActivity
@@ -83,7 +83,7 @@ fun ColumnScope.SearchBarActions(
                     }
                 ) {
 
-                    Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
+                    Icon(painterResource(R.drawable.edit_24px), contentDescription = null)
                 }
             }
         }

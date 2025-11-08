@@ -28,14 +28,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Android
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.ManageSearch
-import androidx.compose.material.icons.rounded.RemoveCircleOutline
-import androidx.compose.material.icons.rounded.ToggleOn
-import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -72,6 +64,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -224,7 +217,7 @@ private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.TravelExplore,
+                    painterResource(R.drawable.travel_explore_24px),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                 )
@@ -247,7 +240,7 @@ private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.ManageSearch,
+                    painterResource(R.drawable.manage_search_24px),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                 )
@@ -273,7 +266,7 @@ private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.Android,
+                    painterResource(R.drawable.android_24px),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                 )
@@ -581,7 +574,10 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
                         }
                     },
                     trailingIcon = {
-                        Icon(imageVector = Icons.Rounded.ArrowDropDown, contentDescription = null)
+                        Icon(
+                            painterResource(R.drawable.arrow_drop_down_24px),
+                            contentDescription = null
+                        )
                     }
                 )
                 DropdownMenu(
@@ -1116,7 +1112,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                     onClick = { viewModel.removeExtra(key) },
                     modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
-                    Icon(imageVector = Icons.Rounded.RemoveCircleOutline, contentDescription = null)
+                    Icon(painterResource(R.drawable.do_not_disturb_on_24px), contentDescription = null)
                 }
             }
         }
@@ -1142,7 +1138,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                 ) {
                     when (newType) {
                         "bool" -> {
-                            Icon(Icons.Rounded.ToggleOn, contentDescription = null)
+                            Icon(painterResource(R.drawable.toggle_on_24px), contentDescription = null)
                         }
 
                         "string" -> {
@@ -1229,7 +1225,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                                 showTypeDropdown = false
                             })
                         DropdownMenuItem(
-                            leadingIcon = { Icon(Icons.Rounded.ToggleOn, null) },
+                            leadingIcon = { Icon(painterResource(R.drawable.toggle_on_24px), null) },
                             text = { Text("Boolean") },
                             onClick = {
                                 newType = "bool"
@@ -1261,7 +1257,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                     },
                     enabled = newKey.isNotBlank()
                 ) {
-                    Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                    Icon(painterResource(R.drawable.add_24px), contentDescription = null)
                 }
             }
         }
