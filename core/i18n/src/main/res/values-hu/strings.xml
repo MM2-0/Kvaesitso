@@ -668,6 +668,7 @@
     <string name="preference_screen_homescreen">Kezdőképernyő</string>
     <string name="preference_screen_homescreen_summary">Óra, keresősáv, háttérkép, rendszersávok</string>
     <string name="preference_screen_icons">Rács és ikonok</string>
+    <string name="preference_screen_icons_summary">Rácsméret, ikonok, jelvények</string>
     <string name="preference_weather_integration">Időjárás</string>
     <string name="preference_media_integration">Médiavezérlés</string>
     <string name="preference_tasks_integration">Feladatok</string>
