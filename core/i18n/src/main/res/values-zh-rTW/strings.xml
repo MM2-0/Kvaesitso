@@ -631,7 +631,6 @@
     <string name="preference_widgets_on_home_screen">主畫面小工具</string>
     <string name="preference_screen_homescreen">主畫面</string>
     <string name="preference_screen_homescreen_summary">時鐘、搜尋欄、桌布、系統列</string>
-    <string name="preference_screen_icons_summary">網格、圖示大小、圖示包、標記</string>
     <string name="preference_weather_integration">天氣</string>
     <string name="preference_media_integration">媒體控制</string>
     <string name="preference_tasks_integration">任務</string>
