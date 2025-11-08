@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="hu">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="hu-rHU">
     <string name="location_open">Nyitva</string>
     <string name="location_closed">Zárva</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
@@ -668,7 +668,6 @@
     <string name="preference_screen_homescreen">Kezdőképernyő</string>
     <string name="preference_screen_homescreen_summary">Óra, keresősáv, háttérkép, rendszersávok</string>
     <string name="preference_screen_icons">Rács és ikonok</string>
-    <string name="preference_screen_icons_summary">Rács, ikonméret, ikoncsomagok, jelvények</string>
     <string name="preference_weather_integration">Időjárás</string>
     <string name="preference_media_integration">Médiavezérlés</string>
     <string name="preference_tasks_integration">Feladatok</string>
