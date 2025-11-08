@@ -684,7 +684,7 @@
     <string name="preference_screen_homescreen">Home screen</string>
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
     <string name="preference_screen_icons">Grid and icons</string>
-    <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
+    <string name="preference_screen_icons_summary">Grid size, icons, badges</string>
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
     <string name="preference_tasks_integration">Tasks</string>
