@@ -43,7 +43,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shader
 import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.asComposePath
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
@@ -53,7 +52,6 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -77,7 +75,6 @@ import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import de.mm20.launcher2.ui.modifier.scale
 import palettes.TonalPalette
 import java.time.Instant
 import java.time.ZoneId
@@ -89,7 +86,7 @@ import android.graphics.Shader as PlatformShader
 @Composable
 fun ShapedLauncherIcon(
     modifier: Modifier = Modifier,
-    size: Dp,
+    size: Dp = LocalGridSettings.current.iconSize.dp,
     icon: () -> LauncherIcon? = { null },
     badge: () -> Badge? = { null },
     shape: Shape = LocalIconShape.current
@@ -107,10 +104,8 @@ fun ShapedLauncherIcon(
         )
     }
 
-    val defaultIconSize = LocalGridSettings.current.iconSize.dp
-
     val renderSettings = LauncherIconRenderSettings(
-        size = defaultIconSize.toPixels().toInt(),
+        size = size.toPixels().toInt(),
         fgThemeColor = MaterialTheme.colorScheme.onPrimaryContainer.toArgb(),
         bgThemeColor = MaterialTheme.colorScheme.primaryContainer.toArgb(),
         fgTone = if (LocalDarkTheme.current) 90 else 10,
@@ -145,9 +140,7 @@ fun ShapedLauncherIcon(
             val ic = currentIcon
             if (bmp != null && ic != null) {
                 Canvas(
-                    modifier = Modifier
-                        .requiredSize(defaultIconSize)
-                        .scale(size / defaultIconSize, TransformOrigin.Center)
+                    modifier = Modifier.requiredSize(size)
                 ) {
                     val brush = BitmapShaderBrush(bmp)
                     if (ic.backgroundLayer is TransparentLayer) {
