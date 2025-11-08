@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="cs">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="cs-rCZ">
     <string name="location_open">Otevřeno</string>
     <string name="location_closed">Zavřeno</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
@@ -673,7 +673,6 @@
     <string name="preference_screen_homescreen">Domovská obrazovka</string>
     <string name="preference_screen_homescreen_summary">Hodiny, vyhledávací lišta, pozadí, systémové lišty</string>
     <string name="preference_screen_icons">Mřížka a ikony</string>
-    <string name="preference_screen_icons_summary">Mřížka, velikost ikon, balíčky ikon, odznaky</string>
     <string name="preference_weather_integration">Počasí</string>
     <string name="preference_media_integration">Ovládání médií</string>
     <string name="preference_tasks_integration">Úkoly</string>
