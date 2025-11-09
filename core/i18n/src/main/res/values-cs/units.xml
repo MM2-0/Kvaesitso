@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="cs">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="cs-rCZ">
     <!-- DIMENSIONS -->
     <string name="dimension_length">Délka</string>
     <string name="dimension_mass">Hmotnost</string>
