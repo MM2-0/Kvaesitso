@@ -659,6 +659,7 @@
     <string name="preference_screen_homescreen">Schermata home</string>
     <string name="preference_screen_homescreen_summary">Orologio, barra di ricerca, sfondo, barre di sistema</string>
     <string name="preference_screen_icons">Griglia e icone</string>
+    <string name="preference_screen_icons_summary">Dimensioni griglia, icone, badge</string>
     <string name="preference_weather_integration">Meteo</string>
     <string name="preference_media_integration">Controllo multimediale</string>
     <string name="preference_tasks_integration">Attività</string>
