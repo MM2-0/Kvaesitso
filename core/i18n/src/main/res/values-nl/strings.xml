@@ -487,7 +487,7 @@
     <string name="preference_screen_clockwidget_summary">Klokstijl en -componenten instellen</string>
     <string name="preference_screen_homescreen">Thuisscherm</string>
     <string name="preference_screen_homescreen_summary">Klok, zoekbalk, achtergrond, systeembalken</string>
-    <string name="preference_screen_icons_summary">Raster, pictogramgrootte, pictogrampaketten, badges</string>
+    <string name="preference_screen_icons_summary">Rastergrootte, pictogrammen, badges</string>
     <string name="preference_weather_integration">Weer</string>
     <string name="preference_media_integration">Mediabeheer</string>
     <string name="widget_config_appwidget_borderless">Randloos</string>
