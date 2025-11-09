@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.widgets.clock
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
@@ -39,7 +42,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -98,8 +106,8 @@ fun ClockWidget(
         viewModel.updateTime(time)
     }
 
-    val partProvider by remember { viewModel.getActivePart(context) }.collectAsStateWithLifecycle(
-        null
+    val partProvider by remember { viewModel.getActiveParts(context) }.collectAsStateWithLifecycle(
+        listOf()
     )
 
     AnimatedContent(editMode, label = "ClockWidget") {
@@ -176,11 +184,15 @@ fun ClockWidget(
                                     Clock(clockStyle, false, darkColors)
                                 }
 
-                                if (partProvider != null) {
+                                InfinitePager(
+                                    modifier = Modifier.animateContentSize(),
+                                    partProvider = partProvider
+                                ) { page ->
                                     DynamicZone(
-                                        modifier = Modifier.padding(bottom = 8.dp),
+                                        modifier = Modifier.padding(bottom = 8.dp).fillMaxWidth(),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
                                         compact = false,
-                                        provider = partProvider,
+                                        provider = partProvider[page],
                                     )
                                 }
                             }
@@ -190,14 +202,18 @@ fun ClockWidget(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(end = 8.dp, bottom = 16.dp),
-                                verticalAlignment = Alignment.CenterVertically,
+                                verticalAlignment = Alignment.Bottom,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                if (partProvider != null) {
+                                InfinitePager(
+                                    modifier = Modifier.weight(1f),
+                                    verticalAlignment = Alignment.Bottom,
+                                    partProvider = partProvider
+                                ) { page ->
                                     DynamicZone(
-                                        modifier = Modifier.weight(1f),
+                                        horizontalAlignment = Alignment.Start,
                                         compact = true,
-                                        provider = partProvider,
+                                        provider = partProvider[page],
                                     )
                                 }
                                 if (clockStyle !is ClockWidgetStyle.Empty) {
@@ -330,13 +346,49 @@ fun Clock(
 @Composable
 fun DynamicZone(
     modifier: Modifier = Modifier,
+    horizontalAlignment: Alignment.Horizontal,
     compact: Boolean,
     provider: PartProvider?,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
+        horizontalAlignment = horizontalAlignment,
+        verticalArrangement = Arrangement.Center
     ) {
         provider?.Component(compact)
+    }
+}
+
+@Composable
+fun InfinitePager (
+    modifier: Modifier = Modifier,
+    verticalAlignment: Alignment.Vertical = Alignment.Top,
+    partProvider: List<PartProvider>,
+    content: @Composable (page: Int) -> Unit
+) {
+    val pagerState = rememberPagerState { Int.MAX_VALUE / 2 }
+    val brush = Brush.horizontalGradient(
+        0f to Color.Transparent, 0.07f to Color.Black,
+        0.93f to Color.Black, 1f to Color.Transparent)
+
+    LaunchedEffect(partProvider.size) {
+        if (partProvider.isNotEmpty()) {
+            pagerState.scrollToPage(
+                Int.MAX_VALUE / 4 / partProvider.size * partProvider.size
+            )
+        }
+    }
+
+    if (partProvider.size > 1) {
+        HorizontalPager(
+            modifier = modifier.graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
+                .drawWithContent {
+                    drawContent()
+                    drawRect(brush = brush, blendMode = BlendMode.DstIn)
+                },
+            state = pagerState,
+            verticalAlignment = verticalAlignment,
+        ) { content(it % partProvider.size) }
     }
 }
 

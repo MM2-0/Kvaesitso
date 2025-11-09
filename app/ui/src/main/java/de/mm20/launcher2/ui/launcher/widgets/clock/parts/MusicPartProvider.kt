@@ -64,6 +64,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
 
         if (compactLayout) {
             Row(
+                modifier = Modifier.padding(start = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
@@ -140,7 +141,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
         }
         if (!compactLayout) {
             Column(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(top = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Column(
@@ -212,7 +213,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
                             }
                         }
                     }
-                    if (supportedActions.skipToPrevious) {
+                    if (supportedActions.skipToNext) {
                         IconButton(onClick = { musicService.next() }) {
                             Icon(
                                 painterResource(R.drawable.skip_next_24px),
