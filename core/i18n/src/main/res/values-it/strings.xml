@@ -485,7 +485,7 @@
     <string name="preference_search_result_ordering_weight_factor_high">Variabile</string>
     <string name="preference_screen_integrations">Integrazioni</string>
     <string name="preference_screen_homescreen">Schermata home</string>
-    <string name="preference_screen_icons_summary">Griglia, dimensione icona, pacchetti icone, indicatori</string>
+    <string name="preference_screen_icons_summary">Dimensioni griglia, icone, badge</string>
     <string name="preference_screen_clockwidget_summary">Configura stile e componenti dell\'orologio</string>
     <string name="preference_screen_homescreen_summary">Orologio, barra di ricerca, sfondo, barre di sistema</string>
     <string name="preference_screen_icons">Griglia e icone</string>
