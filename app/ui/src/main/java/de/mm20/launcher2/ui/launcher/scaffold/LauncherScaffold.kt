@@ -15,7 +15,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
@@ -40,7 +39,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.union
@@ -1252,18 +1250,20 @@ internal fun LauncherScaffold(
             state.darkStatusBarIcons,
             state.darkNavBarIcons,
         ) {
-            val insetsController = WindowInsetsControllerCompat(activity.window, view)
-            insetsController.isAppearanceLightStatusBars = state.darkStatusBarIcons
-            insetsController.isAppearanceLightNavigationBars = state.darkNavBarIcons
-            if (config.showStatusBar) {
-                insetsController.show(WindowInsetsCompat.Type.statusBars())
-            } else {
-                insetsController.hide(WindowInsetsCompat.Type.statusBars())
-            }
-            if (config.showNavBar) {
-                insetsController.show(WindowInsetsCompat.Type.navigationBars())
-            } else {
-                insetsController.hide(WindowInsetsCompat.Type.navigationBars())
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                val insetsController = WindowInsetsControllerCompat(activity.window, view)
+                insetsController.isAppearanceLightStatusBars = state.darkStatusBarIcons
+                insetsController.isAppearanceLightNavigationBars = state.darkNavBarIcons
+                if (config.showStatusBar) {
+                    insetsController.show(WindowInsetsCompat.Type.statusBars())
+                } else {
+                    insetsController.hide(WindowInsetsCompat.Type.statusBars())
+                }
+                if (config.showNavBar) {
+                    insetsController.show(WindowInsetsCompat.Type.navigationBars())
+                } else {
+                    insetsController.hide(WindowInsetsCompat.Type.navigationBars())
+                }
             }
         }
 
