@@ -14,6 +14,7 @@ import de.mm20.launcher2.music.SupportedActions
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.debounce
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -23,7 +24,7 @@ class MusicWidgetVM: ViewModel(), KoinComponent {
 
     val title: Flow<String?> = musicService.title
     val artist: Flow<String?> = musicService.artist
-    val albumArt: Flow<Bitmap?> = musicService.albumArt
+    val albumArt: Flow<Bitmap?> = musicService.albumArt.debounce { if (it == null) 500 else 0L }
     val playbackState: Flow<PlaybackState> = musicService.playbackState
     val duration: Flow<Long?> = musicService.duration
     val position: Flow<Long?> = musicService.position
