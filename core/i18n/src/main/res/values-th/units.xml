@@ -71,12 +71,15 @@
     <plurals name="unit_sqmillimeter">
         <item quantity="other">ตารางมิลลิเมตร</item>
     </plurals>
+    <string name="unit_sqinch_symbol">ตร.นิ้ว</string>
     <plurals name="unit_sqinch">
         <item quantity="other">ตารางนิ้ว</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">ตร.ฟุต</string>
     <plurals name="unit_sqfoot">
         <item quantity="other">ตารางฟุต</item>
     </plurals>
+    <string name="unit_sqyard_symbol">ตร.หลา</string>
     <plurals name="unit_sqyard">
         <item quantity="other">ตารางหลา</item>
     </plurals>
@@ -133,6 +136,9 @@
     <plurals name="unit_gibibyte">
         <item quantity="other">กิบิไบต์</item>
     </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="other">เทบิไบต์</item>
+    </plurals>
     <plurals name="unit_bit">
         <item quantity="other">บิต</item>
     </plurals>
@@ -175,6 +181,7 @@
     <plurals name="unit_metric_ton">
         <item quantity="other">ตัน</item>
     </plurals>
+    <string name="unit_long_ton_symbol">ลองตัน</string>
     <plurals name="unit_long_ton">
         <item quantity="other">ลองตัน</item>
     </plurals>
@@ -187,6 +194,7 @@
     <plurals name="unit_ounce">
         <item quantity="other">ออนซ์</item>
     </plurals>
+    <string name="unit_short_ton_symbol">ชอร์ตตัน</string>
     <plurals name="unit_short_ton">
         <item quantity="other">ชอร์ตตัน</item>
     </plurals>
@@ -201,4 +209,64 @@
         <item quantity="other">เคลวิน</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
+    <string name="unit_liter_symbol">ล.</string>
+    <plurals name="unit_liter">
+        <item quantity="other">ลิตร</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">มล.</string>
+    <plurals name="unit_milliliter">
+        <item quantity="other">มิลลิลิตร</item>
+    </plurals>
+    <string name="unit_cubic_meter_symbol">ลบ.ม.</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="other">ลูกบาศก์เมตร</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">ลบ.ซม.</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="other">ลูกบาศก์เซนติเมตร</item>
+    </plurals>
+    <string name="unit_cubic_millimeter_symbol">ลบ.มม.</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="other">ลูกบาศก์มิลลิเมตร</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">ลบ.นิ้ว</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="other">ลูกบาศก์นิ้ว</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">ลบ.ฟุต</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="other">ลูกบาศก์ฟุต</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">ลบ.หลา</string>
+    <plurals name="unit_cubic_yard">
+        <item quantity="other">ลูกบาศก์หลา</item>
+    </plurals>
+    <plurals name="unit_gallon_us">
+        <item quantity="other">แกลลอน (อเมริกา)</item>
+    </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="other">แกลลอน (อังกฤษ)</item>
+    </plurals>
+    <plurals name="unit_pint_us">
+        <item quantity="other">ไพนต์ (อเมริกา)</item>
+    </plurals>
+    <plurals name="unit_pint_imp">
+        <item quantity="other">ไพนต์ (อังกฤษ)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="other">ออนซ์ของเหลว (อเมริกา)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="other">ออนซ์ของเหลว (อังกฤษ)</item>
+    </plurals>
+    <string name="unit_cup_symbol">ถ้วย</string>
+    <plurals name="unit_cup">
+        <item quantity="other">ถ้วยตวง (อเมริกา)</item>
+    </plurals>
+    <plurals name="unit_tablespoon">
+        <item quantity="other">ช้อนโต๊ะ (อเมริกา)</item>
+    </plurals>
+    <plurals name="unit_teaspoon">
+        <item quantity="other">ช้อนชา (อเมริกา)</item>
+    </plurals>
 </resources>
