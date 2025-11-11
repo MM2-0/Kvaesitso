@@ -585,9 +585,9 @@
     <string name="preference_clockwidget_dynamic_zone">ส่วนไดนามิก</string>
     <string name="preference_clockwidget_date_part">วันที่</string>
     <string name="preference_clockwidget_date_part_summary">แสดงวันที่ปัจจุบัน</string>
-    <string name="preference_clockwidget_favorites_part">แถบใช้งาน</string>
-    <string name="preference_clockwidget_favorites_part_summary">แสดงแถวแรกของรายการที่ปักหมุดไว้</string>
-    <string name="preference_clockwidget_dock_rows">แถบปักหมุด</string>
+    <string name="preference_clockwidget_favorites_part">แถบด็อค</string>
+    <string name="preference_clockwidget_favorites_part_summary">แสดงรายการที่ปักหมุดไว้บนแถบด็อค</string>
+    <string name="preference_clockwidget_dock_rows">แถวในด็อค</string>
     <string name="preference_clockwidget_music_part">สื่อ</string>
     <string name="preference_clockwidget_music_part_summary">แสดงตัวควบคุมสื่อเมื่อมีสื่อกำลังเล่น</string>
     <string name="preference_clockwidget_battery_part">แบตเตอรี่</string>
@@ -670,6 +670,7 @@
     <string name="preference_screen_homescreen">หน้าจอหลัก</string>
     <string name="preference_screen_homescreen_summary">นาฬิกา แถบค้นหา ภาพพื้นหลัง แถบระบบ</string>
     <string name="preference_screen_icons">ลิ้นชักและไอคอน</string>
+    <string name="preference_screen_icons_summary">ลิ้นชักแอป ไอคอน ป้าย</string>
     <string name="preference_weather_integration">สภาพอากาศ</string>
     <string name="preference_media_integration">ตัวควบคุมสื่อ</string>
     <string name="preference_tasks_integration">งาน</string>
@@ -808,9 +809,9 @@
     <string name="note_widget_conflict_local_version">เวอร์ชั่นล่าสุดที่ถูกบันทึกไว้:</string>
     <string name="note_widget_conflict_file_version">เนื้อหาปัจจุบันของไฟล์:</string>
     <string name="note_widget_file_read_error">ไม่สามารถอ่านโน้ตได้</string>
-    <string name="note_widget_file_read_error_description">ไม่สามารถอ่านไฟล์โน้ตต้นฉบับได้ เป็นไปได้ว่าอาจโดนย้ายหรือลบ ข้อมูลสำเนาถูกกู้คืนมาจากพื้นที่จัดเก็บภายในของแอปหน้าแรก ถ้าคุณแก้ไขโน้ต ไฟล์โน้ตต้นฉบับอาจโดนเขียนทับ</string>
+    <string name="note_widget_file_read_error_description">ไม่สามารถอ่านไฟล์โน้ตต้นฉบับได้ ข้อมูลสำเนาถูกกู้คืนมาจากพื้นที่จัดเก็บภายในของแอปหน้าแรก ถ้าคุณแก้ไขโน้ต ไฟล์โน้ตต้นฉบับอาจโดนเขียนทับ</string>
     <string name="note_widget_file_write_error">ไม่สามารถบันทึกโน้ตได้</string>
-    <string name="note_widget_file_write_error_description">ไม่สามารถเขียนโน้ตไปยังไฟล์ต้นฉบับได้ เป็นไปได้ว่ามันอาจโดนย้ายหรือลบ ข้อมูลสำเนาถูกบันทึกไปที่พื้นที่จัดเก็บภายในของแอปหน้าแรก</string>
+    <string name="note_widget_file_write_error_description">ไม่สามารถเขียนโน้ตไปยังไฟล์ต้นฉบับได้ บันทึกข้อมูลสำเนาไปยังพื้นที่จัดเก็บภายในของแอปหน้าแรกแล้ว</string>
     <string name="confirmation_delete_color_scheme">คุณต้องการลบชุดสี %1$s ใช่หรือไม่?</string>
     <string name="confirmation_delete_shapes_scheme">คุณต้องการลบชุดรูปร่าง %1$s ใช่หรือไม่?</string>
     <string name="confirmation_delete_typography_scheme">คุณต้องการลบชุดการจัดตัวอักษร %1$s ใช่หรือไม่?</string>
