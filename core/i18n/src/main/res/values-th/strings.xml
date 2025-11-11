@@ -205,7 +205,7 @@
     <string name="preference_clock_widget_fill_height">เติมให้เต็มความสูงของหน้าจอ</string>
     <string name="preference_clockwidget_date_part">วันที่</string>
     <string name="preference_clockwidget_date_part_summary">แสดงวันที่ปัจจุบัน</string>
-    <string name="preference_clockwidget_favorites_part">แถบใช้งาน</string>
+    <string name="preference_clockwidget_favorites_part">แถบด็อค</string>
     <string name="preference_clockwidget_music_part">สื่อ</string>
     <string name="preference_clockwidget_music_part_summary">แสดงตัวควบคุมสื่อเมื่อมีสื่อกำลังเล่น</string>
     <string name="preference_clockwidget_battery_part">แบตเตอรี่</string>
@@ -328,7 +328,7 @@
     <string name="wind_south_west">ตะวันตกเฉียงใต้</string>
     <string name="wind_west_north_west">ตะวันตกค่อนไปทางเหนือ</string>
     <string name="wind_north_west">ตะวันตกเฉียงเหนือ</string>
-    <string name="preference_screen_icons_summary">ลิ้นชักแอป ขนาดไอคอน ชุดไอคอน ป้าย</string>
+    <string name="preference_screen_icons_summary">ลิ้นชักแอป ไอคอน ป้าย</string>
     <string name="icon_picker_search_icon">ค้นหาในชุดไอคอน</string>
     <string name="wikipedia_url">https://th.wikipedia.org</string>
     <string name="websearch_dialog_replace_icon">แทนที่ไอคอน</string>
@@ -373,8 +373,8 @@
     <string name="missing_permission_accessibility_gesture_settings">การดำเนินการนี้ต้องการสิทธิ์การเข้าถึงของแอปหน้าแรก</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="menu_edit_widgets">แก้ไขวิดเจ็ต</string>
-    <string name="note_widget_file_read_error_description">ไม่สามารถอ่านไฟล์โน้ตต้นฉบับได้ เป็นไปได้ว่าอาจโดนย้ายหรือลบ ข้อมูลสำเนาถูกกู้คืนมาจากพื้นที่จัดเก็บภายในของแอปหน้าแรก ถ้าคุณแก้ไขโน้ต ไฟล์โน้ตต้นฉบับอาจโดนเขียนทับ</string>
-    <string name="note_widget_file_write_error_description">ไม่สามารถเขียนโน้ตไปยังไฟล์ต้นฉบับได้ เป็นไปได้ว่ามันอาจโดนย้ายหรือลบ ข้อมูลสำเนาถูกบันทึกไปที่พื้นที่จัดเก็บภายในของแอปหน้าแรก</string>
+    <string name="note_widget_file_read_error_description">ไม่สามารถอ่านไฟล์โน้ตต้นฉบับได้ ข้อมูลสำเนาถูกกู้คืนมาจากพื้นที่จัดเก็บภายในของแอปหน้าแรก ถ้าคุณแก้ไขโน้ต ไฟล์โน้ตต้นฉบับอาจโดนเขียนทับ</string>
+    <string name="note_widget_file_write_error_description">ไม่สามารถเขียนโน้ตไปยังไฟล์ต้นฉบับได้ บันทึกข้อมูลสำเนาไปยังพื้นที่จัดเก็บภายในของแอปหน้าแรกแล้ว</string>
     <string name="menu_share_store_link">ลิงก์ %1$s</string>
     <string name="widget_add_widget">เพิ่มวิดเจ็ต</string>
     <string name="menu_favorites_pin">ปักหมุดไปยังรายการโปรด</string>
@@ -451,7 +451,7 @@
     <string name="preference_screen_clockwidget_summary">ปรับแต่งรูปแบบนาฬิกาและส่วนประกอบ</string>
     <string name="weather_condition_snowshowersandthunder">หิมะตกบางแห่งและมีท้องฟ้าคำราม</string>
     <string name="preference_clockwidget_layout_vertical">ค่าเริ่มต้น</string>
-    <string name="preference_clockwidget_favorites_part_summary">แสดงแถวแรกของรายการที่ปักหมุดไว้</string>
+    <string name="preference_clockwidget_favorites_part_summary">แสดงรายการที่ปักหมุดไว้บนแถบด็อค</string>
     <string name="weather_no_data">ไม่มีข้อมูลสภาพอากาศ</string>
     <string name="preference_clockwidget_battery_part_summary">แสดงระดับแบตเตอรี่ปัจจุบันเมื่อแบตเตอรี่เหลือน้อยหรือกำลังถูกชาร์จอยู่</string>
     <string name="weather_widget_set_location">กำหนดตำแหน่ง</string>
@@ -856,5 +856,5 @@
     <string name="poi_category_climbing_gym">ยิมปีนผา</string>
     <string name="poi_category_hackerspace">แฮกเกอร์สเปซ</string>
     <string name="poi_category_stationery">ร้านขายเครื่องเขียน</string>
-    <string name="preference_clockwidget_dock_rows">แถบปักหมุด</string>
+    <string name="preference_clockwidget_dock_rows">แถวในด็อค</string>
 </resources>
