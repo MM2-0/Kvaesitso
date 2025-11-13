@@ -157,7 +157,7 @@
     <string name="weather_condition_lightsleetandthunder">Ligera aguanieve y truenos</string>
     <string name="weather_condition_heavyrainandthunder">Fuertes lluvias y truenos</string>
     <string name="weather_condition_wind">Viento</string>
-    <string name="menu_share_apk_file">Archivo</string>
+    <string name="menu_share_apk_file">Archivo APK</string>
     <string name="menu_app_info">Información de la App</string>
     <string name="menu_favorites_pin">Anclar a favoritos</string>
     <string name="menu_favorites_unpin">Desanclar</string>
