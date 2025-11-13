@@ -17,7 +17,7 @@
      %1$s is the name of the app store (e.g. Google Play)-->
     <string name="menu_share_store_link">Enlace de %1$s</string>
     <!-- Share an APK file, shown in the app detail share menu -->
-    <string name="menu_share_apk_file">Archivo</string>
+    <string name="menu_share_apk_file">Archivo APK</string>
     <!-- Uninstall an application -->
     <string name="menu_uninstall">Desinstalar</string>
     <string name="menu_favorites_pin">Anclar a favoritos</string>
@@ -217,10 +217,10 @@
     <string name="menu_edit_widgets">Editar widgets</string>
     <string name="widget_name_weather">Tiempo</string>
     <string name="widget_name_calendar">Calendario</string>
-    <string name="widget_name_music">Música</string>
+    <string name="widget_name_music">Multimedia</string>
     <string name="widget_name_favorites">Favoritos</string>
     <string name="widget_name_notes">Nota</string>
-    <string name="widget_name_unknown">App de widget desconocida</string>
+    <string name="widget_name_unknown">Desconocido</string>
     <string name="widget_add_widget">Añadir widget</string>
     <string name="widget_removed">Widget eliminado</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
@@ -383,7 +383,7 @@
     <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">Se requiere permiso de contactos para buscar contactos</string>
     <!-- Missing call permission in contacts settings screen -->
-    <string name="missing_permission_call_contacts_settings">Se requiere el permiso de llamadas para marcar</string>
+    <string name="missing_permission_call_contacts_settings">Se requiere el permiso de teléfono para marcar</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Se requiere permiso de calendario para buscar en el calendario</string>
     <string name="missing_permission_tasks_search_settings">Se requiere permiso de Tasks para buscar tareas en la aplicación Tasks</string>
@@ -398,19 +398,19 @@
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Se requiere permiso de administración de todos los archivos para buscar archivos locales</string>
+    <string name="missing_permission_file_search_settings_android10">Se requiere acceso a todos los archivos para buscar archivos locales</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Se requiere acceso a notificaciones para mostrar globos de notificación</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Se requiere el permiso de calendario para mostrar las próximas citas y eventos aquí.</string>
+    <string name="missing_permission_calendar_widget">Se requiere el permiso de calendario para mostrar las próximas citas y eventos aquí</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Se requiere el permiso de calendario para buscar en su calendario.</string>
+    <string name="missing_permission_calendar_search">Se requiere el permiso de calendario para buscar en tu calendario</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Se requiere el permiso de ubicación para buscar lugares cercanos.</string>
+    <string name="missing_permission_location_search">Se requiere el permiso de ubicación para buscar lugares cercanos</string>
     <!-- Missing files permission, used in files search results -->
     <string name="missing_permission_files_search">Otorgue permiso de almacenamiento para buscar archivos en este dispositivo</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Otorgue permiso de contacto para buscar en su contactos.</string>
+    <string name="missing_permission_contact_search">Se requiere permiso de contactos para buscar en tus contactos</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Defina %1$s como app de inicio predeterminada para buscar accesos directos de aplicaciones.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -424,14 +424,20 @@
     <string name="preference_theme_dark">Oscuro</string>
     <string name="preference_screen_colors">Esquema de colores</string>
     <string name="preference_colors_default">Por defecto</string>
+    <string name="preference_colors_high_contrast">Alto contraste</string>
     <string name="preference_colors_bw">Blanco y negro</string>
     <string name="preference_custom_colors_corepalette">Paleta de colores</string>
     <string name="preference_mdy_color_source">Fuente para colores dinámicos</string>
     <string name="preference_mdy_color_source_system">Sistema</string>
     <string name="preference_mdy_color_source_wallpaper">Fondo de pantalla</string>
-    <string name="preference_shapes_default">Por defecto</string>
+    <string name="preference_screen_shapes">Formas</string>
+    <string name="preference_shapes_default">Predeterminado</string>
+    <string name="preference_shapes_extra_round">Muy redondo</string>
+    <string name="preference_shapes_base">Forma base</string>
+    <string name="preference_screen_typography">Tipografía</string>
     <string name="preference_screen_transparencies">Transparencia</string>
-    <string name="preference_transparencies_default">Por defecto</string>
+    <string name="preference_transparencies_default">Predeterminado</string>
+    <string name="preference_transparencies_semi_transparent">Semitransparente</string>
     <string name="preference_font">Fuente</string>
     <string name="preference_font_system">Predeterminado del sistema</string>
     <string name="preference_screen_about">Sobre</string>
@@ -513,14 +519,14 @@
     <string name="preference_signout">Cerrar sesión</string>
     <string name="preference_summary_not_logged_in">No has iniciado sesión</string>
     <string name="preference_icon_shape_pentagon">Pentágono</string>
-    <string name="preference_category_wallpaper">Papel tapiz</string>
-    <string name="preference_dim_wallpaper">Oscurecer papel tapiz</string>
-    <string name="preference_dim_wallpaper_summary">En temas oscuros, oscurecer papel tapiz</string>
-    <string name="preference_blur_wallpaper">Difuminar papel tapiz</string>
-    <string name="preference_blur_wallpaper_summary">Usa un efecto de desenfoque sobre el papel tapiz</string>
+    <string name="preference_category_wallpaper">Fondo de pantalla</string>
+    <string name="preference_dim_wallpaper">Oscurecer el fondo de pantalla</string>
+    <string name="preference_dim_wallpaper_summary">En temas oscuros, oscurecer el fondo de pantalla</string>
+    <string name="preference_blur_wallpaper">Desenfocar fondo de pantalla</string>
+    <string name="preference_blur_wallpaper_summary">Usa un efecto de desenfoque sobre el fondo de pantalla</string>
     <string name="preference_blur_wallpaper_unsupported">No soportado en este dispositivo</string>
     <string name="preference_blur_wallpaper_radius">Radio de desenfoque</string>
-    <string name="preference_wallpaper_summary">Elije un papel tapiz</string>
+    <string name="preference_wallpaper_summary">Elije un fondo de pantalla</string>
     <string name="preference_category_badges">Insignias</string>
     <string name="preference_notification_badges">Insignias de notificación</string>
     <string name="preference_notification_badges_summary">Mostrar una insignia en aplicaciones con notificaciones no leídas</string>
@@ -562,6 +568,7 @@
     <string name="preference_clockwidget_layout_vertical">Por defecto</string>
     <string name="preference_clockwidget_layout_horizontal">Compacto</string>
     <string name="preference_clock_widget_show_seconds">Mostrar segundos</string>
+    <string name="preference_clock_widget_monospaced">Dígitos monoespaciados</string>
     <string name="preference_clock_widget_time_format">Formato de hora</string>
     <string name="preference_clock_widget_time_format_24h">24 horas</string>
     <string name="preference_clock_widget_time_format_12h">12 horas</string>
@@ -576,6 +583,8 @@
     <string name="preference_clockwidget_date_part">Fecha</string>
     <string name="preference_clockwidget_date_part_summary">Mostrar la fecha actual</string>
     <string name="preference_clockwidget_favorites_part">Barra</string>
+    <string name="preference_clockwidget_favorites_part_summary">Mostrar elementos fijados en la barra de inicio</string>
+    <string name="preference_clockwidget_dock_rows">Filas de barra de inicio</string>
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_music_part_summary">Mostrar controles multimedia cuando haya una sesión multimedia activa</string>
     <string name="preference_clockwidget_battery_part">Batería</string>
@@ -657,6 +666,7 @@
     <string name="preference_screen_homescreen">Pantalla de inicio</string>
     <string name="preference_screen_homescreen_summary">Reloj, barra de búsqueda, fondo de pantalla, barras del sistema</string>
     <string name="preference_screen_icons">Cuadrícula e ícono</string>
+    <string name="preference_screen_icons_summary">Tamaño de cuadrícula, íconos, insignias</string>
     <string name="preference_weather_integration">Clima</string>
     <string name="preference_media_integration">Control de medios</string>
     <string name="preference_tasks_integration">Tareas</string>
@@ -695,7 +705,7 @@
     <string name="icon_picker_search_icon">Buscar en paquetes de iconos</string>
     <string name="icon_picker_filter_all_packs">Todos los paquetes de íconos</string>
     <string name="apps_profile_work">Trabajo</string>
-    <string name="apps_profile_private">Privado</string>
+    <string name="apps_profile_private">Espacio privado</string>
     <string name="favorites">Favoritos</string>
     <string name="favorites_empty">Los elementos fijados y frecuentemente usados aparecerán aquí</string>
     <string name="favorites_empty_tag">No hay elementos con esta etiqueta</string>
@@ -719,23 +729,23 @@
     <string name="create_search_action_type_intent">Intent personalizado</string>
     <string name="create_search_action_pick_app">Elige una aplicación para buscar:</string>
     <string name="create_search_action_website_url">Introduce la dirección de la página web:</string>
-    <string name="create_search_action_website_invalid_url">La página introducida no se puede importar automáticamente como una búsqueda web. Puedes intentar introducir otra página web o introducir los datos necesarios en el siguiente paso.</string>
+    <string name="create_search_action_website_invalid_url">La página introducida no se puede importar automáticamente como una búsqueda web. Puedes intentar introducir otra página web o introducir los datos necesarios en el siguiente paso</string>
     <string name="search_action_label">Nombre</string>
     <string name="search_action_app">Aplicación</string>
     <string name="search_action_websearch_url">Plantilla de URL</string>
-    <string name="search_action_websearch_url_hint">La plantilla de URL que se usa para construir la búsqueda web. Usa ‘${1}’ en el sitio del término de búsqueda que se vaya a introducir, p.ej. https://google.com/search?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">La plantilla de URL que se usa para construir la búsqueda web. Usa ‘${1}’ en el sitio del término de búsqueda que se vaya a introducir</string>
     <string name="more_information">Información adicional</string>
     <string name="tag_exists_error">Ya existe una etiqueta con este nombre</string>
     <string name="tag_exists_message">Ya existe una etiqueta con este nombre. Si continuas, se combinarán las dos etiquetas</string>
-    <string name="tag_no_items_message">No hay ningún elemento asociado a esta etiqueta. Si continuas, se eliminará la etiqueta.</string>
-    <string name="tag_empty_name">Una etiqueta sin nombre no puede existir. Si continuas, la etiqueta será eliminada.</string>
+    <string name="tag_no_items_message">No hay ningún elemento asociado a esta etiqueta. Si continuas, se eliminará la etiqueta</string>
+    <string name="tag_empty_name">Una etiqueta sin nombre no puede existir. Si continuas, la etiqueta será eliminada</string>
     <string name="tag_select_items">Selecciona elementos:</string>
     <string name="tag_name">Nombre de etiqueta</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d elemento seleccionado</item>
         <item quantity="other">%1$d elementos seleccionados</item>
     </plurals>
-    <string name="preference_layout_open_search">Buscar / cajón de aplicaciones</string>
+    <string name="preference_layout_open_search">Búsqueda y cajón de aplicaciones</string>
     <string name="open_search_pull_down">Deslizar hacia abajo</string>
     <string name="open_search_swipe_left">Deslizar hacia la izquierda</string>
     <string name="open_search_swipe_right">Deslizar hacia la derecha</string>
@@ -765,7 +775,7 @@
     <string name="gesture_action_lock_screen">Apagar pantalla</string>
     <string name="gesture_action_quick_settings">Abrir ajustes rápidos</string>
     <string name="gesture_action_power_menu">Mostrar menú de apagado</string>
-    <string name="gesture_action_recents">Abrir recientes</string>
+    <string name="gesture_action_recents">Abrir aplicaciones recientes</string>
     <string name="gesture_failed_message">Has realizado el gesto \"%1$s\". Este gesto esta configurado actualmente para realizar la acción \"%2$s\". Sin embargo, la acción no se ha podido realizar por la siguiente razón:</string>
     <string name="missing_permission_accessibility_gesture_failed">El servicio de accesibilidad del lanzador debe activarse para realizar esta acción.</string>
     <string name="missing_permission_accessibility_gesture_settings">Esta acción requiere que el servicio de accesibilidad del lanzador esté activado.</string>
@@ -779,7 +789,7 @@
     <string name="widget_config_weather_integration_settings">Configuración de la integración meteorológica</string>
     <string name="widget_config_calendar_no_calendars">Calendarios no encontrados</string>
     <string name="widget_pick_widget">Elegir widget</string>
-    <string name="app_widget_loading_failed">El widget de la aplicación ha fallado en cargar.</string>
+    <string name="app_widget_loading_failed">El widget de la aplicación ha fallado en cargar</string>
     <string name="widget_config_music_integration_settings">Configuración de integración para control multimedia</string>
     <string name="note_widget_link_file">Enlace al archivo</string>
     <string name="note_widget_link_file_summary">Sincronizar el contenido de este widget con un archivo externo</string>
@@ -793,16 +803,22 @@
     <string name="note_widget_conflict_local_version">Última versión guardada:</string>
     <string name="note_widget_conflict_file_version">Contenido actual del archivo:</string>
     <string name="note_widget_file_read_error">Error al leer la nota</string>
-    <string name="note_widget_file_read_error_description">No se ha podido leer el archivo vinculado. Posiblemente, haya sido movido o borrado. Se ha restaurado una copia desde el almacenamiento interno del lanzador. Si editas la nota, posiblemente se sobrescribirá el archivo vinculado.</string>
+    <string name="note_widget_file_read_error_description">No se ha podido leer el archivo vinculado. Se ha restaurado una copia desde el almacenamiento interno del lanzador. Si editas la nota, posiblemente se sobrescribirá el archivo vinculado</string>
     <string name="note_widget_file_write_error">Error al guardar la nota</string>
-    <string name="note_widget_file_write_error_description">No se ha podido leer el archivo vinculado. Posiblemente, haya sido movido o borrado. Se ha restaurado una copia desde el almacenamiento interno del lanzador. Si editas la nota, posiblemente se sobrescribirá el archivo vinculado.</string>
+    <string name="note_widget_file_write_error_description">No se ha podido escribir la nota al archivo vinculado. Se ha restaurado una copia desde el almacenamiento interno del lanzador</string>
     <string name="confirmation_delete_color_scheme">¿Realmente deseas eliminar el esquema de colores %1$s?</string>
+    <string name="confirmation_delete_shapes_scheme">¿Realmente deseas eliminar el esquema de forma %1$s?</string>
+    <string name="confirmation_delete_typography_scheme">¿Realmente deseas eliminar el esquema de tipografía %1$s?</string>
+    <string name="confirmation_delete_transparencies_scheme">¿Realmente deseas eliminar el esquema de transparencia %1$s?</string>
+    <string name="new_theme_name">(sin título)</string>
     <string name="theme_color_scheme_system_default">Usar el predeterminado del sistema</string>
     <string name="theme_color_scheme_autogenerate">A partir de color primario</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Personalizado</string>
     <string name="preference_restore_default">Restaurar predeterminado</string>
+    <string name="import_theme_contents">Contenido</string>
     <string name="import_theme_apply">Aplicar tema</string>
+    <string name="import_theme_exists">El tema ya existe y será actualizado</string>
     <string name="import_theme_error">El archivo seleccionado no pudo ser leído. Asegúrate de que has seleccionado un archivo de tema válido (*.kvtheme), y que el archivo no esté dañado.</string>
     <string name="shortcut_label_unavailable">No disponible</string>
     <string name="app_label_locked_profile">Bloqueado</string>
@@ -831,7 +847,7 @@
     <string name="plugin_type_weather">Proveedor de clima</string>
     <string name="plugin_weather_provider_enable">Establecer como proveedor de clima</string>
     <string name="plugin_weather_provider_enabled">Actualmente establecido como proveedor de clima</string>
-    <string name="unavailable_searchable">Este elemento ya no existe.</string>
+    <string name="unavailable_searchable">Este elemento ya no existe</string>
     <string name="clock_style_digital1">Negrita</string>
     <string name="clock_style_orbit">Órbita</string>
     <string name="clock_style_binary">Binario</string>
@@ -840,6 +856,7 @@
     <string name="clock_style_empty">Sin reloj</string>
     <string name="clock_style_custom">Widget personalizado</string>
     <string name="clock_variant_outlined">Contorneado</string>
+    <string name="clock_variant_analog_ticks">Marcadores</string>
     <string name="menu_show_filters">Mostrar filtros</string>
     <string name="menu_hide_filters">Ocultar filtros</string>
     <string name="search_filter_tools">Herramientas</string>
@@ -941,6 +958,8 @@
     <string name="poi_category_fire_station">Estación de bomberos</string>
     <string name="poi_category_courthouse">Juzgado</string>
     <string name="poi_category_townhall">Ayuntamiento</string>
+    <string name="poi_category_stationery">Papelería</string>
+    <string name="poi_category_climbing_gym">Rocódromo</string>
     <string name="customize_item_label">Título</string>
     <string name="customize_item_tags">Etiquetas</string>
     <string name="customize_item_visibility">Mostrar en</string>
@@ -977,12 +996,12 @@
     <string name="calendar_widget_next_day">Siguiente día</string>
     <string name="calendar_widget_create_event">Crear nuevo evento</string>
     <string name="calendar_widget_open_calendar">Abrir app de calendario</string>
-    <string name="profile_work_profile_state_locked">Las apps de trabajo están pausadas.</string>
+    <string name="profile_work_profile_state_locked">Las aplicaciones de trabajo están pausadas</string>
     <string name="profile_work_profile_action_unlock">Reanudar</string>
     <string name="profile_work_profile_action_lock">Pausar apps de trabajo</string>
-    <string name="profile_private_profile_state_locked">Private space está bloqueado.</string>
+    <string name="profile_private_profile_state_locked">El espacio privado está bloqueado</string>
     <string name="profile_private_profile_action_unlock">Desbloquear</string>
-    <string name="profile_private_profile_action_lock">Bloquear private space</string>
+    <string name="profile_private_profile_action_lock">Bloquear espacio privado</string>
     <string name="hint_drag_and_drop_reorder">Mantén presionado y arrastra los elementos para reorganizarlos</string>
     <plurals name="calendar_search_enabled_lists">
         <item quantity="one">%1$s lista seleccionada</item>
@@ -996,8 +1015,16 @@
         <item quantity="one">en un minuto</item>
         <item quantity="other">en %1$d minutos</item>
     </plurals>
-    <string name="departure_time_departed">salido</string>
+    <string name="departure_time_departed">partida</string>
     <string name="bad_configuration_title">¡Felicidades, te has quedado fuera!</string>
-    <string name="bad_configuration_summary">Has descubierto una combinación de configuraciones que hace que no se pueda acceder a la búsqueda ni a las configuraciones — haciendo que te quedes fuera del lanzador.</string>
+    <string name="bad_configuration_summary">Has descubierto una combinación de configuraciones que impide acceder tanto a la búsqueda como a los ajustes, lo que te deja sin poder abrir el lanzador</string>
+    <string name="theme_export_title">Exportar tema</string>
+    <string name="theme_import_title">Importar tema</string>
     <string name="theme_bundle_name">Nombre</string>
+    <string name="theme_bundle_author">Autor</string>
+    <string name="preference_typography_fonts">Fuentes</string>
+    <string name="font_category_device_default">Predeterminado del dispositivo</string>
+    <string name="font_name_device_headline">Fuente predeterminada para títulos</string>
+    <string name="font_name_device_body">Fuente de texto del dispositivo</string>
+    <string name="font_category_generic">Génerico</string>
 </resources>
