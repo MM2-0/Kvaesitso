@@ -8,6 +8,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.RectF
 import android.graphics.drawable.AdaptiveIconDrawable
+import android.icu.number.NumberFormatter
+import android.icu.text.NumberFormat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
@@ -54,6 +56,7 @@ import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -289,7 +292,7 @@ fun ShapedLauncherIcon(
                         }
                     } else if (number != null && number > 0 && number < 100) {
                         Text(
-                            number.toString(),
+                            NumberFormat.getInstance(Locale.current.platformLocale).format(number),
                             color = MaterialTheme.colorScheme.secondaryContainer,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 fontSize = with(LocalDensity.current) {
