@@ -537,6 +537,7 @@
     <string name="preference_screen_search_summary">Pesquisas, etiquetas, itens ocultos</string>
     <string name="preference_search_favorites">Favoritos</string>
     <string name="preference_search_favorites_summary">Mostrar itens afixados e frequentes por cima da grelha de aplicações</string>
+    <string name="preference_search_apps">Aplicações</string>
     <string name="preference_search_files">Ficheiros</string>
     <string name="preference_search_files_summary">Pesquisar ficheiros locais e na cloud</string>
     <string name="preference_search_contacts">Contactos</string>
