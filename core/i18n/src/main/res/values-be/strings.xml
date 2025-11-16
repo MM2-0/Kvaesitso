@@ -583,6 +583,7 @@
     <string name="preference_screen_search_summary">Пошук, цэтлікі, схаваныя ярлыкі</string>
     <string name="preference_search_favorites">Абраныя</string>
     <string name="preference_search_favorites_summary">Адлюстроўваць замацаваныя праграмы і праграмы, якія часта выкарыстоўваюцца, уверсе меню</string>
+    <string name="preference_search_apps">Праграмы</string>
     <string name="preference_search_files">Файлы</string>
     <string name="preference_search_files_summary">Пошук файлаў на прыладзе і ў воблаке</string>
     <string name="preference_search_contacts">Кантакты</string>
