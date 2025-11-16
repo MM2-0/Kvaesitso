@@ -621,6 +621,7 @@
     <string name="preference_screen_search_summary">חיפוש, תגיות, פריטים מוסתרים</string>
     <string name="preference_search_favorites">מועדפים</string>
     <string name="preference_search_favorites_summary">הצגת פריטים נעוצים ובשימוש נפוץ מעל רשת היישומים</string>
+    <string name="preference_search_apps">יישומים</string>
     <string name="preference_search_files">קבצים</string>
     <string name="preference_search_files_summary">חיפוש בקבצים מקומיים ובקבצים בענן</string>
     <string name="preference_search_contacts">אנשי קשר</string>
