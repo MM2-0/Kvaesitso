@@ -560,6 +560,7 @@
     <string name="preference_screen_search_summary">جستجو، برچسب‌ها، موارد مخفی</string>
     <string name="preference_search_favorites">موارد دلخواه</string>
     <string name="preference_search_favorites_summary">نمایش موارد دلخواه و مورد استفاده بالا بالای شبکه برنامه‌ها</string>
+    <string name="preference_search_apps">برنامه‌ها</string>
     <string name="preference_search_files">پرونده‌ها</string>
     <string name="preference_search_files_summary">جستجوی پرونده‌های محلی و ابری</string>
     <string name="preference_search_contacts">مخاطبین</string>
