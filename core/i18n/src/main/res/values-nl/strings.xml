@@ -590,6 +590,7 @@
     <string name="preference_screen_search_summary">Zoeken, tags, verborgen items</string>
     <string name="preference_search_favorites">Favorieten</string>
     <string name="preference_search_favorites_summary">Vastgezette en vaak gebruikte items tonen boven het applicatieraster</string>
+    <string name="preference_search_apps">Applicaties</string>
     <string name="preference_search_files">Bestanden</string>
     <string name="preference_search_files_summary">Lokale en cloudbestanden doorzoeken</string>
     <string name="preference_search_contacts">Contacten</string>
