@@ -576,6 +576,7 @@
     <string name="preference_screen_search_summary">Arama, etiketler, gizli öğeler</string>
     <string name="preference_search_favorites">Favoriler</string>
     <string name="preference_search_favorites_summary">Sabitlenmiş ve sık kullanılan öğeleri uygulama ızgarasının üzerinde göster</string>
+    <string name="preference_search_apps">Uygulamalar</string>
     <string name="preference_search_files">Dosyalar</string>
     <string name="preference_search_files_summary">Yerel dosyaları ve bulut dosyalarını ara</string>
     <string name="preference_search_contacts">Kişiler</string>
