@@ -606,6 +606,7 @@
     <string name="preference_screen_search_summary">Keresés, címkék, rejtett elemek</string>
     <string name="preference_search_favorites">Kedvencek</string>
     <string name="preference_search_favorites_summary">Kitűzött és gyakran használt elemek megjelenítése az alkalmazásrács felett</string>
+    <string name="preference_search_apps">Alkalmazások</string>
     <string name="preference_search_files">Fájlok</string>
     <string name="preference_search_files_summary">Keresés helyi- és felhőfájlok között</string>
     <string name="preference_search_contacts">Névjegyek</string>
