@@ -572,6 +572,7 @@
     <string name="preference_screen_search_summary">搜尋、標籤、隱藏項目</string>
     <string name="preference_search_favorites">我的最愛</string>
     <string name="preference_search_favorites_summary">在應用程式抽屜上方顯示釘選與常用項目</string>
+    <string name="preference_search_apps">應用程式</string>
     <string name="preference_search_files">檔案</string>
     <string name="preference_search_files_summary">搜尋本機檔案與雲伺服器檔案</string>
     <string name="preference_search_contacts">聯絡人</string>
