@@ -606,6 +606,7 @@
     <string name="preference_screen_search_summary">Поиск, теги, скрытые элементы</string>
     <string name="preference_search_favorites">Избранные</string>
     <string name="preference_search_favorites_summary">Отображать закрепленные и часто используемые над списком приложений</string>
+    <string name="preference_search_apps">Приложения</string>
     <string name="preference_search_files">Файлы</string>
     <string name="preference_search_files_summary">Поиск локальных и облачных файлов</string>
     <string name="preference_search_contacts">Контакты</string>
