@@ -605,6 +605,7 @@
     <string name="preference_screen_search_summary">搜索, 标签, 隐藏项目</string>
     <string name="preference_search_favorites">收藏夹</string>
     <string name="preference_search_favorites_summary">在应用抽屉上方显示固定和常用项目</string>
+    <string name="preference_search_apps">应用</string>
     <string name="preference_search_files">文件</string>
     <string name="preference_search_files_summary">搜索本地文件和云服务器文件</string>
     <string name="preference_search_contacts">联系人</string>
