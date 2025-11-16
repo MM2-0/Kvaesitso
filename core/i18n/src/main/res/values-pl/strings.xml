@@ -567,6 +567,7 @@
     <string name="preference_screen_search_summary">Wyszukiwanie, tagi, ukryte elementy</string>
     <string name="preference_search_favorites">Ulubione</string>
     <string name="preference_search_favorites_summary">Pokazuje przypięte oraz często używane rzeczy nad listą aplikacji</string>
+    <string name="preference_search_apps">Aplikacje</string>
     <string name="preference_search_files">Pliki</string>
     <string name="preference_search_files_summary">Szukaj lokalnych plików oraz plików zapisanych w chmurze</string>
     <string name="preference_search_contacts">Kontakty</string>
