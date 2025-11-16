@@ -590,6 +590,7 @@
     <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Elemente</string>
     <string name="preference_search_favorites">Favoriten</string>
     <string name="preference_search_favorites_summary">Angepinnte und häufig genutzte Elemente über dem App-Raster anzeigen</string>
+    <string name="preference_search_apps_summary">Alle Apps anzeigen, wenn das Suchfeld leer ist</string>
     <string name="preference_search_files">Dateien</string>
     <string name="preference_search_files_summary">Lokale Dateien und Cloud-Dateien durchsuchen</string>
     <string name="preference_search_contacts">Kontakte</string>
