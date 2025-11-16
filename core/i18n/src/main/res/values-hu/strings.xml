@@ -868,4 +868,6 @@
     <string name="poi_category_hackerspace">Hackespace</string>
     <string name="poi_category_stationery">Papír, írószer</string>
     <string name="preference_clockwidget_dock_rows">Dokksorok</string>
+    <string name="preference_search_apps">Alkalmazások</string>
+    <string name="preference_search_apps_summary">Összes alkalmazás megjelenítése, ha a keresőmező üres</string>
 </resources>
