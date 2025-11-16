@@ -591,6 +591,7 @@
     <string name="preference_screen_search_summary">Recherche, étiquettes, éléments cachés</string>
     <string name="preference_search_favorites">Favoris</string>
     <string name="preference_search_favorites_summary">Afficher les applications épinglées et fréquemment utilisées au-dessus de la grille</string>
+    <string name="preference_search_apps">Applications</string>
     <string name="preference_search_files">Fichiers</string>
     <string name="preference_search_files_summary">Rechercher les fichiers locaux et les fichiers du cloud</string>
     <string name="preference_search_contacts_summary">Rechercher les contacts sur cet appareil</string>
