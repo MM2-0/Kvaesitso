@@ -541,6 +541,7 @@
     <string name="preference_screen_search_summary">Tìm kiếm, gắn thẻ, mục ẩn</string>
     <string name="preference_search_favorites">Yêu thích</string>
     <string name="preference_search_favorites_summary">Hiển thị các mục được ghim và sử dụng thường xuyên phía trên lưới ứng dụng</string>
+    <string name="preference_search_apps">Ứng dụng</string>
     <string name="preference_search_files">Tệp tin</string>
     <string name="preference_search_files_summary">Tìm kiếm tệp cục bộ và tệp đám mây</string>
     <string name="preference_search_contacts">Danh bạ</string>
