@@ -557,6 +557,7 @@
     <string name="preference_screen_search_summary">Bilaketa, etiketak, elementu ezkutuak</string>
     <string name="preference_search_favorites">Gogokoak</string>
     <string name="preference_search_favorites_summary">Ainguratutako eta maiz erabiltzen diren elementuak aplikazioen saretaren gainean erakutsi</string>
+    <string name="preference_search_apps">Aplikazioak</string>
     <string name="preference_search_files">Fitxategiak</string>
     <string name="preference_search_files_summary">Tokiko fitxategiak eta hodeiko fitxategiak bilatu</string>
     <string name="preference_search_contacts">Kontaktuak</string>
