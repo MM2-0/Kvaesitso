@@ -868,4 +868,6 @@
     <string name="clock_variant_analog_ticks">Striche</string>
     <string name="preference_clock_widget_monospaced">Ziffern mit fester Breite</string>
     <string name="poi_category_hackerspace">Hackerspace</string>
+    <string name="preference_search_apps">Apps</string>
+    <string name="preference_search_apps_summary">Alle Apps anzeigen, wenn das Suchfeld leer ist</string>
 </resources>
