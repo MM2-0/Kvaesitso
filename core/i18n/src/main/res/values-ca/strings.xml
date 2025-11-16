@@ -602,6 +602,7 @@
     <string name="preference_screen_search_summary">Cerca, etiquetes, elements ocults</string>
     <string name="preference_search_favorites">Preferits</string>
     <string name="preference_search_favorites_summary">Mostra els elements fixats i utilitzats freqüentment a sobre de la graella de les aplicacions</string>
+    <string name="preference_search_apps">Aplicacions</string>
     <string name="preference_search_files">Fitxers</string>
     <string name="preference_search_files_summary">Cerca fitxers locals i fitxers al núvol</string>
     <string name="preference_search_contacts">Contactes</string>
