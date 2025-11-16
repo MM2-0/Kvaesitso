@@ -492,6 +492,7 @@
     <string name="preference_screen_search_summary">검색, 태그, 숨긴 항목</string>
     <string name="preference_search_favorites">즐겨찾기</string>
     <string name="preference_search_favorites_summary">앱 격자 위에 고정한 항목 및 자주 사용한 항목 표시</string>
+    <string name="preference_search_apps">앱</string>
     <string name="preference_search_files">파일</string>
     <string name="preference_search_files_summary">로컬 및 클라우드 파일 검색</string>
     <string name="preference_search_contacts">연락처</string>
