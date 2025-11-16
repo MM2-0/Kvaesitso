@@ -583,6 +583,7 @@
     <string name="preference_screen_search_summary">البحث، العلامات، العناصر المخفية</string>
     <string name="preference_search_favorites">المفضلة</string>
     <string name="preference_search_favorites_summary">إظهار العناصر المثبتة والمستخدمة بشكل متكرر أعلى شبكة التطبيقات</string>
+    <string name="preference_search_apps">التطبيقات</string>
     <string name="preference_search_files">الملفات</string>
     <string name="preference_search_files_summary">البحث في الملفات المحلية وملفات السحابة</string>
     <string name="preference_search_contacts">جهات الاتصال</string>
