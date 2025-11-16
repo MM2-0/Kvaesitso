@@ -518,6 +518,7 @@
     <string name="preference_screen_search_summary">Søk, etiketter, skjulte oppføringer</string>
     <string name="preference_search_favorites">Favoritter</string>
     <string name="preference_search_favorites_summary">Vis festede og ofte brukte oppføringer over app-rutenettet</string>
+    <string name="preference_search_apps">Apper</string>
     <string name="preference_search_files">Filer</string>
     <string name="preference_search_files_summary">Søk i lokale filer og skylagrede filer</string>
     <string name="preference_search_contacts">Kontakter</string>
