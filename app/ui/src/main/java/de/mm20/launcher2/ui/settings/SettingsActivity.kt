@@ -41,6 +41,8 @@ import de.mm20.launcher2.ui.settings.appearance.ExportThemeSettingsRoute
 import de.mm20.launcher2.ui.settings.appearance.ExportThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.ImportThemeSettingsRoute
 import de.mm20.launcher2.ui.settings.appearance.ImportThemeSettingsScreen
+import de.mm20.launcher2.ui.settings.apps.AppSearchSettingsRoute
+import de.mm20.launcher2.ui.settings.apps.AppSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsRoute
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.breezyweather.BreezyWeatherSettingsRoute
@@ -288,6 +290,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<LicenseRoute> {
                 LicenseScreen(it.libraryName)
+            }
+            entry<AppSearchSettingsRoute> {
+                AppSearchSettingsScreen()
             }
         }
 

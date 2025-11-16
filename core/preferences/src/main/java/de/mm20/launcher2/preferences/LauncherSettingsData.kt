@@ -66,6 +66,8 @@ data class LauncherSettingsData internal constructor(
     val favoritesEditButton: Boolean = true,
     val favoritesCompactTags: Boolean = false,
 
+    val searchAllApps: Boolean = true,
+
     val fileSearchProviders: Set<String> = setOf("local"),
 
     @Deprecated("Use contactSearchProviders `local` instead")

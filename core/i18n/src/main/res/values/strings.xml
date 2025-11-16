@@ -620,6 +620,8 @@
     <string name="preference_screen_search_summary">Search, tags, hidden items</string>
     <string name="preference_search_favorites">Favorites</string>
     <string name="preference_search_favorites_summary">Show pinned and frequently used items above app grid</string>
+    <string name="preference_search_apps">Apps</string>
+    <string name="preference_search_apps_summary">Show all apps when the search field is empty</string>
     <string name="preference_search_files">Files</string>
     <string name="preference_search_files_summary">Search local files and cloud files</string>
     <string name="preference_search_contacts">Contacts</string>

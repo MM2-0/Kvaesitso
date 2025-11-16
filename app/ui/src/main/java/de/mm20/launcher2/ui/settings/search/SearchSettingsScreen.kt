@@ -30,6 +30,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.apps.AppSearchSettingsRoute
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsRoute
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsRoute
 import de.mm20.launcher2.ui.settings.contacts.ContactsSettingsRoute
@@ -45,7 +46,7 @@ import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object SearchSettingsRoute: NavKey
+data object SearchSettingsRoute : NavKey
 
 @Composable
 fun SearchSettingsScreen() {
@@ -71,6 +72,7 @@ fun SearchSettingsScreen() {
     val hasLocationPermission by viewModel.hasLocationPermission.collectAsStateWithLifecycle(null)
 
     val favorites by viewModel.favorites.collectAsStateWithLifecycle(null)
+    val allApps by viewModel.allApps.collectAsStateWithLifecycle(null)
     val appShortcuts by viewModel.appShortcuts.collectAsStateWithLifecycle(null)
     val calendar by viewModel.calendarSearch.collectAsStateWithLifecycle(null)
     val places by viewModel.placesSearch.collectAsStateWithLifecycle(null)
@@ -101,6 +103,22 @@ fun SearchSettingsScreen() {
                         backStack.add(FavoritesSettingsRoute)
                     }
                 )
+                PreferenceWithSwitch(
+                    title = stringResource(R.string.preference_search_apps),
+                    summary = stringResource(R.string.preference_search_apps_summary),
+                    icon = R.drawable.apps_24px,
+                    switchValue = allApps == true,
+                    onSwitchChanged = {
+                        viewModel.setAllApps(it)
+                    },
+                    onClick = {
+                        backStack.add(AppSearchSettingsRoute)
+                    }
+                )
+            }
+        }
+        item {
+            PreferenceCategory {
 
                 Preference(
                     title = stringResource(R.string.preference_search_files),
@@ -190,7 +208,7 @@ fun SearchSettingsScreen() {
                     SwitchPreference(
                         title = stringResource(R.string.preference_search_appshortcuts),
                         summary = stringResource(R.string.preference_search_appshortcuts_summary),
-                        icon =  R.drawable.mobile_arrow_up_right_24px,
+                        icon = R.drawable.mobile_arrow_up_right_24px,
                         value = appShortcuts == true && hasAppShortcutsPermission == true,
                         onValueChanged = {
                             viewModel.setAppShortcuts(it)
@@ -202,7 +220,7 @@ fun SearchSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_calculator),
                     summary = stringResource(R.string.preference_search_calculator_summary),
-                    icon =  R.drawable.calculate_24px,
+                    icon = R.drawable.calculate_24px,
                     value = calculator == true,
                     onValueChanged = {
                         viewModel.setCalculator(it)
