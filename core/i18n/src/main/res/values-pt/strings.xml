@@ -606,6 +606,7 @@
     <string name="preference_screen_search_summary">Pesquisa, tags, items escondidos</string>
     <string name="preference_search_favorites">Favoritos</string>
     <string name="preference_search_favorites_summary">Mostra itens fixados e usados com frequência acima da grade do aplicativo</string>
+    <string name="preference_search_apps">Aplicativos</string>
     <string name="preference_search_files">Arquivos</string>
     <string name="preference_search_files_summary">Pesquisa arquivos locais e arquivos na nuvem</string>
     <string name="preference_search_contacts">Contatos</string>
