@@ -608,6 +608,7 @@
     <string name="preference_screen_search_summary">การค้นหา แท็ก สิ่งที่ถูกซ่อน</string>
     <string name="preference_search_favorites">รายการโปรด</string>
     <string name="preference_search_favorites_summary">แสดงสิ่งที่ถูกปักหมุดและสิ่งที่ถูกใช้งานบ่อยข้างบนลิ้นชักแอป</string>
+    <string name="preference_search_apps">แอป</string>
     <string name="preference_search_files">ไฟล์</string>
     <string name="preference_search_files_summary">ค้นหาไฟล์บนเครื่องและบนคลาวด์</string>
     <string name="preference_search_contacts">รายชื่อผู้ติดต่อ</string>
