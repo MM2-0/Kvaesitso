@@ -598,6 +598,7 @@
     <string name="preference_screen_search_summary">Cerca, tag, oggetti nascosti</string>
     <string name="preference_search_favorites">Preferiti</string>
     <string name="preference_search_favorites_summary">Mostra elementi appuntati e usati frequentemente sopra la griglia delle app</string>
+    <string name="preference_search_apps">App</string>
     <string name="preference_search_files">File</string>
     <string name="preference_search_files_summary">Cerca file locali e nel cloud</string>
     <string name="preference_search_contacts">Contatti</string>
