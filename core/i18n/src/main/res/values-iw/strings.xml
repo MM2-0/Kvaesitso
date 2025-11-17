@@ -23,7 +23,7 @@
     <string name="menu_favorites_pin">נעיצה במועדפים</string>
     <string name="menu_favorites_unpin">הסרת הנעיצה</string>
     <string name="menu_back">חזרה</string>
-    <string name="menu_app_info">מידע על היישומון</string>
+    <string name="menu_app_info">מידע על היישום</string>
     <!-- Launch an app -->
     <string name="menu_launch">הפעלה</string>
     <string name="menu_customize">התאמה אישית</string>
@@ -35,7 +35,7 @@
     <string name="action_undo">ביטול</string>
     <string name="action_import">ייבוא</string>
     <string name="action_done">סיום</string>
-    <string name="action_more_actions">עוד פעולות</string>
+    <string name="action_more_actions">פעולות נוספות</string>
     <string name="action_clear">ניקוי</string>
     <string name="action_install">התקנה</string>
     <!-- Delete something (a file or a web search shortcut) -->
@@ -98,7 +98,7 @@
     <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">כותרת: %1$s</string>
     <!-- File metadata, artist of audio tracks -->
-    <string name="file_meta_artist">אמן: %1$s</string>
+    <string name="file_meta_artist">האמן: %1$s</string>
     <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">אלבום: %1$s</string>
     <!-- File metadata, duration of audio tracks -->
@@ -125,7 +125,7 @@
     <string name="file_meta_owner">בעלים: ‌%1$s</string>
     <!-- File metadata, location -->
     <string name="file_meta_location">מיקום: %1$s</string>
-    <string name="file_type_directory">תיקייה</string>
+    <string name="file_type_directory">תיקיה</string>
     <!-- Archive file  -->
     <string name="file_type_archive">קובץ ארכיב</string>
     <!-- Android package file  -->
@@ -137,7 +137,7 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">גיליון נתונים</string>
     <!-- Audio file -->
-    <string name="file_type_music">­קובץ מוזיקה</string>
+    <string name="file_type_music">­שמע</string>
     <!-- Video file -->
     <string name="file_type_video">וידאו</string>
     <!-- Image file -->
@@ -163,7 +163,7 @@
     <!-- Generic file , %1$s is the file extension -->
     <string name="file_type_generic">קובץ %1$s</string>
     <!-- Warning message that is shown when a user attempts to delete a directory -->
-    <string name="alert_delete_directory">התיקייה %1$s וכל התוכן שלה יימחקו לצמיתות. האם להמשיך?</string>
+    <string name="alert_delete_directory">התיקיה %1$s וכל התוכן שלה יימחקו לצמיתות. האם להמשיך?</string>
     <!-- Warning message that is shown when a user attempts to delete a file -->
     <string name="alert_delete_file">הקובץ %1$s יימחק לצמיתות. האם להמשיך?</string>
     <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
@@ -210,7 +210,7 @@
         the region of the language or not commonly used.
        -->
     <string name="default_websearch_3_url">‪https://play.google.com/store/search?q=${1}‬</string>
-    <string name="websearch_dialog_url_error">מציין המיקום \'${1}\' חסר ב-URL זה</string>
+    <string name="websearch_dialog_url_error">מציין המקום \'${1}\' חסר ב-URL זה</string>
     <string name="websearch_dialog_replace_icon">החלפת הסמל</string>
     <string name="websearch_dialog_delete_icon">מחיקת הסמל</string>
     <string name="websearch_dialog_custom_icon">סמל מותאם אישית</string>
@@ -622,6 +622,7 @@
     <string name="preference_search_favorites">מועדפים</string>
     <string name="preference_search_favorites_summary">הצגת פריטים נעוצים ובשימוש נפוץ מעל רשת היישומים</string>
     <string name="preference_search_apps">יישומים</string>
+    <string name="preference_search_apps_summary">הצגת כל היישומים כאשר שורת החיפוש ריקה</string>
     <string name="preference_search_files">קבצים</string>
     <string name="preference_search_files_summary">חיפוש בקבצים מקומיים ובקבצים בענן</string>
     <string name="preference_search_contacts">אנשי קשר</string>
