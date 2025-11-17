@@ -12,7 +12,7 @@
     <string name="menu_uninstall">הסרת ההתקנה</string>
     <string name="menu_favorites_pin">נעיצה במועדפים</string>
     <string name="menu_back">חזרה</string>
-    <string name="menu_app_info">מידע על היישומון</string>
+    <string name="menu_app_info">מידע על היישום</string>
     <string name="menu_favorites_unpin">הסרת הנעיצה</string>
     <string name="menu_launch">הפעלה</string>
     <string name="menu_customize">התאמה אישית</string>
@@ -22,7 +22,7 @@
     <string name="action_undo">ביטול</string>
     <string name="action_import">ייבוא</string>
     <string name="action_done">סיום</string>
-    <string name="action_more_actions">עוד פעולות</string>
+    <string name="action_more_actions">פעולות נוספות</string>
     <string name="action_clear">ניקוי</string>
     <string name="action_install">התקנה</string>
     <string name="menu_delete">מחיקה</string>
@@ -53,7 +53,7 @@
     <string name="wikipedia_url">https://he.wikipedia.org</string>
     <string name="wikipedia_source">מוויקיפדיה</string>
     <string name="file_meta_title">כותרת: %1$s</string>
-    <string name="file_meta_artist">אמן: %1$s</string>
+    <string name="file_meta_artist">האמן: %1$s</string>
     <string name="file_meta_album">אלבום: %1$s</string>
     <string name="file_meta_duration">משך: %1$s</string>
     <string name="file_meta_year">שנה: %1$s</string>
@@ -67,13 +67,13 @@
     <string name="file_meta_app_min_sdk">גרסת SDK מינימלית: ‍%1$s</string>
     <string name="file_meta_owner">בעלים: ‌%1$s</string>
     <string name="file_meta_location">מיקום: %1$s</string>
-    <string name="file_type_directory">תיקייה</string>
+    <string name="file_type_directory">תיקיה</string>
     <string name="file_type_archive">קובץ ארכיב</string>
     <string name="file_type_document">מסמך</string>
     <string name="file_type_android">קובץ חבילת אנדרואיד</string>
     <string name="file_type_source_code">קובץ קוד מקור</string>
     <string name="file_type_spreadsheet">גיליון נתונים</string>
-    <string name="file_type_music">­קובץ מוזיקה</string>
+    <string name="file_type_music">­שמע</string>
     <string name="file_type_video">וידאו</string>
     <string name="file_type_image">תמונה</string>
     <string name="file_type_none">קובץ</string>
@@ -86,12 +86,12 @@
     <string name="file_type_launcherbackup">גיבוי %1$s</string>
     <string name="file_type_launchertheme">ערכת נושא %1$s</string>
     <string name="file_type_generic">קובץ %1$s</string>
-    <string name="alert_delete_directory">התיקייה %1$s וכל התוכן שלה יימחקו לצמיתות. האם להמשיך?</string>
+    <string name="alert_delete_directory">התיקיה %1$s וכל התוכן שלה יימחקו לצמיתות. האם להמשיך?</string>
     <string name="alert_delete_file">הקובץ %1$s יימחק לצמיתות. האם להמשיך?</string>
     <string name="alert_delete_shortcut">הקיצור %1$s יימחק לצמיתות. האם להמשיך?</string>
     <string name="default_websearch_2_url">‪https://www.youtube.com/results?search_query=${1}‬</string>
     <string name="default_websearch_3_name">גוגל פליי</string>
-    <string name="websearch_dialog_url_error">מציין המיקום \'${1}\' חסר ב-URL זה</string>
+    <string name="websearch_dialog_url_error">מציין המקום \'${1}\' חסר ב-URL זה</string>
     <string name="default_websearch_3_url">‪https://play.google.com/store/search?q=${1}‬</string>
     <string name="websearch_dialog_replace_icon">החלפת הסמל</string>
     <string name="websearch_dialog_delete_icon">מחיקת הסמל</string>
@@ -877,4 +877,6 @@
     <string name="poi_category_stationery">כלי כתיבה</string>
     <string name="poi_category_climbing_gym">קיר טיפוס</string>
     <string name="poi_category_hackerspace">מרחב עבודה משותף</string>
+    <string name="preference_search_apps_summary">הצגת כל היישומים כאשר שורת החיפוש ריקה</string>
+    <string name="preference_search_apps">יישומים</string>
 </resources>
