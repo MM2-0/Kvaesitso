@@ -612,6 +612,7 @@
     <string name="preference_search_favorites">Oblíbené</string>
     <string name="preference_search_favorites_summary">Zobrazit připnuté a často používané položky nad mřízkou s aplikacemi</string>
     <string name="preference_search_apps">Aplikace</string>
+    <string name="preference_search_apps_summary">Zobrazit všechny aplikace, když je pole vyhledávání prázdné</string>
     <string name="preference_search_files">Soubory</string>
     <string name="preference_search_files_summary">Prohledávat místní a cloudové soubory</string>
     <string name="preference_search_contacts">Kontakty</string>
