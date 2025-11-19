@@ -606,6 +606,7 @@
     <string name="preference_search_favorites">Favoritos</string>
     <string name="preference_search_favorites_summary">Mostrar elementos fijados y frecuentemente usados encima de la cuadrícula de aplicaciones</string>
     <string name="preference_search_apps">Aplicaciones</string>
+    <string name="preference_search_apps_summary">Mostrar todas las aplicaciones cuando el campo de búsqueda esté vacío</string>
     <string name="preference_search_files">Archivos</string>
     <string name="preference_search_files_summary">Buscar archivos locales y archivos en la nube</string>
     <string name="preference_search_contacts">Contactos</string>
