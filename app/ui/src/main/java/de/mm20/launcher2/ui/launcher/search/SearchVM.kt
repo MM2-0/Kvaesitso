@@ -150,10 +150,11 @@ class SearchVM : ViewModel(), KoinComponent {
     fun launchBestMatchOrAction(context: Context) {
         val bestMatch = bestMatch.value
         if (bestMatch is SavableSearchable) {
-            bestMatch.launch(context, null)
-            favoritesService.reportLaunch(bestMatch)
+            if (bestMatch.launch(context, null))
+                favoritesService.reportLaunch(bestMatch)
             return
-        } else if (bestMatch is SearchAction) {
+        }
+        if (bestMatch is SearchAction) {
             bestMatch.start(context)
             return
         }
