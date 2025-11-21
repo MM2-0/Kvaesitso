@@ -879,4 +879,6 @@
     <string name="preference_screen_shapes">Formas</string>
     <string name="import_theme_exists">El tema ya existe y será actualizado</string>
     <string name="preference_shapes_default">Predeterminado</string>
+    <string name="preference_search_apps">Aplicaciones</string>
+    <string name="preference_search_apps_summary">Mostrar todas las aplicaciones cuando el campo de búsqueda esté vacío</string>
 </resources>
