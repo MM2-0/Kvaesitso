@@ -227,8 +227,6 @@
     <string name="notes_widget_dismissed">Notitie weggegooid</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Via %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Nu, je hebt me gevonden. Proficiat. Was het het waard?</string>
     <!-- Close a dialog -->
     <string name="close">Sluiten</string>
     <string name="no_selection">Geen selectie</string>
