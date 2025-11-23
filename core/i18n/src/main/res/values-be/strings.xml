@@ -100,7 +100,6 @@
     <string name="websearch_dialog_query_encoding_url">Працэнтнае кадзіраванне</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="websearch_dialog_url_error">У запаўніцеля \'${1}\' адсутнічае гэта спасылка</string>
-    <string name="easter_egg_text">Файна, ты знайшоў мяне. Віншую. Але гэта варта было рабіць?</string>
     <string name="close">Закрыць</string>
     <string name="save">Захаваць</string>
     <string name="duplicate">Дубліраваць</string>

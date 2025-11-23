@@ -291,7 +291,6 @@
     <string name="preference_icon_shape_squircle">Pătrat rotunjit</string>
     <string name="preference_icon_shape_triangle">Triunghi Reuleaux</string>
     <string name="missing_permission_auto_location">Accesul la locație este necesar pentru a determina automat locația</string>
-    <string name="easter_egg_text">Ei bine, m-ai găsit. Felicitări. A meritat\?</string>
     <string name="missing_permission_music_widget">Accesul la notificări este necesar pentru a controla redarea media</string>
     <string name="preference_category_licenses">Licențe open source</string>
     <string name="preference_themed_icons_summary">Colorați pictogramele cu schema de culori a aplicației</string>

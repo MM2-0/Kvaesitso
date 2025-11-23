@@ -422,7 +422,6 @@
     <string name="action_done">Selesai</string>
     <string name="action_more_actions">Lebih banyak tindakan</string>
     <string name="action_clear">Bersihkan</string>
-    <string name="easter_egg_text">Nah, Anda menemukan saya. Selamat. Apakah itu sepadan?</string>
     <string name="owncloud_login_2fa_hint">Jika Anda mengaktifkan autentikasi dua faktor, Anda harus menggunakan kata sandi aplikasi di sini.</string>
     <string name="preference_screen_plugins">Plugin</string>
     <string name="preference_screen_plugins_summary">Kelola ekstensi yang terinstal</string>

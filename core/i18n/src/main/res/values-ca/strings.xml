@@ -513,7 +513,6 @@
     <string name="gesture_action_quick_settings">Obrir la configuració ràpida</string>
     <string name="missing_permission_file_search_settings_android10">Cal accés a tots els fitxers per cercar fitxers locals</string>
     <string name="preference_blur_wallpaper_summary">Utilitzeu un efecte borrós al fons de pantalla</string>
-    <string name="easter_egg_text">Bé, m\'has trobat. Moltes Felicitats. Ha valgut la pena\?</string>
     <string name="missing_permission_files_search">Cal permís d\'emmagatzematge per cercar fitxers en aquest dispositiu</string>
     <string name="gesture_failed_message">Heu fet un gest \"%1$s\". Aquest gest està configurat actualment per activar una acció \"%2$s\". Tanmateix, l\'acció no s\'ha pogut dur a terme pel motiu següent:</string>
     <string name="grant_permission">Concedeix</string>

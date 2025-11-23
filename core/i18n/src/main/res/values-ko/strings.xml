@@ -286,7 +286,6 @@
     <string name="preference_screen_tags">태그</string>
     <string name="preference_edit_button">버튼 편집</string>
     <string name="preference_favorites_edit_button_summary">즐겨찾기를 정렬할 수 있는 버튼 표시</string>
-    <string name="easter_egg_text">와, 찾아내셨군요. 축하드려요. 찾아낼 만 하셨나요\?</string>
     <string name="weather_condition_heavysnow">많은 눈</string>
     <string name="weather_condition_lightrainshowers">소나기 조금</string>
     <string name="preference_screen_about">정보</string>

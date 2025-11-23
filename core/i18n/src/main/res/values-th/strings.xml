@@ -63,7 +63,6 @@
     <string name="notes_widget_action_dismiss">ลบโน้ต</string>
     <string name="notes_widget_dismissed">โน้ตถูกลบแล้ว</string>
     <string name="shortcut_summary">สร้างโดย %1$s</string>
-    <string name="easter_egg_text">โดนหาเจอซะแล้วสิ ยินดีด้วย คิดว่าคุ้มมั้ย\?</string>
     <string name="close">ปิด</string>
     <string name="save">บันทึก</string>
     <string name="duplicate">สร้างสำเนา</string>

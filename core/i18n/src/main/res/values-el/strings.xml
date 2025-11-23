@@ -68,7 +68,6 @@
     <string name="websearch_dialog_query_encoding">Κωδικοποίηση ερωτήματος</string>
     <string name="websearch_dialog_query_encoding_url">Κωδικοποίηση URL</string>
     <string name="websearch_dialog_query_encoding_none">Κανένα</string>
-    <string name="easter_egg_text">Λοιπόν, με βρήκες. Συγχαρητήρια. Άξιζε τον κόπο;</string>
     <string name="close">Κλείσιμο</string>
     <string name="menu_item_edit_favs">Επεξεργασία αγαπημένων</string>
     <string name="edit_favorites_dialog_unpinned">Δεν είναι καρφιτσωμένο - χρησιμοποιείται συχνά</string>
