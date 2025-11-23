@@ -136,9 +136,11 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">স্প্রেডশীট</string>
     <!-- Audio file -->
+    <string name="file_type_music">সঙ্গীত ফাইল</string>
     <!-- Video file -->
     <string name="file_type_video">চলচ্চিত্র</string>
     <!-- Image file -->
+    <string name="file_type_image">ছবি</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">ফাইল</string>
     <!-- Presentation -->
@@ -218,17 +220,20 @@
     <string name="menu_edit_widgets">উইজেট সম্পাদনা করুন</string>
     <string name="widget_name_weather">আবহাওয়া</string>
     <string name="widget_name_calendar">ক্যালেন্ডার</string>
+    <string name="widget_name_music">সঙ্গীত</string>
     <string name="widget_name_favorites">প্রিয়গুলি</string>
     <string name="widget_name_notes">নোট</string>
-    <string name="widget_name_unknown">অজানা</string>
+    <string name="widget_name_unknown">অজানা অ্যাপের উইজেট</string>
     <string name="widget_add_widget">উইজেট যোগ করুন</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
+    <string name="notes_widget_placeholder">একটি নোট লিখুন…</string>
     <string name="notes_widget_action_new">নতুন নোট</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">সংরক্ষণ করুন</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">নোট_%1$s</string>
     <string name="notes_widget_action_dismiss">বাদ দিন</string>
+    <string name="notes_widget_dismissed">নোটটি বাদ দেয়া হয়েছে।</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">%1$s এর শর্টকাট</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -254,6 +259,7 @@
     <string name="edit_favorites_dialog_empty_section">আইটেম এখানে টেনে আনুন</string>
     <string name="edit_favorites_dialog_tags">ট্যাগগুলো</string>
     <string name="edit_favorites_dialog_tag_section_empty">পিন করা ট্যাগ এখানে দেখা যাবে</string>
+    <string name="edit_favorites_dialog_new_tag">ট্যাগ তৈরি করুন…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">নেক্সটক্লাইড সার্ভারের লিংক</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -303,6 +309,7 @@
         <item quantity="other">বিগত দিনের %1$dটি চলমান ইভেন্ট</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">সারাদিন</string>
     <string name="task_due_time">শেষ সময় %1$s</string>
     <string name="task_due_date">শেষ তারিখ %1$s</string>
     <string name="task_due_today">আজকে শেষ সময়</string>
@@ -357,32 +364,43 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <string name="weather_no_data">আবহাওয়ার তথ্য পাওয়া যায়নি।</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">স্থান নির্বাচন</string>
+    <string name="weather_location_search_no_result">স্থান খুঁজে পাওয়া যায়নি।</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">অবস্থান স্বয়ংক্রিয়ভাবে নির্ধারণ করতে লোকেশন অ্যাক্সেস প্রয়োজন</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">মিডিয়া প্লেব্যাক নিয়ন্ত্রণ করতে নোটিফিকেশন অ্যাক্সেস প্রয়োজন</string>
     <!-- Missing contact permission in search settings screen -->
+    <string name="missing_permission_contact_search_settings">কন্টাক্ট অনুসন্ধান করতে কন্টাক্ট অনুমতির প্রয়োজন</string>
     <!-- Missing call permission in contacts settings screen -->
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">ক্যালেন্ডার অনুসন্ধান করতে ক্যালেন্ডার অনুমতির প্রয়োজন</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
+    <string name="missing_permission_calendar_widget_settings">এই উইজেটটির ব্যবহারের জন্য ক্যালেন্ডার অনুমতির প্রয়োজন</string>
     <string name="widget_config_calendar_missing_calendars_hint">আপনার ক্যালেন্ডার খুঁজে পাচ্ছেন না?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">অ্যাপ শর্টকাট অনুসন্ধান করার জন্য %1$s-কে ডিফল্ট হোম অ্যাপ হিসেবে সেট করা আবশ্যক</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">লোকাল ফাইল অনুসন্ধান করতে এক্সটার্নাল স্টোরেজ অনুমতির প্রয়োজন</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <string name="missing_permission_file_search_settings_android10">লোকাল ফাইল অনুসন্ধান করতে সব ফাইল পরিচালনা করার অনুমতির প্রয়োজন</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">বিজ্ঞপ্তি ব্যাজ প্রদর্শন করতে নোটিফিকেশন অ্যাক্সেস প্রয়োজন</string>
     <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">এখানে আসন্ন অ্যাপয়েন্টমেন্ট এবং ইভেন্টগুলি প্রদর্শন করতে ক্যালেন্ডার অনুমতি প্রদান করুন।</string>
     <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">আপনার ক্যালেন্ডার অনুসন্ধান করতে ক্যালেন্ডার অনুমতি প্রদান করুন।</string>
     <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">নিকটবর্তী অবস্থান অনুসন্ধান করতে অবস্থান অনুমতি প্রদান করুন।</string>
     <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">এই ডিভাইসে ছবি, মিডিয়া এবং ডকুমেন্ট খোঁজার জন্য স্টোরেজের অনুমতি দিন</string>
     <!-- Missing files permission, used in contact search results -->
+    <string name="missing_permission_contact_search">আপনার কন্টাক্ট খোঁজার জন্য কন্টাক্ট অনুমতি দিন।</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">অ্যাপ শর্টকাট খোঁজার জন্য %1$s-কে ডিফল্ট হোম অ্যাপ হিসেবে সেট করুন।</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -396,6 +414,7 @@
     <string name="preference_theme_dark">গাঢ়</string>
     <string name="preference_screen_colors">রঙের বিন্যাস</string>
     <string name="preference_colors_default">পূর্বনির্ধারিত</string>
+    <string name="preference_colors_bw">সাদা-কালো</string>
     <string name="preference_custom_colors_corepalette">রঙের প্যালেট</string>
     <string name="preference_mdy_color_source">ডাইনামিক রঙের উৎস</string>
     <string name="preference_mdy_color_source_system">সিস্টেম</string>
@@ -403,7 +422,6 @@
     <string name="preference_shapes_default">পূর্বনির্ধারিত</string>
     <string name="preference_transparencies_default">পূর্বনির্ধারিত</string>
     <string name="preference_font">অক্ষররেখা</string>
-    <string name="preference_font_system">সিস্টেমের পূর্বনির্ধারিত</string>
     <string name="preference_screen_about">সম্পর্কে</string>
     <string name="preference_version">সংস্করণ</string>
     <string name="preference_category_advanced">আরো অপশন</string>
@@ -422,6 +440,10 @@
     <string name="preference_debug_cleanup_database_summary">লঞ্চার ডেটাবেস থেকে ভাঙা এবং ব্যবহৃত না হওয়া এন্ট্রি মুছে ফেলুন</string>
     <string name="preference_debug_reinstall_iconpacks">আইকন প্যাক পুনরায় ইনস্টল করুন</string>
     <string name="preference_debug_reinstall_iconpacks_summary">আইকন প্যাকের সঞ্চয় পরিষ্কার করুন এবং পুনর্নির্মাণ করুন</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$dটি এন্ট্রি মুছে ফেলা হয়েছে।</item>
+        <item quantity="other">%1$dটি এন্ট্রি মুছে ফেলা হয়েছে।</item>
+    </plurals>
     <string name="preference_category_icons">আইকনস</string>
     <string name="preference_cards">কার্ড</string>
     <string name="preference_cards_summary">কার্ডের চেহারা কাস্টমাইজ করুন</string>
@@ -432,7 +454,6 @@
     <string name="preference_cards_shape_rounded">গোলাকার</string>
     <string name="preference_cards_shape_cut">কাটা</string>
     <string name="preference_icon_shape">আকৃতি</string>
-    <string name="preference_icon_shape_platform">সিস্টেমের পূর্বনির্ধারিত</string>
     <string name="preference_icon_shape_square">বর্গাকার</string>
     <string name="preference_icon_shape_rounded_square">গোলাকার বর্গ</string>
     <string name="preference_icon_shape_squircle">বর্গাকৃত গোলাকার</string>
@@ -469,7 +490,6 @@
     <string name="preference_screen_debug">ত্রুটি সংশোধন</string>
     <string name="preference_screen_weatherwidget">আবহাওয়া</string>
     <string name="preference_clockwidget_layout_vertical">পূর্বনির্ধারিত</string>
-    <string name="preference_clock_widget_time_format_system">সিস্টেমের পূর্বনির্ধারিত</string>
     <string name="preference_screen_search">খুঁজুন</string>
     <string name="preference_search_favorites">প্রিয়গুলি</string>
     <string name="preference_search_calendar">ক্যালেন্ডার</string>
