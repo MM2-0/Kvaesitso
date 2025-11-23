@@ -405,7 +405,6 @@
     <string name="preference_shapes_default">Numatyta</string>
     <string name="preference_transparencies_default">Numatyta</string>
     <string name="preference_font">Šriftas</string>
-    <string name="preference_font_system">Sistemos numatytas</string>
     <string name="preference_screen_about">Apie</string>
     <string name="preference_version">Versija</string>
     <string name="preference_category_links">Nuorodos</string>
@@ -450,7 +449,6 @@
     <string name="preference_cards_shape_rounded">Apvalinta</string>
     <string name="preference_cards_shape_cut">Kirpti</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Sistemos numatyta</string>
     <string name="preference_icon_shape_square">Kvadratas</string>
     <string name="preference_icon_shape_rounded_square">Apvalintas kvadratas</string>
     <string name="preference_icon_shape_squircle">Apvalintas kvadratas</string>
@@ -529,7 +527,6 @@
     <string name="preference_screen_clockwidget_summary">Tinkinti laikrodžio stilių ir komponentus</string>
     <string name="preference_clockwidget_layout_vertical">Numatytas</string>
     <string name="preference_clockwidget_layout_horizontal">Kompaktiškas</string>
-    <string name="preference_clock_widget_time_format_system">Sistemos numatytas</string>
     <string name="preference_clock_widget_fill_height">Užpildyti ekrano aukštį</string>
     <string name="preference_clock_widget_alignment">Lygiavimas</string>
     <string name="preference_clock_widget_alignment_top">Viršus</string>
@@ -539,6 +536,7 @@
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Rodyti dabartinę data</string>
     <string name="preference_clockwidget_favorites_part">Užduočių juosta</string>
+    <string name="preference_clockwidget_favorites_part_summary">Rodyti pirmą eilę prisegtų daiktų</string>
     <string name="preference_clockwidget_music_part">Medija</string>
     <string name="preference_clockwidget_music_part_summary">Rodyti medijos kontrolę kai yra aktyvi medijos sesija</string>
     <string name="preference_clockwidget_battery_part">Baterija</string>
@@ -605,6 +603,7 @@
     <string name="preference_screen_homescreen">Namų ekranas</string>
     <string name="preference_screen_homescreen_summary">Laikrodis ,paieškos juosta ,fonas ,sistemos juostos</string>
     <string name="preference_screen_icons">Išdėstymas ir ikonos</string>
+    <string name="preference_screen_icons_summary">Išdėstymas ,ikonų dydis , ikonų paketai , ženkleliai</string>
     <string name="preference_weather_integration">Oras</string>
     <string name="preference_media_integration">Medijos kontrolė</string>
     <!-- %1$s: app name (Kvaesitso) -->
