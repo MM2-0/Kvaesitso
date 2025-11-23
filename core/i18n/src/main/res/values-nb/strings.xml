@@ -388,7 +388,6 @@
     <string name="preference_mdy_color_source_wallpaper">Bakgrunn</string>
     <string name="preference_shapes_default">Standard</string>
     <string name="preference_transparencies_default">Standard</string>
-    <string name="preference_font_system">Systemstandard</string>
     <string name="preference_screen_about">Om</string>
     <string name="preference_version">Versjon</string>
     <string name="preference_category_links">Lenker</string>
@@ -424,7 +423,6 @@
     <string name="preference_cards_shape_rounded">Avrundet</string>
     <string name="preference_cards_shape_cut">Klipp ut</string>
     <string name="preference_icon_shape">Form</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_icon_shape_square">Firkantet</string>
     <string name="preference_icon_shape_rounded_square">Avrundet firkant</string>
     <string name="preference_icon_shape_squircle">Kvirkel</string>
@@ -491,7 +489,6 @@
     <string name="preference_clockwidget_layout_vertical">Standard</string>
     <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
     <string name="preference_clock_widget_show_seconds">Vis sekunder</string>
-    <string name="preference_clock_widget_time_format_system">Systemstandard</string>
     <string name="widget_use_theme_colors">Bruk temafarge</string>
     <string name="preference_clock_widget_fill_height">Fyll skjermhøyden</string>
     <string name="preference_clock_widget_alignment">Justering</string>
