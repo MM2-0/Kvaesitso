@@ -224,8 +224,6 @@
     <string name="notes_widget_dismissed">Išmestas ūžrašas.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Iš %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Nu ,manę suradai. Sveikinu .Ar buvo verta\?</string>
     <!-- Close a dialog -->
     <string name="close">Uždaryti</string>
     <string name="save">Išsaugoti</string>
