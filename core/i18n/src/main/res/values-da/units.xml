@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="da">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="da-rDK">
     <!-- DIMENSIONS -->
     <string name="dimension_length">Længde</string>
     <string name="dimension_mass">Masse</string>
