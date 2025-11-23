@@ -97,8 +97,10 @@
     <!-- Document -->
     <!-- Spreadsheet -->
     <!-- Audio file -->
+    <string name="file_type_music">File de musica</string>
     <!-- Video file -->
     <!-- Image file -->
+    <string name="file_type_image">Imagine</string>
     <!-- Generic file without file extension -->
     <!-- Presentation -->
     <!-- Compressed file -->
@@ -158,8 +160,9 @@
     <string name="websearch_dialog_advanced">Avantiate</string>
     <string name="menu_edit_widgets">Modificar le widgets</string>
     <string name="widget_name_weather">Tempore</string>
+    <string name="widget_name_music">Musica</string>
     <string name="widget_name_favorites">Favoritos</string>
-    <string name="widget_name_unknown">Incognite</string>
+    <string name="widget_name_unknown">Widget de application incognite</string>
     <string name="widget_add_widget">Adder un widget</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
@@ -183,6 +186,7 @@
     <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
     <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
     <string name="edit_favorites_dialog_tags">Etiquettas</string>
+    <string name="edit_favorites_dialog_new_tag">Crear etiquetta…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL de servitor Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -225,9 +229,11 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <string name="weather_no_data">Necun datos de tempore disponibile.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Definir location</string>
+    <string name="weather_location_search_no_result">Location non trovate.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <!-- Missing notification permission in music widget settings -->
     <!-- Missing contact permission in search settings screen -->
@@ -256,12 +262,12 @@
     <string name="preference_theme_dark">Obscur</string>
     <string name="preference_screen_colors">Schema de colores</string>
     <string name="preference_colors_default">Predefinite</string>
+    <string name="preference_colors_bw">Blanc e nigre</string>
     <string name="preference_mdy_color_source_system">Systema</string>
     <string name="preference_mdy_color_source_wallpaper">Fundo de schermo</string>
     <string name="preference_shapes_default">Predefinite</string>
     <string name="preference_transparencies_default">Predefinite</string>
     <string name="preference_font">Typo de litteras</string>
-    <string name="preference_font_system">Predefinite del systema</string>
     <string name="preference_screen_about">A proposito de</string>
     <string name="preference_category_links">Ligamines</string>
     <string name="preference_category_licenses">Licentias de codice aperte</string>
@@ -269,6 +275,7 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Aperir sito web</string>
     <string name="preference_screen_about_summary">Information de application e licentia</string>
+    <string name="preference_screen_appearance_summary">Personalisar le apparentia</string>
     <string name="preference_weather_provider">Fornitor</string>
     <string name="provider_metno">MET Norvegia</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (solmente Germania)</string>
@@ -278,7 +285,6 @@
     <string name="preference_category_debug_tools">Instrumentos</string>
     <string name="preference_debug_cleanup_database">Rader le base de datos</string>
     <string name="preference_debug_reinstall_iconpacks">Reinstallar pacchettos de icones</string>
-    <string name="preference_icon_shape_platform">Predefinite del systema</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
     <string name="preference_system_bar_icons_light">Clar</string>
     <string name="preference_system_bar_icons_dark">Obscur</string>
@@ -290,7 +296,6 @@
     <string name="preference_screen_debug">Depuration</string>
     <string name="preference_screen_weatherwidget">Tempore</string>
     <string name="preference_clockwidget_layout_vertical">Predefinite</string>
-    <string name="preference_clock_widget_time_format_system">Predefinite del systema</string>
     <string name="preference_screen_search">Cerca</string>
     <string name="preference_search_favorites">Favoritos</string>
     <string name="preference_screen_buildinfo_summary">Plus de information re le compilation de iste application</string>
@@ -311,9 +316,12 @@
     <string name="search_action_websearch">Recerca web</string>
     <string name="search_action_contact">Adder al contactos</string>
     <string name="more_information">Plus de information</string>
+    <string name="tag_exists_error">Jam existe un etiquetta con iste nomine.</string>
+    <string name="tag_exists_message">Jam existe un etiquetta con iste nomine. Si tu continua, ambe etiquettas essera fusionate.</string>
     <string name="gesture_action_launch_app">Lancear application</string>
     <string name="gesture_action_notifications">Aperir tiratorio de notificationes</string>
     <string name="gesture_action_quick_settings">Aperir le parametros rapide</string>
+    <string name="gesture_action_recents">Aperir recentes</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabile</string>
     <string name="theme_color_scheme_system_default">Usar le predefinite del systema</string>
     <string name="import_theme_apply">Applicar le thema</string>
