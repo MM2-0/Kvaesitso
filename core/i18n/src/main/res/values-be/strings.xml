@@ -237,8 +237,6 @@
     <string name="notes_widget_dismissed">Нататка адхілена.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Ад %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Файна, ты знайшоў мяне. Віншую. Але гэта варта было рабіць?</string>
     <!-- Close a dialog -->
     <string name="close">Закрыць</string>
     <string name="no_selection">Не выбрана</string>
