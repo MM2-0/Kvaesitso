@@ -433,7 +433,6 @@
     <string name="preference_screen_transparencies">Transparence</string>
     <string name="preference_transparencies_default">Par défaut</string>
     <string name="preference_font">Police de caractères</string>
-    <string name="preference_font_system">Police par défaut du système, dépendante du fournisseur (Google Sans sur les téléphones Google Pixel, Roboto sur AOSP)</string>
     <string name="preference_screen_about">À propos</string>
     <string name="preference_category_links">Liens</string>
     <string name="preference_category_licenses">Licences open-source</string>
@@ -477,7 +476,6 @@
     <string name="preference_cards_shape_rounded">Arrondi</string>
     <string name="preference_cards_shape_cut">Coupé</string>
     <string name="preference_icon_shape">Forme</string>
-    <string name="preference_icon_shape_platform">Suivre le système</string>
     <string name="preference_icon_shape_square">Carré</string>
     <string name="preference_icon_shape_rounded_square">Carré arrondi</string>
     <string name="preference_icon_shape_triangle">Triangle arrondi</string>
@@ -510,7 +508,7 @@
     <string name="preference_screen_integrations_summary">Gérer les comptes et les services</string>
     <string name="preference_signin_user">Connecté en tant que %1$s</string>
     <string name="preference_signout">Se déconnecter</string>
-    <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté</string>
+    <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté(e)</string>
     <string name="preference_icon_shape_pentagon">Pentagone</string>
     <string name="preference_category_wallpaper">Fond d\'écran</string>
     <string name="preference_dim_wallpaper">Assombrir le fond d\'écran</string>
@@ -562,7 +560,6 @@
     <string name="preference_clock_widget_time_format">Format de l\'heure</string>
     <string name="preference_clock_widget_time_format_24h">24 heures</string>
     <string name="preference_clock_widget_time_format_12h">12 heures</string>
-    <string name="preference_clock_widget_time_format_system">Défini par le système</string>
     <string name="widget_use_theme_colors">Utiliser les couleurs du thème</string>
     <string name="preference_clock_widget_fill_height">Remplir la hauteur de l\'écran</string>
     <string name="preference_clock_widget_alignment">Alignement</string>
@@ -571,6 +568,7 @@
     <string name="preference_clock_widget_alignment_bottom">Bas</string>
     <string name="preference_clockwidget_dynamic_zone">Zone dynamique</string>
     <string name="preference_clockwidget_date_part_summary">Afficher la date actuelle</string>
+    <string name="preference_clockwidget_favorites_part_summary">Afficher la première ligne d\'éléments épinglés</string>
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_music_part_summary">Afficher les contrôles du média lorsqu\'il y a une session média active</string>
     <string name="preference_clockwidget_battery_part">Batterie</string>
@@ -649,6 +647,7 @@
     <string name="preference_screen_homescreen">Écran d\'accueil</string>
     <string name="preference_screen_homescreen_summary">Horloge, barre de recherche, fond d\'écran, barres système</string>
     <string name="preference_screen_icons">Grille et icônes</string>
+    <string name="preference_screen_icons_summary">Grille, taille d\'icônes, packs d\'icônes, badges</string>
     <string name="preference_weather_integration">Météo</string>
     <string name="preference_media_integration">Contrôle multimédias</string>
     <string name="preference_tasks_integration">Tâches</string>
