@@ -225,8 +225,6 @@
     <string name="notes_widget_action_dismiss">Avvis</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Fra %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Greit, du fant meg. Gratulerer. Var det verdt det?</string>
     <!-- Close a dialog -->
     <string name="close">Lukk</string>
     <string name="save">Lagre</string>
