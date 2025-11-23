@@ -171,7 +171,6 @@
     <string name="notes_widget_action_dismiss">Dimitter</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Per %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
     <!-- Close a dialog -->
     <string name="close">Clauder</string>
     <string name="save">Salveguardar</string>
