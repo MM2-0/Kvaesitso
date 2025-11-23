@@ -412,7 +412,6 @@
     <string name="preference_shapes_default">Domyślny</string>
     <string name="preference_transparencies_default">Domyślny</string>
     <string name="preference_font">Czcionka</string>
-    <string name="preference_font_system">Domyślne</string>
     <string name="preference_screen_about">O aplikacji</string>
     <string name="preference_version">Wersja</string>
     <string name="preference_category_links">Linki</string>
@@ -457,7 +456,6 @@
     <string name="preference_cards_shape_rounded">Zaokrąglone</string>
     <string name="preference_cards_shape_cut">Przycięte</string>
     <string name="preference_icon_shape">Kształt</string>
-    <string name="preference_icon_shape_platform">Domyślne systemowe</string>
     <string name="preference_icon_shape_square">Kwadrat</string>
     <string name="preference_icon_shape_rounded_square">Zaokrąglony kwadrat</string>
     <string name="preference_icon_shape_triangle">Trójkąt Reuleaux</string>
@@ -537,7 +535,6 @@
     <string name="preference_clockwidget_layout_vertical">Pionowy</string>
     <string name="preference_clockwidget_layout_horizontal">Poziomy</string>
     <string name="preference_clock_widget_show_seconds">Pokaż sekundy</string>
-    <string name="preference_clock_widget_time_format_system">Domyślne</string>
     <string name="widget_use_theme_colors">Użyj koloru motywu</string>
     <string name="preference_clock_widget_fill_height">Wypełnij wysokość ekranu</string>
     <string name="preference_clock_widget_alignment">Wyrównanie</string>
@@ -548,6 +545,7 @@
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Pokaż aktualną datę</string>
     <string name="preference_clockwidget_favorites_part">Główny dock</string>
+    <string name="preference_clockwidget_favorites_part_summary">Pokaż pierwszy rząd przypiętych rzeczy</string>
     <string name="preference_clockwidget_music_part_summary">Pokaż elementy sterujące mediów, gdy jest aktywna sesja multimedialna</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
     <string name="preference_clockwidget_battery_part_summary">Pokaż aktualny poziom baterii kiedy jest bliska wyczerpaniu lub gdy się ładuje</string>
@@ -617,6 +615,7 @@
     <string name="preference_screen_homescreen">Ekran domowy</string>
     <string name="preference_screen_homescreen_summary">Zegar, pasek wyszukiwania, tapeta, paski systemowe</string>
     <string name="preference_screen_icons">Siatka i ikony</string>
+    <string name="preference_screen_icons_summary">Siatka, rozmiar ikon, pakiety ikon, plakietki</string>
     <string name="preference_weather_integration">Pogoda</string>
     <string name="preference_media_integration">Sterowanie multimediami</string>
     <!-- %1$s: app name (Kvaesitso) -->
