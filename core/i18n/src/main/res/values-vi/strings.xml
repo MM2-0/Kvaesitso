@@ -227,8 +227,6 @@
     <string name="notes_widget_dismissed">Đã bỏ qua ghi chú.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Bởi %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Vâng, bạn đã tìm thấy tôi. Chúc mừng. Có đáng không?</string>
     <!-- Close a dialog -->
     <string name="close">Đóng</string>
     <string name="save">Lưu</string>
