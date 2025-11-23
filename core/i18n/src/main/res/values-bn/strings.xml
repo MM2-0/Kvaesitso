@@ -236,8 +236,6 @@
     <string name="notes_widget_dismissed">নোটটি বাদ দেয়া হয়েছে।</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">%1$s এর শর্টকাট</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">আহ্। আপনি আমাকে খুঁজে পেলেন। অভিনন্দন। খুব মজা, তাই না?</string>
     <!-- Close a dialog -->
     <string name="close">বন্ধ</string>
     <string name="save">সংরক্ষণ করুন</string>
