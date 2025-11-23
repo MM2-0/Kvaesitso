@@ -407,7 +407,6 @@
     <string name="preference_shapes_default">Oletus</string>
     <string name="preference_transparencies_default">Oletus</string>
     <string name="preference_font">Fontti</string>
-    <string name="preference_font_system">Järjestelmän oletus</string>
     <string name="preference_screen_about">Tietoja</string>
     <string name="preference_version">Versio</string>
     <string name="preference_category_links">Linkkejä</string>
@@ -450,7 +449,6 @@
     <string name="preference_cards_shape_rounded">Pyöristetty</string>
     <string name="preference_cards_shape_cut">Leikattu</string>
     <string name="preference_icon_shape">Muoto</string>
-    <string name="preference_icon_shape_platform">Järjestelmän oletus</string>
     <string name="preference_icon_shape_square">Neliö</string>
     <string name="preference_icon_shape_rounded_square">Pyöristetty neliö</string>
     <string name="preference_icon_shape_squircle">Ympyräneliö</string>
@@ -529,7 +527,6 @@
     <string name="preference_screen_clockwidget_summary">Säädä kellon osia ja tyyliä</string>
     <string name="preference_clockwidget_layout_vertical">Oletus</string>
     <string name="preference_clockwidget_layout_horizontal">Tiivis</string>
-    <string name="preference_clock_widget_time_format_system">Järjestelmän oletus</string>
     <string name="preference_clock_widget_fill_height">Täytä näytön korkeus</string>
     <string name="preference_clock_widget_alignment">Kohdistus</string>
     <string name="preference_clock_widget_alignment_top">Ylhäällä</string>
@@ -539,6 +536,7 @@
     <string name="preference_clockwidget_date_part">Päiväys</string>
     <string name="preference_clockwidget_date_part_summary">Näytä päiväys</string>
     <string name="preference_clockwidget_favorites_part">Telakka</string>
+    <string name="preference_clockwidget_favorites_part_summary">Näytä ensimmäinen rivi kiinnitettyjä kohteita</string>
     <string name="preference_clockwidget_music_part_summary">Näytä mediaohjaimet, kun mediaa on aktiivisena</string>
     <string name="preference_clockwidget_battery_part">Akku</string>
     <string name="preference_clockwidget_battery_part_summary">Näytä akun varaustaso, kun akku on vähissä tai latauksessa</string>
@@ -604,6 +602,7 @@
     <string name="preference_screen_homescreen">Kotinäyttö</string>
     <string name="preference_screen_homescreen_summary">Kello, hakupalkki, taustakuva, järjestelmän palkit</string>
     <string name="preference_screen_icons">Ruudukko ja kuvakkeet</string>
+    <string name="preference_screen_icons_summary">Ruudukko, kuvakkeiden koko, kuvakepaketit, pistemerkit</string>
     <string name="preference_weather_integration">Sää</string>
     <string name="preference_media_integration">Mediasäätimet</string>
     <!-- %1$s: app name (Kvaesitso) -->
