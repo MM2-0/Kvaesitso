@@ -229,8 +229,6 @@
     <string name="notes_widget_dismissed">Catatan dibuang.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Oleh %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Nah, Anda menemukan saya. Selamat. Apakah itu sepadan?</string>
     <!-- Close a dialog -->
     <string name="close">Tutup</string>
     <string name="save">Simpan</string>
