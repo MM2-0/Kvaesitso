@@ -236,8 +236,6 @@
     <string name="notes_widget_dismissed">Нотатку відхилено</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Від %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Ну, ти мене знайшов. Вітаю. А це було того варте?</string>
     <!-- Close a dialog -->
     <string name="close">Закрити</string>
     <string name="no_selection">Немає вибору</string>
@@ -450,6 +448,7 @@
     <string name="preference_screen_weatherwidget">Погода</string>
     <string name="preference_clockwidget_layout_vertical">За замовчуванням</string>
     <string name="preference_clockwidget_favorites_part">Док-панель</string>
+    <string name="preference_clockwidget_favorites_part_summary">Показувати перший рядок закріплених значків</string>
     <string name="preference_screen_search">Пошук</string>
     <string name="preference_search_favorites">Улюблені</string>
     <string name="preference_search_favorites_summary">Показувати закріплені та часто використовувані значки над усіма застосунками</string>
