@@ -438,7 +438,6 @@
     <string name="preference_transparencies_default">По умолчанию</string>
     <string name="preference_transparencies_semi_transparent">Полупрозрачный</string>
     <string name="preference_font">Шрифт</string>
-    <string name="preference_font_system">Системный</string>
     <string name="preference_screen_about">О программе</string>
     <string name="preference_version">Версия</string>
     <string name="preference_category_links">Ссылки</string>
@@ -485,7 +484,6 @@
     <string name="preference_cards_shape_rounded">Закруглённая</string>
     <string name="preference_cards_shape_cut">Срезанная</string>
     <string name="preference_icon_shape">Форма</string>
-    <string name="preference_icon_shape_platform">Системное умолчание</string>
     <string name="preference_icon_shape_square">Квадрат</string>
     <string name="preference_icon_shape_rounded_square">Закруглённый квадрат</string>
     <string name="preference_icon_shape_squircle">Сквиркл</string>
@@ -575,7 +573,6 @@
     <string name="preference_clock_widget_time_format">Формат времени</string>
     <string name="preference_clock_widget_time_format_24h">24-часовой</string>
     <string name="preference_clock_widget_time_format_12h">12-часовой</string>
-    <string name="preference_clock_widget_time_format_system">Системные настройки по умолчанию</string>
     <string name="widget_use_theme_colors">Использовать цвет темы</string>
     <string name="preference_clock_widget_fill_height">Заполнить по высоте</string>
     <string name="preference_clock_widget_alignment">Расположить</string>
@@ -586,6 +583,7 @@
     <string name="preference_clockwidget_date_part">Дата</string>
     <string name="preference_clockwidget_date_part_summary">Показывать текущую дату</string>
     <string name="preference_clockwidget_favorites_part">Быстрый доступ</string>
+    <string name="preference_clockwidget_favorites_part_summary">Показывать первую строку избранных</string>
     <string name="preference_clockwidget_music_part">Медиа</string>
     <string name="preference_clockwidget_music_part_summary">Показать управление медиа, если активна медиа-сессия</string>
     <string name="preference_clockwidget_battery_part">Батарея</string>
@@ -664,6 +662,7 @@
     <string name="preference_screen_homescreen">Главный экран</string>
     <string name="preference_screen_homescreen_summary">Часы, панель поиска, обои, системные карточки</string>
     <string name="preference_screen_icons">Сетка и иконки</string>
+    <string name="preference_screen_icons_summary">Сетка, размер иконок, наборы иконок, значки</string>
     <string name="preference_weather_integration">Погода</string>
     <string name="preference_media_integration">Управление медиа</string>
     <string name="preference_tasks_integration">Задачи</string>
