@@ -229,8 +229,6 @@
     <string name="notes_widget_dismissed">메모를 취소했습니다.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">%1$s 제공</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">와, 찾아내셨군요. 축하드려요. 찾아낼 만 하셨나요\?</string>
     <!-- Close a dialog -->
     <string name="close">닫기</string>
     <string name="save">저장</string>
