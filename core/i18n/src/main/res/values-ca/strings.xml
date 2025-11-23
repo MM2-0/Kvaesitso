@@ -436,7 +436,6 @@
     <string name="preference_screen_transparencies">Transparència</string>
     <string name="preference_transparencies_default">Per defecte</string>
     <string name="preference_transparencies_semi_transparent">Semitransparent</string>
-    <string name="preference_font_system">Sistema predeterminat</string>
     <string name="preference_screen_about">Sobre</string>
     <string name="preference_version">Versió</string>
     <string name="preference_category_links">Enllaços</string>
@@ -482,7 +481,6 @@
     <string name="preference_cards_shape_rounded">Arrodonit</string>
     <string name="preference_cards_shape_cut">Tallat</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Sistema predeterminat</string>
     <string name="preference_icon_shape_square">Quadrat</string>
     <string name="preference_icon_shape_rounded_square">Quadrat arrodonit</string>
     <string name="preference_icon_shape_squircle">Cercle quadrat</string>
@@ -573,7 +571,6 @@
     <string name="preference_clock_widget_time_format">Format horari</string>
     <string name="preference_clock_widget_time_format_24h">24h</string>
     <string name="preference_clock_widget_time_format_12h">12h</string>
-    <string name="preference_clock_widget_time_format_system">Predeterminat</string>
     <string name="widget_use_theme_colors">Utilitzeu el color del tema</string>
     <string name="preference_clock_widget_fill_height">Omplir l\'alçada de la pantalla</string>
     <string name="preference_clock_widget_alignment">Alineació</string>
@@ -583,6 +580,7 @@
     <string name="preference_clockwidget_dynamic_zone">Zona dinàmica</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Mostra la data actual</string>
+    <string name="preference_clockwidget_favorites_part_summary">Mostra la primera fila d\'elements fixats</string>
     <string name="preference_clockwidget_music_part_summary">Mostra els controls multimèdia quan hi ha una sessió multimèdia activa</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
     <string name="preference_clockwidget_battery_part_summary">Mostra el nivell actual de la bateria quan la bateria està baixa o s\'està carregant</string>
@@ -662,6 +660,7 @@
     <string name="preference_screen_homescreen">Pantalla inicial</string>
     <string name="preference_screen_homescreen_summary">Rellotge, barra de cerca, fons de pantalla, barres del sistema</string>
     <string name="preference_screen_icons">Quadrícula i icones</string>
+    <string name="preference_screen_icons_summary">Quadrícula, mida d\'icones, paquets d\'icones, insígnies</string>
     <string name="preference_weather_integration">El temps</string>
     <string name="preference_media_integration">Controls multimèdia</string>
     <string name="preference_tasks_integration">Tasques</string>
