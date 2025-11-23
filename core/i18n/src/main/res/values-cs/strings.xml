@@ -231,8 +231,6 @@
     <string name="notes_widget_dismissed">Poznámka zavřena</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Od %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Super, našli jste mě. Gratuluju. Stálo to za to\?</string>
     <!-- Close a dialog -->
     <string name="close">Zavřít</string>
     <string name="no_selection">Žádný výběr</string>
