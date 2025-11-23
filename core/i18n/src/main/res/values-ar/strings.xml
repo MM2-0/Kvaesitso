@@ -235,8 +235,6 @@
     <string name="notes_widget_dismissed">تم ‏رفض الملاحظة.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">من طرف %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">حسنا، لقد وجدتني. تهانينا. هل كان يستحق كل هذا العناء؟</string>
     <!-- Close a dialog -->
     <string name="close">إغلاق</string>
     <string name="save">حفظ</string>
