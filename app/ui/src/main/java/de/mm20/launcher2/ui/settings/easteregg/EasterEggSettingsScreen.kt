@@ -45,14 +45,6 @@ fun EasterEggSettingsScreen() {
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    modifier = Modifier.padding(16.dp),
-                    text = stringResource(id = R.string.easter_egg_text),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        color = textColor
-                    )
-                )
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
