@@ -228,8 +228,6 @@
     <string name="notes_widget_dismissed">Notatka odrzucona.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Z %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">No cóż, zostałem odnaleziony. Gratulacje. Warto było\?</string>
     <!-- Close a dialog -->
     <string name="close">Zamknij</string>
     <string name="save">Zapisz</string>
