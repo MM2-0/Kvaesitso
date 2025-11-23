@@ -228,8 +228,6 @@
     <string name="notes_widget_dismissed">Notă înlăturată.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">al %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Ei bine, m-ai găsit. Felicitări. A meritat\?</string>
     <!-- Close a dialog -->
     <string name="close">Închide</string>
     <string name="no_selection">Nicio selecție</string>
