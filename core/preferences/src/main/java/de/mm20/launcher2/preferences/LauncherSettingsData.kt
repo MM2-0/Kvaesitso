@@ -5,6 +5,7 @@ import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.serialization.UUIDSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 import java.util.UUID
 
 @Serializable
@@ -47,7 +48,6 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
     val clockWidgetShowSeconds: Boolean = false,
     val clockWidgetMonospaced: Boolean = false,
-    val clockWidgetTimeFormat: TimeFormat = TimeFormat.System,
     val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
     val clockWidgetBatteryPart: Boolean = true,
@@ -191,6 +191,10 @@ data class LauncherSettingsData internal constructor(
         KeyboardFilterBarItem.Tools,
         KeyboardFilterBarItem.HiddenResults,
     ),
+
+
+    @JsonNames("clockWidgetTimeFormat")
+    val localeTimeFormat: TimeFormat = TimeFormat.System,
 
 
     ) {

@@ -353,7 +353,6 @@ fun ConfigureClockWidgetSheet(
     val alignment by viewModel.alignment.collectAsState()
     val showSeconds by viewModel.showSeconds.collectAsState()
     val monospaced by viewModel.monospaced.collectAsState()
-    val timeFormat by viewModel.timeFormat.collectAsState()
     val useAccentColor by viewModel.useThemeColor.collectAsState()
     val parts by viewModel.parts.collectAsState()
 
@@ -513,56 +512,6 @@ fun ConfigureClockWidgetSheet(
                                 viewModel.setMonospaced(it)
                             }
                         )
-                    }
-                    AnimatedVisibility(
-                        style !is ClockWidgetStyle.Analog &&
-                                style !is ClockWidgetStyle.Custom &&
-                                style !is ClockWidgetStyle.Empty
-                    ) {
-                        var showDropdown by remember { mutableStateOf(false) }
-                        Preference(
-                            title = stringResource(R.string.preference_clock_widget_time_format),
-                            summary = when (timeFormat) {
-                                TimeFormat.TwelveHour -> stringResource(R.string.preference_clock_widget_time_format_12h)
-                                TimeFormat.TwentyFourHour -> stringResource(R.string.preference_clock_widget_time_format_24h)
-                                TimeFormat.System -> stringResource(R.string.preference_value_system_default)
-                            },
-                            icon = R.drawable.schedule_24px,
-                            onClick = {
-                                showDropdown = true
-                            }
-                        )
-                        DropdownMenu(
-                            expanded = showDropdown,
-                            onDismissRequest = { showDropdown = false }) {
-                            DropdownMenuItem(
-                                text = {
-                                    Text(stringResource(R.string.preference_value_system_default))
-                                },
-                                onClick = {
-                                    viewModel.setTimeFormat(TimeFormat.System)
-                                    showDropdown = false
-                                }
-                            )
-                            DropdownMenuItem(
-                                text = {
-                                    Text(stringResource(R.string.preference_clock_widget_time_format_24h))
-                                },
-                                onClick = {
-                                    viewModel.setTimeFormat(TimeFormat.TwentyFourHour)
-                                    showDropdown = false
-                                }
-                            )
-                            DropdownMenuItem(
-                                text = {
-                                    Text(stringResource(R.string.preference_clock_widget_time_format_12h))
-                                },
-                                onClick = {
-                                    viewModel.setTimeFormat(TimeFormat.TwelveHour)
-                                    showDropdown = false
-                                }
-                            )
-                        }
                     }
                 }
             }
