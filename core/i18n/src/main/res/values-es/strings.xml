@@ -234,8 +234,6 @@
     <string name="notes_widget_dismissed">Nota eliminada</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">De %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Bueno, me encontraste. Felicidades. ¿Valió la pena\?</string>
     <!-- Close a dialog -->
     <string name="close">Cerrar</string>
     <string name="no_selection">Sin selección</string>
