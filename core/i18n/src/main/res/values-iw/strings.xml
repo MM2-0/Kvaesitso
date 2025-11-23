@@ -239,8 +239,6 @@
     <string name="notes_widget_dismissed">פתק בוטל.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">מ%1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">ובכן, מצאת אותי. מזל טוב. האם זה היה שווה את זה?</string>
     <!-- Close a dialog -->
     <string name="close">סגירה</string>
     <string name="no_selection">ללא בחירה</string>
