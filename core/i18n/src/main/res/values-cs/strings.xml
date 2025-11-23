@@ -441,7 +441,6 @@
     <string name="preference_transparencies_default">Výchozí</string>
     <string name="preference_transparencies_semi_transparent">Poloprůhledný</string>
     <string name="preference_font">Písmo</string>
-    <string name="preference_font_system">Výchozí systémové</string>
     <string name="preference_screen_about">O aplikaci</string>
     <string name="preference_version">Verze</string>
     <string name="preference_category_links">Odkazy</string>
@@ -488,7 +487,6 @@
     <string name="preference_cards_shape_rounded">Zakulacený</string>
     <string name="preference_cards_shape_cut">Uřízlý</string>
     <string name="preference_icon_shape">Tvar</string>
-    <string name="preference_icon_shape_platform">Podle systému</string>
     <string name="preference_icon_shape_square">Čtverec</string>
     <string name="preference_icon_shape_rounded_square">Zakulacený čtverec</string>
     <string name="preference_icon_shape_squircle">Čtverco-kruh</string>
@@ -578,7 +576,6 @@
     <string name="preference_clock_widget_time_format">Formát času</string>
     <string name="preference_clock_widget_time_format_24h">24hodinový</string>
     <string name="preference_clock_widget_time_format_12h">12hodinový</string>
-    <string name="preference_clock_widget_time_format_system">Podle systému</string>
     <string name="widget_use_theme_colors">Použít barvu motivu</string>
     <string name="preference_clock_widget_fill_height">Vyplnit výšku obrazovky</string>
     <string name="preference_clock_widget_alignment">Zarovnání</string>
