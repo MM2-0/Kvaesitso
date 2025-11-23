@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ar">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ar-rSA">
     <!-- DIMENSIONS -->
     <string name="dimension_length">الطول</string>
     <string name="dimension_mass">…الكتلة</string>
