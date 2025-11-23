@@ -395,7 +395,6 @@
     <string name="preference_shapes_default">Lehenetsia</string>
     <string name="preference_transparencies_default">Lehenetsia</string>
     <string name="preference_font">Letra-tipoa</string>
-    <string name="preference_font_system">Sistemaren lehenetsia</string>
     <string name="preference_screen_about">Honi buruz</string>
     <string name="preference_version">Bertsioa</string>
     <string name="preference_category_links">Estekak</string>
@@ -438,7 +437,6 @@
     <string name="preference_cards_shape_rounded">Biribildua</string>
     <string name="preference_cards_shape_cut">Ebakia</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Sistemaren lehenetsia</string>
     <string name="preference_icon_shape_square">Karratua</string>
     <string name="preference_icon_shape_rounded_square">Karratu biribildua</string>
     <string name="preference_icon_shape_triangle">Reuleaux irukia</string>
@@ -526,7 +524,6 @@
     <string name="preference_clock_widget_time_format">Ordu formatua</string>
     <string name="preference_clock_widget_time_format_24h">24 ordu</string>
     <string name="preference_clock_widget_time_format_12h">12 ordu</string>
-    <string name="preference_clock_widget_time_format_system">Sistemaren lehenetsia</string>
     <string name="widget_use_theme_colors">Erabili kolore tematikoa</string>
     <string name="preference_clock_widget_fill_height">Pantailaren garaiera bete</string>
     <string name="preference_clock_widget_alignment">Kokapena</string>
@@ -537,6 +534,7 @@
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Erakutsi uneko data</string>
     <string name="preference_clockwidget_favorites_part">Gogokoak</string>
+    <string name="preference_clockwidget_favorites_part_summary">Erakutsi ainguratutako elementuen lehen ilara</string>
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_music_part_summary">Multimedia-kontrolak erakutsi multimedia-saio aktibo bat dagoenean</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
@@ -614,6 +612,7 @@
     <string name="preference_screen_homescreen">Hasierako pantaila</string>
     <string name="preference_screen_homescreen_summary">Ordularia, bilaketa-barra, horma-papera, sistema-barrak</string>
     <string name="preference_screen_icons">Sareta eta ikonoak</string>
+    <string name="preference_screen_icons_summary">Sareta, ikonoen tamaina, ikono paketeak, biribiltxoak</string>
     <string name="preference_weather_integration">Eguraldia</string>
     <string name="preference_media_integration">Multimedia kontrola</string>
     <string name="preference_tasks_integration">Zereginak</string>
