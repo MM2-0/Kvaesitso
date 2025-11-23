@@ -479,7 +479,7 @@ private fun getShapeName(shape: IconShape?): String? {
             IconShape.Squircle -> R.string.preference_icon_shape_squircle
             IconShape.Square -> R.string.preference_icon_shape_square
             IconShape.Pentagon -> R.string.preference_icon_shape_pentagon
-            IconShape.PlatformDefault -> R.string.preference_icon_shape_platform
+            IconShape.PlatformDefault -> R.string.preference_value_system_default
             IconShape.Circle -> R.string.preference_icon_shape_circle
             IconShape.Teardrop -> R.string.preference_icon_shape_teardrop
             IconShape.Pebble -> R.string.preference_icon_shape_pebble

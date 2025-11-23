@@ -445,7 +445,6 @@
     <string name="preference_transparencies_default">Default</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
     <string name="preference_font">Font</string>
-    <string name="preference_font_system">System default</string>
     <string name="preference_screen_about">About</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Links</string>
@@ -494,7 +493,6 @@
     <string name="preference_cards_shape_rounded">Rounded</string>
     <string name="preference_cards_shape_cut">Cut</string>
     <string name="preference_icon_shape">Shape</string>
-    <string name="preference_icon_shape_platform">System default</string>
     <string name="preference_icon_shape_square">Square</string>
     <string name="preference_icon_shape_rounded_square">Rounded square</string>
     <string name="preference_icon_shape_squircle">Squircle</string>
@@ -587,7 +585,6 @@
     <string name="preference_clock_widget_time_format">Time format</string>
     <string name="preference_clock_widget_time_format_24h">24-hour</string>
     <string name="preference_clock_widget_time_format_12h">12-hour</string>
-    <string name="preference_clock_widget_time_format_system">System default</string>
     <string name="widget_use_theme_colors">Use theme color</string>
     <string name="preference_clock_widget_fill_height">Fill screen height</string>
     <string name="preference_clock_widget_alignment">Alignment</string>
@@ -1060,4 +1057,8 @@
     <string name="font_name_device_headline">Default headline font</string>
     <string name="font_name_device_body">Device text font</string>
     <string name="font_category_generic">Generic</string>
+    <string name="preference_screen_locale">Language and region</string>
+    <string name="preference_screen_locale_summary">Language, units, time format</string>
+    <string name="preference_language">Language</string>
+    <string name="preference_value_system_default">System default</string>
 </resources>

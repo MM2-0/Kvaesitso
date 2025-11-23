@@ -87,7 +87,7 @@ class TypographyRepository(
         get() = Typography(
             id = SystemFontId,
             builtIn = true,
-            name = context.getString(R.string.preference_font_system),
+            name = context.getString(R.string.preference_value_system_default),
             fonts = mapOf(
                 "brand" to FontFamily.DeviceHeadline,
                 "plain" to FontFamily.DeviceBody,

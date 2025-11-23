@@ -525,7 +525,7 @@ fun ConfigureClockWidgetSheet(
                             summary = when (timeFormat) {
                                 TimeFormat.TwelveHour -> stringResource(R.string.preference_clock_widget_time_format_12h)
                                 TimeFormat.TwentyFourHour -> stringResource(R.string.preference_clock_widget_time_format_24h)
-                                TimeFormat.System -> stringResource(R.string.preference_clock_widget_time_format_system)
+                                TimeFormat.System -> stringResource(R.string.preference_value_system_default)
                             },
                             icon = R.drawable.schedule_24px,
                             onClick = {
@@ -537,7 +537,7 @@ fun ConfigureClockWidgetSheet(
                             onDismissRequest = { showDropdown = false }) {
                             DropdownMenuItem(
                                 text = {
-                                    Text(stringResource(R.string.preference_clock_widget_time_format_system))
+                                    Text(stringResource(R.string.preference_value_system_default))
                                 },
                                 onClick = {
                                     viewModel.setTimeFormat(TimeFormat.System)

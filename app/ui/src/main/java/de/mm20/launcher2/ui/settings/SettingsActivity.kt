@@ -85,6 +85,8 @@ import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsRoute
 import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseRoute
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
+import de.mm20.launcher2.ui.settings.locale.LocaleSettingsRoute
+import de.mm20.launcher2.ui.settings.locale.LocaleSettingsScreen
 import de.mm20.launcher2.ui.settings.locations.LocationsSettingsRoute
 import de.mm20.launcher2.ui.settings.locations.LocationsSettingsScreen
 import de.mm20.launcher2.ui.settings.log.LogRoute
@@ -275,6 +277,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<DebugSettingsRoute> {
                 DebugSettingsScreen()
+            }
+            entry<LocaleSettingsRoute> {
+                LocaleSettingsScreen()
             }
             entry<BackupSettingsRoute> {
                 BackupSettingsScreen()
