@@ -438,7 +438,6 @@
     <string name="preference_transparencies_default">ค่าเริ่มต้น</string>
     <string name="preference_transparencies_semi_transparent">โปร่งแสง</string>
     <string name="preference_font">ชุดแบบอักษร</string>
-    <string name="preference_font_system">ค่าเริ่มต้นของระบบ</string>
     <string name="preference_screen_about">เกี่ยวกับ</string>
     <string name="preference_version">เวอร์ชั่น</string>
     <string name="preference_category_links">ลิงก์</string>
@@ -484,7 +483,6 @@
     <string name="preference_cards_shape_rounded">มุมมน</string>
     <string name="preference_cards_shape_cut">มุมตัด</string>
     <string name="preference_icon_shape">รูปร่าง</string>
-    <string name="preference_icon_shape_platform">ค่าเริ่มต้นของระบบ</string>
     <string name="preference_icon_shape_square">สี่เหลี่ยม</string>
     <string name="preference_icon_shape_rounded_square">สีเหลี่ยมมุมมน</string>
     <string name="preference_icon_shape_squircle">สี่เหลี่ยมบวม</string>
@@ -575,7 +573,6 @@
     <string name="preference_clock_widget_time_format">รูปแบบเวลา</string>
     <string name="preference_clock_widget_time_format_24h">24 ชั่วโมง</string>
     <string name="preference_clock_widget_time_format_12h">12 ชั่วโมง</string>
-    <string name="preference_clock_widget_time_format_system">ค่าเริ่มต้นของระบบ</string>
     <string name="widget_use_theme_colors">ใช้สีตามธีม</string>
     <string name="preference_clock_widget_fill_height">เติมให้เต็มความสูงของหน้าจอ</string>
     <string name="preference_clock_widget_alignment">การจัดตำแหน่ง</string>
