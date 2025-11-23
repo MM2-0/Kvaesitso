@@ -438,7 +438,6 @@
     <string name="preference_transparencies_default">默认</string>
     <string name="preference_transparencies_semi_transparent">半透明</string>
     <string name="preference_font">字体</string>
-    <string name="preference_font_system">系统默认</string>
     <string name="preference_screen_about">关于</string>
     <string name="preference_version">版本</string>
     <string name="preference_category_links">链接</string>
@@ -484,7 +483,6 @@
     <string name="preference_cards_shape_rounded">圆角</string>
     <string name="preference_cards_shape_cut">切角</string>
     <string name="preference_icon_shape">形状</string>
-    <string name="preference_icon_shape_platform">系统默认</string>
     <string name="preference_icon_shape_square">正方形</string>
     <string name="preference_icon_shape_rounded_square">圆角方形</string>
     <string name="preference_icon_shape_squircle">方圆形</string>
@@ -575,7 +573,6 @@
     <string name="preference_clock_widget_time_format">时间格式</string>
     <string name="preference_clock_widget_time_format_24h">24小时</string>
     <string name="preference_clock_widget_time_format_12h">12小时</string>
-    <string name="preference_clock_widget_time_format_system">系统默认</string>
     <string name="widget_use_theme_colors">使用主题颜色</string>
     <string name="preference_clock_widget_fill_height">全屏高度</string>
     <string name="preference_clock_widget_alignment">位置</string>
@@ -585,6 +582,7 @@
     <string name="preference_clockwidget_dynamic_zone">动态区域</string>
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">显示当前日期</string>
+    <string name="preference_clockwidget_favorites_part_summary">显示已固定项目的第一行</string>
     <string name="preference_clockwidget_music_part">媒体</string>
     <string name="preference_clockwidget_music_part_summary">在有活动媒体会话时显示媒体控件</string>
     <string name="preference_clockwidget_battery_part">电池</string>
@@ -668,6 +666,7 @@
     <string name="preference_screen_homescreen">主屏幕</string>
     <string name="preference_screen_homescreen_summary">时钟, 搜索栏, 壁纸, 系统栏</string>
     <string name="preference_screen_icons">网格&amp;图标</string>
+    <string name="preference_screen_icons_summary">网格, 图标尺寸, 图标包, 角标</string>
     <string name="preference_weather_integration">天气</string>
     <string name="preference_media_integration">媒体控制</string>
     <string name="preference_tasks_integration">任务</string>
