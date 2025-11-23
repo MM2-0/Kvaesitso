@@ -432,7 +432,6 @@
     <string name="preference_transparencies_default">Standard</string>
     <string name="preference_transparencies_semi_transparent">Halbtransparent</string>
     <string name="preference_font">Schriftart</string>
-    <string name="preference_font_system">Systemstandard</string>
     <string name="preference_screen_about">Über</string>
     <string name="preference_category_licenses">Open-Source-Lizenzen</string>
     <string name="preference_category_advanced">Erweitert</string>
@@ -474,7 +473,6 @@
     <string name="preference_cards_shape_rounded">Abgerundet</string>
     <string name="preference_cards_shape_cut">Abgeschnitten</string>
     <string name="preference_icon_shape">Form</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_icon_shape_square">Quadrat</string>
     <string name="preference_icon_shape_rounded_square">Abgerundetes Quadrat</string>
     <string name="preference_icon_shape_triangle">Reuleaux-Dreieck</string>
@@ -559,7 +557,6 @@
     <string name="preference_clock_widget_time_format">Zeitformat</string>
     <string name="preference_clock_widget_time_format_24h">24-Stunden</string>
     <string name="preference_clock_widget_time_format_12h">12-Stunden</string>
-    <string name="preference_clock_widget_time_format_system">Systemstandard</string>
     <string name="widget_use_theme_colors">Design-Farbe verwenden</string>
     <string name="preference_clock_widget_fill_height">Bildschirmhöhe ausfüllen</string>
     <string name="preference_clock_widget_alignment">Ausrichtung</string>
@@ -1000,4 +997,8 @@
     <string name="font_name_device_headline">Standard-Überschriften-Schrift</string>
     <string name="font_name_device_body">Standard-Text-Schrift</string>
     <string name="font_category_generic">Generisch</string>
+    <string name="preference_screen_locale">Sprache und Region</string>
+    <string name="preference_screen_locale_summary">Sprache, Einheiten, Zeitformat</string>
+    <string name="preference_language">Sprache</string>
+    <string name="preference_value_system_default">Systemstandard</string>
 </resources>
