@@ -143,7 +143,6 @@
     <!-- Save / export the current note content as markdown file -->
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
-    <!-- Wait, we have easter eggs? No way! -->
     <!-- Close a dialog -->
     <string name="save">Konservi</string>
     <string name="skip">Transsalti</string>
