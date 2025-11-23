@@ -143,7 +143,7 @@
     <string name="menu_app_info">Infos sur l\'appli</string>
     <string name="preference_screen_integrations_summary">Gérer les comptes et les services</string>
     <string name="preference_signin_user">Connecté en tant que %1$s</string>
-    <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté</string>
+    <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté(e)</string>
     <string name="file_type_ebook">E-book</string>
     <string name="file_type_drawing">Dessin</string>
     <string name="file_type_form">Formulaire</string>

@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
+import androidx.core.app.GrammaticalInflectionManagerCompat
 import androidx.core.net.toUri
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -61,6 +62,26 @@ fun LocaleSettingsScreen() {
                             }
                         )
                     }
+                )
+                ListPreference(
+                    icon = R.drawable.wc_24px,
+                    title = "Form of address",
+                    value = GrammaticalInflectionManagerCompat.getApplicationGrammaticalGender(context).let {
+                        if (it == GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NOT_SPECIFIED) {
+                            GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NEUTRAL
+                        } else {
+                            it
+                        }
+                    },
+                    onValueChanged = {
+                        GrammaticalInflectionManagerCompat.setRequestedApplicationGrammaticalGender(context, it)
+                    },
+                    enabled = isAtLeastApiLevel(34),
+                    items = listOf(
+                        "Neutral" to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NEUTRAL,
+                        "Feminine" to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_FEMININE,
+                        "Masculine" to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_MASCULINE,
+                    )
                 )
                 ListPreference(
                     icon = R.drawable.schedule_24px,
