@@ -370,7 +370,6 @@
     <string name="preference_shapes_default">기본</string>
     <string name="preference_transparencies_default">기본</string>
     <string name="preference_font">글꼴</string>
-    <string name="preference_font_system">시스템 기본값</string>
     <string name="preference_screen_about">정보</string>
     <string name="preference_version">버전</string>
     <string name="preference_category_links">링크</string>
@@ -411,7 +410,6 @@
     <string name="preference_cards_shape_rounded">둥근 모서리</string>
     <string name="preference_cards_shape_cut">각진 모서리</string>
     <string name="preference_icon_shape">모양</string>
-    <string name="preference_icon_shape_platform">시스템 기본값</string>
     <string name="preference_icon_shape_square">사각형</string>
     <string name="preference_icon_shape_rounded_square">모서리가 둥근 사각형</string>
     <string name="preference_icon_shape_squircle">둥근 사각형</string>
@@ -467,11 +465,11 @@
     <string name="preference_screen_clockwidget">시계</string>
     <string name="preference_screen_clockwidget_summary">시계 스타일 및 구성 요소 설정</string>
     <string name="preference_clockwidget_layout_vertical">기본</string>
-    <string name="preference_clock_widget_time_format_system">시스템 기본값</string>
     <string name="preference_clock_widget_fill_height">화면 높이 맞춤</string>
     <string name="preference_clockwidget_date_part">날짜</string>
     <string name="preference_clockwidget_date_part_summary">오늘 날짜 표시</string>
     <string name="preference_clockwidget_favorites_part">즐겨찾기</string>
+    <string name="preference_clockwidget_favorites_part_summary">고정된 항목의 첫째 줄 표시</string>
     <string name="preference_clockwidget_music_part">미디어</string>
     <string name="preference_clockwidget_music_part_summary">활성 미디어 세션이 있을 경우 미디어 제어 기능 표시</string>
     <string name="preference_clockwidget_battery_part">배터리</string>
@@ -537,6 +535,7 @@
     <string name="preference_screen_homescreen">홈 화면</string>
     <string name="preference_screen_homescreen_summary">시계, 검색 표시줄, 배경화면, 시스템 표시줄</string>
     <string name="preference_screen_icons">격자 및 아이콘</string>
+    <string name="preference_screen_icons_summary">격자, 아이콘 크기, 아이콘 팩, 배지</string>
     <string name="preference_weather_integration">날씨</string>
     <string name="preference_media_integration">미디어 제어</string>
     <!-- %1$s: app name (Kvaesitso) -->
