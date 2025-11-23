@@ -232,8 +232,6 @@
     <string name="notes_widget_dismissed">Not kapatıldı.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">%1$s tarafından</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Beni buldun demek. Tebrikler. Değdi mi bari?</string>
     <!-- Close a dialog -->
     <string name="close">Kapat</string>
     <string name="no_selection">Seçim yok</string>
