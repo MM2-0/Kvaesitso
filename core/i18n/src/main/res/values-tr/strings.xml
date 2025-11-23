@@ -137,8 +137,10 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Hesap tablosu</string>
     <!-- Audio file -->
+    <string name="file_type_music">Müzik dosyası</string>
     <!-- Video file -->
     <!-- Image file -->
+    <string name="file_type_image">Resim</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Dosya</string>
     <!-- Presentation -->
@@ -213,19 +215,21 @@
     <string name="menu_edit_widgets">Araçları düzenle</string>
     <string name="widget_name_weather">Hava Durumu</string>
     <string name="widget_name_calendar">Takvim</string>
-    <string name="widget_name_music">Medya</string>
+    <string name="widget_name_music">Müzik</string>
     <string name="widget_name_favorites">Favoriler</string>
     <string name="widget_name_notes">Not</string>
-    <string name="widget_name_unknown">Bilinmiyor</string>
+    <string name="widget_name_unknown">Bilinmeyen uygulama aracı</string>
     <string name="widget_add_widget">Araç ekle</string>
     <string name="widget_removed">Araç kaldırıldı</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
+    <string name="notes_widget_placeholder">Bir not yazın…</string>
     <string name="notes_widget_action_new">Yeni not</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Kaydet</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Not_%1$s</string>
     <string name="notes_widget_action_dismiss">Kapat</string>
+    <string name="notes_widget_dismissed">Not kapatıldı.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">%1$s tarafından</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -253,6 +257,7 @@
     <string name="edit_favorites_dialog_empty_section">Öğeleri buraya sürükleyin</string>
     <string name="edit_favorites_dialog_tags">Etiketler</string>
     <string name="edit_favorites_dialog_tag_section_empty">Sabitlenmiş etiketler burada görünecek</string>
+    <string name="edit_favorites_dialog_new_tag">Etiket oluştur…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud sunucu URL\'si</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -306,6 +311,7 @@
         <item quantity="other">+%1$d tamamlanmamış görev</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">tüm gün</string>
     <string name="task_due_time">Bitiş saati %1$s</string>
     <string name="task_due_date">Bitiş tarihi %1$s</string>
     <string name="task_due_today">Bugün bitiyor</string>
@@ -363,33 +369,46 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <string name="weather_no_data">Hava durumu verisi mevcut değil.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Konumu ayarla</string>
+    <string name="weather_location_search_no_result">Konum bulunamadı.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Konumu otomatik olarak belirlemek için konum erişimi gereklidir</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Medya oynatmayı kontrol etmek için bildirim erişimi gereklidir</string>
     <!-- Missing contact permission in search settings screen -->
+    <string name="missing_permission_contact_search_settings">Kişileri aramak için kişiler izni gereklidir</string>
     <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">Arama başlatmak için arama izni gereklidir</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Takvimi aramak için takvim izni gereklidir</string>
+    <string name="missing_permission_tasks_search_settings">Görevleri aramak için görevler izni gereklidir</string>
     <string name="missing_permission_tasks_integration">Görevler entegrasyonunu kullanmak için görevler izni gereklidir</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
+    <string name="missing_permission_calendar_widget_settings">Bu araç takvim izni gerektirir</string>
     <string name="widget_config_calendar_missing_calendars_hint">Takvimlerinizi bulamıyor musunuz?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">Uygulama kısayollarını aramak için %1$s varsayılan ana ekran uygulaması olarak ayarlanmalıdır</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">Yerel dosyaları aramak için harici depolama izni gereklidir</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <string name="missing_permission_file_search_settings_android10">Yerel dosyaları aramak için tüm dosyaları yönetme izni gereklidir</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Bildirim rozetlerini görüntülemek için bildirim erişimi gereklidir</string>
     <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">Yaklaşan randevuları ve etkinlikleri burada görüntülemek için takvim izni verin.</string>
     <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">Takviminizde arama yapmak için takvim izni verin.</string>
     <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">Yakındaki yerleri aramak için konum izni verin.</string>
     <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">Bu cihazdaki fotoğrafları, medyayı ve belgeleri aramak için depolama izni verin.</string>
     <!-- Missing files permission, used in contact search results -->
+    <string name="missing_permission_contact_search">Kişilerinizi aramak için kişiler izni verin.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Uygulama kısayollarını aramak için %1$s uygulamasını varsayılan ana ekran olarak ayarlayın.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -404,6 +423,7 @@
     <string name="preference_screen_colors">Renk şeması</string>
     <string name="preference_colors_default">Varsayılan</string>
     <string name="preference_colors_high_contrast">Yüksek kontrast</string>
+    <string name="preference_colors_bw">Siyah ve Beyaz</string>
     <string name="preference_custom_colors_corepalette">Renk paleti</string>
     <string name="preference_mdy_color_source">Dinamik renkler için kaynak</string>
     <string name="preference_mdy_color_source_system">Sistem</string>
@@ -418,7 +438,6 @@
     <string name="preference_transparencies_default">Varsayılan</string>
     <string name="preference_transparencies_semi_transparent">Yarı şeffaf</string>
     <string name="preference_font">Yazı Tipi</string>
-    <string name="preference_font_system">Sistem varsayılanı</string>
     <string name="preference_screen_about">Hakkında</string>
     <string name="preference_version">Sürüm</string>
     <string name="preference_category_links">Bağlantılar</string>
@@ -427,11 +446,13 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">Web sitesini aç</string>
     <string name="preference_screen_about_summary">Uygulama ve lisans bilgileri</string>
+    <string name="preference_screen_appearance_summary">Görünümü ve hissi özelleştirin</string>
     <string name="preference_weather_provider">Sağlayıcı</string>
     <string name="provider_metno">MET Norveç</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (sadece Almanya)</string>
     <string name="preference_category_location">Konum</string>
     <string name="preference_automatic_location">Otomatik konum</string>
+    <string name="preference_automatic_location_summary">Konumu otomatik olarak belirlemek için GPS ve konum servislerini kullan</string>
     <string name="preference_location_managed">Eklenti tarafından yönetiliyor</string>
     <string name="preference_location_managed_summary">Bu sağlayıcının konumu eklenti uygulaması tarafından yönetilmektedir</string>
     <string name="preference_location">Konum</string>
@@ -448,6 +469,10 @@
     <string name="preference_debug_cleanup_database_summary">Başlatıcı veritabanından bozuk ve kullanılmayan girişleri kaldırın</string>
     <string name="preference_debug_reinstall_iconpacks">Simge paketlerini yeniden yükle</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Simge paketi önbelleğini temizle ve yeniden oluştur</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$d giriş kaldırıldı.</item>
+        <item quantity="other">%1$d giriş kaldırıldı.</item>
+    </plurals>
     <string name="preference_category_icons">Simgeler</string>
     <string name="preference_cards">Kartlar</string>
     <string name="preference_cards_summary">Kart görünümünü özelleştir</string>
@@ -458,7 +483,6 @@
     <string name="preference_cards_shape_rounded">Yuvarlak</string>
     <string name="preference_cards_shape_cut">Kesik</string>
     <string name="preference_icon_shape">Şekil</string>
-    <string name="preference_icon_shape_platform">Sistem varsayılanı</string>
     <string name="preference_icon_shape_square">Kare</string>
     <string name="preference_icon_shape_rounded_square">Yuvarlak kare</string>
     <string name="preference_icon_shape_squircle">Yuvarlak köşe</string>
@@ -494,6 +518,7 @@
     <string name="preference_screen_integrations_summary">Bağlı hesapları ve hizmetleri yönet</string>
     <string name="preference_signin_user">%1$s olarak oturum açıldı</string>
     <string name="preference_signout">Oturumu kapat</string>
+    <string name="preference_summary_not_logged_in">Şu anda oturum açmadınız</string>
     <string name="preference_icon_shape_pentagon">Beşgen</string>
     <string name="preference_category_wallpaper">Duvar Kağıdı</string>
     <string name="preference_dim_wallpaper">Duvar kağıdını karart</string>
@@ -547,7 +572,6 @@
     <string name="preference_clock_widget_time_format">Saat biçimi</string>
     <string name="preference_clock_widget_time_format_24h">24 saat</string>
     <string name="preference_clock_widget_time_format_12h">12 saat</string>
-    <string name="preference_clock_widget_time_format_system">Sistem varsayılanı</string>
     <string name="widget_use_theme_colors">Tema rengini kullan</string>
     <string name="preference_clock_widget_fill_height">Ekran yüksekliğini doldur</string>
     <string name="preference_clock_widget_alignment">Hizalama</string>
@@ -557,12 +581,14 @@
     <string name="preference_clockwidget_dynamic_zone">Dinamik bölge</string>
     <string name="preference_clockwidget_date_part">Tarih</string>
     <string name="preference_clockwidget_date_part_summary">Geçerli tarihi göster</string>
+    <string name="preference_clockwidget_favorites_part_summary">Sabitlenmiş öğelerin ilk sırasını göster</string>
     <string name="preference_clockwidget_music_part">Medya</string>
     <string name="preference_clockwidget_music_part_summary">Aktif bir medya oturumu olduğunda medya kontrollerini göster</string>
     <string name="preference_clockwidget_battery_part">Pil</string>
     <string name="preference_clockwidget_battery_part_summary">Pil azaldığında veya şarj olurken mevcut pil seviyesini göster</string>
     <string name="preference_clockwidget_alarm_part">Alarmlar</string>
     <string name="preference_clockwidget_alarm_part_summary">Sonraki 8 saat içinde çalacak alarmları göster</string>
+    <string name="preference_screen_backup">Yedekle &amp; Geri Yükle</string>
     <string name="preference_screen_backup_summary">Başlatıcı verilerini dışa ve içe aktar</string>
     <string name="preference_backup">Yedekle</string>
     <string name="preference_backup_summary">Tercihleri ve başlatıcı verilerini dışa aktar</string>
@@ -635,8 +661,11 @@
     <string name="preference_compact_tags_summary">Etiketlerin kapladığı alanı azaltmak için etiket etiketlerini veya simgelerini gizleyin</string>
     <string name="preference_widgets_edit_button_summary">Araç eklemek, kaldırmak ve yeniden düzenlemek için bir düğme göster</string>
     <string name="preference_widgets_on_home_screen">Ana ekrandaki araçlar</string>
+    <string name="preference_widgets_on_home_screen_summary">Araçları ek bir sayfa yerine ana ekranda göster</string>
     <string name="preference_screen_homescreen">Ana ekran</string>
     <string name="preference_screen_homescreen_summary">Saat, arama çubuğu, duvar kağıdı, sistem çubukları</string>
+    <string name="preference_screen_icons">Izgara &amp; simgeler</string>
+    <string name="preference_screen_icons_summary">Izgara, simge boyutu, simge paketleri, rozetler</string>
     <string name="preference_weather_integration">Hava Durumu</string>
     <string name="preference_media_integration">Medya kontrolü</string>
     <string name="preference_tasks_integration">Görevler</string>
@@ -648,6 +677,7 @@
     <string name="preference_breezyweather_integration_instructions">Breezy Weather\'ı hava durumu sağlayıcısı olarak kullanmak için:\n\n1. Breezy Weather &gt; Ayarlar &gt; Araçlar &amp; Canlı duvar kağıdı &gt; Gadgetbridge verisi gönder &gt; %1$s\'i Etkinleştir\'e gidin\n\n2. %1$s\'te, hava durumu sağlayıcısı olarak Breezy Weather\'ı seçin</string>
     <string name="preference_launch_breezyweather_app">Breezy Weather\'ı aç</string>
     <string name="preference_contacts_call_on_tap">Aramak için dokun</string>
+    <string name="preference_contacts_call_on_tap_summary">Bir telefon numarasına dokunduğunuzda hemen bir arama başlatın</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Henüz bir Nextcloud hesabı bağlamadınız</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -693,22 +723,30 @@
     <string name="search_action_contact">Kişilere ekle</string>
     <string name="search_action_open_url">Web sitesini görüntüle</string>
     <string name="search_action_event">Etkinlik planla</string>
+    <string name="create_search_action_type">Ne tür bir eylem oluşturmak istersiniz?</string>
     <string name="create_search_action_type_web">Bir web sitesinde ara</string>
     <string name="create_search_action_type_app">Bir uygulamada ara</string>
     <string name="create_search_action_type_intent">Özel intent</string>
     <string name="create_search_action_pick_app">Aranacak bir uygulama seçin:</string>
     <string name="create_search_action_website_url">Web sitesinin adresini girin:</string>
+    <string name="create_search_action_website_invalid_url">Verilen web sitesi otomatik olarak bir web araması olarak içe aktarılamaz. Farklı bir web sitesi deneyebilir veya sonraki adımda gerekli verileri manuel olarak girebilirsiniz.</string>
     <string name="search_action_label">Ad</string>
     <string name="search_action_app">Uygulama</string>
     <string name="search_action_websearch_url">URL şablonu</string>
+    <string name="search_action_websearch_url_hint">Web arama URL\'sini oluşturmak için kullanılan URL şablonu. Gerçek arama terimi için bir yer tutucu olarak ‘${1}’ kullanın, örn. https://google.com/search?q=${1}.</string>
     <string name="more_information">Daha fazla bilgi</string>
     <string name="experimental_feature">Deneysel</string>
+    <string name="tag_exists_error">Bu ada sahip bir etiket zaten var.</string>
+    <string name="tag_exists_message">Bu ada sahip bir etiket zaten var. Devam ederseniz, iki etiket birleştirilecektir.</string>
+    <string name="tag_no_items_message">Bu etikete atanmış öğe yok. Devam ederseniz, etiket silinecektir.</string>
+    <string name="tag_empty_name">Bir etiket isimsiz olamaz. Devam ederseniz, etiket silinecektir.</string>
     <string name="tag_select_items">Öğeleri seçin:</string>
     <string name="tag_name">Etiket adı</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d öğe seçildi</item>
         <item quantity="other">%1$d öğe seçildi</item>
     </plurals>
+    <string name="preference_layout_open_search">Arama / uygulama çekmecesi</string>
     <string name="open_search_pull_down">Aşağı kaydır</string>
     <string name="open_search_swipe_left">Sola kaydır</string>
     <string name="open_search_swipe_right">Sağa kaydır</string>
@@ -739,6 +777,7 @@
     <string name="gesture_action_lock_screen">Ekranı kapat</string>
     <string name="gesture_action_quick_settings">Hızlı ayarları aç</string>
     <string name="gesture_action_power_menu">Güç menüsünü göster</string>
+    <string name="gesture_action_recents">Son uygulamaları aç</string>
     <string name="gesture_failed_message">Bir \"%1$s\" hareketi gerçekleştirdiniz. Bu hareket şu anda bir \"%2$s\" eylemini tetikleyecek şekilde ayarlanmış. Ancak, eylem aşağıdaki nedenle gerçekleştirilemedi:</string>
     <string name="missing_permission_accessibility_gesture_failed">Bu eylemi gerçekleştirmek için başlatıcının erişilebilirlik hizmetinin etkinleştirilmesi gerekir.</string>
     <string name="missing_permission_accessibility_gesture_settings">Bu eylem, başlatıcının erişilebilirlik hizmetinin etkinleştirilmesini gerektirir.</string>
@@ -753,6 +792,7 @@
     <string name="widget_config_weather_integration_settings">Hava durumu entegrasyonu ayarları</string>
     <string name="widget_config_calendar_no_calendars">Takvim bulunamadı</string>
     <string name="widget_pick_widget">Araç seç</string>
+    <string name="app_widget_loading_failed">Uygulama aracı yüklenemedi.</string>
     <string name="widget_config_music_integration_settings">Medya kontrolü entegrasyonu ayarları</string>
     <string name="note_widget_link_file">Dosyaya bağla</string>
     <string name="note_widget_link_file_summary">Bu aracın içeriğini harici bir dosyayla senkronize et</string>
@@ -766,7 +806,9 @@
     <string name="note_widget_conflict_local_version">Son kaydedilen sürüm:</string>
     <string name="note_widget_conflict_file_version">Mevcut dosya içeriği:</string>
     <string name="note_widget_file_read_error">Not okunurken hata oluştu</string>
+    <string name="note_widget_file_read_error_description">Bağlantılı dosya okunamadı. Muhtemelen taşınmış veya silinmiş. Başlatıcının dahili depolamasından bir kopya geri yüklendi. Notu düzenlerseniz, bağlantılı dosya muhtemelen üzerine yazılacaktır.</string>
     <string name="note_widget_file_write_error">Not kaydedilirken hata oluştu</string>
+    <string name="note_widget_file_write_error_description">Not, bağlantılı dosyaya yazılamadı. Muhtemelen taşınmış veya silinmiş. Başlatıcının dahili depolamasına bir kopya kaydedildi.</string>
     <string name="confirmation_delete_color_scheme">%1$s renk şemasını gerçekten silmek istiyor musunuz?</string>
     <string name="confirmation_delete_shapes_scheme">%1$s şekil şemasını gerçekten silmek istiyor musunuz?</string>
     <string name="confirmation_delete_typography_scheme">%1$s tipografi şemasını gerçekten silmek istiyor musunuz?</string>
@@ -802,12 +844,14 @@
     <string name="menu_bugreport">Hata Bildir</string>
     <string name="location_open_24_7">7/24 Açık</string>
     <string name="plugin_state_error">Bu eklenti düzgün çalışmıyor</string>
+    <string name="plugin_state_setup_required">Önce bu eklentiyi kurmanız gerekiyor</string>
     <string name="plugin_action_setup">Kur</string>
     <string name="plugin_type_filesearch">Dosyalar</string>
     <string name="plugin_type_contacts">Kişiler</string>
     <string name="plugin_type_weather">Hava durumu sağlayıcısı</string>
     <string name="plugin_weather_provider_enable">Hava durumu sağlayıcısı olarak ayarla</string>
     <string name="plugin_weather_provider_enabled">Şu anda hava durumu sağlayıcısı olarak ayarlı</string>
+    <string name="unavailable_searchable">Bu öğe artık mevcut değil.</string>
     <string name="clock_style_digital1">Kalın</string>
     <string name="clock_style_digital2">Basit</string>
     <string name="clock_style_orbit">Yörünge</string>
@@ -954,8 +998,10 @@
     <string name="calendar_widget_next_day">Sonraki gün</string>
     <string name="calendar_widget_create_event">Yeni etkinlik oluştur</string>
     <string name="calendar_widget_open_calendar">Takvim uygulamasını aç</string>
+    <string name="profile_work_profile_state_locked">İş uygulamaları duraklatıldı.</string>
     <string name="profile_work_profile_action_unlock">Devam ettir</string>
     <string name="profile_work_profile_action_lock">İş uygulamalarını duraklat</string>
+    <string name="profile_private_profile_state_locked">Özel alan kilitli.</string>
     <string name="profile_private_profile_action_unlock">Kilidi aç</string>
     <string name="profile_private_profile_action_lock">Özel alanı kilitle</string>
     <string name="hint_drag_and_drop_reorder">Yeniden düzenlemek için öğeleri basılı tutun ve sürükleyin</string>
@@ -973,6 +1019,7 @@
     </plurals>
     <string name="departure_time_departed">kalktı</string>
     <string name="bad_configuration_title">Tebrikler, kendinizi dışarıda kilitlediniz!</string>
+    <string name="bad_configuration_summary">Hem aramayı hem de ayarları erişilemez kılan bir ayar kombinasyonu buldunuz — bu da sizi başlatıcının dışında bırakıyor.</string>
     <string name="theme_export_title">Temayı dışa aktar</string>
     <string name="theme_import_title">Temayı içe aktar</string>
     <string name="theme_bundle_name">Ad</string>
