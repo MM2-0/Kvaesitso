@@ -431,7 +431,6 @@
     <string name="preference_transparencies_default">Standaard</string>
     <string name="preference_transparencies_semi_transparent">Halfdoorzichtig</string>
     <string name="preference_font">Lettertype</string>
-    <string name="preference_font_system">Systeemstandaard</string>
     <string name="preference_screen_about">Over</string>
     <string name="preference_version">Versie</string>
     <string name="preference_category_links">Koppelingen</string>
@@ -475,7 +474,6 @@
     <string name="preference_cards_shape_rounded">Afgerond</string>
     <string name="preference_cards_shape_cut">Afgetopt</string>
     <string name="preference_icon_shape">Vorm</string>
-    <string name="preference_icon_shape_platform">Systeemstandaard</string>
     <string name="preference_icon_shape_square">Vierkant</string>
     <string name="preference_icon_shape_rounded_square">Afgerond vierkant</string>
     <string name="preference_icon_shape_triangle">Reuleauxdriehoek</string>
@@ -560,7 +558,6 @@
     <string name="preference_clock_widget_time_format">Tijdformaat</string>
     <string name="preference_clock_widget_time_format_24h">24-uur</string>
     <string name="preference_clock_widget_time_format_12h">12-uur</string>
-    <string name="preference_clock_widget_time_format_system">Systeemstandaard</string>
     <string name="widget_use_theme_colors">Themakleur gebruiken</string>
     <string name="preference_clock_widget_fill_height">Volledige hoogte opvullen</string>
     <string name="preference_clock_widget_alignment">Uitlijning</string>
