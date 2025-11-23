@@ -447,7 +447,6 @@
     <string name="preference_transparencies_default">ברירת המחדל</string>
     <string name="preference_transparencies_semi_transparent">חצי שקוף</string>
     <string name="preference_font">גופן</string>
-    <string name="preference_font_system">ברירת המחדל של המערכת</string>
     <string name="preference_screen_about">אודות</string>
     <string name="preference_version">גרסה</string>
     <string name="preference_category_links">קישורים</string>
@@ -497,7 +496,6 @@
     <string name="preference_cards_shape_rounded">מעוגל</string>
     <string name="preference_cards_shape_cut">גזירה</string>
     <string name="preference_icon_shape">צורה</string>
-    <string name="preference_icon_shape_platform">ברירת המחדל של המערכת</string>
     <string name="preference_icon_shape_square">ריבוע</string>
     <string name="preference_icon_shape_rounded_square">ריבוע מעוגל</string>
     <string name="preference_icon_shape_squircle">ריבוע עגלגל</string>
@@ -588,7 +586,6 @@
     <string name="preference_clock_widget_time_format">תבנית השעה</string>
     <string name="preference_clock_widget_time_format_24h">24 שעות</string>
     <string name="preference_clock_widget_time_format_12h">12 שעות</string>
-    <string name="preference_clock_widget_time_format_system">ברירת המחדל של המערכת</string>
     <string name="widget_use_theme_colors">החלת צבע ערכת הנושא</string>
     <string name="preference_clock_widget_fill_height">מילוי גובה המסך</string>
     <string name="preference_clock_widget_alignment">יישור</string>
