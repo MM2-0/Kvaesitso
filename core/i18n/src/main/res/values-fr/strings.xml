@@ -151,7 +151,6 @@
     <string name="menu_calendar_open_externally">Ouvrir dans l\'application de calendrier</string>
     <string name="preference_icon_shape_hexagon">Hexagone</string>
     <string name="shortcut_summary">Par %1$s</string>
-    <string name="easter_egg_text">Bien, vous m\'avez trouvé. Bravo. Cela en valait-il la peine ?</string>
     <string name="missing_permission_calendar_widget">Accorder la permission d\'accès au calendrier pour afficher les évènements à venir ici.</string>
     <string name="missing_permission_calendar_search">Accorder la permission de rechercher dans le calendrier.</string>
     <string name="missing_permission_files_search">Accorder la permission d\'accès au stockage pour rechercher des images, des médias et des documents sur cet appareil.</string>

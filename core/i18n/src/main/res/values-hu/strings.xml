@@ -95,7 +95,6 @@
     <string name="websearch_dialog_query_encoding">Lekérdezés kódolása</string>
     <string name="websearch_dialog_query_encoding_url">Százalékos-kódolás</string>
     <string name="save">Mentés</string>
-    <string name="easter_egg_text">Nos, megtalált. Gratulálok. Megérte?</string>
     <string name="edit_favorites_dialog_unpinned">Nincs kitűzve - gyakran használt</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Kitűzött - automatikusan rendezett</string>
     <string name="owncloud_server_invalid_url">Ez a webcím nem egy érvényes Owncloud telepítésre mutat</string>

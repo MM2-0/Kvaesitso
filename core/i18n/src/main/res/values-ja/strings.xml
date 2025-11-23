@@ -185,7 +185,6 @@
     <string name="widget_name_unknown">不明なアプリウィジェット</string>
     <string name="notes_widget_action_dismiss">閉じる</string>
     <string name="notes_widget_dismissed">メモは閉じられました。</string>
-    <string name="easter_egg_text">さて、見つけたようだね。おめでとう。見つけられてよかった？</string>
     <string name="widget_action_replace">置き換え</string>
     <string name="weather_condition_rain">雨</string>
     <string name="weather_condition_sleet">みぞれ</string>

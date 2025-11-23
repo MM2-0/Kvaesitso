@@ -168,7 +168,6 @@
     <string name="weather_condition_heavyrainandthunder">Starkregen und Gewitter</string>
     <string name="weather_condition_wind">Wind</string>
     <string name="weather_condition_unknown">Unbekannt</string>
-    <string name="easter_egg_text">Tja, da sind Sie. Herzlichen Glückwunsch. War es das wert\?</string>
     <string name="missing_permission_calendar_widget">Kalender-Berechtigung wird benötigt, um Ihre nächsten Termine hier anzuzeigen</string>
     <string name="missing_permission_calendar_search">Kalender-Berechtigung wird benötigt, um Termine zu durchsuchen.</string>
     <string name="missing_permission_location_search">Standortzugriff wird benötigt, um Orte zu finden</string>

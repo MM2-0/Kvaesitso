@@ -249,7 +249,6 @@
     <string name="nextcloud_server_url">Adres URL serwera Nextcloud</string>
     <string name="weather_widget_set_location">Ustaw lokalizację</string>
     <string name="grant_permission">Przyznaj</string>
-    <string name="easter_egg_text">No cóż, zostałam odnaleziony. Gratulacje. Warto było\?</string>
     <string name="disclaimer_currency_converter">Kurs walut, taki jak udostępniany codziennie przez Centralny Bank Europejski. Wszystkie informacje są dostarczane \"takie jakie są\" bez jakiejkolwiek gwarancji. Nie ponosimy odpowiedzialności za podane informacje.
 \n
 \nOstatnia aktualizacja: %1$s</string>
