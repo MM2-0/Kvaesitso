@@ -229,8 +229,6 @@
     <string name="notes_widget_dismissed">メモは閉じられました。</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">%1$s から</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">さて、見つけたようだね。おめでとう。見つけられてよかった？</string>
     <!-- Close a dialog -->
     <string name="close">閉じる</string>
     <string name="save">保存</string>
