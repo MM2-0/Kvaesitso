@@ -434,7 +434,6 @@
     <string name="preference_transparencies_default">Predefinito</string>
     <string name="preference_transparencies_semi_transparent">Semi-trasparente</string>
     <string name="preference_font">Carattere</string>
-    <string name="preference_font_system">Predefinito del sistema</string>
     <string name="preference_screen_about">Informazioni</string>
     <string name="preference_version">Versione</string>
     <string name="preference_category_links">Collegamenti</string>
@@ -478,7 +477,6 @@
     <string name="preference_cards_shape_rounded">Arrotondata</string>
     <string name="preference_cards_shape_cut">Tagliata</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Predefinita sistema</string>
     <string name="preference_icon_shape_square">Quadrato</string>
     <string name="preference_icon_shape_rounded_square">Quadrato smussato</string>
     <string name="preference_icon_shape_squircle">Scoiattolo</string>
@@ -567,7 +565,6 @@
     <string name="preference_clock_widget_time_format">Formato ora</string>
     <string name="preference_clock_widget_time_format_24h">24 ore</string>
     <string name="preference_clock_widget_time_format_12h">12 ore</string>
-    <string name="preference_clock_widget_time_format_system">Predefinito del sistema</string>
     <string name="widget_use_theme_colors">Usa colore del tema</string>
     <string name="preference_clock_widget_fill_height">Riempi altezza schermo</string>
     <string name="preference_clock_widget_alignment">Allineamento</string>
