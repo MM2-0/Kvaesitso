@@ -229,8 +229,6 @@
     <string name="notes_widget_action_dismiss">Rejeitar</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">De %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Parabéns, encontrou-me. Valeu a pena?</string>
     <!-- Close a dialog -->
     <string name="close">Fechar</string>
     <string name="save">Guardar</string>
