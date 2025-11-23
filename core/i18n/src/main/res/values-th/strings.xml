@@ -234,8 +234,6 @@
     <string name="notes_widget_dismissed">โน้ตถูกลบแล้ว</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">สร้างโดย %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">โดนหาเจอซะแล้วสิ ยินดีด้วย คิดว่าคุ้มมั้ย\?</string>
     <!-- Close a dialog -->
     <string name="close">ปิด</string>
     <string name="no_selection">ยังไม่ได้เลือกสิ่งใด</string>
