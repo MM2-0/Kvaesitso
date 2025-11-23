@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="eu">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="eu-rES">
     <!-- DIMENSIONS -->
     <string name="dimension_length">Luzera</string>
     <string name="dimension_mass">Masa</string>
