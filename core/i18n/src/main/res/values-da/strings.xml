@@ -132,8 +132,10 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Regneark</string>
     <!-- Audio file -->
+    <string name="file_type_music">Lydfil</string>
     <!-- Video file -->
     <!-- Image file -->
+    <string name="file_type_image">Billede</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Fil</string>
     <!-- Presentation -->
@@ -211,17 +213,19 @@
     <string name="menu_edit_widgets">Redigér widgets</string>
     <string name="widget_name_weather">Vejr</string>
     <string name="widget_name_calendar">Kalender</string>
-    <string name="widget_name_music">Medier</string>
+    <string name="widget_name_music">Musik</string>
     <string name="widget_name_favorites">Favoritter</string>
-    <string name="widget_name_unknown">Ukendt</string>
+    <string name="widget_name_unknown">Ukendt app-widget</string>
     <string name="widget_add_widget">Tilføj widget</string>
     <string name="widget_removed">Widget fjernet</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
+    <string name="notes_widget_placeholder">Skriv en note…</string>
     <string name="notes_widget_action_new">Ny note</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Gem</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_action_dismiss">Afvis</string>
+    <string name="notes_widget_dismissed">Note afvist.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Af %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -246,6 +250,7 @@
     <string name="edit_favorites_dialog_pinned_sorted">Fastgjort – sorteret manuelt</string>
     <string name="edit_favorites_dialog_empty_section">Træk elementer hertil</string>
     <string name="edit_favorites_dialog_tag_section_empty">Fastgjorte tags vises her</string>
+    <string name="edit_favorites_dialog_new_tag">Opret tag…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud server-URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -295,6 +300,7 @@
         <item quantity="other">+%1$d igangværende begivenheder fra de sidste dage</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">heldags</string>
     <string name="task_due_time">Forfalder kl. %1$s</string>
     <string name="task_due_date">Forfalder d. %1$s</string>
     <string name="task_due_today">Forfalder i dag</string>
@@ -349,32 +355,43 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <string name="weather_no_data">Ingen vejr-data er tilgængelig.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Indstil lokation</string>
+    <string name="weather_location_search_no_result">Lokation ikke fundet.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Lokationsadgang er påkrævet for at fastslå lokationen automatisk</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">Meddelelsesadgang er påkrævet for at styre medieafspilning</string>
     <!-- Missing contact permission in search settings screen -->
+    <string name="missing_permission_contact_search_settings">Tilladelse til kontakter er påkrævet for at søge i kontakter</string>
     <!-- Missing call permission in contacts settings screen -->
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Kalendertilladelse er påkrævet for at søge i kalenderen</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
+    <string name="missing_permission_calendar_widget_settings">Denne widget påkræver kalendertilladelse</string>
     <string name="widget_config_calendar_missing_calendars_hint">Kan du ikke finde dine kalendere?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s skal indstilles som standardstartapp for at søge i app-genveje</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">Tilladelse til ekstern lager er påkrævet for at søge i lokale filer</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <string name="missing_permission_file_search_settings_android10">Adgang til alle filer er påkrævet for at søge i lokale filer</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Meddelelsesadgang er påkrævet for at vise meddelelsesbadges</string>
     <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">Giv kalendertilladelse for at vise kommende aftaler og begivenheder her.</string>
     <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">Giv kalendertilladelse for at søge i din kalender.</string>
     <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">Giv tilladelse til lokation for at søge i nærheden.</string>
     <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">Giv tilladelse til lager for at søge i fotos, medier og dokumenter på denne enhed.</string>
     <!-- Missing files permission, used in contact search results -->
+    <string name="missing_permission_contact_search">Giv tilladelse til kontakter for at søge i dine kontakter.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Indstil %1$s som standardstartapp for at søge i app-genveje.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -388,24 +405,26 @@
     <string name="preference_theme_dark">Mørk</string>
     <string name="preference_screen_colors">Farveskema</string>
     <string name="preference_colors_default">Standard</string>
+    <string name="preference_colors_bw">Sort-hvid</string>
     <string name="preference_custom_colors_corepalette">Farvepalet</string>
     <string name="preference_mdy_color_source">Kilde til dynamiske farver</string>
     <string name="preference_mdy_color_source_wallpaper">Baggrund</string>
     <string name="preference_shapes_default">Standard</string>
     <string name="preference_transparencies_default">Standard</string>
     <string name="preference_font">Skrifttype</string>
-    <string name="preference_font_system">Systemstandard</string>
     <string name="preference_screen_about">Om</string>
     <string name="preference_category_licenses">Open-source licenser</string>
     <string name="preference_category_advanced">Avanceret</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Åbn hjemmeside</string>
     <string name="preference_screen_about_summary">App- og licensoplysninger</string>
+    <string name="preference_screen_appearance_summary">Tilpas udseende</string>
     <string name="preference_weather_provider">Udbyder</string>
     <string name="provider_metno">MET Norge</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (kun Tyskland)</string>
     <string name="preference_category_location">Lokation</string>
     <string name="preference_automatic_location">Automatisk lokation</string>
+    <string name="preference_automatic_location_summary">Brug GPS og lokationstjenester til at finde lokation automatisk</string>
     <string name="preference_location_managed">Håndteret af udvidelse</string>
     <string name="preference_location_managed_summary">Lokaliteten for denne udbyder håndteres af udvidelsesappen</string>
     <string name="preference_location">Lokation</string>
@@ -421,6 +440,10 @@
     <string name="preference_debug_cleanup_database_summary">Fjern ødelagte og ubrugte poster fra launcher-databasen</string>
     <string name="preference_debug_reinstall_iconpacks">Geninstallér ikonpakker</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Ryd og genopbyg ikonpakkens cache</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$d post blev fjernet.</item>
+        <item quantity="other">%1$d poster blev fjernet.</item>
+    </plurals>
     <string name="preference_category_icons">Ikoner</string>
     <string name="preference_cards">Kort</string>
     <string name="preference_cards_summary">Tilpas kort-udseende</string>
@@ -431,7 +454,6 @@
     <string name="preference_cards_shape_rounded">Afrundet</string>
     <string name="preference_cards_shape_cut">Afskåret</string>
     <string name="preference_icon_shape">Form</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_icon_shape_square">Firkant</string>
     <string name="preference_icon_shape_rounded_square">Afrundet firkant</string>
     <string name="preference_icon_shape_squircle">Afrundet firkant</string>
@@ -466,6 +488,7 @@
     <string name="preference_screen_integrations_summary">Administrér forbundet konti og tjenester</string>
     <string name="preference_signin_user">Logget ind som %1$s</string>
     <string name="preference_signout">Log ud</string>
+    <string name="preference_summary_not_logged_in">Du er i øjeblikket ikke logget ind</string>
     <string name="preference_icon_shape_pentagon">Femkantet</string>
     <string name="preference_category_wallpaper">Baggrund</string>
     <string name="preference_dim_wallpaper">Dæmp baggrund</string>
@@ -512,7 +535,6 @@
     <string name="preference_clock_widget_time_format">Tidsformat</string>
     <string name="preference_clock_widget_time_format_24h">24 timer</string>
     <string name="preference_clock_widget_time_format_12h">12 timer</string>
-    <string name="preference_clock_widget_time_format_system">Systemstandard</string>
     <string name="widget_use_theme_colors">Brug temafarve</string>
     <string name="preference_clock_widget_fill_height">Udfyld skærmhøjde</string>
     <string name="preference_clock_widget_alignment">Justering</string>
@@ -521,12 +543,14 @@
     <string name="preference_clockwidget_dynamic_zone">Dynamisk zone</string>
     <string name="preference_clockwidget_date_part">Dato</string>
     <string name="preference_clockwidget_date_part_summary">Vis nuværende dato</string>
+    <string name="preference_clockwidget_favorites_part_summary">Vis den første række af fastgjorte elementer</string>
     <string name="preference_clockwidget_music_part">Medier</string>
     <string name="preference_clockwidget_music_part_summary">Vis mediekontrol, når der er en aktiv mediesession</string>
     <string name="preference_clockwidget_battery_part">Batteri</string>
     <string name="preference_clockwidget_battery_part_summary">Vis nuværende batteriniveau, når batteriet er lavt eller oplader</string>
     <string name="preference_clockwidget_alarm_part">Alarmer</string>
     <string name="preference_clockwidget_alarm_part_summary">Vis alarmer, der ringer inden for de næste 8 timer</string>
+    <string name="preference_screen_backup">Sikkerhedskopiér &amp; Gendan</string>
     <string name="preference_screen_backup_summary">Eksportér og importér launcher-data</string>
     <string name="preference_backup">Sikkerhedskopiér</string>
     <string name="preference_backup_summary">Eksportér præferencer og launcher-data</string>
@@ -592,6 +616,8 @@
     <string name="preference_widgets_edit_button_summary">Vis en knap for at tilføje, fjerne og omarrangere widgets</string>
     <string name="preference_screen_homescreen">Hjemmeskærm</string>
     <string name="preference_screen_homescreen_summary">Ur, søgefelt, baggrund, systemslinjer</string>
+    <string name="preference_screen_icons">Gitter &amp; ikoner</string>
+    <string name="preference_screen_icons_summary">Gitter, ikonstørrelse, ikonpakker, badges</string>
     <string name="preference_weather_integration">Vejr</string>
     <string name="preference_media_integration">Mediekontrol</string>
     <!-- %1$s: app name (Kvaesitso) -->
@@ -639,21 +665,29 @@
     <string name="search_action_contact">Føj til kontakter</string>
     <string name="search_action_open_url">Se hjemmeside</string>
     <string name="search_action_event">Planlæg begivenhed</string>
+    <string name="create_search_action_type">Hvilken slags handling vil du oprette?</string>
     <string name="create_search_action_type_web">Søg på en hjemmeside</string>
     <string name="create_search_action_type_app">Søg i en app</string>
     <string name="create_search_action_type_intent">Tilpasset intent</string>
     <string name="create_search_action_pick_app">Vælg en app at søge i:</string>
     <string name="create_search_action_website_url">Indtast adressen på hjemmesiden:</string>
+    <string name="create_search_action_website_invalid_url">Den givne hjemmeside kan ikke importeres automatisk som en websøgning. Du kan prøve en anden hjemmeside eller indtaste de nødvendige data manuelt i næste trin.</string>
     <string name="search_action_label">Navn</string>
     <string name="search_action_websearch_url">URL-skabelon</string>
+    <string name="search_action_websearch_url_hint">URL-skabelonet, der bruges til at konstruere websøgnings-URL\'en. Brug ‘${1}’ som pladsholder for det faktiske søgeudtryk, f.eks. https://google.dk/search?q=${1}.</string>
     <string name="more_information">Mere information</string>
     <string name="experimental_feature">Eksperimentel</string>
+    <string name="tag_exists_error">Der findes allerede et tag med dette navn.</string>
+    <string name="tag_exists_message">Der findes allerede et tag med dette navn. Hvis du fortsætter, bliver de to tags flettet.</string>
+    <string name="tag_no_items_message">Ingen elementer er tildelt dette tag. Hvis du fortsætter, bliver tagget slettet.</string>
+    <string name="tag_empty_name">Et tag kan ikke eksistere uden et navn. Hvis du fortsætter, slettes tagget.</string>
     <string name="tag_select_items">Vælg elementer:</string>
     <string name="tag_name">Tagnavn</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d element valgt</item>
         <item quantity="other">%1$d elementer valgt</item>
     </plurals>
+    <string name="preference_layout_open_search">Søg / app-skuffe</string>
     <string name="open_search_pull_down">Stryg ned</string>
     <string name="open_search_swipe_left">Stryg til venstre</string>
     <string name="open_search_swipe_right">Stryg til højre</string>
@@ -682,6 +716,7 @@
     <string name="gesture_action_lock_screen">Sluk skærm</string>
     <string name="gesture_action_quick_settings">Åbn hurtigindstillinger</string>
     <string name="gesture_action_power_menu">Vis slukkemenu</string>
+    <string name="gesture_action_recents">Åbn seneste</string>
     <string name="gesture_failed_message">Du har udført en \"%1$s\"-bevægelse. Denne gestus er i øjeblikket indstillet til at udløse en \"%2$s\"-handling. Handlingen kunne dog ikke udføres af følgende grund:</string>
     <string name="missing_permission_accessibility_gesture_failed">Launcherens tilgængelighedstjeneste skal være aktiveret for at udføre denne handling.</string>
     <string name="missing_permission_accessibility_gesture_settings">Denne handling kræver, at launcherens tilgængelighedstjeneste er aktiveret.</string>
@@ -696,6 +731,7 @@
     <string name="widget_config_weather_integration_settings">Indstillinger for vejr-integration</string>
     <string name="widget_config_calendar_no_calendars">Ingen kalendere fundet</string>
     <string name="widget_pick_widget">Vælg widget</string>
+    <string name="app_widget_loading_failed">App-widget kunne ikke indlæses.</string>
     <string name="widget_config_music_integration_settings">Indstillinger for mediekontrol-integration</string>
     <string name="note_widget_link_file">Link til fil</string>
     <string name="note_widget_link_file_summary">Synkronisér widget-indholdet med en ekstern fil</string>
@@ -709,7 +745,9 @@
     <string name="note_widget_conflict_local_version">Sidst gemte version:</string>
     <string name="note_widget_conflict_file_version">Nuværende filindhold:</string>
     <string name="note_widget_file_read_error">Fejl ved læsning af note</string>
+    <string name="note_widget_file_read_error_description">Den linket fil kunne ikke læses. Den er muligvis blevet flyttet eller slettet. En kopi er blevet gendannet fra launcherens interne lager. Hvis du redigerer noten, vil den linket fil muligvis blive overskrevet.</string>
     <string name="note_widget_file_write_error">Fejl med at gemme note</string>
+    <string name="note_widget_file_write_error_description">Noten kunne ikke skrives til den linket fil. Den er muligvis blevet flyttet eller slettet. En kopi er blevet gemt på launcherens interne lager.</string>
     <string name="confirmation_delete_color_scheme">Ønsker du virkelig at slette farveskemaet %1$s?</string>
     <string name="theme_color_scheme_system_default">Brug systemstandard</string>
     <string name="theme_color_scheme_autogenerate">Fra primær farve</string>
@@ -734,12 +772,14 @@
     <string name="menu_bugreport">Fejlrapport</string>
     <string name="location_open_24_7">Åben 24/7</string>
     <string name="plugin_state_error">Denne udvidelse fungerer ikke korrekt</string>
+    <string name="plugin_state_setup_required">Du skal opsætte denne udvidelse først</string>
     <string name="plugin_action_setup">Opsæt</string>
     <string name="plugin_type_filesearch">Filsøgning</string>
     <string name="plugin_type_contacts">Kontakter</string>
     <string name="plugin_type_weather">Vejr-udbyder</string>
     <string name="plugin_weather_provider_enable">Indstil som vejr-udbyder</string>
     <string name="plugin_weather_provider_enabled">I øjeblikket indstillet som vejr-udbyder</string>
+    <string name="unavailable_searchable">Dette element findes ikke længere.</string>
     <string name="clock_style_digital1">Fed</string>
     <string name="clock_style_digital2">Enkel</string>
     <string name="clock_style_binary">Binær</string>
@@ -871,6 +911,7 @@
     <string name="calendar_widget_next_day">Næste dag</string>
     <string name="calendar_widget_create_event">Opret ny begivenhed</string>
     <string name="calendar_widget_open_calendar">Åbn kalenderapp</string>
+    <string name="profile_work_profile_state_locked">Arbejdsapps er sat på pause.</string>
     <string name="profile_work_profile_action_unlock">Fjern pause</string>
     <string name="profile_work_profile_action_lock">Sæt arbejdsapps på pause</string>
     <string name="profile_private_profile_action_unlock">Oplås</string>
