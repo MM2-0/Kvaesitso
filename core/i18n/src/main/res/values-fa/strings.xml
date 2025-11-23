@@ -236,8 +236,6 @@
     <string name="notes_widget_dismissed">یادداشت نادیده گرفته شد.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">با %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">تیتاب، من رو پیدا کردی. ارزشش رو داشت؟</string>
     <!-- Close a dialog -->
     <string name="close">بستن</string>
     <string name="save">نگه‌داشتن</string>
