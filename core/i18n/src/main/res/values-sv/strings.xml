@@ -195,8 +195,6 @@
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Från %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Okej, du hittade mig. Grattis. Var det värt det\?</string>
     <!-- Close a dialog -->
     <string name="close">Stäng</string>
     <!-- Turn something off / disable a functionality of the launcher -->
