@@ -867,4 +867,8 @@
     <string name="poi_category_hackerspace">Hackerspace</string>
     <string name="preference_search_apps">Apps</string>
     <string name="preference_search_apps_summary">Alle Apps anzeigen, wenn das Suchfeld leer ist</string>
+    <string name="preference_screen_locale">Sprache und Region</string>
+    <string name="preference_screen_locale_summary">Sprache, Einheiten, Zeitformat</string>
+    <string name="preference_language">Sprache</string>
+    <string name="preference_value_system_default">Systemstandard</string>
 </resources>
