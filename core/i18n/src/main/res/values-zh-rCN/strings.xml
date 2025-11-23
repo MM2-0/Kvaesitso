@@ -234,8 +234,6 @@
     <string name="notes_widget_dismissed">笔记已删除</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">由 %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">好吧, 你找到我了. 祝贺. 值得不？</string>
     <!-- Close a dialog -->
     <string name="close">关闭</string>
     <string name="no_selection">未选</string>
