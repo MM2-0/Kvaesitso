@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="tr">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="tr-rTR">
     <!-- DIMENSIONS -->
     <string name="dimension_length">Uzunluk</string>
     <string name="dimension_mass">Kütle</string>
