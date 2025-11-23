@@ -230,8 +230,6 @@
     <string name="notes_widget_dismissed">Note ignorée.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Par %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Bien, vous m\'avez trouvé. Bravo. Cela en valait-il la peine ?</string>
     <!-- Close a dialog -->
     <string name="close">Fermer</string>
     <string name="no_selection">Aucune sélection</string>
@@ -508,7 +506,7 @@
     <string name="preference_screen_integrations_summary">Gérer les comptes et les services</string>
     <string name="preference_signin_user">Connecté en tant que %1$s</string>
     <string name="preference_signout">Se déconnecter</string>
-    <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté(e)</string>
+    <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté·e</string>
     <string name="preference_icon_shape_pentagon">Pentagone</string>
     <string name="preference_category_wallpaper">Fond d\'écran</string>
     <string name="preference_dim_wallpaper">Assombrir le fond d\'écran</string>
