@@ -226,8 +226,6 @@
     <string name="notes_widget_dismissed">Oharra baztertu da.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">%1$s-(r)ena</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Tira, aurkitu nauzu. Zorionak. Merezi izan du\?</string>
     <!-- Close a dialog -->
     <string name="close">Itxi</string>
     <string name="save">Gorde</string>
