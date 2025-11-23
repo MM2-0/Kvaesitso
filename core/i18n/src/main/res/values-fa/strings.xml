@@ -135,9 +135,11 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">پرونده حسابرسی</string>
     <!-- Audio file -->
+    <string name="file_type_music">پرونده موسیقی</string>
     <!-- Video file -->
     <string name="file_type_video">ویدیو</string>
     <!-- Image file -->
+    <string name="file_type_image">نگاره</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">پرونده</string>
     <!-- Presentation -->
@@ -217,19 +219,21 @@
     <string name="menu_edit_widgets">ویرایش ابزارک‌ها</string>
     <string name="widget_name_weather">آب و هوا</string>
     <string name="widget_name_calendar">تقویم</string>
-    <string name="widget_name_music">رسانه</string>
+    <string name="widget_name_music">موسیقی</string>
     <string name="widget_name_favorites">دلخواه</string>
     <string name="widget_name_notes">یادداشت</string>
-    <string name="widget_name_unknown">ناشناس</string>
+    <string name="widget_name_unknown">ابزارک برنامه ناشناخته</string>
     <string name="widget_add_widget">افزودن ابزارک</string>
     <string name="widget_removed">ابزارک پاک شد</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
+    <string name="notes_widget_placeholder">چیزی بنویسید…</string>
     <string name="notes_widget_action_new">یادداشت جدید</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">نگه‌داشتن</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">یادداشت_%1$s</string>
     <string name="notes_widget_action_dismiss">نادیده گرفتن</string>
+    <string name="notes_widget_dismissed">یادداشت نادیده گرفته شد.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">با %1$s</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -255,6 +259,7 @@
     <string name="edit_favorites_dialog_empty_section">موارد را به اینجا بکشید</string>
     <string name="edit_favorites_dialog_tags">برچسب‌ها</string>
     <string name="edit_favorites_dialog_tag_section_empty">برچسب‌های سنجاق شده اینجا نمایش داده می‌شوند</string>
+    <string name="edit_favorites_dialog_new_tag">ایجاد برچسب…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">نشانی کارساز Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -302,6 +307,7 @@
         <item quantity="other">+%1$d فعالیت در حال اجرا از روزهای پیشین</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
+    <string name="calendar_event_allday">کل-روز</string>
     <string name="task_due_time">سر رسید در %1$s</string>
     <string name="task_due_date">تا تاریخ %1$s</string>
     <string name="task_due_today">وظیفه امروز</string>
@@ -356,32 +362,44 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <string name="weather_no_data">داده‌های آب و هوایی در دسترس نیست.</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">تنظیم مکان</string>
+    <string name="weather_location_search_no_result">مکان یافت نشد.</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">دسترسی به مکان‌یاب برای یافتن خودکار مکان شما لازم است</string>
     <!-- Missing notification permission in music widget settings -->
     <string name="missing_permission_music_widget">دسترسی به آگاه‌ساز ها برای نمایش رسانه در حال پخش لازم است</string>
     <!-- Missing contact permission in search settings screen -->
+    <string name="missing_permission_contact_search_settings">دسترسی مخاطبین برای جستجو در مخاطبین لازم است</string>
     <!-- Missing call permission in contacts settings screen -->
+    <string name="missing_permission_call_contacts_settings">دسترسی تماس برای شروع تماس‌ها لازم است</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">دسترسی تقویم برای جستجو در تقویم لازم است</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
+    <string name="missing_permission_calendar_widget_settings">ابزارک نیاز به دسترسی تقویم دارد</string>
     <string name="widget_config_calendar_missing_calendars_hint">تقویم تان را نمی‌یابید؟</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s برای جستجوی در میانبرهای برنامه لازم است به عنوان برنامه خانه انتخاب شود</string>
     <!-- Missing file permission in search settings screen -->
+    <string name="missing_permission_file_search_settings">دسترسی حافظه برای جستجو در پرونده های محلی لازم است</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <string name="missing_permission_file_search_settings_android10">دسترسی به کل حافظه برای جستجو در پرونده های محلی لازم است</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">دسترسی به آگاه‌سازها برای نمایش نشان آگاهساز لازم است</string>
     <!-- Missing calendar permission, used in calendar widget -->
+    <string name="missing_permission_calendar_widget">دسترسی تقویم را برای نمایش فعالیت‌های پیش رو و رویدادها اینجا بدهید.</string>
     <!-- Missing calendar permission, used in calendar search results -->
+    <string name="missing_permission_calendar_search">دسترسی تقویم را برای جستجو در تقویم بدهید.</string>
     <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">دسترسی موقعیت را برای جستجوی مکان‌های نزدیک بدهید.</string>
     <!-- Missing files permission, used in files search results -->
+    <string name="missing_permission_files_search">دسترسی به کل حافظه برای جستجو در پرونده‌های محلی لازم است.</string>
     <!-- Missing files permission, used in contact search results -->
+    <string name="missing_permission_contact_search">دسترسی به مخاطبین را برای جستجوی مخاطبین خود اعطا کنید.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">برای جستجوی میانبرهای برنامه، %1$s را به‌عنوان برنامه پیش‌گزیده خانگی تنظیم کنید.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -395,6 +413,7 @@
     <string name="preference_theme_dark">تیره</string>
     <string name="preference_screen_colors">طرح رنگی</string>
     <string name="preference_colors_default">پیش‌گزیده</string>
+    <string name="preference_colors_bw">سیاه و سفید</string>
     <string name="preference_custom_colors_corepalette">تخته رنگ</string>
     <string name="preference_mdy_color_source">منبع برای رنگ‌های پویا</string>
     <string name="preference_mdy_color_source_system">سامانه</string>
@@ -402,7 +421,6 @@
     <string name="preference_shapes_default">پیش‌گزیده</string>
     <string name="preference_transparencies_default">پیش‌گزیده</string>
     <string name="preference_font">قلم</string>
-    <string name="preference_font_system">قلم پیش‌گزیده سامانه</string>
     <string name="preference_screen_about">درباره</string>
     <string name="preference_version">نگارش</string>
     <string name="preference_category_links">پیوندها</string>
@@ -411,6 +429,7 @@
     <!-- Open website of an open source library -->
     <string name="open_webpage">بازکردن وبگاه</string>
     <string name="preference_screen_about_summary">درباره برنامه و مجوزها</string>
+    <string name="preference_screen_appearance_summary">سفارشی‌سازی ظاهر</string>
     <string name="preference_weather_provider">ارائه‌دهنده</string>
     <string name="provider_metno">متئو نروژ</string>
     <string name="provider_openweathermap">نقشه آزاد آب و هوا(OpenWeatherMap)</string>
@@ -418,6 +437,7 @@
     <string name="provider_here">Here</string>
     <string name="preference_category_location">مکان</string>
     <string name="preference_automatic_location">مکان خودکار</string>
+    <string name="preference_automatic_location_summary">به‌کار بردن GPS و خدمات مکان‌یابی برای تعیین مکان به‌صورت خودکار</string>
     <string name="preference_location_managed">مدیریت شده توسط افزونه</string>
     <string name="preference_location_managed_summary">مکان برای این ارائه‌دهنده توسط برنامه افزونه مدیریت می‌شود</string>
     <string name="preference_location">مکان</string>
@@ -433,6 +453,10 @@
     <string name="preference_debug_cleanup_database_summary">پاک‌کردن ورودی‌های خراب و به‌کار نرفته از پایگاه داده برنامه</string>
     <string name="preference_debug_reinstall_iconpacks">نصب دوباره بسته نمادها</string>
     <string name="preference_debug_reinstall_iconpacks_summary">پاک کردن و بازسازی حافظه نهان بسته‌های نماد</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$d مورد پاک‌شده.</item>
+        <item quantity="other">%1$d مورد پاک‌شده.</item>
+    </plurals>
     <string name="preference_category_icons">نمادها</string>
     <string name="preference_cards">کارت‌ها</string>
     <string name="preference_cards_summary">سفارشی‌سازی ظاهر کارت‌ها</string>
@@ -443,7 +467,6 @@
     <string name="preference_cards_shape_rounded">گرد</string>
     <string name="preference_cards_shape_cut">برش‌دار</string>
     <string name="preference_icon_shape">شکل</string>
-    <string name="preference_icon_shape_platform">پیش‌گزیده سامانه</string>
     <string name="preference_icon_shape_square">مربع</string>
     <string name="preference_icon_shape_rounded_square">مربع گرد</string>
     <string name="preference_icon_shape_squircle">squircle</string>
@@ -479,6 +502,7 @@
     <string name="preference_screen_integrations_summary">مدیریت حساب‌ها و خدمات متصل‌شده</string>
     <string name="preference_signin_user">به عنوان %1$s وارد شده‌اید</string>
     <string name="preference_signout">خروج</string>
+    <string name="preference_summary_not_logged_in">شما هنوز وارد نشده‌اید</string>
     <string name="preference_icon_shape_pentagon">پنج‌ضلعی</string>
     <string name="preference_category_wallpaper">پس‌زمینه</string>
     <string name="preference_dim_wallpaper">کم‌رنگ کردن پس‌زمینه</string>
@@ -530,7 +554,6 @@
     <string name="preference_clock_widget_time_format">فرمت زمان</string>
     <string name="preference_clock_widget_time_format_24h">24 ساعته</string>
     <string name="preference_clock_widget_time_format_12h">12 ساعته</string>
-    <string name="preference_clock_widget_time_format_system">پیش‌گزیده سامانه</string>
     <string name="widget_use_theme_colors">به‌کارگیری رنگ‌های پوسته</string>
     <string name="preference_clock_widget_fill_height">پر کردن ارتفاع صفحه</string>
     <string name="preference_clock_widget_alignment">تراز</string>
@@ -541,12 +564,14 @@
     <string name="preference_clockwidget_date_part">تاریخ</string>
     <string name="preference_clockwidget_date_part_summary">نمایش تاریخ کنونی</string>
     <string name="preference_clockwidget_favorites_part">نوار ابزار</string>
+    <string name="preference_clockwidget_favorites_part_summary">نمایش اولین ردیف موارد دلخواه</string>
     <string name="preference_clockwidget_music_part">رسانه</string>
     <string name="preference_clockwidget_music_part_summary">هنگامی که جلسه رسانه‌ای فعال است، نمایش کنترل‌های رسانه‌ای</string>
     <string name="preference_clockwidget_battery_part">باتری</string>
     <string name="preference_clockwidget_battery_part_summary">نمایش سطح کنونی باتری هنگامی که باتری ضعیف است یا در حال شارژ است</string>
     <string name="preference_clockwidget_alarm_part">آلارم‌ها</string>
     <string name="preference_clockwidget_alarm_part_summary">نمایش آلارم‌هایی که در ۸ ساعت آینده به صدا درمی‌آیند</string>
+    <string name="preference_screen_backup">پشتیبان‌گیری و بازیابی</string>
     <string name="preference_screen_backup_summary">صادرات و واردات داده‌های راه‌انداز</string>
     <string name="preference_backup">پشتیبان‌گیری</string>
     <string name="preference_backup_summary">صادرات تنظیمات و داده‌های راه‌انداز</string>
@@ -617,10 +642,13 @@
     <string name="preference_widgets_edit_button_summary">نمایش دکمه‌ای برای افزودن، پاک‌کردن و بازچینی ابزارک‌ها</string>
     <string name="preference_screen_homescreen">صفحه خانگی</string>
     <string name="preference_screen_homescreen_summary">ساعت، نوار جستجو، تصویر زمینه، نوارهای سامانه</string>
+    <string name="preference_screen_icons">شبکه و نمادها</string>
+    <string name="preference_screen_icons_summary">شبکه، اندازه نماد، بسته‌های نماد، نشان‌ها</string>
     <string name="preference_weather_integration">آب و هوا</string>
     <string name="preference_media_integration">هدایت رسانه</string>
     <!-- %1$s: app name (Kvaesitso) -->
     <string name="preference_contacts_call_on_tap">تماس با لمس</string>
+    <string name="preference_contacts_call_on_tap_summary">شروع مستقیم تماس‌ها با لمس شماره‌های تلفن</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">هنوز حساب نکست‌کلود را متصل نکرده‌اید</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -666,22 +694,30 @@
     <string name="search_action_contact">افزودن به مخاطبین</string>
     <string name="search_action_open_url">مشاهده وبگاه</string>
     <string name="search_action_event">برنامه‌ریزی رویداد</string>
+    <string name="create_search_action_type">چه سبک کنشی می‌خواهید ایجاد کنید؟</string>
     <string name="create_search_action_type_web">جستجو در یک وبگاه</string>
     <string name="create_search_action_type_app">جستجو در یک برنامه</string>
     <string name="create_search_action_type_intent">intent سفارشی</string>
     <string name="create_search_action_pick_app">انتخاب یک برنامه برای جستجو:</string>
     <string name="create_search_action_website_url">نشانی وبگاه را وارد کنید:</string>
+    <string name="create_search_action_website_invalid_url">وبگاه داده شده نمی‌تواند به صورت خودکار به عنوان یک جستجوی وب وارد شود. شما می‌توانید وبگاه دیگری را امتحان کنید یا داده‌های مورد نیاز را به صورت دستی در مرحله بعدی وارد کنید.</string>
     <string name="search_action_label">نام</string>
     <string name="search_action_app">برنامه</string>
     <string name="search_action_websearch_url">قالب URL</string>
+    <string name="search_action_websearch_url_hint">قالب نشانی وبی که برای ساخت نشانی وب جستجو به‌کار میرود. ‘${1}’ را به عنوان جایگزینی برای عبارت واقعی جستجو بنویسید، مثال: https://google.com/search?q=${1}.</string>
     <string name="more_information">داده‌های بیشتر</string>
     <string name="experimental_feature">آزمایشی</string>
+    <string name="tag_exists_error">برچسبی با این نام از پیش دارید.</string>
+    <string name="tag_exists_message">برچسبی با این نام از پیش دارید. اگر ادامه دهید، دو برچسب یکی خواهند شد.</string>
+    <string name="tag_no_items_message">هیچ موردی به این برچسب واگذار نشده. اگر ادامه دهید، برچسب پاک خواهد شد.</string>
+    <string name="tag_empty_name">یک برچسب بدون نام نمی‌توانید داشته باشید. اگر ادامه دهید، برچسب پاک خواهد شد.</string>
     <string name="tag_select_items">انتخاب موارد:</string>
     <string name="tag_name">نام برچسب</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d مورد انتخاب‌شده</item>
         <item quantity="other">%1$d مورد انتخاب‌شده</item>
     </plurals>
+    <string name="preference_layout_open_search">جستجو / کشوی برنامه‌ها</string>
     <string name="open_search_pull_down">کشیدن به پایین</string>
     <string name="open_search_swipe_left">کشیدن به چپ</string>
     <string name="open_search_swipe_right">کشیدن به راست</string>
@@ -711,6 +747,7 @@
     <string name="gesture_action_lock_screen">خاموش کردن صفحه</string>
     <string name="gesture_action_quick_settings">بازکردن تنظیمات سریع</string>
     <string name="gesture_action_power_menu">نمایش گزینه‌های نیرو</string>
+    <string name="gesture_action_recents">بازکردن برنامه‌های اخیر</string>
     <string name="gesture_failed_message">شما یک حرکت \"%1$s\" انجام داده‌اید. این حرکت هم برای اجرای کنش \"%2$s\" تنظیم شده است. با این حال، کنش دلخواه به دلیل زیر قابل اجرا نبود:</string>
     <string name="missing_permission_accessibility_gesture_failed">خدمات دسترسی برنامه راه‌انداز باید روشن باشد تا این کار انجام شود.</string>
     <string name="missing_permission_accessibility_gesture_settings">این کار نیازمند روشن بودن خدمات دسترسی برنامه راه‌انداز است.</string>
@@ -725,6 +762,7 @@
     <string name="widget_config_weather_integration_settings">تنظیمات یکپارچگی آب و هوا</string>
     <string name="widget_config_calendar_no_calendars">هیچ تقویمی پیدا نشد</string>
     <string name="widget_pick_widget">انتخاب ابزارک</string>
+    <string name="app_widget_loading_failed">بارگذاری ابزارک برنامه با شکست مواجه شد.</string>
     <string name="widget_config_music_integration_settings">تنظیمات یکپارچگی کنترل رسانه</string>
     <string name="note_widget_link_file">پیوند به پرونده</string>
     <string name="note_widget_link_file_summary">هماهنگ‌سازی محتوای این ابزارک با یک پرونده خارجی</string>
@@ -738,7 +776,9 @@
     <string name="note_widget_conflict_local_version">آخرین نگارش نگه‌داری شده:</string>
     <string name="note_widget_conflict_file_version">محتوای فعلی پرونده:</string>
     <string name="note_widget_file_read_error">خطا در خواندن پرونده پیوند داده شده</string>
+    <string name="note_widget_file_read_error_description">پرونده پیوند داده‌شده را نمی‌توان خواند. گمان میرود جابجا یا پاک‌شده است. یک نگارش از حافظه داخلی برنامه راه‌انداز بازیابی شده است. اگر یادداشت را ویرایش کنید، پرونده پیوند داده‌شده احتمالاً بازنویسی خواهد شد.</string>
     <string name="note_widget_file_write_error">خطا در نگه‌داری یادداشت</string>
+    <string name="note_widget_file_write_error_description">یادداشت نتوانست به پرونده پیوند داده‌شده نوشته شود. گمان می‌رود جابجا یا پاک‌شده باشد. یک نگارش در حافظه داخلی برنامه راه‌انداز نگه‌داری شده است.</string>
     <string name="confirmation_delete_color_scheme">آیا واقعاً می‌خواهید طرح رنگی %1$s را پاک کنید؟</string>
     <string name="theme_color_scheme_system_default">به‌کار بردن پیش‌گزیده سامانه</string>
     <string name="theme_color_scheme_autogenerate">از رنگ اصلی</string>
@@ -768,12 +808,14 @@
     <string name="menu_bugreport">گزارش ایراد</string>
     <string name="location_open_24_7">باز ۲۴/۷</string>
     <string name="plugin_state_error">این افزونه به‌درستی کار نمی‌کند</string>
+    <string name="plugin_state_setup_required">در آغاز باید این افزونه را تنظیم کنید</string>
     <string name="plugin_action_setup">راه‌اندازی</string>
     <string name="plugin_type_filesearch">جستجوی پرونده</string>
     <string name="plugin_type_contacts">مخاطبین</string>
     <string name="plugin_type_weather">ارائه‌دهنده آب و هوا</string>
     <string name="plugin_weather_provider_enable">تنظیم به عنوان ارائه‌دهنده آب و هوا</string>
     <string name="plugin_weather_provider_enabled">در حال حاضر به عنوان ارائه‌دهنده آب و هوا تنظیم شده است</string>
+    <string name="unavailable_searchable">این مورد دیگر وجود ندارد.</string>
     <string name="clock_style_digital1">برجسته</string>
     <string name="clock_style_digital2">ساده</string>
     <string name="clock_style_orbit">مدار</string>
@@ -925,8 +967,10 @@
     <string name="calendar_widget_next_day">روز پسین</string>
     <string name="calendar_widget_create_event">ایجاد رویداد جدید</string>
     <string name="calendar_widget_open_calendar">بازکردن برنامه تقویم</string>
+    <string name="profile_work_profile_state_locked">برنامه‌های کاری متوقف شده‌اند.</string>
     <string name="profile_work_profile_action_unlock">بازگشایی</string>
     <string name="profile_work_profile_action_lock">متوقف کردن برنامه‌های کاری</string>
+    <string name="profile_private_profile_state_locked">فضای شخصی قفل شده است.</string>
     <string name="profile_private_profile_action_unlock">بازکردن</string>
     <string name="profile_private_profile_action_lock">قفل کردن فضای شخصی</string>
     <string name="hint_drag_and_drop_reorder">نگه‌داشتن و درگ کردن موارد برای بازچینی آن‌ها</string>
