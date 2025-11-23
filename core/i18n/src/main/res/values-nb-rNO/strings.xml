@@ -136,7 +136,6 @@
     <string name="weather_no_data">Ingen værdata tilgjengelig.</string>
     <string name="missing_permission_contact_search_settings">Kontakttilgang kreves for å søke i kontakter</string>
     <string name="missing_permission_notification_badges">Varseltilgang kreves for å vise varselprikker</string>
-    <string name="preference_font_system">Systemstandard</string>
     <string name="preference_screen_about">Om</string>
     <string name="preference_version">Versjon</string>
     <string name="preference_category_licenses">Åpen kildekode-lisenser</string>
@@ -256,7 +255,6 @@
     <string name="preference_cards_shape">Form</string>
     <string name="preference_cards_shape_rounded">Avrundet</string>
     <string name="preference_icon_shape">Form</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_icon_shape_square">Firkantet</string>
     <string name="preference_icon_shape_rounded_square">Avrundet firkant</string>
     <string name="preference_screen_plugins_summary">Administrer installerte utvidelser</string>

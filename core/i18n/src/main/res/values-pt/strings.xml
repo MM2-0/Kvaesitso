@@ -201,7 +201,6 @@
     <string name="preference_mdy_color_source_system">Sistema</string>
     <string name="preference_mdy_color_source_wallpaper">Papel de parede</string>
     <string name="preference_font">Tipo de letra</string>
-    <string name="preference_font_system">Definições do sistema</string>
     <string name="preference_screen_about">Acerca</string>
     <string name="preference_version">Versão</string>
     <string name="preference_category_links">Ligações</string>
@@ -246,7 +245,6 @@
     <string name="preference_cards_shape_rounded">Arredondado</string>
     <string name="preference_cards_shape_cut">Recortado</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Definições do sistema</string>
     <string name="preference_icon_shape_square">Quadrado</string>
     <string name="preference_icon_shape_rounded_square">Quadrado curvo</string>
     <string name="preference_icon_shape_circle">Círculo</string>
@@ -798,7 +796,6 @@
     <string name="preference_clock_widget_time_format">Formato de hora</string>
     <string name="preference_clock_widget_time_format_24h">24 horas</string>
     <string name="preference_clock_widget_time_format_12h">12 horas</string>
-    <string name="preference_clock_widget_time_format_system">Padrão do sistema</string>
     <string name="theme_import_title">Importar tema</string>
     <string name="import_theme_exists">O tema já existe e será atualizado</string>
     <string name="preference_search_bar_style_transparent">Transparente</string>

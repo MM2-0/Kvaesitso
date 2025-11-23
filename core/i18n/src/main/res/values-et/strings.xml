@@ -132,7 +132,6 @@
     <string name="preference_transparencies_semi_transparent">Pool-läbipaistev</string>
     <string name="preference_font">Tekst</string>
     <string name="preference_screen_about">Info</string>
-    <string name="preference_font_system">Süsteemi vaikeväärtus</string>
     <string name="preference_version">Versioon</string>
     <string name="preference_category_licenses">Avatud koodiga litsentsid</string>
     <string name="preference_category_advanced">Edasijõudnutele</string>
@@ -200,7 +199,6 @@
     <string name="preference_clock_widget_show_seconds">Näita sekundeid</string>
     <string name="preference_clock_widget_time_format">Kellaaja vorming</string>
     <string name="preference_clock_widget_time_format_24h">24-tundi</string>
-    <string name="preference_clock_widget_time_format_system">Süsteemi vvaikeväärtus</string>
     <string name="widget_use_theme_colors">Kasuta teema värvi</string>
     <string name="preference_clock_widget_alignment">Joondus</string>
     <string name="preference_clock_widget_alignment_top">Üles</string>
@@ -457,7 +455,6 @@
     <string name="weather_condition_unknown">Tundmatu</string>
     <string name="preference_screen_typography">Tüpograafia</string>
     <string name="widget_config_weather_compact">Kompaktne režiim</string>
-    <string name="preference_icon_shape_platform">Süsteemi vaikeväärtus</string>
     <string name="preference_screen_plugins_summary">Halda paigaldatud pluginaid</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_grid_list_style_summary">Näita rakendusi võrgustiku asemel nimekirjana</string>

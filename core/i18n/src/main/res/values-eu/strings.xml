@@ -159,7 +159,6 @@
     <string name="preference_colors_default">Lehenetsia</string>
     <string name="preference_colors_bw">Zuri-beltza</string>
     <string name="preference_font">Letra-tipoa</string>
-    <string name="preference_font_system">Sistemaren lehenetsia</string>
     <string name="preference_screen_about">Honi buruz</string>
     <string name="preference_version">Bertsioa</string>
     <string name="preference_category_links">Estekak</string>
@@ -190,7 +189,6 @@
     <string name="preference_cards_shape_rounded">Biribildua</string>
     <string name="preference_cards_shape_cut">Ebakia</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Sistemaren lehenetsia</string>
     <string name="preference_icon_shape_square">Karratua</string>
     <string name="preference_icon_shape_rounded_square">Karratu biribildua</string>
     <string name="preference_icon_shape_triangle">Reuleaux irukia</string>
@@ -645,7 +643,6 @@
     <string name="preference_clock_widget_time_format">Ordu formatua</string>
     <string name="preference_clock_widget_time_format_24h">24 ordu</string>
     <string name="preference_clock_widget_time_format_12h">12 ordu</string>
-    <string name="preference_clock_widget_time_format_system">Sistemaren lehenetsia</string>
     <string name="preference_search_locations_summary">Bilatu dendak eta beste leku batzuk inguruko eremuan</string>
     <string name="wind_east">Ekialde haizea</string>
     <string name="wind_south_east">Hego-ekialde haizea</string>

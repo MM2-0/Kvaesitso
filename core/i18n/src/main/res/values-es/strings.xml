@@ -412,7 +412,6 @@
         <item quantity="many">%1$d entradas han sido eliminadas</item>
         <item quantity="other">%1$d entradas han sido eliminadas</item>
     </plurals>
-    <string name="preference_font_system">Predeterminado del sistema</string>
     <string name="preference_icon_shape_hexagon">Hexágono</string>
     <string name="menu_customize">Personalizar</string>
     <string name="preference_icon_shape_teardrop">Lágrima</string>
@@ -466,7 +465,6 @@
     <string name="preference_cards_shape">Forma</string>
     <string name="preference_cards_shape_cut">Cortada</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Predeterminada del sistema</string>
     <string name="preference_icon_shape_squircle">Cuadrírculo</string>
     <string name="preference_icon_shape_triangle">Triángulo de Reuleaux</string>
     <string name="preference_theme_system">De acuerdo al sistema</string>
@@ -695,7 +693,6 @@
     <string name="action_clear">Limpiar</string>
     <string name="action_more_actions">Más acciones</string>
     <string name="preference_clock_widget_time_format_12h">12 horas</string>
-    <string name="preference_clock_widget_time_format_system">Predeterminado por el sistema</string>
     <string name="preference_clock_widget_time_format">Formato de hora</string>
     <string name="preference_clock_widget_time_format_24h">24 horas</string>
     <string name="preference_search_supportedunits">Unidades soportadas</string>

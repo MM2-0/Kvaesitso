@@ -164,7 +164,6 @@
     <string name="preference_screen_colors">Kleurenschema</string>
     <string name="preference_colors_bw">Zwart-wit</string>
     <string name="preference_font">Lettertype</string>
-    <string name="preference_font_system">Systeemstandaard</string>
     <string name="preference_screen_about">Over</string>
     <string name="preference_version">Versie</string>
     <string name="preference_category_links">Koppelingen</string>
@@ -198,7 +197,6 @@
     <string name="preference_cards">Kaarten</string>
     <string name="preference_cards_summary">Kaartweergave aanpassen</string>
     <string name="preference_cards_corner_radius">Hoekstraal</string>
-    <string name="preference_icon_shape_platform">Systeemstandaard</string>
     <string name="preference_icon_shape_square">Vierkant</string>
     <string name="preference_icon_shape_triangle">Reuleauxdriehoek</string>
     <string name="preference_icon_shape_circle">Cirkel</string>
@@ -788,7 +786,6 @@
     <string name="preference_clock_widget_time_format">Tijdformaat</string>
     <string name="preference_clock_widget_time_format_24h">24-uur</string>
     <string name="preference_clock_widget_time_format_12h">12-uur</string>
-    <string name="preference_clock_widget_time_format_system">Systeemstandaard</string>
     <plurals name="departure_time_in">
         <item quantity="one">in een minuut</item>
         <item quantity="other">in %1$d minuten</item>

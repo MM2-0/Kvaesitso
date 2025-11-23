@@ -181,7 +181,6 @@
     <string name="preference_colors_default">Per defecte</string>
     <string name="preference_colors_bw">Negre i Blanc</string>
     <string name="preference_font">Font</string>
-    <string name="preference_font_system">Sistema predeterminat</string>
     <string name="preference_screen_about">Sobre</string>
     <string name="preference_version">Versió</string>
     <string name="open_webpage">Lloc web obert</string>
@@ -211,7 +210,6 @@
     <string name="preference_cards_shape_rounded">Arrodonit</string>
     <string name="preference_cards_shape_cut">Tallat</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Sistema predeterminat</string>
     <string name="preference_icon_shape_square">Quadrat</string>
     <string name="preference_icon_shape_rounded_square">Quadrat arrodonit</string>
     <string name="preference_icon_shape_squircle">Cercle quadrat</string>
@@ -780,7 +778,6 @@
     <string name="hint_drag_and_drop_reorder">Manteniu premut i arrossegueu els elements per reordenar-los</string>
     <string name="preference_clock_widget_time_format_24h">24h</string>
     <string name="preference_clock_widget_time_format_12h">12h</string>
-    <string name="preference_clock_widget_time_format_system">Predeterminat</string>
     <string name="preference_search_supportedunits">Unitats suportades</string>
     <string name="apps_profile_private">Privat</string>
     <plurals name="app_info_notifications">

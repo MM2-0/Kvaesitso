@@ -209,7 +209,6 @@
     <string name="preference_cards_summary">Personalizza l\'aspetto delle schede</string>
     <string name="preference_icon_shape">Forma</string>
     <string name="preference_cards_opacity">Opacità</string>
-    <string name="preference_icon_shape_platform">Predefinita sistema</string>
     <string name="preference_icon_shape_square">Quadrato</string>
     <string name="preference_icon_shape_rounded_square">Quadrato smussato</string>
     <string name="preference_icon_shape_squircle">Scoiattolo</string>
@@ -356,7 +355,6 @@
     <string name="weather_condition_heavyrainshowersandthunder">Forti rovesci di pioggia e tuoni</string>
     <string name="weather_condition_rainshowers">Piogge a catinelle</string>
     <string name="missing_permission_appshortcuts_search">Imposta %1$s come app Home predefinita per cercare le scorciatoie delle app.</string>
-    <string name="preference_font_system">Predefinito del sistema</string>
     <string name="preference_enforce_icon_shape_summary">Applica la forma a tutte le icone comprese quelle che normalmente non la supporterebbero</string>
     <string name="alert_delete_shortcut">La scorciatoia %1$s verrà rimossa in modo permanente. Procedere\?</string>
     <string name="preference_grid_labels">Mostra etichette</string>
@@ -797,7 +795,6 @@
     <string name="preference_clock_widget_time_format">Formato ora</string>
     <string name="preference_clock_widget_time_format_24h">24 ore</string>
     <string name="preference_clock_widget_time_format_12h">12 ore</string>
-    <string name="preference_clock_widget_time_format_system">Predefinito del sistema</string>
     <plurals name="departure_time_in">
         <item quantity="one">tra un minuto</item>
         <item quantity="many">tra %1$d minuti</item>

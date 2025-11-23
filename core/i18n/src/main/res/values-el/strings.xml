@@ -138,7 +138,6 @@
     <string name="preference_colors_default">Προεπιλεγμένο</string>
     <string name="preference_colors_bw">Ασπρόμαυρο</string>
     <string name="preference_font">Γραμματοσειρά</string>
-    <string name="preference_font_system">Προεπιλεγμένη συστήματος</string>
     <string name="preference_screen_about">Περί</string>
     <string name="preference_version">Έκδοση</string>
     <string name="preference_category_links">Σύνδεσμοι</string>
@@ -163,7 +162,6 @@
     <string name="preference_cards_shape">Σχήμα</string>
     <string name="preference_cards_shape_rounded">Στρογγυλεμένη</string>
     <string name="preference_cards_shape_cut">Κομμένη</string>
-    <string name="preference_icon_shape_platform">Προεπιλογή συστήματος</string>
     <string name="preference_icon_shape_square">Τετράγωνο</string>
     <string name="preference_icon_shape_circle">Κύκλος</string>
     <string name="preference_icon_shape_teardrop">Δάκρυ</string>

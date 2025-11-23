@@ -172,7 +172,6 @@
     <string name="preference_cards_shape">شکل</string>
     <string name="preference_cards_shape_cut">برش‌دار</string>
     <string name="preference_icon_shape_square">مربع</string>
-    <string name="preference_icon_shape_platform">پیش‌گزیده سامانه</string>
     <string name="preference_icon_shape">شکل</string>
     <string name="weather_condition_lightrainandthunder">بارش باران سبک و رعد</string>
     <string name="preference_icon_shape_squircle">squircle</string>
@@ -224,7 +223,6 @@
     <string name="preference_colors_bw">سیاه و سفید</string>
     <string name="preference_custom_colors_corepalette">تخته رنگ</string>
     <string name="preference_font">قلم</string>
-    <string name="preference_font_system">قلم پیش‌گزیده سامانه</string>
     <string name="preference_screen_about">درباره</string>
     <string name="preference_category_advanced">پیشرفته</string>
     <string name="open_webpage">بازکردن وبگاه</string>
@@ -653,7 +651,6 @@
     <string name="preference_clock_widget_time_format">فرمت زمان</string>
     <string name="preference_clock_widget_time_format_24h">24 ساعته</string>
     <string name="preference_clock_widget_time_format_12h">12 ساعته</string>
-    <string name="preference_clock_widget_time_format_system">پیش‌گزیده سامانه</string>
     <string name="widget_use_theme_colors">به‌کارگیری رنگ‌های پوسته</string>
     <string name="preference_clock_widget_fill_height">پر کردن ارتفاع صفحه</string>
     <string name="preference_clock_widget_alignment">تراز</string>

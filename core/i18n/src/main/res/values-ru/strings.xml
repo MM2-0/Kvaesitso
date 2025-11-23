@@ -163,7 +163,6 @@
     <string name="preference_cards_stroke_width">Ширина рамки</string>
     <string name="preference_cards_opacity">Прозрачность</string>
     <string name="preference_icon_shape">Форма</string>
-    <string name="preference_icon_shape_platform">Системное умолчание</string>
     <string name="preference_icon_shape_rounded_square">Закруглённый квадрат</string>
     <string name="preference_icon_shape_squircle">Сквиркл</string>
     <string name="preference_icon_shape_triangle">Треугольник Рело</string>
@@ -301,7 +300,6 @@
     <string name="preference_blur_wallpaper_unsupported">Не поддерживается на данном устройстве</string>
     <string name="preference_category_badges">Значки</string>
     <string name="edit_favorites_dialog_new_tag">Создать тег…</string>
-    <string name="preference_font_system">Системный</string>
     <string name="preference_icon_shape_teardrop">Слезинка</string>
     <string name="preference_screen_integrations_summary">Управление подключенными учётными записями и сервисами</string>
     <string name="preference_font">Шрифт</string>
@@ -823,7 +821,6 @@
     <string name="preference_clock_widget_time_format">Формат времени</string>
     <string name="preference_clock_widget_time_format_24h">24-часовой</string>
     <string name="preference_clock_widget_time_format_12h">12-часовой</string>
-    <string name="preference_clock_widget_time_format_system">Системные настройки по умолчанию</string>
     <string name="weather_condition_thunder">Гром</string>
     <string name="weather_condition_haze">Дымка</string>
     <string name="missing_permission_tasks_search_settings">Для поиска в задачах требуется соответствующее разрешение</string>

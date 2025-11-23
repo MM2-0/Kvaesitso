@@ -240,7 +240,6 @@
     <string name="preference_theme">테마</string>
     <string name="preference_screen_colors">색상 구성</string>
     <string name="preference_nextcloud_signin">Nextcloud에 로그인</string>
-    <string name="preference_font_system">시스템 기본값</string>
     <string name="preference_weather_provider">공급자</string>
     <string name="preference_search_calculator_summary">수학 식 계산</string>
     <string name="preference_cards_stroke_width">획 너비</string>
@@ -336,7 +335,6 @@
     <string name="preference_weather_integration">날씨</string>
     <string name="gesture_action_launch_app">앱 열기</string>
     <string name="tag_select_items">항목 선택:</string>
-    <string name="preference_icon_shape_platform">시스템 기본값</string>
     <string name="preference_wallpaper_summary">배경화면 선택</string>
     <string name="gesture_action_recents">최근 앱 화면 열기</string>
     <string name="widget_config_weather_integration_settings">날씨 통합 설정</string>

@@ -192,7 +192,6 @@
     <string name="preference_shortcut_badges">Shortcut-Plaketten</string>
     <string name="preference_cloud_badges_summary">Eine Plakette für Dateien, die in einer Cloud gespeichert sind anzeigen</string>
     <string name="preference_shortcut_badges_summary">Für Shortcuts anzeigen, zu welcher App diese gehören</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_nextcloud_signin">Bei Nextcloud anmelden</string>
     <string name="preference_nextcloud_signin_summary">Anmelden, um Ihren Nextcloud-Server durchsuchen zu können</string>
     <string name="preference_about_telegram">Telegram-Gruppe</string>
@@ -352,7 +351,6 @@
     <string name="preference_enforce_icon_shape">Form erzwingen</string>
     <string name="preference_enforce_icon_shape_summary">Form auch auf Icons anwenden, die dies normalerweise nicht unterstützen</string>
     <string name="preference_font">Schriftart</string>
-    <string name="preference_font_system">Systemstandard</string>
     <string name="preference_blur_wallpaper">Hintergrund weichzeichnen</string>
     <string name="preference_blur_wallpaper_summary">Einen Unschärfeeffekt für das Hintergrundbild verwenden</string>
     <string name="preference_blur_wallpaper_unsupported">Auf diesem Gerät nicht unterstützt</string>
@@ -803,7 +801,6 @@
     <string name="preference_clock_widget_time_format">Zeitformat</string>
     <string name="preference_clock_widget_time_format_24h">24-Stunden</string>
     <string name="preference_clock_widget_time_format_12h">12-Stunden</string>
-    <string name="preference_clock_widget_time_format_system">Systemstandard</string>
     <string name="widget_removed">Widget entfernt</string>
     <string name="missing_permission_call_contacts_settings">Telefonberechtigung wird benötigt, um Anrufe zu starten</string>
     <string name="action_install">Installieren</string>

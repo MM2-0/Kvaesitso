@@ -193,7 +193,6 @@
     <string name="preference_cards_stroke_width">Lățimea conturului</string>
     <string name="preference_cards_opacity">Opacitate</string>
     <string name="preference_icon_shape">Formă</string>
-    <string name="preference_icon_shape_platform">Implicită de sistem</string>
     <string name="preference_icon_shape_square">Pătrat</string>
     <string name="preference_icon_shape_rounded_square">Pătrat rotunjit</string>
     <string name="preference_icon_shape_circle">Cerc</string>
@@ -337,7 +336,6 @@
     <string name="menu_map">Vezi pe hartă</string>
     <string name="menu_website">Deschide site web</string>
     <string name="preference_category_advanced">Avansat</string>
-    <string name="preference_font_system">Font implicit</string>
     <string name="location_closes_other_day">se închide la %1$s, %2$s</string>
     <string name="location_closes">se închide la %1$s</string>
     <string name="location_opens">se deschide la %1$s</string>

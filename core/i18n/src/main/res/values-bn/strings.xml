@@ -275,7 +275,6 @@
     <string name="preference_cards_shape_rounded">গোলাকার</string>
     <string name="preference_cards_shape_cut">কাটা</string>
     <string name="preference_icon_shape">আকৃতি</string>
-    <string name="preference_icon_shape_platform">সিস্টেমের পূর্বনির্ধারিত</string>
     <string name="preference_icon_shape_square">বর্গাকার</string>
     <string name="preference_icon_shape_rounded_square">গোলাকার বর্গ</string>
     <string name="preference_icon_shape_squircle">বর্গাকৃত গোলাকার</string>
@@ -291,7 +290,6 @@
     <string name="preference_system_bar_icons_dark">কালো</string>
     <string name="preference_hide_status_bar">স্ট্যাটাস বার লুকান</string>
     <string name="preference_hide_nav_bar">নির্দেশনা বার লুকান</string>
-    <string name="preference_font_system">সিস্টেমের পূর্বনির্ধারিত</string>
     <string name="preference_icon_shape_teardrop">অশ্রুপাত</string>
     <string name="preference_icon_shape_pebble">পাথরের টুকরা</string>
     <string name="preference_icon_shape_hexagon">ষড়ভুজ</string>

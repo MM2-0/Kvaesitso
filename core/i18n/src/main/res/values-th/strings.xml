@@ -125,7 +125,6 @@
     <string name="preference_colors_default">ค่าเริ่มต้น</string>
     <string name="preference_custom_colors_corepalette">จานสี</string>
     <string name="preference_font">ชุดแบบอักษร</string>
-    <string name="preference_font_system">ค่าเริ่มต้นของระบบ</string>
     <string name="preference_screen_about">เกี่ยวกับ</string>
     <string name="preference_version">เวอร์ชั่น</string>
     <string name="open_webpage">เปิดเว็บไซต์</string>
@@ -339,7 +338,6 @@
     <string name="file_meta_path">ตำแหน่งไฟล์: %1$s</string>
     <string name="preference_icon_shape">รูปร่าง</string>
     <string name="file_meta_dimensions">ความละเอียด: %1$s</string>
-    <string name="preference_icon_shape_platform">ค่าเริ่มต้นของระบบ</string>
     <string name="file_meta_app_version">เวอร์ชั่น: %1$s</string>
     <string name="preference_icon_shape_rounded_square">สีเหลี่ยมมุมมน</string>
     <string name="file_meta_app_pkgname">ชื่อแพ็กเกจ: %1$s</string>
@@ -779,7 +777,6 @@
     <string name="preference_clock_widget_time_format_24h">24 ชั่วโมง</string>
     <string name="widget_removed">ลบวิดเจ็ตแล้ว</string>
     <string name="preference_clock_widget_time_format_12h">12 ชั่วโมง</string>
-    <string name="preference_clock_widget_time_format_system">ค่าเริ่มต้นของระบบ</string>
     <plurals name="departure_time_in">
         <item quantity="other">ในอีก %1$d นาที</item>
     </plurals>

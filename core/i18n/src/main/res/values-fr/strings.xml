@@ -173,7 +173,6 @@
     <string name="preference_cloud_badges_summary">Afficher un badge pour les fichiers stockés dans le cloud</string>
     <string name="preference_shortcut_badges">Badges de raccourcis</string>
     <string name="preference_shortcut_badges_summary">Afficher un badge qui indique à quelle application le raccourci appartient</string>
-    <string name="preference_icon_shape_platform">Suivre le système</string>
     <string name="preference_nextcloud_signin">Se connecter avec Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Se connecter pour rechercher dans votre serveur Nextcloud</string>
     <string name="preference_about_telegram">Groupe Telegram</string>
@@ -376,7 +375,6 @@
     <string name="preference_enforce_icon_shape">Imposer la forme</string>
     <string name="preference_enforce_icon_shape_summary">Appliquer la forme à toutes les icônes, y compris celles qui ne la supporteraient pas normalement</string>
     <string name="preference_font">Police de caractères</string>
-    <string name="preference_font_system">Police par défaut du système, dépendante du fournisseur (Google Sans sur les téléphones Google Pixel, Roboto sur AOSP)</string>
     <string name="preference_blur_wallpaper">Flouter le fond d\'écran</string>
     <string name="preference_blur_wallpaper_summary">Ajouter un effet de flou sur le fond d\'écran</string>
     <string name="preference_blur_wallpaper_unsupported">Non supporté sur cet appareil</string>
@@ -859,7 +857,6 @@
     <string name="preference_grid_list_style_summary">Afficher les applications en tant que liste plutôt que grille</string>
     <string name="preference_breezyweather_integration_instructions">Pour ouvrir Breezy Weather comme fournisseur météo :\n\n1. Se rendre dans Breezy Weather &gt; Paramètres &gt; Widgets &amp; Fond d\'écran animé &gt; Envoyer des données Gadgetbridge &gt; Activer %1$s\n\n2. Dans %1$s, sélectionner Breezy Weather comme fournisseur météo</string>
     <string name="profile_work_profile_state_locked">Les applications professionnelles sont en pause.</string>
-    <string name="preference_clock_widget_time_format_system">Défini par le système</string>
     <string name="preference_tasks_integration_ready">L\'intégration avec Tasks est entièrement configurée et est prête à l\'usage.</string>
     <string name="preference_contacts_call_on_tap">Appuyer pour appeler</string>
     <string name="preference_widgets_on_home_screen">Widgets sur l\'écran d\'accueil</string>

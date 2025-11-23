@@ -226,7 +226,6 @@
     <string name="preference_colors_default">預設</string>
     <string name="preference_colors_bw">黑白</string>
     <string name="preference_font">字型</string>
-    <string name="preference_font_system">系統預設</string>
     <string name="preference_screen_about">關於</string>
     <string name="preference_version">版本</string>
     <string name="preference_category_links">連結</string>
@@ -260,7 +259,6 @@
     <string name="preference_cards_shape_rounded">圓角</string>
     <string name="preference_cards_shape_cut">切角</string>
     <string name="preference_icon_shape">形狀</string>
-    <string name="preference_icon_shape_platform">系統預設</string>
     <string name="preference_category_wallpaper">桌布</string>
     <string name="preference_icon_shape_square">正方形</string>
     <string name="preference_icon_shape_rounded_square">圓角方形</string>
@@ -775,7 +773,6 @@
     </plurals>
     <string name="preference_clock_widget_time_format_24h">24 小時制</string>
     <string name="preference_clock_widget_time_format_12h">12 小時制</string>
-    <string name="preference_clock_widget_time_format_system">系統預設</string>
     <string name="preference_clock_widget_time_format">時間格式</string>
     <string name="widget_removed">小工具已移除</string>
     <string name="preference_contacts_call_on_tap">輕觸以撥打</string>

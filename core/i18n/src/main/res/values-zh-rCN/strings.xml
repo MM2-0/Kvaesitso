@@ -227,7 +227,6 @@
     <string name="preference_cards_corner_radius">顶角半径</string>
     <string name="preference_cards_opacity">不透明度</string>
     <string name="preference_icon_shape">形状</string>
-    <string name="preference_icon_shape_platform">系统默认</string>
     <string name="preference_icon_shape_square">正方形</string>
     <string name="preference_icon_shape_rounded_square">圆角方形</string>
     <string name="preference_icon_shape_squircle">方圆形</string>
@@ -347,7 +346,6 @@
     <string name="preference_blur_wallpaper_summary">在壁纸上 使用模糊效果</string>
     <string name="preference_blur_wallpaper_unsupported">在此设备上不受支持</string>
     <string name="preference_font">字体</string>
-    <string name="preference_font_system">系统默认</string>
     <string name="alert_delete_shortcut">快捷方式%1$s将被永久移除. 继续\?</string>
     <string name="preference_force_themed_icons_summary">将应用程序的配色方案应用于所有的图标，包括不支持的图标(不建议)</string>
     <string name="icon_picker_default_icon">默认</string>
@@ -791,7 +789,6 @@
     <string name="preference_clock_widget_time_format">时间格式</string>
     <string name="preference_clock_widget_time_format_24h">24小时</string>
     <string name="preference_clock_widget_time_format_12h">12小时</string>
-    <string name="preference_clock_widget_time_format_system">系统默认</string>
     <string name="missing_permission_call_contacts_settings">需要通话权限才能开始通话</string>
     <string name="import_theme_exists">已有的样式将会被覆盖</string>
     <string name="preference_search_bar_style_transparent">透明</string>

@@ -198,7 +198,6 @@
     <string name="preference_screen_colors">Skema warna</string>
     <string name="preference_colors_default">Default</string>
     <string name="preference_screen_about">Tentang</string>
-    <string name="preference_font_system">Bawaan sistem</string>
     <string name="preference_version">Versi</string>
     <string name="preference_category_links">Tautan</string>
     <string name="preference_category_licenses">Lisensi sumber terbuka</string>
@@ -220,7 +219,6 @@
     <string name="preference_cards_stroke_width">Garis tepi</string>
     <string name="preference_cards_shape_cut">Potongan</string>
     <string name="preference_cards_opacity">Transparansi</string>
-    <string name="preference_icon_shape_platform">Bawaan sistem</string>
     <string name="preference_icon_shape_square">Kotak</string>
     <string name="preference_icon_shape_rounded_square">Kotak melingkar</string>
     <string name="preference_icon_shape_circle">Lingkaran</string>

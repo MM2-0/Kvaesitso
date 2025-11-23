@@ -444,7 +444,6 @@
     <string name="preference_transparencies_default">Varsayılan</string>
     <string name="preference_transparencies_semi_transparent">Yarı şeffaf</string>
     <string name="preference_font">Yazı Tipi</string>
-    <string name="preference_font_system">Sistem varsayılanı</string>
     <string name="preference_screen_about">Hakkında</string>
     <string name="preference_version">Sürüm</string>
     <string name="preference_category_links">Bağlantılar</string>
@@ -493,7 +492,6 @@
     <string name="preference_cards_shape_rounded">Yuvarlak</string>
     <string name="preference_cards_shape_cut">Kesik</string>
     <string name="preference_icon_shape">Şekil</string>
-    <string name="preference_icon_shape_platform">Sistem varsayılanı</string>
     <string name="preference_icon_shape_square">Kare</string>
     <string name="preference_icon_shape_rounded_square">Yuvarlak kare</string>
     <string name="preference_icon_shape_squircle">Yuvarlak köşe</string>
@@ -585,7 +583,6 @@
     <string name="preference_clock_widget_time_format">Saat biçimi</string>
     <string name="preference_clock_widget_time_format_24h">24 saat</string>
     <string name="preference_clock_widget_time_format_12h">12 saat</string>
-    <string name="preference_clock_widget_time_format_system">Sistem varsayılanı</string>
     <string name="widget_use_theme_colors">Tema rengini kullan</string>
     <string name="preference_clock_widget_fill_height">Ekran yüksekliğini doldur</string>
     <string name="preference_clock_widget_alignment">Hizalama</string>

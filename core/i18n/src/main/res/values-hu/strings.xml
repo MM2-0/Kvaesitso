@@ -208,7 +208,6 @@
     <string name="preference_category_debug_tools">Eszközök</string>
     <string name="preference_cards_summary">Kártyák megjelenésének testreszabása</string>
     <string name="preference_font">Betűtípus</string>
-    <string name="preference_font_system">Rendszer alapértelmezett</string>
     <string name="preference_screen_about">Névjegy</string>
     <string name="weather_condition_snowandthunder">Havazás és mennydörgés</string>
     <string name="weather_condition_clearsky">Tiszta ég</string>
@@ -270,7 +269,6 @@
     <string name="preference_cards_shape_rounded">Kerekített</string>
     <string name="preference_cards_shape_cut">Csapott</string>
     <string name="preference_icon_shape">Alakzat</string>
-    <string name="preference_icon_shape_platform">Rendszer alapértelmezett</string>
     <string name="preference_icon_shape_rounded_square">Lekerekített négyzet</string>
     <string name="preference_icon_shape_squircle">Kerekített négyzet</string>
     <string name="preference_icon_shape_triangle">Reuleaux háromszög</string>
@@ -785,7 +783,6 @@
     <string name="weather_forecast_humidity">Páratartalom</string>
     <string name="tag_empty_name">Egy címke nem létezhet név nélkül. Ha folytatja, a címke törlődik</string>
     <string name="widget_removed">Modul törölve</string>
-    <string name="preference_clock_widget_time_format_system">Rendszer alapértelmezett</string>
     <string name="preference_clock_widget_time_format">Időformátum</string>
     <string name="preference_clock_widget_time_format_24h">24 órás</string>
     <string name="preference_clock_widget_time_format_12h">12 órás</string>
