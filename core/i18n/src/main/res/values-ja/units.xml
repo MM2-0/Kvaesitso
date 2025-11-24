@@ -42,6 +42,7 @@
     <plurals name="unit_mile">
         <item quantity="other">マイル</item>
     </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
     <plurals name="unit_nautic_mile">
         <item quantity="other">海里</item>
     </plurals>
@@ -58,12 +59,15 @@
     <plurals name="unit_sqmillimeter">
         <item quantity="other">平方ミリメートル</item>
     </plurals>
+    <string name="unit_sqinch_symbol">in²</string>
     <plurals name="unit_sqinch">
         <item quantity="other">平方インチ</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">ft²</string>
     <plurals name="unit_sqfoot">
         <item quantity="other">平方フィート</item>
     </plurals>
+    <string name="unit_sqyard_symbol">yd²</string>
     <plurals name="unit_sqyard">
         <item quantity="other">平方ヤード</item>
     </plurals>
@@ -118,6 +122,9 @@
     <plurals name="unit_gibibyte">
         <item quantity="other">ギビバイト</item>
     </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="other">テビバイト</item>
+    </plurals>
     <plurals name="unit_bit">
         <item quantity="other">ビット</item>
     </plurals>
@@ -156,6 +163,7 @@
     <plurals name="unit_metric_ton">
         <item quantity="other">トン</item>
     </plurals>
+    <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
         <item quantity="other">ロングトン</item>
     </plurals>
@@ -168,6 +176,7 @@
     <plurals name="unit_ounce">
         <item quantity="other">オンス</item>
     </plurals>
+    <string name="unit_short_ton_symbol">tn.sh.</string>
     <plurals name="unit_short_ton">
         <item quantity="other">ショートトン</item>
     </plurals>
