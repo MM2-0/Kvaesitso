@@ -47,6 +47,7 @@
         <item quantity="one">mil</item>
         <item quantity="other">mil</item>
     </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">deniz mili</item>
         <item quantity="other">deniz mili</item>
@@ -68,14 +69,17 @@
         <item quantity="one">milimetrekare</item>
         <item quantity="other">milimetrekare</item>
     </plurals>
+    <string name="unit_sqinch_symbol">sqin</string>
     <plurals name="unit_sqinch">
         <item quantity="one">inç kare</item>
         <item quantity="other">inç kare</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">sqft</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">foot kare</item>
         <item quantity="other">foot kare</item>
     </plurals>
+    <string name="unit_sqyard_symbol">sqyd</string>
     <plurals name="unit_sqyard">
         <item quantity="one">yarda kare</item>
         <item quantity="other">yarda kare</item>
@@ -150,6 +154,10 @@
         <item quantity="one">gibibayt</item>
         <item quantity="other">gibibayt</item>
     </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebibayt</item>
+        <item quantity="other">tebibayt</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
         <item quantity="one">metre/saniye</item>
@@ -169,10 +177,15 @@
         <item quantity="one">metrik ton</item>
         <item quantity="other">metrik ton</item>
     </plurals>
+    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_ounce_symbol">oz.</string>
     <plurals name="unit_ounce">
         <item quantity="one">ons</item>
         <item quantity="other">ons</item>
     </plurals>
+    <string name="unit_short_ton_symbol">tn.sh.</string>
     <!-- UNITS OF TEMPERATURE -->
     <plurals name="unit_degree_celsius">
         <item quantity="one">derece selsiyus</item>
