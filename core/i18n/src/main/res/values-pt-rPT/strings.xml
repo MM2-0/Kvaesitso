@@ -28,7 +28,7 @@
     <string name="menu_launch">Iniciar</string>
     <string name="menu_customize">Personalizar</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Abrir</string>
+    <string name="menu_open_file">Aberto</string>
     <string name="menu_map">Ver no mapa</string>
     <string name="menu_website">Abrir página web</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -387,7 +387,7 @@
     <string name="preference_category_licenses">Licenças Open Source</string>
     <string name="preference_category_advanced">Avançado</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Visitar site</string>
+    <string name="open_webpage">Abrir página web</string>
     <string name="preference_screen_about_summary">Informações da aplicação e licença</string>
     <string name="preference_weather_provider">Serviço</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (apenas Alemanha)</string>
@@ -735,7 +735,7 @@
     <string name="location_open_24_7">Aberto 24 H</string>
     <string name="plugin_state_error">Este plugin não está a funcionar corretamente</string>
     <string name="plugin_action_setup">Configurar</string>
-    <string name="plugin_type_filesearch">Pesquisa de ficheiros</string>
+    <string name="plugin_type_filesearch">Ficheiros</string>
     <string name="plugin_type_contacts">Contactos</string>
     <string name="plugin_type_weather">Serviço de meteorologia</string>
     <string name="plugin_weather_provider_enable">Definir como serviço de meteorologia</string>
@@ -858,7 +858,7 @@
     <string name="item_visibility_hidden">Nunca</string>
     <string name="contact_info_home">Casa</string>
     <string name="contact_info_mobile">Telemóvel</string>
-    <string name="contact_info_work">Trabalho</string>
+    <string name="contact_info_work">Profissional</string>
     <plurals name="contact_phone_numbers">
         <item quantity="one">%1$s número de telefone</item>
         <item quantity="other">%1$s números de telefone</item>
@@ -895,7 +895,7 @@
         <item quantity="other">%1$s listas selecionadas</item>
     </plurals>
     <string name="weather_forecast_humidity">Humidade</string>
-    <string name="weather_forecast_wind">Vento</string>
+    <string name="weather_forecast_wind">Ventoso</string>
     <string name="weather_forecast_precipitation">Precipitação</string>
     <string name="departure_time_now">agora</string>
     <plurals name="departure_time_in">
