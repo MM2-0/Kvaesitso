@@ -3,34 +3,34 @@
     <string name="location_open">Aberto</string>
     <string name="location_closed">Fechado</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
-    <string name="location_closes">Fecha às %1$s</string>
+    <string name="location_closes">fecha às %1$s</string>
     <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
-    <string name="location_closes_other_day">Fecha %1$s, %2$s</string>
+    <string name="location_closes_other_day">fecha %1$s, às %2$s</string>
     <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
-    <string name="location_opens">Abre às %1$s</string>
+    <string name="location_opens">abre às %1$s</string>
     <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
-    <string name="location_opens_other_day">Abre %1$s, %2$s</string>
+    <string name="location_opens_other_day">abre %1$s, às %2$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
-    <string name="menu_share">Compartilhar</string>
+    <string name="menu_share">Partilhar</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store
      %1$s is the name of the app store (e.g. Google Play)-->
     <string name="menu_share_store_link">Ligação a %1$s</string>
     <!-- Share an APK file, shown in the app detail share menu -->
-    <string name="menu_share_apk_file">Arquivo APK</string>
+    <string name="menu_share_apk_file">Ficheiro</string>
     <!-- Uninstall an application -->
     <string name="menu_uninstall">Desinstalar</string>
-    <string name="menu_favorites_pin">Fixar no favoritos</string>
-    <string name="menu_favorites_unpin">Desfixar</string>
-    <string name="menu_back">Voltar</string>
-    <string name="menu_app_info">Informação do app</string>
+    <string name="menu_favorites_pin">Fixar nos favoritos</string>
+    <string name="menu_favorites_unpin">Desafixar</string>
+    <string name="menu_back">Recuar</string>
+    <string name="menu_app_info">Informações</string>
     <!-- Launch an app -->
     <string name="menu_launch">Iniciar</string>
     <string name="menu_customize">Personalizar</string>
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Abrir</string>
     <string name="menu_map">Ver no mapa</string>
-    <string name="menu_website">Abrir site</string>
+    <string name="menu_website">Abrir página web</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="action_undo">Desfazer</string>
     <string name="action_import">Importar</string>
@@ -39,18 +39,18 @@
     <string name="action_clear">Limpar</string>
     <string name="action_install">Instalar</string>
     <!-- Delete something (a file or a web search shortcut) -->
-    <string name="menu_delete">Excluir</string>
+    <string name="menu_delete">Eliminar</string>
     <string name="menu_remove">Remover</string>
     <!-- Open a contact in the contacts app -->
-    <string name="menu_contacts_open_externally">Abrir no aplicativo de contatos</string>
+    <string name="menu_contacts_open_externally">Abrir nos contactos</string>
     <!-- Open an event in the calendar app -->
-    <string name="menu_calendar_open_externally">Abrir no aplicativo de calendário</string>
+    <string name="menu_calendar_open_externally">Abrir no calendário</string>
     <!-- Shown in the search bar when the search text field is empty -->
     <string name="search_bar_placeholder">Pesquisar</string>
     <!-- App version, used in application details %1$s is the version -->
     <string name="app_info_version">Versão %1$s</string>
     <!-- Menu entry for launcher settings -->
-    <string name="settings">Configurações</string>
+    <string name="settings">Definições</string>
     <!-- Menu entry for launcher help -->
     <string name="help">Ajuda</string>
     <!-- Set the device's wallpaper -->
@@ -60,33 +60,33 @@
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_east">Nordeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_east">Norte-Nordeste</string>
+    <string name="wind_north_north_east">Norte, nordeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east_north_east">Leste-Nordeste</string>
+    <string name="wind_east_north_east">Este, nordeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east">Leste</string>
+    <string name="wind_east">Este</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east_south_east">Leste-Sudeste</string>
+    <string name="wind_east_south_east">Este, sudeste</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south_east">Sudeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_south_east">Sul-Sudeste</string>
+    <string name="wind_south_south_east">Sul, sudeste</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south">Sul</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_south_west">Sul-Sudoeste</string>
+    <string name="wind_south_south_west">Sul, sudoeste</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south_west">Sudoeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west_south_west">Oeste-Sudoeste</string>
+    <string name="wind_west_south_west">Oeste, sudoeste</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_west">Oeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west_north_west">Oeste-Noroeste</string>
+    <string name="wind_west_north_west">Oeste, noroeste</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_west">Noroeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_west">Norte-Noroeste</string>
+    <string name="wind_north_north_west">Norte, noroeste</string>
     <!-- No rain or snow, used in weather widget -->
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
@@ -94,7 +94,7 @@
       (English in most cases) -->
     <string name="wikipedia_url">https://pt.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
-    <string name="wikipedia_source">de Wikipédia</string>
+    <string name="wikipedia_source">De Wikipedia</string>
     <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">Título: %1$s</string>
     <!-- File metadata, artist of audio tracks -->
@@ -112,30 +112,30 @@
     <!-- File type (MIME type) -->
     <string name="file_meta_type">Tipo: %1$s</string>
     <!-- File metadata, image/video dimensions -->
-    <string name="file_meta_dimensions">Dimensões: %1$s</string>
+    <string name="file_meta_dimensions">Dimensão: %1$s</string>
     <!-- File metadata, app name of APK files -->
-    <string name="file_meta_app_name">Nome do app: %1$s</string>
+    <string name="file_meta_app_name">Nome da aplicação: %1$s</string>
     <!-- File metadata, version name of APK files -->
     <string name="file_meta_app_version">Versão: %1$s</string>
     <!-- File metadata, package name of APK files -->
     <string name="file_meta_app_pkgname">Nome do pacote: %1$s</string>
     <!-- File metadata, minimum SDK version of APK files -->
-    <string name="file_meta_app_min_sdk">Versão mínima do SDK : %1$s</string>
+    <string name="file_meta_app_min_sdk">Versão SDK mínima: %1$s</string>
     <!-- File metadata, owner (for cloud files) -->
-    <string name="file_meta_owner">Proprietário: %1$s</string>
+    <string name="file_meta_owner">Dono: %1$s</string>
     <!-- File metadata, location -->
     <string name="file_meta_location">Localização: %1$s</string>
     <string name="file_type_directory">Diretório</string>
     <!-- Archive file  -->
     <string name="file_type_archive">Arquivo</string>
     <!-- Android package file  -->
-    <string name="file_type_android">Arquivo de pacote Android</string>
+    <string name="file_type_android">Ficheiro Android (APK)</string>
     <!-- Source code file -->
-    <string name="file_type_source_code">Arquivo de código-fonte</string>
+    <string name="file_type_source_code">Código-fonte</string>
     <!-- Document -->
     <string name="file_type_document">Documento</string>
     <!-- Spreadsheet -->
-    <string name="file_type_spreadsheet">Planilha</string>
+    <string name="file_type_spreadsheet">Folha de cálculo</string>
     <!-- Audio file -->
     <string name="file_type_music">Áudio</string>
     <!-- Video file -->
@@ -143,30 +143,30 @@
     <!-- Image file -->
     <string name="file_type_image">Imagem</string>
     <!-- Generic file without file extension -->
-    <string name="file_type_none">Arquivo</string>
+    <string name="file_type_none">Ficheiro</string>
     <!-- Presentation -->
     <string name="file_type_presentation">Apresentação</string>
     <!-- Compressed file -->
-    <string name="file_type_compressed">Arquivo comprimido</string>
+    <string name="file_type_compressed">Ficheiro comprimido</string>
     <!-- Plain text file -->
-    <string name="file_type_text">Arquivo de texto</string>
+    <string name="file_type_text">Ficheiro de texto</string>
     <!-- E-book file -->
     <!-- Drawing file -->
     <string name="file_type_drawing">Desenho</string>
     <!-- Form file -->
     <string name="file_type_form">Formulário</string>
     <!-- Launcher backup, %1$s: app name -->
-    <string name="file_type_launcherbackup">Backup do %1$s</string>
+    <string name="file_type_launcherbackup">Backup de %1$s</string>
     <!-- Launcher theme, %1$s: app name -->
-    <string name="file_type_launchertheme">Tema do %1$s</string>
+    <string name="file_type_launchertheme">Tema de %1$s</string>
     <!-- Generic file , %1$s is the file extension -->
-    <string name="file_type_generic">Arquivo %1$s</string>
+    <string name="file_type_generic">Ficheiro %1$s</string>
     <!-- Warning message that is shown when a user attempts to delete a directory -->
-    <string name="alert_delete_directory">O diretório %1$s e todo seu conteúdo será deletado permanentemente. Proceder?</string>
+    <string name="alert_delete_directory">O diretório %1$s e todo o seu conteúdo será eliminado permanentemente. Continuar?</string>
     <!-- Warning message that is shown when a user attempts to delete a file -->
-    <string name="alert_delete_file">O arquivo %1$s será deletado permanentemente. Proceder\?</string>
+    <string name="alert_delete_file">O ficheiro %1$s será eliminado permanentemente. Continuar?</string>
     <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
-    <string name="alert_delete_shortcut">O atalho %1$s será removido permanentemente. Continuar?</string>
+    <string name="alert_delete_shortcut">O atalho %1$s será eliminado permanentemente. Continuar?</string>
     <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
     could not be opened because there was no app installed that could handle the request  -->
     <!--
@@ -207,16 +207,16 @@
         the region of the language or not commonly used.
        -->
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
-    <string name="websearch_dialog_url_error">O atributo \'${1}\' está faltando na URL</string>
-    <string name="websearch_dialog_replace_icon">Trocar ícone</string>
-    <string name="websearch_dialog_delete_icon">Excluir ícone</string>
+    <string name="websearch_dialog_url_error">\'${1}\' está em falta no URL</string>
+    <string name="websearch_dialog_replace_icon">Substituir ícone</string>
+    <string name="websearch_dialog_delete_icon">Eliminar ícone</string>
     <string name="websearch_dialog_custom_icon">Ícone personalizado</string>
     <string name="websearch_dialog_advanced">Avançado</string>
-    <string name="websearch_dialog_query_encoding">Codificação de consulta</string>
-    <string name="websearch_dialog_query_encoding_url">Codificação de porcentagem</string>
-    <string name="websearch_dialog_query_encoding_none">Nenhum</string>
+    <string name="websearch_dialog_query_encoding">Codificação da pesquisa</string>
+    <string name="websearch_dialog_query_encoding_url">Codificação em percentagem</string>
+    <string name="websearch_dialog_query_encoding_none">Nenhuma</string>
     <string name="menu_edit_widgets">Editar widgets</string>
-    <string name="widget_name_weather">Tempo</string>
+    <string name="widget_name_weather">Meteorologia</string>
     <string name="widget_name_calendar">Calendário</string>
     <string name="widget_name_music">Multimédia</string>
     <string name="widget_name_favorites">Favoritos</string>
@@ -228,73 +228,75 @@
     <string name="notes_widget_placeholder">Escrever uma nota</string>
     <string name="notes_widget_action_new">Nova nota</string>
     <!-- Save / export the current note content as markdown file -->
-    <string name="notes_widget_action_save">Salvar</string>
+    <string name="notes_widget_action_save">Guardar</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Nota_%1$s</string>
-    <string name="notes_widget_action_dismiss">Descartar</string>
+    <string name="notes_widget_action_dismiss">Rejeitar</string>
     <string name="notes_widget_dismissed">Nota rejeitada</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">De %1$s</string>
     <!-- Close a dialog -->
     <string name="close">Fechar</string>
     <string name="no_selection">Nada selecionado</string>
-    <string name="save">Salvar</string>
+    <string name="save">Guardar</string>
     <string name="save_as_file">Guardar como ficheiro</string>
     <string name="duplicate">Duplicar</string>
     <string name="edit">Editar</string>
-    <string name="skip">Pular</string>
-    <string name="action_next">Próximo</string>
+    <string name="skip">Ignorar</string>
+    <string name="action_next">Seguinte</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Desligar</string>
     <string name="widget_action_remove">Remover</string>
     <string name="widget_action_replace">Substituir</string>
     <string name="menu_item_edit_favs">Editar favoritos</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
-    <string name="edit_favorites_dialog_unpinned">Não fixado - frequentemente usado</string>
+    <string name="edit_favorites_dialog_unpinned">Não afixados - usados frequentemente</string>
     <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
-    <string name="edit_favorites_dialog_pinned_unsorted">Fixado - organizado automaticamente</string>
+    <string name="edit_favorites_dialog_pinned_unsorted">Afixados - ordenados automaticamente</string>
     <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
-    <string name="edit_favorites_dialog_pinned_sorted">Fixado - organizado manualmente</string>
-    <string name="edit_favorites_dialog_empty_section">Arraste itens aqui</string>
+    <string name="edit_favorites_dialog_pinned_sorted">Afixados - ordenados manualmente</string>
+    <string name="edit_favorites_dialog_empty_section">Arraste os itens para aqui</string>
     <string name="edit_favorites_dialog_tags">Etiquetas</string>
-    <string name="edit_favorites_dialog_tag_section_empty">Etiquetas fixadas vão aparecer aqui</string>
+    <string name="edit_favorites_dialog_tag_section_empty">As etiquetas afixadas aparecem aqui</string>
     <string name="edit_favorites_dialog_new_tag">Criar etiqueta</string>
     <!-- Nextcloud login flow, URL-->
-    <string name="nextcloud_server_url">URL de servidor Nextcloud</string>
+    <string name="nextcloud_server_url">URL do servidor Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
     <!-- Nextcloud login flow, error invalid URL-->
-    <string name="nextcloud_server_invalid_url">Esta URL não aponta para uma instalação válida do Nextcloud</string>
+    <string name="nextcloud_server_invalid_url">Este URL aponta para uma instalação Nextcloud inválida</string>
     <!-- Owncloud login flow, UR-->
     <string name="owncloud_server_url">URL do servidor Owncloud</string>
     <!-- Owncloud login flow, error invalid URL-->
-    <string name="owncloud_server_invalid_url">Esta URL não aponta para uma instalação válida do Owncloud</string>
+    <string name="owncloud_server_invalid_url">Este URL aponta para uma instalação Owncloud inválida</string>
     <!-- Owncloud login flow, password-->
-    <string name="owncloud_password">Senha</string>
+    <string name="owncloud_password">Palavra-passe</string>
     <!-- Owncloud login flow, user name-->
-    <string name="owncloud_username">Usuário</string>
+    <string name="owncloud_username">Nome de utilizador</string>
     <!-- Owncloud login flow -->
-    <string name="owncloud_login_2fa_hint">Se a autenticação de dois fatores estiver ativada, deverá usar uma senha de aplicativo aqui.</string>
+    <string name="owncloud_login_2fa_hint">Se tiver a autenticação 2 fatores ativada, tem que utilizar aqui uma palavra-passe.</string>
     <!-- Owncloud login flow, login failed -->
-    <string name="owncloud_login_failed">Falha no login: nome de usuário ou senha incorretos.</string>
+    <string name="owncloud_login_failed">Falha ao iniciar: nome de utilizador ou palavra-passe inválida.</string>
     <!-- Owncloud login flow, error: username empty -->
     <!-- Owncloud login flow, error: password empty -->
     <!-- Nextcloud/Owncloud login flow, continue button -->
     <string name="login_flow_continue">Continuar</string>
     <!-- Nextcloud/Owncloud login flow, login button -->
-    <string name="login_flow_login">Conectar</string>
-    <string name="disclaimer">Isenção de responsabilidade</string>
+    <string name="login_flow_login">Iniciar sessão</string>
+    <string name="disclaimer">Aviso</string>
     <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
-    <string name="disclaimer_currency_converter">Taxas de câmbio atualizadas conforme são publicadas pelo Banco Central Europeu. Todas as informações são fornecidas \"como estão\", sem qualquer tipo de garantia. Nenhuma responsabilidade é assumida por estas informações.\n \nÚltima atualização: %1$s</string>
-    <string name="show_all">Mostrar todos</string>
+    <string name="disclaimer_currency_converter">As taxas de câmbio são publicadas diariamente pelo Banco Central Europeu. Todas as informações são dadas \"as is\" e sem qualquer garantia. Não assumimos a responsabilidade pela veracidade da informação.
+\n
+\nAtualizadas em: %1$s</string>
+    <string name="show_all">Mostrar tudo</string>
     <!-- Used in calendar widget date selector. -->
     <string name="date_today">Hoje</string>
     <!-- Used in calendar widget date selector. -->
     <string name="date_tomorrow">Amanhã</string>
     <!-- Headline used in calendar widget for pinned events -->
-    <string name="calendar_widget_pinned_events">Próximos</string>
+    <string name="calendar_widget_pinned_events">Brevemente</string>
     <!-- Headline used in calendar widget for the next event, if there is no event today -->
     <string name="calendar_widget_next_events">Próximo evento</string>
-    <string name="calendar_widget_no_events">Sem eventos hoje</string>
+    <string name="calendar_widget_no_events">Não existem eventos hoje</string>
     <!--
         In the calendar widget, only events that start or end at the selected date are shown.
         If an event runs for three days, it won't be listed if the second day is selected.
@@ -302,8 +304,8 @@
         running events that neither started nor will end on the selected day.
         -->
     <plurals name="calendar_widget_running_events">
-        <item quantity="one">+%1$d evento em andamento nos últimos dias</item>
-        <item quantity="other">+%1$d eventos em andamento nos últimos dias</item>
+        <item quantity="one">+%1$d evento de datas passadas</item>
+        <item quantity="other">+%1$d eventos de datas passadas</item>
     </plurals>
     <plurals name="calendar_widget_running_tasks">
         <item quantity="one">+%1$d tarefa por realizar</item>
@@ -311,59 +313,59 @@
     </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">Dia completo</string>
-    <string name="task_due_time">Vence às %1$s</string>
-    <string name="task_due_date">Vence em %1$s</string>
-    <string name="task_due_today">Vence hoje</string>
+    <string name="task_due_time">Termina a %1$s</string>
+    <string name="task_due_date">Limite a %1$s</string>
+    <string name="task_due_today">Termina hoje</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
-    <string name="music_widget_default_title">%1$s está reproduzindo mídia</string>
-    <string name="music_widget_no_data">Nenhuma mídia foi reproduzida ainda</string>
+    <string name="music_widget_default_title">%1$s está a reproduzir</string>
+    <string name="music_widget_no_data">Ainda nada foi reproduzido</string>
     <string name="music_widget_interactive_progress_bar">Barra de progresso interativa</string>
     <string name="weather_condition_sleetshowers">Chuva de granizo</string>
     <string name="weather_condition_heavysleet">Chuva de granizo intensa</string>
-    <string name="weather_condition_lightrainshowersandthunder">Chuvas leves e trovões</string>
+    <string name="weather_condition_lightrainshowersandthunder">Aguaceiros ligeiros e trovoada</string>
     <string name="weather_condition_heavyrain">Chuva intensa</string>
-    <string name="weather_condition_lightsnowandthunder">Neve pouco intensa e trovões</string>
-    <string name="weather_condition_lightrain">Chuva leve</string>
-    <string name="weather_condition_lightrainshowers">Chuvas leves</string>
-    <string name="weather_condition_lightsnow">Neve pouco intensa</string>
+    <string name="weather_condition_lightsnowandthunder">Neve ligeira e trovoada</string>
+    <string name="weather_condition_lightrain">Chuva ligeira</string>
+    <string name="weather_condition_lightrainshowers">Aguaceiros ligeiros</string>
+    <string name="weather_condition_lightsnow">Neve ligeira</string>
     <string name="weather_condition_heavysleetshowersandthunder">Neve molhada intensa e trovões</string>
     <string name="weather_condition_lightsnowshowers">Neve pouco intensa</string>
     <string name="weather_condition_lightssleetshowersandthunder">Neve molhada pouco Intensa e trovões</string>
-    <string name="weather_condition_snowandthunder">Neve e trovões</string>
+    <string name="weather_condition_snowandthunder">Neve e trovoada</string>
     <string name="weather_condition_heavysleetshowers">Neve molhada intensa</string>
     <string name="weather_condition_heavysnow">Neve intensa</string>
     <string name="weather_condition_cloudy">Nublado</string>
-    <string name="weather_condition_lightrainandthunder">Chuva leve e trovões</string>
+    <string name="weather_condition_lightrainandthunder">Chuva ligeira e trovoada</string>
     <string name="weather_condition_snow">Neve</string>
     <string name="weather_condition_hail">Granizo</string>
-    <string name="weather_condition_thunderstorm">Tempestade de trovões</string>
+    <string name="weather_condition_thunderstorm">Trovoada</string>
     <string name="weather_condition_thunder">Trovões</string>
     <string name="weather_condition_heavysnowshowers">Neve intensa</string>
-    <string name="weather_condition_heavyrainshowers">Chuva intensa</string>
-    <string name="weather_condition_rainshowersandthunder">Chuva e trovões</string>
+    <string name="weather_condition_heavyrainshowers">Aguaceiros intensos</string>
+    <string name="weather_condition_rainshowersandthunder">Aguaceiros e trovoada</string>
     <string name="weather_condition_clearsky">Céu limpo</string>
     <string name="weather_condition_sleet">Neve molhada</string>
     <string name="weather_condition_rain">Chuva</string>
     <string name="weather_condition_sleetandthunder">Neve molhada e trovões</string>
     <string name="weather_condition_lightssnowshowersandthunder">Neve pouco intensa e trovões</string>
-    <string name="weather_condition_heavyrainshowersandthunder">Chuva intensa e trovões</string>
-    <string name="weather_condition_fair">Tempo firme</string>
-    <string name="weather_condition_fog">Névoa</string>
+    <string name="weather_condition_heavyrainshowersandthunder">Aguaceiros intensos e trovoada</string>
+    <string name="weather_condition_fair">Ameno</string>
+    <string name="weather_condition_fog">Nevoeiro</string>
     <string name="weather_condition_haze">Neblina</string>
     <string name="weather_condition_sleetshowersandthunder">Chuva com neve e trovoadas</string>
-    <string name="weather_condition_rainandthunder">Chuva e trovões</string>
+    <string name="weather_condition_rainandthunder">Chuva e trovoada</string>
     <string name="weather_condition_lightsleet">Neve molhada pouco intensa</string>
     <string name="weather_condition_heavysleetandthunder">Neve molhada intensa</string>
-    <string name="weather_condition_partlycloudy">Parcialmente</string>
-    <string name="weather_condition_heavysnowandthunder">Neve intensa e trovões</string>
-    <string name="weather_condition_rainshowers">Chuva leve</string>
+    <string name="weather_condition_partlycloudy">Parcialmente nublado</string>
+    <string name="weather_condition_heavysnowandthunder">Neve intensa e trovoada</string>
+    <string name="weather_condition_rainshowers">Aguaceiros</string>
     <string name="weather_condition_lightsleetandthunder">Neve molhada leve e trovões</string>
     <string name="weather_condition_heavysnowshowersandthunder">Neve intensa e trovões</string>
     <string name="weather_condition_lightsleetshowers">Neve molhada pouco intensa</string>
     <string name="weather_condition_snowshowersandthunder">Neve e trovões</string>
     <string name="weather_condition_snowshowers">Neve pouco intensa</string>
-    <string name="weather_condition_heavyrainandthunder">Chuva intensa e trovões</string>
-    <string name="weather_condition_wind">Vento</string>
+    <string name="weather_condition_heavyrainandthunder">Chuva intensa e trovoada</string>
+    <string name="weather_condition_wind">Ventoso</string>
     <string name="weather_condition_unknown">Desconhecido</string>
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
@@ -374,22 +376,22 @@
     <string name="weather_widget_set_location">Definir localização</string>
     <string name="weather_location_search_no_result">Localização não encontrada</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
-    <string name="missing_permission_auto_location">O acesso à localização é necessário para determinar o local automaticamente</string>
+    <string name="missing_permission_auto_location">Requer acesso à localização para determinação automática</string>
     <!-- Missing notification permission in music widget settings -->
-    <string name="missing_permission_music_widget">O acesso às notificações é necessário para controlar a reprodução de mídia</string>
+    <string name="missing_permission_music_widget">Requer acesso às notificações para controlar a reprodução</string>
     <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">Requer acesso aos contactos para poder pesquisar</string>
     <!-- Missing call permission in contacts settings screen -->
     <string name="missing_permission_call_contacts_settings">Requer acesso ao telefone para efetuar chamadas</string>
     <!-- Missing calendar permission in search settings screen -->
-    <string name="missing_permission_calendar_search_settings">A permissão de calendário é necessária para pesquisar o calendário</string>
+    <string name="missing_permission_calendar_search_settings">Requer acesso ao calendário para o pesquisar</string>
     <string name="missing_permission_tasks_search_settings">Requer acesso à aplicação Tasks para pesquisar tarefas</string>
     <string name="missing_permission_tasks_integration">A permissão Tasks é necessária para a integração Tasks</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Este widget requer acesso ao calendário</string>
-    <string name="widget_config_calendar_missing_calendars_hint">Não consegue encontrar seus calendários\?</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Não encontra os seus calendários?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search_settings">%1$s deve ser definido como aplicativo de tela inicial padrão para pesquisar atalhos de aplicativos</string>
+    <string name="missing_permission_appshortcuts_search_settings">Tem que definir %1$s como a aplicação padrão para pesquisar por atalhos de aplicações</string>
     <!-- Missing file permission in search settings screen -->
     <string name="missing_permission_file_search_settings">Requer acesso ao \"Armazenamento externo\" para pesquisar ficheiros localmente</string>
     <!-- Missing file permission in search settings screen.
@@ -397,7 +399,7 @@
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
     <string name="missing_permission_file_search_settings_android10">Requer acesso a \"Gerir todos os ficheiros\" para pesquisar ficheiros locais</string>
     <!-- Missing notification permission, used in badge settings screen -->
-    <string name="missing_permission_notification_badges">Acesso a notificações é necessário para mostrar selos de notificação</string>
+    <string name="missing_permission_notification_badges">Requer acesso às notificações para mostrar os alertas</string>
     <!-- Missing calendar permission, used in calendar widget -->
     <string name="missing_permission_calendar_widget">Requer acesso ao calendário para mostrar os eventos e os lembretes</string>
     <!-- Missing calendar permission, used in calendar search results -->
@@ -409,9 +411,9 @@
     <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">Requer acesso aos contactos para pesquisar contactos</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search">Defina %1$s como aplicativo de tela inicial padrão para pesquisar atalhos de aplicativos.</string>
+    <string name="missing_permission_appshortcuts_search">Defina %1$s como a aplicação padrão para pesquisar atalhos de aplicações.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
-    <string name="missing_permission_appshortcuts_create">Defina %1$s como app inicial padrão para criar atalhos.</string>
+    <string name="missing_permission_appshortcuts_create">Defina %1$s como a aplicação padrão para criar atalhos.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Conceder</string>
     <!-- Appearance preference title -->
@@ -423,8 +425,8 @@
     <string name="preference_colors_default">Padrão</string>
     <string name="preference_colors_high_contrast">Alto contraste</string>
     <string name="preference_colors_bw">Preto e branco</string>
-    <string name="preference_custom_colors_corepalette">Palheta de cores</string>
-    <string name="preference_mdy_color_source">Fonte para cores dinâmicas</string>
+    <string name="preference_custom_colors_corepalette">Paleta de cores</string>
+    <string name="preference_mdy_color_source">Origem para cores dinâmicas</string>
     <string name="preference_mdy_color_source_system">Sistema</string>
     <string name="preference_mdy_color_source_wallpaper">Papel de parede</string>
     <string name="preference_screen_shapes">Formas</string>
@@ -436,237 +438,237 @@
     <string name="preference_screen_transparencies">Transparência</string>
     <string name="preference_transparencies_default">Padrão</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparente</string>
-    <string name="preference_font">Fonte</string>
-    <string name="preference_screen_about">Sobre</string>
+    <string name="preference_font">Tipo de letra</string>
+    <string name="preference_screen_about">Acerca</string>
     <string name="preference_version">Versão</string>
     <string name="preference_category_links">Ligações</string>
-    <string name="preference_category_licenses">Licenças open-source</string>
+    <string name="preference_category_licenses">Licenças Open Source</string>
     <string name="preference_category_advanced">Avançado</string>
     <!-- Open website of an open source library -->
-    <string name="open_webpage">Abrir site</string>
-    <string name="preference_screen_about_summary">Informações sobre o aplicativo e licenças</string>
+    <string name="open_webpage">Visitar site</string>
+    <string name="preference_screen_about_summary">Informações da aplicação e licença</string>
     <string name="preference_screen_appearance_summary">Personalizar aspeto</string>
-    <string name="preference_weather_provider">Provedor</string>
+    <string name="preference_weather_provider">Serviço</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (apenas Alemanha)</string>
     <string name="preference_category_location">Localização</string>
-    <string name="preference_automatic_location">Localização automática</string>
+    <string name="preference_automatic_location">Automática</string>
     <string name="preference_automatic_location_summary">Utilizar serviços de localização para determinação automática</string>
-    <string name="preference_location_managed">Gerenciado por extensão</string>
-    <string name="preference_location_managed_summary">A localização para esse provedor é gerenciada pelo aplicativo de extensão</string>
+    <string name="preference_location_managed">Gerido pelo plugin</string>
+    <string name="preference_location_managed_summary">A localização do serviço é controlada pelo plugin</string>
     <string name="preference_location">Localização</string>
     <string name="preference_location_breezy">Gerir localização em Breezy Weather</string>
-    <string name="preference_imperial_units_summary">Use graus Fahrenheit e milhas por hora</string>
+    <string name="preference_imperial_units_summary">Utilizar Fahrenheit e milhas por hora</string>
     <string name="preference_imperial_units">Unidades imperiais</string>
     <string name="widget_config_weather_compact">Modo compacto</string>
     <string name="preference_category_debug">Depuração</string>
     <string name="preference_category_debug_tools">Ferramentas</string>
-    <string name="preference_debug_dump_heap">Snapshot de memória</string>
-    <string name="preference_debug_dump_heap_summary">Captura um snapshot para analisar o uso de memória. O app vai congelar até que o processo complete.</string>
-    <string name="preference_debug_dump_heap_in_progress">Capturando tela…</string>
-    <string name="preference_debug_cleanup_database">Limpar banco de dados</string>
-    <string name="preference_debug_cleanup_database_summary">Remove entradas quebradas e não utilizadas do banco de dados do iniciador</string>
-    <string name="preference_debug_reinstall_iconpacks">Reinstalar pacote de ícones</string>
-    <string name="preference_debug_reinstall_iconpacks_summary">Limpar e reconstruir o cache do pacote de ícones</string>
+    <string name="preference_debug_dump_heap">Captura de memória</string>
+    <string name="preference_debug_dump_heap_summary">Obter imagem para analisar a utilização de memória. A aplicação será parada até que o processo seja terminado.</string>
+    <string name="preference_debug_dump_heap_in_progress">A obter imagem…</string>
+    <string name="preference_debug_cleanup_database">Limpar base de dados</string>
+    <string name="preference_debug_cleanup_database_summary">Remover entradas danificadas ou não usadas da base de dados</string>
+    <string name="preference_debug_reinstall_iconpacks">Reinstalar ícones</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Limpar e recriar cache de ícones</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">%1$d entrada foi removida</item>
         <item quantity="other">%1$d entradas foram removidas</item>
     </plurals>
     <string name="preference_category_icons">Ícones</string>
     <string name="preference_cards">Cartões</string>
-    <string name="preference_cards_summary">Personalizar aparência dos cartões</string>
-    <string name="preference_cards_corner_radius">Raio de canto</string>
-    <string name="preference_cards_stroke_width">Largura do traçado</string>
+    <string name="preference_cards_summary">Personalizar cartões</string>
+    <string name="preference_cards_corner_radius">Raio do canto</string>
+    <string name="preference_cards_stroke_width">Largura do risco</string>
     <string name="preference_cards_opacity">Opacidade</string>
-    <string name="preference_cards_shape">Formato</string>
+    <string name="preference_cards_shape">Forma</string>
     <string name="preference_cards_shape_rounded">Arredondado</string>
-    <string name="preference_cards_shape_cut">Cortado</string>
-    <string name="preference_icon_shape">Formato</string>
+    <string name="preference_cards_shape_cut">Recortado</string>
+    <string name="preference_icon_shape">Forma</string>
     <string name="preference_icon_shape_square">Quadrado</string>
-    <string name="preference_icon_shape_rounded_square">Quadrado arredondado</string>
+    <string name="preference_icon_shape_rounded_square">Quadrado curvo</string>
     <string name="preference_icon_shape_squircle">Círculo arredondado</string>
-    <string name="preference_icon_shape_triangle">Triângulo Reuleaux</string>
+    <string name="preference_icon_shape_triangle">Triângulo de Reuleaux</string>
     <string name="preference_icon_shape_circle">Círculo</string>
-    <string name="preference_icon_shape_teardrop">Lágrima</string>
-    <string name="preference_icon_shape_pebble">Seixo</string>
+    <string name="preference_icon_shape_teardrop">Gota</string>
+    <string name="preference_icon_shape_pebble">Pedra</string>
     <string name="preference_icon_shape_hexagon">Hexágono</string>
     <string name="preference_category_searchbar">Barra de pesquisa</string>
     <string name="preference_screen_integrations">Integrações</string>
     <string name="preference_screen_plugins">Extensões</string>
-    <string name="preference_screen_plugins_summary">Gerenciar extensões instaladas</string>
-    <string name="no_plugins_installed">Nenhuma extensão instalada</string>
-    <string name="preference_theme_system">Seguir o sistema</string>
-    <string name="preference_themed_icons">Ícones temáticos</string>
-    <string name="preference_themed_icons_summary">Colore os Ícones com o esquema de cores do aplicativo</string>
-    <string name="preference_force_themed_icons">Forçar ícones temáticos</string>
-    <string name="preference_force_themed_icons_summary">Aplique o esquema de cores do aplicativo a todos os ícones, incluindo os não suportados (não recomendado)</string>
+    <string name="preference_screen_plugins_summary">Gerir extensões instaladas</string>
+    <string name="no_plugins_installed">Nenhum plugin instalado</string>
+    <string name="preference_theme_system">Acompanhar sistema</string>
+    <string name="preference_themed_icons">Ícones coloridos</string>
+    <string name="preference_themed_icons_summary">Cor dos ícones segue o esquema de cores da aplicação</string>
+    <string name="preference_force_themed_icons">Impor ícones coloridos</string>
+    <string name="preference_force_themed_icons_summary">Aplicar esquema de cores da aplicação a todos os ícones, mesmo que não suportado (não recomendado)</string>
     <string name="preference_icon_pack">Pacote de ícones</string>
-    <string name="preference_icon_pack_summary_empty">Não há pacotes de ícones instalados</string>
+    <string name="preference_icon_pack_summary_empty">Não existem pacotes instalados</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
     <string name="preference_category_animations">Animações</string>
     <string name="preference_charging_animation">Animação de carregamento</string>
-    <string name="preference_charging_animation_summary">Reproduz uma animação de bolha enquanto o dispositivo está carregando</string>
+    <string name="preference_charging_animation_summary">Mostrar bolha quando o dispositivo está a ser carregado</string>
     <string name="preference_category_system_bars">Barras do sistema</string>
-    <string name="preference_status_bar_icons">Ícones da barra de pesquisa</string>
+    <string name="preference_status_bar_icons">Ícones da barra de estado</string>
     <string name="preference_nav_bar_icons">Ícones da barra de navegação</string>
     <string name="preference_system_bar_icons_auto">Automático</string>
     <string name="preference_system_bar_icons_light">Claro</string>
     <string name="preference_system_bar_icons_dark">Escuro</string>
-    <string name="preference_hide_status_bar">Ocultar a barra de status</string>
-    <string name="preference_hide_nav_bar">Ocultar a barra de navegação</string>
-    <string name="preference_screen_integrations_summary">Gerenciar as contas e serviços conectados</string>
-    <string name="preference_signin_user">Autenticado como %1$s</string>
-    <string name="preference_signout">Desconectar</string>
+    <string name="preference_hide_status_bar">Ocultar barra de estado</string>
+    <string name="preference_hide_nav_bar">Ocultar barra de navegação</string>
+    <string name="preference_screen_integrations_summary">Gerir contas e serviços conectados</string>
+    <string name="preference_signin_user">Sessão iniciada como %1$s</string>
+    <string name="preference_signout">Terminar sessão</string>
     <string name="preference_summary_not_logged_in">Não tem sessão iniciada</string>
     <string name="preference_icon_shape_pentagon">Pentágono</string>
     <string name="preference_category_wallpaper">Papel de parede</string>
     <string name="preference_dim_wallpaper">Escurecer papel de parede</string>
-    <string name="preference_dim_wallpaper_summary">Escurece o papel de parede em temas escuros</string>
+    <string name="preference_dim_wallpaper_summary">Em temas escuros, escurecer papel de parede</string>
     <string name="preference_blur_wallpaper">Desfocar papel de parede</string>
-    <string name="preference_blur_wallpaper_summary">Usa efeito de desfoque no papel de parede</string>
-    <string name="preference_blur_wallpaper_unsupported">Não compatível com este dispositivo</string>
+    <string name="preference_blur_wallpaper_summary">Utilizar efeito de desfoque no papel de parede</string>
+    <string name="preference_blur_wallpaper_unsupported">Não suportado neste dispositivo</string>
     <string name="preference_blur_wallpaper_radius">Raio de desfoque</string>
-    <string name="preference_wallpaper_summary">Escolher o papel de parede</string>
-    <string name="preference_category_badges">Selos</string>
-    <string name="preference_notification_badges">Selos de notificação</string>
-    <string name="preference_notification_badges_summary">Mostra um selo para aplicativos com notificações não lidas</string>
-    <string name="preference_suspended_badges_summary">Mostra um selo para aplicativos suspensos</string>
-    <string name="preference_suspended_badges">Aplicativos suspensos</string>
-    <string name="preference_cloud_badges">Selos de nuvem</string>
-    <string name="preference_cloud_badges_summary">Mostra um selo para arquivos armazenados em nuvem</string>
-    <string name="preference_shortcut_badges">Selos de atalho</string>
-    <string name="preference_shortcut_badges_summary">Mostra um selo que indica a qual aplicativo um atalho pertence</string>
-    <string name="preference_plugin_badges">Emblemas do Plugin</string>
-    <string name="preference_plugin_badges_summary">Indica por qual plugin uma pesquisa foi criada</string>
-    <string name="preference_nextcloud_signin">Entrar com Nextcloud</string>
-    <string name="preference_nextcloud_signin_summary">Entrar para pesquisar no seu servidor Nextcloud</string>
-    <string name="preference_owncloud_signin">Entrar com Owncloud</string>
-    <string name="preference_owncloud_signin_summary">Entrar para pesquisar no seu servidor Owncloud</string>
-    <string name="preference_about_telegram">Grupo do Telegram</string>
+    <string name="preference_wallpaper_summary">Escolher papel de parede</string>
+    <string name="preference_category_badges">Indicadores</string>
+    <string name="preference_notification_badges">Indicadores de notificação</string>
+    <string name="preference_notification_badges_summary">Mostra um indicador nas aplicações com notificações por ler</string>
+    <string name="preference_suspended_badges_summary">Mostra um indicador nas aplicações suspensas</string>
+    <string name="preference_suspended_badges">Aplicações suspensas</string>
+    <string name="preference_cloud_badges">Indicadores de cloud</string>
+    <string name="preference_cloud_badges_summary">Mostra um indicador para ficheiros que estejam na cloud</string>
+    <string name="preference_shortcut_badges">Indicadores de atalhos</string>
+    <string name="preference_shortcut_badges_summary">Mostra um indicador para identificar a que aplicação o atalho pertence</string>
+    <string name="preference_plugin_badges">Indicador de plugins</string>
+    <string name="preference_plugin_badges_summary">Indica qual o plugin em que o resultado da pesquisa foi criado</string>
+    <string name="preference_nextcloud_signin">Iniciar sessão em Nextcloud</string>
+    <string name="preference_nextcloud_signin_summary">Inicie sessão para pesquisar no servidor Nextcloud</string>
+    <string name="preference_owncloud_signin">Iniciar sessão em Owncloud</string>
+    <string name="preference_owncloud_signin_summary">Inicie sessão para pesquisar no servidor Owncloud</string>
+    <string name="preference_about_telegram">Grupo no Telegram</string>
     <string name="preference_about_fdroid">Repositório F-Droid</string>
-    <string name="preference_enforce_icon_shape">Forçar formato</string>
-    <string name="preference_enforce_icon_shape_summary">Aplicar o formato a todos os ícones, incluindo aqueles que normalmente não o suportariam</string>
+    <string name="preference_enforce_icon_shape">Impor forma</string>
+    <string name="preference_enforce_icon_shape_summary">Aplicar forma a todos os ícones, incluindo aqueles que, normalmente, não permitem formas</string>
     <string name="preference_category_license">Licença</string>
-    <string name="preference_about_license">Este aplicativo é um software livre.</string>
-    <string name="preference_about_license_summary">Licenciado sob a GNU General Public License 3.0</string>
-    <string name="preference_category_grid">Grade</string>
-    <string name="preference_grid_icon_size">Tamanho do ícone</string>
+    <string name="preference_about_license">Esta é uma aplicação livre (FOSS).</string>
+    <string name="preference_about_license_summary">Licenciada nos termos da GNU General Public License 3.0</string>
+    <string name="preference_category_grid">Grelha</string>
+    <string name="preference_grid_icon_size">Tamanho dos ícones</string>
     <string name="preference_grid_column_count">Número de colunas</string>
-    <string name="preference_grid_list_style">Exibir aplicativos em lista</string>
-    <string name="preference_grid_list_icons">Exibir ícones de aplicativos em lista</string>
-    <string name="preference_grid_labels">Mostrar rótulos</string>
-    <string name="preference_grid_labels_summary">Mostrar o nome do aplicativo abaixo do ícone</string>
-    <string name="preference_grid_list_style_summary">Exibir aplicativos por lista em vez de grade</string>
-    <string name="preference_grid_list_icons_summary">Mostrar ícones na exibição por lista</string>
+    <string name="preference_grid_list_style">Mostrar aplicações em lista</string>
+    <string name="preference_grid_list_icons">Mostrar ícones em lista</string>
+    <string name="preference_grid_labels">Mostrar textos</string>
+    <string name="preference_grid_labels_summary">Mostrar nome da aplicação por baixo do ícone</string>
+    <string name="preference_grid_list_style_summary">Mostrar aplicações em lista e não em grelha</string>
+    <string name="preference_grid_list_icons_summary">Mostrar ícones em lista e não em grelha</string>
     <string name="preference_screen_debug">Depuração</string>
-    <string name="preference_screen_debug_summary">Ferramentas de solução de problemas</string>
-    <string name="preference_screen_weatherwidget">Clima</string>
-    <string name="preference_category_media_apps">Aplicativos de mídia</string>
+    <string name="preference_screen_debug_summary">Resolução de problemas</string>
+    <string name="preference_screen_weatherwidget">Meteorologia</string>
+    <string name="preference_category_media_apps">Aplicações multimédia</string>
     <string name="preference_screen_clockwidget">Relógio</string>
-    <string name="preference_screen_clockwidget_summary">Configure o estilo do relógio e seus componentes</string>
-    <string name="preference_clockwidget_layout_vertical">Vertical</string>
-    <string name="preference_clockwidget_layout_horizontal">Horizontal</string>
+    <string name="preference_screen_clockwidget_summary">Configurar estilo e componentes do relógio</string>
+    <string name="preference_clockwidget_layout_vertical">Padrão</string>
+    <string name="preference_clockwidget_layout_horizontal">Compacto</string>
     <string name="preference_clock_widget_show_seconds">Mostrar segundos</string>
     <string name="preference_clock_widget_monospaced">Dígitos mono-espaçados</string>
-    <string name="preference_clock_widget_time_format">Formato de horário</string>
-    <string name="preference_clock_widget_time_format_24h">24-horas</string>
-    <string name="preference_clock_widget_time_format_12h">12-horas</string>
-    <string name="widget_use_theme_colors">Use a cor do tema</string>
-    <string name="preference_clock_widget_fill_height">Preencher altura da tela</string>
+    <string name="preference_clock_widget_time_format">Formato de hora</string>
+    <string name="preference_clock_widget_time_format_24h">24 horas</string>
+    <string name="preference_clock_widget_time_format_12h">12 horas</string>
+    <string name="widget_use_theme_colors">Tema colorido</string>
+    <string name="preference_clock_widget_fill_height">Preencher ecrã</string>
     <string name="preference_clock_widget_alignment">Alinhamento</string>
-    <string name="preference_clock_widget_alignment_top">Em cima</string>
-    <string name="preference_clock_widget_alignment_center">No meio</string>
-    <string name="preference_clock_widget_alignment_bottom">Embaixo</string>
-    <string name="preference_clockwidget_dynamic_zone">Zona dinâmica</string>
+    <string name="preference_clock_widget_alignment_top">Cima</string>
+    <string name="preference_clock_widget_alignment_center">Centro</string>
+    <string name="preference_clock_widget_alignment_bottom">Baixo</string>
+    <string name="preference_clockwidget_dynamic_zone">Área dinâmica</string>
     <string name="preference_clockwidget_date_part">Data</string>
-    <string name="preference_clockwidget_date_part_summary">Mostra a data atual</string>
-    <string name="preference_clockwidget_favorites_part">Gaveta de aplicativos</string>
+    <string name="preference_clockwidget_date_part_summary">Mostrar data atual</string>
+    <string name="preference_clockwidget_favorites_part">Doca</string>
     <string name="preference_clockwidget_favorites_part_summary">Mostrar, na doca, os itens afixados</string>
     <string name="preference_clockwidget_dock_rows">Linhas da doca</string>
-    <string name="preference_clockwidget_music_part">Mídia</string>
-    <string name="preference_clockwidget_music_part_summary">Mostra controles de mídia quando houver uma sessão de mídia ativa</string>
+    <string name="preference_clockwidget_music_part">Multimédia</string>
+    <string name="preference_clockwidget_music_part_summary">Mostrar controlos multimédia se existir uma sessão ativa</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
-    <string name="preference_clockwidget_battery_part_summary">Mostra o nível atual da bateria quando a bateria está fraca ou carregando</string>
+    <string name="preference_clockwidget_battery_part_summary">Mostrar nível de bateria se a bateria estiver fraca ou o telefone a carregar</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
-    <string name="preference_clockwidget_alarm_part_summary">Mostra alarmes que tocarão nas próximas 8 horas</string>
+    <string name="preference_clockwidget_alarm_part_summary">Mostrar alarmes que serão ativados nas próximas 8 horas</string>
     <string name="preference_screen_backup">Backup e restauro</string>
-    <string name="preference_screen_backup_summary">Exportar e importar dados do iniciador</string>
-    <string name="preference_backup_summary">Exportar preferências e dados do iniciador</string>
-    <string name="preference_restore">Restauração</string>
-    <string name="preference_restore_summary">Importar um backup criado anteriormente</string>
-    <string name="preference_crash_reporter">Reportar falha</string>
-    <string name="preference_crash_reporter_summary">Relatórios de erros e falhas</string>
+    <string name="preference_screen_backup_summary">Exportar e importar dados da aplicação</string>
+    <string name="preference_backup_summary">Exportar definições e dados da aplicação</string>
+    <string name="preference_restore">Restaurar</string>
+    <string name="preference_restore_summary">Importar dados de um backup</string>
+    <string name="preference_crash_reporter">Relatório de erros</string>
+    <string name="preference_crash_reporter_summary">Relatórios de erros e de problemas</string>
     <string name="preference_logs">Registos</string>
-    <string name="preference_logs_summary">Exibir e exportar logs do aplicativo</string>
+    <string name="preference_logs_summary">Ver e exportar registos da aplicação</string>
     <string name="preference_screen_search">Pesquisar</string>
-    <string name="preference_screen_search_summary">Pesquisa, tags, items escondidos</string>
+    <string name="preference_screen_search_summary">Pesquisas, etiquetas, itens ocultos</string>
     <string name="preference_search_favorites">Favoritos</string>
-    <string name="preference_search_favorites_summary">Mostra itens fixados e usados com frequência acima da grade do aplicativo</string>
+    <string name="preference_search_favorites_summary">Mostrar itens afixados e frequentes por cima da grelha de aplicações</string>
     <string name="preference_search_apps">Aplicativos</string>
-    <string name="preference_search_files">Arquivos</string>
-    <string name="preference_search_files_summary">Pesquisa arquivos locais e arquivos na nuvem</string>
-    <string name="preference_search_contacts">Contatos</string>
-    <string name="preference_search_contacts_summary">Pesquisa contatos neste dispositivo</string>
+    <string name="preference_search_files">Ficheiros</string>
+    <string name="preference_search_files_summary">Pesquisar ficheiros locais e na cloud</string>
+    <string name="preference_search_contacts">Contactos</string>
+    <string name="preference_search_contacts_summary">Pesquisar contactos no dispositivo</string>
     <string name="preference_search_calendar">Calendário</string>
-    <string name="preference_search_calendar_summary">Pesquisa compromissos e eventos futuros</string>
-    <string name="preference_search_local_calendar_summary">Procurar calendários no dispositivo</string>
+    <string name="preference_search_calendar_summary">Pesquisar eventos e tarefas</string>
+    <string name="preference_search_local_calendar_summary">Pesquisar calendários no dispositivo</string>
     <string name="preference_search_tasks">Tarefas</string>
     <string name="preference_search_tasks_summary">Pesquisar tarefas na aplicação Tasks</string>
-    <string name="preference_search_appshortcuts">Atalhos de aplicativos</string>
-    <string name="preference_search_appshortcuts_summary">Pesquisa atalhos de aplicativos</string>
+    <string name="preference_search_appshortcuts">Atalhos</string>
+    <string name="preference_search_appshortcuts_summary">Pesquisar atalhos de aplicações</string>
     <string name="preference_search_calculator">Calculadora</string>
-    <string name="preference_search_calculator_summary">Avalia termos matemáticos</string>
-    <string name="preference_search_unitconverter">Conversão de unidades</string>
-    <string name="preference_search_unitconverter_summary">Uso: 1.5 kg ou 4 cm &gt;&gt; in</string>
-    <string name="preference_search_currencyconverter">Conversor de moedas</string>
-    <string name="preference_search_currencyconverter_summary">Baixe periodicamente as taxas de câmbio para converter moedas</string>
+    <string name="preference_search_calculator_summary">Avaliar termos matemáticos</string>
+    <string name="preference_search_unitconverter">Conversor de unidades</string>
+    <string name="preference_search_unitconverter_summary">Exemplo: 1,5 kg ou 4 cm -&gt; pol</string>
+    <string name="preference_search_currencyconverter">Conversor de moeda</string>
+    <string name="preference_search_currencyconverter_summary">Periodicamente, descarregar taxas de câmbio para conversão de moeda</string>
     <string name="preference_search_supportedunits">Unidades suportadas</string>
     <string name="preference_search_wikipedia">Wikipédia</string>
-    <string name="preference_search_wikipedia_summary">Pesquisa na enciclopédia gratuita</string>
+    <string name="preference_search_wikipedia_summary">Pesquisar na enciclopédia livre</string>
     <string name="preference_search_websites">Sites</string>
-    <string name="preference_search_locations">Lugares</string>
+    <string name="preference_search_locations">Locais</string>
     <string name="preference_search_locations_radius">Raio de pesquisa</string>
-    <string name="preference_search_websites_summary">Mostra uma visualização de um site se a consulta de pesquisa for um URL</string>
-    <string name="preference_search_locations_summary">Pesquisa na sua área por lojas e outros lugates</string>
-    <string name="preference_search_localfiles">Arquivos locais</string>
-    <string name="preference_search_localfiles_summary">Pesquisa documentos, fotos e outros arquivos armazenados neste dispositivo</string>
-    <string name="preference_search_cloud_summary">Pesquisar arquivos de %1$s</string>
+    <string name="preference_search_websites_summary">Pré-visualização de sites se o termo de pesquisa for um URL</string>
+    <string name="preference_search_locations_summary">Pesquisar lojas e outros locais na área</string>
+    <string name="preference_search_localfiles">Ficheiros locais</string>
+    <string name="preference_search_localfiles_summary">Pesquisar documentos, fotos e outros ficheiros guardados no dispositivo</string>
+    <string name="preference_search_cloud_summary">Pesquisar ficheiros de %1$s</string>
     <string name="preference_calendar_calendars">Calendários</string>
-    <string name="preference_calendar_hide_completed">Esconder tarefas completas</string>
-    <string name="preference_screen_buildinfo">informações de compilação</string>
-    <string name="preference_screen_buildinfo_summary">Mais informações sobre esta compilação deste aplicativo</string>
+    <string name="preference_calendar_hide_completed">Ocultar tarefas terminadas</string>
+    <string name="preference_screen_buildinfo">Informação de compilação</string>
+    <string name="preference_screen_buildinfo_summary">Mais informações acerca desta versão</string>
     <string name="preference_search_bar_style">Estilo</string>
-    <string name="preference_search_bar_style_summary">Personalize a aparência da barra de pesquisa</string>
+    <string name="preference_search_bar_style_summary">Personalizar aparência da barra de pesquisa</string>
     <string name="preference_search_bar_style_transparent">Transparente</string>
     <string name="preference_search_bar_style_solid">Sólida</string>
     <string name="preference_search_bar_style_hidden">Oculta</string>
     <string name="preference_search_bar_color">Cor</string>
-    <string name="preference_search_bar_auto_focus">Abrir o teclado</string>
-    <string name="preference_search_bar_auto_focus_summary">Mostra o teclado automaticamente ao abrir a gaveta de aplicativos</string>
-    <string name="preference_search_bar_launch_on_enter">Iniciar ao entrar</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Inicia a correspondência destacada ou a ação rápida ao tocar em ir</string>
-    <string name="preference_hidden_items">Resultados de pesquisa ocultos</string>
-    <string name="preference_hidden_items_summary">Gerenciar aplicativos ocultos e resultados de pesquisa</string>
-    <string name="preference_hidden_items_reveal_button">Mostrar bootão de revelação</string>
-    <string name="preference_hidden_items_reveal_button_summary">Mostre um botão para revelar os resultados escondidos de pesquisa</string>
+    <string name="preference_search_bar_auto_focus">Mostrar teclado</string>
+    <string name="preference_search_bar_auto_focus_summary">Mostrar teclado ao abrir o menu de aplicações</string>
+    <string name="preference_search_bar_launch_on_enter">Abrir ao entrar</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Iniciar ocorrência destacada ou a ação rápida ao tocar</string>
+    <string name="preference_hidden_items">Resultados ocultos</string>
+    <string name="preference_hidden_items_summary">Gerir aplicações ocultas e resultados de pesquisa</string>
+    <string name="preference_hidden_items_reveal_button">Mostrar botão \"Revelar\"</string>
+    <string name="preference_hidden_items_reveal_button_summary">Mostrar botão para revelar os resultados ocultos</string>
     <string name="preference_screen_tags">Etiquetas</string>
-    <string name="preference_screen_tags_summary">Gerenciar etiquetas e itens marcados</string>
-    <string name="preference_wikipedia_customurl">URL da Wikipédia</string>
-    <string name="preference_edit_favorites_summary">Alterar a ordem dos ícones fixados</string>
-    <string name="preference_category_favorites_frequently_used">Usado frequentemente</string>
-    <string name="preference_favorites_frequently_used_summary">Mostra itens usados com frequência nos favoritos</string>
-    <string name="preference_edit_button">Botão editar</string>
-    <string name="preference_favorites_edit_button_summary">Mostra um botão para reorganizar os favoritos</string>
-    <string name="preference_compact_tags">Tags compactas</string>
-    <string name="preference_compact_tags_summary">Esconde etiquetas ou ícones para reduzir o espaço ocupado pelas tags</string>
-    <string name="preference_widgets_edit_button_summary">Mostra um botão para adicionar, remover e reorganizar widgets</string>
+    <string name="preference_screen_tags_summary">Gerir etiquetas e itens com etiqueta</string>
+    <string name="preference_wikipedia_customurl">URL da Wikipedia</string>
+    <string name="preference_edit_favorites_summary">Alterar ordem dos itens afixados</string>
+    <string name="preference_category_favorites_frequently_used">Frequentes</string>
+    <string name="preference_favorites_frequently_used_summary">Mostrar itens frequentes nos favoritos</string>
+    <string name="preference_edit_button">Botão Editar</string>
+    <string name="preference_favorites_edit_button_summary">Mostrar botão para editar os favoritos</string>
+    <string name="preference_compact_tags">Etiquetas compactas</string>
+    <string name="preference_compact_tags_summary">Ocultar texto ou ícones das etiquetas para reduzir o espaço ocupado</string>
+    <string name="preference_widgets_edit_button_summary">Mostrar botão para adicionar, remover ou editar widgets</string>
     <string name="preference_widgets_on_home_screen">Widgets no ecrã principal</string>
     <string name="preference_widgets_on_home_screen_summary">Mostrar widgets no ecrã principal e não em página distinta</string>
-    <string name="preference_screen_homescreen">Tela inicial</string>
-    <string name="preference_screen_homescreen_summary">Relógio, barra de pesquisa, papel de parede,barras de sistema</string>
+    <string name="preference_screen_homescreen">Ecrã inicial</string>
+    <string name="preference_screen_homescreen_summary">Relógio, barra de pesquisa, papel de parede e barras</string>
     <string name="preference_screen_icons">Grelha e ícones</string>
     <string name="preference_screen_icons_summary">Grelha, ícones e indicadores</string>
-    <string name="preference_weather_integration">Tempo</string>
-    <string name="preference_media_integration">Controle de mídia</string>
+    <string name="preference_weather_integration">Meteorologia</string>
+    <string name="preference_media_integration">Controlo multimédia</string>
     <string name="preference_tasks_integration">Tarefas</string>
     <!-- %1$s: app name (Kvaesitso) -->
     <string name="preference_tasks_integration_description">Tasks é uma aplicação open souce para gerir tarefas, listas e lembretes. Se instalada, %1$s pode mostrar e pesquisar as tarefas na aplicação.</string>
@@ -675,70 +677,70 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather é uma aplicação open source de meteorologia. Se instalada, %1$s pode utilizar Breezy Weather com a fonte de dados meteorológicos.</string>
     <string name="preference_breezyweather_integration_instructions">Para utilizar Breezy Weather como serviço meteorológico:\n\n1. Aceda a Breezy Weather &gt; Definições &gt; Widgets &amp; Papel de parede animado &gt; Enviar dados para Gadgetbridge &gt; Ativar %1$s\n\n2. Em %1$s, selecione Breezy Weather como serviço de meteorologia</string>
     <string name="preference_launch_breezyweather_app">Abrir Breezy Weather</string>
-    <string name="preference_contacts_call_on_tap">Toque para chamar</string>
+    <string name="preference_contacts_call_on_tap">Toque para ligar</string>
     <string name="preference_contacts_call_on_tap_summary">Iniciar automaticamente a chamada ao tocar no número de telefone</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
-    <string name="no_account_nextcloud">Você ainda não conectou uma conta Nextcloud</string>
+    <string name="no_account_nextcloud">Ainda não está conectado a uma conta Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
-    <string name="no_account_owncloud">Você ainda não conectou uma conta Owncloud</string>
+    <string name="no_account_owncloud">Ainda não está conectado a uma conta Owncloud</string>
     <!-- Used in an info banner if a specific feature requires a Google account -->
     <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
     <string name="connect_account">Conectar conta</string>
-    <string name="battery_part_charging">Carregando</string>
+    <string name="battery_part_charging">Carregamento</string>
     <plurals name="battery_part_remaining_charge_time">
-        <item quantity="one">Completo em %1$s minuto</item>
-        <item quantity="other">Completo em %1$s minutos</item>
+        <item quantity="one">Totalmente carregado dentro de %1$s minuto</item>
+        <item quantity="other">Totalmente carregado dentro de %1$s minutos</item>
     </plurals>
-    <string name="backup_complete">O backup foi concluído.</string>
-    <string name="restore_invalid_file">O arquivo selecionado não parece ser um backup. Tem certeza de que selecionou o arquivo correto\?</string>
+    <string name="backup_complete">O backup foi efetuado.</string>
+    <string name="restore_invalid_file">O ficheiro selecionado não perece ser de um backup. Tem a certeza de que escolheu o ficheiro correto?</string>
     <!-- %1$s: app name -->
-    <string name="restore_incompatible_file">Este backup foi criado com uma versão diferente de %1$s e não pode ser restaurado com esta versão.</string>
+    <string name="restore_incompatible_file">Este backup foi criado com uma versão diferente de %1$s e não pode ser restaurado nesta versão.</string>
     <!-- %1$s: app name -->
-    <string name="restore_different_minor_version">Este backup foi criado com uma versão diferente de %1$s. Alguns dados podem não ser restaurados corretamente.</string>
+    <string name="restore_different_minor_version">Este backup foi criado com uma versão diferente de %1$s e alguns dados poderão ser perdidos.</string>
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
-    <string name="restore_meta">Criado %1$s em %2$s com %3$s.</string>
+    <string name="restore_meta">Criado em %1$s, %2$s com %3$s.</string>
     <string name="restore_complete">O backup foi restaurado.</string>
     <string name="icon_picker_default_icon">Padrão</string>
     <string name="icon_picker_suggestions">Sugestões</string>
-    <string name="icon_picker_search_icon">Pesquise no pacote de ícones</string>
+    <string name="icon_picker_search_icon">Pesquisar nos pacotes de ícones</string>
     <string name="icon_picker_filter_all_packs">Todos os pacotes de ícones</string>
     <string name="apps_profile_main">Pessoal</string>
-    <string name="apps_profile_work">Trabalho</string>
+    <string name="apps_profile_work">Profissional</string>
     <string name="apps_profile_private">Privado</string>
     <string name="favorites">Favoritos</string>
-    <string name="favorites_empty">Os itens fixados e usados com frequência aparecerão aqui</string>
-    <string name="favorites_empty_tag">Não há itens com esta etiqueta</string>
+    <string name="favorites_empty">Os itens frequentes e afixados irão aparecer aqui</string>
+    <string name="favorites_empty_tag">Não existem itens com esta etiqueta</string>
     <string name="frequently_used_show_in_favorites">Mostrar nos favoritos</string>
-    <string name="frequently_used_rows">Numero de linhas</string>
+    <string name="frequently_used_rows">Número de linhas</string>
     <string name="preference_screen_search_actions">Ações rápidas</string>
     <string name="preference_search_search_actions_summary">Configurar ações rápidas e atalhos de pesquisa</string>
-    <string name="search_action_call">Chamada</string>
-    <string name="search_action_message">Mensagem</string>
+    <string name="search_action_call">Ligar</string>
+    <string name="search_action_message">Enviar SMS</string>
     <string name="search_action_email">Enviar e-mail</string>
-    <string name="search_action_alarm">Programar alarme</string>
-    <string name="search_action_timer">Iniciar cronômetro</string>
-    <string name="search_action_share">Compartilhar</string>
+    <string name="search_action_alarm">Definir alarme</string>
+    <string name="search_action_timer">Iniciar temporizador</string>
+    <string name="search_action_share">Partilhar</string>
     <string name="search_action_websearch">Pesquisa na web</string>
-    <string name="search_action_contact">Adicionar aos contatos</string>
-    <string name="search_action_open_url">Ver site</string>
+    <string name="search_action_contact">Criar contacto</string>
+    <string name="search_action_open_url">Ir para o site</string>
     <string name="search_action_event">Agendar evento</string>
     <string name="create_search_action_type">Que tipo de ação pretende criar?</string>
-    <string name="create_search_action_type_web">Pesquisar em um site</string>
-    <string name="create_search_action_type_app">Pesquisar em um aplicativo</string>
-    <string name="create_search_action_type_intent">Intenção personalizada</string>
-    <string name="create_search_action_pick_app">Escolha um aplicativo para pesquisar:</string>
-    <string name="create_search_action_website_url">Digite o endereço do site:</string>
+    <string name="create_search_action_type_web">Pesquisar nos sites</string>
+    <string name="create_search_action_type_app">Pesquisar na aplicação</string>
+    <string name="create_search_action_type_intent">\'Intent\' personalizado</string>
+    <string name="create_search_action_pick_app">Aplicação para pesquisar:</string>
+    <string name="create_search_action_website_url">Introduza o endereço do site:</string>
     <string name="create_search_action_website_invalid_url">O site indicado não pode ser importado como uma pesquisa web. Pode experimentar com outro site ou introduzir manualmente os dados no próximo passo.</string>
     <string name="search_action_label">Nome</string>
-    <string name="search_action_app">Aplicativo</string>
+    <string name="search_action_app">Aplicação</string>
     <string name="search_action_websearch_url">Modelo de URL</string>
     <string name="search_action_websearch_url_hint">O modelo que será utilizado para construir o URL da pesquisa web. Utilize ‘${1}’ como marcador de posição para o termo de pesquisa.</string>
-    <string name="more_information">Mais Informações</string>
+    <string name="more_information">Mais informação</string>
     <string name="tag_exists_error">Já existe uma etiqueta com este nome</string>
     <string name="tag_exists_message">Já existe uma etiqueta com este nome. Se continuar, as etiquetas serão combinadas.</string>
     <string name="tag_no_items_message">Não existem itens associados a esta etiqueta. Se continuar, a etiqueta será eliminada.</string>
     <string name="tag_empty_name">Não pode criar uma etiqueta sem nome. Se continuar, a etiqueta será eliminada.</string>
-    <string name="tag_select_items">Selecione itens:</string>
+    <string name="tag_select_items">Selecionar itens:</string>
     <string name="tag_name">Nome da etiqueta</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item selecionado</item>
@@ -746,153 +748,153 @@
     </plurals>
     <string name="preference_layout_open_search">Pesquisa e menu de aplicações</string>
     <string name="open_search_pull_down">Deslize para baixo</string>
-    <string name="open_search_swipe_left">Deslize para a esquerda</string>
-    <string name="open_search_swipe_right">Deslize para a direita</string>
+    <string name="open_search_swipe_left">Deslize à esquerda</string>
+    <string name="open_search_swipe_right">Deslize à direita</string>
     <string name="preference_layout_search_bar_position">Posição da barra de pesquisa</string>
-    <string name="search_bar_position_top">Em cima</string>
-    <string name="search_bar_position_bottom">Em baixo</string>
-    <string name="preference_layout_search_results">Organização dos resultados da pesquisa</string>
+    <string name="search_bar_position_top">Cima</string>
+    <string name="search_bar_position_bottom">Baixo</string>
+    <string name="preference_layout_search_results">Disposição dos resultados</string>
     <string name="search_results_order_top_down">De cima para baixo</string>
     <string name="search_results_order_bottom_up">De baixo para cima</string>
     <string name="preference_layout_fixed_search_bar">Barra de pesquisa fixa</string>
-    <string name="preference_layout_fixed_search_bar_summary">Não rola a barra de pesquisa para fora da visão</string>
-    <string name="preference_layout_fixed_rotation">Fixar rotação da tela</string>
-    <string name="preference_layout_fixed_rotation_summary">Mantém a orientação de tela no modo retrato</string>
+    <string name="preference_layout_fixed_search_bar_summary">Não deslocar barra de pesquisa para fora de vista</string>
+    <string name="preference_layout_fixed_rotation">Rotação de ecrã</string>
+    <string name="preference_layout_fixed_rotation_summary">Não rodar ecrã ao virar o dispositivo</string>
     <string name="preference_screen_gestures">Gestos</string>
-    <string name="preference_screen_gestures_summary">Gestos e ações gestuais</string>
+    <string name="preference_screen_gestures_summary">Ações com gestos</string>
     <string name="preference_gesture_swipe_down">Deslize para baixo</string>
-    <string name="preference_gesture_swipe_left">Deslize para a esquerda</string>
-    <string name="preference_gesture_swipe_right">Deslize para a direita</string>
+    <string name="preference_gesture_swipe_left">Deslize à esquerda</string>
+    <string name="preference_gesture_swipe_right">Deslize à direita</string>
     <string name="preference_gesture_swipe_up">Deslize acima</string>
-    <string name="preference_gesture_double_tap">Toque duplo</string>
+    <string name="preference_gesture_double_tap">Dois toques</string>
     <string name="preference_gesture_long_press">Toque longo</string>
-    <string name="preference_gesture_home_button">Botão Home/Gesto</string>
-    <string name="gesture_action_none">Não fazer nada</string>
-    <string name="gesture_action_open_search">Abrir a pesquisa</string>
-    <string name="gesture_action_launch_app">Iniciar aplicativo</string>
-    <string name="gesture_action_notifications">Descer a barra de notificaçōes</string>
-    <string name="gesture_action_lock_screen">Desligar a tela</string>
-    <string name="gesture_action_quick_settings">Abrir as configurações rápidas</string>
-    <string name="gesture_action_power_menu">Mostrar o menu de energia</string>
+    <string name="preference_gesture_home_button">Botão Início/Gesto</string>
+    <string name="gesture_action_none">Nada fazer</string>
+    <string name="gesture_action_open_search">Abrir pesquisa</string>
+    <string name="gesture_action_launch_app">Iniciar aplicação</string>
+    <string name="gesture_action_notifications">Abrir barra de notificações</string>
+    <string name="gesture_action_lock_screen">Desligar ecrã</string>
+    <string name="gesture_action_quick_settings">Definições rápidas</string>
+    <string name="gesture_action_power_menu">Menu energia</string>
     <string name="gesture_action_recents">Abrir aplicações recentes</string>
-    <string name="gesture_failed_message">Você executou o gesto \"%1$s\". Este gesto está definido para acionar a ação \"%2$s\". No entanto, a ação não pôde ser executada pelo seguinte motivo:</string>
-    <string name="missing_permission_accessibility_gesture_failed">O serviço de acessibilidade do iniciador precisa estar ativado para executar esta ação.</string>
-    <string name="missing_permission_accessibility_gesture_settings">Esta ação requer que o serviço de acessibilidade do iniciador esteja ativado.</string>
-    <string name="preference_search_result_ordering_weight_factor">Flexibilidade da classificação</string>
+    <string name="gesture_failed_message">Executou o gesto \"%1$s\" e este gesto está definido para ativar a ação \"%2$s\". Contudo, não foi possível executar a ação por este motivo:</string>
+    <string name="missing_permission_accessibility_gesture_failed">Tem que ativar o serviço de acessibilidade para poder executar esta ação.</string>
+    <string name="missing_permission_accessibility_gesture_settings">Esta ação necessita que o serviço de acessibilidade esteja ativado.</string>
+    <string name="preference_search_result_ordering_weight_factor">Precisão da avaliação</string>
     <string name="preference_search_result_ordering_weight_factor_low">Estável</string>
     <string name="preference_search_result_ordering_weight_factor_default">Balanceada</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variável</string>
-    <string name="widget_config_appwidget_borderless">Sem bordas</string>
-    <string name="widget_config_appwidget_background">Cartão de fundo</string>
+    <string name="widget_config_appwidget_borderless">Sem limites</string>
+    <string name="widget_config_appwidget_background">Fundo do cartão</string>
     <string name="widget_config_appwidget_configure">Configurar widget</string>
     <string name="widget_config_appwidget_resize">Redimensionar</string>
-    <string name="widget_config_weather_integration_settings">Definições de integração meteorológica</string>
-    <string name="widget_config_calendar_no_calendars">Nenhum calendário encontrado</string>
-    <string name="widget_pick_widget">Escolher widget</string>
+    <string name="widget_config_weather_integration_settings">Definições de integração</string>
+    <string name="widget_config_calendar_no_calendars">Não existem calendários</string>
+    <string name="widget_pick_widget">Escolha o widget</string>
     <string name="app_widget_loading_failed">Não foi possível carregar o widget</string>
-    <string name="widget_config_music_integration_settings">Configurações de controle de integração de mídia</string>
-    <string name="note_widget_link_file">Ligar a um arquivo</string>
-    <string name="note_widget_link_file_summary">Sincronizar o conteúdo deste widget com um ficheiro externo</string>
-    <string name="note_widget_linked_file_summary">Conectado ao %1$s</string>
-    <string name="note_widget_action_unlink_file">Desvincular</string>
-    <string name="note_widget_action_relink_file">Reconectar</string>
+    <string name="widget_config_music_integration_settings">Definições de integração multimédia</string>
+    <string name="note_widget_link_file">Ligação ao ficheiro</string>
+    <string name="note_widget_link_file_summary">Sincronizar conteúdo deste widget com um ficheiro externo</string>
+    <string name="note_widget_linked_file_summary">Associado a %1$s</string>
+    <string name="note_widget_action_unlink_file">Dissociar</string>
+    <string name="note_widget_action_relink_file">Associar novamente</string>
     <string name="note_widget_conflict">Conflito</string>
     <string name="note_widget_conflict_action_resolve">Resolver</string>
-    <string name="note_widget_conflict_keep_selected">Manter selencionado</string>
-    <string name="note_widget_conflict_description">O ficheiro ligado não está vazio e o seu conteúdo não corresponde à última versão guardada desta nota. Que versão pretende manter\?</string>
-    <string name="note_widget_conflict_local_version">Ultima versão salva:</string>
-    <string name="note_widget_conflict_file_version">Conteúdo do atual arquivo:</string>
-    <string name="note_widget_file_read_error">Erro ao ler anotação</string>
+    <string name="note_widget_conflict_keep_selected">Manter seleção</string>
+    <string name="note_widget_conflict_description">O ficheiro associado não está vazio e o seu conteúdo não coincide com a última versão guardada da nota. Qual a versão que deseja manter?</string>
+    <string name="note_widget_conflict_local_version">Última versão guardada:</string>
+    <string name="note_widget_conflict_file_version">Conteúdo do ficheiro atual:</string>
+    <string name="note_widget_file_read_error">Erro ao ler a nota</string>
     <string name="note_widget_file_read_error_description">Não foi possível ler a nota. Foi reposta a cópia guardada na memória interna desta aplicação. Se editar a nota, é possível que o ficheiro associado seja substituído.</string>
-    <string name="note_widget_file_write_error">Erro ao salvar anotação</string>
+    <string name="note_widget_file_write_error">Erro ao guardar</string>
     <string name="note_widget_file_write_error_description">Não foi possível guardar a nota no ficheiro associado. Foi reposta uma cópia guardada na memória interna desta aplicação.</string>
-    <string name="confirmation_delete_color_scheme">Tem certeza que quer apagar o esquema de cor %1$s?</string>
+    <string name="confirmation_delete_color_scheme">Tem a certeza de que pretende eliminar o esquema %1$s?</string>
     <string name="confirmation_delete_shapes_scheme">Tem a certeza de que deseja eliminar o esquema de formas %1$s?</string>
     <string name="confirmation_delete_typography_scheme">Tem a certeza de que deseja eliminar o esquema tipográfico %1$s?</string>
     <string name="confirmation_delete_transparencies_scheme">Tem a certeza de que deseja eliminar o esquema de transparência %1$s?</string>
     <string name="new_theme_name">(sem nome)</string>
-    <string name="theme_color_scheme_system_default">Usar o padrão do sistema</string>
-    <string name="theme_color_scheme_autogenerate">A partir da cor primária</string>
-    <string name="theme_color_scheme_palette_color">Palheta</string>
-    <string name="theme_color_scheme_custom_color">Personalizado</string>
-    <string name="preference_restore_default">Restaurar ao padrão</string>
+    <string name="theme_color_scheme_system_default">Predefinição do sistema</string>
+    <string name="theme_color_scheme_autogenerate">Da cor primária</string>
+    <string name="theme_color_scheme_palette_color">Paleta</string>
+    <string name="theme_color_scheme_custom_color">Personalizada</string>
+    <string name="preference_restore_default">Restaurar valores padrão</string>
     <string name="import_theme_contents">Conteúdo</string>
     <string name="import_theme_apply">Aplicar tema</string>
     <string name="import_theme_exists">O tema já existe e será atualizado</string>
-    <string name="import_theme_error">O arquivo selecionado não pode ser lido. Por favor confira se você tem um arquivo de tema válido (*.kvtheme), e que o arquivo não está corrupto.</string>
+    <string name="import_theme_error">Não foi possível ler o ficheiro indicado. Certifique-se de que é um ficheiro de tema válido (*.kvtheme) e que não está danificado.</string>
     <string name="shortcut_label_unavailable">Indisponível</string>
-    <string name="app_label_locked_profile">Trancado</string>
+    <string name="app_label_locked_profile">Bloqueada</string>
     <!-- %1$s: app name -->
-    <string name="shortcut_unavailable_description">Esse atalho esta indisponível porque o %1$s não é o launcher padrão</string>
-    <string name="preference_plugin_enable">Habilitar o plugin</string>
-    <string name="length_unit">Unidade de comprimento</string>
+    <string name="shortcut_unavailable_description">Esta atalho não está disponível porque %1$s não é a aplicação padrão</string>
+    <string name="preference_plugin_enable">Ativar plugin</string>
+    <string name="length_unit">Unidade de medida</string>
     <string name="metric">Métrico</string>
-    <string name="preference_search_location_custom_overpass_url">URL do Overpass</string>
-    <string name="preference_search_locations_hide_uncategorized">Esconder lugares não-categorizados</string>
-    <string name="preference_search_locations_hide_uncategorized_summary">Mostrar apenas resultados com categorias bem definidas, como lanchonetes e restaurantes</string>
+    <string name="preference_search_location_custom_overpass_url">Ignorar URL</string>
+    <string name="preference_search_locations_hide_uncategorized">Ocultar locais sem categoria</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">Mostrar apenas os resultados com categorias definidas como, por exemplo, cafés ou restaurantes</string>
     <string name="preference_search_locations_show_map">Mapa</string>
-    <string name="preference_search_locations_show_map_summary">Mostrar uma pré-visualização do mapa para lugares</string>
-    <string name="preference_search_locations_theme_map">Temas do mapa</string>
-    <string name="preference_search_locations_theme_map_summary">Aplicar o esquema de cor do launcher para o mapa</string>
-    <string name="preference_search_location_custom_tile_server_url">URL do Tileserver</string>
+    <string name="preference_search_locations_show_map_summary">Mostrar antevisão de locais no mapa</string>
+    <string name="preference_search_locations_theme_map">Tema do mapa</string>
+    <string name="preference_search_locations_theme_map_summary">Aplicar esquema de cores da aplicação aos mapas</string>
+    <string name="preference_search_location_custom_tile_server_url">URL Tileserver</string>
     <string name="menu_dial">Ligar</string>
     <string name="menu_navigation">Navegação</string>
-    <string name="menu_bugreport">Reportar bugs</string>
-    <string name="location_open_24_7">Aberto 24/7</string>
-    <string name="plugin_state_error">Esse plugin não está funcionando corretamente</string>
+    <string name="menu_bugreport">Relatório de erro</string>
+    <string name="location_open_24_7">Aberto 24 H</string>
+    <string name="plugin_state_error">Este plugin não está a funcionar corretamente</string>
     <string name="plugin_state_setup_required">Tem que configurar o plugin para o utilizar</string>
     <string name="plugin_action_setup">Configurar</string>
     <string name="plugin_type_filesearch">Ficheiros</string>
     <string name="plugin_type_contacts">Contactos</string>
-    <string name="plugin_type_weather">Provedor de clima</string>
-    <string name="plugin_weather_provider_enable">Definir como provedor de clima</string>
-    <string name="plugin_weather_provider_enabled">Definido como o provedor de clima</string>
+    <string name="plugin_type_weather">Serviço de meteorologia</string>
+    <string name="plugin_weather_provider_enable">Definir como serviço de meteorologia</string>
+    <string name="plugin_weather_provider_enabled">Atualmente definido como serviço de meteorologia</string>
     <string name="unavailable_searchable">Este item já não existe</string>
     <string name="clock_style_digital1">Negrito</string>
     <string name="clock_style_digital2">Simples</string>
     <string name="clock_style_orbit">Órbita</string>
     <string name="clock_style_binary">Binário</string>
-    <string name="clock_style_analog">Mãos</string>
-    <string name="clock_style_segment">Segmento de 7</string>
-    <string name="clock_style_empty">Sem relógio</string>
+    <string name="clock_style_analog">Ponteiros</string>
+    <string name="clock_style_segment">7 segmentos</string>
+    <string name="clock_style_empty">Não usar</string>
     <string name="clock_style_custom">Widget personalizado</string>
-    <string name="clock_variant_outlined">Contornado</string>
+    <string name="clock_variant_outlined">Sublinhado</string>
     <string name="clock_variant_analog_ticks">Ponteiros 2</string>
     <string name="menu_show_filters">Mostrar filtros</string>
-    <string name="menu_hide_filters">Esconder filtros</string>
+    <string name="menu_hide_filters">Ocultar filtros</string>
     <string name="search_filter_tools">Ferramentas</string>
     <string name="search_filter_online">Resultados online</string>
-    <string name="search_filter_apps">Aplicativos</string>
-    <string name="plugin_type_locationsearch">Pesquisa de lugares</string>
+    <string name="search_filter_apps">Aplicações</string>
+    <string name="plugin_type_locationsearch">Pesquisa em locais</string>
     <string name="plugin_type_calendar">Calendário</string>
     <string name="preference_default_filter">Filtro padrão</string>
-    <string name="preference_default_filter_summary">Personalizar o filtro padrão para pesquisas</string>
-    <string name="preference_filter_bar">Mostrar barra de filtros</string>
-    <string name="preference_filter_bar_summary">Mostrar filtros rápidos sobre o teclado</string>
+    <string name="preference_default_filter_summary">Personalizar filtro padrão para pesquisas</string>
+    <string name="preference_filter_bar">Mostrar barra de filtro</string>
+    <string name="preference_filter_bar_summary">Mostrar filtros acima do teclado</string>
     <string name="preference_customize_filter_bar">Personalizar barra de filtros</string>
-    <string name="preference_customize_filter_bar_summary">Personalizar quais itens serão inclusos na barra de filtro</string>
-    <string name="filter_settings_network_warning">O filtro atual habilita pesquisas online por padrão. Suas pesquisas talvez sejam intencionalmente enviadas para serviços web externos. Por razões de privacidade, isso não é recomendado.</string>
-    <string name="preference_search_osm_locations_summary">Pesquise no OpenStreetMap por lojas e outros lugares na área</string>
+    <string name="preference_customize_filter_bar_summary">Personalizar os itens a mostrar na barra de filtros</string>
+    <string name="filter_settings_network_warning">O filtro atual ativa os resultados online por omissão. As suas pesquisas poderão ser envidas para serviços web. Por precaução, não recomendamos ativar esta opção.</string>
+    <string name="preference_search_osm_locations_summary">Procurar lojas e outros locais através de OpenStreetMap</string>
     <string name="poi_category_restaurant">Restaurante</string>
     <string name="poi_category_fast_food">Comida rápida</string>
     <string name="poi_category_bar">Barra</string>
-    <string name="poi_category_cafe">Lanchonete</string>
+    <string name="poi_category_cafe">Café</string>
     <string name="poi_category_supermarket">Supermercado</string>
     <string name="poi_category_school">Escola</string>
     <string name="poi_category_parking">Estacionamento</string>
-    <string name="poi_category_fuel">Posto de gasolina</string>
-    <string name="poi_category_toilets">Banheiro</string>
+    <string name="poi_category_fuel">Estação de serviço</string>
+    <string name="poi_category_toilets">Casa de banho</string>
     <string name="poi_category_pharmacy">Farmácia</string>
-    <string name="poi_category_post_office">Agência de entregas</string>
+    <string name="poi_category_post_office">Correios</string>
     <string name="poi_category_pub">Bar</string>
-    <string name="poi_category_doctors">Doutores</string>
+    <string name="poi_category_doctors">Consultório</string>
     <string name="poi_category_police">Polícia</string>
     <string name="poi_category_dentist">Dentista</string>
     <string name="poi_category_library">Biblioteca</string>
-    <string name="poi_category_ice_cream">Sorveteria</string>
+    <string name="poi_category_ice_cream">Banca de gelados</string>
     <string name="poi_category_theater">Teatro</string>
     <string name="poi_category_cinema">Cinema</string>
-    <string name="poi_category_nightclub">Boate</string>
+    <string name="poi_category_nightclub">Disco</string>
     <string name="poi_category_clinic">Clínica</string>
     <string name="poi_category_university">Universidade</string>
     <string name="poi_category_clothes">Loja de roupa</string>
@@ -900,79 +902,79 @@
     <string name="poi_category_hairdresser">Cabeleireiro</string>
     <string name="poi_category_books">Livraria</string>
     <string name="poi_category_bakery">Padaria</string>
-    <string name="poi_category_car_rental">Aluguel de carros</string>
-    <string name="poi_category_car_sharing">Compartilhamento de carros</string>
-    <string name="poi_category_mobile_phone">Loja de celulares</string>
-    <string name="poi_category_furniture">Loja de móveis</string>
+    <string name="poi_category_car_rental">Rent-a-car</string>
+    <string name="poi_category_car_sharing">Partilha de viaturas</string>
+    <string name="poi_category_mobile_phone">Loja de telemóveis</string>
+    <string name="poi_category_furniture">Loja de mobília</string>
     <string name="poi_category_alcohol">Loja de bebidas</string>
-    <string name="poi_category_florist">Floricultura</string>
-    <string name="poi_category_mall">Shopping</string>
-    <string name="poi_category_optician">Oftalmologista</string>
+    <string name="poi_category_florist">Florista</string>
+    <string name="poi_category_mall">Centro comercial</string>
+    <string name="poi_category_optician">Ótica</string>
     <string name="poi_category_jewelry">Joalheria</string>
-    <string name="poi_category_laundry">Lavanderia</string>
+    <string name="poi_category_laundry">Lavandaria</string>
     <string name="poi_category_bank">Banco</string>
     <string name="poi_category_soccer">Campo de futebol</string>
-    <string name="poi_category_basketball">Quadra de basquete</string>
-    <string name="poi_category_tennis">Quadra de tênis</string>
-    <string name="poi_category_atm">Caixa eletrônico</string>
+    <string name="poi_category_basketball">Campo de basquetebol</string>
+    <string name="poi_category_tennis">Campo de ténis</string>
+    <string name="poi_category_atm">Multibanco</string>
     <string name="poi_category_kiosk">Quiosque</string>
     <string name="poi_category_museum">Museu</string>
-    <string name="poi_category_fitness_center">Academia</string>
+    <string name="poi_category_fitness_center">Ginásio</string>
     <string name="poi_category_church">Igreja</string>
     <string name="poi_category_mosque">Mesquita</string>
     <string name="poi_category_buddhist_temple">Templo budista</string>
     <string name="poi_category_hindu_temple">Templo hindu</string>
     <string name="poi_category_synagogue">Sinagoga</string>
-    <string name="poi_category_pizza_restaurant">Pizzaria</string>
+    <string name="poi_category_pizza_restaurant">Pizaria</string>
     <string name="poi_category_burger_restaurant">Hamburgueria</string>
-    <string name="poi_category_place_of_worship">Local de culto</string>
+    <string name="poi_category_place_of_worship">Local de oração</string>
     <string name="poi_category_chinese_restaurant">Restaurante chinês</string>
     <string name="poi_category_japanese_restaurant">Restaurante japonês</string>
     <string name="poi_category_kebab_restaurant">Restaurante de kebab</string>
     <string name="poi_category_asian_restaurant">Restaurante asiático</string>
     <string name="poi_category_ramen_restaurant">Restaurante de ramen</string>
-    <string name="poi_category_soup_restaurant">Soparia</string>
+    <string name="poi_category_soup_restaurant">Restaurante de sopas</string>
     <string name="poi_category_brunch_restaurant">Restaurante de brunch</string>
-    <string name="poi_category_car_wash">Lava jato</string>
-    <string name="poi_category_charging_station">Estação de recarga</string>
-    <string name="poi_category_motorcycle_rental">Aluguel de motocicletas</string>
+    <string name="poi_category_car_wash">Lavagem de carros</string>
+    <string name="poi_category_charging_station">Estação de carregamento</string>
+    <string name="poi_category_motorcycle_rental">Aluguer de motociclos</string>
     <string name="poi_category_gallery">Galeria</string>
     <string name="poi_category_amusement_park">Parque de diversões</string>
     <string name="poi_category_concert_hall">Sala de concertos</string>
     <string name="poi_category_stadium">Estádio</string>
     <string name="poi_category_casino">Cassino</string>
-    <string name="poi_category_discount_store">Loja de descontos</string>
-    <string name="poi_category_pet">Pet shop</string>
-    <string name="poi_category_shopping">Compras</string>
+    <string name="poi_category_discount_store">Loja de pechinchas</string>
+    <string name="poi_category_pet">Loja de animais</string>
+    <string name="poi_category_shopping">Outras compras</string>
     <string name="poi_category_swimming">Piscina</string>
     <string name="poi_category_martial_arts">Artes marciais</string>
     <string name="poi_category_golf">Campo de golfe</string>
     <string name="poi_category_gymnastics">Ginástica</string>
-    <string name="poi_category_ice_hockey">Pista de hóquei no gelo</string>
-    <string name="poi_category_baseball">Campo de beisebol</string>
-    <string name="poi_category_american_football">Campo de futebol americano</string>
-    <string name="poi_category_handball">Quadra de handebol</string>
-    <string name="poi_category_volleyball">Quadra de vôlei</string>
+    <string name="poi_category_ice_hockey">Ringue de hóquei</string>
+    <string name="poi_category_baseball">Campo de basebol</string>
+    <string name="poi_category_american_football">Campo de râguebi</string>
+    <string name="poi_category_handball">Campo de andebol</string>
+    <string name="poi_category_volleyball">Campo de voleibol</string>
     <string name="poi_category_skiing">Esqui</string>
-    <string name="poi_category_cricket">Campo de críquete</string>
+    <string name="poi_category_cricket">Campo de cricket</string>
     <string name="poi_category_park">Parque</string>
     <string name="poi_category_monument">Monumento</string>
-    <string name="poi_category_government_building">Prédio do governo</string>
-    <string name="poi_category_fire_station">Corpo de bombeiros</string>
+    <string name="poi_category_government_building">Edifício governamental</string>
+    <string name="poi_category_fire_station">Quartel de bombeiros</string>
     <string name="poi_category_courthouse">Tribunal</string>
-    <string name="poi_category_townhall">Prefeitura</string>
+    <string name="poi_category_townhall">Junta de freguesia</string>
     <string name="poi_category_stationery">Papelaria</string>
     <string name="poi_category_climbing_gym">Escalada</string>
     <string name="poi_category_hackerspace">Espaço \'hacker\'</string>
-    <string name="customize_item_label">Etiqueta</string>
+    <string name="customize_item_label">Texto</string>
     <string name="customize_item_tags">Etiquetas</string>
-    <string name="customize_item_visibility">Exibir em</string>
-    <string name="item_visibility_app_default">Grade de apps e resultados de busca</string>
-    <string name="item_visibility_calendar_default">Widget de calendário e resultado de busca</string>
-    <string name="item_visibility_search_only">Resultados de busca</string>
+    <string name="customize_item_visibility">Mostrar em</string>
+    <string name="item_visibility_app_default">Grelha de aplicações e pesquisas</string>
+    <string name="item_visibility_calendar_default">Widget de calendário e pesquisas</string>
+    <string name="item_visibility_search_only">Pesquisas</string>
     <string name="item_visibility_hidden">Nunca</string>
-    <string name="contact_info_home">Residencial</string>
-    <string name="contact_info_mobile">Celular</string>
+    <string name="contact_info_home">Casa</string>
+    <string name="contact_info_mobile">Telemóvel</string>
     <string name="contact_info_work">Trabalho</string>
     <plurals name="contact_phone_numbers">
         <item quantity="one">%1$s número de telefone</item>
@@ -990,36 +992,36 @@
         <item quantity="one">%1$s notificação</item>
         <item quantity="other">%1$s notificações</item>
     </plurals>
-    <string name="weather_widget_no_provider">Nenhum provedor de clima selecionado ou o provedor selecionado está indisponível</string>
-    <string name="music_widget_previous_track">Faixa anterior</string>
-    <string name="music_widget_next_track">Próxima faixa</string>
+    <string name="weather_widget_no_provider">Não escolheu o serviço de meteorologia ou o serviço está indisponível</string>
+    <string name="music_widget_previous_track">Título anterior</string>
+    <string name="music_widget_next_track">Título seguinte</string>
     <string name="music_widget_play">Reproduzir</string>
-    <string name="music_widget_pause">Pausar</string>
+    <string name="music_widget_pause">Pausa</string>
     <string name="music_widget_open_player">Abrir reprodutor</string>
     <string name="calendar_widget_previous_day">Dia anterior</string>
-    <string name="calendar_widget_next_day">Próximo dia</string>
-    <string name="calendar_widget_create_event">Criar novo evento</string>
-    <string name="calendar_widget_open_calendar">Abrir aplicativo de calendário</string>
+    <string name="calendar_widget_next_day">Dia seguinte</string>
+    <string name="calendar_widget_create_event">Criar evento</string>
+    <string name="calendar_widget_open_calendar">Abrir calendário</string>
     <string name="profile_work_profile_state_locked">Aplicações profissionais em pausa</string>
-    <string name="profile_work_profile_action_unlock">Despausar</string>
-    <string name="profile_work_profile_action_lock">Pausar aplicativos de trabalho</string>
+    <string name="profile_work_profile_action_unlock">Cancelar pausa</string>
+    <string name="profile_work_profile_action_lock">Pausa nas aplicações profissionais</string>
     <string name="profile_private_profile_state_locked">O espaço privado está bloqueado</string>
     <string name="profile_private_profile_action_unlock">Desbloquear</string>
-    <string name="profile_private_profile_action_lock">Bloquear Espaço Privado</string>
-    <string name="hint_drag_and_drop_reorder">Segure e arraste itens para reordená-los</string>
+    <string name="profile_private_profile_action_lock">Bloquear espaço privado</string>
+    <string name="hint_drag_and_drop_reorder">Prima e arraste os itens para os organizar</string>
     <plurals name="calendar_search_enabled_lists">
-        <item quantity="one">Lista %1$s selecionada</item>
-        <item quantity="other">Listas %1$s selecionadas</item>
+        <item quantity="one">%1$s lista selecionada</item>
+        <item quantity="other">%1$s listas selecionadas</item>
     </plurals>
-    <string name="weather_forecast_humidity">Umidade</string>
+    <string name="weather_forecast_humidity">Humidade</string>
     <string name="weather_forecast_wind">Vento</string>
-    <string name="weather_forecast_precipitation">Chuva</string>
+    <string name="weather_forecast_precipitation">Precipitação</string>
     <string name="departure_time_now">agora</string>
     <plurals name="departure_time_in">
-        <item quantity="one">em um minuto</item>
-        <item quantity="other">em %1$d minutos</item>
+        <item quantity="one">dentro de um minuto</item>
+        <item quantity="other">dentro de %1$d minutos</item>
     </plurals>
-    <string name="departure_time_departed">partiu</string>
+    <string name="departure_time_departed">partida</string>
     <string name="bad_configuration_title">Parabéns, acabou de se bloquear!</string>
     <string name="bad_configuration_summary">Você conseguir encontrar uma combinação de definições em não é possível aceder às pesquisas e às definições - Acabou de se bloquear!</string>
     <string name="theme_export_title">Exportar tema</string>
