@@ -877,4 +877,8 @@
     <string name="preference_clockwidget_dock_rows">Righe dock</string>
     <string name="preference_search_apps">App</string>
     <string name="preference_search_apps_summary">Mostra tutte le app quando il campo di ricerca è vuoto</string>
+    <string name="preference_screen_locale">Lingua e regione</string>
+    <string name="preference_screen_locale_summary">Lingua, unità, formato ora</string>
+    <string name="preference_language">Lingua</string>
+    <string name="preference_value_system_default">Predefinito del sistema</string>
 </resources>
