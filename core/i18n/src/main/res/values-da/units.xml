@@ -27,6 +27,7 @@
         <item quantity="one">mil</item>
         <item quantity="other">mil</item>
     </plurals>
+    <string name="unit_nautic_mile_symbol">sømil</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">sømil</item>
         <item quantity="other">sømil</item>
@@ -48,10 +49,12 @@
         <item quantity="one">kvadratmillimeter</item>
         <item quantity="other">kvadratmillimeter</item>
     </plurals>
+    <string name="unit_sqinch_symbol">cm²</string>
     <plurals name="unit_sqinch">
         <item quantity="one">kvadratcentimeter</item>
         <item quantity="other">kvadratcentimeter</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">m²</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">kvadratmeter</item>
         <item quantity="other">kvadratmeter</item>
@@ -119,6 +122,9 @@
         <item quantity="one">ton</item>
         <item quantity="other">tons</item>
     </plurals>
+    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_ounce_symbol">oz.</string>
     <!-- UNITS OF TEMPERATURE -->
     <plurals name="unit_degree_celsius">
         <item quantity="one">grad celcius</item>
