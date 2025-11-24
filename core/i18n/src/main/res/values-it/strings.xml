@@ -1022,4 +1022,8 @@
     <string name="font_name_device_headline">Font predefinito per il titolo</string>
     <string name="font_name_device_body">Font del testo del dispositivo</string>
     <string name="font_category_generic">Generico</string>
+    <string name="preference_screen_locale">Lingua e regione</string>
+    <string name="preference_screen_locale_summary">Lingua, unità, formato ora</string>
+    <string name="preference_language">Lingua</string>
+    <string name="preference_value_system_default">Predefinito del sistema</string>
 </resources>
