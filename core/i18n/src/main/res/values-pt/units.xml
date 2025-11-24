@@ -71,94 +71,18 @@
         <item quantity="one">centímetro quadrado</item>
         <item quantity="other">centímetros quadrados</item>
     </plurals>
-    <plurals name="unit_sqmillimeter">
-        <item quantity="one">milímetro quadrado</item>
-        <item quantity="other">milímetros quadrados</item>
-    </plurals>
     <string name="unit_sqinch_symbol">sqin</string>
-    <plurals name="unit_sqinch">
-        <item quantity="one">polegada quadrada</item>
-        <item quantity="other">polegadas quadradas</item>
-    </plurals>
     <string name="unit_sqfoot_symbol">sqft</string>
-    <plurals name="unit_sqfoot">
-        <item quantity="one">pé quadrado</item>
-        <item quantity="other">pés quadrados</item>
-    </plurals>
     <string name="unit_sqyard_symbol">sqyd</string>
-    <plurals name="unit_sqyard">
-        <item quantity="one">jarda quadrada</item>
-        <item quantity="other">jardas quadradas</item>
-    </plurals>
     <string name="unit_acre_symbol">acre</string>
     <!-- UNITS OF TIME -->
-    <plurals name="unit_second">
-        <item quantity="one">segundo</item>
-        <item quantity="other">segundos</item>
-    </plurals>
-    <plurals name="unit_millisecond">
-        <item quantity="one">milisegundo</item>
-        <item quantity="other">milissegundos</item>
-    </plurals>
-    <plurals name="unit_minute">
-        <item quantity="one">minuto</item>
-        <item quantity="other">minutos</item>
-    </plurals>
-    <plurals name="unit_hour">
-        <item quantity="one">hora</item>
-        <item quantity="other">horas</item>
-    </plurals>
-    <plurals name="unit_day">
-        <item quantity="one">dia</item>
-        <item quantity="other">dias</item>
-    </plurals>
-    <plurals name="unit_year">
-        <item quantity="one">ano</item>
-        <item quantity="other">anos</item>
-    </plurals>
     <!-- UNITS OF DATA SIZES -->
     <!-- UNITS OF VELOCITY -->
-    <plurals name="unit_meter_per_second">
-        <item quantity="one">metro por segundo</item>
-        <item quantity="other">metros por segundos</item>
-    </plurals>
-    <plurals name="unit_kilometer_per_hour">
-        <item quantity="one">quilómetro por hora</item>
-        <item quantity="other">quilômetros por hora</item>
-    </plurals>
-    <plurals name="unit_mile_per_hour">
-        <item quantity="one">milha por hora</item>
-        <item quantity="other">milhas por hora</item>
-    </plurals>
-    <plurals name="unit_knot">
-        <item quantity="one">nó</item>
-        <item quantity="other">nós</item>
-    </plurals>
     <!-- UNITS OF MASS -->
-    <plurals name="unit_kilogram">
-        <item quantity="one">kilograma</item>
-        <item quantity="other">quilos</item>
-    </plurals>
-    <plurals name="unit_gram">
-        <item quantity="one">grama</item>
-        <item quantity="other">gramas</item>
-    </plurals>
-    <plurals name="unit_metric_ton">
-        <item quantity="one">tonelada métrica</item>
-        <item quantity="other">toneladas</item>
-    </plurals>
     <string name="unit_long_ton_symbol">tn.l.</string>
-    <plurals name="unit_long_ton">
-        <item quantity="one">tonelada longa</item>
-        <item quantity="other">toneladas britânicas</item>
-    </plurals>
     <plurals name="unit_stone">
         <item quantity="one">pedra</item>
         <item quantity="other">pedras</item>
-    </plurals>
-    <plurals name="unit_pound">
-        <item quantity="one">libra</item>
-        <item quantity="other">libras</item>
     </plurals>
     <string name="unit_ounce_symbol">on.</string>
     <plurals name="unit_ounce">
