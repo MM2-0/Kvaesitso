@@ -53,6 +53,7 @@
         <item quantity="many">mylių</item>
         <item quantity="other">mylių</item>
     </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">jūrmylė</item>
         <item quantity="few">jūrmylios</item>
@@ -84,18 +85,21 @@
         <item quantity="many">kvadratinių milimetrų</item>
         <item quantity="other">kvadratinių milimetrų</item>
     </plurals>
+    <string name="unit_sqinch_symbol">sqin</string>
     <plurals name="unit_sqinch">
         <item quantity="one">kvadratinis colis</item>
         <item quantity="few">kvadratiniai coliai</item>
         <item quantity="many">kvadratinių colių</item>
         <item quantity="other">kvadratinių colių</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">sqft</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">kvadratinė pėda</item>
         <item quantity="few">kvadratinės pėdos</item>
         <item quantity="many">kvadratinių pėdų</item>
         <item quantity="other">kvadratinių pėdų</item>
     </plurals>
+    <string name="unit_sqyard_symbol">sqyd</string>
     <plurals name="unit_sqyard">
         <item quantity="one">kvadratinis yardas</item>
         <item quantity="few">kvadratiniai yardai</item>
@@ -201,6 +205,12 @@
         <item quantity="many">Gibibaitų</item>
         <item quantity="other">Gibibaitų</item>
     </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">Tebibaitas</item>
+        <item quantity="few">Tebibaitai</item>
+        <item quantity="many">Tebibaitų</item>
+        <item quantity="other">Tebibaitų</item>
+    </plurals>
     <plurals name="unit_bit">
         <item quantity="one">bitas</item>
         <item quantity="few">bitai</item>
@@ -275,30 +285,35 @@
         <item quantity="many">metrinių tonų</item>
         <item quantity="other">metrinių tonų</item>
     </plurals>
+    <string name="unit_long_ton_symbol">tn.l</string>
     <plurals name="unit_long_ton">
         <item quantity="one">ilga tona</item>
         <item quantity="few">ilgos tonos</item>
         <item quantity="many">ilgų tonų</item>
         <item quantity="other">ilgų tonų</item>
     </plurals>
+    <string name="unit_stone_symbol">st.</string>
     <plurals name="unit_stone">
         <item quantity="one">akmuo</item>
         <item quantity="few">akmenys</item>
         <item quantity="many">akmenų</item>
         <item quantity="other">akmenų</item>
     </plurals>
+    <string name="unit_pound_symbol">lb.</string>
     <plurals name="unit_pound">
         <item quantity="one">svaras</item>
         <item quantity="few">svarai</item>
         <item quantity="many">svarų</item>
         <item quantity="other">svarų</item>
     </plurals>
+    <string name="unit_ounce_symbol">oz.</string>
     <plurals name="unit_ounce">
         <item quantity="one">uncija</item>
         <item quantity="few">uncijos</item>
         <item quantity="many">uncijų</item>
         <item quantity="other">uncijų</item>
     </plurals>
+    <string name="unit_short_ton_symbol">tn.sh.</string>
     <plurals name="unit_short_ton">
         <item quantity="one">trumpa tona</item>
         <item quantity="few">trumpos tonos</item>
