@@ -508,7 +508,7 @@
     <string name="preference_dim_wallpaper">Hintergrund dimmen</string>
     <string name="preference_dim_wallpaper_summary">Hintergrundbild bei Verwendung von dunklen Designs abdunkeln</string>
     <string name="preference_blur_wallpaper">Hintergrund weichzeichnen</string>
-    <string name="preference_blur_wallpaper_summary">Einen Unschärfe-Effekt für das Hintergrundbild verwenden</string>
+    <string name="preference_blur_wallpaper_summary">Einen Unschärfeeffekt für das Hintergrundbild verwenden</string>
     <string name="preference_blur_wallpaper_unsupported">Auf diesem Gerät nicht unterstützt</string>
     <string name="preference_blur_wallpaper_radius">Unschärfe-Radius</string>
     <string name="preference_wallpaper_summary">Hintergrundbild auswählen</string>
@@ -881,7 +881,7 @@
     <string name="poi_category_alcohol">Spirituosengeschäft</string>
     <string name="poi_category_florist">Blumenhandlung</string>
     <string name="poi_category_mall">Einkaufszentrum</string>
-    <string name="poi_category_optician">Augenoptiker*in</string>
+    <string name="poi_category_optician">Augenoptiker:in</string>
     <string name="poi_category_jewelry">Juwelier:in</string>
     <string name="poi_category_laundry">Wäscherei</string>
     <string name="poi_category_soccer">Fußballplatz</string>
