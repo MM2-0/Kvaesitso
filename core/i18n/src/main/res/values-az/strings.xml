@@ -132,8 +132,10 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Elektron cədvəl</string>
     <!-- Audio file -->
+    <string name="file_type_music">Musiqi faylı</string>
     <!-- Video file -->
     <!-- Image file -->
+    <string name="file_type_image">Şəkil</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Fayl</string>
     <!-- Presentation -->
