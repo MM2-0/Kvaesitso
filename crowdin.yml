@@ -1,11 +1,88 @@
-preserve_hierarchy: 
+preserve_hierarchy: false
 files:
   - source: /core/i18n/src/main/res/values/strings.xml
     translation: /core/i18n/src/main/res/values-%android_code%/%original_file_name%
     type: android
+    languages_mapping:
+      android_code:
+        ar: ar                # Arabic
+        az: az                # Azerbaijani
+        eu: eu                # Basque
+        be: be                # Belarusian
+        bn: bn                # Bengali
+        ca: ca                # Catalan
+        zh-CN: zh-rCN         # Chinese Simplified
+        zh-TW: zh-rTW         # Chinese Traditional
+        cs: cs                # Czech
+        da: da                # Danish
+        nl: nl                # Dutch, Netherlands
+        eo: eo                # Esperanto
+        fi: fi                # Finnish
+        fr: fr                # French, France
+        fr-fem: fr-feminine   # French (feminine)
+        fr-masc: fr-masculine # French (masculine)
+        de: de                # German, Germany
+        el: el                # Greek
+        he: iw                # Hebrew
+        hu: hu                # Hungarian
+        id: in                # Indonesian
+        it: it                # Italian, Italy
+        ja: ja                # Japanese
+        ko: ko                # Korean
+        lt: lt                # Lithuanian
+        ms: ms                # Malay
+        nb: nb                # Norwegian Bokmal
+        fa: fa                # Persian
+        pl: pl                # Polish
+        pt-BR: pt             # Portuguese, Brazil
+        pt-PT: pt-rPT         # Portuguese, Portugal
+        ro: ro                # Romanian
+        ru: ru                # Russian, Russia
+        es-MX: es             # Spanish, Mexico
+        sv-SE: sv             # Swedish, Sweden
+        th: th                # Thai
+        tr: tr                # Turkish, Türkiye
+        uk: uk                # Ukrainian
+        vi: vi                # Vietnamese
   - source: /core/i18n/src/main/res/values/units.xml
     translation: /core/i18n/src/main/res/values-%android_code%/%original_file_name%
     type: android
-  - source: /plugins/sdk/src/main/res/values/strings.xml
-    translation: /plugins/sdk/src/main/res/values-%android_code%/%original_file_name%
-    type: android
+    language_mapping:
+      android_code:
+        ar: ar        # Arabic
+        az: az        # Azerbaijani
+        eu: eu        # Basque
+        be: be        # Belarusian
+        bn: bn        # Bengali
+        ca: ca        # Catalan
+        zh-CN: zh-rCN # Chinese Simplified
+        zh-TW: zh-rTW # Chinese Traditional
+        cs: cs        # Czech
+        da: da        # Danish
+        nl: nl        # Dutch, Netherlands
+        eo: eo        # Esperanto
+        fi: fi        # Finnish
+        fr: fr        # French, France
+        de: de        # German, Germany
+        el: el        # Greek
+        he: iw        # Hebrew
+        hu: hu        # Hungarian
+        id: in        # Indonesian
+        it: it        # Italian, Italy
+        ja: ja        # Japanese
+        ko: ko        # Korean
+        lt: lt        # Lithuanian
+        ms: ms        # Malay
+        nb: nb        # Norwegian Bokmal
+        fa: fa        # Persian
+        pl: pl        # Polish
+        pt-BR: pt     # Portuguese, Brazil
+        pt-PT: pt-rPT # Portuguese, Portugal
+        ro: ro        # Romanian
+        ru: ru        # Russian, Russia
+        es-MX: es     # Spanish, Mexico
+        sv-SE: sv     # Swedish, Sweden
+        th: th        # Thai
+        tr: tr        # Turkish, Türkiye
+        uk: uk        # Ukrainian
+        vi: vi        # Vietnamese
