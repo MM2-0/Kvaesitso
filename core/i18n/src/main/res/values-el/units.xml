@@ -34,6 +34,7 @@
         <item quantity="one">μίλι</item>
         <item quantity="other">μίλια</item>
     </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">ναυτικό μίλι</item>
         <item quantity="other">ναυτικά μίλια</item>
@@ -55,14 +56,17 @@
         <item quantity="one">τετραγωνικό χιλιοστό</item>
         <item quantity="other">τετραγωνικά χιλιοστά</item>
     </plurals>
+    <string name="unit_sqinch_symbol">sqin</string>
     <plurals name="unit_sqinch">
         <item quantity="one">τετραγωνική ίντσα</item>
         <item quantity="other">τετραγωνικές ίντσες</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">sqft</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">τετραγωνικό πόδι</item>
         <item quantity="other">τετραγωνικά πόδια</item>
     </plurals>
+    <string name="unit_sqyard_symbol">sqyd</string>
     <plurals name="unit_sqyard">
         <item quantity="one">τετραγωνική γιάρδα</item>
         <item quantity="other">τετραγωνικές γιάρδες</item>
@@ -101,6 +105,10 @@
         <item quantity="other">έτη</item>
     </plurals>
     <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebiyte</item>
+        <item quantity="other">tebiytes</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
         <item quantity="one">μέτρο ανά δευτερόλεπτο</item>
@@ -131,22 +139,27 @@
         <item quantity="one">τόνος</item>
         <item quantity="other">τόνοι</item>
     </plurals>
+    <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
         <item quantity="one">μακρύς τόνος</item>
         <item quantity="other">μακρείς τόνοι</item>
     </plurals>
+    <string name="unit_stone_symbol">st.</string>
     <plurals name="unit_stone">
         <item quantity="one">πέτρα</item>
         <item quantity="other">πέτρες</item>
     </plurals>
+    <string name="unit_pound_symbol">lb.</string>
     <plurals name="unit_pound">
         <item quantity="one">λίβρα</item>
         <item quantity="other">λίβρες</item>
     </plurals>
+    <string name="unit_ounce_symbol">oz.</string>
     <plurals name="unit_ounce">
         <item quantity="one">ουγγιά</item>
         <item quantity="other">ουγγιές</item>
     </plurals>
+    <string name="unit_short_ton_symbol">tn.sh.</string>
     <plurals name="unit_short_ton">
         <item quantity="one">κοντός τόνος</item>
         <item quantity="other">κοντοί τόνοι</item>
