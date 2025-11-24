@@ -1059,4 +1059,8 @@
     <string name="preference_screen_locale_summary">Language, units, time format</string>
     <string name="preference_language">Language</string>
     <string name="preference_value_system_default">System default</string>
+    <string name="preference_form_of_address">Form of address</string>
+    <string name="preference_form_of_address_neutral">Neutral</string>
+    <string name="preference_form_of_address_fem">Feminine</string>
+    <string name="preference_form_of_address_masc">Masculine</string>
 </resources>

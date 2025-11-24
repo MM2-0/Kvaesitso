@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.capitalize
 import androidx.core.app.GrammaticalInflectionManagerCompat
 import androidx.core.net.toUri
 import androidx.core.os.LocaleListCompat
@@ -53,7 +54,11 @@ fun LocaleSettingsScreen() {
                 Preference(
                     icon = R.drawable.flag_24px,
                     title = stringResource(R.string.preference_language),
-                    summary = if (language == null) stringResource(R.string.preference_value_system_default) else language.getDisplayName(language),
+                    summary = if (language == null) {
+                        stringResource(R.string.preference_value_system_default)
+                    } else {
+                        language.getDisplayName(language).replaceFirstChar { it.uppercase(language) }
+                    },
                     enabled = isAtLeastApiLevel(33),
                     onClick = {
                         context.tryStartActivity(
@@ -63,26 +68,33 @@ fun LocaleSettingsScreen() {
                         )
                     }
                 )
-                ListPreference(
-                    icon = R.drawable.wc_24px,
-                    title = "Form of address",
-                    value = GrammaticalInflectionManagerCompat.getApplicationGrammaticalGender(context).let {
-                        if (it == GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NOT_SPECIFIED) {
-                            GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NEUTRAL
-                        } else {
-                            it
-                        }
-                    },
-                    onValueChanged = {
-                        GrammaticalInflectionManagerCompat.setRequestedApplicationGrammaticalGender(context, it)
-                    },
-                    enabled = isAtLeastApiLevel(34),
-                    items = listOf(
-                        "Neutral" to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NEUTRAL,
-                        "Feminine" to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_FEMININE,
-                        "Masculine" to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_MASCULINE,
+                if (listOf("fr").contains(LocalResources.current.configuration?.locales[0]?.language)) {
+                    ListPreference(
+                        icon = R.drawable.wc_24px,
+                        title = stringResource(R.string.preference_form_of_address),
+                        value = GrammaticalInflectionManagerCompat.getApplicationGrammaticalGender(
+                            context
+                        ).let {
+                            if (it == GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NOT_SPECIFIED) {
+                                GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NEUTRAL
+                            } else {
+                                it
+                            }
+                        },
+                        onValueChanged = {
+                            GrammaticalInflectionManagerCompat.setRequestedApplicationGrammaticalGender(
+                                context,
+                                it
+                            )
+                        },
+                        enabled = isAtLeastApiLevel(34),
+                        items = listOf(
+                            stringResource(R.string.preference_form_of_address_neutral) to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NEUTRAL,
+                            stringResource(R.string.preference_form_of_address_fem) to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_FEMININE,
+                            stringResource(R.string.preference_form_of_address_masc) to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_MASCULINE,
+                        )
                     )
-                )
+                }
                 ListPreference(
                     icon = R.drawable.schedule_24px,
                     title = stringResource(R.string.preference_clock_widget_time_format),
