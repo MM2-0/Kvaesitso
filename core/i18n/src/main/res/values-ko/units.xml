@@ -26,6 +26,7 @@
     <plurals name="unit_mile">
         <item quantity="other">마일</item>
     </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
     <plurals name="unit_nautic_mile">
         <item quantity="other">해리</item>
     </plurals>
@@ -42,12 +43,15 @@
     <plurals name="unit_sqmillimeter">
         <item quantity="other">제곱밀리미터</item>
     </plurals>
+    <string name="unit_sqinch_symbol">sqin</string>
     <plurals name="unit_sqinch">
         <item quantity="other">제곱인치</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">sqft</string>
     <plurals name="unit_sqfoot">
         <item quantity="other">제곱피트</item>
     </plurals>
+    <string name="unit_sqyard_symbol">sqyd</string>
     <plurals name="unit_sqyard">
         <item quantity="other">제곱야드</item>
     </plurals>
@@ -101,6 +105,9 @@
     <plurals name="unit_gibibyte">
         <item quantity="other">기비바이트</item>
     </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="other">테비바이트</item>
+    </plurals>
     <plurals name="unit_bit">
         <item quantity="other">비트</item>
     </plurals>
@@ -139,18 +146,23 @@
     <plurals name="unit_metric_ton">
         <item quantity="other">미터법 톤</item>
     </plurals>
+    <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
         <item quantity="other">롱 톤</item>
     </plurals>
+    <string name="unit_stone_symbol">st.</string>
     <plurals name="unit_stone">
         <item quantity="other">스톤</item>
     </plurals>
+    <string name="unit_pound_symbol">lb.</string>
     <plurals name="unit_pound">
         <item quantity="other">파운드</item>
     </plurals>
+    <string name="unit_ounce_symbol">oz.</string>
     <plurals name="unit_ounce">
         <item quantity="other">온스</item>
     </plurals>
+    <string name="unit_short_ton_symbol">tn.sh.</string>
     <plurals name="unit_short_ton">
         <item quantity="other">쇼트 톤</item>
     </plurals>
