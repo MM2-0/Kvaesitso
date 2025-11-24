@@ -80,6 +80,7 @@
     <!-- Audio file -->
     <!-- Video file -->
     <!-- Image file -->
+    <string name="file_type_image">Figuro</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Dosiero</string>
     <!-- Presentation -->
@@ -138,6 +139,7 @@
     <string name="websearch_dialog_query_encoding_none">Neniom</string>
     <string name="widget_name_weather">Vetero</string>
     <string name="widget_name_calendar">Kalendaro</string>
+    <string name="widget_name_music">Muziko</string>
     <string name="widget_name_unknown">Nekonata</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
