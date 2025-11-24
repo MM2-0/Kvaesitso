@@ -123,8 +123,10 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Lampiran</string>
     <!-- Audio file -->
+    <string name="file_type_music">Fail muzik</string>
     <!-- Video file -->
     <!-- Image file -->
+    <string name="file_type_image">Gambar</string>
     <!-- Generic file without file extension -->
     <string name="file_type_none">Fail</string>
     <!-- Presentation -->
