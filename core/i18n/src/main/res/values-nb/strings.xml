@@ -28,7 +28,7 @@
     <string name="menu_launch">Åpne</string>
     <string name="menu_customize">Tilpass</string>
     <!-- Open a file in the corresponding app -->
-    <string name="menu_open_file">Åpne</string>
+    <string name="menu_open_file">Åpent</string>
     <string name="menu_map">Se på kart</string>
     <string name="menu_website">Åpne nettside</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
@@ -443,8 +443,8 @@
     <string name="preference_charging_animation">Ladeanimasjoner</string>
     <string name="preference_charging_animation_summary">Spill av en bobleanimasjon når enheten lades</string>
     <string name="preference_system_bar_icons_auto">Automatisk</string>
-    <string name="preference_system_bar_icons_light">Lys</string>
-    <string name="preference_system_bar_icons_dark">Mørk</string>
+    <string name="preference_system_bar_icons_light">Lyst</string>
+    <string name="preference_system_bar_icons_dark">Mørkt</string>
     <string name="preference_hide_status_bar">Skjul statusmeny</string>
     <string name="preference_screen_integrations_summary">Administrer tilkoblede konti og tjenester</string>
     <string name="preference_signin_user">Innlogget som %1$s</string>
@@ -478,7 +478,7 @@
     <string name="preference_grid_column_count">Antall kolonner</string>
     <string name="preference_grid_labels">Vis merkelapper</string>
     <string name="preference_grid_labels_summary">Vis app-navn under ikonet</string>
-    <string name="preference_screen_debug">Feilsøking</string>
+    <string name="preference_screen_debug">Feilsøk</string>
     <string name="preference_screen_debug_summary">Feilsøkingsverktøy</string>
     <string name="preference_screen_weatherwidget">Vær</string>
     <string name="preference_category_media_apps">Media-apper</string>
@@ -549,7 +549,7 @@
     <string name="preference_search_bar_launch_on_enter">Start med enter</string>
     <string name="preference_hidden_items">Skjulte søkeresultater</string>
     <string name="preference_hidden_items_summary">Administrer skjulte apper og søkeresultater</string>
-    <string name="preference_screen_tags">Etiketter</string>
+    <string name="preference_screen_tags">Merkelapper</string>
     <string name="preference_screen_tags_summary">Administrer etiketter og merkede oppføringer</string>
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
     <string name="preference_edit_favorites_summary">Endre rekkefølgen til festede oppføringer</string>
@@ -623,8 +623,8 @@
     <string name="open_search_pull_down">Sveip ned</string>
     <string name="open_search_swipe_left">Sveip til venstre</string>
     <string name="open_search_swipe_right">Sveip til høyre</string>
-    <string name="search_bar_position_top">Øverst</string>
-    <string name="search_bar_position_bottom">Nederst</string>
+    <string name="search_bar_position_top">Topp</string>
+    <string name="search_bar_position_bottom">Bunn</string>
     <string name="search_results_order_top_down">Øverst-ned</string>
     <string name="search_results_order_bottom_up">Nederst-opp</string>
     <string name="preference_layout_fixed_search_bar">Fast søkefelt</string>
@@ -686,7 +686,7 @@
     <string name="menu_bugreport">Feilrapport</string>
     <string name="location_open_24_7">Åpen 24/7</string>
     <string name="plugin_state_error">Dette programtillegget fungerer ikke som det skal</string>
-    <string name="plugin_type_filesearch">Filsøk</string>
+    <string name="plugin_type_filesearch">Filer</string>
     <string name="plugin_type_contacts">Kontakter</string>
     <string name="plugin_type_weather">Værtilbyder</string>
     <string name="plugin_weather_provider_enable">Sett som værtilbyder</string>
@@ -786,7 +786,7 @@
     <string name="poi_category_courthouse">Rettssal</string>
     <string name="poi_category_townhall">Rådhus</string>
     <string name="customize_item_label">Etikett</string>
-    <string name="customize_item_tags">Etiketter</string>
+    <string name="customize_item_tags">Merkelapper</string>
     <string name="customize_item_visibility">Vis i</string>
     <string name="item_visibility_app_default">Rutenett og søkeresultater</string>
     <string name="item_visibility_calendar_default">Kalenderwidget og søkeresultater</string>
