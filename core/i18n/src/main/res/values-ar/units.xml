@@ -96,6 +96,7 @@
         <item quantity="many">ميل</item>
         <item quantity="other">ميل</item>
     </plurals>
+    <string name="unit_nautic_mile_symbol">ميل ب.</string>
     <plurals name="unit_nautic_mile">
         <item quantity="zero">ميل بحري</item>
         <item quantity="one">ميل بحري</item>
@@ -141,6 +142,7 @@
         <item quantity="many">ميلمتر مربع</item>
         <item quantity="other">ميلمتر مربع</item>
     </plurals>
+    <string name="unit_sqinch_symbol">بص²</string>
     <plurals name="unit_sqinch">
         <item quantity="zero">بوصة مربعة</item>
         <item quantity="one">بوصة مربعة</item>
@@ -149,6 +151,7 @@
         <item quantity="many">بوصة مربع</item>
         <item quantity="other">بوصة مربع</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">ق²</string>
     <plurals name="unit_sqfoot">
         <item quantity="zero">قدم مربع</item>
         <item quantity="one">قدم مربع</item>
@@ -157,6 +160,7 @@
         <item quantity="many">قدم مربع</item>
         <item quantity="other">قدم مربع</item>
     </plurals>
+    <string name="unit_sqyard_symbol">ياردة مربعة</string>
     <plurals name="unit_sqyard">
         <item quantity="zero">ياردة مربعة</item>
         <item quantity="one">ياردة مربعة</item>
@@ -312,6 +316,14 @@
         <item quantity="other">غيغابيبايت</item>
     </plurals>
     <string name="unit_tebibyte_symbol">تيب</string>
+    <plurals name="unit_tebibyte">
+        <item quantity="zero">تيرابيبايت</item>
+        <item quantity="one">تيرابيبايت</item>
+        <item quantity="two">تيرابيبايتان</item>
+        <item quantity="few">تيرابيبايتات</item>
+        <item quantity="many">تيىابيبايت</item>
+        <item quantity="other">تيرابيبايت</item>
+    </plurals>
     <string name="unit_bit_symbol">بت</string>
     <plurals name="unit_bit">
         <item quantity="zero">بت</item>
@@ -422,6 +434,7 @@
         <item quantity="many">طن متري</item>
         <item quantity="other">طن متري</item>
     </plurals>
+    <string name="unit_long_ton_symbol">ط.إ.</string>
     <plurals name="unit_long_ton">
         <item quantity="zero">طن إمبراطوري</item>
         <item quantity="one">طن إمبراطوري</item>
@@ -430,6 +443,7 @@
         <item quantity="many">طن إمبراطوري</item>
         <item quantity="other">طن إمبراطوري</item>
     </plurals>
+    <string name="unit_stone_symbol">صخ.</string>
     <plurals name="unit_stone">
         <item quantity="zero">صخرة</item>
         <item quantity="one">صخرة</item>
@@ -438,6 +452,7 @@
         <item quantity="many">صخرة</item>
         <item quantity="other">صخرة</item>
     </plurals>
+    <string name="unit_pound_symbol">ر.</string>
     <plurals name="unit_pound">
         <item quantity="zero">رطل</item>
         <item quantity="one">رطل</item>
@@ -446,6 +461,7 @@
         <item quantity="many">رطل</item>
         <item quantity="other">رطل</item>
     </plurals>
+    <string name="unit_ounce_symbol">أون.</string>
     <plurals name="unit_ounce">
         <item quantity="zero">أونصة</item>
         <item quantity="one">أونصة</item>
@@ -454,6 +470,7 @@
         <item quantity="many">أونصة</item>
         <item quantity="other">أونصة</item>
     </plurals>
+    <string name="unit_short_ton_symbol">ط.أ.</string>
     <plurals name="unit_short_ton">
         <item quantity="zero">طن أمريكي</item>
         <item quantity="one">طن أمريكي</item>
