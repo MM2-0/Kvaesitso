@@ -45,6 +45,11 @@
     <string name="unit_kilogram_symbol">کیلوگرم</string>
     <string name="unit_gram_symbol">گرم</string>
     <string name="unit_metric_ton_symbol">تن متریک</string>
+    <string name="unit_long_ton_symbol">تن بلند</string>
+    <string name="unit_stone_symbol">استون</string>
+    <string name="unit_pound_symbol">پوند</string>
+    <string name="unit_ounce_symbol">اونس</string>
+    <string name="unit_short_ton_symbol">تن کوتاه</string>
     <!-- UNITS OF TEMPERATURE -->
     <string name="unit_kelvin_symbol">کلوین</string>
     <!-- UNITS OF VOLUME -->
