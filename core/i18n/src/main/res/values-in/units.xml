@@ -30,6 +30,7 @@
     <plurals name="unit_mile">
         <item quantity="other">mil</item>
     </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
     <plurals name="unit_nautic_mile">
         <item quantity="other">mil laut</item>
     </plurals>
@@ -46,12 +47,15 @@
     <plurals name="unit_sqmillimeter">
         <item quantity="other">milimeter persegi</item>
     </plurals>
+    <string name="unit_sqinch_symbol">sqin</string>
     <plurals name="unit_sqinch">
         <item quantity="other">inci persegi</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">sqft</string>
     <plurals name="unit_sqfoot">
         <item quantity="other">kaki persegi</item>
     </plurals>
+    <string name="unit_sqyard_symbol">sqyd</string>
     <plurals name="unit_sqyard">
         <item quantity="other">yar persegi</item>
     </plurals>
@@ -108,6 +112,9 @@
     <plurals name="unit_gibibyte">
         <item quantity="other">gibibita</item>
     </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="other">tebibita</item>
+    </plurals>
     <plurals name="unit_bit">
         <item quantity="other">bit</item>
     </plurals>
@@ -152,9 +159,11 @@
     <plurals name="unit_long_ton">
         <item quantity="other">ton panjang</item>
     </plurals>
+    <string name="unit_pound_symbol">lb.</string>
     <plurals name="unit_pound">
         <item quantity="other">pon</item>
     </plurals>
+    <string name="unit_ounce_symbol">ons</string>
     <plurals name="unit_ounce">
         <item quantity="other">ons</item>
     </plurals>
