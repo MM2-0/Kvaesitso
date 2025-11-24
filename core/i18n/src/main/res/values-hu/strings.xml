@@ -419,7 +419,7 @@
     <string name="preference_theme_light">Világos</string>
     <string name="preference_theme_dark">Sötét</string>
     <string name="preference_screen_colors">Színösszeállítás</string>
-    <string name="preference_colors_default">Alapértelmezett</string>
+    <string name="preference_colors_default">Alapértelmezés</string>
     <string name="preference_colors_high_contrast">Nagy kontraszt</string>
     <string name="preference_colors_bw">Fekete-fehér</string>
     <string name="preference_custom_colors_corepalette">Színpaletta</string>
@@ -427,13 +427,13 @@
     <string name="preference_mdy_color_source_system">Rendszer</string>
     <string name="preference_mdy_color_source_wallpaper">Háttérkép</string>
     <string name="preference_screen_shapes">Alakzatok</string>
-    <string name="preference_shapes_default">Alapértelmezett</string>
+    <string name="preference_shapes_default">Alapértelmezés</string>
     <string name="preference_shapes_extra_round">Nagyon lekerekített</string>
     <string name="preference_shapes_rect">Négyszögletes</string>
     <string name="preference_shapes_base">Alap alakzat</string>
     <string name="preference_screen_typography">Tipográfia</string>
     <string name="preference_screen_transparencies">Átlátszóság</string>
-    <string name="preference_transparencies_default">Alapértelmezett</string>
+    <string name="preference_transparencies_default">Alapértelmezés</string>
     <string name="preference_transparencies_semi_transparent">Félig átlátszó</string>
     <string name="preference_font">Betűtípus</string>
     <string name="preference_screen_about">Névjegy</string>
@@ -562,7 +562,7 @@
     <string name="preference_category_media_apps">Médiaalkalmazások</string>
     <string name="preference_screen_clockwidget">Óra</string>
     <string name="preference_screen_clockwidget_summary">Óra stílusának és összetevőinek beállítása</string>
-    <string name="preference_clockwidget_layout_vertical">Alapértelmezett</string>
+    <string name="preference_clockwidget_layout_vertical">Alapértelmezés</string>
     <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
     <string name="preference_clock_widget_show_seconds">Másodperc megjelenítése</string>
     <string name="preference_clock_widget_monospaced">Azonos szélességű számjegyek</string>
@@ -699,7 +699,7 @@
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">Létrehozva ekkor: %1$s, a(z) %2$s nevű eszközön, ezzel: %3$s.</string>
     <string name="restore_complete">A biztonsági mentés visszaállítása megtörtént.</string>
-    <string name="icon_picker_default_icon">Alapértelmezett</string>
+    <string name="icon_picker_default_icon">Alapértelmezés</string>
     <string name="icon_picker_suggestions">Javaslatok</string>
     <string name="icon_picker_search_icon">Keresés az ikoncsomagok között</string>
     <string name="icon_picker_filter_all_packs">Minden ikoncsomag</string>
@@ -814,11 +814,11 @@
     <string name="confirmation_delete_typography_scheme">Valóban el szeretné távolítani a(z) %1$s tipográfiai sémát?</string>
     <string name="confirmation_delete_transparencies_scheme">Valóban törölni akarja a(z) %1$s átlátszósági sémát?</string>
     <string name="new_theme_name">(névtelen)</string>
-    <string name="theme_color_scheme_system_default">Rendszer alapértelmezett használata</string>
+    <string name="theme_color_scheme_system_default">Rendszer alapértelmezésének használata</string>
     <string name="theme_color_scheme_autogenerate">Az elsődleges színből</string>
     <string name="theme_color_scheme_palette_color">Paletta</string>
     <string name="theme_color_scheme_custom_color">Egyéni</string>
-    <string name="preference_restore_default">Alapértelmezett visszaállítása</string>
+    <string name="preference_restore_default">Alapértelmezés visszaállítása</string>
     <string name="import_theme_contents">Tartalom</string>
     <string name="import_theme_apply">Téma alkalmazása</string>
     <string name="import_theme_exists">A téma már létezik, ezért frissítve lesz</string>
@@ -1033,4 +1033,8 @@
     <string name="font_name_device_headline">Címsor alapértelmezett betűtípusa</string>
     <string name="font_name_device_body">Eszköz szövegének betűtípusa</string>
     <string name="font_category_generic">Általános</string>
+    <string name="preference_screen_locale">Nyelv és régió</string>
+    <string name="preference_screen_locale_summary">Nyelv, mértékegységek, időformátum</string>
+    <string name="preference_language">Nyelv</string>
+    <string name="preference_value_system_default">Rendszer alapértelmezése</string>
 </resources>
