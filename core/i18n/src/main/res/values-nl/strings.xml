@@ -995,4 +995,8 @@
     <string name="font_name_device_headline">Standaard koplettertype</string>
     <string name="font_name_device_body">Tekstlettertype van het systeem</string>
     <string name="font_category_generic">Generiek</string>
+    <string name="preference_screen_locale">Taal en regio</string>
+    <string name="preference_screen_locale_summary">Taal, eenheden, tijdformaat</string>
+    <string name="preference_language">Taal</string>
+    <string name="preference_value_system_default">Systeemstandaard</string>
 </resources>
