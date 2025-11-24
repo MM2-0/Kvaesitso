@@ -215,7 +215,6 @@
     <string name="menu_edit_widgets">Edita els ginys</string>
     <string name="widget_name_weather">El temps</string>
     <string name="widget_name_calendar">Calendari</string>
-    <string name="widget_name_music">Música</string>
     <string name="widget_name_favorites">Preferits</string>
     <string name="widget_name_notes">Nota</string>
     <string name="widget_name_unknown">Desconegut</string>
