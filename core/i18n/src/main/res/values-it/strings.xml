@@ -212,7 +212,7 @@
     <string name="menu_edit_widgets">Modifica widget</string>
     <string name="widget_name_weather">Meteo</string>
     <string name="widget_name_calendar">Calendario</string>
-    <string name="widget_name_music">Musica</string>
+    <string name="widget_name_music">Multimedia</string>
     <string name="widget_name_favorites">Preferiti</string>
     <string name="widget_name_notes">Nota</string>
     <string name="widget_name_unknown">Sconosciuto</string>
