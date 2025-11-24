@@ -157,7 +157,7 @@
     <string name="weather_condition_heavyrainandthunder">Fuertes lluvias y truenos</string>
     <string name="weather_condition_wind">Viento</string>
     <string name="menu_share_apk_file">Archivo APK</string>
-    <string name="menu_app_info">Información de la App</string>
+    <string name="menu_app_info">Información de la app</string>
     <string name="menu_favorites_pin">Anclar a favoritos</string>
     <string name="menu_favorites_unpin">Desanclar</string>
     <string name="file_meta_app_min_sdk">Versión mínima del SDK: %1$s</string>
@@ -877,4 +877,8 @@
     <string name="preference_shapes_default">Predeterminado</string>
     <string name="preference_search_apps">Aplicaciones</string>
     <string name="preference_search_apps_summary">Mostrar todas las aplicaciones cuando el campo de búsqueda esté vacío</string>
+    <string name="preference_screen_locale">Idioma y región</string>
+    <string name="preference_screen_locale_summary">Idioma, unidades y formato de hora</string>
+    <string name="preference_language">Idioma</string>
+    <string name="preference_value_system_default">Predeterminado del sistema</string>
 </resources>

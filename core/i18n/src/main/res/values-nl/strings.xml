@@ -866,4 +866,8 @@
     <string name="preference_clockwidget_dock_rows">Rijen in dock</string>
     <string name="preference_search_apps_summary">Alle apps tonen als het zoekveld leeg is</string>
     <string name="preference_search_apps">Apps</string>
+    <string name="preference_screen_locale">Taal en regio</string>
+    <string name="preference_screen_locale_summary">Taal, eenheden, tijdformaat</string>
+    <string name="preference_language">Taal</string>
+    <string name="preference_value_system_default">Systeemstandaard</string>
 </resources>

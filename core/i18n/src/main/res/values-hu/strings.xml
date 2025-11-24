@@ -170,7 +170,7 @@
     <string name="weather_widget_set_location">Hely kiválasztása</string>
     <string name="weather_location_search_no_result">A hely nem található</string>
     <string name="missing_permission_appshortcuts_search">Állítsa be a(z) %1$s alkalmazást alapértelmezett indítóként a telepített alkalmazások kereséséhez.</string>
-    <string name="preference_colors_default">Alapértelmezett</string>
+    <string name="preference_colors_default">Alapértelmezés</string>
     <string name="preference_force_themed_icons">Ikonok kényszerítése a témához</string>
     <string name="missing_permission_music_widget">A médialejátszás vezérléséhez értesítési hozzáférés szükséges</string>
     <string name="missing_permission_calendar_search">A naptárban való kereséshez naptárengedély szükséges</string>
@@ -443,7 +443,7 @@
     <string name="widget_config_calendar_no_calendars">Nem található naptár</string>
     <string name="widget_config_music_integration_settings">Médiavezérlő-integráció beállításai</string>
     <string name="note_widget_link_file">Hivatkozás a fájlra</string>
-    <string name="theme_color_scheme_system_default">Rendszer alapértelmezett használata</string>
+    <string name="theme_color_scheme_system_default">Rendszer alapértelmezésének használata</string>
     <string name="theme_color_scheme_autogenerate">Az elsődleges színből</string>
     <string name="shortcut_unavailable_description">Ez a parancsikon nem érhető el, mert a(z) %1$s nem az alapértelmezett indító</string>
     <string name="restore_different_minor_version">Ez a biztonsági mentés a(z) %1$s egy másik verziójával készült. Előfordulhat, hogy egyes adatok nem lesznek helyesen visszaállítva.</string>
@@ -476,7 +476,7 @@
     <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>
     <string name="preference_category_grid">Rács</string>
     <string name="preference_screen_clockwidget">Óra</string>
-    <string name="preference_clockwidget_layout_vertical">Alapértelmezett</string>
+    <string name="preference_clockwidget_layout_vertical">Alapértelmezés</string>
     <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
     <string name="preference_clock_widget_fill_height">Képernyő magasságának kitöltése</string>
     <string name="preference_clock_widget_alignment">Igazítás</string>
@@ -528,7 +528,7 @@
     <string name="restore_invalid_file">A kiválasztott fájl nem tűnik biztonsági mentésnek. Biztosan a megfelelő fájlt választotta ki?</string>
     <string name="restore_incompatible_file">Ez a biztonsági mentés a(z) %1$s egy másik verziójával készült, és ezzel a verzióval nem állítható vissza.</string>
     <string name="restore_complete">A biztonsági mentés visszaállítása megtörtént.</string>
-    <string name="icon_picker_default_icon">Alapértelmezett</string>
+    <string name="icon_picker_default_icon">Alapértelmezés</string>
     <string name="icon_picker_suggestions">Javaslatok</string>
     <string name="favorites">Kedvencek</string>
     <string name="search_action_call">Hívás</string>
@@ -545,7 +545,7 @@
     <string name="confirmation_delete_color_scheme">Biztosan törölni szeretné a(z) %1$s nevű színösszeállítást?</string>
     <string name="theme_color_scheme_custom_color">Egyéni</string>
     <string name="theme_color_scheme_palette_color">Paletta</string>
-    <string name="preference_restore_default">Alapértelmezett visszaállítása</string>
+    <string name="preference_restore_default">Alapértelmezés visszaállítása</string>
     <string name="import_theme_apply">Téma alkalmazása</string>
     <string name="shortcut_label_unavailable">Nem érhető el</string>
     <string name="tag_exists_error">Egy ilyen nevű címke már létezik</string>
@@ -828,7 +828,7 @@
     <string name="bad_configuration_title">Gratulálunk, kizárta saját magát!</string>
     <string name="bad_configuration_summary">Felfedezte a beállítások olyan kombinációját, amely a keresést és a beállításokat is elérhetetlenné teszi — gyakorlatilag kizárja Önt az indítóból</string>
     <string name="preference_screen_shapes">Alakzatok</string>
-    <string name="preference_shapes_default">Alapértelmezett</string>
+    <string name="preference_shapes_default">Alapértelmezés</string>
     <string name="preference_shapes_extra_round">Nagyon lekerekített</string>
     <string name="preference_shapes_rect">Négyszögletes</string>
     <string name="preference_shapes_base">Alap alakzat</string>
@@ -842,7 +842,7 @@
     <string name="theme_import_title">Téma importálása</string>
     <string name="import_theme_contents">Tartalom</string>
     <string name="preference_colors_high_contrast">Nagy kontraszt</string>
-    <string name="preference_transparencies_default">Alapértelmezett</string>
+    <string name="preference_transparencies_default">Alapértelmezés</string>
     <string name="preference_screen_transparencies">Átlátszóság</string>
     <string name="preference_transparencies_semi_transparent">Félig átlátszó</string>
     <string name="confirmation_delete_transparencies_scheme">Valóban törölni akarja a(z) %1$s átlátszósági sémát?</string>
@@ -866,4 +866,8 @@
     <string name="preference_clockwidget_dock_rows">Dokksorok</string>
     <string name="preference_search_apps">Alkalmazások</string>
     <string name="preference_search_apps_summary">Összes alkalmazás megjelenítése, ha a keresőmező üres</string>
+    <string name="preference_screen_locale">Nyelv és régió</string>
+    <string name="preference_screen_locale_summary">Nyelv, mértékegységek, időformátum</string>
+    <string name="preference_language">Nyelv</string>
+    <string name="preference_value_system_default">Rendszer alapértelmezése</string>
 </resources>
