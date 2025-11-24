@@ -10,6 +10,7 @@
         <item quantity="one">fot</item>
         <item quantity="other">fot</item>
     </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">nautisk mil</item>
         <item quantity="other">nautiska mil</item>
@@ -31,14 +32,17 @@
         <item quantity="one">kvadratmillimeter</item>
         <item quantity="other">kvadratmillimeter</item>
     </plurals>
+    <string name="unit_sqinch_symbol">sqin</string>
     <plurals name="unit_sqinch">
         <item quantity="one">kvadrattum</item>
         <item quantity="other">kvadrattum</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">sqft</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">kvadratfot</item>
         <item quantity="other">kvadratfot</item>
     </plurals>
+    <string name="unit_sqyard_symbol">sqyd</string>
     <plurals name="unit_sqyard">
         <item quantity="one">kvadratyard</item>
         <item quantity="other">kvadratyards</item>
@@ -73,6 +77,10 @@
         <item quantity="other">år</item>
     </plurals>
     <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebiyte</item>
+        <item quantity="other">tebiytes</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
         <item quantity="one">meter per sekund</item>
@@ -91,6 +99,11 @@
         <item quantity="one">ton</item>
         <item quantity="other">ton</item>
     </plurals>
+    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_short_ton_symbol">tn.sh.</string>
     <!-- UNITS OF TEMPERATURE -->
     <plurals name="unit_degree_celsius">
         <item quantity="one">grad celsius</item>
