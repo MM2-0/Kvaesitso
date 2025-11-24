@@ -66,6 +66,7 @@
         <item quantity="many">mil</item>
         <item quantity="other">mil</item>
     </plurals>
+    <string name="unit_nautic_mile_symbol">Mm</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">mila morska</item>
         <item quantity="few">mile morskie</item>
@@ -99,18 +100,21 @@
         <item quantity="many">milimetrów kwadratowych</item>
         <item quantity="other">milimetrów kwadratowych</item>
     </plurals>
+    <string name="unit_sqinch_symbol">in²</string>
     <plurals name="unit_sqinch">
         <item quantity="one">cal kwadratowy</item>
         <item quantity="few">cale kwadratowe</item>
         <item quantity="many">cali kwadratowych</item>
         <item quantity="other">cali kwadratowych</item>
     </plurals>
+    <string name="unit_sqfoot_symbol">ft²</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">stopa kwadratowa</item>
         <item quantity="few">stopy kwadratowe</item>
         <item quantity="many">stóp kwadratowych</item>
         <item quantity="other">stóp kwadratowych</item>
     </plurals>
+    <string name="unit_sqyard_symbol">yd²</string>
     <plurals name="unit_sqyard">
         <item quantity="one">jard kwadratowy</item>
         <item quantity="few">jardy kwadratowe</item>
@@ -216,6 +220,12 @@
         <item quantity="many">gibibajtów</item>
         <item quantity="other">gibibajtów</item>
     </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebibajt</item>
+        <item quantity="few">tebibajty</item>
+        <item quantity="many">tebibajtów</item>
+        <item quantity="other">tebibajtów</item>
+    </plurals>
     <string name="unit_kilobit_symbol">kbity</string>
     <string name="unit_megabit_symbol">Mbity</string>
     <string name="unit_gigabit_symbol">Gbity</string>
@@ -253,30 +263,35 @@
         <item quantity="many">ton</item>
         <item quantity="other">ton</item>
     </plurals>
+    <string name="unit_long_ton_symbol">tn.l.</string>
     <plurals name="unit_long_ton">
         <item quantity="one">długa tona</item>
         <item quantity="few">długie tony</item>
         <item quantity="many">długich ton</item>
         <item quantity="other">długich ton</item>
     </plurals>
+    <string name="unit_stone_symbol">st.</string>
     <plurals name="unit_stone">
         <item quantity="one">kamień</item>
         <item quantity="few">kamienie</item>
         <item quantity="many">kamieni</item>
         <item quantity="other">kamieni</item>
     </plurals>
+    <string name="unit_pound_symbol">lb.</string>
     <plurals name="unit_pound">
         <item quantity="one">funt</item>
         <item quantity="few">funty</item>
         <item quantity="many">funtów</item>
         <item quantity="other">funtów</item>
     </plurals>
+    <string name="unit_ounce_symbol">oz.</string>
     <plurals name="unit_ounce">
         <item quantity="one">uncja</item>
         <item quantity="few">uncje</item>
         <item quantity="many">uncji</item>
         <item quantity="other">uncji</item>
     </plurals>
+    <string name="unit_short_ton_symbol">tn.sh.</string>
     <plurals name="unit_short_ton">
         <item quantity="one">krótka tona</item>
         <item quantity="few">krótkie tony</item>
