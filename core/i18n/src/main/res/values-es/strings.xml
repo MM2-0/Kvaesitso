@@ -23,7 +23,7 @@
     <string name="menu_favorites_pin">Anclar a favoritos</string>
     <string name="menu_favorites_unpin">Desanclar</string>
     <string name="menu_back">Volver</string>
-    <string name="menu_app_info">Información de la App</string>
+    <string name="menu_app_info">Información de la app</string>
     <!-- Launch an app -->
     <string name="menu_launch">Iniciar</string>
     <string name="menu_customize">Personalizar</string>
@@ -1024,4 +1024,8 @@
     <string name="font_name_device_headline">Fuente predeterminada para títulos</string>
     <string name="font_name_device_body">Fuente de texto del dispositivo</string>
     <string name="font_category_generic">Génerico</string>
+    <string name="preference_screen_locale">Idioma y región</string>
+    <string name="preference_screen_locale_summary">Idioma, unidades y formato de hora</string>
+    <string name="preference_language">Idioma</string>
+    <string name="preference_value_system_default">Predeterminado del sistema</string>
 </resources>
