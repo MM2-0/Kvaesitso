@@ -1069,4 +1069,8 @@
     <string name="font_name_device_headline">גופן ברירת המחדל של הכותרות</string>
     <string name="font_name_device_body">גופן המלל של המכשיר</string>
     <string name="font_category_generic">כללי</string>
+    <string name="preference_screen_locale">שפה ואיזור</string>
+    <string name="preference_screen_locale_summary">שפה, יחידות-מידה, תבנית הזמן</string>
+    <string name="preference_language">שפה</string>
+    <string name="preference_value_system_default">ברירת-המחדל של המערכת</string>
 </resources>
