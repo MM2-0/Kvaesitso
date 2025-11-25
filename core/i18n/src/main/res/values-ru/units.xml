@@ -78,7 +78,7 @@
         <item quantity="many">миль</item>
         <item quantity="other">миль</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">мор. м.</string>
+    <string name="unit_nautic_mile_symbol">M</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">морская миля</item>
         <item quantity="few">морских мили</item>
@@ -204,92 +204,92 @@
     <plurals name="unit_kilobyte">
         <item quantity="one">килобайт</item>
         <item quantity="few">килобайта</item>
-        <item quantity="many">килобайт</item>
-        <item quantity="other">килобайт</item>
+        <item quantity="many">килобайтов</item>
+        <item quantity="other">килобайтов</item>
     </plurals>
     <string name="unit_megabyte_symbol">Мбайт</string>
     <plurals name="unit_megabyte">
         <item quantity="one">мегабайт</item>
         <item quantity="few">мегабайта</item>
-        <item quantity="many">мегабайт</item>
-        <item quantity="other">мегабайт</item>
+        <item quantity="many">мегабайтов</item>
+        <item quantity="other">мегабайтов</item>
     </plurals>
     <string name="unit_gigabyte_symbol">Гбайт</string>
     <plurals name="unit_gigabyte">
         <item quantity="one">гигабайт</item>
         <item quantity="few">гигабайта</item>
-        <item quantity="many">гигабайт</item>
-        <item quantity="other">гигабайт</item>
+        <item quantity="many">гигабайтов</item>
+        <item quantity="other">гигабайтов</item>
     </plurals>
     <string name="unit_terabyte_symbol">Тбайт</string>
     <plurals name="unit_terabyte">
         <item quantity="one">терабайт</item>
         <item quantity="few">терабайта</item>
-        <item quantity="many">терабайт</item>
-        <item quantity="other">терабайт</item>
+        <item quantity="many">терабайтов</item>
+        <item quantity="other">терабайтов</item>
     </plurals>
     <string name="unit_kibibyte_symbol">КиБ</string>
     <plurals name="unit_kibibyte">
         <item quantity="one">кибибайт</item>
         <item quantity="few">кибибайта</item>
-        <item quantity="many">кибибайт</item>
-        <item quantity="other">кибибайт</item>
+        <item quantity="many">кибибайтов</item>
+        <item quantity="other">кибибайтов</item>
     </plurals>
     <string name="unit_mebibyte_symbol">МиБ</string>
     <plurals name="unit_mebibyte">
         <item quantity="one">мебибайт</item>
         <item quantity="few">мебибайта</item>
-        <item quantity="many">мебибайт</item>
-        <item quantity="other">мебибайт</item>
+        <item quantity="many">мебибайтов</item>
+        <item quantity="other">мебибайтов</item>
     </plurals>
     <string name="unit_gibibyte_symbol">ГиБ</string>
     <plurals name="unit_gibibyte">
         <item quantity="one">гибибайт</item>
         <item quantity="few">гибибайта</item>
-        <item quantity="many">гибибайт</item>
-        <item quantity="other">гибибайт</item>
+        <item quantity="many">гибибайтов</item>
+        <item quantity="other">гибибайтов</item>
     </plurals>
     <string name="unit_tebibyte_symbol">ТиБ</string>
     <plurals name="unit_tebibyte">
         <item quantity="one">тебибайт</item>
         <item quantity="few">тебибайта</item>
-        <item quantity="many">тебибайт</item>
-        <item quantity="other">тебибайт</item>
+        <item quantity="many">тебибайтов</item>
+        <item quantity="other">тебибайтов</item>
     </plurals>
     <string name="unit_bit_symbol">бит</string>
     <plurals name="unit_bit">
         <item quantity="one">бит</item>
         <item quantity="few">бита</item>
-        <item quantity="many">бит</item>
-        <item quantity="other">бит</item>
+        <item quantity="many">битов</item>
+        <item quantity="other">битов</item>
     </plurals>
     <string name="unit_kilobit_symbol">кбит</string>
     <plurals name="unit_kilobit">
         <item quantity="one">килобит</item>
         <item quantity="few">килобита</item>
-        <item quantity="many">килобит</item>
-        <item quantity="other">килобит</item>
+        <item quantity="many">килобитов</item>
+        <item quantity="other">килобитов</item>
     </plurals>
     <string name="unit_megabit_symbol">Мбит</string>
     <plurals name="unit_megabit">
         <item quantity="one">мегабит</item>
         <item quantity="few">мегабита</item>
-        <item quantity="many">мегабит</item>
-        <item quantity="other">мегабит</item>
+        <item quantity="many">мегабитов</item>
+        <item quantity="other">мегабитов</item>
     </plurals>
     <string name="unit_gigabit_symbol">Гбит</string>
     <plurals name="unit_gigabit">
         <item quantity="one">гигабит</item>
         <item quantity="few">гигабита</item>
-        <item quantity="many">гигабит</item>
-        <item quantity="other">гигабит</item>
+        <item quantity="many">гигабитов</item>
+        <item quantity="other">гигабитов</item>
     </plurals>
     <string name="unit_terabit_symbol">Тбит</string>
     <plurals name="unit_terabit">
         <item quantity="one">терабит</item>
         <item quantity="few">терабита</item>
-        <item quantity="many">терабит</item>
-        <item quantity="other">терабит</item>
+        <item quantity="many">терабитов</item>
+        <item quantity="other">терабитов</item>
     </plurals>
     <!-- UNITS OF VELOCITY -->
     <string name="unit_meter_per_second_symbol">м/с</string>
@@ -349,7 +349,7 @@
         <item quantity="many">длинных тонн</item>
         <item quantity="other">длинных тонн</item>
     </plurals>
-    <string name="unit_stone_symbol">ст.</string>
+    <string name="unit_stone_symbol">ст</string>
     <plurals name="unit_stone">
         <item quantity="one">стоун</item>
         <item quantity="few">стоуна</item>
@@ -363,14 +363,14 @@
         <item quantity="many">фунтов</item>
         <item quantity="other">фунтов</item>
     </plurals>
-    <string name="unit_ounce_symbol">ун.</string>
+    <string name="unit_ounce_symbol">унц.</string>
     <plurals name="unit_ounce">
         <item quantity="one">унция</item>
         <item quantity="few">унции</item>
         <item quantity="many">унций</item>
         <item quantity="other">унций</item>
     </plurals>
-    <string name="unit_short_ton_symbol">кор. т.</string>
+    <string name="unit_short_ton_symbol">кор. т</string>
     <plurals name="unit_short_ton">
         <item quantity="one">короткая тонна</item>
         <item quantity="few">коротких тонны</item>
@@ -400,4 +400,81 @@
         <item quantity="other">кельвинов</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
+    <string name="unit_liter_symbol">л</string>
+    <plurals name="unit_liter">
+        <item quantity="one">литр</item>
+        <item quantity="few">литра</item>
+        <item quantity="many">литров</item>
+        <item quantity="other">литров</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">мл</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">миллилитр</item>
+        <item quantity="few">миллилитра</item>
+        <item quantity="many">миллилитров</item>
+        <item quantity="other">миллилитров</item>
+    </plurals>
+    <string name="unit_cubic_meter_symbol">м³</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">кубический метр</item>
+        <item quantity="few">кубических метра</item>
+        <item quantity="many">кубических метров</item>
+        <item quantity="other">кубических метров</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">см³</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">кубический сантиметр</item>
+        <item quantity="few">кубических сантиметра</item>
+        <item quantity="many">кубических сантиметров</item>
+        <item quantity="other">кубических сантиметров</item>
+    </plurals>
+    <string name="unit_cubic_millimeter_symbol">мм³</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">кубический миллиметр</item>
+        <item quantity="few">кубических миллиметра</item>
+        <item quantity="many">кубических миллиметров</item>
+        <item quantity="other">кубических миллиметров</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">куб. дюйм</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">кубический дюйм</item>
+        <item quantity="few">кубических дюйма</item>
+        <item quantity="many">кубических дюймов</item>
+        <item quantity="other">кубических дюймов</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">куб. фут</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">кубический фут</item>
+        <item quantity="few">кубических фута</item>
+        <item quantity="many">кубических футов</item>
+        <item quantity="other">кубических футов</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">куб. ярд</string>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">кубический ярд</item>
+        <item quantity="few">кубических ярда</item>
+        <item quantity="many">кубических ярдов</item>
+        <item quantity="other">кубических ярдов</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">галл. США</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">галлон (США)</item>
+        <item quantity="few">галлона (США)</item>
+        <item quantity="many">галлонов (США)</item>
+        <item quantity="other">галлонов (США)</item>
+    </plurals>
+    <string name="unit_gallon_imp_symbol">галл имп</string>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">столовая ложка (США)</item>
+        <item quantity="few">столовых ложки (США)</item>
+        <item quantity="many">столовых ложек (США)</item>
+        <item quantity="other">столовых ложек (США)</item>
+    </plurals>
+    <string name="unit_teaspoon_symbol">ст. лож. США</string>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">чайная ложка (США)</item>
+        <item quantity="few">чайных ложки (США)</item>
+        <item quantity="many">чайных ложек (США)</item>
+        <item quantity="other">чайных ложек (США)</item>
+    </plurals>
 </resources>
