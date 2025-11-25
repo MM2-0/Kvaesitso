@@ -217,21 +217,21 @@
     <string name="menu_edit_widgets">Редактировать виджеты</string>
     <string name="widget_name_weather">Погода</string>
     <string name="widget_name_calendar">Календарь</string>
-    <string name="widget_name_music">Музыка</string>
+    <string name="widget_name_music">Медиа</string>
     <string name="widget_name_favorites">Избранные</string>
     <string name="widget_name_notes">Заметки</string>
-    <string name="widget_name_unknown">Неизвестный виджет</string>
+    <string name="widget_name_unknown">Неизвестный</string>
     <string name="widget_add_widget">Добавить виджет</string>
     <string name="widget_removed">Виджет удален</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Написать заметку…</string>
+    <string name="notes_widget_placeholder">Написать заметку</string>
     <string name="notes_widget_action_new">Новая заметка</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Сохранить</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Заметка_%1$s</string>
     <string name="notes_widget_action_dismiss">Отменить</string>
-    <string name="notes_widget_dismissed">Заметка удалена.</string>
+    <string name="notes_widget_dismissed">Заметка удалена</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">От %1$s</string>
     <!-- Close a dialog -->
@@ -256,7 +256,7 @@
     <string name="edit_favorites_dialog_empty_section">Перетаскивайте значки сюда</string>
     <string name="edit_favorites_dialog_tags">Теги</string>
     <string name="edit_favorites_dialog_tag_section_empty">Закреплённые теги появятся здесь</string>
-    <string name="edit_favorites_dialog_new_tag">Создать тег…</string>
+    <string name="edit_favorites_dialog_new_tag">Создать тег</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Адрес сервера Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -314,13 +314,14 @@
         <item quantity="other">+%1$d незавершённых задач</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">весь день</string>
+    <string name="calendar_event_allday">Весь день</string>
     <string name="task_due_time">Выполнить до %1$s</string>
     <string name="task_due_date">Выполнить до %1$s</string>
     <string name="task_due_today">Выполнить до конца сегодняшнего дня</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s проигрывает медиа</string>
     <string name="music_widget_no_data">Пока что медиа не включались</string>
+    <string name="music_widget_interactive_progress_bar">Интерактивная полоса прогресса</string>
     <string name="weather_condition_sleetshowers">Ливневый дождь со снегом</string>
     <string name="weather_condition_heavysleet">Сильный дождь со снегом</string>
     <string name="weather_condition_lightrainshowersandthunder">Слабый ливень с громом</string>
@@ -371,11 +372,11 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Нет данных о погоде.</string>
+    <string name="weather_no_data">Нет данных о погоде</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Установить местоположение</string>
-    <string name="weather_location_search_no_result">Местоположение не найдено.</string>
+    <string name="weather_location_search_no_result">Местоположение не найдено</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Доступ к местоположению требуется для его автоматического определения</string>
     <!-- Missing notification permission in music widget settings -->
@@ -386,7 +387,7 @@
     <string name="missing_permission_call_contacts_settings">Для начала звонков необходимо разрешение на вызов</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Для поиска в календаре требуется соответствующее разрешение</string>
-    <string name="missing_permission_tasks_search_settings">Для поиска в задачах требуется соответствующее разрешение</string>
+    <string name="missing_permission_tasks_search_settings">Для поиска в задачах приложения Tasks требуется соответствующее разрешение</string>
     <string name="missing_permission_tasks_integration">Для использования интеграции с задачами требуется соответствующее разрешение</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Этому виджету требуется доступ к календарю</string>
@@ -402,15 +403,15 @@
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Для отображения значков-оповещений требуется доступ к уведомлениям</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Предоставьте разрешение на доступ к календарю для отображения предстоящих встреч и событий.</string>
+    <string name="missing_permission_calendar_widget">Для отображения предстоящих встреч и событий требуется разрешение на доступ к календарю</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Предоставьте разрешение на доступ к календарю для поиска по нему.</string>
+    <string name="missing_permission_calendar_search">Поиска по календарю требуется разрешение на доступ к нему</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Предоставьте разрешение на доступ к местоположению для поиска мест поблизости.</string>
+    <string name="missing_permission_location_search">Для поиска мест поблизости требуется разрешение на доступ к местоположению</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Предоставьте разрешение на доступ к хранилищу для поиска фотографий, медиафайлов и документов на этом устройстве.</string>
+    <string name="missing_permission_files_search">Для поиска фотографий, медиафайлов и документов на этом устройстве требуется разрешение на доступ к хранилищу</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Предоставьте разрешение на доступ к контактной книге для поиска по ней.</string>
+    <string name="missing_permission_contact_search">Для поиска по контактной книге требуется разрешение на доступ к ней</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Установите %1$s главным экраном по умолчанию для поиска ярлыков приложений.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -430,7 +431,11 @@
     <string name="preference_mdy_color_source">Источник динамических цветов</string>
     <string name="preference_mdy_color_source_system">Система</string>
     <string name="preference_mdy_color_source_wallpaper">Обои</string>
+    <string name="preference_screen_shapes">Форма</string>
     <string name="preference_shapes_default">По умолчанию</string>
+    <string name="preference_shapes_extra_round">Особенно скруглённая</string>
+    <string name="preference_shapes_rect">Квадратная</string>
+    <string name="preference_shapes_base">Базовая форма</string>
     <string name="preference_screen_typography">Типографика</string>
     <string name="preference_screen_transparencies">Прозрачный</string>
     <string name="preference_transparencies_default">По умолчанию</string>
@@ -449,7 +454,7 @@
     <string name="provider_brightsky">Deutscher Wetterdienst (только Германия)</string>
     <string name="preference_category_location">Местоположение</string>
     <string name="preference_automatic_location">Автоматическое определение местоположения</string>
-    <string name="preference_automatic_location_summary">Использовать GPS и геолокационные службы для автоматического определения местоположения</string>
+    <string name="preference_automatic_location_summary">Использовать геолокационные службы для автоматического определения местоположения</string>
     <string name="preference_location_managed">Управляется плагином</string>
     <string name="preference_location_managed_summary">Местоположение этого провайдера управляется приложением плагина</string>
     <string name="preference_location">Местоположение</string>
@@ -467,10 +472,10 @@
     <string name="preference_debug_reinstall_iconpacks">Переустановить набор иконок</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Очистить и пересобрать кэш наборов иконок</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">Была удалена %1$d запись.</item>
-        <item quantity="few">Было удалено %1$d записи.</item>
-        <item quantity="many">Было удалено %1$d записей.</item>
-        <item quantity="other">Было удалено %1$d записей.</item>
+        <item quantity="one">Была удалена %1$d запись</item>
+        <item quantity="few">Было удалено %1$d записи</item>
+        <item quantity="many">Было удалено %1$d записей</item>
+        <item quantity="other">Было удалено %1$d записей</item>
     </plurals>
     <string name="preference_category_icons">Иконки</string>
     <string name="preference_cards">Карточки</string>
@@ -568,6 +573,7 @@
     <string name="preference_clockwidget_layout_vertical">Стандартный</string>
     <string name="preference_clockwidget_layout_horizontal">Компактный</string>
     <string name="preference_clock_widget_show_seconds">Показать секунды</string>
+    <string name="preference_clock_widget_monospaced">Моноширинные цифры</string>
     <string name="preference_clock_widget_time_format">Формат времени</string>
     <string name="preference_clock_widget_time_format_24h">24-часовой</string>
     <string name="preference_clock_widget_time_format_12h">12-часовой</string>
@@ -603,6 +609,7 @@
     <string name="preference_search_favorites">Избранные</string>
     <string name="preference_search_favorites_summary">Отображать закрепленные и часто используемые над списком приложений</string>
     <string name="preference_search_apps">Приложения</string>
+    <string name="preference_search_apps_summary">Показывать все приложения, когда строка поиска пуста</string>
     <string name="preference_search_files">Файлы</string>
     <string name="preference_search_files_summary">Поиск локальных и облачных файлов</string>
     <string name="preference_search_contacts">Контакты</string>
