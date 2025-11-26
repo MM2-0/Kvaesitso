@@ -1053,4 +1053,8 @@
     <string name="font_name_device_headline">Výchozí písmo nadpisu</string>
     <string name="font_name_device_body">Písmo textu zařízení</string>
     <string name="font_category_generic">Obecné</string>
+    <string name="preference_screen_locale">Jazyk a oblast</string>
+    <string name="preference_screen_locale_summary">Jazyk, jednotky, formát čaasu</string>
+    <string name="preference_language">Jazyk</string>
+    <string name="preference_value_system_default">Podle systému</string>
 </resources>
