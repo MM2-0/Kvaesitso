@@ -520,7 +520,7 @@ fun WeatherDaySelector(
     onDaySelected: (Int) -> Unit,
     imperialUnits: Boolean
 ) {
-    val dateFormat = SimpleDateFormat("EEE")
+    val dateFormat = SimpleDateFormat("EEE, d")
 
     val listState = rememberLazyListState()
     LazyRow(
@@ -561,7 +561,7 @@ fun WeatherDaySelector(
                     WeatherIcon(icon = weatherIconById(day.icon))
                     Text(
                         modifier = Modifier.padding(start = 8.dp),
-                        text = "${dateFormat.format(day.timestamp)} " +
+                        text = "${dateFormat.format(day.timestamp)} - " +
                                 "${convertTemperature(imperialUnits, day.minTemp)}° / " +
                                 "${convertTemperature(imperialUnits, day.maxTemp)}°",
                         softWrap = false,
