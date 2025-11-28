@@ -1,0 +1,81 @@
+name: Bug report
+description: Create a report to help us address issues you are facing
+title: "[Bug] "
+labels: [Bug]
+body:
+  - type: checkboxes
+    id: duplication
+    attributes:
+      label: ⠀
+      options:
+        - label: This issue is not duplicated with any other open or closed issues
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to make us better!
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is
+      placeholder: |
+        What component or feature is affected
+        Any visible symptoms
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen
+      placeholder: |
+        The correct or intended result
+        Any visual or functional expectations
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Steps to reproduce the bug
+      placeholder: |
+        Step-by-step instructions (numbered list preferred)
+        Any specific settings, gestures, or launcher configurations needed
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Device information
+      description: Provide details about your system environment
+      placeholder: |
+        Device model, system version, Kvaesitso version
+        Any abnormal environments
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem
+      placeholder: |
+        Screenshots or recordings
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here
+      placeholder: |
+        Crash report, logs
+    validations:
+      required: false
