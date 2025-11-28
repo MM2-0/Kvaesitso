@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="hi-rIN">
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <!-- Name of the app -->
+    <!-- Share something. Can be anything, an app, a website, a file, … -->
+    <!-- Shown in the app detail share menu if the application was installed from an app store
+     %1$s is the name of the app store (e.g. Google Play)-->
+    <!-- Share an APK file, shown in the app detail share menu -->
+    <!-- Uninstall an application -->
+    <!-- Launch an app -->
+    <!-- Open a file in the corresponding app -->
+    <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
+    <!-- Delete something (a file or a web search shortcut) -->
+    <!-- Open a contact in the contacts app -->
+    <!-- Open an event in the calendar app -->
+    <!-- Shown in the search bar when the search text field is empty -->
+    <!-- App version, used in application details %1$s is the version -->
+    <!-- Menu entry for launcher settings -->
+    <!-- Menu entry for launcher help -->
+    <!-- Set the device's wallpaper -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- Wind direction, used in weather widget -->
+    <!-- No rain or snow, used in weather widget -->
+    <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
+     This should point to the Wikipedia in the given language. If no such Wikipedia exists,
+      a fallback that is suited best for most users of this language should be used
+      (English in most cases) -->
+    <!-- Shown in Wikipedia results to indicate where they come from -->
+    <!-- File metadata, title of audio tracks -->
+    <!-- File metadata, artist of audio tracks -->
+    <!-- File metadata, album of audio tracks -->
+    <!-- File metadata, duration of audio tracks -->
+    <!-- File metadata, year of audio tracks -->
+    <!-- File size -->
+    <!-- File path -->
+    <!-- File type (MIME type) -->
+    <!-- File metadata, image/video dimensions -->
+    <!-- File metadata, app name of APK files -->
+    <!-- File metadata, version name of APK files -->
+    <!-- File metadata, package name of APK files -->
+    <!-- File metadata, minimum SDK version of APK files -->
+    <!-- File metadata, owner (for cloud files) -->
+    <!-- File metadata, location -->
+    <!-- Archive file  -->
+    <!-- Android package file  -->
+    <!-- Source code file -->
+    <!-- Document -->
+    <!-- Spreadsheet -->
+    <!-- Audio file -->
+    <!-- Video file -->
+    <!-- Image file -->
+    <!-- Generic file without file extension -->
+    <!-- Presentation -->
+    <!-- Compressed file -->
+    <!-- Plain text file -->
+    <!-- E-book file -->
+    <!-- Drawing file -->
+    <!-- Form file -->
+    <!-- Launcher backup, %1$s: app name -->
+    <!-- Launcher theme, %1$s: app name -->
+    <!-- Generic file , %1$s is the file extension -->
+    <!-- Warning message that is shown when a user attempts to delete a directory -->
+    <!-- Warning message that is shown when a user attempts to delete a file -->
+    <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
+    <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
+    could not be opened because there was no app installed that could handle the request  -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the first one. Must be in sync with [default_websearch_1_url].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the first one. Must be in sync with [default_websearch_1_name].
+        Usually Google, but can be substituted with something else if Google is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the second one. Must be in sync with [default_websearch_2_url].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the second one. Must be in sync with [default_websearch_2_name].
+        Usually YouTube, but can be substituted with something else if YouTube is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the name of the third one. Must be in sync with [default_websearch_3_url].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <!--
+        When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
+        This is the URL of the third one. Must be in sync with [default_websearch_3_name].
+        Usually Google Play, but can be substituted with something else if Google Play is not available in
+        the region of the language or not commonly used.
+       -->
+    <!-- Add a third party widget (=a standard Android app widget) -->
+    <!-- Save / export the current note content as markdown file -->
+    <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
+    <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
+    <!-- Close a dialog -->
+    <!-- Turn something off / disable a functionality of the launcher -->
+    <!-- Edit favorites, title for items that are frequently used but not pinned -->
+    <!-- Edit favorites, title for items that are pinned but have not been sorted by the user -->
+    <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
+    <!-- Nextcloud login flow, URL-->
+    <!-- Nextcloud/Owncloud login flow, empty URL-->
+    <!-- Nextcloud login flow, error invalid URL-->
+    <!-- Owncloud login flow, UR-->
+    <!-- Owncloud login flow, error invalid URL-->
+    <!-- Owncloud login flow, password-->
+    <!-- Owncloud login flow, user name-->
+    <!-- Owncloud login flow -->
+    <!-- Owncloud login flow, login failed -->
+    <!-- Owncloud login flow, error: username empty -->
+    <!-- Owncloud login flow, error: password empty -->
+    <!-- Nextcloud/Owncloud login flow, continue button -->
+    <!-- Nextcloud/Owncloud login flow, login button -->
+    <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
+    <!-- Used in calendar widget date selector. -->
+    <!-- Used in calendar widget date selector. -->
+    <!-- Headline used in calendar widget for pinned events -->
+    <!-- Headline used in calendar widget for the next event, if there is no event today -->
+    <!--
+        In the calendar widget, only events that start or end at the selected date are shown.
+        If an event runs for three days, it won't be listed if the second day is selected.
+        Instead, the following text will be shown, %1$d being the total number of
+        running events that neither started nor will end on the selected day.
+        -->
+    <!-- Calendar events that last the entire day -->
+    <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
+    <!-- Humidity details, %1$s: formatted humidity value -->
+    <!-- Wind details, %1$s: formatted wind values -->
+    <!-- Precipitation details, %1$s: formatted precipitation values -->
+    <!-- Manually set a location, used in weather widget location permission banner as an
+        alternative to granting the permission -->
+    <!-- Missing location permission in weather widget and weather widget settings settings -->
+    <!-- Missing notification permission in music widget settings -->
+    <!-- Missing contact permission in search settings screen -->
+    <!-- Missing call permission in contacts settings screen -->
+    <!-- Missing calendar permission in search settings screen -->
+    <!-- Missing calendar permission in calendar widget settings screen -->
+    <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
+    <!-- Missing file permission in search settings screen -->
+    <!-- Missing file permission in search settings screen.
+        Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
+        to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
+    <!-- Missing notification permission, used in badge settings screen -->
+    <!-- Missing calendar permission, used in calendar widget -->
+    <!-- Missing calendar permission, used in calendar search results -->
+    <!-- Missing location permission, used in location search results -->
+    <!-- Missing files permission, used in files search results -->
+    <!-- Missing files permission, used in contact search results -->
+    <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
+    <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
+    <!-- Grant a permission, shown in permission banners -->
+    <!-- Appearance preference title -->
+    <!-- Open website of an open source library -->
+    <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <!-- %1$s: app name (Kvaesitso) -->
+    <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
+    <!-- Used in an info banner if a specific feature requires an Owncloud account -->
+    <!-- Used in an info banner if a specific feature requires a Google account -->
+    <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
+    <!-- %1$s: app name -->
+    <!-- %1$s: app name -->
+    <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
+    <!-- %1$s: app name -->
+</resources>
