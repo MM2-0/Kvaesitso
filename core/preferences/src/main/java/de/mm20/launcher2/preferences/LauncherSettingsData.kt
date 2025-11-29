@@ -195,6 +195,7 @@ data class LauncherSettingsData internal constructor(
 
     @JsonNames("clockWidgetTimeFormat")
     val localeTimeFormat: TimeFormat = TimeFormat.System,
+    val localeMeasurementSystem: MeasurementSystem = MeasurementSystem.System,
 
 
     ) {
@@ -433,4 +434,13 @@ enum class TimeFormat {
     @SerialName("system") System,
     @SerialName("12h") TwelveHour,
     @SerialName("24h") TwentyFourHour
+}
+
+
+@Serializable
+enum class MeasurementSystem {
+    @SerialName("system") System,
+    @SerialName("metric") Metric,
+    @SerialName("uk") UnitedKingdom,
+    @SerialName("us") UnitedStates,
 }

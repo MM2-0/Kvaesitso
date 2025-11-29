@@ -70,6 +70,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.Banner
@@ -101,7 +102,7 @@ fun WeatherWidget(widget: WeatherWidget) {
 
     val selectedForecast by viewModel.currentForecast
 
-    val imperialUnits by viewModel.imperialUnits.collectAsState(false)
+    val measurementSystem by viewModel.measurementSystem.collectAsState()
     val compactMode = !widget.config.showForecast
 
     val isProviderAvailable by viewModel.isProviderAvailable.collectAsStateWithLifecycle(true)
@@ -169,7 +170,7 @@ fun WeatherWidget(widget: WeatherWidget) {
         }
 
 
-        CurrentWeather(forecast, imperialUnits)
+        CurrentWeather(forecast, measurementSystem)
 
         if (!compactMode) {
 
@@ -187,7 +188,7 @@ fun WeatherWidget(widget: WeatherWidget) {
                     WeatherTimeSelector(
                         forecasts = currentDayForecasts,
                         selectedForecast = forecast,
-                        imperialUnits = imperialUnits,
+                        measurementSystem = measurementSystem,
                         onTimeSelected = {
                             viewModel.selectForecast(it)
                         },
@@ -200,7 +201,7 @@ fun WeatherWidget(widget: WeatherWidget) {
                             onDaySelected = {
                                 viewModel.selectDay(it)
                             },
-                            imperialUnits = imperialUnits,
+                            measurementSystem = measurementSystem,
                         )
                     }
                 }
@@ -210,7 +211,7 @@ fun WeatherWidget(widget: WeatherWidget) {
 }
 
 @Composable
-fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
+fun CurrentWeather(forecast: Forecast, measurementSystem: MeasurementSystem) {
     val context = LocalContext.current
     val weatherApp = remember {
         context.packageManager.resolveActivity(
@@ -219,6 +220,12 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             }, 0
         )
     }
+
+    val useFahrenheit = measurementSystem == MeasurementSystem.UnitedStates
+    val useInches = measurementSystem == MeasurementSystem.UnitedStates
+    val useMph = measurementSystem == MeasurementSystem.UnitedStates || measurementSystem == MeasurementSystem.UnitedKingdom
+
+
     var bounds by remember { mutableStateOf(Rect.Zero) }
     val view = LocalView.current
     Column(
@@ -312,7 +319,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 Text(
                     modifier = Modifier.weight(1f),
                     text = convertTemperature(
-                        imperialUnits = imperialUnits,
+                        useFahrenheit = useFahrenheit,
                         temp = forecast.temperature
                     ).toString() + "°",
                     style = MaterialTheme.typography.headlineMedium,
@@ -389,7 +396,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                         Spacer(modifier = Modifier.padding(3.dp))
                         Text(
                             text = if (forecast.windSpeed != null) {
-                                formatWindSpeed(imperialUnits, forecast)
+                                formatWindSpeed(useMph, forecast)
                             } else {
                                 windDirectionAsWord(forecast.windDirection!!)
                             },
@@ -413,7 +420,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                         )
                         Spacer(modifier = Modifier.padding(3.dp))
                         Text(
-                            text = formatPrecipitation(imperialUnits, forecast),
+                            text = formatPrecipitation(useInches, forecast),
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
@@ -428,10 +435,12 @@ fun WeatherTimeSelector(
     modifier: Modifier = Modifier,
     forecasts: List<Forecast>,
     selectedForecast: Forecast,
-    imperialUnits: Boolean,
+    measurementSystem: MeasurementSystem,
     onTimeSelected: (Int) -> Unit
 ) {
     val dateFormat = remember { DateFormat.getTimeInstance(DateFormat.SHORT) }
+
+    val useFahrenheit = measurementSystem == MeasurementSystem.UnitedStates
 
     val listState = rememberLazyListState()
     LazyRow(
@@ -494,7 +503,7 @@ fun WeatherTimeSelector(
                         Text(
                             modifier = Modifier
                                 .alpha(alpha),
-                            text = "${convertTemperature(imperialUnits, fc.temperature)}°",
+                            text = "${convertTemperature(useFahrenheit, fc.temperature)}°",
                             softWrap = false,
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -518,9 +527,10 @@ fun WeatherDaySelector(
     days: List<DailyForecast>,
     selectedDay: DailyForecast,
     onDaySelected: (Int) -> Unit,
-    imperialUnits: Boolean
+    measurementSystem: MeasurementSystem
 ) {
     val dateFormat = SimpleDateFormat("EEE")
+    val useFahrenheit = measurementSystem == MeasurementSystem.UnitedStates
 
     val listState = rememberLazyListState()
     LazyRow(
@@ -562,8 +572,8 @@ fun WeatherDaySelector(
                     Text(
                         modifier = Modifier.padding(start = 8.dp),
                         text = "${dateFormat.format(day.timestamp)} " +
-                                "${convertTemperature(imperialUnits, day.minTemp)}° / " +
-                                "${convertTemperature(imperialUnits, day.maxTemp)}°",
+                                "${convertTemperature(useFahrenheit, day.minTemp)}° / " +
+                                "${convertTemperature(useFahrenheit, day.maxTemp)}°",
                         softWrap = false,
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -591,8 +601,8 @@ private fun formatTime(context: Context, timestamp: Long): String {
     return DateUtils.formatDateTime(context, timestamp, DateUtils.FORMAT_SHOW_TIME)
 }
 
-private fun convertTemperature(imperialUnits: Boolean, temp: Double): Int {
-    return (if (imperialUnits) temp * 9.0 / 5.0 - 459.67 else temp + -273.15).roundToInt()
+private fun convertTemperature(useFahrenheit: Boolean, temp: Double): Int {
+    return (if (useFahrenheit) temp * 9.0 / 5.0 - 459.67 else temp + -273.15).roundToInt()
 }
 
 @Composable
@@ -606,13 +616,13 @@ private fun formatWindSpeed(imperialUnits: Boolean, forecast: Forecast): String 
 }
 
 @Composable
-private fun formatPrecipitation(imperialUnits: Boolean, forecast: Forecast): String {
+private fun formatPrecipitation(useInches: Boolean, forecast: Forecast): String {
     if (forecast.precipProbability != null) {
         return "${forecast.precipProbability} %"
     }
-    val formatter = if (imperialUnits) DecimalFormat("#.##") else DecimalFormat("#.#")
+    val formatter = if (useInches) DecimalFormat("#.##") else DecimalFormat("#.#")
     val precipUnit =
-        if (imperialUnits) stringResource(id = R.string.unit_inch_symbol) else stringResource(id = R.string.unit_millimeter_symbol)
+        if (useInches) stringResource(id = R.string.unit_inch_symbol) else stringResource(id = R.string.unit_millimeter_symbol)
 
     return "${formatter.format(forecast.precipitation)} $precipUnit"
 }

@@ -2,11 +2,15 @@ package de.mm20.launcher2.ui.launcher.widgets.weather
 
 import android.content.Context
 import android.content.Intent
+import android.icu.util.LocaleData
+import android.icu.util.ULocale
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.weather.DailyForecast
@@ -112,8 +116,23 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
     val autoLocation = weatherSettings.autoLocation
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val imperialUnits = weatherSettings.imperialUnits
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val measurementSystem = weatherSettings.measurementSystem
+        .map { ms ->
+            if (ms == MeasurementSystem.System) {
+                return@map if (isAtLeastApiLevel(28)) {
+                    val systemMs = LocaleData.getMeasurementSystem(ULocale.getDefault())
+                    when(systemMs) {
+                        LocaleData.MeasurementSystem.UK -> MeasurementSystem.UnitedKingdom
+                        LocaleData.MeasurementSystem.US -> MeasurementSystem.UnitedStates
+                        else -> MeasurementSystem.Metric
+                    }
+                } else {
+                    MeasurementSystem.Metric
+                }
+            }
+            return@map ms
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), MeasurementSystem.System)
 
     fun selectDay(index: Int) {
         selectedDayIndex = min(index, forecasts.lastIndex)

@@ -1063,4 +1063,8 @@
     <string name="preference_form_of_address_neutral">Neutral</string>
     <string name="preference_form_of_address_fem">Feminine</string>
     <string name="preference_form_of_address_masc">Masculine</string>
+    <string name="preference_measurement_system">Measurement system</string>
+    <string name="preference_measurement_system_metric">Metric</string>
+    <string name="preference_measurement_system_uk">United Kingdom</string>
+    <string name="preference_measurement_system_us">United States</string>
 </resources>

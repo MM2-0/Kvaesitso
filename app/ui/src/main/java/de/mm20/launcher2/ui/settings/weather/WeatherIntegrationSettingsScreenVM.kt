@@ -35,11 +35,6 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
         it?.let { pluginService.getPluginWithState(it) } ?: flowOf(null)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val imperialUnits = weatherSettings.imperialUnits
-    fun setImperialUnits(imperialUnits: Boolean) {
-        weatherSettings.setImperialUnits(imperialUnits)
-    }
-
     val autoLocation = weatherSettings.autoLocation
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 

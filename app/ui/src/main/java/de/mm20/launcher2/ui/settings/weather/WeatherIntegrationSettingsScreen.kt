@@ -93,15 +93,6 @@ fun WeatherIntegrationSettingsScreen() {
                     },
                     value = weatherProvider
                 )
-                val imperialUnits by viewModel.imperialUnits.collectAsState(false)
-                SwitchPreference(
-                    title = stringResource(R.string.preference_imperial_units),
-                    summary = stringResource(R.string.preference_imperial_units_summary),
-                    value = imperialUnits,
-                    onValueChanged = {
-                        viewModel.setImperialUnits(it)
-                    }
-                )
             }
 
         }
