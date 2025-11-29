@@ -858,4 +858,5 @@
     <string name="contact_info_work">Praca</string>
     <string name="weather_forecast_wind">Wiatr</string>
     <string name="theme_bundle_name">Nazwa</string>
+    <string name="preference_measurement_system_metric">Metryczne</string>
 </resources>
