@@ -998,4 +998,5 @@
     <string name="preference_screen_locale_summary">Taal, eenheden, tijdformaat</string>
     <string name="preference_language">Taal</string>
     <string name="preference_value_system_default">Systeemstandaard</string>
+    <string name="preference_measurement_system_metric">Metrisch</string>
 </resources>
