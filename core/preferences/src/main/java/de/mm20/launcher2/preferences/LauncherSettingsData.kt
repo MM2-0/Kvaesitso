@@ -201,7 +201,6 @@ data class LauncherSettingsData internal constructor(
     constructor(
         context: Context,
     ) : this(
-        locationSearchImperialUnits = context.resources.getBoolean(R.bool.default_imperialUnits),
         gridColumnCount = context.resources.getInteger(R.integer.config_columnCount),
     )
 }
