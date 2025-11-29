@@ -1041,4 +1041,5 @@
     <string name="preference_form_of_address_neutral">Semleges</string>
     <string name="preference_form_of_address_fem">Nőnemű</string>
     <string name="preference_form_of_address_masc">Férfinemű</string>
+    <string name="preference_measurement_system_metric">Metrikus</string>
 </resources>
