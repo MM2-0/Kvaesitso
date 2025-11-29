@@ -90,6 +90,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import blend.Blend.harmonize
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.isOpen
 import de.mm20.launcher2.search.location.Attribution
@@ -110,7 +111,6 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.atTone
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
-import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toComposeColor
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
@@ -119,6 +119,7 @@ import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
+import de.mm20.launcher2.ui.utils.formatDistance
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import java.time.Duration
@@ -161,7 +162,7 @@ fun LocationItem(
     val icon by viewModel.icon.collectAsStateWithLifecycle()
     val badge by viewModel.badge.collectAsStateWithLifecycle(null)
 
-    val imperialUnits by viewModel.imperialUnits.collectAsState()
+    val measurementSystem by viewModel.measurementSystem.collectAsState()
 
     val showMap by viewModel.showMap.collectAsState()
 
@@ -201,8 +202,13 @@ fun LocationItem(
                                     this@AnimatedContent
                                 )
                         )
-                        val formattedDistance =
-                            distance?.metersToLocalizedString(context, imperialUnits)
+                        val formattedDistance = distance?.let {
+                            formatDistance(
+                                context,
+                                it,
+                                measurementSystem
+                            )
+                        }
                         val sublabel = listOf(location.category, formattedDistance)
                             .fastFilterNotNull()
                             .joinToString(" • ")
@@ -313,9 +319,13 @@ fun LocationItem(
                             ) {
                                 val category = location.category
                                 val acceptedPaymentMethods = location.acceptedPaymentMethods
-                                val formattedDistance = distance?.metersToLocalizedString(
-                                    context, imperialUnits
-                                )
+                                val formattedDistance = distance?.let {
+                                    formatDistance(
+                                        context,
+                                        it,
+                                        measurementSystem
+                                    )
+                                }
                                 if (category != null || formattedDistance != null) {
                                     Text(
                                         when {

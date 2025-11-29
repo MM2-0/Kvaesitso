@@ -132,7 +132,7 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
             }
             return@map ms
         }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), MeasurementSystem.System)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), MeasurementSystem.Metric)
 
     fun selectDay(index: Int) {
         selectedDayIndex = min(index, forecasts.lastIndex)

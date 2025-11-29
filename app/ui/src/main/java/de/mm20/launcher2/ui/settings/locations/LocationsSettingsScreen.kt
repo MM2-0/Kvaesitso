@@ -1,6 +1,10 @@
 package de.mm20.launcher2.ui.settings.locations
 
 import android.app.PendingIntent
+import android.content.Context
+import android.icu.number.NumberFormatter
+import android.icu.util.Measure
+import android.icu.util.MeasureUnit
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -17,25 +21,26 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
+import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
-import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.TextPreference
-import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.osm.OsmSettingsRoute
+import de.mm20.launcher2.ui.utils.formatDistance
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object LocationsSettingsRoute: NavKey
+data object LocationsSettingsRoute : NavKey
 
 @Composable
 fun LocationsSettingsScreen() {
@@ -45,7 +50,7 @@ fun LocationsSettingsScreen() {
     val context = LocalContext.current
 
     val osmLocations by viewModel.osmLocations.collectAsState()
-    val imperialUnits by viewModel.imperialUnits.collectAsState()
+    val measurementSystem by viewModel.measurementSystem.collectAsState()
     val radius by viewModel.radius.collectAsState()
     val showMap by viewModel.showMap.collectAsState()
     val themeMap by viewModel.themeMap.collectAsState()
@@ -109,18 +114,6 @@ fun LocationsSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                ListPreference(
-                    title = stringResource(R.string.length_unit),
-                    items = listOf(
-                        stringResource(R.string.imperial) to true,
-                        stringResource(R.string.metric) to false
-                    ),
-                    enabled = anyLocationProviderEnabled,
-                    value = imperialUnits,
-                    onValueChanged = {
-                        viewModel.setImperialUnits(it)
-                    }
-                )
                 SliderPreference(
                     title = stringResource(R.string.preference_search_locations_radius),
                     value = radius,
@@ -136,12 +129,9 @@ fun LocationsSettingsScreen() {
                             modifier = Modifier
                                 .width(64.dp)
                                 .padding(start = 16.dp),
-                            text = it.toFloat()
-                                .metersToLocalizedString(LocalContext.current, imperialUnits),
+                            text = formatDistance(context, it.toFloat(), measurementSystem),
                             style = MaterialTheme.typography.titleSmall
                         )
-                        it.toFloat()
-                            .metersToLocalizedString(LocalContext.current, imperialUnits)
                     }
                 )
             }
@@ -186,3 +176,4 @@ fun LocationsSettingsScreen() {
         }
     }
 }
+
