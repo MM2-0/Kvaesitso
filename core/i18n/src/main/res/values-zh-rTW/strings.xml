@@ -1013,4 +1013,5 @@
     <string name="font_name_device_headline">預設標題字體</string>
     <string name="font_name_device_body">裝置文本字體</string>
     <string name="font_category_generic">一般</string>
+    <string name="preference_measurement_system_metric">公制</string>
 </resources>
