@@ -162,7 +162,6 @@ data class LauncherSettingsData internal constructor(
     val weatherLastLocation: LatLon? = null,
     val weatherLastUpdate: Long = 0L,
     val weatherProviderSettings: Map<String, ProviderSettings> = emptyMap(),
-    val weatherImperialUnits: Boolean = false,
 
     @Deprecated("Use locationSearchProviders instead")
     val locationSearchEnabled: Boolean = false,
@@ -202,7 +201,6 @@ data class LauncherSettingsData internal constructor(
     constructor(
         context: Context,
     ) : this(
-        weatherImperialUnits = context.resources.getBoolean(R.bool.default_imperialUnits),
         locationSearchImperialUnits = context.resources.getBoolean(R.bool.default_imperialUnits),
         gridColumnCount = context.resources.getInteger(R.integer.config_columnCount),
     )
