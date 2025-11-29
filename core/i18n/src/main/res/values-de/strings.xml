@@ -1002,5 +1002,8 @@
     <string name="preference_form_of_address">Anredeform</string>
     <string name="preference_form_of_address_fem">Feminin</string>
     <string name="preference_form_of_address_masc">Maskulin</string>
+    <string name="preference_measurement_system">Einheitensystem</string>
     <string name="preference_measurement_system_metric">Metrisch</string>
+    <string name="preference_measurement_system_uk">Vereinigtes Königreich</string>
+    <string name="preference_measurement_system_us">Vereinigte Staaten</string>
 </resources>
