@@ -1073,4 +1073,5 @@
     <string name="preference_screen_locale_summary">שפה, יחידות-מידה, תבנית הזמן</string>
     <string name="preference_language">שפה</string>
     <string name="preference_value_system_default">ברירת-המחדל של המערכת</string>
+    <string name="preference_measurement_system_metric">מטרי</string>
 </resources>
