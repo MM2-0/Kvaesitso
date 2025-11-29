@@ -881,4 +881,8 @@
     <string name="preference_screen_locale_summary">Lingua, unità, formato ora</string>
     <string name="preference_language">Lingua</string>
     <string name="preference_value_system_default">Predefinito del sistema</string>
+    <string name="preference_form_of_address_neutral">Neutro</string>
+    <string name="preference_form_of_address_fem">Femminile</string>
+    <string name="preference_form_of_address_masc">Maschile</string>
+    <string name="preference_form_of_address">Appellativo</string>
 </resources>
