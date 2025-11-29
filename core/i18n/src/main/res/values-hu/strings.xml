@@ -870,4 +870,8 @@
     <string name="preference_screen_locale_summary">Nyelv, mértékegységek, időformátum</string>
     <string name="preference_language">Nyelv</string>
     <string name="preference_value_system_default">Rendszer alapértelmezése</string>
+    <string name="preference_form_of_address_neutral">Semleges</string>
+    <string name="preference_form_of_address_fem">Nőnemű</string>
+    <string name="preference_form_of_address_masc">Férfinemű</string>
+    <string name="preference_form_of_address">Megszólítás</string>
 </resources>
