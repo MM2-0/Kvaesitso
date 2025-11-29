@@ -1033,4 +1033,5 @@
     <string name="font_name_device_headline">Tipo de letra padrão</string>
     <string name="font_name_device_body">Tipo de letra do dispositivo</string>
     <string name="font_category_generic">Genérica</string>
+    <string name="preference_measurement_system_metric">Métrico</string>
 </resources>
