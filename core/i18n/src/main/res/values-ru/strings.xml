@@ -1042,4 +1042,5 @@
     <string name="font_category_device_default">Устройство по умолчанию</string>
     <string name="font_name_device_headline">Шрифт заголовка по умолчанию</string>
     <string name="font_name_device_body">Шрифт текста устройства</string>
+    <string name="preference_measurement_system_metric">Метрическая система измерения</string>
 </resources>
