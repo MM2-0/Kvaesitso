@@ -949,4 +949,5 @@
     <string name="departure_time_now">الآن</string>
     <string name="departure_time_departed">مضت</string>
     <string name="theme_bundle_name">الاسم</string>
+    <string name="preference_measurement_system_metric">متري</string>
 </resources>
