@@ -1027,4 +1027,5 @@
     <string name="font_name_device_headline">Varsayılan başlık yazı tipi</string>
     <string name="font_name_device_body">Cihaz metin yazı tipi</string>
     <string name="font_category_generic">Genel</string>
+    <string name="preference_measurement_system_metric">Metrik</string>
 </resources>
