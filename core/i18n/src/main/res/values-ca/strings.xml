@@ -1014,4 +1014,5 @@
     <string name="font_name_device_headline">Font predeterminada del títol</string>
     <string name="font_name_device_body">Font del text del dispositiu</string>
     <string name="font_category_generic">Genèric</string>
+    <string name="preference_measurement_system_metric">Mètric</string>
 </resources>
