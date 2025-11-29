@@ -1029,4 +1029,5 @@
     <string name="font_name_device_headline">ชุดแบบอักษรเริ่มต้นสำหรับหัวเรื่อง</string>
     <string name="font_name_device_body">ชุดแบบอักษรของอุปกรณ์</string>
     <string name="font_category_generic">ทั่วไป</string>
+    <string name="preference_measurement_system_metric">หน่วยวัดแบบเมตริก</string>
 </resources>
