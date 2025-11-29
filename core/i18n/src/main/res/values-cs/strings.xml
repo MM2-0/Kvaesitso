@@ -1057,4 +1057,5 @@
     <string name="preference_screen_locale_summary">Jazyk, jednotky, formát čaasu</string>
     <string name="preference_language">Jazyk</string>
     <string name="preference_value_system_default">Podle systému</string>
+    <string name="preference_measurement_system_metric">Metrická</string>
 </resources>
