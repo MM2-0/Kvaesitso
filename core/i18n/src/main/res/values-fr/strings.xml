@@ -983,4 +983,5 @@
     <string name="theme_import_title">Importer le thème</string>
     <string name="theme_bundle_name">Nom</string>
     <string name="theme_bundle_author">Créé par</string>
+    <string name="preference_measurement_system_metric">Métrique</string>
 </resources>
