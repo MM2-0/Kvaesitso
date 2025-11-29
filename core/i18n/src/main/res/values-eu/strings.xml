@@ -833,4 +833,5 @@
     <string name="hint_drag_and_drop_reorder">Eutsi eta arrastatu elementuak berrantolatzeko</string>
     <string name="weather_forecast_wind">Haizea</string>
     <string name="theme_bundle_name">Izena</string>
+    <string name="preference_measurement_system_metric">Metrikoa</string>
 </resources>
