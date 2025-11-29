@@ -913,4 +913,5 @@
     <string name="weather_widget_no_provider">Không có nhà cung cấp thời tiết nào được chọn hoặc nhà cung cấp đã chọn không có sẵn</string>
     <string name="weather_forecast_wind">Gió</string>
     <string name="theme_bundle_name">Tên</string>
+    <string name="preference_measurement_system_metric">Hệ Mét</string>
 </resources>
