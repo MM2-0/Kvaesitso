@@ -986,4 +986,5 @@
     </plurals>
     <string name="departure_time_departed">جدا شده</string>
     <string name="theme_bundle_name">نام</string>
+    <string name="preference_measurement_system_metric">متریک</string>
 </resources>
