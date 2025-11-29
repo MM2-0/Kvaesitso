@@ -870,4 +870,8 @@
     <string name="preference_screen_locale_summary">Sprache, Einheiten, Zeitformat</string>
     <string name="preference_language">Sprache</string>
     <string name="preference_value_system_default">Systemstandard</string>
+    <string name="preference_form_of_address">Anrederform</string>
+    <string name="preference_form_of_address_neutral">Neutral</string>
+    <string name="preference_form_of_address_fem">Feminin</string>
+    <string name="preference_form_of_address_masc">Maskulin</string>
 </resources>
