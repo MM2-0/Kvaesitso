@@ -6,11 +6,13 @@ import android.icu.util.LocaleData
 import android.icu.util.ULocale
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.MeasurementSystem
+import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.weather.DailyForecast
@@ -56,14 +58,14 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
      * Index of the currently selected forecast in [currentDayForecasts]
      */
     private var selectedForecastIndex = 0
-    set(value) {
-        if (selectedDayIndex < 0)  {
-            currentForecast.value = null
-            return
+        set(value) {
+            if (selectedDayIndex < 0) {
+                currentForecast.value = null
+                return
+            }
+            field = min(value, forecasts[selectedDayIndex].hourlyForecasts.lastIndex)
+            currentForecast.value = getCurrentlySelectedForecast()
         }
-        field = min(value, forecasts[selectedDayIndex].hourlyForecasts.lastIndex)
-        currentForecast.value = getCurrentlySelectedForecast()
-    }
 
     private val forecastsFlow = weatherRepository.getDailyForecasts()
 
@@ -71,12 +73,12 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
      * All available forecasts, grouped by day
      */
     private var forecasts: List<DailyForecast> = emptyList()
-    set(value) {
-        field = value
-        selectedDayIndex = 0
-        selectedForecastIndex = 0
-        dailyForecasts.value = value
-    }
+        set(value) {
+            field = value
+            selectedDayIndex = 0
+            selectedForecastIndex = 0
+            dailyForecasts.value = value
+        }
 
     /**
      * Currently selected forecast, one of [currentDayForecasts]
@@ -110,9 +112,11 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
 
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun requestLocationPermission(context: AppCompatActivity) {
         permissionsManager.requestPermission(context, PermissionGroup.Location)
     }
+
     val autoLocation = weatherSettings.autoLocation
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
@@ -121,7 +125,7 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
             if (ms == MeasurementSystem.System) {
                 return@map if (isAtLeastApiLevel(28)) {
                     val systemMs = LocaleData.getMeasurementSystem(ULocale.getDefault())
-                    when(systemMs) {
+                    when (systemMs) {
                         LocaleData.MeasurementSystem.UK -> MeasurementSystem.UnitedKingdom
                         LocaleData.MeasurementSystem.US -> MeasurementSystem.UnitedStates
                         else -> MeasurementSystem.Metric
@@ -134,6 +138,9 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), MeasurementSystem.Metric)
 
+    val timeFormat = weatherSettings.timeFormat
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), TimeFormat.TwentyFourHour)
+
     fun selectDay(index: Int) {
         selectedDayIndex = min(index, forecasts.lastIndex)
     }
@@ -143,7 +150,9 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
     }
 
     private fun getCurrentlySelectedForecast(): Forecast? {
-        return forecasts.getOrNull(selectedDayIndex)?.hourlyForecasts?.getOrNull(selectedForecastIndex)
+        return forecasts.getOrNull(selectedDayIndex)?.hourlyForecasts?.getOrNull(
+            selectedForecastIndex
+        )
     }
 
     fun selectNow() {

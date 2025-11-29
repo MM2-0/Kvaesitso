@@ -188,4 +188,8 @@ class WeatherSettings internal constructor(
     val measurementSystem = launcherDataStore.data.map {
         it.localeMeasurementSystem
     }.distinctUntilChanged()
+
+    val timeFormat = launcherDataStore.data.map {
+        it.localeTimeFormat
+    }.distinctUntilChanged()
 }

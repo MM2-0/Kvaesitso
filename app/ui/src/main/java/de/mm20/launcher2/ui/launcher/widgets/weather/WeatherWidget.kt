@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.text.format.DateFormat
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
@@ -71,6 +72,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.MeasurementSystem
+import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.Banner
@@ -82,9 +84,10 @@ import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.widgets.WeatherWidget
-import java.text.DateFormat
+import kotlinx.coroutines.flow.map
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
+import java.util.Locale
 import kotlin.math.roundToInt
 
 @Composable
@@ -103,6 +106,15 @@ fun WeatherWidget(widget: WeatherWidget) {
     val selectedForecast by viewModel.currentForecast
 
     val measurementSystem by viewModel.measurementSystem.collectAsState()
+    val timeFormat by remember(context) {
+        viewModel.timeFormat.map {
+            if (it == TimeFormat.System) {
+                if (android.text.format.DateFormat.is24HourFormat(context)) TimeFormat.TwentyFourHour else TimeFormat.TwelveHour
+            } else {
+                it
+            }
+        }
+    }.collectAsState(TimeFormat.TwentyFourHour)
     val compactMode = !widget.config.showForecast
 
     val isProviderAvailable by viewModel.isProviderAvailable.collectAsStateWithLifecycle(true)
@@ -170,7 +182,7 @@ fun WeatherWidget(widget: WeatherWidget) {
         }
 
 
-        CurrentWeather(forecast, measurementSystem)
+        CurrentWeather(forecast, measurementSystem, timeFormat)
 
         if (!compactMode) {
 
@@ -189,6 +201,7 @@ fun WeatherWidget(widget: WeatherWidget) {
                         forecasts = currentDayForecasts,
                         selectedForecast = forecast,
                         measurementSystem = measurementSystem,
+                        timeFormat = timeFormat,
                         onTimeSelected = {
                             viewModel.selectForecast(it)
                         },
@@ -211,7 +224,11 @@ fun WeatherWidget(widget: WeatherWidget) {
 }
 
 @Composable
-fun CurrentWeather(forecast: Forecast, measurementSystem: MeasurementSystem) {
+fun CurrentWeather(
+    forecast: Forecast,
+    measurementSystem: MeasurementSystem,
+    timeFormat: TimeFormat,
+) {
     val context = LocalContext.current
     val weatherApp = remember {
         context.packageManager.resolveActivity(
@@ -223,7 +240,8 @@ fun CurrentWeather(forecast: Forecast, measurementSystem: MeasurementSystem) {
 
     val useFahrenheit = measurementSystem == MeasurementSystem.UnitedStates
     val useInches = measurementSystem == MeasurementSystem.UnitedStates
-    val useMph = measurementSystem == MeasurementSystem.UnitedStates || measurementSystem == MeasurementSystem.UnitedKingdom
+    val useMph =
+        measurementSystem == MeasurementSystem.UnitedStates || measurementSystem == MeasurementSystem.UnitedKingdom
 
 
     var bounds by remember { mutableStateOf(Rect.Zero) }
@@ -295,7 +313,8 @@ fun CurrentWeather(forecast: Forecast, measurementSystem: MeasurementSystem) {
                             text = "${forecast.provider} (${
                                 formatTime(
                                     LocalContext.current,
-                                    forecast.updateTime
+                                    forecast.updateTime,
+                                    timeFormat,
                                 )
                             })",
                             style = MaterialTheme.typography.bodySmall.copy(fontSize = 8.sp),
@@ -436,9 +455,10 @@ fun WeatherTimeSelector(
     forecasts: List<Forecast>,
     selectedForecast: Forecast,
     measurementSystem: MeasurementSystem,
+    timeFormat: TimeFormat,
     onTimeSelected: (Int) -> Unit
 ) {
-    val dateFormat = remember { DateFormat.getTimeInstance(DateFormat.SHORT) }
+    val context = LocalContext.current
 
     val useFahrenheit = measurementSystem == MeasurementSystem.UnitedStates
 
@@ -490,7 +510,7 @@ fun WeatherTimeSelector(
                         night = fc.night
                     )
                     Text(
-                        text = dateFormat.format(fc.timestamp),
+                        text = formatTime(context, fc.timestamp, timeFormat),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         softWrap = false,
@@ -597,8 +617,10 @@ fun WeatherDaySelector(
     }
 }
 
-private fun formatTime(context: Context, timestamp: Long): String {
-    return DateUtils.formatDateTime(context, timestamp, DateUtils.FORMAT_SHOW_TIME)
+private fun formatTime(context: Context, timestamp: Long, timeFormat: TimeFormat): String {
+    val skeleton = if (timeFormat == TimeFormat.TwelveHour) "h:mm a" else "H:mm"
+    val dateFormat = SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), skeleton), Locale.getDefault())
+    return dateFormat.format(timestamp)
 }
 
 private fun convertTemperature(useFahrenheit: Boolean, temp: Double): Int {
