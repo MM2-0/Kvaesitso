@@ -904,4 +904,5 @@
     </plurals>
     <string name="departure_time_departed">partida</string>
     <string name="theme_bundle_name">Nome</string>
+    <string name="preference_measurement_system_metric">Métrico</string>
 </resources>
