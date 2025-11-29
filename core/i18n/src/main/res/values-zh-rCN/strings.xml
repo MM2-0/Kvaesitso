@@ -1027,4 +1027,5 @@
     <string name="font_name_device_headline">标题字体</string>
     <string name="font_name_device_body">正文字体</string>
     <string name="font_category_generic">常规字体</string>
+    <string name="preference_measurement_system_metric">公制</string>
 </resources>
