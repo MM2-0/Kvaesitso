@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.format.DateFormat
-import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -81,6 +80,10 @@ import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
 import de.mm20.launcher2.ui.theme.transparency.transparency
+import de.mm20.launcher2.ui.utils.formatPercent
+import de.mm20.launcher2.ui.utils.formatPrecipitation
+import de.mm20.launcher2.ui.utils.formatSpeed
+import de.mm20.launcher2.ui.utils.formatTemperature
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -88,7 +91,6 @@ import kotlinx.coroutines.flow.map
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
-import kotlin.math.roundToInt
 
 @Composable
 fun WeatherWidget(widget: WeatherWidget) {
@@ -337,10 +339,11 @@ fun CurrentWeather(
             ) {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = convertTemperature(
-                        useFahrenheit = useFahrenheit,
-                        temp = forecast.temperature
-                    ).toString() + "°",
+                    text = formatTemperature(
+                        context,
+                        forecast.temperature.toFloat(),
+                        measurementSystem
+                    ),
                     style = MaterialTheme.typography.headlineMedium,
                 )
                 Text(
@@ -379,7 +382,7 @@ fun CurrentWeather(
                         )
                         Spacer(modifier = Modifier.padding(3.dp))
                         Text(
-                            text = "${forecast.humidity!!.roundToInt()} %",
+                            text = formatPercent(forecast.humidity!!.toFloat()),
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
@@ -415,7 +418,11 @@ fun CurrentWeather(
                         Spacer(modifier = Modifier.padding(3.dp))
                         Text(
                             text = if (forecast.windSpeed != null) {
-                                formatWindSpeed(useMph, forecast)
+                                formatSpeed(
+                                    context,
+                                    forecast.windSpeed!!.toFloat(),
+                                    measurementSystem
+                                )
                             } else {
                                 windDirectionAsWord(forecast.windDirection!!)
                             },
@@ -439,7 +446,15 @@ fun CurrentWeather(
                         )
                         Spacer(modifier = Modifier.padding(3.dp))
                         Text(
-                            text = formatPrecipitation(useInches, forecast),
+                            text = if (forecast.precipProbability != null) {
+                                formatPercent(forecast.precipProbability!!.toFloat())
+                            } else {
+                                formatPrecipitation(
+                                    context,
+                                    forecast.precipitation?.toFloat() ?: 0f,
+                                    measurementSystem
+                                )
+                            },
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
@@ -523,7 +538,11 @@ fun WeatherTimeSelector(
                         Text(
                             modifier = Modifier
                                 .alpha(alpha),
-                            text = "${convertTemperature(useFahrenheit, fc.temperature)}°",
+                            text = formatTemperature(
+                                context,
+                                fc.temperature.toFloat(),
+                                measurementSystem
+                            ),
                             softWrap = false,
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -550,7 +569,7 @@ fun WeatherDaySelector(
     measurementSystem: MeasurementSystem
 ) {
     val dateFormat = SimpleDateFormat("EEE")
-    val useFahrenheit = measurementSystem == MeasurementSystem.UnitedStates
+    val context = LocalContext.current
 
     val listState = rememberLazyListState()
     LazyRow(
@@ -592,8 +611,18 @@ fun WeatherDaySelector(
                     Text(
                         modifier = Modifier.padding(start = 8.dp),
                         text = "${dateFormat.format(day.timestamp)} " +
-                                "${convertTemperature(useFahrenheit, day.minTemp)}° / " +
-                                "${convertTemperature(useFahrenheit, day.maxTemp)}°",
+                                "${
+                                    formatTemperature(
+                                        context,
+                                        day.minTemp.toFloat(),
+                                        measurementSystem
+                                    )
+                                } / " +
+                                formatTemperature(
+                                    context,
+                                    day.maxTemp.toFloat(),
+                                    measurementSystem
+                                ),
                         softWrap = false,
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -619,34 +648,11 @@ fun WeatherDaySelector(
 
 private fun formatTime(context: Context, timestamp: Long, timeFormat: TimeFormat): String {
     val skeleton = if (timeFormat == TimeFormat.TwelveHour) "h:mm a" else "H:mm"
-    val dateFormat = SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), skeleton), Locale.getDefault())
+    val dateFormat = SimpleDateFormat(
+        DateFormat.getBestDateTimePattern(Locale.getDefault(), skeleton),
+        Locale.getDefault()
+    )
     return dateFormat.format(timestamp)
-}
-
-private fun convertTemperature(useFahrenheit: Boolean, temp: Double): Int {
-    return (if (useFahrenheit) temp * 9.0 / 5.0 - 459.67 else temp + -273.15).roundToInt()
-}
-
-@Composable
-private fun formatWindSpeed(imperialUnits: Boolean, forecast: Forecast): String {
-    if (forecast.windSpeed == null) return ""
-    val formatter = DecimalFormat("0.#")
-    val speedValue = formatter.format(forecast.windSpeed!! * if (imperialUnits) 2.2369 else 1.0)
-    val speedUnit =
-        stringResource(id = if (imperialUnits) R.string.unit_mile_per_hour_symbol else R.string.unit_meter_per_second_symbol)
-    return "$speedValue $speedUnit"
-}
-
-@Composable
-private fun formatPrecipitation(useInches: Boolean, forecast: Forecast): String {
-    if (forecast.precipProbability != null) {
-        return "${forecast.precipProbability} %"
-    }
-    val formatter = if (useInches) DecimalFormat("#.##") else DecimalFormat("#.#")
-    val precipUnit =
-        if (useInches) stringResource(id = R.string.unit_inch_symbol) else stringResource(id = R.string.unit_millimeter_symbol)
-
-    return "${formatter.format(forecast.precipitation)} $precipUnit"
 }
 
 @Composable
