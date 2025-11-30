@@ -385,7 +385,7 @@ private fun Modifier.placeOverlay(
     return layout { measurable, constraints ->
         val placeable = measurable.measure(constraints)
         layout(constraints.maxWidth, constraints.maxHeight) {
-            placeable.placeRelative(
+            placeable.place(
                 (
                         lerp(
                             origin.center.x,
