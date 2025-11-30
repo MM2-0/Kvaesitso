@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.utils.formatPercent
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
@@ -57,20 +58,21 @@ class BatteryPartProvider : PartProvider {
             if (!compactLayout) {
                 Row(
                     Modifier.padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
                         painter = painterResource(getBatteryIcon(it)),
+                        modifier = Modifier.alignByBaseline(),
                         contentDescription = null
                     )
                     Text(
-                        modifier = Modifier.padding(start = 8.dp),
-                        text = "${it.level} %",
+                        modifier = Modifier.padding(start = 8.dp).alignByBaseline(),
+                        text = formatPercent(it.level.toFloat()),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     if (it.charging) {
                         Text(
-                            modifier = Modifier.padding(start = 8.dp),
+                            modifier = Modifier.padding(start = 8.dp).alignByBaseline(),
                             text = it.fullIn?.let {
                                 val m = (it / 60000).toInt()
                                 pluralStringResource(R.plurals.battery_part_remaining_charge_time, m, m)
