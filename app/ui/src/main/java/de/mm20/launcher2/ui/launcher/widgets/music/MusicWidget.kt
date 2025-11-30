@@ -7,13 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.animation.scaleIn
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,6 +43,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,12 +58,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.core.content.res.ResourcesCompat
@@ -165,39 +163,44 @@ fun MusicWidget(widget: MusicWidget) {
                         var seekPosition by remember { mutableStateOf<Float?>(null) }
 
                         if (pos != null && dur != null && dur > 0) {
-                            if (playbackState != PlaybackState.Stopped && supportedActions.seekTo && widget.config.interactiveProgressBar) {
-                                Slider(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 14.dp)
-                                        .requiredHeightIn(max = 20.dp),
-                                    value = (if (isDragged) seekPosition else pos?.toFloat()) ?: 0f,
-                                    valueRange = 0f..dur.toFloat(),
-                                    interactionSource = interactionSource,
-                                    onValueChange = {
-                                        seekPosition = it
-                                    },
-                                    onValueChangeFinished = {
-                                        seekPosition?.let {
-                                            viewModel.seekTo(it.toLong())
-                                            pos = it.toLong()
+                            CompositionLocalProvider(
+                                LocalLayoutDirection provides LayoutDirection.Ltr
+                            ) {
+                                if (playbackState != PlaybackState.Stopped && supportedActions.seekTo && widget.config.interactiveProgressBar) {
+                                    Slider(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 14.dp)
+                                            .requiredHeightIn(max = 20.dp),
+                                        value = (if (isDragged) seekPosition else pos?.toFloat())
+                                            ?: 0f,
+                                        valueRange = 0f..dur.toFloat(),
+                                        interactionSource = interactionSource,
+                                        onValueChange = {
+                                            seekPosition = it
+                                        },
+                                        onValueChangeFinished = {
+                                            seekPosition?.let {
+                                                viewModel.seekTo(it.toLong())
+                                                pos = it.toLong()
+                                            }
+                                        },
+                                        track = {
+                                            SliderDefaults.Track(
+                                                sliderState = it,
+                                                modifier = Modifier.requiredHeight(4.dp)
+                                            )
                                         }
-                                    },
-                                    track = {
-                                        SliderDefaults.Track(
-                                            sliderState = it,
-                                            modifier = Modifier.requiredHeight(4.dp)
-                                        )
-                                    }
-                                )
-                            } else {
-                                LinearProgressIndicator(
-                                    progress = { (pos?.toFloat() ?: 0f) / dur.toFloat() },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 8.dp, horizontal = 16.dp),
-                                    strokeCap = StrokeCap.Round,
-                                )
+                                    )
+                                } else {
+                                    LinearProgressIndicator(
+                                        progress = { (pos?.toFloat() ?: 0f) / dur.toFloat() },
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(vertical = 8.dp, horizontal = 16.dp),
+                                        strokeCap = StrokeCap.Round,
+                                    )
+                                }
                             }
                         } else {
                             Box(
@@ -302,80 +305,84 @@ fun MusicWidget(widget: MusicWidget) {
                 }
             }
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
 
-            ) {
-            if (supportedActions.skipToPrevious) {
-                Tooltip(
-                    tooltipText = stringResource(R.string.music_widget_previous_track)
+        CompositionLocalProvider(
+            LocalLayoutDirection provides LayoutDirection.Ltr
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
+
                 ) {
-                    IconButton(
-                        onClick = {
-                            viewModel.skipPrevious()
-                        }) {
-                        Icon(
-                            painter = painterResource(R.drawable.skip_previous_24px),
-                            stringResource(R.string.music_widget_previous_track)
-                        )
-                    }
-                }
-            }
-            val playPauseIcon =
-                AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
-            Tooltip(
-                tooltipText = stringResource(
-                    if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
-                    else R.string.music_widget_play
-                )
-            ) {
-                FilledTonalIconButton(
-                    colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = MaterialTheme.transparency.surface),
-                    ),
-                    onClick = { viewModel.togglePause() },
-                ) {
-                    AnimatedContent(
-                        playbackState == PlaybackState.Playing,
-                        transitionSpec = {
-                            fadeIn().togetherWith(fadeOut())
-                        },
-                        modifier = Modifier.rotate(
-                            animateFloatAsState(
-                                if (playbackState == PlaybackState.Playing) 90f else 0f
-                            ).value
-                        )
+                if (supportedActions.skipToPrevious) {
+                    Tooltip(
+                        tooltipText = stringResource(R.string.music_widget_previous_track)
                     ) {
-                        if (it) {
+                        IconButton(
+                            onClick = {
+                                viewModel.skipPrevious()
+                            }) {
                             Icon(
-                                painterResource(R.drawable.pause_24px),
-                                stringResource(R.string.music_widget_pause),
-                                modifier = Modifier.rotate(-90f)
-                            )
-                        } else {
-                            Icon(
-                                painterResource(R.drawable.play_arrow_24px),
-                                stringResource(R.string.music_widget_play),
+                                painter = painterResource(R.drawable.skip_previous_24px),
+                                stringResource(R.string.music_widget_previous_track)
                             )
                         }
                     }
                 }
-            }
-            if (supportedActions.skipToNext) {
+
                 Tooltip(
-                    tooltipText = stringResource(R.string.music_widget_next_track)
+                    tooltipText = stringResource(
+                        if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
+                        else R.string.music_widget_play
+                    )
                 ) {
-                    IconButton(onClick = {
-                        viewModel.skipNext()
-                    }) {
-                        Icon(
-                            painter = painterResource(R.drawable.skip_next_24px),
-                            stringResource(R.string.music_widget_next_track)
-                        )
+                    FilledTonalIconButton(
+                        colors = IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = MaterialTheme.transparency.surface),
+                        ),
+                        onClick = { viewModel.togglePause() },
+                    ) {
+                        AnimatedContent(
+                            playbackState == PlaybackState.Playing,
+                            transitionSpec = {
+                                fadeIn().togetherWith(fadeOut())
+                            },
+                            modifier = Modifier.rotate(
+                                animateFloatAsState(
+                                    if (playbackState == PlaybackState.Playing) 90f else 0f
+                                ).value
+                            )
+                        ) {
+                            if (it) {
+                                Icon(
+                                    painterResource(R.drawable.pause_24px),
+                                    stringResource(R.string.music_widget_pause),
+                                    modifier = Modifier.rotate(-90f)
+                                )
+                            } else {
+                                Icon(
+                                    painterResource(R.drawable.play_arrow_24px),
+                                    stringResource(R.string.music_widget_play),
+                                )
+                            }
+                        }
+                    }
+                }
+                if (supportedActions.skipToNext) {
+                    Tooltip(
+                        tooltipText = stringResource(R.string.music_widget_next_track)
+                    ) {
+                        IconButton(onClick = {
+                            viewModel.skipNext()
+                        }) {
+                            Icon(
+                                painter = painterResource(R.drawable.skip_next_24px),
+                                stringResource(R.string.music_widget_next_track)
+                            )
+                        }
                     }
                 }
             }
