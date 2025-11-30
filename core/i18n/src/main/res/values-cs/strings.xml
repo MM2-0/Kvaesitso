@@ -881,4 +881,12 @@
     <string name="preference_screen_locale_summary">Jazyk, jednotky, formát čaasu</string>
     <string name="preference_language">Jazyk</string>
     <string name="preference_value_system_default">Podle systému</string>
+    <string name="preference_form_of_address">Oslovení</string>
+    <string name="preference_form_of_address_neutral">Neutrální</string>
+    <string name="preference_form_of_address_fem">Ženské</string>
+    <string name="preference_form_of_address_masc">Mužské</string>
+    <string name="preference_measurement_system">Měrná soustava</string>
+    <string name="preference_measurement_system_metric">Metrická</string>
+    <string name="preference_measurement_system_uk">Spojené království</string>
+    <string name="preference_measurement_system_us">Spojené státy</string>
 </resources>
