@@ -146,7 +146,7 @@ internal fun formatSpeed(
     metersPerSecond: Float,
     measurementSystem: MeasurementSystem,
 ): String {
-    if (measurementSystem == MeasurementSystem.UnitedStates) {
+    if (measurementSystem == MeasurementSystem.UnitedStates || measurementSystem == MeasurementSystem.UnitedKingdom) {
         return formatMpH(context, metersPerSecond * 2.2369f)
     } else {
         return formatKmH(context, metersPerSecond * 3.6f)
