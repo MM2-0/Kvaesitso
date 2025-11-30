@@ -31,14 +31,16 @@ import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
@@ -433,27 +435,38 @@ fun CustomActions(
                     )
                 }
             }
-            DropdownMenu(
+            DropdownMenuPopup(
                 expanded = showOverflowMenu,
                 onDismissRequest = { showOverflowMenu = false },
             ) {
-                for (i in slots - 1 until actions.customActions.size) {
-                    val action = actions.customActions[i]
-                    DropdownMenuItem(
-                        leadingIcon = {
-                            CustomActionIcon(action, playerPackage)
-                        },
-                        text = {
-                            Text(
-                                text = action.name.toString(),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                        },
-                        onClick = {
-                            onActionSelected(action)
-                        }
-                    )
+                DropdownMenuGroup(
+                    shapes = MenuDefaults.groupShapes(),
+                ) {
+                    for (i in slots - 1 until actions.customActions.size) {
+                        val action = actions.customActions[i]
+                        DropdownMenuItem(
+                            shape =
+                                if (actions.customActions.size == 1) MenuDefaults.standaloneItemShape
+                                else when (i) {
+                                    0 -> MenuDefaults.leadingItemShape
+                                    actions.customActions.lastIndex -> MenuDefaults.trailingItemShape
+                                    else -> MenuDefaults.middleItemShape
+                                },
+                            leadingIcon = {
+                                CustomActionIcon(action, playerPackage)
+                            },
+                            text = {
+                                Text(
+                                    text = action.name.toString(),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            },
+                            onClick = {
+                                onActionSelected(action)
+                            }
+                        )
+                    }
                 }
             }
         }

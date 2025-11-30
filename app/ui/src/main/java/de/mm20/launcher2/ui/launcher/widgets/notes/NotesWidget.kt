@@ -23,11 +23,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
@@ -255,103 +257,118 @@ fun NotesWidget(
                         tooltipText = stringResource(R.string.action_more_actions)
                     ) {
                         IconButton(onClick = { showMenu = true }) {
-                            Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
+                            Icon(
+                                painterResource(R.drawable.more_vert_24px),
+                                stringResource(R.string.action_more_actions)
+                            )
                         }
                     }
-                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.notes_widget_action_new)) },
-                            leadingIcon = {
-                                Icon(painterResource(R.drawable.add_24px), null)
-                            },
-                            onClick = {
-                                val newWidget = NotesWidget(
-                                    id = UUID.randomUUID(),
-                                )
-                                onWidgetAdd(newWidget, 1)
-                                showMenu = false
-                            },
-                        )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.menu_share)) },
-                            leadingIcon = {
-                                Icon(painterResource(R.drawable.share_24px), null)
-                            },
-                            onClick = {
-                                Intent(Intent.ACTION_SEND).apply {
-                                    type = "text/plain"
-                                    putExtra(Intent.EXTRA_TEXT, text.text)
-                                    context.startActivity(Intent.createChooser(this, null))
-                                }
-                                showMenu = false
-                            },
-                        )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.notes_widget_action_save)) },
-                            leadingIcon = {
-                                Icon(painterResource(R.drawable.file_save_24px), null)
-                            },
-                            onClick = {
-                                val fileName = getDefaultNoteFileName(context)
-                                exportLauncher.launch(fileName)
-                                showMenu = false
-                            },
-                        )
-                        if (widget.config.linkedFile == null) {
+                    DropdownMenuPopup(
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false }) {
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShapes(),
+                        ) {
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.note_widget_link_file)) },
+                                shape = MenuDefaults.leadingItemShape,
+                                text = { Text(stringResource(R.string.notes_widget_action_new)) },
                                 leadingIcon = {
-                                    Icon(painterResource(R.drawable.link_24px), null)
+                                    Icon(painterResource(R.drawable.add_24px), null)
                                 },
                                 onClick = {
-                                    linkFileLauncher.launch(getDefaultNoteFileName(context))
+                                    val newWidget = NotesWidget(
+                                        id = UUID.randomUUID(),
+                                    )
+                                    onWidgetAdd(newWidget, 1)
                                     showMenu = false
                                 },
                             )
-                        } else {
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.note_widget_action_unlink_file)) },
+                                shape = MenuDefaults.middleItemShape,
+                                text = { Text(stringResource(R.string.menu_share)) },
                                 leadingIcon = {
-                                    Icon(painterResource(R.drawable.link_off_24px), null)
+                                    Icon(painterResource(R.drawable.share_24px), null)
                                 },
                                 onClick = {
-                                    viewModel.unlinkFile(context)
+                                    Intent(Intent.ACTION_SEND).apply {
+                                        type = "text/plain"
+                                        putExtra(Intent.EXTRA_TEXT, text.text)
+                                        context.startActivity(Intent.createChooser(this, null))
+                                    }
+                                    showMenu = false
+                                },
+                            )
+                            DropdownMenuItem(
+                                shape = MenuDefaults.middleItemShape,
+                                text = { Text(stringResource(R.string.notes_widget_action_save)) },
+                                leadingIcon = {
+                                    Icon(painterResource(R.drawable.file_save_24px), null)
+                                },
+                                onClick = {
+                                    val fileName = getDefaultNoteFileName(context)
+                                    exportLauncher.launch(fileName)
+                                    showMenu = false
+                                },
+                            )
+                            if (widget.config.linkedFile == null) {
+                                DropdownMenuItem(
+                                    shape = MenuDefaults.middleItemShape,
+                                    text = { Text(stringResource(R.string.note_widget_link_file)) },
+                                    leadingIcon = {
+                                        Icon(painterResource(R.drawable.link_24px), null)
+                                    },
+                                    onClick = {
+                                        linkFileLauncher.launch(getDefaultNoteFileName(context))
+                                        showMenu = false
+                                    },
+                                )
+                            } else {
+                                DropdownMenuItem(
+                                    shape = MenuDefaults.middleItemShape,
+                                    text = { Text(stringResource(R.string.note_widget_action_unlink_file)) },
+                                    leadingIcon = {
+                                        Icon(painterResource(R.drawable.link_off_24px), null)
+                                    },
+                                    onClick = {
+                                        viewModel.unlinkFile(context)
+                                        showMenu = false
+                                    },
+                                )
+                            }
+                            DropdownMenuItem(
+                                shape = MenuDefaults.trailingItemShape,
+                                text = { Text(stringResource(R.string.notes_widget_action_dismiss)) },
+                                leadingIcon = {
+                                    Icon(painterResource(R.drawable.delete_24px), null)
+                                },
+                                onClick = {
+                                    val wasLast = isLastWidget != false
+
+                                    if (wasLast) {
+                                        viewModel.updateWidgetContent(NotesWidgetConfig())
+                                    } else {
+                                        viewModel.dismissWidget(widget)
+                                    }
+
+                                    lifecycleOwner.lifecycleScope.launch {
+                                        val result = snackbarHostState.showSnackbar(
+                                            message = context.getString(R.string.notes_widget_dismissed),
+                                            actionLabel = context.getString(R.string.action_undo),
+                                            duration = SnackbarDuration.Short,
+                                        )
+                                        if (result == SnackbarResult.ActionPerformed) {
+                                            if (wasLast) {
+                                                viewModel.updateWidgetContent(widget.config)
+                                            } else {
+                                                onWidgetAdd(widget, 0)
+                                            }
+                                        }
+                                    }
+
                                     showMenu = false
                                 },
                             )
                         }
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.notes_widget_action_dismiss)) },
-                            leadingIcon = {
-                                Icon(painterResource(R.drawable.delete_24px), null)
-                            },
-                            onClick = {
-                                val wasLast = isLastWidget != false
-
-                                if (wasLast) {
-                                    viewModel.updateWidgetContent(NotesWidgetConfig())
-                                } else {
-                                    viewModel.dismissWidget(widget)
-                                }
-
-                                lifecycleOwner.lifecycleScope.launch {
-                                    val result = snackbarHostState.showSnackbar(
-                                        message = context.getString(R.string.notes_widget_dismissed),
-                                        actionLabel = context.getString(R.string.action_undo),
-                                        duration = SnackbarDuration.Short,
-                                    )
-                                    if (result == SnackbarResult.ActionPerformed) {
-                                        if (wasLast) {
-                                            viewModel.updateWidgetContent(widget.config)
-                                        } else {
-                                            onWidgetAdd(widget, 0)
-                                        }
-                                    }
-                                }
-
-                                showMenu = false
-                            },
-                        )
                     }
                 }
             }
@@ -424,10 +441,10 @@ fun NoteWidgetConflictResolveSheet(
                 selected = selectedStrategy == LinkedFileConflictStrategy.KeepFile,
                 onSelect = { selectedStrategy = LinkedFileConflictStrategy.KeepFile },
             )
-            Column (
+            Column(
                 modifier = Modifier.padding(top = 8.dp),
-            ){
-                OutlinedButton (
+            ) {
+                OutlinedButton(
                     onClick = { onResolve(LinkedFileConflictStrategy.Unlink) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.outlinedButtonColors(

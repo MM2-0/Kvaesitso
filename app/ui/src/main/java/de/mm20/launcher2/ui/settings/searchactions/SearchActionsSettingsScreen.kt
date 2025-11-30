@@ -16,12 +16,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -57,7 +58,7 @@ import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object SearchActionsSettingsRoute: NavKey
+data object SearchActionsSettingsRoute : NavKey
 
 @Composable
 fun SearchActionsSettingsScreen() {
@@ -102,14 +103,18 @@ fun SearchActionsSettingsScreen() {
                             backStack.removeLastOrNull()
                         }
                     }) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
+                        Icon(
+                            painterResource(R.drawable.arrow_back_24px),
+                            contentDescription = "Back"
+                        )
                     }
                 },
                 actions = {
                     IconButton(onClick = { viewModel.createAction() }) {
                         Icon(
                             painterResource(R.drawable.add_24px),
-                            contentDescription = null)
+                            contentDescription = null
+                        )
                     }
                     IconButton(onClick = {
                         CustomTabsIntent.Builder()
@@ -193,41 +198,50 @@ fun SearchActionsSettingsScreen() {
                                             showDropdown = true
                                         }
                                     ) {
-                                        Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.edit))
-                                        DropdownMenu(
+                                        Icon(
+                                            painterResource(R.drawable.more_vert_24px),
+                                            stringResource(R.string.edit)
+                                        )
+                                        DropdownMenuPopup(
                                             expanded = showDropdown,
                                             onDismissRequest = { showDropdown = false }
                                         ) {
-                                            DropdownMenuItem(
-                                                leadingIcon = {
-                                                    Icon(
-                                                        painterResource(R.drawable.edit_24px),
-                                                        contentDescription = null
-                                                    )
-                                                },
-                                                text = {
-                                                    Text(stringResource(R.string.edit))
-                                                },
-                                                onClick = {
-                                                    viewModel.editAction(item)
-                                                    showDropdown = false
-                                                }
-                                            )
-                                            DropdownMenuItem(
-                                                leadingIcon = {
-                                                    Icon(
-                                                        painterResource(R.drawable.delete_24px),
-                                                        contentDescription = null
-                                                    )
-                                                },
-                                                text = {
-                                                    Text(stringResource(R.string.menu_delete))
-                                                },
-                                                onClick = {
-                                                    viewModel.removeAction(item)
-                                                    showDropdown = false
-                                                }
-                                            )
+                                            DropdownMenuGroup(
+                                                shapes = MenuDefaults.groupShapes()
+                                            ) {
+                                                DropdownMenuItem(
+                                                    shape = MenuDefaults.leadingItemShape,
+                                                    leadingIcon = {
+                                                        Icon(
+                                                            painterResource(R.drawable.edit_24px),
+                                                            contentDescription = null
+                                                        )
+                                                    },
+                                                    text = {
+                                                        Text(stringResource(R.string.edit))
+                                                    },
+                                                    onClick = {
+                                                        viewModel.editAction(item)
+                                                        showDropdown = false
+                                                    }
+                                                )
+                                                DropdownMenuItem(
+                                                    shape = MenuDefaults.trailingItemShape,
+                                                    leadingIcon = {
+                                                        Icon(
+                                                            painterResource(R.drawable.delete_24px),
+                                                            contentDescription = null
+                                                        )
+                                                    },
+                                                    text = {
+                                                        Text(stringResource(R.string.menu_delete))
+                                                    },
+                                                    onClick = {
+                                                        viewModel.removeAction(item)
+                                                        showDropdown = false
+                                                    }
+                                                )
+                                            }
                                         }
                                     }
                                 }

@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -61,13 +64,17 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                     modifier = Modifier
                         .size(48.dp)
                 ) {
-                    DropdownMenu(
+                    DropdownMenuPopup(
                         expanded = showMenu,
                         onDismissRequest = { showMenu = false },
                         modifier = Modifier.animateContentSize()
                     ) {
-                        OverflowMenuItems(items = actions.subList(slots - 1, actions.size)) {
-                            showMenu = false
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShapes()
+                        ) {
+                            OverflowMenuItems(items = actions.subList(slots - 1, actions.size)) {
+                                showMenu = false
+                            }
                         }
                     }
                 }
@@ -102,13 +109,17 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                                     .size(48.dp)
                                     .offset(0.dp, LocalWindowPosition.current.toDp())
                             ) {
-                                DropdownMenu(
+                                DropdownMenuPopup(
                                     expanded = showMenu,
                                     onDismissRequest = { showMenu = false },
                                     modifier = Modifier.animateContentSize()
                                 ) {
-                                    OverflowMenuItems(items = action.children) {
-                                        showMenu = false
+                                    DropdownMenuGroup(
+                                        shapes = MenuDefaults.groupShapes()
+                                    ) {
+                                        OverflowMenuItems(items = action.children) {
+                                            showMenu = false
+                                        }
                                     }
                                 }
                             }
@@ -138,7 +149,12 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                             Icon(painterResource(action.icon), null)
                         },
                         trailingIcon = {
-                            Icon(painterResource(R.drawable.chevron_forward_24px), null)
+                            Icon(painterResource(R.drawable.arrow_right_24px), null)
+                        },
+                        shape = when {
+                            i == 0 -> MenuDefaults.leadingItemShape
+                            i == items.lastIndex -> MenuDefaults.trailingItemShape
+                            else -> MenuDefaults.middleItemShape
                         }
                     )
                 }
@@ -156,6 +172,11 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                         },
                         leadingIcon = {
                             Icon(painterResource(action.icon), null)
+                        },
+                        shape = when {
+                            i == 0 -> MenuDefaults.leadingItemShape
+                            i == items.lastIndex -> MenuDefaults.trailingItemShape
+                            else -> MenuDefaults.middleItemShape
                         }
                     )
                 }

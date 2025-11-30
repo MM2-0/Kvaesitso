@@ -16,9 +16,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
@@ -182,31 +184,54 @@ fun IconPicker(
                             contentDescription = null
                         )
                     }
-                    DropdownMenu(
+                    DropdownMenuPopup(
+
                         expanded = showIconPackFilter,
-                        onDismissRequest = { showIconPackFilter = false }) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
-                            onClick = {
-                                showIconPackFilter = false
-                                filterIconPack = null
-                                scope.launch {
-                                    viewModel.searchIcon(query, filterIconPack)
-                                }
-                            }
-                        )
-                        installedIconPacks?.forEach { iconPack ->
+                        onDismissRequest = { showIconPackFilter = false }
+                    ) {
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShapes()
+                        ) {
                             DropdownMenuItem(
+                                selected = filterIconPack == null,
+                                shapes = MenuDefaults.itemShape(
+                                    0,
+                                    installedIconPacks?.size?.plus(1) ?: 1
+                                ),
+                                text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
                                 onClick = {
                                     showIconPackFilter = false
-                                    filterIconPack = iconPack
+                                    filterIconPack = null
                                     scope.launch {
                                         viewModel.searchIcon(query, filterIconPack)
                                     }
                                 },
-                                text = {
-                                    Text(iconPack.name)
-                                })
+                                checkedLeadingIcon = {
+                                    Icon(painterResource(R.drawable.check_24px), null)
+                                }
+                            )
+                            installedIconPacks?.forEachIndexed { i, iconPack ->
+                                DropdownMenuItem(
+                                    selected = filterIconPack == iconPack,
+                                    shapes = MenuDefaults.itemShape(
+                                        i + 1,
+                                        installedIconPacks!!.size + 1
+                                    ),
+                                    onClick = {
+                                        showIconPackFilter = false
+                                        filterIconPack = iconPack
+                                        scope.launch {
+                                            viewModel.searchIcon(query, filterIconPack)
+                                        }
+                                    },
+                                    text = {
+                                        Text(iconPack.name)
+                                    },
+                                    checkedLeadingIcon = {
+                                        Icon(painterResource(R.drawable.check_24px), null)
+                                    },
+                                )
+                            }
                         }
                     }
                     Text(

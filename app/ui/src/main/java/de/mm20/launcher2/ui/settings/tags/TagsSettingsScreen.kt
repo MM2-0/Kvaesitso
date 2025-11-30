@@ -1,10 +1,11 @@
 package de.mm20.launcher2.ui.settings.tags
 
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,7 +27,7 @@ import de.mm20.launcher2.ui.launcher.sheets.EditTagSheet
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object TagsSettingsRoute: NavKey
+data object TagsSettingsRoute : NavKey
 
 @Composable
 fun TagsSettingsScreen() {
@@ -38,7 +39,10 @@ fun TagsSettingsScreen() {
         title = stringResource(R.string.preference_screen_tags),
         topBarActions = {
             IconButton(onClick = { viewModel.createTag.value = true }) {
-                Icon(painterResource(R.drawable.add_24px), stringResource(R.string.edit_favorites_dialog_new_tag))
+                Icon(
+                    painterResource(R.drawable.add_24px),
+                    stringResource(R.string.edit_favorites_dialog_new_tag)
+                )
             }
         },
         helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/concepts/tags"
@@ -65,25 +69,41 @@ fun TagsSettingsScreen() {
                             IconButton(onClick = { showMenu = true }) {
                                 Icon(painterResource(R.drawable.more_vert_24px), null)
                             }
-                            DropdownMenu(
+                            DropdownMenuPopup(
                                 expanded = showMenu,
                                 onDismissRequest = { showMenu = false }) {
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.duplicate)) },
-                                    leadingIcon = { Icon(painterResource(R.drawable.content_copy_24px), null) },
-                                    onClick = {
-                                        viewModel.duplicateTag(tag)
-                                        showMenu = false
-                                    }
-                                )
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.menu_delete)) },
-                                    leadingIcon = { Icon(painterResource(R.drawable.delete_24px), null) },
-                                    onClick = {
-                                        viewModel.deleteTag(tag)
-                                        showMenu = false
-                                    }
-                                )
+                                DropdownMenuGroup(
+                                    shapes = MenuDefaults.groupShapes()
+                                ) {
+                                    DropdownMenuItem(
+                                        shape = MenuDefaults.leadingItemShape,
+                                        text = { Text(stringResource(R.string.duplicate)) },
+                                        leadingIcon = {
+                                            Icon(
+                                                painterResource(R.drawable.content_copy_24px),
+                                                null
+                                            )
+                                        },
+                                        onClick = {
+                                            viewModel.duplicateTag(tag)
+                                            showMenu = false
+                                        }
+                                    )
+                                    DropdownMenuItem(
+                                        shape = MenuDefaults.trailingItemShape,
+                                        text = { Text(stringResource(R.string.menu_delete)) },
+                                        leadingIcon = {
+                                            Icon(
+                                                painterResource(R.drawable.delete_24px),
+                                                null
+                                            )
+                                        },
+                                        onClick = {
+                                            viewModel.deleteTag(tag)
+                                            showMenu = false
+                                        }
+                                    )
+                                }
                             }
                         }
                     )

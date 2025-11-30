@@ -16,13 +16,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
@@ -50,7 +52,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
-import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
@@ -548,46 +549,74 @@ fun ConfigureClockWidgetSheet(
                         },
                         enabled = fillHeight == true,
                     )
-                    DropdownMenu(
+                    DropdownMenuPopup(
                         expanded = showDropdown,
                         onDismissRequest = { showDropdown = false }) {
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Icon(
-                                    painterResource(R.drawable.align_vertical_top_24px),
-                                    null
-                                )
-                            },
-                            text = { Text(stringResource(R.string.preference_clock_widget_alignment_top)) },
-                            onClick = {
-                                viewModel.setAlignment(ClockWidgetAlignment.Top)
-                                showDropdown = false
-                            }
-                        )
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Icon(
-                                    painterResource(R.drawable.align_vertical_center_24px),
-                                    null
-                                )
-                            },
-                            text = { Text(stringResource(R.string.preference_clock_widget_alignment_center)) },
-                            onClick = {
-                                viewModel.setAlignment(ClockWidgetAlignment.Center)
-                                showDropdown = false
-                            })
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Icon(
-                                    painterResource(R.drawable.align_vertical_bottom_24px),
-                                    null
-                                )
-                            },
-                            text = { Text(stringResource(R.string.preference_clock_widget_alignment_bottom)) },
-                            onClick = {
-                                viewModel.setAlignment(ClockWidgetAlignment.Bottom)
-                                showDropdown = false
-                            })
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShapes()
+                        ) {
+                            DropdownMenuItem(
+                                shapes = MenuDefaults.itemShape(0, 3),
+                                selected = alignment == ClockWidgetAlignment.Top,
+                                checkedLeadingIcon = {
+                                    Icon(
+                                        painterResource(R.drawable.check_24px),
+                                        null
+                                    )
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        painterResource(R.drawable.align_vertical_top_24px),
+                                        null
+                                    )
+                                },
+                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_top)) },
+                                onClick = {
+                                    viewModel.setAlignment(ClockWidgetAlignment.Top)
+                                    showDropdown = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                shapes = MenuDefaults.itemShape(1, 3),
+                                selected = alignment == ClockWidgetAlignment.Center,
+                                checkedLeadingIcon = {
+                                    Icon(
+                                        painterResource(R.drawable.check_24px),
+                                        null
+                                    )
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        painterResource(R.drawable.align_vertical_center_24px),
+                                        null
+                                    )
+                                },
+                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_center)) },
+                                onClick = {
+                                    viewModel.setAlignment(ClockWidgetAlignment.Center)
+                                    showDropdown = false
+                                })
+                            DropdownMenuItem(
+                                shapes = MenuDefaults.itemShape(2, 3),
+                                selected = alignment == ClockWidgetAlignment.Bottom,
+                                checkedLeadingIcon = {
+                                    Icon(
+                                        painterResource(R.drawable.check_24px),
+                                        null
+                                    )
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        painterResource(R.drawable.align_vertical_bottom_24px),
+                                        null
+                                    )
+                                },
+                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_bottom)) },
+                                onClick = {
+                                    viewModel.setAlignment(ClockWidgetAlignment.Bottom)
+                                    showDropdown = false
+                                })
+                        }
                     }
                 }
             }

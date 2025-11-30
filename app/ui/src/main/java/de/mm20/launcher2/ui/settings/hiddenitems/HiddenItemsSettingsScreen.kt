@@ -10,9 +10,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -209,95 +212,96 @@ private fun VisibilityDropdown(
     value: VisibilityLevel?,
     onValueChanged: (VisibilityLevel) -> Unit,
 ) {
-    DropdownMenu(expanded = expanded, onDismissRequest = onDismissRequest) {
-        Text(
-            text = stringResource(R.string.customize_item_visibility),
-            color = MaterialTheme.colorScheme.secondary,
-            style = MaterialTheme.typography.labelMedium,
-            modifier = Modifier.padding(
-                start = 48.dp,
-                top = 12.dp,
-                bottom = 8.dp,
-                end = 12.dp,
-            )
-        )
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    painterResource(R.drawable.visibility_24px_filled),
-                    contentDescription = null
-                )
-            },
-            text = {
+    DropdownMenuPopup(
+        expanded = expanded,
+        onDismissRequest = onDismissRequest,
+    ) {
+        DropdownMenuGroup(
+            shapes = MenuDefaults.groupShapes(),
+        ) {
+            MenuDefaults.Label {
                 Text(
-                    when (item) {
-                        is Application -> stringResource(R.string.item_visibility_app_default)
-                        is CalendarEvent -> stringResource(R.string.item_visibility_calendar_default)
-                        else -> stringResource(R.string.item_visibility_search_only)
-                    }
+                    text = stringResource(R.string.customize_item_visibility),
                 )
-            },
-            onClick = {
-                onValueChanged(VisibilityLevel.Default)
-            },
-            trailingIcon = {
-                if (value == VisibilityLevel.Default) {
-                    Icon(
-                        painterResource(R.drawable.check_24px),
-                        tint = MaterialTheme.colorScheme.primary,
-                        contentDescription = null
-                    )
-                }
             }
-        )
-        if (item is Application || item is CalendarEvent) {
+
+            val count = if (item is Application || item is CalendarEvent) 3 else 2
+
             DropdownMenuItem(
+                selected = value == VisibilityLevel.Default,
+                shapes = MenuDefaults.itemShape(0, count),
                 leadingIcon = {
                     Icon(
-                        painterResource(R.drawable.visibility_24px),
+                        painterResource(R.drawable.visibility_24px_filled),
+                        contentDescription = null
+                    )
+                },
+                checkedLeadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.check_24px),
                         contentDescription = null
                     )
                 },
                 text = {
-                    Text(stringResource(R.string.item_visibility_search_only))
+                    Text(
+                        when (item) {
+                            is Application -> stringResource(R.string.item_visibility_app_default)
+                            is CalendarEvent -> stringResource(R.string.item_visibility_calendar_default)
+                            else -> stringResource(R.string.item_visibility_search_only)
+                        }
+                    )
                 },
                 onClick = {
-                    onValueChanged(VisibilityLevel.SearchOnly)
+                    onValueChanged(VisibilityLevel.Default)
                 },
-                trailingIcon = {
-                    if (value == VisibilityLevel.SearchOnly) {
+            )
+            if (item is Application || item is CalendarEvent) {
+                DropdownMenuItem(
+                    selected = value == VisibilityLevel.SearchOnly,
+                    shapes = MenuDefaults.itemShape(1, count),
+                    leadingIcon = {
                         Icon(
-                            painterResource(R.drawable.check_24px),
-                            tint = MaterialTheme.colorScheme.primary,
+                            painterResource(R.drawable.visibility_24px),
                             contentDescription = null
                         )
-                    }
-                }
-            )
-        }
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    painterResource(R.drawable.visibility_off_24px),
-                    contentDescription = null
+                    },
+                    checkedLeadingIcon = {
+                        Icon(
+                            painterResource(R.drawable.check_24px),
+                            contentDescription = null
+                        )
+                    },
+                    text = {
+                        Text(stringResource(R.string.item_visibility_search_only))
+                    },
+                    onClick = {
+                        onValueChanged(VisibilityLevel.SearchOnly)
+                    },
                 )
-            },
-            text = {
-                Text(stringResource(R.string.item_visibility_hidden))
-            },
-            onClick = {
-                onValueChanged(VisibilityLevel.Hidden)
-            },
-            trailingIcon = {
-                if (value == VisibilityLevel.Hidden) {
+            }
+            DropdownMenuItem(
+                selected = value == VisibilityLevel.Hidden,
+                shapes = MenuDefaults.itemShape(count - 1, count),
+                leadingIcon = {
                     Icon(
-                        painterResource(R.drawable.check_24px),
-                        tint = MaterialTheme.colorScheme.primary,
+                        painterResource(R.drawable.visibility_off_24px),
                         contentDescription = null
                     )
-                }
-            }
-        )
+                },
+                checkedLeadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.check_24px),
+                        contentDescription = null
+                    )
+                },
+                text = {
+                    Text(stringResource(R.string.item_visibility_hidden))
+                },
+                onClick = {
+                    onValueChanged(VisibilityLevel.Hidden)
+                },
+            )
+        }
     }
 }
 

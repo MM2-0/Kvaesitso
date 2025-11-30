@@ -9,10 +9,13 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -79,20 +82,28 @@ fun ShapeSchemesSettingsScreen() {
                                     onClick = { showMenu = true }) {
                                     Icon(painterResource(R.drawable.more_vert_24px), null)
                                 }
-                                DropdownMenu(
+                                DropdownMenuPopup(
                                     expanded = showMenu,
                                     onDismissRequest = { showMenu = false }
                                 ) {
-                                    DropdownMenuItem(
-                                        leadingIcon = {
-                                            Icon(painterResource(R.drawable.content_copy_24px), null)
-                                        },
-                                        text = { Text(stringResource(R.string.duplicate)) },
-                                        onClick = {
-                                            viewModel.duplicate(theme)
-                                            showMenu = false
-                                        }
-                                    )
+                                    DropdownMenuGroup(
+                                        shapes = MenuDefaults.groupShapes(),
+                                    ) {
+                                        DropdownMenuItem(
+                                            shape = MenuDefaults.standaloneItemShape,
+                                            leadingIcon = {
+                                                Icon(
+                                                    painterResource(R.drawable.content_copy_24px),
+                                                    null
+                                                )
+                                            },
+                                            text = { Text(stringResource(R.string.duplicate)) },
+                                            onClick = {
+                                                viewModel.duplicate(theme)
+                                                showMenu = false
+                                            }
+                                        )
+                                    }
                                 }
                             }
                         },
@@ -121,40 +132,56 @@ fun ShapeSchemesSettingsScreen() {
                                         onClick = { showMenu = true }) {
                                         Icon(painterResource(R.drawable.more_vert_24px), null)
                                     }
-                                    DropdownMenu(
+                                    DropdownMenuPopup(
                                         expanded = showMenu,
                                         onDismissRequest = { showMenu = false }
                                     ) {
-                                        DropdownMenuItem(
-                                            leadingIcon = {
-                                                Icon(painterResource(R.drawable.edit_24px), null)
-                                            },
-                                            text = { Text(stringResource(R.string.edit)) },
-                                            onClick = {
-                                                backStack.add(ShapeSchemeSettingsRoute(id = theme.id))
-                                                showMenu = false
-                                            }
-                                        )
-                                        DropdownMenuItem(
-                                            leadingIcon = {
-                                                Icon(painterResource(R.drawable.content_copy_24px), null)
-                                            },
-                                            text = { Text(stringResource(R.string.duplicate)) },
-                                            onClick = {
-                                                viewModel.duplicate(theme)
-                                                showMenu = false
-                                            }
-                                        )
-                                        DropdownMenuItem(
-                                            leadingIcon = {
-                                                Icon(painterResource(R.drawable.delete_24px), null)
-                                            },
-                                            text = { Text(stringResource(R.string.menu_delete)) },
-                                            onClick = {
-                                                deleteShapes = theme
-                                                showMenu = false
-                                            }
-                                        )
+                                        DropdownMenuGroup(
+                                            shapes = MenuDefaults.groupShapes(),
+                                        ) {
+                                            DropdownMenuItem(
+                                                shape = MenuDefaults.leadingItemShape,
+                                                leadingIcon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.edit_24px),
+                                                        null
+                                                    )
+                                                },
+                                                text = { Text(stringResource(R.string.edit)) },
+                                                onClick = {
+                                                    backStack.add(ShapeSchemeSettingsRoute(id = theme.id))
+                                                    showMenu = false
+                                                }
+                                            )
+                                            DropdownMenuItem(
+                                                shape = MenuDefaults.middleItemShape,
+                                                leadingIcon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.content_copy_24px),
+                                                        null
+                                                    )
+                                                },
+                                                text = { Text(stringResource(R.string.duplicate)) },
+                                                onClick = {
+                                                    viewModel.duplicate(theme)
+                                                    showMenu = false
+                                                }
+                                            )
+                                            DropdownMenuItem(
+                                                shape = MenuDefaults.trailingItemShape,
+                                                leadingIcon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.delete_24px),
+                                                        null
+                                                    )
+                                                },
+                                                text = { Text(stringResource(R.string.menu_delete)) },
+                                                onClick = {
+                                                    deleteShapes = theme
+                                                    showMenu = false
+                                                }
+                                            )
+                                        }
                                     }
                                 }
                             },

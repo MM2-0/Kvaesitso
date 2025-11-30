@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.SplitButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,7 +42,7 @@ import de.mm20.launcher2.ui.component.preferences.TextPreference
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object ExportThemeSettingsRoute: NavKey
+data object ExportThemeSettingsRoute : NavKey
 
 @Composable
 fun ExportThemeSettingsScreen() {
@@ -188,22 +190,27 @@ fun ExportThemeSettingsScreen() {
                             contentDescription = null
                         )
 
-                        DropdownMenu(
+                        DropdownMenuPopup(
                             expanded = showDropdown,
                             onDismissRequest = { showDropdown = false }) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.save_as_file)) },
-                                onClick = {
-                                    fileChooserLauncher.launch("${viewModel.themeName}.kvtheme")
-                                    showDropdown = false
-                                },
-                                leadingIcon = {
-                                    Icon(
-                                        painterResource(R.drawable.save_24px),
-                                        contentDescription = null
-                                    )
-                                }
-                            )
+                            DropdownMenuGroup(
+                                shapes = MenuDefaults.groupShapes()
+                            ) {
+                                DropdownMenuItem(
+                                    shape = MenuDefaults.standaloneItemShape,
+                                    text = { Text(stringResource(R.string.save_as_file)) },
+                                    onClick = {
+                                        fileChooserLauncher.launch("${viewModel.themeName}.kvtheme")
+                                        showDropdown = false
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            painterResource(R.drawable.save_24px),
+                                            contentDescription = null
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
                 }
