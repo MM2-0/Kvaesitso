@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -39,7 +39,7 @@ fun SearchActionIcon(
     size: Dp = 20.dp
 ) {
     val tint = when (color) {
-        0 -> MaterialTheme.colorScheme.primary
+        0 -> LocalContentColor.current
         1 -> Color.Unspecified
         else -> Color(color)
     }

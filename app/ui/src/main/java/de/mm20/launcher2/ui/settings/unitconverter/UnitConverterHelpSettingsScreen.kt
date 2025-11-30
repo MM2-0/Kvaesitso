@@ -59,7 +59,7 @@ fun UnitConverterHelpSettingsScreen() {
                                 .background(MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.shapes.extraSmall),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Text(unit.symbol, style = MaterialTheme.typography.labelSmall)
+                            Text(unit.symbol, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSecondaryContainer)
                         }
                     },
                 )

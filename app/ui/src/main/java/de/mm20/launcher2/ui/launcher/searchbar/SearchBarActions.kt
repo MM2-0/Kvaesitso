@@ -50,6 +50,9 @@ fun ColumnScope.SearchBarActions(
                     colors = if (it == highlightedAction) {
                         AssistChipDefaults.assistChipColors(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            labelColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                            leadingIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                            trailingIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                         )
                     } else AssistChipDefaults.assistChipColors(),
                     border = if (it == highlightedAction) {
