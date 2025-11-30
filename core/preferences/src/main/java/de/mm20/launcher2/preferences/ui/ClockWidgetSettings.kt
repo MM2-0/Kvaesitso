@@ -145,15 +145,6 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
-    val timeFormat
-        get() = launcherDataStore.data.map { it.localeTimeFormat }
-
-    fun setTimeFormat(timeFormat: TimeFormat) {
-        launcherDataStore.update {
-            it.copy(localeTimeFormat = timeFormat)
-        }
-    }
-
     val useThemeColor
         get() = launcherDataStore.data.map { it.clockWidgetUseThemeColor }
 

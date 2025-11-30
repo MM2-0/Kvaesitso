@@ -64,13 +64,6 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setMonospaced(monospaced)
     }
 
-    val timeFormat = settings.timeFormat
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), TimeFormat.System)
-
-    fun setTimeFormat(timeFormat: TimeFormat) {
-        settings.setTimeFormat(timeFormat)
-    }
-
     val useThemeColor = settings.useThemeColor
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 

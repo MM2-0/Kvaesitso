@@ -120,27 +120,6 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
     val autoLocation = weatherSettings.autoLocation
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val measurementSystem = weatherSettings.measurementSystem
-        .map { ms ->
-            if (ms == MeasurementSystem.System) {
-                return@map if (isAtLeastApiLevel(28)) {
-                    val systemMs = LocaleData.getMeasurementSystem(ULocale.getDefault())
-                    when (systemMs) {
-                        LocaleData.MeasurementSystem.UK -> MeasurementSystem.UnitedKingdom
-                        LocaleData.MeasurementSystem.US -> MeasurementSystem.UnitedStates
-                        else -> MeasurementSystem.Metric
-                    }
-                } else {
-                    MeasurementSystem.Metric
-                }
-            }
-            return@map ms
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), MeasurementSystem.Metric)
-
-    val timeFormat = weatherSettings.timeFormat
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), TimeFormat.TwentyFourHour)
-
     fun selectDay(index: Int) {
         selectedDayIndex = min(index, forecasts.lastIndex)
     }

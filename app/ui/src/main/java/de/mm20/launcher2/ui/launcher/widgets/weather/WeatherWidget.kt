@@ -4,7 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.text.format.DateFormat
+import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -79,6 +79,8 @@ import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
+import de.mm20.launcher2.ui.locals.LocalMeasurementSystem
+import de.mm20.launcher2.ui.locals.LocalTimeFormat
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.ui.utils.formatPercent
 import de.mm20.launcher2.ui.utils.formatPrecipitation
@@ -87,10 +89,7 @@ import de.mm20.launcher2.ui.utils.formatTemperature
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.widgets.WeatherWidget
-import kotlinx.coroutines.flow.map
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.util.Locale
 
 @Composable
 fun WeatherWidget(widget: WeatherWidget) {
@@ -107,16 +106,9 @@ fun WeatherWidget(widget: WeatherWidget) {
 
     val selectedForecast by viewModel.currentForecast
 
-    val measurementSystem by viewModel.measurementSystem.collectAsState()
-    val timeFormat by remember(context) {
-        viewModel.timeFormat.map {
-            if (it == TimeFormat.System) {
-                if (android.text.format.DateFormat.is24HourFormat(context)) TimeFormat.TwentyFourHour else TimeFormat.TwelveHour
-            } else {
-                it
-            }
-        }
-    }.collectAsState(TimeFormat.TwentyFourHour)
+    val measurementSystem = LocalMeasurementSystem.current
+    val timeFormat = LocalTimeFormat.current
+
     val compactMode = !widget.config.showForecast
 
     val isProviderAvailable by viewModel.isProviderAvailable.collectAsStateWithLifecycle(true)
@@ -475,8 +467,6 @@ fun WeatherTimeSelector(
 ) {
     val context = LocalContext.current
 
-    val useFahrenheit = measurementSystem == MeasurementSystem.UnitedStates
-
     val listState = rememberLazyListState()
     LazyRow(
         state = listState,
@@ -647,12 +637,17 @@ fun WeatherDaySelector(
 }
 
 private fun formatTime(context: Context, timestamp: Long, timeFormat: TimeFormat): String {
-    val skeleton = if (timeFormat == TimeFormat.TwelveHour) "h:mm a" else "H:mm"
-    val dateFormat = SimpleDateFormat(
-        DateFormat.getBestDateTimePattern(Locale.getDefault(), skeleton),
-        Locale.getDefault()
+    val timeFormatFlag = when (timeFormat) {
+        TimeFormat.TwelveHour -> DateUtils.FORMAT_12HOUR
+        TimeFormat.TwentyFourHour -> DateUtils.FORMAT_24HOUR
+        else -> 0
+    }
+
+    return DateUtils.formatDateTime(
+        context,
+        timestamp,
+        DateUtils.FORMAT_SHOW_TIME or timeFormatFlag
     )
-    return dateFormat.format(timestamp)
 }
 
 @Composable

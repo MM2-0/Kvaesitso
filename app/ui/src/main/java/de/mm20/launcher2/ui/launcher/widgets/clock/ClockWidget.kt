@@ -66,6 +66,7 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.OrbitClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.SegmentClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
+import de.mm20.launcher2.ui.locals.LocalTimeFormat
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreenVM
 import de.mm20.launcher2.ui.utils.isTwentyFourHours
 import org.koin.compose.koinInject
@@ -251,16 +252,15 @@ fun Clock(
     darkColors: Boolean = false
 ) {
     val time = LocalTime.current
+    val timeFormat = LocalTimeFormat.current
     val context = LocalContext.current
     val clockSettings: ClockWidgetSettings = koinInject()
     val showSeconds by clockSettings.showSeconds.collectAsState(initial = false)
     val monospaced by clockSettings.monospaced.collectAsState(initial = false)
     val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = false)
-    val timeFormat by clockSettings.timeFormat.collectAsState(null)
 
-    if (timeFormat == null) return
 
-    val isTwentyFourHours = timeFormat!!.isTwentyFourHours(context)
+    val isTwentyFourHours = timeFormat.isTwentyFourHours(context)
 
     when (style) {
         is ClockWidgetStyle.Digital1 -> DigitalClock1(
