@@ -998,5 +998,12 @@
     <string name="preference_screen_locale_summary">Taal, eenheden, tijdformaat</string>
     <string name="preference_language">Taal</string>
     <string name="preference_value_system_default">Systeemstandaard</string>
+    <string name="preference_form_of_address">Aanspreking</string>
+    <string name="preference_form_of_address_neutral">Neutraal</string>
+    <string name="preference_form_of_address_fem">Vrouwelijk</string>
+    <string name="preference_form_of_address_masc">Mannelijk</string>
+    <string name="preference_measurement_system">Eenheden</string>
     <string name="preference_measurement_system_metric">Metrisch</string>
+    <string name="preference_measurement_system_uk">Verenigd Koninkrijk</string>
+    <string name="preference_measurement_system_us">Verenigde Staten</string>
 </resources>
