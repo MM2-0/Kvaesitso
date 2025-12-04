@@ -879,4 +879,12 @@
     <string name="preference_screen_locale_summary">שפה, יחידות-מידה, תבנית הזמן</string>
     <string name="preference_language">שפה</string>
     <string name="preference_value_system_default">ברירת-המחדל של המערכת</string>
+    <string name="preference_form_of_address">נוסח פנייה מיגדרי</string>
+    <string name="preference_form_of_address_neutral">נייטרלי</string>
+    <string name="preference_form_of_address_fem">לשון נקבה</string>
+    <string name="preference_form_of_address_masc">לשון זכר</string>
+    <string name="preference_measurement_system">יחידות המידה</string>
+    <string name="preference_measurement_system_metric">מטרית</string>
+    <string name="preference_measurement_system_uk">הממלכה המאוחדת</string>
+    <string name="preference_measurement_system_us">ארצות הברית</string>
 </resources>
