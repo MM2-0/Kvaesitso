@@ -119,7 +119,8 @@ public class CrashUtil {
 
             Intent intent = new Intent();
             intent.setComponent(new ComponentName(context.getPackageName(), "de.mm20.launcher2.ui.settings.SettingsActivity"));
-            intent.putExtra("de.mm20.launcher2.settings.ROUTE", "settings/debug/crashreporter/report?fileName=" + URLEncoder.encode(filePath, "utf8"));
+            intent.putExtra("de.mm20.launcher2.settings.ROUTE", "settings/debug/crashreport");
+            intent.putExtra("crash_report_path", filePath);
             intent.setAction(Long.toString(System.currentTimeMillis()));
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);

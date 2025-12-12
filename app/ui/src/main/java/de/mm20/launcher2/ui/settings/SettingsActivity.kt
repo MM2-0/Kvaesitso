@@ -382,6 +382,9 @@ class SettingsActivity : BaseActivity() {
             ROUTE_MEDIA_INTEGRATION -> MediaIntegrationSettingsRoute
             ROUTE_SEARCH_ACTIONS -> SearchActionsSettingsRoute
             ROUTE_HIDDEN_ITEMS -> HiddenItemsSettingsRoute
+            ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
+                CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
+            }
             else -> null
         }
     }
@@ -392,5 +395,7 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_MEDIA_INTEGRATION = "settings/integrations/media"
         const val ROUTE_SEARCH_ACTIONS = "settings/search/searchactions"
         const val ROUTE_HIDDEN_ITEMS = "settings/search/hiddenitems"
+        const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
+        const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"
     }
 }
