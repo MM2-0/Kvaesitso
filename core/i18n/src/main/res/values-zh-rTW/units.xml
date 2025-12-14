@@ -42,7 +42,7 @@
     <plurals name="unit_mile">
         <item quantity="other">英里</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_nautic_mile_symbol">海里</string>
     <plurals name="unit_nautic_mile">
         <item quantity="other">海哩</item>
     </plurals>
@@ -50,24 +50,26 @@
     <plurals name="unit_sqmeter">
         <item quantity="other">平方公尺</item>
     </plurals>
+    <string name="unit_sqkilometer_symbol">平方公里</string>
     <plurals name="unit_sqkilometer">
         <item quantity="other">平方公里</item>
     </plurals>
+    <string name="unit_sqcentimeter_symbol">平方釐米</string>
     <plurals name="unit_sqcentimeter">
         <item quantity="other">平方公分</item>
     </plurals>
     <plurals name="unit_sqmillimeter">
         <item quantity="other">平方公分</item>
     </plurals>
-    <string name="unit_sqinch_symbol">in²</string>
+    <string name="unit_sqinch_symbol">平方英寸</string>
     <plurals name="unit_sqinch">
         <item quantity="other">平方英吋</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">ft²</string>
+    <string name="unit_sqfoot_symbol">平方英尺</string>
     <plurals name="unit_sqfoot">
         <item quantity="other">平方英尺</item>
     </plurals>
-    <string name="unit_sqyard_symbol">yd²</string>
+    <string name="unit_sqyard_symbol">平方碼</string>
     <plurals name="unit_sqyard">
         <item quantity="other">平方碼</item>
     </plurals>
@@ -122,7 +124,7 @@
         <item quantity="other">吉比位元組</item>
     </plurals>
     <plurals name="unit_tebibyte">
-        <item quantity="other">特比位元組</item>
+        <item quantity="other">兆位元</item>
     </plurals>
     <plurals name="unit_bit">
         <item quantity="other">位元</item>
@@ -134,10 +136,11 @@
         <item quantity="other">兆位元</item>
     </plurals>
     <plurals name="unit_gigabit">
-        <item quantity="other">吉比特</item>
+        <item quantity="other">吉位元</item>
     </plurals>
+    <string name="unit_terabit_symbol">兆位元</string>
     <plurals name="unit_terabit">
-        <item quantity="other">太比特</item>
+        <item quantity="other">太位元</item>
     </plurals>
     <!-- UNITS OF VELOCITY -->
     <plurals name="unit_meter_per_second">
@@ -162,23 +165,23 @@
     <plurals name="unit_metric_ton">
         <item quantity="other">公噸</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_long_ton_symbol">英制噸</string>
     <plurals name="unit_long_ton">
         <item quantity="other">英噸</item>
     </plurals>
-    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_stone_symbol">英石</string>
     <plurals name="unit_stone">
         <item quantity="other">英石</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">磅</string>
     <plurals name="unit_pound">
         <item quantity="other">磅</item>
     </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">盎司</string>
     <plurals name="unit_ounce">
         <item quantity="other">盎司</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">美制吨</string>
     <plurals name="unit_short_ton">
         <item quantity="other">短噸</item>
     </plurals>
@@ -193,4 +196,72 @@
         <item quantity="other">克耳文</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
+    <string name="unit_liter_symbol">公升</string>
+    <plurals name="unit_liter">
+        <item quantity="other">公升</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">毫升</string>
+    <plurals name="unit_milliliter">
+        <item quantity="other">毫升</item>
+    </plurals>
+    <string name="unit_cubic_meter_symbol">立方米</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="other">立方米</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">立方釐米</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="other">立方釐米</item>
+    </plurals>
+    <string name="unit_cubic_millimeter_symbol">立方毫米</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="other">立方毫米</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">立方英寸</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="other">立方英寸</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">立方英尺</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="other">立方英尺</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">立方碼</string>
+    <plurals name="unit_cubic_yard">
+        <item quantity="other">立方碼</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">加侖</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="other">加侖</item>
+    </plurals>
+    <string name="unit_gallon_imp_symbol">英制加侖</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="other">英制加侖</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">品脫</string>
+    <plurals name="unit_pint_us">
+        <item quantity="other">品脫</item>
+    </plurals>
+    <string name="unit_pint_imp_symbol">英制品脫</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="other">英制品脫</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">液量盎司</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="other">液量盎司</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">英制液量盎司</string>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="other">英制液量盎司</item>
+    </plurals>
+    <string name="unit_cup_symbol">杯</string>
+    <plurals name="unit_cup">
+        <item quantity="other">杯</item>
+    </plurals>
+    <string name="unit_tablespoon_symbol">餐匙</string>
+    <plurals name="unit_tablespoon">
+        <item quantity="other">餐匙</item>
+    </plurals>
+    <string name="unit_teaspoon_symbol">茶匙</string>
+    <plurals name="unit_teaspoon">
+        <item quantity="other">茶匙</item>
+    </plurals>
 </resources>
