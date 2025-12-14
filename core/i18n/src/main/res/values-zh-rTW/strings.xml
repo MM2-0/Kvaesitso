@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="zh-rTW">
-    <string name="location_open">開啟</string>
-    <string name="location_closed">關閉</string>
+    <string name="location_open">營業中</string>
+    <string name="location_closed">已打烊</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
-    <string name="location_closes">關閉於 %1$s</string>
+    <string name="location_closes">將在 %1$s 打烊</string>
     <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
-    <string name="location_closes_other_day">關閉於 %1$s, %2$s</string>
+    <string name="location_closes_other_day">將在 %1$s, %2$s 打烊</string>
     <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
-    <string name="location_opens">開起於 %1$s</string>
+    <string name="location_opens">將在 %1$s 開始營業</string>
     <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
-    <string name="location_opens_other_day">開起於 %1$s, %2$s</string>
+    <string name="location_opens_other_day">將在 %1$s, %2$s 開始營業</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">分享</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store
      %1$s is the name of the app store (e.g. Google Play)-->
-    <string name="menu_share_store_link">連結 %1$s</string>
+    <string name="menu_share_store_link">在 %1$s 中打開</string>
     <!-- Share an APK file, shown in the app detail share menu -->
-    <string name="menu_share_apk_file">套件檔案</string>
+    <string name="menu_share_apk_file">APK安裝包</string>
     <!-- Uninstall an application -->
-    <string name="menu_uninstall">解除安裝</string>
+    <string name="menu_uninstall">卸載</string>
     <string name="menu_favorites_pin">釘選到我的最愛</string>
     <string name="menu_favorites_unpin">取消釘選</string>
     <string name="menu_back">返回</string>
     <string name="menu_app_info">應用程式資訊</string>
     <!-- Launch an app -->
     <string name="menu_launch">啟動</string>
-    <string name="menu_customize">自訂</string>
+    <string name="menu_customize">自定義</string>
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">開啟</string>
     <string name="menu_map">在地圖上檢視</string>
     <string name="menu_website">開啟網站</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
-    <string name="action_undo">復原動作</string>
+    <string name="action_undo">撤銷</string>
     <string name="action_import">匯入</string>
     <string name="action_done">完成</string>
     <string name="action_more_actions">更多動作</string>
@@ -137,7 +137,7 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">電子表格</string>
     <!-- Audio file -->
-    <string name="file_type_music">音樂檔案</string>
+    <string name="file_type_music">音頻檔案</string>
     <!-- Video file -->
     <string name="file_type_video">影片</string>
     <!-- Image file -->
@@ -217,20 +217,20 @@
     <string name="menu_edit_widgets">編輯小工具</string>
     <string name="widget_name_weather">天氣</string>
     <string name="widget_name_calendar">日曆</string>
-    <string name="widget_name_music">音樂</string>
+    <string name="widget_name_music">多媒體</string>
     <string name="widget_name_favorites">我的最愛</string>
     <string name="widget_name_notes">註記</string>
     <string name="widget_name_unknown">未知的應用程式小工具</string>
     <string name="widget_add_widget">新增小工具</string>
     <string name="widget_removed">小工具已移除</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">寫一個註記…</string>
+    <string name="notes_widget_placeholder">寫一個註記</string>
     <string name="notes_widget_action_new">新的註記</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">儲存</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_action_dismiss">解除</string>
-    <string name="notes_widget_dismissed">註記已被關閉。</string>
+    <string name="notes_widget_dismissed">註記已被關閉</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">由 %1$s</string>
     <!-- Close a dialog -->
@@ -256,7 +256,7 @@
     <string name="edit_favorites_dialog_empty_section">拖動項目到此</string>
     <string name="edit_favorites_dialog_tags">標籤</string>
     <string name="edit_favorites_dialog_tag_section_empty">被釘選的標籤將出現在這裡</string>
-    <string name="edit_favorites_dialog_new_tag">建立標籤…</string>
+    <string name="edit_favorites_dialog_new_tag">建立標籤</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud 伺服器 URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -364,11 +364,11 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">無可用的天氣資料。</string>
+    <string name="weather_no_data">無可用的天氣資料</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">設定位置</string>
-    <string name="weather_location_search_no_result">沒有找到位置。</string>
+    <string name="weather_location_search_no_result">沒有找到位置</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">需要位置存取權以便自動確定位置</string>
     <!-- Missing notification permission in music widget settings -->
@@ -562,6 +562,7 @@
     <string name="preference_clockwidget_layout_vertical">預設</string>
     <string name="preference_clockwidget_layout_horizontal">簡潔</string>
     <string name="preference_clock_widget_show_seconds">顯示秒數</string>
+    <string name="preference_clock_widget_monospaced">等寬字形</string>
     <string name="preference_clock_widget_time_format">時間格式</string>
     <string name="preference_clock_widget_time_format_24h">24 小時制</string>
     <string name="preference_clock_widget_time_format_12h">12 小時制</string>
@@ -575,6 +576,7 @@
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">顯示當前日期</string>
     <string name="preference_clockwidget_favorites_part_summary">顯示已釘選項目的第一行</string>
+    <string name="preference_clockwidget_dock_rows">固定欄</string>
     <string name="preference_clockwidget_music_part">媒體</string>
     <string name="preference_clockwidget_music_part_summary">在有活動媒體會話時顯示媒體控制元件</string>
     <string name="preference_clockwidget_battery_part">電池</string>
@@ -596,6 +598,7 @@
     <string name="preference_search_favorites">我的最愛</string>
     <string name="preference_search_favorites_summary">在應用程式抽屜上方顯示釘選與常用項目</string>
     <string name="preference_search_apps">應用程式</string>
+    <string name="preference_search_apps_summary">當搜索框為空時顯示所有應用程式</string>
     <string name="preference_search_files">檔案</string>
     <string name="preference_search_files_summary">搜尋本機檔案與雲伺服器檔案</string>
     <string name="preference_search_contacts">聯絡人</string>
@@ -952,6 +955,9 @@
     <string name="poi_category_fire_station">消防局</string>
     <string name="poi_category_courthouse">法院</string>
     <string name="poi_category_townhall">市政廳</string>
+    <string name="poi_category_stationery">文具店</string>
+    <string name="poi_category_climbing_gym">攀岩健身房</string>
+    <string name="poi_category_hackerspace">創意工坊</string>
     <string name="customize_item_label">名稱標籤</string>
     <string name="customize_item_tags">標籤</string>
     <string name="customize_item_visibility">顯示於</string>
@@ -1013,5 +1019,16 @@
     <string name="font_name_device_headline">預設標題字體</string>
     <string name="font_name_device_body">裝置文本字體</string>
     <string name="font_category_generic">一般</string>
+    <string name="preference_screen_locale">語言與地區</string>
+    <string name="preference_screen_locale_summary">語言，單位，時間單位</string>
+    <string name="preference_language">語言</string>
+    <string name="preference_value_system_default">系統默認</string>
+    <string name="preference_form_of_address">地址格式</string>
+    <string name="preference_form_of_address_neutral">地址格式</string>
+    <string name="preference_form_of_address_fem">地址格式</string>
+    <string name="preference_form_of_address_masc">地址格式</string>
+    <string name="preference_measurement_system">度量衡系統</string>
     <string name="preference_measurement_system_metric">公制</string>
+    <string name="preference_measurement_system_uk">英制單位</string>
+    <string name="preference_measurement_system_us">美制單位</string>
 </resources>
