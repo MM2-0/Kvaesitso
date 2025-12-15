@@ -194,6 +194,11 @@ data class LauncherSettingsData internal constructor(
     @JsonNames("clockWidgetTimeFormat")
     val localeTimeFormat: TimeFormat = TimeFormat.System,
     val localeMeasurementSystem: MeasurementSystem = MeasurementSystem.System,
+    /**
+     * The ID of the transliterator to use. The empty string means to pick a transliterator
+     * automatically. null disables the transliterator.
+     */
+    val localeTransliterator: String? = "",
 
 
     ) {

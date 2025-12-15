@@ -10,7 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import de.mm20.launcher2.ktx.normalize
+import de.mm20.launcher2.search.ResultScore
+import de.mm20.launcher2.search.StringNormalizer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,10 +23,12 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import java.text.Collator
 
 class WidgetPickerSheetVM(
     private val widgetsService: WidgetsService,
     private val packageManager: PackageManager,
+    private val stringNormalizer: StringNormalizer,
 ) : ViewModel() {
 
     val searchQuery = MutableStateFlow("")
@@ -41,9 +44,15 @@ class WidgetPickerSheetVM(
         .combine(searchQuery) { widgets, query ->
             if (query.isBlank()) return@combine widgets
             withContext(Dispatchers.IO) {
-                val normalizedQuery = query.normalize()
+                val normalizedQuery = stringNormalizer.normalize(query)
                 widgets.filter {
-                    it.label.normalize().contains(normalizedQuery)
+                    ResultScore.from(
+                        query = normalizedQuery,
+                        primaryFields = listOf(
+                            stringNormalizer.normalize(it.label),
+                            it.type
+                        )
+                    ).score >= 0.8f
                 }
             }
         }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(100))
@@ -57,9 +66,10 @@ class WidgetPickerSheetVM(
         .combine(searchQuery) { widgets, query ->
             if (query.isBlank()) return@combine widgets
             withContext(Dispatchers.IO) {
-                val normalizedQuery = query.normalize()
+                val normalizedQuery = stringNormalizer.normalize(query)
                 widgets.filter {
-                    if (it.loadLabel(packageManager).normalize().contains(normalizedQuery)) {
+                    val widgetNormalizedLabel = stringNormalizer.normalize(it.loadLabel(packageManager))
+                    if (widgetNormalizedLabel.contains(normalizedQuery)) {
                         return@filter true
                     }
                     val pkg = it.provider.packageName
@@ -68,8 +78,15 @@ class WidgetPickerSheetVM(
                     } catch (e: PackageManager.NameNotFoundException) {
                         return@filter false
                     }
-                    appInfo.loadLabel(packageManager).toString().normalize()
-                        .contains(normalizedQuery)
+                    val normalizedAppLabel = stringNormalizer.normalize(appInfo.loadLabel(packageManager).toString())
+
+                    ResultScore.from(
+                        query = normalizedQuery,
+                        primaryFields = listOf(
+                            widgetNormalizedLabel,
+                            normalizedAppLabel,
+                        )
+                    ).score >= 0.8f
                 }
             }
         }
@@ -80,9 +97,12 @@ class WidgetPickerSheetVM(
     }
 
     val appWidgetGroups = filteredAppWidgets.map { widgets ->
+        val collator = Collator.getInstance().apply { strength = Collator.SECONDARY }
         withContext(Dispatchers.Default) {
             widgets
-                .sortedBy { it.loadLabel(packageManager).normalize() }
+                .sortedWith { el1, el2 ->
+                    collator.compare(el1.loadLabel(packageManager), el2.loadLabel(packageManager))
+                }
                 .groupBy {
                     it.provider.packageName
                 }
@@ -95,7 +115,9 @@ class WidgetPickerSheetVM(
                     }
                     AppWidgetGroup(appInfo.loadLabel(packageManager).toString(), pkg, it.value)
                 }
-                .sortedBy { it.appName.normalize() }
+                .sortedWith { el1, el2 ->
+                    collator.compare(el1.appName, el2.appName)
+                }
         }
     }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(100))
 
@@ -112,7 +134,7 @@ class WidgetPickerSheetVM(
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {
-                WidgetPickerSheetVM(get(), get())
+                WidgetPickerSheetVM(get(), get(), get())
             }
         }
     }

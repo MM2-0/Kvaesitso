@@ -878,4 +878,5 @@
     <string name="preference_measurement_system_metric">Metrisch</string>
     <string name="preference_measurement_system_uk">Vereinigtes Königreich</string>
     <string name="preference_measurement_system_us">Vereinigte Staaten</string>
+    <string name="preference_transliteration">Bevorzugte Transliteration</string>
 </resources>

@@ -119,7 +119,7 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary", version = "2.10" }
 suncalc = { group = "org.shredzone.commons", name = "commons-suncalc", version = "3.11" }
 jsoup = { group = "org.jsoup", name = "jsoup", version = "1.21.2" }
-commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.14.0" }
+commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.15.0" }
 stringsimilarity = { group = "com.aallam.similarity", name = "string-similarity-kotlin", version = "0.1.0" }
 
 #noinspection NewerVersionAvailable 4.4.2 is the last GPL compatible version, don't update to 5.x

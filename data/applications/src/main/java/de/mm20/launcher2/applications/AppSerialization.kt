@@ -12,6 +12,7 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.StringNormalizer
 import org.json.JSONObject
 
 internal class LockedPrivateProfileAppSerializer : SearchableSerializer {

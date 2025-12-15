@@ -214,7 +214,7 @@ internal class OsmLocationProvider(
 
     private fun delocalizeToQueryableTags(localizedQuery: String): List<String> =
         poiCategories.flatMap { (string, tags) ->
-            val score = ResultScore(
+            val score = ResultScore.from(
                 localizedQuery,
                 primaryFields = listOf(string)
             )

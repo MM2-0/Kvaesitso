@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.ktx.romanize
 import de.mm20.launcher2.searchactions.SearchActionService
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.AppSearchActionBuilder
@@ -25,6 +24,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
+import java.text.Collator
 import kotlin.math.roundToInt
 
 class EditSearchActionSheetVM : ViewModel(), KoinComponent {
@@ -57,7 +57,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     .loadLabel(context.packageManager).toString(),
                 componentName = it
             )
-        }.sortedBy { it.label.romanize().lowercase() }
+        }.sorted()
         emit(items)
     }
 
@@ -611,4 +611,12 @@ enum class EditSearchActionPage {
 data class SearchableApp(
     val label: String,
     val componentName: ComponentName,
-)
+): Comparable<SearchableApp> {
+    override fun compareTo(other: SearchableApp): Int {
+        val label1 = label
+        val label2 = other.label
+        return Collator.getInstance().apply { strength = Collator.SECONDARY }
+            .compare(label1, label2)
+    }
+
+}

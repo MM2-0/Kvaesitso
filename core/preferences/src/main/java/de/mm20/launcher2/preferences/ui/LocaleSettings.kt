@@ -26,4 +26,13 @@ class LocaleSettings internal constructor(
             it.copy(localeMeasurementSystem = measurementSystem)
         }
     }
+
+    val transliterator
+        get() = launcherDataStore.data.map { it.localeTransliterator }
+
+    fun setTransliterator(transliterator: String?) {
+        launcherDataStore.update {
+            it.copy(localeTransliterator = transliterator)
+        }
+    }
 }

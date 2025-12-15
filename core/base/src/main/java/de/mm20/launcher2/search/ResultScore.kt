@@ -1,7 +1,6 @@
 package de.mm20.launcher2.search
 
 import com.aallam.similarity.JaroWinkler
-import de.mm20.launcher2.ktx.normalize
 
 @JvmInline
 value class ResultScore private constructor(private val packed: Long) : Comparable<ResultScore> {
@@ -53,29 +52,26 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
     }
 
     companion object {
-        operator fun invoke(
+        fun from(
             query: String,
             primaryFields: Iterable<String> = emptyList(),
             secondaryFields: Iterable<String> = emptyList(),
         ): ResultScore {
-            val normalizedQuery = query.normalize()
             val jaroWinkler = JaroWinkler()
-            val bestPrimaryScore = primaryFields.maxOfOrNull {
-                val normalizedTerm = it.normalize()
-                val sim = jaroWinkler.similarity(normalizedQuery, normalizedTerm).toFloat()
+            val bestPrimaryScore = primaryFields.maxOfOrNull { term ->
+                val sim = jaroWinkler.similarity(query, term).toFloat()
                 ResultScore(
-                    isPrefix = normalizedTerm.startsWith(normalizedQuery),
-                    isSubstring = normalizedQuery in normalizedTerm,
+                    isPrefix = term.startsWith(query),
+                    isSubstring = query in term,
                     isPrimary = true,
                     similarity = sim
                 )
             } ?: Zero
-            val bestSecondaryScore = secondaryFields.maxOfOrNull {
-                val normalizedTerm = it.normalize()
-                val sim = jaroWinkler.similarity(normalizedQuery, normalizedTerm).toFloat()
+            val bestSecondaryScore = secondaryFields.maxOfOrNull { term ->
+                val sim = jaroWinkler.similarity(query, term).toFloat()
                 ResultScore(
-                    isPrefix = normalizedTerm.startsWith(normalizedQuery),
-                    isSubstring = normalizedQuery in normalizedTerm,
+                    isPrefix = term.startsWith(query),
+                    isSubstring = query in term,
                     isPrimary = false,
                     similarity = sim
                 )

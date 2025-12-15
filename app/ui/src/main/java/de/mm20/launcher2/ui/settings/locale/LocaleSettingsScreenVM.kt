@@ -19,4 +19,9 @@ class LocaleSettingsScreenVM: ViewModel(), KoinComponent {
     fun setMeasurementSystem(measurementSystem: MeasurementSystem) {
         localeSettings.setMeasurementSystem(measurementSystem)
     }
+
+    val transliterator = localeSettings.transliterator
+    fun setTransliterator(transliterator: String?) {
+        localeSettings.setTransliterator(transliterator)
+    }
 }

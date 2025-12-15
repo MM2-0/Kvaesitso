@@ -14,7 +14,6 @@ import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.SavableSearchable
@@ -32,6 +31,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.text.Collator
 
 class EditFavoritesSheetVM : ViewModel(), KoinComponent {
 
@@ -77,12 +77,17 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
             includeTypes = listOf("tag"),
             minPinnedLevel = PinnedLevel.AutomaticallySorted,
         ).first().filterIsInstance<Tag>().toMutableList()
+
+        val collator = Collator.getInstance().apply { strength = Collator.SECONDARY }
+
         availableTags.value =
             customAttributesRepository
                 .getAllTags()
                 .first()
                 .filter {t -> pinnedTags.none { it.tag == t } }
-                .sortedBy { it.normalize() }
+                .sortedWith { el1, el2 ->
+                    collator.compare(el1, el2)
+                }
                 .map { Tag(it) }
         this.pinnedTags.value = pinnedTags
 

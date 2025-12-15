@@ -15,7 +15,7 @@ fun String.decodeUrl(charset: String): String? {
  * Characters must be normalized independently so that
  * A.contains(B) -> A.normalize().contains(B.normalize()) is true.
  */
-fun String.normalize(): String {
+/*fun String.normalize(): String {
     return StringUtils.stripAccents(this.romanize().lowercase(Locale.getDefault()))
         .replace("æ", "ae")
         .replace("œ", "oe")
@@ -29,7 +29,7 @@ fun String.normalize(): String {
  */
 fun String.romanize(): String {
     return Pinyin.toPinyin(this, "")
-}
+}*/
 
 fun String.stripStartOrNull(s: String): String?
     = if (startsWith(s)) removePrefix(s) else null

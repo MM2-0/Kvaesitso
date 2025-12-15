@@ -424,13 +424,13 @@ class SearchVM : ViewModel(), KoinComponent {
             val bWeight = weights[b.key] ?: 0.0
 
             val aScore = if (a.score.isUnspecified) {
-                ResultScore(query = query, primaryFields = listOf(a.labelOverride ?: a.label)).score
+                ResultScore.from(query = query, primaryFields = listOf(a.labelOverride ?: a.label)).score
             } else {
                 a.score.score
             }
 
             val bScore = if (b.score.isUnspecified) {
-                ResultScore(query = query, primaryFields = listOf(b.labelOverride ?: b.label)).score
+                ResultScore.from(query = query, primaryFields = listOf(b.labelOverride ?: b.label)).score
             } else {
                 b.score.score
             }

@@ -1067,4 +1067,7 @@
     <string name="preference_measurement_system_metric">Metric</string>
     <string name="preference_measurement_system_uk">United Kingdom</string>
     <string name="preference_measurement_system_us">United States</string>
+    <string name="preference_transliteration">Preferred transliteration</string>
+    <string name="preference_transliteration_auto">Automatic</string>
+    <string name="preference_transliteration_disabled">Disabled</string>
 </resources>

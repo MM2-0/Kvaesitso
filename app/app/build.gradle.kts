@@ -130,6 +130,7 @@ dependencies {
     implementation(project(":data:searchable"))
     implementation(project(":data:plugins"))
     implementation(project(":data:themes"))
+    implementation(project(":data:i18n"))
     implementation(project(":data:files"))
     implementation(project(":core:i18n"))
     implementation(project(":services:icons"))
