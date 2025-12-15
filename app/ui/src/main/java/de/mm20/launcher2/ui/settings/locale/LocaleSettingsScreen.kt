@@ -57,7 +57,7 @@ fun LocaleSettingsScreen() {
     val transliterators: List<Pair<String, String?>> = remember(locales) {
         if (!isAtLeastApiLevel(29)) return@remember listOf()
 
-        if (locales?.isEmpty == true) return@remember listOf("Disabled" to null)
+        if (locales?.isEmpty == true) return@remember listOf(resources.getString(R.string.preference_transliteration_disabled) to null)
 
         val scripts = mutableSetOf<String>()
         val languages = mutableSetOf<String>()
