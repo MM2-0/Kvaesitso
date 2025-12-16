@@ -878,4 +878,7 @@
     <string name="preference_measurement_system_metric">Metrisch</string>
     <string name="preference_measurement_system_uk">Verenigd Koninkrijk</string>
     <string name="preference_measurement_system_us">Verenigde Staten</string>
+    <string name="preference_transliteration_disabled">Uitgeschakeld</string>
+    <string name="preference_transliteration">Voorkeurstransliteratie</string>
+    <string name="preference_transliteration_auto">Automatisch</string>
 </resources>
