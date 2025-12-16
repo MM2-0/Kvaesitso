@@ -1034,4 +1034,7 @@
     <string name="preference_measurement_system_metric">Metrico</string>
     <string name="preference_measurement_system_uk">Regno Unito</string>
     <string name="preference_measurement_system_us">Stati Uniti</string>
+    <string name="preference_transliteration">Traslitterazione preferita</string>
+    <string name="preference_transliteration_auto">Automatica</string>
+    <string name="preference_transliteration_disabled">Disabilitata</string>
 </resources>
