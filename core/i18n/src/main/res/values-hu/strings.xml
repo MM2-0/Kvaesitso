@@ -1045,4 +1045,7 @@
     <string name="preference_measurement_system_metric">Metrikus</string>
     <string name="preference_measurement_system_uk">Egyesült Királyság</string>
     <string name="preference_measurement_system_us">Egyesült Államok</string>
+    <string name="preference_transliteration">Előnyben részesített átírás</string>
+    <string name="preference_transliteration_auto">Automatikus</string>
+    <string name="preference_transliteration_disabled">Letiltva</string>
 </resources>
