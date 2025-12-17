@@ -45,7 +45,6 @@ dependencies {
     implementation(libs.bundles.androidx.lifecycle)
     implementation(libs.commons.text)
     implementation(libs.kotlinx.serialization.json)
-    implementation(project(":libs:tinypinyin"))
 
     testImplementation(libs.bundles.tests)
 
