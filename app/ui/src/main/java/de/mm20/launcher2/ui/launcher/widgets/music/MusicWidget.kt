@@ -387,14 +387,14 @@ fun MusicWidget(widget: MusicWidget) {
                         }
                     }
                 }
+                CustomActions(
+                    actions = supportedActions,
+                    onActionSelected = {
+                        viewModel.performCustomAction(it)
+                    },
+                    playerPackage = viewModel.currentPlayerPackage,
+                )
             }
-            CustomActions(
-                actions = supportedActions,
-                onActionSelected = {
-                    viewModel.performCustomAction(it)
-                },
-                playerPackage = viewModel.currentPlayerPackage,
-            )
         }
     }
 }
