@@ -58,35 +58,35 @@
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north">Norte</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_east">Noreste</string>
+    <string name="wind_north_east">Nordeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_east">Norte noreste</string>
+    <string name="wind_north_north_east">Nornordeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east_north_east">Este noreste</string>
+    <string name="wind_east_north_east">Estenordeste</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_east">Este</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east_south_east">Este sureste</string>
+    <string name="wind_east_south_east">Estesudeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_east">Sureste</string>
+    <string name="wind_south_east">Sudeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_south_east">Sur sureste</string>
+    <string name="wind_south_south_east">Sudsudeste</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south">Sur</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_south_west">Sur suroeste</string>
+    <string name="wind_south_south_west">Sudsudoeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_west">Suroeste</string>
+    <string name="wind_south_west">Sudoeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west_south_west">Oeste suroeste</string>
+    <string name="wind_west_south_west">Oesudoeste</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_west">Oeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west_north_west">Oeste noroeste</string>
+    <string name="wind_west_north_west">Oesnoroeste</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_west">Noroeste</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_west">Norte noroeste</string>
+    <string name="wind_north_north_west">Nornoroeste</string>
     <!-- No rain or snow, used in weather widget -->
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
@@ -127,7 +127,7 @@
     <string name="file_meta_location">Ubicación: %1$s</string>
     <string name="file_type_directory">Directorio</string>
     <!-- Archive file  -->
-    <string name="file_type_archive">Archivo de archivo</string>
+    <string name="file_type_archive">Archivo de almacenamiento</string>
     <!-- Android package file  -->
     <string name="file_type_android">Archivo de paquete de Android</string>
     <!-- Source code file -->
@@ -156,7 +156,7 @@
     <!-- Form file -->
     <string name="file_type_form">Formulario</string>
     <!-- Launcher backup, %1$s: app name -->
-    <string name="file_type_launcherbackup">%1$s copia de seguridad</string>
+    <string name="file_type_launcherbackup">Copia de seguridad de %1$s</string>
     <!-- Launcher theme, %1$s: app name -->
     <string name="file_type_launchertheme">Tema de %1$s</string>
     <!-- Generic file , %1$s is the file extension -->
@@ -534,11 +534,11 @@
     <string name="preference_shortcut_badges_summary">Mostrar insignia que indica la aplicación a la cual pertenece el acceso directo</string>
     <string name="preference_plugin_badges">Insignias de plugin</string>
     <string name="preference_plugin_badges_summary">Indica con qué plugin se creó un resultado de búsqueda</string>
-    <string name="preference_nextcloud_signin">Registrarse a NextCloud</string>
-    <string name="preference_nextcloud_signin_summary">Regístrate para buscar en tu servidor NextCloud</string>
+    <string name="preference_nextcloud_signin">Iniciar sesión en NextCloud</string>
+    <string name="preference_nextcloud_signin_summary">Inicia sesión para buscar en tu servidor de NextCloud</string>
     <string name="preference_nextcloud">NextCloud</string>
-    <string name="preference_owncloud_signin">Registrarse a Owncloud</string>
-    <string name="preference_owncloud_signin_summary">Regístrate para buscar en tu server Owncloud</string>
+    <string name="preference_owncloud_signin">Iniciar sesión en Owncloud</string>
+    <string name="preference_owncloud_signin_summary">Inicia sesión para buscar en tu servidor de Owncloud</string>
     <string name="preference_about_telegram">Grupo de Telegram</string>
     <string name="preference_about_fdroid">Repositorio de F-Droid</string>
     <string name="preference_enforce_icon_shape">Forzar forma</string>
@@ -629,7 +629,7 @@
     <string name="preference_search_localfiles">Archivos locales</string>
     <string name="preference_search_localfiles_summary">Buscar documentos, imágenes y otros archivos almacenados en este dispositivo</string>
     <string name="preference_search_nextcloud">NextCloud</string>
-    <string name="preference_search_cloud_summary">Buscar %1$s archivos</string>
+    <string name="preference_search_cloud_summary">Buscar archivos de %1$s</string>
     <string name="preference_calendar_calendars">Calendarios</string>
     <string name="preference_calendar_hide_completed">Ocultar tareas completadas</string>
     <string name="preference_screen_buildinfo">Información de versión de aplicación</string>
@@ -677,12 +677,12 @@
     <string name="preference_contacts_call_on_tap">Toca para llamar</string>
     <string name="preference_contacts_call_on_tap_summary">Llamar inmediatamente al presionar el número telefónico</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
-    <string name="no_account_nextcloud">Aun no te has conectado a una cuenta de Nextcloud</string>
+    <string name="no_account_nextcloud">Aún no has vinculado ninguna cuenta de Nextcloud</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
-    <string name="no_account_owncloud">Aun no te has conectado a una cuenta de Owncloud</string>
+    <string name="no_account_owncloud">Aún no has vinculado ninguna cuenta de Owncloud</string>
     <!-- Used in an info banner if a specific feature requires a Google account -->
     <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
-    <string name="connect_account">Conectar cuenta</string>
+    <string name="connect_account">Vincular cuenta</string>
     <string name="battery_part_charging">Cargando</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Carga completa en %1$s minuto</item>
@@ -796,7 +796,7 @@
     <string name="note_widget_conflict">Incoherencia</string>
     <string name="note_widget_conflict_action_resolve">Solucionar</string>
     <string name="note_widget_conflict_keep_selected">Mantener elección</string>
-    <string name="note_widget_conflict_description">El archivo vinculado no está vacío y su contenido no coincide con la última versión guardada de esta nota. ¿Qué versión desea conservar\?</string>
+    <string name="note_widget_conflict_description">El archivo vinculado no está vacío y su contenido no coincide con la última versión guardada de esta nota. ¿Qué versión deseas conservar?</string>
     <string name="note_widget_conflict_local_version">Última versión guardada:</string>
     <string name="note_widget_conflict_file_version">Contenido actual del archivo:</string>
     <string name="note_widget_file_read_error">Error al leer la nota</string>
@@ -1036,4 +1036,7 @@
     <string name="preference_measurement_system_metric">Métrico</string>
     <string name="preference_measurement_system_uk">Reino Unido</string>
     <string name="preference_measurement_system_us">Estados Unidos</string>
+    <string name="preference_transliteration">Transliteración preferida</string>
+    <string name="preference_transliteration_auto">Automática</string>
+    <string name="preference_transliteration_disabled">Deshabilitada</string>
 </resources>
