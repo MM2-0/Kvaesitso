@@ -4,7 +4,7 @@
     <string name="menu_open_file">Abrir</string>
     <string name="menu_calendar_open_externally">Abrir en la aplicación de calendario</string>
     <string name="file_meta_type">Tipo: %1$s</string>
-    <string name="wind_west_north_west">Oeste noroeste</string>
+    <string name="wind_west_north_west">Oesnoroeste</string>
     <string name="wikipedia_url">https://es.wikipedia.org</string>
     <string name="file_meta_app_pkgname">Nombre del paquete: %1$s</string>
     <string name="owncloud_password">Contraseña</string>
@@ -19,20 +19,20 @@
     <string name="settings">Ajustes</string>
     <string name="wallpaper">Fondo de pantalla</string>
     <string name="wind_north">Norte</string>
-    <string name="wind_north_east">Noreste</string>
-    <string name="wind_north_north_east">Norte noreste</string>
-    <string name="wind_east_north_east">Este noreste</string>
+    <string name="wind_north_east">Nordeste</string>
+    <string name="wind_north_north_east">Nornordeste</string>
+    <string name="wind_east_north_east">Estenordeste</string>
     <string name="wind_east">Este</string>
-    <string name="wind_east_south_east">Este sureste</string>
-    <string name="wind_south_east">Sureste</string>
-    <string name="wind_south_south_east">Sur sureste</string>
+    <string name="wind_east_south_east">Estesudeste</string>
+    <string name="wind_south_east">Sudeste</string>
+    <string name="wind_south_south_east">Sudsudeste</string>
     <string name="wind_south">Sur</string>
-    <string name="wind_south_south_west">Sur suroeste</string>
-    <string name="wind_west_south_west">Oeste suroeste</string>
+    <string name="wind_south_south_west">Sudsudoeste</string>
+    <string name="wind_west_south_west">Oesudoeste</string>
     <string name="wind_west">Oeste</string>
     <string name="wind_north_west">Noroeste</string>
-    <string name="wind_south_west">Suroeste</string>
-    <string name="wind_north_north_west">Norte noroeste</string>
+    <string name="wind_south_west">Sudoeste</string>
+    <string name="wind_north_north_west">Nornoroeste</string>
     <string name="wikipedia_source">De Wikipedia</string>
     <string name="file_meta_title">Título: %1$s</string>
     <string name="file_meta_artist">Artista: %1$s</string>
@@ -53,7 +53,7 @@
     <string name="file_type_video">Vídeo</string>
     <string name="file_type_image">Imagen</string>
     <string name="file_type_presentation">Presentación</string>
-    <string name="file_type_archive">Archivo de archivo</string>
+    <string name="file_type_archive">Archivo de almacenamiento</string>
     <string name="file_type_compressed">Archivo comprimido</string>
     <string name="file_type_text">Archivo de texto</string>
     <string name="file_type_ebook">E-book</string>
@@ -199,7 +199,7 @@
     <string name="battery_part_charging">Cargando</string>
     <string name="preference_icon_pack">Paquete de iconos</string>
     <string name="preference_category_badges">Insignias</string>
-    <string name="preference_nextcloud_signin">Registrarse a NextCloud</string>
+    <string name="preference_nextcloud_signin">Iniciar sesión en NextCloud</string>
     <string name="preference_logs_summary">Visualizar y exportar registros de aplicación</string>
     <string name="preference_search_files_summary">Buscar archivos locales y archivos en la nube</string>
     <string name="preference_search_calendar">Calendario</string>
@@ -208,8 +208,8 @@
     <string name="create_search_action_type_web">Buscar en internet</string>
     <string name="search_action_app">Aplicación</string>
     <string name="preference_owncloud">Owncloud</string>
-    <string name="preference_owncloud_signin">Registrarse a Owncloud</string>
-    <string name="preference_owncloud_signin_summary">Regístrate para buscar en tu server Owncloud</string>
+    <string name="preference_owncloud_signin">Iniciar sesión en Owncloud</string>
+    <string name="preference_owncloud_signin_summary">Inicia sesión para buscar en tu servidor de Owncloud</string>
     <string name="preference_about_fdroid">Repositorio de F-Droid</string>
     <string name="preference_enforce_icon_shape">Forzar forma</string>
     <string name="preference_themed_icons_summary">Iconos con esquema de color de la aplicación</string>
@@ -290,7 +290,7 @@
     <string name="preference_search_wikipedia_summary">Busca en la enciclopedia libre</string>
     <string name="preference_search_websites_summary">Mostrar vista previa de la página web si la consulta de búsqueda es una URL</string>
     <string name="preference_search_localfiles">Archivos locales</string>
-    <string name="preference_search_cloud_summary">Buscar %1$s archivos</string>
+    <string name="preference_search_cloud_summary">Buscar archivos de %1$s</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Calendarios</string>
     <string name="preference_screen_buildinfo">Información de versión de aplicación</string>
@@ -299,8 +299,8 @@
     <string name="preference_search_bar_color">Color</string>
     <string name="preference_hidden_items">Resultados de búsqueda ocultos</string>
     <string name="preference_wikipedia_customurl">URL de Wikipedia</string>
-    <string name="no_account_nextcloud">Aun no te has conectado a una cuenta de Nextcloud</string>
-    <string name="connect_account">Conectar cuenta</string>
+    <string name="no_account_nextcloud">Aún no has vinculado ninguna cuenta de Nextcloud</string>
+    <string name="connect_account">Vincular cuenta</string>
     <string name="backup_complete">La copia de seguridad ha sido completada.</string>
     <string name="restore_invalid_file">El archivo seleccionado no es una copia de seguridad. ¿Estás seguro de que has seleccionado el archivo correcto\?</string>
     <string name="restore_different_minor_version">Esta copia de seguridad se ha creado con una diferente versión de %1$s. Puede que algunos datos no se restauren correctamente.</string>
@@ -341,8 +341,8 @@
     <string name="preference_search_bar_auto_focus_summary">Mostrar el teclado automáticamente al abrir la lista de aplicaciones</string>
     <string name="preference_hidden_items_summary">Administrar aplicaciones y resultados de búsqueda ocultos</string>
     <string name="preference_nextcloud">NextCloud</string>
-    <string name="preference_nextcloud_signin_summary">Regístrate para buscar en tu servidor NextCloud</string>
-    <string name="no_account_owncloud">Aun no te has conectado a una cuenta de Owncloud</string>
+    <string name="preference_nextcloud_signin_summary">Inicia sesión para buscar en tu servidor de NextCloud</string>
+    <string name="no_account_owncloud">Aún no has vinculado ninguna cuenta de Owncloud</string>
     <string name="preference_about_license">Esta aplicación es software libre.</string>
     <string name="preference_screen_debug_summary">Herramientas de solución de problemas</string>
     <string name="preference_clockwidget_layout_vertical">Por defecto</string>
@@ -403,7 +403,7 @@
     <string name="save">Guardar</string>
     <string name="weather_condition_snowshowers">Chubascos de nieve</string>
     <string name="action_undo">Deshacer</string>
-    <string name="file_type_launcherbackup">%1$s copia de seguridad</string>
+    <string name="file_type_launcherbackup">Copia de seguridad de %1$s</string>
     <string name="preference_icon_shape_square">Cuadrado</string>
     <string name="preference_icon_shape_rounded_square">Cuadrado redondeado</string>
     <plurals name="debug_cleanup_database_result">
@@ -506,7 +506,7 @@
     <string name="preference_hidden_items_reveal_button_summary">Mostrar un botón para revelar los resultados de búsqueda ocultos</string>
     <string name="widget_config_calendar_no_calendars">Calendarios no encontrados</string>
     <string name="app_widget_loading_failed">El widget de la aplicación ha fallado en cargar</string>
-    <string name="note_widget_conflict_description">El archivo vinculado no está vacío y su contenido no coincide con la última versión guardada de esta nota. ¿Qué versión desea conservar\?</string>
+    <string name="note_widget_conflict_description">El archivo vinculado no está vacío y su contenido no coincide con la última versión guardada de esta nota. ¿Qué versión deseas conservar?</string>
     <string name="note_widget_file_read_error_description">No se ha podido leer el archivo vinculado. Se ha restaurado una copia desde el almacenamiento interno del lanzador. Si editas la nota, posiblemente se sobrescribirá el archivo vinculado</string>
     <string name="widget_config_appwidget_borderless">Sin bordes</string>
     <string name="preference_screen_homescreen">Pantalla de inicio</string>
@@ -889,4 +889,7 @@
     <string name="preference_measurement_system_metric">Métrico</string>
     <string name="preference_measurement_system_uk">Reino Unido</string>
     <string name="preference_measurement_system_us">Estados Unidos</string>
+    <string name="preference_transliteration">Transliteración preferida</string>
+    <string name="preference_transliteration_auto">Automática</string>
+    <string name="preference_transliteration_disabled">Deshabilitada</string>
 </resources>
