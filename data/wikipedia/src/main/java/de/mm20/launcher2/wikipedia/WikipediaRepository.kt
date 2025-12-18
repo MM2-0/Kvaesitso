@@ -7,12 +7,9 @@ import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combineTransform
+import kotlinx.coroutines.flow.flowOf
 
 
 internal class WikipediaRepository(
@@ -20,52 +17,20 @@ internal class WikipediaRepository(
     private val settings: WikipediaSearchSettings,
 ) : SearchableRepository<Article> {
 
-    private val scope = CoroutineScope(Job() + Dispatchers.Default)
-
-    private val httpClient = OkHttpClient
-        .Builder()
-        .connectTimeout(200, TimeUnit.MILLISECONDS)
-        .readTimeout(3000, TimeUnit.MILLISECONDS)
-        .writeTimeout(1000, TimeUnit.MILLISECONDS)
-        .build()
-
-    private lateinit var retrofit: Retrofit
-
-    init {
-        scope.launch {
-            settings.customUrl
-                .distinctUntilChanged()
-                .collectLatest {
-                    try { retrofit = Retrofit.Builder()
-                            .client(httpClient)
-                            .baseUrl(it.takeIf { !it.isNullOrBlank() }
-                                ?: context.getString(R.string.wikipedia_url))
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build()
-                        wikipediaService = retrofit.create(WikipediaApi::class.java)
-                    } catch (e: IllegalArgumentException) {
-                        CrashReporter.logException(e)
-                    }
-                }
-        }
-    }
-
-    private lateinit var wikipediaService: WikipediaApi
-
+    private val wikipediaApi = WikipediaApi(context, null)
 
     override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Wikipedia>> {
         if (query.length < 4 || !allowNetwork) return flowOf(persistentListOf())
 
-        return settings.enabled.transformLatest {
+        return combineTransform(settings.enabled, settings.customUrl) { enabled, url ->
             emit(persistentListOf())
-            withContext(Dispatchers.IO) {
-                httpClient.dispatcher.cancelAll()
-            }
 
-            if (!it || !::wikipediaService.isInitialized) return@transformLatest
-            if (query.isBlank()) return@transformLatest
+            if (query.isBlank()) return@combineTransform
 
-            val results = queryWikipedia(query)
+            val baseUrl =
+                url.takeIf { !it.isNullOrBlank() } ?: context.getString(R.string.wikipedia_url)
+
+            val results = queryWikipedia(baseUrl, query)
             if (results != null) {
                 emit(persistentListOf(results))
             }
@@ -73,14 +38,11 @@ internal class WikipediaRepository(
 
     }
 
-    private suspend fun queryWikipedia(query: String): Wikipedia? {
-
-        val wikipediaService = wikipediaService
-        val wikipediaUrl = retrofit.baseUrl().toString()
+    private suspend fun queryWikipedia(baseUrl: String, query: String): Wikipedia? {
 
         val result = try {
             val imageWidth = context.resources.displayMetrics.widthPixels / 2
-            wikipediaService.search(query, imageWidth)
+            wikipediaApi.search(baseUrl, query, imageWidth)
         } catch (e: Exception) {
             CrashReporter.logException(e)
             return null
@@ -96,7 +58,7 @@ internal class WikipediaRepository(
             text = page.extract,
             imageUrl = image,
             sourceUrl = page.fullurl,
-            wikipediaUrl = wikipediaUrl,
+            wikipediaUrl = baseUrl,
             sourceName = context.getString(R.string.wikipedia_source),
         )
     }

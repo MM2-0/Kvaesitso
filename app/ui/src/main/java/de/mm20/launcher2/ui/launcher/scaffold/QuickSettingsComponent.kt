@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -26,12 +24,14 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -92,7 +92,7 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    Icons.Rounded.Settings, null,
+                    painterResource(R.drawable.settings_24px), null,
                     modifier = Modifier.padding(16.dp),
                     tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 )
@@ -100,11 +100,16 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
         }
     }
 
-    override suspend fun onActivate(state: LauncherScaffoldState) {
-        super.onActivate(state)
+    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+        super.onPreActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.openQuickSettings()
-        } else {
+        }
+    }
+
+    override suspend fun onActivate(state: LauncherScaffoldState) {
+        super.onActivate(state)
+        if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             state.navigateBack(true)
         }
     }

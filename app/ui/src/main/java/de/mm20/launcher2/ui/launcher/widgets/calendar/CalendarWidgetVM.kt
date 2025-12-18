@@ -124,6 +124,11 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     fun createEvent(context: Context) {
         val intent = Intent(Intent.ACTION_EDIT)
         intent.data = CalendarContract.Events.CONTENT_URI
+        val zoneOffset = OffsetDateTime.now().offset
+        val beginTime = selectedDate.value.atTime(12, 0).toInstant(zoneOffset).toEpochMilli()
+        val endTime = selectedDate.value.atTime(13, 0).toInstant(zoneOffset).toEpochMilli()
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
         context.tryStartActivity(intent)
     }
 

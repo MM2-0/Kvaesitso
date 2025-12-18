@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="confirmation_delete_color_scheme">¿Estás segura de que quieres eliminar el esquema de colores %1$s?</string>
+    <string name="confirmation_delete_shapes_scheme">¿Estás segura de que quieres eliminar el esquema de forma %1$s?</string>
+    <string name="confirmation_delete_typography_scheme">¿Estás segura de que quieres eliminar el esquema de tipografía %1$s?</string>
+    <string name="confirmation_delete_transparencies_scheme">¿Estás segura de que quieres eliminar el esquema de transparencia %1$s?</string>
+</resources>

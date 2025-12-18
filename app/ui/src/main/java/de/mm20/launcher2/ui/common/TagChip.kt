@@ -12,14 +12,11 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChipDefaults
@@ -32,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.icons.IconService
@@ -41,6 +39,7 @@ import de.mm20.launcher2.icons.VectorLayer
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.R
 import org.koin.compose.koinInject
 
 @Composable
@@ -141,7 +140,7 @@ fun TagChip(
                     modifier = Modifier
                         .padding(start = 4.dp)
                         .size(FilterChipDefaults.IconSize),
-                    imageVector = foregroundLayer.vector,
+                    painter = painterResource(foregroundLayer.icon),
                     contentDescription = null,
                     tint = iconColor
                 )
@@ -162,7 +161,7 @@ fun TagChip(
                         onClear?.invoke()
                     }
                     .size(FilterChipDefaults.IconSize),
-                imageVector = Icons.Rounded.Close,
+                painter = painterResource(R.drawable.close_20px),
                 contentDescription = null,
             )
         }

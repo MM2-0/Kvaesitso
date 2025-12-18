@@ -6,6 +6,13 @@ import androidx.core.graphics.toColorInt
 import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.Website
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.request.get
+import io.ktor.client.request.url
+import io.ktor.client.statement.bodyAsText
+import io.ktor.client.statement.request
+import io.ktor.http.Url
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
@@ -13,16 +20,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.withContext
-import okhttp3.HttpUrl
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.jsoup.Jsoup
 import java.io.IOException
 import java.io.UncheckedIOException
 import java.net.MalformedURLException
 import java.net.URISyntaxException
 import java.net.URL
-import java.util.concurrent.TimeUnit
 
 
 internal class WebsiteRepository(
@@ -30,20 +33,20 @@ internal class WebsiteRepository(
     val settings: WebsiteSearchSettings,
 ) : SearchableRepository<Website> {
 
-    private val httpClient = OkHttpClient
-        .Builder()
-        .connectTimeout(200, TimeUnit.MILLISECONDS)
-        .readTimeout(3000, TimeUnit.MILLISECONDS)
-        .writeTimeout(1000, TimeUnit.MILLISECONDS)
-        .build()
+    private val httpClient by lazy {
+        HttpClient {
+            install(HttpTimeout) {
+                connectTimeoutMillis = 200
+                requestTimeoutMillis = 3000
+                socketTimeoutMillis = 1000
+            }
+        }
+    }
 
     override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Website>> {
         if (!allowNetwork) return flowOf(persistentListOf())
         return settings.enabled.transformLatest { enabled ->
             emit(persistentListOf())
-            withContext(Dispatchers.IO) {
-                httpClient.dispatcher.cancelAll()
-            }
             if (!enabled || query.isBlank()) return@transformLatest
 
             val website = queryWebsite(query)
@@ -61,14 +64,11 @@ internal class WebsiteRepository(
                 "$protocol$query"
             if (!URLUtil.isValidUrl(url)) return@withContext null
             try {
-                val request = Request.Builder()
-                    .url(URL(url))
-                    .get()
-                    .tag("onlinesearch")
-                    .build()
-                val response = httpClient.newCall(request).execute()
+                val response = httpClient.get {
+                    url(url)
+                }
                 url = response.request.url.toString()
-                val body = response.body?.string() ?: return@withContext null
+                val body = response.bodyAsText()
                 val doc = Jsoup.parse(body)
                 var title = doc.select("meta[property=og:title]").attr("content")
                 if (title.isBlank()) title = doc.title()
@@ -112,9 +112,9 @@ internal class WebsiteRepository(
         return result
     }
 
-    private fun resolveUrl(url: HttpUrl, link: String): String {
+    private fun resolveUrl(url: Url, link: String): String {
         return try {
-            URL(url.toUrl(), link).toString()
+            URL(URL(url.toString()), link).toString()
         } catch (e: MalformedURLException) {
             ""
         }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="websearch_dialog_url_error">Korvattava termi \'${1}\' puuttuu osoitteesta</string>
-    <string name="easter_egg_3">Viimeinen varoitus: tänne ei todella ole piilotettu yhtään mitään</string>
     <string name="widget_action_replace">Korvaa</string>
     <string name="edit_favorites_dialog_empty_section">Vedä kohteita tähän</string>
     <string name="edit_favorites_dialog_tags">Avainsanat</string>
@@ -56,7 +55,6 @@
     <string name="notes_widget_action_dismiss">Hylkää</string>
     <string name="notes_widget_dismissed">Muistiinpano hylätty.</string>
     <string name="shortcut_summary">sovelluksesta %1$s</string>
-    <string name="easter_egg_1">Täällä ei ole yllätyksiä, ellet tuonut niitä mukanasi.</string>
     <string name="close">Sulje</string>
     <string name="nextcloud_server_invalid_url">Tämä URL ei osoita kelvolliseen Nextcloud-asennukseen</string>
     <string name="owncloud_server_url">Owncloud-palvelimen URL</string>
@@ -119,8 +117,6 @@
     <string name="notes_widget_placeholder">Kirjoita muistiinpano…</string>
     <string name="notes_widget_action_new">Uusi muistiinpano</string>
     <string name="notes_widget_export_filename">Muistiinpano_%1$s</string>
-    <string name="easter_egg_2">Lopeta, kiitos. Tuhlaat aikaasi.</string>
-    <string name="easter_egg_text">Nojoo, löysit minut. Onnea. Oliko sen arvoista\?</string>
     <string name="save">Tallenna</string>
     <string name="duplicate">Monista</string>
     <string name="edit">Muokkaa</string>
@@ -138,7 +134,6 @@
     <string name="login_flow_login">Kirjaudu sisään</string>
     <string name="disclaimer">Vastuuvapauslauseke</string>
     <string name="preference_font">Fontti</string>
-    <string name="preference_font_system">Järjestelmän oletus</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (vain Saksa)</string>
     <string name="provider_here">HERE</string>
@@ -171,7 +166,7 @@
     <string name="preference_enforce_icon_shape_summary">Käytä muotoa kaikkiin kuvakkeisiin, myös niihin, jotka eivät tue sitä</string>
     <string name="preference_clockwidget_layout_horizontal">Tiivis</string>
     <string name="preference_search_search_actions_summary">Säädä pikatoimintoja ja hakuoikoteitä</string>
-    <string name="search_action_websearch_url_hint">URL-pohja, jota käytetään verkkohaun osoitteena. Käytä \'${1}\' osoittamaan varsinaisen hakutermin paikkaa osoitteessa, esimerkiksi https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">URL-pohja, jota käytetään verkkohaun osoitteena. Käytä \'${1}\' osoittamaan varsinaisen hakutermin paikkaa osoitteessa, esimerkiksi https://google.com/search?q=${1}.</string>
     <string name="open_search_swipe_left">Vasemmalle pyyhkäisy</string>
     <string name="preference_logs_summary">Näytä tai vie sovelluksen lokit</string>
     <string name="open_search_pull_down">Alas pyyhkäisy</string>
@@ -255,7 +250,7 @@
     <string name="search_action_email">Sähköposti</string>
     <string name="search_action_open_url">Näytä verkkosivu</string>
     <string name="search_action_event">Luo tapahtuma</string>
-    <string name="create_search_action_type">Millaisen toiminnon haluat luoda\?</string>
+    <string name="create_search_action_type">Millaisen toiminnon haluat luoda?</string>
     <string name="create_search_action_type_app">Hae sovelluksesta</string>
     <string name="create_search_action_website_invalid_url">Annetulle verkkosivulle ei voida luoda hakua automaattisesti. Yritä toista verkkosivua tai syötä vaaditut tiedot käsin seuraavassa kohdassa.</string>
     <string name="search_action_label">Nimi</string>
@@ -342,7 +337,6 @@
     <string name="preference_cards_shape_rounded">Pyöristetty</string>
     <string name="preference_cards_shape_cut">Leikattu</string>
     <string name="preference_icon_shape">Muoto</string>
-    <string name="preference_icon_shape_platform">Järjestelmän oletus</string>
     <string name="preference_icon_shape_square">Neliö</string>
     <string name="preference_icon_shape_rounded_square">Pyöristetty neliö</string>
     <string name="preference_icon_shape_squircle">Ympyräneliö</string>
@@ -517,7 +511,6 @@
     <string name="note_widget_conflict_file_version">Tiedoston nykyinen sisältö:</string>
     <string name="note_widget_file_write_error_description">Muistiinpanoa ei voitu kirjoittaa yhdistettyyn tiedostoon. Se on saatettu siirtää tai poistaa. Kopio on tallennettu käynnistyssovelluksen omaan tallennustilaan.</string>
     <string name="confirmation_delete_color_scheme">Haluatko varmasti poistaa värikaavion %1$s\?</string>
-    <string name="new_color_scheme_name">Uusi värikaavio</string>
     <string name="widget_config_music_integration_settings">Mediaohjaimen integraatioiden asetukset</string>
     <string name="note_widget_conflict_local_version">Viimeisin tallennettu versio:</string>
     <string name="theme_color_scheme_system_default">Käytä järjestelmän oletusta</string>

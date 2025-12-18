@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -29,8 +31,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+        }
     }
 
     buildFeatures {
@@ -50,11 +54,12 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
 
-    implementation(libs.okhttp)
+    implementation(libs.bundles.ktor)
 
     api(project(":libs:webdav"))
     implementation(project(":core:crashreporter"))
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))
+    implementation(project(":core:base"))
 
 }

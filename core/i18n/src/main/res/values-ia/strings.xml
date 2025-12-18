@@ -91,7 +91,6 @@
     <string name="preference_colors_bw">Blanc e nigre</string>
     <string name="preference_mdy_color_source_wallpaper">Fundo de schermo</string>
     <string name="preference_font">Typo de litteras</string>
-    <string name="preference_font_system">Predefinite del systema</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Ligamines</string>
     <string name="preference_category_licenses">Licentias de codice aperte</string>
@@ -110,7 +109,6 @@
     <string name="gesture_action_quick_settings">Aperir le parametros rapide</string>
     <string name="gesture_action_recents">Aperir recentes</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabile</string>
-    <string name="new_color_scheme_name">Nove schema de color</string>
     <string name="widget_name_weather">Tempore</string>
     <string name="widget_add_widget">Adder un widget</string>
     <string name="edit">Modificar</string>

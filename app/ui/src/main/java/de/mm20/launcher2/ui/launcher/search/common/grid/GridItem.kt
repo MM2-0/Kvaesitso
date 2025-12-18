@@ -78,6 +78,7 @@ import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.overlays.Overlay
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlin.math.pow
 
 
@@ -215,21 +216,17 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
     val animationProgress = remember {
         Animatable(0f)
     }
+    val animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec<Float>()
+
     LaunchedEffect(show.targetState) {
         if (!show.targetState) {
             animationProgress.animateTo(
-                0f, spring(
-                    Spring.DampingRatioNoBouncy,
-                    Spring.StiffnessMediumLow,
-                )
+                0f, animationSpec
             )
             onDismissRequest()
         } else {
             animationProgress.animateTo(
-                1f, spring(
-                    Spring.DampingRatioLowBouncy,
-                    Spring.StiffnessMediumLow,
-                )
+                100f, animationSpec
             )
         }
     }
@@ -238,11 +235,12 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
     }
 
     Overlay {
+        val p = animationProgress.value * 0.01f
         Box(
             modifier = Modifier
                 .background(
                     MaterialTheme.colorScheme.scrim.copy(
-                        alpha = 0.32f * animationProgress.value.coerceIn(
+                        alpha = 0.32f * p.coerceIn(
                             0f,
                             1f
                         )
@@ -265,8 +263,8 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                 )
         ) {
             LauncherCard(
-                elevation = 8.dp * animationProgress.value,
-                backgroundOpacity = 1f,
+                elevation = 8.dp * p,
+                backgroundOpacity = MaterialTheme.transparency.elevatedSurface,
                 modifier = Modifier
                     .placeOverlay(
                         origin.translate(
@@ -274,7 +272,7 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                             -WindowInsets.systemBars.union(WindowInsets.ime)
                                 .getTop(LocalDensity.current)
                         ),
-                        animationProgress.value
+                        p,
                     )
             ) {
                 when (searchable) {
@@ -282,7 +280,7 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                         AppItemGridPopup(
                             app = searchable,
                             show = show,
-                            animationProgress = animationProgress.value,
+                            animationProgress = p,
                             origin = origin,
                             onDismiss = {
                                 show.targetState = false
@@ -294,7 +292,7 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                         WebsiteItemGridPopup(
                             website = searchable,
                             show = show,
-                            animationProgress = animationProgress.value,
+                            animationProgress = p,
                             origin = origin,
                             onDismiss = {
                                 show.targetState = false
@@ -306,7 +304,7 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                         ArticleItemGridPopup(
                             article = searchable,
                             show = show,
-                            animationProgress = animationProgress.value,
+                            animationProgress = p,
                             origin = origin,
                             onDismiss = {
                                 show.targetState = false
@@ -318,7 +316,7 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                         ContactItemGridPopup(
                             contact = searchable,
                             show = show,
-                            animationProgress = animationProgress.value,
+                            animationProgress = p,
                             origin = origin,
                             onDismiss = {
                                 show.targetState = false
@@ -330,7 +328,7 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                         FileItemGridPopup(
                             file = searchable,
                             show = show,
-                            animationProgress = animationProgress.value,
+                            animationProgress = p,
                             origin = origin,
                             onDismiss = {
                                 show.targetState = false
@@ -342,7 +340,7 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                         CalendarItemGridPopup(
                             calendar = searchable,
                             show = show,
-                            animationProgress = animationProgress.value,
+                            animationProgress = p,
                             origin = origin,
                             onDismiss = {
                                 show.targetState = false
@@ -354,7 +352,7 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                         ShortcutItemGridPopup(
                             shortcut = searchable,
                             show = show,
-                            animationProgress = animationProgress.value,
+                            animationProgress = p,
                             origin = origin,
                             onDismiss = {
                                 show.targetState = false
@@ -366,7 +364,7 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                         LocationItemGridPopup(
                             location = searchable,
                             show = show,
-                            animationProgress = animationProgress.value,
+                            animationProgress = p,
                             origin = origin,
                             onDismiss = {
                                 show.targetState = false
@@ -387,7 +385,7 @@ private fun Modifier.placeOverlay(
     return layout { measurable, constraints ->
         val placeable = measurable.measure(constraints)
         layout(constraints.maxWidth, constraints.maxHeight) {
-            placeable.placeRelative(
+            placeable.place(
                 (
                         lerp(
                             origin.center.x,

@@ -1,11 +1,8 @@
 package de.mm20.launcher2.badges.providers
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Lock
-import androidx.compose.material.icons.rounded.Work
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeIcon
-import de.mm20.launcher2.icons.PrivateSpace
+import de.mm20.launcher2.badges.R
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.AppShortcut
@@ -22,7 +19,7 @@ class ProfileBadgeProvider : BadgeProvider, KoinComponent {
     private val profileManager: ProfileManager by inject()
 
     override fun getBadge(searchable: Searchable): Flow<Badge?> = flow {
-        val userHandle = when(searchable) {
+        val userHandle = when (searchable) {
             is Application -> searchable.user
             is AppShortcut -> searchable.user
             else -> null
@@ -30,7 +27,7 @@ class ProfileBadgeProvider : BadgeProvider, KoinComponent {
         if (userHandle != null) {
             emitAll(
                 profileManager.getProfile(userHandle).map {
-                    when(it?.type) {
+                    when (it?.type) {
                         Profile.Type.Work -> WorkProfile
                         Profile.Type.Private -> PrivateProfile
                         else -> null
@@ -44,11 +41,11 @@ class ProfileBadgeProvider : BadgeProvider, KoinComponent {
 
     companion object {
         private val WorkProfile = Badge(
-            icon = BadgeIcon(Icons.Rounded.Work)
+            icon = BadgeIcon(R.drawable.enterprise_20px)
         )
 
         private val PrivateProfile = Badge(
-            icon = BadgeIcon(Icons.Rounded.PrivateSpace)
+            icon = BadgeIcon(R.drawable.encrypted_20px)
         )
     }
 }

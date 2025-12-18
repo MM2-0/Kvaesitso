@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataMigration
 import androidx.datastore.core.Serializer
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
 import de.mm20.launcher2.backup.Backupable
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +19,8 @@ abstract class BaseSettings<T>(
     internal val context: Context,
     private val fileName: String,
     private val serializer: Serializer<T>,
-    migrations: List<DataMigration<T>>
+    migrations: List<DataMigration<T>>,
+    corruptionHandler: ReplaceFileCorruptionHandler<T>? = null,
 ): Backupable {
 
     protected val scope = CoroutineScope(Job() + Dispatchers.Default)
@@ -29,6 +31,7 @@ abstract class BaseSettings<T>(
         produceMigrations = {
             migrations
         },
+        corruptionHandler = corruptionHandler
     )
 
     protected fun updateData(block: suspend (T) -> T) {

@@ -131,6 +131,13 @@ class HomescreenSettingsScreenVM(
         uiSettings.setDock(dock)
     }
 
+    val dockRows = uiSettings.dockRows
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+
+    fun setDockRows(rows: Int) {
+        uiSettings.setDockRows(rows)
+    }
+
     val fixedRotation = uiSettings.orientation.map { it != ScreenOrientation.Auto }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
@@ -157,38 +164,6 @@ class HomescreenSettingsScreenVM(
 
     fun setWidgetsOnHomeScreen(widgetsOnHomeScreen: Boolean) {
         uiSettings.setHomeScreenWidgets(widgetsOnHomeScreen)
-        viewModelScope.launch {
-            val gestures = gestureSettings.first()
-            if (widgetsOnHomeScreen) {
-                if (gestures.swipeUp is GestureAction.Widgets) {
-                    gestureSettings.setSwipeUp(GestureAction.NoAction)
-                } else if (gestures.swipeRight is GestureAction.Widgets) {
-                    gestureSettings.setSwipeUp(GestureAction.NoAction)
-                } else if (gestures.swipeLeft is GestureAction.Widgets) {
-                    gestureSettings.setSwipeUp(GestureAction.NoAction)
-                } else if (gestures.swipeDown is GestureAction.Widgets) {
-                    gestureSettings.setSwipeUp(GestureAction.NoAction)
-                } else if (gestures.longPress is GestureAction.Widgets) {
-                    gestureSettings.setLongPress(GestureAction.NoAction)
-                } else if (gestures.doubleTap is GestureAction.Widgets) {
-                    gestureSettings.setDoubleTap(GestureAction.NoAction)
-                }
-            } else {
-                if (gestures.swipeUp is GestureAction.NoAction || gestures.swipeUp is GestureAction.Widgets) {
-                    gestureSettings.setSwipeUp(GestureAction.Widgets)
-                } else if (gestures.swipeRight is GestureAction.NoAction || gestures.swipeRight is GestureAction.Widgets) {
-                    gestureSettings.setSwipeRight(GestureAction.Widgets)
-                } else if (gestures.swipeLeft is GestureAction.NoAction || gestures.swipeLeft is GestureAction.Widgets) {
-                    gestureSettings.setSwipeLeft(GestureAction.Widgets)
-                } else if (gestures.swipeDown is GestureAction.NoAction || gestures.swipeDown is GestureAction.Widgets) {
-                    gestureSettings.setSwipeDown(GestureAction.Widgets)
-                } else if (gestures.longPress is GestureAction.NoAction || gestures.longPress is GestureAction.Widgets) {
-                    gestureSettings.setLongPress(GestureAction.Widgets)
-                } else if (gestures.doubleTap is GestureAction.NoAction || gestures.doubleTap is GestureAction.Widgets) {
-                    gestureSettings.setDoubleTap(GestureAction.Widgets)
-                }
-            }
-        }
     }
 
     companion object : KoinComponent {

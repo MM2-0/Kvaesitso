@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -33,8 +35,10 @@ android {
         compose = true
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+        }
     }
     namespace = "de.mm20.launcher2.nextcloud"
 }
@@ -50,7 +54,7 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
 
-    implementation(libs.okhttp)
+    implementation(libs.bundles.ktor)
 
     api(project(":libs:webdav"))
     implementation(project(":core:i18n"))

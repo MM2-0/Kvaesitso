@@ -43,7 +43,6 @@
     <string name="date_tomorrow">明日</string>
     <string name="preference_screen_appearance">外観</string>
     <string name="preference_colors_bw">黒と白</string>
-    <string name="preference_font_system">システムのデフォルト</string>
     <string name="preference_font">フォント</string>
     <string name="preference_category_links">リンク</string>
     <string name="provider_here">HERE</string>
@@ -72,7 +71,6 @@
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="widget_name_calendar">カレンダー</string>
     <string name="widget_name_weather">天気</string>
-    <string name="preference_icon_shape_platform">システムのデフォルト</string>
     <string name="preference_icon_shape_rounded_square">角丸</string>
     <string name="preference_icon_shape_square">スクエア</string>
     <string name="preference_clockwidget_alarm_part">アラーム</string>
@@ -173,7 +171,6 @@
     <string name="weather_condition_wind">風</string>
     <string name="weather_condition_unknown">不明</string>
     <string name="weather_widget_set_location">場所を設定</string>
-    <string name="easter_egg_2">やめて！時間の無駄だよ！</string>
     <string name="widget_name_notes">メモ</string>
     <string name="weather_condition_snow">雪</string>
     <string name="weather_condition_cloudy">曇り</string>
@@ -188,9 +185,6 @@
     <string name="widget_name_unknown">不明なアプリウィジェット</string>
     <string name="notes_widget_action_dismiss">閉じる</string>
     <string name="notes_widget_dismissed">メモは閉じられました。</string>
-    <string name="easter_egg_1">おっと！イースターエッグはここにはありません。</string>
-    <string name="easter_egg_3">もう言わないよ。ここには絶対にイースターエッグなんて隠してないよ！</string>
-    <string name="easter_egg_text">さて、見つけたようだね。おめでとう。見つけられてよかった？</string>
     <string name="widget_action_replace">置き換え</string>
     <string name="weather_condition_rain">雨</string>
     <string name="weather_condition_sleet">みぞれ</string>
@@ -245,7 +239,6 @@
     <string name="backup_complete">バックアップが完了しました。</string>
     <string name="preference_screen_search_actions">クイックアクション</string>
     <string name="preference_restore_default">デフォルトに復元</string>
-    <string name="new_color_scheme_name">新しい配色</string>
     <string name="preference_screen_about">このアプリについて</string>
     <string name="preference_version">バージョン</string>
     <string name="weather_condition_heavysleetshowersandthunder">激しいみぞれと雷</string>

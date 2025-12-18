@@ -240,7 +240,6 @@
     <string name="preference_theme">테마</string>
     <string name="preference_screen_colors">색상 구성</string>
     <string name="preference_nextcloud_signin">Nextcloud에 로그인</string>
-    <string name="preference_font_system">시스템 기본값</string>
     <string name="preference_weather_provider">공급자</string>
     <string name="preference_search_calculator_summary">수학 식 계산</string>
     <string name="preference_cards_stroke_width">획 너비</string>
@@ -287,8 +286,6 @@
     <string name="preference_screen_tags">태그</string>
     <string name="preference_edit_button">버튼 편집</string>
     <string name="preference_favorites_edit_button_summary">즐겨찾기를 정렬할 수 있는 버튼 표시</string>
-    <string name="easter_egg_3">마지막으로 말씀드릴게요. 진짜 이스터 에그 없어요.</string>
-    <string name="easter_egg_text">와, 찾아내셨군요. 축하드려요. 찾아낼 만 하셨나요\?</string>
     <string name="weather_condition_heavysnow">많은 눈</string>
     <string name="weather_condition_lightrainshowers">소나기 조금</string>
     <string name="preference_screen_about">정보</string>
@@ -303,8 +300,6 @@
     <string name="frequently_used_rows">줄 수</string>
     <string name="search_action_event">일정 추가</string>
     <string name="search_action_open_url">웹사이트 보기</string>
-    <string name="easter_egg_1">직접 가져오지 않는 이상 이스터 에그는 없어요.</string>
-    <string name="easter_egg_2">없다니까요. 시간 낭비하지 마세요.</string>
     <string name="preference_crash_reporter">충돌 보고 도구</string>
     <string name="preference_search_calculator">계산기</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
@@ -339,7 +334,6 @@
     <string name="preference_weather_integration">날씨</string>
     <string name="gesture_action_launch_app">앱 열기</string>
     <string name="tag_select_items">항목 선택:</string>
-    <string name="preference_icon_shape_platform">시스템 기본값</string>
     <string name="preference_wallpaper_summary">배경화면 선택</string>
     <string name="gesture_action_recents">최근 앱 화면 열기</string>
     <string name="widget_config_weather_integration_settings">날씨 통합 설정</string>
@@ -390,13 +384,13 @@
     <string name="preference_force_themed_icons">테마 강제 적용</string>
     <string name="tag_exists_message">같은 이름의 태그가 이미 있습니다. 계속 진행하면 두 태그를 하나로 합칩니다.</string>
     <string name="search_action_websearch">웹 검색</string>
-    <string name="create_search_action_type">어떤 종류의 동작을 만드시겠습니까\?</string>
+    <string name="create_search_action_type">어떤 종류의 동작을 만드시겠습니까?</string>
     <string name="tag_no_items_message">이 태그를 지정한 항목이 없습니다. 계속 진행하면 태그를 삭제합니다.</string>
     <string name="backup_complete">백업을 완료했습니다.</string>
     <string name="favorites_empty_tag">이 태그를 지정한 항목이 없습니다.</string>
     <string name="create_search_action_pick_app">검색할 앱 선택:</string>
     <string name="create_search_action_website_url">웹사이트 주소 입력:</string>
-    <string name="search_action_websearch_url_hint">웹 검색 URL을 구성할 때 사용하는 URL 템플릿입니다. 실제 검색어 대신 ‘${1}’을 사용하세요. 예: https://google.com/search\?q=${1}</string>
+    <string name="search_action_websearch_url_hint">웹 검색 URL을 구성할 때 사용하는 URL 템플릿입니다. 실제 검색어 대신 ‘${1}’을 사용하세요. 예: https://google.com/search?q=${1}</string>
     <string name="preference_gesture_swipe_down">아래로 스와이프</string>
     <string name="preference_screen_gestures_summary">제스처 및 제스처 동작</string>
     <string name="create_search_action_type_intent">사용자 정의 인텐트</string>

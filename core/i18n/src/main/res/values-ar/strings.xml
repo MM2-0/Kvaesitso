@@ -103,11 +103,7 @@
     <string name="notes_widget_action_dismiss">استبعاد</string>
     <string name="notes_widget_dismissed">تم ‏رفض الملاحظة.</string>
     <string name="shortcut_summary">من طرف %1$s</string>
-    <string name="easter_egg_1">لا يوجد أسرار مخفية هنا ، إلا إذا أحضرتها معك.</string>
-    <string name="easter_egg_text">حسنا، لقد وجدتني. تهانينا. هل كان يستحق كل هذا العناء؟</string>
     <string name="edit">تعديل</string>
-    <string name="easter_egg_2">من فضلك، توقف عن ذلك، أنت تضيع وقتك</string>
-    <string name="easter_egg_3">لن أقولها مرة أخرى: لا يوجد على الإطلاق أسرار مخفية هنا</string>
     <string name="close">إغلاق</string>
     <string name="save">حفظ</string>
     <string name="duplicate">تكرار</string>
@@ -269,7 +265,6 @@
     <string name="preference_screen_appearance">المظهر</string>
     <string name="preference_theme">السمة</string>
     <string name="preference_colors_bw">أبيض وأسود</string>
-    <string name="preference_font_system">الافتراضي للنظام</string>
     <string name="preference_automatic_location">موقع تلقائي</string>
     <string name="preference_automatic_location_summary">استعمل GPS وخدمة المواقع لتحديد الموقع تلقائيا</string>
     <string name="preference_location">الموقع</string>
@@ -386,7 +381,6 @@
     <string name="preference_screen_search">البحث</string>
     <string name="preference_search_currencyconverter_summary">تنزيل أسعار الصرف بشكل دوري لتحويل العملات</string>
     <string name="preference_search_nextcloud">نكست كلاود Nextcloud</string>
-    <string name="preference_icon_shape_platform">افتراضي النظام</string>
     <string name="preference_icon_shape_triangle">مثلث رولو</string>
     <string name="preference_category_searchbar">شريط البحث</string>
     <string name="preference_screen_integrations">التكاملات</string>
@@ -661,7 +655,6 @@
     <string name="note_widget_file_read_error">خطأ في قراءة الملاحظة</string>
     <string name="note_widget_file_write_error_description">تعذر كتابة الملاحظة في الملف المرتبط. ربما تم نقله أو حذفه. تم حفظ نسخة في وحدة التخزين الداخلية للمشغل.</string>
     <string name="confirmation_delete_color_scheme">هل تريد حقًا حذف نظام الألوان %1$s؟</string>
-    <string name="new_color_scheme_name">نظام ألوان جديد</string>
     <string name="import_theme_apply">تطبيق السمة</string>
     <string name="import_theme_error">تعذر قراءة الملف المحدد. يرجى التأكد من أنك حددت ملف سمة صالح (*.kvtheme)، وأن الملف غير تالف.</string>
     <string name="shortcut_unavailable_description">هذا الاختصار غير متوفر لأن %1$s ليس المشغل الافتراضي</string>
@@ -845,7 +838,15 @@
     <string name="preference_clock_widget_time_format">تنسيق الوقت</string>
     <string name="preference_clock_widget_time_format_24h">24-ساعة</string>
     <string name="preference_clock_widget_time_format_12h">12-ساعة</string>
-    <string name="preference_clock_widget_time_format_system">النظام الافتراضي</string>
     <string name="missing_permission_call_contacts_settings">إذن الاتصال مطلوب لبدء المكالمات</string>
     <string name="preference_contacts_call_on_tap">انقر للاتصال</string>
+    <string name="save_as_file">اهلا</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="zero">السلام</item>
+        <item quantity="one"/>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
+    </plurals>
 </resources>

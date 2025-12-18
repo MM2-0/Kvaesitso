@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
@@ -22,7 +19,7 @@ import de.mm20.launcher2.ui.common.FavoritesTagSelector
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 import de.mm20.launcher2.ui.layout.BottomReversed
-import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
 
 fun LazyListScope.SearchFavorites(
     favorites: List<SavableSearchable>,
@@ -47,7 +44,7 @@ fun LazyListScope.SearchFavorites(
                     )
                     .background(
                         MaterialTheme.colorScheme.surface.copy(
-                            LocalTransparencyScheme.current.surface
+                            MaterialTheme.transparency.surface
                         ),
                         MaterialTheme.shapes.medium
                     )
@@ -62,7 +59,7 @@ fun LazyListScope.SearchFavorites(
                         text = stringResource(
                             if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
                         ),
-                        icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
+                        icon = if (selectedTag == null) R.drawable.star_24px else R.drawable.tag_24px,
                     )
                 }
                 if (pinnedTags.isNotEmpty() || editButton) {

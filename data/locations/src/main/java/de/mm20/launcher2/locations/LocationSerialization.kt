@@ -1,7 +1,6 @@
 package de.mm20.launcher2.locations
 
 import android.content.Context
-import android.util.Log
 import de.mm20.launcher2.locations.providers.PluginLocation
 import de.mm20.launcher2.locations.providers.PluginLocationProvider
 import de.mm20.launcher2.locations.providers.openstreetmaps.OsmLocation
@@ -18,10 +17,10 @@ import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.PaymentMethod
 import de.mm20.launcher2.serialization.Json
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 
 @Serializable
 internal data class SerializedLocation(
@@ -42,6 +41,7 @@ internal data class SerializedLocation(
     val departures: List<Departure>? = null,
     val fixMeUrl: String? = null,
     val attribution: Attribution? = null,
+    val acceptedPaymentMethods: Map<PaymentMethod, Boolean>? = null,
     val authority: String? = null,
     val storageStrategy: StorageStrategy? = null,
 )
@@ -67,6 +67,7 @@ internal class OsmLocationSerializer : SearchableSerializer {
                 timestamp = searchable.timestamp,
                 departures = searchable.departures,
                 fixMeUrl = searchable.fixMeUrl,
+                acceptedPaymentMethods = searchable.acceptedPaymentMethods
             )
         )
     }
@@ -96,6 +97,7 @@ internal class OsmLocationDeserializer(
             userRating = json.userRating,
             openingSchedule = json.openingSchedule,
             timestamp = json.timestamp ?: return null,
+            acceptedPaymentMethods = json.acceptedPaymentMethods,
             updatedSelf = {
                 osmProvider.update(id)
             }
@@ -134,6 +136,7 @@ internal class PluginLocationSerializer : SearchableSerializer {
                         openingSchedule = searchable.openingSchedule,
                         timestamp = searchable.timestamp,
                         departures = searchable.departures,
+                        acceptedPaymentMethods = searchable.acceptedPaymentMethods,
                         fixMeUrl = searchable.fixMeUrl,
                         authority = searchable.authority,
                         storageStrategy = searchable.storageStrategy,
@@ -185,6 +188,7 @@ internal class PluginLocationDeserializer(
                     departures = json.departures,
                     fixMeUrl = json.fixMeUrl,
                     attribution = json.attribution,
+                    acceptedPaymentMethods = json.acceptedPaymentMethods,
                     authority = authority,
                     storageStrategy = strategy,
                     updatedSelf = {

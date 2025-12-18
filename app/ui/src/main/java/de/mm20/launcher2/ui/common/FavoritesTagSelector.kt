@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.common
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.EnterExitState
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.horizontalScroll
@@ -14,11 +13,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.ExpandLess
-import androidx.compose.material.icons.rounded.ExpandMore
-import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -33,13 +27,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.layout.TopReversed
-import de.mm20.launcher2.ui.modifier.consumeAllScrolling
 
 @Composable
 fun FavoritesTagSelector(
@@ -86,7 +80,7 @@ fun FavoritesTagSelector(
                             leadingIcon = if (compact) null else {
                                 {
                                     Icon(
-                                        imageVector = Icons.Rounded.Star,
+                                        painter = painterResource(R.drawable.star_20px_filled),
                                         contentDescription = null,
                                         modifier = Modifier.size(FilterChipDefaults.IconSize),
                                     )
@@ -95,7 +89,7 @@ fun FavoritesTagSelector(
                             label = {
                                 if (compact) {
                                     Icon(
-                                        imageVector = Icons.Rounded.Star,
+                                        painter = painterResource(R.drawable.star_20px_filled),
                                         contentDescription = null,
                                         modifier = Modifier.size(FilterChipDefaults.IconSize),
                                     )
@@ -132,11 +126,11 @@ fun FavoritesTagSelector(
                             modifier = Modifier
                                 .rotate(rot),
                             onClick = { onExpand(true) }) {
-                            Icon(Icons.Rounded.ExpandMore, null)
+                            Icon(painterResource(R.drawable.arrow_drop_down_24px), null)
                         }
                     }
 
-                }
+                    }
 
                 if (editButton) {
                     SmallFloatingActionButton(
@@ -144,7 +138,7 @@ fun FavoritesTagSelector(
                         onClick = { sheetManager.showEditFavoritesSheet() }
                     ) {
                         Icon(
-                            imageVector = Icons.Rounded.Edit,
+                            painter = painterResource(R.drawable.edit_24px),
                             contentDescription = null
                         )
                     }
@@ -167,7 +161,7 @@ fun FavoritesTagSelector(
                         leadingIcon = if (compact) null else {
                             {
                                 Icon(
-                                    imageVector = Icons.Rounded.Star,
+                                    painter = painterResource(R.drawable.star_20px_filled),
                                     contentDescription = null,
                                     modifier = Modifier.size(FilterChipDefaults.IconSize),
                                 )
@@ -176,7 +170,7 @@ fun FavoritesTagSelector(
                         label = {
                             if (compact) {
                                 Icon(
-                                    imageVector = Icons.Rounded.Star,
+                                    painter = painterResource(R.drawable.star_20px_filled),
                                     contentDescription = null,
                                     modifier = Modifier.size(FilterChipDefaults.IconSize),
                                 )
@@ -218,7 +212,7 @@ fun FavoritesTagSelector(
                             .rotate(rot),
                         onClick = { onExpand(false) }
                     ) {
-                        Icon(Icons.Rounded.ExpandLess, null)
+                        Icon(painterResource(R.drawable.arrow_drop_up_24px), null)
                     }
 
                     if (editButton) {
@@ -227,7 +221,7 @@ fun FavoritesTagSelector(
                             onClick = { sheetManager.showEditFavoritesSheet() }
                         ) {
                             Icon(
-                                imageVector = Icons.Rounded.Edit,
+                                painter = painterResource(R.drawable.edit_24px),
                                 contentDescription = null
                             )
                         }

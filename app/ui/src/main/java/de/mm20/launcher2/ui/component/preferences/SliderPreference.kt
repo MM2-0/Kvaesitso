@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Icon
@@ -10,6 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import java.text.DecimalFormat
 import kotlin.math.floor
@@ -19,7 +23,8 @@ import kotlin.math.roundToInt
 @Composable
 fun SliderPreference(
     title: String,
-    icon: ImageVector? = null,
+    @DrawableRes icon: Int? = null,
+    iconPadding: Boolean = icon != null,
     value: Float,
     min: Float = 0f,
     max: Float = 1f,
@@ -33,25 +38,32 @@ fun SliderPreference(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 16.dp)
+            .background(MaterialTheme.colorScheme.surface, MaterialTheme.shapes.extraSmall)
+            .padding(
+                start = if (icon != null || iconPadding) 8.dp else 16.dp,
+                end = 16.dp,
+            )
             .alpha(if (enabled) 1f else 0.38f),
     ) {
-        Box(
-            modifier = Modifier
-                .width(54.dp)
-                .padding(start = 4.dp),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            if (icon != null) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                )
+        if (icon != null || iconPadding) {
+            Box(
+                modifier = Modifier
+                    .width(56.dp)
+                    .padding(end = 8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                if (icon != null) {
+                    Icon(
+                        painter = painterResource(icon),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
             }
         }
         Column(
             modifier = Modifier.weight(1f)
+                .padding(vertical = 16.dp)
         ) {
             Text(
                 modifier = Modifier.padding(start = 2.dp),
@@ -71,7 +83,7 @@ fun SliderPreference(
                     steps = step?.let { ((max - min) / it).toInt() - 1 } ?: 0,
                     onValueChangeFinished = {
                         onValueChanged(sliderValue)
-                    }
+                    },
                 )
                 if (label != null) {
                     label(sliderValue)
@@ -84,7 +96,8 @@ fun SliderPreference(
                     Text(
                         modifier = Modifier.width(56.dp).padding(start = 24.dp),
                         text = format.format(sliderValue),
-                        style = MaterialTheme.typography.titleSmall
+                        style = MaterialTheme.typography.titleSmall,
+                        textAlign = TextAlign.Center,
                     )
                 }
             }
@@ -95,7 +108,7 @@ fun SliderPreference(
 @Composable
 fun SliderPreference(
     title: String,
-    icon: ImageVector? = null,
+    @DrawableRes icon: Int? = null,
     value: Int,
     min: Int = 0,
     max: Int = 100,
@@ -124,7 +137,7 @@ fun SliderPreference(
 @Composable
 inline fun <reified T: Enum<T>> SliderPreference(
     title: String,
-    icon: ImageVector? = null,
+    @DrawableRes icon: Int? = null,
     value: T,
     enabled: Boolean = true,
     labels: List<EnumLocalization<T>>? = null,

@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.common.list
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.updateTransition
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -22,9 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.ui.ktx.animateCorners
+import de.mm20.launcher2.ui.ktx.animateShapeAsState
 import de.mm20.launcher2.ui.layout.BottomReversed
-import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
 
 fun <T : SavableSearchable> LazyListScope.ListResults(
     key: String,
@@ -100,16 +98,41 @@ fun LazyItemScope.ListItemSurface(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val transition = updateTransition(isExpanded)
-    val elevation by transition.animateDp {
-        if (it) 2.dp else 0.dp
-    }
     val backgroundAlpha by transition.animateFloat {
-        if (it) 1f else LocalTransparencyScheme.current.surface
+        if (it) MaterialTheme.transparency.elevatedSurface else MaterialTheme.transparency.surface
+    }
+    val elevation by transition.animateDp {
+        if (it && backgroundAlpha == 1f) 2.dp else 0.dp
     }
 
+
     val padding by transition.animateDp {
-        if (it) 8.dp else 0.dp
+        if (it) 8.dp else 1.dp
     }
+
+    val shape by animateShapeAsState(
+        if (isExpanded) MaterialTheme.shapes.medium
+        else if (!isFirst && !isLast && !isAfterExpanded && !isBeforeExpanded) MaterialTheme.shapes.extraSmall
+        else {
+            val xs = MaterialTheme.shapes.extraSmall
+            val md = MaterialTheme.shapes.medium
+            if (reverse) {
+                xs.copy(
+                    topStart = if (isLast || isBeforeExpanded) md.topStart else xs.topStart,
+                    topEnd = if (isLast || isBeforeExpanded) md.topEnd else xs.topEnd,
+                    bottomEnd = if (isFirst || isAfterExpanded) md.bottomEnd else xs.bottomEnd,
+                    bottomStart = if (isFirst || isAfterExpanded) md.bottomStart else xs.bottomStart,
+                )
+            } else {
+                xs.copy(
+                    topStart = if (isFirst || isAfterExpanded) md.topStart else xs.topStart,
+                    topEnd = if (isFirst || isAfterExpanded) md.topEnd else xs.topEnd,
+                    bottomEnd = if (isLast || isBeforeExpanded) md.bottomEnd else xs.bottomEnd,
+                    bottomStart = if (isLast || isBeforeExpanded) md.bottomStart else xs.bottomStart,
+                )
+            }
+        }
+    )
 
     val modifier = if (reverse) {
         Modifier
@@ -119,12 +142,7 @@ fun LazyItemScope.ListItemSurface(
             )
             .shadow(
                 elevation = elevation,
-                MaterialTheme.shapes.medium.animateCorners(
-                    bottomStart = isFirst || isExpanded || isAfterExpanded,
-                    bottomEnd = isFirst || isExpanded || isAfterExpanded,
-                    topEnd = isLast || isExpanded || isBeforeExpanded,
-                    topStart = isLast || isExpanded || isBeforeExpanded,
-                ),
+                shape,
                 true,
             )
     } else {
@@ -135,12 +153,7 @@ fun LazyItemScope.ListItemSurface(
             )
             .shadow(
                 elevation = elevation,
-                MaterialTheme.shapes.medium.animateCorners(
-                    topStart = isFirst || isExpanded || isAfterExpanded,
-                    topEnd = isFirst || isExpanded || isAfterExpanded,
-                    bottomEnd = isLast || isExpanded || isBeforeExpanded,
-                    bottomStart = isLast || isExpanded || isBeforeExpanded,
-                ),
+                shape,
                 true,
             )
     }
@@ -152,9 +165,6 @@ fun LazyItemScope.ListItemSurface(
             .background(MaterialTheme.colorScheme.surface.copy(backgroundAlpha)),
         verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
     ) {
-        AnimatedVisibility(!isFirst && !isExpanded && !isAfterExpanded) {
-            HorizontalDivider()
-        }
         CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
             content()
         }

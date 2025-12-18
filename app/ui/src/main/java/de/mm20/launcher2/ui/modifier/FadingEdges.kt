@@ -28,7 +28,7 @@ fun Modifier.verticalFadingEdges(
     if(!enabled) return this
     if (top == 0.dp && bottom == 0.dp) return this
 
-    return this then drawWithContent {
+    return drawWithContent {
 
         val topColors = if (top > 0.dp) createColors(
             1f - amount,

@@ -5,24 +5,19 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowDownward
-import androidx.compose.material.icons.rounded.BugReport
-import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Share
-import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SmallFloatingActionButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,9 +29,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.debug.DebugInformationDumper
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
@@ -45,9 +42,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 import java.io.File
 import java.io.IOException
 import java.util.regex.Pattern
+
+@Serializable
+data object LogRoute: NavKey
 
 @Composable
 fun LogScreen() {
@@ -116,9 +117,10 @@ fun LogScreen() {
                     )
                 }
             }) {
-                Icon(Icons.Rounded.Share, contentDescription = null)
+                Icon(painterResource(R.drawable.share_24px), contentDescription = null)
             }
         },
+        verticalArrangement = Arrangement.spacedBy(2.dp),
         floatingActionButton = {
             AnimatedVisibility(
                 listState.canScrollForward,
@@ -133,48 +135,60 @@ fun LogScreen() {
                         listState.animateScrollToItem(lines.lastIndex)
                     }
                 }) {
-                    Icon(Icons.Rounded.ArrowDownward, null)
+                    Icon(
+                        painterResource(R.drawable.arrow_downward_24px),
+                        null,
+                    )
                 }
             }
         },
         lazyColumnState = listState,
     ) {
-        items(lines) {
+        itemsIndexed(lines) { i, it ->
+            val xs = MaterialTheme.shapes.extraSmall
+            val md = MaterialTheme.shapes.medium
+            val shape = xs.copy(
+                topStart = if (i == 0) md.topStart else xs.topStart,
+                topEnd = if (i == 0) md.topEnd else xs.topEnd,
+                bottomStart = if (i == lines.lastIndex) md.bottomStart else xs.bottomStart,
+                bottomEnd = if (i == lines.lastIndex) md.bottomEnd else xs.bottomEnd,
+            )
+
             if (it is RawLogcatLine) {
                 Text(
-                    modifier = Modifier.padding(16.dp),
-                    text = it.line ?: "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface, shape)
+                        .padding(16.dp),
+                    text = it.line,
                     style = MaterialTheme.typography.bodySmall
                 )
             } else if (it is FormattedLogcatLine) {
                 val contentColor = when (it.level) {
-                    "E" -> MaterialTheme.colorScheme.onErrorContainer
-                    "W" -> MaterialTheme.colorScheme.onPrimaryContainer
+                    "E" -> MaterialTheme.colorScheme.error
+                    "W" -> MaterialTheme.colorScheme.primary
                     "D" -> MaterialTheme.colorScheme.onSurfaceVariant
                     else -> MaterialTheme.colorScheme.onSurface
-                }
-                val bgColor = when (it.level) {
-                    "E" -> MaterialTheme.colorScheme.errorContainer
-                    "W" -> MaterialTheme.colorScheme.primaryContainer
-                    "D" -> MaterialTheme.colorScheme.surfaceVariant
-                    else -> MaterialTheme.colorScheme.surface
                 }
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(bgColor)
+                        .background(MaterialTheme.colorScheme.surface, shape)
                         .padding(16.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            when (it.level) {
-                                "E" -> Icons.Rounded.Error
-                                "W" -> Icons.Rounded.Warning
-                                "D" -> Icons.Rounded.BugReport
-                                else -> Icons.Rounded.Info
-                            },
+                            painterResource(
+                                when (it.level) {
+                                    "E" -> R.drawable.error_20px
+                                    "W" -> R.drawable.warning_20px
+                                    "D" -> R.drawable.bug_report_20px
+                                    else -> R.drawable.info_20px
+                                },
+                            ),
                             null,
-                            tint = contentColor
+                            tint = contentColor,
+                            modifier = Modifier.size(20.dp)
                         )
                         Text(
                             modifier = Modifier.padding(start = 8.dp),
@@ -187,7 +201,7 @@ fun LogScreen() {
                         modifier = Modifier.padding(top = 8.dp),
                         text = it.message,
                         style = MaterialTheme.typography.bodySmall,
-                        color = contentColor
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
             }

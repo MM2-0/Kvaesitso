@@ -6,13 +6,9 @@ import android.media.session.PlaybackState.CustomAction
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.animation.scaleIn
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,24 +31,21 @@ import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Audiotrack
-import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.MusicNote
-import androidx.compose.material.icons.rounded.SkipNext
-import androidx.compose.material.icons.rounded.SkipPrevious
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,17 +53,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.core.content.res.ResourcesCompat
@@ -87,7 +84,7 @@ import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
 import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.locals.LocalWindowSize
-import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.widgets.MusicWidget
 import kotlin.math.min
 
@@ -168,39 +165,44 @@ fun MusicWidget(widget: MusicWidget) {
                         var seekPosition by remember { mutableStateOf<Float?>(null) }
 
                         if (pos != null && dur != null && dur > 0) {
-                            if (playbackState != PlaybackState.Stopped || supportedActions.seekTo) {
-                                Slider(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 14.dp)
-                                        .requiredHeightIn(max = 20.dp),
-                                    value = (if (isDragged) seekPosition else pos?.toFloat()) ?: 0f,
-                                    valueRange = 0f..dur.toFloat(),
-                                    interactionSource = interactionSource,
-                                    onValueChange = {
-                                        seekPosition = it
-                                    },
-                                    onValueChangeFinished = {
-                                        seekPosition?.let {
-                                            viewModel.seekTo(it.toLong())
-                                            pos = it.toLong()
+                            CompositionLocalProvider(
+                                LocalLayoutDirection provides LayoutDirection.Ltr
+                            ) {
+                                if (playbackState != PlaybackState.Stopped && supportedActions.seekTo && widget.config.interactiveProgressBar) {
+                                    Slider(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 14.dp)
+                                            .requiredHeightIn(max = 20.dp),
+                                        value = (if (isDragged) seekPosition else pos?.toFloat())
+                                            ?: 0f,
+                                        valueRange = 0f..dur.toFloat(),
+                                        interactionSource = interactionSource,
+                                        onValueChange = {
+                                            seekPosition = it
+                                        },
+                                        onValueChangeFinished = {
+                                            seekPosition?.let {
+                                                viewModel.seekTo(it.toLong())
+                                                pos = it.toLong()
+                                            }
+                                        },
+                                        track = {
+                                            SliderDefaults.Track(
+                                                sliderState = it,
+                                                modifier = Modifier.requiredHeight(4.dp)
+                                            )
                                         }
-                                    },
-                                    track = {
-                                        SliderDefaults.Track(
-                                            sliderState = it,
-                                            modifier = Modifier.requiredHeight(4.dp)
-                                        )
-                                    }
-                                )
-                            } else {
-                                LinearProgressIndicator(
-                                    progress = { (pos?.toFloat() ?: 0f) / dur.toFloat() },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 8.dp, horizontal = 16.dp),
-                                    strokeCap = StrokeCap.Round,
-                                )
+                                    )
+                                } else {
+                                    LinearProgressIndicator(
+                                        progress = { (pos?.toFloat() ?: 0f) / dur.toFloat() },
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(vertical = 8.dp, horizontal = 16.dp),
+                                        strokeCap = StrokeCap.Round,
+                                    )
+                                }
                             }
                         } else {
                             Box(
@@ -232,21 +234,7 @@ fun MusicWidget(widget: MusicWidget) {
                         }
                     }
                 }
-                AnimatedContent(
-                    albumArt,
-                    transitionSpec = {
-                        if (targetState != null && initialState == null) {
-                            fadeIn() togetherWith fadeOut()
-                        } else {
-                            (fadeIn(animationSpec = tween(220, delayMillis = 90)) +
-                                    scaleIn(
-                                        initialScale = 0.92f,
-                                        animationSpec = tween(220, delayMillis = 90)
-                                    ))
-                                .togetherWith(fadeOut(animationSpec = tween(90)))
-                        }
-                    }
-                ) { art ->
+                AnimatedContent(albumArt) { art ->
                     Box(
                         modifier = Modifier
                             .padding(top = 16.dp, end = 16.dp)
@@ -309,7 +297,7 @@ fun MusicWidget(widget: MusicWidget) {
                             }
                         } else {
                             Icon(
-                                imageVector = Icons.Rounded.MusicNote,
+                                painterResource(R.drawable.music_note_48px),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
                                 modifier = Modifier.size(48.dp)
@@ -319,76 +307,94 @@ fun MusicWidget(widget: MusicWidget) {
                 }
             }
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
 
-            ) {
-            if (supportedActions.skipToPrevious) {
-                Tooltip(
-                    tooltipText = stringResource(R.string.music_widget_previous_track)
+        CompositionLocalProvider(
+            LocalLayoutDirection provides LayoutDirection.Ltr
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
+
                 ) {
-                    IconButton(
-                        onClick = {
-                            viewModel.skipPrevious()
-                        }) {
-                        Icon(
-                            imageVector = Icons.Rounded.SkipPrevious,
-                            stringResource(R.string.music_widget_previous_track)
-                        )
+                if (supportedActions.skipToPrevious) {
+                    Tooltip(
+                        tooltipText = stringResource(R.string.music_widget_previous_track)
+                    ) {
+                        IconButton(
+                            onClick = {
+                                viewModel.skipPrevious()
+                            }) {
+                            Icon(
+                                painter = painterResource(R.drawable.skip_previous_24px),
+                                stringResource(R.string.music_widget_previous_track)
+                            )
+                        }
                     }
                 }
-            }
-            val playPauseIcon =
-                AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
-            Tooltip(
-                tooltipText = stringResource(
-                    if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
-                    else R.string.music_widget_play
-                )
-            ) {
-                FilledTonalIconButton(
-                    colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalTransparencyScheme.current.surface),
-                    ),
-                    onClick = { viewModel.togglePause() },
-                ) {
-                    Icon(
-                        painter = rememberAnimatedVectorPainter(
-                            playPauseIcon,
-                            atEnd = playbackState == PlaybackState.Playing
-                        ),
-                        contentDescription = stringResource(
-                            if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
-                            else R.string.music_widget_play
-                        )
+
+                Tooltip(
+                    tooltipText = stringResource(
+                        if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
+                        else R.string.music_widget_play
                     )
-                }
-            }
-            if (supportedActions.skipToNext) {
-                Tooltip(
-                    tooltipText = stringResource(R.string.music_widget_next_track)
                 ) {
-                    IconButton(onClick = {
-                        viewModel.skipNext()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Rounded.SkipNext,
-                            stringResource(R.string.music_widget_next_track)
-                        )
+                    FilledTonalIconButton(
+                        colors = IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = MaterialTheme.transparency.surface),
+                        ),
+                        onClick = { viewModel.togglePause() },
+                    ) {
+                        AnimatedContent(
+                            playbackState == PlaybackState.Playing,
+                            transitionSpec = {
+                                fadeIn().togetherWith(fadeOut())
+                            },
+                            modifier = Modifier.rotate(
+                                animateFloatAsState(
+                                    if (playbackState == PlaybackState.Playing) 90f else 0f
+                                ).value
+                            )
+                        ) {
+                            if (it) {
+                                Icon(
+                                    painterResource(R.drawable.pause_24px),
+                                    stringResource(R.string.music_widget_pause),
+                                    modifier = Modifier.rotate(-90f)
+                                )
+                            } else {
+                                Icon(
+                                    painterResource(R.drawable.play_arrow_24px),
+                                    stringResource(R.string.music_widget_play),
+                                )
+                            }
+                        }
                     }
                 }
+                if (supportedActions.skipToNext) {
+                    Tooltip(
+                        tooltipText = stringResource(R.string.music_widget_next_track)
+                    ) {
+                        IconButton(onClick = {
+                            viewModel.skipNext()
+                        }) {
+                            Icon(
+                                painter = painterResource(R.drawable.skip_next_24px),
+                                stringResource(R.string.music_widget_next_track)
+                            )
+                        }
+                    }
+                }
+                CustomActions(
+                    actions = supportedActions,
+                    onActionSelected = {
+                        viewModel.performCustomAction(it)
+                    },
+                    playerPackage = viewModel.currentPlayerPackage,
+                )
             }
-            CustomActions(
-                actions = supportedActions,
-                onActionSelected = {
-                    viewModel.performCustomAction(it)
-                },
-                playerPackage = viewModel.currentPlayerPackage,
-            )
         }
     }
 }
@@ -423,36 +429,50 @@ fun CustomActions(
                 tooltipText = stringResource(R.string.action_more_actions)
             ) {
                 IconButton(onClick = { showOverflowMenu = true }) {
-                    Icon(imageVector = Icons.Rounded.MoreVert, contentDescription = null)
+                    Icon(
+                        painterResource(R.drawable.more_vert_24px),
+                        contentDescription = null
+                    )
                 }
             }
-            DropdownMenu(
+            DropdownMenuPopup(
                 expanded = showOverflowMenu,
                 onDismissRequest = { showOverflowMenu = false },
             ) {
-                for (i in slots - 1 until actions.customActions.size) {
-                    val action = actions.customActions[i]
-                    DropdownMenuItem(
-                        leadingIcon = {
-                            CustomActionIcon(action, playerPackage)
-                        },
-                        text = {
-                            Text(
-                                text = action.name.toString(),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                        },
-                        onClick = {
-                            onActionSelected(action)
-                        }
-                    )
+                DropdownMenuGroup(
+                    shapes = MenuDefaults.groupShapes(),
+                ) {
+                    for (i in slots - 1 until actions.customActions.size) {
+                        val action = actions.customActions[i]
+                        DropdownMenuItem(
+                            shape =
+                                if (actions.customActions.size == 1) MenuDefaults.standaloneItemShape
+                                else when (i) {
+                                    0 -> MenuDefaults.leadingItemShape
+                                    actions.customActions.lastIndex -> MenuDefaults.trailingItemShape
+                                    else -> MenuDefaults.middleItemShape
+                                },
+                            leadingIcon = {
+                                CustomActionIcon(action, playerPackage)
+                            },
+                            text = {
+                                Text(
+                                    text = action.name.toString(),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            },
+                            onClick = {
+                                onActionSelected(action)
+                            }
+                        )
+                    }
                 }
             }
         }
     } else if (slots == actions.customActions.size) {
         val action = actions.customActions.last()
-        Tooltip (
+        Tooltip(
             tooltipText = action.name.toString()
         ) {
             IconButton(
@@ -516,7 +536,7 @@ fun NoData() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = Icons.Rounded.Audiotrack,
+            painter = painterResource(R.drawable.music_note_24px),
             contentDescription = "",
             modifier = Modifier
                 .padding(24.dp)
@@ -530,9 +550,19 @@ fun NoData() {
     }
 }
 
+@Suppress("DefaultLocale")
 private fun formatTimestamp(timestamp: Long?): String {
     if (timestamp == null) return "--:--"
-    val minutes = timestamp / 1000 / 60
-    val seconds = timestamp / 1000 % 60
-    return String.format("%02d:%02d", minutes, seconds)
+
+    val totalSeconds = timestamp / 1000
+    val days = totalSeconds / 86_400
+    val hours = (totalSeconds % 86_400) / 3600
+    val minutes = (totalSeconds % 3600) / 60
+    val seconds = totalSeconds % 60
+
+    return when {
+        days > 0 -> String.format("%d:%02d:%02d:%02d", days, hours, minutes, seconds)
+        hours > 0 -> String.format("%d:%02d:%02d", hours, minutes, seconds)
+        else -> String.format("%02d:%02d", minutes, seconds)
+    }
 }

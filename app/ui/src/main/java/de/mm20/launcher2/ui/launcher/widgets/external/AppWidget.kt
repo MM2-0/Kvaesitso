@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -61,7 +58,7 @@ fun AppWidget(
         Banner(
             modifier = Modifier.padding(16.dp),
             text = stringResource(R.string.app_widget_loading_failed),
-            icon = Icons.Rounded.Warning,
+            icon = R.drawable.warning_24px,
             secondaryAction = {
                 OutlinedButton(onClick = onWidgetRemove) {
                     Text(stringResource(R.string.widget_action_remove))

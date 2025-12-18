@@ -7,24 +7,14 @@ import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.R
 import de.mm20.launcher2.weather.WeatherProvider
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Locale
 
 internal class OpenWeatherMapProvider(
     private val context: Context,
 ): WeatherProvider {
 
-    private val retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+    private val openWeatherMapApi = OpenWeatherMapApi()
 
-    private val openWeatherMapService by lazy {
-        retrofit.create(OpenWeatherMapApi::class.java)
-    }
     override suspend fun getWeatherData(location: WeatherLocation): List<Forecast>? {
         return when (location) {
             is WeatherLocation.LatLon -> getWeatherData(location.lat, location.lon, location.name)
@@ -43,7 +33,7 @@ internal class OpenWeatherMapProvider(
         val lang = getLanguageCode()
 
         val currentWeather = try {
-            openWeatherMapService.currentWeather(
+            openWeatherMapApi.currentWeather(
                 appid = getApiKey(context) ?: return null,
                 lat = lat,
                 lon = lon,
@@ -64,7 +54,7 @@ internal class OpenWeatherMapProvider(
         val loc = locationName ?: "$city, $country"
 
         val forecasts = try {
-            openWeatherMapService.forecast5Day3Hour(
+            openWeatherMapApi.forecast5Day3Hour(
                 lat = coords.lat,
                 lon = coords.lon,
                 appid = getApiKey(context) ?: return null,
@@ -133,7 +123,7 @@ internal class OpenWeatherMapProvider(
 
     override suspend fun findLocation(query: String): List<WeatherLocation> {
         val response = try {
-            openWeatherMapService.geocode(
+            openWeatherMapApi.geocode(
                 appid = getApiKey(context) ?: return emptyList(),
                 q = query,
             )
@@ -185,8 +175,8 @@ internal class OpenWeatherMapProvider(
             771, 781, in 900..902, in 958..962 -> Forecast.STORM
             800 -> Forecast.CLEAR
             801 -> Forecast.PARTLY_CLOUDY
-            802 -> Forecast.MOSTLY_CLOUDY
-            803 -> Forecast.BROKEN_CLOUDS
+            802 -> Forecast.BROKEN_CLOUDS
+            803 -> Forecast.MOSTLY_CLOUDY
             804, 951 -> Forecast.CLOUDY
             903 -> Forecast.COLD
             904 -> Forecast.HOT

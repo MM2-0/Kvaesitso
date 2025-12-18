@@ -88,9 +88,6 @@
     <string name="notes_widget_export_filename">Notat_%1$s</string>
     <string name="notes_widget_action_dismiss">Avvis</string>
     <string name="shortcut_summary">Fra %1$s</string>
-    <string name="easter_egg_1">Her finnes ei noen påskeegg, med mindre du selv tok de med deg.</string>
-    <string name="easter_egg_3">For siste gang: det er absolutt ingen påskeegg her</string>
-    <string name="easter_egg_text">Greit, du fant meg. Gratulerer. Var det verdt det?</string>
     <string name="close">Lukk</string>
     <string name="save">Lagre</string>
     <string name="duplicate">Dupliser</string>
@@ -138,7 +135,6 @@
     <string name="weather_no_data">Ingen værdata tilgjengelig.</string>
     <string name="missing_permission_contact_search_settings">Kontakttilgang kreves for å søke i kontakter</string>
     <string name="missing_permission_notification_badges">Varseltilgang kreves for å vise varselprikker</string>
-    <string name="preference_font_system">Systemstandard</string>
     <string name="preference_screen_about">Om</string>
     <string name="preference_version">Versjon</string>
     <string name="preference_category_licenses">Åpen kildekode-lisenser</string>
@@ -190,7 +186,6 @@
     <string name="file_type_none">Fil</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
     <string name="notes_widget_action_save">Lagre</string>
-    <string name="easter_egg_2">Vær så snill, stopp, du kaster bort tiden din</string>
     <string name="plugin_type_filesearch">Filsøk</string>
     <string name="preference_restore_summary">Importer en tidligere sikkerhetskopi</string>
     <string name="missing_permission_calendar_search_settings">Kalendertilgang kreves for å søke i kalender</string>
@@ -259,7 +254,6 @@
     <string name="preference_cards_shape">Form</string>
     <string name="preference_cards_shape_rounded">Avrundet</string>
     <string name="preference_icon_shape">Form</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_icon_shape_square">Firkantet</string>
     <string name="preference_icon_shape_rounded_square">Avrundet firkant</string>
     <string name="preference_screen_plugins_summary">Administrer installerte utvidelser</string>
@@ -629,7 +623,6 @@
     <string name="preference_search_result_ordering_weight_factor">Rangeringsfleksibilitet</string>
     <string name="widget_config_weather_integration_settings">Innstillinger for værintegrasjon</string>
     <string name="note_widget_conflict_local_version">Seneste lagrede versjon:</string>
-    <string name="new_color_scheme_name">Nytt fargeskjema</string>
     <string name="theme_color_scheme_system_default">Bruk systemstandard</string>
     <string name="widget_config_music_integration_settings">Innstillinger for mediakontroll-integrasjon</string>
     <string name="theme_color_scheme_palette_color">Palett</string>

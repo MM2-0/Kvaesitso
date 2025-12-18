@@ -12,21 +12,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Share
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.Tune
-import androidx.compose.material.icons.rounded.Visibility
-import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -38,17 +25,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.roundToIntRect
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.ui.R
@@ -62,9 +45,7 @@ import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
-import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 
 @Composable
@@ -174,7 +155,7 @@ fun FileItem(
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
+                                icon = R.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
@@ -182,7 +163,7 @@ fun FileItem(
                         } else {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
+                                icon = R.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -193,7 +174,7 @@ fun FileItem(
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(R.string.menu_open_file),
-                            icon = Icons.Rounded.OpenInNew,
+                            icon = R.drawable.open_in_new_24px,
                             action = {
                                 viewModel.launch(context)
                             }
@@ -201,24 +182,26 @@ fun FileItem(
                     )
 
                     if (file.canShare) {
-                        toolbarActions.add(DefaultToolbarAction(
-                            label = stringResource(R.string.menu_share),
-                            icon = Icons.Rounded.Share,
-                            action = {
-                                file.share(context)
-                            }
-                        ))
+                        toolbarActions.add(
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_share),
+                                icon = R.drawable.share_24px,
+                                action = {
+                                    file.share(context)
+                                }
+                            ))
                     }
 
                     if (file.isDeletable) {
                         var showConfirmDialog by remember { mutableStateOf(false) }
-                        toolbarActions.add(DefaultToolbarAction(
-                            label = stringResource(R.string.menu_delete),
-                            icon = Icons.Rounded.Delete,
-                            action = {
-                                showConfirmDialog = true
-                            }
-                        ))
+                        toolbarActions.add(
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_delete),
+                                icon = R.drawable.delete_24px,
+                                action = {
+                                    showConfirmDialog = true
+                                }
+                            ))
                         if (showConfirmDialog) {
                             AlertDialog(
                                 onDismissRequest = { showConfirmDialog = false },
@@ -251,17 +234,18 @@ fun FileItem(
                     }
 
                     val sheetManager = LocalBottomSheetManager.current
-                    toolbarActions.add(DefaultToolbarAction(
-                        label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Tune,
-                        action = { sheetManager.showCustomizeSearchableModal(file) }
-                    ))
+                    toolbarActions.add(
+                        DefaultToolbarAction(
+                            label = stringResource(R.string.menu_customize),
+                            icon = R.drawable.tune_24px,
+                            action = { sheetManager.showCustomizeSearchableModal(file) }
+                        ))
 
                     Toolbar(
                         leftActions = listOf(
                             DefaultToolbarAction(
                                 label = stringResource(id = R.string.menu_back),
-                                icon = Icons.Rounded.ArrowBack
+                                icon = R.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }

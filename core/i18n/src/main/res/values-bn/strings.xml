@@ -104,9 +104,6 @@
     <string name="notes_widget_action_dismiss">বাদ দিন</string>
     <string name="notes_widget_dismissed">নোটটি বাদ দেয়া হয়েছে।</string>
     <string name="shortcut_summary">%1$s এর শর্টকাট</string>
-    <string name="easter_egg_1">এখানে কোনো ইস্টার এগ নেই, যদি না সেগুলো আপনি নিজে এনে থাকেন।</string>
-    <string name="easter_egg_2">আহহা, বললাম তো থামুন। অযথাই সময় নষ্ট করছেন</string>
-    <string name="easter_egg_text">আহ্। আপনি আমাকে খুঁজে পেলেন। অভিনন্দন। খুব মজা, তাই না?</string>
     <string name="save">সংরক্ষণ করুন</string>
     <string name="duplicate">অনুলিপি তৈরি</string>
     <string name="edit">সম্পাদনা</string>
@@ -177,7 +174,6 @@
     <string name="file_type_drawing">আঁকাবুকি ফাইল</string>
     <string name="alert_delete_shortcut">%1$s শর্টকাটটি স্থায়ীভাবে মুছে ফেলা হবে৷ আপনি নিশ্চিত?</string>
     <string name="notes_widget_action_save">সংরক্ষণ করুন</string>
-    <string name="easter_egg_3">আমি আর বলব না, এখানে নিশ্চিতভাবেই কোনো ইস্টার এগ লুকানো নেই</string>
     <string name="turn_off">বন্ধ করুন</string>
     <string name="menu_delete">মুছুন</string>
     <string name="file_meta_app_min_sdk">ন্যূনতম SDK ভার্সন: %1$s</string>
@@ -278,7 +274,6 @@
     <string name="preference_cards_shape_rounded">গোলাকার</string>
     <string name="preference_cards_shape_cut">কাটা</string>
     <string name="preference_icon_shape">আকৃতি</string>
-    <string name="preference_icon_shape_platform">সিস্টেমের পূর্বনির্ধারিত</string>
     <string name="preference_icon_shape_square">বর্গাকার</string>
     <string name="preference_icon_shape_rounded_square">গোলাকার বর্গ</string>
     <string name="preference_icon_shape_squircle">বর্গাকৃত গোলাকার</string>
@@ -294,7 +289,6 @@
     <string name="preference_system_bar_icons_dark">কালো</string>
     <string name="preference_hide_status_bar">স্ট্যাটাস বার লুকান</string>
     <string name="preference_hide_nav_bar">নির্দেশনা বার লুকান</string>
-    <string name="preference_font_system">সিস্টেমের পূর্বনির্ধারিত</string>
     <string name="preference_icon_shape_teardrop">অশ্রুপাত</string>
     <string name="preference_icon_shape_pebble">পাথরের টুকরা</string>
     <string name="preference_icon_shape_hexagon">ষড়ভুজ</string>

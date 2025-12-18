@@ -56,7 +56,6 @@
     <string name="notes_widget_action_save">Simpan</string>
     <string name="notes_widget_export_filename">Catatan_%1$s</string>
     <string name="shortcut_summary">Oleh %1$s</string>
-    <string name="easter_egg_2">Tolong, hentikan, kamu hanya menghabiskan waktumu</string>
     <string name="close">Tutup</string>
     <string name="save">Simpan</string>
     <string name="edit_favorites_dialog_unpinned">Tidak disematkan – sering dipakai</string>
@@ -199,7 +198,6 @@
     <string name="preference_screen_colors">Skema warna</string>
     <string name="preference_colors_default">Default</string>
     <string name="preference_screen_about">Tentang</string>
-    <string name="preference_font_system">Bawaan sistem</string>
     <string name="preference_version">Versi</string>
     <string name="preference_category_links">Tautan</string>
     <string name="preference_category_licenses">Lisensi sumber terbuka</string>
@@ -221,7 +219,6 @@
     <string name="preference_cards_stroke_width">Garis tepi</string>
     <string name="preference_cards_shape_cut">Potongan</string>
     <string name="preference_cards_opacity">Transparansi</string>
-    <string name="preference_icon_shape_platform">Bawaan sistem</string>
     <string name="preference_icon_shape_square">Kotak</string>
     <string name="preference_icon_shape_rounded_square">Kotak melingkar</string>
     <string name="preference_icon_shape_circle">Lingkaran</string>
@@ -380,7 +377,6 @@
     <string name="preference_mdy_color_source_wallpaper">Walpaper</string>
     <string name="websearch_dialog_query_encoding_url">Pengkodean persen</string>
     <string name="websearch_dialog_query_encoding">Pengkodean kueri</string>
-    <string name="easter_egg_1">Tidak ada telur paskah di sini, kecuali Anda membawanya.</string>
     <string name="weather_condition_snowshowersandthunder">Hujan salju dan guntur</string>
     <string name="weather_condition_heavysnowshowersandthunder">Hujan salju lebat dan guntur</string>
     <string name="provider_metno">MET Norwegia</string>
@@ -390,7 +386,6 @@
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="preference_location_managed">Dikelola oleh plugin</string>
-    <string name="easter_egg_3">Saya tidak akan mengatakannya lagi: sama sekali tidak ada telur paskah yang tersembunyi di sini</string>
     <string name="preference_debug_dump_heap_summary">Ambil snapshot untuk menganalisis penggunaan memori. Aplikasi akan berhenti bekerja hingga proses ini selesai.</string>
     <string name="preference_plugin_badges_summary">Tunjukkan plugin mana yang digunakan untuk membuat hasil pencarian</string>
     <string name="preference_location_managed_summary">Lokasi untuk penyedia ini dikelola oleh aplikasi plugin</string>
@@ -427,7 +422,6 @@
     <string name="action_done">Selesai</string>
     <string name="action_more_actions">Lebih banyak tindakan</string>
     <string name="action_clear">Bersihkan</string>
-    <string name="easter_egg_text">Nah, Anda menemukan saya. Selamat. Apakah itu sepadan?</string>
     <string name="owncloud_login_2fa_hint">Jika Anda mengaktifkan autentikasi dua faktor, Anda harus menggunakan kata sandi aplikasi di sini.</string>
     <string name="preference_screen_plugins">Plugin</string>
     <string name="preference_screen_plugins_summary">Kelola ekstensi yang terinstal</string>

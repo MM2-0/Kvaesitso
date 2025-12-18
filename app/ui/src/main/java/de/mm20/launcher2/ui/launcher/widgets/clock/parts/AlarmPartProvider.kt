@@ -9,8 +9,6 @@ import android.provider.AlarmClock
 import android.text.format.DateUtils
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Alarm
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,9 +16,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
@@ -89,7 +89,7 @@ class AlarmPartProvider : PartProvider {
                     )
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.Alarm,
+                        painterResource(R.drawable.alarm_24px),
                         contentDescription = null
                     )
                     Text(
@@ -113,7 +113,7 @@ class AlarmPartProvider : PartProvider {
                 ) {
                     Icon(
                         modifier = Modifier.padding(end = 8.dp).size(32.dp),
-                        imageVector = Icons.Rounded.Alarm,
+                        painter = painterResource(R.drawable.alarm_24px),
                         contentDescription = null
                     )
                     Text(

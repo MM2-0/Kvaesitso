@@ -16,6 +16,7 @@ import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.AppShortcut
@@ -236,8 +237,8 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }
 
-    val imperialUnits = locationSearchSettings.imperialUnits
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+    val measurementSystem = locationSearchSettings.measurementSystem
+        .stateIn(viewModelScope, SharingStarted.Lazily, MeasurementSystem.Metric)
 
     val showMap = locationSearchSettings.showMap
         .stateIn(viewModelScope, SharingStarted.Lazily, false)

@@ -1,18 +1,17 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
-import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -26,6 +25,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -35,17 +35,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
-internal object ClockAndWidgetsHomeComponent: ScaffoldComponent() {
+internal object ClockAndWidgetsHomeComponent : ScaffoldComponent() {
     private var editMode by mutableStateOf(false)
     private val scrollState = ScrollState(0)
 
@@ -54,7 +55,7 @@ internal object ClockAndWidgetsHomeComponent: ScaffoldComponent() {
     }
 
     override val isAtBottom: State<Boolean?> = derivedStateOf {
-        !scrollState.canScrollForward
+        !scrollState.canScrollForward || scrollState.value == 0
     }
 
     override val drawBackground: Boolean = false
@@ -72,11 +73,19 @@ internal object ClockAndWidgetsHomeComponent: ScaffoldComponent() {
     ) {
         val scope = rememberCoroutineScope()
 
-        val topPadding by animateDpAsState(if (editMode) 80.dp else 0.dp)
+        val clockWidgetSettings: ClockWidgetSettings = koinInject()
+        val fillHeight by clockWidgetSettings.fillHeight.collectAsState(null)
 
+        if (fillHeight == null) return
+
+        val topPadding by animateDpAsState(if (editMode) 80.dp else 0.dp)
         val previousScroll = remember { mutableIntStateOf(scrollState.value) }
 
-        LaunchedEffect(scrollState.value, scrollState.canScrollForward, scrollState.canScrollBackward) {
+        LaunchedEffect(
+            scrollState.value,
+            scrollState.canScrollForward,
+            scrollState.canScrollBackward
+        ) {
             val delta = scrollState.value - previousScroll.intValue
             previousScroll.intValue = scrollState.value
             if (!editMode) {
@@ -91,9 +100,21 @@ internal object ClockAndWidgetsHomeComponent: ScaffoldComponent() {
                 .padding(top = topPadding)
                 .padding(insets),
         ) {
+            val bottomPadding by animateDpAsState(
+                if (fillHeight == true && scrollState.value == 0) insets.calculateBottomPadding()
+                else 0.dp
+            )
+
             ClockWidget(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    then if (fillHeight == true) {
+                        Modifier
+                            .padding(bottom = bottomPadding)
+                            .height(state.size.height.toDp() - insets.calculateTopPadding() - insets.calculateBottomPadding())
+                } else Modifier,
                 editMode = editMode,
-                fillScreenHeight = false,
+                fillScreenHeight = fillHeight == true,
             )
             WidgetColumn(
                 modifier = Modifier
@@ -126,7 +147,10 @@ internal object ClockAndWidgetsHomeComponent: ScaffoldComponent() {
                             scope.launch { state.unlock() }
                         }
                     ) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.action_done))
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            stringResource(R.string.action_done)
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

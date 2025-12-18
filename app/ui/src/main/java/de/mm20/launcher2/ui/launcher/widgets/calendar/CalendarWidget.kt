@@ -4,7 +4,6 @@ import android.content.Context
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
@@ -17,18 +16,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.ChevronLeft
-import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -42,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -51,10 +46,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.Quadruple
 import de.mm20.launcher2.Quintuple
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.launcher.search.common.list.SearchResultList
 import de.mm20.launcher2.widgets.CalendarWidget
@@ -87,7 +80,10 @@ fun CalendarWidget(
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 4.dp)
         ) {
             IconButton(onClick = { viewModel.previousDay() }) {
-                Icon(imageVector = Icons.Rounded.ChevronLeft, contentDescription = stringResource(R.string.calendar_widget_previous_day))
+                Icon(
+                    painter = painterResource(R.drawable.chevron_backward_24px),
+                    contentDescription = stringResource(R.string.calendar_widget_previous_day)
+                )
             }
             Box(
                 modifier = Modifier.weight(1f),
@@ -103,31 +99,54 @@ fun CalendarWidget(
                         overflow = TextOverflow.Ellipsis
                     )
                     Icon(
-                        imageVector = Icons.Rounded.ArrowDropDown,
+                        painterResource(R.drawable.arrow_drop_down_24px),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
                 }
-                DropdownMenu(expanded = showDropdown, onDismissRequest = { showDropdown = false }) {
+                DropdownMenuPopup(
+                    expanded = showDropdown,
+                    onDismissRequest = { showDropdown = false }) {
                     val availableDates = viewModel.availableDates
-                    for (date in availableDates) {
-                        DropdownMenuItem(text = {
-                            Text(formatDay(context, date))
-                        }, onClick = {
-                            viewModel.selectDate(date)
-                            showDropdown = false
-                        })
+                    DropdownMenuGroup(
+                        shapes = MenuDefaults.groupShapes()
+                    ) {
+                        for ((i, date) in availableDates.withIndex()) {
+                            DropdownMenuItem(
+                                shape = if (availableDates.size == 1) MenuDefaults.standaloneItemShape
+                                else when (i) {
+                                    0 -> MenuDefaults.leadingItemShape
+                                    availableDates.lastIndex -> MenuDefaults.trailingItemShape
+                                    else -> MenuDefaults.middleItemShape
+                                },
+                                text = {
+                                    Text(formatDay(context, date))
+                                },
+                                onClick = {
+                                    viewModel.selectDate(date)
+                                    showDropdown = false
+                                })
+                        }
                     }
                 }
             }
             IconButton(onClick = { viewModel.nextDay() }) {
-                Icon(imageVector = Icons.Rounded.ChevronRight, contentDescription = stringResource(R.string.calendar_widget_next_day))
+                Icon(
+                    painter = painterResource(R.drawable.chevron_forward_24px),
+                    contentDescription = stringResource(R.string.calendar_widget_next_day)
+                )
             }
             IconButton(onClick = { viewModel.createEvent(context) }) {
-                Icon(imageVector = Icons.Rounded.Add, contentDescription = stringResource(R.string.calendar_widget_create_event))
+                Icon(
+                    painter = painterResource(R.drawable.add_24px),
+                    contentDescription = stringResource(R.string.calendar_widget_create_event)
+                )
             }
             IconButton(onClick = { viewModel.openCalendarApp(context) }) {
-                Icon(imageVector = Icons.AutoMirrored.Rounded.OpenInNew, contentDescription = stringResource(R.string.calendar_widget_open_calendar))
+                Icon(
+                    painter = painterResource(R.drawable.open_in_new_24px),
+                    contentDescription = stringResource(R.string.calendar_widget_open_calendar)
+                )
             }
         }
         val events by viewModel.calendarEvents

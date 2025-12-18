@@ -58,17 +58,22 @@ internal abstract class ScaffoldComponent {
      */
     open val isAtBottom: State<Boolean?> = mutableStateOf(null)
 
-    @Composable abstract fun Component(
+    open val reverseScrolling: Boolean = false
+
+    @Composable
+    abstract fun Component(
         modifier: Modifier,
         insets: PaddingValues,
         state: LauncherScaffoldState,
     )
 
     @SuppressLint("ModifierFactoryExtensionFunction")
-    open fun homePageModifier(state: LauncherScaffoldState, defaultModifier: Modifier): Modifier = defaultModifier
+    open fun homePageModifier(state: LauncherScaffoldState, defaultModifier: Modifier): Modifier =
+        defaultModifier
 
     @SuppressLint("ModifierFactoryExtensionFunction")
-    open fun searchBarModifier(state: LauncherScaffoldState, defaultModifier: Modifier): Modifier = defaultModifier
+    open fun searchBarModifier(state: LauncherScaffoldState, defaultModifier: Modifier): Modifier =
+        defaultModifier
 
     protected var isActive by mutableStateOf(false)
 

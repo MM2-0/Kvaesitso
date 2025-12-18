@@ -22,8 +22,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object EasterEggSettingsRoute: NavKey
 
 @Composable
 fun EasterEggSettingsScreen() {
@@ -40,14 +45,6 @@ fun EasterEggSettingsScreen() {
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    modifier = Modifier.padding(16.dp),
-                    text = stringResource(id = R.string.easter_egg_text),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        color = textColor
-                    )
-                )
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -8,9 +8,10 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.RectF
 import android.graphics.drawable.AdaptiveIconDrawable
+import android.icu.number.NumberFormatter
+import android.icu.text.NumberFormat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -55,6 +56,7 @@ import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -214,15 +216,15 @@ fun ShapedLauncherIcon(
 
                     is VectorLayer -> {
                         Icon(
-                            imageVector = fg.vector, contentDescription = null,
+                            painter = painterResource(fg.icon), contentDescription = null,
                             tint = if (fg.color == 0) {
                                 Color(renderSettings.fgThemeColor)
                             } else {
                                 Color(getTone(fg.color, renderSettings.fgTone))
                             },
+                            modifier = Modifier.size(size / 2f),
                         )
                     }
-
                     else -> {}
                 }
             } else {
@@ -268,7 +270,7 @@ fun ShapedLauncherIcon(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(size / 24),
-                            imageVector = badgeIcon.imageVector,
+                            painter = painterResource(badgeIcon.iconRes),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onTertiary,
                         )
@@ -290,7 +292,7 @@ fun ShapedLauncherIcon(
                         }
                     } else if (number != null && number > 0 && number < 100) {
                         Text(
-                            number.toString(),
+                            NumberFormat.getInstance(Locale.current.platformLocale).format(number),
                             color = MaterialTheme.colorScheme.secondaryContainer,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 fontSize = with(LocalDensity.current) {

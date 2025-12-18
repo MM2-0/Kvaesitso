@@ -34,7 +34,7 @@ internal class TimeConverter(context: Context) : SimpleFactorConverter() {
                     R.plurals.unit_day
             ),
             MeasureUnitWithFactor(
-                    1.0 / (60 * 60 * 24 * 365),
+                    1.0 / 31_557_600,
                     context.getString(R.string.unit_year_symbol),
                     R.plurals.unit_year
             )

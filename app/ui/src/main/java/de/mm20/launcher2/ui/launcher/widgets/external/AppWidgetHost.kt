@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.widgets.external
 import android.appwidget.AppWidgetProviderInfo
 import android.os.Build
 import android.os.Bundle
+import android.util.SizeF
 import android.util.SparseIntArray
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import android.widget.ScrollView
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -67,18 +67,22 @@ fun AppWidgetHost(
                         } else {
                             it.resetColorResources()
                         }
+                        it.updateAppWidgetSize(
+                            Bundle(),
+                            arrayListOf(SizeF(maxWidth.value, maxHeight.value))
+                        )
+                    } else {
+                        it.updateAppWidgetSize(
+                            null,
+                            maxWidth.value.roundToInt(),
+                            maxHeight.value.roundToInt(),
+                            maxWidth.value.roundToInt(),
+                            maxHeight.value.roundToInt(),
+                        )
+                        // Workaround to force update of the widget view
+                        it.updateAppWidgetOptions(Bundle())
                     }
-
-                    it.updateAppWidgetSize(
-                        null,
-                        maxWidth.value.roundToInt(),
-                        maxHeight.value.roundToInt(),
-                        maxWidth.value.roundToInt(),
-                        maxHeight.value.roundToInt(),
-                    )
                     it.setPadding(padding)
-                    // Workaround to force update of the widget view
-                    it.updateAppWidgetOptions(Bundle())
                 }
             )
         }
@@ -105,6 +109,7 @@ private fun getColorMapping(colorScheme: ColorScheme): SparseIntArray {
     val colorResources = SparseIntArray()
     colorResources.append(android.R.color.system_accent1_0, p.tone(100))
     colorResources.append(android.R.color.system_accent1_10, p.tone(99))
+    colorResources.append(android.R.color.system_accent1_50, p.tone(95))
     colorResources.append(android.R.color.system_accent1_100, p.tone(90))
     colorResources.append(android.R.color.system_accent1_200, p.tone(80))
     colorResources.append(android.R.color.system_accent1_300, p.tone(70))
@@ -117,6 +122,7 @@ private fun getColorMapping(colorScheme: ColorScheme): SparseIntArray {
     colorResources.append(android.R.color.system_accent1_1000, s.tone(0))
     colorResources.append(android.R.color.system_accent2_0, s.tone(100))
     colorResources.append(android.R.color.system_accent2_10, s.tone(99))
+    colorResources.append(android.R.color.system_accent2_50, s.tone(95))
     colorResources.append(android.R.color.system_accent2_100, s.tone(90))
     colorResources.append(android.R.color.system_accent2_200, s.tone(80))
     colorResources.append(android.R.color.system_accent2_300, s.tone(70))
@@ -129,6 +135,7 @@ private fun getColorMapping(colorScheme: ColorScheme): SparseIntArray {
     colorResources.append(android.R.color.system_accent2_1000, t.tone(0))
     colorResources.append(android.R.color.system_accent3_0, t.tone(100))
     colorResources.append(android.R.color.system_accent3_10, t.tone(99))
+    colorResources.append(android.R.color.system_accent3_50, t.tone(95))
     colorResources.append(android.R.color.system_accent3_100, t.tone(90))
     colorResources.append(android.R.color.system_accent3_200, t.tone(80))
     colorResources.append(android.R.color.system_accent3_300, t.tone(70))
@@ -141,6 +148,7 @@ private fun getColorMapping(colorScheme: ColorScheme): SparseIntArray {
     colorResources.append(android.R.color.system_accent3_1000, t.tone(0))
     colorResources.append(android.R.color.system_neutral1_0, n.tone(100))
     colorResources.append(android.R.color.system_neutral1_10, n.tone(99))
+    colorResources.append(android.R.color.system_neutral1_50, n.tone(95))
     colorResources.append(android.R.color.system_neutral1_100, n.tone(90))
     colorResources.append(android.R.color.system_neutral1_200, n.tone(80))
     colorResources.append(android.R.color.system_neutral1_300, n.tone(70))
@@ -153,6 +161,7 @@ private fun getColorMapping(colorScheme: ColorScheme): SparseIntArray {
     colorResources.append(android.R.color.system_neutral1_1000, nv.tone(0))
     colorResources.append(android.R.color.system_neutral2_0, nv.tone(100))
     colorResources.append(android.R.color.system_neutral2_10, nv.tone(99))
+    colorResources.append(android.R.color.system_neutral2_50, nv.tone(95))
     colorResources.append(android.R.color.system_neutral2_100, nv.tone(90))
     colorResources.append(android.R.color.system_neutral2_200, nv.tone(80))
     colorResources.append(android.R.color.system_neutral2_300, nv.tone(70))

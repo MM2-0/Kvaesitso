@@ -68,8 +68,6 @@ started this project so future refactorings are to be expected. This is the curr
       Gradle package yet)
     - `:nextcloud`: Nextcloud APIs and Nextcloud sign-in; used by `:accounts` and `:files`
     - `:owncloud`: Owncloud APIs and Owncloud sign-in; used by `:accounts` and `:files`
-    - `:tinypinyin`: Fork of https://github.com/promeG/TinyPinyin, because the upstream library
-      isn't available in one of the allowed Maven repositories for F-Droid
     - `:webdav`: common APIs for WebDAV search, used by `:nextcloud` and `:owncloud`
 
 Most of the modules have a `Module.kt` file in their root which contains Koin definitions to make

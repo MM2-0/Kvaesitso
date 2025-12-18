@@ -83,7 +83,7 @@ class AndroidCalendarProvider(
                     0
                 }
                 val event = AndroidCalendarEvent(
-                    label = cursor.getStringOrNull(1) ?: "",
+                    label = cursor.getStringOrNull(1) ?: continue,
                     id = cursor.getLong(0),
                     color = cursor.getInt(5),
                     startTime = begin - tzOffset,

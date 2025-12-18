@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher
 
 import android.app.WallpaperManager
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -29,6 +30,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
@@ -75,7 +77,6 @@ import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
-import kotlin.math.pow
 
 
 abstract class SharedLauncherActivity(
@@ -93,6 +94,12 @@ abstract class SharedLauncherActivity(
             window.isStatusBarContrastEnforced = false
         }
         super.onCreate(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            pauseOnHome = savedInstanceState.getBoolean("pauseOnHome")
+            pauseTime = savedInstanceState.getLong("pauseTime")
+            isNewIntent = savedInstanceState.getBoolean("isNewIntent")
+        }
 
         val wallpaperManager = WallpaperManager.getInstance(this)
 
@@ -138,7 +145,10 @@ abstract class SharedLauncherActivity(
                         val gestures by viewModel.gestureState.collectAsState()
                         val searchBarStyle by viewModel.searchBarStyle.collectAsState()
                         val searchBarColor by viewModel.searchBarColor.collectAsState()
+                        val searchBarAutofocus by viewModel.autoFocusSearch.collectAsState(false)
                         val widgetsOnHomeScreen by viewModel.widgetsOnHomeScreen.collectAsState()
+                        val wallpaperBlur by viewModel.wallpaperBlur.collectAsState()
+                        val wallpaperBlurRadius by viewModel.wallpaperBlurRadius.collectAsState()
 
                         val fixedRotation by viewModel.fixedRotation.collectAsState()
 
@@ -174,13 +184,14 @@ abstract class SharedLauncherActivity(
                             }
                         }
 
-                        val enterTransitionProgress = remember { mutableStateOf(1f) }
+                        val enterTransitionProgress = remember { mutableStateOf(100f) }
                         var enterTransition by remember {
                             mutableStateOf<EnterHomeTransition?>(
                                 null
                             )
                         }
 
+                        val animMotionSpec = MaterialTheme.motionScheme.defaultSpatialSpec<Float>()
                         LaunchedEffect(null) {
                             enterHomeTransitionManager
                                 .currentTransition
@@ -189,7 +200,10 @@ abstract class SharedLauncherActivity(
                                     if (it != null) {
                                         enterTransitionProgress.value = 0f
                                         enterTransition = it
-                                        enterTransitionProgress.animateTo(1f)
+                                        enterTransitionProgress.animateTo(
+                                            100f,
+                                            animationSpec = animMotionSpec
+                                        )
                                         enterTransition = null
                                     }
                                 }
@@ -218,10 +232,14 @@ abstract class SharedLauncherActivity(
                                 hideStatus,
                                 hideNav,
                                 widgetsOnHomeScreen,
+                                searchBarAutofocus,
+                                wallpaperBlur,
+                                wallpaperBlurRadius,
                             ) {
                                 if (mode == LauncherActivityMode.Assistant) {
                                     val searchComponent = SearchComponent(
                                         reverse = reverseSearchResults,
+                                        openKeyboard = searchBarAutofocus,
                                     )
                                     val dismissComponent =
                                         DismissComponent(this@SharedLauncherActivity)
@@ -245,6 +263,7 @@ abstract class SharedLauncherActivity(
                                 } else {
                                     val searchComponent = SearchComponent(
                                         reverse = reverseSearchResults,
+                                        openKeyboard = searchBarAutofocus,
                                     )
                                     val widgetComponent by lazy { WidgetsComponent }
 
@@ -264,10 +283,15 @@ abstract class SharedLauncherActivity(
                                                 },
                                             )
 
-                                            is GestureAction.Widgets -> ScaffoldGesture(
-                                                component = widgetComponent,
-                                                animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
-                                            )
+                                            is GestureAction.Widgets ->
+                                                if (widgetsOnHomeScreen == true) {
+                                                    null
+                                                } else {
+                                                    ScaffoldGesture(
+                                                        component = widgetComponent,
+                                                        animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                                    )
+                                                }
 
                                             is GestureAction.Notifications -> ScaffoldGesture(
                                                 component = NotificationsComponent,
@@ -345,6 +369,11 @@ abstract class SharedLauncherActivity(
                                             gestures.longPressApp,
                                             Gesture.LongPress,
                                         ),
+                                        homeButton = getScaffoldGesture(
+                                            gestures.homeButtonAction,
+                                            gestures.homeButtonApp,
+                                            Gesture.HomeButton,
+                                        ),
                                         fixedSearchBar = fixedSearchBar,
                                         searchBarStyle = searchBarStyle,
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
@@ -354,6 +383,7 @@ abstract class SharedLauncherActivity(
                                         showStatusBar = !hideStatus,
                                         showNavBar = !hideNav,
                                         darkSearchBar = darkSearchBar,
+                                        wallpaperBlurRadius = if (wallpaperBlur) wallpaperBlurRadius.dp else 0.dp,
                                     )
 
                                     if (config.isUseless()) config.copy(
@@ -368,10 +398,10 @@ abstract class SharedLauncherActivity(
                                     .fillMaxSize()
                                     .graphicsLayer {
                                         scaleX =
-                                            0.5f + enterTransitionProgress.value * 0.5f
+                                            0.5f + enterTransitionProgress.value * 0.005f
                                         scaleY =
-                                            0.5f + enterTransitionProgress.value * 0.5f
-                                        alpha = enterTransitionProgress.value
+                                            0.5f + enterTransitionProgress.value * 0.005f
+                                        alpha = enterTransitionProgress.value * 0.01f
                                     }
                             )
 
@@ -391,11 +421,11 @@ abstract class SharedLauncherActivity(
                                     modifier = Modifier
                                         .align(Alignment.TopStart)
                                         .graphicsLayer {
-                                            val p = (enterTransitionProgress.value).pow(2f)
+                                            val p = (enterTransitionProgress.value * 0.01f)
                                             transformOrigin = TransformOrigin.Center
                                             translationX = it.targetBounds.left + dX * (1 - p)
                                             translationY = it.targetBounds.top + dY * (1 - p)
-                                            alpha = enterTransitionProgress.value
+                                            alpha = p
                                             scaleX = 1f + s * (1 - p)
                                             scaleY = 1f + s * (1 - p)
                                         }) {
@@ -404,7 +434,7 @@ abstract class SharedLauncherActivity(
                                             dX,
                                             dY
                                         )
-                                    ) { enterTransitionProgress.value }
+                                    ) { enterTransitionProgress.value * 0.01f }
                                 }
                             }
                             LauncherBottomSheets()
@@ -413,6 +443,30 @@ abstract class SharedLauncherActivity(
                 }
             }
         }
+    }
+
+    var pauseTime = 0L
+
+    /**
+     * True if the scaffold was on home screen when the activity was paused.
+     */
+    var pauseOnHome = false
+    var isNewIntent = false
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        isNewIntent = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isNewIntent = false
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("pauseOnHome", pauseOnHome)
+        outState.putBoolean("isNewIntent", isNewIntent)
+        outState.putLong("pauseTime", pauseTime)
     }
 
     override fun onAttachedToWindow() {

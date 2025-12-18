@@ -173,7 +173,7 @@
         <item quantity="other">هكتار</item>
     </plurals>
     <string name="dimension_length">الطول</string>
-    <string name="dimension_mass">الكتلة</string>
+    <string name="dimension_mass">…الكتلة</string>
     <string name="dimension_velocity">السرعة</string>
     <string name="dimension_volume">الحجم</string>
     <string name="dimension_area">المساحة</string>

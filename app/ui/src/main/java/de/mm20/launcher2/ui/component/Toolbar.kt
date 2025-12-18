@@ -8,13 +8,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,8 +22,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.integerResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
@@ -55,19 +55,26 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
             var showMenu by remember { mutableStateOf(false) }
             Box {
                 IconButton(onClick = { showMenu = true }) {
-                    Icon(Icons.Rounded.MoreVert, contentDescription = stringResource(R.string.action_more_actions))
+                    Icon(
+                        painterResource(R.drawable.more_vert_24px),
+                        contentDescription = stringResource(R.string.action_more_actions)
+                    )
                 }
                 Box(
                     modifier = Modifier
                         .size(48.dp)
                 ) {
-                    DropdownMenu(
+                    DropdownMenuPopup(
                         expanded = showMenu,
                         onDismissRequest = { showMenu = false },
                         modifier = Modifier.animateContentSize()
                     ) {
-                        OverflowMenuItems(items = actions.subList(slots - 1, actions.size)) {
-                            showMenu = false
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShapes()
+                        ) {
+                            OverflowMenuItems(items = actions.subList(slots - 1, actions.size)) {
+                                showMenu = false
+                            }
                         }
                     }
                 }
@@ -80,7 +87,7 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                         IconButton(
                             onClick = action.action,
                         ) {
-                            Icon(action.icon, contentDescription = action.label)
+                            Icon(painterResource(action.icon), contentDescription = action.label)
                         }
                     }
 
@@ -92,20 +99,27 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                                     showMenu = true
                                 },
                             ) {
-                                Icon(action.icon, contentDescription = action.label)
+                                Icon(
+                                    painterResource(action.icon),
+                                    contentDescription = action.label
+                                )
                             }
                             Box(
                                 modifier = Modifier
                                     .size(48.dp)
                                     .offset(0.dp, LocalWindowPosition.current.toDp())
                             ) {
-                                DropdownMenu(
+                                DropdownMenuPopup(
                                     expanded = showMenu,
                                     onDismissRequest = { showMenu = false },
                                     modifier = Modifier.animateContentSize()
                                 ) {
-                                    OverflowMenuItems(items = action.children) {
-                                        showMenu = false
+                                    DropdownMenuGroup(
+                                        shapes = MenuDefaults.groupShapes()
+                                    ) {
+                                        OverflowMenuItems(items = action.children) {
+                                            showMenu = false
+                                        }
                                     }
                                 }
                             }
@@ -132,10 +146,15 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                             )
                         },
                         leadingIcon = {
-                            Icon(action.icon, null)
+                            Icon(painterResource(action.icon), null)
                         },
                         trailingIcon = {
-                            Icon(Icons.Rounded.ChevronRight, null)
+                            Icon(painterResource(R.drawable.arrow_right_24px), null)
+                        },
+                        shape = when {
+                            i == 0 -> MenuDefaults.leadingItemShape
+                            i == items.lastIndex -> MenuDefaults.trailingItemShape
+                            else -> MenuDefaults.middleItemShape
                         }
                     )
                 }
@@ -152,7 +171,12 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                             )
                         },
                         leadingIcon = {
-                            Icon(action.icon, null)
+                            Icon(painterResource(action.icon), null)
+                        },
+                        shape = when {
+                            i == 0 -> MenuDefaults.leadingItemShape
+                            i == items.lastIndex -> MenuDefaults.trailingItemShape
+                            else -> MenuDefaults.middleItemShape
                         }
                     )
                 }
@@ -166,17 +190,17 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
 
 interface ToolbarAction {
     val label: String
-    val icon: ImageVector
+    val icon: Int
 }
 
 data class DefaultToolbarAction(
     override val label: String,
-    override val icon: ImageVector,
+    override val icon: Int,
     val action: () -> Unit
 ) : ToolbarAction
 
 data class SubmenuToolbarAction(
     override val label: String,
-    override val icon: ImageVector,
+    override val icon: Int,
     val children: List<ToolbarAction>
 ) : ToolbarAction

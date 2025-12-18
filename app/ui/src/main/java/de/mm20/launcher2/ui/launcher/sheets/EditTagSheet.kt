@@ -23,13 +23,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Apps
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.EmojiEmotions
-import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -55,6 +50,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -96,7 +92,7 @@ fun EditTagSheet(
                 onTagSaved(viewModel.tagName)
             }
             onDismiss()
-        }
+        },
     ) {
         when (viewModel.page) {
             EditTagSheetPage.CreateTag -> CreateNewTagPage(viewModel, it)
@@ -145,24 +141,18 @@ fun PickItems(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
 
     Scaffold (
         contentWindowInsets = WindowInsets(0.dp),
-        modifier = Modifier.padding(paddingValues),
         containerColor = Color.Transparent,
         bottomBar = {
-            Surface (
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
-                shape = MaterialTheme.shapes.medium
+            Box (
+              modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+              contentAlignment = Alignment.CenterEnd
             ) {
-                Box {
-                    Button(
-                        onClick = { viewModel.closeItemPicker() },
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .padding(all = 8.dp)
-                            .padding(end = 12.dp)
-                    ) {
-                        Text(stringResource(R.string.action_next))
-                    }
+
+                ExtendedFloatingActionButton (
+                    modifier = Modifier.padding(paddingValues),
+                    onClick = {viewModel.closeItemPicker()}
+                ) {
+                    Text(stringResource(R.string.action_next))
                 }
             }
         }
@@ -248,7 +238,11 @@ fun ListItem(
                         onTagChanged(false)
                     }
                 ) {
-                    Icon(Icons.Rounded.Check, null, modifier = Modifier.padding(4.dp))
+                    Icon(
+                        painterResource(R.drawable.check_20px),
+                        null,
+                        modifier = Modifier.padding(4.dp)
+                    )
                 }
             }
         }
@@ -312,7 +306,8 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
                 contentAlignment = Alignment.Center,
             ) {
                 if (tagIcon != null) {
-                    var icon = remember(viewModel.tagIcon) { viewModel.tagIcon }.collectAsState(null)
+                    var icon =
+                        remember(viewModel.tagIcon) { viewModel.tagIcon }.collectAsState(null)
                     ShapedLauncherIcon(
                         size = 56.dp,
                         icon = { icon.value },
@@ -320,7 +315,7 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
                     )
                 } else {
                     Icon(
-                        Icons.Rounded.Tag,
+                        painterResource(R.drawable.tag_24px),
                         null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -397,7 +392,7 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
         AnimatedVisibility(viewModel.tagNameExists || viewModel.taggedItems.isEmpty() || viewModel.tagName.isEmpty()) {
             SmallMessage(
                 modifier = Modifier.fillMaxWidth(),
-                icon = Icons.Rounded.Warning,
+                icon = R.drawable.warning_24px,
                 text = stringResource(
                     if (viewModel.taggedItems.isEmpty()) R.string.tag_no_items_message
                     else if (viewModel.tagNameExists) R.string.tag_exists_message
@@ -413,7 +408,7 @@ fun PickIcon(
     viewModel: EditTagSheetVM,
     paddingValues: PaddingValues
 ) {
-    val icon by remember (viewModel.tagCustomIcon) { viewModel.tagCustomIcon }.collectAsState()
+    val icon by remember(viewModel.tagCustomIcon) { viewModel.tagCustomIcon }.collectAsState()
     val tag = Tag(viewModel.tagName)
     var selectedTabIndex = remember {
         mutableIntStateOf(
@@ -424,23 +419,21 @@ fun PickIcon(
         )
     }
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(paddingValues)
+        modifier = Modifier.fillMaxWidth()
     ) {
         SingleChoiceSegmentedButtonRow(
             modifier = Modifier.fillMaxWidth(),
         ) {
             SegmentedButton(
                 selected = selectedTabIndex.intValue == 0,
-                icon = { Icon(Icons.Rounded.Apps, null) },
+                icon = { Icon(painterResource(R.drawable.apps_24px), null) },
                 label = { Text("Icon") },
                 onClick = { selectedTabIndex.intValue = 0 },
                 shape = SegmentedButtonDefaults.itemShape(0, 2)
             )
             SegmentedButton(
                 selected = selectedTabIndex.intValue == 1,
-                icon = { Icon(Icons.Rounded.EmojiEmotions, null) },
+                icon = { Icon(painterResource(R.drawable.mood_24px), null) },
                 label = { Text("Emoji") },
                 onClick = { selectedTabIndex.intValue = 1 },
                 shape = SegmentedButtonDefaults.itemShape(1, 2)
@@ -455,6 +448,7 @@ fun PickIcon(
                     IconPicker(
                         searchable = tag,
                         onSelect = { viewModel.selectIcon(it) },
+                        contentPadding = paddingValues
                     )
                 }
 
@@ -466,6 +460,7 @@ fun PickIcon(
                         onEmojiSelected = {
                             viewModel.selectIcon(CustomTextIcon(text = it))
                         },
+                        contentPadding = paddingValues
                     )
                 }
             }

@@ -9,13 +9,14 @@ import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
+import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SearchableRepository
+import de.mm20.launcher2.search.StringNormalizer
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -27,13 +28,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.withContext
-import org.apache.commons.text.similarity.FuzzyScore
-import java.util.Locale
 
 interface AppShortcutRepository : SearchableRepository<AppShortcut> {
 
@@ -54,6 +54,8 @@ internal class AppShortcutRepositoryImpl(
     private val context: Context,
     private val permissionsManager: PermissionsManager,
     private val settings: ShortcutSearchSettings,
+    private val profileManager: ProfileManager,
+    private val stringNormalizer: StringNormalizer,
 ) : AppShortcutRepository {
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
@@ -117,6 +119,8 @@ internal class AppShortcutRepositoryImpl(
             return flowOf(persistentListOf())
         }
 
+        val normalizedQuery = stringNormalizer.normalize(query)
+
         return combine(
             listOf(
                 settings.enabled,
@@ -143,9 +147,14 @@ internal class AppShortcutRepositoryImpl(
                     )
                     val shortcuts = launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle())
                         ?.mapNotNull {
-                            val score = ResultScore(
-                                query = query,
-                                primaryFields = listOfNotNull(it.longLabel?.toString(), it.shortLabel?.toString())
+                            val score = ResultScore.from(
+                                query = normalizedQuery,
+                                primaryFields = listOfNotNull(
+                                    it.longLabel?.toString()
+                                        ?.let { stringNormalizer.normalize(it) },
+                                    it.shortLabel?.toString()
+                                        ?.let { stringNormalizer.normalize(it) },
+                                )
                             )
                             if (score.score < 0.8f) return@mapNotNull null
                             LauncherShortcut(
@@ -213,9 +222,9 @@ internal class AppShortcutRepositoryImpl(
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return emptyList()
         val results = mutableListOf<AppShortcutConfigActivity>()
-        val profiles = launcherApps.profiles
+        val profiles = profileManager.activeProfiles.first()
         for (profile in profiles) {
-            val activities = launcherApps.getShortcutConfigActivityList(null, profile)
+            val activities = launcherApps.getShortcutConfigActivityList(null, profile.userHandle)
             results.addAll(
                 activities.map {
                     AppShortcutConfigActivity(it)
@@ -223,14 +232,5 @@ internal class AppShortcutRepositoryImpl(
             )
         }
         return results.sorted()
-    }
-
-
-    private fun matches(label: String, query: String): Boolean {
-        val normalizedLabel = label.normalize()
-        val normalizedQuery = query.normalize()
-        if (normalizedLabel.contains(normalizedQuery)) return true
-        val fuzzyScore = FuzzyScore(Locale.getDefault())
-        return fuzzyScore.fuzzyScore(normalizedLabel, normalizedQuery) >= query.length * 1.5
     }
 }

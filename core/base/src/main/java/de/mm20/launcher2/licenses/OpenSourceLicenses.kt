@@ -69,20 +69,11 @@ val OpenSourceLicenses = arrayOf(
         url = "https://square.github.io/okhttp/"
     ),
     OpenSourceLibrary(
-        name = "Retrofit",
-        description = "A type-safe HTTP client for Android and Java",
+        name = "Ktor Client",
+        description = "A multiplatform asynchronous HTTP client",
         licenseName = R.string.apache_license_name,
         licenseText = R.raw.license_apache_2,
-        copyrightNote = "Copyright 2013 Square, Inc.",
-        url = "https://square.github.io/retrofit/"
-    ),
-    OpenSourceLibrary(
-        name = "Gson",
-        description = "Gson is a Java library that can be used to convert Java Objects into their JSON representation.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        copyrightNote = "Copyright 2008 Google Inc.",
-        url = "https://github.com/google/gson/"
+        url = "https://ktor.io/"
     ),
     OpenSourceLibrary(
         name = "commons-suncalc",
@@ -153,13 +144,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://commons.apache.org/proper/commons-text/"
     ),
     OpenSourceLibrary(
-        name = "TinyPinyin",
-        description = "A fast, low-memory Chinese character-to-pinyin library for Java and Android.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        url = "https://github.com/promeG/TinyPinyin"
-    ),
-    OpenSourceLibrary(
         name = "material-color-utilities",
         copyrightNote = "Copyright 2021 Google LLC",
         description = "Algorithms and utilities that power the Material Design 3 (M3) color system, including choosing theme colors from images and creating tones of colors; all in a new color space.",
@@ -176,26 +160,11 @@ val OpenSourceLicenses = arrayOf(
         url = "https://source.android.com/"
     ),
     OpenSourceLibrary(
-        name = "Protobuf",
-        copyrightNote = "Copyright 2008 Google Inc.  All rights reserved.",
-        description = "Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.",
-        licenseName = R.string.bsd_3clause_name,
-        licenseText = R.raw.license_bsd_3clause,
-        url = "https://developers.google.com/protocol-buffers"
-    ),
-    OpenSourceLibrary(
         name = "AndroidSVG",
         description = "AndroidSVG is a SVG parser and renderer for Android.",
         licenseName = R.string.apache_license_name,
         licenseText = R.raw.license_apache_2,
         url = "https://bigbadaboom.github.io/androidsvg/"
-    ),
-    OpenSourceLibrary(
-        name = "emoji4j",
-        description = "Emoji4j is a high-performance, standards-compliant emoji processor supporting Unicode 15 for Java 8 or later.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        url = "https://github.com/sigpwned/emoji4j"
     ),
     OpenSourceLibrary(
         name = "AndroidAddressFormatter",

@@ -51,9 +51,8 @@ import de.mm20.launcher2.ui.launcher.search.website.WebsiteResults
 import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleResults
 import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
-import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
 
 @Composable
 fun SearchColumn(
@@ -75,6 +74,7 @@ fun SearchColumn(
 
     val hideFavs by viewModel.hideFavorites
     val favoritesEnabled by viewModel.favoritesEnabled.collectAsState(false)
+    val allAppsEnabled by viewModel.allAppsEnabled.collectAsState(false)
 
     val apps = viewModel.appResults
     val workApps = viewModel.workAppResults
@@ -175,11 +175,15 @@ fun SearchColumn(
                         compactTags = compactTags,
                         editButton = favoritesEditButton
                     )
+                } else {
+                    // Empty item to maintain scroll position
+                    item(key = "favorites") {
+                    }
                 }
 
-                if (isSearchEmpty && profiles.size > 1) {
+                if (isSearchEmpty && profiles.size > 1 && allAppsEnabled) {
                     AppResults(
-                        apps = when(profiles.getOrNull(selectedAppProfileIndex)?.type) {
+                        apps = when (profiles.getOrNull(selectedAppProfileIndex)?.type) {
                             Profile.Type.Private -> privateApps
                             Profile.Type.Work -> workApps
                             else -> apps
@@ -201,7 +205,7 @@ fun SearchColumn(
                         selectedIndex = selectedAppIndex,
                         onSelect = { selectedAppIndex = it },
                     )
-                } else {
+                } else if (!isSearchEmpty || allAppsEnabled) {
                     AppResults(
                         apps = apps,
                         highlightedItem = bestMatch as? Application,
@@ -370,7 +374,7 @@ fun LazyListScope.SingleResult(
                     vertical = 4.dp,
                 ),
             color = if (highlight) MaterialTheme.colorScheme.secondaryContainer
-            else MaterialTheme.colorScheme.surface.copy(LocalTransparencyScheme.current.surface)
+            else MaterialTheme.colorScheme.surface.copy(MaterialTheme.transparency.surface)
         ) {
             content()
         }

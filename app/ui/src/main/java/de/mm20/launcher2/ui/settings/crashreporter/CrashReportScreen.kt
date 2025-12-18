@@ -1,25 +1,34 @@
 package de.mm20.launcher2.ui.settings.crashreporter
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.BugReport
-import androidx.compose.material.icons.rounded.Share
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.crashreporter.CrashReportType
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class CrashReportRoute(val fileName: String): NavKey
 
 @Composable
 fun CrashReportScreen(fileName: String) {
@@ -34,41 +43,36 @@ fun CrashReportScreen(fileName: String) {
         },
         topBarActions = {
             IconButton(onClick = { crashReport?.let { viewModel.shareCrashReport(context, it) } }) {
-                Icon(imageVector = Icons.Rounded.Share, contentDescription = null)
+                Icon(painterResource(R.drawable.share_24px), contentDescription = null)
             }
             if (crashReport?.type == CrashReportType.Crash) {
                 IconButton(onClick = { crashReport?.let { viewModel.createIssue(context, it) } }) {
-                    Icon(imageVector = Icons.Rounded.BugReport, contentDescription = null)
+                    Icon(painterResource(R.drawable.bug_report_24px), contentDescription = null)
                 }
             }
         }
     ) {
         item {
-            Surface(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
-                color = if (crashReport?.type == CrashReportType.Crash) {
-                    MaterialTheme.colorScheme.errorContainer
-                } else {
-                    MaterialTheme.colorScheme.primaryContainer
-                },
-                shape = MaterialTheme.shapes.small,
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(MaterialTheme.colorScheme.surface)
+                    .horizontalScroll(
+                        rememberScrollState()
+                    ),
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .horizontalScroll(
-                            rememberScrollState()
-                        ),
-                ) {
-                    crashReport?.stacktrace?.let {
-                        Text(
-                            text = it,
-                            modifier = Modifier.padding(16.dp),
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
+                crashReport?.stacktrace?.let {
+                    Text(
+                        text = it,
+                        modifier = Modifier.padding(12.dp),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if (crashReport?.type == CrashReportType.Crash) {
+                            MaterialTheme.colorScheme.error
+                        } else {
+                            MaterialTheme.colorScheme.primary
+                        },
+                    )
                 }
             }
         }
@@ -76,7 +80,8 @@ fun CrashReportScreen(fileName: String) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp)
+                    .background(MaterialTheme.colorScheme.surface, MaterialTheme.shapes.medium)
+                    .padding(12.dp),
             ) {
                 Text(text = "Device Information", style = MaterialTheme.typography.titleMedium)
                 val deviceInformation = remember { viewModel.getDeviceInformation(context) }

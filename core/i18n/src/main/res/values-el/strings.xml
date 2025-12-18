@@ -68,8 +68,6 @@
     <string name="websearch_dialog_query_encoding">Κωδικοποίηση ερωτήματος</string>
     <string name="websearch_dialog_query_encoding_url">Κωδικοποίηση URL</string>
     <string name="websearch_dialog_query_encoding_none">Κανένα</string>
-    <string name="easter_egg_1">Δεν υπάρχουν πασχαλινά αυγά εδώ, εκτός αν τα έφερες μαζί σου.</string>
-    <string name="easter_egg_text">Λοιπόν, με βρήκες. Συγχαρητήρια. Άξιζε τον κόπο;</string>
     <string name="close">Κλείσιμο</string>
     <string name="menu_item_edit_favs">Επεξεργασία αγαπημένων</string>
     <string name="edit_favorites_dialog_unpinned">Δεν είναι καρφιτσωμένο - χρησιμοποιείται συχνά</string>
@@ -139,7 +137,6 @@
     <string name="preference_colors_default">Προεπιλεγμένο</string>
     <string name="preference_colors_bw">Ασπρόμαυρο</string>
     <string name="preference_font">Γραμματοσειρά</string>
-    <string name="preference_font_system">Προεπιλεγμένη συστήματος</string>
     <string name="preference_screen_about">Περί</string>
     <string name="preference_version">Έκδοση</string>
     <string name="preference_category_links">Σύνδεσμοι</string>
@@ -164,7 +161,6 @@
     <string name="preference_cards_shape">Σχήμα</string>
     <string name="preference_cards_shape_rounded">Στρογγυλεμένη</string>
     <string name="preference_cards_shape_cut">Κομμένη</string>
-    <string name="preference_icon_shape_platform">Προεπιλογή συστήματος</string>
     <string name="preference_icon_shape_square">Τετράγωνο</string>
     <string name="preference_icon_shape_circle">Κύκλος</string>
     <string name="preference_icon_shape_teardrop">Δάκρυ</string>
@@ -269,10 +265,8 @@
     <string name="widget_add_widget">Προσθήκη γραφικού στοιχείου</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Καρφιτσωμένο - αυτόματα ταξινομημένο</string>
     <string name="search_bar_placeholder">Αναζήτηση</string>
-    <string name="easter_egg_2">Σταμάτα σε παρακαλώ, χάνεις τον χρόνο σου</string>
     <string name="edit_favorites_dialog_pinned_sorted">Καρφιτσωμένο - χειροκίνητα ταξινομημένο</string>
     <string name="settings">Ρυθμίσεις</string>
-    <string name="easter_egg_3">Δεν θα το ξαναπώ: εδώ δεν κρύβεται απολύτως κανένα πασχαλινό αυγό</string>
     <string name="wallpaper">Φόντο</string>
     <string name="nextcloud_server_invalid_url">Αυτή η διεύθυνση URL δεν οδηγεί σε έγκυρη εγκατάσταση Nextcloud</string>
     <string name="wind_north_east">Βορειοανατολικός</string>

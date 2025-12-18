@@ -7,16 +7,13 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.ScreenOrientation
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
-import de.mm20.launcher2.preferences.SurfaceShape
 import de.mm20.launcher2.preferences.SystemBarColors
-import de.mm20.launcher2.preferences.ThemeDescriptor
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import java.util.UUID
 
 data class CardStyle(
     val opacity: Float = 1f,
-    val cornerRadius: Int = 0,
-    val shape: SurfaceShape = SurfaceShape.Rounded,
     val borderWidth: Int = 0,
 )
 
@@ -90,8 +87,6 @@ class UiSettings internal constructor(
         get() = launcherDataStore.data.map {
             CardStyle(
                 opacity = it.surfacesOpacity,
-                cornerRadius = it.surfacesRadius,
-                shape = it.surfacesShape,
                 borderWidth = it.surfacesBorderWidth,
             )
         }
@@ -102,21 +97,9 @@ class UiSettings internal constructor(
         }
     }
 
-    fun setCardRadius(radius: Int) {
-        launcherDataStore.update {
-            it.copy(surfacesRadius = radius)
-        }
-    }
-
     fun setCardBorderWidth(borderWidth: Int) {
         launcherDataStore.update {
             it.copy(surfacesBorderWidth = borderWidth)
-        }
-    }
-
-    fun setCardShape(shape: SurfaceShape) {
-        launcherDataStore.update {
-            it.copy(surfacesShape = shape)
         }
     }
 
@@ -302,14 +285,47 @@ class UiSettings internal constructor(
     }
 
 
-    val theme
+    val colorsId
         get() = launcherDataStore.data.map {
-            it.uiTheme
+            it.uiColorsId
         }.distinctUntilChanged()
 
-    fun setTheme(theme: ThemeDescriptor) {
+    fun setColorsId(colorsId: UUID) {
         launcherDataStore.update {
-            it.copy(uiTheme = theme)
+            it.copy(uiColorsId = colorsId)
+        }
+    }
+
+    val shapesId
+        get() = launcherDataStore.data.map {
+            it.uiShapesId
+        }.distinctUntilChanged()
+
+    fun setShapesId(shapesId: UUID) {
+        launcherDataStore.update {
+            it.copy(uiShapesId = shapesId)
+        }
+    }
+
+    val transparenciesId
+        get() = launcherDataStore.data.map {
+            it.uiTransparenciesId
+        }.distinctUntilChanged()
+
+    fun setTransparenciesId(transparenciesId: UUID) {
+        launcherDataStore.update {
+            it.copy(uiTransparenciesId = transparenciesId)
+        }
+    }
+
+    val typographyId
+        get() = launcherDataStore.data.map {
+            it.uiTypographyId
+        }.distinctUntilChanged()
+
+    fun setTypographyId(typographyId: UUID) {
+        launcherDataStore.update {
+            it.copy(uiTypographyId = typographyId)
         }
     }
 
@@ -338,6 +354,17 @@ class UiSettings internal constructor(
     fun setDock(dock: Boolean) {
         launcherDataStore.update {
             it.copy(homeScreenDock = dock)
+        }
+    }
+
+    val dockRows
+        get() = launcherDataStore.data.map {
+            it.homeScreenDockRows
+        }.distinctUntilChanged()
+
+    fun setDockRows(rows: Int) {
+        launcherDataStore.update {
+            it.copy(homeScreenDockRows = rows)
         }
     }
 

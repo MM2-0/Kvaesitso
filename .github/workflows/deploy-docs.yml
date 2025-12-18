@@ -41,9 +41,9 @@ jobs:
           java-version: 17
       - name: Use Gradle
         uses: gradle/actions/setup-gradle@v4
-      - run: gradle dokkaHtmlMultiModule
+      - run: gradle dokkaGenerateHtml
         working-directory: .
-      - run: mv build/dokka/htmlMultiModule docs/public/reference
+      - run: mv build/dokka/html docs/public/reference
         working-directory: .
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4

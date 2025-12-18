@@ -2,21 +2,20 @@ package de.mm20.launcher2.ui.settings.hiddenitems
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Visibility
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Visibility
-import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,10 +26,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.CalendarEvent
@@ -41,6 +43,10 @@ import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object HiddenItemsSettingsRoute: NavKey
 
 @Composable
 fun HiddenItemsSettingsScreen() {
@@ -53,7 +59,10 @@ fun HiddenItemsSettingsScreen() {
 
     val showButton by viewModel.hiddenItemsButton.collectAsState()
 
-    PreferenceScreen(title = stringResource(R.string.preference_hidden_items)) {
+    PreferenceScreen(
+        title = stringResource(R.string.preference_hidden_items),
+        verticalArrangement = Arrangement.spacedBy(2.dp)
+    ) {
         item {
             PreferenceCategory {
                 SwitchPreference(
@@ -64,7 +73,14 @@ fun HiddenItemsSettingsScreen() {
                 )
             }
         }
-        items(apps, key = { it.key }) { searchable ->
+        item {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp)
+            )
+        }
+        itemsIndexed(apps, key = { i, it -> it.key }) { i, searchable ->
             val icon by remember(searchable.key) {
                 viewModel.getIcon(searchable, with(density) { 32.dp.roundToPx() })
             }.collectAsState(null)
@@ -75,7 +91,21 @@ fun HiddenItemsSettingsScreen() {
 
             var showDropdown by remember { mutableStateOf(false) }
 
-            Box {
+            val xs = MaterialTheme.shapes.extraSmall
+            val md = MaterialTheme.shapes.medium
+
+            Box(
+                modifier = Modifier
+                    .clip(
+                        xs.copy(
+                            topStart = if (i == 0) md.topStart else xs.topStart,
+                            topEnd = if (i == 0) md.topEnd else xs.topEnd,
+                            bottomStart = if (i == apps.lastIndex) md.bottomStart else xs.bottomStart,
+                            bottomEnd = if (i == apps.lastIndex) md.bottomEnd else xs.bottomEnd
+                        )
+                    )
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
                 HiddenItem(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -111,14 +141,11 @@ fun HiddenItemsSettingsScreen() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(0.5.dp)
-                    .background(
-                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
-                    )
+                    .height(8.dp)
             )
         }
 
-        items(other, key = { it.key }) { searchable ->
+        itemsIndexed(other, key = { i, it -> it.key }) { i, searchable ->
             val icon by remember(searchable.key) {
                 viewModel.getIcon(searchable, with(density) { 32.dp.roundToPx() })
             }.collectAsState(null)
@@ -129,7 +156,21 @@ fun HiddenItemsSettingsScreen() {
 
             var showDropdown by remember { mutableStateOf(false) }
 
-            Box {
+            val xs = MaterialTheme.shapes.extraSmall
+            val md = MaterialTheme.shapes.medium
+
+            Box(
+                modifier = Modifier
+                    .clip(
+                        xs.copy(
+                            topStart = if (i == 0) md.topStart else xs.topStart,
+                            topEnd = if (i == 0) md.topEnd else xs.topEnd,
+                            bottomStart = if (i == other.lastIndex) md.bottomStart else xs.bottomStart,
+                            bottomEnd = if (i == other.lastIndex) md.bottomEnd else xs.bottomEnd
+                        )
+                    )
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
                 HiddenItem(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -171,95 +212,96 @@ private fun VisibilityDropdown(
     value: VisibilityLevel?,
     onValueChanged: (VisibilityLevel) -> Unit,
 ) {
-    DropdownMenu(expanded = expanded, onDismissRequest = onDismissRequest) {
-        Text(
-            text = stringResource(R.string.customize_item_visibility),
-            color = MaterialTheme.colorScheme.secondary,
-            style = MaterialTheme.typography.labelMedium,
-            modifier = Modifier.padding(
-                start = 48.dp,
-                top = 12.dp,
-                bottom = 8.dp,
-                end = 12.dp,
-            )
-        )
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Rounded.Visibility,
-                    contentDescription = null
-                )
-            },
-            text = {
+    DropdownMenuPopup(
+        expanded = expanded,
+        onDismissRequest = onDismissRequest,
+    ) {
+        DropdownMenuGroup(
+            shapes = MenuDefaults.groupShapes(),
+        ) {
+            MenuDefaults.Label {
                 Text(
-                    when (item) {
-                        is Application -> stringResource(R.string.item_visibility_app_default)
-                        is CalendarEvent -> stringResource(R.string.item_visibility_calendar_default)
-                        else -> stringResource(R.string.item_visibility_search_only)
-                    }
+                    text = stringResource(R.string.customize_item_visibility),
                 )
-            },
-            onClick = {
-                onValueChanged(VisibilityLevel.Default)
-            },
-            trailingIcon = {
-                if (value == VisibilityLevel.Default) {
-                    Icon(
-                        imageVector = Icons.Rounded.Check,
-                        tint = MaterialTheme.colorScheme.primary,
-                        contentDescription = null
-                    )
-                }
             }
-        )
-        if (item is Application || item is CalendarEvent) {
+
+            val count = if (item is Application || item is CalendarEvent) 3 else 2
+
             DropdownMenuItem(
+                selected = value == VisibilityLevel.Default,
+                shapes = MenuDefaults.itemShape(0, count),
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Outlined.Visibility,
+                        painterResource(R.drawable.visibility_24px_filled),
+                        contentDescription = null
+                    )
+                },
+                checkedLeadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.check_24px),
                         contentDescription = null
                     )
                 },
                 text = {
-                    Text(stringResource(R.string.item_visibility_search_only))
+                    Text(
+                        when (item) {
+                            is Application -> stringResource(R.string.item_visibility_app_default)
+                            is CalendarEvent -> stringResource(R.string.item_visibility_calendar_default)
+                            else -> stringResource(R.string.item_visibility_search_only)
+                        }
+                    )
                 },
                 onClick = {
-                    onValueChanged(VisibilityLevel.SearchOnly)
+                    onValueChanged(VisibilityLevel.Default)
                 },
-                trailingIcon = {
-                    if (value == VisibilityLevel.SearchOnly) {
+            )
+            if (item is Application || item is CalendarEvent) {
+                DropdownMenuItem(
+                    selected = value == VisibilityLevel.SearchOnly,
+                    shapes = MenuDefaults.itemShape(1, count),
+                    leadingIcon = {
                         Icon(
-                            imageVector = Icons.Rounded.Check,
-                            tint = MaterialTheme.colorScheme.primary,
+                            painterResource(R.drawable.visibility_24px),
                             contentDescription = null
                         )
-                    }
-                }
-            )
-        }
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Rounded.VisibilityOff,
-                    contentDescription = null
+                    },
+                    checkedLeadingIcon = {
+                        Icon(
+                            painterResource(R.drawable.check_24px),
+                            contentDescription = null
+                        )
+                    },
+                    text = {
+                        Text(stringResource(R.string.item_visibility_search_only))
+                    },
+                    onClick = {
+                        onValueChanged(VisibilityLevel.SearchOnly)
+                    },
                 )
-            },
-            text = {
-                Text(stringResource(R.string.item_visibility_hidden))
-            },
-            onClick = {
-                onValueChanged(VisibilityLevel.Hidden)
-            },
-            trailingIcon = {
-                if (value == VisibilityLevel.Hidden) {
+            }
+            DropdownMenuItem(
+                selected = value == VisibilityLevel.Hidden,
+                shapes = MenuDefaults.itemShape(count - 1, count),
+                leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.Check,
-                        tint = MaterialTheme.colorScheme.primary,
+                        painterResource(R.drawable.visibility_off_24px),
                         contentDescription = null
                     )
-                }
-            }
-        )
+                },
+                checkedLeadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.check_24px),
+                        contentDescription = null
+                    )
+                },
+                text = {
+                    Text(stringResource(R.string.item_visibility_hidden))
+                },
+                onClick = {
+                    onValueChanged(VisibilityLevel.Hidden)
+                },
+            )
+        }
     }
 }
 
@@ -288,11 +330,12 @@ private fun HiddenItem(
         if (visibility != null) {
             Icon(
                 modifier = Modifier.alpha(if (visibility == VisibilityLevel.Hidden) 0.3f else 1f),
-                imageVector = when (visibility) {
-                    VisibilityLevel.Hidden -> Icons.Rounded.VisibilityOff
-                    VisibilityLevel.Default -> Icons.Rounded.Visibility
-                    VisibilityLevel.SearchOnly -> Icons.Outlined.Visibility
-                },
+                painter = painterResource(
+                    when (visibility) {
+                    VisibilityLevel.Hidden -> R.drawable.visibility_off_24px
+                    VisibilityLevel.Default -> R.drawable.visibility_24px_filled
+                    VisibilityLevel.SearchOnly -> R.drawable.visibility_24px
+                }),
                 tint = if (visibility == VisibilityLevel.Default) MaterialTheme.colorScheme.primary
                 else MaterialTheme.colorScheme.onSurfaceVariant,
                 contentDescription = null

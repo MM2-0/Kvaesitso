@@ -335,4 +335,6 @@
     <string name="dimension_frequency">Frequência</string>
     <string name="dimension_temperature">Temperatura</string>
     <string name="dimension_time">Tempo</string>
+    <string name="dimension_data">Dados</string>
+    <string name="dimension_bitrate">Taxa de bits</string>
 </resources>

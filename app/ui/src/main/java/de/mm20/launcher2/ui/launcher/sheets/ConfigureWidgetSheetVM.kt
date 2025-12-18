@@ -4,12 +4,12 @@ import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
-import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.widgets.FavoritesWidget
 import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.text.Collator
 
 class ConfigureWidgetSheetVM : ViewModel(), KoinComponent {
 
@@ -22,13 +22,17 @@ class ConfigureWidgetSheetVM : ViewModel(), KoinComponent {
 
         val configTags = widget.config.tagList
 
+        val collator = Collator.getInstance().apply { strength = Collator.SECONDARY }
+
         selectedTags.value = configTags
         availableTags.value =
             customAttributesRepository
                 .getAllTags()
                 .first()
                 .filter {t -> configTags.none { it == t } }
-                .sortedBy { it.normalize() }
+                .sortedWith { el1, el2 ->
+                    collator.compare(el1, el2)
+                }
                 .map { Tag(it) }
     }
 

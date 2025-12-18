@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -16,11 +18,12 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun <T> ListPreference(
     title: String,
-    icon: ImageVector? = null,
-    iconPadding: Boolean = true,
+    @DrawableRes icon: Int? = null,
+    iconPadding: Boolean = icon != null,
     items: List<ListPreferenceItem<T>>,
     value: T,
     summary: String? = items.firstOrNull { value == it.value }?.label,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
     onValueChanged: (T) -> Unit,
     enabled: Boolean = true,
     itemLabel: @Composable RowScope.(item: ListPreferenceItem<T>) -> Unit = {
@@ -36,6 +39,7 @@ fun <T> ListPreference(
         icon = icon,
         iconPadding = iconPadding,
         enabled = enabled,
+        containerColor = containerColor,
         onClick = {
             showDialog = true
         }

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.ktx.withCorners
-import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlin.math.ceil
 
 fun <T : SavableSearchable> LazyListScope.GridResults(
@@ -39,7 +39,7 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                         bottom = if (!reverse && isBottom) 8.dp else 0.dp,
                     )
                     .background(
-                        MaterialTheme.colorScheme.surface.copy(alpha = LocalTransparencyScheme.current.surface),
+                        MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface),
                         MaterialTheme.shapes.medium.withCorners(
                             topStart = isTop,
                             topEnd = isTop,
@@ -72,7 +72,7 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                     bottom = if (!reverse && isLast) 8.dp else 0.dp,
                 )
                 .background(
-                    MaterialTheme.colorScheme.surface.copy(alpha = LocalTransparencyScheme.current.surface),
+                    MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface),
                     MaterialTheme.shapes.medium.withCorners(
                         topStart = isFirst && !reverse || isLast && reverse,
                         topEnd = isFirst && !reverse || isLast && reverse,
@@ -120,7 +120,7 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                         bottom = if (!reverse) 8.dp else 0.dp,
                     )
                     .background(
-                        MaterialTheme.colorScheme.surface.copy(alpha = LocalTransparencyScheme.current.surface),
+                        MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface),
                         MaterialTheme.shapes.medium.withCorners(
                             topStart = isTop,
                             topEnd = isTop,

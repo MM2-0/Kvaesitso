@@ -61,8 +61,6 @@
     <string name="widget_name_music">Muzyka</string>
     <string name="widget_name_favorites">Ulubione</string>
     <string name="widget_add_widget">Dodaj widżet</string>
-    <string name="easter_egg_1">Tutaj nie ma żadnych easter egg\'ów, chyba że je przyniosłeś ze sobą.</string>
-    <string name="easter_egg_3">Nie będę tego powtarzał: tutaj jest absolutnie zero ukrytych easter egg\'ów</string>
     <string name="turn_off">Wyłącz</string>
     <string name="widget_action_remove">Usuń</string>
     <string name="menu_item_edit_favs">Edytuj ulubione</string>
@@ -251,15 +249,12 @@
     <string name="nextcloud_server_url">Adres URL serwera Nextcloud</string>
     <string name="weather_widget_set_location">Ustaw lokalizację</string>
     <string name="grant_permission">Przyznaj</string>
-    <string name="easter_egg_2">Proszę przestań, marnujesz tylko swój czas</string>
-    <string name="easter_egg_text">No cóż, zostałem odnaleziony. Gratulacje. Warto było\?</string>
     <string name="disclaimer_currency_converter">Kurs walut, taki jak udostępniany codziennie przez Centralny Bank Europejski. Wszystkie informacje są dostarczane \"takie jakie są\" bez jakiejkolwiek gwarancji. Nie ponosimy odpowiedzialności za podane informacje.
 \n
 \nOstatnia aktualizacja: %1$s</string>
     <string name="preference_category_licenses">Licencje otwarto źródłowe</string>
     <string name="preference_automatic_location_summary">Użyj GPS i usług lokalizacyjnych aby ustalić twoją lokalizację automatycznie</string>
     <string name="open_webpage">Otwórz stronę internetową</string>
-    <string name="preference_icon_shape_platform">Domyślne systemowe</string>
     <string name="preference_automatic_location">Automatyczna lokalizacja</string>
     <string name="preference_icon_shape_circle">Okrąg</string>
     <string name="preference_imperial_units_summary">Użyj stopni Fahrenheit\'a oraz mil na godzinę</string>
@@ -359,7 +354,6 @@
     <string name="preference_notification_badges">Plakietki powiadomień</string>
     <string name="preference_screen_backup_summary">Eksport i import danych launchera</string>
     <string name="preference_font">Czcionka</string>
-    <string name="preference_font_system">Domyślne</string>
     <string name="preference_logs">Dzienniki zdarzeń</string>
     <string name="preference_logs_summary">Wyświetlanie i eksportowanie dzienników zdarzeń aplikacji</string>
     <string name="preference_widgets_edit_button_summary">Pokaż przycisk do dodawania, usuwania i zmiany układu widżetów</string>
@@ -453,11 +447,11 @@
     <string name="search_action_timer">Uruchom licznik czasu</string>
     <string name="search_action_contact">Dodaj do kontaktów</string>
     <string name="search_action_open_url">Zobacz stronę</string>
-    <string name="create_search_action_type">Jaką akcję chcesz stworzyć\?</string>
+    <string name="create_search_action_type">Jaką akcję chcesz stworzyć?</string>
     <string name="create_search_action_type_web">Wyszukiwanie na stronie internetowej</string>
     <string name="search_action_app">Aplikacja</string>
     <string name="search_action_websearch_url">Wzorzec URL</string>
-    <string name="search_action_websearch_url_hint">Wzorzec URL, który jest używany do konstruowania adresu URL wyszukiwania w sieci. Użyj \'${1}\' jako placeholder dla rzeczywistego terminu wyszukiwania, np. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Wzorzec URL, który jest używany do konstruowania adresu URL wyszukiwania w sieci. Użyj \'${1}\' jako placeholder dla rzeczywistego terminu wyszukiwania, np. https://google.com/search?q=${1}.</string>
     <string name="more_information">Więcej informacji</string>
     <string name="experimental_feature">Eksperymentalne</string>
     <string name="gesture_action_quick_settings">Otwórz szybkie ustawienia</string>
@@ -578,7 +572,6 @@
     <string name="note_widget_conflict_local_version">Ostania zapisana wersja:</string>
     <string name="note_widget_file_write_error_description">Notatka nie mogła zostać zapisana w połączonym pliku. Możliwe, że została przeniesiona lub usunięta. Kopia została zapisana w pamięci wewnętrznej programu uruchamiającego.</string>
     <string name="confirmation_delete_color_scheme">Czy naprawdę chcesz usunąć schemat kolorów %1$s?</string>
-    <string name="new_color_scheme_name">Nowy schemat kolorów</string>
     <string name="theme_color_scheme_autogenerate">Z koloru podstawowego</string>
     <string name="preference_plugin_enable">Włącz wtyczkę</string>
     <string name="length_unit">Jednostka długości</string>

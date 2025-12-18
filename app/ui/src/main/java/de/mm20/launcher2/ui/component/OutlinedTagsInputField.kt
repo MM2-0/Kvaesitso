@@ -4,31 +4,27 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,12 +42,12 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
-import de.mm20.launcher2.ui.ktx.splitLeadingEmoji
+import de.mm20.launcher2.ui.R
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 
@@ -141,9 +137,7 @@ fun OutlinedTagsInputField(
                 label = label,
                 leadingIcon = leadingIcon,
                 innerTextField = {
-                    Box(
-                        contentAlignment = Alignment.CenterStart,
-                    ) {
+                    Column {
                         Row(
                             modifier = Modifier
                                 .requiredHeight(32.dp)
@@ -151,30 +145,19 @@ fun OutlinedTagsInputField(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             for ((i, tag) in tags.withIndex()) {
-                                val (emoji, tagName) = remember(tag) {
-                                    tag.splitLeadingEmoji()
-                                }
                                 InputChip(
                                     selected = i == tags.lastIndex && lastTagFocused,
                                     modifier = Modifier.padding(end = 12.dp),
                                     onClick = { },
                                     leadingIcon = {
-                                        if (emoji != null && tagName != null) {
-                                            Text(
-                                                emoji,
-                                                modifier = Modifier.width(FilterChipDefaults.IconSize),
-                                                textAlign = TextAlign.Center,
-                                            )
-                                        } else if (tagName != null) {
-                                            Icon(
-                                                modifier = Modifier
-                                                    .size(InputChipDefaults.IconSize),
-                                                imageVector = Icons.Rounded.Tag,
-                                                contentDescription = null
-                                            )
-                                        }
+                                        Icon(
+                                            modifier = Modifier
+                                                .size(InputChipDefaults.IconSize),
+                                            painter = painterResource(R.drawable.tag_20px),
+                                            contentDescription = null
+                                        )
                                     },
-                                    label = { Text(tagName ?: emoji ?: "") },
+                                    label = { Text(tag) },
                                     trailingIcon = {
                                         Icon(
                                             modifier = Modifier
@@ -182,7 +165,7 @@ fun OutlinedTagsInputField(
                                                 .clickable {
                                                     onTagsChange(tags.filterIndexed { index, _ -> index != i })
                                                 },
-                                            imageVector = Icons.Rounded.Clear,
+                                            painter = painterResource(R.drawable.close_20px),
                                             contentDescription = null
                                         )
                                     },
@@ -206,21 +189,33 @@ fun OutlinedTagsInputField(
                             }
                         }
                         if (completions.isNotEmpty()) {
-                            Box(modifier = Modifier.fillMaxWidth()) {
-                                DropdownMenu(
+                            Box {
+                                DropdownMenuPopup(
                                     expanded = true,
                                     onDismissRequest = { completions = emptyList() },
                                     properties = PopupProperties(focusable = false)
                                 ) {
-                                    for (completion in completions) {
-                                        DropdownMenuItem(
-                                            text = { Text(completion) },
-                                            onClick = {
-                                                onTagsChange(tags + completion)
-                                                value = ""
-                                                completions = emptyList()
-                                            },
-                                        )
+                                    DropdownMenuGroup(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        shapes = MenuDefaults.groupShapes()
+                                    ) {
+                                        for ((i, completion) in completions.withIndex()) {
+                                            DropdownMenuItem(
+                                                shape =
+                                                    if (completions.size == 1) MenuDefaults.standaloneItemShape
+                                                    else when (i) {
+                                                        0 -> MenuDefaults.leadingItemShape
+                                                        completions.lastIndex -> MenuDefaults.trailingItemShape
+                                                        else -> MenuDefaults.middleItemShape
+                                                    },
+                                                text = { Text(completion) },
+                                                onClick = {
+                                                    onTagsChange(tags + completion)
+                                                    value = ""
+                                                    completions = emptyList()
+                                                },
+                                            )
+                                        }
                                     }
                                 }
                             }

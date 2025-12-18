@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.calendar
 
 import android.content.Context
+import android.text.Html
 import android.text.format.DateUtils
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -17,19 +18,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Circle
-import androidx.compose.material.icons.rounded.Notes
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.People
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
-import androidx.compose.material.icons.rounded.Schedule
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,12 +30,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.roundToIntRect
+import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -60,6 +49,7 @@ import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.locals.LocalTimeFormat
 import palettes.TonalPalette
 
 @Composable
@@ -72,6 +62,7 @@ fun CalendarItem(
     val context = LocalContext.current
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${calendar.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+    val timeFormat = LocalTimeFormat.current
 
     LaunchedEffect(calendar) {
         viewModel.init(calendar, iconSize.toInt())
@@ -96,11 +87,13 @@ fun CalendarItem(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            when (calendar.isCompleted) {
-                                true -> Icons.Rounded.CheckCircle
-                                false -> Icons.Rounded.RadioButtonUnchecked
-                                null -> Icons.Rounded.Circle
-                            },
+                            painterResource(
+                                when (calendar.isCompleted) {
+                                    true -> R.drawable.check_circle_24px_filled
+                                    false -> R.drawable.radio_button_unchecked_24px
+                                    null -> R.drawable.circle_24px_filled
+                                }
+                            ),
                             null,
                             modifier = Modifier
                                 .padding(horizontal = 14.dp, vertical = 20.dp)
@@ -151,7 +144,7 @@ fun CalendarItem(
                     ) {
                         Icon(
                             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                            imageVector = Icons.Rounded.Schedule,
+                            painter = painterResource(R.drawable.schedule_24px),
                             contentDescription = null
                         )
                         Text(
@@ -160,7 +153,7 @@ fun CalendarItem(
                                     rememberSharedContentState("date"),
                                     this@AnimatedContent
                                 ),
-                            text = calendar.formatTime(context),
+                            text = calendar.formatTime(context, timeFormat),
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
@@ -173,11 +166,14 @@ fun CalendarItem(
                         ) {
                             Icon(
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                imageVector = Icons.Rounded.Notes,
+                                painter = painterResource(R.drawable.notes_24px),
                                 contentDescription = null
                             )
                             Text(
-                                text = calendar.description!!,
+                                text = Html.fromHtml(
+                                    calendar.description!!,
+                                    Html.FROM_HTML_MODE_COMPACT
+                                ).toString(),
                                 style = MaterialTheme.typography.bodySmall,
                                 maxLines = 8,
                                 overflow = TextOverflow.Ellipsis,
@@ -193,7 +189,7 @@ fun CalendarItem(
                         ) {
                             Icon(
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                imageVector = Icons.Rounded.People,
+                                painter = painterResource(R.drawable.group_24px),
                                 contentDescription = null
                             )
                             Text(
@@ -216,7 +212,7 @@ fun CalendarItem(
                         ) {
                             Icon(
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                imageVector = Icons.Rounded.Place,
+                                painter = painterResource(R.drawable.location_on_24px),
                                 contentDescription = null
                             )
                             Text(
@@ -232,7 +228,7 @@ fun CalendarItem(
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
+                                icon = R.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
@@ -240,7 +236,7 @@ fun CalendarItem(
                         } else {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
+                                icon = R.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -251,7 +247,7 @@ fun CalendarItem(
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(R.string.menu_calendar_open_externally),
-                            icon = Icons.Rounded.OpenInNew,
+                            icon = R.drawable.open_in_new_24px,
                             action = {
                                 viewModel.launch(context)
                                 onBack()
@@ -260,9 +256,10 @@ fun CalendarItem(
                     )
 
                     val sheetManager = LocalBottomSheetManager.current
-                    toolbarActions.add(DefaultToolbarAction(
+                    toolbarActions.add(
+                        DefaultToolbarAction(
                         label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Tune,
+                        icon = R.drawable.tune_24px,
                         action = { sheetManager.showCustomizeSearchableModal(calendar) }
                     ))
 
@@ -270,7 +267,7 @@ fun CalendarItem(
                         leftActions = listOf(
                             DefaultToolbarAction(
                                 label = stringResource(id = R.string.menu_back),
-                                icon = Icons.AutoMirrored.Rounded.ArrowBack
+                                icon = R.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }
@@ -285,11 +282,13 @@ fun CalendarItem(
                         .padding(16.dp)
                 ) {
                     Icon(
-                        when (calendar.isCompleted) {
-                            true -> Icons.Rounded.CheckCircle
-                            false -> Icons.Rounded.RadioButtonUnchecked
-                            null -> Icons.Rounded.Circle
-                        },
+                        painterResource(
+                            when (calendar.isCompleted) {
+                                true -> R.drawable.check_circle_24px_filled
+                                false -> R.drawable.radio_button_unchecked_24px
+                                null -> R.drawable.circle_24px_filled
+                            }
+                        ),
                         null,
                         modifier = Modifier
                             .padding(end = 16.dp)
@@ -322,7 +321,7 @@ fun CalendarItem(
                                     rememberSharedContentState("date"),
                                     this@AnimatedContent
                                 ),
-                            text = calendar.getSummary(context),
+                            text = calendar.getSummary(context, timeFormat),
                             style = MaterialTheme.typography.bodySmall,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -364,7 +363,16 @@ fun CalendarItemGridPopup(
     }
 }
 
-private fun CalendarEvent.formatTime(context: Context): String {
+private fun CalendarEvent.formatTime(
+    context: Context,
+    timeFormat: TimeFormat,
+): String {
+    val timeFormatFlag = when (timeFormat) {
+        TimeFormat.System -> 0
+        TimeFormat.TwelveHour -> DateUtils.FORMAT_12HOUR
+        TimeFormat.TwentyFourHour -> DateUtils.FORMAT_24HOUR
+    }
+
     val startTime = startTime
     if (startTime == null || isTask) {
         if (allDay) {
@@ -372,14 +380,14 @@ private fun CalendarEvent.formatTime(context: Context): String {
                 context,
                 endTime,
                 endTime,
-                DateUtils.FORMAT_SHOW_DATE
+                DateUtils.FORMAT_SHOW_DATE or timeFormatFlag
             )
         }
         return DateUtils.formatDateRange(
             context,
             endTime,
             endTime,
-            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
+            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or timeFormatFlag
         )
     }
 
@@ -387,18 +395,27 @@ private fun CalendarEvent.formatTime(context: Context): String {
         context,
         startTime,
         endTime,
-        DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_WEEKDAY
+        DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_WEEKDAY or timeFormatFlag
     )
     return DateUtils.formatDateRange(
         context,
         startTime,
         endTime,
-        DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_WEEKDAY
+        DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_WEEKDAY or timeFormatFlag
     )
 
 }
 
-private fun CalendarEvent.getSummary(context: Context): String {
+private fun CalendarEvent.getSummary(
+    context: Context,
+    timeFormat: TimeFormat,
+): String {
+    val timeFormatFlag = when (timeFormat) {
+        TimeFormat.System -> 0
+        TimeFormat.TwelveHour -> DateUtils.FORMAT_12HOUR
+        TimeFormat.TwentyFourHour -> DateUtils.FORMAT_24HOUR
+    }
+
     val startTime = startTime
     if (isTask || startTime == null) {
         val isToday = DateUtils.isToday(endTime)
@@ -410,7 +427,7 @@ private fun CalendarEvent.getSummary(context: Context): String {
                 R.string.task_due_time, DateUtils.formatDateTime(
                     context,
                     endTime,
-                    DateUtils.FORMAT_SHOW_TIME
+                    DateUtils.FORMAT_SHOW_TIME or timeFormatFlag
                 )
             )
         }
@@ -419,7 +436,7 @@ private fun CalendarEvent.getSummary(context: Context): String {
                 R.string.task_due_date, DateUtils.formatDateTime(
                     context,
                     endTime,
-                    DateUtils.FORMAT_SHOW_DATE
+                    DateUtils.FORMAT_SHOW_DATE or timeFormatFlag
                 )
             )
         }
@@ -427,7 +444,7 @@ private fun CalendarEvent.getSummary(context: Context): String {
             R.string.task_due_date, DateUtils.formatDateTime(
                 context,
                 endTime,
-                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
+                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or timeFormatFlag
             )
         )
     }
@@ -442,7 +459,7 @@ private fun CalendarEvent.getSummary(context: Context): String {
                 context,
                 startTime,
                 endTime,
-                DateUtils.FORMAT_SHOW_TIME
+                DateUtils.FORMAT_SHOW_TIME or timeFormatFlag
             )
         }
     } else {
@@ -451,14 +468,14 @@ private fun CalendarEvent.getSummary(context: Context): String {
                 context,
                 startTime,
                 endTime,
-                DateUtils.FORMAT_SHOW_DATE
+                DateUtils.FORMAT_SHOW_DATE or timeFormatFlag
             )
         } else {
             DateUtils.formatDateRange(
                 context,
                 startTime,
                 endTime,
-                DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE
+                DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or timeFormatFlag
             )
         }
     }

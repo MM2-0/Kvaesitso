@@ -1,42 +1,46 @@
 package de.mm20.launcher2.ui.settings.integrations
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.PlayCircleOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.icons.BreezyWeather
-import de.mm20.launcher2.icons.Google
-import de.mm20.launcher2.icons.Nextcloud
-import de.mm20.launcher2.icons.Owncloud
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.breezyweather.BreezyWeatherSettingsRoute
+import de.mm20.launcher2.ui.settings.media.MediaIntegrationSettingsRoute
+import de.mm20.launcher2.ui.settings.nextcloud.NextcloudSettingsRoute
+import de.mm20.launcher2.ui.settings.owncloud.OwncloudSettingsRoute
+import de.mm20.launcher2.ui.settings.tasks.TasksIntegrationSettingsRoute
+import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsRoute
+import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsRoute
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object IntegrationsSettingsRoute: NavKey
 
 @Composable
 fun IntegrationsSettingsScreen() {
     val viewModel: IntegrationsSettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_integrations)) {
         item {
             PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.preference_weather_integration),
-                    icon = Icons.Rounded.LightMode,
+                    icon = R.drawable.light_mode_24px,
                     onClick = {
-                        navController?.navigate("settings/integrations/weather")
+                        backStack.add(WeatherIntegrationSettingsRoute)
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_media_integration),
-                    icon = Icons.Rounded.PlayCircleOutline,
+                    icon = R.drawable.play_circle_24px,
                     onClick = {
-                        navController?.navigate("settings/integrations/media")
+                        backStack.add(MediaIntegrationSettingsRoute)
                     }
                 )
             }
@@ -45,30 +49,37 @@ fun IntegrationsSettingsScreen() {
             PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.preference_nextcloud),
-                    icon = Icons.Rounded.Nextcloud,
+                    icon = R.drawable.nextcloud,
                     onClick = {
-                        navController?.navigate("settings/integrations/nextcloud")
+                        backStack.add(NextcloudSettingsRoute)
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_owncloud),
-                    icon = Icons.Rounded.Owncloud,
+                    icon = R.drawable.owncloud,
                     onClick = {
-                        navController?.navigate("settings/integrations/owncloud")
+                        backStack.add(OwncloudSettingsRoute)
+                    }
+                )
+                Preference(
+                    title = stringResource(R.string.preference_search_wikipedia),
+                    icon = R.drawable.wikipedia,
+                    onClick = {
+                        backStack.add(WikipediaSettingsRoute)
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_tasks_integration),
-                    icon = Icons.Default.Check,
+                    icon = R.drawable.check_24px_sharp,
                     onClick = {
-                        navController?.navigate("settings/integrations/tasks")
+                        backStack.add(TasksIntegrationSettingsRoute)
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_breezyweather_integration),
-                    icon = Icons.Rounded.BreezyWeather,
+                    icon = R.drawable.breezy_weather,
                     onClick = {
-                        navController?.navigate("settings/integrations/breezyweather")
+                        backStack.add(BreezyWeatherSettingsRoute)
                     }
                 )
             }

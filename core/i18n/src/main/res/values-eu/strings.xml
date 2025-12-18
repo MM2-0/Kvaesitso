@@ -109,10 +109,6 @@
     <string name="widget_name_notes">Oharrak</string>
     <string name="notes_widget_export_filename">Oharra_%1$s</string>
     <string name="websearch_dialog_query_encoding_url">Ehuneko-kodeketa</string>
-    <string name="easter_egg_1">Hemen ez dago Pazko arrautzarik, zuk ekarri ez badituzu behintzat.</string>
-    <string name="easter_egg_2">Mesedez, gelditu, denbora galtzen ari zara</string>
-    <string name="easter_egg_3">Ez dut berriro esango: hemen ez dago Pazko arrautzarik ezkutatuta</string>
-    <string name="easter_egg_text">Tira, aurkitu nauzu. Zorionak. Merezi izan du\?</string>
     <string name="login_flow_continue">Jarraitu</string>
     <string name="date_today">Gaur</string>
     <string name="date_tomorrow">Bihar</string>
@@ -162,7 +158,6 @@
     <string name="preference_colors_default">Lehenetsia</string>
     <string name="preference_colors_bw">Zuri-beltza</string>
     <string name="preference_font">Letra-tipoa</string>
-    <string name="preference_font_system">Sistemaren lehenetsia</string>
     <string name="preference_screen_about">Honi buruz</string>
     <string name="preference_version">Bertsioa</string>
     <string name="preference_category_links">Estekak</string>
@@ -193,7 +188,6 @@
     <string name="preference_cards_shape_rounded">Biribildua</string>
     <string name="preference_cards_shape_cut">Ebakia</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Sistemaren lehenetsia</string>
     <string name="preference_icon_shape_square">Karratua</string>
     <string name="preference_icon_shape_rounded_square">Karratu biribildua</string>
     <string name="preference_icon_shape_triangle">Reuleaux irukia</string>
@@ -299,7 +293,7 @@
     <string name="preference_search_files_summary">Tokiko fitxategiak eta hodeiko fitxategiak bilatu</string>
     <string name="preference_search_websites_summary">Erakutsi webgune baten aurrebista bilaketa-kontsulta URL bat bada</string>
     <string name="icon_picker_suggestions">Iradokizunak</string>
-    <string name="create_search_action_type">Zein ekintza mota sortu nahi dituzu\?</string>
+    <string name="create_search_action_type">Zein ekintza mota sortu nahi dituzu?</string>
     <string name="weather_condition_lightrainshowersandthunder">Euri-zaparrada arinak eta trumoiak</string>
     <string name="weather_condition_lightsnowandthunder">Elur arina eta trumoiak</string>
     <string name="weather_condition_lightrain">Euri arina</string>
@@ -496,7 +490,6 @@
     <string name="theme_color_scheme_system_default">Sistemaren lehenetsia erabili</string>
     <string name="confirmation_delete_color_scheme">Benetan %1$s kolore-eskema ezabatu nahi duzu\?</string>
     <string name="edit">Editatu</string>
-    <string name="new_color_scheme_name">Kolore eskema berria</string>
     <string name="preference_restore_default">Lehenetsia berrezarri</string>
     <string name="preference_category_animations">Animazioak</string>
     <string name="preference_charging_animation">Kargatze-animazioa</string>
@@ -619,7 +612,7 @@
     <string name="preference_search_supportedunits">Onartutako unitateak</string>
     <string name="provider_breezy">Breezy Weather</string>
     <string name="preference_location_breezy">Breezy Weather-en kokapena kudeatu</string>
-    <string name="preference_breezyweather_integration"></string>
+    <string name="preference_breezyweather_integration"/>
     <string name="preference_breezyweather_integration_instructions">Breezy Weather eguraldi hornitzaile gisa erabiltzeko:\n\n1. Joan hona: Breezy Weather &gt; Ezarpenak &gt; Trepetak eta horma-papera animatua &gt; Bidali eguraldi datuak Gadgetbridge-ra &gt; Gaitu %1$s\n\n2. %1$s-n, hautatu Breezy Weather eguraldi hornitzaile gisa</string>
     <string name="preference_launch_breezyweather_app">Ireki Breezy Weather</string>
     <string name="action_install">Instalatu</string>
@@ -649,7 +642,6 @@
     <string name="preference_clock_widget_time_format">Ordu formatua</string>
     <string name="preference_clock_widget_time_format_24h">24 ordu</string>
     <string name="preference_clock_widget_time_format_12h">12 ordu</string>
-    <string name="preference_clock_widget_time_format_system">Sistemaren lehenetsia</string>
     <string name="preference_search_locations_summary">Bilatu dendak eta beste leku batzuk inguruko eremuan</string>
     <string name="wind_east">Ekialde haizea</string>
     <string name="wind_south_east">Hego-ekialde haizea</string>

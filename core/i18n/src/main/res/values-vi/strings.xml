@@ -52,7 +52,6 @@
     <string name="weather_condition_fair">Tốt</string>
     <string name="missing_permission_appshortcuts_create">Đặt %1$s làm ứng dụng trang chủ mặc định để tạo lối tắt.</string>
     <string name="preference_font">Phông chữ</string>
-    <string name="preference_font_system">Mặc định hệ thống</string>
     <string name="preference_screen_about">Giới thiệu</string>
     <string name="provider_here">TẠI ĐÂY</string>
     <plurals name="debug_cleanup_database_result">
@@ -184,10 +183,6 @@
     <string name="notes_widget_action_dismiss">Bỏ qua</string>
     <string name="notes_widget_dismissed">Đã bỏ qua ghi chú.</string>
     <string name="shortcut_summary">Bởi %1$s</string>
-    <string name="easter_egg_1">Ở đây không có trứng Phục sinh trừ khi bạn mang chúng theo.</string>
-    <string name="easter_egg_2">Làm ơn dừng lại đi, bạn đang lãng phí thời gian</string>
-    <string name="easter_egg_3">Tôi sẽ không nói lại lần nữa: hoàn toàn không có quả trứng Phục sinh nào được giấu ở đây</string>
-    <string name="easter_egg_text">Vâng, bạn đã tìm thấy tôi. Chúc mừng. Có đáng không?</string>
     <string name="close">Đóng</string>
     <string name="save">Lưu</string>
     <string name="duplicate">Nhân đôi</string>
@@ -321,7 +316,6 @@
     <string name="preference_cards_shape_rounded">Bo tròn</string>
     <string name="preference_cards_shape_cut">Cắt</string>
     <string name="preference_icon_shape">Hình dạng</string>
-    <string name="preference_icon_shape_platform">Mặc định hệ thống</string>
     <string name="preference_icon_shape_square">Hình vuông</string>
     <string name="preference_icon_shape_rounded_square">Hình vuông tròn</string>
     <string name="preference_icon_shape_squircle">Hình tròn</string>
@@ -590,7 +584,6 @@
     <string name="note_widget_file_write_error">Lỗi lưu ghi chú</string>
     <string name="note_widget_file_write_error_description">Không thể ghi ghi chú vào tệp được liên kết. Có thể nó đã bị di chuyển hoặc bị xóa. Một bản sao đã được lưu vào bộ nhớ trong của trình khởi chạy.</string>
     <string name="confirmation_delete_color_scheme">Bạn có thực sự muốn xóa bảng màu %1$s?</string>
-    <string name="new_color_scheme_name">Bảng màu mới</string>
     <string name="theme_color_scheme_system_default">Sử dụng mặc định của hệ thống</string>
     <string name="theme_color_scheme_autogenerate">Từ màu cơ bản</string>
     <string name="theme_color_scheme_palette_color">Bảng màu</string>

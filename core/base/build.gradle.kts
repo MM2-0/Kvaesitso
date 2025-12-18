@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -32,8 +34,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+        }
     }
     namespace = "de.mm20.launcher2.base"
 }
@@ -49,7 +53,6 @@ dependencies {
     implementation(libs.androidx.palette)
     runtimeOnly(libs.androidx.compose.ui)
     runtimeOnly(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.materialicons)
 
     implementation(libs.stringsimilarity)
 

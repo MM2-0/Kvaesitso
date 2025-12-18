@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -66,7 +67,7 @@ fun WidgetColumn(
 
 
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxWidth()
     ) {
         val scope = rememberCoroutineScope()
         Column {
@@ -158,8 +159,6 @@ fun WidgetColumn(
                 if (editMode) R.string.widget_add_widget
                 else R.string.menu_edit_widgets
             )
-            val icon =
-                AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_edit_add)
 
             Button(
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 8.dp),
@@ -175,9 +174,8 @@ fun WidgetColumn(
                 Icon(
                     modifier = Modifier.padding(end = ButtonDefaults.IconSpacing)
                         .size(ButtonDefaults.IconSize),
-                    painter = rememberAnimatedVectorPainter(
-                        animatedImageVector = icon,
-                        atEnd = !editMode
+                    painter = painterResource(
+                        if (editMode) R.drawable.add_20px else R.drawable.edit_20px
                     ), contentDescription = null
                 )
                 Text(title)

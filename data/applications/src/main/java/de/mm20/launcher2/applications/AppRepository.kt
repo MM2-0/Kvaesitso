@@ -10,12 +10,12 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
-import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SearchableRepository
+import de.mm20.launcher2.search.StringNormalizer
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
@@ -30,8 +30,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import org.apache.commons.text.similarity.FuzzyScore
-import java.util.Locale
 
 interface AppRepository : SearchableRepository<Application> {
     fun findOne(
@@ -45,6 +43,7 @@ interface AppRepository : SearchableRepository<Application> {
 internal class AppRepositoryImpl(
     private val context: Context,
     private val profileManager: ProfileManager,
+    private val stringNormalizer: StringNormalizer,
 ) : AppRepository {
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
@@ -240,6 +239,7 @@ internal class AppRepositoryImpl(
     }
 
     override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<LauncherApp>> {
+        val normalizedQuery = stringNormalizer.normalize(query)
         return installedApps.map { apps ->
             withContext(Dispatchers.Default) {
                 val appResults = mutableListOf<LauncherApp>()
@@ -247,9 +247,11 @@ internal class AppRepositoryImpl(
                     appResults.addAll(apps)
                 } else {
                     appResults.addAll(apps.mapNotNull {
-                        val score = ResultScore(
-                            query = query,
-                            primaryFields = listOf(it.label),
+                        val score = ResultScore.from(
+                            query = normalizedQuery,
+                            primaryFields = listOf(
+                                stringNormalizer.normalize(it.label)
+                            ),
                         )
                         if (score.score < 0.8f) return@mapNotNull null
                         it.copy(

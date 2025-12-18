@@ -1,0 +1,11 @@
+- Bring back the "fill height" option for the clock widget while "widgets on home screen" is enabled
+- Add an setting to increase the number rows on home screen (thanks to @and1mon)
+- Unit converter improvements:
+  - Added support for units of volume
+  - The parsing is now more lenient, spaces are now optional and every combination of `>` and `-` is not a valid operator symbol
+  - unit symbols may now contain spaces, some existing unit symbols have been renamed (for example `sqft` -> `sq ft`; `lb.` -> `lb`)
+- Added more configuration options to custom intent quick actions
+- Bugfixes:
+  - fix tap interaction with live wallpapers
+  - fix time parsing when time format is set to 12-hour clock
+  - fix Wikipedia search

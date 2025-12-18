@@ -21,7 +21,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -45,27 +44,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.NavigateNext
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.AirplanemodeActive
-import androidx.compose.material.icons.rounded.BugReport
-import androidx.compose.material.icons.rounded.Commute
-import androidx.compose.material.icons.rounded.Directions
-import androidx.compose.material.icons.rounded.DirectionsBoat
-import androidx.compose.material.icons.rounded.DirectionsBus
-import androidx.compose.material.icons.rounded.DirectionsRailway
-import androidx.compose.material.icons.rounded.DirectionsTransit
-import androidx.compose.material.icons.rounded.Language
-import androidx.compose.material.icons.rounded.Navigation
-import androidx.compose.material.icons.rounded.Phone
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.Subway
-import androidx.compose.material.icons.rounded.Train
-import androidx.compose.material.icons.rounded.Tram
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.FilterChipDefaults
@@ -92,9 +70,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -102,7 +79,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
@@ -113,9 +89,8 @@ import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import blend.Blend.harmonize
 import coil.compose.AsyncImage
-import de.mm20.launcher2.i18n.R
-import de.mm20.launcher2.icons.CableCar
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.isOpen
 import de.mm20.launcher2.search.location.Attribution
@@ -124,7 +99,9 @@ import de.mm20.launcher2.search.location.LineNameComparator
 import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.PaymentMethod
 import de.mm20.launcher2.search.location.isNotEmpty
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.MarqueeText
@@ -134,7 +111,6 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.atTone
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
-import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toComposeColor
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
@@ -143,6 +119,7 @@ import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
+import de.mm20.launcher2.ui.utils.formatDistance
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import java.time.Duration
@@ -166,7 +143,7 @@ fun LocationItem(
 
     val userLocation by remember {
         viewModel.devicePoseProvider.getLocation()
-    }.collectAsStateWithLifecycle(viewModel.devicePoseProvider.lastLocation)
+    }.collectAsStateWithLifecycle(null)
 
     val targetHeading by remember(userLocation, location) {
         if (userLocation != null) {
@@ -179,15 +156,13 @@ fun LocationItem(
     }.collectAsStateWithLifecycle(null)
 
     val userHeading by remember {
-        if (userLocation != null) {
-            viewModel.devicePoseProvider.getAzimuthDegrees()
-        } else emptyFlow()
+        viewModel.devicePoseProvider.getAzimuthDegrees()
     }.collectAsStateWithLifecycle(null)
 
     val icon by viewModel.icon.collectAsStateWithLifecycle()
     val badge by viewModel.badge.collectAsStateWithLifecycle(null)
 
-    val imperialUnits by viewModel.imperialUnits.collectAsState()
+    val measurementSystem by viewModel.measurementSystem.collectAsState()
 
     val showMap by viewModel.showMap.collectAsState()
 
@@ -227,26 +202,40 @@ fun LocationItem(
                                     this@AnimatedContent
                                 )
                         )
-                        val formattedDistance =
-                            distance?.metersToLocalizedString(context, imperialUnits)
-                        val isOpenString = location.openingSchedule?.isOpen()
-                            ?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
-                        val sublabel = listOf(location.category, formattedDistance, isOpenString)
+                        val formattedDistance = distance?.let {
+                            formatDistance(
+                                context,
+                                it,
+                                measurementSystem
+                            )
+                        }
+                        val sublabel = listOf(location.category, formattedDistance)
                             .fastFilterNotNull()
                             .joinToString(" • ")
+                        val isOpenString = location.openingSchedule?.isOpen()
+                            ?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
 
-                        if (sublabel.isNotBlank()) {
-                            Text(
-                                sublabel,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.secondary,
-                                modifier = Modifier
-                                    .padding(top = 2.dp)
-                                    .sharedElement(
-                                        rememberSharedContentState("sublabel"),
-                                        this@AnimatedContent
-                                    )
-                            )
+                        Row(modifier = Modifier.padding(top = 2.dp)) {
+                            if (sublabel.isNotBlank()) {
+                                Text(
+                                    sublabel,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier
+                                        .sharedElement(
+                                            rememberSharedContentState("sublabel"),
+                                            this@AnimatedContent
+                                        )
+                                )
+                            }
+                            if (!isOpenString.isNullOrBlank()) {
+                                Text(
+                                    " • $isOpenString",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier.animateEnterExit()
+                                )
+                            }
                         }
                     }
                     Compass(
@@ -324,28 +313,61 @@ fun LocationItem(
                                         this@AnimatedContent
                                     )
                             )
-                            val category = location.category
-                            val formattedDistance = distance?.metersToLocalizedString(
-                                context, imperialUnits
-                            )
-                            if (category != null || formattedDistance != null) {
-                                Text(
-                                    when {
-                                        category != null && formattedDistance != null -> "$category • $formattedDistance"
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.padding(top = 2.dp)
+                            ) {
+                                val category = location.category
+                                val acceptedPaymentMethods = location.acceptedPaymentMethods
+                                val formattedDistance = distance?.let {
+                                    formatDistance(
+                                        context,
+                                        it,
+                                        measurementSystem
+                                    )
+                                }
+                                if (category != null || formattedDistance != null) {
+                                    Text(
+                                        when {
+                                            category != null && formattedDistance != null -> "$category • $formattedDistance"
 
-                                        category != null -> category
-                                        formattedDistance != null -> formattedDistance
-                                        else -> ""
-                                    },
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.secondary,
-                                    modifier = Modifier
-                                        .padding(top = 2.dp)
-                                        .sharedElement(
-                                            rememberSharedContentState("sublabel"),
-                                            this@AnimatedContent
+                                            category != null -> category
+                                            formattedDistance != null -> formattedDistance
+                                            else -> ""
+                                        },
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        modifier = Modifier
+                                            .sharedElement(
+                                                rememberSharedContentState("sublabel"),
+                                                this@AnimatedContent
+                                            )
+                                    )
+                                }
+                                if (!acceptedPaymentMethods.isNullOrEmpty()) {
+                                    Text(
+                                        " • ",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        modifier = Modifier.animateEnterExit()
+                                    )
+                                    for ((method, available) in acceptedPaymentMethods) {
+                                        Icon(
+                                            painterResource(
+                                                when (method) {
+                                                    PaymentMethod.Cash -> if (available) R.drawable.toll_20px else R.drawable.toll_off_20px
+                                                    PaymentMethod.Card -> if (available) R.drawable.credit_card_20px else R.drawable.credit_card_off_20px
+                                                }
+                                            ),
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.secondary,
+                                            modifier = Modifier
+                                                .size(14.5.dp)
+                                                .padding(end = 2.dp)
+                                                .animateEnterExit()
                                         )
-                                )
+                                    }
+                                }
                             }
                             if (location.userRating != null) {
                                 RatingBar(
@@ -458,7 +480,7 @@ fun LocationItem(
                                 label = { Text(stringResource(R.string.menu_navigation)) },
                                 leadingIcon = {
                                     Icon(
-                                        Icons.Rounded.Directions, null,
+                                        painterResource(R.drawable.directions_20px), null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
@@ -478,7 +500,7 @@ fun LocationItem(
                                 label = { Text(stringResource(R.string.menu_dial)) },
                                 leadingIcon = {
                                     Icon(
-                                        Icons.Rounded.Phone, null,
+                                        painterResource(R.drawable.call_20px), null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
@@ -498,7 +520,7 @@ fun LocationItem(
                                 label = { Text(stringResource(R.string.menu_website)) },
                                 leadingIcon = {
                                     Icon(
-                                        Icons.Rounded.Language, null,
+                                        painterResource(R.drawable.language_20px), null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
@@ -514,7 +536,7 @@ fun LocationItem(
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
+                                icon = R.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
@@ -522,7 +544,7 @@ fun LocationItem(
                         } else {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
+                                icon = R.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -532,7 +554,7 @@ fun LocationItem(
 
                     toolbarActions += DefaultToolbarAction(
                         label = stringResource(id = R.string.menu_map),
-                        icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                        icon = R.drawable.open_in_new_24px,
                     ) {
                         viewModel.launch(context)
                     }
@@ -542,14 +564,14 @@ fun LocationItem(
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(R.string.menu_customize),
-                            icon = Icons.Rounded.Tune,
+                            icon = R.drawable.tune_24px,
                             action = { sheetManager.showCustomizeSearchableModal(location) }
                         ))
 
                     if (location.fixMeUrl != null) {
                         toolbarActions += DefaultToolbarAction(
                             label = stringResource(id = R.string.menu_bugreport),
-                            icon = Icons.Rounded.BugReport,
+                            icon = R.drawable.bug_report_24px,
                         ) {
                             context.tryStartActivity(
                                 Intent(
@@ -564,7 +586,7 @@ fun LocationItem(
                         leftActions = listOf(
                             DefaultToolbarAction(
                                 label = stringResource(id = R.string.menu_back),
-                                icon = Icons.AutoMirrored.Rounded.ArrowBack
+                                icon = R.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }),
@@ -632,7 +654,7 @@ private fun Departures(
                             style = MaterialTheme.typography.labelSmall,
                             modifier = Modifier.padding(end = 12.dp)
                         )
-                        Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                        Icon(painterResource(R.drawable.chevron_forward_24px), null)
                     }
                 } else {
                     val (lines, groupedDepartures) = remember(departures) {
@@ -859,7 +881,7 @@ private fun OpeningSchedule(
                                 modifier = Modifier.weight(1f)
                             )
 
-                            Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                            Icon(painterResource(R.drawable.chevron_forward_24px), null)
                         }
                     }
                 }
@@ -932,7 +954,7 @@ private fun Compass(
     ) {
         if (targetHeading != null) {
             Icon(
-                Icons.Rounded.Navigation,
+                painterResource(R.drawable.assistant_navigation_24px),
                 null,
                 modifier = Modifier
                     .size(20f / 48f * size)
@@ -1043,18 +1065,21 @@ fun LineTypeIcon(
     tint: Color,
     modifier: Modifier = Modifier
 ) = Icon(
-    imageVector = when (lineType) {
-        LineType.Bus -> Icons.Rounded.DirectionsBus
-        LineType.Tram -> Icons.Rounded.Tram
-        LineType.Subway -> Icons.Rounded.Subway
-        LineType.Monorail -> Icons.Rounded.DirectionsTransit
-        LineType.CommuterTrain -> Icons.Rounded.DirectionsRailway
-        LineType.Train, LineType.RegionalTrain, LineType.HighSpeedTrain -> Icons.Rounded.Train
-        LineType.Boat -> Icons.Rounded.DirectionsBoat
-        LineType.CableCar -> Icons.Rounded.CableCar
-        LineType.Airplane -> Icons.Rounded.AirplanemodeActive
-        null -> Icons.Rounded.Commute
-    },
+    painter = painterResource(
+        when (lineType) {
+            LineType.Bus -> R.drawable.directions_bus_20px
+            LineType.Tram -> R.drawable.tram_20px
+            LineType.Subway -> R.drawable.subway_20px
+            LineType.Monorail -> R.drawable.monorail_20px
+            LineType.CommuterTrain -> R.drawable.directions_railway_20px
+            LineType.Train, LineType.RegionalTrain, LineType.HighSpeedTrain -> R.drawable.train_20px
+            LineType.Boat -> R.drawable.directions_boat_20px
+            LineType.CableCar -> R.drawable.cable_car_20px
+            LineType.AerialTramway -> R.drawable.gondola_lift_20px
+            LineType.Airplane -> R.drawable.flight_20px
+            null -> R.drawable.commute_20px
+        }
+    ),
     contentDescription = lineType?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
     modifier = modifier,
     tint = tint
@@ -1096,7 +1121,7 @@ fun LineFilterChip(
                     tint = color.atTone(if (dark) 20 else 100),
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(4.dp)
+                        .padding(2.dp)
                 )
             }
         },

@@ -5,20 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.Label
-import androidx.compose.material.icons.outlined.Visibility
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material.icons.rounded.Visibility
-import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -33,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -78,7 +71,7 @@ fun CustomizeSearchableSheet(
                 icon = { icon },
                 badge = {
                     Badge(
-                        icon = BadgeIcon(Icons.Rounded.Edit)
+                        icon = BadgeIcon(R.drawable.edit_20px)
                     )
                 },
                 modifier = Modifier.clickable {
@@ -105,7 +98,7 @@ fun CustomizeSearchableSheet(
                     Text(searchable.label)
                 },
                 leadingIcon = {
-                    Icon(Icons.AutoMirrored.Rounded.Label, null)
+                    Icon(painterResource(R.drawable.label_24px), null)
                 }
             )
 
@@ -129,7 +122,7 @@ fun CustomizeSearchableSheet(
                     viewModel.autocompleteTags(it).minus(tags.toSet())
                 },
                 leadingIcon = {
-                    Icon(Icons.Rounded.Tag, null)
+                    Icon(painterResource(R.drawable.tag_24px), null)
                 }
             )
 
@@ -169,11 +162,13 @@ fun CustomizeSearchableSheet(
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showDropdown) },
                     leadingIcon = {
                         Icon(
-                            when (visibility) {
-                                VisibilityLevel.Default -> Icons.Rounded.Visibility
-                                VisibilityLevel.SearchOnly -> Icons.Outlined.Visibility
-                                VisibilityLevel.Hidden -> Icons.Rounded.VisibilityOff
-                            },
+                            painterResource(
+                                when (visibility) {
+                                    VisibilityLevel.Default -> R.drawable.visibility_24px_filled
+                                    VisibilityLevel.SearchOnly -> R.drawable.visibility_24px
+                                    VisibilityLevel.Hidden -> R.drawable.visibility_off_24px
+                                }
+                            ),
                             null
                         )
                     },
@@ -195,7 +190,7 @@ fun CustomizeSearchableSheet(
                                 Text(stringResource(R.string.item_visibility_app_default))
                             },
                             leadingIcon = {
-                                Icon(Icons.Rounded.Visibility, null)
+                                Icon(painterResource(R.drawable.visibility_24px_filled), null)
                             }
                         )
                     } else if (searchable is CalendarEvent) {
@@ -208,7 +203,7 @@ fun CustomizeSearchableSheet(
                                 Text(stringResource(R.string.item_visibility_calendar_default))
                             },
                             leadingIcon = {
-                                Icon(Icons.Rounded.Visibility, null)
+                                Icon(painterResource(R.drawable.visibility_24px_filled), null)
                             }
                         )
                     } else {
@@ -221,7 +216,7 @@ fun CustomizeSearchableSheet(
                                 Text(stringResource(R.string.item_visibility_search_only))
                             },
                             leadingIcon = {
-                                Icon(Icons.Rounded.Visibility, null)
+                                Icon(painterResource(R.drawable.visibility_24px_filled), null)
                             }
                         )
                     }
@@ -236,7 +231,7 @@ fun CustomizeSearchableSheet(
                             },
                             leadingIcon = {
                                 Icon(
-                                    Icons.Outlined.Visibility,
+                                    painterResource(R.drawable.visibility_24px),
                                     null
                                 )
                             }
@@ -251,7 +246,7 @@ fun CustomizeSearchableSheet(
                             Text(stringResource(R.string.item_visibility_hidden))
                         },
                         leadingIcon = {
-                            Icon(Icons.Rounded.VisibilityOff, null)
+                            Icon(painterResource(R.drawable.visibility_off_24px), null)
                         }
                     )
                 }
@@ -267,7 +262,7 @@ fun CustomizeSearchableSheet(
         }
         if (pickIcon) {
             val bottomSheetState = rememberModalBottomSheetState()
-            BottomSheetDialog (
+            BottomSheetDialog(
                 onDismissRequest = { viewModel.closeIconPicker() },
                 bottomSheetState = bottomSheetState
             ) {

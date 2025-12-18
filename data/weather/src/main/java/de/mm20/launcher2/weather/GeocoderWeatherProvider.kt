@@ -30,7 +30,7 @@ internal abstract class GeocoderWeatherProvider(
             withContext(Dispatchers.IO) {
                 try {
                     geocoder.getFromLocationName(query, 10)
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     CrashReporter.logException(e)
                     emptyList()
                 }
@@ -51,7 +51,7 @@ internal abstract class GeocoderWeatherProvider(
                 Geocoder(context).getFromLocation(lat, lon, 1)
                     ?.firstOrNull()
                     ?.formatToString() ?: formatLatLon(lat, lon)
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 CrashReporter.logException(e)
                 formatLatLon(lat, lon)
             }

@@ -6,30 +6,46 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.OpenInBrowser
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLibrary
+import de.mm20.launcher2.licenses.OpenSourceLicenses
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class LicenseRoute(
+    val libraryName: String? = null
+): NavKey
 
 @Composable
-fun LicenseScreen(library: OpenSourceLibrary) {
+fun LicenseScreen(libraryName: String?) {
     val context = LocalContext.current
+    val library = remember(libraryName) {
+        if (libraryName == null) {
+            AppLicense.get(context)
+        } else {
+            OpenSourceLicenses.first { lib -> lib.name == libraryName }
+        }
+    }
+
     val viewModel: LicenseScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
 
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
@@ -43,9 +59,9 @@ fun LicenseScreen(library: OpenSourceLibrary) {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController?.navigateUp()
+                        backStack.removeLastOrNull()
                     }) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
                     }
                 },
                 scrollBehavior = scrollBehavior,
@@ -60,7 +76,7 @@ fun LicenseScreen(library: OpenSourceLibrary) {
                             .launchUrl(context, Uri.parse(library.url))
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.OpenInBrowser,
+                            painterResource(R.drawable.open_in_browser_24px),
                             contentDescription = stringResource(
                                 R.string.open_webpage
                             )

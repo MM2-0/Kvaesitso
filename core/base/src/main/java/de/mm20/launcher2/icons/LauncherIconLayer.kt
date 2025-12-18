@@ -1,7 +1,7 @@
 package de.mm20.launcher2.icons
 
 import android.graphics.drawable.Drawable
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.annotation.DrawableRes
 
 sealed interface LauncherIconLayer
 
@@ -54,8 +54,9 @@ data class TextLayer(
     val color: Int = 0,
 ) : LauncherIconLayer
 
+
 data class VectorLayer(
-    val vector: ImageVector,
+    @DrawableRes val icon: Int,
     val color: Int = 0,
 ) : LauncherIconLayer
 

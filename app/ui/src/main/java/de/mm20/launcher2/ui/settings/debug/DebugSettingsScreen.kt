@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
@@ -24,14 +25,20 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterRoute
+import de.mm20.launcher2.ui.settings.log.LogRoute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
+
+@Serializable
+data object DebugSettingsRoute: NavKey
 
 @Composable
 fun DebugSettingsScreen() {
@@ -39,7 +46,7 @@ fun DebugSettingsScreen() {
     val scope = rememberCoroutineScope()
     var dumpingHeap by remember { mutableStateOf(false) }
     val viewModel: DebugSettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     PreferenceScreen(
         stringResource(R.string.preference_screen_debug)
     ) {
@@ -56,14 +63,14 @@ fun DebugSettingsScreen() {
                     title = stringResource(R.string.preference_crash_reporter),
                     summary = stringResource(R.string.preference_crash_reporter_summary),
                     onClick = {
-                        navController?.navigate("settings/debug/crashreporter")
+                        backStack.add(CrashReporterRoute)
                     })
 
                 Preference(
                     title = stringResource(R.string.preference_logs),
                     summary = stringResource(R.string.preference_logs_summary),
                     onClick = {
-                        navController?.navigate("settings/debug/logs")
+                        backStack.add(LogRoute)
                     })
                 Preference(
                     title = stringResource(R.string.preference_debug_dump_heap),

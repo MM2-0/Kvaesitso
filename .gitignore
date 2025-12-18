@@ -56,6 +56,7 @@ captures/
 .idea/modules.xml
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
+.idea/copilot.*.xml
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
@@ -245,23 +246,7 @@ obj/
 /out/
 
 # User-specific configurations
-.idea/caches/
-.idea/libraries/
-.idea/shelf/
-.idea/.name
-.idea/compiler.xml
-.idea/copyright/profiles_settings.xml
-.idea/encodings.xml
-.idea/misc.xml
-.idea/scopes/scope_settings.xml
-.idea/vcs.xml
-.idea/jsLibraryMappings.xml
-.idea/datasources.xml
-.idea/dataSources.ids
-.idea/sqlDataSources.xml
-.idea/dynamic.xml
-.idea/uiDesigner.xml
-.idea/runConfigurations.xml
+.idea
 
 # OS-specific files
 .DS_Store?
@@ -308,5 +293,6 @@ fabric.properties
 .idea/deploymentTargetSelector.xml
 .idea/copilot
 .idea/other.xml
+.idea/studiobot.xml
 
 .kotlin

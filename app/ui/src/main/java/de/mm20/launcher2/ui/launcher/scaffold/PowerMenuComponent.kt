@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.PowerSettingsNew
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -30,6 +28,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
@@ -38,6 +37,7 @@ import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -157,7 +157,7 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    Icons.Rounded.PowerSettingsNew, null,
+                    painterResource(R.drawable.power_settings_new_24px), null,
                     modifier = Modifier.padding(16.dp),
                     tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 )
@@ -165,11 +165,16 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
         }
     }
 
-    override suspend fun onActivate(state: LauncherScaffoldState) {
-        super.onActivate(state)
+    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+        super.onPreActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.openPowerDialog()
-        } else {
+        }
+    }
+
+    override suspend fun onActivate(state: LauncherScaffoldState) {
+        super.onActivate(state)
+        if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             state.navigateBack(true)
         }
     }

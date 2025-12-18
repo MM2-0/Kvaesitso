@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import androidx.annotation.DrawableRes
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
@@ -9,8 +10,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 @Composable
 fun CheckboxPreference(
     title: String,
-    icon: ImageVector? = null,
-    iconPadding: Boolean = true,
+    @DrawableRes icon: Int? = null,
+    iconPadding: Boolean = icon != null,
     summary: String? = null,
     value: Boolean,
     onValueChanged: (Boolean) -> Unit,

@@ -64,7 +64,13 @@ class ClockWidgetSettings internal constructor(
     }
 
     val fillHeight
-        get() = launcherDataStore.data.map { !it.homeScreenWidgets }
+        get() = launcherDataStore.data.map { it.clockWidgetFillHeight || !it.homeScreenWidgets }
+
+    fun setFillHeight(fillHeight: Boolean) {
+        launcherDataStore.update {
+            it.copy(clockWidgetFillHeight = fillHeight)
+        }
+    }
 
     val dock
         get() = launcherDataStore.data.map { it.homeScreenDock }
@@ -84,7 +90,7 @@ class ClockWidgetSettings internal constructor(
                 ClockWidgetStyleEnum.Digital1 -> it.clockWidgetDigital1
                 ClockWidgetStyleEnum.Digital2 -> ClockWidgetStyle.Digital2
                 ClockWidgetStyleEnum.Orbit -> ClockWidgetStyle.Orbit
-                ClockWidgetStyleEnum.Analog -> ClockWidgetStyle.Analog
+                ClockWidgetStyleEnum.Analog -> it.clockWidgetAnalog
                 ClockWidgetStyleEnum.Binary -> ClockWidgetStyle.Binary
                 ClockWidgetStyleEnum.Segment -> ClockWidgetStyle.Segment
                 ClockWidgetStyleEnum.Empty -> ClockWidgetStyle.Empty
@@ -95,6 +101,9 @@ class ClockWidgetSettings internal constructor(
     val digital1: Flow<ClockWidgetStyle.Digital1>
         get() = launcherDataStore.data.map { it.clockWidgetDigital1 }
 
+    val analog: Flow<ClockWidgetStyle.Analog>
+        get() = launcherDataStore.data.map { it.clockWidgetAnalog }
+
     val custom: Flow<ClockWidgetStyle.Custom>
         get() = launcherDataStore.data.map { it.clockWidgetCustom }
 
@@ -102,8 +111,9 @@ class ClockWidgetSettings internal constructor(
         launcherDataStore.update {
             it.copy(
                 clockWidgetStyle = clockStyle.enumValue,
-                clockWidgetDigital1 = if (clockStyle is ClockWidgetStyle.Digital1) clockStyle else it.clockWidgetDigital1,
-                clockWidgetCustom = if (clockStyle is ClockWidgetStyle.Custom) clockStyle else it.clockWidgetCustom,
+                clockWidgetDigital1 = clockStyle as? ClockWidgetStyle.Digital1 ?: it.clockWidgetDigital1,
+                clockWidgetAnalog = clockStyle as? ClockWidgetStyle.Analog ?: it.clockWidgetAnalog,
+                clockWidgetCustom = clockStyle as? ClockWidgetStyle.Custom ?: it.clockWidgetCustom,
             )
         }
     }
@@ -126,12 +136,12 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
-    val timeFormat
-        get() = launcherDataStore.data.map { it.clockWidgetTimeFormat }
+    val monospaced
+        get() = launcherDataStore.data.map { it.clockWidgetMonospaced }
 
-    fun setTimeFormat(timeFormat: TimeFormat) {
+    fun setMonospaced(enabled: Boolean) {
         launcherDataStore.update {
-            it.copy(clockWidgetTimeFormat = timeFormat)
+            it.copy(clockWidgetMonospaced = enabled)
         }
     }
 

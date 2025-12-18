@@ -80,7 +80,6 @@
     <string name="widget_name_weather">Väder</string>
     <string name="widget_name_calendar">Kalender</string>
     <string name="widget_add_widget">Lägg till widget</string>
-    <string name="easter_egg_1">Här finns inga påskägg, såvida du inte själv tog med dig dem.</string>
     <string name="close">Stäng</string>
     <string name="turn_off">Stäng av</string>
     <string name="file_type_compressed">Komprimerad fil</string>
@@ -192,7 +191,6 @@
     <string name="preference_cards_stroke_width">Kantbredd</string>
     <string name="preference_cards_opacity">Genomskinlighet</string>
     <string name="preference_icon_shape">Form</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_icon_shape_square">Fyrkant</string>
     <string name="preference_icon_shape_rounded_square">Rundad fyrkant</string>
     <string name="preference_icon_shape_squircle">Kvirkel</string>
@@ -268,7 +266,6 @@
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_cloud_summary">Sök bland %1$ss filer</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="easter_egg_2">Snälla, sluta, du slösar bort din tid</string>
     <string name="nextcloud_server_invalid_url">Denna URL hänvisar inte till en giltig Nextcloud-installation</string>
     <string name="preference_cloud_badges_summary">Visa en prick på filer som lagras i molnet</string>
     <string name="preference_search_localfiles_summary">Sök dokument, foton och andra filer lagrade på denna enhet</string>
@@ -288,13 +285,11 @@
         <item quantity="one">%1$s minut till fullt</item>
         <item quantity="other">%1$s minuter till fullt</item>
     </plurals>
-    <string name="easter_egg_3">Jag säger det inte igen: här finns absolut inga påskägg gömda</string>
     <string name="owncloud_server_invalid_url">Denna URL hänvisar inte till en giltig Owncloud-installation</string>
     <string name="missing_permission_music_widget">Notifikationsåtkomst krävs för att styra uppspelning av media</string>
     <string name="preference_owncloud_signin_summary">Logga in för att söka i din Owncloud-server</string>
     <string name="menu_share">Dela</string>
     <string name="default_websearch_2_name">YouTube</string>
-    <string name="easter_egg_text">Okej, du hittade mig. Grattis. Var det värt det\?</string>
     <string name="owncloud_login_failed">Inloggning misslyckades: fel användarnamn eller lösenord.</string>
     <string name="missing_permission_file_search_settings_android10">Filhanteringsåtkomst krävs för att söka bland lokala filer</string>
     <string name="preference_screen_debug_summary">Felsökningsverktyg</string>

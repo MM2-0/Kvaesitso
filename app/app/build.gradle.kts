@@ -1,6 +1,7 @@
 import android.annotation.SuppressLint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
@@ -31,8 +32,8 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2025050301
-        versionName = "1.36.1"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2025101700
+        versionName = "1.38.0"
         signingConfig = signingConfigs.getByName("debug")
     }
 
@@ -89,8 +90,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+        }
     }
 
     lint {
@@ -127,6 +130,7 @@ dependencies {
     implementation(project(":data:searchable"))
     implementation(project(":data:plugins"))
     implementation(project(":data:themes"))
+    implementation(project(":data:i18n"))
     implementation(project(":data:files"))
     implementation(project(":core:i18n"))
     implementation(project(":services:icons"))

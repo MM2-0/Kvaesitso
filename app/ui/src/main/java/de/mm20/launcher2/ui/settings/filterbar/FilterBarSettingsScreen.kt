@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -27,11 +25,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.ui.R
@@ -40,14 +40,18 @@ import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropColumn
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.search.filters.getLabel
-import de.mm20.launcher2.ui.launcher.search.filters.icon
+import de.mm20.launcher2.ui.launcher.search.filters.iconMedium
 import de.mm20.launcher2.ui.launcher.search.filters.isCategory
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object FilterBarSettingsRoute: NavKey
 
 @Composable
 fun FilterBarSettingsScreen() {
     val viewModel: FilterBarSettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
     systemUiController.setNavigationBarColor(Color.Black)
@@ -60,8 +64,10 @@ fun FilterBarSettingsScreen() {
             it.key is KeyboardFilterBarItem
         },
         onItemMove = { from, to ->
-            val item = (from.key as? KeyboardFilterBarItem) ?: return@rememberLazyDragAndDropListState
-            val toItem = (to.key as? KeyboardFilterBarItem) ?: return@rememberLazyDragAndDropListState
+            val item =
+                (from.key as? KeyboardFilterBarItem) ?: return@rememberLazyDragAndDropListState
+            val toItem =
+                (to.key as? KeyboardFilterBarItem) ?: return@rememberLazyDragAndDropListState
             viewModel.moveItem(item, toItem)
         }
     )
@@ -87,11 +93,16 @@ fun FilterBarSettingsScreen() {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        if (navController?.navigateUp() != true) {
+                        if (backStack.size <= 1) {
                             activity?.onBackPressed()
+                        } else {
+                            backStack.removeLastOrNull()
                         }
                     }) {
-                        Icon(imageVector = Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = "Back"
+                        )
                     }
                 },
             )
@@ -116,8 +127,11 @@ fun FilterBarSettingsScreen() {
                         .padding(start = 28.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(Icons.Outlined.Info, null,
-                        modifier = Modifier.padding(end = 24.dp).size(16.dp),
+                    Icon(
+                        painterResource(R.drawable.info_20px), null,
+                        modifier = Modifier
+                            .padding(end = 24.dp)
+                            .size(16.dp),
                         tint = MaterialTheme.colorScheme.secondary
                     )
                     Text(
@@ -130,7 +144,8 @@ fun FilterBarSettingsScreen() {
             }
             for (i in 0 until KeyboardFilterBarItem.entries.size) {
                 val item = enabledItems!!.getOrNull(i) ?: disabledItems[i - enabledItems!!.size]
-                val prevItem = enabledItems!!.getOrNull(i - 1) ?: disabledItems.getOrNull(i - enabledItems!!.size - 1)
+                val prevItem = enabledItems!!.getOrNull(i - 1)
+                    ?: disabledItems.getOrNull(i - enabledItems!!.size - 1)
                 if (prevItem != null && prevItem.isCategory != item.isCategory) {
                     item(key = "divider-$i") {
                         HorizontalDivider()
@@ -146,7 +161,7 @@ fun FilterBarSettingsScreen() {
                         ) {
                             SwitchPreference(
                                 title = item.getLabel(context),
-                                icon = item.icon,
+                                icon = item.iconMedium,
                                 value = enabledItems!!.contains(item), onValueChanged = {
                                     if (it) {
                                         viewModel.addAction(item)

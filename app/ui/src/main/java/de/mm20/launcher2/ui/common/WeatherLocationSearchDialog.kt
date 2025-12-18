@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
@@ -24,6 +21,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -44,9 +42,7 @@ fun WeatherLocationSearchDialog(
     BottomSheetDialog(onDismissRequest) {
         var query by remember { mutableStateOf("") }
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
+            modifier = Modifier.fillMaxSize()
         ) {
             SearchBar(
                 modifier = Modifier.padding(bottom = 8.dp),
@@ -57,7 +53,7 @@ fun WeatherLocationSearchDialog(
                     SearchBarDefaults.InputField(
                         leadingIcon = {
                             Icon(
-                                imageVector = Icons.Rounded.Search,
+                                painterResource(R.drawable.search_24px),
                                 contentDescription = null
                             )
                         },
@@ -81,8 +77,8 @@ fun WeatherLocationSearchDialog(
                 )
             } else if (locations.isNotEmpty()) {
                 LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = it
                 ) {
                     items(locations) {
                         Text(
@@ -103,7 +99,7 @@ fun WeatherLocationSearchDialog(
             } else if (query.isNotEmpty()) {
                 SmallMessage(
                     modifier = Modifier.fillMaxWidth(),
-                    icon = Icons.Rounded.Error,
+                    icon = R.drawable.error_24px,
                     text = stringResource(R.string.weather_location_search_no_result)
                 )
             }

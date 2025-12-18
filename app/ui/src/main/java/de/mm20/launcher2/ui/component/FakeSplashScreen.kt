@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.coroutines.Dispatchers
@@ -173,7 +172,11 @@ fun rememberSplashScreenData(searchable: SavableSearchable?): SplashScreenData {
                 )
 
                 val brandingIcon = if (typedValue.resourceId != 0) {
-                    ContextCompat.getDrawable(ctx, typedValue.resourceId)
+                    try {
+                        ContextCompat.getDrawable(ctx, typedValue.resourceId)
+                    } catch (e: Resources.NotFoundException) {
+                        null
+                    }
                 } else {
                     null
                 }

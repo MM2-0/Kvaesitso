@@ -1,0 +1,4 @@
+- New layout with more gesture options
+- More theme options for shapes and typography
+
+See https://github.com/MM2-0/Kvaesitso/releases/tag/v1.37.0 for more details.

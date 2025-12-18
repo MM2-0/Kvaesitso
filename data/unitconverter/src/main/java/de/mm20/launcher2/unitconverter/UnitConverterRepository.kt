@@ -13,13 +13,13 @@ import de.mm20.launcher2.unitconverter.converters.MassConverter
 import de.mm20.launcher2.unitconverter.converters.TemperatureConverter
 import de.mm20.launcher2.unitconverter.converters.TimeConverter
 import de.mm20.launcher2.unitconverter.converters.VelocityConverter
+import de.mm20.launcher2.unitconverter.converters.VolumeConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -27,7 +27,7 @@ import org.koin.core.component.KoinComponent
 
 interface UnitConverterRepository {
     fun search(query: String): Flow<UnitConverter?>
-    suspend fun getAvailableConverters(includeCurrencies: Boolean) : List<Converter>
+    suspend fun getAvailableConverters(includeCurrencies: Boolean): List<Converter>
 }
 
 internal class UnitConverterRepositoryImpl(
@@ -56,7 +56,7 @@ internal class UnitConverterRepositoryImpl(
         }
     }
 
-    override suspend fun getAvailableConverters(includeCurrencies: Boolean) : List<Converter> {
+    override suspend fun getAvailableConverters(includeCurrencies: Boolean): List<Converter> {
         val converters = mutableListOf(
             MassConverter(context),
             LengthConverter(context),
@@ -64,7 +64,8 @@ internal class UnitConverterRepositoryImpl(
             TimeConverter(context),
             VelocityConverter(context),
             AreaConverter(context),
-            TemperatureConverter(context)
+            TemperatureConverter(context),
+            VolumeConverter(context),
         )
         if (includeCurrencies) converters.add(CurrencyConverter(currencyRepository))
 
@@ -75,28 +76,51 @@ internal class UnitConverterRepositoryImpl(
         query: String,
         includeCurrencies: Boolean
     ): UnitConverter? {
-        if (!query.matches(Regex("[0-9,.:]+ [^\\s]+")) &&
-            !query.matches(Regex("[0-9,.:]+ [^\\s]+ >> [^\\s]+")) &&
-            !query.matches(Regex("[0-9,.:]+ [^\\s]+ > [^\\s]+")) &&
-            !query.matches(Regex("[0-9,.:]+ [^\\s]+ - [^\\s]+"))) return null
-        val valueStr: String
-        val unitStr: String
-        val targetUnitStr: String?
+        val regex = Regex("""([+\-]?[\d+\-e,.]+|[^\d>\-]+)""")
 
-        query.split(" ").also {
-            valueStr = it.get(0)
-            unitStr = it.get(1)
-            targetUnitStr = it.getOrNull(3)
+        val matches = regex.findAll(query)
+
+        var inputStr: String? = null
+        var inputValue: Double? = null
+        var inputUnit: String? = null
+        var outputUnit: String? = null
+
+        for ((i, match) in matches.withIndex()) {
+            when (i) {
+                0 -> {
+                    inputStr = match.value.trim()
+                    inputValue = inputStr.toDoubleOrNull()
+                        ?: inputStr.replace(',', '.').toDoubleOrNull()
+                                ?: return null
+                }
+                1 -> inputUnit = match.value.trim()
+                2 -> {
+                    if (!match.value.contains("-") && !match.value.contains(">")) {
+                        outputUnit = match.value.trim()
+                    }
+                }
+                3 -> {
+                    if (outputUnit == null) {
+                        outputUnit = match.value.trim()
+                        break
+                    } else {
+                        return null
+                    }
+                }
+                else -> return null
+            }
         }
-        val value = valueStr.toDoubleOrNull() ?: valueStr.replace(',', '.').toDoubleOrNull()
-        ?: return null
+
+        if (inputValue == null || inputUnit == null) {
+            return null
+        }
 
         val converters = getAvailableConverters(includeCurrencies)
 
         for (converter in converters) {
-            if (!converter.isValidUnit(unitStr)) continue
-            if (targetUnitStr != null && !converter.isValidUnit(targetUnitStr)) continue
-            return converter.convert(context, unitStr, value, targetUnitStr)
+            if (!converter.isValidUnit(inputUnit)) continue
+            if (outputUnit != null && !converter.isValidUnit(outputUnit)) continue
+            return converter.convert(context, inputUnit, inputValue, outputUnit)
         }
         return null
     }

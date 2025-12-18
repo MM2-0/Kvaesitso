@@ -18,14 +18,12 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,6 +35,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -46,8 +45,7 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.layout.BottomReversed
-import de.mm20.launcher2.ui.locals.LocalCardStyle
-import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
 
 @Composable
 fun SearchBar(
@@ -61,6 +59,7 @@ fun SearchBar(
     onUnfocus: () -> Unit = {},
     reverse: Boolean = false,
     darkColors: Boolean = false,
+    readOnly: Boolean = false,
     menu: @Composable RowScope.() -> Unit = {},
     actions: @Composable ColumnScope.() -> Unit = {},
     onKeyboardActionGo: (KeyboardActionScope.() -> Unit)? = null
@@ -103,7 +102,7 @@ fun SearchBar(
             }
         }) {
         when {
-            it == SearchBarLevel.Active -> LocalTransparencyScheme.current.surface
+            it == SearchBarLevel.Active -> MaterialTheme.transparency.surface
             style != SearchBarStyle.Transparent -> 1f
             it == SearchBarLevel.Resting -> 0f
             else -> 1f
@@ -152,7 +151,7 @@ fun SearchBar(
                 ) {
                     Icon(
                         modifier = Modifier.padding(12.dp),
-                        imageVector = androidx.compose.material.icons.Icons.Rounded.Search,
+                        painter = painterResource(R.drawable.search_24px),
                         contentDescription = null,
                         tint = contentColor
                     )
@@ -190,7 +189,8 @@ fun SearchBar(
                             ),
                             keyboardActions = KeyboardActions(
                                 onGo = onKeyboardActionGo,
-                            )
+                            ),
+                            readOnly = readOnly,
                         )
                     }
                     Row(

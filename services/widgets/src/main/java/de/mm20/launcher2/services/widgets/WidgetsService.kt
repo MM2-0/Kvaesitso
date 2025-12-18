@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
 import android.content.pm.LauncherApps
+import android.os.Build
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FavoritesWidget
@@ -32,7 +33,15 @@ class WidgetsService(
         for (profile in profiles) {
             widgets.addAll(appWidgetManager.getInstalledProvidersForProfile(profile))
         }
-        widgets
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            // Ignore widgets that the launcher is not supposed to access
+            widgets.filter {
+                it.widgetFeatures and AppWidgetProviderInfo.WIDGET_FEATURE_HIDE_FROM_PICKER == 0
+            }
+        } else {
+            widgets
+        }
     }
 
     fun getAvailableBuiltInWidgets(): Flow<List<BuiltInWidgetInfo>> {

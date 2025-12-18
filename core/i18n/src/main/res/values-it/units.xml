@@ -7,7 +7,7 @@
         <item quantity="other">iarde quadrate</item>
     </plurals>
     <string name="unit_byte_symbol">B</string>
-    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_nautic_mile_symbol">nmi</string>
     <plurals name="unit_kilometer_per_hour">
         <item quantity="one">chilometro all\'ora</item>
         <item quantity="many">chilometri all\'ora</item>
@@ -77,9 +77,9 @@
     </plurals>
     <string name="unit_sqmeter_symbol">m²</string>
     <plurals name="unit_sqmeter">
-        <item quantity="one">metro quadro</item>
-        <item quantity="many">metri quadri</item>
-        <item quantity="other">metri quadri</item>
+        <item quantity="one">metro quadrato</item>
+        <item quantity="many">metri quadrati</item>
+        <item quantity="other">metri quadrati</item>
     </plurals>
     <string name="unit_sqkilometer_symbol">km²</string>
     <string name="unit_sqcentimeter_symbol">cm²</string>
@@ -99,14 +99,14 @@
         <item quantity="many">pollici quadrati</item>
         <item quantity="other">pollici quadrati</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqfoot_symbol">sq ft</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">piede quadrato</item>
         <item quantity="many">piedi quadrati</item>
         <item quantity="other">piedi quadrati</item>
     </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
-    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_sqyard_symbol">sq yd</string>
+    <string name="unit_sqinch_symbol">sq in</string>
     <string name="unit_hectare_symbol">ha</string>
     <plurals name="unit_hectare">
         <item quantity="one">ettaro</item>
@@ -217,19 +217,19 @@
         <item quantity="many">kilobyte</item>
         <item quantity="other">kilobyte</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">lb</string>
     <plurals name="unit_pound">
         <item quantity="one">libbra</item>
         <item quantity="many">libbre</item>
         <item quantity="other">libbre</item>
     </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">oz</string>
     <plurals name="unit_ounce">
         <item quantity="one">oncia</item>
         <item quantity="many">once</item>
         <item quantity="other">once</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">short ton</string>
     <plurals name="unit_short_ton">
         <item quantity="one">tonnellata corta</item>
         <item quantity="many">tonnellate corte</item>
@@ -267,9 +267,9 @@
     </plurals>
     <string name="unit_tebibyte_symbol">TiB</string>
     <plurals name="unit_tebibyte">
-        <item quantity="one">tebiyte</item>
-        <item quantity="many">tebiyte</item>
-        <item quantity="other">tebiyte</item>
+        <item quantity="one">tebibyte</item>
+        <item quantity="many">tebibyte</item>
+        <item quantity="other">tebibyte</item>
     </plurals>
     <string name="unit_bit_symbol">bit</string>
     <plurals name="unit_bit">
@@ -301,12 +301,12 @@
         <item quantity="many">terabit</item>
         <item quantity="other">terabit</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
-    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_long_ton_symbol">long ton</string>
+    <string name="unit_stone_symbol">st</string>
     <plurals name="unit_megabyte">
         <item quantity="one">megabyte</item>
-        <item quantity="many">megabytes</item>
-        <item quantity="other">megabytes</item>
+        <item quantity="many">megabyte</item>
+        <item quantity="other">megabyte</item>
     </plurals>
     <plurals name="unit_mebibyte">
         <item quantity="one">mebibyte</item>
@@ -331,10 +331,112 @@
     <string name="dimension_area">Area</string>
     <string name="dimension_currency">Valuta</string>
     <string name="dimension_data">Dati</string>
-    <string name="dimension_bitrate">Velocità in bit</string>
+    <string name="dimension_bitrate">Bitrate</string>
     <string name="dimension_pressure">Pressione</string>
     <string name="dimension_energy">Energia</string>
     <string name="dimension_frequency">Frequenza</string>
     <string name="dimension_temperature">Temperatura</string>
     <string name="dimension_time">Tempo</string>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">oncia fluida (imperiale)</item>
+        <item quantity="many">once fluide (imperiali)</item>
+        <item quantity="other">once fluide (imperiali)</item>
+    </plurals>
+    <plurals name="unit_cup">
+        <item quantity="one">tazza (USA)</item>
+        <item quantity="many">tazze (USA)</item>
+        <item quantity="other">tazze (USA)</item>
+    </plurals>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">cucchiaio (USA)</item>
+        <item quantity="many">cucchiai (USA)</item>
+        <item quantity="other">cucchiai (USA)</item>
+    </plurals>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">cucchiaino (USA)</item>
+        <item quantity="many">cucchiaini (USA)</item>
+        <item quantity="other">cucchiaini (USA)</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">cu in</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">pinta (imperiale)</item>
+        <item quantity="many">pinte (imperiali)</item>
+        <item quantity="other">pinte (imperiali)</item>
+    </plurals>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">gallone (USA)</item>
+        <item quantity="many">galloni (USA)</item>
+        <item quantity="other">galloni (USA)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">oncia fluida (USA)</item>
+        <item quantity="many">once fluide (USA)</item>
+        <item quantity="other">once fluide (USA)</item>
+    </plurals>
+    <string name="unit_liter_symbol">L</string>
+    <string name="unit_cubic_meter_symbol">m³</string>
+    <string name="unit_cubic_centimeter_symbol">cm³</string>
+    <string name="unit_cubic_millimeter_symbol">mm³</string>
+    <string name="unit_cubic_foot_symbol">cu ft</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">millimetro cubo</item>
+        <item quantity="many">millimetri cubi</item>
+        <item quantity="other">millimetri cubi</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">cu yd</string>
+    <string name="unit_gallon_us_symbol">gal USA</string>
+    <string name="unit_gallon_imp_symbol">gal imp</string>
+    <string name="unit_pint_us_symbol">pt USA</string>
+    <string name="unit_pint_imp_symbol">pt imp</string>
+    <string name="unit_fluid_ounce_us_symbol">fl oz USA</string>
+    <string name="unit_fluid_ounce_imp_symbol">fl oz imp</string>
+    <string name="unit_tablespoon_symbol">tbsp</string>
+    <string name="unit_cup_symbol">cup</string>
+    <string name="unit_teaspoon_symbol">tsp</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">millilitro</item>
+        <item quantity="many">millilitri</item>
+        <item quantity="other">millilitri</item>
+    </plurals>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">metro cubo</item>
+        <item quantity="many">metri cubi</item>
+        <item quantity="other">metri cubi</item>
+    </plurals>
+    <plurals name="unit_liter">
+        <item quantity="one">litro</item>
+        <item quantity="many">litri</item>
+        <item quantity="other">litri</item>
+    </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">gallone (imperiale)</item>
+        <item quantity="many">galloni (imperiali)</item>
+        <item quantity="other">galloni (imperiali)</item>
+    </plurals>
+    <plurals name="unit_pint_us">
+        <item quantity="one">pinta (USA)</item>
+        <item quantity="many">pinte (USA)</item>
+        <item quantity="other">pinte (USA)</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">mL</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">centimetro cubo</item>
+        <item quantity="many">centimetri cubi</item>
+        <item quantity="other">centimetri cubi</item>
+    </plurals>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">pollice cubo</item>
+        <item quantity="many">pollici cubi</item>
+        <item quantity="other">pollici cubi</item>
+    </plurals>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">piede cubo</item>
+        <item quantity="many">piedi cubi</item>
+        <item quantity="other">piedi cubi</item>
+    </plurals>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">iarda cubica</item>
+        <item quantity="many">iarde cubiche</item>
+        <item quantity="other">iarde cubiche</item>
+    </plurals>
 </resources>

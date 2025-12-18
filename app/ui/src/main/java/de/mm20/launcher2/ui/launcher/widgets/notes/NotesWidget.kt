@@ -21,27 +21,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.CheckCircleOutline
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.ExpandLess
-import androidx.compose.material.icons.rounded.ExpandMore
-import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.LinkOff
-import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
-import androidx.compose.material.icons.rounded.SaveAlt
-import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
@@ -60,6 +48,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -128,7 +117,7 @@ fun NotesWidget(
         Banner(
             modifier = Modifier.padding(16.dp),
             text = stringResource(R.string.note_widget_conflict),
-            icon = Icons.Rounded.ErrorOutline,
+            icon = R.drawable.error_24px,
             primaryAction = {
                 Button(onClick = { showConflictResolveSheet = true }) {
                     Text(stringResource(R.string.note_widget_conflict_action_resolve))
@@ -193,8 +182,10 @@ fun NotesWidget(
                             },
                         ) {
                             Icon(
-                                if (widget.config.linkedFile == null) Icons.Rounded.Link
-                                else Icons.Rounded.LinkOff,
+                                painterResource(
+                                    if (widget.config.linkedFile == null) R.drawable.link_24px
+                                    else R.drawable.link_off_24px,
+                                ),
                                 stringResource(
                                     if (widget.config.linkedFile == null) R.string.note_widget_link_file
                                     else R.string.note_widget_action_unlink_file
@@ -211,7 +202,7 @@ fun NotesWidget(
                                     viewModel.dismissNote()
                                 },
                             ) {
-                                Icon(Icons.Rounded.Delete, null)
+                                Icon(painterResource(R.drawable.delete_24px), null)
                             }
                         }
                     }
@@ -238,7 +229,7 @@ fun NotesWidget(
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize),
-                            imageVector = Icons.Rounded.ErrorOutline,
+                            painter = painterResource(R.drawable.error_20px),
                             contentDescription = null,
                         )
                         Text(stringResource(R.string.note_widget_file_write_error))
@@ -254,7 +245,7 @@ fun NotesWidget(
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize),
-                            imageVector = Icons.Rounded.ErrorOutline,
+                            painter = painterResource(R.drawable.error_20px),
                             contentDescription = null,
                         )
                         Text(stringResource(R.string.note_widget_file_read_error))
@@ -266,103 +257,118 @@ fun NotesWidget(
                         tooltipText = stringResource(R.string.action_more_actions)
                     ) {
                         IconButton(onClick = { showMenu = true }) {
-                            Icon(Icons.Rounded.MoreVert, stringResource(R.string.action_more_actions))
+                            Icon(
+                                painterResource(R.drawable.more_vert_24px),
+                                stringResource(R.string.action_more_actions)
+                            )
                         }
                     }
-                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.notes_widget_action_new)) },
-                            leadingIcon = {
-                                Icon(Icons.Rounded.Add, null)
-                            },
-                            onClick = {
-                                val newWidget = NotesWidget(
-                                    id = UUID.randomUUID(),
-                                )
-                                onWidgetAdd(newWidget, 1)
-                                showMenu = false
-                            },
-                        )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.menu_share)) },
-                            leadingIcon = {
-                                Icon(Icons.Rounded.Share, null)
-                            },
-                            onClick = {
-                                Intent(Intent.ACTION_SEND).apply {
-                                    type = "text/plain"
-                                    putExtra(Intent.EXTRA_TEXT, text.text)
-                                    context.startActivity(Intent.createChooser(this, null))
-                                }
-                                showMenu = false
-                            },
-                        )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.notes_widget_action_save)) },
-                            leadingIcon = {
-                                Icon(Icons.Rounded.SaveAlt, null)
-                            },
-                            onClick = {
-                                val fileName = getDefaultNoteFileName(context)
-                                exportLauncher.launch(fileName)
-                                showMenu = false
-                            },
-                        )
-                        if (widget.config.linkedFile == null) {
+                    DropdownMenuPopup(
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false }) {
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShapes(),
+                        ) {
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.note_widget_link_file)) },
+                                shape = MenuDefaults.leadingItemShape,
+                                text = { Text(stringResource(R.string.notes_widget_action_new)) },
                                 leadingIcon = {
-                                    Icon(Icons.Rounded.Link, null)
+                                    Icon(painterResource(R.drawable.add_24px), null)
                                 },
                                 onClick = {
-                                    linkFileLauncher.launch(getDefaultNoteFileName(context))
+                                    val newWidget = NotesWidget(
+                                        id = UUID.randomUUID(),
+                                    )
+                                    onWidgetAdd(newWidget, 1)
                                     showMenu = false
                                 },
                             )
-                        } else {
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.note_widget_action_unlink_file)) },
+                                shape = MenuDefaults.middleItemShape,
+                                text = { Text(stringResource(R.string.menu_share)) },
                                 leadingIcon = {
-                                    Icon(Icons.Rounded.LinkOff, null)
+                                    Icon(painterResource(R.drawable.share_24px), null)
                                 },
                                 onClick = {
-                                    viewModel.unlinkFile(context)
+                                    Intent(Intent.ACTION_SEND).apply {
+                                        type = "text/plain"
+                                        putExtra(Intent.EXTRA_TEXT, text.text)
+                                        context.startActivity(Intent.createChooser(this, null))
+                                    }
+                                    showMenu = false
+                                },
+                            )
+                            DropdownMenuItem(
+                                shape = MenuDefaults.middleItemShape,
+                                text = { Text(stringResource(R.string.notes_widget_action_save)) },
+                                leadingIcon = {
+                                    Icon(painterResource(R.drawable.file_save_24px), null)
+                                },
+                                onClick = {
+                                    val fileName = getDefaultNoteFileName(context)
+                                    exportLauncher.launch(fileName)
+                                    showMenu = false
+                                },
+                            )
+                            if (widget.config.linkedFile == null) {
+                                DropdownMenuItem(
+                                    shape = MenuDefaults.middleItemShape,
+                                    text = { Text(stringResource(R.string.note_widget_link_file)) },
+                                    leadingIcon = {
+                                        Icon(painterResource(R.drawable.link_24px), null)
+                                    },
+                                    onClick = {
+                                        linkFileLauncher.launch(getDefaultNoteFileName(context))
+                                        showMenu = false
+                                    },
+                                )
+                            } else {
+                                DropdownMenuItem(
+                                    shape = MenuDefaults.middleItemShape,
+                                    text = { Text(stringResource(R.string.note_widget_action_unlink_file)) },
+                                    leadingIcon = {
+                                        Icon(painterResource(R.drawable.link_off_24px), null)
+                                    },
+                                    onClick = {
+                                        viewModel.unlinkFile(context)
+                                        showMenu = false
+                                    },
+                                )
+                            }
+                            DropdownMenuItem(
+                                shape = MenuDefaults.trailingItemShape,
+                                text = { Text(stringResource(R.string.notes_widget_action_dismiss)) },
+                                leadingIcon = {
+                                    Icon(painterResource(R.drawable.delete_24px), null)
+                                },
+                                onClick = {
+                                    val wasLast = isLastWidget != false
+
+                                    if (wasLast) {
+                                        viewModel.updateWidgetContent(NotesWidgetConfig())
+                                    } else {
+                                        viewModel.dismissWidget(widget)
+                                    }
+
+                                    lifecycleOwner.lifecycleScope.launch {
+                                        val result = snackbarHostState.showSnackbar(
+                                            message = context.getString(R.string.notes_widget_dismissed),
+                                            actionLabel = context.getString(R.string.action_undo),
+                                            duration = SnackbarDuration.Short,
+                                        )
+                                        if (result == SnackbarResult.ActionPerformed) {
+                                            if (wasLast) {
+                                                viewModel.updateWidgetContent(widget.config)
+                                            } else {
+                                                onWidgetAdd(widget, 0)
+                                            }
+                                        }
+                                    }
+
                                     showMenu = false
                                 },
                             )
                         }
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.notes_widget_action_dismiss)) },
-                            leadingIcon = {
-                                Icon(Icons.Rounded.Delete, null)
-                            },
-                            onClick = {
-                                val wasLast = isLastWidget != false
-
-                                if (wasLast) {
-                                    viewModel.updateWidgetContent(NotesWidgetConfig())
-                                } else {
-                                    viewModel.dismissWidget(widget)
-                                }
-
-                                lifecycleOwner.lifecycleScope.launch {
-                                    val result = snackbarHostState.showSnackbar(
-                                        message = context.getString(R.string.notes_widget_dismissed),
-                                        actionLabel = context.getString(R.string.action_undo),
-                                        duration = SnackbarDuration.Short,
-                                    )
-                                    if (result == SnackbarResult.ActionPerformed) {
-                                        if (wasLast) {
-                                            viewModel.updateWidgetContent(widget.config)
-                                        } else {
-                                            onWidgetAdd(widget, 0)
-                                        }
-                                    }
-                                }
-
-                                showMenu = false
-                            },
-                        )
                     }
                 }
             }
@@ -435,10 +441,10 @@ fun NoteWidgetConflictResolveSheet(
                 selected = selectedStrategy == LinkedFileConflictStrategy.KeepFile,
                 onSelect = { selectedStrategy = LinkedFileConflictStrategy.KeepFile },
             )
-            Column (
+            Column(
                 modifier = Modifier.padding(top = 8.dp),
-            ){
-                OutlinedButton (
+            ) {
+                OutlinedButton(
                     onClick = { onResolve(LinkedFileConflictStrategy.Unlink) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.outlinedButtonColors(
@@ -446,7 +452,7 @@ fun NoteWidgetConflictResolveSheet(
                     ),
                 ) {
                     Icon(
-                        Icons.Rounded.LinkOff,
+                        painterResource(R.drawable.link_off_24px),
                         null,
                         modifier = Modifier
                             .padding(end = ButtonDefaults.IconSpacing)
@@ -460,7 +466,7 @@ fun NoteWidgetConflictResolveSheet(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Icon(
-                        Icons.Rounded.CheckCircleOutline,
+                        painterResource(R.drawable.check_circle_20px),
                         null,
                         modifier = Modifier
                             .padding(end = ButtonDefaults.IconSpacing)
@@ -515,10 +521,7 @@ fun SelectableNoteContent(
                 onClick = onSelect
             ) {
                 Icon(
-                    if (selected)
-                        Icons.Rounded.CheckCircle
-                    else
-                        Icons.Rounded.RadioButtonUnchecked,
+                    painterResource(if (selected) R.drawable.check_circle_24px_filled else R.drawable.circle_24px),
                     tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     contentDescription = null
                 )
@@ -528,10 +531,7 @@ fun SelectableNoteContent(
                 onClick = { expanded = !expanded }
             ) {
                 Icon(
-                    if (expanded)
-                        Icons.Rounded.ExpandLess
-                    else
-                        Icons.Rounded.ExpandMore,
+                    painterResource(if (expanded) R.drawable.keyboard_arrow_up_24px else R.drawable.keyboard_arrow_down_24px),
                     contentDescription = null
                 )
             }
@@ -553,7 +553,7 @@ fun NoteReadWriteErrorSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(top = 8.dp, bottom = 16.dp)
+                .padding(it)
         ) {
             Text(
                 text = message,
@@ -572,7 +572,7 @@ fun NoteReadWriteErrorSheet(
                     .padding(horizontal = 24.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(Icons.Rounded.Link, null)
+                Icon(painterResource(R.drawable.link_24px), null)
                 Text(
                     stringResource(R.string.note_widget_action_relink_file),
                     modifier = Modifier.padding(start = 16.dp),
@@ -589,7 +589,7 @@ fun NoteReadWriteErrorSheet(
                     .padding(horizontal = 24.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(Icons.Rounded.LinkOff, null)
+                Icon(painterResource(R.drawable.link_off_24px), null)
                 Text(
                     stringResource(R.string.note_widget_action_unlink_file),
                     modifier = Modifier.padding(start = 16.dp),

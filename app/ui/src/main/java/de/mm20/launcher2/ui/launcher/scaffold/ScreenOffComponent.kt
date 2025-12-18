@@ -95,12 +95,17 @@ internal object ScreenOffComponent : ScaffoldComponent(), KoinComponent {
             .alpha(1f - (state.currentProgress * 0.1f)) then defaultModifier
     }
 
-    override suspend fun onActivate(state: LauncherScaffoldState) {
-        super.onActivate(state)
+    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+        super.onPreActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.lockScreen()
-        } else {
-            state.onPredictiveBackEnd()
+        }
+    }
+
+    override suspend fun onActivate(state: LauncherScaffoldState) {
+        super.onActivate(state)
+        if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
+            state.navigateBack(true)
         }
     }
 }

@@ -12,10 +12,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -37,10 +33,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.themes.Theme
+import de.mm20.launcher2.themes.colors.Colors
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.LargeMessage
@@ -63,7 +60,7 @@ fun ImportThemeSheet(
         viewModel.readTheme(context, uri)
     }
 
-    val theme by viewModel.theme
+    val theme by viewModel.colors
     val error by viewModel.error
     var apply by viewModel.apply
 
@@ -87,7 +84,7 @@ fun ImportThemeSheet(
                 contentAlignment = Alignment.Center
             ) {
                 LargeMessage(
-                    icon = Icons.Rounded.ErrorOutline,
+                    icon = R.drawable.error_48px,
                     text = stringResource(R.string.import_theme_error),
                 )
             }
@@ -132,13 +129,13 @@ fun ImportThemeSheet(
 
 @Composable
 fun ThemePreview(
-    theme: Theme,
+    colors: Colors,
     modifier: Modifier = Modifier,
 ) {
     val darkMode = LocalDarkTheme.current
     var darkTheme by remember { mutableStateOf(darkMode) }
 
-    val colorScheme = if (darkTheme) darkColorSchemeOf(theme) else lightColorSchemeOf(theme)
+    val colorScheme = if (darkTheme) darkColorSchemeOf(colors) else lightColorSchemeOf(colors)
 
     Column(modifier = modifier) {
         Row(
@@ -146,7 +143,7 @@ fun ThemePreview(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = theme.name,
+                text = colors.name,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f),
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -157,14 +154,14 @@ fun ThemePreview(
                     selected = !darkTheme,
                     onClick = { darkTheme = false }
                 ) {
-                    Icon(Icons.Rounded.LightMode, null)
+                    Icon(painterResource(R.drawable.light_mode_24px), null)
                 }
                 SegmentedButton(
                     shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
                     selected = darkTheme,
                     onClick = { darkTheme = true }
                 ) {
-                    Icon(Icons.Rounded.DarkMode, null)
+                    Icon(painterResource(R.drawable.dark_mode_24px), null)
                 }
             }
         }

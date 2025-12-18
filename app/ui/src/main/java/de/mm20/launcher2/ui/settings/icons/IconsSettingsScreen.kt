@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.settings.icons
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -16,8 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -35,12 +32,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.preferences.IconShape
@@ -50,12 +49,17 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
+import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object IconsSettingsRoute: NavKey
 
 @Composable
 fun IconsSettingsScreen() {
@@ -144,24 +148,20 @@ fun IconsSettingsScreen() {
         item {
             PreferenceCategory(stringResource(R.string.preference_category_icons)) {
                 if (previewIcons.value.isNotEmpty()) {
-                    Surface(
+                    Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        shape = MaterialTheme.shapes.medium,
-                        color = MaterialTheme.colorScheme.surfaceContainer,
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                            .background(
+                                MaterialTheme.colorScheme.surfaceContainerLowest,
+                                MaterialTheme.shapes.extraSmall
+                            )
+                            .padding(vertical = 24.dp, horizontal = 8.dp)
                     ) {
-                        Row(
-                            modifier = Modifier.padding(vertical = 24.dp, horizontal = 8.dp)
-                        ) {
-                            for (icon in previewIcons.value) {
-                                Box(
-                                    modifier = Modifier.weight(1f),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    ShapedLauncherIcon(size = grid.iconSize.dp, icon = { icon })
-                                }
+                        for (icon in previewIcons.value) {
+                            Box(
+                                modifier = Modifier.weight(1f),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ShapedLauncherIcon(size = grid.iconSize.dp, icon = { icon })
                             }
                         }
                     }
@@ -223,24 +223,23 @@ fun IconsSettingsScreen() {
             PreferenceCategory(
                 title = stringResource(R.string.preference_category_badges),
             ) {
-                AnimatedVisibility(hasNotificationsPermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_notification_badges),
-                        onClick = {
-                            viewModel.requestNotificationsPermission(context as AppCompatActivity)
-                        },
-                        modifier = Modifier.padding(16.dp)
+                GuardedPreference(
+                    locked = hasNotificationsPermission == false,
+                    description = stringResource(R.string.missing_permission_notification_badges),
+                    onUnlock = {
+                        viewModel.requestNotificationsPermission(context as AppCompatActivity)
+                    }
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_notification_badges),
+                        summary = stringResource(R.string.preference_notification_badges_summary),
+                        enabled = hasNotificationsPermission != false,
+                        value = notificationBadges == true && hasNotificationsPermission == true,
+                        onValueChanged = {
+                            viewModel.setNotifications(it)
+                        }
                     )
                 }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_notification_badges),
-                    summary = stringResource(R.string.preference_notification_badges_summary),
-                    enabled = hasNotificationsPermission != false,
-                    value = notificationBadges == true && hasNotificationsPermission == true,
-                    onValueChanged = {
-                        viewModel.setNotifications(it)
-                    }
-                )
                 SwitchPreference(
                     title = stringResource(R.string.preference_cloud_badges),
                     summary = stringResource(R.string.preference_cloud_badges_summary),
@@ -352,7 +351,7 @@ private fun IconPackSelectorSheet(
                                 Icon(
                                     modifier = Modifier
                                         .size(20.dp),
-                                    imageVector = Icons.Rounded.Palette,
+                                    painter = painterResource(R.drawable.palette_20px),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.primary
                                 )
@@ -445,7 +444,8 @@ fun IconShapePreference(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Box(
-                                    modifier = Modifier.clip(getShape(it))
+                                    modifier = Modifier
+                                        .clip(getShape(it))
                                         .size(48.dp)
                                         .background(MaterialTheme.colorScheme.primary)
                                         .clickable {
@@ -479,7 +479,7 @@ private fun getShapeName(shape: IconShape?): String? {
             IconShape.Squircle -> R.string.preference_icon_shape_squircle
             IconShape.Square -> R.string.preference_icon_shape_square
             IconShape.Pentagon -> R.string.preference_icon_shape_pentagon
-            IconShape.PlatformDefault -> R.string.preference_icon_shape_platform
+            IconShape.PlatformDefault -> R.string.preference_value_system_default
             IconShape.Circle -> R.string.preference_icon_shape_circle
             IconShape.Teardrop -> R.string.preference_icon_shape_teardrop
             IconShape.Pebble -> R.string.preference_icon_shape_pebble

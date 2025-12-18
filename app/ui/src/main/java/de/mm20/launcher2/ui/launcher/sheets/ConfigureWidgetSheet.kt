@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -33,28 +35,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.Build
-import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.HelpOutline
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.LinkOff
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
@@ -78,6 +70,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -96,7 +89,7 @@ import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.search.calendar.CalendarListType
-import de.mm20.launcher2.themes.atTone
+import de.mm20.launcher2.themes.colors.atTone
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.common.TagChip
@@ -110,7 +103,6 @@ import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.ktx.splitLeadingEmoji
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.widgets.external.AppWidgetHost
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
@@ -135,20 +127,23 @@ fun ConfigureWidgetSheet(
     onWidgetUpdated: (Widget) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    BottomSheetDialog(onDismissRequest = onDismiss) {
+    BottomSheetDialog(
+        onDismissRequest = onDismiss,
+        windowInsets = WindowInsets()
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = if (widget is AppWidget) 8.dp else 16.dp)
+                .padding(it)
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = 8.dp)
         ) {
             when (widget) {
                 is WeatherWidget -> ConfigureWeatherWidget(widget, onWidgetUpdated)
                 is AppWidget -> ConfigureAppWidget(widget, onWidgetUpdated)
                 is CalendarWidget -> ConfigureCalendarWidget(widget, onWidgetUpdated)
                 is FavoritesWidget -> ConfigureFavoritesWidget(widget, onWidgetUpdated)
-                is MusicWidget -> ConfigureMusicWidget()
+                is MusicWidget -> ConfigureMusicWidget(widget, onWidgetUpdated)
                 is NotesWidget -> ConfigureNotesWidget(widget, onWidgetUpdated)
             }
         }
@@ -203,7 +198,7 @@ fun ColumnScope.ConfigureWeatherWidget(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
-            imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
         )
     }
 }
@@ -248,7 +243,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                 ) {
                     Row(horizontalArrangement = Arrangement.SpaceBetween) {
                         Icon(
-                            imageVector = Icons.Rounded.Star,
+                            painter = painterResource(R.drawable.star_20px),
                             contentDescription = null,
                             modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                         )
@@ -277,7 +272,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                 ) {
                     Row(horizontalArrangement = Arrangement.SpaceBetween) {
                         Icon(
-                            imageVector = Icons.Rounded.Tag,
+                            painter = painterResource(R.drawable.tag_20px),
                             contentDescription = null,
                             modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                         )
@@ -326,59 +321,71 @@ fun ColumnScope.ConfigureFavoritesWidget(
                                     showAddMenu = true
                                 }) {
                                 Icon(
-                                    imageVector = Icons.Rounded.Add,
+                                    painter = painterResource(R.drawable.add_24px),
                                     contentDescription = null
                                 )
                             }
-                            DropdownMenu(
+                            DropdownMenuPopup(
                                 expanded = showAddMenu,
                                 onDismissRequest = { showAddMenu = false }) {
-                                for (tag in availableTags) {
-                                    val (emoji, tagName) = remember(tag.tag) {
-                                        tag.tag.splitLeadingEmoji()
-                                    }
-                                    DropdownMenuItem(
-                                        leadingIcon = {
-                                            if (emoji != null) {
-                                                Text(
-                                                    emoji,
-                                                    modifier = Modifier.width(FilterChipDefaults.IconSize),
-                                                    textAlign = TextAlign.Center,
-                                                )
-                                            } else {
-                                                Icon(Icons.Rounded.Tag, null)
-                                            }
-                                        },
-                                        text = { Text(tagName ?: "") },
-                                        onClick = {
-                                            onWidgetUpdated(
-                                                widget.copy(
-                                                    config = widget.config.copy(
-                                                        tagList = selectedTags + tag.tag
-                                                    )
-                                                )
-                                            )
-                                            viewModel.addTag(tag)
-                                            showAddMenu = false
-                                        })
-                                }
                                 if (availableTags.isNotEmpty()) {
-                                    HorizontalDivider()
-                                }
-                                DropdownMenuItem(
-                                    leadingIcon = {
-                                        Icon(Icons.Rounded.Add, null)
-                                    },
-                                    text = {
-                                        Text(
-                                            stringResource(R.string.edit_favorites_dialog_new_tag),
-                                        )
-                                    },
-                                    onClick = {
-                                        createTag = true;
-                                        showAddMenu = false
+                                    DropdownMenuGroup(
+                                        shapes = MenuDefaults.groupShape(0, 2),
+                                    ) {
+                                        for ((i, tag) in availableTags.withIndex()) {
+                                            DropdownMenuItem(
+                                                shape = if (availableTags.size == 1) MenuDefaults.standaloneItemShape
+                                                else when (i) {
+                                                    0 -> MenuDefaults.leadingItemShape
+                                                    availableTags.lastIndex -> MenuDefaults.trailingItemShape
+                                                    else -> MenuDefaults.middleItemShape
+                                                },
+                                                leadingIcon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.tag_24px),
+                                                        null
+                                                    )
+                                                },
+                                                text = { Text(tag.tag) },
+                                                onClick = {
+                                                    onWidgetUpdated(
+                                                        widget.copy(
+                                                            config = widget.config.copy(
+                                                                tagList = selectedTags + tag.tag
+                                                            )
+                                                        )
+                                                    )
+                                                    viewModel.addTag(tag)
+                                                    showAddMenu = false
+                                                })
+                                        }
                                     }
+                                }
+                                Spacer(
+                                    modifier = Modifier.height(MenuDefaults.GroupSpacing)
                                 )
+                                DropdownMenuGroup(
+                                    shapes = MenuDefaults.groupShape(
+                                        if (availableTags.isEmpty()) 0 else 1,
+                                        if (availableTags.isEmpty()) 1 else 2,
+                                    )
+                                ) {
+                                    DropdownMenuItem(
+                                        shape = MenuDefaults.standaloneItemShape,
+                                        leadingIcon = {
+                                            Icon(painterResource(R.drawable.add_24px), null)
+                                        },
+                                        text = {
+                                            Text(
+                                                stringResource(R.string.edit_favorites_dialog_new_tag),
+                                            )
+                                        },
+                                        onClick = {
+                                            createTag = true
+                                            showAddMenu = false
+                                        }
+                                    )
+                                }
                             }
                         }
 
@@ -463,7 +470,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
-            imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
         )
     }
 
@@ -483,9 +490,26 @@ fun ColumnScope.ConfigureFavoritesWidget(
 
 @Composable
 fun ColumnScope.ConfigureMusicWidget(
+    widget: MusicWidget,
+    onWidgetUpdated: (MusicWidget) -> Unit,
 
 ) {
     val context = LocalContext.current
+
+    OutlinedCard {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            SwitchPreference(
+                title = stringResource(R.string.music_widget_interactive_progress_bar),
+                iconPadding = false,
+                value = widget.config.interactiveProgressBar,
+                onValueChanged = {
+                    onWidgetUpdated(widget.copy(config = widget.config.copy(interactiveProgressBar = it)))
+                }
+            )
+        }
+    }
 
     TextButton(
         modifier = Modifier
@@ -512,7 +536,7 @@ fun ColumnScope.ConfigureMusicWidget(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
-            imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
         )
     }
 }
@@ -539,7 +563,7 @@ fun ColumnScope.ConfigureAppWidget(
             contentAlignment = Alignment.Center
         ) {
             LargeMessage(
-                icon = Icons.Rounded.Error,
+                icon = R.drawable.error_48px,
                 text = stringResource(id = R.string.app_widget_loading_failed)
             )
         }
@@ -550,7 +574,7 @@ fun ColumnScope.ConfigureAppWidget(
             contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
             onClick = { replaceWidget = true }) {
             Icon(
-                Icons.Rounded.Build,
+                painterResource(R.drawable.build_20px),
                 null,
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
@@ -740,7 +764,7 @@ fun ColumnScope.ConfigureAppWidget(
                     modifier = Modifier
                         .padding(start = ButtonDefaults.IconSpacing)
                         .requiredSize(ButtonDefaults.IconSize),
-                    imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+                    painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
                 )
             }
         }
@@ -893,7 +917,7 @@ fun ColumnScope.ConfigureCalendarWidget(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .requiredSize(ButtonDefaults.IconSize),
-                imageVector = Icons.Rounded.HelpOutline, contentDescription = null
+                painter = painterResource(R.drawable.help_20px), contentDescription = null
             )
             Text(stringResource(R.string.widget_config_calendar_missing_calendars_hint))
         }
@@ -940,7 +964,7 @@ fun ConfigureNotesWidget(
     OutlinedCard {
         if (widget.config.linkedFile != null) {
             Preference(
-                icon = { Icon(Icons.Rounded.LinkOff, null) },
+                icon = { Icon(painterResource(R.drawable.link_off_24px), null) },
                 title = { Text(stringResource(R.string.note_widget_action_unlink_file)) },
                 summary = {
                     Text(
@@ -966,7 +990,7 @@ fun ConfigureNotesWidget(
             Preference(
                 title = stringResource(R.string.note_widget_link_file),
                 summary = stringResource(R.string.note_widget_link_file_summary),
-                icon = Icons.Rounded.Link,
+                icon = R.drawable.link_24px,
                 onClick = {
                     linkFileLauncher.launch(
                         context.getString(

@@ -10,6 +10,7 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import de.mm20.launcher2.database.daos.PluginDao
 import de.mm20.launcher2.database.daos.ThemeDao
+import de.mm20.launcher2.database.entities.ColorsEntity
 import de.mm20.launcher2.database.entities.CurrencyEntity
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
 import de.mm20.launcher2.database.entities.ForecastEntity
@@ -18,7 +19,9 @@ import de.mm20.launcher2.database.entities.IconPackEntity
 import de.mm20.launcher2.database.entities.PluginEntity
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
 import de.mm20.launcher2.database.entities.SearchActionEntity
-import de.mm20.launcher2.database.entities.ThemeEntity
+import de.mm20.launcher2.database.entities.ShapesEntity
+import de.mm20.launcher2.database.entities.TransparenciesEntity
+import de.mm20.launcher2.database.entities.TypographyEntity
 import de.mm20.launcher2.database.entities.WidgetEntity
 import de.mm20.launcher2.database.migrations.Migration_10_11
 import de.mm20.launcher2.database.migrations.Migration_11_12
@@ -36,7 +39,9 @@ import de.mm20.launcher2.database.migrations.Migration_22_23
 import de.mm20.launcher2.database.migrations.Migration_23_24
 import de.mm20.launcher2.database.migrations.Migration_24_25
 import de.mm20.launcher2.database.migrations.Migration_25_26
-import de.mm20.launcher2.database.migrations.Migration_26_27
+import de.mm20.launcher2.database.migrations.Migration_27_28
+import de.mm20.launcher2.database.migrations.Migration_28_29
+import de.mm20.launcher2.database.migrations.Migration_29_30
 import de.mm20.launcher2.database.migrations.Migration_6_7
 import de.mm20.launcher2.database.migrations.Migration_7_8
 import de.mm20.launcher2.database.migrations.Migration_8_9
@@ -54,9 +59,12 @@ import java.util.UUID
         WidgetEntity::class,
         CustomAttributeEntity::class,
         SearchActionEntity::class,
-        ThemeEntity::class,
+        ColorsEntity::class,
         PluginEntity::class,
-    ], version = 27, exportSchema = true
+        ShapesEntity::class,
+        TransparenciesEntity::class,
+        TypographyEntity::class,
+    ], version = 30, exportSchema = true
 )
 @TypeConverters(ComponentNameConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -155,7 +163,9 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_23_24(),
                         Migration_24_25(),
                         Migration_25_26(),
-                        Migration_26_27(),
+                        Migration_27_28(),
+                        Migration_28_29(),
+                        Migration_29_30(),
                     ).build()
             if (_instance == null) _instance = instance
             return instance

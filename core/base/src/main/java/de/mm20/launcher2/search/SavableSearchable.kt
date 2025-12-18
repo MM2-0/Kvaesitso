@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.StaticLauncherIcon
-import de.mm20.launcher2.ktx.romanize
 import java.text.Collator
 
 interface SavableSearchable : Searchable, Comparable<SavableSearchable>  {
@@ -38,7 +37,7 @@ interface SavableSearchable : Searchable, Comparable<SavableSearchable>  {
         val label1 = labelOverride ?: label
         val label2 = other.labelOverride ?: other.label
         return Collator.getInstance().apply { strength = Collator.SECONDARY }
-            .compare(label1.romanize(), label2.romanize())
+            .compare(label1, label2)
     }
 
     val domain: String

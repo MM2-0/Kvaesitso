@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.owncloud
 
+import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,12 +10,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.Login
-import androidx.compose.material.icons.automirrored.rounded.Logout
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,24 +22,31 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object OwncloudSettingsRoute: NavKey
 
 @Composable
 fun OwncloudSettingsScreen() {
 
     val viewModel: OwncloudSettingsScreenVM = viewModel()
     val lifecycleOwner = LocalLifecycleOwner.current
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
 
     val owncloudUser by viewModel.owncloudUser
     val loading by viewModel.loading
@@ -60,7 +64,7 @@ fun OwncloudSettingsScreen() {
             item {
                 Column(
                     modifier = Modifier
-                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .background(MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.shapes.medium)
                         .fillParentMaxWidth()
                         .padding(vertical = 64.dp)
                     ,
@@ -100,7 +104,7 @@ fun OwncloudSettingsScreen() {
                         contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                     ) {
                         Icon(
-                            Icons.AutoMirrored.Rounded.Logout,
+                            painterResource(R.drawable.logout_20px),
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize),
@@ -109,35 +113,36 @@ fun OwncloudSettingsScreen() {
                     }
                 }
             }
-            item {
-                HorizontalDivider()
-            }
 
             item {
-                SwitchPreference(
-                    title = stringResource(R.string.plugin_type_filesearch),
-                    summary = stringResource(R.string.preference_search_cloud_summary, owncloudUser!!.userName),
-                    value = searchFiles == true,
-                    onValueChanged = {
-                        viewModel.setSearchFiles(it)
-                    },
-                    iconPadding = false,
-                )
+                PreferenceCategory {
+                    SwitchPreference(
+                        title = stringResource(R.string.plugin_type_filesearch),
+                        summary = stringResource(
+                            R.string.preference_search_cloud_summary,
+                            owncloudUser!!.userName
+                        ),
+                        value = searchFiles == true,
+                        onValueChanged = {
+                            viewModel.setSearchFiles(it)
+                        },
+                        iconPadding = false,
+                    )
+                }
             }
         } else {
             item {
-                val activity = LocalContext.current as AppCompatActivity
-                Preference(
-                    title = stringResource(R.string.preference_owncloud_signin),
-                    summary = stringResource(R.string.preference_owncloud_signin_summary),
-                    icon = Icons.AutoMirrored.Rounded.Login,
-                    onClick = {
-                        viewModel.signIn(activity)
-                    }
-                )
-            }
-            item {
-                HorizontalDivider()
+                val activity = LocalActivity.current as AppCompatActivity
+                PreferenceCategory {
+                    Preference(
+                        title = stringResource(R.string.preference_owncloud_signin),
+                        summary = stringResource(R.string.preference_owncloud_signin_summary),
+                        icon = R.drawable.login_24px,
+                        onClick = {
+                            viewModel.signIn(activity)
+                        }
+                    )
+                }
             }
         }
     }

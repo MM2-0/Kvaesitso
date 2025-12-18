@@ -4,11 +4,6 @@ import android.text.format.DateUtils
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.Warning
-import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -17,20 +12,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.crashreporter.CrashReportType
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalNavController
-import java.net.URLEncoder
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object CrashReporterRoute: NavKey
 
 @Composable
 fun CrashReporterScreen() {
     val viewModel: CrashReporterScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val reports by viewModel.reports
     val showExceptions by viewModel.showExceptions
     val showCrashes by viewModel.showCrashes
@@ -49,7 +49,7 @@ fun CrashReporterScreen() {
                         viewModel.setShowExceptions(value)
                     }) {
                         Icon(
-                            imageVector = if (showExceptions) Icons.Rounded.Warning else Icons.Rounded.WarningAmber,
+                            painterResource(if (showExceptions) R.drawable.warning_24px_filled else R.drawable.warning_24px),
                             contentDescription = null,
                             modifier = Modifier.alpha(if (showExceptions) 1f else 0.5f)
                         )
@@ -58,7 +58,7 @@ fun CrashReporterScreen() {
                         viewModel.setShowCrashes(value)
                     }) {
                         Icon(
-                            imageVector = if (showCrashes) Icons.Rounded.Error else Icons.Rounded.ErrorOutline,
+                            painterResource(if (showCrashes) R.drawable.error_24px_filled else R.drawable.error_24px),
                             contentDescription = null,
                             modifier = Modifier.alpha(if (showCrashes) 1f else 0.5f)
                         )
@@ -66,16 +66,14 @@ fun CrashReporterScreen() {
                 }
             }
             items(it) {
-                OutlinedCard(
-                    modifier = Modifier
-                        .padding(vertical = 4.dp, horizontal = 8.dp)
-                    ,
+                Surface(
+                    shape = MaterialTheme.shapes.medium,
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                navController?.navigate("settings/debug/crashreporter/report?fileName=${it.filePath}")
+                                backStack.add(CrashReportRoute(it.filePath))
                             }
                             .padding(16.dp)
                     ) {
@@ -97,7 +95,9 @@ fun CrashReporterScreen() {
                             ) {
                                 Icon(
                                     modifier = Modifier.padding(end = 8.dp),
-                                    imageVector = if (it.type == CrashReportType.Exception) Icons.Rounded.Warning else Icons.Rounded.Error,
+                                    painter = painterResource(
+                                        if (it.type == CrashReportType.Exception) R.drawable.warning_24px else R.drawable.error_24px
+                                    ),
                                     contentDescription = null
                                 )
                                 Text(

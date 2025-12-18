@@ -11,6 +11,7 @@ val Outfit = FontFamily(
     Font(R.font.outfit_200, weight = FontWeight.ExtraLight, style = FontStyle.Normal),
     Font(R.font.outfit_300, weight = FontWeight.Light, style = FontStyle.Normal),
     Font(R.font.outfit_400, weight = FontWeight.Normal, style = FontStyle.Normal),
+    Font(R.font.outfit_500, weight = FontWeight.Medium, style = FontStyle.Normal),
     Font(R.font.outfit_600, weight = FontWeight.SemiBold, style = FontStyle.Normal),
     Font(R.font.outfit_700, weight = FontWeight.Bold, style = FontStyle.Normal),
     Font(R.font.outfit_800, weight = FontWeight.ExtraBold, style = FontStyle.Normal),

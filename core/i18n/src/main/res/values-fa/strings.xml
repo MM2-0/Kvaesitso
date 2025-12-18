@@ -94,9 +94,6 @@
     <string name="notes_widget_export_filename">یادداشت_%1$s</string>
     <string name="notes_widget_action_dismiss">نادیده گرفتن</string>
     <string name="notes_widget_dismissed">یادداشت نادیده گرفته شد.</string>
-    <string name="easter_egg_2">آقا بس کن برو به زندگیت برس</string>
-    <string name="easter_egg_3">واسه آخرین بار میگم: هیچ چیز عجیب غریبی اینجا قایم نکردم</string>
-    <string name="easter_egg_text">تیتاب، من رو پیدا کردی. ارزشش رو داشت؟</string>
     <string name="close">بستن</string>
     <string name="save">نگه‌داشتن</string>
     <string name="duplicate">هم‌مانندسازی</string>
@@ -149,7 +146,6 @@
     <string name="edit">ویرایش</string>
     <string name="turn_off">خاموش کردن</string>
     <string name="wind_east_south_east">شرق جنوب شرقی</string>
-    <string name="easter_egg_1">در اینجا هیچ شگفتانه ای وجود ندارد، دنبال نخود سیاه نگردید.</string>
     <string name="login_flow_login">ورود</string>
     <string name="weather_location_search_no_result">مکان یافت نشد.</string>
     <string name="missing_permission_calendar_search_settings">دسترسی تقویم برای جستجو در تقویم لازم است</string>
@@ -175,7 +171,6 @@
     <string name="preference_cards_shape">شکل</string>
     <string name="preference_cards_shape_cut">برش‌دار</string>
     <string name="preference_icon_shape_square">مربع</string>
-    <string name="preference_icon_shape_platform">پیش‌گزیده سامانه</string>
     <string name="preference_icon_shape">شکل</string>
     <string name="weather_condition_lightrainandthunder">بارش باران سبک و رعد</string>
     <string name="preference_icon_shape_squircle">squircle</string>
@@ -227,7 +222,6 @@
     <string name="preference_colors_bw">سیاه و سفید</string>
     <string name="preference_custom_colors_corepalette">تخته رنگ</string>
     <string name="preference_font">قلم</string>
-    <string name="preference_font_system">قلم پیش‌گزیده سامانه</string>
     <string name="preference_screen_about">درباره</string>
     <string name="preference_category_advanced">پیشرفته</string>
     <string name="open_webpage">بازکردن وبگاه</string>
@@ -500,7 +494,6 @@
     <string name="preference_gesture_swipe_left">کشیدن به چپ</string>
     <string name="preference_gesture_swipe_right">کشیدن به راست</string>
     <string name="confirmation_delete_color_scheme">آیا واقعاً می‌خواهید طرح رنگی %1$s را پاک کنید؟</string>
-    <string name="new_color_scheme_name">طرح رنگی جدید</string>
     <string name="theme_color_scheme_system_default">به‌کار بردن پیش‌گزیده سامانه</string>
     <string name="gesture_action_open_search">بازکردن جستجو</string>
     <string name="gesture_action_launch_app">اجرای برنامه</string>
@@ -657,7 +650,6 @@
     <string name="preference_clock_widget_time_format">فرمت زمان</string>
     <string name="preference_clock_widget_time_format_24h">24 ساعته</string>
     <string name="preference_clock_widget_time_format_12h">12 ساعته</string>
-    <string name="preference_clock_widget_time_format_system">پیش‌گزیده سامانه</string>
     <string name="widget_use_theme_colors">به‌کارگیری رنگ‌های پوسته</string>
     <string name="preference_clock_widget_fill_height">پر کردن ارتفاع صفحه</string>
     <string name="preference_clock_widget_alignment">تراز</string>

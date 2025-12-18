@@ -4,6 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.ktx.ifNullOrEmpty
 import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
+import de.mm20.launcher2.ktx.stripStartOrNull
 import de.mm20.launcher2.locations.OsmLocationSerializer
 import de.mm20.launcher2.openstreetmaps.R
 import de.mm20.launcher2.search.Location
@@ -16,6 +17,7 @@ import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.search.location.PaymentMethod
 import de.westnordost.osm_opening_hours.model.ClockTime
 import de.westnordost.osm_opening_hours.model.ExtendedClockTime
 import de.westnordost.osm_opening_hours.model.LastNth
@@ -62,7 +64,8 @@ internal data class OsmLocation(
     override val labelOverride: String? = null,
     override val timestamp: Long,
     override var updatedSelf: (suspend (SavableSearchable) -> UpdateResult<Location>)? = null,
-    override val userRating: Float?
+    override val userRating: Float?,
+    override val acceptedPaymentMethods: Map<PaymentMethod, Boolean>?
 ) : Location, UpdatableSearchable<Location> {
 
     override val domain: String
@@ -115,7 +118,25 @@ internal data class OsmLocation(
                 emailAddress = it.tags["email"] ?: it.tags["contact:email"],
                 timestamp = System.currentTimeMillis(),
                 userRating = it.tags["stars"]?.runCatching { this.toInt() }?.getOrNull()
-                    ?.let { min(it, 5) / 5.0f }
+                    ?.let { min(it, 5) / 5.0f },
+                acceptedPaymentMethods = with(
+                    it.tags.mapNotNull { (key, value) ->
+                        (key.stripStartOrNull("payment:") ?: return@mapNotNull null) to value
+                    }.toMap()
+                ) {
+                    // best-effort way to take any method payment as it being available,
+                    // otherwise as being unavailable, or undefined
+                    mapOf(
+                        PaymentMethod.Card to listOf("credit_cards", "debit_cards", "cards"),
+                        PaymentMethod.Cash to listOf("cash")
+                    ).mapNotNull { (method, values) ->
+                        when {
+                            values.any { this[it] in listOf("yes", "only") } -> method to true
+                            values.any { this[it] == "no" } -> method to false
+                            else -> null
+                        }
+                    }.toMap().takeUnless { it.isEmpty() }
+                }
             )
         }
     }
@@ -203,6 +224,7 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                     "optician" -> R.string.poi_category_optician to LocationIcon.Optician
                     "hairdresser" -> R.string.poi_category_hairdresser to LocationIcon.HairSalon
                     "laundry" -> R.string.poi_category_laundry to LocationIcon.Laundromat
+                    "stationery" -> R.string.poi_category_stationery to LocationIcon.Stationery
 
                     else -> R.string.poi_category_shopping to LocationIcon.Shopping
                 }
@@ -287,7 +309,7 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                     "stadium" -> R.string.poi_category_stadium to LocationIcon.Stadium
                     "fitness_centre" -> R.string.poi_category_fitness_center to LocationIcon.FitnessCenter
                     "swimming_pool" -> R.string.poi_category_swimming to LocationIcon.Swimming
-                    "pitch", "sports_centre" -> matchAnyTag<Int, LocationIcon>("sport") {
+                    "pitch", "sports_centre", "sports_hall" -> matchAnyTag<Int, LocationIcon>("sport") {
                         "soccer" with (R.string.poi_category_soccer to LocationIcon.Soccer)
                         "tennis" with (R.string.poi_category_tennis to LocationIcon.Tennis)
                         "basketball" with (R.string.poi_category_basketball to LocationIcon.Basketball)
@@ -300,10 +322,12 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                         "volleyball" with (R.string.poi_category_volleyball to LocationIcon.Volleyball)
                         "skiing" with (R.string.poi_category_skiing to LocationIcon.Skiing)
                         "cricket" with (R.string.poi_category_cricket to LocationIcon.Cricket)
+                        "climbing" with (R.string.poi_category_climbing_gym to LocationIcon.Climbing)
                     }
 
                     "golf_course" -> R.string.poi_category_golf to LocationIcon.Golf
                     "park" -> R.string.poi_category_park to LocationIcon.Park
+                    "hackerspace" -> R.string.poi_category_hackerspace to LocationIcon.Hackerspace
                     else -> null
                 }
             }
@@ -367,6 +391,8 @@ internal fun parseOpeningSchedule(
                     }
                 }
             }
+        } else if (!rule.holidays.isNullOrEmpty()) {
+            continue // skip PH and SH entries
         } else if (!rule.times.isNullOrEmpty() || !rule.months.isNullOrEmpty()) {
             rulesMap.forEach { _, it ->
                 it.add(rule)
@@ -374,14 +400,12 @@ internal fun parseOpeningSchedule(
         }
     }
 
-    // Filter out rules that are not valid for the current year, month, and week. Hopefully,
-    // there is only one rule left per weekday. If not, skip that weekday.
-    val applicableRules = rulesMap.mapNotNull { (day, rules) ->
+    // Filter out rules that are not valid for the current year, month, and week.
+    val applicableRules = rulesMap.flatMap { (day, rules) ->
         rules.filterYears(localTime)
             .filterMonths(localTime)
             .filterNthDays(localTime)
             .map { it.copy(weekdays = listOf(day)) }
-            .singleOrNull()
     }
 
     val hours = mutableSetOf<OpeningHours>()

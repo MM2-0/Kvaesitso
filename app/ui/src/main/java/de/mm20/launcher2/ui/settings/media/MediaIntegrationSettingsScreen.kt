@@ -1,10 +1,11 @@
 package de.mm20.launcher2.ui.settings.media
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,6 +20,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -27,6 +29,10 @@ import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object MediaIntegrationSettingsRoute: NavKey
 
 @Composable
 fun MediaIntegrationSettingsScreen() {
@@ -56,16 +62,23 @@ fun MediaIntegrationSettingsScreen() {
                 )
             }
         }
-        item {
-            AnimatedVisibility(hasPermission == false) {
+        if (hasPermission == false) {
+            item {
                 MissingPermissionBanner(
                     text = stringResource(R.string.missing_permission_music_widget),
                     onClick = {
                         viewModel.requestNotificationPermission(context as AppCompatActivity)
                     },
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.surface,
+                            MaterialTheme.shapes.medium
+                        )
+                        .padding(16.dp)
                 )
             }
+        }
+        item {
             PreferenceCategory(
                 stringResource(R.string.preference_category_media_apps)
             ) {
@@ -85,6 +98,7 @@ fun MediaIntegrationSettingsScreen() {
                 }
             }
         }
+
         if (BuildConfig.DEBUG) {
             item {
                 PreferenceCategory(stringResource(R.string.preference_category_debug)) {

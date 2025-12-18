@@ -2,15 +2,8 @@ package de.mm20.launcher2.ui.settings.filesearch
 
 import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccountBox
-import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,22 +12,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.accounts.AccountType
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.Banner
-import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object FileSearchSettingsRoute: NavKey
 
 @Composable
 fun FileSearchSettingsScreen() {
@@ -67,123 +63,104 @@ fun FileSearchSettingsScreen() {
             PreferenceCategory {
                 val localFiles by viewModel.localFiles.collectAsState()
                 val hasFilePermission by viewModel.hasFilePermission.collectAsState()
-                AnimatedVisibility(hasFilePermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(
-                            if (isAtLeastApiLevel(29)) R.string.missing_permission_file_search_settings_android10 else R.string.missing_permission_file_search_settings
-                        ), onClick = {
-                            viewModel.requestFilePermission(context as AppCompatActivity)
+                GuardedPreference(
+                    locked = hasFilePermission == false,
+                    onUnlock = {
+                        viewModel.requestFilePermission(context as AppCompatActivity)
+                    },
+                    description = stringResource(
+                        if (isAtLeastApiLevel(29)) R.string.missing_permission_file_search_settings_android10 else R.string.missing_permission_file_search_settings
+                    ),
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_search_localfiles),
+                        summary = stringResource(R.string.preference_search_localfiles_summary),
+                        value = localFiles == true && hasFilePermission == true,
+                        onValueChanged = {
+                            viewModel.setLocalFiles(it)
                         },
-                        modifier = Modifier.padding(16.dp)
+                        enabled = hasFilePermission == true
                     )
                 }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_localfiles),
-                    summary = stringResource(R.string.preference_search_localfiles_summary),
-                    value = localFiles == true && hasFilePermission == true,
-                    onValueChanged = {
-                        viewModel.setLocalFiles(it)
-                    },
-                    enabled = hasFilePermission == true
-                )
 
                 val nextcloud by viewModel.nextcloud.collectAsState()
                 val nextcloudAccount by viewModel.nextcloudAccount
-                AnimatedVisibility(nextcloudAccount == null) {
-                    Banner(
-                        text = stringResource(R.string.no_account_nextcloud),
-                        icon = Icons.Rounded.AccountBox,
-                        primaryAction = {
-                            TextButton(onClick = {
-                                viewModel.login(
-                                    context as AppCompatActivity,
-                                    AccountType.Nextcloud
-                                )
-                            }) {
-                                Text(
-                                    stringResource(R.string.connect_account),
-                                )
-                            }
+                GuardedPreference(
+                    locked = nextcloudAccount == null,
+                    onUnlock = {
+                        viewModel.login(context as AppCompatActivity, AccountType.Nextcloud)
+                    },
+                    icon = R.drawable.account_box_24px,
+                    description = stringResource(R.string.no_account_nextcloud),
+                    unlockLabel = stringResource(R.string.connect_account),
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_search_nextcloud),
+                        summary = nextcloudAccount?.let {
+                            stringResource(R.string.preference_search_cloud_summary, it.userName)
+                        } ?: stringResource(R.string.preference_summary_not_logged_in),
+                        value = nextcloud == true && nextcloudAccount != null,
+                        onValueChanged = {
+                            viewModel.setNextcloud(it)
                         },
-                        modifier = Modifier.padding(16.dp)
+                        enabled = nextcloudAccount != null
                     )
                 }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_nextcloud),
-                    summary = nextcloudAccount?.let {
-                        stringResource(R.string.preference_search_cloud_summary, it.userName)
-                    } ?: stringResource(R.string.preference_summary_not_logged_in),
-                    value = nextcloud == true && nextcloudAccount != null,
-                    onValueChanged = {
-                        viewModel.setNextcloud(it)
-                    },
-                    enabled = nextcloudAccount != null
-                )
 
                 val owncloud by viewModel.owncloud.collectAsState()
                 val owncloudAccount by viewModel.owncloudAccount
-                AnimatedVisibility(owncloudAccount == null) {
-                    Banner(
-                        text = stringResource(R.string.no_account_owncloud),
-                        icon = Icons.Rounded.AccountBox,
-                        primaryAction = {
-                            TextButton(onClick = {
-                                viewModel.login(
-                                    context as AppCompatActivity,
-                                    AccountType.Owncloud
-                                )
-                            }) {
-                                Text(
-                                    stringResource(R.string.connect_account),
-                                )
-                            }
+                GuardedPreference(
+                    locked = owncloudAccount == null,
+                    onUnlock = {
+                        viewModel.login(context as AppCompatActivity, AccountType.Owncloud)
+                    },
+                    icon = R.drawable.account_box_24px,
+                    description = stringResource(R.string.no_account_owncloud),
+                    unlockLabel = stringResource(R.string.connect_account),
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_search_owncloud),
+                        summary = owncloudAccount?.let {
+                            stringResource(R.string.preference_search_cloud_summary, it.userName)
+                        } ?: stringResource(R.string.preference_summary_not_logged_in),
+                        value = owncloud == true && owncloudAccount != null,
+                        onValueChanged = {
+                            viewModel.setOwncloud(it)
                         },
-                        modifier = Modifier.padding(16.dp)
+                        enabled = owncloudAccount != null
                     )
                 }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_owncloud),
-                    summary = owncloudAccount?.let {
-                        stringResource(R.string.preference_search_cloud_summary, it.userName)
-                    } ?: stringResource(R.string.preference_summary_not_logged_in),
-                    value = owncloud == true && owncloudAccount != null,
-                    onValueChanged = {
-                        viewModel.setOwncloud(it)
-                    },
-                    enabled = owncloudAccount != null
-                )
 
                 for (plugin in plugins) {
                     val state = plugin.state
-                    if (state is PluginState.SetupRequired) {
-                        Banner(
-                            modifier = Modifier.padding(16.dp),
-                            text = state.message ?: stringResource(id = R.string.plugin_state_setup_required),
-                            icon = Icons.Rounded.ErrorOutline,
-                            primaryAction = {
-                                TextButton(onClick = {
-                                    try {
-                                        state.setupActivity.sendWithBackgroundPermission(context)
-                                    } catch (e: PendingIntent.CanceledException) {
-                                        CrashReporter.logException(e)
-                                    }
-                                }) {
-                                    Text(stringResource(id = R.string.plugin_action_setup))
-                                }
+                    GuardedPreference(
+                        locked = state is PluginState.SetupRequired,
+                        onUnlock = {
+                            try {
+                                (state as PluginState.SetupRequired).setupActivity.sendWithBackgroundPermission(
+                                    context
+                                )
+                            } catch (e: PendingIntent.CanceledException) {
+                                CrashReporter.logException(e)
                             }
+                        },
+                        description = (state as? PluginState.SetupRequired)?.message
+                            ?: stringResource(id = R.string.plugin_state_setup_required),
+                        icon = R.drawable.error_24px,
+                        unlockLabel = stringResource(id = R.string.plugin_action_setup),
+                    ) {
+                        SwitchPreference(
+                            title = plugin.plugin.label,
+                            enabled = enabledPlugins != null && state is PluginState.Ready,
+                            summary = (state as? PluginState.Ready)?.text
+                                ?: (state as? PluginState.SetupRequired)?.message
+                                ?: plugin.plugin.description,
+                            value = enabledPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                            onValueChanged = {
+                                viewModel.setPluginEnabled(plugin.plugin.authority, it)
+                            },
                         )
                     }
-                    SwitchPreference(
-                        title = plugin.plugin.label,
-                        enabled = enabledPlugins != null && state is PluginState.Ready,
-                        summary = (state as? PluginState.Ready)?.text
-                            ?: (state as? PluginState.SetupRequired)?.message
-                            ?: plugin.plugin.description,
-                        value = enabledPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
-                        onValueChanged = {
-                            viewModel.setPluginEnabled(plugin.plugin.authority, it)
-                        },
-                    )
                 }
             }
         }

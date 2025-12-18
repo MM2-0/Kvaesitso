@@ -143,7 +143,7 @@
     <string name="menu_app_info">Infos sur l\'appli</string>
     <string name="preference_screen_integrations_summary">Gérer les comptes et les services</string>
     <string name="preference_signin_user">Connecté en tant que %1$s</string>
-    <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté</string>
+    <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté·e</string>
     <string name="file_type_ebook">E-book</string>
     <string name="file_type_drawing">Dessin</string>
     <string name="file_type_form">Formulaire</string>
@@ -151,11 +151,6 @@
     <string name="menu_calendar_open_externally">Ouvrir dans l\'application de calendrier</string>
     <string name="preference_icon_shape_hexagon">Hexagone</string>
     <string name="shortcut_summary">Par %1$s</string>
-    <!-- Easter egg preference toasts -->
-    <string name="easter_egg_1">Il n\'y a pas d\'easter egg ici, à moins que vous ne l\'ayez amené avec vous.</string>
-    <string name="easter_egg_2">Par pitié, arrêtez, vous perdez votre temps</string>
-    <string name="easter_egg_3">C\'est la dernière fois que je le dis : il n\'y a absolument aucun easter egg caché ici</string>
-    <string name="easter_egg_text">Bien, vous m\'avez trouvé. Bravo. Cela en valait-il la peine ?</string>
     <string name="missing_permission_calendar_widget">Accorder la permission d\'accès au calendrier pour afficher les évènements à venir ici.</string>
     <string name="missing_permission_calendar_search">Accorder la permission de rechercher dans le calendrier.</string>
     <string name="missing_permission_files_search">Accorder la permission d\'accès au stockage pour rechercher des images, des médias et des documents sur cet appareil.</string>
@@ -177,7 +172,6 @@
     <string name="preference_cloud_badges_summary">Afficher un badge pour les fichiers stockés dans le cloud</string>
     <string name="preference_shortcut_badges">Badges de raccourcis</string>
     <string name="preference_shortcut_badges_summary">Afficher un badge qui indique à quelle application le raccourci appartient</string>
-    <string name="preference_icon_shape_platform">Suivre le système</string>
     <string name="preference_nextcloud_signin">Se connecter avec Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Se connecter pour rechercher dans votre serveur Nextcloud</string>
     <string name="preference_about_telegram">Groupe Telegram</string>
@@ -380,7 +374,6 @@
     <string name="preference_enforce_icon_shape">Imposer la forme</string>
     <string name="preference_enforce_icon_shape_summary">Appliquer la forme à toutes les icônes, y compris celles qui ne la supporteraient pas normalement</string>
     <string name="preference_font">Police de caractères</string>
-    <string name="preference_font_system">Police par défaut du système, dépendante du fournisseur (Google Sans sur les téléphones Google Pixel, Roboto sur AOSP)</string>
     <string name="preference_blur_wallpaper">Flouter le fond d\'écran</string>
     <string name="preference_blur_wallpaper_summary">Ajouter un effet de flou sur le fond d\'écran</string>
     <string name="preference_blur_wallpaper_unsupported">Non supporté sur cet appareil</string>
@@ -442,7 +435,7 @@
     <string name="search_action_message">Message</string>
     <string name="search_action_email">Mail</string>
     <string name="search_action_event">Planifier un évènement</string>
-    <string name="create_search_action_type">Quel type d\'action voulez-vous créer \?</string>
+    <string name="create_search_action_type">Quel type d\'action voulez-vous créer ?</string>
     <string name="search_action_app">Application</string>
     <string name="search_action_label">Nom</string>
     <string name="duplicate">Dupliquer</string>
@@ -450,7 +443,7 @@
     <string name="preference_screen_tags">Étiquettes</string>
     <string name="preference_screen_tags_summary">Gérer les étiquettes et les éléments étiquetés</string>
     <string name="tag_exists_message">Une étiquette avec ce nom existe déjà. Si vous continuez, les deux étiquettes seront fusionnées.</string>
-    <string name="search_action_websearch_url_hint">Le modèle d\'URL est utilisé pour construire une URL de recherche. Utilisez ‘${1}’ comme remplacement pour la recherche entrée, par exemple https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Le modèle d\'URL est utilisé pour construire une URL de recherche. Utilisez ‘${1}’ comme remplacement pour la recherche entrée, par exemple https://google.com/search?q=${1}.</string>
     <string name="search_action_open_url">Voir le site</string>
     <string name="create_search_action_website_url">Entrez l\'adresse du site :</string>
     <string name="more_information">Plus d\'informations</string>
@@ -572,7 +565,6 @@
     <string name="theme_color_scheme_custom_color">Couleur personnalisée</string>
     <string name="preference_charging_animation">Animation de chargement</string>
     <string name="preference_restore_default">Rétablir la valeur par défaut</string>
-    <string name="new_color_scheme_name">Nouveau jeu de couleurs</string>
     <string name="theme_color_scheme_palette_color">Palette</string>
     <string name="preference_debug_dump_heap">Sauvegarde mémoire</string>
     <string name="search_action_websearch">Recherche web</string>
@@ -858,13 +850,12 @@
     <string name="profile_work_profile_action_lock">Mettre en pause les applications professionnelles</string>
     <plurals name="calendar_widget_running_tasks">
         <item quantity="one">+%1$d tâche non terminée</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">+%1$d tâches non terminées</item>
     </plurals>
     <string name="preference_grid_list_style_summary">Afficher les applications en tant que liste plutôt que grille</string>
     <string name="preference_breezyweather_integration_instructions">Pour ouvrir Breezy Weather comme fournisseur météo :\n\n1. Se rendre dans Breezy Weather &gt; Paramètres &gt; Widgets &amp; Fond d\'écran animé &gt; Envoyer des données Gadgetbridge &gt; Activer %1$s\n\n2. Dans %1$s, sélectionner Breezy Weather comme fournisseur météo</string>
     <string name="profile_work_profile_state_locked">Les applications professionnelles sont en pause.</string>
-    <string name="preference_clock_widget_time_format_system">Défini par le système</string>
     <string name="preference_tasks_integration_ready">L\'intégration avec Tasks est entièrement configurée et est prête à l\'usage.</string>
     <string name="preference_contacts_call_on_tap">Appuyer pour appeler</string>
     <string name="preference_widgets_on_home_screen">Widgets sur l\'écran d\'accueil</string>
@@ -874,4 +865,24 @@
     <string name="bad_configuration_title">Félicitations, ça s\'appelle se faire enfermer dehors !</string>
     <string name="bad_configuration_summary">Vous avez découvert une combinaison de paramètres qui rendent à la fois la recherche et les paramètres inaccessibles — ce qui vous enferme efficacement à l\'extérieur du lanceur.</string>
     <string name="preference_launch_tasks_app">Ouvrir l\'application Tasks</string>
+    <string name="import_theme_contents">Contenus</string>
+    <string name="preference_shapes_default">Par défaut</string>
+    <string name="preference_screen_shapes">Formes</string>
+    <string name="preference_shapes_extra_round">Très arrondi</string>
+    <string name="preference_shapes_base">Forme de base</string>
+    <string name="preference_shapes_rect">Rectangulaire</string>
+    <string name="confirmation_delete_shapes_scheme">Voulez-vous réellement supprimer le schéma de forme %1$s ?</string>
+    <string name="save_as_file">Enregistrer comme fichier</string>
+    <string name="no_selection">Aucune sélection</string>
+    <string name="theme_export_title">Exporter le thème</string>
+    <string name="theme_bundle_name">Nom</string>
+    <string name="import_theme_exists">Le thème existe déjà et sera mis à jour</string>
+    <string name="theme_bundle_author">Créé par</string>
+    <string name="theme_import_title">Importer le thème</string>
+    <string name="preference_colors_high_contrast">Contraste élevé</string>
+    <string name="preference_screen_transparencies">Transparence</string>
+    <string name="preference_transparencies_default">Par défaut</string>
+    <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
+    <string name="confirmation_delete_transparencies_scheme">Voulez-vous réellement supprimer le schéma de transparence %1$s ?</string>
+    <string name="new_theme_name">(sans titre)</string>
 </resources>
