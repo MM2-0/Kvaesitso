@@ -46,7 +46,14 @@ fun BuildInfoSettingsScreen() {
                     val signatureHash = if (signature != null) {
                         val digest = MessageDigest.getInstance("SHA")
                         digest.update(signature.toByteArray())
-                        Base64.encodeToString(digest.digest(), Base64.NO_WRAP)
+                        digest.digest().toHexString(
+                            HexFormat {
+                                upperCase = true
+                                bytes {
+                                    byteSeparator = ":"
+                                }
+                            }
+                        )
                     } else "null"
                     buildSignature = signatureHash
                 }
