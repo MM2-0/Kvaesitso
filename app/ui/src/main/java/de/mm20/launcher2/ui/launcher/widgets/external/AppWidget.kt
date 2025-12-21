@@ -45,7 +45,7 @@ fun AppWidget(
 ) {
     val context = LocalContext.current
 
-    val lightBackground = (!LocalDarkTheme.current && widget.config.background) || LocalPreferDarkContentOverWallpaper.current
+    val lightBackground = if (widget.config.background) !LocalDarkTheme.current else LocalPreferDarkContentOverWallpaper.current
 
     val widgetInfo = remember(widget.config.widgetId) {
         AppWidgetManager.getInstance(context)

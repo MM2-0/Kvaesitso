@@ -1070,4 +1070,5 @@
     <string name="preference_transliteration">Preferred transliteration</string>
     <string name="preference_transliteration_auto">Automatic</string>
     <string name="preference_transliteration_disabled">Disabled</string>
+    <string name="select_tag">Select tag</string>
 </resources>

@@ -44,7 +44,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
         minPinnedLevel = PinnedLevel.AutomaticallySorted,
     ).map {
         it.filterIsInstance<Tag>()
-    }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     open val favorites: Flow<List<SavableSearchable>> = selectedTag.flatMapLatest { tag ->
         if (tag == null) {

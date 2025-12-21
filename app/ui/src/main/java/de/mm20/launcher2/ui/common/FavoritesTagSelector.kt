@@ -46,6 +46,7 @@ fun FavoritesTagSelector(
     compact: Boolean,
     expanded: Boolean,
     onExpand: (Boolean) -> Unit,
+    showFavorites: Boolean
 ) {
     val sheetManager = LocalBottomSheetManager.current
 
@@ -70,40 +71,42 @@ fun FavoritesTagSelector(
                         .horizontalScroll(scrollState)
                         .padding(end = 12.dp),
                 ) {
-                    FilterChip(
-                        modifier = Modifier
-                            .padding(start = 16.dp),
-                        selected = selectedTag == null,
-                        onClick = { onSelectTag(null) },
-                        leadingIcon = if (compact) null else {
-                            {
-                                Icon(
-                                    painter = painterResource(R.drawable.star_20px_filled),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                )
+                    if (showFavorites) {
+                        FilterChip(
+                            modifier = Modifier
+                                .padding(start = 16.dp),
+                            selected = selectedTag == null,
+                            onClick = { onSelectTag(null) },
+                            leadingIcon = if (compact) null else {
+                                {
+                                    Icon(
+                                        painter = painterResource(R.drawable.star_20px_filled),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                    )
+                                }
+                            },
+                            label = {
+                                if (compact) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.star_20px_filled),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                    )
+                                } else {
+                                    Text(stringResource(R.string.favorites))
+                                }
                             }
-                        },
-                        label = {
-                            if (compact) {
-                                Icon(
-                                    painter = painterResource(R.drawable.star_20px_filled),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                )
-                            } else {
-                                Text(stringResource(R.string.favorites))
-                            }
-                        }
-                    )
-                    for (tag in tags) {
+                        )
+                    }
+                    for ((i, tag) in tags.withIndex()) {
                         TagChip(
                             modifier = Modifier
-                                .padding(start = 8.dp),
+                                .padding(start = if (!showFavorites && i == 0) 16.dp else 8.dp),
                             tag = tag,
                             selected = selectedTag == tag.tag,
                             onClick = {
-                                if (selectedTag == tag.tag) {
+                                if (selectedTag == tag.tag && showFavorites) {
                                     onSelectTag(null)
                                 } else {
                                     onSelectTag(tag.tag)
@@ -184,7 +187,7 @@ fun FavoritesTagSelector(
                             compact = compact,
                             selected = selectedTag == tag.tag,
                             onClick = {
-                                if (selectedTag == tag.tag) {
+                                if (selectedTag == tag.tag && showFavorites) {
                                     onSelectTag(null)
                                 } else {
                                     onSelectTag(tag.tag)
