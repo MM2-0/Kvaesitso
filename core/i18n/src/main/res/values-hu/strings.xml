@@ -1048,4 +1048,5 @@
     <string name="preference_transliteration">Előnyben részesített átírás</string>
     <string name="preference_transliteration_auto">Automatikus</string>
     <string name="preference_transliteration_disabled">Letiltva</string>
+    <string name="select_tag">Címke kiválasztása</string>
 </resources>
