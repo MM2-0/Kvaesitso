@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.FavoritesTagSelector
 import de.mm20.launcher2.ui.component.Banner
@@ -22,19 +23,17 @@ import de.mm20.launcher2.widgets.FavoritesWidget
 fun FavoritesWidget(widget: FavoritesWidget) {
     val viewModel: FavoritesWidgetVM = viewModel(key = "favorites-widget-${widget.id}")
     val favorites by remember { viewModel.favorites }.collectAsState(emptyList())
+    val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)
-    val compactTags by viewModel.compactTags.collectAsState(false)
-    val showFavorites by viewModel.showFavorites.collectAsState(false)
-    val showTags by viewModel.showTags.collectAsState(false)
-    val combinedTags by remember { viewModel.combinedTags }.collectAsState(emptyList())
-    val favoritesEditButton = widget.config.editButton
 
-    val tagsExpanded by viewModel.tagsExpanded.collectAsState(false)
+    val customTags = widget.config.customTags && widget.config.tagList.isNotEmpty()
+    val favoritesEditButton = !customTags && widget.config.editButton
 
-    // there's probably a better way to do this instead of sending combinedTags
-    // back to the viewmodel
-    LaunchedEffect(widget, combinedTags) {
-        viewModel.updateWidget(widget, combinedTags)
+    val compactTags = widget.config.compactTags
+    val tagsExpanded = widget.config.tagsMultiline
+
+    LaunchedEffect(widget) {
+        viewModel.updateWidget(widget)
     }
 
     Column(
@@ -51,10 +50,9 @@ fun FavoritesWidget(widget: FavoritesWidget) {
                 icon = if (selectedTag == null) R.drawable.star_24px else R.drawable.tag_24px,
             )
         }
-        if(favoritesEditButton || (showTags && (showFavorites ||
-                    (combinedTags.isNotEmpty() && combinedTags.size > 1)))) {
+        if (favoritesEditButton || (customTags && widget.config.tagList.size > 1)) {
             FavoritesTagSelector(
-                tags = combinedTags,
+                tags = if (customTags) widget.config.tagList.map { Tag(it) } else pinnedTags,
                 selectedTag = selectedTag,
                 editButton = favoritesEditButton,
                 reverse = false,
@@ -63,7 +61,7 @@ fun FavoritesWidget(widget: FavoritesWidget) {
                 expanded = tagsExpanded,
                 compact = compactTags,
                 onExpand = { viewModel.setTagsExpanded(it) },
-                showFavorites = showFavorites
+                showFavorites = !customTags
             )
         }
     }

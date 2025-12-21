@@ -7,8 +7,7 @@ import java.util.UUID
 
 @Serializable
 data class FavoritesWidgetConfig(
-    val showFavorites: Boolean = true,
-    val showTags: Boolean = true,
+    val customTags: Boolean = false,
     val editButton: Boolean = true,
     val tagsMultiline: Boolean = false,
     val compactTags: Boolean = false,

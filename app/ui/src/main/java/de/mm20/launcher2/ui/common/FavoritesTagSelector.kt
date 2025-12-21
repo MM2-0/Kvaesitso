@@ -71,7 +71,7 @@ fun FavoritesTagSelector(
                         .horizontalScroll(scrollState)
                         .padding(end = 12.dp),
                 ) {
-                    if(showFavorites) {
+                    if (showFavorites) {
                         FilterChip(
                             modifier = Modifier
                                 .padding(start = 16.dp),
@@ -99,14 +99,14 @@ fun FavoritesTagSelector(
                             }
                         )
                     }
-                    for (tag in tags) {
+                    for ((i, tag) in tags.withIndex()) {
                         TagChip(
                             modifier = Modifier
-                                .padding(start = 8.dp),
+                                .padding(start = if (!showFavorites && i == 0) 16.dp else 8.dp),
                             tag = tag,
                             selected = selectedTag == tag.tag,
                             onClick = {
-                                if (selectedTag == tag.tag) {
+                                if (selectedTag == tag.tag && showFavorites) {
                                     onSelectTag(null)
                                 } else {
                                     onSelectTag(tag.tag)
@@ -187,7 +187,7 @@ fun FavoritesTagSelector(
                             compact = compact,
                             selected = selectedTag == tag.tag,
                             onClick = {
-                                if (selectedTag == tag.tag) {
+                                if (selectedTag == tag.tag && showFavorites) {
                                     onSelectTag(null)
                                 } else {
                                     onSelectTag(tag.tag)

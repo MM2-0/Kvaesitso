@@ -1044,9 +1044,6 @@
         <item quantity="other">in %1$d minutes</item>
     </plurals>
     <string name="departure_time_departed">departed</string>
-    <string name="preference_single_tag">Set Single Tag</string>
-    <string name="preference_screen_select_tag">Select Tags</string>
-    <string name="shortcuts_widget_tag_section_empty">Add tags here. Pinned tags will be shown if none are selected</string>
     <string name="bad_configuration_title">Congratulations, you\'ve locked yourself out!</string>
     <string name="bad_configuration_summary">You\'ve discovered a combination of settings that makes both the search and settings inaccessible — effectively locking you out of the launcher</string>
     <string name="theme_export_title">Export theme</string>
@@ -1073,4 +1070,5 @@
     <string name="preference_transliteration">Preferred transliteration</string>
     <string name="preference_transliteration_auto">Automatic</string>
     <string name="preference_transliteration_disabled">Disabled</string>
+    <string name="select_tag">Select tag</string>
 </resources>

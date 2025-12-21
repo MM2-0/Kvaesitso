@@ -12,7 +12,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -26,6 +29,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -36,27 +40,28 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
-import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
-import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -70,18 +75,18 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
+import androidx.compose.ui.zIndex
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -92,13 +97,12 @@ import de.mm20.launcher2.search.calendar.CalendarListType
 import de.mm20.launcher2.themes.colors.atTone
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
-import de.mm20.launcher2.ui.common.TagChip
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
-import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropRow
+import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropColumn
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
@@ -115,8 +119,10 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import org.koin.compose.koinInject
+import java.text.Collator
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
@@ -183,15 +189,16 @@ fun ColumnScope.ConfigureWeatherWidget(
             bottom = 8.dp,
         ),
         onClick = {
-            context.startActivity(Intent(
-                context,
-                SettingsActivity::class.java
-            ).apply {
-                putExtra(
-                    SettingsActivity.EXTRA_ROUTE,
-                    SettingsActivity.ROUTE_WEATHER_INTEGRATION
-                )
-            })
+            context.startActivity(
+                Intent(
+                    context,
+                    SettingsActivity::class.java
+                ).apply {
+                    putExtra(
+                        SettingsActivity.EXTRA_ROUTE,
+                        SettingsActivity.ROUTE_WEATHER_INTEGRATION
+                    )
+                })
         }) {
         Text(stringResource(R.string.widget_config_weather_integration_settings))
         Icon(
@@ -208,283 +215,342 @@ fun ColumnScope.ConfigureFavoritesWidget(
     widget: FavoritesWidget,
     onWidgetUpdated: (FavoritesWidget) -> Unit,
 ) {
-    val viewModel: ConfigureWidgetSheetVM = viewModel()
+    val customAttrRepository = koinInject<CustomAttributesRepository>()
 
-    LaunchedEffect(null) {
-        viewModel.reload(widget)
-    }
+    val allTags by remember {
+        customAttrRepository
+            .getAllTags()
+            .map {
+                val collator = Collator.getInstance().apply { strength = Collator.SECONDARY }
+                it
+                    .sortedWith { el1, el2 ->
+                        collator.compare(el1, el2)
+                    }
+            }
+    }.collectAsState(emptyList())
 
-    val availableTags by viewModel.availableTags
     val tagsListState = rememberLazyListState()
 
     val bottomSheetManager = LocalBottomSheetManager.current
 
-    val selectedTags by viewModel.selectedTags
-
     var createTag by remember { mutableStateOf(false) }
 
-    OutlinedCard {
-        Column(
-            modifier = Modifier.fillMaxWidth()
+
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+    ) {
+        ToggleButton(
+            modifier = Modifier.weight(1f),
+            checked = !widget.config.customTags,
+            onCheckedChange = {
+                if (it) {
+                    onWidgetUpdated(widget.copy(config = widget.config.copy(customTags = false)))
+                }
+            },
+            shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
         ) {
-            MultiChoiceSegmentedButtonRow(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp),
-            ) {
-                SegmentedButton(
-                    checked = widget.config.showFavorites,
-                    onCheckedChange = {
-                        if(it || widget.config.showTags)
-                        {
-                            onWidgetUpdated(widget.copy(config = widget.config.copy(showFavorites = it)))
-                        }
-
-                    },
-                    shape = SegmentedButtonDefaults.itemShape(index = 0, count = 3),
-                ) {
-                    Row(horizontalArrangement = Arrangement.SpaceBetween) {
-                        Icon(
-                            painter = painterResource(R.drawable.star_20px),
-                            contentDescription = null,
-                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
-                        )
-                        Text(text = stringResource(R.string.favorites))
-                    }
-                }
-                SegmentedButton(
-                    checked = widget.config.showTags,
-                    onCheckedChange = {
-                        if(it || widget.config.showFavorites) {
-                            var tagList = selectedTags
-                            if(!it)
-                            {
-                                tagList = emptyList()
-                                viewModel.clearAllTags();
-                            }
-
-                            onWidgetUpdated(
-                                widget.copy(
-                                    config = widget.config.copy(showTags = it, tagList = tagList)
-                                )
-                            )
-                        }
-                    },
-                    shape = SegmentedButtonDefaults.itemShape(index = 2, count = 3),
-                ) {
-                    Row(horizontalArrangement = Arrangement.SpaceBetween) {
-                        Icon(
-                            painter = painterResource(R.drawable.tag_20px),
-                            contentDescription = null,
-                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
-                        )
-                        Text(text = stringResource(R.string.preference_screen_tags))
-                    }
-                }
-            }
-            SwitchPreference(
-                title = stringResource(R.string.preference_edit_button),
-                iconPadding = false,
-                value = widget.config.editButton,
-                onValueChanged = {
-                    onWidgetUpdated(widget.copy(config = widget.config.copy(editButton = it)))
-                }
+            Icon(
+                painterResource(
+                    if (!widget.config.customTags) R.drawable.check_20px else R.drawable.star_20px
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(end = ToggleButtonDefaults.IconSpacing)
+                    .size(ToggleButtonDefaults.IconSize)
             )
-            if(widget.config.showTags) {
-                SwitchPreference(
-                    title = stringResource(R.string.preference_compact_tags),
-                    iconPadding = false,
-                    value = widget.config.compactTags,
-                    onValueChanged = {
-                        onWidgetUpdated(widget.copy(config = widget.config.copy(compactTags = it)))
-                    }
-                )
-            }
-            if(widget.config.showTags) {
-                var showAddMenu by remember { mutableStateOf(false) }
-                Column {
-                    Row(
-                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 16.dp),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            text = stringResource(R.string.edit_favorites_dialog_tags),
-                            style = MaterialTheme.typography.titleMedium,
+
+            Text(stringResource(R.string.favorites))
+        }
+        ToggleButton(
+            modifier = Modifier.weight(1f),
+            checked = widget.config.customTags,
+            onCheckedChange = {
+                if (it) {
+                    onWidgetUpdated(
+                        widget.copy(
+                            config = widget.config.copy(customTags = true)
                         )
-                        Box() {
-                            FilledTonalIconButton(
-                                modifier = Modifier.offset(x = 4.dp),
-                                onClick = {
-                                    showAddMenu = true
-                                }) {
-                                Icon(
-                                    painter = painterResource(R.drawable.add_24px),
-                                    contentDescription = null
-                                )
-                            }
-                            DropdownMenuPopup(
-                                expanded = showAddMenu,
-                                onDismissRequest = { showAddMenu = false }) {
-                                if (availableTags.isNotEmpty()) {
-                                    DropdownMenuGroup(
-                                        shapes = MenuDefaults.groupShape(0, 2),
-                                    ) {
-                                        for ((i, tag) in availableTags.withIndex()) {
-                                            DropdownMenuItem(
-                                                shape = if (availableTags.size == 1) MenuDefaults.standaloneItemShape
-                                                else when (i) {
-                                                    0 -> MenuDefaults.leadingItemShape
-                                                    availableTags.lastIndex -> MenuDefaults.trailingItemShape
-                                                    else -> MenuDefaults.middleItemShape
-                                                },
-                                                leadingIcon = {
-                                                    Icon(
-                                                        painterResource(R.drawable.tag_24px),
-                                                        null
-                                                    )
-                                                },
-                                                text = { Text(tag.tag) },
-                                                onClick = {
-                                                    onWidgetUpdated(
-                                                        widget.copy(
-                                                            config = widget.config.copy(
-                                                                tagList = selectedTags + tag.tag
-                                                            )
-                                                        )
-                                                    )
-                                                    viewModel.addTag(tag)
-                                                    showAddMenu = false
-                                                })
-                                        }
-                                    }
-                                }
-                                Spacer(
-                                    modifier = Modifier.height(MenuDefaults.GroupSpacing)
-                                )
-                                DropdownMenuGroup(
-                                    shapes = MenuDefaults.groupShape(
-                                        if (availableTags.isEmpty()) 0 else 1,
-                                        if (availableTags.isEmpty()) 1 else 2,
-                                    )
+                    )
+                }
+            },
+            shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
+        ) {
+            Icon(
+                painterResource(
+                    if (widget.config.customTags) R.drawable.check_20px else R.drawable.tag_20px
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(end = ToggleButtonDefaults.IconSpacing)
+                    .size(ToggleButtonDefaults.IconSize)
+            )
+
+            Text(stringResource(R.string.preference_screen_tags))
+        }
+    }
+
+    AnimatedContent(widget.config.customTags) { showTags ->
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            if (showTags) {
+                var tagList by remember {
+                    mutableStateOf(widget.config.tagList.toImmutableList())
+                }
+
+
+                val availableTags by remember {
+                    derivedStateOf { allTags - tagList }
+                }
+
+                LaunchedEffect(tagList) {
+                    onWidgetUpdated(
+                        widget.copy(
+                            config = widget.config.copy(
+                                tagList = tagList
+                            )
+                        )
+                    )
+                }
+
+                OutlinedCard(
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+
+                    val rowState = rememberLazyDragAndDropListState(
+                        listState = tagsListState,
+                        onItemMove = { from, to ->
+                            val newTagList = tagList.toMutableList()
+                            val tag = newTagList.removeAt(from.index)
+                            newTagList.add(to.index, tag)
+                            tagList = newTagList.toImmutableList()
+                        },
+                    )
+
+                    LazyDragAndDropColumn(
+                        state = rowState,
+                        modifier = Modifier
+                            .heightIn(max = 9999.dp)
+                            .fillMaxWidth()
+                            .animateContentSize(MaterialTheme.motionScheme.defaultSpatialSpec()),
+                        bidirectionalDrag = false,
+                    ) {
+                        items(
+                            tagList,
+                            key = { it }
+                        ) { tag ->
+                            DraggableItem(state = rowState, key = tag) {
+                                val elevation by animateDpAsState(if (it) 4.dp else 0.dp)
+                                Surface(
+                                    shadowElevation = elevation,
+                                    tonalElevation = elevation,
+                                    modifier = Modifier.zIndex(if (it) 1f else 0f)
                                 ) {
+                                    Preference(
+                                        title = tag,
+                                        icon = R.drawable.tag_24px,
+                                        controls = {
+                                            IconButton(
+                                                modifier = Modifier.offset(x = 8.dp),
+                                                onClick = {
+                                                    tagList = (tagList - tag).toImmutableList()
+                                                }
+                                            ) {
+                                                Icon(
+                                                    painterResource(R.drawable.close_24px),
+                                                    stringResource(R.string.menu_remove),
+                                                )
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                var showAddMenu by remember { mutableStateOf(false) }
+
+                Box {
+                    FilledTonalButton(
+                        modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
+                        onClick = {
+                            showAddMenu = true
+                        },
+                        contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                        shapes = ButtonDefaults.shapes()
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.add_20px),
+                            null,
+                            modifier = Modifier
+                                .padding(end = ButtonDefaults.IconSpacing)
+                                .size(ButtonDefaults.IconSize)
+                        )
+                        Text(stringResource(R.string.select_tag))
+                    }
+                    DropdownMenuPopup(
+                        expanded = showAddMenu,
+                        onDismissRequest = { showAddMenu = false }) {
+                        if (availableTags.isNotEmpty()) {
+                            DropdownMenuGroup(
+                                shapes = MenuDefaults.groupShape(0, 2),
+                            ) {
+                                for ((i, tag) in availableTags.withIndex()) {
                                     DropdownMenuItem(
-                                        shape = MenuDefaults.standaloneItemShape,
-                                        leadingIcon = {
-                                            Icon(painterResource(R.drawable.add_24px), null)
+                                        shape = if (availableTags.size == 1) MenuDefaults.standaloneItemShape
+                                        else when (i) {
+                                            0 -> MenuDefaults.leadingItemShape
+                                            availableTags.lastIndex -> MenuDefaults.trailingItemShape
+                                            else -> MenuDefaults.middleItemShape
                                         },
-                                        text = {
-                                            Text(
-                                                stringResource(R.string.edit_favorites_dialog_new_tag),
+                                        leadingIcon = {
+                                            Icon(
+                                                painterResource(R.drawable.tag_24px),
+                                                null
                                             )
                                         },
+                                        text = { Text(tag) },
                                         onClick = {
-                                            createTag = true
+                                            tagList = (tagList + tag).toImmutableList()
                                             showAddMenu = false
-                                        }
-                                    )
+                                        })
                                 }
                             }
+                            Spacer(
+                                modifier = Modifier.height(MenuDefaults.GroupSpacing)
+                            )
                         }
-
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShape(
+                                if (availableTags.isEmpty()) 0 else 1,
+                                if (availableTags.isEmpty()) 1 else 2,
+                            )
+                        ) {
+                            DropdownMenuItem(
+                                shape = MenuDefaults.standaloneItemShape,
+                                leadingIcon = {
+                                    Icon(painterResource(R.drawable.add_24px), null)
+                                },
+                                text = {
+                                    Text(
+                                        stringResource(R.string.edit_favorites_dialog_new_tag),
+                                    )
+                                },
+                                onClick = {
+                                    createTag = true
+                                    showAddMenu = false
+                                }
+                            )
+                        }
                     }
-                    if (selectedTags.isNotEmpty()) {
-                        val rowState = rememberLazyDragAndDropListState(
-                            listState = tagsListState,
-                            onDragEnd = {
+                }
+
+
+                if (createTag) {
+                    EditTagSheet(
+                        tag = null,
+                        onTagSaved = { tag ->
+                            val newTag = Tag(tag)
+                            tagList = (tagList + newTag.tag).toImmutableList()
+                        },
+                        onDismiss = {
+                            createTag = false
+                        }
+                    )
+                }
+
+                OutlinedCard(
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_compact_tags),
+                            iconPadding = false,
+                            value = widget.config.compactTags,
+                            onValueChanged = {
                                 onWidgetUpdated(
                                     widget.copy(
                                         config = widget.config.copy(
-                                            tagList = viewModel.selectedTags.value
+                                            compactTags = it
                                         )
                                     )
                                 )
                             },
-                            onItemMove = { from, to ->
-                                viewModel.moveItem(from, to)
-                            }
+                            enabled = widget.config.tagList.size > 1,
                         )
-                        LazyDragAndDropRow(
-                            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp),
-                            state = rowState
+                    }
+                }
+            } else {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    OutlinedCard(
+                        modifier = Modifier.padding(top = 16.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            items(
-                                selectedTags,
-                                key = { it }
-                            ) { tag ->
-                                DraggableItem(state = rowState, key = tag) { dragged ->
-                                    val tagVal = Tag(tag)
-                                    TagChip(
-                                        modifier = Modifier
-                                            .padding(end = 12.dp)
-                                            .pointerInput(null) {
-                                            },
-                                        tag = tagVal,
-                                        dragged = dragged,
-                                        clearable = true,
-                                        onClear = {
-                                            onWidgetUpdated(
-                                                widget.copy(
-                                                    config = widget.config.copy(
-                                                        tagList = selectedTags - tag
-                                                    )
-                                                )
+
+                            SwitchPreference(
+                                title = stringResource(R.string.preference_edit_button),
+                                iconPadding = false,
+                                value = widget.config.editButton,
+                                onValueChanged = {
+                                    onWidgetUpdated(
+                                        widget.copy(
+                                            config = widget.config.copy(
+                                                editButton = it
                                             )
-                                            viewModel.clearTag(tagVal)
-                                        }
+                                        )
                                     )
                                 }
-                            }
+                            )
+                            SwitchPreference(
+                                title = stringResource(R.string.customize_item_tags),
+                                iconPadding = false,
+                                value = widget.config.compactTags,
+                                onValueChanged = {
+                                    onWidgetUpdated(
+                                        widget.copy(
+                                            config = widget.config.copy(
+                                                compactTags = it
+                                            )
+                                        )
+                                    )
+                                }
+                            )
                         }
-                    } else {
-                        Text(
+                    }
+                    TextButton(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .align(Alignment.End),
+                        contentPadding = PaddingValues(
+                            end = 16.dp,
+                            top = 8.dp,
+                            start = 24.dp,
+                            bottom = 8.dp,
+                        ),
+                        onClick = {
+                            bottomSheetManager.showEditFavoritesSheet()
+                        }) {
+                        Text(stringResource(R.string.menu_item_edit_favs))
+                        Icon(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp, horizontal = 16.dp),
-                            text = stringResource(R.string.shortcuts_widget_tag_section_empty),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.outline
+                                .padding(start = ButtonDefaults.IconSpacing)
+                                .requiredSize(ButtonDefaults.IconSize),
+                            painter = painterResource(R.drawable.open_in_new_20px),
+                            contentDescription = null
                         )
                     }
                 }
             }
         }
-    }
-    TextButton(
-        modifier = Modifier
-            .padding(top = 8.dp)
-            .align(Alignment.End),
-        contentPadding = PaddingValues(
-            end = 16.dp,
-            top = 8.dp,
-            start = 24.dp,
-            bottom = 8.dp,
-        ),
-        onClick = {
-            bottomSheetManager.showEditFavoritesSheet()
-        }) {
-        Text(stringResource(R.string.menu_item_edit_favs))
-        Icon(
-            modifier = Modifier
-                .padding(start = ButtonDefaults.IconSpacing)
-                .requiredSize(ButtonDefaults.IconSize),
-            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
-        )
-    }
-
-    if (createTag) {
-        EditTagSheet(
-            tag = null,
-            onTagSaved = { tag ->
-                val newTag = Tag(tag)
-                viewModel.addAvailableTag(newTag)
-            },
-            onDismiss = {
-                createTag = false
-            }
-        )
     }
 }
 
@@ -492,7 +558,6 @@ fun ColumnScope.ConfigureFavoritesWidget(
 fun ColumnScope.ConfigureMusicWidget(
     widget: MusicWidget,
     onWidgetUpdated: (MusicWidget) -> Unit,
-
 ) {
     val context = LocalContext.current
 
@@ -521,15 +586,16 @@ fun ColumnScope.ConfigureMusicWidget(
             bottom = 8.dp,
         ),
         onClick = {
-            context.startActivity(Intent(
-                context,
-                SettingsActivity::class.java
-            ).apply {
-                putExtra(
-                    SettingsActivity.EXTRA_ROUTE,
-                    SettingsActivity.ROUTE_MEDIA_INTEGRATION,
-                )
-            })
+            context.startActivity(
+                Intent(
+                    context,
+                    SettingsActivity::class.java
+                ).apply {
+                    putExtra(
+                        SettingsActivity.EXTRA_ROUTE,
+                        SettingsActivity.ROUTE_MEDIA_INTEGRATION,
+                    )
+                })
         }) {
         Text(stringResource(R.string.widget_config_music_integration_settings))
         Icon(
@@ -764,7 +830,8 @@ fun ColumnScope.ConfigureAppWidget(
                     modifier = Modifier
                         .padding(start = ButtonDefaults.IconSpacing)
                         .requiredSize(ButtonDefaults.IconSize),
-                    painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
+                    painter = painterResource(R.drawable.open_in_new_20px),
+                    contentDescription = null
                 )
             }
         }
@@ -930,6 +997,7 @@ fun ConfigureNotesWidget(
     onWidgetUpdated: (NotesWidget) -> Unit
 ) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val linkFileLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("text/markdown")
     ) {
@@ -993,7 +1061,7 @@ fun ConfigureNotesWidget(
                 icon = R.drawable.link_24px,
                 onClick = {
                     linkFileLauncher.launch(
-                        context.getString(
+                        resources.getString(
                             R.string.notes_widget_export_filename,
                             ZonedDateTime.now().format(
                                 DateTimeFormatter.ISO_INSTANT
