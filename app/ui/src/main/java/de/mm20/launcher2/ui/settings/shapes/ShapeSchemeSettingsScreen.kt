@@ -23,6 +23,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
@@ -38,6 +39,8 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -539,47 +542,47 @@ fun ShapePreference(
                         )
                 )
 
-                SingleChoiceSegmentedButtonRow(
+                Row(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
                 ) {
-                    SegmentedButton(
-                        selected = actualCornerStyle == CornerStyle.Rounded,
-                        onClick = {
+                    ToggleButton(
+                        modifier = Modifier.weight(1f),
+                        checked = actualCornerStyle == CornerStyle.Rounded,
+                        onCheckedChange = {
                             currentCornerStyle = CornerStyle.Rounded
                         },
-                        shape = SegmentedButtonDefaults.itemShape(0, 2),
-                        icon = {
-                            SegmentedButtonDefaults.Icon(
-                                active = actualCornerStyle == CornerStyle.Rounded,
-                            ) {
-                                Icon(
-                                    painterResource(R.drawable.rounded_corner_alt_24px),
-                                    null,
-                                    modifier = Modifier.size(SegmentedButtonDefaults.IconSize),
-                                )
-                            }
-                        }
+                        shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                     ) {
+                        Icon(
+                            painterResource(
+                                if (actualCornerStyle == CornerStyle.Rounded) R.drawable.check_20px else R.drawable.rounded_corner_alt_24px
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(end = ToggleButtonDefaults.IconSpacing)
+                                .size(ToggleButtonDefaults.IconSize)
+                        )
                         Text(stringResource(R.string.preference_cards_shape_rounded))
                     }
-                    SegmentedButton(
-                        selected = actualCornerStyle == CornerStyle.Cut,
-                        onClick = {
+                    ToggleButton(
+                        modifier = Modifier.weight(1f),
+                        checked = actualCornerStyle == CornerStyle.Cut,
+                        onCheckedChange = {
                             currentCornerStyle = CornerStyle.Cut
                         },
-                        shape = SegmentedButtonDefaults.itemShape(1, 2),
-                        icon = {
-                            SegmentedButtonDefaults.Icon(
-                                active = actualCornerStyle == CornerStyle.Cut,
-                            ) {
-                                Icon(
-                                    painterResource(R.drawable.cut_corner_20px),
-                                    null,
-                                    modifier = Modifier.size(SegmentedButtonDefaults.IconSize),)
-                            }
-                        }
+                        shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
                     ) {
+                        Icon(
+                            painterResource(
+                                if (actualCornerStyle == CornerStyle.Cut) R.drawable.check_20px else R.drawable.cut_corner_20px
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(end = ToggleButtonDefaults.IconSpacing)
+                                .size(ToggleButtonDefaults.IconSize)
+                        )
                         Text(stringResource(R.string.preference_cards_shape_cut))
                     }
                 }

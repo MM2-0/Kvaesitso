@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +25,7 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -391,57 +393,49 @@ fun SearchBarStylePreference(
                                 )
                             }
                             if (style == SearchBarStyle.Transparent) {
-                                SingleChoiceSegmentedButtonRow(
+                                Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(top = 16.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
                                 ) {
-                                    SegmentedButton(
-                                        selected = colors == SearchBarColors.Auto,
-                                        onClick = {
+                                    ToggleButton(
+                                        modifier = Modifier.weight(1f),
+                                        checked = colors == SearchBarColors.Auto,
+                                        onCheckedChange = {
                                             onColorsChanged(SearchBarColors.Auto)
                                         },
-                                        shape = SegmentedButtonDefaults.itemShape(
-                                            index = 0,
-                                            count = 3
-                                        ),
+                                        shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                                     ) {
                                         Icon(
                                             painterResource(R.drawable.auto_awesome_20dp),
                                             contentDescription = null,
-                                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                                         )
                                     }
-                                    SegmentedButton(
-                                        selected = colors == SearchBarColors.Dark,
-                                        onClick = {
-                                            onColorsChanged(SearchBarColors.Dark)
-                                        },
-                                        shape = SegmentedButtonDefaults.itemShape(
-                                            index = 1,
-                                            count = 3
-                                        ),
-                                    ) {
-                                        Icon(
-                                            painterResource(R.drawable.light_mode_20px),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
-                                        )
-                                    }
-                                    SegmentedButton(
-                                        selected = colors == SearchBarColors.Light,
-                                        onClick = {
+                                    ToggleButton(
+                                        modifier = Modifier.weight(1f),
+                                        checked = colors == SearchBarColors.Light,
+                                        onCheckedChange = {
                                             onColorsChanged(SearchBarColors.Light)
                                         },
-                                        shape = SegmentedButtonDefaults.itemShape(
-                                            index = 2,
-                                            count = 3
-                                        ),
+                                        shapes = ButtonGroupDefaults.connectedMiddleButtonShapes(),
                                     ) {
                                         Icon(
-                                            painterResource(R.drawable.dark_mode_20px),
+                                            painterResource(R.drawable.light_mode_24px),
                                             contentDescription = null,
-                                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                        )
+                                    }
+                                    ToggleButton(
+                                        modifier = Modifier.weight(1f),
+                                        checked = colors == SearchBarColors.Dark,
+                                        onCheckedChange = {
+                                            onColorsChanged(SearchBarColors.Dark)
+                                        },
+                                        shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
+                                    ) {
+                                        Icon(
+                                            painterResource(R.drawable.dark_mode_24px),
+                                            contentDescription = null,
                                         )
                                     }
                                 }

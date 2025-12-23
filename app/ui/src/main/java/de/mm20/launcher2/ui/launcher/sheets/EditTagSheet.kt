@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,6 +25,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +37,8 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -139,18 +143,20 @@ fun CreateNewTagPage(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
 fun PickItems(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
     val columns = LocalGridSettings.current.columnCount - 1
 
-    Scaffold (
+    Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
         containerColor = Color.Transparent,
         bottomBar = {
-            Box (
-              modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
-              contentAlignment = Alignment.CenterEnd
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                contentAlignment = Alignment.CenterEnd
             ) {
 
-                ExtendedFloatingActionButton (
+                ExtendedFloatingActionButton(
                     modifier = Modifier.padding(paddingValues),
-                    onClick = {viewModel.closeItemPicker()}
+                    onClick = { viewModel.closeItemPicker() }
                 ) {
                     Text(stringResource(R.string.action_next))
                 }
@@ -421,23 +427,43 @@ fun PickIcon(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        SingleChoiceSegmentedButtonRow(
+        Row(
             modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
         ) {
-            SegmentedButton(
-                selected = selectedTabIndex.intValue == 0,
-                icon = { Icon(painterResource(R.drawable.apps_24px), null) },
-                label = { Text("Icon") },
-                onClick = { selectedTabIndex.intValue = 0 },
-                shape = SegmentedButtonDefaults.itemShape(0, 2)
-            )
-            SegmentedButton(
-                selected = selectedTabIndex.intValue == 1,
-                icon = { Icon(painterResource(R.drawable.mood_24px), null) },
-                label = { Text("Emoji") },
-                onClick = { selectedTabIndex.intValue = 1 },
-                shape = SegmentedButtonDefaults.itemShape(1, 2)
-            )
+            ToggleButton(
+                modifier = Modifier.weight(1f),
+                checked = selectedTabIndex.intValue == 0,
+                onCheckedChange = { selectedTabIndex.intValue = 0 },
+                shapes = ButtonGroupDefaults.connectedLeadingButtonShapes()
+            ) {
+                Icon(
+                    painterResource(
+                        if (selectedTabIndex.intValue == 0) R.drawable.check_20px else R.drawable.apps_20px
+                    ),
+                    null,
+                    modifier = Modifier.padding(end = ToggleButtonDefaults.IconSpacing).size(
+                        ToggleButtonDefaults.IconSize)
+                )
+                Text("Icon")
+            }
+            ToggleButton(
+                modifier = Modifier.weight(1f),
+                checked = selectedTabIndex.intValue == 1,
+                onCheckedChange = { selectedTabIndex.intValue = 1 },
+                shapes = ButtonGroupDefaults.connectedTrailingButtonShapes()
+            ) {
+                Icon(
+                    painterResource(
+                        if (selectedTabIndex.intValue == 1) R.drawable.check_20px else R.drawable.mood_20px
+                    ),
+                    null,
+                    modifier = Modifier
+                        .padding(end = ToggleButtonDefaults.IconSpacing)
+                        .size(ToggleButtonDefaults.IconSize)
+                )
+                Text("Emoji")
+            }
         }
         AnimatedContent(
             selectedTabIndex.intValue,

@@ -3,37 +3,33 @@ package de.mm20.launcher2.ui.settings.typography
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedIconToggleButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Slider
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.Typography
@@ -47,7 +43,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -89,7 +84,7 @@ import de.mm20.launcher2.themes.typography.TextStyle as ThemeTextStyle
 @Serializable
 data class TypographySettingsRoute(
     @Serializable(with = UUIDSerializer::class) val id: UUID
-): NavKey
+) : NavKey
 
 @Composable
 fun TypographySettingsScreen(themeId: UUID) {
@@ -174,7 +169,11 @@ fun TypographySettingsScreen(themeId: UUID) {
                             size = 48.dp,
                             modifier = Modifier.padding(bottom = 8.dp),
                         )
-                        Text(previewTexts.Medium1, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
+                        Text(
+                            previewTexts.Medium1,
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.bodySmall
+                        )
                     }
                 }
                 TextStylePreference(
@@ -281,8 +280,11 @@ fun TypographySettingsScreen(themeId: UUID) {
                     FilterChip(
                         modifier = Modifier
                             .padding(end = 16.dp),
-                        label = { Text(previewTexts.Short1
-                        ) },
+                        label = {
+                            Text(
+                                previewTexts.Short1
+                            )
+                        },
                         leadingIcon = {
                             Icon(
                                 painterResource(R.drawable.tag_20px),
@@ -1066,19 +1068,13 @@ private fun TextStylePreference(
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
 
-                            Box(
-                                modifier = Modifier
-                                    .size(56.dp)
-                                    .border(
-                                        if (name == actualFontFamily) 2.dp else 1.dp,
-                                        if (name == actualFontFamily) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
-                                        CircleShape
-                                    )
-                                    .clip(CircleShape)
-                                    .clickable {
-                                        fontFamily = name
-                                    },
-                                contentAlignment = Alignment.Center,
+                            OutlinedIconToggleButton(
+                                modifier = Modifier.size(56.dp),
+                                checked = name == actualFontFamily,
+                                onCheckedChange = {
+                                    if (it) fontFamily = name
+                                },
+                                shapes = IconButtonDefaults.toggleableShapes(),
                             ) {
                                 Text(
                                     text = previewTexts.ExtraShort,

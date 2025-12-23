@@ -30,6 +30,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
@@ -45,13 +46,12 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -673,25 +673,42 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
             style = MaterialTheme.typography.titleSmall,
         )
 
-        SingleChoiceSegmentedButtonRow(
-            modifier = Modifier.fillMaxWidth()
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
         ) {
-            SegmentedButton(
-                selected = action.queryKey == null,
-                onClick = {
+            ToggleButton(
+                modifier = Modifier.weight(1f),
+                checked = action.queryKey == null,
+                onCheckedChange = {
                     viewModel.setQueryKey(null)
                 },
-                shape = SegmentedButtonDefaults.itemShape(0, 2)
+                shapes = ButtonGroupDefaults.connectedLeadingButtonShapes()
             ) {
+                AnimatedVisibility(action.queryKey == null) {
+                    Icon(
+                        painterResource(R.drawable.check_20px),
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = ToggleButtonDefaults.IconSpacing).size(ToggleButtonDefaults.IconSize)
+                    )
+                }
                 Text("Data")
             }
-            SegmentedButton(
-                selected = action.queryKey != null,
-                onClick = {
+            ToggleButton(
+                modifier = Modifier.weight(1f),
+                checked = action.queryKey != null,
+                onCheckedChange = {
                     viewModel.setQueryKey("")
                 },
-                shape = SegmentedButtonDefaults.itemShape(1, 2)
+                shapes = ButtonGroupDefaults.connectedTrailingButtonShapes()
             ) {
+                AnimatedVisibility(action.queryKey != null) {
+                    Icon(
+                        painterResource(R.drawable.check_20px),
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = ToggleButtonDefaults.IconSpacing).size(ToggleButtonDefaults.IconSize)
+                    )
+                }
                 Text("String extra")
             }
         }
@@ -723,7 +740,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
             supportingText = {
                 Text(
                     if (action.queryKey == null) {
-                        "The URI template that is used to construct the intent\\'s data URI. Use ‘\${1}’ as a placeholder for the actual search term"
+                        "The URI template that is used to construct the intent\'s data URI. Use ‘\${1}’ as a placeholder for the actual search term"
                     } else {
                         "The template that is used to construct the string that is passed to the intent as a string extra. Use ‘\${1}’ as a placeholder for the actual search term"
                     }

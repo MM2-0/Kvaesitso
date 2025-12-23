@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.FilledIconToggleButton
+import androidx.compose.material3.FilledTonalIconToggleButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,20 +51,28 @@ fun ColorSchemePreferenceCategory(
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.weight(1f)
             )
-            SingleChoiceSegmentedButtonRow {
-                SegmentedButton(
-                    shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
-                    selected = !darkMode,
-                    onClick = { onDarkModeChanged(false) }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+            ) {
+                FilledTonalIconToggleButton(
+                    shapes = IconButtonDefaults.toggleableShapes(),
+                    checked = !darkMode,
+                    onCheckedChange = { onDarkModeChanged(false) }
                 ) {
-                    Icon(painterResource(R.drawable.light_mode_24px), null)
+                    Icon(
+                        painterResource(R.drawable.light_mode_24px),
+                        null
+                    )
                 }
-                SegmentedButton(
-                    shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
-                    selected = darkMode,
-                    onClick = { onDarkModeChanged(true) }
+                FilledTonalIconToggleButton(
+                    shapes = IconButtonDefaults.toggleableShapes(),
+                    checked = darkMode,
+                    onCheckedChange = { onDarkModeChanged(true) }
                 ) {
-                    Icon(painterResource(R.drawable.dark_mode_24px), null)
+                    Icon(
+                        painterResource(R.drawable.dark_mode_24px),
+                        null
+                    )
                 }
             }
         }
@@ -81,7 +91,10 @@ fun ColorSchemePreferenceCategory(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.surfaceContainerLowest, MaterialTheme.shapes.extraSmall)
+                        .background(
+                            MaterialTheme.colorScheme.surfaceContainerLowest,
+                            MaterialTheme.shapes.extraSmall
+                        )
                         .horizontalScroll(rememberScrollState())
                         .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,

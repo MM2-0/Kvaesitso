@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -27,7 +29,8 @@ fun BottomSheetDialog(
             .padding(top = 8.dp),
         sheetState = bottomSheetState,
         onDismissRequest = onDismissRequest,
-        contentWindowInsets = { windowInsets }
+        contentWindowInsets = { windowInsets },
+        containerColor = BottomSheetDefaults.ContainerColor
     ) {
         content(PaddingValues(
             bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current).toDp() + 8.dp,

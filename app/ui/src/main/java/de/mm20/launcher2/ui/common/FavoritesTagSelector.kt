@@ -13,12 +13,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -130,12 +130,12 @@ fun FavoritesTagSelector(
                         }
                     }
 
-                    }
+                }
 
                 if (editButton) {
-                    SmallFloatingActionButton(
-                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
-                        onClick = { sheetManager.showEditFavoritesSheet() }
+                    FilledTonalIconButton(
+                        onClick = { sheetManager.showEditFavoritesSheet() },
+                        shapes = IconButtonDefaults.shapes(),
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.edit_24px),
@@ -216,9 +216,9 @@ fun FavoritesTagSelector(
                     }
 
                     if (editButton) {
-                        SmallFloatingActionButton(
-                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
-                            onClick = { sheetManager.showEditFavoritesSheet() }
+                        FilledTonalIconButton(
+                            onClick = { sheetManager.showEditFavoritesSheet() },
+                            shapes = IconButtonDefaults.shapes(),
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.edit_24px),

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -85,6 +86,7 @@ fun LauncherSearchBar(
                     IconToggleButton(
                         checked = sheetManager.hiddenItemsSheetShown.value,
                         onCheckedChange = { if (it) sheetManager.showHiddenItemsSheet() },
+                        shapes = IconButtonDefaults.toggleableShapes(),
                     ) {
                         Icon(
                             painter = painterResource(
@@ -105,6 +107,7 @@ fun LauncherSearchBar(
                         onCheckedChange = {
                             searchVM.showFilters.value = it
                         },
+                        shapes = IconButtonDefaults.toggleableShapes(),
                     ) {
                         Box {
                             Icon(

@@ -15,6 +15,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
@@ -43,10 +44,13 @@ fun RowScope.SearchBarMenu(
     val rightIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_menu_clear)
 
     Box(contentAlignment = Alignment.TopEnd) {
-        IconButton(onClick = {
-            if (searchBarValue.isNotBlank()) onInputClear()
-            else showOverflowMenu = true
-        }) {
+        IconButton(
+            onClick = {
+                if (searchBarValue.isNotBlank()) onInputClear()
+                else showOverflowMenu = true
+            },
+            shapes = IconButtonDefaults.shapes()
+        ) {
             Icon(
                 painter = rememberAnimatedVectorPainter(
                     rightIcon,

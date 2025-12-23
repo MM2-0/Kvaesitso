@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
@@ -26,11 +27,10 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -364,57 +364,42 @@ fun ConfigureClockWidgetSheet(
                 .fillMaxWidth()
                 .padding(it)
         ) {
-            SingleChoiceSegmentedButtonRow(
+            Row(
                 modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
             ) {
-                SegmentedButton(
-                    selected = compact == false,
-                    onClick = {
-                        viewModel.setCompact(false)
+                ToggleButton(
+                    modifier = Modifier.weight(1f),
+                    checked = compact == false,
+                    onCheckedChange = {
+                        if (it) viewModel.setCompact(false)
                     },
-                    shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
-                    icon = {
-                        SegmentedButtonDefaults.Icon(
-                            active = compact == false,
-                            activeContent = {
-                                Icon(
-                                    painterResource(R.drawable.check_20px),
-                                    contentDescription = null,
-                                )
-                            }
-                        ) {
-                            Icon(
-                                painterResource(R.drawable.splitscreen_top_20px),
-                                contentDescription = null,
-                            )
-                        }
-                    }
+                    shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                 ) {
+                    Icon(
+                        painterResource(if (compact == false) R.drawable.check_20px else R.drawable.splitscreen_top_20px),
+                        null,
+                        modifier = Modifier
+                            .padding(end = ToggleButtonDefaults.IconSpacing)
+                            .size(ToggleButtonDefaults.IconSize)
+                    )
                     Text(text = stringResource(R.string.preference_clockwidget_layout_vertical))
                 }
-                SegmentedButton(
-                    selected = compact == true,
-                    onClick = {
-                        viewModel.setCompact(true)
+                ToggleButton(
+                    modifier = Modifier.weight(1f),
+                    checked = compact == true,
+                    onCheckedChange = {
+                        if (it) viewModel.setCompact(true)
                     },
-                    shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
-                    icon = {
-                        SegmentedButtonDefaults.Icon(
-                            active = compact == true,
-                            activeContent = {
-                                Icon(
-                                    painterResource(R.drawable.check_20px),
-                                    contentDescription = null,
-                                )
-                            }
-                        ) {
-                            Icon(
-                                painterResource(R.drawable.splitscreen_right_20px),
-                                contentDescription = null,
-                            )
-                        }
-                    }
+                    shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
                 ) {
+                    Icon(
+                        painterResource(if (compact == true) R.drawable.check_20px else R.drawable.splitscreen_right_20px),
+                        null,
+                        modifier = Modifier
+                            .padding(end = ToggleButtonDefaults.IconSpacing)
+                            .size(ToggleButtonDefaults.IconSize)
+                    )
                     Text(text = stringResource(R.string.preference_clockwidget_layout_horizontal))
                 }
             }
@@ -433,46 +418,47 @@ fun ConfigureClockWidgetSheet(
                     })
             }
 
-            SingleChoiceSegmentedButtonRow(
+            Row(
                 modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
             ) {
-                SegmentedButton(
-                    selected = color == ClockWidgetColors.Auto,
-                    onClick = {
-                        viewModel.setColor(ClockWidgetColors.Auto)
+                ToggleButton(
+                    modifier = Modifier.weight(1f),
+                    checked = color == ClockWidgetColors.Auto,
+                    onCheckedChange = {
+                        if (it) viewModel.setColor(ClockWidgetColors.Auto)
                     },
-                    shape = SegmentedButtonDefaults.itemShape(index = 0, count = 3),
+                    shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                 ) {
                     Icon(
-                        painterResource(R.drawable.auto_awesome_20dp),
+                        painterResource(R.drawable.auto_awesome_24dp),
                         contentDescription = null,
-                        modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                     )
                 }
-                SegmentedButton(
-                    selected = color == ClockWidgetColors.Dark,
-                    onClick = {
-                        viewModel.setColor(ClockWidgetColors.Dark)
+                ToggleButton(
+                    modifier = Modifier.weight(1f),
+                    checked = color == ClockWidgetColors.Dark,
+                    onCheckedChange = {
+                        if (it) viewModel.setColor(ClockWidgetColors.Dark)
                     },
-                    shape = SegmentedButtonDefaults.itemShape(index = 1, count = 3),
+                    shapes = ButtonGroupDefaults.connectedMiddleButtonShapes(),
                 ) {
                     Icon(
-                        painterResource(R.drawable.light_mode_20px),
+                        painterResource(R.drawable.light_mode_24px),
                         contentDescription = null,
-                        modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                     )
                 }
-                SegmentedButton(
-                    selected = color == ClockWidgetColors.Light,
-                    onClick = {
-                        viewModel.setColor(ClockWidgetColors.Light)
+                ToggleButton(
+                    modifier = Modifier.weight(1f),
+                    checked = color == ClockWidgetColors.Light,
+                    onCheckedChange = {
+                        if (it) viewModel.setColor(ClockWidgetColors.Light)
                     },
-                    shape = SegmentedButtonDefaults.itemShape(index = 2, count = 3),
+                    shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
                 ) {
                     Icon(
-                        painterResource(R.drawable.dark_mode_20px),
+                        painterResource(R.drawable.dark_mode_24px),
                         contentDescription = null,
-                        modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                     )
                 }
             }

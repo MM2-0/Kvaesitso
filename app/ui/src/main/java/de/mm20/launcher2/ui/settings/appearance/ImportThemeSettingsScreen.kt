@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonGroupDefaults
+import androidx.compose.material3.ElevatedToggleButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -24,6 +26,7 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -375,18 +378,24 @@ private fun ThemePreview(
                 .padding(12.dp),
             contentAlignment = Alignment.CenterEnd,
         ) {
-            SingleChoiceSegmentedButtonRow {
-                SegmentedButton(
-                    shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
-                    selected = !darkMode,
-                    onClick = { onDarkModeChanged(false) }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
+            ) {
+                ToggleButton(
+                    checked = !darkMode,
+                    onCheckedChange = {
+                        if (it) onDarkModeChanged(false)
+                    },
+                    shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                 ) {
                     Icon(painterResource(R.drawable.light_mode_24px), null)
                 }
-                SegmentedButton(
-                    shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
-                    selected = darkMode,
-                    onClick = { onDarkModeChanged(true) }
+                ToggleButton(
+                    checked = darkMode,
+                    onCheckedChange = {
+                        if (it) onDarkModeChanged(true)
+                    },
+                    shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
                 ) {
                     Icon(painterResource(R.drawable.dark_mode_24px), null)
                 }

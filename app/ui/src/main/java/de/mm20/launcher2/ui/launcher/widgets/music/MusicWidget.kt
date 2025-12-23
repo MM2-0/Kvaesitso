@@ -34,7 +34,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
-import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.FilledTonalIconToggleButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -61,6 +61,7 @@ import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -103,6 +104,7 @@ fun MusicWidget(widget: MusicWidget) {
     val supportedActions by viewModel.supportedActions.collectAsStateWithLifecycle(SupportedActions())
 
     val context = LocalContext.current
+    val resources = LocalResources.current
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -250,7 +252,7 @@ fun MusicWidget(widget: MusicWidget) {
                             )
                             .semantics {
                                 contentDescription =
-                                    context.getString(R.string.music_widget_open_player)
+                                    resources.getString(R.string.music_widget_open_player)
                             }
                             .conditional(
                                 art == null,
@@ -326,7 +328,9 @@ fun MusicWidget(widget: MusicWidget) {
                         IconButton(
                             onClick = {
                                 viewModel.skipPrevious()
-                            }) {
+                            },
+                            shapes = IconButtonDefaults.shapes(),
+                        ) {
                             Icon(
                                 painter = painterResource(R.drawable.skip_previous_24px),
                                 stringResource(R.string.music_widget_previous_track)
@@ -341,11 +345,10 @@ fun MusicWidget(widget: MusicWidget) {
                         else R.string.music_widget_play
                     )
                 ) {
-                    FilledTonalIconButton(
-                        colors = IconButtonDefaults.filledTonalIconButtonColors(
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = MaterialTheme.transparency.surface),
-                        ),
-                        onClick = { viewModel.togglePause() },
+                    FilledTonalIconToggleButton(
+                        onCheckedChange = { viewModel.togglePause() },
+                        shapes = IconButtonDefaults.toggleableShapes(),
+                        checked = playbackState == PlaybackState.Playing
                     ) {
                         AnimatedContent(
                             playbackState == PlaybackState.Playing,
@@ -360,7 +363,7 @@ fun MusicWidget(widget: MusicWidget) {
                         ) {
                             if (it) {
                                 Icon(
-                                    painterResource(R.drawable.pause_24px),
+                                    painterResource(R.drawable.pause_24px_filled),
                                     stringResource(R.string.music_widget_pause),
                                     modifier = Modifier.rotate(-90f)
                                 )
@@ -377,9 +380,12 @@ fun MusicWidget(widget: MusicWidget) {
                     Tooltip(
                         tooltipText = stringResource(R.string.music_widget_next_track)
                     ) {
-                        IconButton(onClick = {
-                            viewModel.skipNext()
-                        }) {
+                        IconButton(
+                            onClick = {
+                                viewModel.skipNext()
+                            },
+                            shapes = IconButtonDefaults.shapes(),
+                        ) {
                             Icon(
                                 painter = painterResource(R.drawable.skip_next_24px),
                                 stringResource(R.string.music_widget_next_track)
@@ -478,7 +484,8 @@ fun CustomActions(
             IconButton(
                 onClick = {
                     onActionSelected(action)
-                }
+                },
+                shapes = IconButtonDefaults.shapes(),
             ) {
                 CustomActionIcon(action, playerPackage)
             }
@@ -521,7 +528,6 @@ fun CustomActionIcon(action: CustomAction, playerPackage: String?) {
             .build(),
     )
     Icon(
-        modifier = Modifier.size(24.dp),
         painter = painter,
         contentDescription = null,
     )
