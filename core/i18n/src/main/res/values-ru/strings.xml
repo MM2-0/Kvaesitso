@@ -218,7 +218,7 @@
     <string name="widget_name_weather">Погода</string>
     <string name="widget_name_calendar">Календарь</string>
     <string name="widget_name_music">Медиа</string>
-    <string name="widget_name_favorites">Избранные</string>
+    <string name="widget_name_apps">Приложения</string>
     <string name="widget_name_notes">Заметки</string>
     <string name="widget_name_unknown">Неизвестный</string>
     <string name="widget_add_widget">Добавить виджет</string>
