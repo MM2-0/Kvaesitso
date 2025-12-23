@@ -218,7 +218,7 @@
     <string name="widget_name_weather">天气</string>
     <string name="widget_name_calendar">日历</string>
     <string name="widget_name_music">媒体</string>
-    <string name="widget_name_favorites">收藏夹</string>
+    <string name="widget_name_apps">应用</string>
     <string name="widget_name_notes">笔记</string>
     <string name="widget_name_unknown">未知</string>
     <string name="widget_add_widget">添加组件</string>
