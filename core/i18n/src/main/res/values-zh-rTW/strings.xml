@@ -218,7 +218,7 @@
     <string name="widget_name_weather">天氣</string>
     <string name="widget_name_calendar">日曆</string>
     <string name="widget_name_music">多媒體</string>
-    <string name="widget_name_favorites">我的最愛</string>
+    <string name="widget_name_apps">應用程式</string>
     <string name="widget_name_notes">註記</string>
     <string name="widget_name_unknown">未知的應用程式小工具</string>
     <string name="widget_add_widget">新增小工具</string>
