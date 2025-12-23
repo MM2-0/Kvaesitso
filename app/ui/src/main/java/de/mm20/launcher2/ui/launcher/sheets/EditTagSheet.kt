@@ -445,7 +445,7 @@ fun PickIcon(
                     modifier = Modifier.padding(end = ToggleButtonDefaults.IconSpacing).size(
                         ToggleButtonDefaults.IconSize)
                 )
-                Text("Icon")
+                Text(stringResource(R.string.tag_icon_customicon))
             }
             ToggleButton(
                 modifier = Modifier.weight(1f),
@@ -462,7 +462,7 @@ fun PickIcon(
                         .padding(end = ToggleButtonDefaults.IconSpacing)
                         .size(ToggleButtonDefaults.IconSize)
                 )
-                Text("Emoji")
+                Text(stringResource(R.string.tag_icon_emoji))
             }
         }
         AnimatedContent(

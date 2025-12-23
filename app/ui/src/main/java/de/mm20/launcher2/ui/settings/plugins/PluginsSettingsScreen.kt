@@ -64,7 +64,7 @@ fun PluginsSettingsScreen() {
             else -> {
                 if (enabledPackages.isNotEmpty()) {
                     item {
-                        PreferenceCategory("Enabled") {
+                        PreferenceCategory(stringResource(R.string.preference_category_enabled_plugins)) {
                             for (plugin in enabledPackages) {
                                 PluginPreference(viewModel, plugin)
                             }
@@ -73,7 +73,7 @@ fun PluginsSettingsScreen() {
                 }
                 if (disabledPackages.isNotEmpty()) {
                     item {
-                        PreferenceCategory("Installed") {
+                        PreferenceCategory(stringResource(R.string.preference_category_installed_plugins)) {
                             for (plugin in disabledPackages) {
                                 PluginPreference(viewModel, plugin)
                             }

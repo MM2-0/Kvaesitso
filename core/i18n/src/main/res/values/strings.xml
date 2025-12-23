@@ -503,6 +503,8 @@
     <string name="preference_screen_integrations">Integrations</string>
     <string name="preference_screen_plugins">Plugins</string>
     <string name="preference_screen_plugins_summary">Manage installed extensions</string>
+    <string name="preference_category_enabled_plugins">Enabled</string>
+    <string name="preference_category_installed_plugins">Installed</string>
     <string name="no_plugins_installed">No plugins installed</string>
     <string name="preference_theme_system">Follow system</string>
     <string name="preference_themed_icons">Themed icons</string>
@@ -759,6 +761,8 @@
     <string name="tag_empty_name">A tag cannot exist without a name. If you continue, the tag will be deleted</string>
     <string name="tag_select_items">Select items:</string>
     <string name="tag_name">Tag name</string>
+    <string name="tag_icon_customicon">Icon</string>
+    <string name="tag_icon_emoji">Emoji</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item selected</item>
         <item quantity="other">%1$d items selected</item>
