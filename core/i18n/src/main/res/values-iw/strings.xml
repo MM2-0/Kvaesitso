@@ -223,7 +223,7 @@
     <string name="widget_name_weather">מזג האוויר</string>
     <string name="widget_name_calendar">לוח שנה</string>
     <string name="widget_name_music">מוזיקה</string>
-    <string name="widget_name_favorites">מועדפים</string>
+    <string name="widget_name_apps">יישומים</string>
     <string name="widget_name_notes">פתק</string>
     <string name="widget_name_unknown">ווידג\'ט יישומון לא ידוע</string>
     <string name="widget_add_widget">הוספת יישומון</string>
