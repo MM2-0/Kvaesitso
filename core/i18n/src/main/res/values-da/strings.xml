@@ -214,7 +214,6 @@
     <string name="widget_name_weather">Vejr</string>
     <string name="widget_name_calendar">Kalender</string>
     <string name="widget_name_music">Musik</string>
-    <string name="widget_name_favorites">Favoritter</string>
     <string name="widget_name_unknown">Ukendt app-widget</string>
     <string name="widget_add_widget">Tilføj widget</string>
     <string name="widget_removed">Widget fjernet</string>
