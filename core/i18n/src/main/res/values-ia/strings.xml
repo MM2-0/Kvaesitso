@@ -161,7 +161,6 @@
     <string name="menu_edit_widgets">Modificar le widgets</string>
     <string name="widget_name_weather">Tempore</string>
     <string name="widget_name_music">Musica</string>
-    <string name="widget_name_favorites">Favoritos</string>
     <string name="widget_name_unknown">Widget de application incognite</string>
     <string name="widget_add_widget">Adder un widget</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
