@@ -216,7 +216,7 @@
     <string name="widget_name_weather">Météo</string>
     <string name="widget_name_calendar">Calendrier</string>
     <string name="widget_name_music">Musique</string>
-    <string name="widget_name_favorites">Favoris</string>
+    <string name="widget_name_apps">Applications</string>
     <string name="widget_name_unknown">Widget d\'application non reconnu</string>
     <string name="widget_add_widget">Ajouter un widget</string>
     <string name="widget_removed">Widget supprimé</string>
