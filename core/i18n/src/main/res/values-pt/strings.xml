@@ -219,7 +219,7 @@
     <string name="widget_name_weather">Meteorologia</string>
     <string name="widget_name_calendar">Calendário</string>
     <string name="widget_name_music">Multimédia</string>
-    <string name="widget_name_favorites">Favoritos</string>
+    <string name="widget_name_apps">Aplicativos</string>
     <string name="widget_name_notes">Nota</string>
     <string name="widget_name_unknown">Desconhecido</string>
     <string name="widget_add_widget">Adicionar widget</string>
