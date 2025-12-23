@@ -212,7 +212,7 @@
     <string name="menu_edit_widgets">Redigere widgets</string>
     <string name="widget_name_weather">Vær</string>
     <string name="widget_name_calendar">Kalender</string>
-    <string name="widget_name_favorites">Favoritter</string>
+    <string name="widget_name_apps">Apper</string>
     <string name="widget_name_notes">Notat</string>
     <string name="widget_name_unknown">Ukjent</string>
     <string name="widget_add_widget">Legg til widget</string>
