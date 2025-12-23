@@ -220,7 +220,6 @@
     <string name="widget_name_weather">Погода</string>
     <string name="widget_name_calendar">Календар</string>
     <string name="widget_name_music">Медіа</string>
-    <string name="widget_name_favorites">Улюблені</string>
     <string name="widget_name_notes">Нотатка</string>
     <string name="widget_name_unknown">Віджет зник</string>
     <string name="widget_add_widget">Додати віджет</string>
