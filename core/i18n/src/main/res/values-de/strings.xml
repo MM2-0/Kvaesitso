@@ -881,4 +881,9 @@
     <string name="preference_transliteration">Bevorzugte Transliteration</string>
     <string name="preference_transliteration_auto">Automatisch</string>
     <string name="preference_transliteration_disabled">Deaktiviert</string>
+    <string name="preference_category_enabled_plugins">Aktiviert</string>
+    <string name="preference_category_installed_plugins">Installiert</string>
+    <string name="tag_icon_customicon">Icon</string>
+    <string name="tag_icon_emoji">Emoji</string>
+    <string name="select_tag">Tag auswählen</string>
 </resources>
