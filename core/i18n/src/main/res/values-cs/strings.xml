@@ -215,7 +215,7 @@
     <string name="widget_name_weather">Počasí</string>
     <string name="widget_name_calendar">Kalendář</string>
     <string name="widget_name_music">Média</string>
-    <string name="widget_name_favorites">Oblíbené</string>
+    <string name="widget_name_apps">Aplikace</string>
     <string name="widget_name_notes">Poznámka</string>
     <string name="widget_name_unknown">Neznámý</string>
     <string name="widget_add_widget">Přidat widget</string>
