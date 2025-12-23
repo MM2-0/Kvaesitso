@@ -52,7 +52,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
     override fun getRanking(context: Context): Flow<Int> = channelFlow {
         musicService.playbackState.collectLatest {
             if (it == PlaybackState.Stopped) send(0)
-            else send(50)
+            else send(80)
         }
     }
 
