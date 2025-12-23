@@ -69,7 +69,6 @@
     <string name="widget_name_weather">Weer</string>
     <string name="widget_name_calendar">Kalender</string>
     <string name="widget_name_music">Media</string>
-    <string name="widget_name_favorites">Favorieten</string>
     <string name="widget_add_widget">Widget toevoegen</string>
     <string name="shortcut_summary">Via %1$s</string>
     <string name="close">Sluiten</string>

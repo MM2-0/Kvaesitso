@@ -55,7 +55,6 @@
     <string name="widget_name_weather">สภาพอากาศ</string>
     <string name="widget_name_calendar">ปฏิทิน</string>
     <string name="widget_name_music">สื่อ</string>
-    <string name="widget_name_favorites">รายการโปรด</string>
     <string name="widget_name_notes">โน้ต</string>
     <string name="widget_name_unknown">ไม่รู้จัก</string>
     <string name="notes_widget_placeholder">เขียนโน้ต</string>

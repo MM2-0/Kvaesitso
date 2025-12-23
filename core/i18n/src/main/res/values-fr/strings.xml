@@ -360,7 +360,6 @@
     <string name="calendar_widget_next_events">Événement suivant</string>
     <string name="preference_grid_icon_size">Taille d\'icône</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="widget_name_favorites">Favoris</string>
     <string name="action_undo">Annuler</string>
     <string name="preference_restore_summary">Importer une ancienne sauvegarde</string>
     <string name="preference_backup">Sauvegarder</string>

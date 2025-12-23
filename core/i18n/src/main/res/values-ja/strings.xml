@@ -102,7 +102,6 @@
     <string name="alert_delete_directory">ディレクトリ %1$s とそのすべての内容は永久に削除されます。続行しますか？</string>
     <string name="alert_delete_shortcut">ショートカット %1$s は永久に削除されます。続行しますか？</string>
     <string name="widget_add_widget">ウィジェットを追加</string>
-    <string name="widget_name_favorites">お気に入り</string>
     <string name="owncloud_username">ユーザー名</string>
     <string name="owncloud_login_2fa_hint">2要素認証を有効にしている場合は、ここでアプリパスワードを使用する必要があります。</string>
     <string name="owncloud_login_failed">ログイン失敗: ユーザー名またはパスワードが正しくありません。</string>

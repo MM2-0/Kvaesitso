@@ -297,7 +297,6 @@
     </plurals>
     <string name="no_account_nextcloud">Non hai ancora collegato un account Nextcloud</string>
     <string name="no_account_owncloud">Non hai ancora collegato un account Owncloud</string>
-    <string name="widget_name_favorites">Preferiti</string>
     <string name="preference_restore_summary">Importa un backup creato in precedenza</string>
     <string name="restore_meta">Creato il %1$s alle %2$s con %3$s.</string>
     <string name="preference_enforce_icon_shape">Applica forma</string>

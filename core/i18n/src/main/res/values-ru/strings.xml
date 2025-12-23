@@ -267,7 +267,6 @@
     <string name="preference_cards_shape_cut">Срезанная</string>
     <string name="weather_location_search_no_result">Местоположение не найдено</string>
     <string name="action_undo">Отменить</string>
-    <string name="widget_name_favorites">Избранные</string>
     <string name="preference_icon_pack">Набор иконок</string>
     <string name="preference_icon_pack_summary_empty">Наборы иконок не установлены</string>
     <string name="file_type_launcherbackup">Резервная копия %1$s</string>

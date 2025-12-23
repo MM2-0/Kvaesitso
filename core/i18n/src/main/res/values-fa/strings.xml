@@ -84,7 +84,6 @@
     <string name="widget_name_weather">آب و هوا</string>
     <string name="widget_name_calendar">تقویم</string>
     <string name="widget_name_music">موسیقی</string>
-    <string name="widget_name_favorites">دلخواه</string>
     <string name="widget_name_notes">یادداشت</string>
     <string name="widget_name_unknown">ابزارک برنامه ناشناخته</string>
     <string name="widget_add_widget">افزودن ابزارک</string>

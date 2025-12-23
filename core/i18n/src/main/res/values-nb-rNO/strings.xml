@@ -191,7 +191,6 @@
     <string name="missing_permission_calendar_search_settings">Kalendertilgang kreves for å søke i kalender</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="alert_delete_directory">Katalogen %1$s og all dens innhold vil bli slettet permanent. Vil du fortsette?</string>
-    <string name="widget_name_favorites">Favoritter</string>
     <string name="owncloud_login_2fa_hint">Dersom du har tofaktor-autentisering akrivert, må du bruke et app-passord her.</string>
     <string name="disclaimer_currency_converter">Valutakurser publiseres en gang om dagen av den europeiske sentralbanken. All informasjon gis «som den er» uten noen form for garanti. Vi fraskriver oss alt ansvar for denne informasjonen.
 \n

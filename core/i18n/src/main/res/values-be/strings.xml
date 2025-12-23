@@ -120,7 +120,6 @@
     <string name="owncloud_login_failed">Не ўдалося ўвайсці: няверныя імя карыстальніка ці пароль.</string>
     <string name="login_flow_continue">Працягнуць</string>
     <string name="websearch_dialog_query_encoding_none">Няма</string>
-    <string name="widget_name_favorites">Абраныя</string>
     <string name="menu_edit_widgets">Рэдагаваць віджэты</string>
     <string name="widget_name_weather">Надвор\'е</string>
     <string name="widget_name_calendar">Каляндар</string>

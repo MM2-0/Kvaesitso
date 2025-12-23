@@ -137,7 +137,6 @@
         <item quantity="many">+%1$d eventos en ejecución de días anteriores</item>
         <item quantity="other">+%1$d eventos en ejecución de días anteriores</item>
     </plurals>
-    <string name="widget_name_favorites">Favoritos</string>
     <string name="weather_condition_sleetshowers">Chubascos de aguanieve</string>
     <string name="weather_condition_heavysleet">Aguanieve pesada</string>
     <string name="weather_condition_heavyrain">Lluvia pesada</string>

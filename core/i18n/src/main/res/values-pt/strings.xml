@@ -117,7 +117,6 @@
     <string name="file_meta_location">Localização: %1$s</string>
     <string name="file_type_document">Documento</string>
     <string name="default_websearch_2_name">YouTube</string>
-    <string name="widget_name_favorites">Favoritos</string>
     <string name="notes_widget_action_new">Nova nota</string>
     <string name="owncloud_server_invalid_url">Este URL aponta para uma instalação Owncloud inválida</string>
     <string name="alert_delete_shortcut">O atalho %1$s será eliminado permanentemente. Continuar?</string>

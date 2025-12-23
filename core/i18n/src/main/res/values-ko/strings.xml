@@ -61,7 +61,6 @@
     <string name="widget_name_weather">날씨</string>
     <string name="widget_name_calendar">캘린더</string>
     <string name="widget_name_music">음악</string>
-    <string name="widget_name_favorites">즐겨찾기</string>
     <string name="widget_add_widget">위젯 추가</string>
     <string name="shortcut_summary">%1$s 제공</string>
     <string name="close">닫기</string>

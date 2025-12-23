@@ -313,7 +313,6 @@
     <string name="preference_search_appshortcuts_summary">搜索应用快捷方式</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_clockwidget_favorites_part_summary">显示已固定项目的第一行</string>
-    <string name="widget_name_favorites">收藏夹</string>
     <string name="preference_grid_icon_size">图标大小</string>
     <string name="preference_search_currencyconverter">货币转换器</string>
     <string name="preference_search_currencyconverter_summary">定期下载汇率来转换货币</string>
