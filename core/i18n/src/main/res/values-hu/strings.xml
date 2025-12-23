@@ -63,7 +63,6 @@
     <string name="menu_edit_widgets">Modulok szerkesztése</string>
     <string name="widget_name_calendar">Naptár</string>
     <string name="widget_name_music">Média</string>
-    <string name="widget_name_favorites">Kedvencek</string>
     <string name="widget_add_widget">Modul hozzáadása</string>
     <string name="shortcut_summary">Készítette: %1$s</string>
     <string name="duplicate">Másolat készítése</string>

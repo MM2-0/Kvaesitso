@@ -111,7 +111,6 @@
     <string name="websearch_dialog_replace_icon">Korvaa kuvake</string>
     <string name="websearch_dialog_query_encoding_url">Prosenttikoodaus</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
-    <string name="widget_name_favorites">Suosikit</string>
     <string name="widget_name_unknown">Tuntematon pienoisohjelma</string>
     <string name="widget_add_widget">Lisää pienoisohjelma</string>
     <string name="notes_widget_placeholder">Kirjoita muistiinpano…</string>

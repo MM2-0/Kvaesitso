@@ -62,7 +62,6 @@
     <string name="widget_name_weather">Oras</string>
     <string name="widget_name_calendar">Kalendorius</string>
     <string name="widget_name_music">Muzika</string>
-    <string name="widget_name_favorites">Mėgstami</string>
     <string name="widget_name_notes">Ūžrašo knygelė</string>
     <string name="widget_name_unknown">Nežinomos programos valdiklis</string>
     <string name="notes_widget_placeholder">Parašyti ūžrašą…</string>

@@ -59,7 +59,6 @@
     <string name="widget_name_weather">Pogoda</string>
     <string name="widget_name_calendar">Kalendarz</string>
     <string name="widget_name_music">Muzyka</string>
-    <string name="widget_name_favorites">Ulubione</string>
     <string name="widget_add_widget">Dodaj widżet</string>
     <string name="turn_off">Wyłącz</string>
     <string name="widget_action_remove">Usuń</string>

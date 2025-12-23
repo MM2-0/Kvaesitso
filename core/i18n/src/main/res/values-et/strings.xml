@@ -447,7 +447,6 @@
     <string name="menu_launch">Käivita</string>
     <string name="file_meta_year">Aasta: %1$s</string>
     <string name="websearch_dialog_replace_icon">Asenda ikoon</string>
-    <string name="widget_name_favorites">Lemmikud</string>
     <string name="notes_widget_placeholder">Kirjuta märkus…</string>
     <string name="edit_favorites_dialog_tag_section_empty">Kinnitatud silte näidatakse siin</string>
     <string name="show_all">Näita kõiki</string>

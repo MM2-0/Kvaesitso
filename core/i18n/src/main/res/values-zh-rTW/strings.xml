@@ -119,7 +119,6 @@
     <string name="widget_name_weather">天氣</string>
     <string name="widget_name_calendar">日曆</string>
     <string name="widget_name_music">多媒體</string>
-    <string name="widget_name_favorites">我的最愛</string>
     <string name="widget_add_widget">新增小工具</string>
     <string name="shortcut_summary">由 %1$s</string>
     <string name="close">關閉</string>

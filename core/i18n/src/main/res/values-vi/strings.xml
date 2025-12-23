@@ -177,7 +177,6 @@
     <string name="menu_edit_widgets">Chỉnh sửa tiện ích</string>
     <string name="widget_name_calendar">Lịch</string>
     <string name="widget_name_music">Âm nhạc</string>
-    <string name="widget_name_favorites">Yêu thích</string>
     <string name="widget_name_notes">Ghi chú</string>
     <string name="notes_widget_action_save">Lưu</string>
     <string name="notes_widget_action_dismiss">Bỏ qua</string>

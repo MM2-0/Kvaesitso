@@ -64,7 +64,6 @@
     <string name="widget_name_weather">Καιρός</string>
     <string name="widget_name_calendar">Ημερολόγιο</string>
     <string name="widget_name_music">Μουσική</string>
-    <string name="widget_name_favorites">Αγαπημένα</string>
     <string name="websearch_dialog_query_encoding">Κωδικοποίηση ερωτήματος</string>
     <string name="websearch_dialog_query_encoding_url">Κωδικοποίηση URL</string>
     <string name="websearch_dialog_query_encoding_none">Κανένα</string>

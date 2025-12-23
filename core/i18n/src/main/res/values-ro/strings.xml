@@ -58,7 +58,6 @@
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="widget_name_calendar">Calendar</string>
     <string name="widget_name_music">Muzică</string>
-    <string name="widget_name_favorites">Favorite</string>
     <string name="widget_action_remove">Eliminați</string>
     <string name="owncloud_username">Nume utilizator</string>
     <string name="login_flow_continue">Continuați</string>

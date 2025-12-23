@@ -50,7 +50,6 @@
     <string name="widget_name_weather">Cuaca</string>
     <string name="widget_name_calendar">Kalender</string>
     <string name="widget_name_music">Musik</string>
-    <string name="widget_name_favorites">Favorit</string>
     <string name="widget_name_notes">Catatan</string>
     <string name="notes_widget_action_new">Catatan baru</string>
     <string name="notes_widget_action_save">Simpan</string>

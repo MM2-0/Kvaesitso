@@ -69,7 +69,6 @@
     <string name="widget_name_weather">Eguraldia</string>
     <string name="widget_name_calendar">Egutegia</string>
     <string name="widget_name_music">Musika</string>
-    <string name="widget_name_favorites">Gogokoak</string>
     <string name="widget_name_unknown">Aplikazio ezezagunaren trepeta</string>
     <string name="widget_add_widget">Trepeta gehitu</string>
     <string name="notes_widget_placeholder">Ohar bat idatzi…</string>
