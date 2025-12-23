@@ -216,7 +216,7 @@
     <string name="widget_name_weather">Időjárás</string>
     <string name="widget_name_calendar">Naptár</string>
     <string name="widget_name_music">Média</string>
-    <string name="widget_name_favorites">Kedvencek</string>
+    <string name="widget_name_apps">Alkalmazások</string>
     <string name="widget_name_notes">Jegyzet</string>
     <string name="widget_name_unknown">Érvénytelen alkalmazásmodulokhoz használt címke</string>
     <string name="widget_add_widget">Modul hozzáadása</string>
