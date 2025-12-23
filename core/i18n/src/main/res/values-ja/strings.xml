@@ -214,7 +214,6 @@
     <string name="widget_name_weather">天気</string>
     <string name="widget_name_calendar">カレンダー</string>
     <string name="widget_name_music">音楽</string>
-    <string name="widget_name_favorites">お気に入り</string>
     <string name="widget_name_notes">メモ</string>
     <string name="widget_name_unknown">不明なアプリウィジェット</string>
     <string name="widget_add_widget">ウィジェットを追加</string>
