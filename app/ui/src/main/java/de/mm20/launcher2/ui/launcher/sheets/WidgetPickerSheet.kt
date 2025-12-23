@@ -58,7 +58,7 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
 import de.mm20.launcher2.widgets.CalendarWidget
-import de.mm20.launcher2.widgets.FavoritesWidget
+import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -177,6 +177,7 @@ class BindAndConfigureAppWidgetActivity : Activity() {
                     cancel()
                 }
             }
+
             else -> {
                 Log.w("MM20", "Unknown request code $requestCode")
                 cancel()
@@ -186,7 +187,10 @@ class BindAndConfigureAppWidgetActivity : Activity() {
 
     private fun finishWithResult(widgetId: Int) {
         val data = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-        data.putExtra(ExtraAppWidgetProviderInfo, intent.getParcelableExtra<AppWidgetProviderInfo>(ExtraAppWidgetProviderInfo))
+        data.putExtra(
+            ExtraAppWidgetProviderInfo,
+            intent.getParcelableExtra<AppWidgetProviderInfo>(ExtraAppWidgetProviderInfo)
+        )
         setResult(RESULT_OK, data)
         appWidgetId = null
         finish()
@@ -230,7 +234,10 @@ private class BindAndConfigureAppWidgetContract(
                     ),
                 )
             } else {
-                Log.e("MM20", "Could not parse widget result: widgetId=$widgetId, widgetProviderInfo=$widgetProviderInfo")
+                Log.e(
+                    "MM20",
+                    "Could not parse widget result: widgetId=$widgetId, widgetProviderInfo=$widgetProviderInfo"
+                )
             }
         } else {
             Log.e("MM20", "Widget result was not OK")
@@ -322,7 +329,7 @@ fun WidgetPickerSheet(
                                 WeatherWidget.Type -> WeatherWidget(id)
                                 CalendarWidget.Type -> CalendarWidget(id)
                                 MusicWidget.Type -> MusicWidget(id)
-                                FavoritesWidget.Type -> FavoritesWidget(id)
+                                AppsWidget.Type -> AppsWidget(id)
                                 NotesWidget.Type -> NotesWidget(id)
                                 else -> return@OutlinedCard
                             }
@@ -336,14 +343,15 @@ fun WidgetPickerSheet(
                             Icon(
                                 painter =
                                     painterResource(
-                                    when (it.type) {
-                                    WeatherWidget.Type -> R.drawable.light_mode_24px
-                                    CalendarWidget.Type -> R.drawable.today_24px
-                                    MusicWidget.Type -> R.drawable.music_note_24px
-                                    FavoritesWidget.Type -> R.drawable.star_24px
-                                    NotesWidget.Type -> R.drawable.sticky_note_2_24px
-                                    else -> R.drawable.widgets_24px
-                                }),
+                                        when (it.type) {
+                                            WeatherWidget.Type -> R.drawable.light_mode_24px
+                                            CalendarWidget.Type -> R.drawable.today_24px
+                                            MusicWidget.Type -> R.drawable.music_note_24px
+                                            AppsWidget.Type -> R.drawable.apps_24px
+                                            NotesWidget.Type -> R.drawable.sticky_note_2_24px
+                                            else -> R.drawable.widgets_24px
+                                        }
+                                    ),
                                 contentDescription = null,
                                 modifier = Modifier.padding(end = 16.dp)
                             )

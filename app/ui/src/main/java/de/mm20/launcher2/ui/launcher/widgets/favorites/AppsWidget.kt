@@ -17,11 +17,11 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.FavoritesTagSelector
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
-import de.mm20.launcher2.widgets.FavoritesWidget
+import de.mm20.launcher2.widgets.AppsWidget
 
 @Composable
-fun FavoritesWidget(widget: FavoritesWidget) {
-    val viewModel: FavoritesWidgetVM = viewModel(key = "favorites-widget-${widget.id}")
+fun AppsWidget(widget: AppsWidget) {
+    val viewModel: AppsWidgetVM = viewModel(key = "favorites-widget-${widget.id}")
     val favorites by remember { viewModel.favorites }.collectAsState(emptyList())
     val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)

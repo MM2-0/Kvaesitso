@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets.external
 
-import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,21 +20,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.isUnspecified
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
-import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.CalendarWidget
-import de.mm20.launcher2.widgets.FavoritesWidget
+import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
-import kotlin.math.roundToInt
 
 @Composable
 fun AppWidget(
@@ -84,7 +80,7 @@ fun AppWidget(
                         is WeatherWidget -> it.copy(id = widget.id)
                         is MusicWidget -> it.copy(id = widget.id)
                         is CalendarWidget -> it.copy(id = widget.id)
-                        is FavoritesWidget -> it.copy(id = widget.id)
+                        is AppsWidget -> it.copy(id = widget.id)
                         is NotesWidget -> it.copy(id = widget.id)
                     }
                     onWidgetUpdate(updatedWidget)

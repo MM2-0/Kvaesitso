@@ -114,7 +114,7 @@ import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.CalendarWidget
-import de.mm20.launcher2.widgets.FavoritesWidget
+import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -148,7 +148,7 @@ fun ConfigureWidgetSheet(
                 is WeatherWidget -> ConfigureWeatherWidget(widget, onWidgetUpdated)
                 is AppWidget -> ConfigureAppWidget(widget, onWidgetUpdated)
                 is CalendarWidget -> ConfigureCalendarWidget(widget, onWidgetUpdated)
-                is FavoritesWidget -> ConfigureFavoritesWidget(widget, onWidgetUpdated)
+                is AppsWidget -> ConfigureFavoritesWidget(widget, onWidgetUpdated)
                 is MusicWidget -> ConfigureMusicWidget(widget, onWidgetUpdated)
                 is NotesWidget -> ConfigureNotesWidget(widget, onWidgetUpdated)
             }
@@ -212,8 +212,8 @@ fun ColumnScope.ConfigureWeatherWidget(
 
 @Composable
 fun ColumnScope.ConfigureFavoritesWidget(
-    widget: FavoritesWidget,
-    onWidgetUpdated: (FavoritesWidget) -> Unit,
+    widget: AppsWidget,
+    onWidgetUpdated: (AppsWidget) -> Unit,
 ) {
     val customAttrRepository = koinInject<CustomAttributesRepository>()
 
@@ -662,7 +662,7 @@ fun ColumnScope.ConfigureAppWidget(
                         is WeatherWidget -> it.copy(id = widget.id)
                         is MusicWidget -> it.copy(id = widget.id)
                         is CalendarWidget -> it.copy(id = widget.id)
-                        is FavoritesWidget -> it.copy(id = widget.id)
+                        is AppsWidget -> it.copy(id = widget.id)
                         is NotesWidget -> it.copy(id = widget.id)
                     }
                     onWidgetUpdated(updatedWidget)

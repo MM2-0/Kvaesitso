@@ -7,7 +7,7 @@ import android.content.pm.LauncherApps
 import android.os.Build
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.widgets.CalendarWidget
-import de.mm20.launcher2.widgets.FavoritesWidget
+import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -63,8 +63,8 @@ class WidgetsService(
                 label = context.getString(R.string.widget_name_calendar),
             ),
             BuiltInWidgetInfo(
-                type = FavoritesWidget.Type,
-                label = context.getString(R.string.widget_name_favorites),
+                type = AppsWidget.Type,
+                label = context.getString(R.string.widget_name_apps),
             ),
             BuiltInWidgetInfo(
                 type = NotesWidget.Type,
@@ -85,7 +85,7 @@ class WidgetsService(
 
     fun isFavoritesWidgetFirst(): Flow<Boolean> {
         return widgetRepository.get(limit = 1).map {
-            it.firstOrNull() is FavoritesWidget
+            it.firstOrNull() is AppsWidget
         }
     }
 

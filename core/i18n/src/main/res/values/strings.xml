@@ -223,7 +223,7 @@
     <string name="widget_name_weather">Weather</string>
     <string name="widget_name_calendar">Calendar</string>
     <string name="widget_name_music">Media</string>
-    <string name="widget_name_favorites">Favorites</string>
+    <string name="widget_name_apps">Apps</string>
     <string name="widget_name_notes">Note</string>
     <string name="widget_name_unknown">Unknown</string>
     <string name="widget_add_widget">Add widget</string>

@@ -43,11 +43,11 @@ sealed class Widget {
                             ?: CalendarWidgetConfig()
                     CalendarWidget(entity.id, config)
                 }
-                FavoritesWidget.Type -> {
+                AppsWidget.Type -> {
                     val config: FavoritesWidgetConfig =
                         Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
                             ?: FavoritesWidgetConfig()
-                    FavoritesWidget(entity.id, config)
+                    AppsWidget(entity.id, config)
                 }
                 AppWidget.Type -> {
                     val config: AppWidgetConfig =

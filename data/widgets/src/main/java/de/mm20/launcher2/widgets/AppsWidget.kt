@@ -14,7 +14,7 @@ data class FavoritesWidgetConfig(
     val tagList: List<String> = emptyList()
 )
 
-data class FavoritesWidget(
+data class AppsWidget(
     override val id: UUID,
     val config: FavoritesWidgetConfig = FavoritesWidgetConfig(),
 ) : Widget() {
