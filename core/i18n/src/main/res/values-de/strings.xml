@@ -213,7 +213,6 @@
     <string name="widget_name_weather">Wetter</string>
     <string name="widget_name_calendar">Kalender</string>
     <string name="widget_name_music">Medien</string>
-    <string name="widget_name_favorites">Favoriten</string>
     <string name="widget_name_notes">Notiz</string>
     <string name="widget_name_unknown">Unbekannt</string>
     <string name="widget_add_widget">Widget hinzufügen</string>
@@ -479,6 +478,8 @@
     <string name="preference_category_searchbar">Suchleiste</string>
     <string name="preference_screen_integrations">Integrationen</string>
     <string name="preference_screen_plugins_summary">Installierte Erweiterungen verwalten</string>
+    <string name="preference_category_enabled_plugins">Aktiviert</string>
+    <string name="preference_category_installed_plugins">Installiert</string>
     <string name="no_plugins_installed">Keine Plugins installiert</string>
     <string name="preference_theme_system">Systemeinstellung verwenden</string>
     <string name="preference_themed_icons">Eingefärbte Icons</string>
@@ -1009,4 +1010,5 @@
     <string name="preference_transliteration">Bevorzugte Transliteration</string>
     <string name="preference_transliteration_auto">Automatisch</string>
     <string name="preference_transliteration_disabled">Deaktiviert</string>
+    <string name="select_tag">Tag auswählen</string>
 </resources>
