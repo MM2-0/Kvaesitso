@@ -213,7 +213,6 @@
     <string name="widget_name_weather">Sää</string>
     <string name="widget_name_calendar">Kalenteri</string>
     <string name="widget_name_music">Musiikki</string>
-    <string name="widget_name_favorites">Suosikit</string>
     <string name="widget_name_notes">Muistiinpano</string>
     <string name="widget_name_unknown">Tuntematon pienoisohjelma</string>
     <string name="widget_add_widget">Lisää pienoisohjelma</string>
