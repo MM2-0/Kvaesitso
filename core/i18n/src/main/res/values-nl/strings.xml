@@ -881,4 +881,5 @@
     <string name="preference_transliteration_disabled">Uitgeschakeld</string>
     <string name="preference_transliteration">Voorkeurstransliteratie</string>
     <string name="preference_transliteration_auto">Automatisch</string>
+    <string name="select_tag">Label selecteren</string>
 </resources>

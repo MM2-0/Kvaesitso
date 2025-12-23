@@ -887,4 +887,8 @@
     <string name="preference_measurement_system_metric">מטרית</string>
     <string name="preference_measurement_system_uk">הממלכה המאוחדת</string>
     <string name="preference_measurement_system_us">ארצות הברית</string>
+    <string name="preference_transliteration_disabled">מושבת</string>
+    <string name="select_tag">בחירת תגית</string>
+    <string name="preference_transliteration">תעתיק מועדף</string>
+    <string name="preference_transliteration_auto">תעתיק אוטומטי</string>
 </resources>
