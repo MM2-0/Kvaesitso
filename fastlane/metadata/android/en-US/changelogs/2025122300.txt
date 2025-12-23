@@ -1,0 +1,6 @@
+- Added an option to the app grid when the search field is empty
+- Added a new language and region settings screen for unified measurement system, time format, etc preferences
+- Added transliteration support for non-latin alphabets
+- Renamed the favorites widget to apps and allow it to display user-selected tags instead of favorites
+
+https://github.com/MM2-0/Kvaesitso/releases/tag/v1.39.0
