@@ -214,7 +214,7 @@
     <string name="widget_name_weather">날씨</string>
     <string name="widget_name_calendar">캘린더</string>
     <string name="widget_name_music">음악</string>
-    <string name="widget_name_favorites">즐겨찾기</string>
+    <string name="widget_name_apps">앱</string>
     <string name="widget_name_notes">메모</string>
     <string name="widget_name_unknown">알 수 없는 앱 위젯</string>
     <string name="widget_add_widget">위젯 추가</string>
