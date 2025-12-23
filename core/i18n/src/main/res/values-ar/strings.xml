@@ -219,7 +219,7 @@
     <string name="widget_name_weather">الطقس</string>
     <string name="widget_name_calendar">التقويم</string>
     <string name="widget_name_music">الموسيقى</string>
-    <string name="widget_name_favorites">المفضلة</string>
+    <string name="widget_name_apps">التطبيقات</string>
     <string name="widget_name_notes">ملاحظة</string>
     <string name="widget_name_unknown">أداة واجهة تطبيق غير معروفة</string>
     <string name="widget_add_widget">إضافة أداة واجهة</string>
