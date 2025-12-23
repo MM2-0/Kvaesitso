@@ -210,7 +210,7 @@
     <string name="menu_edit_widgets">Widgets bewerken</string>
     <string name="widget_name_weather">Weer</string>
     <string name="widget_name_calendar">Kalender</string>
-    <string name="widget_name_favorites">Favorieten</string>
+    <string name="widget_name_apps">Applicaties</string>
     <string name="widget_name_notes">Notitie</string>
     <string name="widget_name_unknown">Onbekend</string>
     <string name="widget_add_widget">Widget toevoegen</string>
