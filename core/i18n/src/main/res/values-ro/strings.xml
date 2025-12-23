@@ -212,7 +212,6 @@
     <string name="menu_edit_widgets">Editează widget-uri</string>
     <string name="widget_name_weather">Vreme</string>
     <string name="widget_name_music">Muzică</string>
-    <string name="widget_name_favorites">Favorite</string>
     <string name="widget_name_notes">Notiță</string>
     <string name="widget_name_unknown">Widget necunoscut</string>
     <string name="widget_add_widget">Adaugă widget</string>
