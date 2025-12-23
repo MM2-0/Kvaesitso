@@ -216,7 +216,7 @@
     <string name="widget_name_weather">Hava Durumu</string>
     <string name="widget_name_calendar">Takvim</string>
     <string name="widget_name_music">Müzik</string>
-    <string name="widget_name_favorites">Favoriler</string>
+    <string name="widget_name_apps">Uygulamalar</string>
     <string name="widget_name_notes">Not</string>
     <string name="widget_name_unknown">Bilinmeyen uygulama aracı</string>
     <string name="widget_add_widget">Araç ekle</string>
