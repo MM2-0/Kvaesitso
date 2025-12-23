@@ -221,7 +221,7 @@
     <string name="widget_name_weather">Надвор\'е</string>
     <string name="widget_name_calendar">Каляндар</string>
     <string name="widget_name_music">Музыка</string>
-    <string name="widget_name_favorites">Абраныя</string>
+    <string name="widget_name_apps">Праграмы</string>
     <string name="widget_name_notes">Нататка</string>
     <string name="widget_name_unknown">Віджэт невядомай праграмы</string>
     <string name="widget_add_widget">Дадаць віджэт</string>
