@@ -215,7 +215,7 @@
     <string name="menu_edit_widgets">Edita els ginys</string>
     <string name="widget_name_weather">El temps</string>
     <string name="widget_name_calendar">Calendari</string>
-    <string name="widget_name_favorites">Preferits</string>
+    <string name="widget_name_apps">Aplicacions</string>
     <string name="widget_name_notes">Nota</string>
     <string name="widget_name_unknown">Desconegut</string>
     <string name="widget_add_widget">Afegeix un giny</string>
