@@ -221,7 +221,6 @@
     <string name="widget_name_weather">আবহাওয়া</string>
     <string name="widget_name_calendar">ক্যালেন্ডার</string>
     <string name="widget_name_music">সঙ্গীত</string>
-    <string name="widget_name_favorites">প্রিয়গুলি</string>
     <string name="widget_name_notes">নোট</string>
     <string name="widget_name_unknown">অজানা অ্যাপের উইজেট</string>
     <string name="widget_add_widget">উইজেট যোগ করুন</string>
