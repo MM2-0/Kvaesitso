@@ -212,7 +212,7 @@
     <string name="widget_name_weather">Thời tiết</string>
     <string name="widget_name_calendar">Lịch</string>
     <string name="widget_name_music">Âm nhạc</string>
-    <string name="widget_name_favorites">Yêu thích</string>
+    <string name="widget_name_apps">Ứng dụng</string>
     <string name="widget_name_notes">Ghi chú</string>
     <string name="widget_name_unknown">Tiện ích ứng dụng không xác định</string>
     <string name="widget_add_widget">Thêm tiện ích</string>
