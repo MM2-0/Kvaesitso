@@ -213,7 +213,7 @@
     <string name="widget_name_weather">Pogoda</string>
     <string name="widget_name_calendar">Kalendarz</string>
     <string name="widget_name_music">Muzyka</string>
-    <string name="widget_name_favorites">Ulubione</string>
+    <string name="widget_name_apps">Aplikacje</string>
     <string name="widget_name_notes">Widżet przechowujący pojedynczą notatkę</string>
     <string name="widget_name_unknown">Nieznany widżet</string>
     <string name="widget_add_widget">Dodaj widżet</string>
