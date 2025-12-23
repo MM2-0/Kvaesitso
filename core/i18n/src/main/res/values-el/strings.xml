@@ -206,7 +206,6 @@
     <string name="widget_name_weather">Καιρός</string>
     <string name="widget_name_calendar">Ημερολόγιο</string>
     <string name="widget_name_music">Μουσική</string>
-    <string name="widget_name_favorites">Αγαπημένα</string>
     <string name="widget_name_notes">Ένα γραφικό στοιχείο που αποθηκεύει μία μόνο σημείωση</string>
     <string name="widget_name_unknown">Ετικέτα που χρησιμοποιείται για μη έγκυρα γραφικά στοιχεία εφαρμογών</string>
     <string name="widget_add_widget">Προσθήκη γραφικού στοιχείου</string>
