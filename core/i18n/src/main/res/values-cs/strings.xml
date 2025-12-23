@@ -1068,4 +1068,5 @@
     <string name="preference_transliteration">Preferovaná transkripce</string>
     <string name="preference_transliteration_auto">Automatická</string>
     <string name="preference_transliteration_disabled">Zakázaná</string>
+    <string name="select_tag">Vybrat štítek</string>
 </resources>
