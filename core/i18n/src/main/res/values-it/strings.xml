@@ -487,6 +487,8 @@
     <string name="preference_screen_integrations">Integrazioni</string>
     <string name="preference_screen_plugins">Plugin</string>
     <string name="preference_screen_plugins_summary">Gestisci estensioni installate</string>
+    <string name="preference_category_enabled_plugins">Abilitato</string>
+    <string name="preference_category_installed_plugins">Installato</string>
     <string name="no_plugins_installed">Nessun plugin installato</string>
     <string name="preference_theme_system">Segui sistema</string>
     <string name="preference_themed_icons">Icone a tema</string>
@@ -732,6 +734,7 @@
     <string name="tag_empty_name">Un tag non può esistere senza un nome. Se continui, il tag verrà eliminato</string>
     <string name="tag_select_items">Seleziona elementi:</string>
     <string name="tag_name">Nome tag</string>
+    <string name="tag_icon_customicon">Icona</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d elemento selezionato</item>
         <item quantity="other">%1$d elementi selezionati</item>
