@@ -492,6 +492,8 @@
     <string name="preference_screen_integrations">Integrációk</string>
     <string name="preference_screen_plugins">Bővítmények</string>
     <string name="preference_screen_plugins_summary">Telepített bővítmények kezelése</string>
+    <string name="preference_category_enabled_plugins">Engedélyezve</string>
+    <string name="preference_category_installed_plugins">Telepítve</string>
     <string name="no_plugins_installed">Nincsenek telepített bővítmények</string>
     <string name="preference_theme_system">Rendszer beállításainak követése</string>
     <string name="preference_themed_icons">Témának megfelelő ikonok</string>
@@ -742,6 +744,8 @@
     <string name="tag_empty_name">Egy címke nem létezhet név nélkül. Ha folytatja, a címke törlődik</string>
     <string name="tag_select_items">Elemek kiválasztása:</string>
     <string name="tag_name">Címkenév</string>
+    <string name="tag_icon_customicon">Ikon</string>
+    <string name="tag_icon_emoji">Emodzsi</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d kiválasztott elem</item>
         <item quantity="other">%1$d kiválasztott elem</item>
