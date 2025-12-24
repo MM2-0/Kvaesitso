@@ -881,4 +881,9 @@
     <string name="preference_transliteration_auto">Automatikus</string>
     <string name="preference_transliteration_disabled">Letiltva</string>
     <string name="select_tag">Címke kiválasztása</string>
+    <string name="widget_name_apps">Alkalmazások</string>
+    <string name="preference_category_enabled_plugins">Engedélyezve</string>
+    <string name="preference_category_installed_plugins">Telepítve</string>
+    <string name="tag_icon_customicon">Ikon</string>
+    <string name="tag_icon_emoji">Emodzsi</string>
 </resources>
