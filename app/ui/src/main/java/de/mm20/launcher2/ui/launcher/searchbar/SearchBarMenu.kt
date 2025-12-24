@@ -49,7 +49,6 @@ fun RowScope.SearchBarMenu(
                 if (searchBarValue.isNotBlank()) onInputClear()
                 else showOverflowMenu = true
             },
-            shapes = IconButtonDefaults.shapes()
         ) {
             Icon(
                 painter = rememberAnimatedVectorPainter(

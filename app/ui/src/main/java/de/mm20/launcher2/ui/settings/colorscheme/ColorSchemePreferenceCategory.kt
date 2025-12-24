@@ -55,7 +55,6 @@ fun ColorSchemePreferenceCategory(
                 horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
             ) {
                 FilledTonalIconToggleButton(
-                    shapes = IconButtonDefaults.toggleableShapes(),
                     checked = !darkMode,
                     onCheckedChange = { onDarkModeChanged(false) }
                 ) {
@@ -65,7 +64,6 @@ fun ColorSchemePreferenceCategory(
                     )
                 }
                 FilledTonalIconToggleButton(
-                    shapes = IconButtonDefaults.toggleableShapes(),
                     checked = darkMode,
                     onCheckedChange = { onDarkModeChanged(true) }
                 ) {

@@ -135,7 +135,6 @@ fun FavoritesTagSelector(
                 if (editButton) {
                     FilledTonalIconButton(
                         onClick = { sheetManager.showEditFavoritesSheet() },
-                        shapes = IconButtonDefaults.shapes(),
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.edit_24px),
@@ -218,7 +217,6 @@ fun FavoritesTagSelector(
                     if (editButton) {
                         FilledTonalIconButton(
                             onClick = { sheetManager.showEditFavoritesSheet() },
-                            shapes = IconButtonDefaults.shapes(),
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.edit_24px),

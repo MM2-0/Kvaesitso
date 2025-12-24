@@ -329,7 +329,6 @@ fun MusicWidget(widget: MusicWidget) {
                             onClick = {
                                 viewModel.skipPrevious()
                             },
-                            shapes = IconButtonDefaults.shapes(),
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.skip_previous_24px),
@@ -347,7 +346,6 @@ fun MusicWidget(widget: MusicWidget) {
                 ) {
                     FilledTonalIconToggleButton(
                         onCheckedChange = { viewModel.togglePause() },
-                        shapes = IconButtonDefaults.toggleableShapes(),
                         checked = playbackState == PlaybackState.Playing
                     ) {
                         AnimatedContent(
@@ -384,7 +382,6 @@ fun MusicWidget(widget: MusicWidget) {
                             onClick = {
                                 viewModel.skipNext()
                             },
-                            shapes = IconButtonDefaults.shapes(),
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.skip_next_24px),
@@ -485,7 +482,6 @@ fun CustomActions(
                 onClick = {
                     onActionSelected(action)
                 },
-                shapes = IconButtonDefaults.shapes(),
             ) {
                 CustomActionIcon(action, playerPackage)
             }

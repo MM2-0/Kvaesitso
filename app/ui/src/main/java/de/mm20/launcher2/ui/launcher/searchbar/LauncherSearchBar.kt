@@ -86,7 +86,6 @@ fun LauncherSearchBar(
                     IconToggleButton(
                         checked = sheetManager.hiddenItemsSheetShown.value,
                         onCheckedChange = { if (it) sheetManager.showHiddenItemsSheet() },
-                        shapes = IconButtonDefaults.toggleableShapes(),
                     ) {
                         Icon(
                             painter = painterResource(
@@ -107,7 +106,6 @@ fun LauncherSearchBar(
                         onCheckedChange = {
                             searchVM.showFilters.value = it
                         },
-                        shapes = IconButtonDefaults.toggleableShapes(),
                     ) {
                         Box {
                             Icon(

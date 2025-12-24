@@ -1074,7 +1074,6 @@ private fun TextStylePreference(
                                 onCheckedChange = {
                                     if (it) fontFamily = name
                                 },
-                                shapes = IconButtonDefaults.toggleableShapes(),
                             ) {
                                 Text(
                                     text = previewTexts.ExtraShort,
