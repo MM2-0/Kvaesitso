@@ -892,4 +892,9 @@
     <string name="preference_transliteration_auto">Automatica</string>
     <string name="preference_transliteration_disabled">Disabilitata</string>
     <string name="select_tag">Seleziona tag</string>
+    <string name="widget_name_apps">App</string>
+    <string name="preference_category_enabled_plugins">Abilitato</string>
+    <string name="preference_category_installed_plugins">Installato</string>
+    <string name="tag_icon_customicon">Icona</string>
+    <string name="tag_icon_emoji">Emoji</string>
 </resources>
