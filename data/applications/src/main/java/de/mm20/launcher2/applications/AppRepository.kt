@@ -240,21 +240,30 @@ internal class AppRepositoryImpl(
 
     override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<LauncherApp>> {
         val normalizedQuery = stringNormalizer.normalize(query)
+
         return installedApps.map { apps ->
             withContext(Dispatchers.Default) {
+                val normalizerId = stringNormalizer.id
                 val appResults = mutableListOf<LauncherApp>()
                 if (query.isEmpty()) {
                     appResults.addAll(apps)
                 } else {
-                    appResults.addAll(apps.mapNotNull {
+                    appResults.addAll(apps.mapNotNull { app ->
+                        val cachedLabel = app.cachedNormalizerResult
                         val score = ResultScore.from(
                             query = normalizedQuery,
                             primaryFields = listOf(
-                                stringNormalizer.normalize(it.label)
+                                if (cachedLabel?.first == normalizerId) {
+                                    cachedLabel.second
+                                } else {
+                                    stringNormalizer.normalize(app.label).also {
+                                        app.cachedNormalizerResult = normalizerId to it
+                                    }
+                                }
                             ),
                         )
                         if (score.score < 0.8f) return@mapNotNull null
-                        it.copy(
+                        app.copy(
                             score = score
                         )
                     })

@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.withContext
@@ -169,7 +170,7 @@ internal class AppShortcutRepositoryImpl(
                 } else {
                     persistentListOf()
                 }
-            }
+            }.flowOn(Dispatchers.Default)
     }
 
     private val shortcutChangeEmitter = callbackFlow {

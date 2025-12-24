@@ -47,6 +47,13 @@ internal data class LauncherApp(
 
     override val label: String = launcherActivityInfo.label.toString()
 
+    /**
+     * Cached result of the normalized label.
+     * First string is the normalizer ID
+     * Second string is the normalized label
+     */
+    internal var cachedNormalizerResult: Pair<String, String>? = null
+
 
     constructor(
         context: Context,

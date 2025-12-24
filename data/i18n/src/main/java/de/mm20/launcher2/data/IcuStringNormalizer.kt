@@ -22,21 +22,26 @@ internal class IcuStringNormalizer(
     localeSettings: LocaleSettings,
 ) : StringNormalizer {
 
+    override val id: String
+        get() = transliteratorId.value ?: "null"
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-    private val transliterator = localeSettings.transliterator
+    private val transliteratorId = localeSettings.transliterator
         .map {
-            try {
-                getTransliterator(it)
-            } catch (e: IllegalArgumentException) {
-                CrashReporter.logException(e)
-                null
-            }
+            getTransliteratorId(it)
         }
         .stateIn(scope, SharingStarted.Eagerly, null)
 
     override fun normalize(input: String): String {
-        val transliterator = transliterator.value
+        val id = transliteratorId.value
+
+        val transliterator = try {
+            Transliterator.getInstance(id)
+        } catch (e: IllegalArgumentException) {
+            CrashReporter.logException(e)
+            null
+        }
 
         if (transliterator ==  null) {
             return StringUtils.stripAccents(input.lowercase(Locale.getDefault()))
@@ -48,17 +53,17 @@ internal class IcuStringNormalizer(
         return transliterator.transliterate(input).lowercase()
     }
 
-    private fun getTransliterator(preferenceValue: String?): Transliterator {
-        val id = preferenceValue ?: return Transliterator.getInstance(DisabledTransliteratorId)
+    private fun getTransliteratorId(preferenceValue: String?): String {
+        val id = preferenceValue ?: return DisabledTransliteratorId
 
         if (id.isNotBlank()) {
-            return Transliterator.getInstance("$id;$BaseTransliteratorId")
+            return "$id;$BaseTransliteratorId"
         }
 
         val locales = context.resources.configuration.locales
 
         if (locales.isEmpty) {
-            Transliterator.getInstance(BaseTransliteratorId)
+            return BaseTransliteratorId
         }
 
         val scripts = mutableSetOf<String>()
@@ -79,7 +84,7 @@ internal class IcuStringNormalizer(
                 val id = availableIds.find { it.startsWith(filter) }
 
                 if (id != null) {
-                    return Transliterator.getInstance("$id;$BaseTransliteratorId")
+                    return "$id;$BaseTransliteratorId"
                 }
 
                 languages.add(lng)
@@ -91,12 +96,12 @@ internal class IcuStringNormalizer(
                 val id = availableIds.find { it.startsWith(filter) }
 
                 if (id != null) {
-                    return Transliterator.getInstance("$id;$BaseTransliteratorId")
+                    return "$id;$BaseTransliteratorId"
                 }
                 scripts.add(ulocale.script)
             }
         }
-        return Transliterator.getInstance(BaseTransliteratorId)
+        return BaseTransliteratorId
     }
 
     companion object {
