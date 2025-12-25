@@ -482,6 +482,8 @@
     <string name="preference_screen_integrations">Integraties</string>
     <string name="preference_screen_plugins">Plug-ins</string>
     <string name="preference_screen_plugins_summary">Geïnstalleerde uitbreidingen beheren</string>
+    <string name="preference_category_enabled_plugins">Aangezet</string>
+    <string name="preference_category_installed_plugins">Geïnstalleerd</string>
     <string name="no_plugins_installed">Geen plug-ins geïnstalleerd</string>
     <string name="preference_theme_system">Systeem volgen</string>
     <string name="preference_themed_icons">Iconen met thema</string>
@@ -722,6 +724,7 @@
     <string name="tag_empty_name">Een label kan niet bestaan zonder een naam. Als je doorgaat, wordt het label verwijderd</string>
     <string name="tag_select_items">Kies items:</string>
     <string name="tag_name">Labelnaam</string>
+    <string name="tag_icon_customicon">Pictogram</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item geselecteerd</item>
         <item quantity="other">%1$d</item>
