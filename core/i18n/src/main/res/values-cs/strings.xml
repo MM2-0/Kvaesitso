@@ -497,6 +497,8 @@
     <string name="preference_screen_integrations">Integrace</string>
     <string name="preference_screen_plugins">Doplňky</string>
     <string name="preference_screen_plugins_summary">Spravovat nainstalované doplňky</string>
+    <string name="preference_category_enabled_plugins">Povoleno</string>
+    <string name="preference_category_installed_plugins">Nainstalováno</string>
     <string name="no_plugins_installed">Nejsou nainstalovány žádné doplňky</string>
     <string name="preference_theme_system">Podle systému</string>
     <string name="preference_themed_icons">Tématické ikony</string>
@@ -749,6 +751,8 @@
     <string name="tag_empty_name">Štítek nemůže existovat bez názvu. Pokud budete pokračovat, bude štítek odstraněn</string>
     <string name="tag_select_items">Vybrané položky:</string>
     <string name="tag_name">Název štítku</string>
+    <string name="tag_icon_customicon">Ikona</string>
+    <string name="tag_icon_emoji">Emodži</string>
     <plurals name="tag_selected_items">
         <item quantity="one">Vybrána %1$d položka</item>
         <item quantity="few">Vybrány %1$d položky</item>
