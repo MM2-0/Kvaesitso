@@ -892,4 +892,9 @@
     <string name="preference_transliteration_auto">Automatická</string>
     <string name="preference_transliteration_disabled">Zakázaná</string>
     <string name="select_tag">Vybrat štítek</string>
+    <string name="widget_name_apps">Aplikace</string>
+    <string name="preference_category_enabled_plugins">Povoleno</string>
+    <string name="preference_category_installed_plugins">Nainstalováno</string>
+    <string name="tag_icon_customicon">Ikona</string>
+    <string name="tag_icon_emoji">Emodži</string>
 </resources>
