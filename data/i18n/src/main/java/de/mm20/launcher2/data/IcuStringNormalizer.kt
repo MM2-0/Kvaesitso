@@ -23,7 +23,7 @@ internal class IcuStringNormalizer(
 ) : StringNormalizer {
 
     override val id: String
-        get() = transliteratorId.value ?: "null"
+        get() = transliteratorId.value
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -31,7 +31,7 @@ internal class IcuStringNormalizer(
         .map {
             getTransliteratorId(it)
         }
-        .stateIn(scope, SharingStarted.Eagerly, null)
+        .stateIn(scope, SharingStarted.Eagerly, DisabledTransliteratorId)
 
     override fun normalize(input: String): String {
         val id = transliteratorId.value
