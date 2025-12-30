@@ -3,8 +3,96 @@
     <!-- DIMENSIONS -->
     <string name="dimension_length">אורך</string>
     <string name="dimension_mass">מסה</string>
+    <string name="dimension_velocity">מהירות</string>
+    <string name="dimension_volume">נפח</string>
+    <string name="dimension_area">שטח</string>
+    <string name="dimension_currency">מטבע</string>
+    <string name="dimension_data">נתונים</string>
+    <string name="dimension_bitrate">קצב הנתונים</string>
+    <string name="dimension_pressure">לחץ</string>
+    <string name="dimension_energy">אנרגיה</string>
+    <string name="dimension_frequency">תדירות</string>
+    <string name="dimension_temperature">טמפרטורה</string>
+    <string name="dimension_time">זמן</string>
     <!-- UNITS OF LENGTH -->
+    <string name="unit_meter_symbol">יחידות אורך</string>
+    <plurals name="unit_meter">
+        <item quantity="one">מטר</item>
+        <item quantity="two">מטרים</item>
+        <item quantity="many">מטרים</item>
+        <item quantity="other">מטרים</item>
+    </plurals>
+    <string name="unit_kilometer_symbol">ק\"מ</string>
+    <plurals name="unit_kilometer">
+        <item quantity="one">ק\"מ</item>
+        <item quantity="two">ק\"מ</item>
+        <item quantity="many">ק\"מ</item>
+        <item quantity="other">ק\"מ</item>
+    </plurals>
+    <string name="unit_decimeter_symbol">דצימטר</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">דצימטר</item>
+        <item quantity="two">דצימטרים</item>
+        <item quantity="many">דצימטרים</item>
+        <item quantity="other">דצימטרים</item>
+    </plurals>
+    <string name="unit_centimeter_symbol">סנטימטר</string>
+    <plurals name="unit_centimeter">
+        <item quantity="one">סנטימטר</item>
+        <item quantity="two">סנטימטרים</item>
+        <item quantity="many">סנטימטרים</item>
+        <item quantity="other">סנטימטרים</item>
+    </plurals>
+    <string name="unit_millimeter_symbol">מילימטר</string>
+    <plurals name="unit_millimeter">
+        <item quantity="one">מילימטר</item>
+        <item quantity="two">מילימטרים</item>
+        <item quantity="many">מילימטרים</item>
+        <item quantity="other">מילימטרים</item>
+    </plurals>
+    <string name="unit_inch_symbol">אינץ\'</string>
+    <plurals name="unit_inch">
+        <item quantity="one">אינץ\'</item>
+        <item quantity="two">אינצ\'ים</item>
+        <item quantity="many">אינצ\'ים</item>
+        <item quantity="other">אינצ\'ים</item>
+    </plurals>
+    <string name="unit_foot_symbol">רגל</string>
+    <plurals name="unit_foot">
+        <item quantity="one">רגל</item>
+        <item quantity="two">רגליים</item>
+        <item quantity="many">רגליים</item>
+        <item quantity="other">רגליים</item>
+    </plurals>
+    <string name="unit_yard_symbol">יארד</string>
+    <plurals name="unit_yard">
+        <item quantity="one">יארד</item>
+        <item quantity="two">יארדים</item>
+        <item quantity="many">יארדים</item>
+        <item quantity="other">יארדים</item>
+    </plurals>
+    <string name="unit_mile_symbol">מיל</string>
+    <plurals name="unit_mile">
+        <item quantity="one">מיל</item>
+        <item quantity="two">מילים</item>
+        <item quantity="many">מילים</item>
+        <item quantity="other">מילים</item>
+    </plurals>
+    <string name="unit_nautic_mile_symbol">מיל ימי</string>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">מיל ימי</item>
+        <item quantity="two">מילים ימיים</item>
+        <item quantity="many">מילים ימיים</item>
+        <item quantity="other">מילים ימיים</item>
+    </plurals>
     <!-- UNITS OF AREA -->
+    <string name="unit_sqmeter_symbol">מ\"ר</string>
+    <plurals name="unit_sqmeter">
+        <item quantity="one">מטר רבוע</item>
+        <item quantity="two">מטרים רבועים</item>
+        <item quantity="many">מטרים רבועים</item>
+        <item quantity="other">מטרים רבועים</item>
+    </plurals>
     <!-- UNITS OF TIME -->
     <!-- UNITS OF DATA SIZES -->
     <!-- UNITS OF VELOCITY -->
