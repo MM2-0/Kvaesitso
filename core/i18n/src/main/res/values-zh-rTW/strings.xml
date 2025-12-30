@@ -32,7 +32,7 @@
     <string name="menu_map">在地圖上檢視</string>
     <string name="menu_website">開啟網站</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
-    <string name="action_undo">撤銷</string>
+    <string name="action_undo">復原</string>
     <string name="action_import">匯入</string>
     <string name="action_done">完成</string>
     <string name="action_more_actions">更多動作</string>
@@ -219,18 +219,18 @@
     <string name="widget_name_calendar">日曆</string>
     <string name="widget_name_music">多媒體</string>
     <string name="widget_name_apps">應用程式</string>
-    <string name="widget_name_notes">註記</string>
+    <string name="widget_name_notes">筆記</string>
     <string name="widget_name_unknown">未知的應用程式小工具</string>
     <string name="widget_add_widget">新增小工具</string>
     <string name="widget_removed">小工具已移除</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">寫一個註記</string>
-    <string name="notes_widget_action_new">新的註記</string>
+    <string name="notes_widget_placeholder">建立一個筆記…</string>
+    <string name="notes_widget_action_new">新筆記</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">儲存</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_action_dismiss">解除</string>
-    <string name="notes_widget_dismissed">註記已被關閉</string>
+    <string name="notes_widget_dismissed">已刪除筆記</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">由 %1$s</string>
     <!-- Close a dialog -->
@@ -519,8 +519,8 @@
     <string name="preference_dim_wallpaper">調暗桌布</string>
     <string name="preference_dim_wallpaper_summary">在深色主題中，使桌布變暗</string>
     <string name="preference_blur_wallpaper">模糊桌布</string>
-    <string name="preference_blur_wallpaper_summary">在桌布上 使用模糊效果</string>
-    <string name="preference_blur_wallpaper_unsupported">在此裝置上不受支援</string>
+    <string name="preference_blur_wallpaper_summary">對桌布套用模糊效果</string>
+    <string name="preference_blur_wallpaper_unsupported">不支援此裝置</string>
     <string name="preference_blur_wallpaper_radius">模糊半徑</string>
     <string name="preference_wallpaper_summary">選擇一張桌布</string>
     <string name="preference_category_badges">標記</string>
@@ -528,8 +528,8 @@
     <string name="preference_notification_badges_summary">為帶有未讀通知的應用程式顯示標記</string>
     <string name="preference_suspended_badges_summary">為已暫停的應用程式顯示標記</string>
     <string name="preference_suspended_badges">已暫停的應用程式</string>
-    <string name="preference_cloud_badges">雲服務標記</string>
-    <string name="preference_cloud_badges_summary">為儲存在雲伺服器上的檔案顯示標記</string>
+    <string name="preference_cloud_badges">雲端服務標記</string>
+    <string name="preference_cloud_badges_summary">標記雲端伺服器上的檔案</string>
     <string name="preference_shortcut_badges">捷徑標記</string>
     <string name="preference_shortcut_badges_summary">顯示指示捷徑所屬應用程式的標記</string>
     <string name="preference_plugin_badges">外掛程式標記</string>
@@ -560,7 +560,7 @@
     <string name="preference_screen_weatherwidget">天氣</string>
     <string name="preference_category_media_apps">媒體應用程式</string>
     <string name="preference_screen_clockwidget">時鐘</string>
-    <string name="preference_screen_clockwidget_summary">配置時鐘樣式與組件</string>
+    <string name="preference_screen_clockwidget_summary">設定時鐘樣式與組件</string>
     <string name="preference_clockwidget_layout_vertical">預設</string>
     <string name="preference_clockwidget_layout_horizontal">簡潔</string>
     <string name="preference_clock_widget_show_seconds">顯示秒數</string>
@@ -600,9 +600,9 @@
     <string name="preference_search_favorites">我的最愛</string>
     <string name="preference_search_favorites_summary">在應用程式抽屜上方顯示釘選與常用項目</string>
     <string name="preference_search_apps">應用程式</string>
-    <string name="preference_search_apps_summary">當搜索框為空時顯示所有應用程式</string>
+    <string name="preference_search_apps_summary">搜尋欄無文字時顯示所有應用程式</string>
     <string name="preference_search_files">檔案</string>
-    <string name="preference_search_files_summary">搜尋本機檔案與雲伺服器檔案</string>
+    <string name="preference_search_files_summary">搜尋本機檔案與雲端伺服器檔案</string>
     <string name="preference_search_contacts">聯絡人</string>
     <string name="preference_search_contacts_summary">搜尋在此裝置上的聯絡人</string>
     <string name="preference_search_calendar">日曆</string>
@@ -625,7 +625,7 @@
     <string name="preference_search_locations">地點</string>
     <string name="preference_search_locations_radius">搜尋半徑</string>
     <string name="preference_search_websites_summary">如果搜尋查詢是 URL，則顯示網站的預覽</string>
-    <string name="preference_search_locations_summary">顯示秒鐘</string>
+    <string name="preference_search_locations_summary">搜尋附近的商店或其他地點</string>
     <string name="preference_search_localfiles">本機檔案</string>
     <string name="preference_search_localfiles_summary">搜尋儲存在此裝置上的文件、照片與其它檔案</string>
     <string name="preference_search_cloud_summary">搜尋%1$s的檔案</string>
@@ -707,7 +707,7 @@
     <string name="frequently_used_show_in_favorites">顯示在我的最愛</string>
     <string name="frequently_used_rows">行數</string>
     <string name="preference_screen_search_actions">快捷操作</string>
-    <string name="preference_search_search_actions_summary">組態快捷操作與搜尋欄捷徑</string>
+    <string name="preference_search_search_actions_summary">設定快捷操作與搜尋欄捷徑</string>
     <string name="search_action_call">撥號</string>
     <string name="search_action_message">資訊</string>
     <string name="search_action_email">電子郵件</string>
@@ -782,7 +782,7 @@
     <string name="preference_search_result_ordering_weight_factor_high">變數</string>
     <string name="widget_config_appwidget_borderless">無邊框</string>
     <string name="widget_config_appwidget_background">背景卡片</string>
-    <string name="widget_config_appwidget_configure">配置小工具</string>
+    <string name="widget_config_appwidget_configure">設定小工具</string>
     <string name="widget_config_appwidget_resize">調整大小</string>
     <string name="widget_config_weather_integration_settings">氣象整合設定</string>
     <string name="widget_config_calendar_no_calendars">找不到任何行事曆</string>
@@ -797,13 +797,13 @@
     <string name="note_widget_conflict">衝突</string>
     <string name="note_widget_conflict_action_resolve">解決</string>
     <string name="note_widget_conflict_keep_selected">保留所選</string>
-    <string name="note_widget_conflict_description">該連結的文件並非空白，其內容與此註記的上次保存版本不符。您想保留哪個版本？</string>
+    <string name="note_widget_conflict_description">筆記連結的文件含有文字，且與上次儲存的筆記內容不同。您要保留哪個版本？</string>
     <string name="note_widget_conflict_local_version">最後保存的版本：</string>
     <string name="note_widget_conflict_file_version">現行檔案內容：</string>
-    <string name="note_widget_file_read_error">讀取註記時發生錯誤</string>
-    <string name="note_widget_file_read_error_description">無法讀取連結的檔案。可能是因為它已經被移動或刪除。已從啟動器的內部儲存還原了一份副本。如果您編輯註記，連結的檔案可能會被覆寫</string>
-    <string name="note_widget_file_write_error">儲存註記時發生錯誤</string>
-    <string name="note_widget_file_write_error_description">此註記無法寫入連結檔案。已將副本儲存至啟動器的內部儲存空間</string>
+    <string name="note_widget_file_read_error">讀取筆記時發生錯誤</string>
+    <string name="note_widget_file_read_error_description">無法讀取連結的檔案。已從啟動器中還原副本。如果您編輯筆記，連結的檔案可能會被覆寫</string>
+    <string name="note_widget_file_write_error">儲存筆記時發生錯誤</string>
+    <string name="note_widget_file_write_error_description">無法將筆記寫入連結的檔案。已將副本儲存至啟動器的內部儲存空間</string>
     <string name="confirmation_delete_color_scheme">您是否確定要刪除色彩方案 %1$s？</string>
     <string name="confirmation_delete_shapes_scheme">是否將形狀 %1$s 刪除？</string>
     <string name="confirmation_delete_typography_scheme">是否刪除格式 %1$s？</string>
