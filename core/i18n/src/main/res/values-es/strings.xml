@@ -491,6 +491,8 @@
     <string name="preference_category_searchbar">Barra de búsqueda</string>
     <string name="preference_screen_integrations">Integraciones</string>
     <string name="preference_screen_plugins_summary">Administrar extensiones instaladas</string>
+    <string name="preference_category_enabled_plugins">Activado</string>
+    <string name="preference_category_installed_plugins">Instalado</string>
     <string name="no_plugins_installed">Sin plugins instalados</string>
     <string name="preference_theme_system">De acuerdo al sistema</string>
     <string name="preference_themed_icons">Íconos temáticos</string>
