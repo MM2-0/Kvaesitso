@@ -7,6 +7,7 @@
     <string name="dimension_volume">Bolumena</string>
     <string name="dimension_area">Azalera</string>
     <string name="dimension_currency">Moneta</string>
+    <string name="dimension_data">Datuak</string>
     <string name="dimension_bitrate">Bit-tasa</string>
     <string name="dimension_pressure">Presioa</string>
     <string name="dimension_energy">Energia</string>
@@ -185,4 +186,60 @@
         <item quantity="other">fahrenheit gradu</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
+    <plurals name="unit_liter">
+        <item quantity="one">litro</item>
+        <item quantity="other">litro</item>
+    </plurals>
+    <plurals name="unit_milliliter">
+        <item quantity="one">mililitro</item>
+        <item quantity="other">mililitro</item>
+    </plurals>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">metro kubiko</item>
+        <item quantity="other">metro kubiko</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">zm³</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">zentimetro kubiko</item>
+        <item quantity="other">zentimetro kubiko</item>
+    </plurals>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">milimetro kubiko</item>
+        <item quantity="other">milimetro kubiko</item>
+    </plurals>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">hazbete kubiko</item>
+        <item quantity="other">hazbete kubiko</item>
+    </plurals>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">oin kubiko</item>
+        <item quantity="other">oin kubiko</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">gal AEB</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">galoi (AEB)</item>
+        <item quantity="other">galoi (AEB)</item>
+    </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">galoi (inperiala)</item>
+        <item quantity="other">galoi (inperiala)</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">pt AEB</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">pinta (AEB)</item>
+        <item quantity="other">pinta (AEB)</item>
+    </plurals>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">pinta (inperiala)</item>
+        <item quantity="other">pinta (inperiala)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">fl oz AEB</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">ontza fluidoa (AEB)</item>
+        <item quantity="other">ontza fluidoa (AEB)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">ontza fluidoa (inperiala)</item>
+        <item quantity="other">ontza fluidoa (inperiala)</item>
+    </plurals>
 </resources>
