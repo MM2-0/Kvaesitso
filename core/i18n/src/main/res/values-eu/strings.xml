@@ -129,7 +129,7 @@
     <!-- Spreadsheet -->
     <string name="file_type_spreadsheet">Kalkulu orria</string>
     <!-- Audio file -->
-    <string name="file_type_music">Musika fitxategia</string>
+    <string name="file_type_music">Audio fitxategia</string>
     <!-- Video file -->
     <string name="file_type_video">Bideoa</string>
     <!-- Image file -->
@@ -212,23 +212,25 @@
     <string name="widget_name_music">Musika</string>
     <string name="widget_name_apps">Aplikazioak</string>
     <string name="widget_name_notes">Oharrak</string>
-    <string name="widget_name_unknown">Aplikazio ezezagunaren trepeta</string>
+    <string name="widget_name_unknown">Ezezaguna</string>
     <string name="widget_add_widget">Trepeta gehitu</string>
     <string name="widget_removed">Trepeta ezabatua</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Ohar bat idatzi…</string>
+    <string name="notes_widget_placeholder">Ohar bat idatzi</string>
     <string name="notes_widget_action_new">Ohar berria</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Gorde</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_export_filename">Oharra_%1$s</string>
     <string name="notes_widget_action_dismiss">Baztertu</string>
-    <string name="notes_widget_dismissed">Oharra baztertu da.</string>
+    <string name="notes_widget_dismissed">Oharra baztertu da</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">%1$s-(r)ena</string>
     <!-- Close a dialog -->
     <string name="close">Itxi</string>
+    <string name="no_selection">Hautaketarik ez</string>
     <string name="save">Gorde</string>
+    <string name="save_as_file">Fitxategi gisa gorde</string>
     <string name="duplicate">Bikoiztu</string>
     <string name="edit">Editatu</string>
     <string name="skip">Saltatu</string>
@@ -247,7 +249,7 @@
     <string name="edit_favorites_dialog_empty_section">Arrastatu elementuak hona</string>
     <string name="edit_favorites_dialog_tags">Etiketak</string>
     <string name="edit_favorites_dialog_tag_section_empty">Ainguratutako etiketak hemen agertuko dira</string>
-    <string name="edit_favorites_dialog_new_tag">Etiketa sortu…</string>
+    <string name="edit_favorites_dialog_new_tag">Etiketa sortu</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud zerbitzariaren URLa</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -273,6 +275,7 @@
     <string name="login_flow_login">Saioa hasi</string>
     <string name="disclaimer">Erantzukizun-deskargua</string>
     <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
+    <string name="disclaimer_currency_converter">Europako Banku Zentralak egunean behin argitaratzen dituen truke-tasak. Informazio guztia \"dagoen bezala\" ematen da, inolako bermerik gabe. Ez da inolako erantzukizunik hartzen informazio honengatik.\n\nAzken eguneraketa: %1$s</string>
     <string name="show_all">Guztia erakutsi</string>
     <!-- Used in calendar widget date selector. -->
     <string name="date_today">Gaur</string>
@@ -293,11 +296,18 @@
         <item quantity="one">Azken egunetako ekitaldi %1$d martxan</item>
         <item quantity="other">Azken egunetako %1$d ekitaldi martxan</item>
     </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">Amaitu gabeko +%1$d zeregin</item>
+        <item quantity="other">Amaitu gabeko +%1$d zeregin</item>
+    </plurals>
     <!-- Calendar events that last the entire day -->
-    <string name="calendar_event_allday">egun osoan</string>
+    <string name="calendar_event_allday">Egun osoan</string>
+    <string name="task_due_date">%1$s barru hasiko da</string>
+    <string name="task_due_today">Gaur hasiko da</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s multimedia erreproduzitzen ari da</string>
     <string name="music_widget_no_data">Oraindik ez da multimediarik erreproduzitu</string>
+    <string name="music_widget_interactive_progress_bar">Aurrerapen-barra interaktiboa</string>
     <string name="weather_condition_sleetshowers">Elurbusti-zaparradak</string>
     <string name="weather_condition_lightrainshowersandthunder">Euri-zaparrada arinak eta trumoiak</string>
     <string name="weather_condition_lightsnowandthunder">Elur arina eta trumoiak</string>
@@ -334,11 +344,11 @@
     <!-- Humidity details, %1$s: formatted humidity value -->
     <!-- Wind details, %1$s: formatted wind values -->
     <!-- Precipitation details, %1$s: formatted precipitation values -->
-    <string name="weather_no_data">Ez dago eguraldi-daturik eskuragarri.</string>
+    <string name="weather_no_data">Ez dago eguraldi-daturik eskuragarri</string>
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Kokapena zehaztu</string>
-    <string name="weather_location_search_no_result">Kokapena ez da aurkitu.</string>
+    <string name="weather_location_search_no_result">Kokapena ez da aurkitu</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Kokapenerako sarbidea beharrezkoa da kokapena automatikoki zehazteko</string>
     <!-- Missing notification permission in music widget settings -->
@@ -346,32 +356,34 @@
     <!-- Missing contact permission in search settings screen -->
     <string name="missing_permission_contact_search_settings">Kontaktuetarako sarbidea behar da kontaktuak bilatzeko</string>
     <!-- Missing call permission in contacts settings screen -->
-    <string name="missing_permission_call_contacts_settings">Deitzeko baimena behar da deiak hasteko</string>
+    <string name="missing_permission_call_contacts_settings">Telefonoa erabiltzeko baimena behar da deiak hasteko</string>
     <!-- Missing calendar permission in search settings screen -->
     <string name="missing_permission_calendar_search_settings">Egutegirako sarbidea behar da egutegian bilatzeko</string>
+    <string name="missing_permission_tasks_search_settings">Zereginak aplikazioan zereginak bilatzeko, Zereginak atzitzeko baimena behar da</string>
+    <string name="missing_permission_tasks_integration">Zereginen baimena behar da Zereginen integrazioa erabiltzeko</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">Trepeta honek egutegirako sarbidea behar du</string>
     <string name="widget_config_calendar_missing_calendars_hint">Ezin dituzu zure egutegiak aurkitu\?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s hasierako aplikazio gisa ezarri behar da lasterbideak bilatzeko</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">Kanpoko biltegiratze-sarbidea behar da fitxategi lokalak bilatzeko</string>
+    <string name="missing_permission_file_search_settings">Kanpoko biltegiratze-sarbidea behar da fitxategiak gailu honetan bilatzeko</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">Fitxategi guztiak kudeatzeko sarbidea behar da fitxategi lokalak bilatzeko</string>
+    <string name="missing_permission_file_search_settings_android10">Fitxategi guztiak erabiltzeko baimena behar da fitxategi lokalak bilatzeko</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">Jakinarazpenetarako sarbidea behar da jakinarazpen-biribiltxoak bistaratzeko</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Egutegiaren sarbidea eman datozen hitzorduak eta gertaerak hemen bistaratzeko.</string>
+    <string name="missing_permission_calendar_widget">Egutegia erabiltzeko baimena behar da datozen hitzorduak eta gertaerak hemen bistaratzeko</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Egutegirako sarbidea eman zure egutegian bilatzeko.</string>
+    <string name="missing_permission_calendar_search">Egutegia erabiltzeko baimena behar da zure egutegian bilatzeko</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">Kokapen-baimena eman inguruko lekuak bilatzeko.</string>
+    <string name="missing_permission_location_search">Kokapen-baimena behar da inguruko lekuak bilatzeko</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Biltegiratzeko sarbidea eman gailu honetan argazkiak, multimedia eta dokumentuak bilatzeko.</string>
+    <string name="missing_permission_files_search">Biltegiratzeko sarbidea eman gailu honetan fitxategiak bilatzeko.</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">Kontaktuetarako sarbidea eman zure kontaktuak bilatzeko.</string>
+    <string name="missing_permission_contact_search">Kontaktuak erabiltzeko baimena behar da zure kontaktuak bilatzeko</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">%1$s hasierako aplikazio gisa ezarri lasterbideak bilatzeko.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -385,13 +397,21 @@
     <string name="preference_theme_dark">Iluna</string>
     <string name="preference_screen_colors">Kolore eskema</string>
     <string name="preference_colors_default">Lehenetsia</string>
+    <string name="preference_colors_high_contrast">Kontraste handia</string>
     <string name="preference_colors_bw">Zuri-beltza</string>
     <string name="preference_custom_colors_corepalette">Kolore paleta</string>
     <string name="preference_mdy_color_source">Kolore dinamikoen jatorria</string>
     <string name="preference_mdy_color_source_system">Sistema</string>
     <string name="preference_mdy_color_source_wallpaper">Horma-papera</string>
+    <string name="preference_screen_shapes">Formak</string>
     <string name="preference_shapes_default">Lehenetsia</string>
+    <string name="preference_shapes_extra_round">Extra-borobila</string>
+    <string name="preference_shapes_rect">Laukizuzena</string>
+    <string name="preference_shapes_base">Oinarrizko forma</string>
+    <string name="preference_screen_typography">Letra-tipoa</string>
+    <string name="preference_screen_transparencies">Gardentasuna</string>
     <string name="preference_transparencies_default">Lehenetsia</string>
+    <string name="preference_transparencies_semi_transparent">Erdi-gardena</string>
     <string name="preference_font">Letra-tipoa</string>
     <string name="preference_screen_about">Honi buruz</string>
     <string name="preference_version">Bertsioa</string>
@@ -406,7 +426,7 @@
     <string name="provider_brightsky">Deutscher Wetterdienst (Alemania bakarrik)</string>
     <string name="preference_category_location">Kokapena</string>
     <string name="preference_automatic_location">Kokapen automatikoa</string>
-    <string name="preference_automatic_location_summary">GPS eta kokapen zerbitzuak erabili kokapena automatikoki zehazteko</string>
+    <string name="preference_automatic_location_summary">Kokapen zerbitzuak erabili kokapena automatikoki zehazteko</string>
     <string name="preference_location_managed">Gehigarriak kudeatua</string>
     <string name="preference_location_managed_summary">Hornitzaile honen kokapena gehigarriak kudeatzen du</string>
     <string name="preference_location">Kokapena</string>
@@ -417,13 +437,15 @@
     <string name="preference_category_debug">Arazketa</string>
     <string name="preference_category_debug_tools">Tresnak</string>
     <string name="preference_debug_dump_heap">Memoriaren argazkia</string>
+    <string name="preference_debug_dump_heap_summary">Atera argazki bat memoriaren erabilera aztertzeko. Aplikazioa blokeatuta egongo da prozesu hau amaitu arte.</string>
+    <string name="preference_debug_dump_heap_in_progress">Argazkia ateratzen…</string>
     <string name="preference_debug_cleanup_database">Datu-basea garbitu</string>
     <string name="preference_debug_cleanup_database_summary">Kendu hautsitako eta erabili gabeko sarrerak abiarazlearen datu-basetik</string>
     <string name="preference_debug_reinstall_iconpacks">Ikono paketeak berrinstalatu</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Garbitu eta berreraiki ikono paketearen cachea</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">Sarrera %1$d ezabatu da.</item>
-        <item quantity="other">%1$d sarrera ezabatu dira.</item>
+        <item quantity="one">Sarrera %1$d ezabatu da</item>
+        <item quantity="other">%1$d sarrera ezabatu dira</item>
     </plurals>
     <string name="preference_category_icons">Ikonoak</string>
     <string name="preference_cards">Txartelak</string>
@@ -446,6 +468,8 @@
     <string name="preference_screen_integrations">Integrazioak</string>
     <string name="preference_screen_plugins">Gehigarriak</string>
     <string name="preference_screen_plugins_summary">Instalatutako gehigarriak kudeatu</string>
+    <string name="preference_category_enabled_plugins">Gaituta</string>
+    <string name="preference_category_installed_plugins">Instalatua</string>
     <string name="no_plugins_installed">Ez da gehigarririk instalatu</string>
     <string name="preference_theme_system">Sistemaren arabera</string>
     <string name="preference_themed_icons">Ikono gaidunak</string>
@@ -531,8 +555,9 @@
     <string name="preference_clockwidget_dynamic_zone">Eremu dinamikoa</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Erakutsi uneko data</string>
-    <string name="preference_clockwidget_favorites_part">Gogokoak</string>
-    <string name="preference_clockwidget_favorites_part_summary">Erakutsi ainguratutako elementuen lehen ilara</string>
+    <string name="preference_clockwidget_favorites_part">Aplikazio-barra</string>
+    <string name="preference_clockwidget_favorites_part_summary">Erakutsi ainguratutako elementuak aplikazio-barran</string>
+    <string name="preference_clockwidget_dock_rows">Aplikazio-barraren lerroak</string>
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_music_part_summary">Multimedia-kontrolak erakutsi multimedia-saio aktibo bat dagoenean</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
@@ -554,6 +579,7 @@
     <string name="preference_search_favorites">Gogokoak</string>
     <string name="preference_search_favorites_summary">Ainguratutako eta maiz erabiltzen diren elementuak aplikazioen saretaren gainean erakutsi</string>
     <string name="preference_search_apps">Aplikazioak</string>
+    <string name="preference_search_apps_summary">Aplikazio guztiak erakutsi bilaketa-eremua hutsik dagoenean</string>
     <string name="preference_search_files">Fitxategiak</string>
     <string name="preference_search_files_summary">Tokiko fitxategiak eta hodeiko fitxategiak bilatu</string>
     <string name="preference_search_contacts">Kontaktuak</string>
@@ -587,6 +613,9 @@
     <string name="preference_screen_buildinfo_summary">Aplikazio honen konpilazioari buruzko informazio gehiago</string>
     <string name="preference_search_bar_style">Estiloa</string>
     <string name="preference_search_bar_style_summary">Bilaketa-barraren itxura pertsonalizatu</string>
+    <string name="preference_search_bar_style_transparent">Gardena</string>
+    <string name="preference_search_bar_style_solid">Solidoa</string>
+    <string name="preference_search_bar_style_hidden">Ezkutua</string>
     <string name="preference_search_bar_color">Kolorea</string>
     <string name="preference_search_bar_auto_focus">Teklatua ireki</string>
     <string name="preference_search_bar_auto_focus_summary">Aplikazioen tiradera irekitzean teklatua automatikoki erakutsi</string>
@@ -607,19 +636,24 @@
     <string name="preference_compact_tags">Etiketa trinkoak</string>
     <string name="preference_compact_tags_summary">Ezkutatu etiketen testua edo ikonoak etiketen lekua murrizteko</string>
     <string name="preference_widgets_edit_button_summary">Trepetak gehitzeko, kentzeko eta berrantolatzeko botoi bat erakutsi</string>
+    <string name="preference_widgets_on_home_screen">Trepetak hasierako pantailan</string>
+    <string name="preference_widgets_on_home_screen_summary">Erakutsi trepetak hasierako pantailan, orrialde bereizi batean ordez</string>
     <string name="preference_screen_homescreen">Hasierako pantaila</string>
     <string name="preference_screen_homescreen_summary">Ordularia, bilaketa-barra, horma-papera, sistema-barrak</string>
     <string name="preference_screen_icons">Sareta eta ikonoak</string>
-    <string name="preference_screen_icons_summary">Sareta, ikonoen tamaina, ikono paketeak, biribiltxoak</string>
+    <string name="preference_screen_icons_summary">Saretaren tamaina, ikonoak, biribiltxoak</string>
     <string name="preference_weather_integration">Eguraldia</string>
     <string name="preference_media_integration">Multimedia kontrola</string>
     <string name="preference_tasks_integration">Zereginak</string>
     <!-- %1$s: app name (Kvaesitso) -->
+    <string name="preference_tasks_integration_description">Zereginak egitekoen zerrenden eta abisuen doako eta kode irekiko aplikazioa da. Instalatuta badago, %1$s-ek zure zereginak bistara eta bilatu ditzake Zereginak aplikaziotik.</string>
+    <string name="preference_tasks_integration_ready">Zereginen integrazioa guztiz konfiguratuta eta erabiltzeko prest dago.</string>
     <string name="preference_launch_tasks_app">Ireki Tasks aplikazioa</string>
+    <string name="preference_breezyweather_integration_description">Breezy Weather doako eta kode irekiko eguraldi aplikazio bat da. Instalatuta badago, %1$s-(e)k Breezy Weather erabil dezake eguraldi datuetarako datu-iturri gisa.</string>
     <string name="preference_breezyweather_integration_instructions">Breezy Weather eguraldi hornitzaile gisa erabiltzeko:\n\n1. Joan hona: Breezy Weather &gt; Ezarpenak &gt; Trepetak eta horma-papera animatua &gt; Bidali eguraldi datuak Gadgetbridge-ra &gt; Gaitu %1$s\n\n2. %1$s-n, hautatu Breezy Weather eguraldi hornitzaile gisa</string>
     <string name="preference_launch_breezyweather_app">Ireki Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">Deitzeko sakatu</string>
-    <string name="preference_contacts_call_on_tap_summary">Dei bat berehala hasi telefono zenbaki bat sakatzean</string>
+    <string name="preference_contacts_call_on_tap_summary">Dei bat hasi baieztapenik gabe telefono zenbaki bat sakatzean</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">Oraindik ez duzu Nextcloud konturik konektatu</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -670,23 +704,23 @@
     <string name="create_search_action_type_intent">Intent pertsonalizatua</string>
     <string name="create_search_action_pick_app">Aukeratu bilatzeko aplikazio bat:</string>
     <string name="create_search_action_website_url">Webgunearen helbidea idatzi:</string>
-    <string name="create_search_action_website_invalid_url">Emandako webgunea ezin da automatikoki inportatu web bilaketa gisa. Beste webgune bat probatu dezakezu edo eskuz sartu behar diren datuak hurrengo urratsean.</string>
+    <string name="create_search_action_website_invalid_url">Emandako webgunea ezin da automatikoki inportatu web bilaketa gisa. Beste webgune bat probatu dezakezu edo eskuz sartu behar diren datuak hurrengo urratsean</string>
     <string name="search_action_label">Izena</string>
     <string name="search_action_app">Aplikazioa</string>
     <string name="search_action_websearch_url">URL txantiloia</string>
     <string name="more_information">Informazio gehiago</string>
     <string name="experimental_feature">Esperimentala</string>
-    <string name="tag_exists_error">Izen hau duen etiketa bat badago.</string>
-    <string name="tag_exists_message">Izen hau duen etiketa bat badago. Jarraitzen baduzu, bi etiketak batu egingo dira.</string>
-    <string name="tag_no_items_message">Etiketa honi ez zaio elementurik esleitu. Jarraitzen baduzu, etiketa ezabatu egingo da.</string>
-    <string name="tag_empty_name">Etiketa bat ezin da izenik gabe existitu. Jarraitzen baduzu, etiketa ezabatuko da.</string>
+    <string name="tag_exists_error">Izen hau duen etiketa bat badago</string>
+    <string name="tag_exists_message">Izen hau duen etiketa bat badago. Jarraitzen baduzu, bi etiketak batu egingo dira</string>
+    <string name="tag_no_items_message">Etiketa honi ez zaio elementurik esleitu. Jarraitzen baduzu, etiketa ezabatu egingo da</string>
+    <string name="tag_empty_name">Etiketa bat ezin da izenik gabe existitu. Jarraitzen baduzu, etiketa ezabatuko da</string>
     <string name="tag_select_items">Elementuak aukeratu:</string>
     <string name="tag_name">Etiketaren izena</string>
     <plurals name="tag_selected_items">
         <item quantity="one">Elementu %1$d aukeratua</item>
         <item quantity="other">%1$d elementu aukeratuta</item>
     </plurals>
-    <string name="preference_layout_open_search">Bilatu / aplikazioen tiradera</string>
+    <string name="preference_layout_open_search">Bilatu eta aplikazioen tiradera</string>
     <string name="open_search_pull_down">Hatza behera irristatu</string>
     <string name="open_search_swipe_left">Hatza ezkerrera irristatu</string>
     <string name="open_search_swipe_right">Hatza eskuinera irristatu</string>
@@ -716,7 +750,7 @@
     <string name="gesture_action_lock_screen">Pantaila itzali</string>
     <string name="gesture_action_quick_settings">Ezarpen azkarrak ireki</string>
     <string name="gesture_action_power_menu">Itzaltze-menua erakutsi</string>
-    <string name="gesture_action_recents">Azkenekoak ireki</string>
+    <string name="gesture_action_recents">Azkeneko aplikazioak ireki</string>
     <string name="gesture_failed_message">\"%1$s\" keinua egin duzu. Keinu hau \"%2$s\" ekintza abiarazteko ezarrita dago. Hala ere, ezin izan da ekintza burutu honako arrazoi honengatik:</string>
     <string name="missing_permission_accessibility_gesture_failed">Abiarazlearen erabilerraztasun-zerbitzua gaituta egon behar da ekintza hau burutzeko.</string>
     <string name="missing_permission_accessibility_gesture_settings">Ekintza honek abiarazlearen erabilerraztasun-zerbitzua gaituta egotea eskatzen du.</string>
@@ -731,7 +765,7 @@
     <string name="widget_config_weather_integration_settings">Eguraldiaren integrazio ezarpenak</string>
     <string name="widget_config_calendar_no_calendars">Ez da egutegirik aurkitu</string>
     <string name="widget_pick_widget">Trepeta hautatu</string>
-    <string name="app_widget_loading_failed">Ezin izan da aplikazioaren trepeta kargatu.</string>
+    <string name="app_widget_loading_failed">Ezin izan da aplikazioaren trepeta kargatu</string>
     <string name="widget_config_music_integration_settings">Multimedia kontrolatzeko integrazio-ezarpenak</string>
     <string name="note_widget_link_file">Fitxategi batera estekatu</string>
     <string name="note_widget_link_file_summary">Sinkronizatu trepeta honen edukia kanpoko fitxategi batekin</string>
@@ -745,9 +779,9 @@
     <string name="note_widget_conflict_local_version">Gordetako azken bertsioa:</string>
     <string name="note_widget_conflict_file_version">Uneko fitxategiaren edukia:</string>
     <string name="note_widget_file_read_error">Errorea oharra irakurtzean</string>
-    <string name="note_widget_file_read_error_description">Ezin izan da estekatutako fitxategia irakurri. Baliteke, mugitu edo ezabatu izana. Kopia bat leheneratu da abiarazlearen barne biltegitik. Oharra editatzen baduzu, estekatutako fitxategia gainidatziko da.</string>
+    <string name="note_widget_file_read_error_description">Ezin izan da estekatutako fitxategia irakurri. Kopia bat leheneratu da abiarazlearen barne biltegitik. Oharra editatzen baduzu, estekatutako fitxategia gainidatziko da</string>
     <string name="note_widget_file_write_error">Errorea oharra gordetzean</string>
-    <string name="note_widget_file_write_error_description">Oharra estekatutako fitxategian ezin izan da idatzi. Baliteke, mugitu edo ezabatu izana. Kopia bat gorde da abiarazlearen barne biltegian.</string>
+    <string name="note_widget_file_write_error_description">Oharra estekatutako fitxategian ezin izan da idatzi. Kopia bat gorde da abiarazlearen barne biltegian</string>
     <string name="confirmation_delete_color_scheme">Benetan %1$s kolore-eskema ezabatu nahi duzu\?</string>
     <string name="theme_color_scheme_system_default">Sistemaren lehenetsia erabili</string>
     <string name="theme_color_scheme_autogenerate">Kolore primariotik</string>
@@ -819,15 +853,15 @@
     <string name="contact_info_mobile">Sakelekoa</string>
     <string name="contact_info_work">Etxea</string>
     <string name="weather_widget_no_provider">Ez da eguraldi hornitzailerik hautatu edo hautatutako hornitzailea ez dago eskuragarri</string>
-    <string name="music_widget_previous_track">Aurreko kanta</string>
-    <string name="music_widget_next_track">Hurrengo kanta</string>
+    <string name="music_widget_previous_track">Aurreko abestia</string>
+    <string name="music_widget_next_track">Hurrengo abestia</string>
     <string name="music_widget_play">Erreproduzitu</string>
     <string name="music_widget_pause">Gelditu</string>
     <string name="calendar_widget_previous_day">Aurreko eguna</string>
     <string name="calendar_widget_next_day">Hurrengo eguna</string>
     <string name="calendar_widget_create_event">Gertaera berria sortu</string>
     <string name="calendar_widget_open_calendar">Egutegi aplikazioa ireki</string>
-    <string name="profile_private_profile_state_locked">Eremu pribatua blokeatua dago.</string>
+    <string name="profile_private_profile_state_locked">Eremu pribatua blokeatua dago</string>
     <string name="profile_private_profile_action_unlock">Desblokeatu</string>
     <string name="profile_private_profile_action_lock">Eremu pribatua blokeatu</string>
     <string name="hint_drag_and_drop_reorder">Eutsi eta arrastatu elementuak berrantolatzeko</string>
