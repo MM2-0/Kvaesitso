@@ -511,7 +511,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                                 }
                             )
                             SwitchPreference(
-                                title = stringResource(R.string.customize_item_tags),
+                                title = stringResource(R.string.preference_compact_tags),
                                 iconPadding = false,
                                 value = widget.config.compactTags,
                                 onValueChanged = {
