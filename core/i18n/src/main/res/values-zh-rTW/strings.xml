@@ -60,33 +60,33 @@
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_east">東北</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_east">東北偏北</string>
+    <string name="wind_north_north_east">北北東</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east_north_east">東北偏東</string>
+    <string name="wind_east_north_east">東北東</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_east">東</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_east_south_east">東南偏東</string>
+    <string name="wind_east_south_east">東南東</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south_east">東南</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_south_east">東南偏南</string>
+    <string name="wind_south_south_east">南南東</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south">南</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_south_west">西南偏南</string>
+    <string name="wind_south_south_west">南南西</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south_west">西南</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west_south_west">西南偏西</string>
+    <string name="wind_west_south_west">西南西</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_west">西</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_west_north_west">西北偏西</string>
+    <string name="wind_west_north_west">西北西</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_west">西北</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_north_north_west">西北偏北</string>
+    <string name="wind_north_north_west">北北西</string>
     <!-- No rain or snow, used in weather widget -->
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
@@ -98,11 +98,11 @@
     <!-- File metadata, title of audio tracks -->
     <string name="file_meta_title">標題：%1$s</string>
     <!-- File metadata, artist of audio tracks -->
-    <string name="file_meta_artist">藝術家：%1$s</string>
+    <string name="file_meta_artist">作者：%1$s</string>
     <!-- File metadata, album of audio tracks -->
     <string name="file_meta_album">專輯：%1$s</string>
     <!-- File metadata, duration of audio tracks -->
-    <string name="file_meta_duration">時間：%1$s</string>
+    <string name="file_meta_duration">時長：%1$s</string>
     <!-- File metadata, year of audio tracks -->
     <string name="file_meta_year">年份：%1$s</string>
     <!-- File size -->
@@ -122,7 +122,7 @@
     <!-- File metadata, minimum SDK version of APK files -->
     <string name="file_meta_app_min_sdk">最小 SDK 版本：%1$s</string>
     <!-- File metadata, owner (for cloud files) -->
-    <string name="file_meta_owner">所有者：%1$s</string>
+    <string name="file_meta_owner">擁有者：%1$s</string>
     <!-- File metadata, location -->
     <string name="file_meta_location">地理位置：%1$s</string>
     <string name="file_type_directory">目錄</string>
@@ -135,9 +135,9 @@
     <!-- Document -->
     <string name="file_type_document">文件</string>
     <!-- Spreadsheet -->
-    <string name="file_type_spreadsheet">電子表格</string>
+    <string name="file_type_spreadsheet">表格</string>
     <!-- Audio file -->
-    <string name="file_type_music">音訊檔</string>
+    <string name="file_type_music">音訊</string>
     <!-- Video file -->
     <string name="file_type_video">影片檔</string>
     <!-- Image file -->
@@ -147,7 +147,7 @@
     <!-- Presentation -->
     <string name="file_type_presentation">簡報</string>
     <!-- Compressed file -->
-    <string name="file_type_compressed">壓縮檔案</string>
+    <string name="file_type_compressed">壓縮檔</string>
     <!-- Plain text file -->
     <string name="file_type_text">文字檔</string>
     <!-- E-book file -->
@@ -165,9 +165,9 @@
     <!-- Warning message that is shown when a user attempts to delete a directory -->
     <string name="alert_delete_directory">目錄 %1$s 及其所有內容將被永久刪除。繼續？</string>
     <!-- Warning message that is shown when a user attempts to delete a file -->
-    <string name="alert_delete_file">檔案 %1$s 將被永久刪除。繼續？</string>
+    <string name="alert_delete_file">將永久刪除檔案「%1$s」。您要繼續嗎？</string>
     <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
-    <string name="alert_delete_shortcut">捷徑 %1$s 將被永久移除。繼續？</string>
+    <string name="alert_delete_shortcut">將永久移除捷徑「%1$s」。您要繼續嗎？</string>
     <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
     could not be opened because there was no app installed that could handle the request  -->
     <!--
@@ -206,8 +206,8 @@
         Usually Google Play, but can be substituted with something else if Google Play is not available in
         the region of the language or not commonly used.
        -->
-    <string name="websearch_dialog_url_error">此 URL 中缺少預留位置『${1}』</string>
-    <string name="websearch_dialog_replace_icon">替換圖示</string>
+    <string name="websearch_dialog_url_error">URL 中缺少預留位置『${1}』</string>
+    <string name="websearch_dialog_replace_icon">變更圖示</string>
     <string name="websearch_dialog_delete_icon">刪除圖示</string>
     <string name="websearch_dialog_custom_icon">自訂圖示</string>
     <string name="websearch_dialog_advanced">進階</string>
@@ -271,7 +271,7 @@
     <!-- Owncloud login flow, user name-->
     <string name="owncloud_username">使用者名稱</string>
     <!-- Owncloud login flow -->
-    <string name="owncloud_login_2fa_hint">如果您開啟了兩步驗證，您必須在此使用一個應用密碼。</string>
+    <string name="owncloud_login_2fa_hint">若您開啟了兩步驟驗證，您必須在此使用一個應用密碼。</string>
     <!-- Owncloud login flow, login failed -->
     <string name="owncloud_login_failed">登入失敗：不正確的使用者名稱或者密碼。</string>
     <!-- Owncloud login flow, error: username empty -->
@@ -283,7 +283,7 @@
     <string name="disclaimer">宣告</string>
     <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
     <string name="disclaimer_currency_converter">歐洲中央銀行每日公佈一次的匯率。所有資訊均按「原樣」提供，不提供任何保證。對於這些資訊，我們不承擔任何責任。 \n \n最後更新：%1$s</string>
-    <string name="show_all">展示所有</string>
+    <string name="show_all">顯示所有</string>
     <!-- Used in calendar widget date selector. -->
     <string name="date_today">今日</string>
     <!-- Used in calendar widget date selector. -->
@@ -292,7 +292,7 @@
     <string name="calendar_widget_pinned_events">即將來臨</string>
     <!-- Headline used in calendar widget for the next event, if there is no event today -->
     <string name="calendar_widget_next_events">下一個事件</string>
-    <string name="calendar_widget_no_events">今日無事件</string>
+    <string name="calendar_widget_no_events">今天沒有事件</string>
     <!--
         In the calendar widget, only events that start or end at the selected date are shown.
         If an event runs for three days, it won't be listed if the second day is selected.
@@ -300,10 +300,10 @@
         running events that neither started nor will end on the selected day.
         -->
     <plurals name="calendar_widget_running_events">
-        <item quantity="other">從過去 %1$d 天運行的事件</item>
+        <item quantity="other">過去 %1$d 天以來進行中的事件</item>
     </plurals>
     <plurals name="calendar_widget_running_tasks">
-        <item quantity="other">%1$d個未完成任務</item>
+        <item quantity="other">%1$d 個未完成任務</item>
     </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">全天</string>
@@ -311,8 +311,8 @@
     <string name="task_due_date">於 %1$s 到期</string>
     <string name="task_due_today">今日到期</string>
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
-    <string name="music_widget_default_title">%1$s正在播放媒體</string>
-    <string name="music_widget_no_data">尚未播放任何媒體</string>
+    <string name="music_widget_default_title">%1$s 正在播放媒體</string>
+    <string name="music_widget_no_data">未播放任何媒體</string>
     <string name="music_widget_interactive_progress_bar">互動式播放器進度條</string>
     <string name="weather_condition_sleetshowers">陣雨夾雪</string>
     <string name="weather_condition_heavysleet">重度雨夾雪</string>
@@ -370,46 +370,46 @@
     <string name="weather_widget_set_location">設定位置</string>
     <string name="weather_location_search_no_result">沒有找到位置</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
-    <string name="missing_permission_auto_location">需要位置存取權以便自動確定位置</string>
+    <string name="missing_permission_auto_location">需要位置權限以自動定位</string>
     <!-- Missing notification permission in music widget settings -->
-    <string name="missing_permission_music_widget">需要通知存取權以便控制媒體播放</string>
+    <string name="missing_permission_music_widget">需要通知權限以控制媒體播放</string>
     <!-- Missing contact permission in search settings screen -->
-    <string name="missing_permission_contact_search_settings">需要聯絡人許可權以便搜尋聯絡人</string>
+    <string name="missing_permission_contact_search_settings">需要聯絡人權限以搜尋聯絡人</string>
     <!-- Missing call permission in contacts settings screen -->
-    <string name="missing_permission_call_contacts_settings">需要撥號權限以開始撥號</string>
+    <string name="missing_permission_call_contacts_settings">需要電話權限以撥號</string>
     <!-- Missing calendar permission in search settings screen -->
-    <string name="missing_permission_calendar_search_settings">需要日曆許可權以便搜尋日曆</string>
+    <string name="missing_permission_calendar_search_settings">需要日曆權限以搜尋日曆</string>
     <string name="missing_permission_tasks_search_settings">需要 Tasks 權限以搜尋任務</string>
     <string name="missing_permission_tasks_integration">需要 Tasks 權限以與 Kvaesitso 啟動器整合</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
-    <string name="missing_permission_calendar_widget_settings">此小工具需要日曆許可權</string>
-    <string name="widget_config_calendar_missing_calendars_hint">找不到您的行事曆了嗎？</string>
+    <string name="missing_permission_calendar_widget_settings">這個小工具需要日曆權限</string>
+    <string name="widget_config_calendar_missing_calendars_hint">找不到您的行事曆嗎？</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search_settings">%1$s 必須設定成預設主畫面應用程式以搜尋應用程式捷徑</string>
+    <string name="missing_permission_appshortcuts_search_settings">若要搜尋應用程式捷徑，必須將 %1$s 設為預設主畫面應用程式</string>
     <!-- Missing file permission in search settings screen -->
-    <string name="missing_permission_file_search_settings">需要外部儲存許可權以便搜尋本機檔案</string>
+    <string name="missing_permission_file_search_settings">需要外部儲存空間權限以搜尋裝置上的檔案</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">需要「管理所有檔案」許可權以便搜尋本機檔案</string>
+    <string name="missing_permission_file_search_settings_android10">需要「所有檔案的存取權」權限以便搜尋本機檔案</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">需要通知存取權以便顯示通知標記</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">授予日曆許可權以在此處顯示即將到來的約會與事件。</string>
+    <string name="missing_permission_calendar_widget">授予日曆許可權以在此處顯示即將到來的事件</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">授予日曆搜尋日曆的許可權。</string>
+    <string name="missing_permission_calendar_search">需要日曆權限以存取日曆</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">授予位置權限以搜尋附近的位置。</string>
+    <string name="missing_permission_location_search">需要位置權限以搜尋附近的地點</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">授予儲存許可權以在此裝置上搜尋檔案</string>
+    <string name="missing_permission_files_search">需要檔案權限以在此裝置上搜尋檔案</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">授予聯絡人許可權以便搜尋您的聯絡人。</string>
+    <string name="missing_permission_contact_search">需要聯絡人權限以搜尋您的聯絡人</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
-    <string name="missing_permission_appshortcuts_search">設定 %1$s 為預設主畫面應用程式以搜尋應用程式捷徑。</string>
+    <string name="missing_permission_appshortcuts_search">將 %1$s 設為預設主畫面應用程式以搜尋應用程式捷徑。</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
-    <string name="missing_permission_appshortcuts_create">設定 %1$s 為預設主畫面應用程式以建立捷徑。</string>
+    <string name="missing_permission_appshortcuts_create">將 %1$s 設為預設主畫面應用程式以建立捷徑。</string>
     <!-- Grant a permission, shown in permission banners -->
-    <string name="grant_permission">授予</string>
+    <string name="grant_permission">授權</string>
     <!-- Appearance preference title -->
     <string name="preference_screen_appearance">外觀</string>
     <string name="preference_theme">主題</string>
@@ -424,11 +424,11 @@
     <string name="preference_mdy_color_source_system">系統</string>
     <string name="preference_mdy_color_source_wallpaper">桌布</string>
     <string name="preference_screen_shapes">形狀</string>
-    <string name="preference_shapes_default">系統預設</string>
+    <string name="preference_shapes_default">預設</string>
     <string name="preference_shapes_extra_round">圓形</string>
     <string name="preference_shapes_rect">正方形</string>
     <string name="preference_shapes_base">基底形狀</string>
-    <string name="preference_screen_typography">排版</string>
+    <string name="preference_screen_typography">字體</string>
     <string name="preference_screen_transparencies">透明度</string>
     <string name="preference_transparencies_default">預設</string>
     <string name="preference_transparencies_semi_transparent">半透明</string>
@@ -442,13 +442,13 @@
     <string name="open_webpage">開啟網站</string>
     <string name="preference_screen_about_summary">應用程式與許可證資訊</string>
     <string name="preference_screen_appearance_summary">自訂外觀</string>
-    <string name="preference_weather_provider">服務商</string>
+    <string name="preference_weather_provider">提供者</string>
     <string name="provider_brightsky">Deutscher Wetterdienst（只限德國）</string>
     <string name="preference_category_location">位置</string>
     <string name="preference_automatic_location">自動定位</string>
     <string name="preference_automatic_location_summary">使用 GPS 與定位服務自動確定位置</string>
     <string name="preference_location_managed">由外掛程式管理</string>
-    <string name="preference_location_managed_summary">此服務商的位置由外掛應用程式管理</string>
+    <string name="preference_location_managed_summary">此供應商的位置由外掛應用程式管理</string>
     <string name="preference_location">位置</string>
     <string name="preference_location_breezy">管理 Breezy Weather 位置</string>
     <string name="preference_imperial_units_summary">使用華氏度與英里/小時</string>
@@ -576,23 +576,23 @@
     <string name="preference_clock_widget_alignment_bottom">底部</string>
     <string name="preference_clockwidget_dynamic_zone">動態區域</string>
     <string name="preference_clockwidget_date_part">日期</string>
-    <string name="preference_clockwidget_date_part_summary">顯示當前日期</string>
-    <string name="preference_clockwidget_favorites_part_summary">顯示已釘選項目的第一行</string>
-    <string name="preference_clockwidget_dock_rows">固定欄</string>
+    <string name="preference_clockwidget_date_part_summary">顯示目前的日期</string>
+    <string name="preference_clockwidget_favorites_part_summary">在 Dock 中顯示釘選的項目</string>
+    <string name="preference_clockwidget_dock_rows">Dock 欄位數</string>
     <string name="preference_clockwidget_music_part">媒體</string>
     <string name="preference_clockwidget_music_part_summary">在有活動媒體會話時顯示媒體控制元件</string>
     <string name="preference_clockwidget_battery_part">電池</string>
-    <string name="preference_clockwidget_battery_part_summary">在電池電量不足或正在充電時顯示當前電池電量</string>
+    <string name="preference_clockwidget_battery_part_summary">在電池電量不足或充電時顯示目前電池電量</string>
     <string name="preference_clockwidget_alarm_part">鬧鐘</string>
-    <string name="preference_clockwidget_alarm_part_summary">顯示將在接下來的 8 小時內響起的鬧鐘</string>
+    <string name="preference_clockwidget_alarm_part_summary">顯示未來 8 小時內響起的鬧鐘</string>
     <string name="preference_screen_backup">備份與還原</string>
     <string name="preference_screen_backup_summary">匯出與匯入啟動器資料</string>
     <string name="preference_backup">備份</string>
     <string name="preference_backup_summary">匯出設定與啟動器資料</string>
     <string name="preference_restore">還原</string>
     <string name="preference_restore_summary">匯入以前建立的備份</string>
-    <string name="preference_crash_reporter">崩潰報告程式</string>
-    <string name="preference_crash_reporter_summary">錯誤與崩潰報告</string>
+    <string name="preference_crash_reporter">當機報告</string>
+    <string name="preference_crash_reporter_summary">錯誤與當機報告</string>
     <string name="preference_logs">日誌</string>
     <string name="preference_logs_summary">檢視與匯出應用程式日誌</string>
     <string name="preference_screen_search">搜尋</string>
@@ -600,27 +600,27 @@
     <string name="preference_search_favorites">我的最愛</string>
     <string name="preference_search_favorites_summary">在應用程式抽屜上方顯示釘選與常用項目</string>
     <string name="preference_search_apps">應用程式</string>
-    <string name="preference_search_apps_summary">搜尋欄無文字時顯示所有應用程式</string>
+    <string name="preference_search_apps_summary">搜尋欄沒有文字時顯示所有應用程式</string>
     <string name="preference_search_files">檔案</string>
     <string name="preference_search_files_summary">搜尋本機檔案與雲端伺服器檔案</string>
     <string name="preference_search_contacts">聯絡人</string>
-    <string name="preference_search_contacts_summary">搜尋在此裝置上的聯絡人</string>
+    <string name="preference_search_contacts_summary">搜尋裝置上的聯絡人</string>
     <string name="preference_search_calendar">日曆</string>
-    <string name="preference_search_calendar_summary">搜尋即將到來的約會與事件</string>
+    <string name="preference_search_calendar_summary">搜尋即將到來的事件</string>
     <string name="preference_search_local_calendar_summary">在此裝置上搜尋日曆</string>
     <string name="preference_search_tasks">任務</string>
     <string name="preference_search_tasks_summary">於 Tasks 應用程式搜尋任務</string>
     <string name="preference_search_appshortcuts">應用程式捷徑</string>
     <string name="preference_search_appshortcuts_summary">搜尋應用程式捷徑</string>
-    <string name="preference_search_calculator">計算器</string>
-    <string name="preference_search_calculator_summary">計算數學式子</string>
+    <string name="preference_search_calculator">計算機</string>
+    <string name="preference_search_calculator_summary">計算數學算式</string>
     <string name="preference_search_unitconverter">單位轉換器</string>
     <string name="preference_search_unitconverter_summary">用法：1.5 kg 或者 4 cm &gt;&gt; in</string>
     <string name="preference_search_currencyconverter">貨幣轉換器</string>
     <string name="preference_search_currencyconverter_summary">定期下載匯率來轉換貨幣</string>
     <string name="preference_search_supportedunits">支援的單位</string>
     <string name="preference_search_wikipedia">維基百科</string>
-    <string name="preference_search_wikipedia_summary">搜尋免費的百科全書</string>
+    <string name="preference_search_wikipedia_summary">搜尋自由的百科全書</string>
     <string name="preference_search_websites">網站</string>
     <string name="preference_search_locations">地點</string>
     <string name="preference_search_locations_radius">搜尋半徑</string>
@@ -631,7 +631,7 @@
     <string name="preference_search_cloud_summary">搜尋%1$s的檔案</string>
     <string name="preference_calendar_calendars">日曆</string>
     <string name="preference_calendar_hide_completed">隱藏完成的任務</string>
-    <string name="preference_screen_buildinfo">建構資訊</string>
+    <string name="preference_screen_buildinfo">組建資訊</string>
     <string name="preference_screen_buildinfo_summary">有關此版本應用程式的更多資訊</string>
     <string name="preference_search_bar_style">風格</string>
     <string name="preference_search_bar_style_summary">自訂搜尋欄外觀</string>
@@ -642,22 +642,23 @@
     <string name="preference_search_bar_auto_focus">開啟鍵盤</string>
     <string name="preference_search_bar_auto_focus_summary">開啟應用程式抽屜時自動顯示鍵盤</string>
     <string name="preference_search_bar_launch_on_enter">輸入時啟動</string>
-    <string name="preference_search_bar_launch_on_enter_summary">在點擊「前往」後啟動突顯顯示的匹配項或快速操作</string>
+    <string name="preference_search_bar_launch_on_enter_summary">在點擊「前往」後執行焦點上的結果</string>
     <string name="preference_hidden_items">隱藏搜尋結果</string>
     <string name="preference_hidden_items_summary">管理隱藏應用程式與搜尋結果</string>
     <string name="preference_hidden_items_reveal_button">顯示揭露按鈕</string>
     <string name="preference_hidden_items_reveal_button_summary">顯示按鈕以顯示隱藏的搜尋結果</string>
     <string name="preference_screen_tags">標籤</string>
     <string name="preference_screen_tags_summary">管理標籤與標記項目</string>
+    <string name="preference_wikipedia_customurl">Wikipedia 網址</string>
     <string name="preference_edit_favorites_summary">改變釘選項目的順序</string>
-    <string name="preference_category_favorites_frequently_used">常用的</string>
+    <string name="preference_category_favorites_frequently_used">常用</string>
     <string name="preference_favorites_frequently_used_summary">在我的最愛顯示常用的項目</string>
     <string name="preference_edit_button">編輯按鈕</string>
     <string name="preference_favorites_edit_button_summary">顯示一個按鈕以重新排列我的最愛</string>
     <string name="preference_compact_tags">緊湊標籤</string>
     <string name="preference_compact_tags_summary">隱藏標籤文字或圖示以減少標籤佔用空間</string>
     <string name="preference_widgets_edit_button_summary">顯示一個按鈕以新增、移除與重新排列小工具</string>
-    <string name="preference_widgets_on_home_screen">主畫面小工具</string>
+    <string name="preference_widgets_on_home_screen">在主畫面上顯示小工具</string>
     <string name="preference_widgets_on_home_screen_summary">直接於主畫面顯示小工具而不放置於另一個頁面</string>
     <string name="preference_screen_homescreen">主畫面</string>
     <string name="preference_screen_homescreen_summary">時鐘、搜尋欄、桌布、系統列</string>
@@ -671,9 +672,10 @@
     <string name="preference_tasks_integration_ready">已將 Tasks 整合並可供使用。</string>
     <string name="preference_launch_tasks_app">開啟 Tasks 應用程式</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather 是一個開源的天氣應用程式。若已安裝，%1$s 可以取用 Breezy Weather 的天氣資料。</string>
+    <string name="preference_breezyweather_integration_instructions">若要將 Breezy Weather 設為天氣資訊提供者：\n\n1. 開啟 Breezy Weather &gt; 設定 &gt; 小工具與動態桌布 &gt; 傳送天氣資料到 Gadgetbridge &gt; 開啟 %1$s\n\n2. 在 %1$s 中選擇 Breezy Weather 當作天氣資訊提供者</string>
     <string name="preference_launch_breezyweather_app">開啟 Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">輕觸以撥打</string>
-    <string name="preference_contacts_call_on_tap_summary">當輕觸電話號碼時不進行確認即開始撥號</string>
+    <string name="preference_contacts_call_on_tap_summary">輕觸電話號碼時不經確認立即撥號</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">您尚未連線 Nextcloud 帳戶</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -686,11 +688,11 @@
         <item quantity="other">%1$s 分鐘內完成</item>
     </plurals>
     <string name="backup_complete">備份已完成。</string>
-    <string name="restore_invalid_file">所選擇的檔案不是備份檔案。您是否確定選擇了正確的檔案？</string>
+    <string name="restore_invalid_file">您選擇的檔案似乎不是備份檔。確定這是正確的檔案嗎？</string>
     <!-- %1$s: app name -->
-    <string name="restore_incompatible_file">此備份在不一致的版本 %1$s 下建立且不能在當前版本還原。</string>
+    <string name="restore_incompatible_file">此備份在不同的版本 %1$s 建立且無法在目前的版本還原。</string>
     <!-- %1$s: app name -->
-    <string name="restore_different_minor_version">此備份在不一致的版本 %1$s 下建立。一些資料可能不會被正確還原。</string>
+    <string name="restore_different_minor_version">此備份在不同的版本 %1$s 建立。可能無法正確還原某些資料。</string>
     <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
     <string name="restore_meta">由 %3$s 於 %1$s 在 %2$s 中建立。</string>
     <string name="restore_complete">備份已還原。</string>
@@ -709,7 +711,7 @@
     <string name="preference_screen_search_actions">快捷操作</string>
     <string name="preference_search_search_actions_summary">設定快捷操作與搜尋欄捷徑</string>
     <string name="search_action_call">撥號</string>
-    <string name="search_action_message">資訊</string>
+    <string name="search_action_message">簡訊</string>
     <string name="search_action_email">電子郵件</string>
     <string name="search_action_alarm">設定鬧鐘</string>
     <string name="search_action_timer">啟動定時器</string>
@@ -718,12 +720,12 @@
     <string name="search_action_contact">新建聯絡人</string>
     <string name="search_action_open_url">瀏覽網站</string>
     <string name="search_action_event">日程事件</string>
-    <string name="create_search_action_type">您想建立哪種操作？</string>
+    <string name="create_search_action_type">您想建立什麼操作？</string>
     <string name="create_search_action_type_web">在網站上搜尋</string>
     <string name="create_search_action_type_app">在應用程式中搜尋</string>
-    <string name="create_search_action_pick_app">固定一個應用程式到搜尋欄：</string>
+    <string name="create_search_action_pick_app">選擇要搜尋的應用程式：</string>
     <string name="create_search_action_website_url">輸入網站位址：</string>
-    <string name="create_search_action_website_invalid_url">給定的網站不能自動匯入成搜尋引擎。您可以嘗試其它不同的網站或者在下一步手動輸入必填的資料。</string>
+    <string name="create_search_action_website_invalid_url">無法將此網站設定為搜尋引擎。您可以嘗試其他網站或在下一步手動輸入需要的資訊</string>
     <string name="search_action_label">名稱</string>
     <string name="search_action_app">應用程式</string>
     <string name="search_action_websearch_url">URL 範本</string>
@@ -731,9 +733,9 @@
     <string name="more_information">更多資訊</string>
     <string name="experimental_feature">實驗性的</string>
     <string name="tag_exists_error">以此命名的標籤已經存在</string>
-    <string name="tag_exists_message">以此命名的標籤已經存在。如果你執意而為，兩個標籤將會被合併</string>
-    <string name="tag_no_items_message">沒有項目被分配給此標籤。如果你執意而為，此標籤將會被刪除</string>
-    <string name="tag_empty_name">無法存在沒有名稱的標籤。假如您繼續，該標籤將會被刪除</string>
+    <string name="tag_exists_message">已有同名的標籤。如果繼續，則會合併兩個標籤</string>
+    <string name="tag_no_items_message">這個標籤沒有任何內容。如果繼續，將會刪除此標籤</string>
+    <string name="tag_empty_name">標籤名稱不能為空。如果繼續，將會刪除此標籤</string>
     <string name="tag_select_items">選擇項目：</string>
     <string name="tag_name">標籤名字</string>
     <string name="tag_icon_customicon">圖示</string>
@@ -742,9 +744,9 @@
         <item quantity="other">已選擇 %1$d 個項目</item>
     </plurals>
     <string name="preference_layout_open_search">搜尋與應用程式抽屜</string>
-    <string name="open_search_pull_down">下滑</string>
-    <string name="open_search_swipe_left">左滑</string>
-    <string name="open_search_swipe_right">右滑</string>
+    <string name="open_search_pull_down">向下滑動</string>
+    <string name="open_search_swipe_left">向左滑動</string>
+    <string name="open_search_swipe_right">向右滑動</string>
     <string name="preference_layout_search_bar_position">搜尋欄位置</string>
     <string name="search_bar_position_top">頂部</string>
     <string name="search_bar_position_bottom">底部</string>
@@ -752,34 +754,34 @@
     <string name="search_results_order_top_down">從頂部到底部</string>
     <string name="search_results_order_bottom_up">從底部到頂部</string>
     <string name="preference_layout_fixed_search_bar">固定搜尋欄</string>
-    <string name="preference_layout_fixed_search_bar_summary">在離開首頁面檢視時禁止滾動搜尋欄</string>
+    <string name="preference_layout_fixed_search_bar_summary">捲動頁面時不隱藏搜尋欄</string>
     <string name="preference_layout_fixed_rotation">固定螢幕方向</string>
     <string name="preference_layout_fixed_rotation_summary">鎖定螢幕方向為豎屏模式</string>
     <string name="preference_screen_gestures">手勢</string>
     <string name="preference_screen_gestures_summary">手勢與動作</string>
-    <string name="preference_gesture_swipe_down">下滑</string>
-    <string name="preference_gesture_swipe_left">左滑</string>
-    <string name="preference_gesture_swipe_right">右滑</string>
+    <string name="preference_gesture_swipe_down">向下滑動</string>
+    <string name="preference_gesture_swipe_left">向左滑動</string>
+    <string name="preference_gesture_swipe_right">向右滑動</string>
     <string name="preference_gesture_swipe_up">向上滑動</string>
     <string name="preference_gesture_double_tap">連按兩下</string>
     <string name="preference_gesture_long_press">長按</string>
-    <string name="preference_gesture_home_button">主畫面按鈕/手勢</string>
-    <string name="gesture_action_none">什麼都不做</string>
+    <string name="preference_gesture_home_button">主畫面按鈕或手勢</string>
+    <string name="gesture_action_none">無動作</string>
     <string name="gesture_action_open_search">開啟搜尋</string>
     <string name="gesture_action_widgets">小工具</string>
     <string name="gesture_action_launch_app">啟動應用程式</string>
-    <string name="gesture_action_notifications">開啟通知列</string>
+    <string name="gesture_action_notifications">開啟通知中心</string>
     <string name="gesture_action_lock_screen">關閉螢幕</string>
     <string name="gesture_action_quick_settings">開啟快速設定</string>
     <string name="gesture_action_power_menu">顯示電源選單</string>
     <string name="gesture_action_recents">開啟最近使用的應用程式</string>
-    <string name="gesture_failed_message">您已執行「%1$s」手勢。此手勢當前設定為觸發「%2$s」操作。然而，由於以下原因，無法執行該操作：</string>
+    <string name="gesture_failed_message">您觸發了「%1$s」手勢。此手勢目前設定為執行「%2$s」，但因為以下原因無法執行：</string>
     <string name="missing_permission_accessibility_gesture_failed">需要啟用啟動器的無障礙服務才能執行此操作。</string>
-    <string name="missing_permission_accessibility_gesture_settings">這個動作要求開啟無障礙服務。</string>
-    <string name="preference_search_result_ordering_weight_factor">排名靈活性</string>
+    <string name="missing_permission_accessibility_gesture_settings">這個動作需要開啟無障礙服務。</string>
+    <string name="preference_search_result_ordering_weight_factor">排序靈敏度</string>
     <string name="preference_search_result_ordering_weight_factor_low">穩定</string>
     <string name="preference_search_result_ordering_weight_factor_default">平衡</string>
-    <string name="preference_search_result_ordering_weight_factor_high">變數</string>
+    <string name="preference_search_result_ordering_weight_factor_high">敏感</string>
     <string name="widget_config_appwidget_borderless">無邊框</string>
     <string name="widget_config_appwidget_background">背景卡片</string>
     <string name="widget_config_appwidget_configure">設定小工具</string>
@@ -798,16 +800,16 @@
     <string name="note_widget_conflict_action_resolve">解決</string>
     <string name="note_widget_conflict_keep_selected">保留所選</string>
     <string name="note_widget_conflict_description">筆記連結的文件含有文字，且與上次儲存的筆記內容不同。您要保留哪個版本？</string>
-    <string name="note_widget_conflict_local_version">最後保存的版本：</string>
-    <string name="note_widget_conflict_file_version">現行檔案內容：</string>
+    <string name="note_widget_conflict_local_version">最後儲存的版本：</string>
+    <string name="note_widget_conflict_file_version">目前的檔案內容：</string>
     <string name="note_widget_file_read_error">讀取筆記時發生錯誤</string>
     <string name="note_widget_file_read_error_description">無法讀取連結的檔案。已從啟動器中還原副本。如果您編輯筆記，連結的檔案可能會被覆寫</string>
     <string name="note_widget_file_write_error">儲存筆記時發生錯誤</string>
     <string name="note_widget_file_write_error_description">無法將筆記寫入連結的檔案。已將副本儲存至啟動器的內部儲存空間</string>
-    <string name="confirmation_delete_color_scheme">您是否確定要刪除色彩方案 %1$s？</string>
-    <string name="confirmation_delete_shapes_scheme">是否將形狀 %1$s 刪除？</string>
-    <string name="confirmation_delete_typography_scheme">是否刪除格式 %1$s？</string>
-    <string name="confirmation_delete_transparencies_scheme">是否刪除透明度 %1$s？</string>
+    <string name="confirmation_delete_color_scheme">確定要刪除色彩方案「%1$s」嗎？</string>
+    <string name="confirmation_delete_shapes_scheme">確定要刪除形狀設定「%1$s」嗎？</string>
+    <string name="confirmation_delete_typography_scheme">確定要刪除字體設定「%1$s」嗎？</string>
+    <string name="confirmation_delete_transparencies_scheme">確定要刪除透明度設定「%1$s」嗎？</string>
     <string name="new_theme_name">（無標題）</string>
     <string name="theme_color_scheme_system_default">使用系統預設</string>
     <string name="theme_color_scheme_autogenerate">從原色開始</string>
@@ -816,12 +818,12 @@
     <string name="preference_restore_default">還原預設</string>
     <string name="import_theme_contents">內容</string>
     <string name="import_theme_apply">應用主題</string>
-    <string name="import_theme_exists">即將更新已存在之主題</string>
+    <string name="import_theme_exists">即將更新已存在的主題</string>
     <string name="import_theme_error">無法讀取選取的檔案。請確保您選取了有效的主題檔案（*.kvtheme），並且該檔案未損毀。</string>
-    <string name="shortcut_label_unavailable">不可用</string>
+    <string name="shortcut_label_unavailable">無法使用</string>
     <string name="app_label_locked_profile">已鎖定</string>
     <!-- %1$s: app name -->
-    <string name="shortcut_unavailable_description">此捷徑不可用，因為 %1$s 不是預設啟動器</string>
+    <string name="shortcut_unavailable_description">此捷徑無法使用，因為 %1$s 不是預設啟動器</string>
     <string name="preference_plugin_enable">啟用外掛程式</string>
     <string name="length_unit">長度單位</string>
     <string name="imperial">英制</string>
@@ -834,16 +836,16 @@
     <string name="preference_search_locations_theme_map_summary">將啟動器的色彩方案應用至地圖</string>
     <string name="menu_dial">呼叫</string>
     <string name="menu_navigation">導航</string>
-    <string name="menu_bugreport">Bug 回報</string>
-    <string name="location_open_24_7">24/7 開業</string>
-    <string name="plugin_state_error">此外掛程式未正常工作</string>
+    <string name="menu_bugreport">錯誤回報</string>
+    <string name="location_open_24_7">全年 24 小時營業</string>
+    <string name="plugin_state_error">此外掛程式未正常運作</string>
     <string name="plugin_state_setup_required">您需要先設定此外掛程式</string>
     <string name="plugin_action_setup">設定</string>
     <string name="plugin_type_filesearch">檔案</string>
     <string name="plugin_type_contacts">聯絡人</string>
-    <string name="plugin_type_weather">天氣服務商</string>
-    <string name="plugin_weather_provider_enable">設定為天氣服務商</string>
-    <string name="plugin_weather_provider_enabled">目前設為天氣服務商</string>
+    <string name="plugin_type_weather">天氣資訊提供者</string>
+    <string name="plugin_weather_provider_enable">設定為天氣資訊提供者</string>
+    <string name="plugin_weather_provider_enabled">目前設為天氣資訊提供者</string>
     <string name="unavailable_searchable">此項目已不存在</string>
     <string name="clock_style_digital1">粗體</string>
     <string name="clock_style_digital2">簡易</string>
@@ -867,8 +869,8 @@
     <string name="preference_filter_bar">顯示篩選器列</string>
     <string name="preference_filter_bar_summary">在鍵盤上方顯示快速篩選器</string>
     <string name="preference_customize_filter_bar">自訂篩選器列</string>
-    <string name="preference_customize_filter_bar_summary">自訂篩選器列中包含的項目</string>
-    <string name="filter_settings_network_warning">目前的篩選器預設啟用線上結果。您的搜尋可能會無意傳送至外部網路服務。鑒於隱私原因，並不推薦這麼做。</string>
+    <string name="preference_customize_filter_bar_summary">自訂篩選器列上的選項</string>
+    <string name="filter_settings_network_warning">目前的篩選器設定預設啟用網路結果。您的搜尋字串可能會不經注意傳送到外部網路服務上。由於隱私問題，我們不推薦這樣設定。</string>
     <string name="preference_search_osm_locations_summary">在 OpenStreetMap 上搜尋當地商店與其它地點</string>
     <string name="poi_category_restaurant">餐廳</string>
     <string name="poi_category_fast_food">速食</string>
@@ -965,10 +967,10 @@
     <string name="customize_item_label">名稱</string>
     <string name="customize_item_tags">標籤</string>
     <string name="customize_item_visibility">顯示於</string>
-    <string name="item_visibility_app_default">應用程式網格 &amp; 搜尋結果</string>
-    <string name="item_visibility_calendar_default">日曆小工具 &amp; 搜尋結果</string>
+    <string name="item_visibility_app_default">應用程式網格與搜尋結果</string>
+    <string name="item_visibility_calendar_default">日曆小工具與搜尋結果</string>
     <string name="item_visibility_search_only">搜尋結果</string>
-    <string name="item_visibility_hidden">永不</string>
+    <string name="item_visibility_hidden">不顯示</string>
     <string name="contact_info_home">住家</string>
     <string name="contact_info_mobile">手機</string>
     <string name="contact_info_work">工作</string>
@@ -979,12 +981,12 @@
         <item quantity="other">%1$s 個電子郵件位址</item>
     </plurals>
     <plurals name="contact_postal_addresses">
-        <item quantity="other">%1$s 個郵政地址</item>
+        <item quantity="other">%1$s 個地址</item>
     </plurals>
     <plurals name="app_info_notifications">
         <item quantity="other">%1$s 個通知</item>
     </plurals>
-    <string name="weather_widget_no_provider">沒有天氣服務商被選擇或者選擇的服務商不可用</string>
+    <string name="weather_widget_no_provider">未選擇天氣資訊提供者或選擇的提供者無法使用</string>
     <string name="music_widget_previous_track">上一首</string>
     <string name="music_widget_next_track">下一首</string>
     <string name="music_widget_play">播放</string>
@@ -1026,7 +1028,7 @@
     <string name="preference_screen_locale">語言與地區</string>
     <string name="preference_screen_locale_summary">語言、單位、時間格式</string>
     <string name="preference_language">語言</string>
-    <string name="preference_value_system_default">系統默認</string>
+    <string name="preference_value_system_default">系統預設</string>
     <string name="preference_form_of_address">地址格式</string>
     <string name="preference_form_of_address_neutral">地址格式</string>
     <string name="preference_form_of_address_fem">地址格式</string>
