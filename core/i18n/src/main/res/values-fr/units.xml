@@ -64,17 +64,17 @@
         <item quantity="one">millimètre carré</item>
         <item quantity="other">millimètres carrés</item>
     </plurals>
-    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_sqinch_symbol">in²</string>
     <plurals name="unit_sqinch">
         <item quantity="one">pouce carré</item>
         <item quantity="other">pouces carrés</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqfoot_symbol">ft²</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">pied carré</item>
         <item quantity="other">pieds carrés</item>
     </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_sqyard_symbol">yd²</string>
     <plurals name="unit_sqyard">
         <item quantity="one">yard carré</item>
         <item quantity="other">yards carrés</item>
@@ -186,7 +186,7 @@
         <item quantity="one">tonne</item>
         <item quantity="other">tonnes</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_long_ton_symbol">Long ton</string>
     <plurals name="unit_long_ton">
         <item quantity="one">tonne longue</item>
         <item quantity="other">tonnes longues</item>
@@ -206,7 +206,7 @@
         <item quantity="one">once</item>
         <item quantity="other">onces</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">ton courte</string>
     <plurals name="unit_short_ton">
         <item quantity="one">tonne courte</item>
         <item quantity="other">tonnes courtes</item>
@@ -225,4 +225,5 @@
         <item quantity="other">Kelvins</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
+    <string name="unit_gallon_us_symbol">gal</string>
 </resources>
