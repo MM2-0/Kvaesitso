@@ -215,19 +215,19 @@
     <string name="menu_edit_widgets">Modifier les widgets</string>
     <string name="widget_name_weather">Météo</string>
     <string name="widget_name_calendar">Calendrier</string>
-    <string name="widget_name_music">Musique</string>
+    <string name="widget_name_music">Média</string>
     <string name="widget_name_apps">Applications</string>
-    <string name="widget_name_unknown">Widget d\'application non reconnu</string>
+    <string name="widget_name_unknown">Inconnu</string>
     <string name="widget_add_widget">Ajouter un widget</string>
     <string name="widget_removed">Widget supprimé</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
-    <string name="notes_widget_placeholder">Écrire une note…</string>
+    <string name="notes_widget_placeholder">Écrire une note</string>
     <string name="notes_widget_action_new">Nouvelle note</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Sauvegarder</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <string name="notes_widget_action_dismiss">Ignorer</string>
-    <string name="notes_widget_dismissed">Note ignorée.</string>
+    <string name="notes_widget_dismissed">Note ignorée</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">Par %1$s</string>
     <!-- Close a dialog -->
@@ -253,7 +253,7 @@
     <string name="edit_favorites_dialog_empty_section">Faites glisser les éléments ici</string>
     <string name="edit_favorites_dialog_tags">Étiquettes</string>
     <string name="edit_favorites_dialog_tag_section_empty">Les étiquettes épinglées apparaîtront ici</string>
-    <string name="edit_favorites_dialog_new_tag">Créer une étiquette…</string>
+    <string name="edit_favorites_dialog_new_tag">Créer une étiquette</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">URL du serveur Nextcloud</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
