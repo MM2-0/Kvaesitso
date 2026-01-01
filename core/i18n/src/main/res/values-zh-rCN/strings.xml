@@ -394,19 +394,19 @@
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
-    <string name="missing_permission_file_search_settings_android10">需要\"管理所有文件\"权限以便搜索本地文件</string>
+    <string name="missing_permission_file_search_settings_android10">需要\"访问所有文件\"权限以便搜索本地文件</string>
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">需要通知访问权限以便显示通知角标</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">授予日历权限以在此处显示即将到来的约会和事件。</string>
+    <string name="missing_permission_calendar_widget">需要日历权限以在此处显示即将到来的事件</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">授予日历搜索日历的权限。</string>
+    <string name="missing_permission_calendar_search">需要日历权限以搜索日历</string>
     <!-- Missing location permission, used in location search results -->
-    <string name="missing_permission_location_search">授予位置信息权限以搜索附近的位置。</string>
+    <string name="missing_permission_location_search">需要位置信息权限以搜索附近的位置</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">授予存储权限以在此设备上搜索照片、媒体和文档。</string>
+    <string name="missing_permission_files_search">需要存储权限以在此设备上搜索文件</string>
     <!-- Missing files permission, used in contact search results -->
-    <string name="missing_permission_contact_search">授予联系人权限以便搜索你的联系人。</string>
+    <string name="missing_permission_contact_search">需要联系人权限以便搜索你的联系人</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">设置 %1$s 成为默认桌面以搜索应用快捷方式.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
@@ -451,7 +451,7 @@
     <string name="provider_here">这里</string>
     <string name="preference_category_location">位置</string>
     <string name="preference_automatic_location">自动定位</string>
-    <string name="preference_automatic_location_summary">使用 GPS 和定位服务自动确定位置</string>
+    <string name="preference_automatic_location_summary">使用定位服务自动确定位置</string>
     <string name="preference_location_managed">由插件管理</string>
     <string name="preference_location_managed_summary">此提供商的位置由插件应用管理</string>
     <string name="preference_location">位置</string>
@@ -469,7 +469,7 @@
     <string name="preference_debug_reinstall_iconpacks">重新安装图标包</string>
     <string name="preference_debug_reinstall_iconpacks_summary">清除与重建图标缓存</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="other">%1$d条目已经被移除.</item>
+        <item quantity="other">%1$d 条目已经被移除</item>
     </plurals>
     <string name="preference_category_icons">图标</string>
     <string name="preference_cards">卡片</string>
@@ -493,6 +493,8 @@
     <string name="preference_screen_integrations">兼容方式</string>
     <string name="preference_screen_plugins">插件</string>
     <string name="preference_screen_plugins_summary">管理已安装扩展</string>
+    <string name="preference_category_enabled_plugins">已启用</string>
+    <string name="preference_category_installed_plugins">已安装</string>
     <string name="no_plugins_installed">未安装插件</string>
     <string name="preference_theme_system">跟随系统</string>
     <string name="preference_themed_icons">主题图标</string>
@@ -516,7 +518,7 @@
     <string name="preference_screen_integrations_summary">管理已连接的账户和服务</string>
     <string name="preference_signin_user">以 %1$s 身份登陆</string>
     <string name="preference_signout">登出</string>
-    <string name="preference_summary_not_logged_in">您当前未登录</string>
+    <string name="preference_summary_not_logged_in">您未登录</string>
     <string name="preference_icon_shape_pentagon">五角形</string>
     <string name="preference_category_wallpaper">壁纸</string>
     <string name="preference_dim_wallpaper">调暗壁纸</string>
@@ -580,14 +582,15 @@
     <string name="preference_clockwidget_dynamic_zone">动态区域</string>
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">显示当前日期</string>
-    <string name="preference_clockwidget_favorites_part_summary">显示已固定项目的第一行</string>
+    <string name="preference_clockwidget_favorites_part_summary">在 Dock 中显示已固定项目</string>
+    <string name="preference_clockwidget_dock_rows">Dock 栏位数</string>
     <string name="preference_clockwidget_music_part">媒体</string>
     <string name="preference_clockwidget_music_part_summary">在有活动媒体会话时显示媒体控件</string>
     <string name="preference_clockwidget_battery_part">电池</string>
     <string name="preference_clockwidget_battery_part_summary">在电池电量不足或正在充电时显示当前电池电量</string>
     <string name="preference_clockwidget_alarm_part">闹钟</string>
     <string name="preference_clockwidget_alarm_part_summary">显示将在接下来的 8 小时内响起的闹钟</string>
-    <string name="preference_screen_backup">备份&amp;恢复</string>
+    <string name="preference_screen_backup">备份与恢复</string>
     <string name="preference_screen_backup_summary">导出和导入启动器数据</string>
     <string name="preference_backup">备份</string>
     <string name="preference_backup_summary">导出设置和启动器数据</string>
@@ -602,6 +605,7 @@
     <string name="preference_search_favorites">收藏夹</string>
     <string name="preference_search_favorites_summary">在应用抽屉上方显示固定和常用项目</string>
     <string name="preference_search_apps">应用</string>
+    <string name="preference_search_apps_summary">搜索栏为空时显示所有应用</string>
     <string name="preference_search_files">文件</string>
     <string name="preference_search_files_summary">搜索本地文件和云服务器文件</string>
     <string name="preference_search_contacts">联系人</string>
@@ -660,11 +664,11 @@
     <string name="preference_compact_tags_summary">隐藏标签标签或图标以减少标签占用的空间</string>
     <string name="preference_widgets_edit_button_summary">显示一个按钮以添加、移除和重新排列组件</string>
     <string name="preference_widgets_on_home_screen">直达组件</string>
-    <string name="preference_widgets_on_home_screen_summary">在主屏幕而不是组件页显示组件</string>
+    <string name="preference_widgets_on_home_screen_summary">在主屏幕而不是独立页面显示组件</string>
     <string name="preference_screen_homescreen">主屏幕</string>
     <string name="preference_screen_homescreen_summary">时钟, 搜索栏, 壁纸, 系统栏</string>
-    <string name="preference_screen_icons">网格&amp;图标</string>
-    <string name="preference_screen_icons_summary">网格, 图标尺寸, 图标包, 角标</string>
+    <string name="preference_screen_icons">网格与图标</string>
+    <string name="preference_screen_icons_summary">网格尺寸, 图标, 角标</string>
     <string name="preference_weather_integration">天气</string>
     <string name="preference_media_integration">媒体控制</string>
     <string name="preference_tasks_integration">任务</string>
@@ -676,7 +680,7 @@
     <string name="preference_breezyweather_integration_instructions">要使用 Breezy Weather 作为天气数据源：\n\n1. 启用 Breezy Weather &gt; 设置 &gt; 微件与动态壁纸 &gt; 发送天气数据到 Gadgetbridge 中的 %1$s\n\n2. 在 %1$s 中将 Breezy Weather 设为天气数据源</string>
     <string name="preference_launch_breezyweather_app">打开 Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">点击呼叫</string>
-    <string name="preference_contacts_call_on_tap_summary">点击电话号码即可立即拨打电话</string>
+    <string name="preference_contacts_call_on_tap_summary">点击电话号码即可立即拨打电话，无需确认</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">您尚未连接Nextcloud帐户</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -726,23 +730,25 @@
     <string name="create_search_action_type_app">在应用程序中搜索</string>
     <string name="create_search_action_pick_app">固定一个应用程序到搜索栏:</string>
     <string name="create_search_action_website_url">输入网站地址:</string>
-    <string name="create_search_action_website_invalid_url">给定的网站不能自动导入成搜索引擎. 你可以尝试其它不同的网站或者在下一步手动输入必填的数据.</string>
+    <string name="create_search_action_website_invalid_url">给定的网站不能自动导入成搜索引擎. 你可以尝试其它不同的网站或者在下一步手动输入必填的数据</string>
     <string name="search_action_label">名称</string>
     <string name="search_action_app">应用程序</string>
     <string name="search_action_websearch_url">URL模板</string>
-    <string name="search_action_websearch_url_hint">URL模板用于构建搜索引擎的URL.使用‘${1}’作为实际搜索字词的占位符，例如 https://google.com/search?q=${1}。</string>
+    <string name="search_action_websearch_url_hint">URL 模板用于构建搜索引擎的 URL。使用 ‘${1}’ 作为实际搜索字词的占位符</string>
     <string name="more_information">更多信息</string>
     <string name="experimental_feature">实验性的</string>
-    <string name="tag_exists_error">以此命名的标签已经存在.</string>
-    <string name="tag_exists_message">以此命名的标签已经存在.如果你执意而为，两个标签将会被合并.</string>
-    <string name="tag_no_items_message">没有项目被分配给此标签.如果你执意而为,此标签将会被删除.</string>
-    <string name="tag_empty_name">标签必须拥有一个名字。如果继续设为空，这个标签会被删除。</string>
+    <string name="tag_exists_error">以此命名的标签已经存在</string>
+    <string name="tag_exists_message">以此命名的标签已经存在。如果你执意而为，两个标签将会被合并</string>
+    <string name="tag_no_items_message">没有项目被分配给此标签。如果你执意而为，此标签将会被删除</string>
+    <string name="tag_empty_name">标签必须拥有一个名字。如果继续设为空，这个标签会被删除</string>
     <string name="tag_select_items">选择项目:</string>
     <string name="tag_name">标签名字</string>
+    <string name="tag_icon_customicon">图标</string>
+    <string name="tag_icon_emoji">表情符号</string>
     <plurals name="tag_selected_items">
         <item quantity="other">项目%1$d已被选中</item>
     </plurals>
-    <string name="preference_layout_open_search">搜索 / 应用抽屉</string>
+    <string name="preference_layout_open_search">搜索与应用抽屉</string>
     <string name="open_search_pull_down">下滑</string>
     <string name="open_search_swipe_left">左滑</string>
     <string name="open_search_swipe_right">右滑</string>
@@ -788,7 +794,7 @@
     <string name="widget_config_weather_integration_settings">天气综合设置</string>
     <string name="widget_config_calendar_no_calendars">未发现日程</string>
     <string name="widget_pick_widget">选择组件</string>
-    <string name="app_widget_loading_failed">应用组件加载失败.</string>
+    <string name="app_widget_loading_failed">应用组件加载失败</string>
     <string name="widget_config_music_integration_settings">媒体控制综合设置</string>
     <string name="note_widget_link_file">链接到文件</string>
     <string name="note_widget_link_file_summary">将组件的内容与外部文件同步</string>
@@ -802,9 +808,9 @@
     <string name="note_widget_conflict_local_version">最后保存的版本：</string>
     <string name="note_widget_conflict_file_version">当前文件内容：</string>
     <string name="note_widget_file_read_error">错误读取注释</string>
-    <string name="note_widget_file_read_error_description">无法读取链接的文件，可能其已被移动或删除。已从启动器的存储中恢复副本。如果您编辑笔记，链接的文件可能会被覆盖。</string>
+    <string name="note_widget_file_read_error_description">无法读取链接的文件。已从启动器的存储中恢复副本。如果您编辑笔记，链接的文件可能会被覆盖</string>
     <string name="note_widget_file_write_error">保存笔记时出错</string>
-    <string name="note_widget_file_write_error_description">无法将注释写入链接文件。可能已被移动或删除。副本已保存到启动器的内部存储中。</string>
+    <string name="note_widget_file_write_error_description">无法将注释写入链接文件。副本已保存到启动器的内部存储中</string>
     <string name="confirmation_delete_color_scheme">您确实要删除颜色方案 %1$s 吗？</string>
     <string name="confirmation_delete_shapes_scheme">删除形状预设“%1$s”吗？</string>
     <string name="confirmation_delete_typography_scheme">删除字体预设“%1$s”吗？</string>
@@ -847,7 +853,7 @@
     <string name="plugin_type_weather">天气供应商</string>
     <string name="plugin_weather_provider_enable">设为天气供应商</string>
     <string name="plugin_weather_provider_enabled">当前设为天气供应商</string>
-    <string name="unavailable_searchable">此商品已不存在。</string>
+    <string name="unavailable_searchable">此项目已不存在</string>
     <string name="clock_style_digital1">粗体</string>
     <string name="clock_style_digital2">简单</string>
     <string name="clock_style_orbit">轨道</string>
@@ -998,10 +1004,10 @@
     <string name="calendar_widget_next_day">下一天</string>
     <string name="calendar_widget_create_event">添加新事件</string>
     <string name="calendar_widget_open_calendar">打开日历程序</string>
-    <string name="profile_work_profile_state_locked">工作应用已暂停。</string>
+    <string name="profile_work_profile_state_locked">工作应用已暂停</string>
     <string name="profile_work_profile_action_unlock">未暂停</string>
     <string name="profile_work_profile_action_lock">暂停工作应用</string>
-    <string name="profile_private_profile_state_locked">私人空间已锁定。</string>
+    <string name="profile_private_profile_state_locked">私密空间已锁定</string>
     <string name="profile_private_profile_action_unlock">解锁</string>
     <string name="profile_private_profile_action_lock">锁定私人空间</string>
     <string name="hint_drag_and_drop_reorder">按住并拖动项目来重新排列它们</string>
@@ -1017,7 +1023,7 @@
     </plurals>
     <string name="departure_time_departed">已离开</string>
     <string name="bad_configuration_title">恭喜！你给你自个儿锁里头了！</string>
-    <string name="bad_configuration_summary">你探索出了一套访问不了搜索和组件页的配置，使你无法进入设置 — 让启动器桌面变成了启动弃。</string>
+    <string name="bad_configuration_summary">你探索出了一套访问不了搜索和设置的配置，使你无法进入设置 — 让启动器桌面变成了启动弃</string>
     <string name="theme_export_title">导出样式</string>
     <string name="theme_import_title">导入样式</string>
     <string name="theme_bundle_name">名称</string>
@@ -1027,5 +1033,20 @@
     <string name="font_name_device_headline">标题字体</string>
     <string name="font_name_device_body">正文字体</string>
     <string name="font_category_generic">常规字体</string>
+    <string name="preference_screen_locale">语言和区域</string>
+    <string name="preference_screen_locale_summary">语言、单位、时间格式</string>
+    <string name="preference_language">语言</string>
+    <string name="preference_value_system_default">系统默认</string>
+    <string name="preference_form_of_address">地址格式</string>
+    <string name="preference_form_of_address_neutral">中性</string>
+    <string name="preference_form_of_address_fem">女性</string>
+    <string name="preference_form_of_address_masc">男性</string>
+    <string name="preference_measurement_system">度量制</string>
     <string name="preference_measurement_system_metric">公制</string>
+    <string name="preference_measurement_system_uk">英制</string>
+    <string name="preference_measurement_system_us">美制</string>
+    <string name="preference_transliteration">翻译语言偏好</string>
+    <string name="preference_transliteration_auto">自动</string>
+    <string name="preference_transliteration_disabled">禁用</string>
+    <string name="select_tag">选择标签</string>
 </resources>
