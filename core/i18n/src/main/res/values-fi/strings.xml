@@ -550,7 +550,6 @@
     <string name="preference_logs">Lokit</string>
     <string name="preference_logs_summary">Näytä tai vie sovelluksen lokit</string>
     <string name="preference_screen_search">Haku</string>
-    <string name="preference_screen_search_summary">Haku, avainsanat, piilotetut kohteet</string>
     <string name="preference_search_favorites">Suosikit</string>
     <string name="preference_search_favorites_summary">Näytä kiinnitetyt ja usein käytetyt kohteet sovellusruudukon yläpuolella</string>
     <string name="preference_search_files">Tiedostot</string>
@@ -583,10 +582,7 @@
     <string name="preference_search_bar_auto_focus_summary">Näytä näppäimistö automaattisesti avattaessa sovelluslaatikko</string>
     <string name="preference_search_bar_launch_on_enter">Käynnistä enterillä</string>
     <string name="preference_search_bar_launch_on_enter_summary">Käynnistä korostettu osuma tai pikatoiminto enter-painikkeella</string>
-    <string name="preference_hidden_items">Piilotetut hakutulokset</string>
-    <string name="preference_hidden_items_summary">Hallitse piilotettuja sovelluksia ja hakutuloksia</string>
     <string name="preference_hidden_items_reveal_button">Näytä \"paljasta\"-painike</string>
-    <string name="preference_hidden_items_reveal_button_summary">Näytä painike piilotettujen hakutulosten paljastamiseksi</string>
     <string name="preference_screen_tags">Avainsanat</string>
     <string name="preference_screen_tags_summary">Hallitse avainsanoja ja merkittyjä kohteita</string>
     <string name="preference_wikipedia_customurl">Wikipedian osoite</string>
