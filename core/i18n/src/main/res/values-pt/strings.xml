@@ -219,7 +219,7 @@
     <string name="widget_name_weather">Meteorologia</string>
     <string name="widget_name_calendar">Calendário</string>
     <string name="widget_name_music">Multimédia</string>
-    <string name="widget_name_apps">Aplicativos</string>
+    <string name="widget_name_apps">Aplicações</string>
     <string name="widget_name_notes">Nota</string>
     <string name="widget_name_unknown">Desconhecido</string>
     <string name="widget_add_widget">Adicionar widget</string>
@@ -495,6 +495,8 @@
     <string name="preference_screen_integrations">Integrações</string>
     <string name="preference_screen_plugins">Extensões</string>
     <string name="preference_screen_plugins_summary">Gerir extensões instaladas</string>
+    <string name="preference_category_enabled_plugins">Ativo</string>
+    <string name="preference_category_installed_plugins">Instalado</string>
     <string name="no_plugins_installed">Nenhum plugin instalado</string>
     <string name="preference_theme_system">Acompanhar sistema</string>
     <string name="preference_themed_icons">Ícones coloridos</string>
@@ -603,7 +605,8 @@
     <string name="preference_screen_search_summary">Pesquisas, etiquetas, itens ocultos</string>
     <string name="preference_search_favorites">Favoritos</string>
     <string name="preference_search_favorites_summary">Mostrar itens afixados e frequentes por cima da grelha de aplicações</string>
-    <string name="preference_search_apps">Aplicativos</string>
+    <string name="preference_search_apps">Aplicações</string>
+    <string name="preference_search_apps_summary">Mostrar todas as aplicações se o campo de pesquisa estiver vazio</string>
     <string name="preference_search_files">Ficheiros</string>
     <string name="preference_search_files_summary">Pesquisar ficheiros locais e na cloud</string>
     <string name="preference_search_contacts">Contactos</string>
@@ -742,6 +745,7 @@
     <string name="tag_empty_name">Não pode criar uma etiqueta sem nome. Se continuar, a etiqueta será eliminada.</string>
     <string name="tag_select_items">Selecionar itens:</string>
     <string name="tag_name">Nome da etiqueta</string>
+    <string name="tag_icon_customicon">Ícone</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item selecionado</item>
         <item quantity="other">%1$d itens selecionados</item>
@@ -1033,5 +1037,20 @@
     <string name="font_name_device_headline">Tipo de letra padrão</string>
     <string name="font_name_device_body">Tipo de letra do dispositivo</string>
     <string name="font_category_generic">Genérica</string>
+    <string name="preference_screen_locale">Idioma e região</string>
+    <string name="preference_screen_locale_summary">Idioma, unidades e formato de horas</string>
+    <string name="preference_language">Idioma</string>
+    <string name="preference_value_system_default">Definições do sistema</string>
+    <string name="preference_form_of_address">Formato do endereço</string>
+    <string name="preference_form_of_address_neutral">Neutro</string>
+    <string name="preference_form_of_address_fem">Feminino</string>
+    <string name="preference_form_of_address_masc">Masculino</string>
+    <string name="preference_measurement_system">Sistema de medida</string>
     <string name="preference_measurement_system_metric">Métrico</string>
+    <string name="preference_measurement_system_uk">Reino Unido</string>
+    <string name="preference_measurement_system_us">EUA</string>
+    <string name="preference_transliteration">Transliteração preferencial</string>
+    <string name="preference_transliteration_auto">Automática</string>
+    <string name="preference_transliteration_disabled">Inativa</string>
+    <string name="select_tag">Selecione a etiqueta</string>
 </resources>
