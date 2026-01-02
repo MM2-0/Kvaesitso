@@ -485,7 +485,6 @@
     <string name="preference_logs">로그</string>
     <string name="preference_logs_summary">애플리케이션 로그 보기 및 내보내기</string>
     <string name="preference_screen_search">검색</string>
-    <string name="preference_screen_search_summary">검색, 태그, 숨긴 항목</string>
     <string name="preference_search_favorites">즐겨찾기</string>
     <string name="preference_search_favorites_summary">앱 격자 위에 고정한 항목 및 자주 사용한 항목 표시</string>
     <string name="preference_search_apps">앱</string>
@@ -519,8 +518,6 @@
     <string name="preference_search_bar_auto_focus">키보드 열기</string>
     <string name="preference_search_bar_auto_focus_summary">검색을 열 때 자동으로 키보드 표시</string>
     <string name="preference_search_bar_launch_on_enter">엔터로 실행</string>
-    <string name="preference_hidden_items">숨긴 검색 결과</string>
-    <string name="preference_hidden_items_summary">숨긴 앱 및 검색 결과 관리</string>
     <string name="preference_screen_tags">태그</string>
     <string name="preference_screen_tags_summary">태그 및 태그한 항목 관리</string>
     <string name="preference_wikipedia_customurl">위키백과 URL</string>
