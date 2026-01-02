@@ -592,7 +592,6 @@
     <string name="preference_logs">Log</string>
     <string name="preference_logs_summary">Visualizza ed esporta i log dell\'applicazione</string>
     <string name="preference_screen_search">Ricerca</string>
-    <string name="preference_screen_search_summary">Cerca, tag, oggetti nascosti</string>
     <string name="preference_search_favorites">Preferiti</string>
     <string name="preference_search_favorites_summary">Mostra elementi appuntati e usati frequentemente sopra la griglia delle app</string>
     <string name="preference_search_apps">App</string>
@@ -638,10 +637,7 @@
     <string name="preference_search_bar_auto_focus_summary">Mostra automaticamente la tastiera all\'apertura del cassetto</string>
     <string name="preference_search_bar_launch_on_enter">Avvia con invio</string>
     <string name="preference_search_bar_launch_on_enter_summary">Avvia la ricerca evidenziata o l\'azione rapida toccando vai</string>
-    <string name="preference_hidden_items">Risultati ricerca nascosti</string>
-    <string name="preference_hidden_items_summary">Gestisce app nascoste e risultati di ricerca</string>
     <string name="preference_hidden_items_reveal_button">Mostra pulsante rivelazione</string>
-    <string name="preference_hidden_items_reveal_button_summary">Mostra un pulsante per rivelare i risultati di ricerca nascosti</string>
     <string name="preference_screen_tags">Tag</string>
     <string name="preference_screen_tags_summary">Gestisci i tag e gli elementi con tag</string>
     <string name="preference_wikipedia_customurl">URL Wikipedia</string>
