@@ -559,7 +559,6 @@
     <string name="preference_logs">Nhật ký</string>
     <string name="preference_logs_summary">Xem và xuất nhật ký ứng dụng</string>
     <string name="preference_screen_search">Tìm kiếm</string>
-    <string name="preference_screen_search_summary">Tìm kiếm, gắn thẻ, mục ẩn</string>
     <string name="preference_search_favorites">Yêu thích</string>
     <string name="preference_search_favorites_summary">Hiển thị các mục được ghim và sử dụng thường xuyên phía trên lưới ứng dụng</string>
     <string name="preference_search_apps">Ứng dụng</string>
@@ -596,10 +595,7 @@
     <string name="preference_search_bar_auto_focus_summary">Tự động hiển thị bàn phím khi mở ngăn kéo ứng dụng</string>
     <string name="preference_search_bar_launch_on_enter">Khởi chạy khi nhập</string>
     <string name="preference_search_bar_launch_on_enter_summary">Khởi chạy trùng khớp được đánh dấu hoặc hành động nhanh khi nhấn vào</string>
-    <string name="preference_hidden_items">Kết quả tìm kiếm bị ẩn</string>
-    <string name="preference_hidden_items_summary">Quản lý ứng dụng và kết quả tìm kiếm bị ẩn</string>
     <string name="preference_hidden_items_reveal_button">Hiển thị nút tiết lộ</string>
-    <string name="preference_hidden_items_reveal_button_summary">Hiển thị nút để hiển thị kết quả tìm kiếm bị ẩn</string>
     <string name="preference_screen_tags">Thẻ</string>
     <string name="preference_screen_tags_summary">Quản lý thẻ và mục được gắn thẻ</string>
     <string name="preference_wikipedia_customurl">URL Wikipedia</string>
