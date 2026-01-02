@@ -114,6 +114,8 @@ import de.mm20.launcher2.ui.settings.shapes.ShapeSchemeSettingsRoute
 import de.mm20.launcher2.ui.settings.shapes.ShapeSchemeSettingsScreen
 import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsScreen
+import de.mm20.launcher2.ui.settings.smartspacer.SmartspacerSettingsRoute
+import de.mm20.launcher2.ui.settings.smartspacer.SmartspacerSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsRoute
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
 import de.mm20.launcher2.ui.settings.tasks.TasksIntegrationSettingsRoute
@@ -299,6 +301,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<AppSearchSettingsRoute> {
                 AppSearchSettingsScreen()
+            }
+            entry<SmartspacerSettingsRoute> {
+                SmartspacerSettingsScreen()
             }
         }
 

@@ -118,6 +118,10 @@ dependencies {
     implementation(libs.coil.core)
     implementation(libs.coil.compose)
 
+    implementation(libs.smartspacer) {
+        exclude(group = "com.github.skydoves", module = "balloon")
+    }
+
     implementation(project(":libs:material-color-utilities"))
 
     implementation(project(":core:base"))
