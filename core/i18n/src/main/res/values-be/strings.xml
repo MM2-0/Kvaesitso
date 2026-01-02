@@ -606,7 +606,6 @@
     <string name="preference_logs">Журнал аўдыта</string>
     <string name="preference_logs_summary">Праглядвайце і экспартуйце запісы з журнала праграмы</string>
     <string name="preference_screen_search">Пошук</string>
-    <string name="preference_screen_search_summary">Пошук, цэтлікі, схаваныя ярлыкі</string>
     <string name="preference_search_favorites">Абраныя</string>
     <string name="preference_search_favorites_summary">Адлюстроўваць замацаваныя праграмы і праграмы, якія часта выкарыстоўваюцца, уверсе меню</string>
     <string name="preference_search_apps">Праграмы</string>
@@ -652,10 +651,7 @@
     <string name="preference_search_bar_auto_focus_summary">Аўтаматычна паказваць клавіятуру пры адкрыцці меню праграм</string>
     <string name="preference_search_bar_launch_on_enter">Запускаць пры пацвярджэнні</string>
     <string name="preference_search_bar_launch_on_enter_summary">Запускаць вылучаную прапанову або хуткае дзеянне пры націсканні кнопкі \"Увод\"</string>
-    <string name="preference_hidden_items">Схаваныя рэзультаты пошуку</string>
-    <string name="preference_hidden_items_summary">Кіраванне схаванымі праграмамі і рэзультатамі пошуку</string>
     <string name="preference_hidden_items_reveal_button">Кнопка \"Паказаць схаваныя\"</string>
-    <string name="preference_hidden_items_reveal_button_summary">Адлюстроўваць кнопку для паказу схаваных рэзультатаў пошуку</string>
     <string name="preference_screen_tags">Цэтлікі</string>
     <string name="preference_screen_tags_summary">Кіраванне цэтлікамі і ярлыкамі</string>
     <string name="preference_wikipedia_customurl">Спасылка на Вікіпедыю</string>
