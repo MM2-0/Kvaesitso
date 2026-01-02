@@ -151,9 +151,9 @@
     <string name="menu_calendar_open_externally">Ouvrir dans l\'application de calendrier</string>
     <string name="preference_icon_shape_hexagon">Hexagone</string>
     <string name="shortcut_summary">Par %1$s</string>
-    <string name="missing_permission_calendar_widget">Accorder la permission d\'accès au calendrier pour afficher les évènements à venir ici.</string>
-    <string name="missing_permission_calendar_search">Accorder la permission de rechercher dans le calendrier.</string>
-    <string name="missing_permission_files_search">Accorder la permission d\'accès au stockage pour rechercher des images, des médias et des documents sur cet appareil.</string>
+    <string name="missing_permission_calendar_widget">La permission d\'accès au calendrier est nécessaire pour afficher les évènements futurs ici.</string>
+    <string name="missing_permission_calendar_search">La permission d\'accéder au calendrier est nécessaire pour y faire des recherches</string>
+    <string name="missing_permission_files_search">Accorder la permission d\'accès au stockage pour rechercher des images, des médias et des documents sur cet appareil</string>
     <string name="missing_permission_contact_search">Accorder la permission d\'accès aux contacts pour rechercher dans les contacts.</string>
     <string name="close">Fermer</string>
     <string name="websearch_dialog_custom_icon">Icône personnalisée</string>
@@ -369,7 +369,7 @@
     <string name="preference_restore">Restaurer</string>
     <string name="save">Enregistrer</string>
     <string name="file_type_launcherbackup">Sauvegarde %1$s</string>
-    <string name="weather_location_search_no_result">Emplacement inconnu.</string>
+    <string name="weather_location_search_no_result">Emplacement inconnu</string>
     <string name="preference_enforce_icon_shape">Imposer la forme</string>
     <string name="preference_enforce_icon_shape_summary">Appliquer la forme à toutes les icônes, y compris celles qui ne la supporteraient pas normalement</string>
     <string name="preference_font">Police de caractères</string>
@@ -885,4 +885,5 @@
     <string name="confirmation_delete_transparencies_scheme">Voulez-vous réellement supprimer le schéma de transparence %1$s ?</string>
     <string name="new_theme_name">(sans titre)</string>
     <string name="widget_name_apps">Applications</string>
+    <string name="music_widget_interactive_progress_bar">Barre de progression interactive</string>
 </resources>
