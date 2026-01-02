@@ -605,7 +605,6 @@
     <string name="preference_logs">Protokoly</string>
     <string name="preference_logs_summary">Zobrazit a exportovat protokoly aplikace</string>
     <string name="preference_screen_search">Hledání</string>
-    <string name="preference_screen_search_summary">Vyhledávání, štítky, skryté položky</string>
     <string name="preference_search_favorites">Oblíbené</string>
     <string name="preference_search_favorites_summary">Zobrazit připnuté a často používané položky nad mřízkou s aplikacemi</string>
     <string name="preference_search_apps">Aplikace</string>
@@ -652,10 +651,7 @@
     <string name="preference_search_bar_auto_focus_summary">Automaticky zobrazit klávesnici při otevření seznamu aplikací</string>
     <string name="preference_search_bar_launch_on_enter">Spustit při vstupu</string>
     <string name="preference_search_bar_launch_on_enter_summary">Spustit zvýrazněnou shodu nebo rychlou akci při klepnutí na Přejít</string>
-    <string name="preference_hidden_items">Skrýt výsledky vyhledávání</string>
-    <string name="preference_hidden_items_summary">Spravovat skryté aplikace a výsledky vyhledávání</string>
     <string name="preference_hidden_items_reveal_button">Zobrazit tlačítko odhalení</string>
-    <string name="preference_hidden_items_reveal_button_summary">Zobrazit tlačítko pro odhalení skrytých výsledků vyhledávání</string>
     <string name="preference_screen_tags">Štítky</string>
     <string name="preference_screen_tags_summary">Spravovat štítky a označené položky</string>
     <string name="preference_wikipedia_customurl">URL Wikipedie</string>
