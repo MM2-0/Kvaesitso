@@ -52,7 +52,7 @@
         <item quantity="many">miles</item>
         <item quantity="other">miles</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_nautic_mile_symbol">nmi</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">mille nautique</item>
         <item quantity="many">milles nautiques</item>
@@ -83,19 +83,19 @@
         <item quantity="many">millimètres carrés</item>
         <item quantity="other">millimètres carrés</item>
     </plurals>
-    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_sqinch_symbol">in²</string>
     <plurals name="unit_sqinch">
         <item quantity="one">pouce carré</item>
         <item quantity="many">pouces carrés</item>
         <item quantity="other">pouces carrés</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqfoot_symbol">ft²</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">pied carré</item>
         <item quantity="many">pieds carrés</item>
         <item quantity="other">pieds carrés</item>
     </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_sqyard_symbol">yd²</string>
     <plurals name="unit_sqyard">
         <item quantity="one">yard carré</item>
         <item quantity="many">yards carrés</item>
@@ -279,31 +279,31 @@
         <item quantity="many">tonnes</item>
         <item quantity="other">tonnes</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_long_ton_symbol">Long ton</string>
     <plurals name="unit_long_ton">
         <item quantity="one">tonne longue</item>
         <item quantity="many">tonnes longues</item>
         <item quantity="other">tonnes longues</item>
     </plurals>
-    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_stone_symbol">st</string>
     <plurals name="unit_stone">
         <item quantity="one">pierre</item>
         <item quantity="many">pierres</item>
         <item quantity="other">pierres</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">lb</string>
     <plurals name="unit_pound">
         <item quantity="one">livre</item>
         <item quantity="many">livres</item>
         <item quantity="other">livres</item>
     </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">oz</string>
     <plurals name="unit_ounce">
         <item quantity="one">once</item>
         <item quantity="many">onces</item>
         <item quantity="other">onces</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">ton courte</string>
     <plurals name="unit_short_ton">
         <item quantity="one">tonne courte</item>
         <item quantity="many">tonnes courtes</item>
@@ -347,4 +347,50 @@
     <string name="dimension_data">Données</string>
     <string name="dimension_temperature">Température</string>
     <string name="dimension_time">Temps</string>
+    <string name="unit_liter_symbol">L</string>
+    <plurals name="unit_liter">
+        <item quantity="one">litre</item>
+        <item quantity="many">litres</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_milliliter_symbol">mL</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">millilitre</item>
+        <item quantity="many">millilitres</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_cubic_meter_symbol">m³</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">mètre cube</item>
+        <item quantity="many">mètre cube</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">cm³</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">centimètre cube</item>
+        <item quantity="many">centimètres cubes</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_cubic_millimeter_symbol">mm³</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">millimètre cube</item>
+        <item quantity="many">millimètres cubes</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">cu in</string>
+    <string name="unit_cubic_foot_symbol">cu ft</string>
+    <string name="unit_cubic_yard_symbol">cu yd</string>
+    <string name="unit_gallon_us_symbol">gal</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">gallon (US)</item>
+        <item quantity="many">gallons (US)</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_gallon_imp_symbol">gal imp</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">gallon (impérial)</item>
+        <item quantity="many">gallon (impérial)</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_pint_us_symbol">pt US</string>
 </resources>
