@@ -563,6 +563,7 @@
     <string name="preference_clock_widget_alignment_center">Mitte</string>
     <string name="preference_clock_widget_alignment_bottom">Unten</string>
     <string name="preference_clockwidget_dynamic_zone">Dynamische Zone</string>
+    <string name="preference_clockwidget_smartspacer">Wird von Smartspacer verwaltet</string>
     <string name="preference_clockwidget_date_part">Datum</string>
     <string name="preference_clockwidget_date_part_summary">Das aktuelle Datum anzeigen</string>
     <string name="preference_clockwidget_favorites_part_summary">Favoriten im Dock anzeigen</string>
@@ -657,6 +658,9 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather ist eine freie und quelloffene Wetterapp. Wenn installiert, kann %1$s Breezy Weather als Datenquelle für Wetterdaten verwenden.</string>
     <string name="preference_breezyweather_integration_instructions">Um Breezy Weather als Wetterdienst zu nutzen:\n\n1. Öffnen Sie Breezy Weather &gt; Einstellungen &gt; Widgets &amp; Live-Hintergrund &gt; Wetterdaten an Gadgetbridge senden &gt; %1$s aktivieren\n\n2. Wählen Sie Breezy Weather in %1$s als Wetterdienst aus</string>
     <string name="preference_launch_breezyweather_app">Breezy Weather öffnen</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer ist ein freies und quelloffenes At a Glance-Widget. Wenn es installiert ist, kann es in die dynamische Zone des Uhren-Widgets integriert werden</string>
+    <string name="preference_smartspacer_enable">Smartspacer-Integration aktivieren</string>
+    <string name="preference_launch_smartspacer_app">Smartspacer öffnen</string>
     <string name="preference_contacts_call_on_tap">Zum Anrufen tippen</string>
     <string name="preference_contacts_call_on_tap_summary">Beim Antippen einer Telefonnummer ohne Bestätigung einen Anruf starten</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
