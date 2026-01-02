@@ -605,7 +605,6 @@
     <string name="preference_logs">Журналы</string>
     <string name="preference_logs_summary">Просмотр и экспорт журналов приложения</string>
     <string name="preference_screen_search">Поиск</string>
-    <string name="preference_screen_search_summary">Поиск, теги, скрытые элементы</string>
     <string name="preference_search_favorites">Избранные</string>
     <string name="preference_search_favorites_summary">Отображать закрепленные и часто используемые над списком приложений</string>
     <string name="preference_search_apps">Приложения</string>
@@ -648,10 +647,7 @@
     <string name="preference_search_bar_auto_focus_summary">Автоматически показывать клавиатуру при открытии списка приложений</string>
     <string name="preference_search_bar_launch_on_enter">Запускать по Enter</string>
     <string name="preference_search_bar_launch_on_enter_summary">Запускать подсвеченное совпадение или быстрое действие по клавише «Вперёд»</string>
-    <string name="preference_hidden_items">Скрытые результаты поиска</string>
-    <string name="preference_hidden_items_summary">Управление скрытыми приложениями и результатами поиска</string>
     <string name="preference_hidden_items_reveal_button">Показывать кнопку раскрытия</string>
-    <string name="preference_hidden_items_reveal_button_summary">Показывать кнопку, раскрывающую скрытые результаты поиска</string>
     <string name="preference_screen_tags">Теги</string>
     <string name="preference_screen_tags_summary">Настройка тегов и связанных с ними приложений</string>
     <string name="preference_wikipedia_customurl">Адрес Wikipedia</string>
