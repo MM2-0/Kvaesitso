@@ -550,7 +550,6 @@
     <string name="preference_crash_reporter_summary">Klaidų ir ūžlužimo pranešimas</string>
     <string name="preference_logs_summary">Žiurėti ir eksportuoti programos logs</string>
     <string name="preference_screen_search">Paieška</string>
-    <string name="preference_screen_search_summary">Ieška ,žymos ,paslėptos programos</string>
     <string name="preference_search_favorites">Mėgstamiausi</string>
     <string name="preference_search_favorites_summary">Rodyti prisegtus ir dažnai naudojamus rodyti virš programų lauko</string>
     <string name="preference_search_files">Failai</string>
@@ -584,10 +583,7 @@
     <string name="preference_search_bar_auto_focus_summary">Automatiškai rodyti klaviatūra kai atidarant programų stalčių</string>
     <string name="preference_search_bar_launch_on_enter">Atidaryti ateinant</string>
     <string name="preference_search_bar_launch_on_enter_summary">Atidaryti pažymėta mąča at greita veiksmą paspaudus go</string>
-    <string name="preference_hidden_items">Paslėpti paieškos rezultatus</string>
-    <string name="preference_hidden_items_summary">Tvarkyti paslėptas programas ir paieškos rezultatus</string>
     <string name="preference_hidden_items_reveal_button">Rodyti parodyti mygtuka</string>
-    <string name="preference_hidden_items_reveal_button_summary">Rodyti mygtuką kuris parodo paslėptus paieškos rezultatus</string>
     <string name="preference_screen_tags">Žymos</string>
     <string name="preference_screen_tags_summary">Tvarkyti žymas ir pažymėtus daiktus</string>
     <string name="preference_wikipedia_customurl">Vikipedija URL</string>
