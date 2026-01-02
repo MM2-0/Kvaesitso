@@ -53,7 +53,7 @@
         <item quantity="one">milha</item>
         <item quantity="other">milhas</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">nm</string>
+    <string name="unit_nautic_mile_symbol">mn</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">milha náutica</item>
         <item quantity="other">milhas náuticas</item>
@@ -71,15 +71,19 @@
         <item quantity="one">centímetro quadrado</item>
         <item quantity="other">centímetros quadrados</item>
     </plurals>
-    <string name="unit_sqinch_symbol">sqin</string>
-    <string name="unit_sqfoot_symbol">sqft</string>
-    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_sqinch_symbol">mq</string>
+    <string name="unit_sqfoot_symbol">ft²</string>
+    <string name="unit_sqyard_symbol">yd²</string>
     <string name="unit_acre_symbol">acre</string>
     <!-- UNITS OF TIME -->
     <!-- UNITS OF DATA SIZES -->
+    <plurals name="unit_tebibyte">
+        <item quantity="one">TiB</item>
+        <item quantity="other">TiB</item>
+    </plurals>
     <!-- UNITS OF VELOCITY -->
     <!-- UNITS OF MASS -->
-    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_long_ton_symbol">tonelada longa</string>
     <plurals name="unit_stone">
         <item quantity="one">pedra</item>
         <item quantity="other">pedras</item>
@@ -89,7 +93,7 @@
         <item quantity="one">onça</item>
         <item quantity="other">onças</item>
     </plurals>
-    <string name="unit_short_ton_symbol">ton. red.</string>
+    <string name="unit_short_ton_symbol">tonelada reduzida</string>
     <plurals name="unit_short_ton">
         <item quantity="one">tonelada reduzida</item>
         <item quantity="other">toneladas reduzidas</item>
@@ -104,4 +108,83 @@
         <item quantity="other">graus fahrenheit</item>
     </plurals>
     <!-- UNITS OF VOLUME -->
+    <plurals name="unit_liter">
+        <item quantity="one">litro</item>
+        <item quantity="other">litros</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">ml</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">mililitro</item>
+        <item quantity="other">mililitros</item>
+    </plurals>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">metro cúbico</item>
+        <item quantity="other">metros cúbicos</item>
+    </plurals>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">centímetro cúbico</item>
+        <item quantity="other">centímetros cúbicos</item>
+    </plurals>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">milímetro cúbico</item>
+        <item quantity="other">milímetros cúbicos</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">in³</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">polegada cúbica</item>
+        <item quantity="other">polegadas cúbicas</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">ft³</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">pé cúbico</item>
+        <item quantity="other">pés cúbicos</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">yd³</string>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">jarda cúbica</item>
+        <item quantity="other">jardas cúbicas</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">gal - EUA</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">galão (EUA)</item>
+        <item quantity="other">galões (EUA)</item>
+    </plurals>
+    <string name="unit_gallon_imp_symbol">gal imperial</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">galão (imperial)</item>
+        <item quantity="other">galões (imperial)</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">pt - EUA</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">pinto (EUA)</item>
+        <item quantity="other">pintos (EUA)</item>
+    </plurals>
+    <string name="unit_pint_imp_symbol">pt imperial</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">pinto (imperial)</item>
+        <item quantity="other">pintos (imperial)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">oz fluída (EUA)</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">onça fluída (EUA)</item>
+        <item quantity="other">onças fluídas (EUA)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">onças fluídas imperial</string>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">onça fluída (imperial)</item>
+        <item quantity="other">onças fluídas (imperial)</item>
+    </plurals>
+    <string name="unit_cup_symbol">½ pinto</string>
+    <plurals name="unit_cup">
+        <item quantity="one">½ pinto (EUA)</item>
+        <item quantity="other">½ pinto (EUA)</item>
+    </plurals>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">tablespoon (EUA)</item>
+        <item quantity="other">tablespoons (EUA)</item>
+    </plurals>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">teaspoon (EUA)</item>
+        <item quantity="other">teaspoons (EUA)</item>
+    </plurals>
 </resources>
