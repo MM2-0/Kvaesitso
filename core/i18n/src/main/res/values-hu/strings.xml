@@ -600,7 +600,6 @@
     <string name="preference_logs">Naplók</string>
     <string name="preference_logs_summary">Alkalmazásnaplók megtekintése és exportálása</string>
     <string name="preference_screen_search">Keresés</string>
-    <string name="preference_screen_search_summary">Keresés, címkék, rejtett elemek</string>
     <string name="preference_search_favorites">Kedvencek</string>
     <string name="preference_search_favorites_summary">Kitűzött és gyakran használt elemek megjelenítése az alkalmazásrács felett</string>
     <string name="preference_search_apps">Alkalmazások</string>
@@ -647,10 +646,7 @@
     <string name="preference_search_bar_auto_focus_summary">Billentyűzet automatikus megjelenítése az alkalmazásfiók megnyitásakor</string>
     <string name="preference_search_bar_launch_on_enter">Keresés enterrel</string>
     <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyors műveletre, ha megérinti az „Enter” gombot</string>
-    <string name="preference_hidden_items">Rejtett keresési eredmények</string>
-    <string name="preference_hidden_items_summary">Rejtett alkalmazások és keresési eredmények kezelése</string>
     <string name="preference_hidden_items_reveal_button">Kibontásgomb megjelenítése</string>
-    <string name="preference_hidden_items_reveal_button_summary">Egy gomb megjelenítése a rejtett keresési eredmények megjelenítéséhez</string>
     <string name="preference_screen_tags">Címkék</string>
     <string name="preference_screen_tags_summary">Címkék és címkézett elemek kezelése</string>
     <string name="preference_wikipedia_customurl">Wikipédia-webcím</string>
