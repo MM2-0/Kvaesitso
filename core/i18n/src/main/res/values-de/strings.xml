@@ -583,7 +583,7 @@
     <string name="preference_crash_reporter_summary">Fehler- und Absturzberichte</string>
     <string name="preference_logs_summary">Anwendungslogs ansehen und exportieren</string>
     <string name="preference_screen_search">Suche</string>
-    <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Elemente</string>
+    <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Suchergebnisse</string>
     <string name="preference_search_favorites">Favoriten</string>
     <string name="preference_search_favorites_summary">Angepinnte und häufig genutzte Elemente über dem App-Raster anzeigen</string>
     <string name="preference_search_apps_summary">Alle Apps anzeigen, wenn das Suchfeld leer ist</string>
