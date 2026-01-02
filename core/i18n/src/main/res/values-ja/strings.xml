@@ -435,7 +435,6 @@
     <string name="preference_backup_summary">設定とランチャーのデータをエクスポートします</string>
     <string name="preference_restore_summary">以前に作成されたバックアップをインポートします</string>
     <string name="preference_screen_search">検索</string>
-    <string name="preference_screen_search_summary">検索、タグ、非表示のアイテム</string>
     <string name="preference_search_favorites">お気に入り</string>
     <string name="preference_search_calendar">カレンダー</string>
     <string name="preference_screen_buildinfo">ビルド情報</string>
