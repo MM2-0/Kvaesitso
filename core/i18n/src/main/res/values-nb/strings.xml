@@ -510,7 +510,6 @@
     <string name="preference_logs">Logger</string>
     <string name="preference_logs_summary">Se og eksporter applikasjonslogger</string>
     <string name="preference_screen_search">Søk</string>
-    <string name="preference_screen_search_summary">Søk, etiketter, skjulte oppføringer</string>
     <string name="preference_search_favorites">Favoritter</string>
     <string name="preference_search_favorites_summary">Vis festede og ofte brukte oppføringer over app-rutenettet</string>
     <string name="preference_search_apps">Apper</string>
@@ -547,8 +546,6 @@
     <string name="preference_search_bar_auto_focus">Åpne tastatur</string>
     <string name="preference_search_bar_auto_focus_summary">Vis tastatur automatisk når app-skuff åpnes</string>
     <string name="preference_search_bar_launch_on_enter">Start med enter</string>
-    <string name="preference_hidden_items">Skjulte søkeresultater</string>
-    <string name="preference_hidden_items_summary">Administrer skjulte apper og søkeresultater</string>
     <string name="preference_screen_tags">Merkelapper</string>
     <string name="preference_screen_tags_summary">Administrer etiketter og merkede oppføringer</string>
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
