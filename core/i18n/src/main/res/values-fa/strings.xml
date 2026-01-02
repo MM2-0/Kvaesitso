@@ -580,7 +580,6 @@
     <string name="preference_logs">گزارش‌ها</string>
     <string name="preference_logs_summary">مشاهده و صدور گزارش‌های برنامه</string>
     <string name="preference_screen_search">جستجو</string>
-    <string name="preference_screen_search_summary">جستجو، برچسب‌ها، موارد مخفی</string>
     <string name="preference_search_favorites">موارد دلخواه</string>
     <string name="preference_search_favorites_summary">نمایش موارد دلخواه و مورد استفاده بالا بالای شبکه برنامه‌ها</string>
     <string name="preference_search_apps">برنامه‌ها</string>
@@ -623,10 +622,7 @@
     <string name="preference_search_bar_auto_focus_summary">به شیوه خودکار هنگام بازکردن کشوی برنامه‌ها، صفحه‌کلید نمایش داده شود</string>
     <string name="preference_search_bar_launch_on_enter">اجرایی شدن با ورود</string>
     <string name="preference_search_bar_launch_on_enter_summary">اجرای مورد برجسته یا کنش سریع هنگام فشار دادن دکمه \'برو\'</string>
-    <string name="preference_hidden_items">یافته‌های جستجوی مخفی</string>
-    <string name="preference_hidden_items_summary">مدیریت برنامه‌ها و یافته‌های جستجوی مخفی</string>
     <string name="preference_hidden_items_reveal_button">نمایش دکمه آشکارسازی</string>
-    <string name="preference_hidden_items_reveal_button_summary">نمایش دکمه‌ای برای آشکار کردن یافته‌های جستجوی پنهان</string>
     <string name="preference_screen_tags">برچسب‌ها</string>
     <string name="preference_screen_tags_summary">مدیریت برچسب‌ها و موارد برچسب‌گذاری شده</string>
     <string name="preference_wikipedia_customurl">نشانی وبگاه ویکی‌پدیا</string>
