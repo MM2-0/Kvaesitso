@@ -583,7 +583,6 @@
     <string name="preference_logs">Logberichten</string>
     <string name="preference_logs_summary">Applicatielogs bekijken en exporteren</string>
     <string name="preference_screen_search">Zoeken</string>
-    <string name="preference_screen_search_summary">Zoeken, tags, verborgen items</string>
     <string name="preference_search_favorites">Favorieten</string>
     <string name="preference_search_favorites_summary">Vastgezette en vaak gebruikte items tonen boven het applicatieraster</string>
     <string name="preference_search_apps">Applicaties</string>
@@ -628,10 +627,7 @@
     <string name="preference_search_bar_auto_focus_summary">Altijd het toetsenbord tonen wanneer applicatielijst geopend wordt</string>
     <string name="preference_search_bar_launch_on_enter">Uitvoeren bij enter</string>
     <string name="preference_search_bar_launch_on_enter_summary">De gemarkeerde app of snelle actie uitvoeren bij tikken op enter</string>
-    <string name="preference_hidden_items">Verborgen zoekresultaten</string>
-    <string name="preference_hidden_items_summary">Verborgen applicaties en zoekresultaten beheren</string>
     <string name="preference_hidden_items_reveal_button">Toon knop \"onthullen\"</string>
-    <string name="preference_hidden_items_reveal_button_summary">Een knop tonen om verborgen zoekresultaten te onthullen</string>
     <string name="preference_screen_tags">Labels</string>
     <string name="preference_screen_tags_summary">Beheer tags en getagde items</string>
     <string name="preference_edit_favorites_summary">Volgorde van de vastgezette items aanpassen</string>
