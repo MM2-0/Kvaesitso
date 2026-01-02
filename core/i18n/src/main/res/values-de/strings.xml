@@ -886,4 +886,9 @@
     <string name="tag_icon_emoji">Emoji</string>
     <string name="select_tag">Tag auswählen</string>
     <string name="widget_name_apps">Apps</string>
+    <string name="preference_clockwidget_smartspacer">Wird von Smartspacer verwaltet</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer ist ein freies und quelloffenes At a Glance-Widget. Wenn es installiert ist, kann es in die dynamische Zone des Uhren-Widgets integriert werden</string>
+    <string name="preference_smartspacer_enable">Smartspacer-Integration aktivieren</string>
+    <string name="preference_launch_smartspacer_app">Smartspacer öffnen</string>
 </resources>
