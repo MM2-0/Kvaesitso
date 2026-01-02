@@ -259,7 +259,7 @@
     <string name="preference_crash_reporter_summary">Fehler- und Absturzberichte</string>
     <string name="preference_calendar_calendars">Kalender</string>
     <string name="preference_screen_search">Suche</string>
-    <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Elemente</string>
+    <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Suchergebnisse</string>
     <string name="preference_search_favorites">Favoriten</string>
     <string name="preference_search_favorites_summary">Angepinnte und häufig genutzte Elemente über dem App-Raster anzeigen</string>
     <string name="preference_search_files">Dateien</string>
@@ -885,4 +885,5 @@
     <string name="tag_icon_customicon">Icon</string>
     <string name="tag_icon_emoji">Emoji</string>
     <string name="select_tag">Tag auswählen</string>
+    <string name="widget_name_apps">Apps</string>
 </resources>
