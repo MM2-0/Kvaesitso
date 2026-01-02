@@ -314,6 +314,7 @@
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s joue un média</string>
     <string name="music_widget_no_data">Aucun média n\'a encore été joué</string>
+    <string name="music_widget_interactive_progress_bar">Barre de progression interactive</string>
     <string name="weather_condition_sleetshowers">Averses de grésil</string>
     <string name="weather_condition_heavysleet">Fort grésil</string>
     <string name="weather_condition_lightrainshowersandthunder">Légères averses de pluie et orage</string>
@@ -368,7 +369,7 @@
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Définir la position</string>
-    <string name="weather_location_search_no_result">Emplacement inconnu.</string>
+    <string name="weather_location_search_no_result">Emplacement inconnu</string>
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">La permission d\'accès à la position est nécessaire pour déterminer la position automatiquement</string>
     <!-- Missing notification permission in music widget settings -->
@@ -395,13 +396,13 @@
     <!-- Missing notification permission, used in badge settings screen -->
     <string name="missing_permission_notification_badges">La permission d\'accès aux notifications est nécessaire pour afficher les badges de notification</string>
     <!-- Missing calendar permission, used in calendar widget -->
-    <string name="missing_permission_calendar_widget">Accorder la permission d\'accès au calendrier pour afficher les évènements à venir ici.</string>
+    <string name="missing_permission_calendar_widget">La permission d\'accès au calendrier est nécessaire pour afficher les évènements futurs ici.</string>
     <!-- Missing calendar permission, used in calendar search results -->
-    <string name="missing_permission_calendar_search">Accorder la permission de rechercher dans le calendrier.</string>
+    <string name="missing_permission_calendar_search">La permission d\'accéder au calendrier est nécessaire pour y faire des recherches</string>
     <!-- Missing location permission, used in location search results -->
     <string name="missing_permission_location_search">Accorder la permission d\'accès à la localisation pour chercher des emplacements proches.</string>
     <!-- Missing files permission, used in files search results -->
-    <string name="missing_permission_files_search">Accorder la permission d\'accès au stockage pour rechercher des images, des médias et des documents sur cet appareil.</string>
+    <string name="missing_permission_files_search">Accorder la permission d\'accès au stockage pour rechercher des images, des médias et des documents sur cet appareil</string>
     <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">Accorder la permission d\'accès aux contacts pour rechercher dans les contacts.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
