@@ -529,7 +529,6 @@
     <string name="preference_logs">Registos</string>
     <string name="preference_logs_summary">Ver e exportar registos da aplicação</string>
     <string name="preference_screen_search">Pesquisar</string>
-    <string name="preference_screen_search_summary">Pesquisas, etiquetas, itens ocultos</string>
     <string name="preference_search_favorites">Favoritos</string>
     <string name="preference_search_favorites_summary">Mostrar itens afixados e frequentes por cima da grelha de aplicações</string>
     <string name="preference_search_apps">Aplicações</string>
@@ -569,10 +568,7 @@
     <string name="preference_search_bar_auto_focus_summary">Mostrar teclado ao abrir o menu de aplicações</string>
     <string name="preference_search_bar_launch_on_enter">Abrir ao entrar</string>
     <string name="preference_search_bar_launch_on_enter_summary">Iniciar ocorrência destacada ou a ação rápida ao tocar</string>
-    <string name="preference_hidden_items">Resultados ocultos</string>
-    <string name="preference_hidden_items_summary">Gerir aplicações ocultas e resultados de pesquisa</string>
     <string name="preference_hidden_items_reveal_button">Mostrar botão \"Revelar\"</string>
-    <string name="preference_hidden_items_reveal_button_summary">Mostrar botão para revelar os resultados ocultos</string>
     <string name="preference_screen_tags">Etiquetas</string>
     <string name="preference_screen_tags_summary">Gerir etiquetas e itens com etiqueta</string>
     <string name="preference_wikipedia_customurl">URL da Wikipedia</string>
