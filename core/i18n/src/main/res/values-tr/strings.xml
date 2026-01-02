@@ -597,7 +597,6 @@
     <string name="preference_logs">Günlükler</string>
     <string name="preference_logs_summary">Uygulama günlüklerini görüntüle ve dışa aktar</string>
     <string name="preference_screen_search">Arama</string>
-    <string name="preference_screen_search_summary">Arama, etiketler, gizli öğeler</string>
     <string name="preference_search_favorites">Favoriler</string>
     <string name="preference_search_favorites_summary">Sabitlenmiş ve sık kullanılan öğeleri uygulama ızgarasının üzerinde göster</string>
     <string name="preference_search_apps">Uygulamalar</string>
@@ -643,10 +642,7 @@
     <string name="preference_search_bar_auto_focus_summary">Uygulama çekmecesini açarken klavyeyi otomatik olarak göster</string>
     <string name="preference_search_bar_launch_on_enter">Enter ile başlat</string>
     <string name="preference_search_bar_launch_on_enter_summary">Git\'e dokunduğunuzda vurgulanan eşleşmeyi veya hızlı eylemi başlatın</string>
-    <string name="preference_hidden_items">Gizli arama sonuçları</string>
-    <string name="preference_hidden_items_summary">Gizli uygulamaları ve arama sonuçlarını yönet</string>
     <string name="preference_hidden_items_reveal_button">Göster düğmesini göster</string>
-    <string name="preference_hidden_items_reveal_button_summary">Gizli arama sonuçlarını göstermek için bir düğme göster</string>
     <string name="preference_screen_tags">Etiketler</string>
     <string name="preference_screen_tags_summary">Etiketleri ve etiketlenmiş öğeleri yönet</string>
     <string name="preference_wikipedia_customurl">Vikipedi URL\'si</string>
