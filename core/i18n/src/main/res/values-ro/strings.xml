@@ -561,7 +561,6 @@
     <string name="preference_crash_reporter">Reporter de cădere</string>
     <string name="preference_crash_reporter_summary">Rapoarte de eroare și de cădere</string>
     <string name="preference_screen_search">Caută</string>
-    <string name="preference_screen_search_summary">Configurarea căutării</string>
     <string name="preference_search_favorites">Favorite</string>
     <string name="preference_search_favorites_summary">Afișarea elementelor fixate și utilizate frecvent deasupra grilei de aplicații</string>
     <string name="preference_search_files">Fișiere</string>
@@ -596,8 +595,6 @@
     <string name="preference_search_bar_auto_focus">Lansarea tastaturii</string>
     <string name="preference_search_bar_auto_focus_summary">Afișarea automată a tastaturii la deschiderea căutării</string>
     <string name="preference_search_bar_launch_on_enter">Lansare la intrare</string>
-    <string name="preference_hidden_items">Rezultate de căutare ascunse</string>
-    <string name="preference_hidden_items_summary">Gestionarea aplicațiilor ascunse și a rezultatelor căutării</string>
     <string name="preference_hidden_items_reveal_button">Afișează butonul de dezvăluire</string>
     <string name="preference_screen_tags">Etichete</string>
     <string name="preference_screen_tags_summary">Gestionați etichetele și elementele etichetate</string>
