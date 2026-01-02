@@ -697,7 +697,7 @@
     <string name="preference_breezyweather_integration_instructions">To use Breezy Weather as weather provider:\n\n1. Go to Breezy Weather &gt; Settings &gt; Widgets &amp; Live wallpaper &gt; Send Gadgetbridge data &gt; Enable %1$s\n\n2. In %1$s, select Breezy Weather as weather provider</string>
     <string name="preference_launch_breezyweather_app">Open Breezy Weather</string>
     <string name="preference_smartspacer_integration">Smartspacer</string>
-    <string name="preference_smartspacer_integration_description">Smartspacer is a free and open source At a Glance widget. If installed, it can be integrated into the dynamic zone of %1$s\'s clock widget</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer is a free and open source At a Glance widget. If installed, it can be integrated into the dynamic zone of the clock widget</string>
     <string name="preference_smartspacer_enable">Enable Smartspacer integration</string>
     <string name="preference_launch_smartspacer_app">Open Smartspacer</string>
     <string name="preference_contacts_call_on_tap">Tap to call</string>
