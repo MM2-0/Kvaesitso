@@ -560,7 +560,6 @@
     <string name="preference_logs">Dzienniki zdarzeń</string>
     <string name="preference_logs_summary">Wyświetlanie i eksportowanie dzienników zdarzeń aplikacji</string>
     <string name="preference_screen_search">Wyszukiwanie</string>
-    <string name="preference_screen_search_summary">Wyszukiwanie, tagi, ukryte elementy</string>
     <string name="preference_search_favorites">Ulubione</string>
     <string name="preference_search_favorites_summary">Pokazuje przypięte oraz często używane rzeczy nad listą aplikacji</string>
     <string name="preference_search_apps">Aplikacje</string>
@@ -597,10 +596,7 @@
     <string name="preference_search_bar_auto_focus_summary">Automatyczne wyświetlanie klawiatury po otwarciu szuflady aplikacji</string>
     <string name="preference_search_bar_launch_on_enter">Uruchom na starcie</string>
     <string name="preference_search_bar_launch_on_enter_summary">Uruchamianie podświetlonego dopasowania lub szybkiej akcji po dotknięciu przycisku Go</string>
-    <string name="preference_hidden_items">Ukryte elementy</string>
-    <string name="preference_hidden_items_summary">Zarządzaj ukrytymi aplikacjami i wynikami wyszukiwania</string>
     <string name="preference_hidden_items_reveal_button">Pokaż przycisk ujawniania</string>
-    <string name="preference_hidden_items_reveal_button_summary">Pokaż przycisk, aby ujawnić ukryte wyniki wyszukiwania</string>
     <string name="preference_screen_tags">Tagi</string>
     <string name="preference_screen_tags_summary">Zarządzaj tagami i oznaczonymi elementami</string>
     <string name="preference_wikipedia_customurl">Adres URL Wikipedii</string>
