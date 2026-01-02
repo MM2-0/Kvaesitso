@@ -558,7 +558,6 @@
     <string name="preference_logs">Logfiler</string>
     <string name="preference_logs_summary">Se og eksportér applikationslogfiler</string>
     <string name="preference_screen_search">Søg</string>
-    <string name="preference_screen_search_summary">Søg, tags, skjulte elementer</string>
     <string name="preference_search_favorites">Favoritter</string>
     <string name="preference_search_favorites_summary">Vis fastgjorte og ofte brugte elementer over app-gitter</string>
     <string name="preference_search_files">Filer</string>
@@ -597,10 +596,7 @@
     <string name="preference_search_bar_auto_focus_summary">Vis automatisk tastaturet, når du åbner app-skuffen</string>
     <string name="preference_search_bar_launch_on_enter">Start ved enter</string>
     <string name="preference_search_bar_launch_on_enter_summary">Start fremhævet match eller hurtig handling, når du trykker gå</string>
-    <string name="preference_hidden_items">Skjulte søgeresultater</string>
-    <string name="preference_hidden_items_summary">Administrér skjulte apps og søgeresultater</string>
     <string name="preference_hidden_items_reveal_button">Vis afslør-knap</string>
-    <string name="preference_hidden_items_reveal_button_summary">Vis en knap for at afsløre skjulte søgeresultater</string>
     <string name="preference_screen_tags_summary">Administrér tags og taggede elementer</string>
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
     <string name="preference_edit_favorites_summary">Ændr rækkefølgen af fastgjorte elementer</string>
