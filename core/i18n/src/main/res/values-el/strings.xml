@@ -542,7 +542,6 @@
     <string name="preference_logs">Αρχεία καταγραφής</string>
     <string name="preference_logs_summary">Προβολή και εξαγωγή αρχείων καταγραφής</string>
     <string name="preference_screen_search">Αναζήτηση</string>
-    <string name="preference_screen_search_summary">Αναζήτηση, ετικέτες, κρυφά στοιχεία</string>
     <string name="preference_search_favorites">Αγαπημένα</string>
     <string name="preference_search_favorites_summary">Εμφάνιση καρφιτσωμένων και συχνά χρησιμοποιούμενων στοιχείων πάνω από το πλέγμα εφαρμογών</string>
     <string name="preference_search_files">Αρχεία</string>
@@ -573,10 +572,7 @@
     <string name="preference_search_bar_color">Χρώμα</string>
     <string name="preference_search_bar_auto_focus">Άνοιγμα πληκτρολογίου</string>
     <string name="preference_search_bar_auto_focus_summary">Αυτόματη εμφάνιση του πληκτρολογίου κατά το άνοιγμα του μενού εφαρμογών</string>
-    <string name="preference_hidden_items">Κρυφά αποτελέσματα αναζήτησης</string>
-    <string name="preference_hidden_items_summary">Διαχείριση κρυφών εφαρμογών και αποτελεσμάτων αναζήτησης</string>
     <string name="preference_hidden_items_reveal_button">Εμφάνιση κουμπιού αποκάλυψης</string>
-    <string name="preference_hidden_items_reveal_button_summary">Εμφάνιση ενός κουμπιού για την αποκάλυψη κρυφών αποτελεσμάτων αναζήτησης</string>
     <string name="preference_screen_tags">Ετικέτες</string>
     <string name="preference_screen_tags_summary">Διαχείριση ετικετών και στοιχείων με ετικέτα</string>
     <string name="preference_edit_favorites_summary">Αλλαγή της σειράς των καρφιτσωμένων στοιχείων</string>
