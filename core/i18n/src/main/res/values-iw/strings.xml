@@ -613,7 +613,6 @@
     <string name="preference_logs">לוגים</string>
     <string name="preference_logs_summary">הצגה וייצוא לוגים של היישום</string>
     <string name="preference_screen_search">חיפוש</string>
-    <string name="preference_screen_search_summary">חיפוש, תגיות, פריטים מוסתרים</string>
     <string name="preference_search_favorites">מועדפים</string>
     <string name="preference_search_favorites_summary">הצגת פריטים נעוצים ובשימוש נפוץ מעל רשת היישומים</string>
     <string name="preference_search_apps">יישומים</string>
@@ -660,10 +659,7 @@
     <string name="preference_search_bar_auto_focus_summary">הצגת המקלדת באופן אוטומטי בעת פתיחת מגירת היישומים</string>
     <string name="preference_search_bar_launch_on_enter">הפעלה בלחיצה על ENTER</string>
     <string name="preference_search_bar_launch_on_enter_summary">הפעלת ההתאמה המודגשת או פעולה מהירה בעת הקשה על \'המשך\'</string>
-    <string name="preference_hidden_items">תוצאות חיפוש מוסתרות</string>
-    <string name="preference_hidden_items_summary">ניהול יישומים ותוצאות חיפוש שהוסתרו</string>
     <string name="preference_hidden_items_reveal_button">הצגת כפתור החשיפה</string>
-    <string name="preference_hidden_items_reveal_button_summary">הצגת כפתור לחשיפת תוצאות חיפוש שהוסתרו</string>
     <string name="preference_screen_tags">תגיות</string>
     <string name="preference_screen_tags_summary">ניהול תגיות ופריטים מתוייגים</string>
     <string name="preference_wikipedia_customurl">כתובת URL בויקיפדיה</string>
