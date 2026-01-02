@@ -576,7 +576,6 @@
     <string name="preference_logs">السجلات</string>
     <string name="preference_logs_summary">عرض وتصدير سجلات التطبيقات</string>
     <string name="preference_screen_search">البحث</string>
-    <string name="preference_screen_search_summary">البحث، العلامات، العناصر المخفية</string>
     <string name="preference_search_favorites">المفضلة</string>
     <string name="preference_search_favorites_summary">إظهار العناصر المثبتة والمستخدمة بشكل متكرر أعلى شبكة التطبيقات</string>
     <string name="preference_search_apps">التطبيقات</string>
@@ -619,10 +618,7 @@
     <string name="preference_search_bar_auto_focus_summary">إظهار لوحة المفاتيح تلقائيًا عند فتح درج التطبيقات</string>
     <string name="preference_search_bar_launch_on_enter">التشغيل عند الإدخال</string>
     <string name="preference_search_bar_launch_on_enter_summary">تشغيل التطابق المميز أو الإجراء السريع عند النقر فوق انتقال</string>
-    <string name="preference_hidden_items">نتائج البحث المخفية</string>
-    <string name="preference_hidden_items_summary">إدارة التطبيقات ونتائج البحث المخفية</string>
     <string name="preference_hidden_items_reveal_button">إظهار زر الكشف</string>
-    <string name="preference_hidden_items_reveal_button_summary">إظهار زر للكشف عن نتائج البحث المخفية</string>
     <string name="preference_screen_tags">العلامات</string>
     <string name="preference_screen_tags_summary">إدارة العلامات والعناصر الموسومة</string>
     <string name="preference_wikipedia_customurl">عنوان URL في ويكيبيديا</string>
