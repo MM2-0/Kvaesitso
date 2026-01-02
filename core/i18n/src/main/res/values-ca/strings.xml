@@ -594,7 +594,6 @@
     <string name="preference_logs">Registres</string>
     <string name="preference_logs_summary">Veure i exportar els registres d\'aplicacions</string>
     <string name="preference_screen_search">Cerca</string>
-    <string name="preference_screen_search_summary">Cerca, etiquetes, elements ocults</string>
     <string name="preference_search_favorites">Preferits</string>
     <string name="preference_search_favorites_summary">Mostra els elements fixats i utilitzats freqüentment a sobre de la graella de les aplicacions</string>
     <string name="preference_search_apps">Aplicacions</string>
@@ -637,10 +636,7 @@
     <string name="preference_search_bar_auto_focus_summary">Mostra automàticament el teclat en obrir el calaix d\'aplicacions</string>
     <string name="preference_search_bar_launch_on_enter">Llançar a l\'entrar</string>
     <string name="preference_search_bar_launch_on_enter_summary">Llança el resultat de la cerca o executa un acció ràpida prement \"go\"</string>
-    <string name="preference_hidden_items">Resultats de cerca ocults</string>
-    <string name="preference_hidden_items_summary">Gestioneu les aplicacions ocultes i els resultats de la cerca</string>
     <string name="preference_hidden_items_reveal_button">Mostra el botó \"reveal\"</string>
-    <string name="preference_hidden_items_reveal_button_summary">Mostra un botó per mostrar els resultats de la cerca ocults</string>
     <string name="preference_screen_tags">Etiquetes</string>
     <string name="preference_screen_tags_summary">Gestioneu les etiquetes i els elements etiquetats</string>
     <string name="preference_wikipedia_customurl">URL de la Wikipedia</string>
