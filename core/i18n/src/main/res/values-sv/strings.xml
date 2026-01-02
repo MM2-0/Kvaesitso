@@ -436,7 +436,6 @@
     <string name="preference_crash_reporter">Kraschrapportering</string>
     <string name="preference_crash_reporter_summary">Error- och kraschrapporter</string>
     <string name="preference_screen_search">Sök</string>
-    <string name="preference_screen_search_summary">Konfigurera sökningen</string>
     <string name="preference_search_favorites">Favoriter</string>
     <string name="preference_search_favorites_summary">Visa fastnålade och ofta använda objekt ovanför apprutan</string>
     <string name="preference_search_files">Filer</string>
