@@ -297,7 +297,7 @@
     <string name="preference_screen_backup_summary">Launchergegevens exporteren en importeren</string>
     <string name="preference_backup">Backup</string>
     <string name="preference_backup_summary">Voorkeuren en launchergegevens exporteren</string>
-    <string name="preference_screen_search_summary">Zoeken, tags, verborgen items</string>
+    <string name="preference_screen_search_summary">Zoeken, tags, uitgesloten resultaten</string>
     <string name="preference_restore">Herstellen</string>
     <string name="preference_restore_summary">Vroeger gemaakte backup herstellen</string>
     <string name="preference_search_calendar_summary">Toekomstige afspraken en evenementen doorzoeken</string>
@@ -350,8 +350,8 @@
     <string name="preference_search_bar_style">Stijl</string>
     <string name="preference_search_bar_style_summary">Zoekbalkuiterlijk aanpassen</string>
     <string name="preference_search_bar_auto_focus">Toetsenbord openen</string>
-    <string name="preference_hidden_items">Verborgen zoekresultaten</string>
-    <string name="preference_hidden_items_summary">Verborgen applicaties en zoekresultaten beheren</string>
+    <string name="preference_hidden_items">Uitgesloten zoekresultaten</string>
+    <string name="preference_hidden_items_summary">Uitgesloten applicaties en zoekresultaten beheren</string>
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
     <string name="no_account_nextcloud">Je bent nog niet ingelogd bij Nextcloud</string>
     <string name="preference_widgets_edit_button_summary">Knop tonen om widgets toe te voegen, te verwijderen of te verplaatsen</string>
@@ -501,7 +501,7 @@
     <string name="notes_widget_action_dismiss">Weggooien</string>
     <string name="notes_widget_dismissed">Notitie weggegooid</string>
     <string name="preference_hidden_items_reveal_button">Toon knop \"onthullen\"</string>
-    <string name="preference_hidden_items_reveal_button_summary">Een knop tonen om verborgen zoekresultaten te onthullen</string>
+    <string name="preference_hidden_items_reveal_button_summary">Een knop tonen om uitgesloten zoekresultaten te onthullen</string>
     <string name="widget_config_appwidget_background">Achtergrondkaart</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Pictogrampakettencache ledigen en opnieuw bouwen</string>
     <string name="widget_config_calendar_missing_calendars_hint">Kan je jouw kalenders niet vinden\?</string>
@@ -886,4 +886,9 @@
     <string name="preference_category_installed_plugins">Geïnstalleerd</string>
     <string name="tag_icon_customicon">Pictogram</string>
     <string name="tag_icon_emoji">Emoji</string>
+    <string name="preference_clockwidget_smartspacer">Beheerd door Smartspacer</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer is een gratiw en open source At a Glace widget. Als het geïnstalleerd is, kan het geïntegreerd worden in de dynamische zone van het klokwidget</string>
+    <string name="preference_smartspacer_enable">Smartspacer integratie aanzetten</string>
+    <string name="preference_launch_smartspacer_app">Smartspacer openen</string>
 </resources>
