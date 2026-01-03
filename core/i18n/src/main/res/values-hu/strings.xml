@@ -886,4 +886,9 @@
     <string name="preference_category_installed_plugins">Telepítve</string>
     <string name="tag_icon_customicon">Ikon</string>
     <string name="tag_icon_emoji">Emodzsi</string>
+    <string name="preference_clockwidget_smartspacer">Kezelés ezzel: Smartspacer</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">A Smartspacer egy ingyenes és nyílt forráskódú gyorsnézeti modul. Telepítés után integrálható az óramodul dinamikus zónájába</string>
+    <string name="preference_smartspacer_enable">Smartspacer integráció engedélyezése</string>
+    <string name="preference_launch_smartspacer_app">Smartspacer megnyitása</string>
 </resources>
