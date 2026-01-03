@@ -17,33 +17,34 @@ internal interface TextClassifier {
 
 internal class TextClassifierImpl : TextClassifier {
     override suspend fun classify(context: Context, query: String): TextClassificationResult {
+        val trimmedQuery = query.trim()
         return when {
-            query.matches(Regex("^\\S+@\\S+$")) -> TextClassificationResult(
+            trimmedQuery.matches(Regex("^\\S+@\\S+$")) -> TextClassificationResult(
                 type = TextType.Email,
-                text = query,
-                email = query
+                text = trimmedQuery,
+                email = trimmedQuery
             )
 
-            query.matches(Regex("^\\+?[0-9- /.]{4,18}$")) -> TextClassificationResult(
+            trimmedQuery.matches(Regex("^\\+?[0-9- /.]{4,18}$")) -> TextClassificationResult(
                 type = TextType.PhoneNumber,
-                text = query,
-                phoneNumber = query
+                text = trimmedQuery,
+                phoneNumber = trimmedQuery
             )
 
-            query.matches(Regex("^(http(s)?://.)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$")) -> TextClassificationResult(
+            trimmedQuery.matches(Regex("^(http(s)?://.)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$")) -> TextClassificationResult(
                 type = TextType.Url,
-                text = query,
-                url = query
+                text = trimmedQuery,
+                url = trimmedQuery
             )
 
             else -> {
-                parseDate(context, query)?.let { return it }
-                TextClassificationResult(type = TextType.Text, text = query)
+                parseDate(context, trimmedQuery)?.let { return it }
+                TextClassificationResult(type = TextType.Text, text = trimmedQuery)
             }
         }
     }
 
-    private fun parseDate(context: Context, query: String): TextClassificationResult? {
+    private fun parseDate(context: Context, trimmedQuery: String): TextClassificationResult? {
         val dateTimeFormat = SimpleDateFormat(
             DateFormat.getBestDateTimePattern(
                 Locale.getDefault(),
@@ -52,11 +53,11 @@ internal class TextClassifierImpl : TextClassifier {
             context.resources.configuration.locales[0]
         )
         try {
-            dateTimeFormat.parse(query)?.let {
+            dateTimeFormat.parse(trimmedQuery)?.let {
                 val dateTime = LocalDateTime.ofInstant(it.toInstant(), ZoneId.systemDefault())
                 return TextClassificationResult(
                     type = TextType.DateTime,
-                    text = query,
+                    text = trimmedQuery,
                     time = dateTime.toLocalTime(),
                     date = dateTime.toLocalDate(),
                 )
@@ -66,10 +67,10 @@ internal class TextClassifierImpl : TextClassifier {
         }
         val dateFormat = DateFormat.getDateFormat(context)
         try {
-            dateFormat.parse(query)?.let {
+            dateFormat.parse(trimmedQuery)?.let {
                 return TextClassificationResult(
                     type = TextType.Date,
-                    text = query,
+                    text = trimmedQuery,
                     date = LocalDateTime.ofInstant(it.toInstant(), ZoneId.systemDefault())
                         .toLocalDate()
                 )
@@ -85,10 +86,10 @@ internal class TextClassifierImpl : TextClassifier {
             context.resources.configuration.locales[0]
         )
         try {
-            timeFormat.parse(query)?.let {
+            timeFormat.parse(trimmedQuery)?.let {
                 return TextClassificationResult(
                     type = TextType.Time,
-                    text = query,
+                    text = trimmedQuery,
                     time = LocalDateTime.ofInstant(it.toInstant(), ZoneId.systemDefault())
                         .toLocalTime(),
                 )
@@ -98,40 +99,46 @@ internal class TextClassifierImpl : TextClassifier {
         }
 
         val seconds = context.getString(R.string.unit_second_symbol)
-        if (query.matches(Regex("^[0-9]+ ${seconds}$"))) {
-            val value = query.substringBefore(" ").toLong()
+        val secondsMatch = Regex("^([0-9]+)\\s?${seconds}$").find(trimmedQuery)
+        if (secondsMatch != null) {
+            val value = secondsMatch.groups[1]!!.value.toLong()
             return TextClassificationResult(
                 type = TextType.Timespan,
-                text = query,
+                text = trimmedQuery,
                 timespan = Duration.ofSeconds(value)
             )
         }
 
         val days = context.getString(R.string.unit_day_symbol)
-        if (query.matches(Regex("^[0-9]+ ${days}$"))) {
-            val value = query.substringBefore(" ").toLong()
+        val daysMatch = Regex("^([0-9]+)\\s?${days}$").find(trimmedQuery)
+        if (daysMatch != null) {
+            val value = daysMatch.groups[1]!!.value.toLong()
             return TextClassificationResult(
                 type = TextType.Timespan,
-                text = query,
+                text = trimmedQuery,
                 timespan = Duration.ofDays(value)
             )
         }
+
         val minutes = context.getString(R.string.unit_minute_symbol)
-        if (query.matches(Regex("^[0-9]+ ${minutes}$"))) {
-            val value = query.substringBefore(" ").toLong()
+        val minutesMatch = Regex("^([0-9]+)\\s?${minutes}$").find(trimmedQuery)
+        if (minutesMatch != null) {
+            val value = minutesMatch.groups[1]!!.value.toLong()
             val then = LocalDateTime.now().plusMinutes(value)
             return TextClassificationResult(
                 type = TextType.Timespan,
-                text = query,
+                text = trimmedQuery,
                 timespan = Duration.ofMinutes(value)
             )
         }
+
         val hours = context.getString(R.string.unit_hour_symbol)
-        if (query.matches(Regex("^[0-9]+ ${hours}$"))) {
-            val value = query.substringBefore(" ").toLong()
+        val hoursMatch = Regex("^([0-9]+)\\s?${hours}$").find(trimmedQuery)
+        if (hoursMatch != null) {
+            val value = hoursMatch.groups[1]!!.value.toLong()
             return TextClassificationResult(
                 type = TextType.Timespan,
-                text = query,
+                text = trimmedQuery,
                 timespan = Duration.ofHours(value)
             )
         }
