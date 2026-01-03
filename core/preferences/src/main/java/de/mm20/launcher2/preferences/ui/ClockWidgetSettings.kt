@@ -91,7 +91,7 @@ class ClockWidgetSettings internal constructor(
                 ClockWidgetStyleEnum.Digital2 -> ClockWidgetStyle.Digital2
                 ClockWidgetStyleEnum.Orbit -> ClockWidgetStyle.Orbit
                 ClockWidgetStyleEnum.Analog -> it.clockWidgetAnalog
-                ClockWidgetStyleEnum.Binary -> ClockWidgetStyle.Binary
+                ClockWidgetStyleEnum.Binary -> it.clockWidgetBinary
                 ClockWidgetStyleEnum.Segment -> ClockWidgetStyle.Segment
                 ClockWidgetStyleEnum.Empty -> ClockWidgetStyle.Empty
                 ClockWidgetStyleEnum.Custom -> it.clockWidgetCustom
@@ -104,6 +104,9 @@ class ClockWidgetSettings internal constructor(
     val analog: Flow<ClockWidgetStyle.Analog>
         get() = launcherDataStore.data.map { it.clockWidgetAnalog }
 
+    val binary: Flow<ClockWidgetStyle.Binary>
+        get() = launcherDataStore.data.map { it.clockWidgetBinary }
+
     val custom: Flow<ClockWidgetStyle.Custom>
         get() = launcherDataStore.data.map { it.clockWidgetCustom }
 
@@ -113,6 +116,7 @@ class ClockWidgetSettings internal constructor(
                 clockWidgetStyle = clockStyle.enumValue,
                 clockWidgetDigital1 = clockStyle as? ClockWidgetStyle.Digital1 ?: it.clockWidgetDigital1,
                 clockWidgetAnalog = clockStyle as? ClockWidgetStyle.Analog ?: it.clockWidgetAnalog,
+                clockWidgetBinary = clockStyle as? ClockWidgetStyle.Binary ?: it.clockWidgetBinary,
                 clockWidgetCustom = clockStyle as? ClockWidgetStyle.Custom ?: it.clockWidgetCustom,
             )
         }
@@ -133,6 +137,15 @@ class ClockWidgetSettings internal constructor(
     fun setShowSeconds(enabled: Boolean) {
         launcherDataStore.update {
             it.copy(clockWidgetShowSeconds = enabled)
+        }
+    }
+
+    val useEightBits
+        get() = launcherDataStore.data.map { it.clockWidgetUseEightBits }
+
+    fun setUseEightBits(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(clockWidgetUseEightBits = enabled)
         }
     }
 
