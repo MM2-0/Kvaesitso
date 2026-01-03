@@ -36,7 +36,7 @@ class Migration_18_19 : Migration(18, 19) {
             database.execSQL(
                 "INSERT INTO `SearchAction` (`position`, `type`, `data`, `label`, `color`, `icon`, `customIcon`, `options`)" +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                arrayOf(
+                arrayOf<Any?>(
                     position,
                     "url",
                     data,

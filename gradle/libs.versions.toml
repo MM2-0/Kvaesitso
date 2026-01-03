@@ -9,10 +9,10 @@ targetSdk = "36"
 pluginSdk = "2.2.0"
 
 gradle = "8.1.2"
-android-gradle-plugin = "8.13.0"
-ksp-gradle-plugin = "2.3.2"
+android-gradle-plugin = "8.13.2"
+ksp-gradle-plugin = "2.3.4"
 
-kotlin = "2.2.21"
+kotlin = "2.3.0"
 kotlinx-coroutines = "1.10.2"
 kotlinx-immutable = "0.4.0"
 kotlinx-serialization = "1.9.0"
