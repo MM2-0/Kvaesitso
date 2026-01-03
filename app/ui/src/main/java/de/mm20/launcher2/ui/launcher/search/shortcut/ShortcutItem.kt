@@ -22,13 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
@@ -47,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
@@ -54,7 +48,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.AppShortcut
@@ -167,7 +160,7 @@ fun AppShortcutItem(
                                     trailingIcon = if (LocalFavoritesEnabled.current) {
                                         {
                                             Icon(
-                                                if (isPinned) Icons.Rounded.Star else Icons.Rounded.StarOutline,
+                                                painterResource(if (isPinned) R.drawable.star_20px_filled else R.drawable.star_20px),
                                                 stringResource(if (isPinned) R.string.menu_favorites_unpin else R.string.menu_favorites_pin),
                                                 modifier = Modifier
                                                     .clip(CircleShape)
@@ -219,7 +212,7 @@ fun AppShortcutItem(
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
+                                icon = R.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
@@ -227,7 +220,7 @@ fun AppShortcutItem(
                         } else {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
+                                icon = R.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -240,7 +233,7 @@ fun AppShortcutItem(
                         toolbarActions.add(
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_app_info),
-                                icon = Icons.Rounded.Info
+                                icon = R.drawable.info_24px,
                             ) {
                                 context.tryStartActivity(
                                     Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -253,25 +246,27 @@ fun AppShortcutItem(
 
 
                     val sheetManager = LocalBottomSheetManager.current
-                    toolbarActions.add(DefaultToolbarAction(
-                        label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Tune,
-                        action = { sheetManager.showCustomizeSearchableModal(shortcut) }
-                    ))
+                    toolbarActions.add(
+                        DefaultToolbarAction(
+                            label = stringResource(R.string.menu_customize),
+                            icon = R.drawable.tune_24px,
+                            action = { sheetManager.showCustomizeSearchableModal(shortcut) }
+                        ))
 
                     if (shortcut.canDelete) {
-                        toolbarActions.add(DefaultToolbarAction(
-                            label = stringResource(R.string.menu_delete),
-                            icon = Icons.Rounded.Delete,
-                            action = { requestDelete = true }
-                        ))
+                        toolbarActions.add(
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_delete),
+                                icon = R.drawable.delete_24px,
+                                action = { requestDelete = true }
+                            ))
                     }
 
                     Toolbar(
                         leftActions = listOf(
                             DefaultToolbarAction(
                                 label = stringResource(id = R.string.menu_back),
-                                icon = Icons.AutoMirrored.Rounded.ArrowBack
+                                icon = R.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }
@@ -329,140 +324,6 @@ fun AppShortcutItem(
             }
         }
     }
-
-    /*Column(
-        modifier = modifier
-    ) {
-        AnimatedVisibility(showDetails && shortcut.isUnavailable) {
-            MissingPermissionBanner(
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                text = stringResource(R.string.shortcut_unavailable_description, stringResource(R.string.app_name)),
-                onClick = {
-                    viewModel.requestShortcutPermission(context as AppCompatActivity)
-                }
-            )
-        }
-        Row {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp)
-            ) {
-                val titleStyle by animateTextStyleAsState(if (showDetails) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleSmall)
-                Text(
-                    text = shortcut.labelOverride ?: shortcut.label,
-                    style = titleStyle,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-
-                AnimatedVisibility(showDetails) {
-                    val tags by viewModel.tags.collectAsState(emptyList())
-                    if (tags.isNotEmpty()) {
-                        Text(
-                            modifier = Modifier.padding(top = 1.dp, bottom = 2.dp),
-                            text = tags.joinToString(separator = " #", prefix = "#"),
-                            color = MaterialTheme.colorScheme.secondary,
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                    }
-                }
-                val textSpace by transition.animateDp(label = "textSpace") {
-                    if (it) 4.dp else 2.dp
-                }
-                shortcut.appName?.let {
-                    Text(
-                        text = stringResource(R.string.shortcut_summary, it),
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(top = textSpace),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
-
-            val padding by transition.animateDp(label = "iconPadding") {
-                if (it) 16.dp else 8.dp
-            }
-            ShapedLauncherIcon(
-                size = 48.dp,
-                modifier = Modifier
-                    .padding(padding),
-                badge = { badge },
-                icon = { icon },
-            )
-        }
-
-
-        AnimatedVisibility(showDetails) {
-            val toolbarActions = mutableListOf<ToolbarAction>()
-
-            if (LocalFavoritesEnabled.current) {
-                val isPinned by viewModel.isPinned.collectAsState(false)
-                val favAction = if (isPinned) {
-                    DefaultToolbarAction(
-                        label = stringResource(R.string.menu_favorites_unpin),
-                        icon = Icons.Rounded.Star,
-                        action = {
-                            viewModel.unpin()
-                        }
-                    )
-                } else {
-                    DefaultToolbarAction(
-                        label = stringResource(R.string.menu_favorites_pin),
-                        icon = Icons.Rounded.StarOutline,
-                        action = {
-                            viewModel.pin()
-                        })
-                }
-                toolbarActions.add(favAction)
-            }
-
-            val packageName = shortcut.packageName
-            if (packageName != null) {
-                toolbarActions.add(
-                    DefaultToolbarAction(
-                        label = stringResource(R.string.menu_app_info),
-                        icon = Icons.Rounded.Info
-                    ) {
-                        context.tryStartActivity(
-                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                data = Uri.parse("package:$packageName")
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            }
-                        )
-                    })
-            }
-
-
-            val sheetManager = LocalBottomSheetManager.current
-            toolbarActions.add(DefaultToolbarAction(
-                label = stringResource(R.string.menu_customize),
-                icon = Icons.Rounded.Tune,
-                action = { sheetManager.showCustomizeSearchableModal(shortcut) }
-            ))
-
-            if (shortcut.canDelete) {
-                toolbarActions.add(DefaultToolbarAction(
-                    label = stringResource(R.string.menu_delete),
-                    icon = Icons.Rounded.Delete,
-                    action = { requestDelete = true }
-                ))
-            }
-
-            Toolbar(
-                leftActions = listOf(
-                    DefaultToolbarAction(
-                        label = stringResource(id = R.string.menu_back),
-                        icon = Icons.Rounded.ArrowBack
-                    ) {
-                        onBack()
-                    }
-                ),
-                rightActions = toolbarActions
-            )
-        }
-    }*/
 
     if (requestDelete) {
         AlertDialog(

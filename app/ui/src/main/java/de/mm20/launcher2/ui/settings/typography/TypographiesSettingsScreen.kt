@@ -4,20 +4,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ContentCopy
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.RadioButtonChecked
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -28,26 +23,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.themes.typography.Typography
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.theme.typography.typographyOf
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object TypographiesSettingsRoute
+data object TypographiesSettingsRoute: NavKey
 
 @Composable
 fun TypographiesSettingsScreen() {
     val viewModel: TypographySettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val context = LocalContext.current
 
     val selectedTheme by viewModel.selectedTypography.collectAsStateWithLifecycle(null)
@@ -62,7 +59,7 @@ fun TypographiesSettingsScreen() {
         title = stringResource(R.string.preference_screen_typography),
         topBarActions = {
             IconButton(onClick = { viewModel.createNew(context) }) {
-                Icon(Icons.Rounded.Add, null)
+                Icon(painterResource(R.drawable.add_24px), null)
             }
         },
     ) {
@@ -74,7 +71,9 @@ fun TypographiesSettingsScreen() {
                     Preference(
                         icon = {
                             Icon(
-                                if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
+                                painterResource(
+                                    if (theme.id == selectedTheme) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px
+                                ),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -94,22 +93,30 @@ fun TypographiesSettingsScreen() {
                                 IconButton(
                                     modifier = Modifier.padding(start = 12.dp),
                                     onClick = { showMenu = true }) {
-                                    Icon(Icons.Rounded.MoreVert, null)
+                                    Icon(painterResource(R.drawable.more_vert_24px), null)
                                 }
-                                DropdownMenu(
+                                DropdownMenuPopup(
                                     expanded = showMenu,
                                     onDismissRequest = { showMenu = false }
                                 ) {
-                                    DropdownMenuItem(
-                                        leadingIcon = {
-                                            Icon(Icons.Rounded.ContentCopy, null)
-                                        },
-                                        text = { Text(stringResource(R.string.duplicate)) },
-                                        onClick = {
-                                            viewModel.duplicate(theme)
-                                            showMenu = false
-                                        }
-                                    )
+                                    DropdownMenuGroup(
+                                        shapes = MenuDefaults.groupShapes(),
+                                    ) {
+                                        DropdownMenuItem(
+                                            shape = MenuDefaults.standaloneItemShape,
+                                            leadingIcon = {
+                                                Icon(
+                                                    painterResource(R.drawable.content_copy_24px),
+                                                    null
+                                                )
+                                            },
+                                            text = { Text(stringResource(R.string.duplicate)) },
+                                            onClick = {
+                                                viewModel.duplicate(theme)
+                                                showMenu = false
+                                            }
+                                        )
+                                    }
                                 }
                             }
                         },
@@ -129,7 +136,9 @@ fun TypographiesSettingsScreen() {
                         Preference(
                             icon = {
                                 Icon(
-                                    if (theme.id == selectedTheme) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
+                                    painterResource(
+                                        if (theme.id == selectedTheme) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px
+                                    ),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.primary
                                 )
@@ -149,44 +158,58 @@ fun TypographiesSettingsScreen() {
                                     IconButton(
                                         modifier = Modifier.padding(start = 12.dp),
                                         onClick = { showMenu = true }) {
-                                        Icon(Icons.Rounded.MoreVert, null)
+                                        Icon(painterResource(R.drawable.more_vert_24px), null)
                                     }
-                                    DropdownMenu(
+                                    DropdownMenuPopup(
                                         expanded = showMenu,
                                         onDismissRequest = { showMenu = false }
                                     ) {
-                                        DropdownMenuItem(
-                                            leadingIcon = {
-                                                Icon(Icons.Rounded.Edit, null)
-                                            },
-                                            text = { Text(stringResource(R.string.edit)) },
-                                            onClick = {
-                                                navController?.navigate(
-                                                    TypographySettingsRoute(theme.id.toString())
-                                                )
-                                                showMenu = false
-                                            }
-                                        )
-                                        DropdownMenuItem(
-                                            leadingIcon = {
-                                                Icon(Icons.Rounded.ContentCopy, null)
-                                            },
-                                            text = { Text(stringResource(R.string.duplicate)) },
-                                            onClick = {
-                                                viewModel.duplicate(theme)
-                                                showMenu = false
-                                            }
-                                        )
-                                        DropdownMenuItem(
-                                            leadingIcon = {
-                                                Icon(Icons.Rounded.Delete, null)
-                                            },
-                                            text = { Text(stringResource(R.string.menu_delete)) },
-                                            onClick = {
-                                                deleteTypography = theme
-                                                showMenu = false
-                                            }
-                                        )
+                                        DropdownMenuGroup(
+                                            shapes = MenuDefaults.groupShapes(),
+                                        ) {
+                                            DropdownMenuItem(
+                                                shape = MenuDefaults.leadingItemShape,
+                                                leadingIcon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.edit_24px),
+                                                        null
+                                                    )
+                                                },
+                                                text = { Text(stringResource(R.string.edit)) },
+                                                onClick = {
+                                                    backStack.add(TypographySettingsRoute(theme.id))
+                                                    showMenu = false
+                                                }
+                                            )
+                                            DropdownMenuItem(
+                                                shape = MenuDefaults.middleItemShape,
+                                                leadingIcon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.content_copy_24px),
+                                                        null
+                                                    )
+                                                },
+                                                text = { Text(stringResource(R.string.duplicate)) },
+                                                onClick = {
+                                                    viewModel.duplicate(theme)
+                                                    showMenu = false
+                                                }
+                                            )
+                                            DropdownMenuItem(
+                                                shape = MenuDefaults.trailingItemShape,
+                                                leadingIcon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.delete_24px),
+                                                        null
+                                                    )
+                                                },
+                                                text = { Text(stringResource(R.string.menu_delete)) },
+                                                onClick = {
+                                                    deleteTypography = theme
+                                                    showMenu = false
+                                                }
+                                            )
+                                        }
                                     }
                                 }
                             },

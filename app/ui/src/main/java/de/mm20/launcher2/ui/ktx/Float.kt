@@ -23,46 +23,6 @@ fun Float.toDp(): Dp {
     return (this / LocalDensity.current.density).dp
 }
 
-fun Float.roundToString(): String = this.roundToInt().toString()
-
-fun Float.metersToLocalizedString(context: Context, imperialUnits: Boolean): String {
-    val decimalFormat =
-        DecimalFormat().apply { maximumFractionDigits = 1; minimumFractionDigits = 0 }
-
-    val (value, unit) = if (imperialUnits) {
-        // yee haw
-        val asFeet = this * 3.28084f
-        val isYards = asFeet >= 3f
-        val isMiles = asFeet >= 5280f
-        val value =
-            if (isMiles) decimalFormat.format(asFeet / 5280f)
-            else if (isYards) (asFeet / 3f).roundToString()
-            else asFeet.roundToString()
-
-        val unit = context.getString(
-            if (isMiles) R.string.unit_mile_symbol
-            else if (isYards) R.string.unit_yard_symbol
-            else R.string.unit_foot_symbol
-        )
-
-        value to unit
-    } else {
-        val isKm = this >= 1000f
-        val value =
-            if (isKm) decimalFormat.format(this / 1000f)
-            else this.roundToString()
-
-        val unit = context.getString(
-            if (isKm) R.string.unit_kilometer_symbol
-            else R.string.unit_meter_symbol
-        )
-
-        value to unit
-    }
-
-    return "$value $unit"
-}
-
 // https://stackoverflow.com/a/68651222
 val Float.Companion.DegreesConverter
     get() = TwoWayConverter<Float, AnimationVector2D>({

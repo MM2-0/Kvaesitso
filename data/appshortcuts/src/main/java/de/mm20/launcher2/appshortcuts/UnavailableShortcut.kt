@@ -42,7 +42,7 @@ internal class UnavailableShortcut(
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
-                icon = context.getDrawable(R.drawable.ic_file_android)!!,
+                icon = context.getDrawable(R.drawable.android_24px)!!,
                 color = 0xFF333333.toInt()
             ),
             backgroundLayer = ColorLayer(0xFF333333.toInt()),

@@ -143,7 +143,6 @@
     <string name="date_tomorrow">Завтра</string>
     <string name="notes_widget_action_dismiss">Відхилити</string>
     <string name="notes_widget_dismissed">Нотатку відхилено</string>
-    <string name="easter_egg_text">Ну, ти мене знайшов. Вітаю. А це було того варте?</string>
     <string name="widget_action_replace">Замінити</string>
     <string name="edit_favorites_dialog_unpinned">Не закріплені – часто використовуються</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Закріплені – відсортовані автоматично</string>
@@ -226,7 +225,6 @@
     <string name="preference_shapes_rect">Прямокутні</string>
     <string name="missing_permission_notification_badges">Для відображення значків сповіщень потрібен доступ до сповіщень</string>
     <string name="widget_name_music">Медіа</string>
-    <string name="widget_name_favorites">Улюблені</string>
     <string name="widget_name_unknown">Віджет зник</string>
     <string name="widget_add_widget">Додати віджет</string>
     <string name="missing_permission_contact_search">Для пошуку контактів потрібен дозвіл</string>

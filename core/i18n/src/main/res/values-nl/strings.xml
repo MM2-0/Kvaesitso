@@ -69,10 +69,8 @@
     <string name="widget_name_weather">Weer</string>
     <string name="widget_name_calendar">Kalender</string>
     <string name="widget_name_music">Media</string>
-    <string name="widget_name_favorites">Favorieten</string>
     <string name="widget_add_widget">Widget toevoegen</string>
     <string name="shortcut_summary">Via %1$s</string>
-    <string name="easter_egg_text">Nu, je hebt me gevonden. Proficiat. Was het het waard?</string>
     <string name="close">Sluiten</string>
     <string name="save">Opslaan</string>
     <string name="turn_off">Uitzetten</string>
@@ -164,7 +162,6 @@
     <string name="preference_screen_colors">Kleurenschema</string>
     <string name="preference_colors_bw">Zwart-wit</string>
     <string name="preference_font">Lettertype</string>
-    <string name="preference_font_system">Systeemstandaard</string>
     <string name="preference_screen_about">Over</string>
     <string name="preference_version">Versie</string>
     <string name="preference_category_links">Koppelingen</string>
@@ -198,7 +195,6 @@
     <string name="preference_cards">Kaarten</string>
     <string name="preference_cards_summary">Kaartweergave aanpassen</string>
     <string name="preference_cards_corner_radius">Hoekstraal</string>
-    <string name="preference_icon_shape_platform">Systeemstandaard</string>
     <string name="preference_icon_shape_square">Vierkant</string>
     <string name="preference_icon_shape_triangle">Reuleauxdriehoek</string>
     <string name="preference_icon_shape_circle">Cirkel</string>
@@ -295,7 +291,7 @@
     <string name="websearch_dialog_query_encoding_url">Percent-encodering</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="edit_favorites_dialog_new_tag">Label aanmaken</string>
-    <string name="preference_clockwidget_favorites_part_summary">Eerste rij van de vastgezette items tonen</string>
+    <string name="preference_clockwidget_favorites_part_summary">Vastgezette items tonen in dock</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_alarm_part_summary">Alarmen tonen die binnen 8 uur zullen afgaan</string>
     <string name="preference_screen_backup_summary">Launchergegevens exporteren en importeren</string>
@@ -487,7 +483,7 @@
     <string name="preference_screen_clockwidget_summary">Klokstijl en -componenten instellen</string>
     <string name="preference_screen_homescreen">Thuisscherm</string>
     <string name="preference_screen_homescreen_summary">Klok, zoekbalk, achtergrond, systeembalken</string>
-    <string name="preference_screen_icons_summary">Raster, pictogramgrootte, pictogrampaketten, badges</string>
+    <string name="preference_screen_icons_summary">Rastergrootte, pictogrammen, badges</string>
     <string name="preference_weather_integration">Weer</string>
     <string name="preference_media_integration">Mediabeheer</string>
     <string name="widget_config_appwidget_borderless">Randloos</string>
@@ -788,7 +784,6 @@
     <string name="preference_clock_widget_time_format">Tijdformaat</string>
     <string name="preference_clock_widget_time_format_24h">24-uur</string>
     <string name="preference_clock_widget_time_format_12h">12-uur</string>
-    <string name="preference_clock_widget_time_format_system">Systeemstandaard</string>
     <plurals name="departure_time_in">
         <item quantity="one">in een minuut</item>
         <item quantity="other">in %1$d minuten</item>
@@ -867,4 +862,28 @@
     <string name="poi_category_stationery">Briefpapier</string>
     <string name="poi_category_climbing_gym">Klimhal</string>
     <string name="poi_category_hackerspace">Hackerspace</string>
+    <string name="preference_clockwidget_dock_rows">Rijen in dock</string>
+    <string name="preference_search_apps_summary">Alle apps tonen als het zoekveld leeg is</string>
+    <string name="preference_search_apps">Apps</string>
+    <string name="preference_screen_locale">Taal en regio</string>
+    <string name="preference_screen_locale_summary">Taal, eenheden, tijdformaat</string>
+    <string name="preference_language">Taal</string>
+    <string name="preference_value_system_default">Systeemstandaard</string>
+    <string name="preference_form_of_address">Aanspreking</string>
+    <string name="preference_form_of_address_neutral">Neutraal</string>
+    <string name="preference_form_of_address_fem">Vrouwelijk</string>
+    <string name="preference_form_of_address_masc">Mannelijk</string>
+    <string name="preference_measurement_system">Eenheden</string>
+    <string name="preference_measurement_system_metric">Metrisch</string>
+    <string name="preference_measurement_system_uk">Verenigd Koninkrijk</string>
+    <string name="preference_measurement_system_us">Verenigde Staten</string>
+    <string name="preference_transliteration_disabled">Uitgeschakeld</string>
+    <string name="preference_transliteration">Voorkeurstransliteratie</string>
+    <string name="preference_transliteration_auto">Automatisch</string>
+    <string name="select_tag">Label selecteren</string>
+    <string name="widget_name_apps">Applicaties</string>
+    <string name="preference_category_enabled_plugins">Aangezet</string>
+    <string name="preference_category_installed_plugins">Geïnstalleerd</string>
+    <string name="tag_icon_customicon">Pictogram</string>
+    <string name="tag_icon_emoji">Emoji</string>
 </resources>

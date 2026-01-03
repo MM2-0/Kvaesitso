@@ -4,49 +4,20 @@ import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.StickyNote2
-import androidx.compose.material.icons.rounded.Alarm
-import androidx.compose.material.icons.rounded.Call
-import androidx.compose.material.icons.rounded.Email
-import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.Event
-import androidx.compose.material.icons.rounded.FindInPage
-import androidx.compose.material.icons.rounded.Games
-import androidx.compose.material.icons.rounded.ImageSearch
-import androidx.compose.material.icons.rounded.Language
-import androidx.compose.material.icons.rounded.LocationOn
-import androidx.compose.material.icons.rounded.ManageSearch
-import androidx.compose.material.icons.rounded.Movie
-import androidx.compose.material.icons.rounded.MusicNote
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.PersonAdd
-import androidx.compose.material.icons.rounded.PersonSearch
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.QueryStats
-import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material.icons.rounded.Share
-import androidx.compose.material.icons.rounded.Sms
-import androidx.compose.material.icons.rounded.SportsEsports
-import androidx.compose.material.icons.rounded.StickyNote2
-import androidx.compose.material.icons.rounded.Timer
-import androidx.compose.material.icons.rounded.Translate
-import androidx.compose.material.icons.rounded.TravelExplore
-import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.isSpecified
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -55,6 +26,7 @@ import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.AppSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
+import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -66,15 +38,15 @@ fun SearchActionIcon(
     componentName: ComponentName? = null,
     size: Dp = 20.dp
 ) {
-    val tint = when(color) {
-        0 -> MaterialTheme.colorScheme.primary
+    val tint = when (color) {
+        0 -> LocalContentColor.current
         1 -> Color.Unspecified
         else -> Color(color)
     }
     if (icon != SearchActionIcon.Custom || customIcon == null && componentName == null) {
         Icon(
             modifier = Modifier.size(size),
-            imageVector = getSearchActionIconVector(icon),
+            painter = painterResource(getSearchActionIconVector(icon)),
             contentDescription = null,
             tint = tint,
         )
@@ -121,39 +93,39 @@ fun SearchActionIcon(action: SearchAction, size: Dp = 20.dp) {
 
 @Composable
 fun SearchActionIcon(builder: CustomizableSearchActionBuilder, size: Dp = 20.dp) {
-   SearchActionIcon(
-       icon = builder.icon,
-       color = builder.iconColor,
-       customIcon = builder.customIcon,
-       componentName = (builder as? AppSearchActionBuilder)?.baseIntent?.component,
-       size = size,
-   )
+    SearchActionIcon(
+        icon = builder.icon,
+        color = builder.iconColor,
+        customIcon = builder.customIcon,
+        componentName = (builder as? AppSearchActionBuilder)?.baseIntent?.component,
+        size = size,
+    )
 }
 
-fun getSearchActionIconVector(icon: SearchActionIcon): ImageVector {
+fun getSearchActionIconVector(icon: SearchActionIcon): Int {
     return when (icon) {
-        SearchActionIcon.Phone -> Icons.Rounded.Call
-        SearchActionIcon.Website -> Icons.Rounded.Language
-        SearchActionIcon.Alarm -> Icons.Rounded.Alarm
-        SearchActionIcon.Timer -> Icons.Rounded.Timer
-        SearchActionIcon.Contact -> Icons.Rounded.PersonAdd
-        SearchActionIcon.Email -> Icons.Rounded.Email
-        SearchActionIcon.Message -> Icons.Rounded.Sms
-        SearchActionIcon.Calendar -> Icons.Rounded.Event
-        SearchActionIcon.Translate -> Icons.Rounded.Translate
-        SearchActionIcon.Search -> Icons.Rounded.Search
-        SearchActionIcon.Custom -> Icons.Rounded.Warning
-        SearchActionIcon.WebSearch -> Icons.Rounded.TravelExplore
-        SearchActionIcon.PersonSearch -> Icons.Rounded.PersonSearch
-        SearchActionIcon.StatsSearch -> Icons.Rounded.QueryStats
-        SearchActionIcon.SearchPage -> Icons.Rounded.FindInPage
-        SearchActionIcon.SearchList -> Icons.Rounded.ManageSearch
-        SearchActionIcon.ImageSearch -> Icons.Rounded.ImageSearch
-        SearchActionIcon.Location -> Icons.Rounded.Place
-        SearchActionIcon.Movie -> Icons.Rounded.Movie
-        SearchActionIcon.Music -> Icons.Rounded.MusicNote
-        SearchActionIcon.Game -> Icons.Rounded.SportsEsports
-        SearchActionIcon.Note -> Icons.AutoMirrored.Rounded.StickyNote2
-        SearchActionIcon.Share -> Icons.Rounded.Share
+        SearchActionIcon.Phone -> R.drawable.call_24px
+        SearchActionIcon.Website -> R.drawable.language_24px
+        SearchActionIcon.Alarm -> R.drawable.alarm_24px
+        SearchActionIcon.Timer -> R.drawable.timer_24px
+        SearchActionIcon.Contact -> R.drawable.person_add_24px
+        SearchActionIcon.Email -> R.drawable.mail_24px
+        SearchActionIcon.Message -> R.drawable.sms_24px
+        SearchActionIcon.Calendar -> R.drawable.event_24px
+        SearchActionIcon.Translate -> R.drawable.translate_24px
+        SearchActionIcon.Search -> R.drawable.search_24px
+        SearchActionIcon.Custom -> R.drawable.warning_24px
+        SearchActionIcon.WebSearch -> R.drawable.travel_explore_24px
+        SearchActionIcon.PersonSearch -> R.drawable.person_search_24px
+        SearchActionIcon.StatsSearch -> R.drawable.query_stats_24px
+        SearchActionIcon.SearchPage -> R.drawable.find_in_page_24px
+        SearchActionIcon.SearchList -> R.drawable.manage_search_24px
+        SearchActionIcon.ImageSearch -> R.drawable.image_search_24px
+        SearchActionIcon.Location -> R.drawable.location_on_24px
+        SearchActionIcon.Movie -> R.drawable.movie_24px
+        SearchActionIcon.Music -> R.drawable.music_note_24px
+        SearchActionIcon.Game -> R.drawable.sports_esports_24px
+        SearchActionIcon.Note -> R.drawable.sticky_note_2_24px
+        SearchActionIcon.Share -> R.drawable.share_24px
     }
 }

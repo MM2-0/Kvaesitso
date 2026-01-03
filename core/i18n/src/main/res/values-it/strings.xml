@@ -117,7 +117,6 @@
     <string name="widget_name_music">Media</string>
     <string name="widget_add_widget">Aggiungi widget</string>
     <string name="shortcut_summary">Da %1$s</string>
-    <string name="easter_egg_text">Bene, mi hai trovato. Congratulazioni. Ne valeva la pena\?</string>
     <string name="close">Chiudi</string>
     <string name="turn_off">Disabilita</string>
     <string name="widget_action_remove">Rimuovi</string>
@@ -209,7 +208,6 @@
     <string name="preference_cards_summary">Personalizza l\'aspetto delle schede</string>
     <string name="preference_icon_shape">Forma</string>
     <string name="preference_cards_opacity">Opacità</string>
-    <string name="preference_icon_shape_platform">Predefinita sistema</string>
     <string name="preference_icon_shape_square">Quadrato</string>
     <string name="preference_icon_shape_rounded_square">Quadrato smussato</string>
     <string name="preference_icon_shape_squircle">Scoiattolo</string>
@@ -299,7 +297,6 @@
     </plurals>
     <string name="no_account_nextcloud">Non hai ancora collegato un account Nextcloud</string>
     <string name="no_account_owncloud">Non hai ancora collegato un account Owncloud</string>
-    <string name="widget_name_favorites">Preferiti</string>
     <string name="preference_restore_summary">Importa un backup creato in precedenza</string>
     <string name="restore_meta">Creato il %1$s alle %2$s con %3$s.</string>
     <string name="preference_enforce_icon_shape">Applica forma</string>
@@ -342,7 +339,7 @@
     <string name="preference_font">Carattere</string>
     <string name="restore_complete">Il backup è stato ripristinato.</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostra la prima riga di elementi appuntati</string>
+    <string name="preference_clockwidget_favorites_part_summary">Mostra elementi appuntati nel dock</string>
     <string name="preference_backup_summary">Esporta preferenze e dati del launcher</string>
     <string name="preference_search_currencyconverter_summary">Scarica periodicamente i tassi di cambio per convertire le valute</string>
     <string name="menu_customize">Personalizza</string>
@@ -356,7 +353,6 @@
     <string name="weather_condition_heavyrainshowersandthunder">Forti rovesci di pioggia e tuoni</string>
     <string name="weather_condition_rainshowers">Piogge a catinelle</string>
     <string name="missing_permission_appshortcuts_search">Imposta %1$s come app Home predefinita per cercare le scorciatoie delle app.</string>
-    <string name="preference_font_system">Predefinito del sistema</string>
     <string name="preference_enforce_icon_shape_summary">Applica la forma a tutte le icone comprese quelle che normalmente non la supporterebbero</string>
     <string name="alert_delete_shortcut">La scorciatoia %1$s verrà rimossa in modo permanente. Procedere\?</string>
     <string name="preference_grid_labels">Mostra etichette</string>
@@ -485,7 +481,7 @@
     <string name="preference_search_result_ordering_weight_factor_high">Variabile</string>
     <string name="preference_screen_integrations">Integrazioni</string>
     <string name="preference_screen_homescreen">Schermata home</string>
-    <string name="preference_screen_icons_summary">Griglia, dimensione icona, pacchetti icone, indicatori</string>
+    <string name="preference_screen_icons_summary">Dimensioni griglia, icone, badge</string>
     <string name="preference_screen_clockwidget_summary">Configura stile e componenti dell\'orologio</string>
     <string name="preference_screen_homescreen_summary">Orologio, barra di ricerca, sfondo, barre di sistema</string>
     <string name="preference_screen_icons">Griglia e icone</string>
@@ -797,7 +793,6 @@
     <string name="preference_clock_widget_time_format">Formato ora</string>
     <string name="preference_clock_widget_time_format_24h">24 ore</string>
     <string name="preference_clock_widget_time_format_12h">12 ore</string>
-    <string name="preference_clock_widget_time_format_system">Predefinito del sistema</string>
     <plurals name="departure_time_in">
         <item quantity="one">tra un minuto</item>
         <item quantity="many">tra %1$d minuti</item>
@@ -878,4 +873,28 @@
     <string name="poi_category_stationery">Cartoleria</string>
     <string name="poi_category_hackerspace">Hackerspazio</string>
     <string name="poi_category_climbing_gym">Palestra di arrampicata</string>
+    <string name="preference_clockwidget_dock_rows">Righe dock</string>
+    <string name="preference_search_apps">App</string>
+    <string name="preference_search_apps_summary">Mostra tutte le app quando il campo di ricerca è vuoto</string>
+    <string name="preference_screen_locale">Lingua e regione</string>
+    <string name="preference_screen_locale_summary">Lingua, unità, formato ora</string>
+    <string name="preference_language">Lingua</string>
+    <string name="preference_value_system_default">Predefinito del sistema</string>
+    <string name="preference_form_of_address_neutral">Neutro</string>
+    <string name="preference_form_of_address_fem">Femminile</string>
+    <string name="preference_form_of_address_masc">Maschile</string>
+    <string name="preference_form_of_address">Appellativo</string>
+    <string name="preference_measurement_system_us">Stati Uniti</string>
+    <string name="preference_measurement_system">Sistema di misurazione</string>
+    <string name="preference_measurement_system_metric">Metrico</string>
+    <string name="preference_measurement_system_uk">Regno Unito</string>
+    <string name="preference_transliteration">Traslitterazione preferita</string>
+    <string name="preference_transliteration_auto">Automatica</string>
+    <string name="preference_transliteration_disabled">Disabilitata</string>
+    <string name="select_tag">Seleziona tag</string>
+    <string name="widget_name_apps">App</string>
+    <string name="preference_category_enabled_plugins">Abilitato</string>
+    <string name="preference_category_installed_plugins">Installato</string>
+    <string name="tag_icon_customicon">Icona</string>
+    <string name="tag_icon_emoji">Emoji</string>
 </resources>

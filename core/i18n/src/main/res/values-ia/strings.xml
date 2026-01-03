@@ -67,7 +67,6 @@
     <string name="preference_about_license">Iste application es software libere.</string>
     <string name="preference_screen_buildinfo_summary">Plus de information re le compilation de iste application</string>
     <string name="widget_name_music">Musica</string>
-    <string name="widget_name_favorites">Favoritos</string>
     <string name="widget_name_unknown">Widget de application incognite</string>
     <string name="notes_widget_action_dismiss">Dimitter</string>
     <string name="save">Salveguardar</string>
@@ -91,7 +90,6 @@
     <string name="preference_colors_bw">Blanc e nigre</string>
     <string name="preference_mdy_color_source_wallpaper">Fundo de schermo</string>
     <string name="preference_font">Typo de litteras</string>
-    <string name="preference_font_system">Predefinite del systema</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Ligamines</string>
     <string name="preference_category_licenses">Licentias de codice aperte</string>

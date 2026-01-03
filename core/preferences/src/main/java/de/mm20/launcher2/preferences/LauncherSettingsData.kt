@@ -5,9 +5,11 @@ import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.serialization.UUIDSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 import java.util.UUID
 
 @Serializable
+@ConsistentCopyVisibility
 data class LauncherSettingsData internal constructor(
     val schemaVersion: Int = 5,
 
@@ -35,6 +37,8 @@ data class LauncherSettingsData internal constructor(
     val mediaDenyList: Set<String> = emptySet(),
 
     val clockWidgetCompact: Boolean = false,
+    val clockWidgetSmartspacer: Boolean = false,
+
     @Deprecated("")
     @SerialName("clockWidgetStyle")
     val _clockWidgetStyle: ClockWidgetStyle = ClockWidgetStyle.Digital1(),
@@ -48,16 +52,16 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetShowSeconds: Boolean = false,
     val clockWidgetUseEightBits: Boolean = false,
     val clockWidgetMonospaced: Boolean = false,
-    val clockWidgetTimeFormat: TimeFormat = TimeFormat.System,
     val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
     val clockWidgetBatteryPart: Boolean = true,
     val clockWidgetMusicPart: Boolean = true,
     val clockWidgetDatePart: Boolean = true,
-    val clockWidgetFillHeight: Boolean = true,
+    val clockWidgetFillHeight: Boolean = false,
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
 
     val homeScreenDock: Boolean = false,
+    val homeScreenDockRows: Int = 1,
     val homeScreenWidgets: Boolean = false,
 
     val favoritesEnabled: Boolean = true,
@@ -65,6 +69,8 @@ data class LauncherSettingsData internal constructor(
     val favoritesFrequentlyUsedRows: Int = 1,
     val favoritesEditButton: Boolean = true,
     val favoritesCompactTags: Boolean = false,
+
+    val searchAllApps: Boolean = true,
 
     val fileSearchProviders: Set<String> = setOf("local"),
 
@@ -160,12 +166,10 @@ data class LauncherSettingsData internal constructor(
     val weatherLastLocation: LatLon? = null,
     val weatherLastUpdate: Long = 0L,
     val weatherProviderSettings: Map<String, ProviderSettings> = emptyMap(),
-    val weatherImperialUnits: Boolean = false,
 
     @Deprecated("Use locationSearchProviders instead")
     val locationSearchEnabled: Boolean = false,
     val locationSearchProviders: Set<String> = setOf("openstreetmaps"),
-    val locationSearchImperialUnits: Boolean = false,
     val locationSearchRadius: Int = 1500,
     val locationSearchHideUncategorized: Boolean = true,
     val locationSearchOverpassUrl: String? = null,
@@ -191,12 +195,20 @@ data class LauncherSettingsData internal constructor(
     ),
 
 
+    @JsonNames("clockWidgetTimeFormat")
+    val localeTimeFormat: TimeFormat = TimeFormat.System,
+    val localeMeasurementSystem: MeasurementSystem = MeasurementSystem.System,
+    /**
+     * The ID of the transliterator to use. The empty string means to pick a transliterator
+     * automatically. null disables the transliterator.
+     */
+    val localeTransliterator: String? = "",
+
+
     ) {
     constructor(
         context: Context,
     ) : this(
-        weatherImperialUnits = context.resources.getBoolean(R.bool.default_imperialUnits),
-        locationSearchImperialUnits = context.resources.getBoolean(R.bool.default_imperialUnits),
         gridColumnCount = context.resources.getInteger(R.integer.config_columnCount),
     )
 }
@@ -429,4 +441,13 @@ enum class TimeFormat {
     @SerialName("system") System,
     @SerialName("12h") TwelveHour,
     @SerialName("24h") TwentyFourHour
+}
+
+
+@Serializable
+enum class MeasurementSystem {
+    @SerialName("system") System,
+    @SerialName("metric") Metric,
+    @SerialName("uk") UnitedKingdom,
+    @SerialName("us") UnitedStates,
 }

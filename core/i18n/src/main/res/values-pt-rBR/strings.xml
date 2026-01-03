@@ -70,7 +70,6 @@
     <string name="widget_name_music">Música</string>
     <string name="widget_add_widget">Adicionar widget</string>
     <string name="shortcut_summary">De %1$s</string>
-    <string name="easter_egg_text">Bem, você me achou. Parabéns. Valeu a pena?</string>
     <string name="close">Fechar</string>
     <string name="turn_off">Desligar</string>
     <string name="widget_action_remove">Remover</string>
@@ -104,12 +103,10 @@
     <string name="preference_category_licenses">Licenças open-source</string>
     <string name="preference_category_debug">Depuração</string>
     <string name="preference_imperial_units">Unidades imperiais</string>
-    <string name="preference_icon_shape_platform">Padrão do sistema</string>
     <string name="owncloud_login_2fa_hint">Se a autenticação de dois fatores estiver ativada, deverá usar uma senha de aplicativo aqui.</string>
     <string name="disclaimer_currency_converter">Taxas de câmbio atualizadas conforme são publicadas pelo Banco Central Europeu. Todas as informações são fornecidas \"como estão\", sem qualquer tipo de garantia. Nenhuma responsabilidade é assumida por estas informações.\n \nÚltima atualização: %1$s</string>
     <string name="weather_condition_snow">Neve</string>
     <string name="weather_widget_set_location">Definir localização</string>
-    <string name="widget_name_favorites">Favoritos</string>
     <string name="owncloud_login_failed">Falha no login: nome de usuário ou senha incorretos.</string>
     <string name="login_flow_continue">Continuar</string>
     <string name="login_flow_login">Conectar</string>
@@ -284,7 +281,6 @@
     <string name="weather_location_search_no_result">Localização não encontrada.</string>
     <string name="missing_permission_calendar_widget">Conceda permissão de calendário para exibir compromissos e eventos futuros aqui.</string>
     <string name="preference_font">Fonte</string>
-    <string name="preference_font_system">Fonte padrão do sistema, depende da fabricante (Google Sans nos smartphones Google Pixel, Roboto no AOSP)</string>
     <string name="alert_delete_shortcut">O atalho %1$s será removido permanentemente. Continuar?</string>
     <string name="menu_remove">Remover</string>
     <string name="save">Salvar</string>
@@ -824,7 +820,6 @@
     <string name="no_selection">Nenhuma seleção</string>
     <string name="save_as_file">Salvar como arquivo</string>
     <string name="provider_breezy">Breezy Weather</string>
-    <string name="preference_clock_widget_time_format_system">Padrão do sistema</string>
     <string name="gesture_action_widgets">Widgets</string>
     <string name="import_theme_exists">Tema já existe e será atualizado</string>
     <string name="import_theme_contents">Conteúdos</string>

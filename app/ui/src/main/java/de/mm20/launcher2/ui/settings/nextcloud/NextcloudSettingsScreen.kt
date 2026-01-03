@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.Login
-import androidx.compose.material.icons.automirrored.rounded.Logout
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -24,25 +21,31 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object NextcloudSettingsRoute: NavKey
 
 @Composable
 fun NextcloudSettingsScreen() {
 
     val viewModel: NextcloudSettingsScreenVM = viewModel()
     val lifecycleOwner = LocalLifecycleOwner.current
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
 
     val nextcloudUser by viewModel.nextcloudUser
     val loading by viewModel.loading
@@ -108,7 +111,7 @@ fun NextcloudSettingsScreen() {
                         contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                     ) {
                         Icon(
-                            Icons.AutoMirrored.Rounded.Logout,
+                            painterResource(R.drawable.logout_20px),
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize),
@@ -142,7 +145,7 @@ fun NextcloudSettingsScreen() {
                     Preference(
                         title = stringResource(R.string.preference_nextcloud_signin),
                         summary = stringResource(R.string.preference_nextcloud_signin_summary),
-                        icon = Icons.AutoMirrored.Rounded.Login,
+                        icon = R.drawable.login_24px,
                         onClick = {
                             viewModel.signIn(activity)
                         }

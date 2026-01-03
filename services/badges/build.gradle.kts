@@ -42,7 +42,6 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.compose.materialicons)
     implementation(libs.bundles.androidx.lifecycle)
 
     implementation(libs.koin.android)

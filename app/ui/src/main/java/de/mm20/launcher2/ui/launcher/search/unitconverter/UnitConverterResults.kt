@@ -11,16 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Bolt
-import androidx.compose.material.icons.rounded.FitnessCenter
-import androidx.compose.material.icons.rounded.Schedule
-import androidx.compose.material.icons.rounded.Speed
-import androidx.compose.material.icons.rounded.SquareFoot
-import androidx.compose.material.icons.rounded.Storage
-import androidx.compose.material.icons.rounded.Straighten
-import androidx.compose.material.icons.rounded.Thermostat
-import androidx.compose.material.icons.rounded.Toll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -34,12 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.icons.Cube
 import de.mm20.launcher2.search.data.CurrencyUnitConverter
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.ui.R
@@ -121,7 +111,7 @@ fun LazyListScope.UnitConverterResults(
                         }
                     }
                     Icon(
-                        imageVector = getDimensionIcon(converter.dimension),
+                        painter = painterResource(getDimensionIcon(converter.dimension)),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier
@@ -216,20 +206,20 @@ fun LazyListScope.UnitConverterResults(
     }
 }
 
-fun getDimensionIcon(dimension: Dimension): ImageVector {
+fun getDimensionIcon(dimension: Dimension): Int {
     return when (dimension) {
-        Dimension.Mass -> Icons.Rounded.FitnessCenter
-        Dimension.Length -> Icons.Rounded.Straighten
-        Dimension.Velocity -> Icons.Rounded.Speed
-        Dimension.Volume -> Icons.Rounded.Cube
-        Dimension.Area -> Icons.Rounded.SquareFoot
-        Dimension.Currency -> Icons.Rounded.Toll
-        Dimension.Data -> Icons.Rounded.Storage
+        Dimension.Mass -> R.drawable.weight_24px
+        Dimension.Length -> R.drawable.straighten_24px
+        Dimension.Velocity -> R.drawable.speed_24px
+        Dimension.Volume -> R.drawable.deployed_code_24px
+        Dimension.Area -> R.drawable.square_foot_24px
+        Dimension.Currency -> R.drawable.payments_24px
+        Dimension.Data -> R.drawable.hard_disk_24px
         Dimension.Bitrate -> TODO()
         Dimension.Pressure -> TODO()
-        Dimension.Energy -> Icons.Rounded.Bolt
+        Dimension.Energy -> R.drawable.bolt_24px
         Dimension.Frequency -> TODO()
-        Dimension.Temperature -> Icons.Rounded.Thermostat
-        Dimension.Time -> Icons.Rounded.Schedule
+        Dimension.Temperature -> R.drawable.device_thermostat_24px
+        Dimension.Time -> R.drawable.schedule_24px
     }
 }

@@ -1,11 +1,117 @@
-preserve_hierarchy: 
+preserve_hierarchy: false
 files:
   - source: /core/i18n/src/main/res/values/strings.xml
     translation: /core/i18n/src/main/res/values-%android_code%/%original_file_name%
     type: android
+    languages_mapping:
+      android_code:
+        ar: ar                    # Arabic
+        az: az                    # Azerbaijani
+        eu: eu                    # Basque
+        be: be                    # Belarusian
+        be-fem: be-feminine       # Belarusian (feminine)
+        be-masc: be-masculine     # Belarusian (masculine)
+        bn: bn                    # Bengali
+        ca: ca                    # Catalan
+        ca-fem: ca-feminine       # Catalan (feminine)
+        ca-masc: ca-masculine     # Catalan (masculine)
+        zh-CN: zh-rCN             # Chinese Simplified
+        zh-TW: zh-rTW             # Chinese Traditional
+        cs: cs                    # Czech
+        cs-fem: cs-feminine       # Czech (feminine)
+        cs-masc: cs-masculine     # Czech (masculine)
+        da: da                    # Danish
+        nl: nl                    # Dutch, Netherlands
+        eo: eo                    # Esperanto
+        fi: fi                    # Finnish
+        fr: fr                    # French, France
+        fr-fem: fr-feminine       # French (feminine)
+        fr-masc: fr-masculine     # French (masculine)
+        de: de                    # German, Germany
+        el: el                    # Greek
+        el-fem: el-feminine       # Greek (feminine)
+        el-masc: el-masculine     # Greek (masculine)
+        he: iw                    # Hebrew
+        he-fem: he-feminine       # Hebrew (feminine)
+        he-masc: he-masculine     # Hebrew (masculine)
+        hi: hi                    # Hindi
+        hi-fem: hi-feminine       # Hindi (feminine)
+        hi-masc: hi-masculine     # Hindi (masculine)
+        hu: hu                    # Hungarian
+        id: in                    # Indonesian
+        it: it                    # Italian, Italy
+        it-fem: it-feminine       # Italian (feminine)
+        it-masc: it-masculine     # Italian (masculine)
+        ja: ja                    # Japanese
+        ko: ko                    # Korean
+        lt: lt                    # Lithuanian
+        ms: ms                    # Malay
+        nb: nb                    # Norwegian Bokmal
+        fa: fa                    # Persian
+        pl: pl                    # Polish
+        pl-fem: pl-feminine       # Polish (feminine)
+        pl-masc: pl-masculine     # Polish (masculine)
+        pt-BR: pt                 # Portuguese, Brazil
+        pt-BR-fem: pt-feminine    # Portuguese, Brazil (feminine)
+        pt-BR-masc: pt-masculine  # Portuguese, Brazil (masculine)
+        pt-PT: pt-rPT             # Portuguese, Portugal
+        pt-PT-fem: pt-feminine    # Portuguese, Portugal (feminine)
+        pt-PT-masc: pt-masculine  # Portuguese, Portugal (masculine)
+        ro: ro                    # Romanian
+        ro-fem: ro-feminine       # Romanian (feminine)
+        ro-masc: ro-masculine     # Romanian (masculine)
+        ru: ru                    # Russian, Russia
+        ru-fem: ru-feminine       # Russian (feminine)
+        ru-masc: ru-masculine     # Russian (masculine)
+        es-MX: es                 # Spanish, Mexico
+        es-MX-fem: es-feminine    # Spanish, Mexico (feminine)
+        es-MX-masc: es-masculine  # Spanish, Mexico (masculine)
+        sv-SE: sv                 # Swedish, Sweden
+        th: th                    # Thai
+        tr: tr                    # Turkish, Türkiye
+        uk: uk                    # Ukrainian
+        uk-fem: uk-feminine       # Ukrainian (feminine)
+        uk-masc: uk-masculine     # Ukrainian (masculine)
+        vi: vi                    # Vietnamese
   - source: /core/i18n/src/main/res/values/units.xml
     translation: /core/i18n/src/main/res/values-%android_code%/%original_file_name%
     type: android
-  - source: /plugins/sdk/src/main/res/values/strings.xml
-    translation: /plugins/sdk/src/main/res/values-%android_code%/%original_file_name%
-    type: android
+    language_mapping:
+      android_code:
+        ar: ar        # Arabic
+        az: az        # Azerbaijani
+        eu: eu        # Basque
+        be: be        # Belarusian
+        bn: bn        # Bengali
+        ca: ca        # Catalan
+        zh-CN: zh-rCN # Chinese Simplified
+        zh-TW: zh-rTW # Chinese Traditional
+        cs: cs        # Czech
+        da: da        # Danish
+        nl: nl        # Dutch, Netherlands
+        eo: eo        # Esperanto
+        fi: fi        # Finnish
+        fr: fr        # French, France
+        de: de        # German, Germany
+        el: el        # Greek
+        he: iw        # Hebrew
+        hu: hu        # Hungarian
+        id: in        # Indonesian
+        it: it        # Italian, Italy
+        ja: ja        # Japanese
+        ko: ko        # Korean
+        lt: lt        # Lithuanian
+        ms: ms        # Malay
+        nb: nb        # Norwegian Bokmal
+        fa: fa        # Persian
+        pl: pl        # Polish
+        pt-BR: pt     # Portuguese, Brazil
+        pt-PT: pt-rPT # Portuguese, Portugal
+        ro: ro        # Romanian
+        ru: ru        # Russian, Russia
+        es-MX: es     # Spanish, Mexico
+        sv-SE: sv     # Swedish, Sweden
+        th: th        # Thai
+        tr: tr        # Turkish, Türkiye
+        uk: uk        # Ukrainian
+        vi: vi        # Vietnamese

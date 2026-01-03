@@ -17,12 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Circle
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.DarkMode
-import androidx.compose.material.icons.rounded.LightMode
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,23 +25,23 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.ClockWidgetColors
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
@@ -62,19 +57,22 @@ import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.widgets.clock.ConfigureClockWidgetSheet
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object HomescreenSettingsRoute: NavKey
 
 @Composable
 fun HomescreenSettingsScreen() {
     val viewModel: HomescreenSettingsScreenVM =
         viewModel(factory = HomescreenSettingsScreenVM.Factory)
 
-    val navController = LocalNavController.current
-
     val context = LocalContext.current
 
     val dock by viewModel.dock.collectAsStateWithLifecycle(null)
+    val dockRows by viewModel.dockRows.collectAsStateWithLifecycle(1)
     val fixedRotation by viewModel.fixedRotation.collectAsStateWithLifecycle(null)
     val widgetsOnHomeScreen by viewModel.widgetsOnHomeScreen.collectAsStateWithLifecycle(null)
     val editButton by viewModel.widgetEditButton.collectAsStateWithLifecycle(null)
@@ -123,6 +121,17 @@ fun HomescreenSettingsScreen() {
                         viewModel.setDock(it)
                     },
                 )
+                AnimatedVisibility(dock == true) {
+                    SliderPreference(
+                        title = stringResource(R.string.preference_clockwidget_dock_rows),
+                        value = dockRows,
+                        min = 1,
+                        max = 4,
+                        onValueChanged = {
+                            viewModel.setDockRows(it)
+                        }
+                    )
+                }
                 SwitchPreference(
                     title = stringResource(R.string.preference_widgets_on_home_screen),
                     summary = stringResource(R.string.preference_widgets_on_home_screen_summary),
@@ -298,7 +307,8 @@ fun SearchBarStylePreference(
             SearchBarStyle.entries
         }
 
-        val darkColors = LocalPreferDarkContentOverWallpaper.current && colors == SearchBarColors.Auto || colors == SearchBarColors.Dark
+        val darkColors =
+            LocalPreferDarkContentOverWallpaper.current && colors == SearchBarColors.Auto || colors == SearchBarColors.Dark
 
         BottomSheetDialog(
             onDismissRequest = {
@@ -322,7 +332,7 @@ fun SearchBarStylePreference(
                             ) {
                                 Text(
                                     text = stringResource(
-                                        when(style) {
+                                        when (style) {
                                             SearchBarStyle.Transparent -> R.string.preference_search_bar_style_transparent
                                             SearchBarStyle.Solid -> R.string.preference_search_bar_style_solid
                                             SearchBarStyle.Hidden -> R.string.preference_search_bar_style_hidden
@@ -338,7 +348,10 @@ fun SearchBarStylePreference(
                                     }
                                 ) {
                                     Icon(
-                                        if (style == value) Icons.Rounded.CheckCircle else Icons.Outlined.Circle,
+                                        painterResource(
+                                            if (style == value) R.drawable.check_circle_24px_filled
+                                            else R.drawable.circle_24px
+                                        ),
                                         contentDescription = null,
                                         tint = if (style == value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                                     )
@@ -353,7 +366,7 @@ fun SearchBarStylePreference(
                                     )
                                     .clip(MaterialTheme.shapes.medium)
                                     .background(
-                                        when  {
+                                        when {
                                             style != SearchBarStyle.Transparent -> MaterialTheme.colorScheme.inverseSurface
                                             LocalDarkTheme.current != darkColors -> MaterialTheme.colorScheme.surfaceContainer
                                             else -> MaterialTheme.colorScheme.inverseSurface
@@ -380,55 +393,49 @@ fun SearchBarStylePreference(
                                 )
                             }
                             if (style == SearchBarStyle.Transparent) {
-                                SingleChoiceSegmentedButtonRow(
-                                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 16.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
                                 ) {
-                                    SegmentedButton(
-                                        selected = colors == SearchBarColors.Auto,
-                                        onClick = {
+                                    ToggleButton(
+                                        modifier = Modifier.weight(1f),
+                                        checked = colors == SearchBarColors.Auto,
+                                        onCheckedChange = {
                                             onColorsChanged(SearchBarColors.Auto)
                                         },
-                                        shape = SegmentedButtonDefaults.itemShape(
-                                            index = 0,
-                                            count = 3
-                                        ),
+                                        shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                                     ) {
                                         Icon(
-                                            imageVector = Icons.Rounded.AutoAwesome,
+                                            painterResource(R.drawable.auto_awesome_20dp),
                                             contentDescription = null,
-                                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
                                         )
                                     }
-                                    SegmentedButton(
-                                        selected = colors == SearchBarColors.Dark,
-                                        onClick = {
-                                            onColorsChanged(SearchBarColors.Dark)
-                                        },
-                                        shape = SegmentedButtonDefaults.itemShape(
-                                            index = 1,
-                                            count = 3
-                                        ),
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.LightMode,
-                                            contentDescription = null,
-                                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
-                                        )
-                                    }
-                                    SegmentedButton(
-                                        selected = colors == SearchBarColors.Light,
-                                        onClick = {
+                                    ToggleButton(
+                                        modifier = Modifier.weight(1f),
+                                        checked = colors == SearchBarColors.Light,
+                                        onCheckedChange = {
                                             onColorsChanged(SearchBarColors.Light)
                                         },
-                                        shape = SegmentedButtonDefaults.itemShape(
-                                            index = 2,
-                                            count = 3
-                                        ),
+                                        shapes = ButtonGroupDefaults.connectedMiddleButtonShapes(),
                                     ) {
                                         Icon(
-                                            imageVector = Icons.Rounded.DarkMode,
+                                            painterResource(R.drawable.light_mode_24px),
                                             contentDescription = null,
-                                            modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                        )
+                                    }
+                                    ToggleButton(
+                                        modifier = Modifier.weight(1f),
+                                        checked = colors == SearchBarColors.Dark,
+                                        onCheckedChange = {
+                                            onColorsChanged(SearchBarColors.Dark)
+                                        },
+                                        shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
+                                    ) {
+                                        Icon(
+                                            painterResource(R.drawable.dark_mode_24px),
+                                            contentDescription = null,
                                         )
                                     }
                                 }

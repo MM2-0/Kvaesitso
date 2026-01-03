@@ -100,7 +100,6 @@
     <string name="websearch_dialog_query_encoding_url">Працэнтнае кадзіраванне</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="websearch_dialog_url_error">У запаўніцеля \'${1}\' адсутнічае гэта спасылка</string>
-    <string name="easter_egg_text">Файна, ты знайшоў мяне. Віншую. Але гэта варта было рабіць?</string>
     <string name="close">Закрыць</string>
     <string name="save">Захаваць</string>
     <string name="duplicate">Дубліраваць</string>
@@ -121,7 +120,6 @@
     <string name="owncloud_login_failed">Не ўдалося ўвайсці: няверныя імя карыстальніка ці пароль.</string>
     <string name="login_flow_continue">Працягнуць</string>
     <string name="websearch_dialog_query_encoding_none">Няма</string>
-    <string name="widget_name_favorites">Абраныя</string>
     <string name="menu_edit_widgets">Рэдагаваць віджэты</string>
     <string name="widget_name_weather">Надвор\'е</string>
     <string name="widget_name_calendar">Каляндар</string>
@@ -239,7 +237,6 @@
     <string name="preference_mdy_color_source_system">Сістэма</string>
     <string name="preference_mdy_color_source_wallpaper">Шпалеры</string>
     <string name="preference_font">Шрыфт</string>
-    <string name="preference_font_system">Сістэмны</string>
     <string name="preference_screen_about">Аб праграме</string>
     <string name="preference_version">Версія</string>
     <string name="preference_category_links">Спасылкі</string>
@@ -288,7 +285,6 @@
     <string name="preference_cards_summary">Дапасаваць выгляд картак</string>
     <string name="preference_cards_shape_rounded">Акруглая</string>
     <string name="preference_icon_shape">Фігура</string>
-    <string name="preference_icon_shape_platform">Стандартная</string>
     <string name="preference_icon_shape_square">Квадратная</string>
     <string name="preference_icon_shape_rounded_square">Скругленая квадратная</string>
     <string name="preference_icon_shape_squircle">Круграт</string>
@@ -870,7 +866,6 @@
     <string name="preference_typography_fonts">Шрыфты</string>
     <string name="font_category_device_default">Налады прылады</string>
     <string name="preference_contacts_call_on_tap">Націсніце, каб выклікнуць</string>
-    <string name="preference_clock_widget_time_format_system">Сістэмны фармат</string>
     <string name="preference_clock_widget_time_format">Фармат часу</string>
     <string name="preference_clock_widget_time_format_24h">24 гадзіны</string>
     <string name="preference_clock_widget_time_format_12h">12 гадзін</string>

@@ -26,27 +26,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.ChevronLeft
-import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material.icons.rounded.PhotoSizeSelectSmall
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
-import androidx.compose.material.icons.rounded.RestartAlt
-import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.icons.rounded.SwapHoriz
-import androidx.compose.material.icons.rounded.Tune
-import androidx.compose.material.icons.rounded.Widgets
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -65,6 +55,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -162,39 +153,61 @@ fun WatchFaceSelector(
                             modifier = Modifier
                                 .padding(4.dp)
                         ) {
-                            Icon(Icons.Rounded.Tune, null)
-                            DropdownMenu(
+                            Icon(painterResource(R.drawable.tune_24px), null)
+                            DropdownMenuPopup(
                                 expanded = showStyleSettings,
                                 onDismissRequest = { showStyleSettings = false }) {
                                 if (selected is ClockWidgetStyle.Digital1) {
-                                    DropdownMenuItem(
-                                        text = { Text(stringResource(R.string.clock_variant_outlined)) },
-                                        leadingIcon = {
-                                            Icon(
-                                                if (selected.outlined) Icons.Rounded.CheckCircle
-                                                else Icons.Rounded.RadioButtonUnchecked,
-                                                null
-                                            )
-                                        },
-                                        onClick = {
-                                            onSelect(selected.copy(outlined = !selected.outlined))
-                                        }
-                                    )
+                                    DropdownMenuGroup(
+                                        shapes = MenuDefaults.groupShapes()
+                                    ) {
+                                        DropdownMenuItem(
+                                            checked = selected.outlined,
+                                            onCheckedChange = {
+                                                onSelect(selected.copy(outlined = it))
+                                            },
+                                            shapes = MenuDefaults.itemShapes(),
+                                            text = { Text(stringResource(R.string.clock_variant_outlined)) },
+                                            leadingIcon = {
+                                                Icon(
+                                                    painterResource(R.drawable.circle_24px),
+                                                    null
+                                                )
+                                            },
+                                            checkedLeadingIcon = {
+                                                Icon(
+                                                    painterResource(R.drawable.check_circle_24px_filled),
+                                                    null
+                                                )
+                                            },
+                                        )
+                                    }
                                 }
                                 if (selected is ClockWidgetStyle.Analog) {
-                                    DropdownMenuItem(
-                                        text = { Text(stringResource(R.string.clock_variant_analog_ticks)) },
-                                        leadingIcon = {
-                                            Icon(
-                                                if (selected.showTicks) Icons.Rounded.CheckCircle
-                                                else Icons.Rounded.RadioButtonUnchecked,
-                                                null
-                                            )
-                                        },
-                                        onClick = {
-                                            onSelect(selected.copy(showTicks = !selected.showTicks))
-                                        }
-                                    )
+                                    DropdownMenuGroup(
+                                        shapes = MenuDefaults.groupShapes()
+                                    ) {
+                                        DropdownMenuItem(
+                                            text = { Text(stringResource(R.string.clock_variant_analog_ticks)) },
+                                            leadingIcon = {
+                                                Icon(
+                                                    painterResource(R.drawable.circle_24px),
+                                                    null
+                                                )
+                                            },
+                                            checkedLeadingIcon = {
+                                                Icon(
+                                                    painterResource(R.drawable.check_circle_24px_filled),
+                                                    null
+                                                )
+                                            },
+                                            shapes = MenuDefaults.itemShapes(),
+                                            checked = selected.showTicks,
+                                            onCheckedChange = {
+                                                onSelect(selected.copy(showTicks = it))
+                                            }
+                                        )
+                                    }
                                 }
 //                                if (selected is ClockWidgetStyle.Binary) {
 //                                    DropdownMenuItem(
@@ -212,70 +225,97 @@ fun WatchFaceSelector(
 //                                    )
 //                                }
                                 if (selected is ClockWidgetStyle.Custom) {
-                                    DropdownMenuItem(
-                                        text = { Text(stringResource(R.string.widget_pick_widget)) },
-                                        leadingIcon = {
-                                            Icon(Icons.Rounded.SwapHoriz, null)
-                                        },
-                                        onClick = {
-                                            showWidgetPicker = true
-                                            showStyleSettings = false
+                                    DropdownMenuGroup(
+                                        shapes = MenuDefaults.groupShapes()
+                                    ) {
+                                        val widget = remember(selected.widgetId) {
+                                            val id = selected.widgetId ?: return@remember null
+                                            AppWidgetManager.getInstance(context)
+                                                .getAppWidgetInfo(id)
                                         }
-                                    )
-                                    DropdownMenuItem(
-                                        leadingIcon = {
-                                            Icon(Icons.Rounded.PhotoSizeSelectSmall, null)
-                                        },
-                                        text = { Text(stringResource(R.string.widget_config_appwidget_resize)) },
-                                        onClick = { resizeCustomWidget = true }
-                                    )
-                                    val widget = remember(selected.widgetId) {
-                                        val id = selected.widgetId ?: return@remember null
-                                        AppWidgetManager.getInstance(context)
-                                            .getAppWidgetInfo(id)
-                                    }
-                                    val appWidgetHost = LocalAppWidgetHost.current
-                                    if (widget?.configure != null) {
                                         DropdownMenuItem(
-                                            text = { Text(stringResource(R.string.widget_config_appwidget_configure)) },
+                                            text = { Text(stringResource(R.string.widget_pick_widget)) },
                                             leadingIcon = {
-                                                Icon(Icons.Rounded.Settings, null)
+                                                Icon(
+                                                    painterResource(R.drawable.swap_horiz_24px),
+                                                    null
+                                                )
                                             },
                                             onClick = {
-                                                appWidgetHost.startAppWidgetConfigureActivityForResult(
-                                                    getActivityFromContext(context) ?: return@DropdownMenuItem,
-                                                    selected.widgetId ?: return@DropdownMenuItem,
-                                                    0,
-                                                    0,
-                                                    if (Build.VERSION.SDK_INT < 34) {
+                                                showWidgetPicker = true
+                                                showStyleSettings = false
+                                            },
+                                            shape = MenuDefaults.leadingItemShape,
+                                        )
+                                        DropdownMenuItem(
+                                            leadingIcon = {
+                                                Icon(painterResource(R.drawable.resize_24px), null)
+                                            },
+                                            text = { Text(stringResource(R.string.widget_config_appwidget_resize)) },
+                                            onClick = { resizeCustomWidget = true },
+                                            shape = if (widget?.configure == null && !BuildConfig.DEBUG) {
+                                                MenuDefaults.trailingItemShape
+                                            } else {
+                                                MenuDefaults.middleItemShape
+                                            },
+                                        )
+                                        val appWidgetHost = LocalAppWidgetHost.current
+                                        if (widget?.configure != null) {
+                                            DropdownMenuItem(
+                                                text = { Text(stringResource(R.string.widget_config_appwidget_configure)) },
+                                                leadingIcon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.settings_24px),
                                                         null
-                                                    } else {
-                                                        ActivityOptions.makeBasic()
-                                                            .setPendingIntentBackgroundActivityStartMode(
-                                                                ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
-                                                            )
-                                                            .toBundle()
+                                                    )
+                                                },
+                                                onClick = {
+                                                    appWidgetHost.startAppWidgetConfigureActivityForResult(
+                                                        getActivityFromContext(context)
+                                                            ?: return@DropdownMenuItem,
+                                                        selected.widgetId
+                                                            ?: return@DropdownMenuItem,
+                                                        0,
+                                                        0,
+                                                        if (Build.VERSION.SDK_INT < 34) {
+                                                            null
+                                                        } else {
+                                                            ActivityOptions.makeBasic()
+                                                                .setPendingIntentBackgroundActivityStartMode(
+                                                                    ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+                                                                )
+                                                                .toBundle()
+                                                        }
+                                                    )
+                                                },
+                                                shape = if (!BuildConfig.DEBUG) {
+                                                    MenuDefaults.trailingItemShape
+                                                } else {
+                                                    MenuDefaults.middleItemShape
+                                                },
+                                            )
+                                        }
+                                        if (BuildConfig.DEBUG) {
+                                            DropdownMenuItem(
+                                                shape = MenuDefaults.trailingItemShape,
+                                                leadingIcon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.restart_alt_24px),
+                                                        null
+                                                    )
+                                                },
+                                                text = { Text("Reset") },
+                                                onClick = {
+                                                    val widgetId = selected.widgetId
+                                                    if (widgetId != null) {
+                                                        appWidgetHost.deleteAppWidgetId(widgetId)
                                                     }
-                                                )
-                                            }
-                                        )
-                                    }
-                                    if (BuildConfig.DEBUG) {
-                                        DropdownMenuItem(
-                                            leadingIcon = {
-                                                Icon(Icons.Rounded.RestartAlt, null)
-                                            },
-                                            text = { Text("Reset") },
-                                            onClick = {
-                                                val widgetId = selected.widgetId
-                                                if (widgetId != null) {
-                                                    appWidgetHost.deleteAppWidgetId(widgetId)
-                                                }
-                                                onSelect(
-                                                    ClockWidgetStyle.Custom()
-                                                )
-                                            }
-                                        )
+                                                    onSelect(
+                                                        ClockWidgetStyle.Custom()
+                                                    )
+                                                },
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -322,7 +362,7 @@ fun WatchFaceSelector(
                                             modifier = Modifier
                                                 .padding(end = ButtonDefaults.IconSpacing)
                                                 .size(ButtonDefaults.IconSize),
-                                            imageVector = Icons.Rounded.Widgets,
+                                            painter = painterResource(R.drawable.widgets_20px),
                                             contentDescription = null,
                                         )
                                         Text(stringResource(R.string.widget_pick_widget))
@@ -367,7 +407,7 @@ fun WatchFaceSelector(
                                 )
                             }
                         }) {
-                        Icon(Icons.Rounded.ChevronLeft, null)
+                        Icon(painterResource(R.drawable.chevron_backward_24px), null)
                     }
                     var showStyleDropdown by remember { mutableStateOf(false) }
                     TextButton(
@@ -393,33 +433,44 @@ fun WatchFaceSelector(
                             textAlign = TextAlign.Center,
                         )
                         Icon(
-                            Icons.Rounded.ArrowDropDown,
+                            painterResource(R.drawable.arrow_drop_down_20px),
                             null,
                             modifier = Modifier
                                 .padding(ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize)
                         )
-                        DropdownMenu(
+                        DropdownMenuPopup(
                             expanded = showStyleDropdown,
                             onDismissRequest = { showStyleDropdown = false }
                         ) {
-                            for (style in styles.withIndex()) {
-                                DropdownMenuItem(
-                                    onClick = {
-                                        scope.launch {
-                                            pagerState.animateScrollToPage(
-                                                style.index,
+                            DropdownMenuGroup(
+                                shapes = MenuDefaults.groupShapes()
+                            ) {
+                                for (style in styles.withIndex()) {
+                                    DropdownMenuItem(
+                                        shapes = MenuDefaults.itemShape(style.index, styles.size),
+                                        selected = style.index == pagerState.currentPage,
+                                        onClick = {
+                                            scope.launch {
+                                                pagerState.animateScrollToPage(
+                                                    style.index,
+                                                )
+                                            }
+                                            showStyleDropdown = false
+                                        },
+                                        text = {
+                                            Text(
+                                                text = getClockStyleName(context, style.value),
+                                            )
+                                        },
+                                        checkedLeadingIcon = {
+                                            Icon(
+                                                painterResource(R.drawable.check_24px),
+                                                null,
                                             )
                                         }
-                                        showStyleDropdown = false
-                                    },
-                                    text = {
-                                        Text(
-                                            text = getClockStyleName(context, style.value),
-                                        )
-                                    }
-                                )
-                            }
+                                    )
+                                }}
                         }
                     }
 
@@ -432,7 +483,7 @@ fun WatchFaceSelector(
                                 )
                             }
                         }) {
-                        Icon(Icons.Rounded.ChevronRight, null)
+                        Icon(painterResource(R.drawable.chevron_forward_24px), null)
                     }
                 }
             }
@@ -614,7 +665,7 @@ private fun ResizeCustomWidget(
                     .offset(y = 64.dp),
                 onClick = onExit
             ) {
-                Icon(Icons.Rounded.Done, null)
+                Icon(painterResource(R.drawable.check_24px), null)
             }
         }
     }

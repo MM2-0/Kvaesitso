@@ -98,7 +98,7 @@ internal data class LauncherShortcut(
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
                 color = 0xFF3DDA84.toInt(),
-                icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
+                icon = ContextCompat.getDrawable(context, R.drawable.android_24px)!!,
                 scale = 0.65f,
             ),
             backgroundLayer = ColorLayer(0xFF3DDA84.toInt()),

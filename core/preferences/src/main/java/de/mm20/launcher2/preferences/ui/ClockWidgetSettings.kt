@@ -158,15 +158,6 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
-    val timeFormat
-        get() = launcherDataStore.data.map { it.clockWidgetTimeFormat }
-
-    fun setTimeFormat(timeFormat: TimeFormat) {
-        launcherDataStore.update {
-            it.copy(clockWidgetTimeFormat = timeFormat)
-        }
-    }
-
     val useThemeColor
         get() = launcherDataStore.data.map { it.clockWidgetUseThemeColor }
 
@@ -175,6 +166,16 @@ class ClockWidgetSettings internal constructor(
             it.copy(clockWidgetUseThemeColor = enabled)
         }
     }
+
+    val useSmartspacer
+        get() = launcherDataStore.data.map { it.clockWidgetSmartspacer }
+
+    fun setUseSmartspacer(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(clockWidgetSmartspacer = enabled)
+        }
+    }
+
 }
 
 internal val ClockWidgetStyle.enumValue

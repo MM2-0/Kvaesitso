@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="location_closed">बंद</string>
+    <string name="location_open">खुली</string>
+    <string name="action_undo">पूर्ववत</string>
+    <string name="menu_share_apk_file">पैकेज फ़ाइल</string>
+    <string name="menu_uninstall">अनइंस्टॉल करें</string>
+    <string name="menu_favorites_pin">पसंदीदा में पिन करें</string>
+    <string name="menu_favorites_unpin">अनपिन</string>
+    <string name="menu_back">पीछे</string>
+    <string name="menu_app_info">ऐप की जानकारी</string>
+    <string name="menu_customize">अनुकूलित करें</string>
+    <string name="menu_open_file">खोलें</string>
+    <string name="menu_map">मैप पर देखें</string>
+    <string name="menu_website">वेबसाइट खोलें</string>
+    <string name="action_import">आयात</string>
+    <string name="action_done">पूर्ण</string>
+    <string name="menu_share">भेजें</string>
+    <string name="menu_launch">शुरू करें</string>
+</resources>

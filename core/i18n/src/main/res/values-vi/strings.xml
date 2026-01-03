@@ -52,7 +52,6 @@
     <string name="weather_condition_fair">Tốt</string>
     <string name="missing_permission_appshortcuts_create">Đặt %1$s làm ứng dụng trang chủ mặc định để tạo lối tắt.</string>
     <string name="preference_font">Phông chữ</string>
-    <string name="preference_font_system">Mặc định hệ thống</string>
     <string name="preference_screen_about">Giới thiệu</string>
     <string name="provider_here">TẠI ĐÂY</string>
     <plurals name="debug_cleanup_database_result">
@@ -178,13 +177,11 @@
     <string name="menu_edit_widgets">Chỉnh sửa tiện ích</string>
     <string name="widget_name_calendar">Lịch</string>
     <string name="widget_name_music">Âm nhạc</string>
-    <string name="widget_name_favorites">Yêu thích</string>
     <string name="widget_name_notes">Ghi chú</string>
     <string name="notes_widget_action_save">Lưu</string>
     <string name="notes_widget_action_dismiss">Bỏ qua</string>
     <string name="notes_widget_dismissed">Đã bỏ qua ghi chú.</string>
     <string name="shortcut_summary">Bởi %1$s</string>
-    <string name="easter_egg_text">Vâng, bạn đã tìm thấy tôi. Chúc mừng. Có đáng không?</string>
     <string name="close">Đóng</string>
     <string name="save">Lưu</string>
     <string name="duplicate">Nhân đôi</string>
@@ -318,7 +315,6 @@
     <string name="preference_cards_shape_rounded">Bo tròn</string>
     <string name="preference_cards_shape_cut">Cắt</string>
     <string name="preference_icon_shape">Hình dạng</string>
-    <string name="preference_icon_shape_platform">Mặc định hệ thống</string>
     <string name="preference_icon_shape_square">Hình vuông</string>
     <string name="preference_icon_shape_rounded_square">Hình vuông tròn</string>
     <string name="preference_icon_shape_squircle">Hình tròn</string>

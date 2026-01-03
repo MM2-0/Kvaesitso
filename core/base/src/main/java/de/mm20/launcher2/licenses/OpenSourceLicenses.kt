@@ -144,13 +144,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://commons.apache.org/proper/commons-text/"
     ),
     OpenSourceLibrary(
-        name = "TinyPinyin",
-        description = "A fast, low-memory Chinese character-to-pinyin library for Java and Android.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        url = "https://github.com/promeG/TinyPinyin"
-    ),
-    OpenSourceLibrary(
         name = "material-color-utilities",
         copyrightNote = "Copyright 2021 Google LLC",
         description = "Algorithms and utilities that power the Material Design 3 (M3) color system, including choosing theme colors from images and creating tones of colors; all in a new color space.",
@@ -204,5 +197,12 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_apache_2,
         url = "https://chrisbanes.github.io/haze",
         copyrightNote = "Copyright 2024 Chris Banes",
+    ),
+    OpenSourceLibrary(
+        name = "Smartspacer Client SDK",
+        description = "A library to integrate Smartspacer in your app",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://chrisbanes.github.io/haze",
     )
 )

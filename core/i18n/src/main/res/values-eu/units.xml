@@ -53,7 +53,7 @@
         <item quantity="one">milia</item>
         <item quantity="other">milia</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_nautic_mile_symbol">nmi</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">itsas milia</item>
         <item quantity="other">itsas milia</item>
@@ -74,17 +74,17 @@
         <item quantity="one">milimetro karratu</item>
         <item quantity="other">milimetro karratu</item>
     </plurals>
-    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_sqinch_symbol">sq in</string>
     <plurals name="unit_sqinch">
         <item quantity="one">hazbete karratu</item>
         <item quantity="other">hazbete karratu</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqfoot_symbol">sq ft</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">oin karratu</item>
         <item quantity="other">oin karratu</item>
     </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_sqyard_symbol">sq yd</string>
     <plurals name="unit_sqyard">
         <item quantity="one">yarda karratu</item>
         <item quantity="other">yarda karratu</item>
@@ -173,7 +173,7 @@
         <item quantity="other">gibiyte</item>
     </plurals>
     <plurals name="unit_tebibyte">
-        <item quantity="one">tebiyte</item>
+        <item quantity="one">tebibyte</item>
         <item quantity="other">tebiyte</item>
     </plurals>
     <plurals name="unit_bit">
@@ -226,24 +226,24 @@
         <item quantity="one">tona</item>
         <item quantity="other">tona</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_long_ton_symbol">long ton</string>
     <plurals name="unit_long_ton">
         <item quantity="one">tona luze</item>
         <item quantity="other">tona luze</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">lb</string>
     <plurals name="unit_pound">
         <item quantity="one">libra</item>
         <item quantity="other">libra</item>
     </plurals>
     <string name="unit_degree_celsius_symbol">°C</string>
     <string name="unit_degree_fahrenheit_symbol">°F</string>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">oz</string>
     <plurals name="unit_ounce">
         <item quantity="one">ontza</item>
         <item quantity="other">ontza</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">short ton</string>
     <plurals name="unit_short_ton">
         <item quantity="one">tona motz</item>
         <item quantity="other">tona motz</item>
@@ -277,4 +277,70 @@
     <string name="dimension_time">Denbora</string>
     <string name="dimension_mass">Masa</string>
     <string name="dimension_bitrate">Bit-tasa</string>
+    <string name="dimension_data">Datuak</string>
+    <string name="unit_liter_symbol">L</string>
+    <plurals name="unit_liter">
+        <item quantity="one">litro</item>
+        <item quantity="other">litro</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">mL</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">mililitro</item>
+        <item quantity="other">mililitro</item>
+    </plurals>
+    <string name="unit_cubic_meter_symbol">m³</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">metro kubiko</item>
+        <item quantity="other">metro kubiko</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">zm³</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">zentimetro kubiko</item>
+        <item quantity="other">zentimetro kubiko</item>
+    </plurals>
+    <string name="unit_cubic_millimeter_symbol">mm³</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">milimetro kubiko</item>
+        <item quantity="other">milimetro kubiko</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">cu in</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">hazbete kubiko</item>
+        <item quantity="other">hazbete kubiko</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">cu ft</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">oin kubiko</item>
+        <item quantity="other">oin kubiko</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">cu yd</string>
+    <string name="unit_gallon_us_symbol">gal AEB</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">galoi (AEB)</item>
+        <item quantity="other">galoi (AEB)</item>
+    </plurals>
+    <string name="unit_gallon_imp_symbol">gal imp</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">galoi (inperiala)</item>
+        <item quantity="other">galoi (inperiala)</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">pt AEB</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">pinta (AEB)</item>
+        <item quantity="other">pinta (AEB)</item>
+    </plurals>
+    <string name="unit_pint_imp_symbol">pt imp</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">pinta (inperiala)</item>
+        <item quantity="other">pinta (inperiala)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">fl oz AEB</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">ontza fluidoa (AEB)</item>
+        <item quantity="other">ontza fluidoa (AEB)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">ontza fluidoa (inperiala)</item>
+        <item quantity="other">ontza fluidoa (inperiala)</item>
+    </plurals>
 </resources>

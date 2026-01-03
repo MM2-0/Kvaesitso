@@ -6,10 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Extension
-import androidx.compose.material.icons.rounded.Verified
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.ui.R
@@ -28,7 +25,11 @@ import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object PluginsSettingsRoute: NavKey
 
 @Composable
 fun PluginsSettingsScreen() {
@@ -52,7 +53,7 @@ fun PluginsSettingsScreen() {
                         verticalArrangement = Arrangement.Center,
                     ) {
                         LargeMessage(
-                            icon = Icons.Rounded.Extension,
+                            icon = R.drawable.extension_48px,
                             text = stringResource(R.string.no_plugins_installed),
                             color = MaterialTheme.colorScheme.secondary
                         )
@@ -63,7 +64,7 @@ fun PluginsSettingsScreen() {
             else -> {
                 if (enabledPackages.isNotEmpty()) {
                     item {
-                        PreferenceCategory("Enabled") {
+                        PreferenceCategory(stringResource(R.string.preference_category_enabled_plugins)) {
                             for (plugin in enabledPackages) {
                                 PluginPreference(viewModel, plugin)
                             }
@@ -72,7 +73,7 @@ fun PluginsSettingsScreen() {
                 }
                 if (disabledPackages.isNotEmpty()) {
                     item {
-                        PreferenceCategory("Installed") {
+                        PreferenceCategory(stringResource(R.string.preference_category_installed_plugins)) {
                             for (plugin in disabledPackages) {
                                 PluginPreference(viewModel, plugin)
                             }
@@ -86,7 +87,7 @@ fun PluginsSettingsScreen() {
 
 @Composable
 private fun PluginPreference(viewModel: PluginsSettingsScreenVM, plugin: PluginPackage) {
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val icon by remember(plugin.packageName) {
         viewModel.getIcon(plugin)
     }.collectAsState(null)
@@ -107,7 +108,7 @@ private fun PluginPreference(viewModel: PluginsSettingsScreenVM, plugin: PluginP
             )
         },
         onClick = {
-            navController?.navigate("settings/plugins/${plugin.packageName}")
+            backStack.add(PluginSettingsRoute(pluginId = plugin.packageName))
         }
     )
 }

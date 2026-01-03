@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.calendar.providers.CalendarList
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.themes.colors.atTone
@@ -19,6 +20,10 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class CalendarProviderSettingsRoute(val providerId: String): NavKey
 
 @Composable
 fun CalendarProviderSettingsScreen(providerId: String) {

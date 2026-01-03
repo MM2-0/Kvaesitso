@@ -11,10 +11,6 @@ import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.DragIndicator
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -37,14 +34,14 @@ import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.sheets.ConfigureWidgetSheet
 import de.mm20.launcher2.ui.launcher.widgets.calendar.CalendarWidget
 import de.mm20.launcher2.ui.launcher.widgets.external.AppWidget
-import de.mm20.launcher2.ui.launcher.widgets.favorites.FavoritesWidget
+import de.mm20.launcher2.ui.launcher.widgets.favorites.AppsWidget
 import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
 import de.mm20.launcher2.ui.launcher.widgets.notes.NotesWidget
 import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidget
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.CalendarWidget
-import de.mm20.launcher2.widgets.FavoritesWidget
+import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -89,7 +86,7 @@ fun WidgetItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.DragIndicator,
+                        painterResource(R.drawable.drag_indicator_24px),
                         contentDescription = null,
                         modifier = Modifier.draggable(
                             state = draggableState,
@@ -109,7 +106,7 @@ fun WidgetItem(
                             is WeatherWidget -> stringResource(R.string.widget_name_weather)
                             is MusicWidget -> stringResource(R.string.widget_name_music)
                             is CalendarWidget -> stringResource(R.string.widget_name_calendar)
-                            is FavoritesWidget -> stringResource(R.string.widget_name_favorites)
+                            is AppsWidget -> stringResource(R.string.widget_name_apps)
                             is NotesWidget -> stringResource(R.string.widget_name_notes)
                             is AppWidget -> remember(widget.config.widgetId) {
                                 appWidget?.loadLabel(
@@ -129,13 +126,13 @@ fun WidgetItem(
                         configure = true
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.Tune,
+                            painterResource(R.drawable.tune_24px),
                             contentDescription = stringResource(R.string.settings)
                         )
                     }
                     IconButton(onClick = { onWidgetRemove() }) {
                         Icon(
-                            imageVector = Icons.Rounded.Delete,
+                            painterResource(R.drawable.delete_24px),
                             contentDescription = stringResource(R.string.widget_action_remove)
                         )
                     }
@@ -155,8 +152,8 @@ fun WidgetItem(
                         CalendarWidget(widget)
                     }
 
-                    is FavoritesWidget -> {
-                        FavoritesWidget(widget)
+                    is AppsWidget -> {
+                        AppsWidget(widget)
                     }
 
                     is NotesWidget -> {

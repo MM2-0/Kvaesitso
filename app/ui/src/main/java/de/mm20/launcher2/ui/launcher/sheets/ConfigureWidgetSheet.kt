@@ -12,39 +12,56 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Build
-import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.HelpOutline
-import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.LinkOff
-import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.DropdownMenuGroup
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,19 +75,24 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
+import androidx.compose.ui.zIndex
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.search.calendar.CalendarListType
 import de.mm20.launcher2.themes.colors.atTone
 import de.mm20.launcher2.ui.R
@@ -79,6 +101,9 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
+import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropColumn
+import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -89,13 +114,15 @@ import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.CalendarWidget
-import de.mm20.launcher2.widgets.FavoritesWidget
+import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import org.koin.compose.koinInject
+import java.text.Collator
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
@@ -106,19 +133,22 @@ fun ConfigureWidgetSheet(
     onWidgetUpdated: (Widget) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    BottomSheetDialog(onDismissRequest = onDismiss) {
+    BottomSheetDialog(
+        onDismissRequest = onDismiss,
+        windowInsets = WindowInsets()
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = if (widget is AppWidget) 8.dp else 16.dp)
+                .padding(it)
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = 8.dp)
         ) {
             when (widget) {
                 is WeatherWidget -> ConfigureWeatherWidget(widget, onWidgetUpdated)
                 is AppWidget -> ConfigureAppWidget(widget, onWidgetUpdated)
                 is CalendarWidget -> ConfigureCalendarWidget(widget, onWidgetUpdated)
-                is FavoritesWidget -> ConfigureFavoritesWidget(widget, onWidgetUpdated)
+                is AppsWidget -> ConfigureFavoritesWidget(widget, onWidgetUpdated)
                 is MusicWidget -> ConfigureMusicWidget(widget, onWidgetUpdated)
                 is NotesWidget -> ConfigureNotesWidget(widget, onWidgetUpdated)
             }
@@ -159,74 +189,368 @@ fun ColumnScope.ConfigureWeatherWidget(
             bottom = 8.dp,
         ),
         onClick = {
-            context.startActivity(Intent(
-                context,
-                SettingsActivity::class.java
-            ).apply {
-                putExtra(
-                    SettingsActivity.EXTRA_ROUTE,
-                    SettingsActivity.ROUTE_WEATHER_INTEGRATION
-                )
-            })
+            context.startActivity(
+                Intent(
+                    context,
+                    SettingsActivity::class.java
+                ).apply {
+                    putExtra(
+                        SettingsActivity.EXTRA_ROUTE,
+                        SettingsActivity.ROUTE_WEATHER_INTEGRATION
+                    )
+                })
         }) {
         Text(stringResource(R.string.widget_config_weather_integration_settings))
         Icon(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
-            imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
         )
     }
 }
 
 @Composable
 fun ColumnScope.ConfigureFavoritesWidget(
-    widget: FavoritesWidget,
-    onWidgetUpdated: (FavoritesWidget) -> Unit,
+    widget: AppsWidget,
+    onWidgetUpdated: (AppsWidget) -> Unit,
 ) {
+    val customAttrRepository = koinInject<CustomAttributesRepository>()
+
+    val allTags by remember {
+        customAttrRepository
+            .getAllTags()
+            .map {
+                val collator = Collator.getInstance().apply { strength = Collator.SECONDARY }
+                it
+                    .sortedWith { el1, el2 ->
+                        collator.compare(el1, el2)
+                    }
+            }
+    }.collectAsState(emptyList())
+
+    val tagsListState = rememberLazyListState()
+
     val bottomSheetManager = LocalBottomSheetManager.current
-    OutlinedCard {
-        Column(
-            modifier = Modifier.fillMaxWidth()
+
+    var createTag by remember { mutableStateOf(false) }
+
+
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+    ) {
+        ToggleButton(
+            modifier = Modifier.weight(1f),
+            checked = !widget.config.customTags,
+            onCheckedChange = {
+                if (it) {
+                    onWidgetUpdated(widget.copy(config = widget.config.copy(customTags = false)))
+                }
+            },
+            shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
         ) {
-            SwitchPreference(
-                title = stringResource(R.string.preference_edit_button),
-                iconPadding = false,
-                value = widget.config.editButton,
-                onValueChanged = {
-                    onWidgetUpdated(widget.copy(config = widget.config.copy(editButton = it)))
-                }
+            Icon(
+                painterResource(
+                    if (!widget.config.customTags) R.drawable.check_20px else R.drawable.star_20px
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(end = ToggleButtonDefaults.IconSpacing)
+                    .size(ToggleButtonDefaults.IconSize)
             )
-            SwitchPreference(
-                title = stringResource(R.string.preference_compact_tags),
-                iconPadding = false,
-                value = widget.config.compactTags,
-                onValueChanged = {
-                    onWidgetUpdated(widget.copy(config = widget.config.copy(compactTags = it)))
+
+            Text(stringResource(R.string.favorites))
+        }
+        ToggleButton(
+            modifier = Modifier.weight(1f),
+            checked = widget.config.customTags,
+            onCheckedChange = {
+                if (it) {
+                    onWidgetUpdated(
+                        widget.copy(
+                            config = widget.config.copy(customTags = true)
+                        )
+                    )
                 }
+            },
+            shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
+        ) {
+            Icon(
+                painterResource(
+                    if (widget.config.customTags) R.drawable.check_20px else R.drawable.tag_20px
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(end = ToggleButtonDefaults.IconSpacing)
+                    .size(ToggleButtonDefaults.IconSize)
             )
+
+            Text(stringResource(R.string.preference_screen_tags))
         }
     }
-    TextButton(
-        modifier = Modifier
-            .padding(top = 8.dp)
-            .align(Alignment.End),
-        contentPadding = PaddingValues(
-            end = 16.dp,
-            top = 8.dp,
-            start = 24.dp,
-            bottom = 8.dp,
-        ),
-        onClick = {
-            bottomSheetManager.showEditFavoritesSheet()
-        }) {
-        Text(stringResource(R.string.menu_item_edit_favs))
-        Icon(
+
+    AnimatedContent(widget.config.customTags) { showTags ->
+        Column(
             modifier = Modifier
-                .padding(start = ButtonDefaults.IconSpacing)
-                .requiredSize(ButtonDefaults.IconSize),
-            imageVector = Icons.Rounded.OpenInNew, contentDescription = null
-        )
+                .fillMaxWidth(),
+        ) {
+            if (showTags) {
+                var tagList by remember {
+                    mutableStateOf(widget.config.tagList.toImmutableList())
+                }
+
+
+                val availableTags by remember {
+                    derivedStateOf { allTags - tagList }
+                }
+
+                LaunchedEffect(tagList) {
+                    onWidgetUpdated(
+                        widget.copy(
+                            config = widget.config.copy(
+                                tagList = tagList
+                            )
+                        )
+                    )
+                }
+
+                OutlinedCard(
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+
+                    val rowState = rememberLazyDragAndDropListState(
+                        listState = tagsListState,
+                        onItemMove = { from, to ->
+                            val newTagList = tagList.toMutableList()
+                            val tag = newTagList.removeAt(from.index)
+                            newTagList.add(to.index, tag)
+                            tagList = newTagList.toImmutableList()
+                        },
+                    )
+
+                    LazyDragAndDropColumn(
+                        state = rowState,
+                        modifier = Modifier
+                            .heightIn(max = 9999.dp)
+                            .fillMaxWidth()
+                            .animateContentSize(MaterialTheme.motionScheme.defaultSpatialSpec()),
+                        bidirectionalDrag = false,
+                    ) {
+                        items(
+                            tagList,
+                            key = { it }
+                        ) { tag ->
+                            DraggableItem(state = rowState, key = tag) {
+                                val elevation by animateDpAsState(if (it) 4.dp else 0.dp)
+                                Surface(
+                                    shadowElevation = elevation,
+                                    tonalElevation = elevation,
+                                    modifier = Modifier.zIndex(if (it) 1f else 0f)
+                                ) {
+                                    Preference(
+                                        title = tag,
+                                        icon = R.drawable.tag_24px,
+                                        controls = {
+                                            IconButton(
+                                                modifier = Modifier.offset(x = 8.dp),
+                                                onClick = {
+                                                    tagList = (tagList - tag).toImmutableList()
+                                                }
+                                            ) {
+                                                Icon(
+                                                    painterResource(R.drawable.close_24px),
+                                                    stringResource(R.string.menu_remove),
+                                                )
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                var showAddMenu by remember { mutableStateOf(false) }
+
+                Box {
+                    FilledTonalButton(
+                        modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
+                        onClick = {
+                            showAddMenu = true
+                        },
+                        contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                        shapes = ButtonDefaults.shapes()
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.add_20px),
+                            null,
+                            modifier = Modifier
+                                .padding(end = ButtonDefaults.IconSpacing)
+                                .size(ButtonDefaults.IconSize)
+                        )
+                        Text(stringResource(R.string.select_tag))
+                    }
+                    DropdownMenuPopup(
+                        expanded = showAddMenu,
+                        onDismissRequest = { showAddMenu = false }) {
+                        if (availableTags.isNotEmpty()) {
+                            DropdownMenuGroup(
+                                shapes = MenuDefaults.groupShape(0, 2),
+                            ) {
+                                for ((i, tag) in availableTags.withIndex()) {
+                                    DropdownMenuItem(
+                                        shape = if (availableTags.size == 1) MenuDefaults.standaloneItemShape
+                                        else when (i) {
+                                            0 -> MenuDefaults.leadingItemShape
+                                            availableTags.lastIndex -> MenuDefaults.trailingItemShape
+                                            else -> MenuDefaults.middleItemShape
+                                        },
+                                        leadingIcon = {
+                                            Icon(
+                                                painterResource(R.drawable.tag_24px),
+                                                null
+                                            )
+                                        },
+                                        text = { Text(tag) },
+                                        onClick = {
+                                            tagList = (tagList + tag).toImmutableList()
+                                            showAddMenu = false
+                                        })
+                                }
+                            }
+                            Spacer(
+                                modifier = Modifier.height(MenuDefaults.GroupSpacing)
+                            )
+                        }
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShape(
+                                if (availableTags.isEmpty()) 0 else 1,
+                                if (availableTags.isEmpty()) 1 else 2,
+                            )
+                        ) {
+                            DropdownMenuItem(
+                                shape = MenuDefaults.standaloneItemShape,
+                                leadingIcon = {
+                                    Icon(painterResource(R.drawable.add_24px), null)
+                                },
+                                text = {
+                                    Text(
+                                        stringResource(R.string.edit_favorites_dialog_new_tag),
+                                    )
+                                },
+                                onClick = {
+                                    createTag = true
+                                    showAddMenu = false
+                                }
+                            )
+                        }
+                    }
+                }
+
+
+                if (createTag) {
+                    EditTagSheet(
+                        tag = null,
+                        onTagSaved = { tag ->
+                            val newTag = Tag(tag)
+                            tagList = (tagList + newTag.tag).toImmutableList()
+                        },
+                        onDismiss = {
+                            createTag = false
+                        }
+                    )
+                }
+
+                OutlinedCard(
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_compact_tags),
+                            iconPadding = false,
+                            value = widget.config.compactTags,
+                            onValueChanged = {
+                                onWidgetUpdated(
+                                    widget.copy(
+                                        config = widget.config.copy(
+                                            compactTags = it
+                                        )
+                                    )
+                                )
+                            },
+                            enabled = widget.config.tagList.size > 1,
+                        )
+                    }
+                }
+            } else {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    OutlinedCard(
+                        modifier = Modifier.padding(top = 16.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+
+                            SwitchPreference(
+                                title = stringResource(R.string.preference_edit_button),
+                                iconPadding = false,
+                                value = widget.config.editButton,
+                                onValueChanged = {
+                                    onWidgetUpdated(
+                                        widget.copy(
+                                            config = widget.config.copy(
+                                                editButton = it
+                                            )
+                                        )
+                                    )
+                                }
+                            )
+                            SwitchPreference(
+                                title = stringResource(R.string.preference_compact_tags),
+                                iconPadding = false,
+                                value = widget.config.compactTags,
+                                onValueChanged = {
+                                    onWidgetUpdated(
+                                        widget.copy(
+                                            config = widget.config.copy(
+                                                compactTags = it
+                                            )
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                    }
+                    TextButton(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .align(Alignment.End),
+                        contentPadding = PaddingValues(
+                            end = 16.dp,
+                            top = 8.dp,
+                            start = 24.dp,
+                            bottom = 8.dp,
+                        ),
+                        onClick = {
+                            bottomSheetManager.showEditFavoritesSheet()
+                        }) {
+                        Text(stringResource(R.string.menu_item_edit_favs))
+                        Icon(
+                            modifier = Modifier
+                                .padding(start = ButtonDefaults.IconSpacing)
+                                .requiredSize(ButtonDefaults.IconSize),
+                            painter = painterResource(R.drawable.open_in_new_20px),
+                            contentDescription = null
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -234,7 +558,6 @@ fun ColumnScope.ConfigureFavoritesWidget(
 fun ColumnScope.ConfigureMusicWidget(
     widget: MusicWidget,
     onWidgetUpdated: (MusicWidget) -> Unit,
-
 ) {
     val context = LocalContext.current
 
@@ -263,22 +586,23 @@ fun ColumnScope.ConfigureMusicWidget(
             bottom = 8.dp,
         ),
         onClick = {
-            context.startActivity(Intent(
-                context,
-                SettingsActivity::class.java
-            ).apply {
-                putExtra(
-                    SettingsActivity.EXTRA_ROUTE,
-                    SettingsActivity.ROUTE_MEDIA_INTEGRATION,
-                )
-            })
+            context.startActivity(
+                Intent(
+                    context,
+                    SettingsActivity::class.java
+                ).apply {
+                    putExtra(
+                        SettingsActivity.EXTRA_ROUTE,
+                        SettingsActivity.ROUTE_MEDIA_INTEGRATION,
+                    )
+                })
         }) {
         Text(stringResource(R.string.widget_config_music_integration_settings))
         Icon(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
-            imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
         )
     }
 }
@@ -305,7 +629,7 @@ fun ColumnScope.ConfigureAppWidget(
             contentAlignment = Alignment.Center
         ) {
             LargeMessage(
-                icon = Icons.Rounded.Error,
+                icon = R.drawable.error_48px,
                 text = stringResource(id = R.string.app_widget_loading_failed)
             )
         }
@@ -316,7 +640,7 @@ fun ColumnScope.ConfigureAppWidget(
             contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
             onClick = { replaceWidget = true }) {
             Icon(
-                Icons.Rounded.Build,
+                painterResource(R.drawable.build_20px),
                 null,
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
@@ -338,7 +662,7 @@ fun ColumnScope.ConfigureAppWidget(
                         is WeatherWidget -> it.copy(id = widget.id)
                         is MusicWidget -> it.copy(id = widget.id)
                         is CalendarWidget -> it.copy(id = widget.id)
-                        is FavoritesWidget -> it.copy(id = widget.id)
+                        is AppsWidget -> it.copy(id = widget.id)
                         is NotesWidget -> it.copy(id = widget.id)
                     }
                     onWidgetUpdated(updatedWidget)
@@ -506,7 +830,8 @@ fun ColumnScope.ConfigureAppWidget(
                     modifier = Modifier
                         .padding(start = ButtonDefaults.IconSpacing)
                         .requiredSize(ButtonDefaults.IconSize),
-                    imageVector = Icons.Rounded.OpenInNew, contentDescription = null
+                    painter = painterResource(R.drawable.open_in_new_20px),
+                    contentDescription = null
                 )
             }
         }
@@ -659,7 +984,7 @@ fun ColumnScope.ConfigureCalendarWidget(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .requiredSize(ButtonDefaults.IconSize),
-                imageVector = Icons.Rounded.HelpOutline, contentDescription = null
+                painter = painterResource(R.drawable.help_20px), contentDescription = null
             )
             Text(stringResource(R.string.widget_config_calendar_missing_calendars_hint))
         }
@@ -672,6 +997,7 @@ fun ConfigureNotesWidget(
     onWidgetUpdated: (NotesWidget) -> Unit
 ) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val linkFileLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("text/markdown")
     ) {
@@ -706,7 +1032,7 @@ fun ConfigureNotesWidget(
     OutlinedCard {
         if (widget.config.linkedFile != null) {
             Preference(
-                icon = { Icon(Icons.Rounded.LinkOff, null) },
+                icon = { Icon(painterResource(R.drawable.link_off_24px), null) },
                 title = { Text(stringResource(R.string.note_widget_action_unlink_file)) },
                 summary = {
                     Text(
@@ -732,10 +1058,10 @@ fun ConfigureNotesWidget(
             Preference(
                 title = stringResource(R.string.note_widget_link_file),
                 summary = stringResource(R.string.note_widget_link_file_summary),
-                icon = Icons.Rounded.Link,
+                icon = R.drawable.link_24px,
                 onClick = {
                     linkFileLauncher.launch(
-                        context.getString(
+                        resources.getString(
                             R.string.notes_widget_export_filename,
                             ZonedDateTime.now().format(
                                 DateTimeFormatter.ISO_INSTANT

@@ -92,7 +92,6 @@
     <string name="widget_name_weather">الطقس</string>
     <string name="widget_name_calendar">التقويم</string>
     <string name="widget_name_music">الموسيقى</string>
-    <string name="widget_name_favorites">المفضلة</string>
     <string name="widget_name_notes">ملاحظة</string>
     <string name="widget_name_unknown">أداة واجهة تطبيق غير معروفة</string>
     <string name="widget_add_widget">إضافة أداة واجهة</string>
@@ -103,7 +102,6 @@
     <string name="notes_widget_action_dismiss">استبعاد</string>
     <string name="notes_widget_dismissed">تم ‏رفض الملاحظة.</string>
     <string name="shortcut_summary">من طرف %1$s</string>
-    <string name="easter_egg_text">حسنا، لقد وجدتني. تهانينا. هل كان يستحق كل هذا العناء؟</string>
     <string name="edit">تعديل</string>
     <string name="close">إغلاق</string>
     <string name="save">حفظ</string>
@@ -266,7 +264,6 @@
     <string name="preference_screen_appearance">المظهر</string>
     <string name="preference_theme">السمة</string>
     <string name="preference_colors_bw">أبيض وأسود</string>
-    <string name="preference_font_system">الافتراضي للنظام</string>
     <string name="preference_automatic_location">موقع تلقائي</string>
     <string name="preference_automatic_location_summary">استعمل GPS وخدمة المواقع لتحديد الموقع تلقائيا</string>
     <string name="preference_location">الموقع</string>
@@ -383,7 +380,6 @@
     <string name="preference_screen_search">البحث</string>
     <string name="preference_search_currencyconverter_summary">تنزيل أسعار الصرف بشكل دوري لتحويل العملات</string>
     <string name="preference_search_nextcloud">نكست كلاود Nextcloud</string>
-    <string name="preference_icon_shape_platform">افتراضي النظام</string>
     <string name="preference_icon_shape_triangle">مثلث رولو</string>
     <string name="preference_category_searchbar">شريط البحث</string>
     <string name="preference_screen_integrations">التكاملات</string>
@@ -841,7 +837,6 @@
     <string name="preference_clock_widget_time_format">تنسيق الوقت</string>
     <string name="preference_clock_widget_time_format_24h">24-ساعة</string>
     <string name="preference_clock_widget_time_format_12h">12-ساعة</string>
-    <string name="preference_clock_widget_time_format_system">النظام الافتراضي</string>
     <string name="missing_permission_call_contacts_settings">إذن الاتصال مطلوب لبدء المكالمات</string>
     <string name="preference_contacts_call_on_tap">انقر للاتصال</string>
     <string name="save_as_file">اهلا</string>

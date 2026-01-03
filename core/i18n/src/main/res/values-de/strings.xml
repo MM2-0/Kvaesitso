@@ -46,7 +46,7 @@
     <string name="preference_category_debug">Debug</string>
     <string name="wikipedia_url">https://de.wikipedia.org</string>
     <string name="wikipedia_source">Aus Wikipedia</string>
-    <string name="preference_category_icons">Symbole</string>
+    <string name="preference_category_icons">Icons</string>
     <string name="preference_icon_shape">Form</string>
     <string name="preference_icon_shape_square">Quadrat</string>
     <string name="preference_icon_shape_rounded_square">Abgerundetes Quadrat</string>
@@ -91,13 +91,13 @@
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="websearch_dialog_url_error">In dieser URL fehlt der Platzhalter „${1}“</string>
-    <string name="websearch_dialog_replace_icon">Symbol ersetzen</string>
-    <string name="websearch_dialog_delete_icon">Symbol löschen</string>
+    <string name="websearch_dialog_replace_icon">Icon ersetzen</string>
+    <string name="websearch_dialog_delete_icon">Icon löschen</string>
     <string name="preference_weather_provider">Wetterdienst</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (nur Deutschland)</string>
-    <string name="preference_icon_pack_summary_empty">Keine Symbolpakete installiert</string>
-    <string name="preference_icon_pack">Symbolpaket</string>
+    <string name="preference_icon_pack_summary_empty">Keine Iconpacks installiert</string>
+    <string name="preference_icon_pack">Iconpack</string>
     <string name="menu_edit_widgets">Widgets bearbeiten</string>
     <string name="widget_name_weather">Wetter</string>
     <string name="widget_name_calendar">Kalender</string>
@@ -168,14 +168,13 @@
     <string name="weather_condition_heavyrainandthunder">Starkregen und Gewitter</string>
     <string name="weather_condition_wind">Wind</string>
     <string name="weather_condition_unknown">Unbekannt</string>
-    <string name="easter_egg_text">Tja, da sind Sie. Herzlichen Glückwunsch. War es das wert\?</string>
     <string name="missing_permission_calendar_widget">Kalender-Berechtigung wird benötigt, um Ihre nächsten Termine hier anzuzeigen</string>
     <string name="missing_permission_calendar_search">Kalender-Berechtigung wird benötigt, um Termine zu durchsuchen.</string>
     <string name="missing_permission_location_search">Standortzugriff wird benötigt, um Orte zu finden</string>
     <string name="missing_permission_contact_search">Kontakt-Berechtigung wird benötigt, um Kontakte zu durchsuchen.</string>
     <string name="missing_permission_files_search">Speicher-Berechtigung wird benötigt, um Dateien auf diesem Gerät zu durchsuchen</string>
     <string name="close">Schließen</string>
-    <string name="websearch_dialog_custom_icon">Eigenes Symbol</string>
+    <string name="websearch_dialog_custom_icon">Eigenes Icon</string>
     <string name="widget_action_remove">Entfernen</string>
     <string name="provider_here">HERE</string>
     <string name="preference_icon_shape_pentagon">Fünfeck</string>
@@ -192,7 +191,6 @@
     <string name="preference_shortcut_badges">Shortcut-Plaketten</string>
     <string name="preference_cloud_badges_summary">Eine Plakette für Dateien, die in einer Cloud gespeichert sind anzeigen</string>
     <string name="preference_shortcut_badges_summary">Für Shortcuts anzeigen, zu welcher App diese gehören</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_nextcloud_signin">Bei Nextcloud anmelden</string>
     <string name="preference_nextcloud_signin_summary">Anmelden, um Ihren Nextcloud-Server durchsuchen zu können</string>
     <string name="preference_about_telegram">Telegram-Gruppe</string>
@@ -239,8 +237,8 @@
         <item quantity="one">+%1$d laufender Termin aus vergangenen Tagen</item>
         <item quantity="other">+%1$d laufende Termine aus vergangenen Tagen</item>
     </plurals>
-    <string name="preference_themed_icons">Eingefärbte Symbole</string>
-    <string name="preference_themed_icons_summary">Symbole an das Farbschema der App anpassen</string>
+    <string name="preference_themed_icons">Eingefärbte Icons</string>
+    <string name="preference_themed_icons_summary">Icons an das Farbschema der App anpassen</string>
     <string name="weather_no_data">Keine Wetterdaten verfügbar</string>
     <string name="preference_category_grid">Raster</string>
     <string name="preference_grid_column_count">Spaltenanzahl</string>
@@ -261,7 +259,7 @@
     <string name="preference_crash_reporter_summary">Fehler- und Absturzberichte</string>
     <string name="preference_calendar_calendars">Kalender</string>
     <string name="preference_screen_search">Suche</string>
-    <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Elemente</string>
+    <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Suchergebnisse</string>
     <string name="preference_search_favorites">Favoriten</string>
     <string name="preference_search_favorites_summary">Angepinnte und häufig genutzte Elemente über dem App-Raster anzeigen</string>
     <string name="preference_search_files">Dateien</string>
@@ -320,10 +318,10 @@
     <string name="missing_permission_appshortcuts_search_settings">%1$s muss als Standard-Start-App gesetzt sein, um App-Shortcuts durchsuchen zu können</string>
     <string name="missing_permission_appshortcuts_search">%1$s als Standard-Start-App festlegen, um App-Shortcuts durchsuchen zu können.</string>
     <string name="preference_search_appshortcuts_summary">App-Shortcuts durchsuchen</string>
-    <string name="widget_name_favorites">Favoriten</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Die erste Zeile der Favoriten anzeigen</string>
-    <string name="preference_grid_icon_size">Symbolgröße</string>
+    <string name="preference_clockwidget_favorites_part_summary">Favoriten im Dock anzeigen</string>
+    <string name="preference_clockwidget_dock_rows">Dock-Zeilen</string>
+    <string name="preference_grid_icon_size">Icongröße</string>
     <string name="preference_search_currencyconverter">Währungsrechner</string>
     <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen, um Währungen umzurechnen</string>
     <string name="action_undo">Rückgängig</string>
@@ -349,17 +347,16 @@
     <string name="save">Speichern</string>
     <string name="file_type_launcherbackup">%1$s-Backup</string>
     <string name="preference_enforce_icon_shape">Form erzwingen</string>
-    <string name="preference_enforce_icon_shape_summary">Form auch auf Symbole anwenden, die dies normalerweise nicht unterstützen</string>
+    <string name="preference_enforce_icon_shape_summary">Form auch auf Icons anwenden, die dies normalerweise nicht unterstützen</string>
     <string name="preference_font">Schriftart</string>
-    <string name="preference_font_system">Systemstandard</string>
     <string name="preference_blur_wallpaper">Hintergrund weichzeichnen</string>
     <string name="preference_blur_wallpaper_summary">Einen Unschärfeeffekt für das Hintergrundbild verwenden</string>
     <string name="preference_blur_wallpaper_unsupported">Auf diesem Gerät nicht unterstützt</string>
-    <string name="preference_force_themed_icons">Eingefärbte Symbole erzwingen</string>
-    <string name="preference_force_themed_icons_summary">Das Anwendungsfarbschema auf alle Symbole anwenden, einschließlich nicht unterstützter (nicht empfohlen)</string>
+    <string name="preference_force_themed_icons">Eingefärbte Icons erzwingen</string>
+    <string name="preference_force_themed_icons_summary">Das Anwendungsfarbschema auf alle Icons anwenden, einschließlich nicht unterstützter (nicht empfohlen)</string>
     <string name="icon_picker_default_icon">Vorgabe</string>
     <string name="icon_picker_suggestions">Vorschläge</string>
-    <string name="icon_picker_search_icon">In Symbolpaketen suchen</string>
+    <string name="icon_picker_search_icon">In Iconpacks suchen</string>
     <string name="menu_customize">Anpassen</string>
     <string name="alert_delete_shortcut">Der Shortcut %1$s wird unwiderruflich gelöscht. Fortfahren\?</string>
     <string name="preference_grid_labels">Beschriftungen anzeigen</string>
@@ -480,12 +477,12 @@
     <string name="preference_search_result_ordering_weight_factor_default">Ausgewogen</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variabel</string>
     <string name="gesture_action_launch_app">App starten</string>
-    <string name="icon_picker_filter_all_packs">Alle Symbolpakete</string>
+    <string name="icon_picker_filter_all_packs">Alle Iconpacks</string>
     <string name="preference_screen_clockwidget_summary">Uhrenstil und -Komponenten konfigurieren</string>
     <string name="preference_screen_homescreen">Startbildschirm</string>
     <string name="preference_screen_homescreen_summary">Uhr, Suchleiste, Hintergrundbild, Systemleisten</string>
-    <string name="preference_screen_icons">Raster und Symbole</string>
-    <string name="preference_screen_icons_summary">Raster, Symbolgröße, Symbolpakete, Plaketten</string>
+    <string name="preference_screen_icons">Raster und Icons</string>
+    <string name="preference_screen_icons_summary">Raster, Icons, Plaketten</string>
     <string name="preference_weather_integration">Wetter</string>
     <string name="preference_media_integration">Mediensteuerung</string>
     <string name="widget_config_calendar_no_calendars">Keine Kalender gefunden</string>
@@ -497,8 +494,8 @@
     <string name="widget_config_weather_integration_settings">Einstellungen für die Wetter-Integration</string>
     <string name="app_widget_loading_failed">App-Widget konnte nicht geladen werden</string>
     <string name="preference_category_media_apps">Medienapps</string>
-    <string name="preference_debug_reinstall_iconpacks">Symbolpakete neu installieren</string>
-    <string name="preference_debug_reinstall_iconpacks_summary">Symbolpaketecache leeren und neu erstellen</string>
+    <string name="preference_debug_reinstall_iconpacks">Iconpacks neu installieren</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Iconpackcache leeren und neu erstellen</string>
     <string name="widget_name_notes">Notiz</string>
     <string name="notes_widget_placeholder">Notiz schreiben</string>
     <string name="notes_widget_action_new">Neue Notiz</string>
@@ -636,7 +633,7 @@
     <string name="poi_category_hospital">Krankenhaus</string>
     <string name="poi_category_post_office">Post</string>
     <string name="poi_category_police">Polizei</string>
-    <string name="poi_category_dentist">Zahnarzt</string>
+    <string name="poi_category_dentist">Zahnarztpraxis</string>
     <string name="poi_category_library">Bücherei</string>
     <string name="poi_category_ice_cream">Eisdiele</string>
     <string name="poi_category_theater">Theater</string>
@@ -645,7 +642,7 @@
     <string name="poi_category_clinic">Klinik</string>
     <string name="poi_category_clothes">Bekleidungsgeschäft</string>
     <string name="poi_category_convenience">Lebensmittelgeschäft</string>
-    <string name="poi_category_hairdresser">Friseur</string>
+    <string name="poi_category_hairdresser">Friseur:in</string>
     <string name="poi_category_books">Buchhandlung</string>
     <string name="poi_category_bakery">Bäckerei</string>
     <string name="poi_category_mobile_phone">Handygeschäft</string>
@@ -654,7 +651,7 @@
     <string name="poi_category_florist">Blumenhandlung</string>
     <string name="poi_category_mall">Einkaufszentrum</string>
     <string name="poi_category_optician">Augenoptiker:in</string>
-    <string name="poi_category_jewelry">Juwelier</string>
+    <string name="poi_category_jewelry">Juwelier:in</string>
     <string name="poi_category_laundry">Wäscherei</string>
     <string name="poi_category_bank">Bank</string>
     <string name="poi_category_soccer">Fußballplatz</string>
@@ -664,7 +661,7 @@
     <string name="poi_category_museum">Museum</string>
     <string name="poi_category_fitness_center">Fitnesscenter</string>
     <string name="poi_category_fast_food">Fast Food</string>
-    <string name="poi_category_doctors">Arzt</string>
+    <string name="poi_category_doctors">Arztpraxis</string>
     <string name="poi_category_parking">Parkplatz</string>
     <string name="poi_category_university">Universität</string>
     <string name="poi_category_basketball">Basketballfeld</string>
@@ -781,7 +778,7 @@
         <item quantity="other">%1$s Listen ausgewählt</item>
     </plurals>
     <string name="preference_compact_tags">Kompakte Tags</string>
-    <string name="preference_compact_tags_summary">Beschriftungen oder Symbole von Tags ausblenden, um den von Tags eingenommenen Platz zu reduzieren</string>
+    <string name="preference_compact_tags_summary">Beschriftungen oder Icons von Tags ausblenden, um den von Tags eingenommenen Platz zu reduzieren</string>
     <string name="departure_time_now">jetzt</string>
     <plurals name="departure_time_in">
         <item quantity="one">in einer Minute</item>
@@ -802,7 +799,6 @@
     <string name="preference_clock_widget_time_format">Zeitformat</string>
     <string name="preference_clock_widget_time_format_24h">24-Stunden</string>
     <string name="preference_clock_widget_time_format_12h">12-Stunden</string>
-    <string name="preference_clock_widget_time_format_system">Systemstandard</string>
     <string name="widget_removed">Widget entfernt</string>
     <string name="missing_permission_call_contacts_settings">Telefonberechtigung wird benötigt, um Anrufe zu starten</string>
     <string name="action_install">Installieren</string>
@@ -867,4 +863,32 @@
     <string name="clock_variant_analog_ticks">Striche</string>
     <string name="preference_clock_widget_monospaced">Ziffern mit fester Breite</string>
     <string name="poi_category_hackerspace">Hackerspace</string>
+    <string name="preference_search_apps">Apps</string>
+    <string name="preference_search_apps_summary">Alle Apps anzeigen, wenn das Suchfeld leer ist</string>
+    <string name="preference_screen_locale">Sprache und Region</string>
+    <string name="preference_screen_locale_summary">Sprache, Einheiten, Zeitformat</string>
+    <string name="preference_language">Sprache</string>
+    <string name="preference_value_system_default">Systemstandard</string>
+    <string name="preference_form_of_address">Anredeform</string>
+    <string name="preference_form_of_address_neutral">Neutral</string>
+    <string name="preference_form_of_address_fem">Feminin</string>
+    <string name="preference_form_of_address_masc">Maskulin</string>
+    <string name="preference_measurement_system">Einheitensystem</string>
+    <string name="preference_measurement_system_metric">Metrisch</string>
+    <string name="preference_measurement_system_uk">Vereinigtes Königreich</string>
+    <string name="preference_measurement_system_us">Vereinigte Staaten</string>
+    <string name="preference_transliteration">Bevorzugte Transliteration</string>
+    <string name="preference_transliteration_auto">Automatisch</string>
+    <string name="preference_transliteration_disabled">Deaktiviert</string>
+    <string name="preference_category_enabled_plugins">Aktiviert</string>
+    <string name="preference_category_installed_plugins">Installiert</string>
+    <string name="tag_icon_customicon">Icon</string>
+    <string name="tag_icon_emoji">Emoji</string>
+    <string name="select_tag">Tag auswählen</string>
+    <string name="widget_name_apps">Apps</string>
+    <string name="preference_clockwidget_smartspacer">Wird von Smartspacer verwaltet</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer ist ein freies und quelloffenes At a Glance-Widget. Wenn es installiert ist, kann es in die dynamische Zone des Uhren-Widgets integriert werden</string>
+    <string name="preference_smartspacer_enable">Smartspacer-Integration aktivieren</string>
+    <string name="preference_launch_smartspacer_app">Smartspacer öffnen</string>
 </resources>

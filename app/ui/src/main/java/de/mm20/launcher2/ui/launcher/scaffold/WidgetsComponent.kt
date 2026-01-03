@@ -10,9 +10,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -86,9 +89,10 @@ internal object WidgetsComponent : ScaffoldComponent() {
                 .padding(horizontal = 8.dp)
                 .padding(top = topPadding)
                 .padding(insets),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             WidgetColumn(
-                modifier = Modifier,
+                modifier = Modifier.widthIn(max = 900.dp).fillMaxHeight(),
                 editMode = editMode,
                 onEditModeChange = {
                     scope.launch { state.lock(hideSearchBar = true) }

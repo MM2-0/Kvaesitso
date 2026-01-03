@@ -191,7 +191,6 @@
     <string name="preference_cards_stroke_width">Kantbredd</string>
     <string name="preference_cards_opacity">Genomskinlighet</string>
     <string name="preference_icon_shape">Form</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_icon_shape_square">Fyrkant</string>
     <string name="preference_icon_shape_rounded_square">Rundad fyrkant</string>
     <string name="preference_icon_shape_squircle">Kvirkel</string>
@@ -291,7 +290,6 @@
     <string name="preference_owncloud_signin_summary">Logga in för att söka i din Owncloud-server</string>
     <string name="menu_share">Dela</string>
     <string name="default_websearch_2_name">YouTube</string>
-    <string name="easter_egg_text">Okej, du hittade mig. Grattis. Var det värt det\?</string>
     <string name="owncloud_login_failed">Inloggning misslyckades: fel användarnamn eller lösenord.</string>
     <string name="missing_permission_file_search_settings_android10">Filhanteringsåtkomst krävs för att söka bland lokala filer</string>
     <string name="preference_screen_debug_summary">Felsökningsverktyg</string>

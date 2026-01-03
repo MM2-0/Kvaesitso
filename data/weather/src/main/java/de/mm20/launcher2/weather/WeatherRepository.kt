@@ -244,8 +244,9 @@ class WeatherUpdateWorker(
             Result.retry()
         } else {
             Log.i("WeatherUpdateWorker", "Weather update succeeded")
+            val in7Days = System.currentTimeMillis() + Duration.ofDays(7).toMillis()
             appDatabase.weatherDao()
-                .replaceAll(weatherData.map { it.toDatabaseEntity() })
+                .replaceAll(weatherData.takeWhile { it.timestamp < in7Days  }.map { it.toDatabaseEntity() })
             settings.setLastUpdate(System.currentTimeMillis())
             Result.success()
         }

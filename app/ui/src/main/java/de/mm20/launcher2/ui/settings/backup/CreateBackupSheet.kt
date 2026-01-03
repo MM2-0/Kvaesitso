@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircleOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -65,7 +63,7 @@ fun CreateBackupSheet(
             else {
                 LargeMessage(
                     modifier = Modifier.aspectRatio(1f),
-                    icon = Icons.Rounded.CheckCircleOutline,
+                    icon = R.drawable.check_circle_48px,
                     text = stringResource(
                         id = R.string.backup_complete
                     )

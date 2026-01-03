@@ -32,8 +32,8 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2025070400
-        versionName = "1.37.0"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2025123000
+        versionName = "1.39.2"
         signingConfig = signingConfigs.getByName("debug")
     }
 
@@ -130,6 +130,7 @@ dependencies {
     implementation(project(":data:searchable"))
     implementation(project(":data:plugins"))
     implementation(project(":data:themes"))
+    implementation(project(":data:i18n"))
     implementation(project(":data:files"))
     implementation(project(":core:i18n"))
     implementation(project(":services:icons"))

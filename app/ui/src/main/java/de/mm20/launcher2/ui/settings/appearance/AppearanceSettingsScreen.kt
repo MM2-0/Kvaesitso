@@ -2,40 +2,35 @@ package de.mm20.launcher2.ui.settings.appearance
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowCircleDown
-import androidx.compose.material.icons.rounded.ArrowCircleUp
-import androidx.compose.material.icons.rounded.CropSquare
-import androidx.compose.material.icons.rounded.Opacity
-import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.TextFields
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.ColorScheme
-import de.mm20.launcher2.preferences.Font
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.component.preferences.value
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemesSettingsRoute
+import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.typography.TypographiesSettingsRoute
-import de.mm20.launcher2.ui.theme.getTypography
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object AppearanceSettingsRoute: NavKey
 
 @Composable
 fun AppearanceSettingsScreen() {
     val viewModel: AppearanceSettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val colorThemeName by viewModel.colorThemeName.collectAsStateWithLifecycle(null)
     val typographyThemeName by viewModel.typographyThemeName.collectAsStateWithLifecycle(null)
     val shapeThemeName by viewModel.shapeThemeName.collectAsStateWithLifecycle(null)
@@ -46,7 +41,7 @@ fun AppearanceSettingsScreen() {
         if (it == null) {
             return@rememberLauncherForActivityResult
         }
-        navController?.navigate(ImportThemeSettingsRoute(it.toString()))
+        backStack.add(ImportThemeSettingsRoute(it))
     }
 
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
@@ -74,33 +69,33 @@ fun AppearanceSettingsScreen() {
                     title = stringResource(id = R.string.preference_screen_colors),
                     summary = colorThemeName,
                     onClick = {
-                        navController?.navigate("settings/appearance/colors")
+                        backStack.add(ColorSchemesSettingsRoute)
                     },
-                    icon = Icons.Rounded.Palette,
+                    icon = R.drawable.palette_24px,
                 )
                 Preference(
                     title = stringResource(id = R.string.preference_screen_typography),
                     summary = typographyThemeName,
                     onClick = {
-                        navController?.navigate(TypographiesSettingsRoute)
+                        backStack.add(TypographiesSettingsRoute)
                     },
-                    icon = Icons.Rounded.TextFields,
+                    icon = R.drawable.text_fields_24px,
                 )
                 Preference(
                     title = stringResource(id = R.string.preference_screen_shapes),
                     summary = shapeThemeName,
                     onClick = {
-                        navController?.navigate("settings/appearance/shapes")
+                        backStack.add(ShapeSchemesSettingsRoute)
                     },
-                    icon = Icons.Rounded.CropSquare,
+                    icon = R.drawable.crop_square_24px,
                 )
                 Preference(
                     title = stringResource(id = R.string.preference_screen_transparencies),
                     summary = transparencyThemeName,
                     onClick = {
-                        navController?.navigate(TransparencySchemesSettingsRoute)
+                        backStack.add(TransparencySchemesSettingsRoute)
                     },
-                    icon = Icons.Rounded.Opacity,
+                    icon = R.drawable.opacity_24px,
                 )
             }
         }
@@ -109,16 +104,16 @@ fun AppearanceSettingsScreen() {
             PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.theme_import_title),
-                    icon = Icons.Rounded.ArrowCircleDown,
+                    icon = R.drawable.arrow_circle_down_24px,
                     onClick = {
                         importLauncher.launch(arrayOf("*/*"))
                     }
                 )
                 Preference(
                     title = stringResource(R.string.theme_export_title),
-                    icon = Icons.Rounded.ArrowCircleUp,
+                    icon = R.drawable.arrow_circle_up_24px,
                     onClick = {
-                        navController?.navigate("settings/appearance/export")
+                        backStack.add(ExportThemeSettingsRoute)
                     }
                 )
             }

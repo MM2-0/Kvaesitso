@@ -19,16 +19,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.RestartAlt
-import androidx.compose.material.icons.rounded.RoundedCorner
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
@@ -44,6 +39,8 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,6 +51,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -64,8 +62,8 @@ import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.icons.CutCorner
-import de.mm20.launcher2.icons.RoundedCornerAlt
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.serialization.UUIDSerializer
 import de.mm20.launcher2.themes.shapes.CornerStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
@@ -73,10 +71,16 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.ktx.withCorners
 import de.mm20.launcher2.ui.theme.shapes.shapesOf
+import kotlinx.serialization.Serializable
 import java.util.UUID
 import kotlin.math.max
 import kotlin.math.min
 import de.mm20.launcher2.themes.shapes.Shape as ThemeShape
+
+@Serializable
+data class ShapeSchemeSettingsRoute(
+    @Serializable(with = UUIDSerializer::class) val id: UUID
+): NavKey
 
 @Composable
 fun ShapeSchemeSettingsScreen(themeId: UUID) {
@@ -202,7 +206,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                         ) {
                             DropdownMenuItem(
                                 leadingIcon = {
-                                    Icon(Icons.Rounded.OpenInNew, null)
+                                    Icon(painterResource(R.drawable.more_vert_24px), null)
                                 },
                                 text = { Text("Menu") },
                                 onClick = { })
@@ -264,7 +268,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                             )
                     ) {
                         Icon(
-                            Icons.Rounded.Search,
+                            painterResource(R.drawable.search_24px),
                             null,
                             modifier = Modifier.padding(12.dp)
                         )
@@ -289,7 +293,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     previewShapes = previewShapes,
                 ) {
                     FloatingActionButton(onClick = {}) {
-                        Icon(Icons.Rounded.Edit, null)
+                        Icon(painterResource(R.drawable.edit_24px), null)
                     }
                 }
                 ShapePreference(
@@ -504,7 +508,8 @@ fun ShapePreference(
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
-                    .padding(it),
+                    .padding(it)
+                    .padding(bottom = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 val previewShape = if ((currentCornerStyle ?: baseShape.corners
@@ -537,40 +542,47 @@ fun ShapePreference(
                         )
                 )
 
-                SingleChoiceSegmentedButtonRow(
+                Row(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
                 ) {
-                    SegmentedButton(
-                        selected = actualCornerStyle == CornerStyle.Rounded,
-                        onClick = {
+                    ToggleButton(
+                        modifier = Modifier.weight(1f),
+                        checked = actualCornerStyle == CornerStyle.Rounded,
+                        onCheckedChange = {
                             currentCornerStyle = CornerStyle.Rounded
                         },
-                        shape = SegmentedButtonDefaults.itemShape(0, 2),
-                        icon = {
-                            SegmentedButtonDefaults.Icon(
-                                active = actualCornerStyle == CornerStyle.Rounded,
-                            ) {
-                                Icon(Icons.Rounded.RoundedCornerAlt, null)
-                            }
-                        }
+                        shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                     ) {
+                        Icon(
+                            painterResource(
+                                if (actualCornerStyle == CornerStyle.Rounded) R.drawable.check_20px else R.drawable.rounded_corner_alt_24px
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(end = ToggleButtonDefaults.IconSpacing)
+                                .size(ToggleButtonDefaults.IconSize)
+                        )
                         Text(stringResource(R.string.preference_cards_shape_rounded))
                     }
-                    SegmentedButton(
-                        selected = actualCornerStyle == CornerStyle.Cut,
-                        onClick = {
+                    ToggleButton(
+                        modifier = Modifier.weight(1f),
+                        checked = actualCornerStyle == CornerStyle.Cut,
+                        onCheckedChange = {
                             currentCornerStyle = CornerStyle.Cut
                         },
-                        shape = SegmentedButtonDefaults.itemShape(1, 2),
-                        icon = {
-                            SegmentedButtonDefaults.Icon(
-                                active = actualCornerStyle == CornerStyle.Cut,
-                            ) {
-                                Icon(Icons.Rounded.CutCorner, null)
-                            }
-                        }
+                        shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
                     ) {
+                        Icon(
+                            painterResource(
+                                if (actualCornerStyle == CornerStyle.Cut) R.drawable.check_20px else R.drawable.cut_corner_20px
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(end = ToggleButtonDefaults.IconSpacing)
+                                .size(ToggleButtonDefaults.IconSize)
+                        )
                         Text(stringResource(R.string.preference_cards_shape_cut))
                     }
                 }
@@ -580,7 +592,7 @@ fun ShapePreference(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        Icons.Rounded.RoundedCorner,
+                        painterResource(R.drawable.rounded_corner_24px),
                         null,
                         modifier = Modifier
                             .padding(end = 8.dp)
@@ -607,7 +619,7 @@ fun ShapePreference(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        Icons.Rounded.RoundedCorner,
+                        painterResource(R.drawable.rounded_corner_24px),
                         null,
                         modifier = Modifier.padding(end = 8.dp)
                     )
@@ -632,7 +644,7 @@ fun ShapePreference(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        Icons.Rounded.RoundedCorner,
+                        painterResource(R.drawable.rounded_corner_24px),
                         null,
                         modifier = Modifier
                             .padding(end = 8.dp)
@@ -659,7 +671,7 @@ fun ShapePreference(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        Icons.Rounded.RoundedCorner,
+                        painterResource(R.drawable.rounded_corner_24px),
                         null,
                         modifier = Modifier
                             .padding(end = 8.dp)
@@ -703,7 +715,7 @@ fun ShapePreference(
                     }
                 ) {
                     Icon(
-                        Icons.Rounded.RestartAlt, null,
+                        painterResource(R.drawable.restart_alt_20px), null,
                         modifier = Modifier
                             .padding(ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize)

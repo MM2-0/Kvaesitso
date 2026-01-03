@@ -1,7 +1,11 @@
 package de.mm20.launcher2.preferences.weather
 
+import android.icu.util.LocaleData
+import android.icu.util.ULocale
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LatLon
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.ProviderSettings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -181,14 +185,11 @@ class WeatherSettings internal constructor(
         }
     }
 
-    val imperialUnits = launcherDataStore.data.map { it.weatherImperialUnits }
-        .distinctUntilChanged()
+    val measurementSystem = launcherDataStore.data.map {
+        it.localeMeasurementSystem
+    }.distinctUntilChanged()
 
-    fun setImperialUnits(imperialUnits: Boolean) {
-        launcherDataStore.update {
-            it.copy(
-                weatherImperialUnits = imperialUnits,
-            )
-        }
-    }
+    val timeFormat = launcherDataStore.data.map {
+        it.localeTimeFormat
+    }.distinctUntilChanged()
 }

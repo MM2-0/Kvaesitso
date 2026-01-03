@@ -6,7 +6,6 @@ import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.graphics.drawable.Drawable
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.ktx.romanize
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.text.Collator
@@ -30,6 +29,6 @@ class AppShortcutConfigActivity(
         val label1 = label
         val label2 = other.label
         return Collator.getInstance().apply { strength = Collator.SECONDARY }
-            .compare(label1.romanize(), label2.romanize())
+            .compare(label1, label2)
     }
 }

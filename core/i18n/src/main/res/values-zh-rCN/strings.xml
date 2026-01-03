@@ -21,9 +21,9 @@
 \n
 \n最后更新: %1$s</string>
     <string name="missing_permission_auto_location">需要位置访问权限以便自动确定位置</string>
-    <string name="preference_automatic_location_summary">使用 GPS 和定位服务自动确定位置</string>
+    <string name="preference_automatic_location_summary">使用定位服务自动确定位置</string>
     <string name="wind_north_north_east">东北偏北</string>
-    <string name="missing_permission_file_search_settings_android10">需要\"管理所有文件\"权限以便搜索本地文件</string>
+    <string name="missing_permission_file_search_settings_android10">需要\"访问所有文件\"权限以便搜索本地文件</string>
     <string name="preference_cards">卡片</string>
     <string name="weather_condition_clearsky">晴朗无云</string>
     <string name="file_meta_year">年份: %1$s</string>
@@ -106,7 +106,6 @@
     <string name="widget_name_music">媒体</string>
     <string name="widget_add_widget">添加组件</string>
     <string name="shortcut_summary">由 %1$s</string>
-    <string name="easter_egg_text">好吧, 你找到我了. 祝贺. 值得不？</string>
     <string name="close">关闭</string>
     <string name="turn_off">关闭</string>
     <string name="widget_action_remove">移除</string>
@@ -179,10 +178,10 @@
     <string name="missing_permission_calendar_widget_settings">此组件需要日历权限</string>
     <string name="missing_permission_file_search_settings">需要外部存储权限以便搜索此设备上的文件</string>
     <string name="missing_permission_notification_badges">需要通知访问权限以便显示通知角标</string>
-    <string name="missing_permission_calendar_widget">授予日历权限以在此处显示即将到来的约会和事件。</string>
-    <string name="missing_permission_calendar_search">授予日历搜索日历的权限。</string>
-    <string name="missing_permission_files_search">授予存储权限以在此设备上搜索照片、媒体和文档。</string>
-    <string name="missing_permission_contact_search">授予联系人权限以便搜索你的联系人。</string>
+    <string name="missing_permission_calendar_widget">需要日历权限以在此处显示即将到来的事件</string>
+    <string name="missing_permission_calendar_search">需要日历权限以搜索日历</string>
+    <string name="missing_permission_files_search">需要存储权限以在此设备上搜索文件</string>
+    <string name="missing_permission_contact_search">需要联系人权限以便搜索你的联系人</string>
     <string name="grant_permission">授予</string>
     <string name="preference_screen_appearance">外观</string>
     <string name="preference_theme">主题</string>
@@ -219,7 +218,7 @@
     <string name="preference_hide_nav_bar">隐藏导航条</string>
     <string name="preference_screen_integrations_summary">管理已连接的账户和服务</string>
     <string name="preference_signin_user">以 %1$s 身份登陆</string>
-    <string name="preference_summary_not_logged_in">您当前未登录</string>
+    <string name="preference_summary_not_logged_in">您未登录</string>
     <string name="preference_icon_shape_pentagon">五角形</string>
     <string name="preference_category_wallpaper">壁纸</string>
     <string name="preference_dim_wallpaper">调暗壁纸</string>
@@ -227,7 +226,6 @@
     <string name="preference_cards_corner_radius">顶角半径</string>
     <string name="preference_cards_opacity">不透明度</string>
     <string name="preference_icon_shape">形状</string>
-    <string name="preference_icon_shape_platform">系统默认</string>
     <string name="preference_icon_shape_square">正方形</string>
     <string name="preference_icon_shape_rounded_square">圆角方形</string>
     <string name="preference_icon_shape_squircle">方圆形</string>
@@ -314,8 +312,7 @@
     <string name="preference_search_appshortcuts">应用快捷方式</string>
     <string name="preference_search_appshortcuts_summary">搜索应用快捷方式</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">显示已固定项目的第一行</string>
-    <string name="widget_name_favorites">收藏夹</string>
+    <string name="preference_clockwidget_favorites_part_summary">在 Dock 中显示已固定项目</string>
     <string name="preference_grid_icon_size">图标大小</string>
     <string name="preference_search_currencyconverter">货币转换器</string>
     <string name="preference_search_currencyconverter_summary">定期下载汇率来转换货币</string>
@@ -323,7 +320,7 @@
     <string name="calendar_widget_next_events">下一个事件</string>
     <string name="preference_hidden_items">隐藏搜索结果</string>
     <string name="preference_hidden_items_summary">管理隐藏应用和搜索结果</string>
-    <string name="preference_screen_backup">备份&amp;恢复</string>
+    <string name="preference_screen_backup">备份与恢复</string>
     <string name="preference_screen_backup_summary">导出和导入启动器数据</string>
     <string name="preference_backup">备份</string>
     <string name="preference_backup_summary">导出设置和启动器数据</string>
@@ -347,7 +344,6 @@
     <string name="preference_blur_wallpaper_summary">在壁纸上 使用模糊效果</string>
     <string name="preference_blur_wallpaper_unsupported">在此设备上不受支持</string>
     <string name="preference_font">字体</string>
-    <string name="preference_font_system">系统默认</string>
     <string name="alert_delete_shortcut">快捷方式%1$s将被永久移除. 继续\?</string>
     <string name="preference_force_themed_icons_summary">将应用程序的配色方案应用于所有的图标，包括不支持的图标(不建议)</string>
     <string name="icon_picker_default_icon">默认</string>
@@ -376,7 +372,7 @@
     <string name="preference_debug_cleanup_database">清理数据库</string>
     <string name="preference_debug_cleanup_database_summary">从启动器数据库中删除损坏和未使用的条目</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="other">%1$d条目已经被移除.</item>
+        <item quantity="other">%1$d 条目已经被移除</item>
     </plurals>
     <string name="favorites_empty">被固定的和常用的项目会出现在这里</string>
     <string name="favorites_empty_tag">此标签里没有项目</string>
@@ -413,7 +409,7 @@
     <string name="search_action_label">名称</string>
     <string name="search_action_app">应用程序</string>
     <string name="search_action_websearch_url">URL模板</string>
-    <string name="search_action_websearch_url_hint">URL模板用于构建搜索引擎的URL.使用‘${1}’作为实际搜索字词的占位符，例如 https://google.com/search?q=${1}。</string>
+    <string name="search_action_websearch_url_hint">URL 模板用于构建搜索引擎的 URL。使用 ‘${1}’ 作为实际搜索字词的占位符</string>
     <string name="more_information">更多信息</string>
     <string name="experimental_feature">实验性的</string>
     <string name="create_search_action_type">你想创建哪种操作?</string>
@@ -422,12 +418,12 @@
     <string name="create_search_action_type_intent">Custom intent</string>
     <string name="create_search_action_pick_app">固定一个应用程序到搜索栏:</string>
     <string name="create_search_action_website_url">输入网站地址:</string>
-    <string name="create_search_action_website_invalid_url">给定的网站不能自动导入成搜索引擎. 你可以尝试其它不同的网站或者在下一步手动输入必填的数据.</string>
+    <string name="create_search_action_website_invalid_url">给定的网站不能自动导入成搜索引擎. 你可以尝试其它不同的网站或者在下一步手动输入必填的数据</string>
     <string name="duplicate">复制</string>
     <string name="action_next">下一步</string>
-    <string name="tag_exists_error">以此命名的标签已经存在.</string>
-    <string name="tag_no_items_message">没有项目被分配给此标签.如果你执意而为,此标签将会被删除.</string>
-    <string name="tag_exists_message">以此命名的标签已经存在.如果你执意而为，两个标签将会被合并.</string>
+    <string name="tag_exists_error">以此命名的标签已经存在</string>
+    <string name="tag_no_items_message">没有项目被分配给此标签。如果你执意而为，此标签将会被删除</string>
+    <string name="tag_exists_message">以此命名的标签已经存在。如果你执意而为，两个标签将会被合并</string>
     <string name="tag_select_items">选择项目:</string>
     <string name="tag_name">标签名字</string>
     <plurals name="tag_selected_items">
@@ -444,7 +440,7 @@
     <string name="search_results_order_bottom_up">从底部到顶部</string>
     <string name="open_search_pull_down">下滑</string>
     <string name="preference_layout_search_bar_position">搜索栏位置</string>
-    <string name="preference_layout_open_search">搜索 / 应用抽屉</string>
+    <string name="preference_layout_open_search">搜索与应用抽屉</string>
     <string name="preference_screen_gestures">手势</string>
     <string name="preference_screen_gestures_summary">手势与动作</string>
     <string name="preference_gesture_swipe_down">下滑</string>
@@ -474,8 +470,8 @@
     <string name="widget_action_replace">替换</string>
     <string name="preference_debug_reinstall_iconpacks">重新安装图标包</string>
     <string name="preference_debug_reinstall_iconpacks_summary">清除与重建图标缓存</string>
-    <string name="preference_screen_icons_summary">网格, 图标尺寸, 图标包, 角标</string>
-    <string name="app_widget_loading_failed">应用组件加载失败.</string>
+    <string name="preference_screen_icons_summary">网格尺寸, 图标, 角标</string>
+    <string name="app_widget_loading_failed">应用组件加载失败</string>
     <string name="widget_config_calendar_no_calendars">未发现日程</string>
     <string name="widget_config_music_integration_settings">媒体控制综合设置</string>
     <string name="preference_screen_integrations">兼容方式</string>
@@ -485,7 +481,7 @@
     <string name="widget_config_weather_integration_settings">天气综合设置</string>
     <string name="preference_screen_homescreen">主屏幕</string>
     <string name="preference_screen_homescreen_summary">时钟, 搜索栏, 壁纸, 系统栏</string>
-    <string name="preference_screen_icons">网格&amp;图标</string>
+    <string name="preference_screen_icons">网格与图标</string>
     <string name="preference_screen_clockwidget_summary">配置时钟风格和组件</string>
     <string name="widget_config_appwidget_borderless">无边框</string>
     <string name="widget_config_appwidget_configure">配置组件</string>
@@ -531,7 +527,7 @@
     <string name="action_done">完成</string>
     <string name="action_more_actions">更多行动</string>
     <string name="action_clear">清除</string>
-    <string name="missing_permission_location_search">授予位置信息权限以搜索附近的位置。</string>
+    <string name="missing_permission_location_search">需要位置信息权限以搜索附近的位置</string>
     <string name="preference_mdy_color_source_system">系统</string>
     <string name="preference_location_managed">由插件管理</string>
     <string name="preference_search_locations">地点</string>
@@ -609,11 +605,11 @@
     <string name="poi_category_fuel">加油站</string>
     <string name="shortcut_label_unavailable">不可用</string>
     <string name="filter_settings_network_warning">当前过滤器默认启用在线结果。您的搜索查询可能会被无意发送到外部网络服务。出于隐私原因，不建议这样做。</string>
-    <string name="note_widget_file_write_error_description">无法将注释写入链接文件。可能已被移动或删除。副本已保存到启动器的内部存储中。</string>
+    <string name="note_widget_file_write_error_description">无法将注释写入链接文件。副本已保存到启动器的内部存储中</string>
     <string name="preference_search_supportedunits">支持的单位</string>
     <string name="note_widget_conflict_description">链接的文件不为空，且其内容与此笔记的上次保存版本不匹配。您想保留哪个版本？</string>
     <string name="note_widget_file_read_error">错误读取注释</string>
-    <string name="note_widget_file_read_error_description">无法读取链接的文件，可能其已被移动或删除。已从启动器的存储中恢复副本。如果您编辑笔记，链接的文件可能会被覆盖。</string>
+    <string name="note_widget_file_read_error_description">无法读取链接的文件。已从启动器的存储中恢复副本。如果您编辑笔记，链接的文件可能会被覆盖</string>
     <string name="note_widget_file_write_error">保存笔记时出错</string>
     <string name="theme_color_scheme_autogenerate">从原色开始</string>
     <string name="import_theme_error">无法读取所选文件。请确保您选择的是有效的主题文件 (*.kvtheme)，并且该文件未损坏。</string>
@@ -623,7 +619,7 @@
     <string name="preference_search_osm_locations_summary">在OpenStreetMap上搜索当地的商店和其他地点</string>
     <string name="poi_category_supermarket">超市</string>
     <string name="preference_search_locations_theme_map">地图主题</string>
-    <string name="unavailable_searchable">此商品已不存在。</string>
+    <string name="unavailable_searchable">此项目已不存在</string>
     <string name="search_filter_online">在线答案</string>
     <string name="search_filter_apps">应用</string>
     <string name="preference_clock_widget_alignment">位置</string>
@@ -681,7 +677,7 @@
     <string name="poi_category_optician">验光师</string>
     <string name="poi_category_jewelry">珠宝店</string>
     <string name="poi_category_laundry">洗衣店</string>
-    <string name="profile_work_profile_state_locked">工作应用已暂停。</string>
+    <string name="profile_work_profile_state_locked">工作应用已暂停</string>
     <string name="music_widget_open_player">打开播放器</string>
     <string name="poi_category_gallery">画廊</string>
     <string name="poi_category_gymnastics">体操</string>
@@ -748,10 +744,10 @@
     <string name="poi_category_florist">花店</string>
     <string name="poi_category_mall">购物中心</string>
     <string name="preference_contacts_call_on_tap">点击呼叫</string>
-    <string name="preference_contacts_call_on_tap_summary">点击电话号码即可立即拨打电话</string>
+    <string name="preference_contacts_call_on_tap_summary">点击电话号码即可立即拨打电话，无需确认</string>
     <string name="profile_work_profile_action_unlock">未暂停</string>
     <string name="profile_work_profile_action_lock">暂停工作应用</string>
-    <string name="profile_private_profile_state_locked">私人空间已锁定。</string>
+    <string name="profile_private_profile_state_locked">私密空间已锁定</string>
     <string name="music_widget_next_track">下一个标题</string>
     <string name="music_widget_play">播放</string>
     <string name="music_widget_pause">暂停</string>
@@ -791,7 +787,6 @@
     <string name="preference_clock_widget_time_format">时间格式</string>
     <string name="preference_clock_widget_time_format_24h">24小时</string>
     <string name="preference_clock_widget_time_format_12h">12小时</string>
-    <string name="preference_clock_widget_time_format_system">系统默认</string>
     <string name="missing_permission_call_contacts_settings">需要通话权限才能开始通话</string>
     <string name="import_theme_exists">已有的样式将会被覆盖</string>
     <string name="preference_search_bar_style_transparent">透明</string>
@@ -811,7 +806,7 @@
     <string name="preference_gesture_swipe_up">向上滑动</string>
     <string name="gesture_action_widgets">组件页</string>
     <string name="confirmation_delete_shapes_scheme">删除形状预设“%1$s”吗？</string>
-    <string name="bad_configuration_summary">你探索出了一套访问不了搜索和组件页的配置，使你无法进入设置 — 让启动器桌面变成了启动弃。</string>
+    <string name="bad_configuration_summary">你探索出了一套访问不了搜索和设置的配置，使你无法进入设置 — 让启动器桌面变成了启动弃</string>
     <string name="preference_transparencies_default">默认</string>
     <string name="preference_screen_transparencies">透明度</string>
     <string name="preference_transparencies_semi_transparent">半透明</string>
@@ -849,11 +844,35 @@
     <string name="font_name_device_body">正文字体</string>
     <string name="font_category_generic">常规字体</string>
     <string name="preference_widgets_on_home_screen">直达组件</string>
-    <string name="preference_widgets_on_home_screen_summary">在主屏幕而不是组件页显示组件</string>
-    <string name="tag_empty_name">标签必须拥有一个名字。如果继续设为空，这个标签会被删除。</string>
+    <string name="preference_widgets_on_home_screen_summary">在主屏幕而不是独立页面显示组件</string>
+    <string name="tag_empty_name">标签必须拥有一个名字。如果继续设为空，这个标签会被删除</string>
     <string name="preference_launch_tasks_app">打开 Tasks 应用</string>
     <string name="preference_clock_widget_monospaced">等宽</string>
     <string name="poi_category_stationery">文具店</string>
     <string name="poi_category_climbing_gym">攀岩馆</string>
     <string name="poi_category_hackerspace">创客空间</string>
+    <string name="widget_name_apps">应用</string>
+    <string name="preference_category_enabled_plugins">已启用</string>
+    <string name="preference_category_installed_plugins">已安装</string>
+    <string name="preference_clockwidget_dock_rows">Dock 栏位数</string>
+    <string name="preference_search_apps">应用</string>
+    <string name="preference_search_apps_summary">搜索栏为空时显示所有应用</string>
+    <string name="tag_icon_customicon">图标</string>
+    <string name="tag_icon_emoji">表情符号</string>
+    <string name="preference_screen_locale">语言和区域</string>
+    <string name="preference_screen_locale_summary">语言、单位、时间格式</string>
+    <string name="preference_language">语言</string>
+    <string name="preference_value_system_default">系统默认</string>
+    <string name="preference_form_of_address">地址格式</string>
+    <string name="preference_form_of_address_neutral">中性</string>
+    <string name="preference_form_of_address_fem">女性</string>
+    <string name="preference_form_of_address_masc">男性</string>
+    <string name="preference_measurement_system">度量制</string>
+    <string name="preference_measurement_system_metric">公制</string>
+    <string name="preference_measurement_system_uk">英制</string>
+    <string name="preference_measurement_system_us">美制</string>
+    <string name="preference_transliteration">翻译语言偏好</string>
+    <string name="preference_transliteration_auto">自动</string>
+    <string name="preference_transliteration_disabled">禁用</string>
+    <string name="select_tag">选择标签</string>
 </resources>

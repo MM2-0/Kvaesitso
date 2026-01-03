@@ -96,7 +96,6 @@
     <string name="widget_name_weather">আবহাওয়া</string>
     <string name="widget_name_calendar">ক্যালেন্ডার</string>
     <string name="widget_name_music">সঙ্গীত</string>
-    <string name="widget_name_favorites">প্রিয়গুলি</string>
     <string name="widget_name_unknown">অজানা অ্যাপের উইজেট</string>
     <string name="notes_widget_placeholder">একটি নোট লিখুন…</string>
     <string name="notes_widget_action_new">নতুন নোট</string>
@@ -104,7 +103,6 @@
     <string name="notes_widget_action_dismiss">বাদ দিন</string>
     <string name="notes_widget_dismissed">নোটটি বাদ দেয়া হয়েছে।</string>
     <string name="shortcut_summary">%1$s এর শর্টকাট</string>
-    <string name="easter_egg_text">আহ্। আপনি আমাকে খুঁজে পেলেন। অভিনন্দন। খুব মজা, তাই না?</string>
     <string name="save">সংরক্ষণ করুন</string>
     <string name="duplicate">অনুলিপি তৈরি</string>
     <string name="edit">সম্পাদনা</string>
@@ -275,7 +273,6 @@
     <string name="preference_cards_shape_rounded">গোলাকার</string>
     <string name="preference_cards_shape_cut">কাটা</string>
     <string name="preference_icon_shape">আকৃতি</string>
-    <string name="preference_icon_shape_platform">সিস্টেমের পূর্বনির্ধারিত</string>
     <string name="preference_icon_shape_square">বর্গাকার</string>
     <string name="preference_icon_shape_rounded_square">গোলাকার বর্গ</string>
     <string name="preference_icon_shape_squircle">বর্গাকৃত গোলাকার</string>
@@ -291,7 +288,6 @@
     <string name="preference_system_bar_icons_dark">কালো</string>
     <string name="preference_hide_status_bar">স্ট্যাটাস বার লুকান</string>
     <string name="preference_hide_nav_bar">নির্দেশনা বার লুকান</string>
-    <string name="preference_font_system">সিস্টেমের পূর্বনির্ধারিত</string>
     <string name="preference_icon_shape_teardrop">অশ্রুপাত</string>
     <string name="preference_icon_shape_pebble">পাথরের টুকরা</string>
     <string name="preference_icon_shape_hexagon">ষড়ভুজ</string>

@@ -2,23 +2,15 @@ package de.mm20.launcher2.ui.launcher.searchbar
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.imeAnimationTarget
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.KeyboardActionScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.FilterAlt
-import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -29,8 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -41,7 +33,6 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchVM
-import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 
 @Composable
@@ -96,7 +87,13 @@ fun LauncherSearchBar(
                         checked = sheetManager.hiddenItemsSheetShown.value,
                         onCheckedChange = { if (it) sheetManager.showHiddenItemsSheet() },
                     ) {
-                        Icon(imageVector = Icons.Rounded.VisibilityOff, contentDescription = null)
+                        Icon(
+                            painter = painterResource(
+                                if (sheetManager.hiddenItemsSheetShown.value) R.drawable.visibility_off_24px_filled
+                                else R.drawable.visibility_off_24px
+                            ),
+                            contentDescription = null
+                        )
                     }
                 }
                 AnimatedVisibility(
@@ -111,9 +108,15 @@ fun LauncherSearchBar(
                         },
                     ) {
                         Box {
-                            Icon(imageVector = Icons.Rounded.FilterAlt, contentDescription = stringResource(
-                                if (searchVM.showFilters.value) R.string.menu_hide_filters else R.string.menu_show_filters
-                            ))
+                            Icon(
+                                painter = painterResource(
+                                    if (searchVM.showFilters.value)R.drawable.filter_alt_24px_filled
+                                    else R.drawable.filter_alt_24px
+                                ),
+                                contentDescription = stringResource(
+                                    if (searchVM.showFilters.value) R.string.menu_hide_filters else R.string.menu_show_filters
+                                )
+                            )
                             androidx.compose.animation.AnimatedVisibility(
                                 !searchVM.filters.value.allCategoriesEnabled,
                                 enter = scaleIn(tween(100)),

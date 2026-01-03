@@ -16,14 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -40,12 +32,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
@@ -56,11 +50,17 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsRoute
+import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsRoute
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PluginSettingsRoute(val pluginId: String): NavKey
 
 @Composable
 fun PluginSettingsScreen(pluginId: String) {
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val activity = LocalActivity.current
     val context = LocalContext.current
     val viewModel: PluginSettingsScreenVM = viewModel()
@@ -138,12 +138,14 @@ fun PluginSettingsScreen(pluginId: String) {
                 ),
                 navigationIcon = {
                     IconButton(onClick = {
-                        if (navController?.navigateUp() != true) {
+                        if (backStack.size <= 1) {
                             activity?.onBackPressed()
+                        } else {
+                            backStack.removeLastOrNull()
                         }
                     }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                            painterResource(R.drawable.arrow_back_24px),
                             contentDescription = "Back"
                         )
                     }
@@ -156,7 +158,7 @@ fun PluginSettingsScreen(pluginId: String) {
                             }
                         }) {
                             Icon(
-                                imageVector = Icons.Rounded.Settings,
+                                painterResource(R.drawable.settings_24px),
                                 contentDescription = null
                             )
                         }
@@ -165,16 +167,20 @@ fun PluginSettingsScreen(pluginId: String) {
                         viewModel.openAppInfo(context)
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.Info,
+                            painterResource(R.drawable.info_24px),
                             contentDescription = null
                         )
                     }
                     IconButton(onClick = {
                         viewModel.uninstall(context)
-                        navController?.navigateUp()
+                        if (backStack.size <= 1) {
+                            activity?.onBackPressed()
+                        } else {
+                            backStack.removeLastOrNull()
+                        }
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.Delete,
+                            painterResource(R.drawable.delete_24px),
                             contentDescription = null
                         )
                     }
@@ -226,7 +232,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     )
                                     if (pluginPackage?.isVerified == true) {
                                         Icon(
-                                            Icons.Rounded.Verified, null,
+                                            painterResource(R.drawable.verified_20px), null,
                                             modifier = Modifier
                                                 .padding(start = 4.dp)
                                                 .size(16.dp),
@@ -290,7 +296,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) Icons.Rounded.Error else Icons.Rounded.Info,
+                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
                                                 stringResource(R.string.plugin_state_error)
@@ -345,7 +351,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) Icons.Rounded.Error else Icons.Rounded.Info,
+                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
                                                 stringResource(R.string.plugin_state_error)
@@ -399,7 +405,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) Icons.Rounded.Error else Icons.Rounded.Info,
+                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
                                                 stringResource(R.string.plugin_state_error)
@@ -471,7 +477,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                         }
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) Icons.Rounded.Error else Icons.Rounded.Info,
+                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
                                                 stringResource(R.string.plugin_state_error)
@@ -520,7 +526,9 @@ fun PluginSettingsScreen(pluginId: String) {
                                             },
                                             iconPadding = false,
                                             onClick = {
-                                                navController?.navigate("settings/search/calendar/${plugin.plugin.authority}")
+                                                backStack.add(CalendarProviderSettingsRoute(
+                                                    providerId = plugin.plugin.authority
+                                                ))
                                             }
                                         )
                                     }
@@ -536,7 +544,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) Icons.Rounded.Error else Icons.Rounded.Info,
+                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
                                                 stringResource(R.string.plugin_state_error)
@@ -579,9 +587,9 @@ fun PluginSettingsScreen(pluginId: String) {
                                 }
                                 Preference(
                                     title = stringResource(R.string.widget_config_weather_integration_settings),
-                                    icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                                    icon = R.drawable.open_in_new_24px,
                                     onClick = {
-                                        navController?.navigate("settings/integrations/weather")
+                                        backStack.add(WeatherIntegrationSettingsRoute)
                                     }
                                 )
                             }

@@ -95,6 +95,12 @@ abstract class SharedLauncherActivity(
         }
         super.onCreate(savedInstanceState)
 
+        if (savedInstanceState != null) {
+            pauseOnHome = savedInstanceState.getBoolean("pauseOnHome")
+            pauseTime = savedInstanceState.getLong("pauseTime")
+            isNewIntent = savedInstanceState.getBoolean("isNewIntent")
+        }
+
         val wallpaperManager = WallpaperManager.getInstance(this)
 
         val windowSize = Resources.getSystem().displayMetrics.let {
@@ -454,6 +460,13 @@ abstract class SharedLauncherActivity(
     override fun onPause() {
         super.onPause()
         isNewIntent = false
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("pauseOnHome", pauseOnHome)
+        outState.putBoolean("isNewIntent", isNewIntent)
+        outState.putLong("pauseTime", pauseTime)
     }
 
     override fun onAttachedToWindow() {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.SharedTransitionLayout
@@ -21,19 +22,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.Message
-import androidx.compose.material.icons.automirrored.rounded.NavigateNext
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Directions
-import androidx.compose.material.icons.rounded.Email
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Phone
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -55,6 +43,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -148,7 +137,7 @@ fun ContactItem(
                         var expandedSection by remember { mutableStateOf(-1) }
                         if (contact.phoneNumbers.isNotEmpty()) {
                             ContactInfo(
-                                icon = Icons.Rounded.Phone,
+                                icon = R.drawable.call_24px,
                                 label = pluralStringResource(
                                     R.plurals.contact_phone_numbers,
                                     contact.phoneNumbers.size,
@@ -171,7 +160,7 @@ fun ContactItem(
                                         )
                                     }) {
                                         Icon(
-                                            Icons.AutoMirrored.Rounded.Message,
+                                            painterResource(R.drawable.sms_24px),
                                             null,
                                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
@@ -196,7 +185,7 @@ fun ContactItem(
                         }
                         if (contact.emailAddresses.isNotEmpty()) {
                             ContactInfo(
-                                icon = Icons.Rounded.Email,
+                                icon = R.drawable.mail_24px,
                                 label = pluralStringResource(
                                     R.plurals.contact_email_addresses,
                                     contact.emailAddresses.size,
@@ -225,7 +214,7 @@ fun ContactItem(
                         }
                         if (contact.postalAddresses.isNotEmpty()) {
                             ContactInfo(
-                                icon = Icons.Rounded.Place,
+                                icon = R.drawable.location_on_24px,
                                 label = pluralStringResource(
                                     R.plurals.contact_postal_addresses,
                                     contact.postalAddresses.size,
@@ -246,7 +235,7 @@ fun ContactItem(
                                             )
                                         }) {
                                             Icon(
-                                                Icons.Rounded.Directions,
+                                                painterResource(R.drawable.directions_24px),
                                                 null,
                                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                             )
@@ -301,7 +290,7 @@ fun ContactItem(
                             if (itemsWithPermission.isEmpty()) continue
 
                             ContactInfo(
-                                icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                                icon = R.drawable.open_in_new_24px,
                                 customIcon = appIcon,
                                 label = label,
                                 items = itemsWithPermission,
@@ -336,7 +325,7 @@ fun ContactItem(
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
+                                icon = R.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
@@ -344,7 +333,7 @@ fun ContactItem(
                         } else {
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
+                                icon = R.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -355,7 +344,7 @@ fun ContactItem(
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(R.string.menu_contacts_open_externally),
-                            icon = Icons.Rounded.OpenInNew,
+                            icon = R.drawable.open_in_new_24px,
                             action = {
                                 viewModel.launch(context)
                             }
@@ -365,7 +354,7 @@ fun ContactItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(DefaultToolbarAction(
                         label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Tune,
+                        icon = R.drawable.tune_24px,
                         action = { sheetManager.showCustomizeSearchableModal(contact) }
                     ))
 
@@ -374,7 +363,7 @@ fun ContactItem(
                         leftActions = listOf(
                             DefaultToolbarAction(
                                 label = stringResource(id = R.string.menu_back),
-                                icon = Icons.AutoMirrored.Rounded.ArrowBack
+                                icon = R.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }
@@ -441,9 +430,9 @@ private fun <T> ContactInfo(
     items: List<T>,
     itemLabel: (T) -> String,
     itemSubLabel: (T) -> String? = { null },
-    itemIcon: (T) -> ImageVector? = { null },
+    itemIcon: (T) -> Int? = { null },
     secondaryAction: (@Composable (T) -> Unit)? = null,
-    icon: ImageVector,
+    @DrawableRes icon: Int,
     customIcon: Drawable? = null,
     copyText: ((T) -> String)? = null,
     expanded: Boolean,
@@ -516,7 +505,7 @@ private fun <T> ContactInfo(
                                     )
                                 } else {
                                     Icon(
-                                        itemIcon(item) ?: icon,
+                                        painterResource(itemIcon(item) ?: icon),
                                         null,
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier.padding(horizontal = 4.dp),
@@ -570,7 +559,7 @@ private fun <T> ContactInfo(
                         )
                     } else {
                         Icon(
-                            icon,
+                            painterResource(icon),
                             null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(horizontal = 4.dp)
@@ -584,7 +573,7 @@ private fun <T> ContactInfo(
                             .padding(horizontal = 16.dp),
                     )
                     Icon(
-                        Icons.AutoMirrored.Rounded.NavigateNext,
+                        painterResource(R.drawable.chevron_forward_24px),
                         null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

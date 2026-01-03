@@ -25,20 +25,15 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilledTonalIconToggleButton
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -63,6 +58,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -121,7 +117,7 @@ fun EditFavoritesSheet(
         } else {
             ReorderFavoritesGrid(viewModel, it)
             if (createShortcutTarget != null) {
-                BottomSheetDialog({viewModel.cancelPickShortcut()}) {
+                BottomSheetDialog({ viewModel.cancelPickShortcut() }) {
                     ShortcutPicker(viewModel, it)
                 }
             }
@@ -247,23 +243,28 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                             badge = badge
                         )
                         if (contextMenuItemKey == it.item.key) {
-                            DropdownMenu(
+                            DropdownMenuPopup(
                                 expanded = true,
                                 onDismissRequest = { contextMenuItemKey = null }) {
-                                DropdownMenuItem(
-                                    leadingIcon = {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Delete,
-                                            contentDescription = null
-                                        )
-                                    },
-                                    text = {
-                                        Text(stringResource(R.string.menu_remove))
-                                    }, onClick = {
-                                        contextMenuItemKey?.let { viewModel.remove(it) }
-                                        contextMenuItemKey = null
-                                    }
-                                )
+                                DropdownMenuGroup(
+                                    shapes = MenuDefaults.groupShapes()
+                                ) {
+                                    DropdownMenuItem(
+                                        shape = MenuDefaults.standaloneItemShape,
+                                        leadingIcon = {
+                                            Icon(
+                                                painterResource(R.drawable.delete_24px),
+                                                contentDescription = null
+                                            )
+                                        },
+                                        text = {
+                                            Text(stringResource(R.string.menu_remove))
+                                        }, onClick = {
+                                            contextMenuItemKey?.let { viewModel.remove(it) }
+                                            contextMenuItemKey = null
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
@@ -297,7 +298,10 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     checked = showSettings,
                                     onCheckedChange = { showSettings = it }) {
                                     Icon(
-                                        imageVector = Icons.Rounded.Settings,
+                                        painterResource(
+                                            if (showSettings) R.drawable.settings_24px_filled
+                                            else R.drawable.settings_24px
+                                        ),
                                         contentDescription = null
                                     )
                                 }
@@ -308,7 +312,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                         viewModel.pickShortcut(it.section)
                                     }) {
                                     Icon(
-                                        imageVector = Icons.Rounded.Add,
+                                        painterResource(R.drawable.add_24px),
                                         contentDescription = null
                                     )
                                 }
@@ -471,41 +475,64 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                         showAddMenu = true
                                     }) {
                                     Icon(
-                                        imageVector = Icons.Rounded.Add,
+                                        painterResource(R.drawable.add_24px),
                                         contentDescription = null
                                     )
                                 }
-                                DropdownMenu(
+                                DropdownMenuPopup(
                                     expanded = showAddMenu,
                                     onDismissRequest = { showAddMenu = false }) {
-                                    for (tag in availableTags) {
-                                        DropdownMenuItem(
-                                            leadingIcon = {
-                                                Icon(Icons.Rounded.Tag, null)
-                                            },
-                                            text = { Text(tag.tag) },
-                                            onClick = {
-                                                viewModel.pinTag(tag)
-                                                showAddMenu = false
-                                            })
-                                    }
                                     if (availableTags.isNotEmpty()) {
-                                        HorizontalDivider()
-                                    }
-                                    DropdownMenuItem(
-                                        leadingIcon = {
-                                            Icon(Icons.Rounded.Add, null)
-                                        },
-                                        text = {
-                                            Text(
-                                                stringResource(R.string.edit_favorites_dialog_new_tag),
-                                            )
-                                        },
-                                        onClick = {
-                                            createTag = true
-                                            showAddMenu = false
+                                        DropdownMenuGroup(
+                                            shapes = MenuDefaults.groupShape(0, 2),
+                                        ) {
+                                            for ((i, tag) in availableTags.withIndex()) {
+                                                DropdownMenuItem(
+                                                    shape = if (availableTags.size == 1) MenuDefaults.standaloneItemShape
+                                                    else when (i) {
+                                                        0 -> MenuDefaults.leadingItemShape
+                                                        availableTags.lastIndex -> MenuDefaults.trailingItemShape
+                                                        else -> MenuDefaults.middleItemShape
+                                                    },
+                                                    leadingIcon = {
+                                                        Icon(
+                                                            painterResource(R.drawable.tag_24px),
+                                                            null
+                                                        )
+                                                    },
+                                                    text = { Text(tag.tag) },
+                                                    onClick = {
+                                                        viewModel.pinTag(tag)
+                                                        showAddMenu = false
+                                                    })
+                                            }
                                         }
+                                    }
+                                    Spacer(
+                                        modifier = Modifier.height(MenuDefaults.GroupSpacing)
                                     )
+                                    DropdownMenuGroup(
+                                        shapes = MenuDefaults.groupShape(
+                                            if (availableTags.isEmpty()) 0 else 1,
+                                            if (availableTags.isEmpty()) 1 else 2,
+                                        )
+                                    ) {
+                                        DropdownMenuItem(
+                                            shape = MenuDefaults.standaloneItemShape,
+                                            leadingIcon = {
+                                                Icon(painterResource(R.drawable.add_24px), null)
+                                            },
+                                            text = {
+                                                Text(
+                                                    stringResource(R.string.edit_favorites_dialog_new_tag),
+                                                )
+                                            },
+                                            onClick = {
+                                                createTag = true
+                                                showAddMenu = false
+                                            }
+                                        )
+                                    }
                                 }
                             }
 

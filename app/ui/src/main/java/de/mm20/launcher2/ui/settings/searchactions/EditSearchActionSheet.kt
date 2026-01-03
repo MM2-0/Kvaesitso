@@ -28,36 +28,30 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Android
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.ManageSearch
-import androidx.compose.material.icons.rounded.RemoveCircleOutline
-import androidx.compose.material.icons.rounded.ToggleOn
-import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -72,6 +66,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -224,7 +219,7 @@ private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.TravelExplore,
+                    painterResource(R.drawable.travel_explore_24px),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                 )
@@ -247,7 +242,7 @@ private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.ManageSearch,
+                    painterResource(R.drawable.manage_search_24px),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                 )
@@ -273,7 +268,7 @@ private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.Android,
+                    painterResource(R.drawable.android_24px),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                 )
@@ -581,28 +576,42 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
                         }
                     },
                     trailingIcon = {
-                        Icon(imageVector = Icons.Rounded.ArrowDropDown, contentDescription = null)
+                        Icon(
+                            painterResource(R.drawable.arrow_drop_down_24px),
+                            contentDescription = null
+                        )
                     }
                 )
-                DropdownMenu(
+                DropdownMenuPopup(
                     expanded = showAppDropdown,
                     onDismissRequest = { showAppDropdown = false }) {
-                    for (app in availableSearchApps) {
-                        DropdownMenuItem(
-                            text = { Text(app.label) },
-                            onClick = {
-                                viewModel.setComponentName(app.componentName)
-                                showAppDropdown = false
-                            },
-                            leadingIcon = {
-                                SearchActionIcon(
-                                    size = 24.dp,
-                                    componentName = app.componentName,
-                                    icon = SearchActionIcon.Custom,
-                                    color = 1,
-                                )
-                            }
-                        )
+                    DropdownMenuGroup(
+                        shapes = MenuDefaults.groupShapes()
+                    ) {
+                        for ((i, app) in availableSearchApps.withIndex()) {
+                            DropdownMenuItem(
+                                shape =
+                                    if (availableSearchApps.size == 1) MenuDefaults.standaloneItemShape
+                                    else when (i) {
+                                        0 -> MenuDefaults.leadingItemShape
+                                        availableSearchApps.lastIndex -> MenuDefaults.trailingItemShape
+                                        else -> MenuDefaults.middleItemShape
+                                    },
+                                text = { Text(app.label) },
+                                onClick = {
+                                    viewModel.setComponentName(app.componentName)
+                                    showAppDropdown = false
+                                },
+                                leadingIcon = {
+                                    SearchActionIcon(
+                                        size = 24.dp,
+                                        componentName = app.componentName,
+                                        icon = SearchActionIcon.Custom,
+                                        color = 1,
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -664,25 +673,42 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
             style = MaterialTheme.typography.titleSmall,
         )
 
-        SingleChoiceSegmentedButtonRow(
-            modifier = Modifier.fillMaxWidth()
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
         ) {
-            SegmentedButton(
-                selected = action.queryKey == null,
-                onClick = {
+            ToggleButton(
+                modifier = Modifier.weight(1f),
+                checked = action.queryKey == null,
+                onCheckedChange = {
                     viewModel.setQueryKey(null)
                 },
-                shape = SegmentedButtonDefaults.itemShape(0, 2)
+                shapes = ButtonGroupDefaults.connectedLeadingButtonShapes()
             ) {
+                AnimatedVisibility(action.queryKey == null) {
+                    Icon(
+                        painterResource(R.drawable.check_20px),
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = ToggleButtonDefaults.IconSpacing).size(ToggleButtonDefaults.IconSize)
+                    )
+                }
                 Text("Data")
             }
-            SegmentedButton(
-                selected = action.queryKey != null,
-                onClick = {
+            ToggleButton(
+                modifier = Modifier.weight(1f),
+                checked = action.queryKey != null,
+                onCheckedChange = {
                     viewModel.setQueryKey("")
                 },
-                shape = SegmentedButtonDefaults.itemShape(1, 2)
+                shapes = ButtonGroupDefaults.connectedTrailingButtonShapes()
             ) {
+                AnimatedVisibility(action.queryKey != null) {
+                    Icon(
+                        painterResource(R.drawable.check_20px),
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = ToggleButtonDefaults.IconSpacing).size(ToggleButtonDefaults.IconSize)
+                    )
+                }
                 Text("String extra")
             }
         }
@@ -714,7 +740,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
             supportingText = {
                 Text(
                     if (action.queryKey == null) {
-                        "The URI template that is used to construct the intent\\'s data URI. Use ‘\${1}’ as a placeholder for the actual search term"
+                        "The URI template that is used to construct the intent\'s data URI. Use ‘\${1}’ as a placeholder for the actual search term"
                     } else {
                         "The template that is used to construct the string that is passed to the intent as a string extra. Use ‘\${1}’ as a placeholder for the actual search term"
                     }
@@ -1116,7 +1142,10 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                     onClick = { viewModel.removeExtra(key) },
                     modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
-                    Icon(imageVector = Icons.Rounded.RemoveCircleOutline, contentDescription = null)
+                    Icon(
+                        painterResource(R.drawable.do_not_disturb_on_24px),
+                        contentDescription = null
+                    )
                 }
             }
         }
@@ -1142,7 +1171,10 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                 ) {
                     when (newType) {
                         "bool" -> {
-                            Icon(Icons.Rounded.ToggleOn, contentDescription = null)
+                            Icon(
+                                painterResource(R.drawable.toggle_on_24px),
+                                contentDescription = null
+                            )
                         }
 
                         "string" -> {
@@ -1165,76 +1197,91 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                             Text("1.00", style = MaterialTheme.typography.labelSmall)
                         }
                     }
-                    DropdownMenu(
+                    DropdownMenuPopup(
                         expanded = showTypeDropdown,
                         onDismissRequest = { showTypeDropdown = false }) {
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Text(
-                                    "ABC",
-                                    style = MaterialTheme.typography.labelSmall
-                                )
-                            },
-                            text = { Text("String") },
-                            onClick = {
-                                newType = "string"
-                                showTypeDropdown = false
-                            })
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Text(
-                                    "123",
-                                    style = MaterialTheme.typography.labelSmall
-                                )
-                            },
-                            text = { Text("Integer") },
-                            onClick = {
-                                newType = "int"
-                                showTypeDropdown = false
-                            })
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Text(
-                                    "1234",
-                                    style = MaterialTheme.typography.labelSmall
-                                )
-                            },
-                            text = { Text("Long") },
-                            onClick = {
-                                newType = "long"
-                                showTypeDropdown = false
-                            })
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Text(
-                                    "1.0",
-                                    style = MaterialTheme.typography.labelSmall
-                                )
-                            },
-                            text = { Text("Float") },
-                            onClick = {
-                                newType = "float"
-                                showTypeDropdown = false
-                            })
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Text(
-                                    "1.00",
-                                    style = MaterialTheme.typography.labelSmall
-                                )
-                            },
-                            text = { Text("Double") },
-                            onClick = {
-                                newType = "double"
-                                showTypeDropdown = false
-                            })
-                        DropdownMenuItem(
-                            leadingIcon = { Icon(Icons.Rounded.ToggleOn, null) },
-                            text = { Text("Boolean") },
-                            onClick = {
-                                newType = "bool"
-                                showTypeDropdown = false
-                            })
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShapes()
+                        ) {
+                            DropdownMenuItem(
+                                shape = MenuDefaults.leadingItemShape,
+                                leadingIcon = {
+                                    Text(
+                                        "ABC",
+                                        style = MaterialTheme.typography.labelSmall
+                                    )
+                                },
+                                text = { Text("String") },
+                                onClick = {
+                                    newType = "string"
+                                    showTypeDropdown = false
+                                })
+                            DropdownMenuItem(
+                                shape = MenuDefaults.middleItemShape,
+                                leadingIcon = {
+                                    Text(
+                                        "123",
+                                        style = MaterialTheme.typography.labelSmall
+                                    )
+                                },
+                                text = { Text("Integer") },
+                                onClick = {
+                                    newType = "int"
+                                    showTypeDropdown = false
+                                })
+                            DropdownMenuItem(
+                                shape = MenuDefaults.middleItemShape,
+                                leadingIcon = {
+                                    Text(
+                                        "1234",
+                                        style = MaterialTheme.typography.labelSmall
+                                    )
+                                },
+                                text = { Text("Long") },
+                                onClick = {
+                                    newType = "long"
+                                    showTypeDropdown = false
+                                })
+                            DropdownMenuItem(
+                                shape = MenuDefaults.middleItemShape,
+                                leadingIcon = {
+                                    Text(
+                                        "1.0",
+                                        style = MaterialTheme.typography.labelSmall
+                                    )
+                                },
+                                text = { Text("Float") },
+                                onClick = {
+                                    newType = "float"
+                                    showTypeDropdown = false
+                                })
+                            DropdownMenuItem(
+                                shape = MenuDefaults.middleItemShape,
+                                leadingIcon = {
+                                    Text(
+                                        "1.00",
+                                        style = MaterialTheme.typography.labelSmall
+                                    )
+                                },
+                                text = { Text("Double") },
+                                onClick = {
+                                    newType = "double"
+                                    showTypeDropdown = false
+                                })
+                            DropdownMenuItem(
+                                shape = MenuDefaults.trailingItemShape,
+                                leadingIcon = {
+                                    Icon(
+                                        painterResource(R.drawable.toggle_on_24px),
+                                        null
+                                    )
+                                },
+                                text = { Text("Boolean") },
+                                onClick = {
+                                    newType = "bool"
+                                    showTypeDropdown = false
+                                })
+                        }
                     }
                 }
                 OutlinedTextField(
@@ -1261,7 +1308,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                     },
                     enabled = newKey.isNotBlank()
                 ) {
-                    Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                    Icon(painterResource(R.drawable.add_24px), contentDescription = null)
                 }
             }
         }

@@ -18,6 +18,7 @@ import de.mm20.launcher2.preferences.ui.BadgeSettings
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.IconSettings
+import de.mm20.launcher2.preferences.ui.LocaleSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.preferences.ui.UiState
@@ -50,4 +51,5 @@ val preferencesModule = module {
     factory { ClockWidgetSettings(get()) }
     factory { LocationSearchSettings(get()) }
     factory { SearchFilterSettings(get()) }
+    factory { LocaleSettings(get()) }
 }

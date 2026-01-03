@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.time.Duration
 import kotlin.time.Duration.Companion.days
 
 class BreezyWeatherProvider(
@@ -45,28 +46,7 @@ class BreezyWeatherProvider(
     internal suspend fun pushWeatherData(data: BreezyWeatherData) {
         val result = mutableListOf<Forecast>()
 
-        val lastUpdate = System.currentTimeMillis()
-
-        result += Forecast(
-            timestamp = data.timestamp?.times(1000L) ?: return,
-            temperature = data.currentTemp ?: return,
-            icon = iconForId(data.currentConditionCode ?: return).id,
-            condition = data.currentCondition ?: return,
-            location = data.location ?: return,
-            provider = "Breezy Weather",
-            clouds = data.cloudCover,
-            humidity = data.currentHumidity?.toDouble(),
-            pressure = data.pressure?.toDouble(),
-            windSpeed = data.windSpeed?.toDouble()?.div(3.6),
-            precipProbability = data.precipProbability,
-            windDirection = data.windDirection?.toDouble(),
-            night = isNight(
-                data.timestamp.times(1000L),
-                data.sunRise?.times(1000L),
-                data.sunSet?.times(1000L)
-            ),
-            updateTime = lastUpdate,
-        )
+        val lastUpdate = data.timestamp?.times(1000L) ?: return
 
         val sunrises = buildList {
             if (data.sunRise != null) add(data.sunRise.times(1000L))
@@ -100,7 +80,7 @@ class BreezyWeatherProvider(
                 temperature = hourly.temp?.toDouble() ?: continue,
                 icon = iconForId(hourly.conditionCode ?: continue).id,
                 condition = textForId(hourly.conditionCode) ?: continue,
-                location = data.location,
+                location = data.location ?: return,
                 provider = "Breezy Weather",
                 humidity = hourly.humidity?.toDouble(),
                 windSpeed = hourly.windSpeed?.toDouble()?.div(3.6),
@@ -112,33 +92,26 @@ class BreezyWeatherProvider(
         }
 
         withContext(Dispatchers.IO) {
+            val in7Days = System.currentTimeMillis() + Duration.ofDays(7).toMillis()
             database.weatherDao()
-                .replaceAll(result.map { it.toDatabaseEntity() })
+                .replaceAll(result.takeWhile { it.timestamp < in7Days  }.map { it.toDatabaseEntity() })
         }
     }
 
     private fun iconForId(id: Int): WeatherIcon {
         return when (id) {
-            200, 201, in 230..232 -> WeatherIcon.ThunderstormWithRain
-            202 -> WeatherIcon.ThunderstormWithRain
-            210, 211 -> WeatherIcon.Thunderstorm
-            212, 221 -> WeatherIcon.HeavyThunderstorm
-            in 300..302, in 310..312 -> WeatherIcon.Drizzle
-            313, 314, 321, in 500..504, 511, in 520..522, 531 -> WeatherIcon.Showers
-            in 600..602 -> WeatherIcon.Snow
-            611, 612, 615, 616, in 620..622 -> WeatherIcon.Sleet
-            701, 711, 731, 741, 761, 762 -> WeatherIcon.Fog
-            721 -> WeatherIcon.Haze
-            771, 781, in 900..902, in 958..962 -> WeatherIcon.Storm
             800 -> WeatherIcon.Clear
             801 -> WeatherIcon.PartlyCloudy
-            802 -> WeatherIcon.MostlyCloudy
-            803 -> WeatherIcon.BrokenClouds
-            804, 951 -> WeatherIcon.Cloudy
-            903 -> WeatherIcon.Cold
-            904 -> WeatherIcon.Hot
-            905, in 952..957 -> WeatherIcon.Wind
-            906 -> WeatherIcon.Hail
+            803 -> WeatherIcon.Cloudy
+            500 -> WeatherIcon.Showers
+            600 -> WeatherIcon.Snow
+            771 -> WeatherIcon.Wind
+            741 -> WeatherIcon.Fog
+            751 -> WeatherIcon.Haze
+            611 -> WeatherIcon.Sleet
+            511 -> WeatherIcon.Hail
+            210 -> WeatherIcon.Thunderstorm
+            211 -> WeatherIcon.ThunderstormWithRain
             else -> WeatherIcon.Unknown
         }
     }
@@ -160,10 +133,6 @@ class BreezyWeatherProvider(
             else -> R.string.weather_condition_unknown
         }
         return context.getString(resId)
-    }
-
-    private fun isNight(timestamp: Long, sunrise: Long?, sunset: Long?): Boolean {
-        return (sunrise != null && timestamp < sunrise) || (sunset != null && timestamp > sunset)
     }
 
     companion object {

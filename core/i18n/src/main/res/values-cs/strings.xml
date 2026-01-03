@@ -131,10 +131,8 @@
     <string name="widget_name_weather">Počasí</string>
     <string name="widget_name_calendar">Kalendář</string>
     <string name="widget_name_music">Média</string>
-    <string name="widget_name_favorites">Oblíbené</string>
     <string name="widget_add_widget">Přidat widget</string>
     <string name="shortcut_summary">Od %1$s</string>
-    <string name="easter_egg_text">Super, našli jste mě. Gratuluju. Stálo to za to\?</string>
     <string name="close">Zavřít</string>
     <string name="save">Uložit</string>
     <string name="turn_off">Vypnout</string>
@@ -220,7 +218,6 @@
     <string name="preference_colors_default">Výchozí</string>
     <string name="preference_colors_bw">Černá a bílá</string>
     <string name="preference_font">Písmo</string>
-    <string name="preference_font_system">Výchozí systémové</string>
     <string name="preference_screen_about">O aplikaci</string>
     <string name="preference_version">Verze</string>
     <string name="preference_category_links">Odkazy</string>
@@ -246,7 +243,6 @@
     <string name="preference_cards_shape">Tvar</string>
     <string name="preference_cards_shape_rounded">Zakulacený</string>
     <string name="preference_icon_shape">Tvar</string>
-    <string name="preference_icon_shape_platform">Podle systému</string>
     <string name="preference_icon_shape_square">Čtverec</string>
     <string name="preference_icon_shape_rounded_square">Zakulacený čtverec</string>
     <string name="preference_icon_shape_squircle">Čtverco-kruh</string>
@@ -299,7 +295,7 @@
     <string name="preference_clockwidget_layout_horizontal">Horizontální</string>
     <string name="preference_clockwidget_date_part">Datum</string>
     <string name="preference_clockwidget_favorites_part">Dok</string>
-    <string name="preference_clockwidget_favorites_part_summary">Zobrazit první řádek připnutých položek</string>
+    <string name="preference_clockwidget_favorites_part_summary">Zobrazit připnuté položky v doku</string>
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_music_part_summary">Zobrazit ovládání médií, když je aktivní jejich přehrávání</string>
     <string name="preference_clockwidget_battery_part">Baterie</string>
@@ -488,7 +484,7 @@
     <string name="preference_screen_homescreen">Domovská obrazovka</string>
     <string name="preference_screen_homescreen_summary">Hodiny, vyhledávací lišta, pozadí, systémové lišty</string>
     <string name="preference_screen_icons">Mřížka a ikony</string>
-    <string name="preference_screen_icons_summary">Mřížka, velikost ikon, balíčky ikon, odznaky</string>
+    <string name="preference_screen_icons_summary">Velikost mřížky, ikony, odznaky</string>
     <string name="preference_weather_integration">Počasí</string>
     <string name="preference_media_integration">Ovládání médií</string>
     <string name="widget_config_calendar_no_calendars">Nenalezeny žádné kalendáře</string>
@@ -797,7 +793,6 @@
     <string name="preference_clock_widget_time_format">Formát času</string>
     <string name="preference_clock_widget_time_format_24h">24hodinový</string>
     <string name="preference_clock_widget_time_format_12h">12hodinový</string>
-    <string name="preference_clock_widget_time_format_system">Podle systému</string>
     <string name="departure_time_now">nyní</string>
     <plurals name="departure_time_in">
         <item quantity="one">za minutu</item>
@@ -878,4 +873,28 @@
     <string name="poi_category_stationery">Papírnictví</string>
     <string name="poi_category_climbing_gym">Lezecká stěna</string>
     <string name="poi_category_hackerspace">Hackerspace</string>
+    <string name="preference_clockwidget_dock_rows">Řádky doku</string>
+    <string name="preference_search_apps">Aplikace</string>
+    <string name="preference_search_apps_summary">Zobrazit všechny aplikace, když je pole vyhledávání prázdné</string>
+    <string name="preference_screen_locale">Jazyk a oblast</string>
+    <string name="preference_screen_locale_summary">Jazyk, jednotky, formát čaasu</string>
+    <string name="preference_language">Jazyk</string>
+    <string name="preference_value_system_default">Podle systému</string>
+    <string name="preference_form_of_address">Oslovení</string>
+    <string name="preference_form_of_address_neutral">Neutrální</string>
+    <string name="preference_form_of_address_fem">Ženské</string>
+    <string name="preference_form_of_address_masc">Mužské</string>
+    <string name="preference_measurement_system">Měrná soustava</string>
+    <string name="preference_measurement_system_metric">Metrická</string>
+    <string name="preference_measurement_system_uk">Spojené království</string>
+    <string name="preference_measurement_system_us">Spojené státy</string>
+    <string name="preference_transliteration">Preferovaná transkripce</string>
+    <string name="preference_transliteration_auto">Automatická</string>
+    <string name="preference_transliteration_disabled">Zakázaná</string>
+    <string name="select_tag">Vybrat štítek</string>
+    <string name="widget_name_apps">Aplikace</string>
+    <string name="preference_category_enabled_plugins">Povoleno</string>
+    <string name="preference_category_installed_plugins">Nainstalováno</string>
+    <string name="tag_icon_customicon">Ikona</string>
+    <string name="tag_icon_emoji">Emodži</string>
 </resources>

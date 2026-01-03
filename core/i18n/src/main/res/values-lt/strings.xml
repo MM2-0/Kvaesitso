@@ -62,7 +62,6 @@
     <string name="widget_name_weather">Oras</string>
     <string name="widget_name_calendar">Kalendorius</string>
     <string name="widget_name_music">Muzika</string>
-    <string name="widget_name_favorites">Mėgstami</string>
     <string name="widget_name_notes">Ūžrašo knygelė</string>
     <string name="widget_name_unknown">Nežinomos programos valdiklis</string>
     <string name="notes_widget_placeholder">Parašyti ūžrašą…</string>
@@ -70,7 +69,6 @@
     <string name="notes_widget_export_filename">Ūžrašas_%1$s</string>
     <string name="notes_widget_action_dismiss">Ignoruoti</string>
     <string name="shortcut_summary">Iš %1$s</string>
-    <string name="easter_egg_text">Nu ,manę suradai. Sveikinu .Ar buvo verta\?</string>
     <string name="close">Uždaryti</string>
     <string name="duplicate">Duplikuoti</string>
     <string name="edit">Keisti</string>
@@ -144,7 +142,6 @@
     <string name="preference_screen_colors">Spalvų schema</string>
     <string name="preference_custom_colors_corepalette">Spalvų paletė</string>
     <string name="preference_font">Šriftas</string>
-    <string name="preference_font_system">Sistemos numatytas</string>
     <string name="preference_version">Versija</string>
     <string name="preference_category_links">Nuorodos</string>
     <string name="preference_category_licenses">Atviro šaltinio licensijos</string>
@@ -174,7 +171,6 @@
     <string name="preference_cards_shape_rounded">Apvalinta</string>
     <string name="preference_cards_shape_cut">Kirpti</string>
     <string name="preference_icon_shape">Forma</string>
-    <string name="preference_icon_shape_platform">Sistemos numatyta</string>
     <string name="preference_icon_shape_rounded_square">Apvalintas kvadratas</string>
     <string name="preference_icon_shape_squircle">Apvalintas kvadratas</string>
     <string name="preference_icon_shape_circle">Skritulys</string>

@@ -13,16 +13,14 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material.icons.rounded.FilterAlt
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
@@ -36,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -98,7 +97,7 @@ fun IconPicker(
                         SearchBarDefaults.InputField(
                             leadingIcon = {
                                 Icon(
-                                    imageVector = Icons.Rounded.Search,
+                                    painterResource(R.drawable.search_24px),
                                     contentDescription = null
                                 )
                             },
@@ -164,7 +163,7 @@ fun IconPicker(
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize),
-                            imageVector = Icons.Rounded.FilterAlt,
+                            painter = painterResource(R.drawable.filter_alt_20px),
                             contentDescription = null
                         )
                     } else {
@@ -185,31 +184,54 @@ fun IconPicker(
                             contentDescription = null
                         )
                     }
-                    DropdownMenu(
+                    DropdownMenuPopup(
+
                         expanded = showIconPackFilter,
-                        onDismissRequest = { showIconPackFilter = false }) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
-                            onClick = {
-                                showIconPackFilter = false
-                                filterIconPack = null
-                                scope.launch {
-                                    viewModel.searchIcon(query, filterIconPack)
-                                }
-                            }
-                        )
-                        installedIconPacks?.forEach { iconPack ->
+                        onDismissRequest = { showIconPackFilter = false }
+                    ) {
+                        DropdownMenuGroup(
+                            shapes = MenuDefaults.groupShapes()
+                        ) {
                             DropdownMenuItem(
+                                selected = filterIconPack == null,
+                                shapes = MenuDefaults.itemShape(
+                                    0,
+                                    installedIconPacks?.size?.plus(1) ?: 1
+                                ),
+                                text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
                                 onClick = {
                                     showIconPackFilter = false
-                                    filterIconPack = iconPack
+                                    filterIconPack = null
                                     scope.launch {
                                         viewModel.searchIcon(query, filterIconPack)
                                     }
                                 },
-                                text = {
-                                    Text(iconPack.name)
-                                })
+                                checkedLeadingIcon = {
+                                    Icon(painterResource(R.drawable.check_24px), null)
+                                }
+                            )
+                            installedIconPacks?.forEachIndexed { i, iconPack ->
+                                DropdownMenuItem(
+                                    selected = filterIconPack == iconPack,
+                                    shapes = MenuDefaults.itemShape(
+                                        i + 1,
+                                        installedIconPacks!!.size + 1
+                                    ),
+                                    onClick = {
+                                        showIconPackFilter = false
+                                        filterIconPack = iconPack
+                                        scope.launch {
+                                            viewModel.searchIcon(query, filterIconPack)
+                                        }
+                                    },
+                                    text = {
+                                        Text(iconPack.name)
+                                    },
+                                    checkedLeadingIcon = {
+                                        Icon(painterResource(R.drawable.check_24px), null)
+                                    },
+                                )
+                            }
                         }
                     }
                     Text(
@@ -218,7 +240,7 @@ fun IconPicker(
                         modifier = Modifier.animateContentSize()
                     )
                     Icon(
-                        Icons.Rounded.ArrowDropDown,
+                        painterResource(R.drawable.arrow_drop_down_20px),
                         modifier = Modifier
                             .padding(start = ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize),

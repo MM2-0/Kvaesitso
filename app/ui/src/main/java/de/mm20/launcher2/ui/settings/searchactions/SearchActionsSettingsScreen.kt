@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings.searchactions
 
 import android.net.Uri
+import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
@@ -14,21 +15,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.HelpOutline
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -43,11 +37,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.ui.R
@@ -58,12 +54,16 @@ import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.component.getSearchActionIconVector
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object SearchActionsSettingsRoute : NavKey
 
 @Composable
 fun SearchActionsSettingsScreen() {
     val viewModel: SearchActionsSettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
+    val backStack = LocalBackStack.current
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
     systemUiController.setNavigationBarColor(Color.Black)
@@ -72,7 +72,7 @@ fun SearchActionsSettingsScreen() {
 
     val colorScheme = MaterialTheme.colorScheme
 
-    val activity = LocalContext.current as? AppCompatActivity
+    val activity = LocalActivity.current as? AppCompatActivity
 
     val listState = rememberLazyDragAndDropListState(
         onDragStart = {
@@ -85,11 +85,6 @@ fun SearchActionsSettingsScreen() {
     val disabledActions by viewModel.disabledActions.collectAsState()
 
     Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.createAction() }) {
-                Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
-            }
-        },
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -102,14 +97,25 @@ fun SearchActionsSettingsScreen() {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        if (navController?.navigateUp() != true) {
+                        if (backStack.size <= 1) {
                             activity?.onBackPressed()
+                        } else {
+                            backStack.removeLastOrNull()
                         }
                     }) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            painterResource(R.drawable.arrow_back_24px),
+                            contentDescription = "Back"
+                        )
                     }
                 },
                 actions = {
+                    IconButton(onClick = { viewModel.createAction() }) {
+                        Icon(
+                            painterResource(R.drawable.add_24px),
+                            contentDescription = null
+                        )
+                    }
                     IconButton(onClick = {
                         CustomTabsIntent.Builder()
                             .setDefaultColorSchemeParams(
@@ -124,7 +130,7 @@ fun SearchActionsSettingsScreen() {
                             )
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.HelpOutline,
+                            painterResource(R.drawable.help_24px),
                             contentDescription = "Help"
                         )
                     }
@@ -147,8 +153,11 @@ fun SearchActionsSettingsScreen() {
                         .padding(start = 28.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(Icons.Outlined.Info, null,
-                        modifier = Modifier.padding(end = 24.dp).size(16.dp),
+                    Icon(
+                        painterResource(R.drawable.info_20px), null,
+                        modifier = Modifier
+                            .padding(end = 24.dp)
+                            .size(16.dp),
                         tint = MaterialTheme.colorScheme.secondary
                     )
                     Text(
@@ -189,41 +198,50 @@ fun SearchActionsSettingsScreen() {
                                             showDropdown = true
                                         }
                                     ) {
-                                        Icon(Icons.Rounded.MoreVert, stringResource(R.string.edit))
-                                        DropdownMenu(
+                                        Icon(
+                                            painterResource(R.drawable.more_vert_24px),
+                                            stringResource(R.string.edit)
+                                        )
+                                        DropdownMenuPopup(
                                             expanded = showDropdown,
                                             onDismissRequest = { showDropdown = false }
                                         ) {
-                                            DropdownMenuItem(
-                                                leadingIcon = {
-                                                    Icon(
-                                                        Icons.Rounded.Edit,
-                                                        contentDescription = null
-                                                    )
-                                                },
-                                                text = {
-                                                    Text(stringResource(R.string.edit))
-                                                },
-                                                onClick = {
-                                                    viewModel.editAction(item)
-                                                    showDropdown = false
-                                                }
-                                            )
-                                            DropdownMenuItem(
-                                                leadingIcon = {
-                                                    Icon(
-                                                        Icons.Rounded.Delete,
-                                                        contentDescription = null
-                                                    )
-                                                },
-                                                text = {
-                                                    Text(stringResource(R.string.menu_delete))
-                                                },
-                                                onClick = {
-                                                    viewModel.removeAction(item)
-                                                    showDropdown = false
-                                                }
-                                            )
+                                            DropdownMenuGroup(
+                                                shapes = MenuDefaults.groupShapes()
+                                            ) {
+                                                DropdownMenuItem(
+                                                    shape = MenuDefaults.leadingItemShape,
+                                                    leadingIcon = {
+                                                        Icon(
+                                                            painterResource(R.drawable.edit_24px),
+                                                            contentDescription = null
+                                                        )
+                                                    },
+                                                    text = {
+                                                        Text(stringResource(R.string.edit))
+                                                    },
+                                                    onClick = {
+                                                        viewModel.editAction(item)
+                                                        showDropdown = false
+                                                    }
+                                                )
+                                                DropdownMenuItem(
+                                                    shape = MenuDefaults.trailingItemShape,
+                                                    leadingIcon = {
+                                                        Icon(
+                                                            painterResource(R.drawable.delete_24px),
+                                                            contentDescription = null
+                                                        )
+                                                    },
+                                                    text = {
+                                                        Text(stringResource(R.string.menu_delete))
+                                                    },
+                                                    onClick = {
+                                                        viewModel.removeAction(item)
+                                                        showDropdown = false
+                                                    }
+                                                )
+                                            }
                                         }
                                     }
                                 }

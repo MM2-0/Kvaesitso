@@ -128,6 +128,8 @@ class SearchVM : ViewModel(), KoinComponent {
     val favoritesEnabled = searchUiSettings.favorites
     val hideFavorites = mutableStateOf(false)
 
+    val allAppsEnabled = searchUiSettings.allApps
+
     val showFilters = mutableStateOf(false)
 
     private val defaultFilters = searchFilterSettings.defaultFilter.stateIn(
@@ -422,19 +424,19 @@ class SearchVM : ViewModel(), KoinComponent {
             val bWeight = weights[b.key] ?: 0.0
 
             val aScore = if (a.score.isUnspecified) {
-                ResultScore(query = query, primaryFields = listOf(a.labelOverride ?: a.label)).score
+                ResultScore.from(query = query, primaryFields = listOf(a.labelOverride ?: a.label)).score
             } else {
                 a.score.score
             }
 
             val bScore = if (b.score.isUnspecified) {
-                ResultScore(query = query, primaryFields = listOf(b.labelOverride ?: b.label)).score
+                ResultScore.from(query = query, primaryFields = listOf(b.labelOverride ?: b.label)).score
             } else {
                 b.score.score
             }
 
-            val aTotal = aScore * 0.7f + aWeight.toFloat() * 0.3f
-            val bTotal = bScore * 0.7f + bWeight.toFloat() * 0.3f
+            val aTotal = aScore * 0.6f + aWeight.toFloat() * 0.4f
+            val bTotal = bScore * 0.6f + bWeight.toFloat() * 0.4f
 
             bTotal.compareTo(aTotal)
         }

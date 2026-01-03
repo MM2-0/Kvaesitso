@@ -1,0 +1,2 @@
+- Fix crashes
+- Restore old favorites widget behavior to hide apps from dock

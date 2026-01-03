@@ -4,9 +4,6 @@ import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,11 +14,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object BreezyWeatherSettingsRoute: NavKey
 
 @Composable
 fun BreezyWeatherSettingsScreen() {
@@ -42,7 +44,7 @@ fun BreezyWeatherSettingsScreen() {
                             R.string.preference_breezyweather_integration_description,
                             stringResource(R.string.app_name),
                         ),
-                        icon = Icons.Rounded.Info,
+                        icon = R.drawable.info_24px,
                         modifier = Modifier.background(MaterialTheme.colorScheme.surface).padding(16.dp),
                         primaryAction = {
                             Button(onClick = {
@@ -63,7 +65,7 @@ fun BreezyWeatherSettingsScreen() {
                             R.string.preference_breezyweather_integration_instructions,
                             stringResource(R.string.app_name),
                         ),
-                        icon = Icons.Rounded.Info,
+                        icon = R.drawable.info_24px,
                         modifier = Modifier.background(MaterialTheme.colorScheme.surface).padding(16.dp),
                     )
                     Preference(
@@ -79,7 +81,7 @@ fun BreezyWeatherSettingsScreen() {
                     )
                     Preference(
                         title = stringResource(R.string.preference_launch_breezyweather_app),
-                        icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                        icon = R.drawable.open_in_new_24px,
                         onClick = {
                             viewModel.launchBreezyApp(activity)
                         }

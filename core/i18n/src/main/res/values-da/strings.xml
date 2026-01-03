@@ -20,7 +20,6 @@
     <string name="wikipedia_url">https://da.wikipedia.org</string>
     <string name="turn_off">Slå fra</string>
     <string name="widget_action_remove">Fjern</string>
-    <string name="easter_egg_text">Nå, du fandt mig. Tillykke. Var dét det hele værd\?</string>
     <string name="owncloud_password">Adgangskode</string>
     <string name="show_all">Vis alle</string>
     <string name="music_widget_no_data">Ingen medier er blevet afspillet endnu</string>
@@ -90,7 +89,6 @@
     <string name="widget_name_weather">Vejr</string>
     <string name="widget_name_calendar">Kalender</string>
     <string name="widget_name_music">Musik</string>
-    <string name="widget_name_favorites">Favoritter</string>
     <string name="widget_name_unknown">Ukendt app-widget</string>
     <string name="widget_add_widget">Tilføj widget</string>
     <string name="notes_widget_placeholder">Skriv en note…</string>
@@ -365,7 +363,6 @@
     <string name="preference_debug_dump_heap_summary">Tag et snapshot for at analysere hukommelsesforbruget. Appen vil fryse, indtil denne proces er afsluttet.</string>
     <string name="preference_cards_shape_cut">Afskåret</string>
     <string name="preference_icon_shape">Form</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_cards_shape_rounded">Afrundet</string>
     <string name="preference_hide_status_bar">Skjul statuslinje</string>
     <string name="preference_system_bar_icons_dark">Mørk</string>
@@ -390,7 +387,6 @@
     <string name="preference_signin_user">Logget ind som %1$s</string>
     <string name="preference_blur_wallpaper_radius">Sløringsradius</string>
     <string name="preference_custom_colors_corepalette">Farvepalet</string>
-    <string name="preference_font_system">Systemstandard</string>
     <string name="preference_font">Skrifttype</string>
     <string name="preference_backup_summary">Eksportér præferencer og launcher-data</string>
     <string name="preference_owncloud_signin">Log ind på Owncloud</string>
@@ -728,7 +724,6 @@
     <string name="preference_clock_widget_time_format">Tidsformat</string>
     <string name="preference_clock_widget_time_format_24h">24 timer</string>
     <string name="preference_clock_widget_time_format_12h">12 timer</string>
-    <string name="preference_clock_widget_time_format_system">Systemstandard</string>
     <string name="clock_style_custom">Brugerdefineret widget</string>
     <string name="menu_show_filters">Vis filtre</string>
     <string name="menu_hide_filters">Skjul filtre</string>

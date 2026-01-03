@@ -2,6 +2,7 @@ package de.mm20.launcher2.badges
 
 import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed interface BadgeIcon {
@@ -9,12 +10,12 @@ sealed interface BadgeIcon {
     value class Drawable(val drawable: android.graphics.drawable.Drawable): BadgeIcon
 
     @JvmInline
-    value class Vector(val imageVector: ImageVector): BadgeIcon
+    value class Vector(@DrawableRes val iconRes: Int): BadgeIcon
 }
 
 fun BadgeIcon(drawable: Drawable): BadgeIcon = BadgeIcon.Drawable(drawable)
 
-fun BadgeIcon(imageVector: ImageVector): BadgeIcon = BadgeIcon.Vector(imageVector)
+fun BadgeIcon(@DrawableRes iconRes: Int): BadgeIcon = BadgeIcon.Vector(iconRes)
 
 interface Badge {
     val number: Int?

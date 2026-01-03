@@ -34,6 +34,15 @@ class SearchUiSettings internal constructor(
         }
     }
 
+    val allApps
+        get() = launcherDataStore.data.map { it.searchAllApps }.distinctUntilChanged()
+
+    fun setAllApps(allAppsGrid: Boolean) {
+        launcherDataStore.update {
+            it.copy(searchAllApps = allAppsGrid)
+        }
+    }
+
     val openKeyboard
         get() = launcherDataStore.data.map { it.searchBarKeyboard }.distinctUntilChanged()
 

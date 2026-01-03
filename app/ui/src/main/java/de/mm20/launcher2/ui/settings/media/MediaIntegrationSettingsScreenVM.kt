@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -21,6 +20,7 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.text.Collator
 import kotlin.math.roundToInt
 
 class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
@@ -68,7 +68,7 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
                     icon = iconService.getIcon(it, (32 * density).roundToInt())
                         .shareIn(viewModelScope, SharingStarted.WhileSubscribed(10000))
                 )
-            }.sortedBy { it.label.normalize() }
+            }.sorted()
             loading.value = false
         }
     }
@@ -104,4 +104,12 @@ data class AppListItem(
     val isMusicApp: Boolean,
     val isChecked: Boolean,
     val icon: Flow<LauncherIcon?>,
-)
+): Comparable<AppListItem> {
+    override fun compareTo(other: AppListItem): Int {
+        val label1 = label
+        val label2 = other.label
+        return Collator.getInstance().apply { strength = Collator.SECONDARY }
+            .compare(label1, label2)
+    }
+
+}

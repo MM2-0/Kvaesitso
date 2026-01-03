@@ -78,12 +78,13 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uitooling)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.materialicons)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.animationgraphics)
     implementation(libs.androidx.constraintlayout.compose)
 
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.compose.material3adaptive.navigation3)
 
     implementation(libs.jsoup)
     implementation(libs.markdown)
@@ -95,7 +96,6 @@ dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pagerindicators)
     implementation(libs.accompanist.flowlayout)
-    implementation(libs.accompanist.navigationanimation)
 
     implementation(libs.haze)
 
@@ -117,6 +117,10 @@ dependencies {
 
     implementation(libs.coil.core)
     implementation(libs.coil.compose)
+
+    implementation(libs.smartspacer) {
+        exclude(group = "com.github.skydoves", module = "balloon")
+    }
 
     implementation(project(":libs:material-color-utilities"))
 

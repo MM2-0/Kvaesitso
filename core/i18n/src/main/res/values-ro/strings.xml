@@ -58,7 +58,6 @@
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="widget_name_calendar">Calendar</string>
     <string name="widget_name_music">Muzică</string>
-    <string name="widget_name_favorites">Favorite</string>
     <string name="widget_action_remove">Eliminați</string>
     <string name="owncloud_username">Nume utilizator</string>
     <string name="login_flow_continue">Continuați</string>
@@ -193,7 +192,6 @@
     <string name="preference_cards_stroke_width">Lățimea conturului</string>
     <string name="preference_cards_opacity">Opacitate</string>
     <string name="preference_icon_shape">Formă</string>
-    <string name="preference_icon_shape_platform">Implicită de sistem</string>
     <string name="preference_icon_shape_square">Pătrat</string>
     <string name="preference_icon_shape_rounded_square">Pătrat rotunjit</string>
     <string name="preference_icon_shape_circle">Cerc</string>
@@ -292,7 +290,6 @@
     <string name="preference_icon_shape_squircle">Pătrat rotunjit</string>
     <string name="preference_icon_shape_triangle">Triunghi Reuleaux</string>
     <string name="missing_permission_auto_location">Accesul la locație este necesar pentru a determina automat locația</string>
-    <string name="easter_egg_text">Ei bine, m-ai găsit. Felicitări. A meritat\?</string>
     <string name="missing_permission_music_widget">Accesul la notificări este necesar pentru a controla redarea media</string>
     <string name="preference_category_licenses">Licențe open source</string>
     <string name="preference_themed_icons_summary">Colorați pictogramele cu schema de culori a aplicației</string>
@@ -337,7 +334,6 @@
     <string name="menu_map">Vezi pe hartă</string>
     <string name="menu_website">Deschide site web</string>
     <string name="preference_category_advanced">Avansat</string>
-    <string name="preference_font_system">Font implicit</string>
     <string name="location_closes_other_day">se închide la %1$s, %2$s</string>
     <string name="location_closes">se închide la %1$s</string>
     <string name="location_opens">se deschide la %1$s</string>

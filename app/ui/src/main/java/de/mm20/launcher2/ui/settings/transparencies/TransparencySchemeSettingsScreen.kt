@@ -10,16 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -34,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -43,7 +37,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.serialization.UUIDSerializer
 import de.mm20.launcher2.themes.transparencies.Transparencies
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LocalIconShape
@@ -56,14 +51,12 @@ import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 import kotlinx.serialization.Serializable
 import java.text.DecimalFormat
 import java.util.UUID
-import kotlin.math.floor
-import kotlin.math.log
 import kotlin.math.round
 
 @Serializable
 data class TransparencySchemeSettingsRoute(
-    val id: String
-)
+    @Serializable(with = UUIDSerializer::class) val id: UUID
+): NavKey
 
 @Composable
 fun TransparencySchemeSettingsScreen(themeId: UUID) {
@@ -288,15 +281,19 @@ private fun TransparencyPreference(
                     },
                     valueRange = 0f..1f,
                 )
-                val format = remember { DecimalFormat().apply {
-                    maximumFractionDigits = 2
-                    minimumFractionDigits = 0
-                } }
+                val format = remember {
+                    DecimalFormat().apply {
+                        maximumFractionDigits = 2
+                        minimumFractionDigits = 0
+                    }
+                }
                 Text(
                     text = format.format(value ?: defaultValue),
                     style = MaterialTheme.typography.labelSmall,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(start = 8.dp).widthIn(min = 48.dp),
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .widthIn(min = 48.dp),
                 )
             }
         }

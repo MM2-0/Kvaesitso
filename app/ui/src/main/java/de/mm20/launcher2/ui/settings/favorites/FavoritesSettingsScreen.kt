@@ -1,11 +1,5 @@
 package de.mm20.launcher2.ui.settings.favorites
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.Insights
-import androidx.compose.material.icons.rounded.Sort
-import androidx.compose.material.icons.rounded.SwapVert
-import androidx.compose.material.icons.rounded.TableRows
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.preferences.WeightFactor
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.ListPreference
@@ -23,6 +18,10 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.sheets.EditFavoritesSheet
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object FavoritesSettingsRoute: NavKey
 
 @Composable
 fun FavoritesSettingsScreen() {
@@ -36,7 +35,7 @@ fun FavoritesSettingsScreen() {
                 Preference(
                     title = stringResource(R.string.menu_item_edit_favs),
                     summary = stringResource(R.string.preference_edit_favorites_summary),
-                    icon = Icons.Rounded.Sort,
+                    icon = R.drawable.sort_24px,
                     onClick = {
                         showEditSheet = true
                     }
@@ -53,7 +52,7 @@ fun FavoritesSettingsScreen() {
                     onValueChanged = {
                         viewModel.setFrequentlyUsed(it)
                     },
-                    icon = Icons.Rounded.Insights
+                    icon = R.drawable.show_chart_24px,
                 )
                 val frequentlyUsedRows by viewModel.frequentlyUsedRows.collectAsState()
                 SliderPreference(
@@ -65,12 +64,12 @@ fun FavoritesSettingsScreen() {
                     onValueChanged = {
                         viewModel.setFrequentlyUsedRows(it)
                     },
-                    icon = Icons.Rounded.TableRows
+                    icon = R.drawable.table_rows_24px,
                 )
                 val searchResultWeightFactor by viewModel.searchResultWeightFactor.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_search_result_ordering_weight_factor),
-                    icon = Icons.Rounded.SwapVert,
+                    icon = R.drawable.swap_vert_24px,
                     value = searchResultWeightFactor,
                     items = listOf(
                         stringResource(R.string.preference_search_result_ordering_weight_factor_low) to WeightFactor.Low,
@@ -92,7 +91,7 @@ fun FavoritesSettingsScreen() {
                     onValueChanged = {
                         viewModel.setEditButton(it)
                     },
-                    icon = Icons.Rounded.Edit
+                    icon = R.drawable.edit_24px,
                 )
                 SwitchPreference(
                     title = stringResource(R.string.preference_compact_tags),

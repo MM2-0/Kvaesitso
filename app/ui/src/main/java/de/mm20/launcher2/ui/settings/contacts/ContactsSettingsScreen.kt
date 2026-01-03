@@ -2,34 +2,27 @@ package de.mm20.launcher2.ui.settings.contacts
 
 import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Call
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.Banner
-import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object ContactsSettingsRoute: NavKey
 
 @Composable
 fun ContactsSettingsScreen() {
@@ -60,7 +53,7 @@ fun ContactsSettingsScreen() {
                     SwitchPreference(
                         title = stringResource(R.string.preference_search_contacts),
                         summary = stringResource(R.string.preference_search_contacts_summary),
-                        icon = Icons.Rounded.Person,
+                        icon = R.drawable.person_24px,
                         value = enabledProviders.contains("local"),
                         onValueChanged = {
                             viewModel.setProviderEnabled("local", it)
@@ -82,7 +75,7 @@ fun ContactsSettingsScreen() {
                         },
                         description = (state as? PluginState.SetupRequired)?.message
                             ?: stringResource(id = R.string.plugin_state_setup_required),
-                        icon = Icons.Rounded.ErrorOutline,
+                        icon = R.drawable.error_24px,
                         unlockLabel = stringResource(id = R.string.plugin_action_setup),
                     ) {
                         SwitchPreference(
@@ -112,7 +105,7 @@ fun ContactsSettingsScreen() {
                     SwitchPreference(
                         title = stringResource(R.string.preference_contacts_call_on_tap),
                         summary = stringResource(R.string.preference_contacts_call_on_tap_summary),
-                        icon = Icons.Rounded.Call,
+                        icon = R.drawable.call_24px,
                         value = callOnTap == true && hasCallPermission == true,
                         onValueChanged = {
                             viewModel.setCallOnTap(it)

@@ -30,7 +30,7 @@ interface Application: SavableSearchable {
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
-                icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
+                icon = ContextCompat.getDrawable(context, R.drawable.android_24px)!!,
                 scale = 0.65f,
                 color = 0xff3dda84.toInt(),
             ),

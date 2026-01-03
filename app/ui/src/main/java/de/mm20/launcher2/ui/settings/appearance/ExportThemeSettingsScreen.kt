@@ -9,19 +9,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CropSquare
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.Opacity
-import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.Save
-import androidx.compose.material.icons.rounded.Share
-import androidx.compose.material.icons.rounded.TextFields
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.SplitButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,14 +29,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.TextPreference
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object ExportThemeSettingsRoute : NavKey
 
 @Composable
 fun ExportThemeSettingsScreen() {
@@ -61,9 +61,10 @@ fun ExportThemeSettingsScreen() {
         }
     }
 
-    val fileChooserLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/vnd.de.mm20.launcher2.theme")) {
-        if (it != null) viewModel.exportTheme(context, it)
-    }
+    val fileChooserLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/vnd.de.mm20.launcher2.theme")) {
+            if (it != null) viewModel.exportTheme(context, it)
+        }
 
     LaunchedEffect(Unit) {
         viewModel.init()
@@ -95,7 +96,7 @@ fun ExportThemeSettingsScreen() {
             PreferenceCategory {
                 ListPreference(
                     stringResource(R.string.preference_screen_colors),
-                    icon = Icons.Rounded.Palette,
+                    icon = R.drawable.palette_24px,
                     value = viewModel.colorScheme,
                     items = listOf(stringResource(R.string.no_selection) to null) + colorSchemes.map {
                         it.name to it
@@ -106,7 +107,7 @@ fun ExportThemeSettingsScreen() {
                 )
                 ListPreference(
                     stringResource(R.string.preference_screen_typography),
-                    icon = Icons.Rounded.TextFields,
+                    icon = R.drawable.text_fields_24px,
                     value = viewModel.typographyScheme,
                     items = listOf(stringResource(R.string.no_selection) to null) + typographyThemes.map {
                         it.name to it
@@ -117,7 +118,7 @@ fun ExportThemeSettingsScreen() {
                 )
                 ListPreference(
                     stringResource(R.string.preference_screen_shapes),
-                    icon = Icons.Rounded.CropSquare,
+                    icon = R.drawable.crop_square_24px,
                     value = viewModel.shapeScheme,
                     items = listOf(stringResource(R.string.no_selection) to null) + shapeThemes.map {
                         it.name to it
@@ -128,7 +129,7 @@ fun ExportThemeSettingsScreen() {
                 )
                 ListPreference(
                     stringResource(R.string.preference_screen_transparencies),
-                    icon = Icons.Rounded.Opacity,
+                    icon = R.drawable.opacity_24px,
                     value = viewModel.transparencyScheme,
                     items = listOf(stringResource(R.string.no_selection) to null) + transparencySchemes.map {
                         it.name to it
@@ -160,7 +161,7 @@ fun ExportThemeSettingsScreen() {
                         }
                     ) {
                         Icon(
-                            Icons.Rounded.Share,
+                            painterResource(R.drawable.share_20px),
                             null,
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
@@ -179,7 +180,7 @@ fun ExportThemeSettingsScreen() {
                             label = "Trailing Icon Rotation"
                         )
                         Icon(
-                            Icons.Rounded.KeyboardArrowDown,
+                            painterResource(R.drawable.keyboard_arrow_down_24px),
                             modifier =
                                 Modifier
                                     .size(SplitButtonDefaults.TrailingIconSize)
@@ -189,15 +190,27 @@ fun ExportThemeSettingsScreen() {
                             contentDescription = null
                         )
 
-                        DropdownMenu(expanded = showDropdown, onDismissRequest = { showDropdown = false }) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.save_as_file)) },
-                                onClick = {
-                                    fileChooserLauncher.launch("${viewModel.themeName}.kvtheme")
-                                    showDropdown = false
-                                },
-                                leadingIcon = { Icon(Icons.Rounded.Save, contentDescription = null) }
-                            )
+                        DropdownMenuPopup(
+                            expanded = showDropdown,
+                            onDismissRequest = { showDropdown = false }) {
+                            DropdownMenuGroup(
+                                shapes = MenuDefaults.groupShapes()
+                            ) {
+                                DropdownMenuItem(
+                                    shape = MenuDefaults.standaloneItemShape,
+                                    text = { Text(stringResource(R.string.save_as_file)) },
+                                    onClick = {
+                                        fileChooserLauncher.launch("${viewModel.themeName}.kvtheme")
+                                        showDropdown = false
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            painterResource(R.drawable.save_24px),
+                                            contentDescription = null
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
                 }

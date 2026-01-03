@@ -4,10 +4,6 @@ import android.icu.text.DecimalFormat
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.StarHalf
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,9 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ui.R
 import kotlin.math.round
 
 /**
@@ -43,7 +41,7 @@ fun RatingBar(
     ) {
         for (i in 0 until fullStars) {
             Icon(
-                imageVector = Icons.Rounded.Star,
+                painter = painterResource(R.drawable.star_20px_filled),
                 contentDescription = null,
                 tint = tint,
                 modifier = iconModifier
@@ -51,7 +49,7 @@ fun RatingBar(
         }
         if (halfStar) {
             Icon(
-                imageVector = Icons.AutoMirrored.Rounded.StarHalf,
+                painter = painterResource(R.drawable.star_half_20px),
                 contentDescription = null,
                 tint = tint,
                 modifier = iconModifier
@@ -59,7 +57,7 @@ fun RatingBar(
         }
         for (i in 0 until emptyStars) {
             Icon(
-                imageVector = Icons.Rounded.StarOutline,
+                painter = painterResource(R.drawable.star_20px),
                 contentDescription = null,
                 tint = tint,
                 modifier = iconModifier

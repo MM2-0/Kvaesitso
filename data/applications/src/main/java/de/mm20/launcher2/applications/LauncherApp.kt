@@ -1,6 +1,5 @@
 package de.mm20.launcher2.applications
 
-import android.app.admin.DevicePolicyManager
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
@@ -33,7 +32,6 @@ import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.StoreLink
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlin.math.roundToInt
 
 internal data class LauncherApp(
     private val launcherActivityInfo: LauncherActivityInfo,
@@ -49,10 +47,24 @@ internal data class LauncherApp(
 
     override val label: String = launcherActivityInfo.label.toString()
 
+    /**
+     * Cached result of the normalized label.
+     * First string is the normalizer ID
+     * Second string is the normalized label
+     */
+    internal var cachedNormalizerResult: Pair<String, String>? = null
 
-    constructor(context: Context, launcherActivityInfo: LauncherActivityInfo, score: ResultScore = ResultScore.Unspecified) : this(
+
+    constructor(
+        context: Context,
+        launcherActivityInfo: LauncherActivityInfo,
+        score: ResultScore = ResultScore.Unspecified,
+    ) : this(
         launcherActivityInfo,
-        versionName = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
+        versionName = getPackageVersionName(
+            context,
+            launcherActivityInfo.applicationInfo.packageName
+        ),
         isSuspended = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED != 0,
         userSerialNumber = launcherActivityInfo.user.getSerialNumber(context),
         score = score,
@@ -63,7 +75,8 @@ internal data class LauncherApp(
 
     private val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
 
-    private val isSystemApp: Boolean = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+    private val isSystemApp: Boolean =
+        launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
 
     override val canUninstall: Boolean
         get() = !isSystemApp && isMainProfile
@@ -89,7 +102,7 @@ internal data class LauncherApp(
         try {
             val icon =
                 withContext(Dispatchers.IO) {
-                    val density = size / (108/1.5)
+                    val density = size / (108 / 1.5)
                     launcherActivityInfo.getIcon(0)
 
                 } ?: return null
@@ -269,7 +282,10 @@ internal data class LauncherApp(
 
         fun isSuspended(context: Context, packageName: String): Boolean {
             return try {
-                context.packageManager.getApplicationInfo(packageName, 0).flags and ApplicationInfo.FLAG_SUSPENDED != 0
+                context.packageManager.getApplicationInfo(
+                    packageName,
+                    0
+                ).flags and ApplicationInfo.FLAG_SUSPENDED != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 false
             }

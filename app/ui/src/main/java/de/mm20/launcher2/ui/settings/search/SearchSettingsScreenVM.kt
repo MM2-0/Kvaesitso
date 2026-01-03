@@ -49,6 +49,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         searchUiSettings.setFavorites(favorites)
     }
 
+    val allApps = searchUiSettings.allApps
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setAllApps(allApps: Boolean) {
+        searchUiSettings.setAllApps(allApps)
+    }
+
     val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

@@ -223,7 +223,7 @@
     <string name="widget_name_weather">Weather</string>
     <string name="widget_name_calendar">Calendar</string>
     <string name="widget_name_music">Media</string>
-    <string name="widget_name_favorites">Favorites</string>
+    <string name="widget_name_apps">Apps</string>
     <string name="widget_name_notes">Note</string>
     <string name="widget_name_unknown">Unknown</string>
     <string name="widget_add_widget">Add widget</string>
@@ -239,8 +239,6 @@
     <string name="notes_widget_dismissed">Note dismissed</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">By %1$s</string>
-    <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it\?</string>
     <!-- Close a dialog -->
     <string name="close">Close</string>
     <string name="no_selection">No selection</string>
@@ -445,7 +443,6 @@
     <string name="preference_transparencies_default">Default</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
     <string name="preference_font">Font</string>
-    <string name="preference_font_system">System default</string>
     <string name="preference_screen_about">About</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Links</string>
@@ -494,7 +491,6 @@
     <string name="preference_cards_shape_rounded">Rounded</string>
     <string name="preference_cards_shape_cut">Cut</string>
     <string name="preference_icon_shape">Shape</string>
-    <string name="preference_icon_shape_platform">System default</string>
     <string name="preference_icon_shape_square">Square</string>
     <string name="preference_icon_shape_rounded_square">Rounded square</string>
     <string name="preference_icon_shape_squircle">Squircle</string>
@@ -507,6 +503,8 @@
     <string name="preference_screen_integrations">Integrations</string>
     <string name="preference_screen_plugins">Plugins</string>
     <string name="preference_screen_plugins_summary">Manage installed extensions</string>
+    <string name="preference_category_enabled_plugins">Enabled</string>
+    <string name="preference_category_installed_plugins">Installed</string>
     <string name="no_plugins_installed">No plugins installed</string>
     <string name="preference_theme_system">Follow system</string>
     <string name="preference_themed_icons">Themed icons</string>
@@ -588,7 +586,6 @@
     <string name="preference_clock_widget_time_format">Time format</string>
     <string name="preference_clock_widget_time_format_24h">24-hour</string>
     <string name="preference_clock_widget_time_format_12h">12-hour</string>
-    <string name="preference_clock_widget_time_format_system">System default</string>
     <string name="widget_use_theme_colors">Use theme color</string>
     <string name="preference_clock_widget_fill_height">Fill screen height</string>
     <string name="preference_clock_widget_alignment">Alignment</string>
@@ -596,10 +593,12 @@
     <string name="preference_clock_widget_alignment_center">Center</string>
     <string name="preference_clock_widget_alignment_bottom">Bottom</string>
     <string name="preference_clockwidget_dynamic_zone">Dynamic zone</string>
+    <string name="preference_clockwidget_smartspacer">Managed by Smartspacer</string>
     <string name="preference_clockwidget_date_part">Date</string>
     <string name="preference_clockwidget_date_part_summary">Show the current date</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Show the first row of pinned items</string>
+    <string name="preference_clockwidget_favorites_part_summary">Show pinned items in dock</string>
+    <string name="preference_clockwidget_dock_rows">Dock rows</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Show media controls when there is an active media session</string>
     <string name="preference_clockwidget_battery_part">Battery</string>
@@ -617,9 +616,11 @@
     <string name="preference_logs">Logs</string>
     <string name="preference_logs_summary">View and export application logs</string>
     <string name="preference_screen_search">Search</string>
-    <string name="preference_screen_search_summary">Search, tags, hidden items</string>
+    <string name="preference_screen_search_summary">Search, tags, excluded results</string>
     <string name="preference_search_favorites">Favorites</string>
     <string name="preference_search_favorites_summary">Show pinned and frequently used items above app grid</string>
+    <string name="preference_search_apps">Apps</string>
+    <string name="preference_search_apps_summary">Show all apps when the search field is empty</string>
     <string name="preference_search_files">Files</string>
     <string name="preference_search_files_summary">Search local files and cloud files</string>
     <string name="preference_search_contacts">Contacts</string>
@@ -664,10 +665,10 @@
     <string name="preference_search_bar_auto_focus_summary">Automatically show the keyboard when opening the app drawer</string>
     <string name="preference_search_bar_launch_on_enter">Launch on enter</string>
     <string name="preference_search_bar_launch_on_enter_summary">Launch highlighted match or quick action upon tapping go</string>
-    <string name="preference_hidden_items">Hidden search results</string>
-    <string name="preference_hidden_items_summary">Manage hidden apps and search results</string>
+    <string name="preference_hidden_items">Excluded search results</string>
+    <string name="preference_hidden_items_summary">Manage excluded apps and search results</string>
     <string name="preference_hidden_items_reveal_button">Show reveal button</string>
-    <string name="preference_hidden_items_reveal_button_summary">Show a button to reveal hidden search results</string>
+    <string name="preference_hidden_items_reveal_button_summary">Show a button to reveal excluded search results</string>
     <string name="preference_screen_tags">Tags</string>
     <string name="preference_screen_tags_summary">Manage tags and tagged items</string>
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
@@ -684,7 +685,7 @@
     <string name="preference_screen_homescreen">Home screen</string>
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
     <string name="preference_screen_icons">Grid and icons</string>
-    <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
+    <string name="preference_screen_icons_summary">Grid size, icons, badges</string>
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
     <string name="preference_tasks_integration">Tasks</string>
@@ -696,6 +697,10 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather is a free and open source weather app. If installed, %1$s can use Breezy Weather as a data source for weather data.</string>
     <string name="preference_breezyweather_integration_instructions">To use Breezy Weather as weather provider:\n\n1. Go to Breezy Weather &gt; Settings &gt; Widgets &amp; Live wallpaper &gt; Send Gadgetbridge data &gt; Enable %1$s\n\n2. In %1$s, select Breezy Weather as weather provider</string>
     <string name="preference_launch_breezyweather_app">Open Breezy Weather</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer is a free and open source At a Glance widget. If installed, it can be integrated into the dynamic zone of the clock widget</string>
+    <string name="preference_smartspacer_enable">Enable Smartspacer integration</string>
+    <string name="preference_launch_smartspacer_app">Open Smartspacer</string>
     <string name="preference_contacts_call_on_tap">Tap to call</string>
     <string name="preference_contacts_call_on_tap_summary">Start a call without confirmation when tapping a phone number</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -762,6 +767,8 @@
     <string name="tag_empty_name">A tag cannot exist without a name. If you continue, the tag will be deleted</string>
     <string name="tag_select_items">Select items:</string>
     <string name="tag_name">Tag name</string>
+    <string name="tag_icon_customicon">Icon</string>
+    <string name="tag_icon_emoji">Emoji</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item selected</item>
         <item quantity="other">%1$d items selected</item>
@@ -1058,4 +1065,20 @@
     <string name="font_name_device_headline">Default headline font</string>
     <string name="font_name_device_body">Device text font</string>
     <string name="font_category_generic">Generic</string>
+    <string name="preference_screen_locale">Language and region</string>
+    <string name="preference_screen_locale_summary">Language, units, time format</string>
+    <string name="preference_language">Language</string>
+    <string name="preference_value_system_default">System default</string>
+    <string name="preference_form_of_address">Form of address</string>
+    <string name="preference_form_of_address_neutral">Neutral</string>
+    <string name="preference_form_of_address_fem">Feminine</string>
+    <string name="preference_form_of_address_masc">Masculine</string>
+    <string name="preference_measurement_system">Measurement system</string>
+    <string name="preference_measurement_system_metric">Metric</string>
+    <string name="preference_measurement_system_uk">United Kingdom</string>
+    <string name="preference_measurement_system_us">United States</string>
+    <string name="preference_transliteration">Preferred transliteration</string>
+    <string name="preference_transliteration_auto">Automatic</string>
+    <string name="preference_transliteration_disabled">Disabled</string>
+    <string name="select_tag">Select tag</string>
 </resources>

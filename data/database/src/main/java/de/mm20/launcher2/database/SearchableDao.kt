@@ -183,7 +183,7 @@ interface SearchableDao {
     @Query("UPDATE Searchable SET launchCount = launchCount + 1 WHERE `key` = :key")
     fun incrementLaunchCount(key: String)
 
-    @Query("UPDATE Searchable SET `weight` = `weight` * (1.0 - :alpha) WHERE `key` != :key")
+    @Query("UPDATE Searchable SET `weight` = `weight` * (1.0 - :alpha) WHERE `key` != :key AND weight > 0.001")
     fun reduceWeightExcept(key: String, alpha: Double)
 
     @Query("UPDATE Searchable SET `weight` = `weight` + :alpha * (1.0 - `weight`) WHERE `key` == :key")

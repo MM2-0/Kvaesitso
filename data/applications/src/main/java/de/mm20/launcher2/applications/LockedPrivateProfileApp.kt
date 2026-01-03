@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.os.UserHandle
 import android.os.UserManager
 import android.util.Log
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Lock
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.LauncherIcon
@@ -25,7 +23,7 @@ internal data class LockedPrivateProfileApp(
     override val componentName: ComponentName,
     override val user: UserHandle,
     internal val userSerialNumber: Long,
-): Application {
+) : Application {
     override val isSuspended: Boolean = false
     override val versionName: String? = null
     override val canUninstall: Boolean = false
@@ -43,7 +41,8 @@ internal data class LockedPrivateProfileApp(
     override val domain: String = LauncherApp.Domain
     override val canShareApk: Boolean = false
 
-    override val key: String = "${domain}://${componentName.packageName}:${componentName.className}:${userSerialNumber}"
+    override val key: String =
+        "${domain}://${componentName.packageName}:${componentName.className}:${userSerialNumber}"
 
     override fun overrideLabel(label: String): SavableSearchable {
         // We don't expose custom labels for locked apps
@@ -86,7 +85,7 @@ internal data class LockedPrivateProfileApp(
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = VectorLayer(
-                vector = Icons.Rounded.Lock,
+                icon = R.drawable.lock_24px,
             ),
             backgroundLayer = ColorLayer(0)
         )

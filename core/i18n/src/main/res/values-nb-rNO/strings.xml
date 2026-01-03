@@ -88,7 +88,6 @@
     <string name="notes_widget_export_filename">Notat_%1$s</string>
     <string name="notes_widget_action_dismiss">Avvis</string>
     <string name="shortcut_summary">Fra %1$s</string>
-    <string name="easter_egg_text">Greit, du fant meg. Gratulerer. Var det verdt det?</string>
     <string name="close">Lukk</string>
     <string name="save">Lagre</string>
     <string name="duplicate">Dupliser</string>
@@ -136,7 +135,6 @@
     <string name="weather_no_data">Ingen værdata tilgjengelig.</string>
     <string name="missing_permission_contact_search_settings">Kontakttilgang kreves for å søke i kontakter</string>
     <string name="missing_permission_notification_badges">Varseltilgang kreves for å vise varselprikker</string>
-    <string name="preference_font_system">Systemstandard</string>
     <string name="preference_screen_about">Om</string>
     <string name="preference_version">Versjon</string>
     <string name="preference_category_licenses">Åpen kildekode-lisenser</string>
@@ -193,7 +191,6 @@
     <string name="missing_permission_calendar_search_settings">Kalendertilgang kreves for å søke i kalender</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="alert_delete_directory">Katalogen %1$s og all dens innhold vil bli slettet permanent. Vil du fortsette?</string>
-    <string name="widget_name_favorites">Favoritter</string>
     <string name="owncloud_login_2fa_hint">Dersom du har tofaktor-autentisering akrivert, må du bruke et app-passord her.</string>
     <string name="disclaimer_currency_converter">Valutakurser publiseres en gang om dagen av den europeiske sentralbanken. All informasjon gis «som den er» uten noen form for garanti. Vi fraskriver oss alt ansvar for denne informasjonen.
 \n
@@ -256,7 +253,6 @@
     <string name="preference_cards_shape">Form</string>
     <string name="preference_cards_shape_rounded">Avrundet</string>
     <string name="preference_icon_shape">Form</string>
-    <string name="preference_icon_shape_platform">Systemstandard</string>
     <string name="preference_icon_shape_square">Firkantet</string>
     <string name="preference_icon_shape_rounded_square">Avrundet firkant</string>
     <string name="preference_screen_plugins_summary">Administrer installerte utvidelser</string>

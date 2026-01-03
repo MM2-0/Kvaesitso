@@ -111,13 +111,11 @@
     <string name="websearch_dialog_replace_icon">Korvaa kuvake</string>
     <string name="websearch_dialog_query_encoding_url">Prosenttikoodaus</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
-    <string name="widget_name_favorites">Suosikit</string>
     <string name="widget_name_unknown">Tuntematon pienoisohjelma</string>
     <string name="widget_add_widget">Lisää pienoisohjelma</string>
     <string name="notes_widget_placeholder">Kirjoita muistiinpano…</string>
     <string name="notes_widget_action_new">Uusi muistiinpano</string>
     <string name="notes_widget_export_filename">Muistiinpano_%1$s</string>
-    <string name="easter_egg_text">Nojoo, löysit minut. Onnea. Oliko sen arvoista\?</string>
     <string name="save">Tallenna</string>
     <string name="duplicate">Monista</string>
     <string name="edit">Muokkaa</string>
@@ -135,7 +133,6 @@
     <string name="login_flow_login">Kirjaudu sisään</string>
     <string name="disclaimer">Vastuuvapauslauseke</string>
     <string name="preference_font">Fontti</string>
-    <string name="preference_font_system">Järjestelmän oletus</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (vain Saksa)</string>
     <string name="provider_here">HERE</string>
@@ -339,7 +336,6 @@
     <string name="preference_cards_shape_rounded">Pyöristetty</string>
     <string name="preference_cards_shape_cut">Leikattu</string>
     <string name="preference_icon_shape">Muoto</string>
-    <string name="preference_icon_shape_platform">Järjestelmän oletus</string>
     <string name="preference_icon_shape_square">Neliö</string>
     <string name="preference_icon_shape_rounded_square">Pyöristetty neliö</string>
     <string name="preference_icon_shape_squircle">Ympyräneliö</string>

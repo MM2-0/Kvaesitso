@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences.search
 
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.MeasurementSystem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -15,7 +16,7 @@ class LocationSearchSettings internal constructor(
                 hideUncategorized = it.locationSearchHideUncategorized,
                 overpassUrl = it.locationSearchOverpassUrl,
                 tileServer = it.locationSearchTileServer,
-                imperialUnits = it.locationSearchImperialUnits,
+                measurementSystem = it.localeMeasurementSystem,
                 showMap = it.locationSearchShowMap,
                 showPositionOnMap = it.locationSearchShowPositionOnMap,
                 themeMap = it.locationSearchThemeMap,
@@ -130,14 +131,8 @@ class LocationSearchSettings internal constructor(
         }
     }
 
-    val imperialUnits
-        get() = launcherDataStore.data.map { it.locationSearchImperialUnits }
-
-    fun setImperialUnits(imperialUnits: Boolean) {
-        launcherDataStore.update {
-            it.copy(locationSearchImperialUnits = imperialUnits)
-        }
-    }
+    val measurementSystem
+        get() = launcherDataStore.data.map { it.localeMeasurementSystem }
 
     companion object {
         const val DefaultTileServerUrl = "https://tile.openstreetmap.org/\${z}/\${x}/\${y}.png"
@@ -152,7 +147,7 @@ data class LocationSearchSettingsData(
     val hideUncategorized: Boolean = true,
     val overpassUrl: String? = null,
     val tileServer: String? = null,
-    val imperialUnits: Boolean = false,
+    val measurementSystem: MeasurementSystem = MeasurementSystem.System,
     val showMap: Boolean = false,
     val showPositionOnMap: Boolean = false,
     val themeMap: Boolean = true,

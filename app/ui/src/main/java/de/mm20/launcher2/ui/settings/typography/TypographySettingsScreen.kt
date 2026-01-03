@@ -1,48 +1,35 @@
 package de.mm20.launcher2.ui.settings.typography
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.FormatBold
-import androidx.compose.material.icons.rounded.FormatLineSpacing
-import androidx.compose.material.icons.rounded.FormatSize
-import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.RestartAlt
-import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material.icons.rounded.Work
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedIconToggleButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Slider
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.Typography
@@ -56,8 +43,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.capitalize
@@ -71,7 +58,8 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.icons.LetterSpacing2
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.serialization.UUIDSerializer
 import de.mm20.launcher2.themes.typography.DefaultEmphasizedTextStyles
 import de.mm20.launcher2.themes.typography.DefaultTextStyles
 import de.mm20.launcher2.themes.typography.FontManager
@@ -95,8 +83,8 @@ import de.mm20.launcher2.themes.typography.TextStyle as ThemeTextStyle
 
 @Serializable
 data class TypographySettingsRoute(
-    val id: String
-)
+    @Serializable(with = UUIDSerializer::class) val id: UUID
+) : NavKey
 
 @Composable
 fun TypographySettingsScreen(themeId: UUID) {
@@ -181,7 +169,11 @@ fun TypographySettingsScreen(themeId: UUID) {
                             size = 48.dp,
                             modifier = Modifier.padding(bottom = 8.dp),
                         )
-                        Text(previewTexts.Medium1, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
+                        Text(
+                            previewTexts.Medium1,
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.bodySmall
+                        )
                     }
                 }
                 TextStylePreference(
@@ -288,11 +280,14 @@ fun TypographySettingsScreen(themeId: UUID) {
                     FilterChip(
                         modifier = Modifier
                             .padding(end = 16.dp),
-                        label = { Text(previewTexts.Short1
-                        ) },
+                        label = {
+                            Text(
+                                previewTexts.Short1
+                            )
+                        },
                         leadingIcon = {
                             Icon(
-                                Icons.Rounded.Tag,
+                                painterResource(R.drawable.tag_20px),
                                 contentDescription = null,
                                 modifier = Modifier.size(FilterChipDefaults.IconSize)
                             )
@@ -411,8 +406,8 @@ fun TypographySettingsScreen(themeId: UUID) {
                             text = { Text(previewTexts.Short1) },
                             icon = {
                                 Icon(
-                                    Icons.Rounded.Person,
-                                    contentDescription = null
+                                    painterResource(R.drawable.person_24px_filled),
+                                    contentDescription = null,
                                 )
                             },
                             onClick = {}
@@ -422,7 +417,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                             text = { Text(previewTexts.Short2) },
                             icon = {
                                 Icon(
-                                    Icons.Rounded.Work,
+                                    painterResource(R.drawable.enterprise_24px),
                                     contentDescription = null
                                 )
                             },
@@ -900,7 +895,7 @@ private fun getFontSummary(context: Context, fontFamily: ThemeFontFamily?): Stri
 
 @Composable
 private fun SliderRow(
-    icon: ImageVector,
+    @DrawableRes icon: Int,
     min: Float,
     max: Float,
     step: Float = 1f,
@@ -916,7 +911,7 @@ private fun SliderRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
     ) {
         Icon(
-            imageVector = icon,
+            painter = painterResource(icon),
             contentDescription = null,
             modifier = Modifier.padding(end = 8.dp),
             tint = MaterialTheme.colorScheme.primary
@@ -1073,19 +1068,12 @@ private fun TextStylePreference(
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
 
-                            Box(
-                                modifier = Modifier
-                                    .size(56.dp)
-                                    .border(
-                                        if (name == actualFontFamily) 2.dp else 1.dp,
-                                        if (name == actualFontFamily) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
-                                        CircleShape
-                                    )
-                                    .clip(CircleShape)
-                                    .clickable {
-                                        fontFamily = name
-                                    },
-                                contentAlignment = Alignment.Center,
+                            OutlinedIconToggleButton(
+                                modifier = Modifier.size(56.dp),
+                                checked = name == actualFontFamily,
+                                onCheckedChange = {
+                                    if (it) fontFamily = name
+                                },
                             ) {
                                 Text(
                                     text = previewTexts.ExtraShort,
@@ -1108,7 +1096,7 @@ private fun TextStylePreference(
                 }
 
                 SliderRow(
-                    icon = Icons.Rounded.FormatBold,
+                    icon = R.drawable.format_bold_24px,
                     min = 100f,
                     max = 900f,
                     step = 100f,
@@ -1119,7 +1107,7 @@ private fun TextStylePreference(
                     }
                 )
                 SliderRow(
-                    icon = Icons.Rounded.FormatSize,
+                    icon = R.drawable.format_size_24px,
                     min = floor((defaultValue?.fontSize ?: defaultValueParent?.fontSize)!! / 2f),
                     max = ceil((defaultValue?.fontSize ?: defaultValueParent?.fontSize)!! * 2f),
                     value = actualFontSize.toFloat(),
@@ -1131,7 +1119,7 @@ private fun TextStylePreference(
                     }
                 )
                 SliderRow(
-                    icon = Icons.Rounded.FormatLineSpacing,
+                    icon = R.drawable.format_line_spacing_24px,
                     min = 0.5f,
                     max = 2f,
                     step = 0.05f,
@@ -1142,7 +1130,7 @@ private fun TextStylePreference(
                     }
                 )
                 SliderRow(
-                    icon = Icons.Rounded.LetterSpacing2,
+                    icon = R.drawable.format_letter_spacing_24px,
                     min = -0.25f,
                     max = 1f,
                     step = 0.01f,
@@ -1172,7 +1160,7 @@ private fun TextStylePreference(
                     }
                 ) {
                     Icon(
-                        Icons.Rounded.RestartAlt, null,
+                        painterResource(R.drawable.restart_alt_20px), null,
                         modifier = Modifier
                             .padding(ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize)

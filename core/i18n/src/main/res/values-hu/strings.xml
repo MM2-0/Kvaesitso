@@ -63,7 +63,6 @@
     <string name="menu_edit_widgets">Modulok szerkesztése</string>
     <string name="widget_name_calendar">Naptár</string>
     <string name="widget_name_music">Média</string>
-    <string name="widget_name_favorites">Kedvencek</string>
     <string name="widget_add_widget">Modul hozzáadása</string>
     <string name="shortcut_summary">Készítette: %1$s</string>
     <string name="duplicate">Másolat készítése</string>
@@ -95,7 +94,6 @@
     <string name="websearch_dialog_query_encoding">Lekérdezés kódolása</string>
     <string name="websearch_dialog_query_encoding_url">Százalékos-kódolás</string>
     <string name="save">Mentés</string>
-    <string name="easter_egg_text">Nos, megtalált. Gratulálok. Megérte?</string>
     <string name="edit_favorites_dialog_unpinned">Nincs kitűzve - gyakran használt</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Kitűzött - automatikusan rendezett</string>
     <string name="owncloud_server_invalid_url">Ez a webcím nem egy érvényes Owncloud telepítésre mutat</string>
@@ -208,7 +206,6 @@
     <string name="preference_category_debug_tools">Eszközök</string>
     <string name="preference_cards_summary">Kártyák megjelenésének testreszabása</string>
     <string name="preference_font">Betűtípus</string>
-    <string name="preference_font_system">Rendszer alapértelmezett</string>
     <string name="preference_screen_about">Névjegy</string>
     <string name="weather_condition_snowandthunder">Havazás és mennydörgés</string>
     <string name="weather_condition_clearsky">Tiszta ég</string>
@@ -270,7 +267,6 @@
     <string name="preference_cards_shape_rounded">Kerekített</string>
     <string name="preference_cards_shape_cut">Csapott</string>
     <string name="preference_icon_shape">Alakzat</string>
-    <string name="preference_icon_shape_platform">Rendszer alapértelmezett</string>
     <string name="preference_icon_shape_rounded_square">Lekerekített négyzet</string>
     <string name="preference_icon_shape_squircle">Kerekített négyzet</string>
     <string name="preference_icon_shape_triangle">Reuleaux háromszög</string>
@@ -310,7 +306,7 @@
     <string name="preference_category_media_apps">Médiaalkalmazások</string>
     <string name="preference_search_unitconverter_summary">Használat: 1,5 kg, vagy 4 cm &gt;&gt; in</string>
     <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyors műveletre, ha megérinti az „Enter” gombot</string>
-    <string name="preference_hidden_items">Rejtett keresési eredmények</string>
+    <string name="preference_hidden_items">Kizárt keresési eredmények</string>
     <string name="icon_picker_filter_all_packs">Minden ikoncsomag</string>
     <string name="search_action_websearch">Internetes keresés</string>
     <string name="plugin_state_setup_required">Először be kell állítani ezt a bővítményt</string>
@@ -324,9 +320,9 @@
     <string name="preference_logs_summary">Alkalmazásnaplók megtekintése és exportálása</string>
     <string name="preference_screen_buildinfo_summary">További információ az alkalmazás ezen verziójáról</string>
     <string name="preference_search_bar_launch_on_enter">Keresés enterrel</string>
-    <string name="preference_hidden_items_summary">Rejtett alkalmazások és keresési eredmények kezelése</string>
+    <string name="preference_hidden_items_summary">Kizárt alkalmazások és keresési eredmények kezelése</string>
     <string name="preference_wikipedia_customurl">Wikipédia-webcím</string>
-    <string name="preference_screen_icons_summary">Rács, ikonméret, ikoncsomagok, jelvények</string>
+    <string name="preference_screen_icons_summary">Rácsméret, ikonok, jelvények</string>
     <string name="apps_profile_main">Személyes</string>
     <string name="favorites_empty">A kitűzött és gyakran használt elemek itt jelennek meg</string>
     <string name="frequently_used_show_in_favorites">Megjelenítés a kedvencekben</string>
@@ -383,7 +379,7 @@
     <string name="preference_widgets_edit_button_summary">Egy gomb megjelenítése a modulok hozzáadásához, eltávolításához és átrendezéséhez</string>
     <string name="note_widget_file_read_error_description">A hivatkozott fájlt nem lehetett beolvasni. A másolat visszaállításra került az indító alkalmazás belső tárolójából. Ha szerkeszti a jegyzetet, a hivatkozott fájl valószínűleg felülírásra kerül</string>
     <string name="plugin_state_error">Ez a bővítmény nem működik megfelelően</string>
-    <string name="preference_screen_search_summary">Keresés, címkék, rejtett elemek</string>
+    <string name="preference_screen_search_summary">Keresés, címkék, kizárt eredmények</string>
     <string name="preference_search_files_summary">Keresés helyi- és felhőfájlok között</string>
     <string name="preference_search_cloud_summary">Keresés a(z) %1$s fájljai között</string>
     <string name="preference_favorites_frequently_used_summary">Gyakran használt elemek megjelenítése a kedvencek között</string>
@@ -446,7 +442,7 @@
     <string name="widget_config_calendar_no_calendars">Nem található naptár</string>
     <string name="widget_config_music_integration_settings">Médiavezérlő-integráció beállításai</string>
     <string name="note_widget_link_file">Hivatkozás a fájlra</string>
-    <string name="theme_color_scheme_system_default">Rendszer alapértelmezett használata</string>
+    <string name="theme_color_scheme_system_default">Rendszer alapértelmezésének használata</string>
     <string name="theme_color_scheme_autogenerate">Az elsődleges színből</string>
     <string name="shortcut_unavailable_description">Ez a parancsikon nem érhető el, mert a(z) %1$s nem az alapértelmezett indító</string>
     <string name="restore_different_minor_version">Ez a biztonsági mentés a(z) %1$s egy másik verziójával készült. Előfordulhat, hogy egyes adatok nem lesznek helyesen visszaállítva.</string>
@@ -489,7 +485,7 @@
     <string name="preference_clockwidget_date_part">Dátum</string>
     <string name="preference_clockwidget_date_part_summary">Jelenlegi dátum megjelenítése</string>
     <string name="preference_clockwidget_favorites_part">Dokk</string>
-    <string name="preference_clockwidget_favorites_part_summary">Kitűzött elemek első sorának megjelenítése</string>
+    <string name="preference_clockwidget_favorites_part_summary">Kitűzött elemek megjelenítése a dokkon</string>
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_battery_part">Akkumulátor</string>
     <string name="preference_clockwidget_alarm_part">Riasztások</string>
@@ -520,7 +516,7 @@
     <string name="preference_search_bar_style">Stílus</string>
     <string name="preference_search_bar_style_summary">Keresősáv megjelenésének testreszabása</string>
     <string name="preference_search_bar_color">Szín</string>
-    <string name="preference_hidden_items_reveal_button_summary">Egy gomb megjelenítése a rejtett keresési eredmények megjelenítéséhez</string>
+    <string name="preference_hidden_items_reveal_button_summary">Egy gomb megjelenítése a kizárt keresési eredmények megjelenítéséhez</string>
     <string name="preference_screen_tags_summary">Címkék és címkézett elemek kezelése</string>
     <string name="preference_category_favorites_frequently_used">Gyakran használt</string>
     <string name="preference_screen_homescreen">Kezdőképernyő</string>
@@ -548,7 +544,7 @@
     <string name="confirmation_delete_color_scheme">Biztosan törölni szeretné a(z) %1$s nevű színösszeállítást?</string>
     <string name="theme_color_scheme_custom_color">Egyéni</string>
     <string name="theme_color_scheme_palette_color">Paletta</string>
-    <string name="preference_restore_default">Alapértelmezett visszaállítása</string>
+    <string name="preference_restore_default">Visszaállítás alapértelmezettre</string>
     <string name="import_theme_apply">Téma alkalmazása</string>
     <string name="shortcut_label_unavailable">Nem érhető el</string>
     <string name="tag_exists_error">Egy ilyen nevű címke már létezik</string>
@@ -785,7 +781,6 @@
     <string name="weather_forecast_humidity">Páratartalom</string>
     <string name="tag_empty_name">Egy címke nem létezhet név nélkül. Ha folytatja, a címke törlődik</string>
     <string name="widget_removed">Modul törölve</string>
-    <string name="preference_clock_widget_time_format_system">Rendszer alapértelmezett</string>
     <string name="preference_clock_widget_time_format">Időformátum</string>
     <string name="preference_clock_widget_time_format_24h">24 órás</string>
     <string name="preference_clock_widget_time_format_12h">12 órás</string>
@@ -867,4 +862,28 @@
     <string name="poi_category_climbing_gym">Mászóterem</string>
     <string name="poi_category_hackerspace">Hackespace</string>
     <string name="poi_category_stationery">Papír, írószer</string>
+    <string name="preference_clockwidget_dock_rows">Dokksorok</string>
+    <string name="preference_search_apps">Alkalmazások</string>
+    <string name="preference_search_apps_summary">Összes alkalmazás megjelenítése, ha a keresőmező üres</string>
+    <string name="preference_screen_locale">Nyelv és régió</string>
+    <string name="preference_screen_locale_summary">Nyelv, mértékegységek, időformátum</string>
+    <string name="preference_language">Nyelv</string>
+    <string name="preference_value_system_default">Rendszer alapértelmezése</string>
+    <string name="preference_form_of_address_neutral">Semleges</string>
+    <string name="preference_form_of_address_fem">Nőnemű</string>
+    <string name="preference_form_of_address_masc">Férfinemű</string>
+    <string name="preference_form_of_address">Megszólítás</string>
+    <string name="preference_measurement_system">Mértékegységrendszer</string>
+    <string name="preference_measurement_system_metric">Metrikus</string>
+    <string name="preference_measurement_system_uk">Egyesült Királyság</string>
+    <string name="preference_measurement_system_us">Egyesült Államok</string>
+    <string name="preference_transliteration">Előnyben részesített átírás</string>
+    <string name="preference_transliteration_auto">Automatikus</string>
+    <string name="preference_transliteration_disabled">Letiltva</string>
+    <string name="select_tag">Címke kiválasztása</string>
+    <string name="widget_name_apps">Alkalmazások</string>
+    <string name="preference_category_enabled_plugins">Engedélyezve</string>
+    <string name="preference_category_installed_plugins">Telepítve</string>
+    <string name="tag_icon_customicon">Ikon</string>
+    <string name="tag_icon_emoji">Emodzsi</string>
 </resources>

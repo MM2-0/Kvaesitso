@@ -84,7 +84,6 @@
     <string name="widget_name_weather">آب و هوا</string>
     <string name="widget_name_calendar">تقویم</string>
     <string name="widget_name_music">موسیقی</string>
-    <string name="widget_name_favorites">دلخواه</string>
     <string name="widget_name_notes">یادداشت</string>
     <string name="widget_name_unknown">ابزارک برنامه ناشناخته</string>
     <string name="widget_add_widget">افزودن ابزارک</string>
@@ -94,7 +93,6 @@
     <string name="notes_widget_export_filename">یادداشت_%1$s</string>
     <string name="notes_widget_action_dismiss">نادیده گرفتن</string>
     <string name="notes_widget_dismissed">یادداشت نادیده گرفته شد.</string>
-    <string name="easter_egg_text">تیتاب، من رو پیدا کردی. ارزشش رو داشت؟</string>
     <string name="close">بستن</string>
     <string name="save">نگه‌داشتن</string>
     <string name="duplicate">هم‌مانندسازی</string>
@@ -172,7 +170,6 @@
     <string name="preference_cards_shape">شکل</string>
     <string name="preference_cards_shape_cut">برش‌دار</string>
     <string name="preference_icon_shape_square">مربع</string>
-    <string name="preference_icon_shape_platform">پیش‌گزیده سامانه</string>
     <string name="preference_icon_shape">شکل</string>
     <string name="weather_condition_lightrainandthunder">بارش باران سبک و رعد</string>
     <string name="preference_icon_shape_squircle">squircle</string>
@@ -224,7 +221,6 @@
     <string name="preference_colors_bw">سیاه و سفید</string>
     <string name="preference_custom_colors_corepalette">تخته رنگ</string>
     <string name="preference_font">قلم</string>
-    <string name="preference_font_system">قلم پیش‌گزیده سامانه</string>
     <string name="preference_screen_about">درباره</string>
     <string name="preference_category_advanced">پیشرفته</string>
     <string name="open_webpage">بازکردن وبگاه</string>
@@ -653,7 +649,6 @@
     <string name="preference_clock_widget_time_format">فرمت زمان</string>
     <string name="preference_clock_widget_time_format_24h">24 ساعته</string>
     <string name="preference_clock_widget_time_format_12h">12 ساعته</string>
-    <string name="preference_clock_widget_time_format_system">پیش‌گزیده سامانه</string>
     <string name="widget_use_theme_colors">به‌کارگیری رنگ‌های پوسته</string>
     <string name="preference_clock_widget_fill_height">پر کردن ارتفاع صفحه</string>
     <string name="preference_clock_widget_alignment">تراز</string>

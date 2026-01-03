@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,11 +17,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Colorize
-import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +28,8 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -113,50 +114,47 @@ fun ThemeColorPreference(
                     .verticalScroll(rememberScrollState())
                     .padding(it),
             ) {
-                SingleChoiceSegmentedButtonRow(
-                    modifier = Modifier.fillMaxWidth()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
                 ) {
-                    SegmentedButton(
-                        selected = actualValue is ColorRef,
-                        onClick = {
-                            if (actualValue is ColorRef) return@SegmentedButton
+                    ToggleButton(
+                        modifier = Modifier.weight(1f),
+                        checked = actualValue is ColorRef,
+                        onCheckedChange = {
+                            if (actualValue is ColorRef) return@ToggleButton
                             currentValue = defaultValue
                         },
-                        icon = {
-                            SegmentedButtonDefaults.Icon(
-                                active = actualValue is ColorRef,
-                            ) {
-                                Icon(
-                                    Icons.Rounded.Palette,
-                                    null,
-                                    modifier = Modifier
-                                        .size(SegmentedButtonDefaults.IconSize)
-                                )
-                            }
-                        },
-                        shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2)
+                        shapes = ButtonGroupDefaults.connectedLeadingButtonShapes()
                     ) {
+                        Icon(
+                            painterResource(
+                                if (actualValue is ColorRef) R.drawable.check_20px else R.drawable.palette_20px
+                            ),
+                            null,
+                            modifier = Modifier
+                                .padding(end = ToggleButtonDefaults.IconSpacing)
+                                .size(ToggleButtonDefaults.IconSize)
+                        )
                         Text(stringResource(R.string.theme_color_scheme_palette_color))
                     }
-                    SegmentedButton(
-                        selected = actualValue is StaticColor,
-                        onClick = {
+                    ToggleButton(
+                        modifier = Modifier.weight(1f),
+                        checked = actualValue is StaticColor,
+                        onCheckedChange = {
                             currentValue = StaticColor(actualValue.get(corePalette))
                         },
-                        icon = {
-                            SegmentedButtonDefaults.Icon(
-                                active = actualValue is StaticColor,
-                            ) {
-                                Icon(
-                                    Icons.Rounded.Colorize,
-                                    null,
-                                    modifier = Modifier
-                                        .size(SegmentedButtonDefaults.IconSize)
-                                )
-                            }
-                        },
-                        shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2)
+                        shapes = ButtonGroupDefaults.connectedTrailingButtonShapes()
                     ) {
+                        Icon(
+                            painterResource(
+                                if (actualValue is StaticColor) R.drawable.check_20px else R.drawable.colorize_20px
+                            ),
+                            null,
+                            modifier = Modifier
+                                .padding(end = ToggleButtonDefaults.IconSpacing)
+                                .size(ToggleButtonDefaults.IconSize)
+                        )
                         Text(stringResource(R.string.theme_color_scheme_custom_color))
                     }
                 }
@@ -424,7 +422,8 @@ fun ThemeColorPreference(
                             onClick = { currentValue = null }
                         ) {
                             Icon(
-                                Icons.Rounded.RestartAlt, null,
+                                painterResource(R.drawable.restart_alt_20px),
+                                null,
                                 modifier = Modifier
                                     .padding(ButtonDefaults.IconSpacing)
                                     .size(ButtonDefaults.IconSize)
