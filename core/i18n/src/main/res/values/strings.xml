@@ -700,6 +700,8 @@
     <string name="preference_smartspacer_integration_description">Smartspacer is a free and open source At a Glance widget. If installed, it can be integrated into the dynamic zone of the clock widget</string>
     <string name="preference_smartspacer_enable">Enable Smartspacer integration</string>
     <string name="preference_launch_smartspacer_app">Open Smartspacer</string>
+    <string name="preference_feed_integration">Feed</string>
+    <string name="no_feed_providers">No feed providers installed</string>
     <string name="preference_contacts_call_on_tap">Tap to call</string>
     <string name="preference_contacts_call_on_tap_summary">Start a call without confirmation when tapping a phone number</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -804,6 +806,7 @@
     <string name="gesture_action_quick_settings">Open quick settings</string>
     <string name="gesture_action_power_menu">Show power menu</string>
     <string name="gesture_action_recents">Open recent apps</string>
+    <string name="gesture_action_feed">Feed</string>
     <string name="gesture_failed_message">You have performed a \"%1$s\" gesture. This gesture is currently set to trigger a \"%2$s\" action. However, the action could not be performed for the following reason:</string>
     <string name="missing_permission_accessibility_gesture_failed">The launcher\'s accessibility service needs to be enabled to perform this action.</string>
     <string name="missing_permission_accessibility_gesture_settings">This action requires the launcher\'s accessibility service to be enabled.</string>

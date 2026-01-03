@@ -161,5 +161,6 @@ dependencies {
     implementation(project(":services:global-actions"))
     implementation(project(":services:widgets"))
     implementation(project(":services:favorites"))
+    implementation(project(":services:feed"))
     implementation(project(":core:devicepose"))
 }

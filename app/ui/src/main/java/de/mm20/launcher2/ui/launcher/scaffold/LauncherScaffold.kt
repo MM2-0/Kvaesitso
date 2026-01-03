@@ -791,17 +791,13 @@ internal class LauncherScaffoldState(
         }
     }
 
-    private val backInterpolation = PathInterpolator(0f, 0f, 0f, 1f)
-    fun onPredictiveBack(progress: Float) {
-        if (!isSettledOnSecondaryPage) return
+    fun setProgress(progress: Float) {
         val gesture = currentGesture ?: return
         val anim = currentAnimation ?: return
 
-        val progress = backInterpolation.getInterpolation(progress)
-
         when (gesture) {
             Gesture.TapSearchBar, Gesture.DoubleTap, Gesture.LongPress -> {
-                currentZOffset = 1f - progress
+                currentZOffset = progress
             }
 
             else -> {
@@ -818,18 +814,33 @@ internal class LauncherScaffoldState(
 
                 currentOffset = if (anim == ScaffoldAnimation.Push) {
                     Offset(
-                        x * size.width * (1f - progress * 0.1f),
-                        y * size.height * (1f - progress * 0.1f)
+                        x * size.width * progress,
+                        y * size.height * progress
                     )
                 } else {
                     Offset(
-                        x * rubberbandThreshold * progress,
-                        y * rubberbandThreshold * progress
+                        x * rubberbandThreshold * (1f - progress),
+                        y * rubberbandThreshold * (1f - progress)
                     )
                 }
 
             }
         }
+    }
+
+    private val backInterpolation = PathInterpolator(0f, 0f, 0f, 1f)
+    fun onPredictiveBack(progress: Float) {
+        if (!isSettledOnSecondaryPage) return
+        val anim = currentAnimation ?: return
+
+        val progress = backInterpolation.getInterpolation(progress)
+
+        val p = when(anim) {
+            ScaffoldAnimation.Push -> 1f - progress * 0.1f
+            else -> 1f - progress
+        }
+
+        setProgress(p)
     }
 
     suspend fun onPredictiveBackCancel() {

@@ -202,6 +202,8 @@ data class LauncherSettingsData internal constructor(
      */
     val localeTransliterator: String? = "",
 
+    val feedProviderPackage: String? = null
+
 
     ) {
     constructor(
@@ -394,6 +396,10 @@ sealed interface GestureAction {
     @Serializable
     @SerialName("launch_searchable")
     data class Launch(val key: String?) : GestureAction
+
+    @Serializable
+    @SerialName("feed")
+    data object Feed : GestureAction
 }
 
 

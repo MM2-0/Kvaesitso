@@ -11,6 +11,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.breezyweather.BreezyWeatherSettingsRoute
+import de.mm20.launcher2.ui.settings.feed.FeedIntegrationSettingsRoute
 import de.mm20.launcher2.ui.settings.media.MediaIntegrationSettingsRoute
 import de.mm20.launcher2.ui.settings.nextcloud.NextcloudSettingsRoute
 import de.mm20.launcher2.ui.settings.owncloud.OwncloudSettingsRoute
@@ -43,6 +44,13 @@ fun IntegrationsSettingsScreen() {
                     icon = R.drawable.play_circle_24px,
                     onClick = {
                         backStack.add(MediaIntegrationSettingsRoute)
+                    }
+                )
+                Preference(
+                    title = stringResource(R.string.preference_feed_integration),
+                    icon = R.drawable.news_24px,
+                    onClick = {
+                        backStack.add(FeedIntegrationSettingsRoute)
                     }
                 )
             }
