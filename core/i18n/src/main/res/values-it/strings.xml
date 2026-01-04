@@ -46,7 +46,7 @@
     <!-- Open an event in the calendar app -->
     <string name="menu_calendar_open_externally">Apri nell\'app calendario</string>
     <!-- Shown in the search bar when the search text field is empty -->
-    <string name="search_bar_placeholder">Cerca</string>
+    <string name="search_bar_placeholder">Ricerca</string>
     <!-- App version, used in application details %1$s is the version -->
     <string name="app_info_version">Versione %1$s</string>
     <!-- Menu entry for launcher settings -->
@@ -572,6 +572,7 @@
     <string name="preference_clock_widget_alignment_center">Centro</string>
     <string name="preference_clock_widget_alignment_bottom">Basso</string>
     <string name="preference_clockwidget_dynamic_zone">Zona dinamica</string>
+    <string name="preference_clockwidget_smartspacer">Gestito da Smartspacer</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Mostra la data corrente</string>
     <string name="preference_clockwidget_favorites_part_summary">Mostra elementi appuntati nel dock</string>
@@ -592,6 +593,7 @@
     <string name="preference_logs">Log</string>
     <string name="preference_logs_summary">Visualizza ed esporta i log dell\'applicazione</string>
     <string name="preference_screen_search">Ricerca</string>
+    <string name="preference_screen_search_summary">Ricerca, tag, risultati esclusi</string>
     <string name="preference_search_favorites">Preferiti</string>
     <string name="preference_search_favorites_summary">Mostra elementi appuntati e usati frequentemente sopra la griglia delle app</string>
     <string name="preference_search_apps">App</string>
@@ -637,7 +639,10 @@
     <string name="preference_search_bar_auto_focus_summary">Mostra automaticamente la tastiera all\'apertura del cassetto</string>
     <string name="preference_search_bar_launch_on_enter">Avvia con invio</string>
     <string name="preference_search_bar_launch_on_enter_summary">Avvia la ricerca evidenziata o l\'azione rapida toccando vai</string>
+    <string name="preference_hidden_items">Risultati ricerca esclusi</string>
+    <string name="preference_hidden_items_summary">Gestisci app escluse e risultati di ricerca</string>
     <string name="preference_hidden_items_reveal_button">Mostra pulsante rivelazione</string>
+    <string name="preference_hidden_items_reveal_button_summary">Mostra un pulsante per rivelare i risultati di ricerca esclusi</string>
     <string name="preference_screen_tags">Tag</string>
     <string name="preference_screen_tags_summary">Gestisci i tag e gli elementi con tag</string>
     <string name="preference_wikipedia_customurl">URL Wikipedia</string>
@@ -665,6 +670,9 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather è un\'app meteo gratuita e open source. Se installata, %1$s può utilizzare Breezy Weather come fonte di dati meteo.</string>
     <string name="preference_breezyweather_integration_instructions">Per utilizzare Breezy Weather come fornitore di servizi meteo:\n\n1. Vai su Breezy Weather &gt; Impostazioni &gt; Widget e sfondi animati &gt; Invia dati Gadgetbridge &gt; Abilita %1$s\n\n2. In %1$s, seleziona Breezy Weather come fornitore di servizi meteo</string>
     <string name="preference_launch_breezyweather_app">Apri Breezy Weather</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer è un widget At a Glance gratuito e open source. Se installato, può essere integrato nella zona dinamica del widget orologio</string>
+    <string name="preference_smartspacer_enable">Abilita integrazione Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">Apri Smartspacer</string>
     <string name="preference_contacts_call_on_tap">Clicca per chiamare</string>
     <string name="preference_contacts_call_on_tap_summary">Avvia una chiamata senza conferma quando tocchi un numero di telefono</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
