@@ -578,6 +578,7 @@
     <string name="preference_clock_widget_alignment_center">Középre</string>
     <string name="preference_clock_widget_alignment_bottom">Alulra</string>
     <string name="preference_clockwidget_dynamic_zone">Dinamikus zóna</string>
+    <string name="preference_clockwidget_smartspacer">Kezelés ezzel: Smartspacer</string>
     <string name="preference_clockwidget_date_part">Dátum</string>
     <string name="preference_clockwidget_date_part_summary">Jelenlegi dátum megjelenítése</string>
     <string name="preference_clockwidget_favorites_part">Dokk</string>
@@ -678,6 +679,9 @@
     <string name="preference_breezyweather_integration_description">A Breezy Weather egy szabad és nyílt forráskódú időjárás-alkalmazás. Ha telepítve van, akkor a(z) %1$s az időjárásadatok adatforrásaként használhatja a Breezy Weathert.</string>
     <string name="preference_breezyweather_integration_instructions">A Breezy Weather időjárásszolgáltatóként való használatához:\n\n1. Menjen a Breezy Weather &gt; Beállítások &gt; Modulok és élő háttérképek &gt; Gadgetbridge adatok küldése &gt; %1$s engedélyezése\n\n2. A(z) %1$s mezőben válassza ki a Breezy Weathert időjárásszolgáltatóként</string>
     <string name="preference_launch_breezyweather_app">Breezy Weather megnyitása</string>
+    <string name="preference_smartspacer_integration_description">A Smartspacer egy ingyenes és nyílt forráskódú gyorsnézeti modul. Telepítés után integrálható az óramodul dinamikus zónájába</string>
+    <string name="preference_smartspacer_enable">Smartspacer integráció engedélyezése</string>
+    <string name="preference_launch_smartspacer_app">Smartspacer megnyitása</string>
     <string name="preference_contacts_call_on_tap">Koppintson a híváshoz</string>
     <string name="preference_contacts_call_on_tap_summary">Hívás azonnali indítása megerősítés kérése nélkül egy telefonszámra való koppintáskor</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
