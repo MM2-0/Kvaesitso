@@ -564,6 +564,7 @@
     <string name="preference_clock_widget_alignment_center">Midden</string>
     <string name="preference_clock_widget_alignment_bottom">Onderaan</string>
     <string name="preference_clockwidget_dynamic_zone">Dynamische zone</string>
+    <string name="preference_clockwidget_smartspacer">Beheerd door Smartspacer</string>
     <string name="preference_clockwidget_date_part">Datum</string>
     <string name="preference_clockwidget_date_part_summary">Huidige datum tonen</string>
     <string name="preference_clockwidget_favorites_part_summary">Vastgezette items tonen in dock</string>
@@ -583,6 +584,7 @@
     <string name="preference_logs">Logberichten</string>
     <string name="preference_logs_summary">Applicatielogs bekijken en exporteren</string>
     <string name="preference_screen_search">Zoeken</string>
+    <string name="preference_screen_search_summary">Zoeken, tags, uitgesloten resultaten</string>
     <string name="preference_search_favorites">Favorieten</string>
     <string name="preference_search_favorites_summary">Vastgezette en vaak gebruikte items tonen boven het applicatieraster</string>
     <string name="preference_search_apps">Applicaties</string>
@@ -627,7 +629,10 @@
     <string name="preference_search_bar_auto_focus_summary">Altijd het toetsenbord tonen wanneer applicatielijst geopend wordt</string>
     <string name="preference_search_bar_launch_on_enter">Uitvoeren bij enter</string>
     <string name="preference_search_bar_launch_on_enter_summary">De gemarkeerde app of snelle actie uitvoeren bij tikken op enter</string>
+    <string name="preference_hidden_items">Uitgesloten zoekresultaten</string>
+    <string name="preference_hidden_items_summary">Uitgesloten applicaties en zoekresultaten beheren</string>
     <string name="preference_hidden_items_reveal_button">Toon knop \"onthullen\"</string>
+    <string name="preference_hidden_items_reveal_button_summary">Een knop tonen om uitgesloten zoekresultaten te onthullen</string>
     <string name="preference_screen_tags">Labels</string>
     <string name="preference_screen_tags_summary">Beheer tags en getagde items</string>
     <string name="preference_edit_favorites_summary">Volgorde van de vastgezette items aanpassen</string>
@@ -654,6 +659,9 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather is een gratis en open-source weer-app. Indien geïnstalleerd, kan %1$s Breezy Weather gebruiken als gegevensbron voor weergegevens.</string>
     <string name="preference_breezyweather_integration_instructions">Om Breezy Weather te gebruiken als leverancier van weergegevens:\n\n1. Ga naar Breezy Weather &gt; Settings &gt; Widgets &amp; Live wallpaper &gt; Send Gadgetbridge data &gt; Enable %1$s\n\n2. Selecteer in %1$s Breezy Weather als leverancier van weergegevens</string>
     <string name="preference_launch_breezyweather_app">Breezy Weather openen</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer is een gratiw en open source At a Glace widget. Als het geïnstalleerd is, kan het geïntegreerd worden in de dynamische zone van het klokwidget</string>
+    <string name="preference_smartspacer_enable">Smartspacer integratie aanzetten</string>
+    <string name="preference_launch_smartspacer_app">Smartspacer openen</string>
     <string name="preference_contacts_call_on_tap">Tik om te bellen</string>
     <string name="preference_contacts_call_on_tap_summary">Start direct, zonder bevestiging, een gesprek bij het tikken op een telefoonnummer</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
