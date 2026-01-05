@@ -577,6 +577,7 @@
     <string name="preference_clock_widget_alignment_center">Centro</string>
     <string name="preference_clock_widget_alignment_bottom">Inferior</string>
     <string name="preference_clockwidget_dynamic_zone">Zona dinámica</string>
+    <string name="preference_clockwidget_smartspacer">Gestionado por Smartspacer</string>
     <string name="preference_clockwidget_date_part">Fecha</string>
     <string name="preference_clockwidget_date_part_summary">Mostrar la fecha actual</string>
     <string name="preference_clockwidget_favorites_part">Barra</string>
@@ -599,6 +600,7 @@
     <string name="preference_logs">Registros</string>
     <string name="preference_logs_summary">Visualizar y exportar registros de aplicación</string>
     <string name="preference_screen_search">Buscar</string>
+    <string name="preference_screen_search_summary">Búsqueda, etiquetas, elementos excluidos</string>
     <string name="preference_search_favorites">Favoritos</string>
     <string name="preference_search_favorites_summary">Mostrar elementos fijados y frecuentemente usados encima de la cuadrícula de aplicaciones</string>
     <string name="preference_search_apps">Aplicaciones</string>
@@ -644,7 +646,10 @@
     <string name="preference_search_bar_auto_focus_summary">Mostrar el teclado automáticamente al abrir la lista de aplicaciones</string>
     <string name="preference_search_bar_launch_on_enter">Iniciar al entrar</string>
     <string name="preference_search_bar_launch_on_enter_summary">Inicie la coincidencia destacada o una acción rápida al pulsar ir</string>
+    <string name="preference_hidden_items">Resultados de búsqueda excluidos</string>
+    <string name="preference_hidden_items_summary">Administrar aplicaciones y resultados de búsqueda excluidos</string>
     <string name="preference_hidden_items_reveal_button">Mostrar el botón de revelar</string>
+    <string name="preference_hidden_items_reveal_button_summary">Mostrar un botón para revelar los resultados de búsqueda excluidos</string>
     <string name="preference_screen_tags">Etiquetas</string>
     <string name="preference_screen_tags_summary">Administrar etiquetas y elementos etiquetados</string>
     <string name="preference_wikipedia_customurl">URL de Wikipedia</string>
@@ -672,6 +677,9 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather es una aplicación meteorológica gratuita y de código abierto. Si está instalada, %1$s puede usar Breezy Weather como una fuente de datos para información meteorológica.</string>
     <string name="preference_breezyweather_integration_instructions">Para usar Breezy Weather como un proveedor de clima:\n\n1. Abre Breezy Weather &gt; Configuración &gt; Complementos y fondos de pantalla animados &gt; Enviar los datos meteorológicos a GadgetBridge &gt; Habilita %1$s\n\n2. En %1$s, selecciona Breezy Weather como proveedor de clima</string>
     <string name="preference_launch_breezyweather_app">Abrir Breezy Weather</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer es un widget de código abierto inspirado en De un vistazo. Si se instala, se puede integrar en la zona dinámica del widget del reloj</string>
+    <string name="preference_smartspacer_enable">Habilitar integración con Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">Abrir Smartspacer</string>
     <string name="preference_contacts_call_on_tap">Toca para llamar</string>
     <string name="preference_contacts_call_on_tap_summary">Llamar inmediatamente al presionar el número telefónico</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -736,6 +744,7 @@
     <string name="tag_empty_name">Una etiqueta sin nombre no puede existir. Si continuas, la etiqueta será eliminada</string>
     <string name="tag_select_items">Selecciona elementos:</string>
     <string name="tag_name">Nombre de etiqueta</string>
+    <string name="tag_icon_customicon">Icono</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d elemento seleccionado</item>
         <item quantity="other">%1$d elementos seleccionados</item>
@@ -1037,4 +1046,5 @@
     <string name="preference_transliteration">Transliteración preferida</string>
     <string name="preference_transliteration_auto">Automática</string>
     <string name="preference_transliteration_disabled">Deshabilitada</string>
+    <string name="select_tag">Seleccionar etiqueta</string>
 </resources>
