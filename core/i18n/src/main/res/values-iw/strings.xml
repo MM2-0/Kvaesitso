@@ -506,6 +506,8 @@
     <string name="preference_screen_integrations">אינטגרציות</string>
     <string name="preference_screen_plugins">תוספים</string>
     <string name="preference_screen_plugins_summary">ניהול התוספים המותקנים</string>
+    <string name="preference_category_enabled_plugins">מופעל</string>
+    <string name="preference_category_installed_plugins">מותקנים</string>
     <string name="no_plugins_installed">לא מותקנים תוספים</string>
     <string name="preference_theme_system">כפי שמוגדר במערכת</string>
     <string name="preference_themed_icons">סמלים בצבעי ערכת הנושא</string>
@@ -591,6 +593,7 @@
     <string name="preference_clock_widget_alignment_center">מרכז</string>
     <string name="preference_clock_widget_alignment_bottom">תחתון</string>
     <string name="preference_clockwidget_dynamic_zone">אזור דינמי</string>
+    <string name="preference_clockwidget_smartspacer">מנוהל ע\"י Smartspacer</string>
     <string name="preference_clockwidget_date_part">תאריך</string>
     <string name="preference_clockwidget_date_part_summary">הצגת התאריך הנוכחי</string>
     <string name="preference_clockwidget_favorites_part">עגינה</string>
@@ -613,6 +616,7 @@
     <string name="preference_logs">לוגים</string>
     <string name="preference_logs_summary">הצגה וייצוא לוגים של היישום</string>
     <string name="preference_screen_search">חיפוש</string>
+    <string name="preference_screen_search_summary">חיפוש, תגיות, פריטים מוסתרים</string>
     <string name="preference_search_favorites">מועדפים</string>
     <string name="preference_search_favorites_summary">הצגת פריטים נעוצים ובשימוש נפוץ מעל רשת היישומים</string>
     <string name="preference_search_apps">יישומים</string>
@@ -659,7 +663,10 @@
     <string name="preference_search_bar_auto_focus_summary">הצגת המקלדת באופן אוטומטי בעת פתיחת מגירת היישומים</string>
     <string name="preference_search_bar_launch_on_enter">הפעלה בלחיצה על ENTER</string>
     <string name="preference_search_bar_launch_on_enter_summary">הפעלת ההתאמה המודגשת או פעולה מהירה בעת הקשה על \'המשך\'</string>
+    <string name="preference_hidden_items">תוצאות חיפוש מוסתרות</string>
+    <string name="preference_hidden_items_summary">ניהול יישומים ותוצאות חיפוש שהוסתרו</string>
     <string name="preference_hidden_items_reveal_button">הצגת כפתור החשיפה</string>
+    <string name="preference_hidden_items_reveal_button_summary">הצגת כפתור לחשיפת תוצאות חיפוש שלא נכללו</string>
     <string name="preference_screen_tags">תגיות</string>
     <string name="preference_screen_tags_summary">ניהול תגיות ופריטים מתוייגים</string>
     <string name="preference_wikipedia_customurl">כתובת URL בויקיפדיה</string>
@@ -687,6 +694,9 @@
     <string name="preference_breezyweather_integration_description">יישומון Breezy Weather הינו יישומון מזג אוויר חופשי בקוד פתוח. אם מותקן, %1$s יכול להשתמש ב-Breezy Weather כמקור נתונים לנתוני מזג אוויר.</string>
     <string name="preference_breezyweather_integration_instructions">כדי להשתמש ב-Breezy Weather כספק מזג אוויר:\n\n1. עברו ל-Breezy Weather &gt; הגדרות &gt; ווידג\'טים ורקע חי &gt; שליחת נתוני Gadgetbridge &gt; הפעלת %1$s\n\n2. ב-%1$s, בחרו ב-Breezy Weather כספק מזג אוויר</string>
     <string name="preference_launch_breezyweather_app">פתיחת Breezy Weather</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer הוא יישומון קוד-פתוח ללא עלות ל-At a Glance. אם הותקן, הוא יכול להשתלב באזור הדינמי של יישומון השעון</string>
+    <string name="preference_smartspacer_enable">הפעלת שילוב Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">פתיחת Smartspacer</string>
     <string name="preference_contacts_call_on_tap">לחצו כדי להתקשר</string>
     <string name="preference_contacts_call_on_tap_summary">התחל שיחה באופן מיידי בעת לחיצה על מספר טלפון</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -755,6 +765,7 @@
     <string name="tag_empty_name">תגית לא יכולה להתקיים ללא שם. אם תמשיך, התגית תימחק.</string>
     <string name="tag_select_items">בחירת פריטים:</string>
     <string name="tag_name">שם תגית</string>
+    <string name="tag_icon_customicon">סמל</string>
     <plurals name="tag_selected_items">
         <item quantity="one">פריט נבחר %1$d</item>
         <item quantity="two">%1$d פריטים נבחרו</item>
