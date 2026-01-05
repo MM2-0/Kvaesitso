@@ -512,7 +512,7 @@
     <string name="preference_search_bar_auto_focus">פתיחת המקלדת</string>
     <string name="preference_search_bar_auto_focus_summary">הצגת המקלדת באופן אוטומטי בעת פתיחת מגירת היישומים</string>
     <string name="preference_search_bar_launch_on_enter">הפעלה בלחיצה על ENTER</string>
-    <string name="preference_hidden_items_reveal_button_summary">הצגת כפתור לחשיפת תוצאות חיפוש שהוסתרו</string>
+    <string name="preference_hidden_items_reveal_button_summary">הצגת כפתור לחשיפת תוצאות חיפוש שלא נכללו</string>
     <string name="preference_compact_tags">תגיות קומפקטיות</string>
     <string name="preference_compact_tags_summary">הסתרת תוויות או סמלים של תגיות כדי לצמצם את השטח שממלאות התגיות</string>
     <string name="connect_account">חיבור חשבון</string>
@@ -890,4 +890,13 @@
     <string name="select_tag">בחירת תגית</string>
     <string name="preference_transliteration">תעתיק מועדף</string>
     <string name="preference_transliteration_auto">תעתיק אוטומטי</string>
+    <string name="widget_name_apps">יישומים</string>
+    <string name="preference_category_enabled_plugins">מופעל</string>
+    <string name="preference_category_installed_plugins">מותקנים</string>
+    <string name="preference_clockwidget_smartspacer">מנוהל ע\"י Smartspacer</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer הוא יישומון קוד-פתוח ללא עלות ל-At a Glance. אם הותקן, הוא יכול להשתלב באזור הדינמי של יישומון השעון</string>
+    <string name="preference_smartspacer_enable">הפעלת שילוב Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">פתיחת Smartspacer</string>
+    <string name="tag_icon_customicon">סמל</string>
 </resources>
