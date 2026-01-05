@@ -308,7 +308,7 @@
     <string name="preference_restore">Obnovit</string>
     <string name="preference_crash_reporter">Hlášení pádů</string>
     <string name="preference_crash_reporter_summary">Hlášení chyb a pádů</string>
-    <string name="preference_screen_search_summary">Vyhledávání, štítky, skryté položky</string>
+    <string name="preference_screen_search_summary">Vyhledávání, štítky, vyloučené výsledky</string>
     <string name="preference_screen_search">Hledání</string>
     <string name="preference_search_favorites">Oblíbené</string>
     <string name="preference_search_files">Soubory</string>
@@ -337,8 +337,8 @@
     <string name="preference_search_bar_style_summary">Přizpůsobit vzhled vyhledávací lišty</string>
     <string name="preference_search_bar_auto_focus">Otevřít klávesnici</string>
     <string name="preference_search_bar_auto_focus_summary">Automaticky zobrazit klávesnici při otevření seznamu aplikací</string>
-    <string name="preference_hidden_items">Skrýt výsledky vyhledávání</string>
-    <string name="preference_hidden_items_summary">Spravovat skryté aplikace a výsledky vyhledávání</string>
+    <string name="preference_hidden_items">Vyloučené výsledky vyhledávání</string>
+    <string name="preference_hidden_items_summary">Spravovat vyloučené aplikace a výsledky vyhledávání</string>
     <string name="preference_wikipedia_customurl">URL Wikipedie</string>
     <string name="no_account_nextcloud">Zatím jste nepřipojili svůj účet Nextcloud</string>
     <string name="no_account_owncloud">Zatím jste nepřipojili svůj účet Owncloud</string>
@@ -505,7 +505,7 @@
     <string name="notes_widget_action_dismiss">Zavřít</string>
     <string name="notes_widget_dismissed">Poznámka zavřena</string>
     <string name="preference_hidden_items_reveal_button">Zobrazit tlačítko odhalení</string>
-    <string name="preference_hidden_items_reveal_button_summary">Zobrazit tlačítko pro odhalení skrytých výsledků vyhledávání</string>
+    <string name="preference_hidden_items_reveal_button_summary">Zobrazit tlačítko pro odhalení vyloučených výsledků vyhledávání</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Vymazat a znovu sestavit mezipaměť balíčků ikon</string>
     <string name="widget_config_appwidget_background">Karta pozadí</string>
     <string name="widget_config_calendar_missing_calendars_hint">Nevidíte své kalendáře\?</string>
@@ -897,4 +897,9 @@
     <string name="preference_category_installed_plugins">Nainstalováno</string>
     <string name="tag_icon_customicon">Ikona</string>
     <string name="tag_icon_emoji">Emodži</string>
+    <string name="preference_clockwidget_smartspacer">Spravováno aplikací Smartspacer</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer je bezplatný a open-source widget Přehledu událostí. Pokud je nainstalovaný, můžete jej integrovat do dynamické oblasti widgetu hodin</string>
+    <string name="preference_smartspacer_enable">Povolit integraci Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">Otevřít Smartspacer</string>
 </resources>
