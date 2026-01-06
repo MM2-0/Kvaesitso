@@ -680,6 +680,7 @@
     <string name="preference_smartspacer_integration_description">Smartspacer es un widget de código abierto inspirado en De un vistazo. Si se instala, se puede integrar en la zona dinámica del widget del reloj</string>
     <string name="preference_smartspacer_enable">Habilitar integración con Smartspacer</string>
     <string name="preference_launch_smartspacer_app">Abrir Smartspacer</string>
+    <string name="no_feed_providers">No hay ningún provedor de feed instalado</string>
     <string name="preference_contacts_call_on_tap">Toca para llamar</string>
     <string name="preference_contacts_call_on_tap_summary">Llamar inmediatamente al presionar el número telefónico</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
