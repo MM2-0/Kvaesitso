@@ -687,6 +687,8 @@
     <string name="preference_smartspacer_integration_description">Smartspacer je bezplatný a open-source widget Přehledu událostí. Pokud je nainstalovaný, můžete jej integrovat do dynamické oblasti widgetu hodin</string>
     <string name="preference_smartspacer_enable">Povolit integraci Smartspacer</string>
     <string name="preference_launch_smartspacer_app">Otevřít Smartspacer</string>
+    <string name="preference_feed_integration">Zdroj</string>
+    <string name="no_feed_providers">Nejsou nainstalováni žádní poskytovatelé</string>
     <string name="preference_contacts_call_on_tap">Klepněte pro vytočení</string>
     <string name="preference_contacts_call_on_tap_summary">Po klepnutí na telefonní číslo zahájit hovor bez potvrzení</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -795,6 +797,7 @@
     <string name="gesture_action_quick_settings">Otevřít rychlá nastavení</string>
     <string name="gesture_action_power_menu">Zobrazit menu napájení</string>
     <string name="gesture_action_recents">Otevřít nedávné aplikace</string>
+    <string name="gesture_action_feed">Zdroj</string>
     <string name="gesture_failed_message">Provedli jste gesto „%1$s“. Toto gesto je momentálně nastaveno na vykonání akce „%2$s“. Akci nicméně nelze provést z následujícího důvodu:</string>
     <string name="missing_permission_accessibility_gesture_failed">Pro vykonání této akce musí být povolena služba přístupnosti spouštěče.</string>
     <string name="missing_permission_accessibility_gesture_settings">Tato akce vyžaduje povolení akce přístupnosti spouštěče.</string>
