@@ -1,6 +1,6 @@
 # Feed
 
-The feed is a personalized content page that lives to the left of your home screen, that can be
+The feed is a personalized content page that lives to the left of your home screen, which can be
 opened without leaving the launcher. Traditionally, launchers show the Google Discover feed here,
 but there are other alternatives.
 

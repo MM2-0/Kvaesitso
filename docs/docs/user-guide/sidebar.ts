@@ -54,6 +54,10 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         text: 'Weather',
         link: '/docs/user-guide/integrations/weather',
       },
+      {
+        text: 'Feed',
+        link: '/docs/user-guide/integrations/feed',
+      },
     ],
   },
   {

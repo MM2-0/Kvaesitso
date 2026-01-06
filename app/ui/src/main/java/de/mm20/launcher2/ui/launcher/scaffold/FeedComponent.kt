@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,7 +34,6 @@ import de.mm20.launcher2.feed.FeedService
 import de.mm20.launcher2.preferences.feed.FeedSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toIntOffset
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -46,6 +45,8 @@ internal class FeedComponent(
     private val feedService: FeedService by inject()
 
     override val permanent: Boolean = true
+
+    private var state = mutableIntStateOf(0)
 
     @Composable
     override fun Component(
@@ -79,18 +80,30 @@ internal class FeedComponent(
             }
         }
 
-        val enableScroll = state.currentComponent == this && progress > 0f && progress < 1f
+        val componentState = this.state.intValue
 
-        LaunchedEffect(enableScroll) {
-            if (enableScroll) {
+        LaunchedEffect(state.currentComponent == this && componentState < 2) {
+            if (state.currentComponent == this@FeedComponent && componentState < 2) {
                 feedConnection?.startScroll()
-            } else {
+            }
+        }
+
+        LaunchedEffect(componentState == 2 && progress > 0.5f) {
+            if (componentState == 2 && progress > 0.5f) {
                 feedConnection?.endScroll()
             }
         }
 
-        LaunchedEffect(progress) {
-            feedConnection?.onScroll(progress)
+        LaunchedEffect(componentState == 0) {
+            if (componentState == 0) {
+                feedConnection?.closeFeed()
+            }
+        }
+
+        LaunchedEffect(state.currentComponent == this, progress) {
+            if (state.currentComponent == this@FeedComponent) {
+                feedConnection?.onScroll(progress)
+            }
         }
 
         LaunchedEffect(feedProgress.floatValue) {
@@ -141,5 +154,26 @@ internal class FeedComponent(
             .offset { state.currentOffset.toIntOffset() }
             .alpha(1f - state.currentProgress)
     }
+
+    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+        super.onPreActivate(state)
+        this.state.intValue = 2
+    }
+
+    override suspend fun onActivate(state: LauncherScaffoldState) {
+        super.onActivate(state)
+        this.state.intValue = 3
+    }
+
+    override suspend fun onDismiss(state: LauncherScaffoldState) {
+        super.onDismiss(state)
+        this.state.intValue = 0
+    }
+
+    override suspend fun onPreDismiss(state: LauncherScaffoldState) {
+        super.onPreDismiss(state)
+        this.state.intValue = 1
+    }
+
 
 }

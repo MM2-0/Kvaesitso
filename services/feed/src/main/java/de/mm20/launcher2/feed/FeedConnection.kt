@@ -29,6 +29,9 @@ interface FeedConnection {
     fun startScroll()
     fun endScroll()
     fun onScroll(progress: Float)
+    
+    fun openFeed()
+    fun closeFeed()
 }
 
 internal class FeedConnectionImpl(
@@ -72,6 +75,22 @@ internal class FeedConnectionImpl(
     override fun onScroll(progress: Float) {
         try {
             overlay?.onScroll(progress)
+        } catch (e: RemoteException) {
+            CrashReporter.logException(e)
+        }
+    }
+
+    override fun openFeed() {
+        try {
+            overlay?.openOverlay(Flags)
+        } catch (e: RemoteException) {
+            CrashReporter.logException(e)
+        }
+    }
+
+    override fun closeFeed() {
+        try {
+            overlay?.closeOverlay(Flags)
         } catch (e: RemoteException) {
             CrashReporter.logException(e)
         }
