@@ -682,6 +682,8 @@
     <string name="preference_smartspacer_integration_description">A Smartspacer egy ingyenes és nyílt forráskódú gyorsnézeti modul. Telepítés után integrálható az óramodul dinamikus zónájába</string>
     <string name="preference_smartspacer_enable">Smartspacer integráció engedélyezése</string>
     <string name="preference_launch_smartspacer_app">Smartspacer megnyitása</string>
+    <string name="preference_feed_integration">Hírforrás</string>
+    <string name="no_feed_providers">Nincs telepítve hírforrás-szolgáltató</string>
     <string name="preference_contacts_call_on_tap">Koppintson a híváshoz</string>
     <string name="preference_contacts_call_on_tap_summary">Hívás azonnali indítása megerősítés kérése nélkül egy telefonszámra való koppintáskor</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -786,6 +788,7 @@
     <string name="gesture_action_quick_settings">Gyorsbeállítások megnyitása</string>
     <string name="gesture_action_power_menu">Kikapcsolási menü megjelenítése</string>
     <string name="gesture_action_recents">Legutóbbi alkalmazások megnyitása</string>
+    <string name="gesture_action_feed">Hírforrás</string>
     <string name="gesture_failed_message">Egy „%1$s” gesztust hajtott végre. Ez a gesztus jelenleg egy „%2$s” művelet kiváltására van beállítva. Az akciót azonban a következő okból nem lehetett végrehajtani:</string>
     <string name="missing_permission_accessibility_gesture_failed">A művelet végrehajtásához engedélyezni kell a Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
     <string name="missing_permission_accessibility_gesture_settings">Ehhez a művelethez engedélyezni kell az Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
