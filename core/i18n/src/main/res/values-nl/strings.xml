@@ -662,6 +662,7 @@
     <string name="preference_smartspacer_integration_description">Smartspacer is een gratiw en open source At a Glace widget. Als het geïnstalleerd is, kan het geïntegreerd worden in de dynamische zone van het klokwidget</string>
     <string name="preference_smartspacer_enable">Smartspacer integratie aanzetten</string>
     <string name="preference_launch_smartspacer_app">Smartspacer openen</string>
+    <string name="no_feed_providers">Geen feedproviders geïnstalleerd</string>
     <string name="preference_contacts_call_on_tap">Tik om te bellen</string>
     <string name="preference_contacts_call_on_tap_summary">Start direct, zonder bevestiging, een gesprek bij het tikken op een telefoonnummer</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -764,7 +765,7 @@
     <string name="gesture_action_quick_settings">Snelle instellingen openen</string>
     <string name="gesture_action_power_menu">Menu uitschakelen tonen</string>
     <string name="gesture_action_recents">Recente applicaties openen</string>
-    <string name="gesture_failed_message">Je hebt het gebaar\"%1$s\" uitgevoerd. Dit gebaar is ingesteld om de actie\"%2$s\" uit te voeren. Deze actie kon echter niet uitgevoerd worden omwille van de volgende reden:</string>
+    <string name="gesture_failed_message">Je hebt het gebaar \"%1$s\" uitgevoerd. Dit gebaar is ingesteld om de actie \"%2$s\" uit te voeren. Deze actie kon echter niet uitgevoerd worden omwille van de volgende reden:</string>
     <string name="missing_permission_accessibility_gesture_failed">De toegankelijkheidsservice van het startscherm moet aanstaan om deze actie uit te voeren.</string>
     <string name="missing_permission_accessibility_gesture_settings">De toegankelijkheidsservice van het startscherm moet aanstaan om deze actie uit te voeren.</string>
     <string name="preference_search_result_ordering_weight_factor">Flexibiliteit sortering</string>
