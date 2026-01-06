@@ -673,6 +673,7 @@
     <string name="preference_smartspacer_integration_description">Smartspacer è un widget At a Glance gratuito e open source. Se installato, può essere integrato nella zona dinamica del widget orologio</string>
     <string name="preference_smartspacer_enable">Abilita integrazione Smartspacer</string>
     <string name="preference_launch_smartspacer_app">Apri Smartspacer</string>
+    <string name="no_feed_providers">Nessun provider di feed installato</string>
     <string name="preference_contacts_call_on_tap">Clicca per chiamare</string>
     <string name="preference_contacts_call_on_tap_summary">Avvia una chiamata senza conferma quando tocchi un numero di telefono</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
