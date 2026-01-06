@@ -21,6 +21,7 @@ import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -32,6 +33,7 @@ fun FeedIntegrationSettingsScreen() {
 
     val viewModel: FeedIntegrationSettingsScreenVM = viewModel()
     val selectedProvider by viewModel.providerPackage.collectAsState(null)
+    val feedEnabled by viewModel.feedEnabled.collectAsState(null)
 
     val providers = remember { viewModel.getFeedProviders(context) }
     PreferenceScreen(
@@ -58,6 +60,19 @@ fun FeedIntegrationSettingsScreen() {
         } else {
             item {
                 PreferenceCategory {
+                    SwitchPreference(
+                        icon = R.drawable.news_24px,
+                        title = stringResource(R.string.preference_feed_integration),
+                        summary = stringResource(R.string.preference_feed_enable_summary),
+                        value = feedEnabled == true,
+                        onValueChanged = {
+                            viewModel.setFeedEnabled(it)
+                        }
+                    )
+                }
+            }
+            item {
+                PreferenceCategory(stringResource(R.string.preference_category_feed_provider)) {
                     for (prov in providers) {
                         Preference(
                             title = prov.label,

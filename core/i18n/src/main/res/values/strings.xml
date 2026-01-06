@@ -701,6 +701,8 @@
     <string name="preference_smartspacer_enable">Enable Smartspacer integration</string>
     <string name="preference_launch_smartspacer_app">Open Smartspacer</string>
     <string name="preference_feed_integration">Feed</string>
+    <string name="preference_category_feed_provider">Feed provider</string>
+    <string name="preference_feed_enable_summary">Swipe right on the home screen to open the feed</string>
     <string name="no_feed_providers">No feed providers installed</string>
     <string name="preference_contacts_call_on_tap">Tap to call</string>
     <string name="preference_contacts_call_on_tap_summary">Start a call without confirmation when tapping a phone number</string>

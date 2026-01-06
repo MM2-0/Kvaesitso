@@ -23,11 +23,18 @@ class FeedIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     val providerPackage = feedSettings.providerPackage
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed(0), 1)
 
+    val feedEnabled = feedSettings.enabled
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(0), 1)
+
     fun setProviderPackage(providerPackage: String?) {
         feedSettings.setProviderPackage(providerPackage)
     }
 
     fun getFeedProviders(context: Context): List<FeedProvider> {
         return feedService.getAvailableFeedProviders()
+    }
+
+    fun setFeedEnabled(enabled: Boolean) {
+        feedSettings.setEnabled(enabled)
     }
 }
