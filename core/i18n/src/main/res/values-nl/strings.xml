@@ -662,6 +662,8 @@
     <string name="preference_smartspacer_integration_description">Smartspacer is een gratiw en open source At a Glace widget. Als het geïnstalleerd is, kan het geïntegreerd worden in de dynamische zone van het klokwidget</string>
     <string name="preference_smartspacer_enable">Smartspacer integratie aanzetten</string>
     <string name="preference_launch_smartspacer_app">Smartspacer openen</string>
+    <string name="preference_category_feed_provider">Feedaanbieder</string>
+    <string name="preference_feed_enable_summary">Naar rechts vegen op het thuisscherm om de feed te openen</string>
     <string name="no_feed_providers">Geen feedproviders geïnstalleerd</string>
     <string name="preference_contacts_call_on_tap">Tik om te bellen</string>
     <string name="preference_contacts_call_on_tap_summary">Start direct, zonder bevestiging, een gesprek bij het tikken op een telefoonnummer</string>
