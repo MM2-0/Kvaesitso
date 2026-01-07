@@ -902,4 +902,7 @@
     <string name="preference_smartspacer_integration_description">Smartspacer je bezplatný a open-source widget Přehledu událostí. Pokud je nainstalovaný, můžete jej integrovat do dynamické oblasti widgetu hodin</string>
     <string name="preference_smartspacer_enable">Povolit integraci Smartspacer</string>
     <string name="preference_launch_smartspacer_app">Otevřít Smartspacer</string>
+    <string name="preference_feed_integration">Zdroj</string>
+    <string name="no_feed_providers">Nejsou nainstalováni žádní poskytovatelé</string>
+    <string name="gesture_action_feed">Zdroj</string>
 </resources>

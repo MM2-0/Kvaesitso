@@ -902,4 +902,7 @@
     <string name="tag_icon_customicon">Icono</string>
     <string name="tag_icon_emoji">Emoji</string>
     <string name="select_tag">Seleccionar etiqueta</string>
+    <string name="preference_feed_integration">Feed</string>
+    <string name="no_feed_providers">No hay ningún provedor de feed instalado</string>
+    <string name="gesture_action_feed">Feed</string>
 </resources>

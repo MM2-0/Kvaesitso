@@ -899,10 +899,12 @@
     <string name="tag_icon_emoji">Emoji</string>
     <string name="preference_clockwidget_smartspacer">Gestito da Smartspacer</string>
     <string name="preference_smartspacer_integration">Smartspacer</string>
-    <string name="preference_smartspacer_integration_description">Smartspacer è un widget At a Glance gratuito e open source. Se installato, può essere integrato nella zona dinamica del widget orologio</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer è un widget At a Glance gratuito e open source. Se installato, può essere integrato nella zona dinamica del widget orologilo</string>
     <string name="preference_smartspacer_enable">Abilita integrazione Smartspacer</string>
     <string name="preference_launch_smartspacer_app">Apri Smartspacer</string>
     <string name="preference_feed_integration">Feed</string>
     <string name="no_feed_providers">Nessun provider di feed installato</string>
     <string name="gesture_action_feed">Feed</string>
+    <string name="preference_category_feed_provider">Fornitore di feed</string>
+    <string name="preference_feed_enable_summary">Scorri verso destra nella schermata iniziale per aprire il feed</string>
 </resources>
