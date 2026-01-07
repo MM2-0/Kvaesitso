@@ -670,9 +670,11 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather è un\'app meteo gratuita e open source. Se installata, %1$s può utilizzare Breezy Weather come fonte di dati meteo.</string>
     <string name="preference_breezyweather_integration_instructions">Per utilizzare Breezy Weather come fornitore di servizi meteo:\n\n1. Vai su Breezy Weather &gt; Impostazioni &gt; Widget e sfondi animati &gt; Invia dati Gadgetbridge &gt; Abilita %1$s\n\n2. In %1$s, seleziona Breezy Weather come fornitore di servizi meteo</string>
     <string name="preference_launch_breezyweather_app">Apri Breezy Weather</string>
-    <string name="preference_smartspacer_integration_description">Smartspacer è un widget At a Glance gratuito e open source. Se installato, può essere integrato nella zona dinamica del widget orologio</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer è un widget At a Glance gratuito e open source. Se installato, può essere integrato nella zona dinamica del widget orologilo</string>
     <string name="preference_smartspacer_enable">Abilita integrazione Smartspacer</string>
     <string name="preference_launch_smartspacer_app">Apri Smartspacer</string>
+    <string name="preference_category_feed_provider">Fornitore di feed</string>
+    <string name="preference_feed_enable_summary">Scorri verso destra nella schermata iniziale per aprire il feed</string>
     <string name="no_feed_providers">Nessun provider di feed installato</string>
     <string name="preference_contacts_call_on_tap">Clicca per chiamare</string>
     <string name="preference_contacts_call_on_tap_summary">Avvia una chiamata senza conferma quando tocchi un numero di telefono</string>
