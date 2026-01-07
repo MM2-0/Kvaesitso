@@ -58,7 +58,7 @@ internal class FeedComponent(
         val lifecycleOwner = LocalLifecycleOwner.current
 
         val progress = state.currentProgress
-        val feedProgress = remember { mutableFloatStateOf(0f) }
+        val feedProgress = remember { mutableFloatStateOf(-1f) }
 
         val feedProviderPackage by remember { feedSettings.providerPackage }.collectAsState(null)
 
@@ -80,38 +80,38 @@ internal class FeedComponent(
             }
         }
 
-        val componentState = this.state.intValue
 
-        LaunchedEffect(state.currentComponent == this && componentState < 2) {
-            if (state.currentComponent == this@FeedComponent && componentState < 2) {
+        if (state.currentComponent == this) {
+            LaunchedEffect(Unit) {
                 feedConnection?.startScroll()
             }
-        }
-
-        LaunchedEffect(componentState == 2 && progress > 0.5f) {
-            if (componentState == 2 && progress > 0.5f) {
-                feedConnection?.endScroll()
-            }
-        }
-
-        LaunchedEffect(componentState == 0) {
-            if (componentState == 0) {
-                feedConnection?.closeFeed()
-            }
-        }
-
-        LaunchedEffect(state.currentComponent == this, progress) {
-            if (state.currentComponent == this@FeedComponent) {
-                feedConnection?.onScroll(progress)
-            }
-        }
-
-        LaunchedEffect(feedProgress.floatValue) {
-            if (isActive) {
-                state.setProgress(feedProgress.floatValue)
-                if (feedProgress.floatValue <= 0f) {
-                    state.onPredictiveBackEnd()
+            LaunchedEffect(state.isSettledOnSecondaryPage, progress > 0.8f) {
+                if (state.isSettledOnSecondaryPage && progress > 0.8f) {
+                    feedConnection?.endScroll()
                 }
+            }
+
+            LaunchedEffect(progress) {
+                if (feedProgress.floatValue != progress) {
+                    feedConnection?.onScroll(progress)
+                }
+            }
+
+            LaunchedEffect(
+                isActive,
+                feedProgress.floatValue
+            ) {
+                if (isActive) {
+                    state.setProgress(feedProgress.floatValue)
+                    if (feedProgress.floatValue <= 0f) {
+                        feedConnection?.closeFeed()
+                        state.onPredictiveBackEnd()
+                    }
+                }
+            }
+        } else {
+            LaunchedEffect(Unit) {
+                feedConnection?.closeFeed()
             }
         }
 
