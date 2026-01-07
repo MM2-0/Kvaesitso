@@ -894,4 +894,6 @@
     <string name="gesture_action_feed">Feed</string>
     <string name="preference_feed_integration">Feed</string>
     <string name="no_feed_providers">Geen feedproviders geïnstalleerd</string>
+    <string name="preference_feed_enable_summary">Naar rechts vegen op het thuisscherm om de feed te openen</string>
+    <string name="preference_category_feed_provider">Feedaanbieder</string>
 </resources>
