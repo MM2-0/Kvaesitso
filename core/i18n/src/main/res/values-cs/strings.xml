@@ -905,4 +905,6 @@
     <string name="preference_feed_integration">Zdroj</string>
     <string name="no_feed_providers">Nejsou nainstalováni žádní poskytovatelé</string>
     <string name="gesture_action_feed">Zdroj</string>
+    <string name="preference_category_feed_provider">Poskytovatel zdroje</string>
+    <string name="preference_feed_enable_summary">Posuňte vpravo na domovské obrazovce pro otevření zdroje</string>
 </resources>
