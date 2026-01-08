@@ -2,4 +2,177 @@
 <resources>
     <string name="dimension_mass">מסה</string>
     <string name="dimension_length">אורך</string>
+    <string name="dimension_volume">נפח</string>
+    <string name="dimension_area">שטח</string>
+    <string name="dimension_velocity">מהירות</string>
+    <string name="dimension_currency">מטבע</string>
+    <string name="dimension_data">נתונים</string>
+    <string name="dimension_bitrate">קצב הנתונים</string>
+    <string name="dimension_pressure">לחץ</string>
+    <string name="dimension_energy">אנרגיה</string>
+    <string name="dimension_frequency">תדירות</string>
+    <string name="dimension_temperature">טמפרטורה</string>
+    <string name="dimension_time">זמן</string>
+    <string name="unit_meter_symbol">יחידות אורך</string>
+    <plurals name="unit_meter">
+        <item quantity="one">מטר</item>
+        <item quantity="two">מטרים</item>
+        <item quantity="other">מטרים</item>
+    </plurals>
+    <string name="unit_kilometer_symbol">ק\"מ</string>
+    <plurals name="unit_kilometer">
+        <item quantity="one">ק\"מ</item>
+        <item quantity="two">ק\"מ</item>
+        <item quantity="other">ק\"מ</item>
+    </plurals>
+    <string name="unit_decimeter_symbol">דצימטר</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">דצימטר</item>
+        <item quantity="two">דצימטרים</item>
+        <item quantity="other">דצימטרים</item>
+    </plurals>
+    <string name="unit_centimeter_symbol">סנטימטר</string>
+    <plurals name="unit_centimeter">
+        <item quantity="one">סנטימטר</item>
+        <item quantity="two">סנטימטרים</item>
+        <item quantity="other">סנטימטרים</item>
+    </plurals>
+    <string name="unit_millimeter_symbol">מילימטר</string>
+    <plurals name="unit_millimeter">
+        <item quantity="one">מילימטר</item>
+        <item quantity="two">מילימטרים</item>
+        <item quantity="other">מילימטרים</item>
+    </plurals>
+    <string name="unit_inch_symbol">אינץ\'</string>
+    <plurals name="unit_inch">
+        <item quantity="one">אינץ\'</item>
+        <item quantity="two">אינצ\'ים</item>
+        <item quantity="other">אינצ\'ים</item>
+    </plurals>
+    <string name="unit_foot_symbol">רגל</string>
+    <plurals name="unit_foot">
+        <item quantity="one">רגל</item>
+        <item quantity="two">רגליים</item>
+        <item quantity="other">רגליים</item>
+    </plurals>
+    <string name="unit_yard_symbol">יארד</string>
+    <plurals name="unit_yard">
+        <item quantity="one">יארד</item>
+        <item quantity="two">יארדים</item>
+        <item quantity="other">יארדים</item>
+    </plurals>
+    <string name="unit_mile_symbol">מיל</string>
+    <plurals name="unit_mile">
+        <item quantity="one">מיל</item>
+        <item quantity="two">מילים</item>
+        <item quantity="other">מילים</item>
+    </plurals>
+    <string name="unit_nautic_mile_symbol">מיל ימי</string>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">מיל ימי</item>
+        <item quantity="two">מילים ימיים</item>
+        <item quantity="other">מילים ימיים</item>
+    </plurals>
+    <string name="unit_sqmeter_symbol">מ\"ר</string>
+    <plurals name="unit_sqmeter">
+        <item quantity="one">מטר רבוע</item>
+        <item quantity="two">מטרים רבועים</item>
+        <item quantity="other">מטרים רבועים</item>
+    </plurals>
+    <string name="unit_sqkilometer_symbol">קמ\"ר</string>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">קמ\"ר</item>
+        <item quantity="two">קמ\"ר</item>
+        <item quantity="other">קמ\"ר</item>
+    </plurals>
+    <string name="unit_sqcentimeter_symbol">סמ\"ר</string>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">סמ\"ר</item>
+        <item quantity="two">סמ\"ר</item>
+        <item quantity="other">סמ\"ר</item>
+    </plurals>
+    <string name="unit_sqmillimeter_symbol">מילימטר רבוע</string>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">מילימטר רבוע</item>
+        <item quantity="two">מילימטר רבועים</item>
+        <item quantity="other">מילימטר רבועים</item>
+    </plurals>
+    <string name="unit_sqinch_symbol">אינץ\' רבוע</string>
+    <plurals name="unit_sqinch">
+        <item quantity="one">אינץ\' רבוע</item>
+        <item quantity="two">אינץ\' רבועים</item>
+        <item quantity="other">אינץ\' רבועים</item>
+    </plurals>
+    <string name="unit_sqfoot_symbol">רגל רבוע</string>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">רגל רבוע</item>
+        <item quantity="two">רגל רבועים</item>
+        <item quantity="other">רגל רבועים</item>
+    </plurals>
+    <string name="unit_sqyard_symbol">יארד רבוע</string>
+    <plurals name="unit_sqyard">
+        <item quantity="one">יארד רבוע</item>
+        <item quantity="two">יארד רבועים</item>
+        <item quantity="other">יארד רבועים</item>
+    </plurals>
+    <string name="unit_hectare_symbol">הקטאר</string>
+    <plurals name="unit_hectare">
+        <item quantity="one">הקטאר</item>
+        <item quantity="two">הקטארים</item>
+        <item quantity="other">הקטארים</item>
+    </plurals>
+    <string name="unit_acre_symbol">אקר</string>
+    <plurals name="unit_acre">
+        <item quantity="one">אקר</item>
+        <item quantity="two">אקרים</item>
+        <item quantity="other">אקרים</item>
+    </plurals>
+    <string name="unit_second_symbol">שנ</string>
+    <plurals name="unit_second">
+        <item quantity="one">שנייה</item>
+        <item quantity="two">שניות</item>
+        <item quantity="other">שניות</item>
+    </plurals>
+    <string name="unit_millisecond_symbol">מילישנייה</string>
+    <plurals name="unit_millisecond">
+        <item quantity="one">מילישנייה</item>
+        <item quantity="two">מילישניות</item>
+        <item quantity="other">מילישניות</item>
+    </plurals>
+    <string name="unit_minute_symbol">דק</string>
+    <plurals name="unit_minute">
+        <item quantity="one">דקה</item>
+        <item quantity="two">דקות</item>
+        <item quantity="other">דקות</item>
+    </plurals>
+    <string name="unit_hour_symbol">שע</string>
+    <plurals name="unit_hour">
+        <item quantity="one">שעה</item>
+        <item quantity="two">שעות (שעתיים)</item>
+        <item quantity="other">שעות</item>
+    </plurals>
+    <string name="unit_day_symbol">יום</string>
+    <plurals name="unit_day">
+        <item quantity="one">יום</item>
+        <item quantity="two">ימים (יומיים)</item>
+        <item quantity="other">ימים</item>
+    </plurals>
+    <string name="unit_year_symbol">שנה</string>
+    <plurals name="unit_year">
+        <item quantity="one">שנה</item>
+        <item quantity="two">שנים (שנתיים)</item>
+        <item quantity="other">שנים</item>
+    </plurals>
+    <string name="unit_byte_symbol">בית</string>
+    <plurals name="unit_byte">
+        <item quantity="one">בית</item>
+        <item quantity="two">בתים</item>
+        <item quantity="other">בתים</item>
+    </plurals>
+    <string name="unit_kilobyte_symbol">ק\"ב</string>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">קילו-בית</item>
+        <item quantity="two">קילו-בית</item>
+        <item quantity="other">קילו-בית</item>
+    </plurals>
 </resources>

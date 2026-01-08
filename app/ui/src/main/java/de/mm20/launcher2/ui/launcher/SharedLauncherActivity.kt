@@ -10,6 +10,7 @@ import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -27,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.IntOffset
@@ -48,6 +50,7 @@ import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.scaffold.ClockAndWidgetsHomeComponent
 import de.mm20.launcher2.ui.launcher.scaffold.ClockHomeComponent
 import de.mm20.launcher2.ui.launcher.scaffold.DismissComponent
+import de.mm20.launcher2.ui.launcher.scaffold.FeedComponent
 import de.mm20.launcher2.ui.launcher.scaffold.Gesture
 import de.mm20.launcher2.ui.launcher.scaffold.LaunchComponent
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffold
@@ -168,7 +171,7 @@ abstract class SharedLauncherActivity(
                         val darkSearchBar = LocalPreferDarkContentOverWallpaper.current
                                 && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark
 
-                        LaunchedEffect(dimBackground && darkTheme) {
+                        /*LaunchedEffect(dimBackground && darkTheme) {
                             if (dimBackground && darkTheme) {
                                 val windowAttributes = window.attributes
                                 windowAttributes.flags =
@@ -182,7 +185,7 @@ abstract class SharedLauncherActivity(
                                 window.attributes = windowAttributes
                                 window.setDimAmount(0f)
                             }
-                        }
+                        }*/
 
                         val enterTransitionProgress = remember { mutableStateOf(100f) }
                         var enterTransition by remember {
@@ -211,6 +214,10 @@ abstract class SharedLauncherActivity(
 
                         OverlayHost(
                             modifier = Modifier
+                                .background(
+                                    if (dimBackground && darkTheme) Color( 0f, 0f, 0f, 0.3f)
+                                    else Color.Transparent
+                                )
                                 .fillMaxSize(),
                             contentAlignment = Alignment.BottomCenter
                         ) {
@@ -266,6 +273,7 @@ abstract class SharedLauncherActivity(
                                         openKeyboard = searchBarAutofocus,
                                     )
                                     val widgetComponent by lazy { WidgetsComponent }
+                                    val feedComponent by lazy { FeedComponent(this@SharedLauncherActivity) }
 
                                     fun getScaffoldGesture(
                                         action: GestureAction?,
@@ -315,6 +323,11 @@ abstract class SharedLauncherActivity(
 
                                             is GestureAction.ScreenLock -> ScaffoldGesture(
                                                 component = ScreenOffComponent,
+                                                animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                            )
+
+                                            is GestureAction.Feed -> ScaffoldGesture(
+                                                component = FeedComponent(this@SharedLauncherActivity),
                                                 animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                             )
 

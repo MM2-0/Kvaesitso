@@ -61,13 +61,14 @@ fun GestureSettingsScreen() {
         add(stringResource(R.string.gesture_action_launch_app) to GestureAction.Launch(null))
     }
 
+    val optionsWithFeed = options + (stringResource(R.string.gesture_action_feed) to GestureAction.Feed)
+
+
     val context = LocalContext.current
     PreferenceScreen(title = stringResource(R.string.preference_screen_gestures)) {
         item {
             val appIconSize = 32.dp.toPixels()
             PreferenceCategory {
-
-
                 val swipeDown by viewModel.swipeDown.collectAsStateWithLifecycle(null)
                 val swipeDownApp by viewModel.swipeDownApp.collectAsState(null)
                 val swipeDownAppIcon by remember(swipeDownApp?.key) {
@@ -128,7 +129,7 @@ fun GestureSettingsScreen() {
                         icon = R.drawable.swipe_right_alt_24px,
                         value = swipeRight,
                         onValueChanged = { viewModel.setSwipeRight(it) },
-                        options = options,
+                        options = optionsWithFeed,
                         app = swipeRightApp,
                         appIcon = swipeRightAppIcon,
                         onAppChanged = { viewModel.setSwipeRightApp(it) }

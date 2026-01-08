@@ -70,6 +70,8 @@ import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsRoute
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
 import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsRoute
 import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
+import de.mm20.launcher2.ui.settings.feed.FeedIntegrationSettingsRoute
+import de.mm20.launcher2.ui.settings.feed.FeedIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsRoute
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.filterbar.FilterBarSettingsRoute
@@ -114,6 +116,8 @@ import de.mm20.launcher2.ui.settings.shapes.ShapeSchemeSettingsRoute
 import de.mm20.launcher2.ui.settings.shapes.ShapeSchemeSettingsScreen
 import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsScreen
+import de.mm20.launcher2.ui.settings.smartspacer.SmartspacerSettingsRoute
+import de.mm20.launcher2.ui.settings.smartspacer.SmartspacerSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsRoute
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
 import de.mm20.launcher2.ui.settings.tasks.TasksIntegrationSettingsRoute
@@ -299,6 +303,12 @@ class SettingsActivity : BaseActivity() {
             }
             entry<AppSearchSettingsRoute> {
                 AppSearchSettingsScreen()
+            }
+            entry<SmartspacerSettingsRoute> {
+                SmartspacerSettingsScreen()
+            }
+            entry<FeedIntegrationSettingsRoute> {
+                FeedIntegrationSettingsScreen()
             }
         }
 

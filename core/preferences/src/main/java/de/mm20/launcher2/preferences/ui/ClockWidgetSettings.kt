@@ -153,6 +153,16 @@ class ClockWidgetSettings internal constructor(
             it.copy(clockWidgetUseThemeColor = enabled)
         }
     }
+
+    val useSmartspacer
+        get() = launcherDataStore.data.map { it.clockWidgetSmartspacer }
+
+    fun setUseSmartspacer(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(clockWidgetSmartspacer = enabled)
+        }
+    }
+
 }
 
 internal val ClockWidgetStyle.enumValue

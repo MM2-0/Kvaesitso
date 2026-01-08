@@ -50,7 +50,7 @@ fun AppsWidget(widget: AppsWidget) {
                 icon = if (selectedTag == null) R.drawable.star_24px else R.drawable.tag_24px,
             )
         }
-        if (favoritesEditButton || (customTags && widget.config.tagList.size > 1)) {
+        if (favoritesEditButton || (!customTags && pinnedTags.isNotEmpty()) || (customTags && widget.config.tagList.size > 1)) {
             FavoritesTagSelector(
                 tags = if (customTags) widget.config.tagList.map { Tag(it) } else pinnedTags,
                 selectedTag = selectedTag,

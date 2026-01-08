@@ -259,7 +259,7 @@
     <string name="preference_crash_reporter_summary">Fehler- und Absturzberichte</string>
     <string name="preference_calendar_calendars">Kalender</string>
     <string name="preference_screen_search">Suche</string>
-    <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Elemente</string>
+    <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Suchergebnisse</string>
     <string name="preference_search_favorites">Favoriten</string>
     <string name="preference_search_favorites_summary">Angepinnte und häufig genutzte Elemente über dem App-Raster anzeigen</string>
     <string name="preference_search_files">Dateien</string>
@@ -885,4 +885,10 @@
     <string name="tag_icon_customicon">Icon</string>
     <string name="tag_icon_emoji">Emoji</string>
     <string name="select_tag">Tag auswählen</string>
+    <string name="widget_name_apps">Apps</string>
+    <string name="preference_clockwidget_smartspacer">Wird von Smartspacer verwaltet</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer ist ein freies und quelloffenes At a Glance-Widget. Wenn es installiert ist, kann es in die dynamische Zone des Uhren-Widgets integriert werden</string>
+    <string name="preference_smartspacer_enable">Smartspacer-Integration aktivieren</string>
+    <string name="preference_launch_smartspacer_app">Smartspacer öffnen</string>
 </resources>

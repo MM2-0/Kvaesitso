@@ -109,7 +109,7 @@ abstract class AppDatabase : RoomDatabase() {
                             db.execSQL(
                                 "INSERT INTO `SearchAction` (`position`, `type`, `data`, `label`, `color`, `icon`, `customIcon`, `options`) " +
                                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?)",
-                                arrayOf(
+                                arrayOf<Any?>(
                                     9,
                                     "url",
                                     context.getString(R.string.default_websearch_2_url),

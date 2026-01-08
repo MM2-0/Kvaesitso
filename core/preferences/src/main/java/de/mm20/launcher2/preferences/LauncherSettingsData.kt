@@ -37,6 +37,8 @@ data class LauncherSettingsData internal constructor(
     val mediaDenyList: Set<String> = emptySet(),
 
     val clockWidgetCompact: Boolean = false,
+    val clockWidgetSmartspacer: Boolean = false,
+
     @Deprecated("")
     @SerialName("clockWidgetStyle")
     val _clockWidgetStyle: ClockWidgetStyle = ClockWidgetStyle.Digital1(),
@@ -199,6 +201,8 @@ data class LauncherSettingsData internal constructor(
      * automatically. null disables the transliterator.
      */
     val localeTransliterator: String? = "",
+
+    val feedProviderPackage: String? = null
 
 
     ) {
@@ -392,6 +396,10 @@ sealed interface GestureAction {
     @Serializable
     @SerialName("launch_searchable")
     data class Launch(val key: String?) : GestureAction
+
+    @Serializable
+    @SerialName("feed")
+    data object Feed : GestureAction
 }
 
 

@@ -296,7 +296,7 @@
     <string name="preference_search_bar_style">Estilo</string>
     <string name="preference_search_bar_style_summary">Personalizar apariencia de barra de búsqueda</string>
     <string name="preference_search_bar_color">Color</string>
-    <string name="preference_hidden_items">Resultados de búsqueda ocultos</string>
+    <string name="preference_hidden_items">Resultados de búsqueda excluidos</string>
     <string name="preference_wikipedia_customurl">URL de Wikipedia</string>
     <string name="no_account_nextcloud">Aún no has vinculado ninguna cuenta de Nextcloud</string>
     <string name="connect_account">Vincular cuenta</string>
@@ -338,7 +338,7 @@
     </plurals>
     <string name="preference_cloud_badges_summary">Mostrar insignia para archivos almacenados en la nube</string>
     <string name="preference_search_bar_auto_focus_summary">Mostrar el teclado automáticamente al abrir la lista de aplicaciones</string>
-    <string name="preference_hidden_items_summary">Administrar aplicaciones y resultados de búsqueda ocultos</string>
+    <string name="preference_hidden_items_summary">Administrar aplicaciones y resultados de búsqueda excluidos</string>
     <string name="preference_nextcloud">NextCloud</string>
     <string name="preference_nextcloud_signin_summary">Inicia sesión para buscar en tu servidor de NextCloud</string>
     <string name="no_account_owncloud">Aún no has vinculado ninguna cuenta de Owncloud</string>
@@ -381,7 +381,7 @@
     <string name="preference_logs">Registros</string>
     <string name="preference_screen_search">Buscar</string>
     <string name="preference_screen_gestures_summary">Gestos y acciones de gestos</string>
-    <string name="preference_screen_search_summary">Búsqueda, etiquetas, elementos ocultos</string>
+    <string name="preference_screen_search_summary">Búsqueda, etiquetas, elementos excluidos</string>
     <string name="preference_search_calculator_summary">Evaluar términos matemáticos</string>
     <string name="preference_screen_backup_summary">Exportar e importar datos del lanzador</string>
     <string name="preference_backup_summary">Exportar preferencias y datos del lanzador</string>
@@ -502,7 +502,7 @@
     <string name="note_widget_conflict">Incoherencia</string>
     <string name="note_widget_action_relink_file">Restablecer conexión</string>
     <string name="note_widget_link_file_summary">Sincronizar el contenido de este widget con un archivo externo</string>
-    <string name="preference_hidden_items_reveal_button_summary">Mostrar un botón para revelar los resultados de búsqueda ocultos</string>
+    <string name="preference_hidden_items_reveal_button_summary">Mostrar un botón para revelar los resultados de búsqueda excluidos</string>
     <string name="widget_config_calendar_no_calendars">Calendarios no encontrados</string>
     <string name="app_widget_loading_failed">El widget de la aplicación ha fallado en cargar</string>
     <string name="note_widget_conflict_description">El archivo vinculado no está vacío y su contenido no coincide con la última versión guardada de esta nota. ¿Qué versión deseas conservar?</string>
@@ -891,4 +891,18 @@
     <string name="preference_transliteration">Transliteración preferida</string>
     <string name="preference_transliteration_auto">Automática</string>
     <string name="preference_transliteration_disabled">Deshabilitada</string>
+    <string name="preference_category_enabled_plugins">Activado</string>
+    <string name="preference_category_installed_plugins">Instalado</string>
+    <string name="widget_name_apps">Aplicaciones</string>
+    <string name="preference_clockwidget_smartspacer">Gestionado por Smartspacer</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer es un widget de código abierto inspirado en De un vistazo. Si se instala, se puede integrar en la zona dinámica del widget del reloj</string>
+    <string name="preference_smartspacer_enable">Habilitar integración con Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">Abrir Smartspacer</string>
+    <string name="tag_icon_customicon">Icono</string>
+    <string name="tag_icon_emoji">Emoji</string>
+    <string name="select_tag">Seleccionar etiqueta</string>
+    <string name="preference_feed_integration">Feed</string>
+    <string name="no_feed_providers">No hay ningún provedor de feed instalado</string>
+    <string name="gesture_action_feed">Feed</string>
 </resources>

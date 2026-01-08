@@ -31,6 +31,7 @@ import de.mm20.launcher2.locations.locationsModule
 import de.mm20.launcher2.permissions.permissionsModule
 import de.mm20.launcher2.data.plugins.dataPluginsModule
 import de.mm20.launcher2.devicepose.devicePoseModule
+import de.mm20.launcher2.feed.feedModule
 import de.mm20.launcher2.plugins.servicesPluginsModule
 import de.mm20.launcher2.preferences.preferencesModule
 import de.mm20.launcher2.profiles.profilesModule
@@ -98,6 +99,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     devicePoseModule,
                     profilesModule,
                     i18nDataModule,
+                    feedModule,
                 )
             )
         }

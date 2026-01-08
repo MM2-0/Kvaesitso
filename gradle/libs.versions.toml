@@ -10,9 +10,10 @@ pluginSdk = "2.2.0"
 
 gradle = "8.1.2"
 android-gradle-plugin = "8.13.2"
+
 ksp-gradle-plugin = "2.3.2"
 
-kotlin = "2.2.21"
+kotlin = "2.3.0"
 kotlinx-coroutines = "1.10.2"
 kotlinx-immutable = "0.4.0"
 kotlinx-serialization = "1.9.0"
@@ -47,6 +48,7 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
 osmOpeningHours = "0.4.0"
+material = "1.13.0"
 
 [libraries]
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
@@ -133,6 +135,9 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 osmopeninghours = { group = "de.westnordost", name = "osm-opening-hours", version.ref = "osmOpeningHours" }
+
+smartspacer = { group = "com.kieronquinn.smartspacer", name = "sdk-client", version = "1.1.2" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [bundles]
 kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]

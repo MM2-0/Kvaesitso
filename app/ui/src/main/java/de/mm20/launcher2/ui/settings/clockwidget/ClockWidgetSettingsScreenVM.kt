@@ -106,4 +106,12 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     fun setAlignment(alignment: ClockWidgetAlignment) {
         settings.setAlignment(alignment)
     }
+
+    val useSmartspacer = settings.useSmartspacer
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun disableSmartspacer() {
+        settings.setUseSmartspacer(false)
+    }
+
 }

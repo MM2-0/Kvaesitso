@@ -54,7 +54,7 @@
     <string name="menu_open_file">Apri</string>
     <string name="menu_delete">Elimina</string>
     <string name="menu_calendar_open_externally">Apri nell\'app calendario</string>
-    <string name="search_bar_placeholder">Cerca</string>
+    <string name="search_bar_placeholder">Ricerca</string>
     <string name="app_info_version">Versione %1$s</string>
     <string name="settings">Impostazioni</string>
     <string name="wallpaper">Sfondo</string>
@@ -262,7 +262,7 @@
     <string name="preference_clockwidget_alarm_part">Sveglie</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra le sveglie che suoneranno nelle prossime 8 ore</string>
     <string name="preference_screen_search">Ricerca</string>
-    <string name="preference_screen_search_summary">Cerca, tag, oggetti nascosti</string>
+    <string name="preference_screen_search_summary">Ricerca, tag, risultati esclusi</string>
     <string name="preference_search_favorites">Preferiti</string>
     <string name="preference_search_files">File</string>
     <string name="preference_search_contacts">Contatti</string>
@@ -315,8 +315,8 @@
     <string name="preference_search_appshortcuts_summary">Cerca scorciatoie app</string>
     <string name="preference_grid_icon_size">Dimensione icona</string>
     <string name="preference_search_currencyconverter">Convertitore di valuta</string>
-    <string name="preference_hidden_items">Risultati ricerca nascosti</string>
-    <string name="preference_hidden_items_summary">Gestisce app nascoste e risultati di ricerca</string>
+    <string name="preference_hidden_items">Risultati ricerca esclusi</string>
+    <string name="preference_hidden_items_summary">Gestisci app escluse e risultati di ricerca</string>
     <string name="restore_incompatible_file">Questo backup è stato creato con una versione diversa di %1$s e non può essere ripristinato con questa versione.</string>
     <string name="icon_picker_default_icon">Predefinito</string>
     <string name="icon_picker_suggestions">Suggerimenti</string>
@@ -506,7 +506,7 @@
     <string name="notes_widget_dismissed">Nota respinta</string>
     <string name="notes_widget_action_dismiss">Respingi</string>
     <string name="preference_hidden_items_reveal_button">Mostra pulsante rivelazione</string>
-    <string name="preference_hidden_items_reveal_button_summary">Mostra un pulsante per rivelare i risultati di ricerca nascosti</string>
+    <string name="preference_hidden_items_reveal_button_summary">Mostra un pulsante per rivelare i risultati di ricerca esclusi</string>
     <string name="widget_config_appwidget_background">Sfondo scheda</string>
     <string name="widget_config_calendar_missing_calendars_hint">Non riesci a trovare i tuoi calendari?</string>
     <string name="note_widget_link_file">Collegamento al file</string>
@@ -897,4 +897,14 @@
     <string name="preference_category_installed_plugins">Installato</string>
     <string name="tag_icon_customicon">Icona</string>
     <string name="tag_icon_emoji">Emoji</string>
+    <string name="preference_clockwidget_smartspacer">Gestito da Smartspacer</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer è un widget At a Glance gratuito e open source. Se installato, può essere integrato nella zona dinamica del widget orologilo</string>
+    <string name="preference_smartspacer_enable">Abilita integrazione Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">Apri Smartspacer</string>
+    <string name="preference_feed_integration">Feed</string>
+    <string name="no_feed_providers">Nessun provider di feed installato</string>
+    <string name="gesture_action_feed">Feed</string>
+    <string name="preference_category_feed_provider">Fornitore di feed</string>
+    <string name="preference_feed_enable_summary">Scorri verso destra nella schermata iniziale per aprire il feed</string>
 </resources>

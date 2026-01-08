@@ -34,6 +34,8 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.locale.LocaleSettingsRoute
 import de.mm20.launcher2.weather.breezy.BreezyWeatherProvider
 import kotlinx.serialization.Serializable
 
@@ -44,6 +46,7 @@ data object WeatherIntegrationSettingsRoute: NavKey
 fun WeatherIntegrationSettingsScreen() {
     val viewModel: WeatherIntegrationSettingsScreenVM = viewModel()
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
 
     val availableProviders by viewModel.availableProviders.collectAsState(emptyList())
     val weatherProvider by viewModel.weatherProvider.collectAsState()
@@ -141,6 +144,17 @@ fun WeatherIntegrationSettingsScreen() {
                         enabled = !autoLocation,
                     )
                 }
+            }
+        }
+        item {
+            PreferenceCategory {
+                Preference(
+                    title = stringResource(R.string.preference_measurement_system),
+                    icon = R.drawable.open_in_new_24px,
+                    onClick = {
+                        backStack.add(LocaleSettingsRoute)
+                    }
+                )
             }
         }
         if (BuildConfig.DEBUG) {
