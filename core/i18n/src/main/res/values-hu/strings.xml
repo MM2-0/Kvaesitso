@@ -683,6 +683,8 @@
     <string name="preference_smartspacer_enable">Smartspacer integráció engedélyezése</string>
     <string name="preference_launch_smartspacer_app">Smartspacer megnyitása</string>
     <string name="preference_feed_integration">Hírforrás</string>
+    <string name="preference_category_feed_provider">Hírforrás-szolgáltató</string>
+    <string name="preference_feed_enable_summary">Csúsztassa jobbra az ujját a kezdőképernyőn a hírforrás megnyitásához</string>
     <string name="no_feed_providers">Nincs telepítve hírforrás-szolgáltató</string>
     <string name="preference_contacts_call_on_tap">Koppintson a híváshoz</string>
     <string name="preference_contacts_call_on_tap_summary">Hívás azonnali indítása megerősítés kérése nélkül egy telefonszámra való koppintáskor</string>
