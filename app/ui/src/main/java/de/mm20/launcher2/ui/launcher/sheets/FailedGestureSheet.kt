@@ -45,8 +45,8 @@ fun FailedGestureSheet(
         Gesture.SwipeLeft -> R.string.preference_gesture_swipe_left
         Gesture.SwipeRight -> R.string.preference_gesture_swipe_right
         Gesture.SwipeUp -> R.string.preference_gesture_swipe_up
+        Gesture.HomeButton -> R.string.preference_gesture_home_button
         else -> throw IllegalArgumentException("Unknown gesture: ${failedGesture.gesture}")
-        //Gesture.HomeButton -> R.string.preference_gesture_home_button
     })
 
     BottomSheetDialog(
