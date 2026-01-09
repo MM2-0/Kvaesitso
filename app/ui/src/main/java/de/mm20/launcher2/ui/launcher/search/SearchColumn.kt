@@ -61,6 +61,7 @@ fun SearchColumn(
     state: LazyListState = rememberLazyListState(),
     reverse: Boolean = false,
     userScrollEnabled: Boolean = true,
+    onHideKeyboard: () -> Unit = {},
 ) {
 
     val columns = LocalGridSettings.current.columnCount
@@ -193,6 +194,7 @@ fun SearchColumn(
                         selectedProfileIndex = selectedAppProfileIndex,
                         onProfileSelected = {
                             selectedAppProfileIndex = it
+                            onHideKeyboard()
                         },
                         isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true,
                         onProfileLockChange = { p, l ->

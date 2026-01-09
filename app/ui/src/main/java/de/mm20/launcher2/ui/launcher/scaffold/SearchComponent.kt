@@ -91,6 +91,9 @@ internal class SearchComponent(
                 state = lazyListState,
                 reverse = reverse,
                 userScrollEnabled = !state.isDragged,
+                onHideKeyboard = {
+                    state.isSearchBarFocused = false
+                }
             )
         }
     }
