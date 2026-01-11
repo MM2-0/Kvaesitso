@@ -446,7 +446,7 @@
     <string name="provider_brightsky">Deutscher Wetterdienst（只限德國）</string>
     <string name="preference_category_location">位置</string>
     <string name="preference_automatic_location">自動定位</string>
-    <string name="preference_automatic_location_summary">使用 GPS 與定位服務自動確定位置</string>
+    <string name="preference_automatic_location_summary">使用定位服務自動定位</string>
     <string name="preference_location_managed">由外掛程式管理</string>
     <string name="preference_location_managed_summary">此供應商的位置由外掛應用程式管理</string>
     <string name="preference_location">位置</string>
@@ -575,6 +575,7 @@
     <string name="preference_clock_widget_alignment_center">中間</string>
     <string name="preference_clock_widget_alignment_bottom">底部</string>
     <string name="preference_clockwidget_dynamic_zone">動態區域</string>
+    <string name="preference_clockwidget_smartspacer">由 Smartspacer 管理</string>
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">顯示目前的日期</string>
     <string name="preference_clockwidget_favorites_part_summary">在 Dock 中顯示釘選的項目</string>
@@ -674,6 +675,12 @@
     <string name="preference_breezyweather_integration_description">Breezy Weather 是一個開源的天氣應用程式。若已安裝，%1$s 可以取用 Breezy Weather 的天氣資料。</string>
     <string name="preference_breezyweather_integration_instructions">若要將 Breezy Weather 設為天氣資訊提供者：\n\n1. 開啟 Breezy Weather &gt; 設定 &gt; 小工具與動態桌布 &gt; 傳送天氣資料到 Gadgetbridge &gt; 開啟 %1$s\n\n2. 在 %1$s 中選擇 Breezy Weather 當作天氣資訊提供者</string>
     <string name="preference_launch_breezyweather_app">開啟 Breezy Weather</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer 是免費且開放原始碼的總覽小工具。可安裝 Smartspacer 並與時鐘小工具的動態整合</string>
+    <string name="preference_smartspacer_enable">啟用 Smartspacer 整合</string>
+    <string name="preference_launch_smartspacer_app">開啟 Smartspacer</string>
+    <string name="preference_category_feed_provider">Feed 提供者</string>
+    <string name="preference_feed_enable_summary">在主畫面向右滑動開啟 Feed</string>
+    <string name="no_feed_providers">未安裝任何 Feed 提供者</string>
     <string name="preference_contacts_call_on_tap">輕觸以撥打</string>
     <string name="preference_contacts_call_on_tap_summary">輕觸電話號碼時不經確認立即撥號</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -839,7 +846,7 @@
     <string name="menu_bugreport">錯誤回報</string>
     <string name="location_open_24_7">全年 24 小時營業</string>
     <string name="plugin_state_error">此外掛程式未正常運作</string>
-    <string name="plugin_state_setup_required">您需要先設定此外掛程式</string>
+    <string name="plugin_state_setup_required">請先設定此外掛程式</string>
     <string name="plugin_action_setup">設定</string>
     <string name="plugin_type_filesearch">檔案</string>
     <string name="plugin_type_contacts">聯絡人</string>
@@ -1037,6 +1044,8 @@
     <string name="preference_measurement_system_metric">公制</string>
     <string name="preference_measurement_system_uk">英制單位</string>
     <string name="preference_measurement_system_us">美制單位</string>
+    <string name="preference_transliteration">字母轉寫偏好</string>
     <string name="preference_transliteration_auto">自動</string>
+    <string name="preference_transliteration_disabled">停用</string>
     <string name="select_tag">選擇標籤</string>
 </resources>
