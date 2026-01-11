@@ -15,9 +15,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,12 +28,12 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import de.mm20.launcher2.feed.FeedConnection
 import de.mm20.launcher2.feed.FeedService
 import de.mm20.launcher2.preferences.feed.FeedSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toIntOffset
+import kotlinx.coroutines.flow.flowOf
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -55,23 +55,33 @@ internal class FeedComponent(
         state: LauncherScaffoldState
     ) {
         val activity = LocalActivity.current
-        val lifecycleOwner = LocalLifecycleOwner.current
-
-        val progress = state.currentProgress
-        val feedProgress = remember { mutableFloatStateOf(-1f) }
 
         val feedProviderPackage by remember { feedSettings.providerPackage }.collectAsState(null)
 
         var feedConnection by remember { mutableStateOf<FeedConnection?>(null) }
-        val feedReady = feedConnection?.ready?.collectAsState(false)
-        val feedAvailable = feedConnection?.available?.collectAsState(null)
 
+        val feedReady by remember(feedConnection) {
+            feedConnection?.ready ?: flowOf(false)
+        }.collectAsState(false)
+
+        val feedAvailable by remember(feedConnection) {
+            feedConnection?.available ?: flowOf(false)
+        }.collectAsState(false)
+
+
+        val feedHasContent by remember(feedConnection) {
+            feedConnection?.hasContent ?: flowOf(false)
+        }.collectAsState(false)
+
+        val feedProgress by remember(feedConnection) {
+            feedConnection?.scrollProgress ?: flowOf(0f)
+        }.collectAsState(0f)
+
+        val progress = state.currentProgress
 
         DisposableEffect(feedProviderPackage) {
             val conn = feedProviderPackage?.let {
-                feedService.createFeedInstance(activity as AppCompatActivity, it) { p ->
-                    feedProgress.floatValue = p
-                }
+                feedService.createFeedInstance(activity as AppCompatActivity, it)
             }
             feedConnection = conn
 
@@ -80,38 +90,45 @@ internal class FeedComponent(
             }
         }
 
-
-        if (state.currentComponent == this) {
-            LaunchedEffect(Unit) {
-                feedConnection?.startScroll()
-            }
-            LaunchedEffect(state.isSettledOnSecondaryPage, progress > 0.8f) {
-                if (state.isSettledOnSecondaryPage && progress > 0.8f) {
-                    feedConnection?.endScroll()
+        if (feedHasContent && feedReady && feedAvailable) {
+            if (state.currentComponent == this) {
+                LaunchedEffect(Unit) {
+                    feedConnection?.startScroll()
                 }
-            }
 
-            LaunchedEffect(progress) {
-                if (feedProgress.floatValue != progress) {
-                    feedConnection?.onScroll(progress)
-                }
-            }
 
-            LaunchedEffect(
-                isActive,
-                feedProgress.floatValue
-            ) {
-                if (isActive) {
-                    state.setProgress(feedProgress.floatValue)
-                    if (feedProgress.floatValue <= 0f) {
-                        feedConnection?.closeFeed()
-                        state.onPredictiveBackEnd()
+                DisposableEffect(Unit) {
+                    onDispose {
+                        feedConnection?.onScroll(0f)
+                        feedConnection?.endScroll()
                     }
                 }
-            }
-        } else {
-            LaunchedEffect(Unit) {
-                feedConnection?.closeFeed()
+
+                if (isActive) {
+                    SideEffect {
+                        state.setProgress(feedProgress)
+                    }
+
+                    if (feedProgress <= 0) {
+                        LaunchedEffect(Unit) {
+                            feedConnection?.endScroll()
+                            state.onPredictiveBackEnd()
+                        }
+                    }
+                } else {
+                    SideEffect {
+                        if (feedProgress != progress) {
+                            feedConnection?.onScroll(progress)
+                        }
+                    }
+                }
+
+                if (state.isSettledOnSecondaryPage && feedProgress >= 0.8f) {
+                    LaunchedEffect(Unit) {
+                        feedConnection?.endScroll()
+                    }
+                }
+
             }
         }
 
@@ -119,8 +136,9 @@ internal class FeedComponent(
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            if (feedAvailable?.value == false) {
+        )
+        {
+            if (!feedAvailable) {
                 Icon(
                     painterResource(R.drawable.error_48px),
                     null,
@@ -131,6 +149,19 @@ internal class FeedComponent(
                     "Feed could not be loaded.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center,
+                )
+            } else if (!feedHasContent) {
+                Icon(
+                    painterResource(R.drawable.news_48px),
+                    null,
+                    tint = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.size(48.dp)
+                )
+                Text(
+                    "Feed has no content.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                 )
             }

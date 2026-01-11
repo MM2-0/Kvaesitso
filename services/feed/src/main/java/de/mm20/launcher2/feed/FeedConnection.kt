@@ -22,6 +22,9 @@ import kotlinx.coroutines.flow.StateFlow
 interface FeedConnection {
     val available: StateFlow<Boolean>
     val ready: StateFlow<Boolean>
+    val hasContent: StateFlow<Boolean>
+
+    val scrollProgress: StateFlow<Float>
 
     fun restart()
     fun destroy()
@@ -29,7 +32,7 @@ interface FeedConnection {
     fun startScroll()
     fun endScroll()
     fun onScroll(progress: Float)
-    
+
     fun openFeed()
     fun closeFeed()
 }
@@ -37,7 +40,6 @@ interface FeedConnection {
 internal class FeedConnectionImpl(
     private val activity: AppCompatActivity,
     private val serviceIntent: Intent,
-    private val callback: FeedCallback,
 ) : IBridgeCallback.Stub(), FeedConnection, ServiceConnection, DefaultLifecycleObserver {
 
     private var isActivityStarted = false
@@ -49,8 +51,13 @@ internal class FeedConnectionImpl(
 
     override val available = MutableStateFlow(true)
     override val ready = MutableStateFlow(false)
+    override val hasContent = MutableStateFlow(false)
+
+    override val scrollProgress = MutableStateFlow(0f)
 
     private var overlay: ILauncherOverlay? = null
+
+    private var retries = MaxRetries
 
     init {
         start()
@@ -131,6 +138,10 @@ internal class FeedConnectionImpl(
             ready.value = false
             available.value = false
             overlay = null
+            Log.e(
+                "FeedConnection",
+                "onServiceConnected received a null binder"
+            )
             return
         }
 
@@ -142,6 +153,11 @@ internal class FeedConnectionImpl(
                 overlay = ILauncherOverlay.Stub.asInterface(service)
                 sendConfig()
                 ready.value = true
+                retries = MaxRetries
+                Log.d(
+                    "FeedConnection",
+                    "Feed service connected with interface descriptor \"${service.interfaceDescriptor}\""
+                )
             } else {
                 Log.e(
                     "FeedConnection",
@@ -149,7 +165,11 @@ internal class FeedConnectionImpl(
                 )
                 available.value = false
                 ready.value = false
-                destroy()
+                if (retries > 0) {
+                    Log.e("FeedConnection", "$retries remaining, trying again")
+                    retries--
+                    restart()
+                }
             }
         } catch (e: RemoteException) {
             CrashReporter.logException(e)
@@ -168,7 +188,10 @@ internal class FeedConnectionImpl(
     override fun onBindingDied(name: ComponentName?) {
         super.onBindingDied(name)
         Log.w("FeedConnection", "binding has died :(")
-        restart()
+        if (retries > 0) {
+            retries--
+            restart()
+        }
     }
 
     override fun onStart(owner: LifecycleOwner) {
@@ -202,11 +225,17 @@ internal class FeedConnectionImpl(
 
         val callback = object : ILauncherOverlayCallback.Stub() {
             override fun overlayScrollChanged(progress: Float) {
-                callback.onOverlayScrollChanged(progress)
+                scrollProgress.value = progress
             }
 
             override fun overlayStatusChanged(status: Int) {
                 Log.d("FeedConnection", "overlayStatusChanged: $status")
+                hasContent.value = try {
+                    overlay?.hasOverlayContent() ?: false
+                } catch (e: RemoteException) {
+                    CrashReporter.logException(e)
+                    false
+                }
             }
 
         }
@@ -225,6 +254,7 @@ internal class FeedConnectionImpl(
 
     companion object {
         private const val Flags = Context.BIND_AUTO_CREATE or Context.BIND_IMPORTANT
+        private const val MaxRetries = 5
     }
 
 }

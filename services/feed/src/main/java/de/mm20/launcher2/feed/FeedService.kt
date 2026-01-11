@@ -14,7 +14,6 @@ class FeedService(
     fun createFeedInstance(
         activity: AppCompatActivity,
         feedProvider: String,
-        callback: FeedCallback,
     ): FeedConnection {
         val intent = Intent(
             "com.android.launcher3.WINDOW_OVERLAY",
@@ -29,7 +28,6 @@ class FeedService(
         return FeedConnectionImpl(
             activity,
             intent.setPackage(feedProvider),
-            callback,
         )
     }
 
