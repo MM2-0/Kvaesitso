@@ -238,7 +238,7 @@
     <string name="provider_here">HERE</string>
     <string name="preference_category_location">位置</string>
     <string name="preference_automatic_location">自動定位</string>
-    <string name="preference_automatic_location_summary">使用 GPS 與定位服務自動確定位置</string>
+    <string name="preference_automatic_location_summary">使用定位服務自動定位</string>
     <string name="preference_location">位置</string>
     <string name="preference_imperial_units_summary">使用華氏度與英里/小時</string>
     <string name="preference_imperial_units">英制單位</string>
@@ -641,7 +641,7 @@
     <string name="menu_navigation">導航</string>
     <string name="menu_bugreport">錯誤回報</string>
     <string name="plugin_state_error">此外掛程式未正常運作</string>
-    <string name="plugin_state_setup_required">您需要先設定此外掛程式</string>
+    <string name="plugin_state_setup_required">請先設定此外掛程式</string>
     <string name="location_open_24_7">全年 24 小時營業</string>
     <string name="clock_style_digital1">粗體</string>
     <string name="clock_style_digital2">簡易</string>
@@ -871,4 +871,16 @@
     <string name="preference_transliteration_auto">自動</string>
     <string name="select_tag">選擇標籤</string>
     <string name="widget_name_apps">應用程式</string>
+    <string name="preference_clockwidget_smartspacer">由 Smartspacer 管理</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer 是免費且開放原始碼的總覽小工具。可安裝 Smartspacer 並與時鐘小工具的動態整合</string>
+    <string name="preference_smartspacer_enable">啟用 Smartspacer 整合</string>
+    <string name="preference_launch_smartspacer_app">開啟 Smartspacer</string>
+    <string name="preference_transliteration">字母轉寫偏好</string>
+    <string name="preference_transliteration_disabled">停用</string>
+    <string name="preference_feed_integration">Feed</string>
+    <string name="preference_category_feed_provider">Feed 提供者</string>
+    <string name="preference_feed_enable_summary">在主畫面向右滑動開啟 Feed</string>
+    <string name="no_feed_providers">未安裝任何 Feed 提供者</string>
+    <string name="gesture_action_feed">Feed</string>
 </resources>
