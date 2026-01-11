@@ -27,6 +27,7 @@ fun BinaryClock(
     compact: Boolean,
     twentyFourHours: Boolean,
     showSeconds: Boolean,
+    useEightBits: Boolean,
     useThemeColor: Boolean,
     darkColors: Boolean,
 ) {
@@ -55,37 +56,15 @@ fun BinaryClock(
     val disabledColor = LocalContentColor.current.copy(alpha = 0.45f)
 
     if (verticalLayout) {
-        Column(
-            horizontalAlignment = Alignment.End
-        ) {
-            Row(
-                modifier = Modifier.padding(start = 0.dp, top = 24.dp, end = 0.dp, bottom = 6.dp)
+        if (useEightBits) {
+            Column(
+                horizontalAlignment = Alignment.End
             ) {
-                for (i in 0 until if (twentyFourHours) 11 else 10) {
-                    val active = if (i < if (twentyFourHours) 5 else 4) {
-                        hour and (1 shl ((if (twentyFourHours) 4 else 3) - i)) != 0
-                    } else {
-                        minute and (1 shl ((if (twentyFourHours) 10 else 9) - i)) != 0
-                    }
-                    Box(
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .size(12.dp)
-                            .background(
-                                if (active) color else disabledColor
-                            )
-                    )
-                    if (i == if (twentyFourHours) 4 else 3) {
-                        Box(Modifier.size(8.dp))
-                    }
-                }
-            }
-            if (showSeconds) {
                 Row(
                     horizontalArrangement = Arrangement.End
                 ) {
-                    for (i in 0 until 6) {
-                        val active = second and (1 shl (5 - i)) != 0
+                    for (i in 0 until 8) {
+                        val active = hour and (1 shl (7 - i)) != 0
                         Box(
                             modifier = Modifier
                                 .padding(4.dp)
@@ -94,6 +73,91 @@ fun BinaryClock(
                                     if (active) color else disabledColor
                                 )
                         )
+                        if (i == 3) {
+                            Box(Modifier.size(4.dp))
+                        }
+                    }
+                }
+                Row(
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    for (i in 0 until 8) {
+                        val active = minute and (1 shl (7 - i)) != 0
+                        Box(
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .size(12.dp)
+                                .background(
+                                    if (active) color else disabledColor
+                                )
+                        )
+                        if (i == 3) {
+                            Box(Modifier.size(4.dp))
+                        }
+                    }
+                }
+                if (showSeconds) {
+                    Row(
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        for (i in 0 until 8) {
+                            val active = second and (1 shl (7 - i)) != 0
+                            Box(
+                                modifier = Modifier
+                                    .padding(4.dp)
+                                    .size(12.dp)
+                                    .background(
+                                        if (active) color else disabledColor
+                                    )
+                            )
+                            if (i == 3) {
+                               Box(Modifier.size(4.dp))
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            Column(
+                horizontalAlignment = Alignment.End
+            ) {
+                Row(
+                    modifier = Modifier.padding(start = 0.dp, top = 24.dp, end = 0.dp, bottom = 6.dp)
+                ) {
+                    for (i in 0 until if (twentyFourHours) 11 else 10) {
+                        val active = if (i < if (twentyFourHours) 5 else 4) {
+                            hour and (1 shl ((if (twentyFourHours) 4 else 3) - i)) != 0
+                        } else {
+                            minute and (1 shl ((if (twentyFourHours) 10 else 9) - i)) != 0
+                        }
+                        Box(
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .size(12.dp)
+                                .background(
+                                    if (active) color else disabledColor
+                                )
+                        )
+                        if (i == if (twentyFourHours) 4 else 3) {
+                            Box(Modifier.size(8.dp))
+                        }
+                    }
+                }
+                if (showSeconds) {
+                    Row(
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        for (i in 0 until 6) {
+                            val active = second and (1 shl (5 - i)) != 0
+                            Box(
+                                modifier = Modifier
+                                    .padding(4.dp)
+                                    .size(12.dp)
+                                    .background(
+                                        if (active) color else disabledColor
+                                    )
+                            )
+                        }
                     }
                 }
             }
