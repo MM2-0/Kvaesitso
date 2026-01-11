@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
@@ -37,14 +36,14 @@ import kotlinx.coroutines.flow.flowOf
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-internal class FeedComponent(
-    private val context: Context,
-) : ScaffoldComponent(), KoinComponent {
+internal object FeedComponent : ScaffoldComponent(), KoinComponent {
 
     private val feedSettings: FeedSettings by inject()
     private val feedService: FeedService by inject()
 
     override val permanent: Boolean = true
+
+    override val survivesPause: Boolean = true
 
     private var state = mutableIntStateOf(0)
 

@@ -1243,7 +1243,9 @@ internal fun LauncherScaffold(
                         }
                     } else if (activity.pauseTime > 0L && System.currentTimeMillis() - activity.pauseTime > 5000L) {
                         if (!state.isLocked) {
-                            state.reset()
+                            if (state.currentComponent?.survivesPause != true) {
+                                state.reset()
+                            }
                             searchVM.reset()
                         }
                     }

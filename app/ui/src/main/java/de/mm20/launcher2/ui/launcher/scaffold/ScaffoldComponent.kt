@@ -47,6 +47,12 @@ internal abstract class ScaffoldComponent {
     open val hasIme: Boolean = false
 
     /**
+     * If true, the component stays open when the launcher is resumed. If false, the launcher resets
+     * to its default position.
+     */
+    open val survivesPause = false
+
+    /**
      * Whether the component is scrolled all the way up
      * null, if the component does not provide content
      */

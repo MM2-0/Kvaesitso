@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -273,7 +272,6 @@ abstract class SharedLauncherActivity(
                                         openKeyboard = searchBarAutofocus,
                                     )
                                     val widgetComponent by lazy { WidgetsComponent }
-                                    val feedComponent by lazy { FeedComponent(this@SharedLauncherActivity) }
 
                                     fun getScaffoldGesture(
                                         action: GestureAction?,
@@ -327,7 +325,7 @@ abstract class SharedLauncherActivity(
                                             )
 
                                             is GestureAction.Feed -> ScaffoldGesture(
-                                                component = FeedComponent(this@SharedLauncherActivity),
+                                                component = FeedComponent,
                                                 animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                             )
 
