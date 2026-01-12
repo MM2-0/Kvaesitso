@@ -346,12 +346,12 @@
     <string name="weather_condition_heavyrainshowers">Yoğun sağanak yağmur</string>
     <string name="weather_condition_rainshowersandthunder">Sağanak yağmur ve gök gürültüsü</string>
     <string name="weather_condition_clearsky">Açık gökyüzü</string>
-    <string name="weather_condition_sleet">Sulu kar</string>
+    <string name="weather_condition_sleet">Karla karışık yağmur</string>
     <string name="weather_condition_rain">Yağmurlu</string>
-    <string name="weather_condition_sleetandthunder">Sulu kar ve gök gürültüsü</string>
+    <string name="weather_condition_sleetandthunder">Karla karışık yağmur ve yıldırım</string>
     <string name="weather_condition_lightssnowshowersandthunder">Hafif kar sağanağı ve gök gürültüsü</string>
     <string name="weather_condition_heavyrainshowersandthunder">Yoğun sağanak yağmur ve gök gürültüsü</string>
-    <string name="weather_condition_fair">Açık</string>
+    <string name="weather_condition_fair">Normal</string>
     <string name="weather_condition_fog">Sis</string>
     <string name="weather_condition_haze">Puslu</string>
     <string name="weather_condition_sleetshowersandthunder">Sulu kar sağanağı ve gök gürültüsü</string>
