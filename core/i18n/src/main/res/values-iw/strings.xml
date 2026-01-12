@@ -697,6 +697,8 @@
     <string name="preference_smartspacer_integration_description">Smartspacer הוא יישומון קוד-פתוח ללא עלות ל-At a Glance. אם הותקן, הוא יכול להשתלב באזור הדינמי של יישומון השעון</string>
     <string name="preference_smartspacer_enable">הפעלת שילוב Smartspacer</string>
     <string name="preference_launch_smartspacer_app">פתיחת Smartspacer</string>
+    <string name="preference_feed_integration">הזנה</string>
+    <string name="preference_category_feed_provider">ספק ההזנה</string>
     <string name="preference_contacts_call_on_tap">לחצו כדי להתקשר</string>
     <string name="preference_contacts_call_on_tap_summary">התחל שיחה באופן מיידי בעת לחיצה על מספר טלפון</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -804,6 +806,7 @@
     <string name="gesture_action_quick_settings">פתיחת לוח ההגדרות המהירות</string>
     <string name="gesture_action_power_menu">הצגת תפריט ההפעלה</string>
     <string name="gesture_action_recents">פתח אחרונים</string>
+    <string name="gesture_action_feed">הזנה</string>
     <string name="gesture_failed_message">ביצעת מחווה של \"%1$s\". מחווה זו מוגדרת כעת להפעלת פעולת \"%2$s\". עם זאת, לא ניתן היה לבצע את הפעולה מהסיבה הבאה:</string>
     <string name="missing_permission_accessibility_gesture_failed">שירות הנגישות של הלאנצ\'ר צריך להיות מופעל כדי לבצע פעולה זו.</string>
     <string name="missing_permission_accessibility_gesture_settings">פעולה זו דורשת הפעלת שירות הנגישות של הלאנצ\'ר.</string>
