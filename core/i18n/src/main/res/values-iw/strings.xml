@@ -699,6 +699,8 @@
     <string name="preference_launch_smartspacer_app">פתיחת Smartspacer</string>
     <string name="preference_feed_integration">הזנה</string>
     <string name="preference_category_feed_provider">ספק ההזנה</string>
+    <string name="preference_feed_enable_summary">החלקה ימינה במסך הבית לפתיחת ההזנה</string>
+    <string name="no_feed_providers">לא מותקן ספק הזנה</string>
     <string name="preference_contacts_call_on_tap">לחצו כדי להתקשר</string>
     <string name="preference_contacts_call_on_tap_summary">התחל שיחה באופן מיידי בעת לחיצה על מספר טלפון</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
@@ -768,6 +770,7 @@
     <string name="tag_select_items">בחירת פריטים:</string>
     <string name="tag_name">שם תגית</string>
     <string name="tag_icon_customicon">סמל</string>
+    <string name="tag_icon_emoji">אמוג\'י</string>
     <plurals name="tag_selected_items">
         <item quantity="one">פריט נבחר %1$d</item>
         <item quantity="two">%1$d פריטים נבחרו</item>
