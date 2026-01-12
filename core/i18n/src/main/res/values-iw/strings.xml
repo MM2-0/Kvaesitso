@@ -899,4 +899,6 @@
     <string name="preference_smartspacer_enable">הפעלת שילוב Smartspacer</string>
     <string name="preference_launch_smartspacer_app">פתיחת Smartspacer</string>
     <string name="tag_icon_customicon">סמל</string>
+    <string name="preference_feed_integration">הזנה</string>
+    <string name="preference_category_feed_provider">ספק ההזנה</string>
 </resources>
