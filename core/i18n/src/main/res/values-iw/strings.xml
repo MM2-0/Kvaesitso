@@ -901,4 +901,8 @@
     <string name="tag_icon_customicon">סמל</string>
     <string name="preference_feed_integration">הזנה</string>
     <string name="preference_category_feed_provider">ספק ההזנה</string>
+    <string name="preference_feed_enable_summary">החלקה ימינה במסך הבית לפתיחת ההזנה</string>
+    <string name="no_feed_providers">לא מותקן ספק הזנה</string>
+    <string name="tag_icon_emoji">אמוג\'י</string>
+    <string name="gesture_action_feed">הזנה</string>
 </resources>
