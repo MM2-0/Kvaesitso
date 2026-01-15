@@ -24,14 +24,14 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setCompact(compact)
     }
 
-    val availableClockStyles = combine(settings.digital1, settings.analog, settings.custom) { digital1, analog, custom ->
+    val availableClockStyles = combine(settings.digital1, settings.analog, settings.binary, settings.custom) { digital1, analog, binary, custom ->
         listOf(
             digital1,
             ClockWidgetStyle.Digital2,
             analog,
             ClockWidgetStyle.Orbit,
             ClockWidgetStyle.Segment,
-            ClockWidgetStyle.Binary,
+            binary,
             custom,
             ClockWidgetStyle.Empty,
         )
@@ -55,6 +55,13 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setShowSeconds(showSeconds: Boolean) {
         settings.setShowSeconds(showSeconds)
+    }
+
+    val useEightBits = settings.useEightBits
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setUseEightBits(useEightBits: Boolean) {
+        settings.setUseEightBits(useEightBits)
     }
 
     val monospaced = settings.monospaced
