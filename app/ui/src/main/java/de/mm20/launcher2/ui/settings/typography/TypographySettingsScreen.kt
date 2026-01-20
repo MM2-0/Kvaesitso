@@ -8,14 +8,20 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -758,47 +764,54 @@ private fun FontPreference(
         onClick = { showDialog = true },
     )
 
-    if (showDialog) {
+    DismissableBottomSheet(
+        expanded = showDialog,
+        onDismissRequest = { showDialog = false },
+    ) {
         val fonts = remember { fontManager.getInstalledFonts() }
-        DismissableBottomSheet(
-            onDismissRequest = { showDialog = false },
+        LazyColumn(
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                top = 16.dp,
+                end = 16.dp,
+                bottom = 16.dp + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
+            ),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            LazyColumn(contentPadding = it, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                if (fonts.builtIn.isNotEmpty()) {
-                    item {
-                        FontPickerCategory(
-                            preview.ExtraShort,
-                            null,
-                            fonts.builtIn,
-                            onFontClick = {
-                                    onValueChange(it)
-                                    showDialog = false
-                            })
-                    }
+            if (fonts.builtIn.isNotEmpty()) {
+                item {
+                    FontPickerCategory(
+                        preview.ExtraShort,
+                        null,
+                        fonts.builtIn,
+                        onFontClick = {
+                            onValueChange(it)
+                            showDialog = false
+                        })
                 }
-                if (fonts.deviceDefault.isNotEmpty()) {
-                    item {
-                        FontPickerCategory(
-                            preview.ExtraShort,
-                            stringResource(R.string.font_category_device_default),
-                            fonts.deviceDefault,
-                            onFontClick = {
-                                    onValueChange(it)
-                                    showDialog = false
-                            })
-                    }
+            }
+            if (fonts.deviceDefault.isNotEmpty()) {
+                item {
+                    FontPickerCategory(
+                        preview.ExtraShort,
+                        stringResource(R.string.font_category_device_default),
+                        fonts.deviceDefault,
+                        onFontClick = {
+                            onValueChange(it)
+                            showDialog = false
+                        })
                 }
-                if (fonts.generic.isNotEmpty()) {
-                    item {
-                        FontPickerCategory(
-                            preview.ExtraShort,
-                            stringResource(R.string.font_category_generic),
-                            fonts.generic,
-                            onFontClick = {
-                                    onValueChange(it)
-                                    showDialog = false
-                            })
-                    }
+            }
+            if (fonts.generic.isNotEmpty()) {
+                item {
+                    FontPickerCategory(
+                        preview.ExtraShort,
+                        stringResource(R.string.font_category_generic),
+                        fonts.generic,
+                        onFontClick = {
+                            onValueChange(it)
+                            showDialog = false
+                        })
                 }
             }
         }
@@ -951,209 +964,210 @@ private fun TextStylePreference(
         },
         onClick = { showDialog = true },
     )
-    if (showDialog) {
-        var fontFamily by remember(value) {
-            mutableStateOf(value?.fontFamily)
-        }
-        var fontSize by remember(value) {
-            mutableStateOf(value?.fontSize)
-        }
-        var lineHeight by remember(value) {
-            mutableStateOf(value?.lineHeight)
-        }
-        var weight by remember(value) {
-            mutableStateOf((value?.fontWeight as? ThemeFontWeight.Absolute)?.weight)
-        }
-        var letterSpacing by remember(value) {
-            mutableStateOf(value?.letterSpacing)
-        }
+    var fontFamily by remember(value) {
+        mutableStateOf(value?.fontFamily)
+    }
+    var fontSize by remember(value) {
+        mutableStateOf(value?.fontSize)
+    }
+    var lineHeight by remember(value) {
+        mutableStateOf(value?.lineHeight)
+    }
+    var weight by remember(value) {
+        mutableStateOf((value?.fontWeight as? ThemeFontWeight.Absolute)?.weight)
+    }
+    var letterSpacing by remember(value) {
+        mutableStateOf(value?.letterSpacing)
+    }
 
-        DismissableBottomSheet(
-            onDismissRequest = {
-                onValueChange(
-                    ThemeTextStyle(
-                        fontFamily = fontFamily,
-                        fontSize = fontSize,
-                        lineHeight = lineHeight,
-                        fontWeight = weight?.let { ThemeFontWeight.Absolute(it) },
-                        letterSpacing = letterSpacing
-                    )
+    DismissableBottomSheet(
+        expanded = showDialog,
+        onDismissRequest = {
+            onValueChange(
+                ThemeTextStyle(
+                    fontFamily = fontFamily,
+                    fontSize = fontSize,
+                    lineHeight = lineHeight,
+                    fontWeight = weight?.let { ThemeFontWeight.Absolute(it) },
+                    letterSpacing = letterSpacing
                 )
-                showDialog = false
-            },
-        ) {
+            )
+            showDialog = false
+        },
+    ) {
 
 
-            val actualFontFamily = fontFamily
-                ?: parentValue?.fontFamily
-                ?: defaultValue?.fontFamily
-                ?: defaultValueParent?.fontFamily!!
-            val actualFontSize = fontSize
-                ?: parentValue?.fontSize
-                ?: defaultValue?.fontSize
-                ?: defaultValueParent?.fontSize!!
-            val actualLineHeight = lineHeight
-                ?: parentValue?.lineHeight
-                ?: defaultValue?.lineHeight
-                ?: defaultValueParent?.lineHeight!!
-            val actualWeight = when {
-                weight != null -> FontWeight(weight!!)
-                parentValue?.fontWeight != null -> FontWeight(parentValue.fontWeight!!.weight)
-                defaultValue?.fontWeight is ThemeFontWeight.Absolute -> FontWeight((defaultValue.fontWeight as ThemeFontWeight.Absolute).weight)
-                defaultValue?.fontWeight is ThemeFontWeight.Relative &&
-                        defaultValueParent?.fontWeight is ThemeFontWeight.Absolute -> {
-                    FontWeight(
-                        (defaultValueParent.fontWeight as ThemeFontWeight.Absolute).weight +
-                                (defaultValue.fontWeight as ThemeFontWeight.Relative).relativeWeight
-                    )
-                }
-
-                else -> FontWeight.Normal
+        val actualFontFamily = fontFamily
+            ?: parentValue?.fontFamily
+            ?: defaultValue?.fontFamily
+            ?: defaultValueParent?.fontFamily!!
+        val actualFontSize = fontSize
+            ?: parentValue?.fontSize
+            ?: defaultValue?.fontSize
+            ?: defaultValueParent?.fontSize!!
+        val actualLineHeight = lineHeight
+            ?: parentValue?.lineHeight
+            ?: defaultValue?.lineHeight
+            ?: defaultValueParent?.lineHeight!!
+        val actualWeight = when {
+            weight != null -> FontWeight(weight!!)
+            parentValue?.fontWeight != null -> FontWeight(parentValue.fontWeight!!.weight)
+            defaultValue?.fontWeight is ThemeFontWeight.Absolute -> FontWeight((defaultValue.fontWeight as ThemeFontWeight.Absolute).weight)
+            defaultValue?.fontWeight is ThemeFontWeight.Relative &&
+                    defaultValueParent?.fontWeight is ThemeFontWeight.Absolute -> {
+                FontWeight(
+                    (defaultValueParent.fontWeight as ThemeFontWeight.Absolute).weight +
+                            (defaultValue.fontWeight as ThemeFontWeight.Relative).relativeWeight
+                )
             }
-            val actualLetterSpacing = letterSpacing
-                ?: parentValue?.letterSpacing
-                ?: defaultValue?.letterSpacing
-                ?: defaultValueParent?.letterSpacing!!
 
-            Column(
-                modifier = Modifier.padding(it),
+            else -> FontWeight.Normal
+        }
+        val actualLetterSpacing = letterSpacing
+            ?: parentValue?.letterSpacing
+            ?: defaultValue?.letterSpacing
+            ?: defaultValueParent?.letterSpacing!!
+
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp)
+                .navigationBarsPadding(),
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 200.dp),
+                contentAlignment = Alignment.Center,
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 200.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = previewTexts.TwoLines,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontFamily = fontFamilyOf(context, fonts[actualFontFamily]),
-                        fontSize = actualFontSize.sp,
-                        lineHeight = actualLineHeight.em,
-                        fontWeight = actualWeight,
-                        letterSpacing = actualLetterSpacing.em,
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .padding(vertical = 16.dp)
-                        .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    for ((name, font) in fonts) {
-                        val f = remember(font) { fontFamilyOf(context, font) }
-                        Column(
-                            modifier = Modifier
-                                .width(56.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
-                        ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = previewTexts.TwoLines,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontFamily = fontFamilyOf(context, fonts[actualFontFamily]),
+                    fontSize = actualFontSize.sp,
+                    lineHeight = actualLineHeight.em,
+                    fontWeight = actualWeight,
+                    letterSpacing = actualLetterSpacing.em,
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .padding(vertical = 16.dp)
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                for ((name, font) in fonts) {
+                    val f = remember(font) { fontFamilyOf(context, font) }
+                    Column(
+                        modifier = Modifier
+                            .width(56.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
 
-                            OutlinedIconToggleButton(
-                                modifier = Modifier.size(56.dp),
-                                checked = name == actualFontFamily,
-                                onCheckedChange = {
-                                    if (it) fontFamily = name
-                                },
-                            ) {
-                                Text(
-                                    text = previewTexts.ExtraShort,
-                                    fontFamily = f,
-                                    style = MaterialTheme.typography.headlineSmall,
-                                    textAlign = TextAlign.Center,
-                                )
-                            }
+                        OutlinedIconToggleButton(
+                            modifier = Modifier.size(56.dp),
+                            checked = name == actualFontFamily,
+                            onCheckedChange = {
+                                if (it) fontFamily = name
+                            },
+                        ) {
                             Text(
-                                text = name.capitalize(LocaleList.current),
+                                text = previewTexts.ExtraShort,
                                 fontFamily = f,
-                                style = MaterialTheme.typography.bodySmall,
+                                style = MaterialTheme.typography.headlineSmall,
                                 textAlign = TextAlign.Center,
-                                modifier = Modifier.width(56.dp),
-                                maxLines = 1,
-                                overflow = TextOverflow.MiddleEllipsis,
                             )
                         }
+                        Text(
+                            text = name.capitalize(LocaleList.current),
+                            fontFamily = f,
+                            style = MaterialTheme.typography.bodySmall,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.width(56.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.MiddleEllipsis,
+                        )
                     }
-                }
-
-                SliderRow(
-                    icon = R.drawable.format_bold_24px,
-                    min = 100f,
-                    max = 900f,
-                    step = 100f,
-                    value = actualWeight.weight.toFloat(),
-                    onValueChange = { weight = it.toInt() },
-                    formatValue = {
-                        it.roundToInt().toString()
-                    }
-                )
-                SliderRow(
-                    icon = R.drawable.format_size_24px,
-                    min = floor((defaultValue?.fontSize ?: defaultValueParent?.fontSize)!! / 2f),
-                    max = ceil((defaultValue?.fontSize ?: defaultValueParent?.fontSize)!! * 2f),
-                    value = actualFontSize.toFloat(),
-                    onValueChange = {
-                        fontSize = it.roundToInt()
-                    },
-                    formatValue = {
-                        it.roundToInt().toString()
-                    }
-                )
-                SliderRow(
-                    icon = R.drawable.format_line_spacing_24px,
-                    min = 0.5f,
-                    max = 2f,
-                    step = 0.05f,
-                    value = actualLineHeight,
-                    onValueChange = { lineHeight = it },
-                    formatValue = {
-                        (it * 100).roundToInt().toString() + "%"
-                    }
-                )
-                SliderRow(
-                    icon = R.drawable.format_letter_spacing_24px,
-                    min = -0.25f,
-                    max = 1f,
-                    step = 0.01f,
-                    value = actualLetterSpacing,
-                    onValueChange = { letterSpacing = (it * 100f).roundToInt() / 100f },
-                    formatValue = {
-                        (it * 100).roundToInt().toString() + "%"
-                    }
-                )
-
-                HorizontalDivider(
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-
-                TextButton(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .align(Alignment.End),
-                    contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
-                    onClick = {
-                        fontFamily = null
-                        fontSize = null
-                        lineHeight = null
-                        weight = null
-                        letterSpacing = null
-                        onValueChange(null)
-                    }
-                ) {
-                    Icon(
-                        painterResource(R.drawable.restart_alt_20px), null,
-                        modifier = Modifier
-                            .padding(ButtonDefaults.IconSpacing)
-                            .size(ButtonDefaults.IconSize)
-                    )
-                    Text(stringResource(R.string.preference_restore_default))
                 }
             }
-        }
 
+            SliderRow(
+                icon = R.drawable.format_bold_24px,
+                min = 100f,
+                max = 900f,
+                step = 100f,
+                value = actualWeight.weight.toFloat(),
+                onValueChange = { weight = it.toInt() },
+                formatValue = {
+                    it.roundToInt().toString()
+                }
+            )
+            SliderRow(
+                icon = R.drawable.format_size_24px,
+                min = floor((defaultValue?.fontSize ?: defaultValueParent?.fontSize)!! / 2f),
+                max = ceil((defaultValue?.fontSize ?: defaultValueParent?.fontSize)!! * 2f),
+                value = actualFontSize.toFloat(),
+                onValueChange = {
+                    fontSize = it.roundToInt()
+                },
+                formatValue = {
+                    it.roundToInt().toString()
+                }
+            )
+            SliderRow(
+                icon = R.drawable.format_line_spacing_24px,
+                min = 0.5f,
+                max = 2f,
+                step = 0.05f,
+                value = actualLineHeight,
+                onValueChange = { lineHeight = it },
+                formatValue = {
+                    (it * 100).roundToInt().toString() + "%"
+                }
+            )
+            SliderRow(
+                icon = R.drawable.format_letter_spacing_24px,
+                min = -0.25f,
+                max = 1f,
+                step = 0.01f,
+                value = actualLetterSpacing,
+                onValueChange = { letterSpacing = (it * 100f).roundToInt() / 100f },
+                formatValue = {
+                    (it * 100).roundToInt().toString() + "%"
+                }
+            )
+
+            HorizontalDivider(
+                modifier = Modifier.padding(top = 16.dp)
+            )
+
+            TextButton(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .align(Alignment.End),
+                contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
+                onClick = {
+                    fontFamily = null
+                    fontSize = null
+                    lineHeight = null
+                    weight = null
+                    letterSpacing = null
+                    onValueChange(null)
+                }
+            ) {
+                Icon(
+                    painterResource(R.drawable.restart_alt_20px), null,
+                    modifier = Modifier
+                        .padding(ButtonDefaults.IconSpacing)
+                        .size(ButtonDefaults.IconSize)
+                )
+                Text(stringResource(R.string.preference_restore_default))
+            }
+        }
     }
 }
 

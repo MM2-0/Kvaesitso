@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -51,7 +52,8 @@ fun CorePaletteColorPreference(
     var showDialog by remember { mutableStateOf(false) }
 
     Row(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
             .clip(MaterialTheme.shapes.extraSmall)
             .clickable(
                 onClick = { showDialog = true },
@@ -62,7 +64,9 @@ fun CorePaletteColorPreference(
     ) {
         ColorSwatch(
             color = Color(value ?: defaultValue),
-            modifier = Modifier.padding(end = 20.dp).size(48.dp),
+            modifier = Modifier
+                .padding(end = 20.dp)
+                .size(48.dp),
         )
 
         Text(
@@ -74,78 +78,79 @@ fun CorePaletteColorPreference(
         )
     }
 
-    if (showDialog) {
-        var currentValue by remember { mutableStateOf(value) }
-        DismissableBottomSheet(onDismissRequest = {
+    var currentValue by remember { mutableStateOf(value) }
+    DismissableBottomSheet(
+        expanded = showDialog,
+        onDismissRequest = {
             onValueChange(currentValue)
             showDialog = false
         }) {
-            Column(
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(it)
-            ) {
-                SwitchPreference(
-                    icon = R.drawable.rule_settings_24px,
-                    title = stringResource(R.string.theme_color_scheme_system_default),
-                    value = currentValue == null,
-                    onValueChanged = {
-                        currentValue = if (it) null else defaultValue
-                    },
-                    containerColor = Color.Transparent,
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp)
+                .navigationBarsPadding()
+        ) {
+            SwitchPreference(
+                icon = R.drawable.rule_settings_24px,
+                title = stringResource(R.string.theme_color_scheme_system_default),
+                value = currentValue == null,
+                onValueChanged = {
+                    currentValue = if (it) null else defaultValue
+                },
+                containerColor = Color.Transparent,
+            )
+            AnimatedVisibility(
+                currentValue != null,
+                enter = expandVertically(
+                    expandFrom = Alignment.Top,
+                ),
+                exit = shrinkVertically(
+                    shrinkTowards = Alignment.Top,
                 )
-                AnimatedVisibility(
-                    currentValue != null,
-                    enter = expandVertically(
-                        expandFrom = Alignment.Top,
-                    ),
-                    exit = shrinkVertically(
-                        shrinkTowards = Alignment.Top,
+            ) {
+                Column {
+                    HorizontalDivider(
+                        modifier = Modifier.padding(bottom = 24.dp)
                     )
-                ) {
-                    Column {
+                    val colorPickerState = rememberHctColorPickerState(
+                        initialColor = Color(value ?: defaultValue),
+                        onColorChanged = {
+                            currentValue = it.toArgb()
+                        }
+                    )
+                    HctColorPicker(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.CenterHorizontally),
+                        state = colorPickerState,
+                    )
+
+                    if (autoGenerate != null) {
                         HorizontalDivider(
-                            modifier = Modifier.padding(bottom = 24.dp)
+                            modifier = Modifier.padding(top = 16.dp)
                         )
-                        val colorPickerState = rememberHctColorPickerState(
-                            initialColor = Color(value ?: defaultValue),
-                            onColorChanged = {
-                                currentValue = it.toArgb()
-                            }
-                        )
-                        HctColorPicker(
+
+                        TextButton(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.CenterHorizontally),
-                            state = colorPickerState,
-                        )
-
-                        if (autoGenerate != null) {
-                            HorizontalDivider(
-                                modifier = Modifier.padding(top = 16.dp)
-                            )
-
-                            TextButton(
-                                modifier = Modifier
-                                    .padding(top = 8.dp)
-                                    .align(Alignment.End),
-                                contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
-                                onClick = {
-                                    val autoGenerated = autoGenerate()
-                                    currentValue = autoGenerated
-                                    if (autoGenerated != null) {
-                                        colorPickerState.setColor(Color(autoGenerated))
-                                    }
+                                .padding(top = 8.dp)
+                                .align(Alignment.End),
+                            contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
+                            onClick = {
+                                val autoGenerated = autoGenerate()
+                                currentValue = autoGenerated
+                                if (autoGenerated != null) {
+                                    colorPickerState.setColor(Color(autoGenerated))
                                 }
-                            ) {
-                                Icon(
-                                    painterResource(R.drawable.wand_stars_20px), null,
-                                    modifier = Modifier
-                                        .padding(ButtonDefaults.IconSpacing)
-                                        .size(ButtonDefaults.IconSize)
-                                )
-                                Text(stringResource(R.string.theme_color_scheme_autogenerate))
                             }
+                        ) {
+                            Icon(
+                                painterResource(R.drawable.wand_stars_20px), null,
+                                modifier = Modifier
+                                    .padding(ButtonDefaults.IconSpacing)
+                                    .size(ButtonDefaults.IconSize)
+                            )
+                            Text(stringResource(R.string.theme_color_scheme_autogenerate))
                         }
                     }
                 }

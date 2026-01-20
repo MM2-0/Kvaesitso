@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -123,19 +124,18 @@ fun NotesWidget(
                 }
             },
         )
-        if (showConflictResolveSheet) {
-            NoteWidgetConflictResolveSheet(
-                localContent = widget.config.storedText,
-                fileContent = text.text,
-                onResolve = {
-                    viewModel.resolveFileContentConflict(context, it)
-                    showConflictResolveSheet = false
-                },
-                onDismissRequest = {
-                    showConflictResolveSheet = false
-                }
-            )
-        }
+        NoteWidgetConflictResolveSheet(
+            expanded = showConflictResolveSheet,
+            localContent = widget.config.storedText,
+            fileContent = text.text,
+            onResolve = {
+                viewModel.resolveFileContentConflict(context, it)
+                showConflictResolveSheet = false
+            },
+            onDismissRequest = {
+                showConflictResolveSheet = false
+            }
+        )
         return
     }
     Column {
@@ -374,44 +374,44 @@ fun NotesWidget(
         }
     }
 
-    if (readWriteErrorSheetText != null) {
-        NoteReadWriteErrorSheet(
-            message = readWriteErrorSheetText!!,
-            onDismiss = { readWriteErrorSheetText = null },
-            onRelink = {
-                linkFileLauncher.launch(
-                    context.getString(
-                        R.string.notes_widget_export_filename,
-                        ZonedDateTime.now().format(
-                            DateTimeFormatter.ISO_INSTANT
-                        )
+    NoteReadWriteErrorSheet(
+        message = readWriteErrorSheetText,
+        onDismiss = { readWriteErrorSheetText = null },
+        onRelink = {
+            linkFileLauncher.launch(
+                context.getString(
+                    R.string.notes_widget_export_filename,
+                    ZonedDateTime.now().format(
+                        DateTimeFormatter.ISO_INSTANT
                     )
                 )
-            },
-            onUnlink = {
-                viewModel.unlinkFile(context)
-            }
-        )
-    }
+            )
+        },
+        onUnlink = {
+            viewModel.unlinkFile(context)
+        }
+    )
 }
 
 @Composable
 fun NoteWidgetConflictResolveSheet(
+    expanded: Boolean,
     localContent: String,
     fileContent: String,
     onResolve: (LinkedFileConflictStrategy) -> Unit,
     onDismissRequest: () -> Unit,
 ) {
-    var selectedStrategy by remember { mutableStateOf<LinkedFileConflictStrategy?>(null) }
     DismissableBottomSheet(
+        expanded = expanded,
         onDismissRequest = onDismissRequest,
-
     ) {
+        var selectedStrategy by remember { mutableStateOf<LinkedFileConflictStrategy?>(null) }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(it),
+                .padding(16.dp)
+                .navigationBarsPadding(),
         ) {
 
             Text(
@@ -538,19 +538,24 @@ fun SelectableNoteContent(
 
 @Composable
 fun NoteReadWriteErrorSheet(
-    message: String,
+    message: String?,
     onDismiss: () -> Unit,
     onRelink: () -> Unit,
     onUnlink: () -> Unit,
 ) {
     DismissableBottomSheet(
+        state = message,
+        expanded = { it != null },
         onDismissRequest = onDismiss,
-    ) {
+    ) { message ->
+        message ?: return@DismissableBottomSheet
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(it)
+                .padding(16.dp)
+                .navigationBarsPadding()
         ) {
             Text(
                 text = message,

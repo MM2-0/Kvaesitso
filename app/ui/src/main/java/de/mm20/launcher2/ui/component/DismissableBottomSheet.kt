@@ -67,7 +67,7 @@ import kotlinx.coroutines.CancellationException
 fun DismissableBottomSheet(
     expanded: Boolean = true,
     onDismissRequest: () -> Unit,
-    content: @Composable (contentPadding: PaddingValues) -> Unit,
+     content: @Composable (contentPadding: PaddingValues) -> Unit,
 ) {
     DismissableBottomSheet(
         state = expanded,

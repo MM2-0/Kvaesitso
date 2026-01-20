@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -74,7 +75,8 @@ fun ThemeColorPreference(
     var showDialog by remember { mutableStateOf(false) }
 
     Row(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
             .clip(MaterialTheme.shapes.extraSmall)
             .clickable(
                 onClick = { showDialog = true },
@@ -85,7 +87,9 @@ fun ThemeColorPreference(
     ) {
         ColorSwatch(
             color = Color((value ?: defaultValue).get(corePalette)),
-            modifier = Modifier.padding(end = 20.dp).size(48.dp),
+            modifier = Modifier
+                .padding(end = 20.dp)
+                .size(48.dp),
         )
 
         Text(
@@ -97,336 +101,337 @@ fun ThemeColorPreference(
         )
     }
 
-    if (showDialog) {
-        var currentValue by remember { mutableStateOf(value) }
+    var currentValue by remember { mutableStateOf(value) }
 
-        val actualValue = currentValue ?: defaultValue
-        DismissableBottomSheet(onDismissRequest = {
+    DismissableBottomSheet(
+        expanded = showDialog,
+        onDismissRequest = {
             onValueChange(currentValue)
             showDialog = false
         }) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-                    .padding(it),
+        val actualValue = currentValue ?: defaultValue
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp)
+                .navigationBarsPadding(),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
+                ToggleButton(
+                    modifier = Modifier.weight(1f),
+                    checked = actualValue is ColorRef,
+                    onCheckedChange = {
+                        if (actualValue is ColorRef) return@ToggleButton
+                        currentValue = defaultValue
+                    },
+                    shapes = ButtonGroupDefaults.connectedLeadingButtonShapes()
                 ) {
-                    ToggleButton(
-                        modifier = Modifier.weight(1f),
-                        checked = actualValue is ColorRef,
-                        onCheckedChange = {
-                            if (actualValue is ColorRef) return@ToggleButton
-                            currentValue = defaultValue
-                        },
-                        shapes = ButtonGroupDefaults.connectedLeadingButtonShapes()
-                    ) {
-                        Icon(
-                            painterResource(
-                                if (actualValue is ColorRef) R.drawable.check_20px else R.drawable.palette_20px
-                            ),
-                            null,
-                            modifier = Modifier
-                                .padding(end = ToggleButtonDefaults.IconSpacing)
-                                .size(ToggleButtonDefaults.IconSize)
-                        )
-                        Text(stringResource(R.string.theme_color_scheme_palette_color))
-                    }
-                    ToggleButton(
-                        modifier = Modifier.weight(1f),
-                        checked = actualValue is StaticColor,
-                        onCheckedChange = {
-                            currentValue = StaticColor(actualValue.get(corePalette))
-                        },
-                        shapes = ButtonGroupDefaults.connectedTrailingButtonShapes()
-                    ) {
-                        Icon(
-                            painterResource(
-                                if (actualValue is StaticColor) R.drawable.check_20px else R.drawable.colorize_20px
-                            ),
-                            null,
-                            modifier = Modifier
-                                .padding(end = ToggleButtonDefaults.IconSpacing)
-                                .size(ToggleButtonDefaults.IconSize)
-                        )
-                        Text(stringResource(R.string.theme_color_scheme_custom_color))
-                    }
+                    Icon(
+                        painterResource(
+                            if (actualValue is ColorRef) R.drawable.check_20px else R.drawable.palette_20px
+                        ),
+                        null,
+                        modifier = Modifier
+                            .padding(end = ToggleButtonDefaults.IconSpacing)
+                            .size(ToggleButtonDefaults.IconSize)
+                    )
+                    Text(stringResource(R.string.theme_color_scheme_palette_color))
                 }
-                AnimatedContent(
-                    actualValue,
-                    label = "AnimatedContent",
-                    contentKey = { it is StaticColor }
-                ) { themeColor ->
-                    Column {
-                        if (themeColor is StaticColor) {
-                            val colorPickerState = rememberHctColorPickerState(
-                                initialColor = Color(themeColor.color),
-                                onColorChanged = {
-                                    currentValue = StaticColor(it.toArgb())
-                                }
-                            )
-                            HctColorPicker(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 24.dp)
-                                    .align(Alignment.CenterHorizontally),
-                                state = colorPickerState
-                            )
-                        } else if (themeColor is ColorRef) {
-                            val hct = Hct.fromInt(corePalette.get(themeColor.color))
-                            val hue = hct.hue.toFloat()
-                            val chroma = hct.chroma.toFloat()
-                            var tone by remember(value == null) { mutableStateOf(themeColor.tone.toFloat()) }
-                            Row(
-                                modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
-                            ) {
-                                ColorSwatch(
-                                    color = Color(
-                                        corePalette
-                                            .get(CorePaletteColor.Primary)
-                                            .atTone(tone.toInt())
-                                    ),
-                                    modifier = Modifier
-                                        .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.Primary,
-                                                tone.roundToInt()
-                                            )
-                                        },
-                                    selected = themeColor.color == CorePaletteColor.Primary,
-                                )
-                                Spacer(modifier = Modifier.weight(1f))
-                                ColorSwatch(
-                                    color = Color(
-                                        corePalette
-                                            .get(CorePaletteColor.Secondary)
-                                            .atTone(tone.toInt())
-                                    ),
-                                    modifier = Modifier
-                                        .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.Secondary,
-                                                tone.roundToInt()
-                                            )
-                                        },
-                                    selected = themeColor.color == CorePaletteColor.Secondary,
-                                )
-                                Spacer(modifier = Modifier.weight(1f))
-                                ColorSwatch(
-                                    color = Color(
-                                        corePalette
-                                            .get(CorePaletteColor.Tertiary)
-                                            .atTone(tone.toInt())
-                                    ),
-                                    modifier = Modifier
-                                        .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.Tertiary,
-                                                tone.roundToInt()
-                                            )
-                                        },
-                                    selected = themeColor.color == CorePaletteColor.Tertiary,
-                                )
+                ToggleButton(
+                    modifier = Modifier.weight(1f),
+                    checked = actualValue is StaticColor,
+                    onCheckedChange = {
+                        currentValue = StaticColor(actualValue.get(corePalette))
+                    },
+                    shapes = ButtonGroupDefaults.connectedTrailingButtonShapes()
+                ) {
+                    Icon(
+                        painterResource(
+                            if (actualValue is StaticColor) R.drawable.check_20px else R.drawable.colorize_20px
+                        ),
+                        null,
+                        modifier = Modifier
+                            .padding(end = ToggleButtonDefaults.IconSpacing)
+                            .size(ToggleButtonDefaults.IconSize)
+                    )
+                    Text(stringResource(R.string.theme_color_scheme_custom_color))
+                }
+            }
+            AnimatedContent(
+                actualValue,
+                label = "AnimatedContent",
+                contentKey = { it is StaticColor }
+            ) { themeColor ->
+                Column {
+                    if (themeColor is StaticColor) {
+                        val colorPickerState = rememberHctColorPickerState(
+                            initialColor = Color(themeColor.color),
+                            onColorChanged = {
+                                currentValue = StaticColor(it.toArgb())
                             }
-                            Row(
-                                modifier = Modifier.padding(bottom = 16.dp)
-                            ) {
-                                ColorSwatch(
-                                    color = Color(
-                                        corePalette
-                                            .get(CorePaletteColor.Neutral)
-                                            .atTone(tone.toInt())
-                                    ),
-                                    modifier = Modifier
-                                        .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.Neutral,
-                                                tone.roundToInt()
-                                            )
-                                        },
-                                    selected = themeColor.color == CorePaletteColor.Neutral,
-                                )
-                                Spacer(modifier = Modifier.weight(1f))
-                                ColorSwatch(
-                                    color = Color(
-                                        corePalette
-                                            .get(CorePaletteColor.NeutralVariant)
-                                            .atTone(tone.toInt())
-                                    ),
-                                    modifier = Modifier
-                                        .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.NeutralVariant,
-                                                tone.roundToInt()
-                                            )
-                                        },
-                                    selected = themeColor.color == CorePaletteColor.NeutralVariant,
-                                )
-                                Spacer(modifier = Modifier.weight(1f))
-                                ColorSwatch(
-                                    color = Color(
-                                        corePalette
-                                            .get(CorePaletteColor.Error)
-                                            .atTone(tone.toInt())
-                                    ),
-                                    modifier = Modifier
-                                        .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.Error,
-                                                tone.roundToInt()
-                                            )
-                                        },
-                                    selected = themeColor.color == CorePaletteColor.Error,
-                                )
-                            }
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
+                        )
+                        HctColorPicker(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 24.dp)
+                                .align(Alignment.CenterHorizontally),
+                            state = colorPickerState
+                        )
+                    } else if (themeColor is ColorRef) {
+                        val hct = Hct.fromInt(corePalette.get(themeColor.color))
+                        val hue = hct.hue.toFloat()
+                        val chroma = hct.chroma.toFloat()
+                        var tone by remember(value == null) { mutableStateOf(themeColor.tone.toFloat()) }
+                        Row(
+                            modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
+                        ) {
+                            ColorSwatch(
+                                color = Color(
+                                    corePalette
+                                        .get(CorePaletteColor.Primary)
+                                        .atTone(tone.toInt())
+                                ),
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 16.dp)
-                            ) {
-                                Text(
-                                    text = "T",
-                                    modifier = Modifier.width(32.dp),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    textAlign = TextAlign.Center
-                                )
-                                Slider(
-                                    modifier = Modifier.weight(1f),
-                                    value = tone,
-                                    valueRange = 0f..100f,
-                                    onValueChange = {
-                                        tone = it
-                                        currentValue = themeColor.copy(tone = it.roundToInt())
+                                    .padding(8.dp)
+                                    .size(64.dp)
+                                    .clickable {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.Primary,
+                                            tone.roundToInt()
+                                        )
                                     },
-                                    track = {
-                                        Canvas(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(20.dp)
-                                        ) {
-                                            drawRoundRect(
-                                                brush = Brush.horizontalGradient(
-                                                    colors = listOf(
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            0f
-                                                        ),
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            10f
-                                                        ),
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            20f
-                                                        ),
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            30f
-                                                        ),
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            40f
-                                                        ),
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            50f
-                                                        ),
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            60f
-                                                        ),
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            70f
-                                                        ),
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            80f
-                                                        ),
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            90f
-                                                        ),
-                                                        Color.hct(
-                                                            hue,
-                                                            chroma,
-                                                            100f
-                                                        ),
-                                                    )
-                                                ),
-                                                style = Fill,
-                                                cornerRadius = CornerRadius(
-                                                    10.dp.toPx(),
-                                                    10.dp.toPx()
+                                selected = themeColor.color == CorePaletteColor.Primary,
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                            ColorSwatch(
+                                color = Color(
+                                    corePalette
+                                        .get(CorePaletteColor.Secondary)
+                                        .atTone(tone.toInt())
+                                ),
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .size(64.dp)
+                                    .clickable {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.Secondary,
+                                            tone.roundToInt()
+                                        )
+                                    },
+                                selected = themeColor.color == CorePaletteColor.Secondary,
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                            ColorSwatch(
+                                color = Color(
+                                    corePalette
+                                        .get(CorePaletteColor.Tertiary)
+                                        .atTone(tone.toInt())
+                                ),
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .size(64.dp)
+                                    .clickable {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.Tertiary,
+                                            tone.roundToInt()
+                                        )
+                                    },
+                                selected = themeColor.color == CorePaletteColor.Tertiary,
+                            )
+                        }
+                        Row(
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        ) {
+                            ColorSwatch(
+                                color = Color(
+                                    corePalette
+                                        .get(CorePaletteColor.Neutral)
+                                        .atTone(tone.toInt())
+                                ),
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .size(64.dp)
+                                    .clickable {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.Neutral,
+                                            tone.roundToInt()
+                                        )
+                                    },
+                                selected = themeColor.color == CorePaletteColor.Neutral,
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                            ColorSwatch(
+                                color = Color(
+                                    corePalette
+                                        .get(CorePaletteColor.NeutralVariant)
+                                        .atTone(tone.toInt())
+                                ),
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .size(64.dp)
+                                    .clickable {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.NeutralVariant,
+                                            tone.roundToInt()
+                                        )
+                                    },
+                                selected = themeColor.color == CorePaletteColor.NeutralVariant,
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                            ColorSwatch(
+                                color = Color(
+                                    corePalette
+                                        .get(CorePaletteColor.Error)
+                                        .atTone(tone.toInt())
+                                ),
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .size(64.dp)
+                                    .clickable {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.Error,
+                                            tone.roundToInt()
+                                        )
+                                    },
+                                selected = themeColor.color == CorePaletteColor.Error,
+                            )
+                        }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp)
+                        ) {
+                            Text(
+                                text = "T",
+                                modifier = Modifier.width(32.dp),
+                                style = MaterialTheme.typography.labelMedium,
+                                textAlign = TextAlign.Center
+                            )
+                            Slider(
+                                modifier = Modifier.weight(1f),
+                                value = tone,
+                                valueRange = 0f..100f,
+                                onValueChange = {
+                                    tone = it
+                                    currentValue = themeColor.copy(tone = it.roundToInt())
+                                },
+                                track = {
+                                    Canvas(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(20.dp)
+                                    ) {
+                                        drawRoundRect(
+                                            brush = Brush.horizontalGradient(
+                                                colors = listOf(
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        0f
+                                                    ),
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        10f
+                                                    ),
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        20f
+                                                    ),
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        30f
+                                                    ),
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        40f
+                                                    ),
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        50f
+                                                    ),
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        60f
+                                                    ),
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        70f
+                                                    ),
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        80f
+                                                    ),
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        90f
+                                                    ),
+                                                    Color.hct(
+                                                        hue,
+                                                        chroma,
+                                                        100f
+                                                    ),
                                                 )
+                                            ),
+                                            style = Fill,
+                                            cornerRadius = CornerRadius(
+                                                10.dp.toPx(),
+                                                10.dp.toPx()
                                             )
-                                        }
-                                    },
-                                    thumb = {
-                                        Box(
-                                            modifier = Modifier
-                                                .padding(vertical = 2.dp, horizontal = 8.dp)
-                                                .size(16.dp)
-                                                .shadow(1.dp, CircleShape)
-                                                .clip(CircleShape)
-                                                .background(Color.White)
                                         )
                                     }
-                                )
-                                Text(
-                                    text = tone.roundToInt().toString(),
-                                    modifier = Modifier.width(32.dp),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    textAlign = TextAlign.Center,
-                                )
-                            }
-                        }
-                        HorizontalDivider(
-                            modifier = Modifier.padding(top = 16.dp)
-                        )
-
-                        TextButton(
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                                .align(Alignment.End),
-                            contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
-                            onClick = { currentValue = null }
-                        ) {
-                            Icon(
-                                painterResource(R.drawable.restart_alt_20px),
-                                null,
-                                modifier = Modifier
-                                    .padding(ButtonDefaults.IconSpacing)
-                                    .size(ButtonDefaults.IconSize)
+                                },
+                                thumb = {
+                                    Box(
+                                        modifier = Modifier
+                                            .padding(vertical = 2.dp, horizontal = 8.dp)
+                                            .size(16.dp)
+                                            .shadow(1.dp, CircleShape)
+                                            .clip(CircleShape)
+                                            .background(Color.White)
+                                    )
+                                }
                             )
-                            Text(stringResource(R.string.preference_restore_default))
+                            Text(
+                                text = tone.roundToInt().toString(),
+                                modifier = Modifier.width(32.dp),
+                                style = MaterialTheme.typography.labelMedium,
+                                textAlign = TextAlign.Center,
+                            )
                         }
+                    }
+                    HorizontalDivider(
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
+
+                    TextButton(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .align(Alignment.End),
+                        contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
+                        onClick = { currentValue = null }
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.restart_alt_20px),
+                            null,
+                            modifier = Modifier
+                                .padding(ButtonDefaults.IconSpacing)
+                                .size(ButtonDefaults.IconSize)
+                        )
+                        Text(stringResource(R.string.preference_restore_default))
                     }
                 }
             }

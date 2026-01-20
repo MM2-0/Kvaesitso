@@ -285,8 +285,9 @@ fun GesturePreference(
         }
     }
 
-    if (value is GestureAction.Launch && (showAppPicker || app == null)) {
+    if (value is GestureAction.Launch) {
         SearchablePicker(
+            expanded = (showAppPicker || app == null),
             onDismissRequest = {
                 showAppPicker = false
                 if (app == null) onValueChanged(GestureAction.NoAction)

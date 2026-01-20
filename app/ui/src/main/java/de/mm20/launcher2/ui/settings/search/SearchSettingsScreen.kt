@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.settings.search
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -397,27 +398,29 @@ fun SearchSettingsScreen() {
         }
     }
 
-    if (showFilterEditor) {
+    DismissableBottomSheet(
+        expanded = showFilterEditor,
+        onDismissRequest = { showFilterEditor = false }) {
         val filters by viewModel.searchFilters.collectAsStateWithLifecycle()
-        DismissableBottomSheet(onDismissRequest = { showFilterEditor = false }) {
-            Column(
-                modifier = Modifier.padding(it)
-            ) {
-                AnimatedVisibility(filters.allowNetwork) {
-                    SmallMessage(
-                        modifier = Modifier.padding(bottom = 16.dp),
-                        icon = R.drawable.warning_24px,
-                        text = stringResource(R.string.filter_settings_network_warning)
-                    )
-                }
-                SearchFilters(
-                    filters = filters,
-                    onFiltersChange = {
-                        viewModel.setSearchFilters(it)
-                    },
-                    settings = true,
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .navigationBarsPadding()
+        ) {
+            AnimatedVisibility(filters.allowNetwork) {
+                SmallMessage(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    icon = R.drawable.warning_24px,
+                    text = stringResource(R.string.filter_settings_network_warning)
                 )
             }
+            SearchFilters(
+                filters = filters,
+                onFiltersChange = {
+                    viewModel.setSearchFilters(it)
+                },
+                settings = true,
+            )
         }
     }
 }

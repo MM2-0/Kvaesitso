@@ -77,7 +77,7 @@ import de.mm20.launcher2.themes.shapes.Shape as ThemeShape
 @Serializable
 data class ShapeSchemeSettingsRoute(
     @Serializable(with = UUIDSerializer::class) val id: UUID
-): NavKey
+) : NavKey
 
 @Composable
 fun ShapeSchemeSettingsScreen(themeId: UUID) {
@@ -463,20 +463,38 @@ fun ShapePreference(
         )
     }
 
-    if (showDialog) {
-        val maxRadius = (24 * factor).toInt()
+    val maxRadius = (24 * factor).toInt()
 
-        val baseTopStart = ((baseShape.radii?.get(0) ?: 12) * factor).toInt()
-        val baseTopEnd = ((baseShape.radii?.get(1) ?: 12) * factor).toInt()
-        val baseBottomEnd = ((baseShape.radii?.get(2) ?: 12) * factor).toInt()
-        val baseBottomStart = ((baseShape.radii?.get(3) ?: 12) * factor).toInt()
+    val baseTopStart = ((baseShape.radii?.get(0) ?: 12) * factor).toInt()
+    val baseTopEnd = ((baseShape.radii?.get(1) ?: 12) * factor).toInt()
+    val baseBottomEnd = ((baseShape.radii?.get(2) ?: 12) * factor).toInt()
+    val baseBottomStart = ((baseShape.radii?.get(3) ?: 12) * factor).toInt()
 
 
-        var currentCornerStyle by remember(shape) { mutableStateOf(shape?.corners) }
-        var currentTopStart by remember(shape) { mutableStateOf(shape?.radii?.get(0)) }
-        var currentTopEnd by remember(shape) { mutableStateOf(shape?.radii?.get(1)) }
-        var currentBottomEnd by remember(shape) { mutableStateOf(shape?.radii?.get(2)) }
-        var currentBottomStart by remember(shape) { mutableStateOf(shape?.radii?.get(3)) }
+    var currentCornerStyle by remember(shape) { mutableStateOf(shape?.corners) }
+    var currentTopStart by remember(shape) { mutableStateOf(shape?.radii?.get(0)) }
+    var currentTopEnd by remember(shape) { mutableStateOf(shape?.radii?.get(1)) }
+    var currentBottomEnd by remember(shape) { mutableStateOf(shape?.radii?.get(2)) }
+    var currentBottomStart by remember(shape) { mutableStateOf(shape?.radii?.get(3)) }
+
+    DismissableBottomSheet(
+        expanded = showDialog,
+        onDismissRequest = {
+            showDialog = false
+            onValueChange(
+                ThemeShape(
+                    corners = currentCornerStyle,
+                    radii = if (currentTopStart != null || currentTopEnd != null || currentBottomEnd != null || currentBottomStart != null) {
+                        intArrayOf(
+                            currentTopStart ?: baseTopStart,
+                            currentTopEnd ?: baseTopEnd,
+                            currentBottomEnd ?: baseBottomEnd,
+                            currentBottomStart ?: baseBottomStart,
+                        )
+                    } else null
+                )
+            )
+        }) {
 
         val actualCornerStyle = currentCornerStyle ?: baseShape.corners ?: CornerStyle.Rounded
         val actualTopStart = currentTopStart ?: baseTopStart
@@ -484,241 +502,222 @@ fun ShapePreference(
         val actualBottomEnd = currentBottomEnd ?: baseBottomEnd
         val actualBottomStart = currentBottomStart ?: baseBottomStart
 
-        DismissableBottomSheet(
-            onDismissRequest = {
-                showDialog = false
-                onValueChange(
-                    ThemeShape(
-                        corners = currentCornerStyle,
-                        radii = if (currentTopStart != null || currentTopEnd != null || currentBottomEnd != null || currentBottomStart != null) {
-                            intArrayOf(
-                                currentTopStart ?: baseTopStart,
-                                currentTopEnd ?: baseTopEnd,
-                                currentBottomEnd ?: baseBottomEnd,
-                                currentBottomStart ?: baseBottomStart,
-                            )
-                        } else null
-                    )
-                )
-            }) {
-
-            Column(
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(it)
-                    .padding(bottom = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(it)
+                .padding(bottom = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            val previewShape = if ((currentCornerStyle ?: baseShape.corners
+                ?: CornerStyle.Rounded) == CornerStyle.Rounded
             ) {
-                val previewShape = if ((currentCornerStyle ?: baseShape.corners
-                    ?: CornerStyle.Rounded) == CornerStyle.Rounded
-                ) {
-                    RoundedCornerShape(
-                        topStart = (currentTopStart ?: baseTopStart).dp,
-                        topEnd = (currentTopEnd ?: baseTopEnd).dp,
-                        bottomEnd = (currentBottomEnd ?: baseBottomEnd).dp,
-                        bottomStart = (currentBottomStart ?: baseBottomStart).dp
+                RoundedCornerShape(
+                    topStart = (currentTopStart ?: baseTopStart).dp,
+                    topEnd = (currentTopEnd ?: baseTopEnd).dp,
+                    bottomEnd = (currentBottomEnd ?: baseBottomEnd).dp,
+                    bottomStart = (currentBottomStart ?: baseBottomStart).dp
 
+                )
+            } else {
+                CutCornerShape(
+                    topStart = (currentTopStart ?: baseTopStart).dp,
+                    topEnd = (currentTopEnd ?: baseTopEnd).dp,
+                    bottomEnd = (currentBottomEnd ?: baseBottomEnd).dp,
+                    bottomStart = (currentBottomStart ?: baseBottomStart).dp
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(max(96, maxRadius * 2).dp)
+                    .background(MaterialTheme.colorScheme.surfaceContainer, previewShape)
+                    .border(
+                        2.dp,
+                        MaterialTheme.colorScheme.primary,
+                        previewShape
                     )
-                } else {
-                    CutCornerShape(
-                        topStart = (currentTopStart ?: baseTopStart).dp,
-                        topEnd = (currentTopEnd ?: baseTopEnd).dp,
-                        bottomEnd = (currentBottomEnd ?: baseBottomEnd).dp,
-                        bottomStart = (currentBottomStart ?: baseBottomStart).dp
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+            ) {
+                ToggleButton(
+                    modifier = Modifier.weight(1f),
+                    checked = actualCornerStyle == CornerStyle.Rounded,
+                    onCheckedChange = {
+                        currentCornerStyle = CornerStyle.Rounded
+                    },
+                    shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
+                ) {
+                    Icon(
+                        painterResource(
+                            if (actualCornerStyle == CornerStyle.Rounded) R.drawable.check_20px else R.drawable.rounded_corner_alt_24px
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(end = ToggleButtonDefaults.IconSpacing)
+                            .size(ToggleButtonDefaults.IconSize)
                     )
+                    Text(stringResource(R.string.preference_cards_shape_rounded))
                 }
-                Box(
+                ToggleButton(
+                    modifier = Modifier.weight(1f),
+                    checked = actualCornerStyle == CornerStyle.Cut,
+                    onCheckedChange = {
+                        currentCornerStyle = CornerStyle.Cut
+                    },
+                    shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
+                ) {
+                    Icon(
+                        painterResource(
+                            if (actualCornerStyle == CornerStyle.Cut) R.drawable.check_20px else R.drawable.cut_corner_20px
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(end = ToggleButtonDefaults.IconSpacing)
+                            .size(ToggleButtonDefaults.IconSize)
+                    )
+                    Text(stringResource(R.string.preference_cards_shape_cut))
+                }
+            }
+
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    painterResource(R.drawable.rounded_corner_24px),
+                    null,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(max(96, maxRadius * 2).dp)
-                        .background(MaterialTheme.colorScheme.surfaceContainer, previewShape)
-                        .border(
-                            2.dp,
-                            MaterialTheme.colorScheme.primary,
-                            previewShape
-                        )
+                        .padding(end = 8.dp)
+                        .rotate(-90f)
+                )
+                Slider(
+                    modifier = Modifier
+                        .weight(1f),
+                    value = actualTopStart.toFloat(),
+                    onValueChange = {
+                        currentTopStart = it.toInt()
+                    },
+                    valueRange = 0f..maxRadius.toFloat(),
+                    steps = maxRadius + 1
+                )
+                Text(
+                    text = actualTopStart.toString(),
+                    modifier = Modifier.width(32.dp),
+                    style = MaterialTheme.typography.labelMedium,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    painterResource(R.drawable.rounded_corner_24px),
+                    null,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Slider(
+                    modifier = Modifier
+                        .weight(1f),
+                    value = actualTopEnd.toFloat(),
+                    onValueChange = {
+                        currentTopEnd = it.toInt()
+                    },
+                    valueRange = 0f..maxRadius.toFloat(),
+                    steps = maxRadius + 1,
+                )
+                Text(
+                    text = actualTopEnd.toString(),
+                    modifier = Modifier.width(32.dp),
+                    style = MaterialTheme.typography.labelMedium,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    painterResource(R.drawable.rounded_corner_24px),
+                    null,
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .rotate(90f)
+                )
+                Slider(
+                    modifier = Modifier
+                        .weight(1f),
+                    value = actualBottomEnd.toFloat(),
+                    onValueChange = {
+                        currentBottomEnd = it.toInt()
+                    },
+                    valueRange = 0f..maxRadius.toFloat(),
+                    steps = maxRadius + 1,
+                )
+                Text(
+                    text = actualBottomEnd.toString(),
+                    modifier = Modifier.width(32.dp),
+                    style = MaterialTheme.typography.labelMedium,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    painterResource(R.drawable.rounded_corner_24px),
+                    null,
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .rotate(180f)
+                )
+                Slider(
+                    modifier = Modifier
+                        .weight(1f),
+                    value = actualBottomStart.toFloat(),
+                    onValueChange = {
+                        currentBottomStart = it.toInt()
+                    },
+                    valueRange = 0f..maxRadius.toFloat(),
+                    steps = maxRadius + 1,
+                )
+                Text(
+                    text = actualBottomStart.toString(),
+                    modifier = Modifier.width(32.dp),
+                    style = MaterialTheme.typography.labelMedium,
+                    textAlign = TextAlign.Center,
                 )
 
-                Row(
+            }
+
+            HorizontalDivider(
+                modifier = Modifier.padding(top = 16.dp)
+            )
+
+            TextButton(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .align(Alignment.End),
+                contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
+                onClick = {
+                    currentTopStart = null
+                    currentTopEnd = null
+                    currentBottomEnd = null
+                    currentBottomStart = null
+                    currentCornerStyle = null
+                    onValueChange(null)
+                }
+            ) {
+                Icon(
+                    painterResource(R.drawable.restart_alt_20px), null,
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
-                ) {
-                    ToggleButton(
-                        modifier = Modifier.weight(1f),
-                        checked = actualCornerStyle == CornerStyle.Rounded,
-                        onCheckedChange = {
-                            currentCornerStyle = CornerStyle.Rounded
-                        },
-                        shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
-                    ) {
-                        Icon(
-                            painterResource(
-                                if (actualCornerStyle == CornerStyle.Rounded) R.drawable.check_20px else R.drawable.rounded_corner_alt_24px
-                            ),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(end = ToggleButtonDefaults.IconSpacing)
-                                .size(ToggleButtonDefaults.IconSize)
-                        )
-                        Text(stringResource(R.string.preference_cards_shape_rounded))
-                    }
-                    ToggleButton(
-                        modifier = Modifier.weight(1f),
-                        checked = actualCornerStyle == CornerStyle.Cut,
-                        onCheckedChange = {
-                            currentCornerStyle = CornerStyle.Cut
-                        },
-                        shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
-                    ) {
-                        Icon(
-                            painterResource(
-                                if (actualCornerStyle == CornerStyle.Cut) R.drawable.check_20px else R.drawable.cut_corner_20px
-                            ),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(end = ToggleButtonDefaults.IconSpacing)
-                                .size(ToggleButtonDefaults.IconSize)
-                        )
-                        Text(stringResource(R.string.preference_cards_shape_cut))
-                    }
-                }
-
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        painterResource(R.drawable.rounded_corner_24px),
-                        null,
-                        modifier = Modifier
-                            .padding(end = 8.dp)
-                            .rotate(-90f)
-                    )
-                    Slider(
-                        modifier = Modifier
-                            .weight(1f),
-                        value = actualTopStart.toFloat(),
-                        onValueChange = {
-                            currentTopStart = it.toInt()
-                        },
-                        valueRange = 0f..maxRadius.toFloat(),
-                        steps = maxRadius + 1
-                    )
-                    Text(
-                        text = actualTopStart.toString(),
-                        modifier = Modifier.width(32.dp),
-                        style = MaterialTheme.typography.labelMedium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        painterResource(R.drawable.rounded_corner_24px),
-                        null,
-                        modifier = Modifier.padding(end = 8.dp)
-                    )
-                    Slider(
-                        modifier = Modifier
-                            .weight(1f),
-                        value = actualTopEnd.toFloat(),
-                        onValueChange = {
-                            currentTopEnd = it.toInt()
-                        },
-                        valueRange = 0f..maxRadius.toFloat(),
-                        steps = maxRadius + 1,
-                    )
-                    Text(
-                        text = actualTopEnd.toString(),
-                        modifier = Modifier.width(32.dp),
-                        style = MaterialTheme.typography.labelMedium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        painterResource(R.drawable.rounded_corner_24px),
-                        null,
-                        modifier = Modifier
-                            .padding(end = 8.dp)
-                            .rotate(90f)
-                    )
-                    Slider(
-                        modifier = Modifier
-                            .weight(1f),
-                        value = actualBottomEnd.toFloat(),
-                        onValueChange = {
-                            currentBottomEnd = it.toInt()
-                        },
-                        valueRange = 0f..maxRadius.toFloat(),
-                        steps = maxRadius + 1,
-                    )
-                    Text(
-                        text = actualBottomEnd.toString(),
-                        modifier = Modifier.width(32.dp),
-                        style = MaterialTheme.typography.labelMedium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        painterResource(R.drawable.rounded_corner_24px),
-                        null,
-                        modifier = Modifier
-                            .padding(end = 8.dp)
-                            .rotate(180f)
-                    )
-                    Slider(
-                        modifier = Modifier
-                            .weight(1f),
-                        value = actualBottomStart.toFloat(),
-                        onValueChange = {
-                            currentBottomStart = it.toInt()
-                        },
-                        valueRange = 0f..maxRadius.toFloat(),
-                        steps = maxRadius + 1,
-                    )
-                    Text(
-                        text = actualBottomStart.toString(),
-                        modifier = Modifier.width(32.dp),
-                        style = MaterialTheme.typography.labelMedium,
-                        textAlign = TextAlign.Center,
-                    )
-
-                }
-
-                HorizontalDivider(
-                    modifier = Modifier.padding(top = 16.dp)
+                        .padding(ButtonDefaults.IconSpacing)
+                        .size(ButtonDefaults.IconSize)
                 )
-
-                TextButton(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .align(Alignment.End),
-                    contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
-                    onClick = {
-                        currentTopStart = null
-                        currentTopEnd = null
-                        currentBottomEnd = null
-                        currentBottomStart = null
-                        currentCornerStyle = null
-                        onValueChange(null)
-                    }
-                ) {
-                    Icon(
-                        painterResource(R.drawable.restart_alt_20px), null,
-                        modifier = Modifier
-                            .padding(ButtonDefaults.IconSpacing)
-                            .size(ButtonDefaults.IconSize)
-                    )
-                    Text(stringResource(R.string.preference_restore_default))
-                }
+                Text(stringResource(R.string.preference_restore_default))
             }
         }
     }

@@ -272,19 +272,18 @@ fun CustomizeSearchableSheet(
                 }
             }
         }
-        if (pickIcon) {
-            DismissableBottomSheet(
-                onDismissRequest = { viewModel.closeIconPicker() },
-            ) {
-                IconPicker(
-                    searchable = searchable,
-                    onSelect = {
-                            viewModel.pickIcon(it)
-                            viewModel.closeIconPicker()
-                    },
-                    contentPadding = it,
-                )
-            }
+        DismissableBottomSheet(
+            expanded = pickIcon,
+            onDismissRequest = { viewModel.closeIconPicker() },
+        ) {
+            IconPicker(
+                searchable = searchable,
+                onSelect = {
+                        viewModel.pickIcon(it)
+                        viewModel.closeIconPicker()
+                },
+                contentPadding = it,
+            )
         }
     }
 }
