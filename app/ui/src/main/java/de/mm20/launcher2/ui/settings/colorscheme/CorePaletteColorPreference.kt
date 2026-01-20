@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.colorpicker.HctColorPicker
 import de.mm20.launcher2.ui.component.colorpicker.rememberHctColorPickerState
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -76,7 +76,7 @@ fun CorePaletteColorPreference(
 
     if (showDialog) {
         var currentValue by remember { mutableStateOf(value) }
-        BottomSheetDialog(onDismissRequest = {
+        DismissableBottomSheet(onDismissRequest = {
             onValueChange(currentValue)
             showDialog = false
         }) {

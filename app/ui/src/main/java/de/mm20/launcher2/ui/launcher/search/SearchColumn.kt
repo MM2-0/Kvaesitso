@@ -355,11 +355,10 @@ fun SearchColumn(
 
 
     val sheetManager = LocalBottomSheetManager.current
-    if (sheetManager.hiddenItemsSheetShown.value) {
-        HiddenItemsSheet(
-            items = hiddenResults,
-            onDismiss = { sheetManager.dismissHiddenItemsSheet() })
-    }
+    HiddenItemsSheet(
+        expanded = sheetManager.hiddenItemsSheetShown.value,
+        items = hiddenResults,
+        onDismiss = { sheetManager.dismissHiddenItemsSheet() })
 }
 
 

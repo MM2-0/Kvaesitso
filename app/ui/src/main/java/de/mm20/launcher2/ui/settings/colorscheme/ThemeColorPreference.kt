@@ -22,9 +22,6 @@ import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -57,7 +54,7 @@ import de.mm20.launcher2.themes.colors.StaticColor
 import de.mm20.launcher2.themes.colors.atTone
 import de.mm20.launcher2.themes.colors.get
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.colorpicker.HctColorPicker
 import de.mm20.launcher2.ui.component.colorpicker.rememberHctColorPickerState
 import de.mm20.launcher2.ui.ktx.hct
@@ -104,7 +101,7 @@ fun ThemeColorPreference(
         var currentValue by remember { mutableStateOf(value) }
 
         val actualValue = currentValue ?: defaultValue
-        BottomSheetDialog(onDismissRequest = {
+        DismissableBottomSheet(onDismissRequest = {
             onValueChange(currentValue)
             showDialog = false
         }) {

@@ -14,6 +14,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -343,7 +344,8 @@ class SettingsActivity : BaseActivity() {
                             )
                         }
                         OverlayHost(
-                            modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainer)
+                            modifier = Modifier.fillMaxSize()
+                                .background(MaterialTheme.colorScheme.surfaceContainer)
                         ) {
                             NavDisplay(
                                 backStack = backStack,

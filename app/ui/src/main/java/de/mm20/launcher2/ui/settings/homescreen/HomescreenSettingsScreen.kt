@@ -14,16 +14,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
@@ -46,7 +42,7 @@ import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.component.preferences.ListPreference
@@ -57,12 +53,11 @@ import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.widgets.clock.ConfigureClockWidgetSheet
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
-import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object HomescreenSettingsRoute: NavKey
+data object HomescreenSettingsRoute : NavKey
 
 @Composable
 fun HomescreenSettingsScreen() {
@@ -286,9 +281,10 @@ fun HomescreenSettingsScreen() {
         }
     }
 
-    if (viewModel.showClockWidgetSheet) {
-        ConfigureClockWidgetSheet(onDismiss = { viewModel.showClockWidgetSheet = false })
-    }
+    ConfigureClockWidgetSheet(
+        expanded = viewModel.showClockWidgetSheet,
+        onDismiss = { viewModel.showClockWidgetSheet = false }
+    )
 }
 
 @Composable
@@ -310,7 +306,7 @@ fun SearchBarStylePreference(
         val darkColors =
             LocalPreferDarkContentOverWallpaper.current && colors == SearchBarColors.Auto || colors == SearchBarColors.Dark
 
-        BottomSheetDialog(
+        DismissableBottomSheet(
             onDismissRequest = {
                 showDialog = false
             }

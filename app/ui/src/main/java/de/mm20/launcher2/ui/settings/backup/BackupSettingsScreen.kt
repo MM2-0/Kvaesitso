@@ -1,11 +1,14 @@
 package de.mm20.launcher2.ui.settings.backup
 
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.RestoreBackupSheet
@@ -13,24 +16,21 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.serialization.Serializable
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 
 @Serializable
-data object BackupSettingsRoute: NavKey
+data object BackupSettingsRoute : NavKey
 
 @Composable
 fun BackupSettingsScreen() {
-    val viewModel: BackupSettingsScreenVM = viewModel()
 
-    val restoreUri by viewModel.restoreUri
+    var restoreUri by remember { mutableStateOf<Uri?>(null) }
 
-    val showBackupSheet by viewModel.showBackupSheet
+    var showBackupSheet by remember { mutableStateOf(false) }
 
     val restoreLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument(),
         onResult = {
-            viewModel.setRestoreUri(it)
+            restoreUri = it
         }
     )
 
@@ -41,7 +41,7 @@ fun BackupSettingsScreen() {
                     title = stringResource(id = R.string.preference_backup),
                     summary = stringResource(id = R.string.preference_backup_summary),
                     onClick = {
-                        viewModel.setShowBackupSheet(true)
+                        showBackupSheet = true
                     })
                 Preference(
                     title = stringResource(id = R.string.preference_restore),
@@ -55,13 +55,11 @@ fun BackupSettingsScreen() {
 
     val uri = restoreUri
 
-    if (uri != null) {
-        RestoreBackupSheet(uri = uri, onDismissRequest = { viewModel.setRestoreUri(null) })
-    }
+    RestoreBackupSheet(uri = uri, onDismissRequest = { restoreUri = null })
 
-    if(showBackupSheet) {
-        CreateBackupSheet(onDismissRequest = {
-            viewModel.setShowBackupSheet(false)
+    CreateBackupSheet(
+        expanded = showBackupSheet,
+        onDismissRequest = {
+            showBackupSheet = false
         })
-    }
 }

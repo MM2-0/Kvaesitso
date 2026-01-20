@@ -31,10 +31,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Shapes
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -66,7 +63,7 @@ import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.serialization.UUIDSerializer
 import de.mm20.launcher2.themes.shapes.CornerStyle
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.ktx.withCorners
@@ -487,7 +484,7 @@ fun ShapePreference(
         val actualBottomEnd = currentBottomEnd ?: baseBottomEnd
         val actualBottomStart = currentBottomStart ?: baseBottomStart
 
-        BottomSheetDialog(
+        DismissableBottomSheet(
             onDismissRequest = {
                 showDialog = false
                 onValueChange(

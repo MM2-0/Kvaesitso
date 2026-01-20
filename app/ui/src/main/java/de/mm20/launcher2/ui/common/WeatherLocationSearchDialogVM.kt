@@ -20,16 +20,16 @@ class WeatherLocationSearchDialogVM: ViewModel(), KoinComponent {
 
     private var debounceSearchJob: Job? = null
     suspend fun searchLocation(query: String) {
-        debounceSearchJob?.cancelAndJoin()
         if (query.isBlank()) {
             locationResults.value = emptyList()
             isSearchingLocation.value = false
             return
         }
+        debounceSearchJob?.cancelAndJoin()
         withContext(coroutineContext) {
             debounceSearchJob = launch {
-                delay(1000)
                 isSearchingLocation.value = true
+                delay(1000)
                 locationResults.value = repository.searchLocations(query).first()
                 isSearchingLocation.value = false
             }

@@ -12,9 +12,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -56,6 +59,7 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
@@ -75,7 +79,7 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.TagChip
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
@@ -83,24 +87,27 @@ import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropRow
 import de.mm20.launcher2.ui.component.dragndrop.LazyVerticalDragAndDropGrid
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
+import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlin.math.roundToInt
 
 @Composable
 fun EditFavoritesSheet(
+    expanded: Boolean,
     onDismiss: () -> Unit,
 ) {
-    val viewModel: EditFavoritesSheetVM = viewModel()
+    DismissableBottomSheet(expanded, onDismissRequest = onDismiss) {
 
-    LaunchedEffect(null) {
-        viewModel.reload()
-    }
+        val viewModel: EditFavoritesSheetVM = viewModel()
 
-    val loading by viewModel.loading
-    val createShortcutTarget by viewModel.createShortcutTarget
+        LaunchedEffect(null) {
+            viewModel.reload()
+        }
 
-    BottomSheetDialog(onDismiss) {
+        val loading by viewModel.loading
+        val createShortcutTarget by viewModel.createShortcutTarget
+
         if (loading) {
             Box(
                 modifier = Modifier
@@ -115,11 +122,18 @@ fun EditFavoritesSheet(
                 )
             }
         } else {
-            ReorderFavoritesGrid(viewModel, it)
-            if (createShortcutTarget != null) {
-                BottomSheetDialog({ viewModel.cancelPickShortcut() }) {
-                    ShortcutPicker(viewModel, it)
-                }
+            ReorderFavoritesGrid(
+                viewModel,
+                PaddingValues(
+                    start = 16.dp,
+                    end = 16.dp,
+                    bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+                )
+            )
+            DismissableBottomSheet(
+                expanded = createShortcutTarget != null,
+                onDismissRequest = { viewModel.cancelPickShortcut() }) {
+                ShortcutPicker(viewModel, it)
             }
         }
     }

@@ -19,7 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.SmallMessage
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
@@ -399,7 +399,7 @@ fun SearchSettingsScreen() {
 
     if (showFilterEditor) {
         val filters by viewModel.searchFilters.collectAsStateWithLifecycle()
-        BottomSheetDialog(onDismissRequest = { showFilterEditor = false }) {
+        DismissableBottomSheet(onDismissRequest = { showFilterEditor = false }) {
             Column(
                 modifier = Modifier.padding(it)
             ) {

@@ -21,7 +21,7 @@ import de.mm20.launcher2.ui.launcher.sheets.EditFavoritesSheet
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object FavoritesSettingsRoute: NavKey
+data object FavoritesSettingsRoute : NavKey
 
 @Composable
 fun FavoritesSettingsScreen() {
@@ -105,9 +105,8 @@ fun FavoritesSettingsScreen() {
         }
     }
 
-    if (showEditSheet) {
-        EditFavoritesSheet(
-            onDismiss = { showEditSheet = false }
-        )
-    }
+    EditFavoritesSheet(
+        expanded = showEditSheet,
+        onDismiss = { showEditSheet = false }
+    )
 }

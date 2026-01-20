@@ -475,10 +475,11 @@ fun WatchFaceSelector(
         }
     }
 
-    if (showWidgetPicker && selected is ClockWidgetStyle.Custom) {
+    if (selected is ClockWidgetStyle.Custom) {
         val previousWidgetId = selected.widgetId
         val appWidgetHost = LocalAppWidgetHost.current
         WidgetPickerSheet(
+            expanded = showWidgetPicker,
             includeBuiltinWidgets = false,
             onWidgetSelected = {
                 if (previousWidgetId != null) {

@@ -187,7 +187,8 @@ fun LocationPreference(
             showDialog = true
         }
     )
-    if (showDialog) {
-        WeatherLocationSearchDialog(onDismissRequest = { showDialog = false })
-    }
+    WeatherLocationSearchDialog(
+        expanded = showDialog,
+        onDismissRequest = { showDialog = false }
+    )
 }

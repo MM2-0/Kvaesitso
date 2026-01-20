@@ -23,7 +23,6 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconToggleButton
@@ -33,12 +32,10 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.Typography
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,14 +61,13 @@ import de.mm20.launcher2.themes.typography.DefaultEmphasizedTextStyles
 import de.mm20.launcher2.themes.typography.DefaultTextStyles
 import de.mm20.launcher2.themes.typography.FontManager
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.theme.typography.fontFamilyOf
 import de.mm20.launcher2.ui.theme.typography.typographyOf
-import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import java.util.UUID
 import kotlin.math.ceil
@@ -763,12 +759,9 @@ private fun FontPreference(
     )
 
     if (showDialog) {
-        val sheetState = rememberModalBottomSheetState()
         val fonts = remember { fontManager.getInstalledFonts() }
-        val scope = rememberCoroutineScope()
-        BottomSheetDialog(
+        DismissableBottomSheet(
             onDismissRequest = { showDialog = false },
-            bottomSheetState = sheetState
         ) {
             LazyColumn(contentPadding = it, verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 if (fonts.builtIn.isNotEmpty()) {
@@ -778,11 +771,8 @@ private fun FontPreference(
                             null,
                             fonts.builtIn,
                             onFontClick = {
-                                scope.launch {
-                                    sheetState.hide()
                                     onValueChange(it)
                                     showDialog = false
-                                }
                             })
                     }
                 }
@@ -793,11 +783,8 @@ private fun FontPreference(
                             stringResource(R.string.font_category_device_default),
                             fonts.deviceDefault,
                             onFontClick = {
-                                scope.launch {
-                                    sheetState.hide()
                                     onValueChange(it)
                                     showDialog = false
-                                }
                             })
                     }
                 }
@@ -808,11 +795,8 @@ private fun FontPreference(
                             stringResource(R.string.font_category_generic),
                             fonts.generic,
                             onFontClick = {
-                                scope.launch {
-                                    sheetState.hide()
                                     onValueChange(it)
                                     showDialog = false
-                                }
                             })
                     }
                 }
@@ -984,7 +968,7 @@ private fun TextStylePreference(
             mutableStateOf(value?.letterSpacing)
         }
 
-        BottomSheetDialog(
+        DismissableBottomSheet(
             onDismissRequest = {
                 onValueChange(
                     ThemeTextStyle(

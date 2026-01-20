@@ -36,7 +36,6 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -57,7 +56,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.markdown.MarkdownEditor
 import de.mm20.launcher2.ui.component.markdown.MarkdownText
@@ -404,10 +403,8 @@ fun NoteWidgetConflictResolveSheet(
     onDismissRequest: () -> Unit,
 ) {
     var selectedStrategy by remember { mutableStateOf<LinkedFileConflictStrategy?>(null) }
-    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    BottomSheetDialog(
+    DismissableBottomSheet(
         onDismissRequest = onDismissRequest,
-        bottomSheetState = bottomSheetState
 
     ) {
         Column(
@@ -546,7 +543,7 @@ fun NoteReadWriteErrorSheet(
     onRelink: () -> Unit,
     onUnlink: () -> Unit,
 ) {
-    BottomSheetDialog(
+    DismissableBottomSheet(
         onDismissRequest = onDismiss,
     ) {
         Column(

@@ -18,20 +18,25 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -54,11 +59,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
-import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppsWidget
+import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -249,41 +254,48 @@ private class BindAndConfigureAppWidgetContract(
 
 @Composable
 fun WidgetPickerSheet(
+    expanded: Boolean,
     includeBuiltinWidgets: Boolean = true,
     title: String = stringResource(R.string.widget_pick_widget),
     onWidgetSelected: (Widget) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val context = LocalContext.current
-    val density = LocalDensity.current
-    val viewModel: WidgetPickerSheetVM = viewModel(factory = WidgetPickerSheetVM.Factory)
 
-    val bindAppWidgetStarter =
-        rememberLauncherForActivityResult(BindAndConfigureAppWidgetContract(density)) {
-            if (it != null) {
-                onWidgetSelected(it)
-                onDismiss()
-            }
-        }
-
-
-    val appWidgetGroups by viewModel.appWidgetGroups.collectAsState(emptyList())
-    val expandAllGroups by viewModel.expandAllGroups.collectAsState(false)
-
-    val colorSurface = MaterialTheme.colorScheme.surfaceContainerLow
-
-    val query by viewModel.searchQuery.collectAsState("")
-
-    BottomSheetDialog(
+    DismissableBottomSheet(
+        expanded = expanded,
         onDismissRequest = onDismiss
     ) {
+        val context = LocalContext.current
+        val density = LocalDensity.current
+        val viewModel: WidgetPickerSheetVM = viewModel(factory = WidgetPickerSheetVM.Factory)
+
+        val bindAppWidgetStarter =
+            rememberLauncherForActivityResult(BindAndConfigureAppWidgetContract(density)) {
+                if (it != null) {
+                    onWidgetSelected(it)
+                    onDismiss()
+                }
+            }
+
+
+        val appWidgetGroups by viewModel.appWidgetGroups.collectAsState(emptyList())
+        val expandAllGroups by viewModel.expandAllGroups.collectAsState(false)
+
+        val colorSurface = MaterialTheme.colorScheme.surfaceContainerLow
+
+        val query by viewModel.searchQuery.collectAsState("")
+
         val builtIn by viewModel.builtInWidgets.collectAsState(emptyList())
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = it
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + 16.dp
+            ),
         ) {
             stickyHeader {
-                SearchBar(
+                DockedSearchBar(
                     modifier = Modifier
                         .fillMaxWidth()
                         .drawBehind {
@@ -295,24 +307,34 @@ fun WidgetPickerSheet(
                             )
                         }
                         .padding(bottom = 16.dp),
-                    windowInsets = WindowInsets(0.dp),
-                    query = query,
-                    onQueryChange = { viewModel.search(it) },
-                    onSearch = {},
-                    active = false,
-                    onActiveChange = {},
-                    placeholder = {
-                        Text(stringResource(R.string.search_bar_placeholder))
-                    },
-                    leadingIcon = {
-                        Icon(painterResource(R.drawable.search_24px), null)
-                    },
-                    trailingIcon = {
-                        if (query.isNotEmpty()) {
-                            IconButton(onClick = { viewModel.search("") }) {
-                                Icon(painterResource(R.drawable.close_24px), null)
-                            }
-                        }
+                    expanded = false,
+                    onExpandedChange = {},
+                    inputField = {
+                        SearchBarDefaults.InputField(
+                            leadingIcon = {
+                                Icon(
+                                    painterResource(R.drawable.search_24px),
+                                    contentDescription = null
+                                )
+                            },
+                            trailingIcon = {
+                                if (query.isNotEmpty()) {
+                                    IconButton(onClick = { viewModel.search("") }) {
+                                        Icon(painterResource(R.drawable.close_24px), null)
+                                    }
+                                }
+                            },
+                            onSearch = {},
+                            expanded = false,
+                            onExpandedChange = {},
+                            query = query,
+                            onQueryChange = {
+                                viewModel.search(it)
+                            },
+                            placeholder = {
+                                Text(stringResource(R.string.search_bar_placeholder))
+                            },
+                        )
                     }
                 ) {
                 }

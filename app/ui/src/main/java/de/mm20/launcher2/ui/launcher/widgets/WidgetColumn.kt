@@ -1,8 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets
 
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
@@ -34,10 +29,6 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -161,7 +152,9 @@ fun WidgetColumn(
             )
 
             Button(
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 8.dp),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(vertical = 8.dp),
                 contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                 onClick = {
                     if (!editMode) {
@@ -172,7 +165,8 @@ fun WidgetColumn(
                 }
             ) {
                 Icon(
-                    modifier = Modifier.padding(end = ButtonDefaults.IconSpacing)
+                    modifier = Modifier
+                        .padding(end = ButtonDefaults.IconSpacing)
                         .size(ButtonDefaults.IconSize),
                     painter = painterResource(
                         if (editMode) R.drawable.add_20px else R.drawable.edit_20px
@@ -184,13 +178,12 @@ fun WidgetColumn(
         }
     }
 
-    if (addNewWidget) {
-        WidgetPickerSheet(
-            onDismiss = { addNewWidget = false },
-            onWidgetSelected = {
-                viewModel.addWidget(it)
-                addNewWidget = false
-            }
-        )
-    }
+    WidgetPickerSheet(
+        expanded = addNewWidget,
+        onDismiss = { addNewWidget = false },
+        onWidgetSelected = {
+            viewModel.addWidget(it)
+            addNewWidget = false
+        }
+    )
 }

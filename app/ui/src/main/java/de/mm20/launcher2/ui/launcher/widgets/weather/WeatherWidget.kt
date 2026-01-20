@@ -115,9 +115,10 @@ fun WeatherWidget(widget: WeatherWidget) {
 
     var showLocationDialog by remember { mutableStateOf(false) }
 
-    if (showLocationDialog) {
-        WeatherLocationSearchDialog(onDismissRequest = { showLocationDialog = false })
-    }
+    WeatherLocationSearchDialog(
+        expanded = showLocationDialog,
+        onDismissRequest = { showLocationDialog = false }
+    )
 
 
     Column {

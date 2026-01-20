@@ -1,10 +1,15 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -13,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -21,10 +25,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -39,27 +43,35 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.IconPicker
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.OutlinedTagsInputField
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 @Composable
 fun CustomizeSearchableSheet(
-    searchable: SavableSearchable,
+    searchable: SavableSearchable?,
     onDismiss: () -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
-    val viewModel: CustomizeSearchableSheetVM =
-        remember(searchable.key) { CustomizeSearchableSheetVM(searchable) }
 
-    val pickIcon by viewModel.isIconPickerOpen
+    DismissableBottomSheet(
+        state = searchable,
+        expanded = { it != null },
+        onDismissRequest = { onDismiss() }) { searchable ->
 
-    BottomSheetDialog(onDismissRequest = { if (!pickIcon) onDismiss() }) {
+        searchable ?: return@DismissableBottomSheet
+
+        val viewModel: CustomizeSearchableSheetVM =
+            remember(searchable.key) { CustomizeSearchableSheetVM(searchable) }
+
+        val pickIcon by viewModel.isIconPickerOpen
+
         Column(
-            modifier = Modifier.padding(it),
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp)
+                .navigationBarsPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val iconSize = 64.dp
@@ -261,19 +273,14 @@ fun CustomizeSearchableSheet(
             }
         }
         if (pickIcon) {
-            val bottomSheetState = rememberModalBottomSheetState()
-            BottomSheetDialog(
+            DismissableBottomSheet(
                 onDismissRequest = { viewModel.closeIconPicker() },
-                bottomSheetState = bottomSheetState
             ) {
                 IconPicker(
                     searchable = searchable,
                     onSelect = {
-                        scope.launch {
                             viewModel.pickIcon(it)
-                            bottomSheetState.hide()
                             viewModel.closeIconPicker()
-                        }
                     },
                     contentPadding = it,
                 )

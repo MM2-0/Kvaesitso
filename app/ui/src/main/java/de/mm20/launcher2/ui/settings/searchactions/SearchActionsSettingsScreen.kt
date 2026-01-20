@@ -288,26 +288,24 @@ fun SearchActionsSettingsScreen() {
     val editAction by viewModel.showEditDialogFor
     val createAction by viewModel.showCreateDialog
 
-    if (createAction) {
-        EditSearchActionSheet(
-            initialSearchAction = null,
-            onSave = {
-                viewModel.addAction(it)
-            },
-            onDismiss = {
-                viewModel.dismissDialogs()
-            }
-        )
-    }
-    if (editAction != null) {
-        EditSearchActionSheet(
-            initialSearchAction = editAction,
-            onSave = {
-                viewModel.updateAction(editAction!!, it)
-            },
-            onDismiss = {
-                viewModel.dismissDialogs()
-            }
-        )
-    }
+    EditSearchActionSheet(
+        expanded = createAction,
+        initialSearchAction = null,
+        onSave = {
+            viewModel.addAction(it)
+        },
+        onDismiss = {
+            viewModel.dismissDialogs()
+        }
+    )
+    EditSearchActionSheet(
+        expanded = editAction != null,
+        initialSearchAction = editAction,
+        onSave = {
+            viewModel.updateAction(editAction!!, it)
+        },
+        onDismiss = {
+            viewModel.dismissDialogs()
+        }
+    )
 }

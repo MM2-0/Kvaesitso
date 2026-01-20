@@ -31,15 +31,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.ToggleButtonDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -65,7 +61,7 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.IconPicker
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.SmallMessage
 import de.mm20.launcher2.ui.component.emojipicker.EmojiPicker
@@ -88,8 +84,7 @@ fun EditTagSheet(
 
     if (viewModel.loading) return
 
-    BottomSheetDialog(
-        bottomSheetState = rememberModalBottomSheetState(true),
+    DismissableBottomSheet(
         onDismissRequest = {
             if (viewModel.page == EditTagSheetPage.CustomizeTag) {
                 viewModel.save()

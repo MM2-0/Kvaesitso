@@ -6,9 +6,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -45,8 +49,7 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.BottomSheetDialog
-import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
@@ -59,7 +62,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object IconsSettingsRoute: NavKey
+data object IconsSettingsRoute : NavKey
 
 @Composable
 fun IconsSettingsScreen() {
@@ -276,44 +279,49 @@ fun IconsSettingsScreen() {
         }
     }
 
-    if (showIconPackSheet) {
-        val iconPackPreviewIcons = remember(installedIconPacks, iconSize) {
-
-            installedIconPacks.associate {
-                it.packageName to viewModel.getIconPackPreviewIcons(
-                    context,
-                    it,
-                    grid.columnCount,
-                    iconSize,
-                    icons?.themedIcons == true
-                )
-            }
+    val iconPackPreviewIcons = remember(installedIconPacks, iconSize) {
+        installedIconPacks.associate {
+            it.packageName to viewModel.getIconPackPreviewIcons(
+                context,
+                it,
+                grid.columnCount,
+                iconSize,
+                icons?.themedIcons == true
+            )
         }
-
-        IconPackSelectorSheet(
-            installedIconPacks,
-            iconPackPreviewIcons = iconPackPreviewIcons,
-            columns = grid.columnCount,
-            onSelect = {
-                viewModel.setIconPack(it.packageName)
-                showIconPackSheet = false
-            },
-            onDismiss = { showIconPackSheet = false },
-        )
     }
+
+    IconPackSelectorSheet(
+        expanded = showIconPackSheet,
+        installedIconPacks,
+        iconPackPreviewIcons = iconPackPreviewIcons,
+        columns = grid.columnCount,
+        onSelect = {
+            viewModel.setIconPack(it.packageName)
+            showIconPackSheet = false
+        },
+        onDismiss = { showIconPackSheet = false },
+    )
 }
 
 @Composable
 private fun IconPackSelectorSheet(
+    expanded: Boolean,
     installedIconPacks: List<IconPack>,
     iconPackPreviewIcons: Map<String, Flow<List<LauncherIcon>>>,
     columns: Int,
     onSelect: (IconPack) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    BottomSheetDialog(onDismissRequest = onDismiss) {
+    DismissableBottomSheet(expanded = expanded, onDismissRequest = onDismiss) {
         LazyColumn(
-            contentPadding = it,
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                end = 16.dp,
+                top = 16.dp,
+                bottom = 16.dp + WindowInsets.navigationBars.asPaddingValues()
+                    .calculateBottomPadding(),
+            ),
         ) {
             items(installedIconPacks.size) {
 

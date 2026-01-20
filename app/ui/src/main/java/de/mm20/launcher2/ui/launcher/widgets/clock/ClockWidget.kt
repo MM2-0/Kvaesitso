@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -57,7 +58,7 @@ import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.Banner
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
@@ -144,9 +145,7 @@ fun ClockWidget(
                     }
                 }
                 HorizontalDivider()
-                if (configure) {
-                    ConfigureClockWidgetSheet(onDismiss = { configure = false })
-                }
+                ConfigureClockWidgetSheet(expanded = configure, onDismiss = { configure = false })
             }
         } else {
             Column(modifier = modifier) {
@@ -345,27 +344,29 @@ fun DynamicZone(
 
 @Composable
 fun ConfigureClockWidgetSheet(
+    expanded: Boolean,
     onDismiss: () -> Unit,
 ) {
-    val viewModel: ClockWidgetSettingsScreenVM = viewModel()
-    val compact by viewModel.compact.collectAsState()
-    val color by viewModel.color.collectAsState()
-    val style by viewModel.clockStyle.collectAsState()
-    val fillHeight by viewModel.fillHeight.collectAsState()
-    val widgetsOnHome by viewModel.widgetsOnHome.collectAsState()
-    val alignment by viewModel.alignment.collectAsState()
-    val showSeconds by viewModel.showSeconds.collectAsState()
-    val monospaced by viewModel.monospaced.collectAsState()
-    val useAccentColor by viewModel.useThemeColor.collectAsState()
-    val parts by viewModel.parts.collectAsState()
-    val smartspacer by viewModel.useSmartspacer.collectAsState()
+    DismissableBottomSheet(expanded = expanded, onDismissRequest = onDismiss) {
+        val viewModel: ClockWidgetSettingsScreenVM = viewModel()
+        val compact by viewModel.compact.collectAsState()
+        val color by viewModel.color.collectAsState()
+        val style by viewModel.clockStyle.collectAsState()
+        val fillHeight by viewModel.fillHeight.collectAsState()
+        val widgetsOnHome by viewModel.widgetsOnHome.collectAsState()
+        val alignment by viewModel.alignment.collectAsState()
+        val showSeconds by viewModel.showSeconds.collectAsState()
+        val monospaced by viewModel.monospaced.collectAsState()
+        val useAccentColor by viewModel.useThemeColor.collectAsState()
+        val parts by viewModel.parts.collectAsState()
+        val smartspacer by viewModel.useSmartspacer.collectAsState()
 
-    BottomSheetDialog(onDismissRequest = onDismiss) {
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
-                .padding(it)
+                .padding(16.dp)
+                .navigationBarsPadding()
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),

@@ -26,10 +26,11 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -97,7 +98,7 @@ import de.mm20.launcher2.search.calendar.CalendarListType
 import de.mm20.launcher2.themes.colors.atTone
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
-import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -113,8 +114,8 @@ import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.widgets.AppWidget
-import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppsWidget
+import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -129,19 +130,20 @@ import kotlin.math.roundToInt
 
 @Composable
 fun ConfigureWidgetSheet(
+    expanded: Boolean,
     widget: Widget,
     onWidgetUpdated: (Widget) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    BottomSheetDialog(
-        onDismissRequest = onDismiss,
-        windowInsets = WindowInsets()
+    DismissableBottomSheet(
+        expanded = expanded,
+        onDismissRequest = onDismiss
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = if (widget is AppWidget) 8.dp else 16.dp)
-                .padding(it)
+                .padding(horizontal = if (widget is AppWidget) 8.dp else 16.dp, vertical = 16.dp)
+                .navigationBarsPadding()
                 .verticalScroll(rememberScrollState())
         ) {
             when (widget) {
@@ -648,28 +650,28 @@ fun ColumnScope.ConfigureAppWidget(
             )
             Text(stringResource(R.string.widget_action_replace))
         }
-        if (replaceWidget) {
-            WidgetPickerSheet(
-                onDismiss = { replaceWidget = false },
-                onWidgetSelected = {
-                    val updatedWidget = when (it) {
-                        is AppWidget -> widget.copy(
-                            config = widget.config.copy(
-                                widgetId = it.config.widgetId
-                            )
+        WidgetPickerSheet(
+            expanded = replaceWidget,
+            onDismiss = { replaceWidget = false },
+            onWidgetSelected = {
+                val updatedWidget = when (it) {
+                    is AppWidget -> widget.copy(
+                        config = widget.config.copy(
+                            widgetId = it.config.widgetId
                         )
+                    )
 
-                        is WeatherWidget -> it.copy(id = widget.id)
-                        is MusicWidget -> it.copy(id = widget.id)
-                        is CalendarWidget -> it.copy(id = widget.id)
-                        is AppsWidget -> it.copy(id = widget.id)
-                        is NotesWidget -> it.copy(id = widget.id)
-                    }
-                    onWidgetUpdated(updatedWidget)
-                    replaceWidget = false
+                    is WeatherWidget -> it.copy(id = widget.id)
+                    is MusicWidget -> it.copy(id = widget.id)
+                    is CalendarWidget -> it.copy(id = widget.id)
+                    is AppsWidget -> it.copy(id = widget.id)
+                    is NotesWidget -> it.copy(id = widget.id)
                 }
-            )
-        }
+                onWidgetUpdated(updatedWidget)
+                replaceWidget = false
+            }
+        )
+
         return
     }
 

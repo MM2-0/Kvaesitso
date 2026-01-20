@@ -33,7 +33,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
 
     private var initialCustomIcon: String? = null
 
-    val currentPage = mutableStateOf(EditSearchActionPage.SelectType)
+    val currentPage = mutableStateOf<EditSearchActionPage?>(null)
     val createNew = mutableStateOf(false)
 
     val searchAction = mutableStateOf<CustomizableSearchActionBuilder?>(null)
@@ -207,6 +207,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
     }
 
     fun onDismiss() {
+        currentPage.value = null
         val action = searchAction.value ?: return
         val newIcon = action.customIcon
         if (newIcon != initialCustomIcon) {

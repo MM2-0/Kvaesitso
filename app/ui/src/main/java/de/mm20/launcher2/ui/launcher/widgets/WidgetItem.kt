@@ -174,11 +174,10 @@ fun WidgetItem(
             }
         }
     }
-    if (configure) {
-        ConfigureWidgetSheet(
-            widget = widget,
-            onWidgetUpdated = onWidgetUpdate,
-            onDismiss = { configure = false },
-        )
-    }
+    ConfigureWidgetSheet(
+        expanded = configure,
+        widget = widget,
+        onWidgetUpdated = onWidgetUpdate,
+        onDismiss = { configure = false },
+    )
 }

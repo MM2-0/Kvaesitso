@@ -26,8 +26,8 @@ import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.widgets.AppWidget
-import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppsWidget
+import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -41,7 +41,8 @@ fun AppWidget(
 ) {
     val context = LocalContext.current
 
-    val lightBackground = if (widget.config.background) !LocalDarkTheme.current else LocalPreferDarkContentOverWallpaper.current
+    val lightBackground =
+        if (widget.config.background) !LocalDarkTheme.current else LocalPreferDarkContentOverWallpaper.current
 
     val widgetInfo = remember(widget.config.widgetId) {
         AppWidgetManager.getInstance(context)
@@ -66,28 +67,27 @@ fun AppWidget(
                 }
             }
         )
-        if (replaceWidget) {
-            WidgetPickerSheet(
-                onDismiss = { replaceWidget = false },
-                onWidgetSelected = {
-                    val updatedWidget = when (it) {
-                        is AppWidget -> widget.copy(
-                            config = widget.config.copy(
-                                widgetId = it.config.widgetId
-                            )
+        WidgetPickerSheet(
+            expanded = replaceWidget,
+            onDismiss = { replaceWidget = false },
+            onWidgetSelected = {
+                val updatedWidget = when (it) {
+                    is AppWidget -> widget.copy(
+                        config = widget.config.copy(
+                            widgetId = it.config.widgetId
                         )
+                    )
 
-                        is WeatherWidget -> it.copy(id = widget.id)
-                        is MusicWidget -> it.copy(id = widget.id)
-                        is CalendarWidget -> it.copy(id = widget.id)
-                        is AppsWidget -> it.copy(id = widget.id)
-                        is NotesWidget -> it.copy(id = widget.id)
-                    }
-                    onWidgetUpdate(updatedWidget)
-                    replaceWidget = false
+                    is WeatherWidget -> it.copy(id = widget.id)
+                    is MusicWidget -> it.copy(id = widget.id)
+                    is CalendarWidget -> it.copy(id = widget.id)
+                    is AppsWidget -> it.copy(id = widget.id)
+                    is NotesWidget -> it.copy(id = widget.id)
                 }
-            )
-        }
+                onWidgetUpdate(updatedWidget)
+                replaceWidget = false
+            }
+        )
     } else {
         val width = widget.config.width
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {

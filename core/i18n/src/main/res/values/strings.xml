@@ -38,6 +38,7 @@
     <string name="action_more_actions">More actions</string>
     <string name="action_clear">Clear</string>
     <string name="action_install">Install</string>
+    <string name="action_quit">Quit</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
     <string name="menu_remove">Remove</string>
@@ -751,6 +752,8 @@
     <string name="search_action_contact">Add to contacts</string>
     <string name="search_action_open_url">View website</string>
     <string name="search_action_event">Schedule event</string>
+    <string name="create_search_action_title">New quick action</string>
+    <string name="edit_search_action_title">Edit quick action</string>
     <string name="create_search_action_type">What type of action do you want to create?</string>
     <string name="create_search_action_type_web">Search on a website</string>
     <string name="create_search_action_type_app">Search in an app</string>
@@ -1085,4 +1088,5 @@
     <string name="preference_transliteration_auto">Automatic</string>
     <string name="preference_transliteration_disabled">Disabled</string>
     <string name="select_tag">Select tag</string>
+    <string name="dialog_discard_unsaved">Quit without saving?</string>
 </resources>
