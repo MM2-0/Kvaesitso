@@ -53,7 +53,7 @@
         <item quantity="one">foot</item>
         <item quantity="other">foot</item>
     </plurals>
-    <string name="unit_yard_symbol">yd</string>
+    <string name="unit_yard_symbol">yard</string>
     <plurals name="unit_yard">
         <item quantity="one">yarda</item>
         <item quantity="other">yarda</item>
@@ -63,7 +63,7 @@
         <item quantity="one">mil</item>
         <item quantity="other">mil</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_nautic_mile_symbol">nmi</string>
     <plurals name="unit_nautic_mile">
         <item quantity="one">deniz mili</item>
         <item quantity="other">deniz mili</item>
@@ -89,17 +89,17 @@
         <item quantity="one">milimetrekare</item>
         <item quantity="other">milimetrekare</item>
     </plurals>
-    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_sqinch_symbol">sq in</string>
     <plurals name="unit_sqinch">
         <item quantity="one">inç kare</item>
         <item quantity="other">inç kare</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqfoot_symbol">sq ft</string>
     <plurals name="unit_sqfoot">
         <item quantity="one">foot kare</item>
         <item quantity="other">foot kare</item>
     </plurals>
-    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_sqyard_symbol">sq yd</string>
     <plurals name="unit_sqyard">
         <item quantity="one">yarda kare</item>
         <item quantity="other">yarda kare</item>
@@ -253,30 +253,30 @@
         <item quantity="one">metrik ton</item>
         <item quantity="other">metrik ton</item>
     </plurals>
-    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_long_ton_symbol">uzun ton</string>
     <plurals name="unit_long_ton">
-        <item quantity="one">long ton</item>
-        <item quantity="other">long ton</item>
+        <item quantity="one">uzun ton</item>
+        <item quantity="other">uzun ton</item>
     </plurals>
-    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_stone_symbol">st</string>
     <plurals name="unit_stone">
         <item quantity="one">stone</item>
         <item quantity="other">stone</item>
     </plurals>
-    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_pound_symbol">lb</string>
     <plurals name="unit_pound">
         <item quantity="one">pound</item>
         <item quantity="other">pound</item>
     </plurals>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_ounce_symbol">oz</string>
     <plurals name="unit_ounce">
         <item quantity="one">ons</item>
         <item quantity="other">ons</item>
     </plurals>
-    <string name="unit_short_ton_symbol">tn.sh.</string>
+    <string name="unit_short_ton_symbol">kısa ton</string>
     <plurals name="unit_short_ton">
-        <item quantity="one">short ton</item>
-        <item quantity="other">short ton</item>
+        <item quantity="one">kısa ton</item>
+        <item quantity="other">kısa ton</item>
     </plurals>
     <!-- UNITS OF TEMPERATURE -->
     <string name="unit_degree_celsius_symbol">°C</string>
@@ -293,5 +293,90 @@
     <plurals name="unit_kelvin">
         <item quantity="one">kelvin</item>
         <item quantity="other">kelvin</item>
+    </plurals>
+    <string name="unit_liter_symbol">L</string>
+    <plurals name="unit_liter">
+        <item quantity="one">Litre</item>
+        <item quantity="other">Litre</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">mL</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">mililitre</item>
+        <item quantity="other">mililitre</item>
+    </plurals>
+    <string name="unit_cubic_meter_symbol">m³</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">metreküp</item>
+        <item quantity="other">metreküp</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">cm³</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">santimentreküp</item>
+        <item quantity="other">santimetreküp</item>
+    </plurals>
+    <string name="unit_cubic_millimeter_symbol">mm³</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">milimetreküp</item>
+        <item quantity="other">milimetreküp</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">cu in</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">inç küp</item>
+        <item quantity="other">inç küp</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">cu ft</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">foot küp</item>
+        <item quantity="other">foot küp</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">cu yd</string>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">yard küp</item>
+        <item quantity="other">yard küp</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">US gal</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">galon (US)</item>
+        <item quantity="other">galon (US)</item>
+    </plurals>
+    <string name="unit_gallon_imp_symbol">Imp. gal</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">Emperyal galon</item>
+        <item quantity="other">Emperyal galon</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">US pint</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">pint (US)</item>
+        <item quantity="other">pint (US)</item>
+    </plurals>
+    <string name="unit_pint_imp_symbol">Imp. pint</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">pint (emperyal)</item>
+        <item quantity="other">pint (emperyal)</item>
+    </plurals>
+    <string name="unit_cup_symbol">fincan</string>
+    <plurals name="unit_cup">
+        <item quantity="one">fincan (US)</item>
+        <item quantity="other">fincan (US)</item>
+    </plurals>
+    <string name="unit_tablespoon_symbol">yemek kaşığı</string>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">yemek kaşığı</item>
+        <item quantity="other">yemek kaşığı</item>
+    </plurals>
+    <string name="unit_teaspoon_symbol">çay kaşığı</string>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">çay kaşığı</item>
+        <item quantity="other">çay kaşığı</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">fl oz ABD</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">sıvı ons (US)</item>
+        <item quantity="other">sıvı ons (US)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">fl oz imp</string>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">sıvı ons (emperyal)</item>
+        <item quantity="other">sıvı ons (emperyal)</item>
     </plurals>
 </resources>
