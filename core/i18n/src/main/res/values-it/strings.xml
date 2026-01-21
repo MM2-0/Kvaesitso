@@ -38,6 +38,7 @@
     <string name="action_more_actions">Più azioni</string>
     <string name="action_clear">Cancella contenuto campo di testo</string>
     <string name="action_install">Installa</string>
+    <string name="action_quit">Abbandona</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Elimina</string>
     <string name="menu_remove">Rimuovi</string>
@@ -723,6 +724,8 @@
     <string name="search_action_contact">Crea contatto</string>
     <string name="search_action_open_url">Visualizza sito web</string>
     <string name="search_action_event">Pianifica evento</string>
+    <string name="create_search_action_title">Nuova azione rapida</string>
+    <string name="edit_search_action_title">Modifica azione rapida</string>
     <string name="create_search_action_type">Che tipo di azione vuoi creare?</string>
     <string name="create_search_action_type_web">Cerca su un sito web</string>
     <string name="create_search_action_type_app">Cerca in un\'app</string>
@@ -1048,4 +1051,5 @@
     <string name="preference_transliteration_auto">Automatica</string>
     <string name="preference_transliteration_disabled">Disabilitata</string>
     <string name="select_tag">Seleziona tag</string>
+    <string name="dialog_discard_unsaved">Uscire senza salvare?</string>
 </resources>
