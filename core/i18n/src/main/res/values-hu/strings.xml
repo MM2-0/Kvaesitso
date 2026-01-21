@@ -38,6 +38,7 @@
     <string name="action_more_actions">További műveletek</string>
     <string name="action_clear">Kiürítés</string>
     <string name="action_install">Telepítés</string>
+    <string name="action_quit">Kilépés</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Törlés</string>
     <string name="menu_remove">Eltávolítás</string>
@@ -647,7 +648,7 @@
     <string name="preference_search_bar_auto_focus">Billentyűzet megjelenítése</string>
     <string name="preference_search_bar_auto_focus_summary">Billentyűzet automatikus megjelenítése az alkalmazásfiók megnyitásakor</string>
     <string name="preference_search_bar_launch_on_enter">Keresés enterrel</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyors műveletre, ha megérinti az „Enter” gombot</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyorsműveletre, ha megérinti az „Enter” gombot</string>
     <string name="preference_hidden_items">Kizárt keresési eredmények</string>
     <string name="preference_hidden_items_summary">Kizárt alkalmazások és keresési eredmények kezelése</string>
     <string name="preference_hidden_items_reveal_button">Kibontásgomb megjelenítése</string>
@@ -733,6 +734,8 @@
     <string name="search_action_contact">Hozzáadás a névjegyekhez</string>
     <string name="search_action_open_url">Weboldal meglátogatása</string>
     <string name="search_action_event">Esemény ütemezése</string>
+    <string name="create_search_action_title">Új gyorsművelet</string>
+    <string name="edit_search_action_title">Gyorsművelet szerkesztése</string>
     <string name="create_search_action_type">Milyen típusú műveletet szeretne létrehozni?</string>
     <string name="create_search_action_type_web">Keresés egy weboldalon</string>
     <string name="create_search_action_type_app">Keresés egy alkalmazásban</string>
@@ -885,7 +888,7 @@
     <string name="preference_default_filter">Alapértelmezett szűrő</string>
     <string name="preference_default_filter_summary">Keresések alapértelmezett szűrőjének testreszabása</string>
     <string name="preference_filter_bar">Szűrősáv megjelenítése</string>
-    <string name="preference_filter_bar_summary">Gyors szűrők megjelenítése a billentyűzet felett</string>
+    <string name="preference_filter_bar_summary">Gyorsszűrők megjelenítése a billentyűzet felett</string>
     <string name="preference_customize_filter_bar">Szűrősáv testreszabása</string>
     <string name="preference_customize_filter_bar_summary">Adja meg, hogy mely elemek szerepeljenek a szűrősávon</string>
     <string name="filter_settings_network_warning">A jelenlegi szűrő alapértelmezés szerint lehetővé teszi az internetes keresési találatokat. A keresési lekérdezések véletlenül külső webes szolgáltatásokra kerülhetnek. Adatvédelmi okokból ez nem ajánlott.</string>
@@ -1062,4 +1065,5 @@
     <string name="preference_transliteration_auto">Automatikus</string>
     <string name="preference_transliteration_disabled">Letiltva</string>
     <string name="select_tag">Címke kiválasztása</string>
+    <string name="dialog_discard_unsaved">Kilépés mentés nélkül?</string>
 </resources>
