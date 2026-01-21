@@ -907,4 +907,8 @@
     <string name="gesture_action_feed">Feed</string>
     <string name="preference_category_feed_provider">Fornitore di feed</string>
     <string name="preference_feed_enable_summary">Scorri verso destra nella schermata iniziale per aprire il feed</string>
+    <string name="action_quit">Abbandona</string>
+    <string name="create_search_action_title">Nuova azione rapida</string>
+    <string name="edit_search_action_title">Modifica azione rapida</string>
+    <string name="dialog_discard_unsaved">Uscire senza salvare?</string>
 </resources>
