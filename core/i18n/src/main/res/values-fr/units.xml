@@ -351,46 +351,66 @@
     <plurals name="unit_liter">
         <item quantity="one">litre</item>
         <item quantity="many">litres</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_milliliter_symbol">mL</string>
     <plurals name="unit_milliliter">
         <item quantity="one">millilitre</item>
         <item quantity="many">millilitres</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_cubic_meter_symbol">m³</string>
     <plurals name="unit_cubic_meter">
         <item quantity="one">mètre cube</item>
         <item quantity="many">mètre cube</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_cubic_centimeter_symbol">cm³</string>
     <plurals name="unit_cubic_centimeter">
         <item quantity="one">centimètre cube</item>
         <item quantity="many">centimètres cubes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_cubic_millimeter_symbol">mm³</string>
     <plurals name="unit_cubic_millimeter">
         <item quantity="one">millimètre cube</item>
         <item quantity="many">millimètres cubes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
-    <string name="unit_cubic_inch_symbol">cu in</string>
+    <string name="unit_cubic_inch_symbol">in³</string>
     <string name="unit_cubic_foot_symbol">cu ft</string>
     <string name="unit_cubic_yard_symbol">cu yd</string>
-    <string name="unit_gallon_us_symbol">gal</string>
+    <string name="unit_gallon_us_symbol">gal US</string>
     <plurals name="unit_gallon_us">
         <item quantity="one">gallon (US)</item>
         <item quantity="many">gallons (US)</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_gallon_imp_symbol">gal imp</string>
     <plurals name="unit_gallon_imp">
         <item quantity="one">gallon (impérial)</item>
         <item quantity="many">gallon (impérial)</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_pint_us_symbol">pt US</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">Pouce cube</item>
+        <item quantity="many">Pouces cube</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">Pied cube</item>
+        <item quantity="many">Pieds cube</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">verge cube</item>
+        <item quantity="many">verges cube</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="unit_pint_us">
+        <item quantity="one">pinte (US)</item>
+        <item quantity="many">pintes (US)</item>
+        <item quantity="other"></item>
+    </plurals>
 </resources>

@@ -305,7 +305,7 @@
     <string name="preference_layout_open_search">Keresés és alkalmazásfiók</string>
     <string name="preference_category_media_apps">Médiaalkalmazások</string>
     <string name="preference_search_unitconverter_summary">Használat: 1,5 kg, vagy 4 cm &gt;&gt; in</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyors műveletre, ha megérinti az „Enter” gombot</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyorsműveletre, ha megérinti az „Enter” gombot</string>
     <string name="preference_hidden_items">Kizárt keresési eredmények</string>
     <string name="icon_picker_filter_all_packs">Minden ikoncsomag</string>
     <string name="search_action_websearch">Internetes keresés</string>
@@ -606,7 +606,7 @@
     <string name="search_filter_tools">Eszközök</string>
     <string name="search_filter_apps">Alkalmazások</string>
     <string name="preference_filter_bar">Szűrősáv megjelenítése</string>
-    <string name="preference_filter_bar_summary">Gyors szűrők megjelenítése a billentyűzet felett</string>
+    <string name="preference_filter_bar_summary">Gyorsszűrők megjelenítése a billentyűzet felett</string>
     <string name="preference_default_filter">Alapértelmezett szűrő</string>
     <string name="preference_default_filter_summary">Keresések alapértelmezett szűrőjének testreszabása</string>
     <string name="filter_settings_network_warning">A jelenlegi szűrő alapértelmezés szerint lehetővé teszi az internetes keresési találatokat. A keresési lekérdezések véletlenül külső webes szolgáltatásokra kerülhetnek. Adatvédelmi okokból ez nem ajánlott.</string>
@@ -896,4 +896,8 @@
     <string name="gesture_action_feed">Hírforrás</string>
     <string name="preference_category_feed_provider">Hírforrás-szolgáltató</string>
     <string name="preference_feed_enable_summary">Csúsztassa jobbra az ujját a kezdőképernyőn a hírforrás megnyitásához</string>
+    <string name="action_quit">Kilépés</string>
+    <string name="create_search_action_title">Új gyorsművelet</string>
+    <string name="edit_search_action_title">Gyorsművelet szerkesztése</string>
+    <string name="dialog_discard_unsaved">Kilépés mentés nélkül?</string>
 </resources>

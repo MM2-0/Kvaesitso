@@ -907,4 +907,8 @@
     <string name="gesture_action_feed">Zdroj</string>
     <string name="preference_category_feed_provider">Poskytovatel zdroje</string>
     <string name="preference_feed_enable_summary">Posuňte vpravo na domovské obrazovce pro otevření zdroje</string>
+    <string name="action_quit">Ukončit</string>
+    <string name="create_search_action_title">Nová rychlá akce</string>
+    <string name="edit_search_action_title">Upravit rychlou akci</string>
+    <string name="dialog_discard_unsaved">Ukončit bez uložení?</string>
 </resources>
