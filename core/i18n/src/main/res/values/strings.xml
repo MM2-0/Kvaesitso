@@ -768,7 +768,7 @@
     <string name="more_information">More information</string>
     <string name="experimental_feature">Experimental</string>
     <string name="tag_exists_error">A tag with this name already exists</string>
-    <string name="tag_name_empty_error">Tag name cannot be empty</string>
+    <string name="tag_name_empty_error">Name cannot be empty</string>
     <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged</string>
     <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted</string>
     <string name="tag_select_items">Select items</string>
