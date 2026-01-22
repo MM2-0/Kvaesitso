@@ -56,7 +56,7 @@
     <string name="preference_theme_dark">Sombre</string>
     <string name="preference_screen_colors">Palette de couleur</string>
     <string name="preference_colors_default">Défaut</string>
-    <string name="preference_colors_bw">Noir et Blanc</string>
+    <string name="preference_colors_bw">Noir et blanc</string>
     <string name="preference_screen_about">À propos</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Liens</string>
@@ -67,7 +67,7 @@
     <string name="preference_screen_appearance_summary">Modifier l\'apparence</string>
     <string name="preference_category_location">Position</string>
     <string name="preference_automatic_location">Position automatique</string>
-    <string name="preference_automatic_location_summary">Utiliser le GPS et les services de localisation pour déterminer la localisation automatiquement</string>
+    <string name="preference_automatic_location_summary">Utiliser les services de localisation pour déterminer la localisation automatiquement</string>
     <string name="preference_location">Position</string>
     <string name="preference_imperial_units_summary">Utiliser les degrés Fahrenheit et les miles par heure</string>
     <string name="preference_imperial_units">Système impérial</string>
@@ -283,7 +283,7 @@
     <string name="preference_crash_reporter">Signaler un plantage</string>
     <string name="preference_crash_reporter_summary">Signaler une erreur ou un plantage</string>
     <string name="preference_screen_search">Rechercher</string>
-    <string name="preference_screen_search_summary">Recherche, étiquettes, éléments cachés</string>
+    <string name="preference_screen_search_summary">Recherche, étiquettes, résultats exclus</string>
     <string name="preference_search_favorites">Favoris</string>
     <string name="preference_search_favorites_summary">Afficher les applications épinglées et fréquemment utilisées au-dessus de la grille</string>
     <string name="preference_search_files">Fichiers</string>
@@ -344,7 +344,7 @@
     <string name="preference_search_appshortcuts">Raccourcis d\'applications</string>
     <string name="preference_search_appshortcuts_summary">Rechercher les raccourcis d\'applications</string>
     <string name="restore_different_minor_version">Cette sauvegarde a été créée depuis une version différente de %1$s. Certaines données pourraient ne pas être restaurées correctement.</string>
-    <string name="preference_clockwidget_favorites_part_summary">Afficher la première ligne d\'éléments épinglés</string>
+    <string name="preference_clockwidget_favorites_part_summary">Afficher les éléments épinglés sur le dock</string>
     <string name="restore_invalid_file">Le fichier sélectionné semble ne pas être un fichier de sauvegarde. Êtes-vous sûr d\'avoir sélectionné le bon fichier ?</string>
     <string name="restore_incompatible_file">Cette sauvegarde a été créée avec une version différente de %1$s et ne peut donc pas être restaurée sur cette version.</string>
     <string name="restore_complete">La sauvegarde a bien été restaurée.</string>
@@ -353,8 +353,8 @@
     <string name="preference_cards_shape_rounded">Arrondi</string>
     <string name="preference_cards_shape_cut">Coupé</string>
     <string name="preference_search_currencyconverter_summary">Télécharger régulièrement les taux de change pour convertir les devises</string>
-    <string name="preference_hidden_items">Résultats de recherche cachés</string>
-    <string name="preference_hidden_items_summary">Gérer les applications et recherches cachées</string>
+    <string name="preference_hidden_items">Résultats de recherche exclus</string>
+    <string name="preference_hidden_items_summary">Gérer les applications et recherches exclus</string>
     <string name="backup_complete">La sauvegarde a bien été réalisée.</string>
     <string name="restore_meta">Créée le %1$s sur %2$s depuis %3$s.</string>
     <string name="calendar_widget_next_events">Événement suivant</string>
@@ -401,9 +401,9 @@
     <string name="favorites_empty_tag">Il n\'y a pas d\'élément avec cette étiquette</string>
     <string name="frequently_used_rows">Nombre de colonnes</string>
     <plurals name="debug_cleanup_database_result">
-        <item quantity="one">%1$d entrée a été supprimée.</item>
-        <item quantity="many">%1$d entrées ont été supprimées.</item>
-        <item quantity="other">%1$d entrées ont été supprimées.</item>
+        <item quantity="one">%1$d entrée a été supprimée</item>
+        <item quantity="many">%1$d entrées ont été supprimées</item>
+        <item quantity="other">%1$d entrées ont été supprimées</item>
     </plurals>
     <string name="preference_widgets_edit_button_summary">Afficher un bouton pour ajouter, supprimer et réordonner les widgets</string>
     <string name="menu_remove">Supprimer</string>
@@ -441,14 +441,14 @@
     <string name="action_next">Suivant</string>
     <string name="preference_screen_tags">Étiquettes</string>
     <string name="preference_screen_tags_summary">Gérer les étiquettes et les éléments étiquetés</string>
-    <string name="tag_exists_message">Une étiquette avec ce nom existe déjà. Si vous continuez, les deux étiquettes seront fusionnées.</string>
-    <string name="search_action_websearch_url_hint">Le modèle d\'URL est utilisé pour construire une URL de recherche. Utilisez ‘${1}’ comme remplacement pour la recherche entrée, par exemple https://google.com/search?q=${1}.</string>
+    <string name="tag_exists_message">Une étiquette avec ce nom existe déjà. Si vous continuez, les deux étiquettes seront fusionnées</string>
+    <string name="search_action_websearch_url_hint">Le modèle d\'URL est utilisé pour construire une URL de recherche. Utilisez ‘${1}’ comme remplacement pour l\'entrée de recherche</string>
     <string name="search_action_open_url">Voir le site</string>
     <string name="create_search_action_website_url">Entrez l\'adresse du site :</string>
     <string name="more_information">Plus d\'informations</string>
     <string name="experimental_feature">Expérimental</string>
     <string name="create_search_action_pick_app">Choisir une application pour rechercher :</string>
-    <string name="create_search_action_website_invalid_url">Ce site ne peut pas être importé automatiquement comme moteur de recherche. Vous pouvez essayer un autre site ou entrer directement les données nécessaires dans la prochaine étape.</string>
+    <string name="create_search_action_website_invalid_url">Ce site ne peut pas être importé automatiquement comme moteur de recherche. Vous pouvez essayer un autre site ou entrer directement les données nécessaires dans la prochaine étape</string>
     <string name="search_action_alarm">Créer une alarme</string>
     <string name="search_action_timer">Démarrer un minuteur</string>
     <string name="search_action_contact">Ajouter aux contacts</string>
@@ -456,8 +456,8 @@
     <string name="create_search_action_type_app">Rechercher dans une application</string>
     <string name="create_search_action_type_intent">Intent personnalisé</string>
     <string name="search_action_websearch_url">Modèle d\'URL</string>
-    <string name="tag_exists_error">Une étiquette avec ce nom existe déjà.</string>
-    <string name="tag_no_items_message">Aucun élément n\'est assigné à cette étiquette. Si vous continuez, l\'étiquette sera supprimée.</string>
+    <string name="tag_exists_error">Une étiquette avec ce nom existe déjà</string>
+    <string name="tag_no_items_message">Aucun élément n\'est assigné à cette étiquette. Si vous continuez, l\'étiquette sera supprimée</string>
     <string name="tag_select_items">Éléments sélectionnés :</string>
     <string name="tag_name">Nom de l\'étiquette</string>
     <plurals name="tag_selected_items">
@@ -471,7 +471,7 @@
     <string name="widget_config_calendar_no_calendars">Aucun calendrier trouvé</string>
     <string name="preference_screen_integrations">Intégrations</string>
     <string name="preference_screen_homescreen">Écran d\'accueil</string>
-    <string name="preference_screen_icons_summary">Grille, taille d\'icônes, packs d\'icônes, badges</string>
+    <string name="preference_screen_icons_summary">Taille de la grille, icônes, badges</string>
     <string name="search_bar_position_top">Haut</string>
     <string name="search_bar_position_bottom">Bas</string>
     <string name="preference_layout_search_results">Arrangement des résultats de recherche</string>
@@ -515,7 +515,7 @@
     <string name="gesture_action_launch_app">Lancer une application</string>
     <string name="gesture_action_lock_screen">Éteindre l\'écran</string>
     <string name="preference_hidden_items_reveal_button">Afficher le bouton Révéler</string>
-    <string name="preference_hidden_items_reveal_button_summary">Afficher un bouton pour révéler les résultats de recherche masqués</string>
+    <string name="preference_hidden_items_reveal_button_summary">Afficher un bouton pour révéler les résultats de recherche exclus</string>
     <string name="widget_config_appwidget_background">Carte de fond</string>
     <string name="widget_name_notes">Note</string>
     <string name="preference_screen_clockwidget_summary">Configurer le style d\'horloge et les composants</string>
@@ -814,7 +814,7 @@
     <string name="weather_forecast_wind">Vent</string>
     <string name="weather_forecast_precipitation">Précipitations</string>
     <string name="weather_forecast_humidity">Humidité</string>
-    <string name="tag_empty_name">Une étiquette ne peut exister sans nom. Si vous continuez, l\'étiquette sera supprimée.</string>
+    <string name="tag_empty_name">Une étiquette ne peut exister sans nom. Si vous continuez, l\'étiquette sera supprimée</string>
     <string name="weather_condition_thunder">Tonnerre</string>
     <string name="weather_condition_haze">Brume</string>
     <string name="provider_breezy">Breezy Weather</string>
@@ -845,7 +845,7 @@
     <string name="preference_search_local_calendar_summary">Rechercher des agendas sur l\'appareil</string>
     <string name="preference_grid_list_style">Afficher les applications en tant que liste</string>
     <string name="preference_grid_list_icons">Afficher les icônes d\'applications dans la liste</string>
-    <string name="preference_contacts_call_on_tap_summary">Démarrer immédiatement un appel lors d\'un appui sur un numéro de téléphone</string>
+    <string name="preference_contacts_call_on_tap_summary">Démarrer un appel sans confirmation lors d\'un appui sur un numéro de téléphone</string>
     <string name="profile_work_profile_action_lock">Mettre en pause les applications professionnelles</string>
     <plurals name="calendar_widget_running_tasks">
         <item quantity="one">+%1$d tâche non terminée</item>
@@ -886,4 +886,22 @@
     <string name="new_theme_name">(sans titre)</string>
     <string name="widget_name_apps">Applications</string>
     <string name="music_widget_interactive_progress_bar">Barre de progression interactive</string>
+    <string name="preference_screen_typography">Typographie</string>
+    <string name="preference_category_enabled_plugins">Activé</string>
+    <string name="preference_category_installed_plugins">Installé</string>
+    <string name="preference_clockwidget_smartspacer">Géré par Smartspacer</string>
+    <string name="preference_clockwidget_dock_rows">Lignes du dock</string>
+    <string name="preference_search_apps">Applications</string>
+    <string name="preference_search_apps_summary">Afficher toutes les applications lorsque le champs est vide</string>
+    <string name="preference_search_bar_style_transparent">Transparent</string>
+    <string name="preference_search_bar_style_solid">Opaque</string>
+    <string name="preference_search_bar_style_hidden">Masqué</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_enable">Activer l\'intégration Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">Ouvrir Smartspacer</string>
+    <string name="preference_feed_integration">Fils</string>
+    <string name="create_search_action_title">Nouvelle action rapide</string>
+    <string name="edit_search_action_title">Éditer l\'action rapide</string>
+    <string name="tag_icon_customicon">Icône</string>
+    <string name="tag_icon_emoji">Émoji</string>
 </resources>
