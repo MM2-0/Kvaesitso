@@ -896,4 +896,8 @@
     <string name="no_feed_providers">Geen feedproviders geïnstalleerd</string>
     <string name="preference_feed_enable_summary">Naar rechts vegen op het thuisscherm om de feed te openen</string>
     <string name="preference_category_feed_provider">Feedaanbieder</string>
+    <string name="action_quit">Afsluiten</string>
+    <string name="create_search_action_title">Nieuwe snelle actie</string>
+    <string name="edit_search_action_title">Snelle actie bewerken</string>
+    <string name="dialog_discard_unsaved">Afsluiten zonder opslaan?</string>
 </resources>
