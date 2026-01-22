@@ -11,9 +11,11 @@ fun LauncherBottomSheets() {
     EditFavoritesSheet(
         expanded = bottomSheetManager.editFavoritesSheetShown.value,
         onDismiss = { bottomSheetManager.dismissEditFavoritesSheet() })
-    bottomSheetManager.editTagSheetShown.value?.let {
-        EditTagSheet(tag = it, onDismiss = { bottomSheetManager.dismissEditTagSheet() })
-    }
+    EditTagSheet(
+        expanded = bottomSheetManager.editTagSheetShown.value != null,
+        tag = bottomSheetManager.editTagSheetShown.value,
+        onDismiss = { bottomSheetManager.dismissEditTagSheet() }
+    )
     FailedGestureSheet(
         bottomSheetManager.failedGestureSheetShown.value,
         onDismiss = { bottomSheetManager.dismissFailedGestureSheet() }

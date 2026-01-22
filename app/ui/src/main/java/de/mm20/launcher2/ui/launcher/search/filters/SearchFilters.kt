@@ -29,7 +29,6 @@ fun SearchFilters(
     val allCategoriesEnabled = filters.allCategoriesEnabled
     Column(
         modifier = modifier
-            .verticalScroll(rememberScrollState())
             .padding(horizontal = 4.dp),
     ) {
         FilterChip(

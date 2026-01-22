@@ -111,21 +111,20 @@ fun TagsSettingsScreen() {
             }
         }
     }
-    if (viewModel.editTag.value != null) {
-        EditTagSheet(
-            tag = viewModel.editTag.value,
-            onDismiss = {
-                viewModel.editTag.value = null
-                viewModel.createTag.value = false
-            }
-        )
-    } else if (viewModel.createTag.value) {
-        EditTagSheet(
-            tag = null,
-            onDismiss = {
-                viewModel.createTag.value = false
-                viewModel.editTag.value = null
-            }
-        )
-    }
+    EditTagSheet(
+        expanded = viewModel.editTag.value != null,
+        tag = viewModel.editTag.value,
+        onDismiss = {
+            viewModel.editTag.value = null
+            viewModel.createTag.value = false
+        }
+    )
+    EditTagSheet(
+        expanded = viewModel.createTag.value,
+        tag = null,
+        onDismiss = {
+            viewModel.createTag.value = false
+            viewModel.editTag.value = null
+        }
+    )
 }

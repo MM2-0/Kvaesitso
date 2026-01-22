@@ -41,6 +41,7 @@ class EditTagSheetVM : ViewModel(), KoinComponent {
     var loading by mutableStateOf(true)
 
     var page by mutableStateOf(EditTagSheetPage.CreateTag)
+    var wasOnLastPage by mutableStateOf(false)
 
     var taggedItems by mutableStateOf(emptyList<SavableSearchable>())
     var taggableApps by mutableStateOf(emptyList<TaggableItem>())
@@ -56,6 +57,7 @@ class EditTagSheetVM : ViewModel(), KoinComponent {
         this.oldTagName = tag
         this.tagName = tag ?: ""
         this.page = if (tag == null) EditTagSheetPage.CreateTag else EditTagSheetPage.CustomizeTag
+        this.wasOnLastPage = this.page == EditTagSheetPage.CustomizeTag
         this.taggedItems = emptyList()
         viewModelScope.launch(Dispatchers.Default) {
             allTags = tagService.getAllTags().first().toSet()
@@ -80,7 +82,7 @@ class EditTagSheetVM : ViewModel(), KoinComponent {
     fun save() {
         val oldName = oldTagName
         val newName = tagName
-        val tagIcon = tagCustomIcon
+        val tagIcon = tagCustomIcon.value
         if ((taggedItems.isEmpty() || tagName.isEmpty()) && oldName != null) tagService.deleteTag(oldName)
         else if (oldName != null) tagService.updateTag(oldName, newName = newName, items = taggedItems)
         else tagService.createTag(tagName, taggedItems)
@@ -89,16 +91,18 @@ class EditTagSheetVM : ViewModel(), KoinComponent {
             iconService.setCustomIcon(Tag(oldName), null)
         }
         if (tagIcon != null) {
-            iconService.setCustomIcon(Tag(newName), tagCustomIcon.value)
+            iconService.setCustomIcon(Tag(newName), tagIcon)
         } else {
             iconService.setCustomIcon(Tag(newName), null)
         }
-        loading = true
     }
 
     fun onClickContinue() {
         if (page == EditTagSheetPage.CreateTag && tagNameExists) return
         page = if (page == EditTagSheetPage.CreateTag) EditTagSheetPage.PickItems else EditTagSheetPage.CustomizeTag
+        if (page == EditTagSheetPage.CustomizeTag) {
+            wasOnLastPage = true
+        }
         oldTagName = tagName
     }
 

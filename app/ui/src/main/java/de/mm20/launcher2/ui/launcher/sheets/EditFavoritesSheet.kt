@@ -59,7 +59,6 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
@@ -87,7 +86,6 @@ import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropRow
 import de.mm20.launcher2.ui.component.dragndrop.LazyVerticalDragAndDropGrid
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
-import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlin.math.roundToInt
@@ -113,7 +111,7 @@ fun EditFavoritesSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
-                    .padding(it)
+                    .padding(16.dp)
             ) {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -122,18 +120,20 @@ fun EditFavoritesSheet(
                 )
             }
         } else {
-            ReorderFavoritesGrid(
-                viewModel,
+            val paddingValues =
                 PaddingValues(
                     start = 16.dp,
                     end = 16.dp,
                     bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
                 )
+            ReorderFavoritesGrid(
+                viewModel,
+                paddingValues
             )
             DismissableBottomSheet(
                 expanded = createShortcutTarget != null,
                 onDismissRequest = { viewModel.cancelPickShortcut() }) {
-                ShortcutPicker(viewModel, it)
+                ShortcutPicker(viewModel, paddingValues)
             }
         }
     }
@@ -598,17 +598,16 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
             }
         }
     }
-    if (createTag) {
-        EditTagSheet(
-            tag = null,
-            onTagSaved = { tag ->
-                viewModel.pinTag(Tag(tag))
-            },
-            onDismiss = {
-                createTag = false
-            }
-        )
-    }
+    EditTagSheet(
+        expanded = createTag,
+        tag = null,
+        onTagSaved = { tag ->
+            viewModel.pinTag(Tag(tag))
+        },
+        onDismiss = {
+            createTag = false
+        }
+    )
 }
 
 @Composable

@@ -29,7 +29,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -451,18 +450,17 @@ fun ColumnScope.ConfigureFavoritesWidget(
                 }
 
 
-                if (createTag) {
-                    EditTagSheet(
-                        tag = null,
-                        onTagSaved = { tag ->
-                            val newTag = Tag(tag)
-                            tagList = (tagList + newTag.tag).toImmutableList()
-                        },
-                        onDismiss = {
-                            createTag = false
-                        }
-                    )
-                }
+                EditTagSheet(
+                    expanded = createTag,
+                    tag = null,
+                    onTagSaved = { tag ->
+                        val newTag = Tag(tag)
+                        tagList = (tagList + newTag.tag).toImmutableList()
+                    },
+                    onDismiss = {
+                        createTag = false
+                    }
+                )
 
                 OutlinedCard(
                     modifier = Modifier.padding(top = 16.dp)

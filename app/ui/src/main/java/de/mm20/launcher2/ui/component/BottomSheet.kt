@@ -59,7 +59,7 @@ fun BottomSheet(
 fun <T>BottomSheet(
     state: T,
     expanded: (T) -> Boolean,
-    onDismissRequest: () -> Unit,
+    onDismissRequest: () -> Unit = {},
     content: @Composable (state: T) -> Unit,
 ) {
     val expandedState = remember { MutableTransitionState(state) }

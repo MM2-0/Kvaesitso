@@ -768,10 +768,10 @@
     <string name="more_information">More information</string>
     <string name="experimental_feature">Experimental</string>
     <string name="tag_exists_error">A tag with this name already exists</string>
+    <string name="tag_name_empty_error">Tag name cannot be empty</string>
     <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged</string>
     <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted</string>
-    <string name="tag_empty_name">A tag cannot exist without a name. If you continue, the tag will be deleted</string>
-    <string name="tag_select_items">Select items:</string>
+    <string name="tag_select_items">Select items</string>
     <string name="tag_name">Tag name</string>
     <string name="tag_icon_customicon">Icon</string>
     <string name="tag_icon_emoji">Emoji</string>
@@ -1088,5 +1088,7 @@
     <string name="preference_transliteration_auto">Automatic</string>
     <string name="preference_transliteration_disabled">Disabled</string>
     <string name="select_tag">Select tag</string>
+    <string name="create_tag_title">New tag</string>
+    <string name="edit_tag_title">Edit tag</string>
     <string name="dialog_discard_unsaved">Quit without saving?</string>
 </resources>
