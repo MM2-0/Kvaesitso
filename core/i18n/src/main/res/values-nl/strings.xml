@@ -36,6 +36,7 @@
     <string name="action_more_actions">Meer acties</string>
     <string name="action_clear">Wissen</string>
     <string name="action_install">Installeren</string>
+    <string name="action_quit">Afsluiten</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Verwijderen</string>
     <string name="menu_remove">Verwijderen</string>
@@ -712,6 +713,8 @@
     <string name="search_action_contact">Contact maken</string>
     <string name="search_action_open_url">Website bekijken</string>
     <string name="search_action_event">Afspraak plannen</string>
+    <string name="create_search_action_title">Nieuwe snelle actie</string>
+    <string name="edit_search_action_title">Snelle actie bewerken</string>
     <string name="create_search_action_type">Welk soort actie wil je maken?</string>
     <string name="create_search_action_type_web">Zoeken op website</string>
     <string name="create_search_action_type_app">Zoeken in applicatie</string>
@@ -1020,4 +1023,5 @@
     <string name="preference_transliteration_auto">Automatisch</string>
     <string name="preference_transliteration_disabled">Uitgeschakeld</string>
     <string name="select_tag">Label selecteren</string>
+    <string name="dialog_discard_unsaved">Afsluiten zonder opslaan?</string>
 </resources>
