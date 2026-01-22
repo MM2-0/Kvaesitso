@@ -631,7 +631,6 @@
     <string name="profile_work_profile_action_unlock">解除暫停</string>
     <string name="profile_work_profile_state_locked">工作應用程式被暫停</string>
     <string name="hint_drag_and_drop_reorder">按住並拖曳項目以重新排列它們</string>
-    <string name="tag_empty_name">標籤名稱不能為空。如果繼續，將會刪除此標籤</string>
     <string name="preference_restore_default">還原預設</string>
     <string name="shortcut_label_unavailable">無法使用</string>
     <string name="shortcut_unavailable_description">此捷徑無法使用，因為 %1$s 不是預設啟動器</string>

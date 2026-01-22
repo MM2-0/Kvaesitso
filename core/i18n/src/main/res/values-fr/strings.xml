@@ -814,7 +814,6 @@
     <string name="weather_forecast_wind">Vent</string>
     <string name="weather_forecast_precipitation">Précipitations</string>
     <string name="weather_forecast_humidity">Humidité</string>
-    <string name="tag_empty_name">Une étiquette ne peut exister sans nom. Si vous continuez, l\'étiquette sera supprimée</string>
     <string name="weather_condition_thunder">Tonnerre</string>
     <string name="weather_condition_haze">Brume</string>
     <string name="provider_breezy">Breezy Weather</string>

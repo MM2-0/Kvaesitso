@@ -789,7 +789,6 @@
     <string name="weather_forecast_precipitation">Precipitazione</string>
     <string name="weather_forecast_wind">Vento</string>
     <string name="widget_removed">Widget rimosso</string>
-    <string name="tag_empty_name">Un tag non può esistere senza un nome. Se continui, il tag verrà eliminato</string>
     <string name="preference_clock_widget_time_format">Formato ora</string>
     <string name="preference_clock_widget_time_format_24h">24 ore</string>
     <string name="preference_clock_widget_time_format_12h">12 ore</string>

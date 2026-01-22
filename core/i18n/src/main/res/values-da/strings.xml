@@ -691,7 +691,6 @@
     <string name="profile_private_profile_action_unlock">Oplås</string>
     <string name="preference_signout">Log ud</string>
     <string name="poi_category_baseball">Baseballbane</string>
-    <string name="tag_empty_name">Et tag kan ikke eksistere uden et navn. Hvis du fortsætter, slettes tagget.</string>
     <string name="poi_category_tennis">Tennisbane</string>
     <string name="poi_category_chinese_restaurant">Kinesisk restaurant</string>
     <string name="weather_forecast_humidity">Fugtighed</string>

@@ -747,7 +747,6 @@
     <string name="tag_exists_error">Bu ada sahip bir etiket zaten var</string>
     <string name="tag_exists_message">Bu ada sahip bir etiket zaten var. Devam ederseniz, iki etiket birleştirilecektir</string>
     <string name="tag_no_items_message">Bu etikete atanmış öğe yok. Devam ederseniz, etiket silinecektir</string>
-    <string name="tag_empty_name">Bir etiket isimsiz olamaz. Devam ederseniz, etiket silinecektir</string>
     <string name="tag_select_items">Öğeleri seçin:</string>
     <string name="tag_name">Etiket adı</string>
     <plurals name="tag_selected_items">

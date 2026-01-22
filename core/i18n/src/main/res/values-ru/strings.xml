@@ -805,7 +805,6 @@
     <string name="weather_forecast_precipitation">Осадки</string>
     <string name="widget_removed">Виджет удален</string>
     <string name="missing_permission_call_contacts_settings">Для начала звонков необходимо разрешение на вызов</string>
-    <string name="tag_empty_name">Тег не может существовать без названия. Если вы продолжите, тег будет удален.</string>
     <string name="preference_grid_list_style">Показывать приложения списком</string>
     <string name="preference_grid_list_icons">Показывать иконки приложений в списке</string>
     <string name="preference_grid_list_style_summary">Отображать приложения в виде списка, а не сетки</string>

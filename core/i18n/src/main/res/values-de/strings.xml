@@ -795,7 +795,6 @@
     <string name="preference_grid_list_style_summary">Apps als Liste statt als Raster darstellen</string>
     <string name="preference_grid_list_icons_summary">Icons in der App-Liste anzeigen</string>
     <string name="weather_forecast_precipitation">Niederschlag</string>
-    <string name="tag_empty_name">Unbenannte Tags werden nicht unterstützt. Wenn Sie fortfahren, wird der Tag gelöscht</string>
     <string name="preference_clock_widget_time_format">Zeitformat</string>
     <string name="preference_clock_widget_time_format_24h">24-Stunden</string>
     <string name="preference_clock_widget_time_format_12h">12-Stunden</string>

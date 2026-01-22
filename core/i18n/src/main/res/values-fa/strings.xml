@@ -474,7 +474,6 @@
     <string name="preference_search_bar_style_summary">سفارشی کردن ظاهر نوار جستجو</string>
     <string name="restore_meta">ساخته شده %1$s در %2$s با %3$s.</string>
     <string name="open_search_swipe_right">کشیدن به راست</string>
-    <string name="tag_empty_name">یک برچسب بدون نام نمی‌توانید داشته باشید. اگر ادامه دهید، برچسب پاک خواهد شد.</string>
     <string name="tag_name">نام برچسب</string>
     <string name="preference_layout_open_search">جستجو / کشوی برنامه‌ها</string>
     <string name="open_search_pull_down">کشیدن به پایین</string>

@@ -766,7 +766,6 @@
     <string name="profile_work_profile_state_locked">Les aplicacions de treball estan en pausa</string>
     <string name="weather_forecast_humidity">Humitat</string>
     <string name="weather_forecast_wind">Vent</string>
-    <string name="tag_empty_name">Una etiqueta no pot existir sense un nom. Si continueu, l\'etiqueta se suprimirà</string>
     <string name="action_done">Fet</string>
     <string name="action_more_actions">Més accions</string>
     <string name="action_clear">Borra el camp</string>

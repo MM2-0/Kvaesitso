@@ -770,7 +770,6 @@
     <string name="weather_forecast_precipitation">หยาดน้ำฟ้า</string>
     <string name="weather_forecast_humidity">ความชื้น</string>
     <string name="weather_forecast_wind">ลม</string>
-    <string name="tag_empty_name">ไม่สามารถตั้งแท็กที่ไม่มีชื่อได้ หากคุณดำเนินการต่อ แท็กจะถูกลบ</string>
     <string name="preference_clock_widget_time_format">รูปแบบเวลา</string>
     <string name="preference_clock_widget_time_format_24h">24 ชั่วโมง</string>
     <string name="widget_removed">ลบวิดเจ็ตแล้ว</string>

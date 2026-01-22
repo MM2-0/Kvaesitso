@@ -596,7 +596,6 @@
     <string name="tag_exists_error">תגית עם שם זה כבר קיימת.</string>
     <string name="tag_exists_message">תגית עם שם זה כבר קיימת. אם תמשיך, שתי התגיות ימוזגו.</string>
     <string name="tag_no_items_message">לא הוקצו פריטים לתגית זו. אם תמשיך, התגית תימחק.</string>
-    <string name="tag_empty_name">תגית לא יכולה להתקיים ללא שם. אם תמשיך, התגית תימחק.</string>
     <string name="preference_layout_search_results">סידור תוצאות החיפוש</string>
     <string name="search_results_order_top_down">מלמעלה למטה</string>
     <string name="search_results_order_bottom_up">מלמטה למעלה</string>

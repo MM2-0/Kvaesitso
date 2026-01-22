@@ -788,7 +788,6 @@
     <string name="weather_forecast_wind">Vítr</string>
     <string name="weather_forecast_precipitation">Srážky</string>
     <string name="weather_forecast_humidity">Vlhkost</string>
-    <string name="tag_empty_name">Štítek nemůže existovat bez názvu. Pokud budete pokračovat, bude štítek odstraněn</string>
     <string name="widget_removed">Widget odstraněn</string>
     <string name="preference_clock_widget_time_format">Formát času</string>
     <string name="preference_clock_widget_time_format_24h">24hodinový</string>

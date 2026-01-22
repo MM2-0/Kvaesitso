@@ -845,7 +845,6 @@
     <string name="font_category_generic">常规字体</string>
     <string name="preference_widgets_on_home_screen">直达组件</string>
     <string name="preference_widgets_on_home_screen_summary">在主屏幕而不是独立页面显示组件</string>
-    <string name="tag_empty_name">标签必须拥有一个名字。如果继续设为空，这个标签会被删除</string>
     <string name="preference_launch_tasks_app">打开 Tasks 应用</string>
     <string name="preference_clock_widget_monospaced">等宽</string>
     <string name="poi_category_stationery">文具店</string>

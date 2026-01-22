@@ -626,7 +626,6 @@
     <string name="preference_grid_list_icons_summary">Erakutsi ikonoak zerrenda-ikuspegian</string>
     <string name="shortcut_unavailable_description">Lasterbide hau ez dago erabilgarri %1$s ez delako abiarazle lehenetsia</string>
     <string name="clock_style_custom">Trepeta pertsonalizatua</string>
-    <string name="tag_empty_name">Etiketa bat ezin da izenik gabe existitu. Jarraitzen baduzu, etiketa ezabatuko da</string>
     <string name="preference_search_locations_hide_uncategorized">Ezkutatu kategoriarik gabeko lekuak</string>
     <string name="music_widget_play">Erreproduzitu</string>
     <string name="preference_search_tasks">Zereginak</string>

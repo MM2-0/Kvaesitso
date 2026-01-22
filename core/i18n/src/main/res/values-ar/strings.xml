@@ -812,7 +812,6 @@
     <string name="poi_category_tennis">ملعب تنس</string>
     <string name="profile_private_profile_state_locked">المساحة الخاصة مقفلة.</string>
     <string name="profile_private_profile_action_unlock">إلغاء القفل</string>
-    <string name="tag_empty_name">لا يمكن أن توجد علامة بدون اسم. إذا تابعت، سيتم حذف العلامة.</string>
     <string name="weather_forecast_humidity">رطوبة</string>
     <string name="weather_forecast_wind">رياح</string>
     <string name="weather_forecast_precipitation">هطول الأمطار</string>

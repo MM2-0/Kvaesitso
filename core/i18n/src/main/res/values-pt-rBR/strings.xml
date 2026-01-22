@@ -758,7 +758,6 @@
     <string name="preference_grid_list_icons_summary">Mostrar ícones na exibição por lista</string>
     <string name="preference_clock_widget_time_format">Formato de horário</string>
     <string name="preference_search_local_calendar_summary">Procurar calendários no dispositivo</string>
-    <string name="tag_empty_name">Uma etiqueta não pode existir sem um nome. Se você continuar, a etiqueta será deletada.</string>
     <string name="poi_category_amusement_park">Parque de diversões</string>
     <string name="poi_category_concert_hall">Sala de concertos</string>
     <string name="customize_item_visibility">Exibir em</string>

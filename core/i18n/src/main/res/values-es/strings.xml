@@ -823,7 +823,6 @@
     <string name="menu_show_filters">Mostrar filtros</string>
     <string name="menu_hide_filters">Ocultar filtros</string>
     <string name="poi_category_hindu_temple">Templo hindú</string>
-    <string name="tag_empty_name">Una etiqueta sin nombre no puede existir. Si continuas, la etiqueta será eliminada</string>
     <string name="poi_category_church">Iglesia</string>
     <string name="poi_category_asian_restaurant">Restaurante asiático</string>
     <string name="preference_launch_breezyweather_app">Abrir Breezy Weather</string>

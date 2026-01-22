@@ -789,7 +789,6 @@
     <string name="preference_grid_list_style_summary">Mostrar aplicações em lista e não em grelha</string>
     <string name="preference_grid_list_icons_summary">Mostrar ícones em lista e não em grelha</string>
     <string name="preference_search_local_calendar_summary">Pesquisar calendários no dispositivo</string>
-    <string name="tag_empty_name">Não pode criar uma etiqueta sem nome. Se continuar, a etiqueta será eliminada.</string>
     <string name="preference_compact_tags_summary">Ocultar texto ou ícones das etiquetas para reduzir o espaço ocupado</string>
     <string name="preference_clock_widget_time_format">Formato de hora</string>
     <string name="preference_clock_widget_time_format_24h">24 horas</string>

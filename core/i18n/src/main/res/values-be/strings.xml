@@ -767,7 +767,6 @@
     <string name="weather_forecast_humidity">Вільготнасць</string>
     <string name="weather_forecast_wind">Вецер</string>
     <string name="customize_item_visibility">Адлюстроўваць у</string>
-    <string name="tag_empty_name">Цэтлік не можа існаваць без назвы. Калі вы працягніце, цэтлік будзе выдалены.</string>
     <string name="item_visibility_app_default">Сетцы праграм і ў пошукавых выніках</string>
     <string name="music_widget_next_track">Наступны трэк</string>
     <string name="music_widget_play">Граць</string>
