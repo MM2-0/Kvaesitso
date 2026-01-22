@@ -434,8 +434,8 @@
     <string name="action_next">Weiter</string>
     <string name="tag_exists_error">Ein Tag mit diesem Namen existiert bereits</string>
     <string name="tag_exists_message">Ein Tag mit diesem Namen existiert bereits. Wenn Sie fortfahren, werden die beiden Tags zusammengeführt</string>
-    <string name="tag_no_items_message">Diesem Tag sind keine Elemente zugeordnet. Wenn Sie fortfahren, wird der Tag gelöscht</string>
-    <string name="tag_select_items">Elemente auswählen:</string>
+    <string name="tag_no_items_message">Diesem Tag sind keine Elemente zugeordnet. Wenn Sie fortfahren, wird das Tag gelöscht</string>
+    <string name="tag_select_items">Elemente auswählen</string>
     <string name="tag_name">Tag-Name</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d Element ausgewählt</item>
@@ -890,4 +890,16 @@
     <string name="preference_smartspacer_integration_description">Smartspacer ist ein freies und quelloffenes At a Glance-Widget. Wenn es installiert ist, kann es in die dynamische Zone des Uhren-Widgets integriert werden</string>
     <string name="preference_smartspacer_enable">Smartspacer-Integration aktivieren</string>
     <string name="preference_launch_smartspacer_app">Smartspacer öffnen</string>
+    <string name="action_quit">Verlassen</string>
+    <string name="preference_feed_integration">Feed</string>
+    <string name="preference_category_feed_provider">Feedanbieter</string>
+    <string name="preference_feed_enable_summary">Auf dem Startbildschirm nach rechts wischen, um das Feed zu öffnen</string>
+    <string name="no_feed_providers">Keine Feedanbieter installiert</string>
+    <string name="create_search_action_title">Neue Schnellaktion</string>
+    <string name="edit_search_action_title">Schnellaktion bearbeiten</string>
+    <string name="tag_name_empty_error">Name kann nicht leer sein</string>
+    <string name="gesture_action_feed">Feed</string>
+    <string name="create_tag_title">Neues Tag</string>
+    <string name="edit_tag_title">Tag bearbeiten</string>
+    <string name="dialog_discard_unsaved">Verlassen, ohne zu speichern?</string>
 </resources>
