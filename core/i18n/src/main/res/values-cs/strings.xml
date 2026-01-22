@@ -37,6 +37,7 @@
     <string name="action_more_actions">Další akce</string>
     <string name="action_clear">Vymazat</string>
     <string name="action_install">Instalovat</string>
+    <string name="action_quit">Ukončit</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Odstranit</string>
     <string name="menu_remove">Odebrat</string>
@@ -740,6 +741,8 @@
     <string name="search_action_contact">Přidat do kontaktů</string>
     <string name="search_action_open_url">Zobrazit web</string>
     <string name="search_action_event">Naplánovat událost</string>
+    <string name="create_search_action_title">Nová rychlá akce</string>
+    <string name="edit_search_action_title">Upravit rychlou akci</string>
     <string name="create_search_action_type">Jaký typ akce chcete vytvořit?</string>
     <string name="create_search_action_type_web">Vyhledat na webu</string>
     <string name="create_search_action_type_app">Vyhledat v aplikaci</string>
@@ -1082,4 +1085,5 @@
     <string name="preference_transliteration_auto">Automatická</string>
     <string name="preference_transliteration_disabled">Zakázaná</string>
     <string name="select_tag">Vybrat štítek</string>
+    <string name="dialog_discard_unsaved">Ukončit bez uložení?</string>
 </resources>
