@@ -437,7 +437,7 @@
     <string name="action_next">Successivo</string>
     <string name="tag_exists_error">Esiste già un tag con questo nome</string>
     <string name="tag_no_items_message">Nessun elemento è assegnato a questo tag. Se continui, il tag verrà eliminato</string>
-    <string name="tag_select_items">Seleziona elementi:</string>
+    <string name="tag_select_items">Seleziona elementi</string>
     <string name="tag_name">Nome tag</string>
     <string name="open_search_pull_down">Scorri in basso</string>
     <string name="open_search_swipe_left">Scorri a sinistra</string>
@@ -910,4 +910,7 @@
     <string name="create_search_action_title">Nuova azione rapida</string>
     <string name="edit_search_action_title">Modifica azione rapida</string>
     <string name="dialog_discard_unsaved">Uscire senza salvare?</string>
+    <string name="tag_name_empty_error">Il nome non può essere vuoto</string>
+    <string name="create_tag_title">Nuovo tag</string>
+    <string name="edit_tag_title">Modifica tag</string>
 </resources>
