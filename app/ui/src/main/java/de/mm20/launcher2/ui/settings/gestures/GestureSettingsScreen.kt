@@ -129,7 +129,7 @@ fun GestureSettingsScreen() {
                         icon = R.drawable.swipe_right_alt_24px,
                         value = swipeRight,
                         onValueChanged = { viewModel.setSwipeRight(it) },
-                        options = optionsWithFeed,
+                        options = options, //optionsWithFeed,
                         app = swipeRightApp,
                         appIcon = swipeRightAppIcon,
                         onAppChanged = { viewModel.setSwipeRightApp(it) }
