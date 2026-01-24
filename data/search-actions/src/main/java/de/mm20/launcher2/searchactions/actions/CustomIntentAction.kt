@@ -2,7 +2,6 @@ package de.mm20.launcher2.searchactions.actions
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.core.net.toUri
 import de.mm20.launcher2.ktx.tryStartActivity
 

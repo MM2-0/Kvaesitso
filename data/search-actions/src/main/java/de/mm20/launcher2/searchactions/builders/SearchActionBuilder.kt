@@ -57,7 +57,7 @@ interface SearchActionBuilder {
                         iconColor = entity.color ?: 0,
                         icon = SearchActionIcon.fromInt(entity.icon),
                         customIcon = entity.customIcon,
-                        queryKey = options?.optString("extra"),
+                        queryKey = options?.optString("extra")?.takeIf { it.isNotBlank() },
                         queryTemplate = options?.optString("template")?.takeIf { it.isNotBlank() }
                     )
                 }
