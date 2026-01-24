@@ -46,14 +46,13 @@ fun IntegrationsSettingsScreen() {
                         backStack.add(MediaIntegrationSettingsRoute)
                     }
                 )
-                /*
                 Preference(
                     title = stringResource(R.string.preference_feed_integration),
                     icon = R.drawable.news_24px,
                     onClick = {
                         backStack.add(FeedIntegrationSettingsRoute)
                     }
-                )*/
+                )
             }
         }
         item {
@@ -97,7 +96,6 @@ fun IntegrationsSettingsScreen() {
                         backStack.add(BreezyWeatherSettingsRoute)
                     }
                 )
-                /*
                 if (isAtLeastApiLevel(29)) {
                     Preference(
                         title = stringResource(R.string.preference_smartspacer_integration),
@@ -106,7 +104,7 @@ fun IntegrationsSettingsScreen() {
                             backStack.add(SmartspacerSettingsRoute)
                         }
                     )
-                }*/
+                }
             }
         }
     }
