@@ -427,7 +427,7 @@
     <string name="tag_exists_error">Er bestaat al een label met deze naam</string>
     <string name="tag_exists_message">Er bestaat al een label met deze naam. Als je doorgaat worden de twee labels samengevoegd</string>
     <string name="tag_no_items_message">Dit label bevat geen items. Als je doorgaat wordt het label verwijderd</string>
-    <string name="tag_select_items">Kies items:</string>
+    <string name="tag_select_items">Kies items</string>
     <string name="tag_name">Labelnaam</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item geselecteerd</item>
@@ -899,4 +899,7 @@
     <string name="create_search_action_title">Nieuwe snelle actie</string>
     <string name="edit_search_action_title">Snelle actie bewerken</string>
     <string name="dialog_discard_unsaved">Afsluiten zonder opslaan?</string>
+    <string name="tag_name_empty_error">Naam mag niet leeg zijn</string>
+    <string name="create_tag_title">Nieuw label</string>
+    <string name="edit_tag_title">Label bewerken</string>
 </resources>
