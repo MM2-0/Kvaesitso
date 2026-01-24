@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.component
 
-import android.util.Log
 import androidx.activity.compose.PredictiveBackHandler
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.Animatable
@@ -20,7 +19,6 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -129,7 +127,8 @@ fun <T> DismissableBottomSheet(
 
             }
 
-            val motionSpec = MaterialTheme.motionScheme.defaultEffectsSpec<Float>()
+            val effectsSpec = MaterialTheme.motionScheme.defaultEffectsSpec<Float>()
+            val spatialSpec = MaterialTheme.motionScheme.defaultSpatialSpec<Float>()
 
             val transition = rememberTransition(expandedState)
 
@@ -164,7 +163,7 @@ fun <T> DismissableBottomSheet(
 
                 if (draggableState.anchors.size > 1) {
                     LaunchedEffect(Unit) {
-                        draggableState.animateTo(SheetValue.PartiallyExpanded, motionSpec)
+                        draggableState.animateTo(SheetValue.PartiallyExpanded, spatialSpec)
                     }
 
                     if (draggableState.settledValue != SheetValue.Hidden) {
@@ -179,7 +178,7 @@ fun <T> DismissableBottomSheet(
                     LaunchedEffect(expandedTarget) {
                         if (expandedTarget != expandedCurrent && draggableState.settledValue == draggableState.targetValue) {
                             if (!expandedTarget && draggableState.settledValue != SheetValue.Hidden) {
-                                draggableState.animateTo(SheetValue.Hidden, motionSpec)
+                                draggableState.animateTo(SheetValue.Hidden, spatialSpec)
                             }
                         }
                     }
@@ -200,7 +199,7 @@ fun <T> DismissableBottomSheet(
                 val flingBehavior =
                     AnchoredDraggableDefaults.flingBehavior(
                         state = draggableState,
-                        animationSpec = motionSpec,
+                        animationSpec = effectsSpec,
                     )
 
                 Surface(

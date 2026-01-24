@@ -134,8 +134,8 @@ fun <T>BottomSheet(
                 transition.AnimatedVisibility(
                     visible = { expanded(it) },
                     modifier = Modifier.align(Alignment.BottomCenter),
-                    enter = slideInVertically { it },
-                    exit = slideOutVertically { it }
+                    enter = slideInVertically(MaterialTheme.motionScheme.defaultSpatialSpec()) { it },
+                    exit = slideOutVertically { it },
                 ) {
                     Surface(
                         shadowElevation = 1.dp,
