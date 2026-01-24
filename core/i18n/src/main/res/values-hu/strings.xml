@@ -305,7 +305,7 @@
     <string name="preference_layout_open_search">Keresés és alkalmazásfiók</string>
     <string name="preference_category_media_apps">Médiaalkalmazások</string>
     <string name="preference_search_unitconverter_summary">Használat: 1,5 kg, vagy 4 cm &gt;&gt; in</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyorsműveletre, ha megérinti az „Enter” gombot</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Ugrás a kiemelt keresési találatra vagy gyorsműveletre, az „Enter” gomb megérintésekor</string>
     <string name="preference_hidden_items">Kizárt keresési eredmények</string>
     <string name="icon_picker_filter_all_packs">Minden ikoncsomag</string>
     <string name="search_action_websearch">Internetes keresés</string>
