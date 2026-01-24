@@ -331,18 +331,6 @@ class SettingsActivity : BaseActivity() {
                 }
             }
 
-            val isDarkTheme = LocalDarkTheme.current
-            val lifecycleOwner = LocalLifecycleOwner.current
-            val activity = LocalActivity.current
-            val view = LocalView.current
-            LaunchedEffect(isDarkTheme) {
-                lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    val insetsController = WindowInsetsControllerCompat(activity!!.window, view)
-                    insetsController.isAppearanceLightStatusBars = !isDarkTheme
-                    insetsController.isAppearanceLightNavigationBars = !isDarkTheme
-                }
-            }
-
             val wallpaperColors by wallpaperColorsAsState()
             CompositionLocalProvider(
                 LocalWallpaperColors provides wallpaperColors,
@@ -350,6 +338,18 @@ class SettingsActivity : BaseActivity() {
             ) {
                 ProvideCompositionLocals {
                     LauncherTheme {
+                        val isDarkTheme = LocalDarkTheme.current
+                        val lifecycleOwner = LocalLifecycleOwner.current
+                        val activity = LocalActivity.current
+                        val view = LocalView.current
+                        LaunchedEffect(isDarkTheme) {
+                            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                                val insetsController = WindowInsetsControllerCompat(activity!!.window, view)
+                                insetsController.isAppearanceLightStatusBars = !isDarkTheme
+                                insetsController.isAppearanceLightNavigationBars = !isDarkTheme
+                            }
+                        }
+
                         OverlayHost(
                             modifier = Modifier
                                 .fillMaxSize()
