@@ -1755,7 +1755,7 @@ private fun Modifier.secondaryPageAnimation(
                 Gesture.SwipeDown -> IntOffset(0, -state.size.height.toInt())
                 Gesture.SwipeLeft -> IntOffset(state.size.width.toInt(), 0)
                 Gesture.SwipeRight -> IntOffset(-state.size.width.toInt(), 0)
-                else -> IntOffset.Zero
+                else -> IntOffset(state.size.width.toInt(), 0)
             }
         }
         .absoluteOffset {
