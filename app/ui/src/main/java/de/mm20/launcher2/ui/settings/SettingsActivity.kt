@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.settings
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.fadeIn
@@ -23,8 +24,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.core.app.GrammaticalInflectionManagerCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -148,7 +155,7 @@ class SettingsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.enableEdgeToEdge(window)
 
         val newRoute = getStartRoute(intent)
         initialRoute = newRoute
@@ -324,6 +331,18 @@ class SettingsActivity : BaseActivity() {
                 }
             }
 
+            val isDarkTheme = LocalDarkTheme.current
+            val lifecycleOwner = LocalLifecycleOwner.current
+            val activity = LocalActivity.current
+            val view = LocalView.current
+            LaunchedEffect(isDarkTheme) {
+                lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                    val insetsController = WindowInsetsControllerCompat(activity!!.window, view)
+                    insetsController.isAppearanceLightStatusBars = !isDarkTheme
+                    insetsController.isAppearanceLightNavigationBars = !isDarkTheme
+                }
+            }
+
             val wallpaperColors by wallpaperColorsAsState()
             CompositionLocalProvider(
                 LocalWallpaperColors provides wallpaperColors,
@@ -331,20 +350,9 @@ class SettingsActivity : BaseActivity() {
             ) {
                 ProvideCompositionLocals {
                     LauncherTheme {
-                        val systemBarColor = MaterialTheme.colorScheme.surfaceDim
-                        val systemBarColorAlt = MaterialTheme.colorScheme.onSurface
-                        val isDarkTheme = LocalDarkTheme.current
-                        LaunchedEffect(isDarkTheme, systemBarColor, systemBarColorAlt) {
-                            enableEdgeToEdge(
-                                if (isDarkTheme) SystemBarStyle.dark(systemBarColor.toArgb())
-                                else SystemBarStyle.light(
-                                    systemBarColor.toArgb(),
-                                    systemBarColorAlt.toArgb()
-                                )
-                            )
-                        }
                         OverlayHost(
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier
+                                .fillMaxSize()
                                 .background(MaterialTheme.colorScheme.surfaceContainer)
                         ) {
                             NavDisplay(
