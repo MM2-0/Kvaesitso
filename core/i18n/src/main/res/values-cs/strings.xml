@@ -409,7 +409,7 @@
     <string name="tag_exists_error">Štítek s tímto názvem již existuje</string>
     <string name="tag_exists_message">Štítek s tímto názvem již existuje. Pokud budete pokračovat, budou oba štítky spojeny</string>
     <string name="tag_no_items_message">K tomuto štítku nejsou přiřazeny žádné položky. Pokud budete pokračovat, štítek bude odstraněn</string>
-    <string name="tag_select_items">Vybrané položky:</string>
+    <string name="tag_select_items">Vybrat položky</string>
     <string name="tag_name">Název štítku</string>
     <plurals name="tag_selected_items">
         <item quantity="one">Vybrána %1$d položka</item>
@@ -910,4 +910,7 @@
     <string name="create_search_action_title">Nová rychlá akce</string>
     <string name="edit_search_action_title">Upravit rychlou akci</string>
     <string name="dialog_discard_unsaved">Ukončit bez uložení?</string>
+    <string name="tag_name_empty_error">Název nemůže být prázdný</string>
+    <string name="create_tag_title">Nový štítek</string>
+    <string name="edit_tag_title">Upravit štítek</string>
 </resources>
