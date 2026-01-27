@@ -40,7 +40,7 @@ import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object GesturesSettingsRoute: NavKey
+data object GesturesSettingsRoute : NavKey
 
 @Composable
 fun GestureSettingsScreen() {
@@ -61,7 +61,8 @@ fun GestureSettingsScreen() {
         add(stringResource(R.string.gesture_action_launch_app) to GestureAction.Launch(null))
     }
 
-    val optionsWithFeed = options + (stringResource(R.string.gesture_action_feed) to GestureAction.Feed)
+    val optionsWithFeed =
+        options + (stringResource(R.string.gesture_action_feed) to GestureAction.Feed)
 
 
     val context = LocalContext.current
@@ -229,9 +230,7 @@ fun GestureSettingsScreen() {
 
 fun requiresAccessibilityService(action: GestureAction?): Boolean {
     return when (action) {
-        is GestureAction.Notifications,
         is GestureAction.ScreenLock,
-        is GestureAction.QuickSettings,
         is GestureAction.Recents,
         is GestureAction.PowerMenu -> true
 

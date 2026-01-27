@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.animation.PathInterpolator
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -15,7 +16,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,25 +27,15 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import de.mm20.launcher2.globalactions.GlobalActionsService
-import de.mm20.launcher2.permissions.PermissionGroup
-import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
-
-    private val permissionsManager: PermissionsManager by inject()
-    private val globalActionService: GlobalActionsService by inject()
-
-    override val permanent: Boolean
-        get() = !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)
+    private val context: Context by inject()
+    override val permanent: Boolean = false
 
     override val showSearchBar: Boolean = false
-
     override val drawBackground: Boolean = false
 
     private val interpolator = PathInterpolator(0f, 0f, 0f, 1f)
@@ -56,19 +46,6 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        if (isActive) {
-            val bottomSheetManager = LocalBottomSheetManager.current
-            LaunchedEffect(Unit) {
-                val gesture = state.currentGesture ?: return@LaunchedEffect
-                if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
-                    bottomSheetManager.showFailedGestureSheet(
-                        gesture = gesture,
-                        action = GestureAction.QuickSettings,
-                    )
-                }
-            }
-        }
-
         val scale by animateFloatAsState(
             if (state.currentProgress >= 0.5f) 1.2f else 1f
         )
@@ -85,7 +62,10 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
                     .systemBarsPadding()
                     .padding(16.dp)
                     .size(64.dp)
-                    .offset(y = -134.dp * interpolator.getInterpolation(1f - state.currentProgress * 2f).coerceAtLeast(0f))
+                    .offset(
+                        y = -134.dp * interpolator.getInterpolation(1f - state.currentProgress * 2f)
+                            .coerceAtLeast(0f)
+                    )
                     .scale(scale)
                     .shadow(4.dp, CircleShape)
                     .background(MaterialTheme.colorScheme.secondaryContainer, CircleShape),
@@ -102,16 +82,12 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
 
     override suspend fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
-        if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
-            globalActionService.openQuickSettings()
-        }
+        context.expandQuickSettings()
     }
 
     override suspend fun onActivate(state: LauncherScaffoldState) {
         super.onActivate(state)
-        if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
-            state.navigateBack(true)
-        }
+        state.navigateBack(false)
     }
 
     @SuppressLint("ModifierFactoryExtensionFunction")
@@ -135,6 +111,17 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
                     color = color.copy(alpha = 0.5f * (state.currentProgress * 2f).coerceAtMost(1f))
                 )
             }
+        }
+    }
+
+    private fun Context.expandQuickSettings() {
+        try {
+            val statusBarService = getSystemService("statusbar")
+            val statusBarManager = Class.forName("android.app.StatusBarManager")
+            val method = statusBarManager.getMethod("expandSettingsPanel")
+            method.invoke(statusBarService)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }
