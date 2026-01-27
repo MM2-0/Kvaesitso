@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.animation.PathInterpolator
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -27,13 +26,14 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.ui.R
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 internal object NotificationsComponent : ScaffoldComponent(), KoinComponent {
 
-    private val context: Context by inject()
+    private val globalActionService: GlobalActionsService by inject()
 
     override val permanent: Boolean = false
 
@@ -85,7 +85,7 @@ internal object NotificationsComponent : ScaffoldComponent(), KoinComponent {
 
     override suspend fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
-        context.expandNotificationsPanel()
+        globalActionService.openNotificationDrawer()
     }
 
     override suspend fun onActivate(state: LauncherScaffoldState) {
@@ -114,17 +114,6 @@ internal object NotificationsComponent : ScaffoldComponent(), KoinComponent {
                     color = color.copy(alpha = 0.5f * (state.currentProgress * 2f).coerceAtMost(1f))
                 )
             }
-        }
-    }
-
-    private fun Context.expandNotificationsPanel() {
-        try {
-            val statusBarService = getSystemService("statusbar")
-            val statusBarManager = Class.forName("android.app.StatusBarManager")
-            val method = statusBarManager.getMethod("expandNotificationsPanel")
-            method.invoke(statusBarService)
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 }
