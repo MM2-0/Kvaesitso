@@ -415,8 +415,8 @@
     <string name="preference_screen_icons">רשת וסמלים</string>
     <string name="preference_screen_icons_summary">גודל הרשת, סמלים, תגים</string>
     <string name="preference_weather_integration">מזג אוויר</string>
-    <string name="preference_widgets_edit_button_summary">הצגת מקש להוספה, הסרה או סידור מחדש של יישומונים (Widgets)</string>
-    <string name="preference_widgets_on_home_screen">יישומונים (Widgets) במסך הבית</string>
+    <string name="preference_widgets_edit_button_summary">הצגת מקש להוספה, הסרה או סידור מחדש של יישומונים</string>
+    <string name="preference_widgets_on_home_screen">יישומונים במסך הבית</string>
     <string name="preference_breezyweather_integration_instructions">כדי להשתמש ב-Breezy Weather כספק מזג אוויר:\n\n1. עברו ל-Breezy Weather &gt; הגדרות &gt; ווידג\'טים ורקע חי &gt; שליחת נתוני Gadgetbridge &gt; הפעלת %1$s\n\n2. ב-%1$s, בחרו ב-Breezy Weather כספק מזג אוויר</string>
     <string name="preference_launch_breezyweather_app">פתיחת Breezy Weather</string>
     <string name="preference_contacts_call_on_tap">לחצו כדי להתקשר</string>
