@@ -268,7 +268,7 @@
     <string name="preference_clockwidget_alarm_part">闹钟</string>
     <string name="preference_clockwidget_alarm_part_summary">显示将在接下来的 8 小时内响起的闹钟</string>
     <string name="preference_screen_search">搜索</string>
-    <string name="preference_screen_search_summary">搜索, 标签, 隐藏项目</string>
+    <string name="preference_screen_search_summary">搜索, 标签, 不包括的项目</string>
     <string name="preference_search_favorites">收藏夹</string>
     <string name="preference_search_favorites_summary">在应用抽屉上方显示固定和常用项目</string>
     <string name="preference_search_files">文件</string>
@@ -318,8 +318,8 @@
     <string name="preference_search_currencyconverter_summary">定期下载汇率来转换货币</string>
     <string name="action_undo">撤销</string>
     <string name="calendar_widget_next_events">下一个事件</string>
-    <string name="preference_hidden_items">隐藏搜索结果</string>
-    <string name="preference_hidden_items_summary">管理隐藏应用和搜索结果</string>
+    <string name="preference_hidden_items">未包含的搜索结果</string>
+    <string name="preference_hidden_items_summary">管理未包含的应用和搜索结果</string>
     <string name="preference_screen_backup">备份与恢复</string>
     <string name="preference_screen_backup_summary">导出和导入启动器数据</string>
     <string name="preference_backup">备份</string>
@@ -424,7 +424,7 @@
     <string name="tag_exists_error">以此命名的标签已经存在</string>
     <string name="tag_no_items_message">没有项目被分配给此标签。如果你执意而为，此标签将会被删除</string>
     <string name="tag_exists_message">以此命名的标签已经存在。如果你执意而为，两个标签将会被合并</string>
-    <string name="tag_select_items">选择项目:</string>
+    <string name="tag_select_items">选择项目：</string>
     <string name="tag_name">标签名字</string>
     <plurals name="tag_selected_items">
         <item quantity="other">项目%1$d已被选中</item>
@@ -487,7 +487,7 @@
     <string name="widget_config_appwidget_configure">配置组件</string>
     <string name="widget_name_unknown">未知</string>
     <string name="notes_widget_dismissed">笔记已删除</string>
-    <string name="preference_hidden_items_reveal_button_summary">显示一个按钮展示隐藏搜索结果</string>
+    <string name="preference_hidden_items_reveal_button_summary">显示一个按钮展示未包含的搜索结果</string>
     <string name="widget_config_appwidget_background">背景卡片</string>
     <string name="widget_name_notes">笔记</string>
     <string name="notes_widget_placeholder">写个笔记</string>
@@ -874,4 +874,21 @@
     <string name="preference_transliteration_auto">自动</string>
     <string name="preference_transliteration_disabled">禁用</string>
     <string name="select_tag">选择标签</string>
+    <string name="action_quit">退出</string>
+    <string name="preference_clockwidget_smartspacer">由 Smartspacer 主管</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer 是一个免费且开源的直观小部件。如果安装了它，它可以被集成到时钟小部件的动态区域中</string>
+    <string name="preference_smartspacer_enable">集成</string>
+    <string name="preference_launch_smartspacer_app">打开 Smartspacer</string>
+    <string name="preference_feed_integration">推送</string>
+    <string name="preference_category_feed_provider">推送者</string>
+    <string name="preference_feed_enable_summary">滑动</string>
+    <string name="no_feed_providers">未安装任何推送提供者</string>
+    <string name="create_search_action_title">新建快捷操作</string>
+    <string name="edit_search_action_title">修改快捷操作</string>
+    <string name="tag_name_empty_error">姓名不可以为空</string>
+    <string name="gesture_action_feed">推送</string>
+    <string name="create_tag_title">新建标签</string>
+    <string name="edit_tag_title">修改标签</string>
+    <string name="dialog_discard_unsaved">是否退出并舍弃你的内容？</string>
 </resources>
