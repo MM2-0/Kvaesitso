@@ -188,7 +188,6 @@
     <string name="disclaimer_currency_converter">أسعار الصرف كما ينشرها البنك المركزي الأوروبي مرة واحدة في اليوم. يتم توفير جميع المعلومات \"كما هي\" دون أي نوع من الضمان. لا نتحمل أي مسؤولية عن هذه المعلومات.
 \n
 \nاخر تحديث: %1$s</string>
-    <string name="action_import">استيراد</string>
     <string name="file_type_launchertheme">سمة %1$s</string>
     <string name="weather_condition_lightrainshowersandthunder">زخات مطر خفيفة ورعد</string>
     <string name="weather_condition_heavyrain">أمطار غزيرة</string>
@@ -209,7 +208,6 @@
     <string name="location_open">مفتوح</string>
     <string name="location_closed">مغلق</string>
     <string name="plugin_state_setup_required">عليك أن تهيء هذه الاضافة أولا</string>
-    <string name="preference_mdy_color_source_system">النظام</string>
     <string name="task_due_time">الموعد على %1$s</string>
     <string name="task_due_date">الموعد في %1$s</string>
     <string name="task_due_today">الموعد اليوم</string>
@@ -217,7 +215,6 @@
     <string name="missing_permission_calendar_widget_settings">أداة الواجهة تتطلب اذونات التقويم</string>
     <string name="preference_theme_light">فاتح</string>
     <string name="preference_screen_colors">نمط الألوان</string>
-    <string name="preference_colors_default">افتراضي</string>
     <string name="preference_screen_appearance_summary">خصص المظهر والاحساس</string>
     <string name="provider_metno">الأرصاد الجوية النرويجية</string>
     <string name="provider_openweathermap">خريطة الطقس المفتوحة (OpenWeatherMap)</string>
@@ -231,15 +228,11 @@
     <string name="provider_here">هنا</string>
     <string name="menu_map">عرض على الخريطة</string>
     <string name="menu_website">فتح الموقع</string>
-    <string name="action_done">تم</string>
-    <string name="action_more_actions">مزيد من الاجراءات</string>
-    <string name="action_clear">مسح</string>
     <string name="missing_permission_notification_badges">الوصول الى الاشعارات مطلوب لعرض شارات الاشعارات</string>
     <string name="missing_permission_contact_search_settings">أذونات جهات الاتصال مطلوبة للبحث في قائمة الاتصالات</string>
     <string name="missing_permission_calendar_widget">قم بمنح اذن الوصول الى التقويم لعرض المواعيد و الأحداث القادمة.</string>
     <string name="missing_permission_contact_search">قم بمنح اذن الوصول لجهات الاتصال للبحث بقائمة جهات اتصالاتك.</string>
     <string name="missing_permission_appshortcuts_search">عين %1$s كتطبيق الشاشة الرئيسية الافتراضي للبحث في اختصارات التطبيقات.</string>
-    <string name="preference_mdy_color_source">المصدر للألوان الديناميكية</string>
     <string name="preference_screen_about">حول</string>
     <string name="preference_category_advanced">متقدم</string>
     <string name="open_webpage">فتح الموقع</string>
@@ -254,13 +247,11 @@
     <string name="widget_config_calendar_missing_calendars_hint">لا يمكنك ايجاد تقويماتك؟</string>
     <string name="missing_permission_location_search">قم بمنح اذن الموقع للبحث عن المواقع القريبة.</string>
     <string name="preference_theme_dark">مظلم</string>
-    <string name="preference_mdy_color_source_wallpaper">الخلفية</string>
     <string name="preference_category_licenses">رخص مفتوحة المصدر</string>
     <string name="missing_permission_file_search_settings">أذونات التخزين مطلوبة للوصول الى الملفات المحلية</string>
     <string name="missing_permission_calendar_search_settings">اذونات التقويم مطلوبة للبحث بالتقويم</string>
     <string name="missing_permission_file_search_settings_android10">أذونات ادارة الملفات مطلوبة للوصول الى الملفات المحلية</string>
     <string name="grant_permission">منح</string>
-    <string name="preference_custom_colors_corepalette">لوحة الألوان</string>
     <string name="preference_debug_dump_heap">لقطة للذاكرة</string>
     <string name="missing_permission_files_search">قم بمنح اذن الوصول الى التخزين للبحث في الصور, الوسائط والمستندات على هذا الجهاز.</string>
     <string name="missing_permission_appshortcuts_create">عين %1$s كتطبيق الشاشة الرئيسية الافتراضي لانشاء اختصارات.</string>
@@ -947,8 +938,4 @@
     <string name="theme_bundle_name">اسم المظهر</string>
     <string name="theme_export_title">حفظ المظهر</string>
     <string name="theme_import_title">استيراد مظهر</string>
-    <plurals name="calendar_widget_running_tasks">
-        <item quantity="one">مهمة واحدة لم تكتمل</item>
-        <item quantity="other">%1$d مهام لم تكتمل</item>
-    </plurals>
 </resources>
