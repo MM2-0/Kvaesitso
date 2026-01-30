@@ -19,13 +19,13 @@ kotlinx-serialization = "1.10.0"
 
 jetbrains-markdown = "0.7.3"
 
-androidx-compose = "1.11.0-alpha03"
-androidx-compose-material3 = "1.5.0-alpha12"
-androidx-compose-material3adaptive = "1.3.0-alpha06"
+androidx-compose = "1.11.0-alpha04"
+androidx-compose-material3 = "1.5.0-alpha13"
+androidx-compose-material3adaptive = "1.3.0-alpha07"
 androidx-lifecycle = "2.10.0"
 androidx-core = "1.17.0"
 androidx-appcompat = "1.7.1"
-androidx-activity = "1.12.2"
+androidx-activity = "1.12.3"
 androidx-navigation3 = "1.0.0"
 
 # Careful, 2.10.0 seems to require some fixes, or jobs aren't executed
