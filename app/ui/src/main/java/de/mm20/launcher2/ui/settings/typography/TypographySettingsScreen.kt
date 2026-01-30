@@ -859,7 +859,8 @@ private fun FontPickerCategory(
 
 private fun getFontName(context: Context, fontFamily: ThemeFontFamily?): String {
     return when (fontFamily) {
-        is ThemeFontFamily.LauncherDefault -> "Outfit"
+        is ThemeFontFamily.LauncherDefault -> "Google Sans Flex"
+        is ThemeFontFamily.LauncherDefaultRound -> "Google Sans Flex (Rounded)"
         is ThemeFontFamily.DeviceHeadline -> context.getString(R.string.font_name_device_headline)
         is ThemeFontFamily.DeviceBody -> context.getString(R.string.font_name_device_body)
         is ThemeFontFamily.System -> fontFamily.name

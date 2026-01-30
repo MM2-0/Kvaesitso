@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.settings.appearance
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.ColorScheme
-import de.mm20.launcher2.preferences.Font
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.ThemeRepository
 import kotlinx.coroutines.flow.SharingStarted
@@ -58,12 +57,5 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setCompatModeColors(enabled: Boolean) {
         uiSettings.setCompatModeColors(enabled)
-    }
-
-    val font = uiSettings.font
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setFont(font: Font) {
-        uiSettings.setFont(font)
     }
 }

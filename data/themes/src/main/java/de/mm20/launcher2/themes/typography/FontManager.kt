@@ -29,7 +29,7 @@ class FontManager(
         val deviceBodyExists = deviceBodyResId != 0 &&
             context.resources.getString(deviceBodyResId).isNotBlank()
         return FontList(
-            builtIn = listOf(FontFamily.LauncherDefault),
+            builtIn = listOf(FontFamily.LauncherDefault, FontFamily.LauncherDefaultRound),
             generic = listOf(
                 FontFamily.SansSerif,
                 FontFamily.Serif,

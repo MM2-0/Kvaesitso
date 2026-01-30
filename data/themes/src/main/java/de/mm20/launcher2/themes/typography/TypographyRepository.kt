@@ -5,6 +5,7 @@ import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.MonospaceId
 import de.mm20.launcher2.themes.R
+import de.mm20.launcher2.themes.RoundedTypographyId
 import de.mm20.launcher2.themes.SerifId
 import de.mm20.launcher2.themes.SystemFontId
 import kotlinx.coroutines.CoroutineScope
@@ -30,6 +31,7 @@ class TypographyRepository(
 
     fun get(id: UUID): Flow<Typography?> {
         if (id == DefaultThemeId) return flowOf(default)
+        if (id == RoundedTypographyId) return flowOf(defaultRound)
         if (id == SystemFontId) return flowOf(systemFont)
         if (id == SerifId) return flowOf(serif)
         if (id == MonospaceId) return flowOf(monospace)
@@ -63,6 +65,7 @@ class TypographyRepository(
     private fun getBuiltIn(): List<Typography> {
         return listOf(
             default,
+            defaultRound,
             systemFont,
             serif,
             monospace,
@@ -73,10 +76,23 @@ class TypographyRepository(
         get() = Typography(
             id = DefaultThemeId,
             builtIn = true,
-            name = "Outfit",
+            name = "Google Sans",
             fonts = mapOf(
                 "brand" to FontFamily.LauncherDefault,
-                "plain" to null,
+                "plain" to FontFamily.LauncherDefault,
+            ),
+            styles = DefaultTextStyles,
+            emphasizedStyles = DefaultEmphasizedTextStyles,
+        )
+
+    private val defaultRound: Typography
+        get() = Typography(
+            id = RoundedTypographyId,
+            builtIn = true,
+            name = "Google Sans (Rounded)",
+            fonts = mapOf(
+                "brand" to FontFamily.LauncherDefaultRound,
+                "plain" to FontFamily.LauncherDefaultRound,
             ),
             styles = DefaultTextStyles,
             emphasizedStyles = DefaultEmphasizedTextStyles,

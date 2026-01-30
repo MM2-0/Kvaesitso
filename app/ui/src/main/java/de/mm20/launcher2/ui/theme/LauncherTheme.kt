@@ -1,20 +1,20 @@
 package de.mm20.launcher2.ui.theme
 
-import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
-import de.mm20.launcher2.preferences.Font
+import androidx.compose.material3.MaterialExpressiveTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
-import de.mm20.launcher2.ui.theme.colorscheme.*
+import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
+import de.mm20.launcher2.ui.theme.colorscheme.lightColorSchemeOf
 import de.mm20.launcher2.ui.theme.shapes.shapesOf
 import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 import de.mm20.launcher2.ui.theme.transparency.transparencySchemeOf
-import de.mm20.launcher2.ui.theme.typography.DefaultTypography
-import de.mm20.launcher2.ui.theme.typography.getDeviceDefaultTypography
 import de.mm20.launcher2.ui.theme.typography.typographyOf
 import kotlinx.coroutines.flow.flatMapLatest
 import org.koin.compose.koinInject
@@ -74,10 +74,6 @@ fun LauncherTheme(
     val transparencyScheme = transparencySchemeOf(themeTransparencies!!)
 
 
-    val font by remember { uiSettings.font }.collectAsState(
-        Font.Outfit
-    )
-
     CompositionLocalProvider(
         LocalDarkTheme provides darkTheme,
         LocalTransparencyScheme provides transparencyScheme,
@@ -91,9 +87,3 @@ fun LauncherTheme(
     }
 }
 
-fun getTypography(context: Context, font: Font?): Typography {
-    return when (font) {
-        Font.System -> getDeviceDefaultTypography(context)
-        else -> DefaultTypography
-    }
-}

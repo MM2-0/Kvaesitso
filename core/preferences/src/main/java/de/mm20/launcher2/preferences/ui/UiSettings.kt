@@ -1,7 +1,6 @@
 package de.mm20.launcher2.preferences.ui
 
 import de.mm20.launcher2.preferences.ColorScheme
-import de.mm20.launcher2.preferences.Font
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.ScreenOrientation
@@ -326,17 +325,6 @@ class UiSettings internal constructor(
     fun setTypographyId(typographyId: UUID) {
         launcherDataStore.update {
             it.copy(uiTypographyId = typographyId)
-        }
-    }
-
-    val font
-        get() = launcherDataStore.data.map {
-            it.uiFont
-        }.distinctUntilChanged()
-
-    fun setFont(font: Font) {
-        launcherDataStore.update {
-            it.copy(uiFont = font)
         }
     }
 

@@ -121,12 +121,11 @@ val OpenSourceLicenses = arrayOf(
         url = "https://insert-koin.io/"
     ),
     OpenSourceLibrary(
-        name = "Outfit",
+        name = "Google Sans Flex",
         description = "A geometric sans serif typeface",
-        copyrightNote = "Copyright 2021 The Outfit Project Authors",
         licenseName = R.string.open_font_license_name,
         licenseText = R.raw.license_ofl,
-        url = "https://github.com/Outfitio/Outfit-Fonts"
+        url = "https://fonts.google.com/specimen/Google+Sans+Flex"
     ),
     OpenSourceLibrary(
         name = "Coil",

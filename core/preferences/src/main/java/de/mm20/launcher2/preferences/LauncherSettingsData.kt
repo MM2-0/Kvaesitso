@@ -24,7 +24,6 @@ data class LauncherSettingsData internal constructor(
     val uiTypographyId: UUID = UUID(0L, 0L),
 
     val uiCompatModeColors: Boolean = false,
-    val uiFont: Font = Font.Outfit,
     @Deprecated("No longer in use, only used for migration")
     val uiBaseLayout: BaseLayout = BaseLayout.PullDown,
     val uiOrientation: ScreenOrientation = ScreenOrientation.Auto,
@@ -217,12 +216,6 @@ data class LauncherSettingsData internal constructor(
 enum class ColorScheme {
     Light,
     Dark,
-    System,
-}
-
-@Serializable
-enum class Font {
-    Outfit,
     System,
 }
 

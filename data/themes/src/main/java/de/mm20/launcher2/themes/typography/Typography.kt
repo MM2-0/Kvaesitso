@@ -186,6 +186,10 @@ sealed interface FontFamily {
     data object LauncherDefault : FontFamily
 
     @Serializable
+    @SerialName("launcher_default_round")
+    data object LauncherDefaultRound : FontFamily
+
+    @Serializable
     @SerialName("device_headline")
     data object DeviceHeadline : FontFamily
 
