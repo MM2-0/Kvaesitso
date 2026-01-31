@@ -1,17 +1,35 @@
 package de.mm20.launcher2.ui.theme.typography.fontfamily
 
 import androidx.annotation.FontRes
+import androidx.collection.LruCache
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
+import java.io.File
 
-internal fun FontVariation.roundness(roundness: Float): FontVariation.Setting {
-    return Setting("ROND", roundness)
+
+private val fontCache = LruCache<String, FontFamily>(20)
+
+internal fun createVariableFontFamily(@FontRes resId: Int, settings: Map<String, Float>): FontFamily {
+    val cacheKey = "0.$resId/${settings.entries.joinToString(separator = ",") { "${it.key}=${it.value}" }}"
+
+    val cacheHit = fontCache.get(cacheKey)
+    if (cacheHit != null) {
+        return cacheHit
+    }
+
+    val family = createVariableFontFamily(
+        resId, *settings.map { FontVariation.Setting(it.key, it.value) }.toTypedArray()
+    )
+
+    fontCache.put(cacheKey, family)
+
+    return family
 }
 
-internal fun createVariableFontFamily(@FontRes resId: Int, vararg settings: FontVariation.Setting): FontFamily {
+private fun createVariableFontFamily(@FontRes resId: Int, vararg settings: FontVariation.Setting): FontFamily {
     val fonts = mutableListOf<Font>()
     for (weight in 100..900 step 100) {
         fonts += Font(

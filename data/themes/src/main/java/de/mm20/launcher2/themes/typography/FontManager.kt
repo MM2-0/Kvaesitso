@@ -1,17 +1,20 @@
 package de.mm20.launcher2.themes.typography
 
 import android.content.Context
-import android.graphics.Typeface
-import android.graphics.fonts.SystemFonts
-import android.os.Build
-import android.util.Log
-import androidx.core.graphics.TypefaceCompat
 
 data class FontList(
     val builtIn: List<FontFamily>,
     val generic: List<FontFamily>,
     val deviceDefault: List<FontFamily>,
     val system: List<FontFamily>,
+)
+
+data class VariableFontAxis(
+    val name: String,
+    val label: String,
+    val range: ClosedFloatingPointRange<Float>,
+    val step: Float,
+    val defaultValue: Float,
 )
 
 class FontManager(
@@ -24,12 +27,12 @@ class FontManager(
             .getIdentifier("config_bodyFontFamily", "string", "android")
 
         val deviceHeadlineExists = deviceHeadlineResId != 0 &&
-            context.resources.getString(deviceHeadlineResId).isNotBlank()
+                context.resources.getString(deviceHeadlineResId).isNotBlank()
 
         val deviceBodyExists = deviceBodyResId != 0 &&
-            context.resources.getString(deviceBodyResId).isNotBlank()
+                context.resources.getString(deviceBodyResId).isNotBlank()
         return FontList(
-            builtIn = listOf(FontFamily.LauncherDefault, FontFamily.LauncherDefaultRound),
+            builtIn = listOf(FontFamily.LauncherDefault()),
             generic = listOf(
                 FontFamily.SansSerif,
                 FontFamily.Serif,
@@ -41,5 +44,17 @@ class FontManager(
             ),
             system = emptyList(),
         )
+    }
+
+    fun getFontSettings(font: FontFamily.VariableFontFamily): List<VariableFontAxis> {
+        if (font is FontFamily.LauncherDefault) {
+            return listOf(
+                VariableFontAxis("wdth", "Width", 25f..151f, 1f, 100f),
+                VariableFontAxis("ROND", "Roundness", 0f..100f, 1f, 0f),
+                VariableFontAxis("GRAD", "Grade", 0f..100f, 1f, 0f),
+            )
+        }
+
+        return emptyList()
     }
 }

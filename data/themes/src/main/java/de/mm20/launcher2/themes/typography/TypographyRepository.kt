@@ -78,8 +78,8 @@ class TypographyRepository(
             builtIn = true,
             name = "Google Sans",
             fonts = mapOf(
-                "brand" to FontFamily.LauncherDefault,
-                "plain" to FontFamily.LauncherDefault,
+                "brand" to FontFamily.LauncherDefault(),
+                "plain" to FontFamily.LauncherDefault(),
             ),
             styles = DefaultTextStyles,
             emphasizedStyles = DefaultEmphasizedTextStyles,
@@ -91,8 +91,8 @@ class TypographyRepository(
             builtIn = true,
             name = "Google Sans (Rounded)",
             fonts = mapOf(
-                "brand" to FontFamily.LauncherDefaultRound,
-                "plain" to FontFamily.LauncherDefaultRound,
+                "brand" to FontFamily.LauncherDefault(mapOf("ROND" to 100f)),
+                "plain" to FontFamily.LauncherDefault(mapOf("ROND" to 100f)),
             ),
             styles = DefaultTextStyles,
             emphasizedStyles = DefaultEmphasizedTextStyles,

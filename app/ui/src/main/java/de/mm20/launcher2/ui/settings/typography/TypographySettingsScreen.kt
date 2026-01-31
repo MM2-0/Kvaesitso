@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -29,6 +30,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconToggleButton
@@ -46,6 +48,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -72,6 +75,7 @@ import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.theme.typography.fontFamilyOf
 import de.mm20.launcher2.ui.theme.typography.typographyOf
 import kotlinx.serialization.Serializable
@@ -745,24 +749,60 @@ private fun FontPreference(
     val fontManager = FontManager(context)
 
     var showDialog by remember { mutableStateOf(false) }
+    var showFontSettings by remember { mutableStateOf(false) }
 
-    Preference(
-        title = title,
-        summary = getFontName(context, value),
-        icon = {
-            Text(
-                text = preview.ExtraShort,
-                style = TextStyle(
-                    fontFamily = remember(value) { fontFamilyOf(context, value) },
-                    fontWeight = FontWeight.Normal,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontSize = 24.sp,
-                    textAlign = TextAlign.Center,
-                )
+    val fontVariantAxes = remember(value) {
+        if (value is ThemeFontFamily.VariableFontFamily) {
+            fontManager.getFontSettings(value)
+        } else {
+            emptyList()
+        }
+    }
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.background(
+            MaterialTheme.colorScheme.surface,
+            MaterialTheme.shapes.extraSmall
+        )
+    ) {
+        Box(
+            modifier = Modifier.weight(1f)
+        ) {
+            Preference(
+                title = title,
+                summary = getFontName(context, value),
+                icon = {
+                    Text(
+                        text = preview.ExtraShort,
+                        style = TextStyle(
+                            fontFamily = remember(value) { fontFamilyOf(context, value) },
+                            fontWeight = FontWeight.Normal,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 24.sp,
+                            textAlign = TextAlign.Center,
+                        )
+                    )
+                },
+                onClick = { showDialog = true },
+                containerColor = Color.Transparent,
             )
-        },
-        onClick = { showDialog = true },
-    )
+        }
+        if (fontVariantAxes.isNotEmpty()) {
+            Box(
+                modifier = Modifier
+                    .height(36.dp)
+                    .width(1.dp)
+                    .background(MaterialTheme.colorScheme.outlineVariant)
+            )
+            IconButton(
+                modifier = Modifier.padding(horizontal = 12.dp),
+                onClick = { showFontSettings = true }
+            ) {
+                Icon(painterResource(R.drawable.tune_24px), null)
+            }
+        }
+    }
 
     DismissableBottomSheet(
         expanded = showDialog,
@@ -774,7 +814,8 @@ private fun FontPreference(
                 start = 16.dp,
                 top = 16.dp,
                 end = 16.dp,
-                bottom = 16.dp + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
+                bottom = 16.dp + WindowInsets.navigationBars.asPaddingValues()
+                    .calculateBottomPadding(),
             ),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -812,6 +853,59 @@ private fun FontPreference(
                             onValueChange(it)
                             showDialog = false
                         })
+                }
+            }
+        }
+    }
+
+    if (value is ThemeFontFamily.VariableFontFamily) {
+        DismissableBottomSheet(
+            expanded = showFontSettings,
+            onDismissRequest = {
+                showFontSettings = false
+            }
+        ) {
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(16.dp)
+                    .navigationBarsPadding()
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
+                        .heightIn(min = 200.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = preview.TwoLines,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontFamily = fontFamilyOf(context, value)
+                    )
+                }
+
+                PreferenceCategory {
+                    for (axis in fontVariantAxes) {
+                        SliderPreference(
+                            title = axis.label,
+                            value = value.settings.get(axis.name) ?: axis.defaultValue,
+                            onValueChanged = {
+                                val map = value.settings.toMutableMap()
+                                map[axis.name] = it
+
+                                if (value is ThemeFontFamily.LauncherDefault) {
+                                    onValueChange(value.copy(settings = map))
+                                }
+                            },
+                            min = axis.range.start,
+                            max = axis.range.endInclusive,
+                            step = axis.step,
+                            )
+                    }
                 }
             }
         }
@@ -860,7 +954,6 @@ private fun FontPickerCategory(
 private fun getFontName(context: Context, fontFamily: ThemeFontFamily?): String {
     return when (fontFamily) {
         is ThemeFontFamily.LauncherDefault -> "Google Sans Flex"
-        is ThemeFontFamily.LauncherDefaultRound -> "Google Sans Flex (Rounded)"
         is ThemeFontFamily.DeviceHeadline -> context.getString(R.string.font_name_device_headline)
         is ThemeFontFamily.DeviceBody -> context.getString(R.string.font_name_device_body)
         is ThemeFontFamily.System -> fontFamily.name

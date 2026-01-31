@@ -181,13 +181,18 @@ data class TextStyle<out W : FontWeight?>(
 
 @Serializable
 sealed interface FontFamily {
-    @Serializable
-    @SerialName("launcher_default")
-    data object LauncherDefault : FontFamily
+
+    sealed interface VariableFontFamily {
+        val settings: Map<String, Float>
+            get() = emptyMap()
+    }
 
     @Serializable
-    @SerialName("launcher_default_round")
-    data object LauncherDefaultRound : FontFamily
+    @SerialName("launcher_default")
+    data class LauncherDefault(
+        override val settings: Map<String, Float> = emptyMap()
+    ) : FontFamily, VariableFontFamily
+
 
     @Serializable
     @SerialName("device_headline")
