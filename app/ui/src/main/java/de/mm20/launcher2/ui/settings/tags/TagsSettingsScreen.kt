@@ -1,8 +1,12 @@
 package de.mm20.launcher2.ui.settings.tags
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MenuDefaults
@@ -13,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -24,6 +29,7 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.launcher.sheets.EditTagSheet
+import de.mm20.launcher2.ui.settings.shapes.ShapeSchemeSettingsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -37,14 +43,6 @@ fun TagsSettingsScreen() {
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_tags),
-        topBarActions = {
-            IconButton(onClick = { viewModel.createTag.value = true }) {
-                Icon(
-                    painterResource(R.drawable.add_24px),
-                    stringResource(R.string.edit_favorites_dialog_new_tag)
-                )
-            }
-        },
         helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/concepts/tags"
     ) {
         item {
@@ -108,6 +106,22 @@ fun TagsSettingsScreen() {
                         }
                     )
                 }
+            }
+        }
+        item {
+            FilledTonalButton(
+                contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                onClick = {
+                    viewModel.createTag.value = true
+                }) {
+                Icon(
+                    painterResource(R.drawable.add_20px),
+                    null,
+                    modifier = Modifier
+                        .padding(end = ButtonDefaults.IconSpacing)
+                        .size(ButtonDefaults.IconSize)
+                )
+                Text(stringResource(R.string.create_tag_title))
             }
         }
     }
