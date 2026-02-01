@@ -104,7 +104,6 @@ fun TypographySettingsScreen(themeId: UUID) {
     ) { viewModel.getTypography(themeId) }.collectAsStateWithLifecycle(null)
 
     val previewTypography = theme?.let { typographyOf(it) }
-    val previewTexts = PreviewTexts()
 
     var editName by remember { mutableStateOf(false) }
 
@@ -167,7 +166,7 @@ fun TypographySettingsScreen(themeId: UUID) {
         }
         item {
             PreferenceCategory("Body") {
-                TypographyPreview(previewTypography, previewTexts) {
+                TypographyPreview(previewTypography) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -176,7 +175,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                             modifier = Modifier.padding(bottom = 8.dp),
                         )
                         Text(
-                            previewTexts.Medium1,
+                            stringResource(R.string.typo_preview_medium1),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.bodySmall
                         )
@@ -195,7 +194,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Body Medium",
@@ -210,7 +208,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Body Large",
@@ -225,7 +222,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Body Small Emphasized",
@@ -242,7 +238,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Body Medium Emphasized",
@@ -259,7 +254,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Body Large Emphasized",
@@ -276,20 +270,17 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
             }
         }
         item {
             PreferenceCategory("Label") {
-                TypographyPreview(previewTypography, previewTexts) {
+                TypographyPreview(previewTypography) {
                     FilterChip(
                         modifier = Modifier
                             .padding(end = 16.dp),
                         label = {
-                            Text(
-                                previewTexts.Short1
-                            )
+                            Text(stringResource(R.string.typo_preview_short1))
                         },
                         leadingIcon = {
                             Icon(
@@ -302,7 +293,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                         onClick = {},
                     )
                     Button(onClick = {}) {
-                        Text(previewTexts.Medium2)
+                        Text(stringResource(R.string.typo_preview_medium2))
                     }
                 }
                 TextStylePreference(
@@ -318,7 +309,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Label Medium",
@@ -333,7 +323,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Label Large",
@@ -348,7 +337,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Label Small Emphasized",
@@ -365,7 +353,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Label Medium Emphasized",
@@ -382,7 +369,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Label Large Emphasized",
@@ -399,17 +385,16 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
             }
         }
         item {
             PreferenceCategory("Title") {
-                TypographyPreview(previewTypography, previewTexts) {
+                TypographyPreview(previewTypography) {
                     PrimaryTabRow(0, modifier = Modifier.width(300.dp)) {
                         LeadingIconTab(
                             selected = true,
-                            text = { Text(previewTexts.Short1) },
+                            text = { Text(stringResource(R.string.typo_preview_short1)) },
                             icon = {
                                 Icon(
                                     painterResource(R.drawable.person_24px_filled),
@@ -420,7 +405,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                         )
                         LeadingIconTab(
                             selected = false,
-                            text = { Text(previewTexts.Short2) },
+                            text = { Text(stringResource(R.string.typo_preview_short2)) },
                             icon = {
                                 Icon(
                                     painterResource(R.drawable.enterprise_24px),
@@ -444,7 +429,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Title Medium",
@@ -459,7 +443,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Title Large",
@@ -474,7 +457,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Title Small Emphasized",
@@ -491,7 +473,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Title Medium Emphasized",
@@ -508,7 +489,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Title Large Emphasized",
@@ -525,7 +505,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
             }
         }
@@ -544,7 +523,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Headline Medium",
@@ -559,7 +537,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Headline Large",
@@ -574,7 +551,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Headline Small Emphasized",
@@ -592,7 +568,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Headline Medium Emphasized",
@@ -610,7 +585,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Headline Large Emphasized",
@@ -628,7 +602,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
             }
         }
@@ -647,7 +620,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Display Medium",
@@ -662,7 +634,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Display Large",
@@ -677,7 +648,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Display Small Emphasized",
@@ -695,7 +665,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Display Medium Emphasized",
@@ -713,7 +682,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
                 TextStylePreference(
                     title = "Display Large Emphasized",
@@ -731,7 +699,6 @@ fun TypographySettingsScreen(themeId: UUID) {
                             )
                         )
                     },
-                    previewTexts = previewTexts,
                 )
             }
         }
@@ -744,7 +711,6 @@ private fun FontPreference(
     value: ThemeFontFamily?,
     onValueChange: (ThemeFontFamily?) -> Unit = {},
 ) {
-    val preview = PreviewTexts()
     val context = LocalContext.current
     val fontManager = FontManager(context)
 
@@ -774,7 +740,7 @@ private fun FontPreference(
                 summary = getFontName(context, value),
                 icon = {
                     Text(
-                        text = preview.ExtraShort,
+                        text = stringResource(R.string.typo_preview_extra_short),
                         style = TextStyle(
                             fontFamily = remember(value) { fontFamilyOf(context, value) },
                             fontWeight = FontWeight.Normal,
@@ -822,7 +788,7 @@ private fun FontPreference(
             if (fonts.builtIn.isNotEmpty()) {
                 item {
                     FontPickerCategory(
-                        preview.ExtraShort,
+                        stringResource(R.string.typo_preview_extra_short),
                         null,
                         fonts.builtIn,
                         onFontClick = {
@@ -834,7 +800,7 @@ private fun FontPreference(
             if (fonts.deviceDefault.isNotEmpty()) {
                 item {
                     FontPickerCategory(
-                        preview.ExtraShort,
+                        stringResource(R.string.typo_preview_extra_short),
                         stringResource(R.string.font_category_device_default),
                         fonts.deviceDefault,
                         onFontClick = {
@@ -846,7 +812,7 @@ private fun FontPreference(
             if (fonts.generic.isNotEmpty()) {
                 item {
                     FontPickerCategory(
-                        preview.ExtraShort,
+                        stringResource(R.string.typo_preview_extra_short),
                         stringResource(R.string.font_category_generic),
                         fonts.generic,
                         onFontClick = {
@@ -880,7 +846,7 @@ private fun FontPreference(
                 ) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = preview.TwoLines,
+                        text = stringResource(R.string.typo_preview_long),
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.headlineMedium,
@@ -1033,7 +999,6 @@ private fun TextStylePreference(
     defaultValue: ThemeTextStyle<ThemeFontWeight>?,
     defaultValueParent: ThemeTextStyle<ThemeFontWeight.Absolute?>? = null,
     onValueChange: (ThemeTextStyle<ThemeFontWeight.Absolute?>?) -> Unit = {},
-    previewTexts: PreviewTexts,
 ) {
     val context = LocalContext.current
 
@@ -1048,7 +1013,7 @@ private fun TextStylePreference(
         },
         icon = {
             Text(
-                text = previewTexts.ExtraShort,
+                text = stringResource(R.string.typo_preview_extra_short),
                 style = textStyle,
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
@@ -1136,7 +1101,7 @@ private fun TextStylePreference(
             ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = previewTexts.TwoLines,
+                    text = stringResource(R.string.typo_preview_long),
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.primary,
                     fontFamily = fontFamilyOf(context, fonts[actualFontFamily]),
@@ -1170,7 +1135,7 @@ private fun TextStylePreference(
                             },
                         ) {
                             Text(
-                                text = previewTexts.ExtraShort,
+                                text = stringResource(R.string.typo_preview_extra_short),
                                 fontFamily = f,
                                 style = MaterialTheme.typography.headlineSmall,
                                 textAlign = TextAlign.Center,
@@ -1268,7 +1233,6 @@ private fun TextStylePreference(
 @Composable
 private fun TypographyPreview(
     previewTypography: Typography,
-    previewTexts: PreviewTexts,
     content: @Composable () -> Unit,
 ) {
     Row(

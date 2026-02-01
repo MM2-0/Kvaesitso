@@ -59,7 +59,6 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.settings.transparencies.checkerboard
-import de.mm20.launcher2.ui.settings.typography.PreviewTexts
 import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
 import de.mm20.launcher2.ui.theme.colorscheme.lightColorSchemeOf
 import de.mm20.launcher2.ui.theme.shapes.shapesOf
@@ -250,7 +249,6 @@ private fun ThemePreview(
     darkMode: Boolean,
     onDarkModeChanged: (Boolean) -> Unit,
 ) {
-    val previewTexts = PreviewTexts()
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -311,17 +309,17 @@ private fun ThemePreview(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        previewTexts.Medium1,
+                        stringResource(R.string.typo_preview_medium1),
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
-                        previewTexts.Medium2,
+                        stringResource(R.string.typo_preview_medium2),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.secondary
                     )
                     Text(
-                        previewTexts.TwoLines,
+                        stringResource(R.string.typo_preview_long),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(top = 4.dp),
                         color = MaterialTheme.colorScheme.onSurface,
@@ -336,7 +334,7 @@ private fun ThemePreview(
             ) {
                 FilterChip(
                     selected = true,
-                    label = { Text(previewTexts.Short1) },
+                    label = { Text(stringResource(R.string.typo_preview_short1)) },
                     leadingIcon = {
                         Icon(
                             painterResource(R.drawable.star_20px), null,
@@ -347,7 +345,7 @@ private fun ThemePreview(
                 )
                 FilterChip(
                     selected = false,
-                    label = { Text(previewTexts.Short2) },
+                    label = { Text(stringResource(R.string.typo_preview_short2)) },
                     leadingIcon = {
                         Icon(
                             painterResource(R.drawable.star_20px), null,
@@ -368,8 +366,8 @@ private fun ThemePreview(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
             ) {
-                Button(onClick = {}) { Text(previewTexts.Medium1) }
-                OutlinedButton(onClick = {}) { Text(previewTexts.Medium2) }
+                Button(onClick = {}) { Text(stringResource(R.string.typo_preview_medium1)) }
+                OutlinedButton(onClick = {}) { Text(stringResource(R.string.typo_preview_medium2)) }
             }
         }
         Box(

@@ -256,19 +256,17 @@ fun TypographiesSettingsScreen() {
 
 @Composable
 private fun TypographyPreview(typography: androidx.compose.material3.Typography) {
-    val previewTexts = PreviewTexts()
-
     Column(
         modifier = Modifier.padding(vertical = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = previewTexts.Short1,
+            text = stringResource(R.string.typo_preview_short1),
             style = typography.titleSmall,
         )
         Text(
-            text = previewTexts.Short2,
+            text = stringResource(R.string.typo_preview_short2),
             style = typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )

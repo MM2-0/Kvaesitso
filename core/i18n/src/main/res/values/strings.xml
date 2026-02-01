@@ -1091,4 +1091,10 @@
     <string name="create_tag_title">New tag</string>
     <string name="edit_tag_title">Edit tag</string>
     <string name="dialog_discard_unsaved">Quit without saving?</string>
+    <string name="typo_preview_extra_short">Aa</string>
+    <string name="typo_preview_short1">Ava</string>
+    <string name="typo_preview_short2">Typ</string>
+    <string name="typo_preview_medium1">Hamburg</string>
+    <string name="typo_preview_medium2">Preview</string>
+    <string name="typo_preview_long">The quick brown fox\njumps over 123479</string>
 </resources>

@@ -902,4 +902,10 @@
     <string name="create_tag_title">Neues Tag</string>
     <string name="edit_tag_title">Tag bearbeiten</string>
     <string name="dialog_discard_unsaved">Verlassen, ohne zu speichern?</string>
+    <string name="typo_preview_extra_short">Aa</string>
+    <string name="typo_preview_short1">Typ</string>
+    <string name="typo_preview_short2">Äöü</string>
+    <string name="typo_preview_medium1">Hamburg</string>
+    <string name="typo_preview_medium2">Größe</string>
+    <string name="typo_preview_long">Franz jagt im komplett\nverwahrlosten Taxi 123479</string>
 </resources>
