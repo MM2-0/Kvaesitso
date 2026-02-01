@@ -902,4 +902,10 @@
     <string name="tag_name_empty_error">A név nem lehet üres</string>
     <string name="create_tag_title">Új címke</string>
     <string name="edit_tag_title">Címke szerkesztése</string>
+    <string name="typo_preview_extra_short">Aa</string>
+    <string name="typo_preview_short1">Éva</string>
+    <string name="typo_preview_short2">Típus</string>
+    <string name="typo_preview_medium1">Budapest</string>
+    <string name="typo_preview_medium2">Előnézet</string>
+    <string name="typo_preview_long">Árvíztűrő tükörfúrógép\n0123456789</string>
 </resources>
