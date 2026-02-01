@@ -88,21 +88,7 @@ fun PreferenceScreen(
 
     val colorScheme = MaterialTheme.colorScheme
 
-    val touchSlop = LocalViewConfiguration.current.touchSlop
     var fabVisible by remember { mutableStateOf(true) }
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPostScroll(
-                consumed: Offset,
-                available: Offset,
-                source: NestedScrollSource
-            ): Offset {
-                if (consumed.y < -touchSlop) fabVisible = false
-                else if (consumed.y > touchSlop) fabVisible = true
-                return super.onPostScroll(consumed, available, source)
-            }
-        }
-    }
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
