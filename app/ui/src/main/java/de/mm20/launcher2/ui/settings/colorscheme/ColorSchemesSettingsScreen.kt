@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -64,11 +66,6 @@ fun ColorSchemesSettingsScreen() {
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_colors),
-        topBarActions = {
-            IconButton(onClick = { viewModel.createNew(context) }) {
-                Icon(painterResource(R.drawable.add_24px), null)
-            }
-        },
     ) {
         item {
             PreferenceCategory {
@@ -197,6 +194,25 @@ fun ColorSchemesSettingsScreen() {
                         )
                     }
                 }
+            }
+        }
+
+
+        item {
+            FilledTonalButton(
+                contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                onClick = {
+                    val uuid = viewModel.createNew(context)
+                    backStack.add(ColorSchemeSettingsRoute(uuid))
+                }) {
+                Icon(
+                    painterResource(R.drawable.add_20px),
+                    null,
+                    modifier = Modifier
+                        .padding(end = ButtonDefaults.IconSpacing)
+                        .size(ButtonDefaults.IconSize)
+                )
+                Text(stringResource(R.string.preference_create_colors))
             }
         }
     }

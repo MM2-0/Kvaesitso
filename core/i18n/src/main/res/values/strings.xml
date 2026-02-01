@@ -427,6 +427,7 @@
     <string name="preference_theme_light">Light</string>
     <string name="preference_theme_dark">Dark</string>
     <string name="preference_screen_colors">Color scheme</string>
+    <string name="preference_create_colors">New color scheme</string>
     <string name="preference_colors_default">Default</string>
     <string name="preference_colors_high_contrast">High contrast</string>
     <string name="preference_colors_bw">Black and white</string>
@@ -435,12 +436,15 @@
     <string name="preference_mdy_color_source_system">System</string>
     <string name="preference_mdy_color_source_wallpaper">Wallpaper</string>
     <string name="preference_screen_shapes">Shapes</string>
+    <string name="preference_create_shapes">New shapes scheme</string>
     <string name="preference_shapes_default">Default</string>
     <string name="preference_shapes_extra_round">Extra round</string>
     <string name="preference_shapes_rect">Rectangular</string>
     <string name="preference_shapes_base">Base shape</string>
     <string name="preference_screen_typography">Typography</string>
+    <string name="preference_create_typography">New typography scheme</string>
     <string name="preference_screen_transparencies">Transparency</string>
+    <string name="preference_create_transparency">New transparency scheme</string>
     <string name="preference_transparencies_default">Default</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
     <string name="preference_font">Font</string>
