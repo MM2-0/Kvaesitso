@@ -26,6 +26,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -56,6 +57,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -162,6 +164,52 @@ fun TypographySettingsScreen(themeId: UUID) {
                         )
                     }
                 )
+                for (key in theme!!.fonts.keys.sorted()) {
+                    if (key == "plain" || key == "brand") continue
+                    FontPreference(
+                        title = key.capitalize(Locale.current),
+                        theme!!.fonts[key],
+                        removable = true,
+                        onValueChange = {
+                            viewModel.updateTypography(
+                                theme!!.copy(
+                                    fonts = theme!!.fonts.toMutableMap().apply {
+                                        if (it == null) {
+                                            remove(key)
+                                        } else {
+                                            put(key, it)
+                                        }
+                                    }
+                                )
+                            )
+                        }
+                    )
+                }
+            }
+        }
+        if (theme!!.fonts.size < 8) {
+            item {
+                FilledTonalButton(
+                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                    onClick = {
+                    val firstFreeIndex = (1 .. 8).firstOrNull {
+                        !theme!!.fonts.containsKey("custom $it")
+                    }
+                    if (firstFreeIndex != null) {
+                        viewModel.updateTypography(
+                            theme!!.copy(
+                                fonts = theme!!.fonts.toMutableMap()
+                                    .apply { put("custom $firstFreeIndex", ThemeFontFamily.SansSerif) })
+                        )
+                    }
+                }) {
+                    Icon(
+                        painterResource(R.drawable.add_20px),
+                        null,
+                        modifier = Modifier.padding(end = ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
+                    )
+                    Text(stringResource(R.string.add_font_style))
+                }
             }
         }
         item {
@@ -709,6 +757,7 @@ fun TypographySettingsScreen(themeId: UUID) {
 private fun FontPreference(
     title: String,
     value: ThemeFontFamily?,
+    removable: Boolean = false,
     onValueChange: (ThemeFontFamily?) -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -765,7 +814,7 @@ private fun FontPreference(
                 modifier = Modifier.padding(horizontal = 12.dp),
                 onClick = { showFontSettings = true }
             ) {
-                Icon(painterResource(R.drawable.tune_24px), null)
+                Icon(painterResource(R.drawable.custom_typography_24px), null)
             }
         }
     }
@@ -819,6 +868,27 @@ private fun FontPreference(
                             onValueChange(it)
                             showDialog = false
                         })
+                }
+            }
+
+            if (removable) {
+                item {
+                    PreferenceCategory() {
+                        Preference(
+                            title = stringResource(R.string.remove_font_style),
+                            icon = {
+                                Icon(
+                                    painterResource(R.drawable.delete_24px),
+                                    null,
+                                    tint = MaterialTheme.colorScheme.error,
+                                )
+                            },
+                            onClick = {
+                                onValueChange(null)
+                                showDialog = false
+                            }
+                        )
+                    }
                 }
             }
         }

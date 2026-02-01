@@ -1067,7 +1067,9 @@
     <string name="theme_import_title">Import theme</string>
     <string name="theme_bundle_name">Name</string>
     <string name="theme_bundle_author">Author</string>
-    <string name="preference_typography_fonts">Fonts</string>
+    <string name="preference_typography_fonts">Font styles</string>
+    <string name="add_font_style">Add font style</string>
+    <string name="remove_font_style">Remove this font style</string>
     <string name="font_category_device_default">Device default</string>
     <string name="font_name_device_headline">Default headline font</string>
     <string name="font_name_device_body">Device text font</string>
