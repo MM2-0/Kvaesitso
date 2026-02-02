@@ -902,4 +902,10 @@
     <string name="tag_name_empty_error">Naam mag niet leeg zijn</string>
     <string name="create_tag_title">Nieuw label</string>
     <string name="edit_tag_title">Label bewerken</string>
+    <string name="typo_preview_extra_short">Aa</string>
+    <string name="typo_preview_short1">Ben</string>
+    <string name="typo_preview_short2">Mie</string>
+    <string name="typo_preview_medium1">Parels</string>
+    <string name="typo_preview_medium2">Comité</string>
+    <string name="typo_preview_long">Doch vlakbĳ zwerft \'n \nexquis gympje 1234790</string>
 </resources>
