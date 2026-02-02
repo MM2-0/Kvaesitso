@@ -38,7 +38,7 @@ fun SliderPreference(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface, MaterialTheme.shapes.extraSmall)
+            .background(MaterialTheme.colorScheme.surfaceBright, MaterialTheme.shapes.extraSmall)
             .padding(
                 start = if (icon != null || iconPadding) 8.dp else 16.dp,
                 end = 16.dp,

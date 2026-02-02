@@ -30,7 +30,7 @@ fun PreferenceWithSwitch(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.background(MaterialTheme.colorScheme.surface, MaterialTheme.shapes.extraSmall)
+        modifier = Modifier.background(MaterialTheme.colorScheme.surfaceBright, MaterialTheme.shapes.extraSmall)
     ) {
         Box(
             modifier = Modifier.weight(1f)

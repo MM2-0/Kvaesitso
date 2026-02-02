@@ -24,7 +24,7 @@ fun Color.Companion.hct(hue: Float, chroma: Float, tone: Float): Color {
 fun Color.atTone(tone: Int): Color {
     return Color(
         Hct.fromInt(this.toArgb()).apply {
-            this.tone = tone.toDouble()
+            this.setTone(tone.toDouble())
         }.toInt()
     )
 }

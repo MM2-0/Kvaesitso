@@ -777,7 +777,7 @@ private fun FontPreference(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.background(
-            MaterialTheme.colorScheme.surface,
+            MaterialTheme.colorScheme.surfaceBright,
             MaterialTheme.shapes.extraSmall
         )
     ) {
@@ -1309,7 +1309,7 @@ private fun TypographyPreview(
         modifier = Modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.extraSmall)
-            .background(MaterialTheme.colorScheme.surfaceContainerLowest)
+            .background(MaterialTheme.colorScheme.surfaceContainerLow)
             .horizontalScroll(rememberScrollState())
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,

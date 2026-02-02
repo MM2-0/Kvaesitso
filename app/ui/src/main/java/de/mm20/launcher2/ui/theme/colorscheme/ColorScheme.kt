@@ -20,21 +20,27 @@ import de.mm20.launcher2.themes.colors.Colors as ThemeColors
 import de.mm20.launcher2.themes.colors.get
 import de.mm20.launcher2.themes.colors.merge
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
+import dynamiccolor.ColorSpec
+import hct.Hct
 import org.koin.compose.koinInject
+import scheme.SchemeContent
+import scheme.SchemeExpressive
+import scheme.SchemeNeutral
+import scheme.SchemeTonalSpot
 
 @Composable
 fun lightColorSchemeOf(colors: ThemeColors): ColorScheme {
-    return colorSchemeOf(colors.lightColorScheme.merge(DefaultLightColorScheme), colors.corePalette)
+    return colorSchemeOf(false, colors.lightColorScheme.merge(DefaultLightColorScheme), colors.corePalette)
 }
 
 @Composable
 fun darkColorSchemeOf(colors: ThemeColors): ColorScheme {
-    return colorSchemeOf(colors.darkColorScheme.merge(DefaultDarkColorScheme), colors.corePalette)
+    return colorSchemeOf(true, colors.darkColorScheme.merge(DefaultDarkColorScheme), colors.corePalette)
 }
 
 @Composable
-fun colorSchemeOf(colorScheme: FullColorScheme, corePalette: PartialCorePalette): ColorScheme {
-    val defaultPalette = systemCorePalette()
+fun colorSchemeOf(dark: Boolean, colorScheme: FullColorScheme, corePalette: PartialCorePalette): ColorScheme {
+    val defaultPalette = systemCorePalette(dark)
     return remember(colorScheme, corePalette, defaultPalette) {
         val mergedCorePalette = corePalette.merge(defaultPalette)
         ColorScheme(
@@ -79,7 +85,7 @@ fun colorSchemeOf(colorScheme: FullColorScheme, corePalette: PartialCorePalette)
 }
 
 @Composable
-fun systemCorePalette(): CorePalette<Int> {
+fun systemCorePalette(dark: Boolean): CorePalette<Int> {
     val uiSettings: UiSettings = koinInject()
     val compatModeColors by remember {
         uiSettings.compatModeColors
@@ -98,14 +104,20 @@ fun systemCorePalette(): CorePalette<Int> {
     }
     val wallpaperColors = LocalWallpaperColors.current
     return remember(wallpaperColors) {
-        val corePalette = palettes.CorePalette.of(wallpaperColors.primary.toArgb())
+        val corePalette = SchemeTonalSpot(
+            Hct.fromInt(
+                wallpaperColors.primary.toArgb()),
+            dark,
+            0.0,
+            ColorSpec.SpecVersion.SPEC_2025,
+        )
         CorePalette(
-            primary = corePalette.a1.tone(40),
-            secondary = corePalette.a2.tone(40),
-            tertiary = corePalette.a3.tone(40),
-            neutral = corePalette.n1.tone(40),
-            neutralVariant = corePalette.n2.tone(40),
-            error = corePalette.error.tone(40),
+            primary = corePalette.primaryPaletteKeyColor,
+            secondary = corePalette.secondaryPaletteKeyColor,
+            tertiary = corePalette.tertiaryPaletteKeyColor,
+            neutral = corePalette.neutralPaletteKeyColor,
+            neutralVariant = corePalette.neutralVariantPaletteKeyColor,
+            error = corePalette.errorPalette.keyColor.toInt(),
         )
     }
 }

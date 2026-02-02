@@ -65,15 +65,15 @@ import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
 import de.mm20.launcher2.ui.theme.colorscheme.lightColorSchemeOf
 import de.mm20.launcher2.ui.theme.colorscheme.systemCorePalette
+import hct.Hct
 import kotlinx.serialization.Serializable
-import palettes.CorePalette
+import scheme.SchemeExpressive
 import java.util.UUID
-import kotlin.uuid.Uuid
 
 @Serializable
 data class ColorSchemeSettingsRoute(
     @Serializable(with = UUIDSerializer::class) val id: UUID
-): NavKey
+) : NavKey
 
 @Composable
 fun ColorSchemeSettingsScreen(themeId: UUID) {
@@ -91,7 +91,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
     val previewColorScheme =
         theme?.let { if (previewDarkTheme) darkColorSchemeOf(it) else lightColorSchemeOf(it) }
 
-    val systemPalette = systemCorePalette()
+    val systemPalette = systemCorePalette(dark)
 
     val mergedCorePalette by remember(theme?.corePalette, systemPalette) {
         derivedStateOf {
@@ -175,7 +175,9 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     defaultValue = systemPalette.secondary,
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
-                            CorePalette.of(it).a2.keyColor.toInt()
+                            SchemeExpressive(
+                                Hct.fromInt(it), false, 0.0,
+                            ).secondaryPaletteKeyColor
                         }
                     },
                 )
@@ -194,7 +196,9 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     defaultValue = systemPalette.tertiary,
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
-                            CorePalette.of(it).a3.keyColor.toInt()
+                            SchemeExpressive(
+                                Hct.fromInt(it), false, 0.0,
+                            ).tertiaryPaletteKeyColor
                         }
                     },
                 )
@@ -213,7 +217,9 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     defaultValue = systemPalette.neutral,
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
-                            CorePalette.of(it).n1.keyColor.toInt()
+                            SchemeExpressive(
+                                Hct.fromInt(it), false, 0.0,
+                            ).neutralPaletteKeyColor
                         }
                     },
                 )
@@ -232,7 +238,9 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     defaultValue = systemPalette.neutralVariant,
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
-                            CorePalette.of(it).n2.keyColor.toInt()
+                            SchemeExpressive(
+                                Hct.fromInt(it), false, 0.0,
+                            ).neutralVariantPaletteKeyColor
                         }
                     },
                 )
@@ -251,7 +259,9 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     defaultValue = systemPalette.error,
                     autoGenerate = {
                         theme!!.corePalette.primary?.let {
-                            CorePalette.of(it).error.keyColor.toInt()
+                            SchemeExpressive(
+                                Hct.fromInt(it), false, 0.0,
+                            ).errorPalette.keyColor.toInt()
                         }
                     },
                 )
@@ -790,7 +800,11 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Icon(painterResource(R.drawable.search_24px), null, tint = MaterialTheme.colorScheme.onSurface)
+                        Icon(
+                            painterResource(R.drawable.search_24px),
+                            null,
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
                     }
                 }
             }
@@ -1080,7 +1094,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                 }
 
                 IconButton(
-                    onClick = {  },
+                    onClick = { },
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .align(Alignment.CenterVertically),

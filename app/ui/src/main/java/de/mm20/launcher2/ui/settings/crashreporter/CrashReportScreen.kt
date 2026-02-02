@@ -57,7 +57,7 @@ fun CrashReportScreen(fileName: String) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(MaterialTheme.shapes.medium)
-                    .background(MaterialTheme.colorScheme.surface)
+                    .background(MaterialTheme.colorScheme.surfaceBright)
                     .horizontalScroll(
                         rememberScrollState()
                     ),
@@ -80,7 +80,7 @@ fun CrashReportScreen(fileName: String) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surface, MaterialTheme.shapes.medium)
+                    .background(MaterialTheme.colorScheme.surfaceBright, MaterialTheme.shapes.medium)
                     .padding(12.dp),
             ) {
                 Text(text = "Device Information", style = MaterialTheme.typography.titleMedium)

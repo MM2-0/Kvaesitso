@@ -35,13 +35,13 @@ fun ColorSwatch(
             else 40f
         }
         it.apply {
-            this.tone = tone.toDouble()
+            this.setTone(tone.toDouble())
         }.toInt()
     })
     val borderColor = Color(Hct.fromInt(color.toArgb()).let {
         val tone = if (darkTheme) 30f else 80f
         it.apply {
-            this.tone = tone.toDouble()
+            this.setTone(tone.toDouble())
         }.toInt()
     })
     Box(

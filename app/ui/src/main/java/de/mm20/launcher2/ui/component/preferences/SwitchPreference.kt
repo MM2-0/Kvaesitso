@@ -21,7 +21,7 @@ fun SwitchPreference(
     value: Boolean,
     onValueChanged: (Boolean) -> Unit,
     enabled: Boolean = true,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
 ) {
     Preference(
         title = title,

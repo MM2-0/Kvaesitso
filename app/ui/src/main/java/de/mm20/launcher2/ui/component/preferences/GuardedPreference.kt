@@ -29,7 +29,7 @@ fun GuardedPreference(
         modifier = Modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.extraSmall)
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surfaceBright)
     ) {
         if (locked) {
             Banner(
