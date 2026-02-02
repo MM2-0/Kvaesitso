@@ -913,4 +913,10 @@
     <string name="tag_name_empty_error">Il nome non può essere vuoto</string>
     <string name="create_tag_title">Nuovo tag</string>
     <string name="edit_tag_title">Modifica tag</string>
+    <string name="typo_preview_extra_short">Aa</string>
+    <string name="typo_preview_short1">Mano</string>
+    <string name="typo_preview_short2">Vino</string>
+    <string name="typo_preview_medium1">Scompiglio</string>
+    <string name="typo_preview_medium2">Libertà</string>
+    <string name="typo_preview_long">Quel bizzarro caffè costa 124,79€\nma già 0 esperti l’han capito</string>
 </resources>
