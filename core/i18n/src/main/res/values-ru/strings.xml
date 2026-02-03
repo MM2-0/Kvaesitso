@@ -7,6 +7,7 @@
     <string name="menu_favorites_unpin">Открепить</string>
     <string name="menu_back">Назад</string>
     <string name="menu_launch">Запустить</string>
+    <string name="action_quit">Выход</string>
     <string name="menu_delete">Убрать</string>
     <string name="menu_contacts_open_externally">Открыть в Контактах</string>
     <string name="menu_calendar_open_externally">Открыть в Календаре</string>
@@ -234,6 +235,7 @@
     <string name="preference_search_localfiles_summary">Поиск документов, фотографий и других файлов, хранящихся на этом устройстве</string>
     <string name="preference_calendar_calendars">Календари</string>
     <string name="preference_search_files">Файлы</string>
+    <string name="preference_clockwidget_smartspacer">Управляемый Smartspacer</string>
     <string name="preference_clockwidget_date_part">Дата</string>
     <string name="preference_clockwidget_battery_part">Батарея</string>
     <string name="preference_clockwidget_battery_part_summary">Показывать текущий уровень заряда батареи, когда батарея разряжена или заряжается</string>
@@ -241,6 +243,7 @@
     <string name="preference_notification_badges">Значки-оповещения</string>
     <string name="preference_suspended_badges">Приостановленные приложения</string>
     <string name="preference_about_license">Данное приложение является свободным ПО.</string>
+    <string name="preference_clockwidget_dock_rows">Закрепленные строки</string>
     <string name="preference_clockwidget_music_part">Медиа</string>
     <string name="preference_search_files_summary">Поиск локальных и облачных файлов</string>
     <string name="preference_hide_status_bar">Скрыть строку состояния</string>
@@ -258,6 +261,7 @@
     <string name="preference_screen_debug">Отладка</string>
     <string name="preference_category_widgets">Виджеты</string>
     <string name="preference_screen_weatherwidget">Погода</string>
+    <string name="no_selection">Нет выбора</string>
     <string name="save">Сохранить</string>
     <string name="calendar_widget_next_events">Следующее событие</string>
     <string name="missing_permission_appshortcuts_search_settings">Для поиска ярлыков приложений %1$s должно быть установлено главным экраном по умолчанию</string>
@@ -350,11 +354,13 @@
     <string name="preference_screen_buildinfo_summary">Больше информации об этой сборке приложения</string>
     <string name="preference_search_bar_auto_focus_summary">Автоматически показывать клавиатуру при открытии списка приложений</string>
     <string name="preference_gesture_swipe_right">Свайп вправо</string>
+    <string name="preference_gesture_swipe_up">Свайп вверх</string>
     <string name="preference_gesture_double_tap">Двойное касание</string>
     <string name="preference_gesture_long_press">Длительное нажатие</string>
     <string name="preference_screen_search_actions">Быстрые действия</string>
     <string name="search_action_alarm">Установить будильник</string>
     <string name="create_search_action_type_app">Поиск в приложении</string>
+    <string name="edit_search_action_title">Изменить быстрое действие</string>
     <string name="create_search_action_type">Какое действие вы хотите создать?</string>
     <string name="create_search_action_type_web">Поиск по веб-сайту</string>
     <string name="create_search_action_website_url">Введите адрес веб-сайта:</string>
@@ -379,6 +385,7 @@
     <string name="preference_search_bar_auto_focus">Показывать клавиатуру</string>
     <string name="gesture_action_launch_app">Запустить приложение</string>
     <string name="gesture_action_recents">Показать недавние приложения</string>
+    <string name="gesture_action_feed">Лента</string>
     <string name="gesture_failed_message">Вы выполнили жест «%1$s». В данный момент он настроен на запуск действия «%2$s». Однако оно не может быть выполнено по следующей причине:</string>
     <string name="create_search_action_pick_app">Выберите приложение для поиска:</string>
     <string name="preference_nextcloud_signin">Войти в Nextcloud</string>
@@ -400,6 +407,7 @@
     <string name="preference_search_favorites_summary">Отображать закрепленные и часто используемые над списком приложений</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_bar_style_summary">Настроить внешний вид строки поиска</string>
+    <string name="preference_search_bar_style_hidden">Скрытая</string>
     <string name="preference_search_bar_color">Цвет</string>
     <string name="preference_favorites_edit_button_summary">Показывать кнопку для редактирования избранных</string>
     <string name="preference_widgets_edit_button_summary">Показывать кнопку для добавления, удаления и редактирования виджетов</string>
@@ -436,6 +444,7 @@
     <string name="search_action_label">Название</string>
     <string name="experimental_feature">Экспериментально</string>
     <string name="tag_exists_error">Тег с таким названием уже существует.</string>
+    <string name="tag_name_empty_error">Наименование не может быть пустым</string>
     <string name="tag_exists_message">Тег с таким названием уже существует. Если вы продолжите, два тега будут совмещены.</string>
     <string name="tag_name">Название тега</string>
     <string name="preference_layout_open_search">Поиск / список приложений</string>
@@ -465,6 +474,7 @@
     <string name="preference_cloud_badges">Облачные значки</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_search_cloud_summary">Искать файлы %1$s</string>
+    <string name="preference_widgets_on_home_screen_summary">Показывать виджеты на домашнем экране вместо отдельной страницы</string>
     <string name="preference_screen_homescreen">Главный экран</string>
     <string name="preference_screen_icons">Сетка и иконки</string>
     <string name="preference_weather_integration">Погода</string>
@@ -493,6 +503,7 @@
     <string name="widget_config_weather_integration_settings">Настройки интеграции погоды</string>
     <string name="preference_search_appshortcuts_summary">Искать ярлыки приложений</string>
     <string name="note_widget_conflict_local_version">Последняя сохранённая версия:</string>
+    <string name="widget_name_apps">Приложения</string>
     <string name="widget_name_notes">Заметки</string>
     <string name="preference_cloud_badges_summary">Показывать значок для файлов, хранящихся в облачном хранилище</string>
     <string name="preference_edit_favorites_summary">Изменить порядок закрепленных приложений</string>
@@ -547,6 +558,7 @@
     <string name="preference_clock_widget_alignment_top">Вверху</string>
     <string name="plugin_type_filesearch">Файлы</string>
     <string name="preference_clock_widget_alignment_center">По центру</string>
+    <string name="import_theme_exists">Тема уже существует и будет обновлена</string>
     <string name="import_theme_error">Не удалось прочитать выбранный файл. Убедитесь, что вы выбрали корректный файл темы (*.kvtheme) и что он не повреждён.</string>
     <string name="plugin_weather_provider_enable">Назначить провайдером погоды</string>
     <string name="preference_restore_default">Вернуть умолчание</string>
@@ -559,6 +571,7 @@
     <string name="preference_custom_colors_corepalette">Цветовая палитра</string>
     <string name="preference_screen_plugins">Плагины</string>
     <string name="preference_screen_plugins_summary">Управление установленными дополнениями</string>
+    <string name="preference_category_installed_plugins">Установлены</string>
     <string name="no_plugins_installed">Установленных плагинов нет</string>
     <string name="preference_category_animations">Анимации</string>
     <string name="preference_charging_animation">Анимация зарядки</string>
@@ -742,6 +755,7 @@
     <string name="poi_category_pet">Зоомагазин</string>
     <string name="item_visibility_app_default">В списке приложений и результатах поиска</string>
     <string name="item_visibility_calendar_default">В календарном виджете и результатах поиска</string>
+    <string name="poi_category_hackerspace">Хакерское пространство</string>
     <string name="customize_item_label">Название</string>
     <string name="customize_item_tags">Теги</string>
     <plurals name="contact_phone_numbers">
@@ -765,6 +779,7 @@
     <string name="action_more_actions">Больше действий</string>
     <string name="action_clear">Очистить поле</string>
     <string name="preference_search_supportedunits">Поддерживаемые единицы</string>
+    <string name="clock_variant_analog_ticks">Стрелки</string>
     <string name="menu_show_filters">Показать фильтры</string>
     <string name="menu_hide_filters">Скрыть фильтры</string>
     <string name="music_widget_next_track">Следующий трек</string>
@@ -781,6 +796,7 @@
     <string name="calendar_widget_previous_day">Предыдущий день</string>
     <string name="app_label_locked_profile">Заблокировано</string>
     <string name="calendar_widget_open_calendar">Открыть приложение календаря</string>
+    <string name="no_feed_providers">Провайдеры ленты не установлены</string>
     <string name="preference_contacts_call_on_tap">Нажмите, чтобы позвонить</string>
     <string name="preference_contacts_call_on_tap_summary">Совершить вызов при нажатии на номер телефона</string>
     <string name="departure_time_departed">ушел</string>
@@ -848,11 +864,13 @@
     <string name="gesture_action_widgets">Виджеты</string>
     <string name="preference_transparencies_default">По умолчанию</string>
     <string name="preference_transparencies_semi_transparent">Полупрозрачный</string>
-    <string name="preference_screen_transparencies">Прозрачный</string>
+    <string name="preference_screen_transparencies">Прозрачность</string>
+    <string name="confirmation_delete_transparencies_scheme">Вы действительно хотите удалить схему прозрачности %1$s</string>
     <string name="new_theme_name">(без названия)</string>
     <string name="save_as_file">Сохранить как файл</string>
     <string name="theme_bundle_name">Имя</string>
     <string name="theme_bundle_author">Автор</string>
+    <string name="bad_configuration_summary">Вы обнаружили комбинацию настроек, которая делает недоступными как поиск, так и настройки, фактически блокируя доступ к лаунчеру</string>
     <string name="theme_export_title">Экспортировать тему</string>
     <string name="preference_screen_typography">Типографика</string>
     <string name="preference_typography_fonts">Шрифты</string>
@@ -868,4 +886,40 @@
     <string name="preference_clock_widget_monospaced">Моноширинные цифры</string>
     <string name="preference_search_apps">Приложения</string>
     <string name="preference_search_apps_summary">Показывать все приложения, когда строка поиска пуста</string>
+    <string name="preference_category_enabled_plugins">Включены</string>
+    <string name="preference_search_bar_style_transparent">Прозрачная</string>
+    <string name="preference_search_bar_style_solid">Непрозрачная</string>
+    <string name="preference_smartspacer_integration_description">Smartscpacer - бесплатный open source виджет Самое главное. Если установлен, может быть интегрирован в динамическую зону виджета часов.</string>
+    <string name="preference_smartspacer_enable">Включить интеграцию Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">Открыть Smartspacer</string>
+    <string name="preference_feed_integration">Лента</string>
+    <string name="preference_category_feed_provider">Провайдер ленты</string>
+    <string name="preference_feed_enable_summary">Свайп вправо на домашнем экране</string>
+    <string name="create_search_action_title">Новое быстрое действие</string>
+    <string name="tag_icon_customicon">Иконка</string>
+    <string name="confirmation_delete_shapes_scheme">Вы действительно хотите удалить форму %1$s?</string>
+    <string name="confirmation_delete_typography_scheme">Вы действительно хотите удалить типографику %1$s?</string>
+    <string name="poi_category_stationery">Стационарный</string>
+    <string name="poi_category_climbing_gym">Скалолазание</string>
+    <string name="bad_configuration_title">Поздравляем, Вы сами себя заперли!</string>
+    <string name="font_category_generic">Общий</string>
+    <string name="preference_screen_locale">Язык и регион</string>
+    <string name="preference_screen_locale_summary">Язык, единицы измерения, формат времени</string>
+    <string name="preference_language">Язык</string>
+    <string name="preference_value_system_default">Настройки системы</string>
+    <string name="preference_form_of_address">Форма адреса</string>
+    <string name="preference_form_of_address_neutral">Нейтральный</string>
+    <string name="preference_form_of_address_fem">Женский</string>
+    <string name="preference_form_of_address_masc">Мужской</string>
+    <string name="preference_measurement_system">Система единиц измерения</string>
+    <string name="preference_measurement_system_metric">Метрическая</string>
+    <string name="preference_measurement_system_uk">Великобритания</string>
+    <string name="preference_measurement_system_us">США</string>
+    <string name="preference_transliteration">Предпочитаемая транслитерация</string>
+    <string name="preference_transliteration_auto">Автоматическая</string>
+    <string name="preference_transliteration_disabled">Отключена</string>
+    <string name="select_tag">Выбрать тег</string>
+    <string name="create_tag_title">Новый тег</string>
+    <string name="edit_tag_title">Изменить тег</string>
+    <string name="dialog_discard_unsaved">Выйти без сохранения?</string>
 </resources>
