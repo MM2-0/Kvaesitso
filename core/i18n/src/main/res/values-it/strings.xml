@@ -858,7 +858,7 @@
     <string name="new_theme_name">(senza titolo)</string>
     <string name="preference_screen_typography">Tipografia</string>
     <string name="confirmation_delete_typography_scheme">Vuoi davvero eliminare lo schema tipografico %1$s?</string>
-    <string name="preference_typography_fonts">Font</string>
+    <string name="preference_typography_fonts">Stili del font</string>
     <string name="font_category_device_default">Dispositivo predefinito</string>
     <string name="font_name_device_headline">Font predefinito per il titolo</string>
     <string name="font_name_device_body">Font del testo del dispositivo</string>
@@ -919,4 +919,10 @@
     <string name="typo_preview_medium1">Scompiglio</string>
     <string name="typo_preview_medium2">Libertà</string>
     <string name="typo_preview_long">Quel bizzarro caffè costa 124,79€\nma già 0 esperti l’han capito</string>
+    <string name="preference_create_colors">Nuova combinazione di colori</string>
+    <string name="preference_create_shapes">Nuova combinazione di forme</string>
+    <string name="preference_create_typography">Nuovo combinazione tipografica</string>
+    <string name="preference_create_transparency">Nuovo combinazione di trasparenza</string>
+    <string name="add_font_style">Aggiungi stile del font</string>
+    <string name="remove_font_style">Rimuovi questo stile del font</string>
 </resources>
