@@ -908,4 +908,10 @@
     <string name="typo_preview_medium1">Budapest</string>
     <string name="typo_preview_medium2">Előnézet</string>
     <string name="typo_preview_long">Árvíztűrő tükörfúrógép\n0123456789</string>
+    <string name="preference_create_colors">Új színséma</string>
+    <string name="preference_create_shapes">Új alakzatséma</string>
+    <string name="preference_create_typography">Új tipográfiai séma</string>
+    <string name="preference_create_transparency">Új átlátszósági séma</string>
+    <string name="add_font_style">Betűtípus hozzáadása</string>
+    <string name="remove_font_style">Betűtípus eltávolítása</string>
 </resources>
