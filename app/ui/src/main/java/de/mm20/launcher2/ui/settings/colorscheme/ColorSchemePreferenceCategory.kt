@@ -90,7 +90,7 @@ fun ColorSchemePreferenceCategory(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(
-                            MaterialTheme.colorScheme.surfaceContainerLowest,
+                            MaterialTheme.colorScheme.surfaceContainerLow,
                             MaterialTheme.shapes.extraSmall
                         )
                         .horizontalScroll(rememberScrollState())

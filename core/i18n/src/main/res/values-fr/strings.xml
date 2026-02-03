@@ -928,4 +928,8 @@
     <string name="preference_measurement_system_uk">Royaume-Uni</string>
     <string name="preference_measurement_system_us">États-Unis</string>
     <string name="dialog_discard_unsaved">Quitter sans sauvegarder ?</string>
+    <string name="typo_preview_long">Dès Noël, où un zéphyr haï me vêt de glaçons würmiens,\nje dîne d’exquis rôtis de bœuf au kir, à l’aÿ d’âge mûr, &amp;cætera. 1234790</string>
+    <string name="typo_preview_medium2">Prévisual.</string>
+    <string name="typo_preview_short2">Typ.</string>
+    <string name="typo_preview_extra_short">Aa</string>
 </resources>

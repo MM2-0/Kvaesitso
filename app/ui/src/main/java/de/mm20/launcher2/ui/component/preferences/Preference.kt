@@ -29,7 +29,7 @@ fun Preference(
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -92,7 +92,7 @@ fun Preference(
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
 ) {
     Preference(
         title = {
@@ -121,7 +121,7 @@ fun Preference(
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
 ) {
     Preference(
         title,

@@ -11,37 +11,13 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
-
-/**
- * Animates the corners of a shape between its original value and 0.
- * For each parameter set to true, the corresponding corner will animate to the original value.
- * Otherwise, it will animate to 0.
- */
-@Composable
-fun CornerBasedShape.animateCorners(
-    topStart: Boolean,
-    topEnd: Boolean,
-    bottomEnd: Boolean,
-    bottomStart: Boolean,
-): CornerBasedShape {
-    val value by animateShapeAsState(
-        copy(
-            topStart = if (topStart) this.topStart else CornerSize(0f),
-            topEnd = if (topEnd) this.topEnd else CornerSize(0f),
-            bottomEnd = if (bottomEnd) this.bottomEnd else CornerSize(0f),
-            bottomStart = if (bottomStart) this.bottomStart else CornerSize(0f)
-        )
-    )
-
-    return value
-}
 
 /**
  * Animate between two shapes.
@@ -52,12 +28,19 @@ fun CornerBasedShape.animateCorners(
  */
 @Composable
 fun animateShapeAsState(
-    shape: CornerBasedShape,
+    shape: Shape,
     animationSpec: AnimationSpec<CornerBasedShape> = remember { spring() },
     visibilityThreshold: CornerBasedShape? = null,
     label: String = "ValueAnimation",
-    finishedListener: ((CornerBasedShape) -> Unit)? = null
-): State<CornerBasedShape> {
+    finishedListener: ((Shape) -> Unit)? = null
+): State<Shape> {
+
+    if (shape !is CornerBasedShape) {
+        return remember(shape) {
+            mutableStateOf(shape)
+        }
+    }
+
     val density = LocalDensity.current
     val converter = remember(shape.javaClass, density) {
         if (shape is CutCornerShape) CutCornerShapeConverter(density)

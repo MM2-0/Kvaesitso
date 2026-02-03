@@ -154,7 +154,7 @@ fun IconsSettingsScreen() {
                     Row(
                         modifier = Modifier
                             .background(
-                                MaterialTheme.colorScheme.surfaceContainerLowest,
+                                MaterialTheme.colorScheme.surfaceContainerLow,
                                 MaterialTheme.shapes.extraSmall
                             )
                             .padding(vertical = 24.dp, horizontal = 8.dp)

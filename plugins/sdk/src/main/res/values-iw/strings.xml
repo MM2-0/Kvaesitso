@@ -2,4 +2,5 @@
 <resources>
     <string name="request_permission_deny_button">דחה</string>
     <string name="request_permission_message"><![CDATA[<b>%1$s</b> רוצה לגשת למידע מ-<b>%2$s</b>.]]></string>
+    <string name="request_permission_allow_button">התרה</string>
 </resources>

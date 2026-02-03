@@ -3,14 +3,13 @@ package de.mm20.launcher2.ui.settings.shapes
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import de.mm20.launcher2.preferences.ui.UiSettings
-import de.mm20.launcher2.themes.shapes.Shapes
 import de.mm20.launcher2.themes.ThemeRepository
+import de.mm20.launcher2.themes.shapes.Shapes
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.UUID
-import kotlin.getValue
 
 class ShapeSchemesSettingsScreenVM : ViewModel(), KoinComponent {
 
@@ -40,12 +39,14 @@ class ShapeSchemesSettingsScreenVM : ViewModel(), KoinComponent {
         themeRepository.shapes.delete(shapes)
     }
 
-    fun createNew(context: Context) {
+    fun createNew(context: Context): UUID {
+        val uuid = UUID.randomUUID()
         themeRepository.shapes.create(
             Shapes(
-                id = UUID.randomUUID(),
+                id = uuid,
                 name = context.getString(R.string.new_theme_name)
             )
         )
+        return uuid
     }
 }

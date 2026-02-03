@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,6 +42,7 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.typography.TypographySettingsRoute
 import de.mm20.launcher2.ui.theme.WallpaperColors
 import de.mm20.launcher2.ui.theme.transparency.transparencySchemeOf
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
@@ -64,11 +68,6 @@ fun TransparencySchemesSettingsScreen() {
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_transparencies),
-        topBarActions = {
-            IconButton(onClick = { viewModel.createNew(context) }) {
-                Icon(painterResource(R.drawable.add_24px), null)
-            }
-        },
     ) {
         item {
             PreferenceCategory {
@@ -200,6 +199,22 @@ fun TransparencySchemesSettingsScreen() {
                         )
                     }
                 }
+            }
+        }
+
+        item {
+            FilledTonalButton(
+                contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                onClick = {
+                    val uuid = viewModel.createNew(context)
+                    backStack.add(TransparencySchemeSettingsRoute(uuid))
+                }) {
+                Icon(
+                    painterResource(R.drawable.add_20px),
+                    null,
+                    modifier = Modifier.padding(end = ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
+                )
+                Text(stringResource(R.string.preference_create_transparency))
             }
         }
     }

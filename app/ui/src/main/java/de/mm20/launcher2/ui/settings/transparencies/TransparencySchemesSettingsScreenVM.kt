@@ -39,12 +39,14 @@ class TransparencySchemesSettingsScreenVM : ViewModel(), KoinComponent {
         themeRepository.transparencies.delete(transparencies)
     }
 
-    fun createNew(context: Context) {
+    fun createNew(context: Context): UUID {
+        val uuid = UUID.randomUUID()
         themeRepository.transparencies.create(
             Transparencies(
-                id = UUID.randomUUID(),
+                id = uuid,
                 name = context.getString(R.string.new_theme_name)
             )
         )
+        return uuid
     }
 }

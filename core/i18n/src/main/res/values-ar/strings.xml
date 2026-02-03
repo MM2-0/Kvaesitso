@@ -885,7 +885,7 @@
     <string name="poi_category_stationery">محل أدوات مكتبية</string>
     <string name="preference_breezyweather_integration">تطبيق Breezy Weather</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather تطبيق طقس مجاني ومفتوح المصدر. إن وُجد، يمكنه إمداد %1$s ببيانات الطقس.</string>
-    <string name="preference_breezyweather_integration_instructions">لتفعيل Breezy Weather كموفر الطقس:\n\n1. اذهب إلى Breezy Weather > الإعدادات > الأدوات > تفعيل %1$s\n\n2. اختر Breezy Weather من إعدادات الطقس في %1$s</string>
+    <string name="preference_breezyweather_integration_instructions">لتفعيل Breezy Weather كموفر الطقس:\n\n1. اذهب إلى Breezy Weather &gt; الإعدادات &gt; الأدوات &gt; تفعيل %1$s\n\n2. اختر Breezy Weather من إعدادات الطقس في %1$s</string>
     <string name="preference_category_enabled_plugins">مفعلة</string>
     <string name="preference_category_feed_provider">مصدر الأخبار</string>
     <string name="preference_category_installed_plugins">مثبتة</string>

@@ -232,7 +232,7 @@ private fun TransparencyPreference(
         modifier = Modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.extraSmall)
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surfaceBright)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

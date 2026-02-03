@@ -39,12 +39,14 @@ class TypographySettingsScreenVM : ViewModel(), KoinComponent {
         themeRepository.typographies.delete(typography)
     }
 
-    fun createNew(context: Context) {
+    fun createNew(context: Context): UUID {
+        val uuid = UUID.randomUUID()
         themeRepository.typographies.create(
             Typography(
-                id = UUID.randomUUID(),
+                id = uuid,
                 name = context.getString(R.string.new_theme_name)
             )
         )
+        return uuid
     }
 }

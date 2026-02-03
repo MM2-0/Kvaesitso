@@ -28,13 +28,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -88,21 +84,7 @@ fun PreferenceScreen(
 
     val colorScheme = MaterialTheme.colorScheme
 
-    val touchSlop = LocalViewConfiguration.current.touchSlop
     var fabVisible by remember { mutableStateOf(true) }
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPostScroll(
-                consumed: Offset,
-                available: Offset,
-                source: NestedScrollSource
-            ): Offset {
-                if (consumed.y < -touchSlop) fabVisible = false
-                else if (consumed.y > touchSlop) fabVisible = true
-                return super.onPostScroll(consumed, available, source)
-            }
-        }
-    }
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -171,8 +153,8 @@ fun PreferenceScreen(
             content = content,
             verticalArrangement = verticalArrangement,
             contentPadding = PaddingValues(
-                top = it.calculateTopPadding(),
-                bottom = it.calculateBottomPadding() + 4.dp,
+                top = it.calculateTopPadding() + 12.dp,
+                bottom = it.calculateBottomPadding() + 12.dp,
                 start = 12.dp,
                 end = 12.dp
             )

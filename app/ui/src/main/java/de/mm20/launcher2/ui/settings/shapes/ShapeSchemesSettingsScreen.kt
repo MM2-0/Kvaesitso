@@ -8,10 +8,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -42,7 +43,7 @@ import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object ShapeSchemesSettingsRoute: NavKey
+data object ShapeSchemesSettingsRoute : NavKey
 
 @Composable
 fun ShapeSchemesSettingsScreen() {
@@ -59,11 +60,6 @@ fun ShapeSchemesSettingsScreen() {
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_shapes),
-        topBarActions = {
-            IconButton(onClick = { viewModel.createNew(context) }) {
-                Icon(painterResource(R.drawable.add_24px), null)
-            }
-        },
     ) {
         item {
             PreferenceCategory {
@@ -99,6 +95,7 @@ fun ShapeSchemesSettingsScreen() {
                                             },
                                             text = { Text(stringResource(R.string.duplicate)) },
                                             onClick = {
+
                                                 viewModel.duplicate(theme)
                                                 showMenu = false
                                             }
@@ -191,6 +188,24 @@ fun ShapeSchemesSettingsScreen() {
                         )
                     }
                 }
+            }
+        }
+
+        item {
+            FilledTonalButton(
+                contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                onClick = {
+                    val uuid = viewModel.createNew(context)
+                    backStack.add(ShapeSchemeSettingsRoute(uuid))
+                }) {
+                Icon(
+                    painterResource(R.drawable.add_20px),
+                    null,
+                    modifier = Modifier
+                        .padding(end = ButtonDefaults.IconSpacing)
+                        .size(ButtonDefaults.IconSize)
+                )
+                Text(stringResource(R.string.preference_create_shapes))
             }
         }
     }

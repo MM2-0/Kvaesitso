@@ -81,7 +81,7 @@ fun ThemeColorPreference(
             .clickable(
                 onClick = { showDialog = true },
             )
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surfaceBright)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

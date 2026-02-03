@@ -7,16 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.ui.UiSettings
-import de.mm20.launcher2.themes.BlackAndWhiteThemeId
-import de.mm20.launcher2.themes.DefaultThemeId
-import de.mm20.launcher2.themes.colors.Colors
-import de.mm20.launcher2.themes.HighContrastThemeId
 import de.mm20.launcher2.themes.ThemeRepository
+import de.mm20.launcher2.themes.colors.Colors
 import de.mm20.launcher2.themes.toLegacyJson
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -62,21 +58,25 @@ class ColorSchemesSettingsScreenVM : ViewModel(), KoinComponent {
             context.tryStartActivity(Intent().apply {
                 action = Intent.ACTION_SEND
                 type = "application/json"
-                putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(
-                    context,
-                    context.applicationContext.packageName + ".fileprovider",
-                    file
-                ))
+                putExtra(
+                    Intent.EXTRA_STREAM, FileProvider.getUriForFile(
+                        context,
+                        context.applicationContext.packageName + ".fileprovider",
+                        file
+                    )
+                )
             }.let { Intent.createChooser(it, null) })
         }
     }
 
-    fun createNew(context: Context) {
+    fun createNew(context: Context): UUID {
+        val uuid = UUID.randomUUID()
         themeRepository.colors.create(
             Colors(
-                id = UUID.randomUUID(),
+                id = uuid,
                 name = context.getString(R.string.new_theme_name)
             )
         )
+        return uuid
     }
 }

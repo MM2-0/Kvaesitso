@@ -23,7 +23,7 @@ fun <T> ListPreference(
     items: List<ListPreferenceItem<T>>,
     value: T,
     summary: String? = items.firstOrNull { value == it.value }?.label,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
     onValueChanged: (T) -> Unit,
     enabled: Boolean = true,
     itemLabel: @Composable RowScope.(item: ListPreferenceItem<T>) -> Unit = {

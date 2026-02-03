@@ -414,7 +414,7 @@ fun ShapePreference(
         modifier = Modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.extraSmall)
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surfaceBright)
             .clickable(
                 onClick = { showDialog = true },
             )
@@ -733,7 +733,7 @@ private fun ShapePreview(
         modifier = Modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.extraSmall)
-            .background(MaterialTheme.colorScheme.surfaceContainerLowest)
+            .background(MaterialTheme.colorScheme.surfaceContainerLow)
             .horizontalScroll(rememberScrollState())
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
