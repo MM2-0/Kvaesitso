@@ -882,4 +882,11 @@
     <string name="preference_feed_enable_summary">在主畫面向右滑動開啟 Feed</string>
     <string name="no_feed_providers">未安裝任何 Feed 提供者</string>
     <string name="gesture_action_feed">Feed</string>
+    <string name="create_tag_title">新增標籤</string>
+    <string name="edit_tag_title">編輯標籤</string>
+    <string name="action_quit">離開</string>
+    <string name="dialog_discard_unsaved">是否離開並放棄儲存？</string>
+    <string name="add_font_style">新增字型樣式</string>
+    <string name="remove_font_style">移除此字型樣式</string>
+    <string name="tag_name_empty_error">名稱不能為空</string>
 </resources>
