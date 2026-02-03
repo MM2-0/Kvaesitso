@@ -847,7 +847,7 @@
     <string name="new_theme_name">(naamloos)</string>
     <string name="preference_screen_typography">Typografie</string>
     <string name="confirmation_delete_typography_scheme">Weet je zeker dat je het typografieschema %1$s wil verwijderen?</string>
-    <string name="preference_typography_fonts">Lettertypes</string>
+    <string name="preference_typography_fonts">Lettertypestijlen</string>
     <string name="font_category_device_default">Apparaatstandaard</string>
     <string name="font_name_device_headline">Standaard koplettertype</string>
     <string name="font_name_device_body">Tekstlettertype van het systeem</string>
@@ -908,4 +908,10 @@
     <string name="typo_preview_medium1">Parels</string>
     <string name="typo_preview_medium2">Comité</string>
     <string name="typo_preview_long">Doch vlakbĳ zwerft \'n \nexquis gympje 1234790</string>
+    <string name="preference_create_colors">Nieuw kleurenschema</string>
+    <string name="preference_create_shapes">Nieuw vormenthema</string>
+    <string name="preference_create_typography">Nieuw typografieschema</string>
+    <string name="preference_create_transparency">Nieuw transparantieschema</string>
+    <string name="add_font_style">Lettertypestijl toevoegen</string>
+    <string name="remove_font_style">Deze lettertypestijl verwijderen</string>
 </resources>
