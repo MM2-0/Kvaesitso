@@ -1101,6 +1101,10 @@
     <string name="preference_measurement_system_metric">Metric</string>
     <string name="preference_measurement_system_uk">United Kingdom</string>
     <string name="preference_measurement_system_us">United States</string>
+    <string name="preference_wind_speed_uom">Wind speed</string>
+    <string name="preference_wind_speed_uom_kmh">Kilometers per hour</string>
+    <string name="preference_wind_speed_uom_mps">Meters per second</string>
+    <string name="preference_wind_speed_uom_mph">Miles per hour</string>
     <string name="preference_transliteration">Preferred transliteration</string>
     <string name="preference_transliteration_auto">Automatic</string>
     <string name="preference_calendar_system">Calendar system</string>

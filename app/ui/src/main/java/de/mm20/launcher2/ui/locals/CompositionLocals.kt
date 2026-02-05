@@ -9,6 +9,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.TimeFormat
+import de.mm20.launcher2.preferences.WindSpeedUoM
 import de.mm20.launcher2.preferences.ui.CardStyle
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.ui.theme.WallpaperColors
@@ -25,6 +26,7 @@ val LocalGridSettings = compositionLocalOf { GridSettings() }
 
 val LocalTimeFormat = staticCompositionLocalOf { TimeFormat.TwentyFourHour }
 val LocalMeasurementSystem = staticCompositionLocalOf { MeasurementSystem.Metric }
+val LocalWindSpeedUoM = staticCompositionLocalOf { WindSpeedUoM.KilometersPerHour }
 val LocalCalendarSystems = staticCompositionLocalOf<List<Calendar?>> { listOf(null, null) }
 val LocalCalendarSystemIds = staticCompositionLocalOf<List<String?>> { listOf(null, null) }
 

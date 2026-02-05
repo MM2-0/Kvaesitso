@@ -879,4 +879,8 @@
     <string name="preference_launch_smartspacer_app">Открыть Smartspacer</string>
     <string name="preference_feed_integration">Лента</string>
     <string name="action_quit">Выйти</string>
+    <string name="preference_wind_speed_uom_mph">Мили в час</string>
+    <string name="preference_wind_speed_uom">Скорость ветра</string>
+    <string name="preference_wind_speed_uom_kmh">Километры в час</string>
+    <string name="preference_wind_speed_uom_mps">Метры в секунду</string>
 </resources>
