@@ -145,6 +145,7 @@
     <string name="preference_theme_light">Светлая</string>
     <string name="preference_theme_dark">Тёмная</string>
     <string name="preference_screen_colors">Цветовая схема</string>
+    <string name="preference_create_colors">Новая цветовая схема</string>
     <string name="preference_colors_default">По умолчанию</string>
     <string name="preference_screen_about">О программе</string>
     <string name="preference_version">Версия</string>
@@ -860,10 +861,13 @@
     <string name="theme_import_title">Импортировать тему</string>
     <string name="import_theme_contents">Содержание</string>
     <string name="preference_colors_high_contrast">Высокая контрастность</string>
+    <string name="preference_create_shapes">Новая форма</string>
     <string name="preference_shapes_default">По умолчанию</string>
     <string name="gesture_action_widgets">Виджеты</string>
+    <string name="preference_create_transparency">Новая схема прозрачности</string>
     <string name="preference_transparencies_default">По умолчанию</string>
     <string name="preference_transparencies_semi_transparent">Полупрозрачный</string>
+    <string name="preference_create_typography">Новая типографика</string>
     <string name="preference_screen_transparencies">Прозрачность</string>
     <string name="confirmation_delete_transparencies_scheme">Вы действительно хотите удалить схему прозрачности %1$s</string>
     <string name="new_theme_name">(без названия)</string>
@@ -874,6 +878,7 @@
     <string name="theme_export_title">Экспортировать тему</string>
     <string name="preference_screen_typography">Типографика</string>
     <string name="preference_typography_fonts">Шрифты</string>
+    <string name="remove_font_style">Удалить этот стиль шрифта</string>
     <string name="font_category_device_default">Устройство по умолчанию</string>
     <string name="font_name_device_headline">Шрифт заголовка по умолчанию</string>
     <string name="font_name_device_body">Шрифт текста устройства</string>
@@ -922,4 +927,6 @@
     <string name="create_tag_title">Новый тег</string>
     <string name="edit_tag_title">Изменить тег</string>
     <string name="dialog_discard_unsaved">Выйти без сохранения?</string>
+    <string name="add_font_style">Добавить стиль шрифта</string>
+    <string name="typo_preview_long">Быстрая бурая лиса перепрыгивает через 1234790 метров</string>
 </resources>
