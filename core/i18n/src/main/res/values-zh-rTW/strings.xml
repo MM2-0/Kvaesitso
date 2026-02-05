@@ -372,8 +372,8 @@
     <string name="preference_search_bar_auto_focus">開啟鍵盤</string>
     <string name="no_account_owncloud">您尚未連線 Owncloud 帳戶</string>
     <string name="preference_search_bar_auto_focus_summary">開啟應用程式抽屜時自動顯示鍵盤</string>
-    <string name="preference_hidden_items">隱藏搜尋結果</string>
-    <string name="preference_hidden_items_summary">管理隱藏應用程式與搜尋結果</string>
+    <string name="preference_hidden_items">已排除的搜尋結果</string>
+    <string name="preference_hidden_items_summary">管理已排除的應用程式與搜尋結果</string>
     <string name="preference_screen_tags">標籤</string>
     <string name="preference_screen_tags_summary">管理標籤與標記項目</string>
     <string name="preference_wikipedia_customurl">Wikipedia 網址</string>
@@ -428,7 +428,7 @@
     <string name="tag_exists_error">以此命名的標籤已經存在</string>
     <string name="tag_exists_message">已有同名的標籤。如果繼續，則會合併兩個標籤</string>
     <string name="tag_no_items_message">這個標籤沒有任何內容。如果繼續，將會刪除此標籤</string>
-    <string name="tag_select_items">選擇項目：</string>
+    <string name="tag_select_items">選擇項目</string>
     <string name="tag_name">標籤名字</string>
     <string name="preference_layout_open_search">搜尋與應用程式抽屜</string>
     <string name="open_search_pull_down">向下滑動</string>
@@ -472,7 +472,7 @@
     <string name="widget_config_calendar_no_calendars">找不到任何行事曆</string>
     <string name="preference_screen_integrations">整合功能</string>
     <string name="preference_hidden_items_reveal_button">顯示揭露按鈕</string>
-    <string name="preference_hidden_items_reveal_button_summary">顯示按鈕以顯示隱藏的搜尋結果</string>
+    <string name="preference_hidden_items_reveal_button_summary">顯示按鈕以顯示已排除的搜尋結果</string>
     <string name="preference_screen_homescreen">主畫面</string>
     <string name="preference_screen_homescreen_summary">時鐘、搜尋欄、桌布、系統列</string>
     <string name="widget_config_weather_integration_settings">氣象整合設定</string>
@@ -889,4 +889,12 @@
     <string name="add_font_style">新增字型樣式</string>
     <string name="remove_font_style">移除此字型樣式</string>
     <string name="tag_name_empty_error">名稱不能為空</string>
+    <string name="preference_create_colors">新顏色設定</string>
+    <string name="preference_create_shapes">新形狀設定</string>
+    <string name="preference_create_typography">新排版設定</string>
+    <string name="preference_create_transparency">新透明度設定</string>
+    <string name="create_search_action_title">新快速操作</string>
+    <string name="edit_search_action_title">編輯快速操作</string>
+    <string name="typo_preview_extra_short"></string>
+    <string name="typo_preview_short1"></string>
 </resources>
