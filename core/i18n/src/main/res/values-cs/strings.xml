@@ -858,7 +858,7 @@
     <string name="confirmation_delete_transparencies_scheme">Opravdu chcete odstranit schéma průhlednosti %1$s?</string>
     <string name="preference_screen_typography">Typografie</string>
     <string name="confirmation_delete_typography_scheme">Opravdu chcete odstranit schéma typografie %1$s?</string>
-    <string name="preference_typography_fonts">Písma</string>
+    <string name="preference_typography_fonts">Styly písma</string>
     <string name="font_category_device_default">Podle zařízení</string>
     <string name="font_name_device_headline">Výchozí písmo nadpisu</string>
     <string name="font_name_device_body">Písmo textu zařízení</string>
@@ -913,4 +913,16 @@
     <string name="tag_name_empty_error">Název nemůže být prázdný</string>
     <string name="create_tag_title">Nový štítek</string>
     <string name="edit_tag_title">Upravit štítek</string>
+    <string name="preference_create_colors">Nové barevné schéma</string>
+    <string name="preference_create_shapes">Nové schéma tvarů</string>
+    <string name="preference_create_typography">Nový typografický styl</string>
+    <string name="preference_create_transparency">Nový transparentní styl</string>
+    <string name="add_font_style">Přidat styly písma</string>
+    <string name="remove_font_style">Odstranit tento styl písma</string>
+    <string name="typo_preview_extra_short">Aa</string>
+    <string name="typo_preview_short1">Ava</string>
+    <string name="typo_preview_short2">Typ</string>
+    <string name="typo_preview_medium1">Hamburg</string>
+    <string name="typo_preview_medium2">Náhled</string>
+    <string name="typo_preview_long">Hleď, příliš žluťoučký kůň úpěl ďábelské ódy.\n1234567890</string>
 </resources>
