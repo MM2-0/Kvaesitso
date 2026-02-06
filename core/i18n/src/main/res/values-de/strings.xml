@@ -850,7 +850,7 @@
     <string name="new_theme_name">(unbenannt)</string>
     <string name="preference_screen_typography">Typografie</string>
     <string name="confirmation_delete_typography_scheme">Möchten Sie das Typografie-Schema %1$s wirklich löschen?</string>
-    <string name="preference_typography_fonts">Schriften</string>
+    <string name="preference_typography_fonts">Schriftstile</string>
     <string name="font_category_device_default">Gerätestandard</string>
     <string name="font_name_device_headline">Standard-Überschriften-Schrift</string>
     <string name="font_name_device_body">Standard-Text-Schrift</string>
@@ -908,4 +908,10 @@
     <string name="typo_preview_medium1">Hamburg</string>
     <string name="typo_preview_medium2">Größe</string>
     <string name="typo_preview_long">Fußgänger überqueren\ndie Straße mit 1234790</string>
+    <string name="preference_create_colors">Neues Farbschema</string>
+    <string name="preference_create_shapes">Neues Formenschema</string>
+    <string name="preference_create_typography">Neues Typografieschema</string>
+    <string name="preference_create_transparency">Neues Transparenzschema</string>
+    <string name="add_font_style">Schriftstil hinzufügen</string>
+    <string name="remove_font_style">Diesen Schriftstil entfernen</string>
 </resources>
