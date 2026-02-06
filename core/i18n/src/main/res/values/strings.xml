@@ -1102,5 +1102,5 @@
     <string name="typo_preview_short2">Typ</string>
     <string name="typo_preview_medium1">Hamburg</string>
     <string name="typo_preview_medium2">Preview</string>
-    <string name="typo_preview_long">The quick brown fox\njumps over 1234790</string>
+    <string name="typo_preview_long">The quick brown fox jumps over 1234790</string>
 </resources>
