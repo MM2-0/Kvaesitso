@@ -447,3 +447,4 @@ enum class MeasurementSystem {
     @SerialName("uk") UnitedKingdom,
     @SerialName("us") UnitedStates,
 }
+
