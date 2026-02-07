@@ -52,6 +52,7 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
     val clockWidgetBatteryPart: Boolean = true,
+    val clockWidgetAlwaysShowBattery: Boolean = false,
     val clockWidgetMusicPart: Boolean = true,
     val clockWidgetDatePart: Boolean = true,
     val clockWidgetFillHeight: Boolean = false,

@@ -29,7 +29,9 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
 
-class BatteryPartProvider : PartProvider {
+class BatteryPartProvider(
+    private val alwaysShowBattery: Boolean = false,
+) : PartProvider {
 
     private val batteryInfo = MutableStateFlow<BatteryInfo?>(null)
 
@@ -38,7 +40,9 @@ class BatteryPartProvider : PartProvider {
 
         chargingInfo.collectLatest {
             batteryInfo.value = it
-            if (it.charging) {
+            if (alwaysShowBattery) {
+                send(10)
+            } else if (it.charging) {
                 send(10)
             } else if (it.level <= 15) {
                 send(55)
