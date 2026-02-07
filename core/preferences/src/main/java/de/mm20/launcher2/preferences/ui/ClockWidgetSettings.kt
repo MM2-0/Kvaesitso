@@ -57,6 +57,15 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
+    val alwaysShowBattery
+        get() = launcherDataStore.data.map { it.clockWidgetAlwaysShowBattery }
+
+    fun setAlwaysShowBattery(alwaysShowBattery: Boolean) {
+        launcherDataStore.update {
+            it.copy(clockWidgetAlwaysShowBattery = alwaysShowBattery)
+        }
+    }
+
     fun setAlarmPart(alarmPart: Boolean) {
         launcherDataStore.update {
             it.copy(clockWidgetAlarmPart = alarmPart)

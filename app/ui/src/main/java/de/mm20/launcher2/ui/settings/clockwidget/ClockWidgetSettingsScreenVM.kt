@@ -100,6 +100,13 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setAlarmPart(alarmPart)
     }
 
+    val alwaysShowBattery = settings.alwaysShowBattery
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setAlwaysShowBattery(alwaysShow: Boolean) {
+        settings.setAlwaysShowBattery(alwaysShow)
+    }
+
     val alignment = settings.alignment
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

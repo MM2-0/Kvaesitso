@@ -360,6 +360,7 @@ fun ConfigureClockWidgetSheet(
         val useAccentColor by viewModel.useThemeColor.collectAsState()
         val parts by viewModel.parts.collectAsState()
         val smartspacer by viewModel.useSmartspacer.collectAsState()
+        val alwaysShowBattery by viewModel.alwaysShowBattery.collectAsState()
 
         Column(
             modifier = Modifier
@@ -675,6 +676,18 @@ fun ConfigureClockWidgetSheet(
                                 viewModel.setBatteryPart(it)
                             }
                         )
+                        AnimatedVisibility(
+                            parts?.battery == true
+                        ) {
+                            SwitchPreference(
+                                title = stringResource(R.string.preference_clockwidget_battery_part_always_show),
+                                summary = stringResource(R.string.preference_clockwidget_battery_part_always_show_summary),
+                                value = alwaysShowBattery == true,
+                                onValueChanged = {
+                                    viewModel.setAlwaysShowBattery(it)
+                                }
+                            )
+                        }
                     }
                 }
             }

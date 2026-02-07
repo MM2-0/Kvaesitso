@@ -51,7 +51,8 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetMonospaced: Boolean = false,
     val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
-    val clockWidgetBatteryPart: Boolean = true,
+    val clockWidgetBatteryPart: Boolean = true, // Could/should probably be an enum or smth? But that would make migration harder ig so idk
+    val clockWidgetAlwaysShowBattery: Boolean = false,
     val clockWidgetMusicPart: Boolean = true,
     val clockWidgetDatePart: Boolean = true,
     val clockWidgetFillHeight: Boolean = false,

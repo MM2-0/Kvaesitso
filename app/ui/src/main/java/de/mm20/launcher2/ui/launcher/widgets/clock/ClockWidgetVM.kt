@@ -30,15 +30,15 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
 
     private val partProviders = settings.parts.combine(settings.useSmartspacer) { p, s ->
         p to s
-    }.map { (parts, smartspacer) ->
+    }.combine(settings.alwaysShowBattery) { (parts, smartspacer), alwaysShowBattery ->
         if (smartspacer && isAtLeastApiLevel(29)) {
-            return@map listOf(SmartspacerPartProvider())
+            return@combine listOf(SmartspacerPartProvider())
         }
 
         val providers = mutableListOf<PartProvider>()
         if (parts.date) providers += DatePartProvider()
         if (parts.music) providers += MusicPartProvider()
-        if (parts.battery) providers += BatteryPartProvider()
+        if (parts.battery) providers += BatteryPartProvider(alwaysShowBattery)
         if (parts.alarm) providers += AlarmPartProvider()
         providers
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
