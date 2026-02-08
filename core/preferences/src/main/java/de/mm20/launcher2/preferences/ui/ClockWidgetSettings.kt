@@ -1,5 +1,6 @@
 package de.mm20.launcher2.preferences.ui
 
+import de.mm20.launcher2.preferences.BatteryStatusVisibility
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.map
 data class ClockWidgetParts(
     val date: Boolean,
     val music: Boolean = false,
-    val battery: Boolean = false,
+    val battery: BatteryStatusVisibility = BatteryStatusVisibility.Hide,
     val alarm: Boolean = false,
 )
 
@@ -51,18 +52,9 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
-    fun setBatteryPart(batteryPart: Boolean) {
+    fun setBatteryPart(batteryPart: BatteryStatusVisibility) {
         launcherDataStore.update {
             it.copy(clockWidgetBatteryPart = batteryPart)
-        }
-    }
-
-    val alwaysShowBattery
-        get() = launcherDataStore.data.map { it.clockWidgetAlwaysShowBattery }
-
-    fun setAlwaysShowBattery(alwaysShowBattery: Boolean) {
-        launcherDataStore.update {
-            it.copy(clockWidgetAlwaysShowBattery = alwaysShowBattery)
         }
     }
 

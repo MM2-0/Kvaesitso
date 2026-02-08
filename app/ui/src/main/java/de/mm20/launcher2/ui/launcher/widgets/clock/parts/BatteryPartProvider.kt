@@ -23,6 +23,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
+import de.mm20.launcher2.preferences.BatteryStatusVisibility
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.utils.formatPercent
 import kotlinx.coroutines.channels.awaitClose
@@ -30,7 +31,7 @@ import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
 
 class BatteryPartProvider(
-    private val alwaysShowBattery: Boolean = false,
+    private val batteryStatusVisibility: BatteryStatusVisibility = BatteryStatusVisibility.Hide,
 ) : PartProvider {
 
     private val batteryInfo = MutableStateFlow<BatteryInfo?>(null)
@@ -40,7 +41,9 @@ class BatteryPartProvider(
 
         chargingInfo.collectLatest {
             batteryInfo.value = it
-            if (alwaysShowBattery) {
+            if (batteryStatusVisibility == BatteryStatusVisibility.Hide) {
+                send(0)
+            } else if (batteryStatusVisibility == BatteryStatusVisibility.Always) {
                 send(10)
             } else if (it.charging) {
                 send(10)

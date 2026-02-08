@@ -51,6 +51,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.preferences.BatteryStatusVisibility
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
@@ -61,6 +62,7 @@ import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.CustomClock
@@ -360,7 +362,6 @@ fun ConfigureClockWidgetSheet(
         val useAccentColor by viewModel.useThemeColor.collectAsState()
         val parts by viewModel.parts.collectAsState()
         val smartspacer by viewModel.useSmartspacer.collectAsState()
-        val alwaysShowBattery by viewModel.alwaysShowBattery.collectAsState()
 
         Column(
             modifier = Modifier
@@ -667,27 +668,20 @@ fun ConfigureClockWidgetSheet(
                                 viewModel.setAlarmPart(it)
                             }
                         )
-                        SwitchPreference(
+                        ListPreference(
                             title = stringResource(R.string.preference_clockwidget_battery_part),
                             summary = stringResource(R.string.preference_clockwidget_battery_part_summary),
                             icon = R.drawable.battery_full_24px,
-                            value = parts?.battery == true,
+                            value = parts?.battery,
                             onValueChanged = {
-                                viewModel.setBatteryPart(it)
-                            }
-                        )
-                        AnimatedVisibility(
-                            parts?.battery == true
-                        ) {
-                            SwitchPreference(
-                                title = stringResource(R.string.preference_clockwidget_battery_part_always_show),
-                                summary = stringResource(R.string.preference_clockwidget_battery_part_always_show_summary),
-                                value = alwaysShowBattery == true,
-                                onValueChanged = {
-                                    viewModel.setAlwaysShowBattery(it)
-                                }
+                                    if (it != null) viewModel.setBatteryPart(it)
+                            },
+                            items = listOf(
+                                stringResource(R.string.preference_clockwidget_battery_part_hide) to BatteryStatusVisibility.Hide,
+                                stringResource(R.string.preference_clockwidget_battery_part_show) to BatteryStatusVisibility.Show,
+                                stringResource(R.string.preference_clockwidget_battery_part_always_show) to BatteryStatusVisibility.Always
                             )
-                        }
+                        )
                     }
                 }
             }
