@@ -745,7 +745,7 @@
         <item quantity="two">בעוד %1$d דקות</item>
         <item quantity="other">בעוד %1$d דקות</item>
     </plurals>
-    <string name="preference_typography_fonts">גופנים</string>
+    <string name="preference_typography_fonts">סגנונות גופן</string>
     <string name="font_category_device_default">ברירת המחדל של המכשיר</string>
     <string name="font_name_device_headline">גופן ברירת המחדל של הכותרות</string>
     <string name="font_name_device_body">גופן המלל של המכשיר</string>
@@ -911,4 +911,16 @@
     <string name="create_tag_title">תגית חדשה</string>
     <string name="edit_tag_title">עריכת תגית</string>
     <string name="dialog_discard_unsaved">לצאת מבלי לשמור?</string>
+    <string name="add_font_style">הוספת סגנון גופן</string>
+    <string name="remove_font_style">הסרת סגנון גופן זה</string>
+    <string name="preference_create_colors">ערכת צבעים חדשה</string>
+    <string name="preference_create_shapes">ערכת צורות חדשה</string>
+    <string name="preference_create_typography">ערכת טיפוגרפיה חדשה</string>
+    <string name="preference_create_transparency">ערכת שקיפות חדשה</string>
+    <string name="typo_preview_extra_short">אב</string>
+    <string name="typo_preview_short1">אגץ</string>
+    <string name="typo_preview_short2">מםנן</string>
+    <string name="typo_preview_medium1">דברי הימים</string>
+    <string name="typo_preview_medium2">נוף איילון</string>
+    <string name="typo_preview_long">איך בלש תפס גמד\nרוצח עז קטנה 12390</string>
 </resources>
