@@ -135,6 +135,28 @@ fun HomescreenSettingsScreen() {
                     onValueChanged = {
                         viewModel.setWidgetsOnHomeScreen(it)
                     })
+                AnimatedVisibility(widgetsOnHomeScreen == false) {
+                    val widgetScreenCount by viewModel.widgetScreenCount.collectAsStateWithLifecycle(1)
+
+                    Column {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_widget_screen_count),
+                            value = widgetScreenCount,
+                            min = 1,
+                            max = 4,
+                            onValueChanged = {
+                                viewModel.setWidgetScreenCount(it)
+                            }
+                        )
+
+                        Text(
+                            text = stringResource(R.string.preference_widget_screen_count_info),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                        )
+                    }
+                }
                 SwitchPreference(
                     title = stringResource(id = R.string.preference_edit_button),
                     summary = stringResource(id = R.string.preference_widgets_edit_button_summary),

@@ -35,9 +35,13 @@ enum class WidgetScreenTarget {
         val Default = Widgets1
 
         /**
-         * List of available widget screen targets that can be assigned to gestures.
-         * This excludes Home as it's a special case for the home screen.
+         * Get list of available widget screen targets based on configured count.
+         * @param count Number of widget screens to make available (1-4)
+         * @return List of WidgetScreenTarget enum values
          */
-        val availableTargets = listOf(Widgets1, Widgets2, Widgets3, Widgets4)
+        fun getAvailableTargets(count: Int): List<WidgetScreenTarget> {
+            val all = listOf(Widgets1, Widgets2, Widgets3, Widgets4)
+            return all.take(count.coerceIn(1, 4))
+        }
     }
 }

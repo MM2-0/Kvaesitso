@@ -11,7 +11,7 @@ import java.util.UUID
 @Serializable
 @ConsistentCopyVisibility
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 5,
+    val schemaVersion: Int = 6,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     @Serializable(with = UUIDSerializer::class)
@@ -143,6 +143,7 @@ data class LauncherSettingsData internal constructor(
     val surfacesShape: SurfaceShape = SurfaceShape.Rounded,
 
     val widgetsEditButton: Boolean = true,
+    val widgetScreenCount: Int = 1,
 
     val gesturesSwipeDown: GestureAction = GestureAction.Search,
     val gesturesSwipeLeft: GestureAction = GestureAction.NoAction,
