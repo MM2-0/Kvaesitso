@@ -57,7 +57,17 @@ fun GestureSettingsScreen() {
         add(stringResource(R.string.gesture_action_recents) to GestureAction.Recents)
         add(stringResource(R.string.gesture_action_power_menu) to GestureAction.PowerMenu)
         add(stringResource(R.string.gesture_action_open_search) to GestureAction.Search)
-        if (allowWidgetGesture == true) add(stringResource(R.string.gesture_action_widgets) to GestureAction.Widgets)
+        if (allowWidgetGesture == true) {
+            // Dynamically add all available widget screen targets
+            de.mm20.launcher2.preferences.WidgetScreenTarget.availableTargets.forEachIndexed { index, target ->
+                val label = if (index == 0) {
+                    stringResource(R.string.gesture_action_widgets)
+                } else {
+                    "${stringResource(R.string.gesture_action_widgets)} ${index + 1}"
+                }
+                add(label to GestureAction.Widgets(target))
+            }
+        }
         add(stringResource(R.string.gesture_action_launch_app) to GestureAction.Launch(null))
     }
 

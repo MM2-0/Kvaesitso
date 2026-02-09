@@ -43,11 +43,32 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import de.mm20.launcher2.preferences.WidgetScreenTarget
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import kotlinx.coroutines.launch
 
-internal object WidgetsComponent : ScaffoldComponent() {
+internal class WidgetsComponent(
+    private val target: WidgetScreenTarget
+) : ScaffoldComponent() {
+
+    companion object {
+        /**
+         * Cache for widget component instances.
+         * Components are created lazily only when needed.
+         */
+        private val componentCache = mutableMapOf<WidgetScreenTarget, WidgetsComponent>()
+
+        /**
+         * Get or create a WidgetsComponent for the given target.
+         * This ensures we reuse the same instance for each target.
+         */
+        fun forTarget(target: WidgetScreenTarget): WidgetsComponent {
+            return componentCache.getOrPut(target) {
+                WidgetsComponent(target)
+            }
+        }
+    }
 
     private val scrollState = ScrollState(0)
 
@@ -98,6 +119,7 @@ internal object WidgetsComponent : ScaffoldComponent() {
                     scope.launch { state.lock(hideSearchBar = true) }
                     editMode = it
                 },
+                parentId = target.scopeId.toString(),
             )
         }
         if (editMode) {
