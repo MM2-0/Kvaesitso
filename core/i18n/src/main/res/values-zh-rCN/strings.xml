@@ -839,7 +839,7 @@
     </plurals>
     <string name="missing_permission_tasks_search_settings">需要 Tasks 应用权限来在 Tasks app 中搜索任务</string>
     <string name="preference_screen_typography">文字</string>
-    <string name="preference_typography_fonts">字体</string>
+    <string name="preference_typography_fonts">字体样式</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather 是一款免费的开源天气应用。安装后 %1$s 可将其作为天气数据的数据源。</string>
     <string name="font_name_device_body">正文字体</string>
     <string name="font_category_generic">常规字体</string>
@@ -891,4 +891,10 @@
     <string name="create_tag_title">新建标签</string>
     <string name="edit_tag_title">修改标签</string>
     <string name="dialog_discard_unsaved">是否退出并舍弃你的内容？</string>
+    <string name="preference_create_colors">新建配色方案</string>
+    <string name="preference_create_shapes">新建形状方案</string>
+    <string name="preference_create_typography">新建排版方案</string>
+    <string name="preference_create_transparency">新建透明度方案</string>
+    <string name="add_font_style">添加字体样式</string>
+    <string name="remove_font_style">移除此字体样式</string>
 </resources>
