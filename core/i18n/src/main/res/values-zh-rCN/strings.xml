@@ -897,4 +897,10 @@
     <string name="preference_create_transparency">新建透明度方案</string>
     <string name="add_font_style">添加字体样式</string>
     <string name="remove_font_style">移除此字体样式</string>
+    <string name="typo_preview_short1">文A</string>
+    <string name="typo_preview_extra_short">Aa</string>
+    <string name="typo_preview_short2">永p</string>
+    <string name="typo_preview_medium1">永字八法</string>
+    <string name="typo_preview_medium2">预览文本</string>
+    <string name="typo_preview_long">汉字笔画结构多样\n1234567890，。！？</string>
 </resources>
