@@ -9,6 +9,7 @@ data class FavoritesSettingsData(
     val columns: Int,
     val frequentlyUsed: Boolean,
     val frequentlyUsedRows: Int,
+    val latestRows: Int,
 )
 
 class FavoritesSettings internal constructor(
@@ -18,6 +19,7 @@ class FavoritesSettings internal constructor(
         columns = it.gridColumnCount,
         frequentlyUsed = it.favoritesFrequentlyUsed,
         frequentlyUsedRows = it.favoritesFrequentlyUsedRows,
+        latestRows = it.favoritesLatestRows,
     )
 }.distinctUntilChanged()) {
 
@@ -26,6 +28,13 @@ class FavoritesSettings internal constructor(
 
     fun setShowEditButton(showEditButton: Boolean) {
         dataStore.update { it.copy(favoritesEditButton = showEditButton) }
+    }
+
+    val showLatestButton
+        get() = dataStore.data.map { it.favoritesLatestButton }.distinctUntilChanged()
+
+    fun setShowLatestButton(showLatestButton: Boolean) {
+        dataStore.update { it.copy(favoritesLatestButton = showLatestButton) }
     }
 
     val frequentlyUsed: Flow<Boolean>
@@ -47,5 +56,12 @@ class FavoritesSettings internal constructor(
 
     fun setCompactTags(compactTags: Boolean) {
         dataStore.update { it.copy(favoritesCompactTags = compactTags) }
+    }
+
+    val latestRows: Flow<Int>
+        get() = dataStore.data.map { it.favoritesLatestRows }.distinctUntilChanged()
+
+    fun setLatestRows(latestRows: Int) {
+        dataStore.update { it.copy(favoritesLatestRows = latestRows) }
     }
 }

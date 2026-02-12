@@ -34,6 +34,12 @@ class FavoritesSettingsScreenVM: ViewModel(), KoinComponent {
         favoritesSettings.setShowEditButton(editButton)
     }
 
+    val latestButton = favoritesSettings.showLatestButton
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    fun setLatestButton(latestButton: Boolean) {
+        favoritesSettings.setShowLatestButton(latestButton)
+    }
+
     val searchResultWeightFactor = rankingSettings.weightFactor
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), WeightFactor.Default)
     fun setSearchResultWeightFactor(searchResultWeightFactor: WeightFactor) {
@@ -44,5 +50,11 @@ class FavoritesSettingsScreenVM: ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setCompactTags(compactTags: Boolean) {
         favoritesSettings.setCompactTags(compactTags)
+    }
+
+    val latestRows = favoritesSettings.latestRows
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 2)
+    fun setLatestRows(latestRows: Int) {
+        favoritesSettings.setLatestRows(latestRows)
     }
 }
