@@ -39,7 +39,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.preferences.WidgetScreenTarget
-import de.mm20.launcher2.preferences.WidgetScreenTarget.Home
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
@@ -126,7 +125,7 @@ internal object ClockAndWidgetsHomeComponent : ScaffoldComponent() {
                     scope.launch { state.lock(hideSearchBar = true) }
                     editMode = it
                 },
-                parentId = Home.scopeId.toString(),
+                parentId = WidgetScreenTarget.Default.scopeId.toString(),
             )
         }
         if (editMode) {

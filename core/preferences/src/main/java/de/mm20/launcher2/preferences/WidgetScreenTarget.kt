@@ -9,7 +9,6 @@ import java.util.UUID
  */
 @Serializable
 enum class WidgetScreenTarget {
-    Home,
     Widgets1,
     Widgets2,
     Widgets3,
@@ -21,7 +20,6 @@ enum class WidgetScreenTarget {
      */
     val scopeId: UUID
         get() = when (this) {
-            Home -> UUID.fromString("00000000-0000-0000-0000-000000000000")
             Widgets1 -> UUID.fromString("00000000-0000-0000-0000-000000000001")
             Widgets2 -> UUID.fromString("00000000-0000-0000-0000-000000000002")
             Widgets3 -> UUID.fromString("00000000-0000-0000-0000-000000000003")
