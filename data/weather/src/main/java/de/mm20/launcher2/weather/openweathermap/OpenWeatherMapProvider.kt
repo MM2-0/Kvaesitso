@@ -162,27 +162,20 @@ internal class OpenWeatherMapProvider(
 
     private fun iconForId(id: Int): Int {
         return when (id) {
-            200, 201, in 230..232 -> Forecast.THUNDERSTORM_WITH_RAIN
-            202 -> Forecast.HEAVY_THUNDERSTORM_WITH_RAIN
-            210, 211 -> Forecast.THUNDERSTORM
-            212, 221 -> Forecast.HEAVY_THUNDERSTORM
-            in 300..302, in 310..312 -> Forecast.DRIZZLE
-            313, 314, 321, in 500..504, 511, in 520..522, 531 -> Forecast.SHOWERS
+            200, 201, 202, in 230..232 -> Forecast.THUNDERSTORM
+            210, 211, 212, 221 -> Forecast.THUNDER
+            in 300..302, in 310..312, 500, 520 -> Forecast.LIGHT_RAIN
+            313, 314, 321, 501, 511, 521, 531 -> Forecast.RAIN
+            502, 503, 504, 522 -> Forecast.HEAVY_RAIN
             in 600..602 -> Forecast.SNOW
             611, 612, 615, 616, in 620..622 -> Forecast.SLEET
-            701, 711, 731, 741, 761, 762 -> Forecast.FOG
-            721 -> Forecast.HAZE
-            771, 781, in 900..902, in 958..962 -> Forecast.STORM
+            701, 711, 741 -> Forecast.FOG
+            721, 731, 751, 761, 762 -> Forecast.HAZE
+            771, 781 -> Forecast.WIND
             800 -> Forecast.CLEAR
-            801 -> Forecast.PARTLY_CLOUDY
-            802 -> Forecast.BROKEN_CLOUDS
-            803 -> Forecast.MOSTLY_CLOUDY
-            804, 951 -> Forecast.CLOUDY
-            903 -> Forecast.COLD
-            904 -> Forecast.HOT
-            905, in 952..957 -> Forecast.WIND
-            906 -> Forecast.HAIL
-            else -> Forecast.NONE
+            801, 802, 803 -> Forecast.PARTLY_CLOUDY
+            804-> Forecast.OVERCAST
+            else -> Forecast.UNKNOWN
         }
     }
 

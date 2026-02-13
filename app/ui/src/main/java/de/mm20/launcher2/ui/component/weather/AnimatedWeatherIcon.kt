@@ -3,13 +3,35 @@ package de.mm20.launcher2.ui.component.weather
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.InfiniteRepeatableSpec
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateOffset
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -41,9 +63,7 @@ fun AnimatedWeatherIcon(
         SunMoon(icon, night, colors)
         Precipitation(icon, colors)
         LightningBolt(icon, colors)
-        LightningBolt2(icon, colors)
         Cloud1(icon, colors)
-        Wind2(icon, colors)
         Cloud2(icon, colors)
         Cloud3(icon, colors)
         Fog(icon, colors)
@@ -63,18 +83,16 @@ private fun SunMoon(icon: WeatherIcon, night: Boolean, colors: WeatherIconColors
         when (it) {
             WeatherIcon.Clear,
             WeatherIcon.PartlyCloudy,
-            WeatherIcon.BrokenClouds,
             WeatherIcon.Haze -> 1f
-            WeatherIcon.MostlyCloudy -> 0.8f
+
             else -> 0f
         }
     }
     val offset by transition.animateOffset(label = "sunOffset") {
         when (it) {
             WeatherIcon.Clear,
-            WeatherIcon.BrokenClouds,
             WeatherIcon.Haze -> Offset.Zero
-            WeatherIcon.MostlyCloudy -> Offset(6f, -4f)
+
             WeatherIcon.PartlyCloudy -> Offset(3f, -2f)
             else -> Offset.Zero
         }
@@ -97,19 +115,17 @@ private fun LightningBolt(icon: WeatherIcon, colors: WeatherIconColors) {
 
     val scale by transition.animateFloat(label = "scale") {
         when (it) {
-            WeatherIcon.Thunderstorm,
-            WeatherIcon.ThunderstormWithRain,
-            WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm -> 0.6f
+            WeatherIcon.Thunder,
+            WeatherIcon.Thunderstorm -> 0.6f
+
             else -> 0f
         }
     }
     val offset by transition.animateOffset(label = "offset") {
         when (it) {
-            WeatherIcon.ThunderstormWithRain,
+            WeatherIcon.Thunder,
             WeatherIcon.Thunderstorm -> Offset(1f, 8f)
-            WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm -> Offset(6f, 8f)
+
             else -> Offset.Zero
         }
     }
@@ -125,35 +141,6 @@ private fun LightningBolt(icon: WeatherIcon, colors: WeatherIconColors) {
     )
 }
 
-@Composable
-private fun LightningBolt2(icon: WeatherIcon, colors: WeatherIconColors) {
-    val transition = updateTransition(targetState = icon, "AnimatedWeatherIconBolt2")
-
-    val scale by transition.animateFloat(label = "scale") {
-        when (it) {
-            WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm -> 0.5f
-            else -> 0f
-        }
-    }
-    val offset by transition.animateOffset(label = "offset") {
-        when (it) {
-            WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm -> Offset(-9f, 5f)
-            else -> Offset.Zero
-        }
-    }
-
-    Icon(
-        painter = painterResource(R.drawable.bolt_24px_filled),
-        null,
-        modifier = Modifier
-            .size(32.dp)
-            .offset(offset.x.dp, offset.y.dp)
-            .scale(scale),
-        tint = colors.lightningBolt
-    )
-}
 
 @Composable
 private fun Cloud1(icon: WeatherIcon, colors: WeatherIconColors) {
@@ -162,64 +149,60 @@ private fun Cloud1(icon: WeatherIcon, colors: WeatherIconColors) {
     val scale by transition.animateFloat(label = "scale") {
         when (it) {
             WeatherIcon.Clear -> 0f
+            WeatherIcon.Thunder,
             WeatherIcon.Thunderstorm,
-            WeatherIcon.ThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm,
-            WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.Showers,
-            WeatherIcon.Drizzle,
+            WeatherIcon.LightRain,
+            WeatherIcon.Rain,
+            WeatherIcon.HeavyRain,
             WeatherIcon.Sleet,
             WeatherIcon.Snow,
             WeatherIcon.Hail,
             WeatherIcon.Wind,
-            WeatherIcon.Cloudy,
-            WeatherIcon.Storm,
+            WeatherIcon.Overcast,
+            WeatherIcon.Wind,
             WeatherIcon.Fog -> 1.4f
-            WeatherIcon.MostlyCloudy,
+
             WeatherIcon.PartlyCloudy -> 1f
-            WeatherIcon.BrokenClouds -> 0.9f
             else -> 0f
         }
     }
     val offset by transition.animateOffset(label = "offset") {
         when (it) {
-            WeatherIcon.Showers,
-            WeatherIcon.Drizzle,
+            WeatherIcon.LightRain,
+            WeatherIcon.Rain,
+            WeatherIcon.HeavyRain,
             WeatherIcon.Sleet,
             WeatherIcon.Snow,
             WeatherIcon.Hail,
-            WeatherIcon.Thunderstorm,
-            WeatherIcon.ThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm,
-            WeatherIcon.HeavyThunderstormWithRain -> Offset(0f, -14f)
-            WeatherIcon.Cloudy,
+            WeatherIcon.Thunder,
+            WeatherIcon.Thunderstorm -> Offset(0f, -14f)
+
+            WeatherIcon.Overcast,
             WeatherIcon.Wind,
-            WeatherIcon.Storm,
             WeatherIcon.Fog -> Offset(0f, -5f)
-            WeatherIcon.MostlyCloudy -> Offset(-5f, 0f)
+
             WeatherIcon.PartlyCloudy -> Offset(-3f, 4f)
-            WeatherIcon.BrokenClouds -> Offset(-5f, 7f)
             else -> Offset.Zero
         }
     }
     val color by transition.animateColor(label = "color") {
         when (it) {
             WeatherIcon.Thunderstorm,
-            WeatherIcon.ThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm,
-            WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.Storm -> colors.cloudDark2
-            WeatherIcon.Showers,
+            WeatherIcon.Thunder,
+            WeatherIcon.Wind -> colors.cloudDark2
+
+            WeatherIcon.Rain,
+            WeatherIcon.HeavyRain,
             WeatherIcon.Sleet,
             WeatherIcon.Hail,
-            WeatherIcon.Cloudy,
+            WeatherIcon.Overcast,
             WeatherIcon.Wind,
             WeatherIcon.Fog -> colors.cloudDark1
-            WeatherIcon.Drizzle,
+
+            WeatherIcon.LightRain,
             WeatherIcon.Snow -> colors.cloudMedium2
-            WeatherIcon.MostlyCloudy -> colors.cloudLight2
-            WeatherIcon.PartlyCloudy,
-            WeatherIcon.BrokenClouds -> colors.cloudLight1
+
+            WeatherIcon.PartlyCloudy -> colors.cloudLight1
             else -> colors.cloudMedium2
         }
     }
@@ -241,61 +224,55 @@ private fun Cloud2(icon: WeatherIcon, colors: WeatherIconColors) {
 
     val scale by transition.animateFloat(label = "scale") {
         when (it) {
+            WeatherIcon.Thunder,
             WeatherIcon.Thunderstorm,
-            WeatherIcon.ThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm,
-            WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.MostlyCloudy,
-            WeatherIcon.Showers,
-            WeatherIcon.Drizzle,
+            WeatherIcon.Rain,
+            WeatherIcon.HeavyRain,
+            WeatherIcon.LightRain,
             WeatherIcon.Sleet,
             WeatherIcon.Snow,
             WeatherIcon.Hail,
-            WeatherIcon.Cloudy,
+            WeatherIcon.Overcast,
             WeatherIcon.Wind,
-            WeatherIcon.Storm,
             WeatherIcon.Fog -> 1.1f
-            WeatherIcon.BrokenClouds -> 0.7f
+
             else -> 0f
         }
     }
     val offset by transition.animateOffset(label = "offset") {
         when (it) {
-            WeatherIcon.Showers,
-            WeatherIcon.Drizzle,
+            WeatherIcon.Rain,
+            WeatherIcon.LightRain,
+            WeatherIcon.HeavyRain,
             WeatherIcon.Sleet,
             WeatherIcon.Snow,
             WeatherIcon.Hail,
             WeatherIcon.Thunderstorm,
-            WeatherIcon.ThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm,
-            WeatherIcon.HeavyThunderstormWithRain -> Offset(-6f, -6f)
-            WeatherIcon.Cloudy,
+            WeatherIcon.Thunder -> Offset(-6f, -6f)
+
+            WeatherIcon.Overcast,
             WeatherIcon.Wind,
-            WeatherIcon.Storm,
             WeatherIcon.Fog -> Offset(-6f, 3f)
-            WeatherIcon.BrokenClouds -> Offset(9f, -9f)
-            WeatherIcon.MostlyCloudy -> Offset(4f, 5f)
+
             else -> Offset.Zero
         }
     }
     val color by transition.animateColor(label = "color") {
         when (it) {
-            WeatherIcon.BrokenClouds -> colors.cloudLight2
             WeatherIcon.Thunderstorm,
-            WeatherIcon.ThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm,
-            WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.Storm -> colors.cloudMedium2
-            WeatherIcon.Showers,
-            WeatherIcon.Drizzle,
+            WeatherIcon.Thunder,
+            WeatherIcon.Wind -> colors.cloudMedium2
+
+            WeatherIcon.Rain,
+            WeatherIcon.HeavyRain,
+            WeatherIcon.LightRain,
             WeatherIcon.Sleet,
             WeatherIcon.Snow,
             WeatherIcon.Hail,
-            WeatherIcon.Cloudy,
+            WeatherIcon.Overcast,
             WeatherIcon.Wind,
             WeatherIcon.Fog -> colors.cloudMedium1
-            WeatherIcon.MostlyCloudy -> colors.cloudMedium1
+
             else -> colors.cloudMedium2
         }
     }
@@ -317,52 +294,53 @@ private fun Cloud3(icon: WeatherIcon, colors: WeatherIconColors) {
 
     val scale by transition.animateFloat(label = "scale") {
         when (it) {
-            WeatherIcon.Showers,
-            WeatherIcon.Drizzle,
+            WeatherIcon.Rain,
+            WeatherIcon.LightRain,
+            WeatherIcon.HeavyRain,
             WeatherIcon.Sleet,
             WeatherIcon.Snow,
             WeatherIcon.Hail,
             WeatherIcon.Thunderstorm,
-            WeatherIcon.ThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm,
-            WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.Cloudy,
-            WeatherIcon.Wind,
-            WeatherIcon.Storm -> 1f
+            WeatherIcon.Thunder,
+            WeatherIcon.Overcast,
+            WeatherIcon.Wind -> 1f
+
             else -> 0f
         }
     }
     val offset by transition.animateOffset(label = "offset") {
         when (it) {
-            WeatherIcon.Showers,
-            WeatherIcon.Drizzle,
+            WeatherIcon.LightRain,
+            WeatherIcon.HeavyRain,
+            WeatherIcon.Rain,
             WeatherIcon.Sleet,
             WeatherIcon.Snow,
             WeatherIcon.Hail,
             WeatherIcon.Thunderstorm,
-            WeatherIcon.ThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm,
-            WeatherIcon.HeavyThunderstormWithRain -> Offset(6f, -4f)
-            WeatherIcon.Cloudy,
-            WeatherIcon.Wind,
-            WeatherIcon.Storm -> Offset(6f, 5f)
+            WeatherIcon.Thunder -> Offset(6f, -4f)
+
+            WeatherIcon.Overcast,
+            WeatherIcon.Wind -> Offset(6f, 5f)
+
             else -> Offset.Zero
         }
     }
     val color by transition.animateColor(label = "color") {
         when (it) {
             WeatherIcon.Thunderstorm,
-            WeatherIcon.ThunderstormWithRain,
-            WeatherIcon.HeavyThunderstorm,
-            WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.Storm -> colors.cloudDark1
-            WeatherIcon.Showers,
+            WeatherIcon.Thunder,
+            WeatherIcon.Wind -> colors.cloudDark1
+
+            WeatherIcon.Rain,
+            WeatherIcon.HeavyRain,
             WeatherIcon.Sleet,
             WeatherIcon.Hail,
-            WeatherIcon.Cloudy,
+            WeatherIcon.Overcast,
             WeatherIcon.Wind -> colors.cloudMedium2
-            WeatherIcon.Drizzle,
+
+            WeatherIcon.LightRain,
             WeatherIcon.Snow -> colors.cloudLight2
+
             else -> colors.cloudMedium2
         }
     }
@@ -381,7 +359,7 @@ private fun Cloud3(icon: WeatherIcon, colors: WeatherIconColors) {
 @Composable
 private fun Hot(icon: WeatherIcon, colors: WeatherIconColors) {
     val scale by animateFloatAsState(
-        if (icon == WeatherIcon.Hot) {
+        if (icon == WeatherIcon.ExtremeHeat) {
             1f
         } else {
             0f
@@ -400,7 +378,7 @@ private fun Hot(icon: WeatherIcon, colors: WeatherIconColors) {
 @Composable
 private fun Cold(icon: WeatherIcon, colors: WeatherIconColors) {
     val scale by animateFloatAsState(
-        if (icon == WeatherIcon.Cold) {
+        if (icon == WeatherIcon.ExtremeCold) {
             1f
         } else {
             0f
@@ -419,7 +397,7 @@ private fun Cold(icon: WeatherIcon, colors: WeatherIconColors) {
 @Composable
 private fun Wind1(icon: WeatherIcon, colors: WeatherIconColors) {
     val scale by animateFloatAsState(
-        if (icon == WeatherIcon.Wind || icon == WeatherIcon.Storm) {
+        if (icon == WeatherIcon.Wind) {
             0.6f
         } else {
             0f
@@ -436,38 +414,38 @@ private fun Wind1(icon: WeatherIcon, colors: WeatherIconColors) {
     )
 }
 
-@Composable
-private fun Wind2(icon: WeatherIcon, colors: WeatherIconColors) {
-    val scale by animateFloatAsState(
-        if (icon == WeatherIcon.Storm) {
-            0.6f
-        } else {
-            0f
-        }
-    )
-    Icon(
-        painterResource(R.drawable.air_20px),
-        null,
-        modifier = Modifier
-            .scale(scale)
-            .offset(8.dp, -1.dp)
-            .size(32.dp),
-        tint = colors.windDark
-    )
-}
 
 @Preview
 @Composable
 fun AnimatedWeatherIconTestPanel() {
-    var icon by remember { mutableStateOf(WeatherIcon.ThunderstormWithRain) }
+    var icon by remember { mutableStateOf(WeatherIcon.Thunderstorm) }
     var night by remember { mutableStateOf(false) }
     Row {
-        val icons = WeatherIcon.values()
+        val icons = WeatherIcon.entries
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             AnimatedWeatherIcon(icon = icon, night = night)
             WeatherIcon(icon = icon, night = night)
+
+            val monochromeColors = WeatherIconDefaults.monochromeColors(
+                MaterialTheme.colorScheme.secondary
+            )
+
+            AnimatedWeatherIcon(
+                modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
+                icon = icon,
+                night = night,
+                colors = monochromeColors
+            )
+
+            WeatherIcon(
+                modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
+                icon = icon,
+                night = night,
+                colors = monochromeColors
+            )
         }
 
         Column {
@@ -510,7 +488,7 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
     ) {
         Crossfade(icon) {
             when (it) {
-                WeatherIcon.Drizzle -> {
+                WeatherIcon.LightRain, WeatherIcon.Rain -> {
                     val anim = rememberInfiniteTransition()
                     val animProgress by anim.animateFloat(
                         initialValue = 0f, targetValue = 1f, animationSpec = InfiniteRepeatableSpec(
@@ -526,6 +504,7 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
                         tint = colors.rain
                     )
                 }
+
                 WeatherIcon.Hail -> {
                     val anim = rememberInfiniteTransition()
                     val animProgress by anim.animateFloat(
@@ -542,6 +521,7 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
                         tint = colors.hail,
                     )
                 }
+
                 WeatherIcon.Snow -> {
                     val anim = rememberInfiniteTransition()
                     val animProgress by anim.animateFloat(
@@ -561,9 +541,9 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
                         tint = colors.snow,
                     )
                 }
-                WeatherIcon.Showers,
-                WeatherIcon.ThunderstormWithRain,
-                WeatherIcon.HeavyThunderstormWithRain -> {
+
+                WeatherIcon.HeavyRain,
+                WeatherIcon.Thunderstorm -> {
                     val anim = rememberInfiniteTransition()
                     val animProgress by anim.animateFloat(
                         initialValue = 0f, targetValue = 1f, animationSpec = InfiniteRepeatableSpec(
@@ -579,6 +559,7 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
                         tint = colors.rain,
                     )
                 }
+
                 WeatherIcon.Sleet -> {
                     val anim = rememberInfiniteTransition()
                     val animProgress by anim.animateFloat(
@@ -603,6 +584,7 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
                         tint = colors.snow,
                     )
                 }
+
                 else -> {}
             }
         }
@@ -625,25 +607,36 @@ private fun Fog(icon: WeatherIcon, colors: WeatherIconColors) {
 }
 
 enum class WeatherIcon {
-    None,
+    Unknown,
+
     Clear,
-    Cloudy,
-    Cold,
-    Drizzle,
-    Haze,
-    Fog,
-    Hail,
-    HeavyThunderstorm,
-    HeavyThunderstormWithRain,
-    Hot,
-    MostlyCloudy,
     PartlyCloudy,
-    Showers,
-    Sleet,
-    Snow,
-    Storm,
+    Overcast,
+
+    LightRain,
+    Rain,
+    HeavyRain,
+
+    /**
+     * Thunder and lightning without rain
+     */
+    Thunder,
+
+    /**
+     * Thunder and lightning with rain
+     */
     Thunderstorm,
-    ThunderstormWithRain,
+
+    Snow,
+    Sleet,
+    Hail,
+
+    ExtremeHeat,
+    ExtremeCold,
+
     Wind,
-    BrokenClouds
+
+    Fog,
+    Haze,
+
 }

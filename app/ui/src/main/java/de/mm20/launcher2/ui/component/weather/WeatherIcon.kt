@@ -43,10 +43,7 @@ private fun SunMoon(icon: WeatherIcon, night: Boolean, colors: WeatherIconColors
     when (icon) {
         WeatherIcon.Clear,
         WeatherIcon.PartlyCloudy,
-        WeatherIcon.BrokenClouds,
-        WeatherIcon.Haze,
-        WeatherIcon.MostlyCloudy -> {
-        }
+        WeatherIcon.Haze, -> {}
 
         else -> return
     }
@@ -56,15 +53,10 @@ private fun SunMoon(icon: WeatherIcon, night: Boolean, colors: WeatherIconColors
     val scale = when (icon) {
         WeatherIcon.Clear,
         WeatherIcon.PartlyCloudy,
-        WeatherIcon.BrokenClouds,
         WeatherIcon.Haze -> 1f
-
-        WeatherIcon.MostlyCloudy -> 0.8f
-        else -> 0f
     }
 
     val offset = when (icon) {
-        WeatherIcon.MostlyCloudy -> DpOffset(2.dp, -3.dp)
         WeatherIcon.PartlyCloudy -> DpOffset(2.dp, -2.dp)
         else -> DpOffset.Zero
     }
@@ -85,19 +77,16 @@ private fun Cloud1(icon: WeatherIcon, colors: WeatherIconColors) {
 
     when (icon) {
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain,
-        WeatherIcon.Showers,
-        WeatherIcon.Drizzle,
+        WeatherIcon.Thunder,
+        WeatherIcon.Rain,
+        WeatherIcon.LightRain,
+        WeatherIcon.HeavyRain,
         WeatherIcon.Sleet,
         WeatherIcon.Snow,
         WeatherIcon.Hail,
-        WeatherIcon.Cloudy,
+        WeatherIcon.Overcast,
         WeatherIcon.Fog,
-        WeatherIcon.MostlyCloudy,
-        WeatherIcon.PartlyCloudy,
-        WeatherIcon.BrokenClouds -> {
+        WeatherIcon.PartlyCloudy -> {
         }
 
         else -> return
@@ -105,62 +94,48 @@ private fun Cloud1(icon: WeatherIcon, colors: WeatherIconColors) {
 
     val scale = when (icon) {
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain,
-        WeatherIcon.Showers,
-        WeatherIcon.Drizzle,
+        WeatherIcon.Thunder,
+        WeatherIcon.Rain,
+        WeatherIcon.LightRain,
+        WeatherIcon.HeavyRain,
         WeatherIcon.Sleet,
         WeatherIcon.Snow,
         WeatherIcon.Hail,
-        WeatherIcon.Cloudy,
+        WeatherIcon.Overcast,
         WeatherIcon.Fog -> 1.4f
 
-        WeatherIcon.MostlyCloudy,
         WeatherIcon.PartlyCloudy -> 1f
-
-        WeatherIcon.BrokenClouds -> 0.9f
-        else -> 0f
     }
     val offset = when (icon) {
-        WeatherIcon.Showers,
-        WeatherIcon.Drizzle,
+        WeatherIcon.HeavyRain,
+        WeatherIcon.Rain,
+        WeatherIcon.LightRain,
         WeatherIcon.Sleet,
         WeatherIcon.Snow,
         WeatherIcon.Hail,
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain -> DpOffset(0.dp, -7.dp)
+        WeatherIcon.Thunder -> DpOffset(0.dp, -7.dp)
 
-        WeatherIcon.Cloudy,
+        WeatherIcon.Overcast,
         WeatherIcon.Fog -> DpOffset(0.dp, -2.5.dp)
 
-        WeatherIcon.MostlyCloudy -> DpOffset(-2.5.dp, 0.dp)
         WeatherIcon.PartlyCloudy -> DpOffset(-1.5.dp, 2.dp)
-        WeatherIcon.BrokenClouds -> DpOffset(-2.5.dp, 3.5.dp)
-        else -> DpOffset.Zero
     }
     val color = when (icon) {
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain -> colors.cloudDark2
+        WeatherIcon.Thunder -> colors.cloudDark2
 
-        WeatherIcon.Showers,
+        WeatherIcon.Rain,
+        WeatherIcon.HeavyRain,
         WeatherIcon.Sleet,
         WeatherIcon.Hail,
-        WeatherIcon.Cloudy,
+        WeatherIcon.Overcast,
         WeatherIcon.Fog -> colors.cloudDark1
 
-        WeatherIcon.Drizzle,
+        WeatherIcon.LightRain,
         WeatherIcon.Snow -> colors.cloudMedium2
 
-        WeatherIcon.MostlyCloudy -> colors.cloudLight2
-        WeatherIcon.PartlyCloudy,
-        WeatherIcon.BrokenClouds -> colors.cloudLight1
-
-        else -> colors.cloudMedium2
+        WeatherIcon.PartlyCloudy -> colors.cloudLight1
     }
 
     Icon(
@@ -179,18 +154,15 @@ private fun Cloud2(icon: WeatherIcon, colors: WeatherIconColors) {
 
     when (icon) {
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain,
-        WeatherIcon.MostlyCloudy,
-        WeatherIcon.Showers,
-        WeatherIcon.Drizzle,
+        WeatherIcon.Thunder,
+        WeatherIcon.Rain,
+        WeatherIcon.HeavyRain,
+        WeatherIcon.LightRain,
         WeatherIcon.Sleet,
         WeatherIcon.Snow,
         WeatherIcon.Hail,
-        WeatherIcon.Cloudy,
-        WeatherIcon.Fog,
-        WeatherIcon.BrokenClouds -> {
+        WeatherIcon.Overcast,
+        WeatherIcon.Fog -> {
         }
 
         else -> return
@@ -198,56 +170,41 @@ private fun Cloud2(icon: WeatherIcon, colors: WeatherIconColors) {
 
     val scale = when (icon) {
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain,
-        WeatherIcon.MostlyCloudy,
-        WeatherIcon.Showers,
-        WeatherIcon.Drizzle,
+        WeatherIcon.Thunder,
+        WeatherIcon.Rain,
+        WeatherIcon.LightRain,
+        WeatherIcon.HeavyRain,
         WeatherIcon.Sleet,
         WeatherIcon.Snow,
         WeatherIcon.Hail,
-        WeatherIcon.Cloudy,
+        WeatherIcon.Overcast,
         WeatherIcon.Fog -> 1.1f
-
-        WeatherIcon.BrokenClouds -> 0.7f
-        else -> 0f
     }
     val offset = when (icon) {
-        WeatherIcon.Showers,
-        WeatherIcon.Drizzle,
+        WeatherIcon.Rain,
+        WeatherIcon.HeavyRain,
+        WeatherIcon.LightRain,
         WeatherIcon.Sleet,
         WeatherIcon.Snow,
         WeatherIcon.Hail,
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain -> DpOffset(-3.dp, -3.dp)
+        WeatherIcon.Thunder -> DpOffset(-3.dp, -3.dp)
 
-        WeatherIcon.Cloudy,
+        WeatherIcon.Overcast,
         WeatherIcon.Fog -> DpOffset(-3.dp, 1.5.dp)
-
-        WeatherIcon.BrokenClouds -> DpOffset(4.5.dp, -4.5.dp)
-        WeatherIcon.MostlyCloudy -> DpOffset(2.dp, 2.5.dp)
-        else -> DpOffset.Zero
     }
     val color = when (icon) {
-        WeatherIcon.BrokenClouds -> colors.cloudLight2
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain -> colors.cloudMedium2
+        WeatherIcon.Thunder -> colors.cloudMedium2
 
-        WeatherIcon.Showers,
-        WeatherIcon.Drizzle,
+        WeatherIcon.Rain,
+        WeatherIcon.HeavyRain,
+        WeatherIcon.LightRain,
         WeatherIcon.Sleet,
         WeatherIcon.Snow,
         WeatherIcon.Hail,
-        WeatherIcon.Cloudy,
+        WeatherIcon.Overcast,
         WeatherIcon.Fog -> colors.cloudMedium1
-
-        WeatherIcon.MostlyCloudy -> colors.cloudMedium1
-        else -> colors.cloudMedium2
     }
 
     Icon(
@@ -264,52 +221,41 @@ private fun Cloud2(icon: WeatherIcon, colors: WeatherIconColors) {
 @Composable
 private fun Cloud3(icon: WeatherIcon, colors: WeatherIconColors) {
     when (icon) {
-        WeatherIcon.Showers,
-        WeatherIcon.Drizzle,
+        WeatherIcon.LightRain,
+        WeatherIcon.HeavyRain,
+        WeatherIcon.Rain,
         WeatherIcon.Sleet,
         WeatherIcon.Snow,
         WeatherIcon.Hail,
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain,
-        WeatherIcon.Cloudy -> {
-
-        }
+        WeatherIcon.Thunder,
+        WeatherIcon.Overcast -> {}
 
         else -> return
     }
     val offset = when (icon) {
-        WeatherIcon.Showers,
-        WeatherIcon.Drizzle,
+        WeatherIcon.LightRain,
+        WeatherIcon.HeavyRain,
+        WeatherIcon.Rain,
         WeatherIcon.Sleet,
         WeatherIcon.Snow,
         WeatherIcon.Hail,
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain -> DpOffset(3.dp, -2.dp)
-
-        WeatherIcon.Cloudy,
-        WeatherIcon.Fog -> DpOffset(3.dp, 2.5.dp)
-
-        else -> DpOffset.Zero
+        WeatherIcon.Thunder -> DpOffset(3.dp, -2.dp)
+        WeatherIcon.Overcast -> DpOffset(3.dp, 2.5.dp)
     }
     val color = when (icon) {
         WeatherIcon.Thunderstorm,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain -> colors.cloudDark1
+        WeatherIcon.Thunder -> colors.cloudDark1
 
-        WeatherIcon.Showers,
+        WeatherIcon.Rain,
+        WeatherIcon.HeavyRain,
         WeatherIcon.Sleet,
         WeatherIcon.Hail,
-        WeatherIcon.Cloudy -> colors.cloudMedium2
+        WeatherIcon.Overcast -> colors.cloudMedium2
 
-        WeatherIcon.Drizzle,
+        WeatherIcon.LightRain,
         WeatherIcon.Snow -> colors.cloudLight2
-
-        else -> colors.cloudMedium2
     }
 
     Icon(
@@ -345,30 +291,26 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
     }
 
     when (icon) {
-        WeatherIcon.Showers,
-        WeatherIcon.Drizzle,
+        WeatherIcon.Rain,
+        WeatherIcon.LightRain,
+        WeatherIcon.HeavyRain,
         WeatherIcon.Hail,
         WeatherIcon.Snow,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstormWithRain -> {
+        WeatherIcon.Thunderstorm -> {
         }
-
         else -> return
     }
     val vector = when (icon) {
-        WeatherIcon.Drizzle -> WeatherLightRain
-        WeatherIcon.Showers,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstormWithRain -> WeatherRain
-
+        WeatherIcon.LightRain, WeatherIcon.Rain -> WeatherLightRain
+        WeatherIcon.HeavyRain,
+        WeatherIcon.Thunderstorm -> WeatherRain
         WeatherIcon.Hail, WeatherIcon.Snow -> WeatherHail
-        else -> WeatherLightRain
     }
     val color = when (icon) {
-        WeatherIcon.Drizzle,
-        WeatherIcon.Showers,
-        WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstormWithRain -> colors.rain
+        WeatherIcon.LightRain,
+        WeatherIcon.Rain,
+        WeatherIcon.HeavyRain,
+        WeatherIcon.Thunderstorm -> colors.rain
 
         WeatherIcon.Hail -> colors.hail
         WeatherIcon.Snow -> colors.snow
@@ -386,7 +328,7 @@ private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
 
 @Composable
 private fun HotCold(icon: WeatherIcon, colors: WeatherIconColors) {
-    if (icon == WeatherIcon.Hot) {
+    if (icon == WeatherIcon.ExtremeHeat) {
         Icon(
             modifier = Modifier
                 .size(32.dp),
@@ -395,7 +337,7 @@ private fun HotCold(icon: WeatherIcon, colors: WeatherIconColors) {
             tint = colors.hot
         )
     }
-    if (icon == WeatherIcon.Cold) {
+    if (icon == WeatherIcon.ExtremeCold) {
         Icon(
             modifier = Modifier
                 .size(32.dp),
@@ -408,20 +350,10 @@ private fun HotCold(icon: WeatherIcon, colors: WeatherIconColors) {
 
 @Composable
 private fun Wind(icon: WeatherIcon, colors: WeatherIconColors) {
-    if (icon == WeatherIcon.Storm) {
+    if (icon == WeatherIcon.Wind) {
         Icon(
             modifier = Modifier
-                .offset(x = 4.dp, y = 0.dp)
-                .size(24.dp),
-            painter = painterResource(R.drawable.air_24px),
-            contentDescription = null,
-            tint = colors.windDark
-        )
-    }
-    if (icon == WeatherIcon.Wind || icon == WeatherIcon.Storm) {
-        Icon(
-            modifier = Modifier
-                .size(if (icon == WeatherIcon.Wind) 32.dp else 24.dp),
+                .size(32.dp),
             painter = painterResource(R.drawable.air_24px),
             contentDescription = null,
             tint = colors.wind
@@ -449,34 +381,18 @@ private fun Fog(icon: WeatherIcon, colors: WeatherIconColors) {
 @Composable
 private fun LightningBolts(icon: WeatherIcon, colors: WeatherIconColors) {
 
-    if (icon != WeatherIcon.ThunderstormWithRain
-        && icon != WeatherIcon.HeavyThunderstormWithRain
-        && icon != WeatherIcon.Thunderstorm
-        && icon != WeatherIcon.HeavyThunderstorm
+    if (icon != WeatherIcon.Thunderstorm
+        && icon != WeatherIcon.Thunder
     ) {
         return
     }
 
-    val isHeavy =
-        icon == WeatherIcon.HeavyThunderstormWithRain || icon == WeatherIcon.HeavyThunderstorm
-
     Icon(
         modifier = Modifier
             .size(12.dp)
-            .offset(x = if (isHeavy) 4.dp else 1.dp, y = 6.dp),
+            .offset(x = 1.dp, y = 6.dp),
         painter = painterResource(R.drawable.bolt_24px_filled),
         contentDescription = null,
         tint = colors.lightningBolt
     )
-
-    if (icon == WeatherIcon.HeavyThunderstorm || icon == WeatherIcon.HeavyThunderstormWithRain) {
-        Icon(
-            modifier = Modifier
-                .size(10.dp)
-                .offset(x = -3.dp, y = 6.dp),
-            painter = painterResource(R.drawable.bolt_24px_filled),
-            contentDescription = null,
-            tint = colors.lightningBolt
-        )
-    }
 }

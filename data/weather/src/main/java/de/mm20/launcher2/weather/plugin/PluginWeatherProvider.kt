@@ -5,14 +5,9 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.CancellationSignal
 import android.util.Log
-import androidx.core.database.getDoubleOrNull
-import androidx.core.database.getIntOrNull
-import androidx.core.database.getLongOrNull
-import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.config.WeatherPluginConfig
-import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract.ForecastColumns
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract.LocationColumns
@@ -142,26 +137,35 @@ internal class PluginWeatherProvider(
     private fun getIcon(icon: String): Int {
         return when (icon) {
             "Clear" -> Forecast.CLEAR
-            "Cloudy" -> Forecast.CLOUDY
-            "Cold" -> Forecast.COLD
-            "Drizzle" -> Forecast.DRIZZLE
             "Haze" -> Forecast.HAZE
             "Fog" -> Forecast.FOG
-            "Hail" -> Forecast.HAIL
-            "HeavyThunderstorm" -> Forecast.HEAVY_THUNDERSTORM
-            "HeavyThunderstormWithRain" -> Forecast.HEAVY_THUNDERSTORM_WITH_RAIN
-            "Hot" -> Forecast.HOT
-            "MostlyCloudy" -> Forecast.MOSTLY_CLOUDY
             "PartlyCloudy" -> Forecast.PARTLY_CLOUDY
-            "Showers" -> Forecast.SHOWERS
+            "Overcast" -> Forecast.OVERCAST
+            "Rain" -> Forecast.RAIN
+            "LightRain" -> Forecast.LIGHT_RAIN
+            "HeavyRain" -> Forecast.HEAVY_RAIN
             "Sleet" -> Forecast.SLEET
             "Snow" -> Forecast.SNOW
-            "Storm" -> Forecast.STORM
+            "Hail" -> Forecast.HAIL
+            "Thunder" -> Forecast.THUNDER
             "Thunderstorm" -> Forecast.THUNDERSTORM
-            "ThunderstormWithRain" -> Forecast.THUNDERSTORM_WITH_RAIN
             "Wind" -> Forecast.WIND
-            "BrokenClouds" -> Forecast.BROKEN_CLOUDS
-            else -> Forecast.NONE
+            "ExtremeHeat" -> Forecast.EXTREME_HEAT
+            "ExtremeCold" -> Forecast.EXTREME_COLD
+
+            // Deprecated values
+            "Cloudy" -> Forecast.OVERCAST
+            "Storm" -> Forecast.WIND
+            "HeavyThunderstorm" -> Forecast.THUNDER
+            "HeavyThunderstormWithRain" -> Forecast.THUNDERSTORM
+            "ThunderstormWithRain" -> Forecast.THUNDERSTORM
+            "MostlyCloudy" -> Forecast.PARTLY_CLOUDY
+            "BrokenClouds" -> Forecast.PARTLY_CLOUDY
+            "Hot" -> Forecast.EXTREME_HEAT
+            "Cold" -> Forecast.EXTREME_COLD
+            "Showers" -> Forecast.RAIN
+            "Drizzle" -> Forecast.LIGHT_RAIN
+            else -> Forecast.UNKNOWN
         }
     }
 

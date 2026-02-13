@@ -102,8 +102,8 @@ class BreezyWeatherProvider(
         return when (id) {
             800 -> WeatherIcon.Clear
             801 -> WeatherIcon.PartlyCloudy
-            803 -> WeatherIcon.Cloudy
-            500 -> WeatherIcon.Showers
+            803 -> WeatherIcon.Overcast
+            500 -> WeatherIcon.Rain
             600 -> WeatherIcon.Snow
             771 -> WeatherIcon.Wind
             741 -> WeatherIcon.Fog
@@ -111,7 +111,7 @@ class BreezyWeatherProvider(
             611 -> WeatherIcon.Sleet
             511 -> WeatherIcon.Hail
             210 -> WeatherIcon.Thunderstorm
-            211 -> WeatherIcon.ThunderstormWithRain
+            211 -> WeatherIcon.Thunderstorm
             else -> WeatherIcon.Unknown
         }
     }

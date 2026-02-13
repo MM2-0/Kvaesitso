@@ -6,12 +6,14 @@ import android.content.Intent
 import android.net.Uri
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -79,6 +81,8 @@ import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
+import de.mm20.launcher2.ui.component.weather.WeatherIconDefaults
+import de.mm20.launcher2.ui.ktx.animateShapeAsState
 import de.mm20.launcher2.ui.locals.LocalMeasurementSystem
 import de.mm20.launcher2.ui.locals.LocalTimeFormat
 import de.mm20.launcher2.ui.theme.transparency.transparency
@@ -187,21 +191,32 @@ fun WeatherWidget(widget: WeatherWidget) {
 
             Surface(
                 color = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.surface),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                shape = MaterialTheme.shapes.small,
             ) {
                 Column(
-                    modifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
+                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
                 ) {
-                    WeatherTimeSelector(
-                        forecasts = currentDayForecasts,
-                        selectedForecast = forecast,
-                        measurementSystem = measurementSystem,
-                        timeFormat = timeFormat,
-                        onTimeSelected = {
-                            viewModel.selectForecast(it)
-                        },
-                        modifier = Modifier.padding(bottom = 12.dp)
-                    )
+                    AnimatedContent(
+                        currentDayForecasts to forecast,
+                        contentKey = { it.first },
+                        transitionSpec = {
+                            fadeIn() togetherWith fadeOut()
+                        }
+                    ) { (fcs, fc) ->
+                        WeatherTimeSelector(
+                            forecasts = fcs,
+                            selectedForecast = fc,
+                            measurementSystem = measurementSystem,
+                            timeFormat = timeFormat,
+                            onTimeSelected = {
+                                viewModel.selectForecast(it)
+                            },
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
                     selectedDayForecast?.let {
                         WeatherDaySelector(
                             days = dailyForecasts,
@@ -469,12 +484,16 @@ fun WeatherTimeSelector(
     val context = LocalContext.current
 
     val listState = rememberLazyListState()
+
+    val colors = WeatherIconDefaults.colors()
+    val selectedColors = WeatherIconDefaults.monochromeColors(MaterialTheme.colorScheme.secondary)
+
     LazyRow(
         state = listState,
         modifier = modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(2.dp),
-        contentPadding = PaddingValues(start = 12.dp, end = 12.dp),
+        contentPadding = PaddingValues(start = 8.dp, end = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         itemsIndexed(forecasts, key = { idx, _ -> idx }) { idx, fc ->
@@ -482,22 +501,26 @@ fun WeatherTimeSelector(
             val sm = MaterialTheme.shapes.small
             val xs = MaterialTheme.shapes.extraSmall
             Surface(
-                shape = when (idx) {
-                    0 -> xs.copy(
-                        topStart = sm.topStart,
-                        bottomStart = sm.bottomStart
-                    )
+                shape = animateShapeAsState(
+                    when {
+                        selected -> sm
+                        idx == 0 -> xs.copy(
+                            topStart = sm.topStart,
+                            bottomStart = sm.bottomStart
+                        )
 
-                    forecasts.lastIndex -> xs.copy(
-                        topEnd = sm.topEnd,
-                        bottomEnd = sm.bottomEnd
-                    )
+                        idx == forecasts.lastIndex -> xs.copy(
+                            topEnd = sm.topEnd,
+                            bottomEnd = sm.bottomEnd
+                        )
 
-                    else -> MaterialTheme.shapes.extraSmall
-                },
+                        else -> MaterialTheme.shapes.extraSmall
+                    }
+                ).value,
                 modifier = Modifier
                     .widthIn(min = 60.dp),
-                color = MaterialTheme.colorScheme.surface,
+                color = if (selected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.surfaceBright,
+                contentColor = if (selected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onSurfaceVariant,
             ) {
                 Column(
                     modifier = Modifier
@@ -513,12 +536,12 @@ fun WeatherTimeSelector(
                             }
                             .padding(bottom = 4.dp),
                         icon = weatherIconById(fc.icon),
-                        night = fc.night
+                        night = fc.night,
+                        colors = if (selected) selectedColors else colors
                     )
                     Text(
                         text = formatTime(context, fc.timestamp, timeFormat),
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         softWrap = false,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
@@ -536,13 +559,15 @@ fun WeatherTimeSelector(
                             ),
                             softWrap = false,
                             style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Box(
                             modifier = Modifier
                                 .alpha(1f - alpha)
                                 .requiredSize(8.dp)
-                                .background(MaterialTheme.colorScheme.primary, CircleShape)
+                                .background(
+                                    MaterialTheme.colorScheme.onSecondary,
+                                    CircleShape
+                                )
                         )
                     }
                 }
@@ -562,6 +587,9 @@ fun WeatherDaySelector(
     val dateFormat = SimpleDateFormat("EEE")
     val context = LocalContext.current
 
+    val colors = WeatherIconDefaults.colors()
+    val selectedColors = WeatherIconDefaults.monochromeColors(MaterialTheme.colorScheme.secondary)
+
     val listState = rememberLazyListState()
     LazyRow(
         state = listState,
@@ -569,7 +597,7 @@ fun WeatherDaySelector(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(2.dp),
         verticalAlignment = Alignment.CenterVertically,
-        contentPadding = PaddingValues(start = 12.dp, end = 12.dp),
+        contentPadding = PaddingValues(start = 8.dp, end = 8.dp),
     ) {
         itemsIndexed(days, key = { idx, _ -> idx }) { idx, day ->
             val selected = day == selectedDay
@@ -577,20 +605,24 @@ fun WeatherDaySelector(
             val sm = MaterialTheme.shapes.small
             val xs = MaterialTheme.shapes.extraSmall
             Surface(
-                shape = when (idx) {
-                    0 -> xs.copy(
-                        topStart = sm.topStart,
-                        bottomStart = sm.bottomStart
-                    )
+                shape = animateShapeAsState(
+                    when {
+                        selected -> sm
+                        idx == 0 -> xs.copy(
+                            topStart = sm.topStart,
+                            bottomStart = sm.bottomStart
+                        )
 
-                    days.lastIndex -> xs.copy(
-                        topEnd = sm.topEnd,
-                        bottomEnd = sm.bottomEnd
-                    )
+                        idx == days.lastIndex -> xs.copy(
+                            topEnd = sm.topEnd,
+                            bottomEnd = sm.bottomEnd
+                        )
 
-                    else -> MaterialTheme.shapes.extraSmall
-                },
-                color = MaterialTheme.colorScheme.surface,
+                        else -> MaterialTheme.shapes.extraSmall
+                    }
+                ).value,
+                color = if (selected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.surfaceBright,
+                contentColor = if (selected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onSurfaceVariant,
             ) {
                 Row(
                     modifier = Modifier
@@ -598,7 +630,10 @@ fun WeatherDaySelector(
                         .padding(top = 4.dp, bottom = 4.dp, start = 4.dp, end = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    WeatherIcon(icon = weatherIconById(day.icon))
+                    WeatherIcon(
+                        icon = weatherIconById(day.icon),
+                        colors = if (selected) selectedColors else colors
+                    )
                     Text(
                         modifier = Modifier.padding(start = 8.dp),
                         text = "${dateFormat.format(day.timestamp)} " +
@@ -616,7 +651,6 @@ fun WeatherDaySelector(
                                 ),
                         softWrap = false,
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     val spec = MaterialTheme.motionScheme.fastSpatialSpec<IntSize>()
                     AnimatedVisibility(
@@ -628,7 +662,10 @@ fun WeatherDaySelector(
                             modifier = Modifier
                                 .padding(start = 8.dp)
                                 .size(8.dp)
-                                .background(MaterialTheme.colorScheme.primary, CircleShape)
+                                .background(
+                                    MaterialTheme.colorScheme.onSecondary,
+                                    CircleShape
+                                )
                         )
                     }
                 }
@@ -678,26 +715,27 @@ private fun windDirectionAsWord(direction: Double): String {
 private fun weatherIconById(id: Int): WeatherIcon {
     return when (id) {
         Forecast.CLEAR -> WeatherIcon.Clear
-        Forecast.CLOUDY -> WeatherIcon.Cloudy
-        Forecast.COLD -> WeatherIcon.Cold
-        Forecast.DRIZZLE -> WeatherIcon.Drizzle
+        Forecast.OVERCAST -> WeatherIcon.Overcast
+        Forecast.EXTREME_COLD -> WeatherIcon.ExtremeHeat
+        Forecast.LIGHT_RAIN -> WeatherIcon.LightRain
         Forecast.HAZE -> WeatherIcon.Haze
         Forecast.FOG -> WeatherIcon.Fog
         Forecast.HAIL -> WeatherIcon.Hail
-        Forecast.HEAVY_THUNDERSTORM -> WeatherIcon.HeavyThunderstorm
-        Forecast.HEAVY_THUNDERSTORM_WITH_RAIN -> WeatherIcon.HeavyThunderstormWithRain
-        Forecast.HOT -> WeatherIcon.Hot
-        Forecast.MOSTLY_CLOUDY -> WeatherIcon.MostlyCloudy
+        Forecast.EXTREME_HEAT -> WeatherIcon.ExtremeHeat
         Forecast.PARTLY_CLOUDY -> WeatherIcon.PartlyCloudy
-        Forecast.SHOWERS -> WeatherIcon.Showers
+        Forecast.RAIN -> WeatherIcon.Rain
+        Forecast.HEAVY_RAIN -> WeatherIcon.HeavyRain
         Forecast.SLEET -> WeatherIcon.Sleet
         Forecast.SNOW -> WeatherIcon.Snow
-        Forecast.STORM -> WeatherIcon.Storm
+        Forecast.THUNDER -> WeatherIcon.Thunder
         Forecast.THUNDERSTORM -> WeatherIcon.Thunderstorm
-        Forecast.THUNDERSTORM_WITH_RAIN -> WeatherIcon.ThunderstormWithRain
         Forecast.WIND -> WeatherIcon.Wind
-        Forecast.BROKEN_CLOUDS -> WeatherIcon.BrokenClouds
-        else -> WeatherIcon.None
+        Forecast.MOSTLY_CLOUDY -> WeatherIcon.PartlyCloudy
+        Forecast.STORM -> WeatherIcon.Wind
+        Forecast.BROKEN_CLOUDS -> WeatherIcon.PartlyCloudy
+        Forecast.HEAVY_THUNDERSTORM -> WeatherIcon.Thunder
+        Forecast.HEAVY_THUNDERSTORM_WITH_RAIN -> WeatherIcon.Thunderstorm
+        else -> WeatherIcon.Unknown
     }
 }
 
