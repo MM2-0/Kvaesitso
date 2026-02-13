@@ -47,6 +47,7 @@ import de.mm20.launcher2.database.migrations.Migration_7_8
 import de.mm20.launcher2.database.migrations.Migration_8_9
 import de.mm20.launcher2.database.migrations.Migration_9_10
 import de.mm20.launcher2.ktx.toBytes
+import de.mm20.launcher2.preferences.WidgetScreenTarget
 import java.util.UUID
 
 @Database(
@@ -129,15 +130,19 @@ abstract class AppDatabase : RoomDatabase() {
                                 )
                             )
 
+                            val defaultParentId = WidgetScreenTarget.Default.scopeId
                             db.execSQL(
-                                "INSERT INTO Widget (`type`, `position`, `id`) VALUES " +
-                                        "('weather', 0, ?)," +
-                                        "('music', 1, ?)," +
-                                        "('calendar', 2, ?);",
+                                "INSERT INTO Widget (`type`, `position`, `id`, `parentId`) VALUES " +
+                                        "('weather', 0, ?, ?)," +
+                                        "('music', 1, ?, ?)," +
+                                        "('calendar', 2, ?, ?);",
                                 arrayOf(
                                     UUID.randomUUID().toBytes(),
+                                    defaultParentId.toBytes(),
                                     UUID.randomUUID().toBytes(),
-                                    UUID.randomUUID().toBytes()
+                                    defaultParentId.toBytes(),
+                                    UUID.randomUUID().toBytes(),
+                                    defaultParentId.toBytes()
                                 )
                             )
                         }
@@ -172,4 +177,3 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 }
-
