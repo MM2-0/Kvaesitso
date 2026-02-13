@@ -811,6 +811,7 @@
     <string name="gesture_action_none">Do nothing</string>
     <string name="gesture_action_open_search">Open search</string>
     <string name="gesture_action_widgets">Widgets</string>
+    <string name="gesture_action_widgets_indexed">Widgets %1$d</string>
     <string name="gesture_action_launch_app">Launch app</string>
     <string name="gesture_action_notifications">Open notification drawer</string>
     <string name="gesture_action_lock_screen">Turn off screen</string>

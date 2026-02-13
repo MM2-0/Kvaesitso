@@ -68,7 +68,7 @@ fun GestureSettingsScreen() {
                         if (widgetScreenCount == 1) {
                             stringResource(R.string.gesture_action_widgets)
                         } else {
-                            "${stringResource(R.string.gesture_action_widgets)} ${index + 1}"
+                            stringResource(R.string.gesture_action_widgets_indexed, index + 1)
                         }
                     add(label to GestureAction.Widgets(target))
                 }
