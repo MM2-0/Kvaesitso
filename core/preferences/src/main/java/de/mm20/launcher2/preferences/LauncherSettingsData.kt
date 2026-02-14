@@ -11,7 +11,7 @@ import java.util.UUID
 @Serializable
 @ConsistentCopyVisibility
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 5,
+    val schemaVersion: Int = 6,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     @Serializable(with = UUIDSerializer::class)
@@ -51,6 +51,10 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetMonospaced: Boolean = false,
     val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
+    @Deprecated("")
+    @SerialName("clockWidgetBatteryPart")
+    val _clockWidgetBatteryPart: Boolean = true,
+    @SerialName("clockWidgetBatteryPart2")
     val clockWidgetBatteryPart: BatteryStatusVisibility = BatteryStatusVisibility.Show,
     val clockWidgetMusicPart: Boolean = true,
     val clockWidgetDatePart: Boolean = true,
