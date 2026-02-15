@@ -12,10 +12,7 @@ data class CalendarList(
      */
     val name: String,
     /**
-     * The main content type of this list. This has mainly cosmetic purposes (labels, icons).
-     * It doesn't need to be 100% accurate since the actual type is determined on a per-item basis.
-     * However, the launcher will hide some settings if it doesn't find any lists that would be
-     * affected by them.
+     * The content type of this list.
      */
     val contentTypes: List<CalendarListType>,
     /**
@@ -23,7 +20,7 @@ data class CalendarList(
      */
     val accountName: String? = null,
     /**
-     * The color of this list, in 0xFFAARRGGBB format.
+     * The color of this list, in 0xAARRGGBB format.
      * If null, the launcher will use a default theme color.
      * The color is corrected to match the launcher's theme  (i.e. for dark mode).
      */
