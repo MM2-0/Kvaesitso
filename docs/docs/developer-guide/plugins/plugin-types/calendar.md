@@ -76,12 +76,12 @@ A `CalendarEvent` has the following properties:
 - `calendarName`: The name of the calendar the event belongs to.
 - `description` (optional): A description of the event.
 - `location` (optional): The location of the event.
+- `attendees`: A list of human-readable names, representing the attendees.
 - `color` (optional): The color of the event, in `0xAARRGGBB` format.
 - `startTime`: Start time of the event in milliseconds since epoch. For tasks, this can be null.
 - `endTime`: End time of the event in milliseconds since epoch. For tasks, this is the due date.
 - `includeTime`: If false, only the date will be shown for the event.
-- `attendees`: A list of human-readable names, representing the attendees.
-- `uri`: A URI that opens the event. Can be a URI that your app can handle, or a https link.
+- `uri`: A URI that opens the event. Can be a URI that your app can handle, or a weblink.
 - `isCompleted` (optional): If this is not null, the event is treated as a task, indicated by a
   checkmark in the UI.
 
