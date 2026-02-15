@@ -39,13 +39,13 @@ class GlobalActionsService(private val context: Context) {
             val method = statusBarManager.getMethod("expandNotificationsPanel")
             method.invoke(statusBarService)
         } catch (e: IllegalAccessException) {
-            Log.e("MM20", Log.getStackTraceString(e))
+            CrashReporter.logException(e)
         } catch (e: InvocationTargetException) {
-            Log.e("MM20", Log.getStackTraceString(e))
+            CrashReporter.logException(e)
         } catch (e: NoSuchMethodException) {
-            Log.e("MM20", Log.getStackTraceString(e))
+            CrashReporter.logException(e)
         } catch (e: ClassNotFoundException) {
-            Log.e("MM20", Log.getStackTraceString(e))
+            CrashReporter.logException(e)
         }
     }
 
