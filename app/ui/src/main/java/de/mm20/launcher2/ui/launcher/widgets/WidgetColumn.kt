@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -41,24 +42,29 @@ import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.widgets.AppWidget
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 @Composable
 fun WidgetColumn(
     modifier: Modifier = Modifier,
     editMode: Boolean = false,
     onEditModeChange: (Boolean) -> Unit,
+    parentId: String,
 ) {
 
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    val viewModel: WidgetsVM = viewModel()
+    val viewModel: WidgetsVM = viewModel(
+        key = "widgets-column-$parentId",
+        factory = WidgetsVM.Factory(parentId),
+    )
     val snackbarHostState = LocalSnackbarHostState.current
 
     var addNewWidget by rememberSaveable { mutableStateOf(false) }
 
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         val scope = rememberCoroutineScope()
         Column {
@@ -70,7 +76,8 @@ fun WidgetColumn(
             for ((i, widget) in widgetsWithIndex) {
                 key(widget.id) {
                     var dragOffsetAfterSwap = remember<Float?> { null }
-                    val offsetY = remember(widgets) { mutableStateOf(dragOffsetAfterSwap ?: 0f) }
+                    val offsetY =
+                        remember(widgets) { mutableFloatStateOf(dragOffsetAfterSwap ?: 0f) }
 
                     LaunchedEffect(widgets) {
                         dragOffsetAfterSwap = null
@@ -138,7 +145,7 @@ fun WidgetColumn(
                             scope.launch {
                                 offsetY.animateTo(0f)
                             }
-                        }
+                        },
                     )
                 }
             }
@@ -148,7 +155,7 @@ fun WidgetColumn(
         if (editMode || editButton == true) {
             val title = stringResource(
                 if (editMode) R.string.widget_add_widget
-                else R.string.menu_edit_widgets
+                else R.string.menu_edit_widgets,
             )
 
             Button(
@@ -162,15 +169,16 @@ fun WidgetColumn(
                     } else {
                         addNewWidget = true
                     }
-                }
+                },
             ) {
                 Icon(
                     modifier = Modifier
                         .padding(end = ButtonDefaults.IconSpacing)
                         .size(ButtonDefaults.IconSize),
                     painter = painterResource(
-                        if (editMode) R.drawable.add_20px else R.drawable.edit_20px
-                    ), contentDescription = null
+                        if (editMode) R.drawable.add_20px else R.drawable.edit_20px,
+                    ),
+                    contentDescription = null,
                 )
                 Text(title)
             }
@@ -184,6 +192,6 @@ fun WidgetColumn(
         onWidgetSelected = {
             viewModel.addWidget(it)
             addNewWidget = false
-        }
+        },
     )
 }

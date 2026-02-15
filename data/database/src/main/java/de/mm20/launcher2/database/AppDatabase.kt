@@ -39,14 +39,17 @@ import de.mm20.launcher2.database.migrations.Migration_22_23
 import de.mm20.launcher2.database.migrations.Migration_23_24
 import de.mm20.launcher2.database.migrations.Migration_24_25
 import de.mm20.launcher2.database.migrations.Migration_25_26
+import de.mm20.launcher2.database.migrations.Migration_26_27
 import de.mm20.launcher2.database.migrations.Migration_27_28
 import de.mm20.launcher2.database.migrations.Migration_28_29
 import de.mm20.launcher2.database.migrations.Migration_29_30
+import de.mm20.launcher2.database.migrations.Migration_30_31
 import de.mm20.launcher2.database.migrations.Migration_6_7
 import de.mm20.launcher2.database.migrations.Migration_7_8
 import de.mm20.launcher2.database.migrations.Migration_8_9
 import de.mm20.launcher2.database.migrations.Migration_9_10
 import de.mm20.launcher2.ktx.toBytes
+import de.mm20.launcher2.preferences.WidgetScreenTarget
 import java.util.UUID
 
 @Database(
@@ -64,7 +67,7 @@ import java.util.UUID
         ShapesEntity::class,
         TransparenciesEntity::class,
         TypographyEntity::class,
-    ], version = 30, exportSchema = true
+    ], version = 31, exportSchema = true
 )
 @TypeConverters(ComponentNameConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -129,15 +132,19 @@ abstract class AppDatabase : RoomDatabase() {
                                 )
                             )
 
+                            val defaultParentId = WidgetScreenTarget.Default.scopeId
                             db.execSQL(
-                                "INSERT INTO Widget (`type`, `position`, `id`) VALUES " +
-                                        "('weather', 0, ?)," +
-                                        "('music', 1, ?)," +
-                                        "('calendar', 2, ?);",
+                                "INSERT INTO Widget (`type`, `position`, `id`, `parentId`) VALUES " +
+                                        "('weather', 0, ?, ?)," +
+                                        "('music', 1, ?, ?)," +
+                                        "('calendar', 2, ?, ?);",
                                 arrayOf(
                                     UUID.randomUUID().toBytes(),
+                                    defaultParentId.toBytes(),
                                     UUID.randomUUID().toBytes(),
-                                    UUID.randomUUID().toBytes()
+                                    defaultParentId.toBytes(),
+                                    UUID.randomUUID().toBytes(),
+                                    defaultParentId.toBytes()
                                 )
                             )
                         }
@@ -163,13 +170,14 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_23_24(),
                         Migration_24_25(),
                         Migration_25_26(),
+                        Migration_26_27(),
                         Migration_27_28(),
                         Migration_28_29(),
                         Migration_29_30(),
+                        Migration_30_31(),
                     ).build()
             if (_instance == null) _instance = instance
             return instance
         }
     }
 }
-
