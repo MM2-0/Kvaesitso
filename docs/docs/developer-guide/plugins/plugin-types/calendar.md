@@ -132,6 +132,15 @@ return `null`. In this case, the launcher will remove it from its database.
 The calendar widget uses the same `search` method that the search uses. The only difference is that
 `query.query` is always `null` and that `params.allowNetwork` is always `false`.
 
+#### Actions
+
+To handle the calendar widget actions (**<span class="material-symbols-rounded">add</span>Create new
+event**, **<span class="material-symbols-rounded">open_in_new</span> Open calendar app**), your app
+should be able to handle the following intents:
+
+- Open the calendar to a particular date: [see here](https://developer.android.com/identity/providers/calendar-provider#intent-view)
+- Add a calendar event: [see here](https://developer.android.com/guide/components/intents-common#AddEvent)
+
 ### Tasks
 
 Tasks are a special type of calendar event, because they can be completed or uncompleted. A
