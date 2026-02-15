@@ -747,7 +747,7 @@
     <string name="tag_exists_error">Bu ada sahip bir etiket zaten var</string>
     <string name="tag_exists_message">Bu ada sahip bir etiket zaten var. Devam ederseniz, iki etiket birleştirilecektir</string>
     <string name="tag_no_items_message">Bu etikete atanmış öğe yok. Devam ederseniz, etiket silinecektir</string>
-    <string name="tag_select_items">Öğeleri seçin:</string>
+    <string name="tag_select_items">Öğeleri seçin</string>
     <string name="tag_name">Etiket adı</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d öğe seçildi</item>
@@ -851,7 +851,7 @@
     <string name="menu_bugreport">Hata Bildir</string>
     <string name="location_open_24_7">7/24 Açık</string>
     <string name="plugin_state_error">Bu eklenti düzgün çalışmıyor</string>
-    <string name="plugin_state_setup_required">Önce bu eklentiyi kurmanız gerekiyor</string>
+    <string name="plugin_state_setup_required">Eklentiyi kullanmak için önce kurmalısınız</string>
     <string name="plugin_action_setup">Kur</string>
     <string name="plugin_type_filesearch">Dosyalar</string>
     <string name="plugin_type_contacts">Kişiler</string>
@@ -1036,7 +1036,7 @@
     <string name="theme_import_title">Temayı içe aktar</string>
     <string name="theme_bundle_name">Ad</string>
     <string name="theme_bundle_author">Yazar</string>
-    <string name="preference_typography_fonts">Yazı Tipleri</string>
+    <string name="preference_typography_fonts">Font şekilleri</string>
     <string name="font_category_device_default">Cihaz varsayılanı</string>
     <string name="font_name_device_headline">Varsayılan başlık yazı tipi</string>
     <string name="font_name_device_body">Cihaz metin yazı tipi</string>
@@ -1084,4 +1084,23 @@
     <string name="preference_transliteration_auto">Otomatik</string>
     <string name="preference_transliteration_disabled">Devre dışı</string>
     <string name="select_tag">Etiket seçin</string>
+    <string name="action_quit">Çık</string>
+    <string name="preference_create_colors">Yeni renk şeması</string>
+    <string name="preference_create_shapes">Yeni şekil temaları</string>
+    <string name="preference_create_typography">Yeni yazım şemaları</string>
+    <string name="preference_create_transparency">Yeni şeffaflık şeması</string>
+    <string name="create_search_action_title">Yeni hızlı hareket</string>
+    <string name="edit_search_action_title">hızlı hareketi düzenle</string>
+    <string name="tag_name_empty_error">İsim bölümü boş kalamaz</string>
+    <string name="add_font_style">yeni bir font ekle</string>
+    <string name="remove_font_style">bu fontu kaldır</string>
+    <string name="create_tag_title">Yeni etiket</string>
+    <string name="edit_tag_title">Etiketi düzenle</string>
+    <string name="dialog_discard_unsaved">Kaydetmeden çıkılsın mı?</string>
+    <string name="typo_preview_extra_short">Aa</string>
+    <string name="typo_preview_short1">Ağaç</string>
+    <string name="typo_preview_short2">Yazı</string>
+    <string name="typo_preview_medium1">İçli köfte</string>
+    <string name="typo_preview_medium2">Önizleme</string>
+    <string name="typo_preview_long">Çevik kahvernekli tilki\n123456789\'un üstünden atlar</string>
 </resources>
