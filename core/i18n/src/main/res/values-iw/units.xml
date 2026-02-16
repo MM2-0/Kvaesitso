@@ -175,4 +175,82 @@
         <item quantity="two">קילו-בית</item>
         <item quantity="other">קילו-בית</item>
     </plurals>
+    <string name="unit_megabyte_symbol">מ\"ב</string>
+    <plurals name="unit_megabyte">
+        <item quantity="one">מגה-בית</item>
+        <item quantity="two">מגה-בית</item>
+        <item quantity="other">מגה-בית</item>
+    </plurals>
+    <string name="unit_gigabyte_symbol">ג\"ב</string>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">ג\'יגה-בית</item>
+        <item quantity="two">ג\'יגה-בית</item>
+        <item quantity="other">ג\'יגה-בית</item>
+    </plurals>
+    <string name="unit_terabyte_symbol">ט\"ב</string>
+    <plurals name="unit_terabyte">
+        <item quantity="one">טרה-בית</item>
+        <item quantity="two">טרה-בית</item>
+        <item quantity="other">טרה-בית</item>
+    </plurals>
+    <string name="unit_kibibyte_symbol">קיבי-בית</string>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">קיבי-בית</item>
+        <item quantity="two">קיבי-בית</item>
+        <item quantity="other">קיבי-בית</item>
+    </plurals>
+    <string name="unit_mebibyte_symbol">מבי-בית</string>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">מבי-בית</item>
+        <item quantity="two">מבי-בית</item>
+        <item quantity="other">מבי-בית</item>
+    </plurals>
+    <string name="unit_gibibyte_symbol">גיבי-בית</string>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">גיבי-בית</item>
+        <item quantity="two">גיבי-בית</item>
+        <item quantity="other">גיבי-בית</item>
+    </plurals>
+    <string name="unit_tebibyte_symbol">טבי-בית</string>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">טבי-בית</item>
+        <item quantity="two">טבי-בית</item>
+        <item quantity="other">טבי-בית</item>
+    </plurals>
+    <string name="unit_bit_symbol">סיבית</string>
+    <plurals name="unit_bit">
+        <item quantity="one">סיבית</item>
+        <item quantity="two">סיביות</item>
+        <item quantity="other">סיביות</item>
+    </plurals>
+    <string name="unit_kilobit_symbol">קילוסיביות</string>
+    <plurals name="unit_kilobit">
+        <item quantity="one">קילוסיביות</item>
+        <item quantity="two">קילוסיביות</item>
+        <item quantity="other">קילוסיביות</item>
+    </plurals>
+    <string name="unit_megabit_symbol">מגהסיביות</string>
+    <plurals name="unit_megabit">
+        <item quantity="one">מגהסיביות</item>
+        <item quantity="two">מגהסיביות</item>
+        <item quantity="other">מגהסיביות</item>
+    </plurals>
+    <string name="unit_gigabit_symbol">גיגהסיביות</string>
+    <plurals name="unit_gigabit">
+        <item quantity="one">גיגהסיביות</item>
+        <item quantity="two">גיגהסיביות</item>
+        <item quantity="other">גיגהסיביות</item>
+    </plurals>
+    <string name="unit_terabit_symbol">טרהסיביות</string>
+    <plurals name="unit_terabit">
+        <item quantity="one">טרהסיביות</item>
+        <item quantity="two">טרהסיביות</item>
+        <item quantity="other">טרהסיביות</item>
+    </plurals>
+    <string name="unit_meter_per_second_symbol">מ\'/ש\'</string>
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">מ\'/ש\'</item>
+        <item quantity="two">מ\'/ש\'</item>
+        <item quantity="other">מ\'/ש\'</item>
+    </plurals>
 </resources>
