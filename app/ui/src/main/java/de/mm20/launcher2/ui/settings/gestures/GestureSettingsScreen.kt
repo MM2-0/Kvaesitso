@@ -28,6 +28,7 @@ import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.WidgetScreenTarget
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.SearchablePicker
@@ -48,6 +49,7 @@ fun GestureSettingsScreen() {
 
     val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle(null)
     val allowWidgetGesture by viewModel.allowWidgetGesture.collectAsStateWithLifecycle(null)
+    val widgetScreenCount by viewModel.widgetScreenCount.collectAsStateWithLifecycle(1)
 
     val options = buildList {
         add(stringResource(R.string.gesture_action_none) to GestureAction.NoAction)
@@ -57,7 +59,20 @@ fun GestureSettingsScreen() {
         add(stringResource(R.string.gesture_action_recents) to GestureAction.Recents)
         add(stringResource(R.string.gesture_action_power_menu) to GestureAction.PowerMenu)
         add(stringResource(R.string.gesture_action_open_search) to GestureAction.Search)
-        if (allowWidgetGesture == true) add(stringResource(R.string.gesture_action_widgets) to GestureAction.Widgets)
+        if (allowWidgetGesture == true) {
+            // Dynamically add widget screen targets based on user configuration
+            WidgetScreenTarget.getAvailableTargets(widgetScreenCount)
+                .forEachIndexed { index, target ->
+
+                    val label =
+                        if (widgetScreenCount == 1) {
+                            stringResource(R.string.gesture_action_widgets)
+                        } else {
+                            stringResource(R.string.gesture_action_widgets_indexed, index + 1)
+                        }
+                    add(label to GestureAction.Widgets(target))
+                }
+        }
         add(stringResource(R.string.gesture_action_launch_app) to GestureAction.Launch(null))
     }
 
@@ -89,7 +104,7 @@ fun GestureSettingsScreen() {
                         options = options,
                         app = swipeDownApp,
                         appIcon = swipeDownAppIcon,
-                        onAppChanged = { viewModel.setSwipeDownApp(it) }
+                        onAppChanged = { viewModel.setSwipeDownApp(it) },
                     )
                 }
 
@@ -111,7 +126,7 @@ fun GestureSettingsScreen() {
                         options = options,
                         app = swipeLeftApp,
                         appIcon = swipeLeftAppIcon,
-                        onAppChanged = { viewModel.setSwipeLeftApp(it) }
+                        onAppChanged = { viewModel.setSwipeLeftApp(it) },
                     )
                 }
 
@@ -133,7 +148,7 @@ fun GestureSettingsScreen() {
                         options = optionsWithFeed,
                         app = swipeRightApp,
                         appIcon = swipeRightAppIcon,
-                        onAppChanged = { viewModel.setSwipeRightApp(it) }
+                        onAppChanged = { viewModel.setSwipeRightApp(it) },
                     )
                 }
 
@@ -155,7 +170,7 @@ fun GestureSettingsScreen() {
                         options = options,
                         app = swipeUpApp,
                         appIcon = swipeUpAppIcon,
-                        onAppChanged = { viewModel.setSwipeUpApp(it) }
+                        onAppChanged = { viewModel.setSwipeUpApp(it) },
                     )
                 }
 
@@ -177,7 +192,7 @@ fun GestureSettingsScreen() {
                         options = options,
                         app = doubleTapApp,
                         appIcon = doubleTapAppIcon,
-                        onAppChanged = { viewModel.setDoubleTapApp(it) }
+                        onAppChanged = { viewModel.setDoubleTapApp(it) },
                     )
                 }
 
@@ -199,7 +214,7 @@ fun GestureSettingsScreen() {
                         options = options,
                         app = longPressApp,
                         appIcon = longPressAppIcon,
-                        onAppChanged = { viewModel.setLongPressApp(it) }
+                        onAppChanged = { viewModel.setLongPressApp(it) },
                     )
                 }
                 val homeButton by viewModel.homeButton.collectAsStateWithLifecycle(null)
@@ -220,7 +235,7 @@ fun GestureSettingsScreen() {
                         options = options,
                         app = homeButtonApp,
                         appIcon = homeButtonAppIcon,
-                        onAppChanged = { viewModel.setHomeButtonApp(it) }
+                        onAppChanged = { viewModel.setHomeButtonApp(it) },
                     )
                 }
             }
@@ -232,7 +247,8 @@ fun requiresAccessibilityService(action: GestureAction?): Boolean {
     return when (action) {
         is GestureAction.ScreenLock,
         is GestureAction.Recents,
-        is GestureAction.PowerMenu -> true
+        is GestureAction.PowerMenu,
+            -> true
 
         else -> false
     }
@@ -251,19 +267,28 @@ fun GesturePreference(
 ) {
     var showAppPicker by remember { mutableStateOf(false) }
     Row(
-        verticalAlignment = (Alignment.CenterVertically)
+        verticalAlignment = (Alignment.CenterVertically),
     ) {
         Box(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         ) {
             ListPreference(
                 title = title,
                 icon = icon,
                 items = options,
                 value = value,
-                summary = options.find { value?.javaClass == it.second.javaClass }?.first
-                    ?: stringResource(R.string.gesture_action_none),
-                onValueChanged = { if (it != null) onValueChanged(it) }
+                summary = options.find { option ->
+                    when {
+                        value is GestureAction.Widgets && option.second is GestureAction.Widgets -> {
+                            val valueTarget = value.target
+                            val optionTarget = (option.second as GestureAction.Widgets).target
+                            valueTarget == optionTarget
+                        }
+
+                        else -> value?.javaClass == option.second.javaClass
+                    }
+                }?.first ?: stringResource(R.string.gesture_action_none),
+                onValueChanged = { if (it != null) onValueChanged(it) },
             )
         }
 
@@ -273,12 +298,13 @@ fun GesturePreference(
                     .height(36.dp)
                     .width(1.dp)
                     .alpha(0.38f)
-                    .background(LocalContentColor.current)
+                    .background(LocalContentColor.current),
             )
             Box(
                 modifier = Modifier
                     .clickable { showAppPicker = true }
-                    .padding(12.dp)) {
+                    .padding(12.dp),
+            ) {
                 ShapedLauncherIcon(size = 32.dp, icon = { appIcon })
             }
         }
@@ -295,7 +321,7 @@ fun GesturePreference(
             onValueChanged = {
                 showAppPicker = false
                 onAppChanged(it)
-            }
+            },
         )
     }
 

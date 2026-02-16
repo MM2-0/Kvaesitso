@@ -271,7 +271,6 @@ abstract class SharedLauncherActivity(
                                         reverse = reverseSearchResults,
                                         openKeyboard = searchBarAutofocus,
                                     )
-                                    val widgetComponent by lazy { WidgetsComponent }
 
                                     fun getScaffoldGesture(
                                         action: GestureAction?,
@@ -294,7 +293,7 @@ abstract class SharedLauncherActivity(
                                                     null
                                                 } else {
                                                     ScaffoldGesture(
-                                                        component = widgetComponent,
+                                                        component = WidgetsComponent.forTarget(action.target),
                                                         animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                                     )
                                                 }
