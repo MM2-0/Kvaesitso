@@ -925,4 +925,7 @@
     <string name="typo_preview_medium1">Hamburg</string>
     <string name="typo_preview_medium2">Náhled</string>
     <string name="typo_preview_long">Hleď, příliš žluťoučký kůň úpěl ďábelské ódy.\n1234567890</string>
+    <string name="preference_widget_screen_count">Počet obrazovek s widgety</string>
+    <string name="preference_widget_screen_count_info">Upozornění: snížení počtu automaticky resetuje gesta přiřazená k zakázaným obrazovkám.</string>
+    <string name="gesture_action_widgets_indexed">Widgety %1$d</string>
 </resources>
