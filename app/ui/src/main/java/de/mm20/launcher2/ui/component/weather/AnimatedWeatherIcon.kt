@@ -189,21 +189,20 @@ private fun Cloud1(icon: WeatherIcon, colors: WeatherIconColors) {
         when (it) {
             WeatherIcon.Thunderstorm,
             WeatherIcon.Thunder,
-            WeatherIcon.Wind -> colors.cloudDark2
+            WeatherIcon.Wind,
+            WeatherIcon.HeavyRain -> colors.cloud1
 
             WeatherIcon.Rain,
-            WeatherIcon.HeavyRain,
             WeatherIcon.Sleet,
             WeatherIcon.Hail,
             WeatherIcon.Overcast,
-            WeatherIcon.Wind,
-            WeatherIcon.Fog -> colors.cloudDark1
+            WeatherIcon.Fog -> colors.cloud2
 
             WeatherIcon.LightRain,
-            WeatherIcon.Snow -> colors.cloudMedium2
+            WeatherIcon.Snow -> colors.cloud3
 
-            WeatherIcon.PartlyCloudy -> colors.cloudLight1
-            else -> colors.cloudMedium2
+            WeatherIcon.PartlyCloudy -> colors.cloud5
+            else -> colors.cloud3
         }
     }
 
@@ -261,19 +260,19 @@ private fun Cloud2(icon: WeatherIcon, colors: WeatherIconColors) {
         when (it) {
             WeatherIcon.Thunderstorm,
             WeatherIcon.Thunder,
-            WeatherIcon.Wind -> colors.cloudMedium2
+            WeatherIcon.Wind,
+            WeatherIcon.HeavyRain -> colors.cloud2
 
             WeatherIcon.Rain,
-            WeatherIcon.HeavyRain,
-            WeatherIcon.LightRain,
             WeatherIcon.Sleet,
-            WeatherIcon.Snow,
             WeatherIcon.Hail,
             WeatherIcon.Overcast,
-            WeatherIcon.Wind,
-            WeatherIcon.Fog -> colors.cloudMedium1
+            WeatherIcon.Fog -> colors.cloud3
 
-            else -> colors.cloudMedium2
+            WeatherIcon.LightRain,
+            WeatherIcon.Snow -> colors.cloud4
+
+            else -> colors.cloud2
         }
     }
 
@@ -329,19 +328,18 @@ private fun Cloud3(icon: WeatherIcon, colors: WeatherIconColors) {
         when (it) {
             WeatherIcon.Thunderstorm,
             WeatherIcon.Thunder,
-            WeatherIcon.Wind -> colors.cloudDark1
+            WeatherIcon.Wind,
+            WeatherIcon.HeavyRain -> colors.cloud3
 
             WeatherIcon.Rain,
-            WeatherIcon.HeavyRain,
             WeatherIcon.Sleet,
             WeatherIcon.Hail,
-            WeatherIcon.Overcast,
-            WeatherIcon.Wind -> colors.cloudMedium2
+            WeatherIcon.Overcast -> colors.cloud4
 
             WeatherIcon.LightRain,
-            WeatherIcon.Snow -> colors.cloudLight2
+            WeatherIcon.Snow -> colors.cloud5
 
-            else -> colors.cloudMedium2
+            else -> colors.cloud4
         }
     }
 
@@ -429,8 +427,8 @@ fun AnimatedWeatherIconTestPanel() {
             AnimatedWeatherIcon(icon = icon, night = night)
             WeatherIcon(icon = icon, night = night)
 
-            val monochromeColors = WeatherIconDefaults.monochromeColors(
-                MaterialTheme.colorScheme.secondary
+            val monochromeColors = WeatherIconDefaults.themedColors(
+                MaterialTheme.colorScheme.secondary,
             )
 
             AnimatedWeatherIcon(

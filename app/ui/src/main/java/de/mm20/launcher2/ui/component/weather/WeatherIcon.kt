@@ -123,19 +123,19 @@ private fun Cloud1(icon: WeatherIcon, colors: WeatherIconColors) {
     }
     val color = when (icon) {
         WeatherIcon.Thunderstorm,
-        WeatherIcon.Thunder -> colors.cloudDark2
+        WeatherIcon.Thunder,
+        WeatherIcon.HeavyRain -> colors.cloud1
 
         WeatherIcon.Rain,
-        WeatherIcon.HeavyRain,
         WeatherIcon.Sleet,
         WeatherIcon.Hail,
         WeatherIcon.Overcast,
-        WeatherIcon.Fog -> colors.cloudDark1
+        WeatherIcon.Fog -> colors.cloud2
 
         WeatherIcon.LightRain,
-        WeatherIcon.Snow -> colors.cloudMedium2
+        WeatherIcon.Snow -> colors.cloud3
 
-        WeatherIcon.PartlyCloudy -> colors.cloudLight1
+        WeatherIcon.PartlyCloudy -> colors.cloud5
     }
 
     Icon(
@@ -195,16 +195,17 @@ private fun Cloud2(icon: WeatherIcon, colors: WeatherIconColors) {
     }
     val color = when (icon) {
         WeatherIcon.Thunderstorm,
-        WeatherIcon.Thunder -> colors.cloudMedium2
+        WeatherIcon.Thunder,
+        WeatherIcon.HeavyRain -> colors.cloud2
 
         WeatherIcon.Rain,
-        WeatherIcon.HeavyRain,
-        WeatherIcon.LightRain,
         WeatherIcon.Sleet,
-        WeatherIcon.Snow,
         WeatherIcon.Hail,
         WeatherIcon.Overcast,
-        WeatherIcon.Fog -> colors.cloudMedium1
+        WeatherIcon.Fog -> colors.cloud3
+
+        WeatherIcon.LightRain,
+        WeatherIcon.Snow -> colors.cloud4
     }
 
     Icon(
@@ -246,16 +247,16 @@ private fun Cloud3(icon: WeatherIcon, colors: WeatherIconColors) {
     }
     val color = when (icon) {
         WeatherIcon.Thunderstorm,
-        WeatherIcon.Thunder -> colors.cloudDark1
+        WeatherIcon.Thunder,
+        WeatherIcon.HeavyRain -> colors.cloud3
 
         WeatherIcon.Rain,
-        WeatherIcon.HeavyRain,
         WeatherIcon.Sleet,
         WeatherIcon.Hail,
-        WeatherIcon.Overcast -> colors.cloudMedium2
+        WeatherIcon.Overcast -> colors.cloud4
 
         WeatherIcon.LightRain,
-        WeatherIcon.Snow -> colors.cloudLight2
+        WeatherIcon.Snow -> colors.cloud5
     }
 
     Icon(

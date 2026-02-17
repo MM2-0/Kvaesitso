@@ -364,7 +364,8 @@ fun CurrentWeather(
                         end = 8.dp
                     ),
                     icon = weatherIconById(forecast.icon),
-                    night = forecast.night
+                    night = forecast.night,
+                    WeatherIconDefaults.colors(MaterialTheme.colorScheme.surface)
                 )
             }
         }
@@ -485,8 +486,10 @@ fun WeatherTimeSelector(
 
     val listState = rememberLazyListState()
 
-    val colors = WeatherIconDefaults.colors()
-    val selectedColors = WeatherIconDefaults.monochromeColors(MaterialTheme.colorScheme.secondary)
+    val colors = WeatherIconDefaults.colors(MaterialTheme.colorScheme.surfaceBright)
+    val selectedColors = WeatherIconDefaults.themedColors(
+        MaterialTheme.colorScheme.secondary,
+    )
 
     LazyRow(
         state = listState,
@@ -587,8 +590,10 @@ fun WeatherDaySelector(
     val dateFormat = SimpleDateFormat("EEE")
     val context = LocalContext.current
 
-    val colors = WeatherIconDefaults.colors()
-    val selectedColors = WeatherIconDefaults.monochromeColors(MaterialTheme.colorScheme.secondary)
+    val colors = WeatherIconDefaults.colors(MaterialTheme.colorScheme.surfaceBright)
+    val selectedColors = WeatherIconDefaults.themedColors(
+        MaterialTheme.colorScheme.secondary,
+        )
 
     val listState = rememberLazyListState()
     LazyRow(
