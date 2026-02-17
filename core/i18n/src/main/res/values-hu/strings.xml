@@ -914,4 +914,7 @@
     <string name="preference_create_transparency">Új átlátszósági séma</string>
     <string name="add_font_style">Betűtípus hozzáadása</string>
     <string name="remove_font_style">Betűtípus eltávolítása</string>
+    <string name="preference_widget_screen_count">Modulképernyők száma</string>
+    <string name="preference_widget_screen_count_info">Megjegyzés: A szám csökkentése automatikusan törli a letiltott képernyőkhöz rendelt gesztusokat.</string>
+    <string name="gesture_action_widgets_indexed">Modulok: %1$d</string>
 </resources>
