@@ -903,4 +903,7 @@
     <string name="typo_preview_medium1">永字八法</string>
     <string name="typo_preview_medium2">预览文本</string>
     <string name="typo_preview_long">汉字笔画结构多样\n1234567890，。！？</string>
+    <string name="preference_widget_screen_count">组件屏幕计数</string>
+    <string name="preference_widget_screen_count_info">提示：减少这一计数将自动重设分配到禁用的屏幕的手势。</string>
+    <string name="gesture_action_widgets_indexed">组件 %1$d</string>
 </resources>
