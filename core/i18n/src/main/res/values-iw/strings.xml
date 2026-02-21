@@ -923,4 +923,7 @@
     <string name="typo_preview_medium1">דברי הימים</string>
     <string name="typo_preview_medium2">נוף איילון</string>
     <string name="typo_preview_long">איך בלש תפס גמד\nרוצח עז קטנה 12390</string>
+    <string name="preference_widget_screen_count">כמות ווידג\'טים במסך</string>
+    <string name="preference_widget_screen_count_info">שים לב: הפחתת הכמות תאפס אוטומטית את המחוות שהוקצו למסכים מושבתים.</string>
+    <string name="gesture_action_widgets_indexed">ווידג\'טים %1$d</string>
 </resources>
