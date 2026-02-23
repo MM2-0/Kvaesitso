@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import android.app.WallpaperManager
-import android.util.Log
 import android.view.animation.PathInterpolator
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.PredictiveBackHandler
@@ -1036,7 +1035,6 @@ internal class LauncherScaffoldState(
     }
 
     suspend fun reset() {
-        Log.d("MM20", "reset was called!!!")
         isSearchBarFocused = false
         currentOffset = Offset.Zero
         currentZOffset = 0f
