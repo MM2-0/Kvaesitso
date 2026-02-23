@@ -779,7 +779,7 @@
     <string name="gesture_action_none">Hiçbir şey yapma</string>
     <string name="gesture_action_open_search">Aramayı aç</string>
     <string name="gesture_action_widgets">Widgetlar</string>
-    <string name="gesture_action_launch_app">Uygulama başlat</string>
+    <string name="gesture_action_launch_app">Uygulamayı başlat</string>
     <string name="gesture_action_notifications">Bildirim çekmecesini aç</string>
     <string name="gesture_action_lock_screen">Ekranı kapat</string>
     <string name="gesture_action_quick_settings">Hızlı ayarları aç</string>
@@ -1103,4 +1103,7 @@
     <string name="typo_preview_medium1">İçli köfte</string>
     <string name="typo_preview_medium2">Önizleme</string>
     <string name="typo_preview_long">Çevik kahvernekli tilki\n123456789\'un üstünden atlar</string>
+    <string name="gesture_action_widgets_indexed">%1$d Widgetları</string>
+    <string name="preference_widget_screen_count_info">Not: Sayıyı azaltmak, devre dışı bırakılmış ekranlara atanan hareketleri otomatik olarak sıfırlar.</string>
+    <string name="preference_widget_screen_count">Widget ekranı sayısı</string>
 </resources>
