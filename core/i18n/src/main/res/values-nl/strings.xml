@@ -914,4 +914,7 @@
     <string name="preference_create_transparency">Nieuw transparantieschema</string>
     <string name="add_font_style">Lettertypestijl toevoegen</string>
     <string name="remove_font_style">Deze lettertypestijl verwijderen</string>
+    <string name="preference_widget_screen_count">Aantal widgetschermen</string>
+    <string name="preference_widget_screen_count_info">Pas op: Het aantal verminderen zal automatisch de gebaren resetten die toegewezen zijn aan uitgeschakelde schermen.</string>
+    <string name="gesture_action_widgets_indexed">Widgets %1$d</string>
 </resources>

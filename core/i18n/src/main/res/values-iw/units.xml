@@ -253,4 +253,190 @@
         <item quantity="two">מ\'/ש\'</item>
         <item quantity="other">מ\'/ש\'</item>
     </plurals>
+    <string name="unit_kilometer_per_hour_symbol">קמ\"ש</string>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">קילומטר לשעה</item>
+        <item quantity="two">קילומטרים לשעה</item>
+        <item quantity="other">קילומטרים לשעה</item>
+    </plurals>
+    <string name="unit_mile_per_hour_symbol">מייל לשעה</string>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">מייל לשעה</item>
+        <item quantity="two">מיילים לשעה</item>
+        <item quantity="other">מיילים לשעה</item>
+    </plurals>
+    <string name="unit_knot_symbol">קשר</string>
+    <plurals name="unit_knot">
+        <item quantity="one">קשר</item>
+        <item quantity="two">קשרים</item>
+        <item quantity="other">קשרים</item>
+    </plurals>
+    <string name="unit_kilogram_symbol">ק\"ג</string>
+    <plurals name="unit_kilogram">
+        <item quantity="one">קילוגרם</item>
+        <item quantity="two">קילוגרמים</item>
+        <item quantity="other">קילוגרמים</item>
+    </plurals>
+    <string name="unit_gram_symbol">ג\'</string>
+    <plurals name="unit_gram">
+        <item quantity="one">גרם</item>
+        <item quantity="two">גרמים</item>
+        <item quantity="other">גרמים</item>
+    </plurals>
+    <string name="unit_metric_ton_symbol">ט\'</string>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">טונה</item>
+        <item quantity="two">טונות</item>
+        <item quantity="other">טונות</item>
+    </plurals>
+    <string name="unit_long_ton_symbol">טון אימפריאלי</string>
+    <plurals name="unit_long_ton">
+        <item quantity="one">טון אימפריאלי</item>
+        <item quantity="two">טונות אימפריאליות</item>
+        <item quantity="other">טונות אימפריאליות</item>
+    </plurals>
+    <string name="unit_stone_symbol">סטון</string>
+    <plurals name="unit_stone">
+        <item quantity="one">סטון</item>
+        <item quantity="two">סטון</item>
+        <item quantity="other">סטון</item>
+    </plurals>
+    <string name="unit_pound_symbol">ליברה</string>
+    <plurals name="unit_pound">
+        <item quantity="one">פאונד</item>
+        <item quantity="two">פאונד</item>
+        <item quantity="other">פאונד</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">טון קצר</item>
+        <item quantity="two">טונות קצרות</item>
+        <item quantity="other">טונות קצרות</item>
+    </plurals>
+    <string name="unit_ounce_symbol">אונקיה</string>
+    <plurals name="unit_ounce">
+        <item quantity="one">אונקיה</item>
+        <item quantity="two">אונקיות</item>
+        <item quantity="other">אונקיות</item>
+    </plurals>
+    <string name="unit_short_ton_symbol">טון קצר</string>
+    <string name="unit_degree_celsius_symbol">°C</string>
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">מעלה צלזיוס</item>
+        <item quantity="two">מעלות צלזיוס</item>
+        <item quantity="other">מעלות צלזיוס</item>
+    </plurals>
+    <string name="unit_degree_fahrenheit_symbol">°F</string>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">מעלה פרנהייט</item>
+        <item quantity="two">מעלות פרנהייט</item>
+        <item quantity="other">מעלות פרנהייט</item>
+    </plurals>
+    <string name="unit_kelvin_symbol">K</string>
+    <plurals name="unit_kelvin">
+        <item quantity="one">קלווין</item>
+        <item quantity="two">קלווין</item>
+        <item quantity="other">קלווין</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">אינץ\' מעוקב</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">אינץ\' מעוקב</item>
+        <item quantity="two">אינץ\' מעוקב</item>
+        <item quantity="other">אינץ\' מעוקב</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">רגל מעוקב</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">רגל מעוקב</item>
+        <item quantity="two">רגל מעוקב</item>
+        <item quantity="other">רגל מעוקב</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">יארד מעוקב</string>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">יארד מעוקב</item>
+        <item quantity="two">יארד מעוקב</item>
+        <item quantity="other">יארד מעוקב</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">גאלון אמריקאי</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">גאלון אמריקאי</item>
+        <item quantity="two">גאלון אמריקאי</item>
+        <item quantity="other">גאלון אמריקאי</item>
+    </plurals>
+    <string name="unit_gallon_imp_symbol">גאלון אימפריאלי</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">גאלון אימפריאלי</item>
+        <item quantity="two">גאלון אימפריאלי</item>
+        <item quantity="other">גאלון אימפריאלי</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">פיינט אמריקאי</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">פיינט אמריקאי</item>
+        <item quantity="two">פיינט אמריקאי</item>
+        <item quantity="other">פיינט אמריקאי</item>
+    </plurals>
+    <string name="unit_pint_imp_symbol">פיינט אימפריאלי</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">פיינט אימפריאלי</item>
+        <item quantity="two">פיינט אימפריאלי</item>
+        <item quantity="other">פיינט אימפריאלי</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">אונקיית נוזל אמריקאית</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">אונקיית נוזל אמריקאית</item>
+        <item quantity="two">אונקיית נוזל אמריקאית</item>
+        <item quantity="other">אונקיית נוזל אמריקאית</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">אונקיית נוזל אימפריאלית</string>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">אונקיית נוזל אימפריאלית</item>
+        <item quantity="two">אונקיית נוזל אימפריאלית</item>
+        <item quantity="other">אונקיית נוזל אימפריאלית</item>
+    </plurals>
+    <string name="unit_cup_symbol">כוס</string>
+    <plurals name="unit_cup">
+        <item quantity="one">כוס</item>
+        <item quantity="two">כוסות</item>
+        <item quantity="other">כוסות</item>
+    </plurals>
+    <string name="unit_tablespoon_symbol">כף</string>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">כף</item>
+        <item quantity="two">כפות</item>
+        <item quantity="other">כפות</item>
+    </plurals>
+    <string name="unit_teaspoon_symbol">כפית</string>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">כפית</item>
+        <item quantity="two">כפיות</item>
+        <item quantity="other">כפיות</item>
+    </plurals>
+    <string name="unit_liter_symbol">ל\'</string>
+    <plurals name="unit_liter">
+        <item quantity="one">ליטר</item>
+        <item quantity="two">ליטרים</item>
+        <item quantity="other">ליטרים</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">מ\"ל</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">מיליליטר</item>
+        <item quantity="two">מיליליטרים</item>
+        <item quantity="other">מיליליטרים</item>
+    </plurals>
+    <string name="unit_cubic_meter_symbol">מ\"ק</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">מטר מעוקב</item>
+        <item quantity="two">מטר מעוקב</item>
+        <item quantity="other">מטר מעוקב</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">סמ\"ק</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">סנטימטר מעוקב</item>
+        <item quantity="two">סנטימטר מעוקב</item>
+        <item quantity="other">סנטימטר מעוקב</item>
+    </plurals>
+    <string name="unit_cubic_millimeter_symbol">ממ\"ק</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">מילימטר מעוקב</item>
+        <item quantity="two">מילימטר מעוקב</item>
+        <item quantity="other">מילימטר מעוקב</item>
+    </plurals>
 </resources>
