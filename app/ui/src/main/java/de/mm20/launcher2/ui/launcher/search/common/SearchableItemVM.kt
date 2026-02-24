@@ -19,6 +19,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
+import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.File
@@ -56,6 +57,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val contactSearchSettings: ContactSearchSettings by inject()
+    private val profileManager: ProfileManager by inject()
 
     val isUpToDate = MutableStateFlow(true)
 
@@ -96,6 +98,11 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         if (searchable !is Application) emptyFlow()
         else notificationRepository.notifications.map { it.filter { it.packageName == searchable.componentName.packageName && !it.isGroupSummary } }
     }
+
+    val profile = searchable.flatMapLatest { searchable ->
+        if (searchable !is Application) emptyFlow()
+        else profileManager.getProfile(searchable.user)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     val children = searchable.flatMapLatest {
         when (it) {

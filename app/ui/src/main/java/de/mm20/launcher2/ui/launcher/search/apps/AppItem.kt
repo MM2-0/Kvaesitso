@@ -53,6 +53,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
+import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -498,11 +499,27 @@ fun AppItem(
                     )
                 }
             } else {
+                val profile by viewModel.profile.collectAsStateWithLifecycle(null)
+                val isWorkProfile = profile?.type == Profile.Type.Work
+                val showListIcons = LocalGridSettings.current.showListIcons
+                
                 Row(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .then(
+                            if (isWorkProfile && !showListIcons) {
+                                Modifier.background(
+                                    Color(0xFF1E3A5F),
+                                    MaterialTheme.shapes.small
+                                )
+                                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                            } else {
+                                Modifier
+                            }
+                        ),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    if (LocalGridSettings.current.showListIcons) {
+                    if (showListIcons) {
                         ShapedLauncherIcon(
                             size = LocalGridSettings.current.iconSize.dp,
                             modifier = Modifier
@@ -516,6 +533,11 @@ fun AppItem(
                         overflow = TextOverflow.Ellipsis,
                         text = app.labelOverride ?: app.label,
                         style = MaterialTheme.typography.titleMedium,
+                        color = if (isWorkProfile && !showListIcons) {
+                            Color.White
+                        } else {
+                            Color.Unspecified
+                        },
                         modifier = Modifier
                             .sharedBounds(
                                 rememberSharedContentState("label"),
