@@ -510,6 +510,22 @@ fun ColumnScope.ConfigureFavoritesWidget(
                                     )
                                 }
                             )
+                            HorizontalDivider()
+                            SwitchPreference(
+                                title = stringResource(R.string.preference_latest_button),
+                                iconPadding = false,
+                                value = widget.config.latestButton,
+                                onValueChanged = {
+                                    onWidgetUpdated(
+                                        widget.copy(
+                                            config = widget.config.copy(
+                                                latestButton = it
+                                            )
+                                        )
+                                    )
+                                }
+                            )
+                            HorizontalDivider()
                             SwitchPreference(
                                 title = stringResource(R.string.preference_compact_tags),
                                 iconPadding = false,

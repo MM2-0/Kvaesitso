@@ -4,6 +4,7 @@ import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.services.widgets.WidgetsService
 import de.mm20.launcher2.ui.common.FavoritesVM
+import de.mm20.launcher2.ui.common.SelectorTarget
 import de.mm20.launcher2.widgets.AppsWidget
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,7 +36,7 @@ class AppsWidgetVM : FavoritesVM() {
         }
 
     override val favorites = super.favorites.combine(clockWidgetFavSlots) { favs, slots ->
-        if (selectedTag.value == null) {
+        if (selectedTarget.value == null) {
             if (favs.lastIndex < slots) emptyList()
             else favs.subList(slots, favs.size)
         } else {
@@ -53,9 +54,9 @@ class AppsWidgetVM : FavoritesVM() {
     }
 
     fun updateWidget(widget: AppsWidget) {
-        selectTag(null)
+        selectTarget(SelectorTarget.Favorites)
         if (widget.config.customTags) {
-            selectTag(widget.config.tagList.firstOrNull())
+            selectTarget(widget.config.tagList.firstOrNull()?.let { SelectorTarget.CustomTag(it)} ?: SelectorTarget.Favorites)
         }
 
         this.widget.value = widget

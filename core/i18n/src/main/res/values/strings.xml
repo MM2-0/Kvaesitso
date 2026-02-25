@@ -683,6 +683,9 @@
     <string name="preference_favorites_edit_button_summary">Show a button to rearrange the favorites</string>
     <string name="preference_compact_tags">Compact tags</string>
     <string name="preference_compact_tags_summary">Hide tag labels or icons to reduce the space occupied by tags</string>
+    <string name="preference_latest_button">Latest button</string>
+    <string name="preference_latest_button_summary">Show button for recently installed apps</string>
+    <string name="preference_latest_rows">Number of rows</string>
     <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
     <string name="preference_widgets_on_home_screen">Widgets on home screen</string>
     <string name="preference_widgets_on_home_screen_summary">Show widgets on the home screen instead of a separate page</string>
@@ -744,6 +747,7 @@
     <string name="favorites">Favorites</string>
     <string name="favorites_empty">Pinned and frequently used items will appear here</string>
     <string name="favorites_empty_tag">There are no items with this tag</string>
+    <string name="latest">Latest</string>
     <string name="frequently_used_show_in_favorites">Show in favorites</string>
     <string name="frequently_used_rows">Number of rows</string>
     <string name="preference_screen_search_actions">Quick actions</string>

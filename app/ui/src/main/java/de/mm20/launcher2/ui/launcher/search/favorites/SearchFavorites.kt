@@ -16,6 +16,7 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.FavoritesTagSelector
+import de.mm20.launcher2.ui.common.SelectorTarget
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 import de.mm20.launcher2.ui.layout.BottomReversed
@@ -24,12 +25,13 @@ import de.mm20.launcher2.ui.theme.transparency.transparency
 fun LazyListScope.SearchFavorites(
     favorites: List<SavableSearchable>,
     pinnedTags: List<Tag>,
-    selectedTag: String?,
+    selectedTarget: SelectorTarget,
     compactTags: Boolean,
     tagsExpanded: Boolean,
     onExpandTags: (Boolean) -> Unit,
-    onSelectTag: (String?) -> Unit,
+    onSelectTarget: (SelectorTarget) -> Unit,
     editButton: Boolean,
+    showLatestButton: Boolean,
     reverse: Boolean,
 ) {
     item(
@@ -52,28 +54,29 @@ fun LazyListScope.SearchFavorites(
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
             ) {
                 if (favorites.isNotEmpty()) {
-                    SearchResultGrid(favorites, transitionKey = selectedTag, reverse = reverse)
+                    SearchResultGrid(favorites, transitionKey = selectedTarget, reverse = reverse)
                 } else {
                     Banner(
                         modifier = Modifier.padding(16.dp),
                         text = stringResource(
-                            if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
+                            if (selectedTarget is SelectorTarget.Favorites) R.string.favorites_empty else R.string.favorites_empty_tag
                         ),
-                        icon = if (selectedTag == null) R.drawable.star_24px else R.drawable.tag_24px,
+                        icon = if (selectedTarget is SelectorTarget.Favorites) R.drawable.star_24px else R.drawable.tag_24px,
                     )
                 }
                 if (pinnedTags.isNotEmpty() || editButton) {
                     FavoritesTagSelector(
                         tags = pinnedTags,
-                        selectedTag = selectedTag,
+                        selectedTarget = selectedTarget,
                         editButton = editButton,
                         reverse = false,
-                        onSelectTag = onSelectTag,
+                        onSelectTarget = onSelectTarget,
                         scrollState = rememberScrollState(),
                         expanded = tagsExpanded,
                         compact = compactTags,
                         onExpand = onExpandTags,
-                        showFavorites = true
+                        showFavorites = true,
+                        showRecentlyInstalledApps = showLatestButton
                     )
                 }
             }
