@@ -72,7 +72,7 @@
         <item quantity="many">ميل</item>
         <item quantity="other">ميل</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">ميل ب.</string>
+    <string name="unit_nautic_mile_symbol">الميل</string>
     <plurals name="unit_nautic_mile">
         <item quantity="zero">ميل بحري</item>
         <item quantity="one">ميل بحري</item>
@@ -93,7 +93,7 @@
         <item quantity="other">سنتيمتر مربع</item>
     </plurals>
     <string name="unit_sqmillimeter_symbol">مم²</string>
-    <string name="unit_sqinch_symbol">بص²</string>
+    <string name="unit_sqinch_symbol">وحدة مربعة</string>
     <plurals name="unit_sqinch">
         <item quantity="zero">بوصة مربعة</item>
         <item quantity="one">بوصة مربعة</item>
@@ -102,7 +102,7 @@
         <item quantity="many">بوصة مربع</item>
         <item quantity="other">بوصة مربع</item>
     </plurals>
-    <string name="unit_sqfoot_symbol">ق²</string>
+    <string name="unit_sqfoot_symbol">قدم ²</string>
     <plurals name="unit_sqfoot">
         <item quantity="zero">قدم مربع</item>
         <item quantity="one">قدم مربع</item>
@@ -272,7 +272,7 @@
         <item quantity="many">طن إمبراطوري</item>
         <item quantity="other">طن إمبراطوري</item>
     </plurals>
-    <string name="unit_long_ton_symbol">ط.إ.</string>
+    <string name="unit_long_ton_symbol">لونغ تون</string>
     <plurals name="unit_pound">
         <item quantity="zero">رطل</item>
         <item quantity="one">رطل</item>
@@ -281,7 +281,7 @@
         <item quantity="many">رطل</item>
         <item quantity="other">رطل</item>
     </plurals>
-    <string name="unit_ounce_symbol">أون.</string>
+    <string name="unit_ounce_symbol">أون</string>
     <plurals name="unit_ounce">
         <item quantity="zero">أونصة</item>
         <item quantity="one">أونصة</item>
@@ -290,7 +290,7 @@
         <item quantity="many">أونصة</item>
         <item quantity="other">أونصة</item>
     </plurals>
-    <string name="unit_short_ton_symbol">ط.أ.</string>
+    <string name="unit_short_ton_symbol">تون قصير</string>
     <plurals name="unit_short_ton">
         <item quantity="zero">طن أمريكي</item>
         <item quantity="one">طن أمريكي</item>
@@ -479,7 +479,7 @@
         <item quantity="many">كيلوغرام</item>
         <item quantity="other">كيلوغرام</item>
     </plurals>
-    <string name="unit_pound_symbol">ر.</string>
+    <string name="unit_pound_symbol">ر</string>
     <string name="unit_degree_celsius_symbol">°س</string>
     <plurals name="unit_degree_celsius">
         <item quantity="zero">درجة سيلسيوس</item>
@@ -490,7 +490,7 @@
         <item quantity="other">درجة سيلسيوس</item>
     </plurals>
     <string name="unit_degree_fahrenheit_symbol">°ف</string>
-    <string name="unit_stone_symbol">صخ.</string>
+    <string name="unit_stone_symbol">صخ</string>
     <plurals name="unit_stone">
         <item quantity="zero">صخرة</item>
         <item quantity="one">صخرة</item>
@@ -498,5 +498,86 @@
         <item quantity="few">صخرات</item>
         <item quantity="many">صخرة</item>
         <item quantity="other">صخرة</item>
+    </plurals>
+    <string name="unit_liter_symbol">لتر</string>
+    <plurals name="unit_liter">
+        <item quantity="zero">لتر</item>
+        <item quantity="one">لتر</item>
+        <item quantity="two">لتران</item>
+        <item quantity="few">لترات</item>
+        <item quantity="many">لتر</item>
+        <item quantity="other">لتر</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">ميللي لتر</string>
+    <plurals name="unit_milliliter">
+        <item quantity="zero">ميللي لتر</item>
+        <item quantity="one">ميللي لتر</item>
+        <item quantity="two">ميللي لتران</item>
+        <item quantity="few">ميللي لتر</item>
+        <item quantity="many">ميللي لتر</item>
+        <item quantity="other">ميللي لتر</item>
+    </plurals>
+    <string name="unit_cubic_meter_symbol">متر³</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="zero">متر³</item>
+        <item quantity="one">متر³</item>
+        <item quantity="two">متران³</item>
+        <item quantity="few">متر³</item>
+        <item quantity="many">متر³</item>
+        <item quantity="other">متر³</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">سم³</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="zero">سم³</item>
+        <item quantity="one">سم³</item>
+        <item quantity="two">سنتيمتران مكعبان</item>
+        <item quantity="few">سم³</item>
+        <item quantity="many">سم³</item>
+        <item quantity="other">سم³</item>
+    </plurals>
+    <string name="unit_cubic_millimeter_symbol">مم³</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="zero">مم³</item>
+        <item quantity="one">مم³</item>
+        <item quantity="two">ميلي متران مكعبان</item>
+        <item quantity="few">مم³</item>
+        <item quantity="many">مم³</item>
+        <item quantity="other">مم³</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">بوصة مكعبة</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="zero">بوصة مكعبة</item>
+        <item quantity="one">بوصة مكعبة</item>
+        <item quantity="two">بوصتان مكعبتان</item>
+        <item quantity="few">بوصة مكعبة</item>
+        <item quantity="many">بوصة مكعبة</item>
+        <item quantity="other">بوصة مكعبة</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">قدم مكعب</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="zero">قدم مكعب</item>
+        <item quantity="one">قدم مكعب</item>
+        <item quantity="two">قدمان مكعبان</item>
+        <item quantity="few">قدم مكعب</item>
+        <item quantity="many">قدم مكعب</item>
+        <item quantity="other">قدم مكعب</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">الساحة مكعب</string>
+    <plurals name="unit_cubic_yard">
+        <item quantity="zero">ساحة مكعب</item>
+        <item quantity="one">لساحة مكعب</item>
+        <item quantity="two">ساحتان مكعبتان</item>
+        <item quantity="few">ساحة مكعب</item>
+        <item quantity="many">ساحة مكعب</item>
+        <item quantity="other">ساحة مكعب</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">جالون أمريكي</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="zero">جالون أمريكي</item>
+        <item quantity="one">جالون أمريكي</item>
+        <item quantity="two">جالونان أمريكي</item>
+        <item quantity="few">جالون أمريكي</item>
+        <item quantity="many">جالون أمريكي</item>
+        <item quantity="other">جالون أمريكي</item>
     </plurals>
 </resources>
