@@ -889,7 +889,7 @@
     <string name="preference_measurement_system_us">Spojené státy</string>
     <string name="preference_transliteration">Preferovaná transkripce</string>
     <string name="preference_transliteration_auto">Automatická</string>
-    <string name="preference_transliteration_disabled">Zakázaná</string>
+    <string name="preference_value_disabled">Zakázaná</string>
     <string name="select_tag">Vybrat štítek</string>
     <string name="widget_name_apps">Aplikace</string>
     <string name="preference_category_enabled_plugins">Povoleno</string>

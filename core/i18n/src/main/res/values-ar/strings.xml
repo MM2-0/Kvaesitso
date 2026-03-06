@@ -925,7 +925,7 @@
     <string name="preference_tasks_integration_ready">تم الربط بنجاح. التطبيق جاهز للاستخدام.</string>
     <string name="preference_transliteration">طريقة كتابة الأحرف</string>
     <string name="preference_transliteration_auto">تلقائي</string>
-    <string name="preference_transliteration_disabled">معطل</string>
+    <string name="preference_value_disabled">معطل</string>
     <string name="preference_value_system_default">إعدادات النظام</string>
     <string name="preference_widgets_on_home_screen">أدوات الشاشة الرئيسية</string>
     <string name="preference_widgets_on_home_screen_summary">عرض الأدوات في الشاشة الرئيسية بدلاً من صفحة منفصلة</string>

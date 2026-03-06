@@ -1085,6 +1085,7 @@
     <string name="preference_screen_locale_summary">Language, units, time format</string>
     <string name="preference_language">Language</string>
     <string name="preference_value_system_default">System default</string>
+    <string name="preference_value_disabled">Disabled</string>
     <string name="preference_form_of_address">Form of address</string>
     <string name="preference_form_of_address_neutral">Neutral</string>
     <string name="preference_form_of_address_fem">Feminine</string>
@@ -1095,7 +1096,9 @@
     <string name="preference_measurement_system_us">United States</string>
     <string name="preference_transliteration">Preferred transliteration</string>
     <string name="preference_transliteration_auto">Automatic</string>
-    <string name="preference_transliteration_disabled">Disabled</string>
+    <string name="preference_calendar_system">Calendar system</string>
+    <string name="preference_calendar_system_primary">Primary calendar</string>
+    <string name="preference_calendar_system_secondary">Secondary calendar</string>
     <string name="select_tag">Select tag</string>
     <string name="create_tag_title">New tag</string>
     <string name="edit_tag_title">Edit tag</string>

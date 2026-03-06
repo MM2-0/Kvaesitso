@@ -1,6 +1,10 @@
 package de.mm20.launcher2.ui.launcher.search.calendar
 
 import android.content.Context
+import android.icu.text.DateFormat
+import android.icu.text.DateIntervalFormat
+import android.icu.util.DateInterval
+import android.icu.util.ULocale
 import android.text.Html
 import android.text.format.DateUtils
 import androidx.compose.animation.AnimatedContent
@@ -18,6 +22,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -46,10 +51,12 @@ import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import de.mm20.launcher2.ui.locals.LocalCalendarSystemIds
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalTimeFormat
+import de.mm20.launcher2.ui.utils.isTwentyFourHours
 import palettes.TonalPalette
 
 @Composable
@@ -147,15 +154,33 @@ fun CalendarItem(
                             painter = painterResource(R.drawable.schedule_24px),
                             contentDescription = null
                         )
-                        Text(
-                            modifier = Modifier
-                                .sharedBounds(
-                                    rememberSharedContentState("date"),
-                                    this@AnimatedContent
-                                ),
-                            text = calendar.formatTime(context, timeFormat),
-                            style = MaterialTheme.typography.bodySmall
-                        )
+                        Column {
+                            val primaryCalendar = LocalCalendarSystemIds.current.first()
+                            val secondaryCalendar = LocalCalendarSystemIds.current.last()
+
+                            Text(
+                                modifier = Modifier
+                                    .sharedBounds(
+                                        rememberSharedContentState("date"),
+                                        this@AnimatedContent
+                                    ),
+                                text = calendar.formatTime(context, timeFormat, primaryCalendar),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+
+                            if (secondaryCalendar != null) {
+                                Text(
+                                    modifier = modifier.padding(top = 2.dp),
+                                    text = calendar.formatTime(
+                                        context,
+                                        timeFormat,
+                                        secondaryCalendar
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        }
                     }
                     if (!calendar.description.isNullOrBlank()) {
                         Row(
@@ -258,10 +283,10 @@ fun CalendarItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(
                         DefaultToolbarAction(
-                        label = stringResource(R.string.menu_customize),
-                        icon = R.drawable.tune_24px,
-                        action = { sheetManager.showCustomizeSearchableModal(calendar) }
-                    ))
+                            label = stringResource(R.string.menu_customize),
+                            icon = R.drawable.tune_24px,
+                            action = { sheetManager.showCustomizeSearchableModal(calendar) }
+                        ))
 
                     Toolbar(
                         leftActions = listOf(
@@ -321,7 +346,7 @@ fun CalendarItem(
                                     rememberSharedContentState("date"),
                                     this@AnimatedContent
                                 ),
-                            text = calendar.getSummary(context, timeFormat),
+                            text = calendar.getSummary(context, timeFormat, LocalCalendarSystemIds.current.first()),
                             style = MaterialTheme.typography.bodySmall,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -366,54 +391,47 @@ fun CalendarItemGridPopup(
 private fun CalendarEvent.formatTime(
     context: Context,
     timeFormat: TimeFormat,
+    calendarSystem: String?,
 ): String {
-    val timeFormatFlag = when (timeFormat) {
-        TimeFormat.System -> 0
-        TimeFormat.TwelveHour -> DateUtils.FORMAT_12HOUR
-        TimeFormat.TwentyFourHour -> DateUtils.FORMAT_24HOUR
+    val locale = ULocale.getDefault().setKeywordValue("calendar", calendarSystem)
+
+    val time = if (timeFormat.isTwentyFourHours(context)) {
+        "HH:mm"
+    } else {
+        "hh:mm a"
     }
 
     val startTime = startTime
     if (startTime == null || isTask) {
         if (allDay) {
-            return DateUtils.formatDateRange(
-                context,
-                endTime,
-                endTime,
-                DateUtils.FORMAT_SHOW_DATE or timeFormatFlag
-            )
+            return DateFormat.getInstanceForSkeleton("EEE, MMMM d yyyy", locale)
+                .format(endTime)
         }
-        return DateUtils.formatDateRange(
-            context,
-            endTime,
-            endTime,
-            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or timeFormatFlag
-        )
+        return DateFormat.getInstanceForSkeleton("EEE, MMMM d yyyy, $time", locale)
+            .format(endTime)
     }
 
-    if (allDay) return DateUtils.formatDateRange(
-        context,
-        startTime,
-        endTime,
-        DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_WEEKDAY or timeFormatFlag
-    )
-    return DateUtils.formatDateRange(
-        context,
-        startTime,
-        endTime,
-        DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_WEEKDAY or timeFormatFlag
-    )
+    if (allDay) {
+        return DateIntervalFormat.getInstance("EEE, MMMM d yyyy", locale)
+            .format(DateInterval(startTime, endTime))
+    }
+
+    return DateIntervalFormat.getInstance("EEE, MMMM d yyyy, $time", locale)
+        .format(DateInterval(startTime, endTime))
 
 }
 
 private fun CalendarEvent.getSummary(
     context: Context,
     timeFormat: TimeFormat,
+    calendarSystem: String?,
 ): String {
-    val timeFormatFlag = when (timeFormat) {
-        TimeFormat.System -> 0
-        TimeFormat.TwelveHour -> DateUtils.FORMAT_12HOUR
-        TimeFormat.TwentyFourHour -> DateUtils.FORMAT_24HOUR
+    val locale = ULocale.getDefault().setKeywordValue("calendar", calendarSystem)
+
+    val time = if (timeFormat.isTwentyFourHours(context)) {
+        "HH:mm"
+    } else {
+        "hh:mm a"
     }
 
     val startTime = startTime
@@ -424,28 +442,22 @@ private fun CalendarEvent.getSummary(
                 return context.getString(R.string.task_due_today)
             }
             return context.getString(
-                R.string.task_due_time, DateUtils.formatDateTime(
-                    context,
-                    endTime,
-                    DateUtils.FORMAT_SHOW_TIME or timeFormatFlag
-                )
+                R.string.task_due_time,
+                DateIntervalFormat.getInstance(time, locale)
+                    .format(DateInterval(endTime, endTime))
             )
         }
         if (allDay) {
             return context.getString(
-                R.string.task_due_date, DateUtils.formatDateTime(
-                    context,
-                    endTime,
-                    DateUtils.FORMAT_SHOW_DATE or timeFormatFlag
-                )
+                R.string.task_due_date,
+                DateFormat.getInstanceForSkeleton("EEE, MMMM d", locale)
+                    .format(endTime)
             )
         }
         return context.getString(
-            R.string.task_due_date, DateUtils.formatDateTime(
-                context,
-                endTime,
-                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or timeFormatFlag
-            )
+            R.string.task_due_date,
+            DateFormat.getInstanceForSkeleton("EEE, MMMM d, $time", locale)
+                .format(endTime)
         )
     }
 
@@ -455,28 +467,17 @@ private fun CalendarEvent.getSummary(
         if (allDay) {
             context.getString(R.string.calendar_event_allday)
         } else {
-            DateUtils.formatDateRange(
-                context,
-                startTime,
-                endTime,
-                DateUtils.FORMAT_SHOW_TIME or timeFormatFlag
-            )
+            DateIntervalFormat.getInstance(time, locale)
+                .format(DateInterval(startTime, endTime))
         }
     } else {
         if (allDay) {
-            DateUtils.formatDateRange(
-                context,
-                startTime,
-                endTime,
-                DateUtils.FORMAT_SHOW_DATE or timeFormatFlag
-            )
+            DateIntervalFormat.getInstance("MMMM d", locale)
+                .format(DateInterval(startTime, endTime))
         } else {
-            DateUtils.formatDateRange(
-                context,
-                startTime,
-                endTime,
-                DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or timeFormatFlag
-            )
+
+            DateIntervalFormat.getInstance("MMMM d, $time", locale)
+                .format(DateInterval(startTime, endTime))
         }
     }
 }

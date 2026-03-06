@@ -876,7 +876,7 @@
     <string name="preference_smartspacer_enable">啟用 Smartspacer 整合</string>
     <string name="preference_launch_smartspacer_app">開啟 Smartspacer</string>
     <string name="preference_transliteration">字母轉寫偏好</string>
-    <string name="preference_transliteration_disabled">停用</string>
+    <string name="preference_value_disabled">停用</string>
     <string name="preference_feed_integration">Feed</string>
     <string name="preference_category_feed_provider">Feed 提供者</string>
     <string name="preference_feed_enable_summary">在主畫面向右滑動開啟 Feed</string>

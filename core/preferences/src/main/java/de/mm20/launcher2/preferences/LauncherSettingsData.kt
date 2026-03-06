@@ -202,6 +202,16 @@ data class LauncherSettingsData internal constructor(
      */
     val localeTransliterator: String? = "",
 
+    /**
+     * The ICU id of the primary calendar. `null` to use the default.
+     */
+    val localePrimaryCalendar: String? = null,
+
+    /**
+     * The ICU id of the secondary calendar. `null` to disable.
+     */
+    val localeSecondaryCalendar: String? = null,
+
     val feedProviderPackage: String? = null
 
 

@@ -1082,7 +1082,7 @@
     <string name="preference_measurement_system_us">Amerika Birleşik Devletleri</string>
     <string name="preference_transliteration">Tercih edilen tercüme</string>
     <string name="preference_transliteration_auto">Otomatik</string>
-    <string name="preference_transliteration_disabled">Devre dışı</string>
+    <string name="preference_value_disabled">Devre dışı</string>
     <string name="select_tag">Etiket seçin</string>
     <string name="action_quit">Çık</string>
     <string name="preference_create_colors">Yeni renk şeması</string>

@@ -1,11 +1,13 @@
 package de.mm20.launcher2.ui.base
 
+import android.icu.util.Calendar
 import android.icu.util.LocaleData
 import android.icu.util.ULocale
 import android.text.format.DateFormat
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -17,6 +19,8 @@ import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.preferences.ui.LocaleSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.component.ProvideIconShape
+import de.mm20.launcher2.ui.locals.LocalCalendarSystemIds
+import de.mm20.launcher2.ui.locals.LocalCalendarSystems
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalMeasurementSystem
@@ -82,13 +86,41 @@ fun ProvideSettings(
         }.distinctUntilChanged()
     }.collectAsState(null)
 
+    val calendarIds by remember {
+        localeSettings.primaryCalendar.combine(localeSettings.secondaryCalendar) { p, s ->
+            listOf(p, s)
+        }
+    }.collectAsState(listOf(null, null))
+
+    val calendars by remember {
+        derivedStateOf {
+            val p = calendarIds.first()
+            val s = calendarIds.last()
+            val primary = if (p == null) {
+                Calendar.getInstance(ULocale.getDefault())
+            } else {
+                Calendar.getInstance(ULocale.getDefault().setKeywordValue("calendar", p))
+            }
+            val secondary = if (s == null) {
+                null
+            } else {
+                Calendar.getInstance(ULocale.getDefault().setKeywordValue("calendar", s))
+            }
+            listOfNotNull(
+                primary, secondary
+            )
+        }
+    }
+
     if (timeFormat == null || measurementSystem == null) return
 
     CompositionLocalProvider(
         LocalFavoritesEnabled provides favoritesEnabled,
         LocalGridSettings provides gridSettings,
         LocalTimeFormat provides timeFormat!!,
-        LocalMeasurementSystem provides measurementSystem!!
+        LocalMeasurementSystem provides measurementSystem!!,
+        LocalCalendarSystems provides calendars,
+        LocalCalendarSystemIds provides calendarIds,
     ) {
         ProvideIconShape(iconShape) {
             content()

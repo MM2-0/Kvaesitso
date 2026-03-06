@@ -1,19 +1,16 @@
 package de.mm20.launcher2.ui.settings.locale
 
 import android.content.Intent
+import android.icu.text.ListFormatter
 import android.icu.text.Transliterator
 import android.icu.util.ULocale
-import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.toLowerCase
-import androidx.compose.ui.text.toUpperCase
 import androidx.core.app.GrammaticalInflectionManagerCompat
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -28,8 +25,8 @@ import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
-import java.util.Locale
 
 @Serializable
 data object LocaleSettingsRoute : NavKey
@@ -40,9 +37,12 @@ fun LocaleSettingsScreen() {
     val resources = LocalResources.current
     val viewModel: LocaleSettingsScreenVM = viewModel()
 
+    val backstack = LocalBackStack.current
+
     val timeFormat by viewModel.timeFormat.collectAsStateWithLifecycle(null)
     val measurementSystem by viewModel.measurementSystem.collectAsStateWithLifecycle(null)
     val transliterator by viewModel.transliterator.collectAsStateWithLifecycle(null)
+    val calendars by viewModel.calendars.collectAsStateWithLifecycle(emptyList())
 
     // The language that has been selected by the user, or null to use the system language
     val selectedLocale = remember {
@@ -57,13 +57,13 @@ fun LocaleSettingsScreen() {
     val transliterators: List<Pair<String, String?>> = remember(locales) {
         if (!isAtLeastApiLevel(29)) return@remember listOf()
 
-        if (locales?.isEmpty == true) return@remember listOf(resources.getString(R.string.preference_transliteration_disabled) to null)
+        if (locales?.isEmpty == true) return@remember listOf(resources.getString(R.string.preference_value_disabled) to null)
 
         val scripts = mutableSetOf<String>()
         val languages = mutableSetOf<String>()
 
         val transliterators = mutableMapOf<String?, String>(
-            null to resources.getString(R.string.preference_transliteration_disabled),
+            null to resources.getString(R.string.preference_value_disabled),
             "" to resources.getString(R.string.preference_transliteration_auto),
         )
 
@@ -82,7 +82,11 @@ fun LocaleSettingsScreen() {
                 val ids = availableIds.filter { it.startsWith(filter) }
 
                 for (id in ids) {
-                    transliterators[id] = "${ulocale.displayLanguage.replaceFirstChar { ulocale.displayLanguage.first().uppercase() }} ($id)"
+                    transliterators[id] = "${
+                        ulocale.displayLanguage.replaceFirstChar {
+                            ulocale.displayLanguage.first().uppercase()
+                        }
+                    } ($id)"
                 }
 
                 languages.add(lng)
@@ -94,7 +98,11 @@ fun LocaleSettingsScreen() {
                 val ids = availableIds.filter { it.startsWith(filter) }
 
                 for (id in ids) {
-                    transliterators[id] = "${ulocale.displayScript.replaceFirstChar { ulocale.displayScript.first().uppercase() }} ($id)"
+                    transliterators[id] = "${
+                        ulocale.displayScript.replaceFirstChar {
+                            ulocale.displayScript.first().uppercase()
+                        }
+                    } ($id)"
                 }
                 scripts.add(ulocale.script)
             }
@@ -196,6 +204,35 @@ fun LocaleSettingsScreen() {
                         stringResource(R.string.preference_measurement_system_uk) to MeasurementSystem.UnitedKingdom,
                         stringResource(R.string.preference_measurement_system_us) to MeasurementSystem.UnitedStates,
                     )
+                )
+                Preference(
+                    title = stringResource(R.string.preference_calendar_system),
+                    icon = R.drawable.calendar_today_24px,
+                    onClick = {
+                        backstack += CalendarSettingsRoute
+                    },
+                    summary = remember(calendars) {
+                        val primary = calendars.getOrNull(0)
+                        val secondary = calendars.getOrNull(1)
+
+                        val primaryName = if (primary == null) {
+                            resources.getString(R.string.preference_value_system_default)
+                        } else {
+                            ULocale.getDefault().setKeywordValue("calendar", primary)
+                                .getDisplayKeywordValue("calendar")
+                        }
+
+                        val secondaryName = if (secondary == null) {
+                            null
+                        } else {
+                            ULocale.getDefault().setKeywordValue("calendar", secondary)
+                                .getDisplayKeywordValue("calendar")
+                        }
+
+                        ListFormatter.getInstance().format(
+                            listOfNotNull(primaryName, secondaryName)
+                        )
+                    }
                 )
             }
         }

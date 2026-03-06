@@ -872,7 +872,7 @@
     <string name="preference_measurement_system_us">美制</string>
     <string name="preference_transliteration">翻译语言偏好</string>
     <string name="preference_transliteration_auto">自动</string>
-    <string name="preference_transliteration_disabled">禁用</string>
+    <string name="preference_value_disabled">禁用</string>
     <string name="select_tag">选择标签</string>
     <string name="action_quit">退出</string>
     <string name="preference_clockwidget_smartspacer">由 Smartspacer 主管</string>
