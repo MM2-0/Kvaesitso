@@ -68,7 +68,7 @@
     <string name="alert_delete_shortcut">سوف يتم ازالة اختصار %1$s نهائيا. هل تريد المتابعة؟</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="menu_app_info">معلومات التطبيق</string>
-    <string name="file_type_music">ملف موسيقى</string>
+    <string name="file_type_music">الصوتيات</string>
     <string name="menu_contacts_open_externally">افتح فى تطبيق جهات الاتصال</string>
     <string name="wind_east_south_east">شرق الجنوب الشرقي</string>
     <string name="file_type_none">ملف</string>
@@ -95,16 +95,16 @@
     <string name="menu_edit_widgets">تحرير أدوات الواجهة</string>
     <string name="widget_name_weather">الطقس</string>
     <string name="widget_name_calendar">التقويم</string>
-    <string name="widget_name_music">الموسيقى</string>
+    <string name="widget_name_music">الصوتيات</string>
     <string name="widget_name_notes">ملاحظة</string>
     <string name="widget_name_unknown">أداة واجهة تطبيق غير معروفة</string>
     <string name="widget_add_widget">إضافة أداة واجهة</string>
-    <string name="notes_widget_placeholder">اكتب ملاحظة…</string>
+    <string name="notes_widget_placeholder">اكتب ملاحظة</string>
     <string name="notes_widget_action_new">ملاحظة جديدة</string>
     <string name="notes_widget_action_save">‌حفظ</string>
     <string name="notes_widget_export_filename">ملاحظة_%1$s</string>
     <string name="notes_widget_action_dismiss">استبعاد</string>
-    <string name="notes_widget_dismissed">تم ‏رفض الملاحظة.</string>
+    <string name="notes_widget_dismissed">تم ‏رفض الملاحظة</string>
     <string name="shortcut_summary">من طرف %1$s</string>
     <string name="edit">تعديل</string>
     <string name="close">إغلاق</string>
@@ -140,7 +140,7 @@
     <string name="edit_favorites_dialog_empty_section">اسحب العناصر الى هنا</string>
     <string name="nextcloud_server_url">عنوان URL لخادم Nextcloud</string>
     <string name="edit_favorites_dialog_tag_section_empty">ستظهر العلامات المثبتة هنا</string>
-    <string name="edit_favorites_dialog_new_tag">إنشاء علامة…</string>
+    <string name="edit_favorites_dialog_new_tag">إنشاء علامة</string>
     <string name="owncloud_server_invalid_url">لا يشير عنوان URL هذا إلى تثبيت Owncloud صالح</string>
     <string name="nextcloud_server_invalid_url">لا يشير عنوان URL هذا إلى تثبيت Nextcloud صالح</string>
     <string name="owncloud_server_url">عنوان URL لخادم Owncloud</string>
@@ -938,4 +938,5 @@
     <string name="theme_bundle_name">اسم المظهر</string>
     <string name="theme_export_title">حفظ المظهر</string>
     <string name="theme_import_title">استيراد مظهر</string>
+    <string name="typo_preview_long">الثعلب البني السريع\nيقفز فوق 1234790</string>
 </resources>
