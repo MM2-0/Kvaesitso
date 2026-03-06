@@ -1109,4 +1109,5 @@
     <string name="typo_preview_medium1">Hamburg</string>
     <string name="typo_preview_medium2">Preview</string>
     <string name="typo_preview_long">The quick brown fox\njumps over 1234790</string>
+    <string name="preference_category_donate">Support the development</string>
 </resources>
