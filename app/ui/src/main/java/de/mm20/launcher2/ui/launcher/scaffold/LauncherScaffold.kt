@@ -197,7 +197,7 @@ internal data class ScaffoldConfiguration(
                     swipeRight,
                     doubleTap,
                     longPress,
-                    //homeButton,
+                    homeButton,
                 ).none { it.component.showSearchBar }
     }
 }
