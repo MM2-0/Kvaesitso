@@ -925,4 +925,11 @@
     <string name="preference_create_transparency">Nuovo combinazione di trasparenza</string>
     <string name="add_font_style">Aggiungi stile del font</string>
     <string name="remove_font_style">Rimuovi questo stile del font</string>
+    <string name="preference_category_donate">Sostieni lo sviluppo</string>
+    <string name="preference_widget_screen_count">Conteggio schermate widget</string>
+    <string name="preference_widget_screen_count_info">Nota: riducendo il conteggio, i gesti assegnati alle schermate disabilitate verranno automaticamente reimpostati.</string>
+    <string name="gesture_action_widgets_indexed">Widget %1$d</string>
+    <string name="preference_calendar_system">Il sistema di calendario preferito (ad esempio calendario gregoriano, calendario ebraico, calendario persiano)</string>
+    <string name="preference_calendar_system_primary">Calendario primario</string>
+    <string name="preference_calendar_system_secondary">Calendario secondario</string>
 </resources>
