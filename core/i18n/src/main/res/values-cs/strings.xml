@@ -928,4 +928,8 @@
     <string name="preference_widget_screen_count">Počet obrazovek s widgety</string>
     <string name="preference_widget_screen_count_info">Upozornění: snížení počtu automaticky resetuje gesta přiřazená k zakázaným obrazovkám.</string>
     <string name="gesture_action_widgets_indexed">Widgety %1$d</string>
+    <string name="preference_calendar_system">Kalendářový systém</string>
+    <string name="preference_calendar_system_primary">Primární kalendář</string>
+    <string name="preference_calendar_system_secondary">Sekundární kalendář</string>
+    <string name="preference_category_donate">Podpořte vývoj</string>
 </resources>
