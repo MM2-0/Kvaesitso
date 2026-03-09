@@ -807,7 +807,7 @@
     <string name="preference_search_locations_hide_uncategorized_summary">הצגה רק את התוצאות עם קטגוריות מוגדרות היטב, כמו בתי קפה ומסעדות</string>
     <string name="location_open_24_7">פתוח 24/7</string>
     <string name="plugin_state_error">התוסף אינו פועל כראוי</string>
-    <string name="plugin_state_setup_required">עליך להגדיר תחילה את תוסף זה</string>
+    <string name="plugin_state_setup_required">עליך להגדיר תוסף זה תחילה</string>
     <string name="plugin_action_setup">הגדרה</string>
     <string name="plugin_type_filesearch">קבצים</string>
     <string name="plugin_type_contacts">אנשי קשר</string>
@@ -923,7 +923,11 @@
     <string name="typo_preview_medium1">דברי הימים</string>
     <string name="typo_preview_medium2">נוף איילון</string>
     <string name="typo_preview_long">איך בלש תפס גמד\nרוצח עז קטנה 12390</string>
-    <string name="preference_widget_screen_count">כמות ווידג\'טים במסך</string>
+    <string name="preference_widget_screen_count">כמות היישומונים במסך</string>
     <string name="preference_widget_screen_count_info">שים לב: הפחתת הכמות תאפס אוטומטית את המחוות שהוקצו למסכים מושבתים.</string>
     <string name="gesture_action_widgets_indexed">יישומונים %1$d</string>
+    <string name="preference_calendar_system">סוג לוח-השנה</string>
+    <string name="preference_calendar_system_primary">לוח-השנה הראשי</string>
+    <string name="preference_calendar_system_secondary">לוח-שנה משני</string>
+    <string name="preference_category_donate">תמיכה במפתחים</string>
 </resources>
