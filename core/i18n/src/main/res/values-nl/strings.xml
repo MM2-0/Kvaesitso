@@ -917,4 +917,8 @@
     <string name="preference_widget_screen_count">Aantal widgetschermen</string>
     <string name="preference_widget_screen_count_info">Pas op: Het aantal verminderen zal automatisch de gebaren resetten die toegewezen zijn aan uitgeschakelde schermen.</string>
     <string name="gesture_action_widgets_indexed">Widgets %1$d</string>
+    <string name="preference_calendar_system">Kalendersysteem</string>
+    <string name="preference_calendar_system_primary">Voorkeurskalender</string>
+    <string name="preference_calendar_system_secondary">Bijkomende kalender</string>
+    <string name="preference_category_donate">Ondersteun de ontwikkeling</string>
 </resources>

@@ -917,4 +917,8 @@
     <string name="preference_widget_screen_count">Modulképernyők száma</string>
     <string name="preference_widget_screen_count_info">Megjegyzés: A szám csökkentése automatikusan törli a letiltott képernyőkhöz rendelt gesztusokat.</string>
     <string name="gesture_action_widgets_indexed">Modulok: %1$d</string>
+    <string name="preference_calendar_system">Naptárrendszer</string>
+    <string name="preference_calendar_system_primary">Elsődleges naptár</string>
+    <string name="preference_calendar_system_secondary">Másodlagos naptár</string>
+    <string name="preference_category_donate">Fejlesztés támogatása</string>
 </resources>
