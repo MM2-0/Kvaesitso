@@ -49,12 +49,12 @@ internal data class LocationForecast(
                 ) {
                     @Serializable
                     internal data class Details(
-                        @SerialName("air_temperature") val airTemperature: Double,
-                        @SerialName("cloud_area_fraction") val cloudAreaFraction: Double,
-                        @SerialName("relative_humidity") val relativeHumidity: Double,
-                        @SerialName("wind_from_direction") val windFromDirection: Double,
-                        @SerialName("wind_speed") val windSpeed: Double,
-                        @SerialName("air_pressure_at_sea_level") val airPressureAtSeaLevel: Double,
+                        @SerialName("air_temperature") val airTemperature: Double?,
+                        @SerialName("cloud_area_fraction") val cloudAreaFraction: Double?,
+                        @SerialName("relative_humidity") val relativeHumidity: Double?,
+                        @SerialName("wind_from_direction") val windFromDirection: Double?,
+                        @SerialName("wind_speed") val windSpeed: Double?,
+                        @SerialName("air_pressure_at_sea_level") val airPressureAtSeaLevel: Double?,
                     )
                 }
 
@@ -70,7 +70,8 @@ internal data class LocationForecast(
 
                     @Serializable
                     internal data class Details(
-                        @SerialName("precipitation_amount") val precipitationAmount: Double?
+                        @SerialName("precipitation_amount") val precipitationAmount: Double?,
+                        @SerialName("ultraviolet_index_clear_sky_max") val ultravioletIndexClearSkyMax: Double?,
                     )
                 }
             }

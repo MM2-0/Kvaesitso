@@ -65,7 +65,7 @@ object WeatherIconDefaults {
     @Composable
     fun themedColors(backgroundColor: Color): WeatherIconColors {
 
-        val themeColor = MaterialTheme.colorScheme.primary
+        val themeColor = MaterialTheme.colorScheme.secondary
         val neutralColor = MaterialTheme.colorScheme.outline
 
         return remember(backgroundColor, themeColor, neutralColor) {

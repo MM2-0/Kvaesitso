@@ -97,9 +97,9 @@ internal class MetNoProvider(
                 forecasts.add(
                     Forecast(
                         timestamp = timestamp,
-                        temperature = details.airTemperature + 273.15,
+                        temperature = (details.airTemperature ?: continue) + 273.15,
                         updateTime = updatedAt,
-                        clouds = details.cloudAreaFraction.roundToInt(),
+                        clouds = details.cloudAreaFraction?.roundToInt(),
                         humidity = details.relativeHumidity,
                         windDirection = details.windFromDirection,
                         windSpeed = details.windSpeed,
@@ -110,6 +110,7 @@ internal class MetNoProvider(
                         icon = iconForCode(symbolCode),
                         condition = conditionForCode(symbolCode),
                         precipitation = precipitationAmount,
+                        uvIndex = nextHours.details?.ultravioletIndexClearSkyMax,
                         night = isNight(timestamp, lat, lon)
 
                     )
@@ -239,7 +240,7 @@ internal class MetNoProvider(
 
             "lightrain", "lightrainshowers" -> Forecast.LIGHT_RAIN
             "heavyrain", "heavyrainshowers" -> Forecast.HEAVY_RAIN
-            "rain" -> Forecast.RAIN
+            "rain", "rainshowers" -> Forecast.RAIN
 
             "lightsleet", "lightsleetshowers", "heavysleet", "heavysleetshowers", "sleet" -> Forecast.SLEET
 

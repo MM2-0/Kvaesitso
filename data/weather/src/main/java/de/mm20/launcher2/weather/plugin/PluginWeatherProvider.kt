@@ -118,6 +118,7 @@ internal class PluginWeatherProvider(
                         provider = cursor[ForecastColumns.Provider] ?: continue,
                         providerUrl = cursor[ForecastColumns.ProviderUrl] ?: "",
                         clouds = cursor[ForecastColumns.Clouds],
+                        uvIndex = cursor[ForecastColumns.UvIndex],
                         humidity = cursor[ForecastColumns.Humidity]?.toDouble(),
                         precipitation = cursor[ForecastColumns.Precipitation],
                         precipProbability = cursor[ForecastColumns.RainProbability],

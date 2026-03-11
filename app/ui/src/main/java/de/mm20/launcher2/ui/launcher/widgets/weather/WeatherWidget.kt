@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.widgets.weather
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -21,20 +22,25 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -57,11 +63,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -78,7 +86,6 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
-import de.mm20.launcher2.ui.component.Tooltip
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIconDefaults
@@ -193,7 +200,7 @@ fun WeatherWidget(widget: WeatherWidget) {
                 color = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.surface),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(start = 8.dp, bottom = 8.dp, end = 8.dp),
                 shape = MaterialTheme.shapes.small,
             ) {
                 Column(
@@ -248,16 +255,13 @@ fun CurrentWeather(
         )
     }
 
-    val useFahrenheit = measurementSystem == MeasurementSystem.UnitedStates
-    val useInches = measurementSystem == MeasurementSystem.UnitedStates
-    val useMph =
-        measurementSystem == MeasurementSystem.UnitedStates || measurementSystem == MeasurementSystem.UnitedKingdom
-
 
     var bounds by remember { mutableStateOf(Rect.Zero) }
     val view = LocalView.current
-    Column(
+    Row(
         modifier = Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Max)
             .onPlaced {
                 val size = it.size
                 val offset = it.localToRoot(Offset.Zero)
@@ -288,128 +292,154 @@ fun CurrentWeather(
                 },
                 interactionSource = remember { MutableInteractionSource() },
                 indication = LocalIndication.current,
-            )
+            ),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
 
         Column(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .padding(
+                    top = 16.dp,
+                    end = 16.dp,
+                    start = 16.dp,
+                    bottom = 8.dp,
+                )
         ) {
-            Row(
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Row(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = forecast.location,
-                        style = MaterialTheme.typography.titleMedium
+            Text(
+                text = forecast.location,
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Text(
+                modifier = Modifier.padding(vertical = 2.dp),
+                text = formatTemperature(
+                    context,
+                    forecast.temperature.toFloat(),
+                    measurementSystem
+                ),
+                style = MaterialTheme.typography.headlineLarge,
+            )
+
+            Text(
+                text = forecast.condition,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(
+                text = "${forecast.provider} (${
+                    formatTime(
+                        LocalContext.current,
+                        forecast.updateTime,
+                        timeFormat,
                     )
-                }
-                Tooltip(
-                    tooltipText = stringResource(R.string.preference_weather_provider)
-                ) {
-                    Surface(
-                        shape = MaterialTheme.shapes.extraSmall.copy(
-                            topStart = CornerSize(0),
-                            topEnd = CornerSize(0),
-                            bottomEnd = CornerSize(0)
-                        ),
-                        color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = MaterialTheme.transparency.surface),
-                    ) {
-                        Text(
-                            text = "${forecast.provider} (${
-                                formatTime(
-                                    LocalContext.current,
-                                    forecast.updateTime,
-                                    timeFormat,
-                                )
-                            })",
-                            style = MaterialTheme.typography.bodySmall.copy(fontSize = 8.sp),
-                            modifier = Modifier
-                                .clickable(onClick = {
-                                    val intent = Intent(Intent.ACTION_VIEW).apply {
-                                        data = Uri.parse(forecast.providerUrl)
-                                            ?: return@clickable
-                                    }
-                                    context.tryStartActivity(intent)
-                                })
-                                .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 12.dp)
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier.padding(start = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = formatTemperature(
-                        context,
-                        forecast.temperature.toFloat(),
-                        measurementSystem
-                    ),
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-                Text(
-                    text = forecast.condition,
-                    style = MaterialTheme.typography.labelMedium,
-                )
-                AnimatedWeatherIcon(
-                    modifier = Modifier.padding(
-                        start = 8.dp,
-                        end = 8.dp
-                    ),
-                    icon = weatherIconById(forecast.icon),
-                    night = forecast.night,
-                    WeatherIconDefaults.colors(MaterialTheme.colorScheme.surface)
-                )
-            }
+                })",
+                style = MaterialTheme.typography.bodySmall.copy(fontSize = 8.sp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .offset(-16.dp, 4.dp)
+                    .clickable(onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(forecast.providerUrl)
+                                ?: return@clickable
+                        }
+                        context.tryStartActivity(intent)
+                    })
+                    .padding(horizontal = 16.dp, vertical = 4.dp)
+            )
+
+
         }
 
-        Row(
+        Column(
             modifier = Modifier
-                .padding(start = 16.dp, end = 16.dp, bottom = 12.dp, top = 8.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .weight(1f)
+                .fillMaxHeight()
+                .padding(
+                    end = 16.dp,
+                    top = 16.dp,
+                    bottom = 16.dp,
+                ),
+            horizontalAlignment = Alignment.End,
         ) {
-            if (forecast.humidity != null) {
-                Tooltip(
-                    tooltipText = stringResource(R.string.weather_forecast_humidity)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+
+            AnimatedWeatherIcon(
+                modifier = Modifier.offset(8.dp, -8.dp),
+                icon = weatherIconById(forecast.icon),
+                night = forecast.night,
+                WeatherIconDefaults.colors(MaterialTheme.colorScheme.surface)
+            )
+
+            CurrentWeatherDetails(
+                modifier = Modifier.weight(1f),
+                forecast = forecast,
+                measurementSystem = measurementSystem,
+            )
+        }
+    }
+}
+
+@Composable
+private fun CurrentWeatherDetails(
+    modifier: Modifier = Modifier,
+    forecast: Forecast,
+    measurementSystem: MeasurementSystem
+) {
+    val context = LocalContext.current
+    val resources = LocalResources.current
+
+    val items = remember(forecast) {
+        buildList<Pair<@Composable () -> Unit, String>> {
+            if (
+                forecast.precipProbability != null && forecast.precipProbability!! >= 20 ||
+                forecast.precipitation != null && forecast.precipitation!! >= 1
+            ) {
+                add(
+                    @Composable {
                         Icon(
-                            painter = painterResource(R.drawable.humidity_percentage_20px),
-                            modifier = Modifier.size(20.dp),
+                            painter = painterResource(R.drawable.rainy_20px),
+                            modifier = Modifier
+                                .size(20.dp),
+                            contentDescription = null,
                             tint = MaterialTheme.colorScheme.secondary,
-                            contentDescription = null
                         )
-                        Spacer(modifier = Modifier.padding(3.dp))
-                        Text(
-                            text = formatPercent(forecast.humidity!!.toFloat()),
-                            style = MaterialTheme.typography.bodySmall,
+                    } to if (forecast.precipProbability != null) {
+                        formatPercent(forecast.precipProbability!!.toFloat())
+                    } else {
+                        formatPrecipitation(
+                            context,
+                            forecast.precipitation?.toFloat() ?: 0f,
+                            measurementSystem
                         )
                     }
-                }
-
+                )
             }
-            if (forecast.windDirection != null || forecast.windSpeed != null) {
-                Tooltip(
-                    tooltipText = stringResource(R.string.weather_forecast_wind)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+            if (forecast.uvIndex != null && forecast.uvIndex!! >= 3) {
+                add(
+                    @Composable {
+                        Icon(
+                            painter = painterResource(R.drawable.sunny_20px),
+                            modifier = Modifier
+                                .size(20.dp),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary,
+                        )
+                    } to "UV ${forecast.uvIndex}"
+
+                )
+            }
+            if (forecast.windSpeed != null && forecast.windSpeed!! >= 3) {
+                add(
+                    @Composable {
                         if (forecast.windDirection != null) {
                             // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
                             val angle by animateFloatAsState(forecast.windDirection!!.toFloat() + 180f)
                             Icon(
-                                painter = painterResource(R.drawable.north_20px),
+                                painter = painterResource(R.drawable.navigation_20px),
                                 modifier = Modifier
                                     .rotate(angle)
                                     .size(20.dp),
@@ -424,50 +454,61 @@ fun CurrentWeather(
                                 tint = MaterialTheme.colorScheme.secondary,
                             )
                         }
-                        Spacer(modifier = Modifier.padding(3.dp))
-                        Text(
-                            text = if (forecast.windSpeed != null) {
-                                formatSpeed(
-                                    context,
-                                    forecast.windSpeed!!.toFloat(),
-                                    measurementSystem
-                                )
-                            } else {
-                                windDirectionAsWord(forecast.windDirection!!)
-                            },
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    }
-                }
+                    } to formatSpeed(
+                        context,
+                        forecast.windSpeed!!.toFloat(),
+                        measurementSystem
+                    )
+
+                )
             }
-            if (forecast.precipitation != null) {
-                Tooltip(
-                    tooltipText = stringResource(id = R.string.weather_forecast_precipitation)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+            if (size < 4) {
+                add(
+                    @Composable {
                         Icon(
-                            painter = painterResource(R.drawable.rainy_20px),
-                            modifier = Modifier.size(20.dp),
+                            painter = painterResource(R.drawable.humidity_mid_20px),
+                            modifier = Modifier
+                                .size(20.dp),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.secondary,
                         )
-                        Spacer(modifier = Modifier.padding(3.dp))
-                        Text(
-                            text = if (forecast.precipProbability != null) {
-                                formatPercent(forecast.precipProbability!!.toFloat())
-                            } else {
-                                formatPrecipitation(
-                                    context,
-                                    forecast.precipitation?.toFloat() ?: 0f,
-                                    measurementSystem
-                                )
-                            },
-                            style = MaterialTheme.typography.bodySmall,
+                    } to formatPercent(forecast.humidity!!.toFloat()),
+                )
+            }
+            if (size < 4 && forecast.clouds != null && forecast.clouds!! >= 30) {
+                add(
+                    @Composable {
+                        Icon(
+                            painter = painterResource(R.drawable.cloud_20px),
+                            modifier = Modifier
+                                .size(20.dp),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary,
                         )
-                    }
-                }
+                    } to formatPercent(forecast.clouds!!.toFloat()),
+                )
+            }
+        }
+    }
+
+    FlowRow(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.End),
+    ) {
+        for (item in items) {
+            Row(
+                modifier = Modifier,
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                item.first()
+                Text(
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.padding(start = 4.dp),
+                    text = item.second,
+                    style = MaterialTheme.typography.labelSmall,
+                )
             }
         }
     }
@@ -593,7 +634,7 @@ fun WeatherDaySelector(
     val colors = WeatherIconDefaults.colors(MaterialTheme.colorScheme.surfaceBright)
     val selectedColors = WeatherIconDefaults.themedColors(
         MaterialTheme.colorScheme.secondary,
-        )
+    )
 
     val listState = rememberLazyListState()
     LazyRow(
@@ -693,9 +734,8 @@ private fun formatTime(context: Context, timestamp: Long, timeFormat: TimeFormat
     )
 }
 
-@Composable
-private fun windDirectionAsWord(direction: Double): String {
-    return stringResource(
+private fun windDirectionAsWord(resources: Resources, direction: Double): String {
+    return resources.getString(
         when (direction) {
             in 11.25..33.75 -> R.string.wind_north_north_east
             in 33.75..56.25 -> R.string.wind_north_east

@@ -68,14 +68,14 @@ data class WeatherResultClouds(
 
 @Serializable
 data class CurrentWeatherResultRain(
-    @SerialName("1h") val oneHour: Double,
-    @SerialName("3h") val threeHours: Double,
+    @SerialName("1h") val oneHour: Double?,
+    @SerialName("3h") val threeHours: Double?,
 )
 
 @Serializable
 data class CurrentWeatherResultSnow(
-    @SerialName("1h") val oneHour: Double,
-    @SerialName("3h") val threeHours: Double,
+    @SerialName("1h") val oneHour: Double?,
+    @SerialName("3h") val threeHours: Double?,
 )
 
 @Serializable
@@ -117,7 +117,7 @@ data class ForecastResultSnow(
 
 @Serializable
 data class ForecastResultSys(
-    val pod: String,
+    val pod: String?,
 )
 
 @Serializable

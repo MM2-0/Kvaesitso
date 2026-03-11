@@ -86,6 +86,7 @@ class BreezyWeatherProvider(
                 windSpeed = hourly.windSpeed?.toDouble()?.div(3.6),
                 precipProbability = hourly.precipProbability,
                 windDirection = hourly.windDirection?.toDouble(),
+                uvIndex = hourly.uvIndex?.toDouble(),
                 updateTime = lastUpdate,
                 night = isNight
             )
