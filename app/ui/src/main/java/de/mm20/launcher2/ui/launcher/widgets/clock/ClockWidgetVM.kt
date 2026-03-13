@@ -38,7 +38,7 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
         val providers = mutableListOf<PartProvider>()
         if (parts.date) providers += DatePartProvider()
         if (parts.music) providers += MusicPartProvider()
-        if (parts.battery) providers += BatteryPartProvider()
+        providers += BatteryPartProvider(parts.battery)
         if (parts.alarm) providers += AlarmPartProvider()
         providers
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
