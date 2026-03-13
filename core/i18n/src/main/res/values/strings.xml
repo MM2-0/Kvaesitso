@@ -689,6 +689,8 @@
     <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
     <string name="preference_widgets_on_home_screen">Widgets on home screen</string>
     <string name="preference_widgets_on_home_screen_summary">Show widgets on the home screen instead of a separate page</string>
+    <string name="preference_widget_screen_count">Widget screen count</string>
+    <string name="preference_widget_screen_count_info">Note: Reducing the count will automatically reset gestures assigned to disabled screens.</string>
     <string name="preference_screen_homescreen">Home screen</string>
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
     <string name="preference_screen_icons">Grid and icons</string>
@@ -812,6 +814,7 @@
     <string name="gesture_action_none">Do nothing</string>
     <string name="gesture_action_open_search">Open search</string>
     <string name="gesture_action_widgets">Widgets</string>
+    <string name="gesture_action_widgets_indexed">Widgets %1$d</string>
     <string name="gesture_action_launch_app">Launch app</string>
     <string name="gesture_action_notifications">Open notification drawer</string>
     <string name="gesture_action_lock_screen">Turn off screen</string>
@@ -1085,6 +1088,7 @@
     <string name="preference_screen_locale_summary">Language, units, time format</string>
     <string name="preference_language">Language</string>
     <string name="preference_value_system_default">System default</string>
+    <string name="preference_value_disabled">Disabled</string>
     <string name="preference_form_of_address">Form of address</string>
     <string name="preference_form_of_address_neutral">Neutral</string>
     <string name="preference_form_of_address_fem">Feminine</string>
@@ -1095,7 +1099,9 @@
     <string name="preference_measurement_system_us">United States</string>
     <string name="preference_transliteration">Preferred transliteration</string>
     <string name="preference_transliteration_auto">Automatic</string>
-    <string name="preference_transliteration_disabled">Disabled</string>
+    <string name="preference_calendar_system">Calendar system</string>
+    <string name="preference_calendar_system_primary">Primary calendar</string>
+    <string name="preference_calendar_system_secondary">Secondary calendar</string>
     <string name="select_tag">Select tag</string>
     <string name="create_tag_title">New tag</string>
     <string name="edit_tag_title">Edit tag</string>
@@ -1106,4 +1112,5 @@
     <string name="typo_preview_medium1">Hamburg</string>
     <string name="typo_preview_medium2">Preview</string>
     <string name="typo_preview_long">The quick brown fox\njumps over 1234790</string>
+    <string name="preference_category_donate">Support the development</string>
 </resources>

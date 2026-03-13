@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.licenses.OpenSourceLicenses
@@ -79,6 +80,21 @@ fun AboutSettingsScreen() {
             }
         }
         item {
+            PreferenceCategory(title = stringResource(id = R.string.preference_category_donate)) {
+                Preference(
+                    icon = R.drawable.favorite_24px,
+                    title = "GitHub Sponsors",
+                    summary = "github.com/sponsors/MM2-0",
+                    onClick = {
+
+                        context.startActivity(Intent(Intent.ACTION_VIEW).apply {
+                            data = "https://github.com/sponsors/MM2-0".toUri()
+                        })
+                    }
+                )
+            }
+        }
+        item {
             PreferenceCategory(title = stringResource(id = R.string.preference_category_links)) {
                 Preference(
                     icon = R.drawable.github,
@@ -86,7 +102,7 @@ fun AboutSettingsScreen() {
                     summary = "github.com/MM2-0/Kvaesitso",
                     onClick = {
                         context.startActivity(Intent(Intent.ACTION_VIEW).apply {
-                            data = Uri.parse("https://github.com/MM2-0/Kvaesitso")
+                            data = "https://github.com/MM2-0/Kvaesitso".toUri()
                         })
                     }
                 )
@@ -96,7 +112,7 @@ fun AboutSettingsScreen() {
                     summary = "t.me/Kvaesitso",
                     onClick = {
                         context.startActivity(Intent(Intent.ACTION_VIEW).apply {
-                            data = Uri.parse("https://t.me/Kvaesitso")
+                            data = "https://t.me/Kvaesitso".toUri()
                         })
                     }
                 )
@@ -107,7 +123,7 @@ fun AboutSettingsScreen() {
                     onClick = {
                         context.startActivity(Intent(Intent.ACTION_VIEW).apply {
                             data =
-                                Uri.parse("https://fdroid.mm20.de")
+                                "https://fdroid.mm20.de".toUri()
                         })
                     }
                 )

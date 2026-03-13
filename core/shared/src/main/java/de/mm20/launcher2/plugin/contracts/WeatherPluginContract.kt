@@ -29,6 +29,7 @@ object WeatherPluginContract {
         val Precipitation = column<Double>("precipitation")
         val RainProbability = column<Int>("rain_probability")
         val Clouds = column<Int>("clouds")
+        val UvIndex = column<Double>("uv_index")
         val Location = column<String>("location")
         val Provider = column<String>("provider")
         val ProviderUrl = column<String>("provider_url")

@@ -35,4 +35,22 @@ class LocaleSettings internal constructor(
             it.copy(localeTransliterator = transliterator)
         }
     }
+
+    val primaryCalendar
+        get() = launcherDataStore.data.map { it.localePrimaryCalendar }
+
+    fun setPrimaryCalendar(primaryCalendar: String?) {
+        launcherDataStore.update {
+            it.copy(localePrimaryCalendar = primaryCalendar)
+        }
+    }
+
+    val secondaryCalendar
+        get() = launcherDataStore.data.map { it.localeSecondaryCalendar }
+
+    fun setSecondaryCalendar(secondaryCalendar: String?) {
+        launcherDataStore.update {
+            it.copy(localeSecondaryCalendar = secondaryCalendar)
+        }
+    }
 }

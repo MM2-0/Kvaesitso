@@ -878,7 +878,7 @@
     <string name="preference_measurement_system_us">Egyesült Államok</string>
     <string name="preference_transliteration">Előnyben részesített átírás</string>
     <string name="preference_transliteration_auto">Automatikus</string>
-    <string name="preference_transliteration_disabled">Letiltva</string>
+    <string name="preference_value_disabled">Letiltva</string>
     <string name="select_tag">Címke kiválasztása</string>
     <string name="widget_name_apps">Alkalmazások</string>
     <string name="preference_category_enabled_plugins">Engedélyezve</string>
@@ -914,4 +914,11 @@
     <string name="preference_create_transparency">Új átlátszósági séma</string>
     <string name="add_font_style">Betűtípus hozzáadása</string>
     <string name="remove_font_style">Betűtípus eltávolítása</string>
+    <string name="preference_widget_screen_count">Modulképernyők száma</string>
+    <string name="preference_widget_screen_count_info">Megjegyzés: A szám csökkentése automatikusan törli a letiltott képernyőkhöz rendelt gesztusokat.</string>
+    <string name="gesture_action_widgets_indexed">Modulok: %1$d</string>
+    <string name="preference_calendar_system">Naptárrendszer</string>
+    <string name="preference_calendar_system_primary">Elsődleges naptár</string>
+    <string name="preference_calendar_system_secondary">Másodlagos naptár</string>
+    <string name="preference_category_donate">Fejlesztés támogatása</string>
 </resources>

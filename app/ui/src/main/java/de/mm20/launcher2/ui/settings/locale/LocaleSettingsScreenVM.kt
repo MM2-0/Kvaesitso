@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModel
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.LocaleSettings
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.combine
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class LocaleSettingsScreenVM: ViewModel(), KoinComponent {
+class LocaleSettingsScreenVM : ViewModel(), KoinComponent {
     private val localeSettings: LocaleSettings by inject()
 
     val timeFormat = localeSettings.timeFormat
@@ -23,5 +25,9 @@ class LocaleSettingsScreenVM: ViewModel(), KoinComponent {
     val transliterator = localeSettings.transliterator
     fun setTransliterator(transliterator: String?) {
         localeSettings.setTransliterator(transliterator)
+    }
+
+    val calendars = combine(localeSettings.primaryCalendar, localeSettings.secondaryCalendar) {
+        it.toImmutableList()
     }
 }

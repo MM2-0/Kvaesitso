@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.locals
 
+import android.icu.util.Calendar
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -22,8 +23,10 @@ val LocalFavoritesEnabled = compositionLocalOf { true }
 
 val LocalGridSettings = compositionLocalOf { GridSettings() }
 
-val LocalTimeFormat = compositionLocalOf { TimeFormat.TwentyFourHour }
-val LocalMeasurementSystem = compositionLocalOf { MeasurementSystem.Metric }
+val LocalTimeFormat = staticCompositionLocalOf { TimeFormat.TwentyFourHour }
+val LocalMeasurementSystem = staticCompositionLocalOf { MeasurementSystem.Metric }
+val LocalCalendarSystems = staticCompositionLocalOf<List<Calendar?>> { listOf(null, null) }
+val LocalCalendarSystemIds = staticCompositionLocalOf<List<String?>> { listOf(null, null) }
 
 val LocalSnackbarHostState = compositionLocalOf { SnackbarHostState() }
 

@@ -849,6 +849,6 @@
     <string name="preference_measurement_system_us">Ameriketako Estatu Batuak</string>
     <string name="preference_transliteration">Hobetsitako transliterazioa</string>
     <string name="preference_transliteration_auto">Automatikoa</string>
-    <string name="preference_transliteration_disabled">Ezgaitua</string>
+    <string name="preference_value_disabled">Ezgaitua</string>
     <string name="select_tag">Etiketa hautatu</string>
 </resources>

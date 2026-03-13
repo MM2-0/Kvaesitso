@@ -1,4 +1,4 @@
-# Weather Provider Plugins
+# Weather Provider
 
 Weather provider plugins need to extend
 the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-provider/index.html" target="_blank">`WeatherProvider`</a>

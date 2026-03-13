@@ -878,6 +878,6 @@
     <string name="preference_measurement_system_us">EUA</string>
     <string name="preference_transliteration">Transliteração preferencial</string>
     <string name="preference_transliteration_auto">Automática</string>
-    <string name="preference_transliteration_disabled">Inativa</string>
+    <string name="preference_value_disabled">Inativa</string>
     <string name="select_tag">Selecione a etiqueta</string>
 </resources>

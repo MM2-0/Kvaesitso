@@ -74,6 +74,8 @@ import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterRoute
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsRoute
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
+import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestRoute
+import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestScreen
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsRoute
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
 import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsRoute
@@ -96,6 +98,8 @@ import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsRoute
 import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseRoute
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
+import de.mm20.launcher2.ui.settings.locale.CalendarSettingsRoute
+import de.mm20.launcher2.ui.settings.locale.CalendarSettingsScreen
 import de.mm20.launcher2.ui.settings.locale.LocaleSettingsRoute
 import de.mm20.launcher2.ui.settings.locale.LocaleSettingsScreen
 import de.mm20.launcher2.ui.settings.locations.LocationsSettingsRoute
@@ -291,8 +295,14 @@ class SettingsActivity : BaseActivity() {
             entry<DebugSettingsRoute> {
                 DebugSettingsScreen()
             }
+            entry<StringNormalizerTestRoute> {
+                StringNormalizerTestScreen()
+            }
             entry<LocaleSettingsRoute> {
                 LocaleSettingsScreen()
+            }
+            entry<CalendarSettingsRoute> {
+                CalendarSettingsScreen()
             }
             entry<BackupSettingsRoute> {
                 BackupSettingsScreen()

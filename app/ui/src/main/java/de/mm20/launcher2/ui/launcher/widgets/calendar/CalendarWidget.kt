@@ -1,6 +1,9 @@
 package de.mm20.launcher2.ui.launcher.widgets.calendar
 
 import android.content.Context
+import android.icu.text.DateFormat
+import android.icu.util.Calendar
+import android.icu.util.ULocale
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
@@ -50,7 +53,9 @@ import de.mm20.launcher2.Quintuple
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.launcher.search.common.list.SearchResultList
+import de.mm20.launcher2.ui.locals.LocalCalendarSystems
 import de.mm20.launcher2.widgets.CalendarWidget
+import java.sql.Date
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -92,7 +97,7 @@ fun CalendarWidget(
                 var showDropdown by remember { mutableStateOf(false) }
                 TextButton(onClick = { showDropdown = true }) {
                     Text(
-                        text = formatDay(context, selectedDate),
+                        text = formatDay(context, selectedDate, LocalCalendarSystems.current[0]!!),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = 1,
@@ -120,7 +125,7 @@ fun CalendarWidget(
                                     else -> MenuDefaults.middleItemShape
                                 },
                                 text = {
-                                    Text(formatDay(context, date))
+                                    Text(formatDay(context, date, LocalCalendarSystems.current[0]!!))
                                 },
                                 onClick = {
                                     viewModel.selectDate(date)
@@ -316,15 +321,15 @@ private fun Info(
 }
 
 
-private fun formatDay(context: Context, day: LocalDate): String {
+private fun formatDay(context: Context, day: LocalDate, calendar: Calendar): String {
     val today = LocalDate.now()
     return when {
         today == day -> context.getString(R.string.date_today)
         today.plusDays(1) == day -> context.getString(R.string.date_tomorrow)
-        else -> DateUtils.formatDateTime(
-            context,
-            day.atStartOfDay(ZoneId.systemDefault()).toEpochSecond() * 1000,
-            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_ABBREV_WEEKDAY
-        )
+        else -> DateFormat.getInstanceForSkeleton(
+            calendar,
+            "E MMMM d",
+            ULocale.getDefault(),
+        ).format(Date.from(day.atStartOfDay(ZoneId.systemDefault()).toInstant()))
     }
 }

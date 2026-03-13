@@ -86,6 +86,7 @@ abstract class WeatherProvider(
                     put(ForecastColumns.Precipitation, it.precipitation?.mm)
                     put(ForecastColumns.RainProbability, it.rainProbability)
                     put(ForecastColumns.Clouds, it.clouds)
+                    put(ForecastColumns.UvIndex, it.uvIndex)
                     put(ForecastColumns.Location, it.location)
                     put(ForecastColumns.Provider, it.provider)
                     put(ForecastColumns.ProviderUrl, it.providerUrl)

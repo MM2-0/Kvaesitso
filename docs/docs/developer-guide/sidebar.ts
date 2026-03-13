@@ -79,6 +79,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
             text: 'Places Search Provider',
             link: '/docs/developer-guide/plugins/plugin-types/places-search',
           },
+          {
+            text: 'Calendar Provider',
+            link: '/docs/developer-guide/plugins/plugin-types/calendar',
+          },
         ],
       },
       {

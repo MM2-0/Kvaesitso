@@ -1,4 +1,4 @@
-# Contact search
+# Contact Search
 
 Contact search provider plugins need to extend
 the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.contacts/-contact-provider/index.html" target="_blank">`ContactProvider`</a>
@@ -86,7 +86,7 @@ If you have set `config.storageStrategy` to `StorageStrategy.StoreReference`, yo
 suspend fun get(id: String, params: GetParams): Contact?
 ```
 
-This method is used to lookup a contact by its `id`. If the contact is no longer available, it should
+This method is used to look up a contact by its `id`. If the contact is no longer available, it should
 return `null`. In this case, the launcher will remove it from its database.
 
 - `id` is the ID of the contact that is being requested

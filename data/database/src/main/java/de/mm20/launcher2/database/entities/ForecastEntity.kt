@@ -24,7 +24,9 @@ data class ForecastEntity(
         val provider: String,
         val providerUrl: String = "",
         @ColumnInfo(name = "rainProbability") val precipProbability: Int = -1,
+        @Deprecated("Deprecated")
         val snowProbability: Int = -1,
+        val uvIndex: Double = -1.0,
         val updateTime: Long
 ) {
     companion object {

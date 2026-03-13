@@ -289,7 +289,7 @@
     <string name="missing_permission_contact_search_settings">Yhteystietojen käyttöoikeus tarvitaan yhteystietojen hakuun</string>
     <string name="weather_widget_set_location">Valitse sijainti</string>
     <string name="missing_permission_auto_location">Sijainnin käyttöoikeus vaaditaan sijainnin automaattiseen määritykseen</string>
-    <string name="widget_config_calendar_missing_calendars_hint">Etkö löydy kalentereitasi\?</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Etkö löydä kalentereitasi?</string>
     <string name="missing_permission_calendar_search_settings">Kalenterin käyttöoikeus tarvitaan tapahtumien hakuun</string>
     <string name="missing_permission_calendar_widget_settings">Tämä pienoisohjelma vaatii kalenterin käyttöoikeuden</string>
     <string name="missing_permission_appshortcuts_search_settings">%1$s on asetettava aloitusnäyttösovellukseksi sovellusoikoteiden hakua varten</string>
@@ -331,7 +331,7 @@
     <string name="preference_screen_appearance_summary">Mukauta käyttökokemusta</string>
     <string name="preference_weather_provider">Tarjoaja</string>
     <string name="preference_debug_dump_heap_summary">Tallenna vedos muistin käytön analysoimiseen. Sovellus pysähtyy kunnes toiminto on valmis.</string>
-    <string name="preference_cards_opacity">Läpinäkymättömyys</string>
+    <string name="preference_cards_opacity">Läpikuultavuus</string>
     <string name="preference_cards_shape">Muoto</string>
     <string name="preference_cards_shape_rounded">Pyöristetty</string>
     <string name="preference_cards_shape_cut">Leikattu</string>

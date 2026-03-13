@@ -97,9 +97,9 @@ internal class MetNoProvider(
                 forecasts.add(
                     Forecast(
                         timestamp = timestamp,
-                        temperature = details.airTemperature + 273.15,
+                        temperature = (details.airTemperature ?: continue) + 273.15,
                         updateTime = updatedAt,
-                        clouds = details.cloudAreaFraction.roundToInt(),
+                        clouds = details.cloudAreaFraction?.roundToInt(),
                         humidity = details.relativeHumidity,
                         windDirection = details.windFromDirection,
                         windSpeed = details.windSpeed,
@@ -110,6 +110,7 @@ internal class MetNoProvider(
                         icon = iconForCode(symbolCode),
                         condition = conditionForCode(symbolCode),
                         precipitation = precipitationAmount,
+                        uvIndex = nextHours.details?.ultravioletIndexClearSkyMax,
                         night = isNight(timestamp, lat, lon)
 
                     )
@@ -232,32 +233,35 @@ internal class MetNoProvider(
 
     private fun iconForCode(code: String): Int {
         return when (code.substringBefore("_")) {
-            "clearsky" -> Forecast.CLEAR
-            "fair" -> Forecast.PARTLY_CLOUDY
-            "partlycloudy" -> Forecast.MOSTLY_CLOUDY
-            "cloudy" -> Forecast.CLOUDY
-            "rainshowers", "rain", "lightrainshowers", "lightrain" -> Forecast.DRIZZLE
-            "rainshowersandthunder", "snowandthunder", "snowshowersandthunder",
-            "lightssnowshowersandthunder", "lightsleetandthunder",
-            "lightsnowandthunder" -> Forecast.THUNDERSTORM
-
-            "sleetshowers", "sleet", "lightsleetshowers", "heavysleetshowers", "lightsleet",
-            "heavysleet" -> Forecast.SLEET
-
-            "snowshowers", "snow", "lightsnowshowers", "heavysnowshowers", "lightsnow",
-            "heavysnow" -> Forecast.SNOW
-
-            "heavyrain", "heavyrainshowers" -> Forecast.SHOWERS
-            "heavyrainandthunder", "sleetshowersandthunder", "rainandthunder", "sleetandthunder",
-            "lightrainshowersandthunder", "heavyrainshowersandthunder",
-            "lightssleetshowersandthunder", "lightrainandthunder" -> Forecast.THUNDERSTORM_WITH_RAIN
-
+            "clearsky", "fair" -> Forecast.CLEAR
+            "partlycloudy" -> Forecast.PARTLY_CLOUDY
+            "cloudy" -> Forecast.OVERCAST
             "fog" -> Forecast.FOG
-            "heavysleetshowersandthunder",
-            "heavysleetandthunder" -> Forecast.HEAVY_THUNDERSTORM_WITH_RAIN
 
-            "heavysnowshowersandthunder", "heavysnowandthunder" -> Forecast.HEAVY_THUNDERSTORM
-            else -> Forecast.NONE
+            "lightrain", "lightrainshowers" -> Forecast.LIGHT_RAIN
+            "heavyrain", "heavyrainshowers" -> Forecast.HEAVY_RAIN
+            "rain", "rainshowers" -> Forecast.RAIN
+
+            "lightsleet", "lightsleetshowers", "heavysleet", "heavysleetshowers", "sleet" -> Forecast.SLEET
+
+            "snow", "lightsnow", "lightsnowshowers", "heavysnow", "heavysnowshowers" -> Forecast.SNOW
+
+            "rainandthunder",
+            "heavyrainandthunder",
+            "heavyrainshowersandthunder",
+            "lightrainshowersandthunder",
+            "lightrainandthunder",
+            "rainshowersandthunder",
+            "lightssnowshowersandthunder",
+            "lightsnowshowersandthunder",
+            "snowshowersandthunder",
+            "heavysnowandthunder",
+            "heavysnowshowersandthunder",
+            "heavysleetandthunder",
+            "lightssleetshowersandthunder",
+            "sleetshowersandthunder" -> Forecast.THUNDERSTORM
+
+            else -> Forecast.UNKNOWN
         }
     }
 

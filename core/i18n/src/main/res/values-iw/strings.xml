@@ -745,7 +745,7 @@
         <item quantity="two">בעוד %1$d דקות</item>
         <item quantity="other">בעוד %1$d דקות</item>
     </plurals>
-    <string name="preference_typography_fonts">גופנים</string>
+    <string name="preference_typography_fonts">סגנונות גופן</string>
     <string name="font_category_device_default">ברירת המחדל של המכשיר</string>
     <string name="font_name_device_headline">גופן ברירת המחדל של הכותרות</string>
     <string name="font_name_device_body">גופן המלל של המכשיר</string>
@@ -807,7 +807,7 @@
     <string name="preference_search_locations_hide_uncategorized_summary">הצגה רק את התוצאות עם קטגוריות מוגדרות היטב, כמו בתי קפה ומסעדות</string>
     <string name="location_open_24_7">פתוח 24/7</string>
     <string name="plugin_state_error">התוסף אינו פועל כראוי</string>
-    <string name="plugin_state_setup_required">עליך להגדיר תחילה את תוסף זה</string>
+    <string name="plugin_state_setup_required">עליך להגדיר תוסף זה תחילה</string>
     <string name="plugin_action_setup">הגדרה</string>
     <string name="plugin_type_filesearch">קבצים</string>
     <string name="plugin_type_contacts">אנשי קשר</string>
@@ -885,7 +885,7 @@
     <string name="preference_measurement_system_metric">מטרית</string>
     <string name="preference_measurement_system_uk">הממלכה המאוחדת</string>
     <string name="preference_measurement_system_us">ארצות הברית</string>
-    <string name="preference_transliteration_disabled">מושבת</string>
+    <string name="preference_value_disabled">מושבת</string>
     <string name="select_tag">בחירת תגית</string>
     <string name="preference_transliteration">תעתיק מועדף</string>
     <string name="preference_transliteration_auto">תעתיק אוטומטי</string>
@@ -911,4 +911,23 @@
     <string name="create_tag_title">תגית חדשה</string>
     <string name="edit_tag_title">עריכת תגית</string>
     <string name="dialog_discard_unsaved">לצאת מבלי לשמור?</string>
+    <string name="add_font_style">הוספת סגנון גופן</string>
+    <string name="remove_font_style">הסרת סגנון גופן זה</string>
+    <string name="preference_create_colors">ערכת צבעים חדשה</string>
+    <string name="preference_create_shapes">ערכת צורות חדשה</string>
+    <string name="preference_create_typography">ערכת טיפוגרפיה חדשה</string>
+    <string name="preference_create_transparency">ערכת שקיפות חדשה</string>
+    <string name="typo_preview_extra_short">אב</string>
+    <string name="typo_preview_short1">אגץ</string>
+    <string name="typo_preview_short2">מםנן</string>
+    <string name="typo_preview_medium1">דברי הימים</string>
+    <string name="typo_preview_medium2">נוף איילון</string>
+    <string name="typo_preview_long">איך בלש תפס גמד\nרוצח עז קטנה 12390</string>
+    <string name="preference_widget_screen_count">כמות היישומונים במסך</string>
+    <string name="preference_widget_screen_count_info">שים לב: הפחתת הכמות תאפס אוטומטית את המחוות שהוקצו למסכים מושבתים.</string>
+    <string name="gesture_action_widgets_indexed">יישומונים %1$d</string>
+    <string name="preference_calendar_system">סוג לוח-השנה</string>
+    <string name="preference_calendar_system_primary">לוח-השנה הראשי</string>
+    <string name="preference_calendar_system_secondary">לוח-שנה משני</string>
+    <string name="preference_category_donate">תמיכה במפתחים</string>
 </resources>

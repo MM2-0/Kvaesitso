@@ -180,6 +180,11 @@ data class Forecast(
      * Clouds in percent
      */
     val clouds: Int? = null,
+
+    /**
+     * UV index (0-11)
+     */
+    val uvIndex: Double? = null,
     /**
      * Location name
      */

@@ -889,7 +889,7 @@
     <string name="preference_measurement_system_us">Estados Unidos</string>
     <string name="preference_transliteration">Transliteración preferida</string>
     <string name="preference_transliteration_auto">Automática</string>
-    <string name="preference_transliteration_disabled">Deshabilitada</string>
+    <string name="preference_value_disabled">Deshabilitada</string>
     <string name="preference_category_enabled_plugins">Activado</string>
     <string name="preference_category_installed_plugins">Instalado</string>
     <string name="widget_name_apps">Aplicaciones</string>

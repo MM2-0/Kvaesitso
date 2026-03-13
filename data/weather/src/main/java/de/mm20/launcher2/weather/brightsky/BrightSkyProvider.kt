@@ -87,10 +87,10 @@ internal class BrightSkyProvider(
         return when (icon) {
             "clear-day", "clear-night" -> Forecast.CLEAR
             "partly-cloudy-day", "partly-cloudy-night" -> Forecast.PARTLY_CLOUDY
-            "cloudy" -> Forecast.CLOUDY
+            "cloudy" -> Forecast.OVERCAST
             "fog" -> Forecast.FOG
             "wind" -> Forecast.WIND
-            "rain" -> Forecast.SHOWERS
+            "rain" -> Forecast.RAIN
             "sleet" -> Forecast.SLEET
             "snow" -> Forecast.SNOW
             "hail" -> Forecast.HAIL

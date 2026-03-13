@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,7 +23,6 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterRoute
 import de.mm20.launcher2.ui.settings.log.LogRoute
@@ -38,7 +36,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 @Serializable
-data object DebugSettingsRoute: NavKey
+data object DebugSettingsRoute : NavKey
 
 @Composable
 fun DebugSettingsScreen() {
@@ -133,6 +131,15 @@ fun DebugSettingsScreen() {
                     onClick = {
                         viewModel.reinstallIconPacks()
                     })
+                if (BuildConfig.DEBUG) {
+                    Preference(
+                        title = "String normalization test",
+                        summary = "Test string transliteration and normalization",
+                        onClick = {
+                            backStack += StringNormalizerTestRoute
+                        }
+                    )
+                }
             }
         }
     }

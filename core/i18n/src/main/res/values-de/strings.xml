@@ -878,7 +878,7 @@
     <string name="preference_measurement_system_us">Vereinigte Staaten</string>
     <string name="preference_transliteration">Bevorzugte Transliteration</string>
     <string name="preference_transliteration_auto">Automatisch</string>
-    <string name="preference_transliteration_disabled">Deaktiviert</string>
+    <string name="preference_value_disabled">Deaktiviert</string>
     <string name="preference_category_enabled_plugins">Aktiviert</string>
     <string name="preference_category_installed_plugins">Installiert</string>
     <string name="tag_icon_customicon">Icon</string>
@@ -914,4 +914,9 @@
     <string name="preference_create_transparency">Neues Transparenzschema</string>
     <string name="add_font_style">Schriftstil hinzufügen</string>
     <string name="remove_font_style">Diesen Schriftstil entfernen</string>
+    <string name="preference_widget_screen_count">Anzahl Widget-Seiten</string>
+    <string name="gesture_action_widgets_indexed">Widgets %1$d</string>
+    <string name="preference_calendar_system">Kalendersystem</string>
+    <string name="preference_calendar_system_primary">Primärer Kalender</string>
+    <string name="preference_calendar_system_secondary">Sekundärer Kalender</string>
 </resources>
