@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.settings.clockwidget
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.preferences.BatteryStatusVisibility
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
@@ -88,7 +89,7 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setDatePart(datePart)
     }
 
-    fun setBatteryPart(batteryPart: Boolean) {
+    fun setBatteryPart(batteryPart: BatteryStatusVisibility) {
         settings.setBatteryPart(batteryPart)
     }
 
