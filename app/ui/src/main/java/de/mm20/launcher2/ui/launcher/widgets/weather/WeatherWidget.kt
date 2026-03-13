@@ -101,6 +101,7 @@ import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.widgets.WeatherWidget
 import java.text.SimpleDateFormat
+import kotlin.math.roundToInt
 
 @Composable
 fun WeatherWidget(widget: WeatherWidget) {
@@ -428,7 +429,7 @@ private fun CurrentWeatherDetails(
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.secondary,
                         )
-                    } to "UV ${forecast.uvIndex}"
+                    } to resources.getString(R.string.uv_index, forecast.uvIndex?.roundToInt())
 
                 )
             }
@@ -462,7 +463,7 @@ private fun CurrentWeatherDetails(
 
                 )
             }
-            if (size < 4 && forecast.humidity != null) {
+            if (size < 4 && forecast.humidity != null && forecast.temperature >= 293.15) {
                 add(
                     @Composable {
                         Icon(
@@ -475,7 +476,7 @@ private fun CurrentWeatherDetails(
                     } to formatPercent(forecast.humidity!!.toFloat()),
                 )
             }
-            if (size < 4 && forecast.clouds != null && forecast.clouds!! >= 30) {
+            if (size < 4 && forecast.clouds != null && forecast.clouds!! >= 10) {
                 add(
                     @Composable {
                         Icon(

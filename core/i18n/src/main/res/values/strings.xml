@@ -88,6 +88,7 @@
     <string name="wind_north_west">North west</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north_north_west">North north west</string>
+    <string name="uv_index">UV %1$d</string>
     <!-- No rain or snow, used in weather widget -->
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
