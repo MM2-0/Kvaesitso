@@ -462,7 +462,7 @@ private fun CurrentWeatherDetails(
 
                 )
             }
-            if (size < 4) {
+            if (size < 4 && forecast.humidity != null) {
                 add(
                     @Composable {
                         Icon(
