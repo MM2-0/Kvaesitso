@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.FeatureFlags
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
@@ -46,13 +47,15 @@ fun IntegrationsSettingsScreen() {
                         backStack.add(MediaIntegrationSettingsRoute)
                     }
                 )
-                Preference(
-                    title = stringResource(R.string.preference_feed_integration),
-                    icon = R.drawable.news_24px,
-                    onClick = {
-                        backStack.add(FeedIntegrationSettingsRoute)
-                    }
-                )
+                if (FeatureFlags.feed) {
+                    Preference(
+                        title = stringResource(R.string.preference_feed_integration),
+                        icon = R.drawable.news_24px,
+                        onClick = {
+                            backStack.add(FeedIntegrationSettingsRoute)
+                        }
+                    )
+                }
             }
         }
         item {
@@ -97,13 +100,15 @@ fun IntegrationsSettingsScreen() {
                     }
                 )
                 if (isAtLeastApiLevel(29)) {
-                    Preference(
-                        title = stringResource(R.string.preference_smartspacer_integration),
-                        icon = R.drawable.smartspacer,
-                        onClick = {
-                            backStack.add(SmartspacerSettingsRoute)
-                        }
-                    )
+                    if (FeatureFlags.smartspacerIntegration) {
+                        Preference(
+                            title = stringResource(R.string.preference_smartspacer_integration),
+                            icon = R.drawable.smartspacer,
+                            onClick = {
+                                backStack.add(SmartspacerSettingsRoute)
+                            }
+                        )
+                    }
                 }
             }
         }

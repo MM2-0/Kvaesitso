@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.FeatureFlags
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.GestureAction
@@ -77,7 +78,9 @@ fun GestureSettingsScreen() {
     }
 
     val optionsWithFeed =
-        options + (stringResource(R.string.gesture_action_feed) to GestureAction.Feed)
+        if (FeatureFlags.feed) {
+            options + (stringResource(R.string.gesture_action_feed) to GestureAction.Feed)
+        } else options
 
 
     val context = LocalContext.current
