@@ -39,7 +39,7 @@
     <string name="preference_about_license_summary">Licencováno pod GNU General Public License 3.0</string>
     <string name="preference_screen_debug_summary">Nástroje pro řešení potíží</string>
     <string name="preference_clockwidget_date_part_summary">Zobrazit aktuální datum</string>
-    <string name="preference_clockwidget_battery_part_summary">Zobrazit aktuální úroveň baterie, když je vybitá nebo se nabíjí</string>
+    <string name="preference_clockwidget_battery_part_summary">Zobrazit aktuální úroveň baterie</string>
     <string name="preference_restore_summary">Importovat dříve vytvořenou zálohu</string>
     <string name="preference_search_favorites_summary">Zobrazit připnuté a často používané položky nad mřízkou s aplikacemi</string>
     <string name="preference_search_calculator_summary">Vyhodnocování matematických výrazů</string>
@@ -932,4 +932,7 @@
     <string name="preference_calendar_system_primary">Primární kalendář</string>
     <string name="preference_calendar_system_secondary">Sekundární kalendář</string>
     <string name="preference_category_donate">Podpořte vývoj</string>
+    <string name="preference_clockwidget_battery_part_always_show">Vždy zobrazit</string>
+    <string name="preference_clockwidget_battery_part_show">Zobrazit při nízké hodnotě nebo při nabíjení</string>
+    <string name="preference_clockwidget_battery_part_hide">Vypnuto</string>
 </resources>
