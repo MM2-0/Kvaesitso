@@ -448,7 +448,7 @@ fun WatchFaceSelector(
                                                 text = getClockStyleName(context, style.value),
                                             )
                                         },
-                                        checkedLeadingIcon = {
+                                        selectedLeadingIcon = {
                                             Icon(
                                                 painterResource(R.drawable.check_24px),
                                                 null,

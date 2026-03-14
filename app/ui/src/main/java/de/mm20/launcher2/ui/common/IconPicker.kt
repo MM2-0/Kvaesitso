@@ -206,7 +206,7 @@ fun IconPicker(
                                         viewModel.searchIcon(query, filterIconPack)
                                     }
                                 },
-                                checkedLeadingIcon = {
+                                selectedLeadingIcon = {
                                     Icon(painterResource(R.drawable.check_24px), null)
                                 }
                             )
@@ -227,7 +227,7 @@ fun IconPicker(
                                     text = {
                                         Text(iconPack.name)
                                     },
-                                    checkedLeadingIcon = {
+                                    selectedLeadingIcon = {
                                         Icon(painterResource(R.drawable.check_24px), null)
                                     },
                                 )

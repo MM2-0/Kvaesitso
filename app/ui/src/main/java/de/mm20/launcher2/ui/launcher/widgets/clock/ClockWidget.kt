@@ -550,7 +550,7 @@ fun ConfigureClockWidgetSheet(
                             DropdownMenuItem(
                                 shapes = MenuDefaults.itemShape(0, 3),
                                 selected = alignment == ClockWidgetAlignment.Top,
-                                checkedLeadingIcon = {
+                                selectedLeadingIcon = {
                                     Icon(
                                         painterResource(R.drawable.check_24px),
                                         null
@@ -571,7 +571,7 @@ fun ConfigureClockWidgetSheet(
                             DropdownMenuItem(
                                 shapes = MenuDefaults.itemShape(1, 3),
                                 selected = alignment == ClockWidgetAlignment.Center,
-                                checkedLeadingIcon = {
+                                selectedLeadingIcon = {
                                     Icon(
                                         painterResource(R.drawable.check_24px),
                                         null
@@ -591,7 +591,7 @@ fun ConfigureClockWidgetSheet(
                             DropdownMenuItem(
                                 shapes = MenuDefaults.itemShape(2, 3),
                                 selected = alignment == ClockWidgetAlignment.Bottom,
-                                checkedLeadingIcon = {
+                                selectedLeadingIcon = {
                                     Icon(
                                         painterResource(R.drawable.check_24px),
                                         null

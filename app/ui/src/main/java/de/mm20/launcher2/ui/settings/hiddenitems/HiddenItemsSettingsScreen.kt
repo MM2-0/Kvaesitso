@@ -236,7 +236,7 @@ private fun VisibilityDropdown(
                         contentDescription = null
                     )
                 },
-                checkedLeadingIcon = {
+                selectedLeadingIcon = {
                     Icon(
                         painterResource(R.drawable.check_24px),
                         contentDescription = null
@@ -265,7 +265,7 @@ private fun VisibilityDropdown(
                             contentDescription = null
                         )
                     },
-                    checkedLeadingIcon = {
+                    selectedLeadingIcon = {
                         Icon(
                             painterResource(R.drawable.check_24px),
                             contentDescription = null
@@ -288,7 +288,7 @@ private fun VisibilityDropdown(
                         contentDescription = null
                     )
                 },
-                checkedLeadingIcon = {
+                selectedLeadingIcon = {
                     Icon(
                         painterResource(R.drawable.check_24px),
                         contentDescription = null
