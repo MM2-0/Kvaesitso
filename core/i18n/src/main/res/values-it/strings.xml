@@ -258,7 +258,7 @@
     <string name="preference_clockwidget_date_part_summary">Mostra la data corrente</string>
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_battery_part">Batteria</string>
-    <string name="preference_clockwidget_battery_part_summary">Mostra il livello della batteria quando la batteria è scarica o in ricarica</string>
+    <string name="preference_clockwidget_battery_part_summary">Mostra il livello della batteria</string>
     <string name="preference_clockwidget_alarm_part">Sveglie</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra le sveglie che suoneranno nelle prossime 8 ore</string>
     <string name="preference_screen_search">Ricerca</string>
@@ -932,4 +932,7 @@
     <string name="preference_calendar_system">Il sistema di calendario preferito (ad esempio calendario gregoriano, calendario ebraico, calendario persiano)</string>
     <string name="preference_calendar_system_primary">Calendario primario</string>
     <string name="preference_calendar_system_secondary">Calendario secondario</string>
+    <string name="preference_clockwidget_battery_part_always_show">Mostra sempre</string>
+    <string name="preference_clockwidget_battery_part_show">Mostra quando è scarica o in carica</string>
+    <string name="preference_clockwidget_battery_part_hide">Nascondi</string>
 </resources>
