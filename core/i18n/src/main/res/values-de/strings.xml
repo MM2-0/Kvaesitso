@@ -919,4 +919,8 @@
     <string name="preference_calendar_system">Kalendersystem</string>
     <string name="preference_calendar_system_primary">Primärer Kalender</string>
     <string name="preference_calendar_system_secondary">Sekundärer Kalender</string>
+    <string name="preference_clockwidget_battery_part_always_show">Immer anzeigen</string>
+    <string name="preference_clockwidget_battery_part_show">Wenn niedrig und beim Laden</string>
+    <string name="preference_clockwidget_battery_part_hide">Aus</string>
+    <string name="preference_category_donate">Entwicklung unterstützen</string>
 </resources>
