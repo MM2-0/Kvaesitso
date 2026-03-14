@@ -924,4 +924,5 @@
     <string name="preference_clockwidget_battery_part_always_show">Megjelenítés mindig</string>
     <string name="preference_clockwidget_battery_part_show">Megjelenítés csak akkor, amikor alacsony vagy töltődik</string>
     <string name="preference_clockwidget_battery_part_hide">Kikapcsolás</string>
+    <string name="uv_index">UV: %1$d</string>
 </resources>
