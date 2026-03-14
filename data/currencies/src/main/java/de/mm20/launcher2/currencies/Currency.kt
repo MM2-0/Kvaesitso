@@ -4,6 +4,9 @@ import de.mm20.launcher2.database.entities.CurrencyEntity
 
 data class Currency(
         val symbol: String,
+        /**
+         * The value of 1 EUR in this currency
+         */
         val value: Double,
         val lastUpdate: Long
 ) {
