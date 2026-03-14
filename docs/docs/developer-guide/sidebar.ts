@@ -98,19 +98,31 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
         link: '/docs/developer-guide/plugins/access-control',
       },
       {
+        text: 'SDK Changelogs',
+        items: [
+          {
+            text: 'v2.3.0',
+            link: '/docs/developer-guide/plugins/changelogs/v2.3.0',
+          },
+          {
+            text: 'v2.2.0',
+            link: '/docs/developer-guide/plugins/changelogs/v2.2.0',
+          },
+          {
+            text: 'v2.1.0',
+            link: '/docs/developer-guide/plugins/changelogs/v2.1.0',
+          },
+          {
+            text: 'v2.0.0',
+            link: '/docs/developer-guide/plugins/changelogs/v2.0.0',
+          },
+
+        ],
+      },
+      {
         text: 'Reference',
         link: '/reference/index.html',
         target: '_blank',
-      },
-      {
-        text: 'Migrations',
-        items: [
-          {
-            text: 'Migrate to plugin SDK v2.x',
-            link: '/docs/developer-guide/plugins/migrations/v2',
-          },
-          ,
-        ],
       },
     ],
   },
