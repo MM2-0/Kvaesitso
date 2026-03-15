@@ -935,4 +935,5 @@
     <string name="preference_clockwidget_battery_part_always_show">Mostra sempre</string>
     <string name="preference_clockwidget_battery_part_show">Mostra quando è scarica o in carica</string>
     <string name="preference_clockwidget_battery_part_hide">Nascondi</string>
+    <string name="uv_index">UV %1$d</string>
 </resources>
