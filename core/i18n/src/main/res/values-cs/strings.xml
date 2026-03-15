@@ -935,4 +935,5 @@
     <string name="preference_clockwidget_battery_part_always_show">Vždy zobrazit</string>
     <string name="preference_clockwidget_battery_part_show">Zobrazit při nízké hodnotě nebo při nabíjení</string>
     <string name="preference_clockwidget_battery_part_hide">Vypnuto</string>
+    <string name="uv_index">UV %1$d</string>
 </resources>
