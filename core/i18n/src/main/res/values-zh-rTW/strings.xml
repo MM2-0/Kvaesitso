@@ -903,4 +903,8 @@
     <string name="preference_calendar_system_primary">主曆制</string>
     <string name="preference_calendar_system_secondary">第二曆制</string>
     <string name="preference_category_donate">支持開發</string>
+    <string name="uv_index">UV %1$d</string>
+    <string name="preference_clockwidget_battery_part_always_show">永遠顯示</string>
+    <string name="preference_clockwidget_battery_part_show">低電量時或充電時顯示</string>
+    <string name="preference_clockwidget_battery_part_hide">關閉</string>
 </resources>
