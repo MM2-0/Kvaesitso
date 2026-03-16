@@ -364,7 +364,7 @@
     <string name="preference_crash_reporter_summary">דיווחי שגיאות וקריסות</string>
     <string name="preference_backup">גיבוי</string>
     <string name="preference_backup_summary">ייצוא ההעדפות ונתוני המשגר</string>
-    <string name="preference_clockwidget_battery_part_summary">הצגת רמת הסוללה הנוכחית כאשר הסוללה חלשה או בעת טעינה</string>
+    <string name="preference_clockwidget_battery_part_summary">הצגת רמת הסוללה הנוכחית</string>
     <string name="preference_screen_search">חיפוש</string>
     <string name="preference_screen_search_summary">חיפוש, תגיות, תוצאות מוחרגות</string>
     <string name="preference_search_favorites_summary">הצגת פריטים נעוצים ובשימוש נפוץ מעל רשת היישומים</string>
@@ -930,4 +930,8 @@
     <string name="preference_calendar_system_primary">לוח-השנה הראשי</string>
     <string name="preference_calendar_system_secondary">לוח-שנה משני</string>
     <string name="preference_category_donate">תמיכה במפתחים</string>
+    <string name="preference_clockwidget_battery_part_always_show">הצגה תמיד</string>
+    <string name="preference_clockwidget_battery_part_show">הצגה כאשר נמוכה או בעת טעינה</string>
+    <string name="preference_clockwidget_battery_part_hide">מוסתר</string>
+    <string name="uv_index">קרינת UV %1$d</string>
 </resources>
