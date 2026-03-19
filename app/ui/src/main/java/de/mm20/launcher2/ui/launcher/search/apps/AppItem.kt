@@ -123,14 +123,16 @@ fun AppItem(
                                 }
 
 
-                                app.versionName?.let {
-                                    Text(
-                                        text = stringResource(R.string.app_info_version, it),
-                                        style = MaterialTheme.typography.bodySmall,
-                                        modifier = Modifier.padding(top = 4.dp),
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
+                                if (LocalGridSettings.current.showAppVersion) {
+                                    app.versionName?.let {
+                                        Text(
+                                            text = stringResource(R.string.app_info_version, it),
+                                            style = MaterialTheme.typography.bodySmall,
+                                            modifier = Modifier.padding(top = 4.dp),
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    }
                                 }
                                 Text(
                                     text = app.componentName.packageName,
