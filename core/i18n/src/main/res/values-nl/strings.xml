@@ -924,4 +924,5 @@
     <string name="preference_clockwidget_battery_part_always_show">Altijd tonen</string>
     <string name="preference_clockwidget_battery_part_show">Tonen bij opladen of laag niveau</string>
     <string name="preference_clockwidget_battery_part_hide">Uit</string>
+    <string name="uv_index">UV-index %1$d</string>
 </resources>
