@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
@@ -35,7 +36,7 @@ import de.mm20.launcher2.ui.launcher.search.common.list.ListResults
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 
-fun LazyListScope.AppResults(
+fun LazyGridScope.AppResults(
     onProfileSelected: (Int) -> Unit,
     profiles: List<Profile> = emptyList(),
     selectedProfileIndex: Int = -1,

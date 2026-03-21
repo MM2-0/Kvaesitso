@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -42,24 +42,24 @@ internal class SearchComponent(
         state: LauncherScaffoldState
     ) {
         val searchVM = viewModel<SearchVM>()
-        val lazyListState = rememberLazyListState()
+        val lazyGridState = rememberLazyGridState()
 
         LaunchedEffect(isActive) {
             if (!isActive) {
                 searchVM.reset()
-                lazyListState.scrollToItem(0, 0)
+                lazyGridState.scrollToItem(0, 0)
             }
         }
 
         LaunchedEffect(searchVM.searchQuery.value, searchVM.filters.value) {
-            lazyListState.requestScrollToItem(0, 0)
+            lazyGridState.requestScrollToItem(0, 0)
         }
 
-        LaunchedEffect(lazyListState.canScrollForward, lazyListState.canScrollBackward) {
+        LaunchedEffect(lazyGridState.canScrollForward, lazyGridState.canScrollBackward) {
             isAtBottom.value =
-                !lazyListState.canScrollForward && !reverse || !lazyListState.canScrollBackward && reverse
+                !lazyGridState.canScrollForward && !reverse || !lazyGridState.canScrollBackward && reverse
             isAtTop.value =
-                !lazyListState.canScrollForward && reverse || !lazyListState.canScrollBackward && !reverse
+                !lazyGridState.canScrollForward && reverse || !lazyGridState.canScrollBackward && !reverse
         }
 
 
@@ -88,7 +88,7 @@ internal class SearchComponent(
             SearchColumn(
                 modifier = Modifier.nestedScroll(scrollConnection).widthIn(max = 916.dp).fillMaxHeight(),
                 paddingValues = insets,
-                state = lazyListState,
+                state = lazyGridState,
                 reverse = reverse,
                 userScrollEnabled = !state.isDragged,
                 onHideKeyboard = {

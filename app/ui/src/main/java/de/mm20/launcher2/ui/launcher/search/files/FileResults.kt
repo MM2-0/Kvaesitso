@@ -2,7 +2,7 @@ package de.mm20.launcher2.ui.launcher.search.files
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
@@ -16,7 +16,7 @@ import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListResults
 import kotlin.math.min
 
-fun LazyListScope.FileResults(
+fun LazyGridScope.FileResults(
     files: List<File>,
     missingPermission: Boolean,
     onPermissionRequest: () -> Unit,
