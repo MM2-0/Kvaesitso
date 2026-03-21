@@ -2,7 +2,7 @@ package de.mm20.launcher2.ui.launcher.search.calendar
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
@@ -16,7 +16,7 @@ import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListResults
 import kotlin.math.min
 
-fun LazyListScope.CalendarResults(
+fun LazyGridScope.CalendarResults(
     events: List<CalendarEvent>,
     missingPermission: Boolean,
     onPermissionRequest: () -> Unit,
@@ -39,7 +39,7 @@ fun LazyListScope.CalendarResults(
                     .fillMaxWidth(),
                 item = calendar,
                 showDetails = showDetails,
-                onShowDetails = { onSelect(if(it) index else -1) },
+                onShowDetails = { onSelect(if (it) index else -1) },
                 highlight = highlightedItem?.key == calendar.key
             )
         },

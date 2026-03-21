@@ -263,11 +263,11 @@ private fun formatMillimeters(
             .withLocale(
                 Locale.getDefault()
             ).unitWidth(NumberFormatter.UnitWidth.NARROW)
-            .precision(Precision.maxFraction(0))
+            .precision(Precision.maxFraction(1))
             .format(Measure(millimeters, MeasureUnit.MILLIMETER)).toString()
     } else {
         val formatted = NumberFormat.getInstance().apply {
-            maximumFractionDigits = 0
+            maximumFractionDigits = 1
         }.format(millimeters)
         return "$formatted ${context.getString(R.string.unit_millimeter_symbol)}"
     }

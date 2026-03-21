@@ -1,11 +1,11 @@
 package de.mm20.launcher2.ui.launcher.search.wikipedia
 
-import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListResults
 
-fun LazyListScope.ArticleResults(
+fun LazyGridScope.ArticleResults(
     articles: List<Article>,
     selectedIndex: Int,
     onSelect: (Int) -> Unit,
@@ -19,7 +19,7 @@ fun LazyListScope.ArticleResults(
             ListItem(
                 item = article,
                 showDetails = showDetails,
-                onShowDetails = { onSelect(if(it) index else -1) },
+                onShowDetails = { onSelect(if (it) index else -1) },
                 highlight = article.key == highlightedItem?.key,
             )
         },

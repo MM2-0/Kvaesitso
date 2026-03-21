@@ -118,14 +118,16 @@ fun CalendarWidget(
                     ) {
                         for ((i, date) in availableDates.withIndex()) {
                             DropdownMenuItem(
-                                shape = if (availableDates.size == 1) MenuDefaults.standaloneItemShape
-                                else when (i) {
-                                    0 -> MenuDefaults.leadingItemShape
-                                    availableDates.lastIndex -> MenuDefaults.trailingItemShape
-                                    else -> MenuDefaults.middleItemShape
-                                },
+                                shapes = MenuDefaults.itemShape(i, availableDates.size),
+                                selected = date == selectedDate,
                                 text = {
                                     Text(formatDay(context, date, LocalCalendarSystems.current[0]!!))
+                                },
+                                selectedLeadingIcon = {
+                                    Icon(
+                                        painterResource(R.drawable.check_24px),
+                                        null,
+                                    )
                                 },
                                 onClick = {
                                     viewModel.selectDate(date)

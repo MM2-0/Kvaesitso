@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -39,7 +41,7 @@ import de.mm20.launcher2.unitconverter.Dimension
 import java.util.Date
 import kotlin.math.min
 
-fun LazyListScope.UnitConverterResults(
+fun LazyGridScope.UnitConverterResults(
     converters: List<UnitConverter>,
     truncate: Boolean,
     onShowAll: () -> Unit,
@@ -49,6 +51,9 @@ fun LazyListScope.UnitConverterResults(
         val converter = converters.first()
         item(
             key = "converter-header",
+            span = {
+                GridItemSpan(maxLineSpan)
+            }
         ) {
             ListItemSurface(
                 isFirst = true,
@@ -129,7 +134,10 @@ fun LazyListScope.UnitConverterResults(
         val count = if (truncate) min(5, converter.values.size) else converter.values.size
         items(
             count,
-            key = { "converter-${converter.values[it].symbol}" }
+            key = { "converter-${converter.values[it].symbol}" },
+            span = {
+                GridItemSpan(maxLineSpan)
+            }
         ) {
             val value = converter.values[it]
             ListItemSurface(
@@ -193,7 +201,10 @@ fun LazyListScope.UnitConverterResults(
         }
         if (truncate && converter.values.size > 5) {
             item(
-                key = "converter-footer"
+                key = "converter-footer",
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
             ) {
                 ListItemSurface(
                     isLast = true,
