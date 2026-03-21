@@ -11,7 +11,8 @@ data class FavoritesWidgetConfig(
     val editButton: Boolean = true,
     val tagsMultiline: Boolean = false,
     val compactTags: Boolean = false,
-    val tagList: List<String> = emptyList()
+    val tagList: List<String> = emptyList(),
+    val latestButton: Boolean = false
 )
 
 data class AppsWidget(
