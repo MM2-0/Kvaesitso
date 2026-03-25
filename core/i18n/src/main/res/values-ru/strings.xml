@@ -868,4 +868,15 @@
     <string name="preference_clock_widget_monospaced">Моноширинные цифры</string>
     <string name="preference_search_apps">Приложения</string>
     <string name="preference_search_apps_summary">Показывать все приложения, когда строка поиска пуста</string>
+    <string name="widget_name_apps">Приложения</string>
+    <string name="no_selection">Не выбрано</string>
+    <string name="preference_create_colors">Новая цветовая схема</string>
+    <string name="preference_create_transparency">Новая схема прозрачности</string>
+    <string name="preference_category_enabled_plugins">Включить</string>
+    <string name="preference_category_installed_plugins">Установлен</string>
+    <string name="preference_clockwidget_smartspacer">Управляется Smartspacer\'ом</string>
+    <string name="preference_clockwidget_battery_part_always_show">Всегда показывать</string>
+    <string name="preference_search_bar_style_hidden">Скрытый</string>
+    <string name="preference_launch_smartspacer_app">Открыть Smartspacer</string>
+    <string name="preference_feed_integration">Лента</string>
 </resources>
