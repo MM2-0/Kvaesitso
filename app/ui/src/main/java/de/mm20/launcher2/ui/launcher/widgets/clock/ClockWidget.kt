@@ -670,7 +670,6 @@ fun ConfigureClockWidgetSheet(
                         )
                         ListPreference(
                             title = stringResource(R.string.preference_clockwidget_battery_part),
-                            summary = stringResource(R.string.preference_clockwidget_battery_part_summary),
                             icon = R.drawable.battery_full_24px,
                             value = parts?.battery,
                             onValueChanged = {

@@ -607,7 +607,6 @@
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Show media controls when there is an active media session</string>
     <string name="preference_clockwidget_battery_part">Battery</string>
-    <string name="preference_clockwidget_battery_part_summary">Show the current battery level</string>
     <string name="preference_clockwidget_battery_part_always_show">Always show</string>
     <string name="preference_clockwidget_battery_part_show">Show when low or charging</string>
     <string name="preference_clockwidget_battery_part_hide">Off</string>
