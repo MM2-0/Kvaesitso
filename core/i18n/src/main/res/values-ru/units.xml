@@ -261,7 +261,7 @@
     <string name="unit_kilogram_symbol">кг</string>
     <string name="unit_gram_symbol">г</string>
     <string name="unit_metric_ton_symbol">т</string>
-    <string name="unit_long_ton_symbol">длин. т.</string>
+    <string name="unit_long_ton_symbol">длинная тонна</string>
     <string name="unit_stone_symbol">ст</string>
     <plurals name="unit_stone">
         <item quantity="one">стоун</item>
@@ -481,4 +481,26 @@
         <item quantity="many">чашек</item>
         <item quantity="other">чашек</item>
     </plurals>
+    <string name="unit_pint_us_symbol">жидкая пинта США</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">пинта (США)</item>
+        <item quantity="few">пинты (США)</item>
+        <item quantity="many">пинт (США)</item>
+        <item quantity="other">пинт (США)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">жид. унция США</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">жидкая унция (США)</item>
+        <item quantity="few">жидкие унции (США)</item>
+        <item quantity="many">жидких унций (США)</item>
+        <item quantity="other">жидких унций (США)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">имп. жид. унция</string>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">жидкая унция (имперская)</item>
+        <item quantity="few">жидкие унции (имперские)</item>
+        <item quantity="many">жидких унций (имперских)</item>
+        <item quantity="other">жидких унций (имперских)</item>
+    </plurals>
+    <string name="unit_tablespoon_symbol">ст. л.</string>
 </resources>
