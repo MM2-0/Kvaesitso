@@ -332,7 +332,6 @@
     <string name="preference_clockwidget_music_part_summary">Rodyti medijos kontrolę kai yra aktyvi medijos sesija</string>
     <string name="preference_screen_appearance_summary">Tinkinti išvaizda ir jausma</string>
     <string name="preference_theme_system">Sekti sistemą</string>
-    <string name="preference_clockwidget_battery_part_summary">Rodyti dabartinį baterijos lygį kai nėra daug baterijos peocentų ar kraunama</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (tik Vokietijai)</string>
     <string name="preference_themed_icons">Temuotos ikonos</string>
     <string name="preference_clockwidget_alarm_part">Žadintuvas</string>

@@ -541,7 +541,6 @@
     <string name="preference_clock_widget_show_seconds">إظهار الثواني</string>
     <string name="preference_clockwidget_date_part_summary">إظهار التاريخ الحالي</string>
     <string name="preference_clockwidget_favorites_part">قاعدة التثبيت</string>
-    <string name="preference_clockwidget_battery_part_summary">إظهار مستوى البطارية الحالي عندما تكون البطارية منخفضة أو قيد الشحن</string>
     <string name="preference_restore">استعادة</string>
     <string name="preference_restore_summary">استيراد نسخة احتياطية تم إنشاؤها مسبقًا</string>
     <string name="preference_logs">السجلات</string>

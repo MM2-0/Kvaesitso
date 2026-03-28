@@ -241,7 +241,6 @@
     <string name="preference_clockwidget_date_part_summary">Visa aktuellt datum</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_battery_part">Batteri</string>
-    <string name="preference_clockwidget_battery_part_summary">Visa aktuell batterinivå när batteriet är lågt eller laddas</string>
     <string name="preference_clockwidget_alarm_part">Alarm</string>
     <string name="preference_clockwidget_alarm_part_summary">Visa alarm som ringer inom de närmsta 15 minuterna</string>
     <string name="preference_crash_reporter">Kraschrapportering</string>

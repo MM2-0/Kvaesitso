@@ -286,7 +286,6 @@
     <string name="preference_icon_shape_hexagon">Hexagonoa</string>
     <string name="preference_grid_labels_summary">Aplikazioaren izena ikonoaren azpian erakutsi</string>
     <string name="preference_theme_system">Sistemaren arabera</string>
-    <string name="preference_clockwidget_battery_part_summary">Erakutsi uneko bateriaren maila bateria gutxi dagoenean edo kargatzen ari denean</string>
     <string name="preference_screen_search">Bilatu</string>
     <string name="preference_dim_wallpaper_summary">Gai ilunetan, horma-papera ilundu</string>
     <string name="preference_search_files_summary">Tokiko fitxategiak eta hodeiko fitxategiak bilatu</string>

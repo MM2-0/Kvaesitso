@@ -274,7 +274,6 @@
     <string name="preference_clockwidget_music_part">رسانه</string>
     <string name="preference_clockwidget_music_part_summary">هنگامی که جلسه رسانه‌ای فعال است، نمایش کنترل‌های رسانه‌ای</string>
     <string name="preference_clockwidget_battery_part">باتری</string>
-    <string name="preference_clockwidget_battery_part_summary">نمایش سطح کنونی باتری هنگامی که باتری ضعیف است یا در حال شارژ است</string>
     <string name="preference_search_calendar">تقویم</string>
     <string name="preference_search_calendar_summary">جستجوی تعهدات و رویدادهای آینده</string>
     <string name="preference_search_localfiles_summary">جستجوی اسناد، عکس‌ها و سایر فایل‌های ذخیره‌شده روی این دستگاه</string>

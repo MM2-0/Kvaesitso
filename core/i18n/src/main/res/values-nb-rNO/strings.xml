@@ -170,7 +170,6 @@
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Vis mediakontroller når der er en aktiv mediaøkt</string>
     <string name="preference_clockwidget_battery_part">Batteri</string>
-    <string name="preference_clockwidget_battery_part_summary">Vis nåværende batterinivå når batteriet er lavt eller lades</string>
     <string name="preference_clockwidget_alarm_part">Alarmer</string>
     <string name="preference_clockwidget_alarm_part_summary">Vis alarmer som vil gå de neste 8 timer</string>
     <string name="preference_screen_backup">Sikkerhetskopi og gjenoppretting</string>

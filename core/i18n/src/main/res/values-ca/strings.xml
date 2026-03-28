@@ -279,7 +279,6 @@
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Mostra els controls multimèdia quan hi ha una sessió multimèdia activa</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
-    <string name="preference_clockwidget_battery_part_summary">Mostra el nivell actual de la bateria quan la bateria està baixa o s\'està carregant</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra les alarmes que sonaran en les properes 8 hores</string>
     <string name="preference_screen_backup">Fes una còpia de seguretat i restaura</string>

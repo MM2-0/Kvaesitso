@@ -236,7 +236,6 @@
     <string name="preference_search_files">Файлы</string>
     <string name="preference_clockwidget_date_part">Дата</string>
     <string name="preference_clockwidget_battery_part">Батарея</string>
-    <string name="preference_clockwidget_battery_part_summary">Показывать текущий уровень заряда батареи, когда батарея разряжена или заряжается</string>
     <string name="preference_search_bar_style">Стиль</string>
     <string name="preference_notification_badges">Значки-оповещения</string>
     <string name="preference_suspended_badges">Приостановленные приложения</string>

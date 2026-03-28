@@ -314,7 +314,6 @@
     <string name="plugin_type_weather">Időjáráselőrejelzési szolgáltató</string>
     <string name="plugin_weather_provider_enable">Beállítás időjáráselőrejelzési szolgáltatónak</string>
     <string name="preference_clock_widget_alignment_bottom">Alulra</string>
-    <string name="preference_clockwidget_battery_part_summary">Akkumulátor jelenlegi töltöttségi szintjének megjelenítése</string>
     <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 8 órán belül megszólalnak</string>
     <string name="preference_logs">Naplók</string>
     <string name="preference_logs_summary">Alkalmazásnaplók megtekintése és exportálása</string>

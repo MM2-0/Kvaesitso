@@ -258,7 +258,6 @@
     <string name="preference_clockwidget_date_part_summary">Mostra la data corrente</string>
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_battery_part">Batteria</string>
-    <string name="preference_clockwidget_battery_part_summary">Mostra il livello della batteria</string>
     <string name="preference_clockwidget_alarm_part">Sveglie</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra le sveglie che suoneranno nelle prossime 8 ore</string>
     <string name="preference_screen_search">Ricerca</string>

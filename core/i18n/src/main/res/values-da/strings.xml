@@ -108,7 +108,6 @@
     <string name="preference_clockwidget_date_part">Dato</string>
     <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_clockwidget_battery_part">Batteri</string>
-    <string name="preference_clockwidget_battery_part_summary">Vis nuværende batteriniveau, når batteriet er lavt eller oplader</string>
     <string name="preference_screen_search">Søg</string>
     <string name="preference_search_files">Filer</string>
     <string name="preference_search_calendar">Kalender</string>

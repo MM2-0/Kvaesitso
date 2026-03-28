@@ -373,7 +373,6 @@
     <string name="search_action_label">Nombre</string>
     <string name="preference_clockwidget_date_part_summary">Mostrar la fecha actual</string>
     <string name="preference_screen_backup">Copia de seguridad y restauración</string>
-    <string name="preference_clockwidget_battery_part_summary">Mostrar el nivel actual de batería cuando el nivel de batería sea bajo o esté cargando</string>
     <string name="search_action_websearch_url">Plantilla de URL</string>
     <string name="preference_clockwidget_alarm_part">Alarmas</string>
     <string name="preference_layout_search_bar_position">Posición de la barra de búsqueda</string>

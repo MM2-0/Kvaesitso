@@ -196,7 +196,6 @@
     <string name="preference_clockwidget_favorites_part">Telakka</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_battery_part">Akku</string>
-    <string name="preference_clockwidget_battery_part_summary">Näytä akun varaustaso, kun akku on vähissä tai latauksessa</string>
     <string name="preference_clockwidget_alarm_part">Hälytykset</string>
     <string name="preference_clockwidget_alarm_part_summary">Näytä seuraavan 15 minuutin hälytykset</string>
     <string name="preference_screen_backup">Varmuuskopioi ja palauta</string>

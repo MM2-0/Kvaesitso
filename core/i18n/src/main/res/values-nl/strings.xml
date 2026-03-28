@@ -309,7 +309,6 @@
     <string name="preference_screen_weatherwidget">Weer</string>
     <string name="preference_clockwidget_music_part_summary">Bedieningselementen voor media tonen als er media wordt afgespeeld</string>
     <string name="preference_clockwidget_battery_part">Batterij</string>
-    <string name="preference_clockwidget_battery_part_summary">Batterijniveau tonen</string>
     <string name="preference_clockwidget_alarm_part">Alarmen</string>
     <string name="preference_crash_reporter">Crashrapportage</string>
     <string name="preference_crash_reporter_summary">Fout- en crashrapporten</string>

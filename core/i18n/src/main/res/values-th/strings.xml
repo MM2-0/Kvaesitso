@@ -449,7 +449,6 @@
     <string name="preference_clockwidget_layout_vertical">ค่าเริ่มต้น</string>
     <string name="preference_clockwidget_favorites_part_summary">แสดงรายการที่ปักหมุดไว้บนแถบด็อค</string>
     <string name="weather_no_data">ไม่มีข้อมูลสภาพอากาศ</string>
-    <string name="preference_clockwidget_battery_part_summary">แสดงระดับแบตเตอรี่ปัจจุบันเมื่อแบตเตอรี่เหลือน้อยหรือกำลังถูกชาร์จอยู่</string>
     <string name="weather_widget_set_location">กำหนดตำแหน่ง</string>
     <string name="preference_restore">กู้คืนข้อมูล</string>
     <string name="missing_permission_auto_location">คุณต้องอนุญาตให้แอปเข้าถึงตำแหน่งเพื่อการกำหนดตำแหน่งแบบอัตโนมัติ</string>

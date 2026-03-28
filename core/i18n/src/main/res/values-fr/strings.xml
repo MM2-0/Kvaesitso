@@ -335,7 +335,6 @@
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_music_part_summary">Afficher les contrôles du média lorsqu\'il y a une session média active</string>
     <string name="preference_clockwidget_battery_part">Batterie</string>
-    <string name="preference_clockwidget_battery_part_summary">Afficher le niveau de la batterie lorsque celle-ci est basse ou en chargement</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
     <string name="preference_clockwidget_alarm_part_summary">Afficher les alarmes qui sonneront dans les 8 prochaines heures</string>
     <string name="battery_part_charging">Chargement</string>

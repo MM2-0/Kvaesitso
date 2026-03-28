@@ -327,7 +327,6 @@
     <string name="preference_clockwidget_music_part">媒體</string>
     <string name="preference_clockwidget_music_part_summary">在有活動媒體會話時顯示媒體控制元件</string>
     <string name="preference_clockwidget_battery_part">電池</string>
-    <string name="preference_clockwidget_battery_part_summary">顯示目前電池電量</string>
     <string name="preference_clockwidget_alarm_part">鬧鐘</string>
     <string name="preference_clockwidget_alarm_part_summary">顯示未來 8 小時內響起的鬧鐘</string>
     <string name="preference_screen_backup">備份與還原</string>
