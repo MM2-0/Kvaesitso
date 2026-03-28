@@ -204,7 +204,7 @@
     <string name="weather_widget_set_location">Установить местоположение</string>
     <string name="missing_permission_auto_location">Доступ к местоположению требуется для его автоматического определения</string>
     <string name="missing_permission_contact_search_settings">Для поиска контактов требуется соответствующее разрешение</string>
-    <string name="missing_permission_file_search_settings_android10">Для поиска файлов требуется разрешение «Управление всеми файлами»</string>
+    <string name="missing_permission_file_search_settings_android10">Для поиска файлов требуется разрешение «Доступ ко всем файлам»</string>
     <string name="missing_permission_files_search">Для поиска фотографий, медиафайлов и документов на этом устройстве требуется разрешение на доступ к хранилищу</string>
     <string name="preference_theme">Тема</string>
     <string name="preference_colors_bw">Чёрно-белая</string>
@@ -878,4 +878,5 @@
     <string name="preference_search_bar_style_hidden">Скрытый</string>
     <string name="preference_launch_smartspacer_app">Открыть Smartspacer</string>
     <string name="preference_feed_integration">Лента</string>
+    <string name="action_quit">Выйти</string>
 </resources>
