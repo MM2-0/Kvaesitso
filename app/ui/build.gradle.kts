@@ -89,9 +89,6 @@ dependencies {
     implementation(libs.jsoup)
     implementation(libs.markdown)
 
-    // Legacy dependencies
-    implementation(libs.androidx.transition)
-
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pagerindicators)
