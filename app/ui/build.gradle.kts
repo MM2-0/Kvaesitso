@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.kotlin.plugin.compose)
 }
@@ -60,6 +59,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        buildConfig = true
     }
 
     lint {
@@ -86,7 +86,6 @@ dependencies {
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.compose.material3adaptive.navigation3)
 
-    implementation(libs.jsoup)
     implementation(libs.markdown)
 
     implementation(libs.accompanist.systemuicontroller)
@@ -106,8 +105,6 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodelcompose)
     implementation(libs.androidx.lifecycle.runtimecompose)
-
-    implementation(libs.jsoup)
 
     implementation(libs.koin.android)
     implementation(libs.koin.androidxcompose)

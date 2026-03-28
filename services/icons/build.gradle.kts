@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -35,6 +34,9 @@ android {
         }
     }
     namespace = "de.mm20.launcher2.icons"
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {

@@ -1,11 +1,9 @@
-import android.annotation.SuppressLint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -31,7 +29,6 @@ android {
         applicationId = "de.mm20.launcher2"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        @SuppressLint("HighAppVersionCode")
         versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026012400
         versionName = "1.39.3"
         signingConfig = signingConfigs.getByName("debug")
@@ -49,12 +46,8 @@ android {
     buildTypes {
         release {
             applicationIdSuffix = ".release"
-
-            postprocessing {
-                isRemoveUnusedCode = true
-                isObfuscate = false
-                isOptimizeCode = true
-            }
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
         debug {
             applicationIdSuffix = ".debug"
@@ -67,11 +60,8 @@ android {
             versionNameSuffix = "-${LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))}-nightly"
             signingConfig = signingConfigs.findByName("gh-actions")
 
-            postprocessing {
-                isRemoveUnusedCode = true
-                isObfuscate = false
-                isOptimizeCode = true
-            }
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
 
         flavorDimensions += "variant"
@@ -100,6 +90,9 @@ android {
         abortOnError = false
     }
     namespace = "de.mm20.launcher2"
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 
