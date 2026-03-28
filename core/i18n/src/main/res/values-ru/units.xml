@@ -468,4 +468,17 @@
         <item quantity="many">чайных ложек (США)</item>
         <item quantity="other">чайных ложек (США)</item>
     </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">галлон</item>
+        <item quantity="few">галлона</item>
+        <item quantity="many">галлонов</item>
+        <item quantity="other">галлонов</item>
+    </plurals>
+    <string name="unit_cup_symbol">чашка</string>
+    <plurals name="unit_cup">
+        <item quantity="one">чашка</item>
+        <item quantity="few">чашки</item>
+        <item quantity="many">чашек</item>
+        <item quantity="other">чашек</item>
+    </plurals>
 </resources>
