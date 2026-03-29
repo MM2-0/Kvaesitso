@@ -337,4 +337,90 @@
     <string name="dimension_time">Tempo</string>
     <string name="dimension_data">Dados</string>
     <string name="dimension_bitrate">Taxa de bits</string>
+    <!-- UNITS OF VOLUME -->
+    <string name="unit_liter_symbol">L</string>
+    <plurals name="unit_liter">
+        <item quantity="one">Litro</item>
+        <item quantity="other">Litros</item>
+    </plurals>
+    <string name="unit_milliliter_symbol">mL</string>
+    <plurals name="unit_milliliter">
+        <item quantity="one">mililitro</item>
+        <item quantity="other">mililitros</item>
+    </plurals>
+    <string name="unit_cubic_meter_symbol">m³</string>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">metro cúbico</item>
+        <item quantity="other">metros cúbicos</item>
+    </plurals>
+    <string name="unit_cubic_centimeter_symbol">cm³</string>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">centímetro cúbico</item>
+        <item quantity="other">centímetros cúbicos</item>
+    </plurals>
+    <string name="unit_cubic_millimeter_symbol">mm³</string>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">milímetro cúbico</item>
+        <item quantity="other">milímetros cúbicos</item>
+    </plurals>
+    <string name="unit_cubic_inch_symbol">cu.in</string>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">polegada cúbica</item>
+        <item quantity="other">polegadas cúbicas</item>
+    </plurals>
+    <string name="unit_cubic_foot_symbol">cu.ft</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">pé cúbico</item>
+        <item quantity="other">pés cúbicos</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">cu.yd</string>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">jarda cúbica</item>
+        <item quantity="other">jardas cúbicas</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">gal. US</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">galão (EUA)</item>
+        <item quantity="other">galões (EUA)</item>
+    </plurals>
+    <string name="unit_gallon_imp_symbol">gal. imp</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">galão (imperial)</item>
+        <item quantity="other">galões (imperial)</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">quart. US</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">quartilho (EUA)</item>
+        <item quantity="other">quartilhos (EUA)</item>
+    </plurals>
+    <string name="unit_pint_imp_symbol">quart. imp</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">quartilho (imperial)</item>
+        <item quantity="other">quartilhos (imperial)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">fl oz US</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">fluid ounce (US)</item>
+        <item quantity="other">fluid ounces (US)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">fl oz imp</string>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">onça fluida (imperial)</item>
+        <item quantity="other">onças fluidas (imperial)</item>
+    </plurals>
+    <string name="unit_cup_symbol">xícara (EUA)</string>
+    <plurals name="unit_cup">
+        <item quantity="one">xícara (EUA)</item>
+        <item quantity="other">xícaras EUA)</item>
+    </plurals>
+    <string name="unit_tablespoon_symbol">tbsp</string>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">colher de sopa (EUA)</item>
+        <item quantity="other">colheres de sopa (EUA)</item>
+    </plurals>
+    <string name="unit_teaspoon_symbol">tsp</string>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">colher de chá (EUA)</item>
+        <item quantity="other">colheres de chá (EUA)</item>
+    </plurals>
 </resources>
