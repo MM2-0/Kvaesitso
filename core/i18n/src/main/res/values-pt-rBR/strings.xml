@@ -2,6 +2,7 @@
 <resources>
     <string name="menu_share">Compartilhar</string>
     <string name="menu_back">Voltar</string>
+    <string name="action_quit">Sair</string>
     <string name="menu_delete">Excluir</string>
     <string name="menu_contacts_open_externally">Abrir no aplicativo de contatos</string>
     <string name="menu_calendar_open_externally">Abrir no aplicativo de calendário</string>
@@ -24,6 +25,7 @@
     <string name="wind_east_north_east">Leste-Nordeste</string>
     <string name="wind_east_south_east">Leste-Sudeste</string>
     <string name="wind_south_south_east">Sul-Sudeste</string>
+    <string name="uv_index">UV %1$d</string>
     <string name="wikipedia_url">https://pt.wikipedia.org</string>
     <string name="wikipedia_source">de Wikipédia</string>
     <string name="file_meta_title">Título: %1$s</string>
@@ -127,14 +129,17 @@
     <string name="preference_cards_opacity">Opacidade</string>
     <string name="preference_icon_shape_square">Quadrado</string>
     <string name="preference_clockwidget_favorites_part">Gaveta de aplicativos</string>
+    <string name="preference_clockwidget_dock_rows">Linhas da gaveta de aplicativos</string>
     <string name="preference_clockwidget_music_part">Mídia</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
+    <string name="preference_clockwidget_battery_part_hide">Desabilitado</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
     <string name="preference_crash_reporter_summary">Relatórios de erros e falhas</string>
     <string name="preference_crash_reporter">Reportar falha</string>
     <string name="preference_screen_search">Pesquisar</string>
     <string name="preference_screen_search_summary">Pesquisa, tags, items escondidos</string>
     <string name="preference_search_favorites">Favoritos</string>
+    <string name="preference_search_apps_summary">Mostrar todos os aplicativos quando o campo de pesquisa estiver vazio</string>
     <string name="preference_search_files">Arquivos</string>
     <string name="preference_search_contacts">Contatos</string>
     <string name="preference_search_calendar">Calendário</string>
@@ -163,6 +168,7 @@
     <string name="preference_theme_light">Claro</string>
     <string name="preference_theme_dark">Escuro</string>
     <string name="preference_screen_colors">Esquema de cores</string>
+    <string name="preference_create_colors">Novo esquema de cores</string>
     <string name="preference_colors_default">Padrão</string>
     <string name="preference_screen_about">Sobre</string>
     <string name="preference_screen_appearance">Aparência</string>
@@ -257,6 +263,7 @@
     <string name="preference_screen_clockwidget">Relógio</string>
     <string name="preference_clockwidget_layout_vertical">Vertical</string>
     <string name="preference_clockwidget_layout_horizontal">Horizontal</string>
+    <string name="preference_clockwidget_smartspacer">Gerenciado pelo Smartspacer</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Mostra a data atual</string>
     <string name="websearch_dialog_query_encoding_none">Nenhum</string>
@@ -381,6 +388,7 @@
     <string name="preference_logs">Logs</string>
     <string name="search_action_event">Agendar evento</string>
     <string name="create_search_action_website_invalid_url">O site fornecido não pode ser importado automaticamente como uma pesquisa na web. Você pode tentar um site diferente ou inserir os dados necessários manualmente na próxima etapa.</string>
+    <string name="tag_name_empty_error">Nome não pode ser vazio</string>
     <string name="tag_exists_message">Já existe uma etiqueta com este nome. Se você continuar, as duas etiquetas serão mescladas.</string>
     <string name="preference_layout_fixed_search_bar_summary">Não rola a barra de pesquisa para fora da visão</string>
     <string name="search_action_label">Nome</string>
@@ -423,6 +431,7 @@
     <string name="preference_layout_search_bar_position">Posição da barra de pesquisa</string>
     <string name="preference_screen_gestures">Gestos</string>
     <string name="preference_screen_gestures_summary">Gestos e ações gestuais</string>
+    <string name="gesture_action_feed">Feed</string>
     <string name="gesture_failed_message">Você executou o gesto \"%1$s\". Este gesto está definido para acionar a ação \"%2$s\". No entanto, a ação não pôde ser executada pelo seguinte motivo:</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item selecionado</item>
@@ -432,6 +441,7 @@
     <string name="tag_exists_error">Já existe uma etiqueta com este nome.</string>
     <string name="missing_permission_accessibility_gesture_failed">O serviço de acessibilidade do iniciador precisa estar ativado para executar esta ação.</string>
     <string name="missing_permission_accessibility_gesture_settings">Esta ação requer que o serviço de acessibilidade do iniciador esteja ativado.</string>
+    <string name="gesture_action_widgets_indexed">Widgets %1$d</string>
     <string name="gesture_action_launch_app">Iniciar aplicativo</string>
     <string name="gesture_action_lock_screen">Desligar a tela</string>
     <string name="gesture_action_quick_settings">Abrir as configurações rápidas</string>
@@ -445,6 +455,7 @@
     <string name="search_action_timer">Iniciar cronômetro</string>
     <string name="search_action_contact">Adicionar aos contatos</string>
     <string name="search_action_open_url">Ver site</string>
+    <string name="edit_search_action_title">Editar ação rápida</string>
     <string name="create_search_action_type">Que tipo de ação você deseja criar?</string>
     <string name="create_search_action_type_web">Pesquisar em um site</string>
     <string name="create_search_action_type_app">Pesquisar em um aplicativo</string>
@@ -479,6 +490,8 @@
     <string name="app_widget_loading_failed">Falha no carregamento do widget da aplicação.</string>
     <string name="widget_config_calendar_no_calendars">Nenhum calendário encontrado</string>
     <string name="preference_screen_integrations">Integrações</string>
+    <string name="preference_widget_screen_count">Número de telas de widget</string>
+    <string name="preference_widget_screen_count_info">Observação: Reduzir o número reiniciará automaticamente gestos atribuídos a telas desabilitadas</string>
     <string name="preference_screen_homescreen">Tela inicial</string>
     <string name="preference_screen_homescreen_summary">Relógio, barra de pesquisa, papel de parede,barras de sistema</string>
     <string name="preference_media_integration">Controle de mídia</string>
@@ -507,6 +520,7 @@
     <string name="note_widget_conflict_description">O ficheiro ligado não está vazio e o seu conteúdo não corresponde à última versão guardada desta nota. Que versão pretende manter\?</string>
     <string name="note_widget_file_read_error_description">O ficheiro ligado não pôde ser lido. Possivelmente, foi movido ou eliminado. Foi restaurada uma cópia a partir do armazenamento interno do iniciador. Se editar a nota, o ficheiro ligado será possivelmente substituído.</string>
     <string name="note_widget_file_write_error_description">A nota não pôde ser escrita no ficheiro conectado. Possivelmente, foi movida ou eliminada. Foi guardada uma cópia no armazenamento interno do iniciador.</string>
+    <string name="widget_name_apps">Aplicativos</string>
     <string name="widget_name_notes">Nota</string>
     <string name="widget_action_replace">Substituir</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Limpar e reconstruir o cache do pacote de ícones</string>
@@ -535,6 +549,8 @@
     <string name="location_closed">Fechado</string>
     <string name="preference_screen_plugins">Extensões</string>
     <string name="preference_screen_plugins_summary">Gerenciar extensões instaladas</string>
+    <string name="preference_category_enabled_plugins">Habilitado</string>
+    <string name="preference_category_installed_plugins">Instalado</string>
     <string name="no_plugins_installed">Nenhuma extensão instalada</string>
     <string name="preference_charging_animation_summary">Reproduz uma animação de bolha enquanto o dispositivo está carregando</string>
     <string name="preference_charging_animation">Animação de carregamento</string>
@@ -557,6 +573,9 @@
     <string name="preference_mdy_color_source_wallpaper">Papel de parede</string>
     <string name="preference_location_managed">Gerenciado por extensão</string>
     <string name="preference_location_managed_summary">A localização para esse provedor é gerenciada pelo aplicativo de extensão</string>
+    <string name="poi_category_stationery">Papelaria</string>
+    <string name="poi_category_climbing_gym">Academia de escalada</string>
+    <string name="poi_category_hackerspace">Hackerspace</string>
     <string name="customize_item_label">Etiqueta</string>
     <string name="plugin_type_filesearch">Arquivos</string>
     <string name="plugin_action_setup">Configurar</string>
@@ -694,6 +713,7 @@
     <string name="poi_category_chinese_restaurant">Restaurante chinês</string>
     <string name="poi_category_museum">Museu</string>
     <string name="poi_category_car_wash">Lava jato</string>
+    <string name="preference_create_shapes">Novo esquema de formas</string>
     <string name="preference_shapes_default">Padrão</string>
     <string name="preference_shapes_extra_round">Extra arrendondado</string>
     <string name="preference_screen_shapes">Formas</string>
@@ -755,6 +775,7 @@
     <string name="preference_clock_widget_time_format_24h">24-horas</string>
     <string name="preference_grid_list_style_summary">Exibir aplicativos por lista em vez de grade</string>
     <string name="preference_grid_list_icons_summary">Mostrar ícones na exibição por lista</string>
+    <string name="preference_clock_widget_monospaced">Dígitos monoespaçados</string>
     <string name="preference_clock_widget_time_format">Formato de horário</string>
     <string name="preference_search_local_calendar_summary">Procurar calendários no dispositivo</string>
     <string name="poi_category_amusement_park">Parque de diversões</string>
@@ -780,6 +801,7 @@
         <item quantity="other">+%1$d tarefas inacabadas</item>
     </plurals>
     <string name="preference_tasks_integration_description">Tasks é um aplicativo gratuito e open source de lista de tarefas e lembretes. Se instalado, %1$s poderá exibir e procurar suas tarefas do aplicativo Tasks.</string>
+    <string name="no_feed_providers">Nenhum provedor de feed instalado</string>
     <string name="preference_contacts_call_on_tap">Toque para chamar</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather é um aplicativo de clima gratuito e open source. Se instalado, %1$s poderá usar Breezy Weather como uma fonte de dados para dados de clima.</string>
     <string name="poi_category_optician">Oftalmologista</string>
@@ -840,7 +862,9 @@
         <item quantity="many">%1$s endereços postais</item>
         <item quantity="other">%1$s endereços postais</item>
     </plurals>
+    <string name="preference_create_typography">Novo esquema de tipografia</string>
     <string name="preference_screen_transparencies">Transparência</string>
+    <string name="preference_create_transparency">Novo esquema de transparência</string>
     <string name="preference_transparencies_default">Padrão</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparente</string>
     <string name="confirmation_delete_transparencies_scheme">Tem certeza que deseja excluir o esquema de transparência %1$s?</string>
@@ -856,6 +880,8 @@
     <string name="preference_screen_typography">Tipografia</string>
     <string name="confirmation_delete_typography_scheme">Tem certeza que deseja excluir o esquema de tipografia %1$s?</string>
     <string name="preference_typography_fonts">Fontes</string>
+    <string name="add_font_style">Adicionar estilo de fonte</string>
+    <string name="remove_font_style">Remover este estilo de fonte</string>
     <string name="font_category_device_default">Padrão do dispositivo</string>
     <string name="font_name_device_headline">Fonte padrão do título</string>
     <string name="font_name_device_body">Fonte de texto do dispositivo</string>
@@ -865,4 +891,46 @@
     <string name="preference_search_bar_style_solid">Sólido</string>
     <string name="clock_variant_analog_ticks">Tique-taques</string>
     <string name="music_widget_interactive_progress_bar">Barra de progresso interativa</string>
+    <string name="tag_icon_customicon">Ícone</string>
+    <string name="preference_screen_locale">Idioma e região</string>
+    <string name="preference_screen_locale_summary">Idioma, unidades, formato de horário</string>
+    <string name="preference_language">Idioma</string>
+    <string name="preference_value_system_default">Padrão do sistema</string>
+    <string name="preference_value_disabled">Desabilitado</string>
+    <string name="preference_form_of_address">Gênero de tratamento</string>
+    <string name="preference_form_of_address_neutral">Neutro</string>
+    <string name="preference_form_of_address_fem">Feminino</string>
+    <string name="preference_form_of_address_masc">Masculino</string>
+    <string name="preference_measurement_system">Sistema de medida</string>
+    <string name="preference_measurement_system_metric">Métrico</string>
+    <string name="preference_measurement_system_uk">Reino Unido</string>
+    <string name="preference_measurement_system_us">Estados Unidos</string>
+    <string name="preference_transliteration_auto">Automático</string>
+    <string name="preference_calendar_system">Sistema de calendário</string>
+    <string name="preference_calendar_system_primary">Calendário principal</string>
+    <string name="preference_calendar_system_secondary">Calendário secundário</string>
+    <string name="typo_preview_medium1">Hamburgo</string>
+    <string name="typo_preview_medium2">Prévia</string>
+    <string name="typo_preview_long">Só juíza chata não vê\ncâmera frágil\n1234790</string>
+    <string name="preference_category_donate">Apoie o desenvolvimento</string>
+    <string name="preference_search_apps">Aplicativos</string>
+    <string name="preference_category_feed_provider">Provedor de feed</string>
+    <string name="preference_feed_enable_summary">Deslize para a direita na tela inicial para abrir o feed</string>
+    <string name="preference_launch_smartspacer_app">Abrir o Smartspacer</string>
+    <string name="preference_feed_integration">Feed</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer é um widget de Resumo gratuito e código-aberto. Se instalado, é possível integrá-lo à zona dinâmica do widget de relógio</string>
+    <string name="preference_smartspacer_enable">Habilitar integração com o Smartspacer</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_clockwidget_battery_part_always_show">Mostrar sempre</string>
+    <string name="select_tag">Selecionar etiqueta</string>
+    <string name="create_tag_title">Nova etiqueta</string>
+    <string name="edit_tag_title">Editar etiqueta</string>
+    <string name="dialog_discard_unsaved">Sair sem salvar?</string>
+    <string name="typo_preview_extra_short">Aa</string>
+    <string name="typo_preview_short1">Ava</string>
+    <string name="typo_preview_short2">Typ</string>
+    <string name="preference_clockwidget_battery_part_show">Mostrar quando fraca ou carregando</string>
+    <string name="create_search_action_title">Nova ação rápida</string>
+    <string name="preference_transliteration">Transliteração preferida</string>
+    <string name="tag_icon_emoji">Emoji</string>
 </resources>
