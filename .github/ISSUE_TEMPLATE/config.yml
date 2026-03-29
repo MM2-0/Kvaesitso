@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/MM2-0/Kvaesitso/discussions
+    about: Discuss or ask questions here
+  - name: Telegram group
+    url: https://t.me/Kvaesitso
+    about: Support, polls and showcases
