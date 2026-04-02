@@ -38,6 +38,7 @@ internal data class LauncherApp(
     override val versionName: String?,
     override val isSuspended: Boolean = false,
     internal val userSerialNumber: Long,
+    override val firstInstallTime: Long = 0L,
     override val labelOverride: String? = null,
     override val score: ResultScore = ResultScore.Unspecified,
 ) : Application {
@@ -67,6 +68,10 @@ internal data class LauncherApp(
         ),
         isSuspended = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED != 0,
         userSerialNumber = launcherActivityInfo.user.getSerialNumber(context),
+        firstInstallTime = getPackageInstallTime(
+            context,
+            launcherActivityInfo.applicationInfo.packageName
+        ),
         score = score,
     )
 
@@ -277,6 +282,14 @@ internal data class LauncherApp(
                 context.packageManager.getPackageInfo(packageName, 0).versionName
             } catch (e: PackageManager.NameNotFoundException) {
                 null
+            }
+        }
+
+        fun getPackageInstallTime(context: Context, packageName: String): Long {
+            return try {
+                context.packageManager.getPackageInfo(packageName, 0).firstInstallTime
+            } catch (e: PackageManager.NameNotFoundException) {
+                0L
             }
         }
 
