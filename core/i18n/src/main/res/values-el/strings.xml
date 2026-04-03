@@ -206,7 +206,6 @@
     <string name="preference_clockwidget_favorites_part_summary">Εμφάνιση της πρώτης σειράς καρφιτσωμένων στοιχείων</string>
     <string name="preference_clockwidget_music_part">Πολυμέσα</string>
     <string name="preference_clockwidget_battery_part">Μπαταρία</string>
-    <string name="preference_clockwidget_battery_part_summary">Εμφάνιση του τρέχοντος επιπέδου μπαταρίας όταν είναι χαμηλή ή φορτίζει</string>
     <string name="preference_clockwidget_alarm_part">Ξυπνητήρια</string>
     <string name="preference_screen_backup">Αντίγραφα ασφαλείας &amp; Επαναφορά</string>
     <string name="preference_backup">Αντίγραφα ασφαλείας</string>

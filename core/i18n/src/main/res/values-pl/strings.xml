@@ -234,7 +234,6 @@
     <string name="preference_clockwidget_battery_part">Bateria</string>
     <string name="weather_condition_sleetandthunder">Śnieg z deszczem i piorunami</string>
     <string name="calendar_event_allday">cały dzień</string>
-    <string name="preference_clockwidget_battery_part_summary">Pokaż aktualny poziom baterii kiedy jest bliska wyczerpaniu lub gdy się ładuje</string>
     <string name="weather_condition_sleetshowersandthunder">Przelotne opady śniegu z deszczem i piorunami</string>
     <string name="menu_share_store_link">Link %1$s</string>
     <string name="preference_clockwidget_alarm_part_summary">Pokaż alarmy które zadzwonią w ciągu 15 minut</string>

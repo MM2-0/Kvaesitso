@@ -286,7 +286,6 @@
     <string name="preference_clockwidget_battery_part">Baterai</string>
     <string name="preference_clockwidget_alarm_part">Alarm</string>
     <string name="preference_clockwidget_music_part_summary">Tampilkan kontrol media ketika ada sesi media yang aktif</string>
-    <string name="preference_clockwidget_battery_part_summary">Tampilkan level baterai ketika baterai lemah atau sedang mengisi daya</string>
     <string name="preference_clockwidget_alarm_part_summary">Tampilkan alarm yang akan berdering sekitar 15 menit mendatang</string>
     <string name="preference_screen_search">Pencarian</string>
     <string name="preference_search_favorites">Favorit</string>

@@ -242,7 +242,6 @@
     <string name="preference_clockwidget_favorites_part_summary">Afișează primul rând de elemente fixate</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_battery_part">Baterie</string>
-    <string name="preference_clockwidget_battery_part_summary">Afișează nivelul curent al bateriei atunci când bateria este scăzută sau se încarcă</string>
     <string name="preference_clockwidget_alarm_part">Alarme</string>
     <string name="preference_clockwidget_alarm_part_summary">Afișează alarme care vor suna în următoarele 15 minute</string>
     <string name="preference_crash_reporter_summary">Rapoarte de eroare și de cădere</string>

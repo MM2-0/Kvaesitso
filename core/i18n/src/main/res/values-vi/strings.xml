@@ -408,7 +408,6 @@
     <string name="preference_clockwidget_music_part">Phương tiện</string>
     <string name="preference_clockwidget_music_part_summary">Hiển thị các điều khiển phương tiện khi có phiên phương tiện đang hoạt động</string>
     <string name="preference_clockwidget_battery_part">Pin</string>
-    <string name="preference_clockwidget_battery_part_summary">Hiển thị mức pin hiện tại khi pin yếu hoặc đang sạc</string>
     <string name="preference_clockwidget_alarm_part">Báo thức</string>
     <string name="preference_clockwidget_alarm_part_summary">Hiển thị báo thức sẽ đổ chuông trong vòng 8 giờ tới</string>
     <string name="preference_screen_backup">Sao lưu &amp; Khôi phục</string>

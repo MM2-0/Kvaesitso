@@ -4,7 +4,6 @@
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_owncloud_signin">登陆到Owncloud</string>
     <string name="preference_about_license">此应用是自由软件。</string>
-    <string name="preference_clockwidget_battery_part_summary">在电池电量不足或正在充电时显示当前电池电量</string>
     <string name="preference_crash_reporter">崩溃报告程序</string>
     <string name="preference_crash_reporter_summary">错误和崩溃报告</string>
     <string name="preference_search_files_summary">搜索本地文件和云服务器文件</string>

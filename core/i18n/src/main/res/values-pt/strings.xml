@@ -323,7 +323,6 @@
     <string name="preference_location_managed_summary">A localização do serviço é controlada pelo plugin</string>
     <string name="preference_notification_badges">Indicadores de notificação</string>
     <string name="preference_grid_column_count">Número de colunas</string>
-    <string name="preference_clockwidget_battery_part_summary">Mostrar nível de bateria se a bateria estiver fraca ou o telefone a carregar</string>
     <string name="preference_clock_widget_show_seconds">Mostrar segundos</string>
     <string name="preference_restore">Restaurar</string>
     <string name="weather_condition_thunderstorm">Trovoada</string>
