@@ -9,6 +9,7 @@ import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
@@ -393,143 +394,184 @@ private fun CurrentWeatherDetails(
     val resources = LocalResources.current
 
     val items = remember(forecast) {
-        buildList<Pair<@Composable () -> Unit, String>> {
+        buildList<Triple<String, @Composable () -> Unit, String>> {
             if (
                 forecast.precipProbability != null && forecast.precipProbability!! >= 20 ||
                 forecast.precipitation != null && forecast.precipitation!! >= 1
             ) {
                 add(
-                    @Composable {
-                        Icon(
-                            painter = painterResource(R.drawable.rainy_20px),
-                            modifier = Modifier
-                                .size(20.dp),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.secondary,
-                        )
-                    } to when {
-                        forecast.precipProbability != null
-                                && forecast.precipitation != null
-                                && forecast.precipitation!! >= 0.05 -> {
-                            "${
-                                formatPercent(
-                                    forecast.precipProbability!!.toFloat()
-                                )
-                            } • ${
+                    Triple(
+                        "rain",
+                        @Composable {
+                            Icon(
+                                painter = painterResource(R.drawable.rainy_20px),
+                                modifier = Modifier
+                                    .size(20.dp),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.secondary,
+                            )
+                        },
+                        when {
+                            forecast.precipProbability != null
+                                    && forecast.precipitation != null
+                                    && forecast.precipitation!! >= 0.05 -> {
+                                "${
+                                    formatPercent(
+                                        forecast.precipProbability!!.toFloat()
+                                    )
+                                } • ${
+                                    formatPrecipitation(
+                                        context,
+                                        forecast.precipitation?.toFloat() ?: 0f,
+                                        measurementSystem
+                                    )
+                                }"
+
+                            }
+
+                            forecast.precipProbability != null -> {
+                                formatPercent(forecast.precipProbability!!.toFloat())
+                            }
+
+                            else -> {
                                 formatPrecipitation(
                                     context,
                                     forecast.precipitation?.toFloat() ?: 0f,
                                     measurementSystem
                                 )
-                            }"
-
+                            }
                         }
-
-                        forecast.precipProbability != null -> {
-                            formatPercent(forecast.precipProbability!!.toFloat())
-                        }
-
-                        else -> {
-                            formatPrecipitation(
-                                context,
-                                forecast.precipitation?.toFloat() ?: 0f,
-                                measurementSystem
-                            )
-                        }
-                    }
+                    )
                 )
             }
             if (forecast.uvIndex != null && forecast.uvIndex!! >= 3) {
                 add(
-                    @Composable {
-                        Icon(
-                            painter = painterResource(R.drawable.sunny_20px),
-                            modifier = Modifier
-                                .size(20.dp),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.secondary,
-                        )
-                    } to resources.getString(R.string.uv_index, forecast.uvIndex?.roundToInt())
+                    Triple(
+                        "uv",
+                        @Composable {
+                            Icon(
+                                painter = painterResource(R.drawable.sunny_20px),
+                                modifier = Modifier
+                                    .size(20.dp),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.secondary,
+                            )
+                        },
+                        resources.getString(R.string.uv_index, forecast.uvIndex?.roundToInt())
+                    )
 
                 )
             }
             if (forecast.windSpeed != null && forecast.windSpeed!! >= 3) {
                 add(
-                    @Composable {
-                        if (forecast.windDirection != null) {
-                            // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
-                            val angle by animateFloatAsState(forecast.windDirection!!.toFloat() + 180f)
-                            Icon(
-                                painter = painterResource(R.drawable.navigation_20px),
-                                modifier = Modifier
-                                    .rotate(angle)
-                                    .size(20.dp),
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.secondary,
-                            )
-                        } else {
-                            Icon(
-                                painter = painterResource(R.drawable.air_20px),
-                                contentDescription = null,
-                                modifier = Modifier.size(20.dp),
-                                tint = MaterialTheme.colorScheme.secondary,
-                            )
-                        }
-                    } to formatSpeed(
-                        context,
-                        forecast.windSpeed!!.toFloat(),
-                        measurementSystem
+                    Triple(
+                        "wind",
+                        @Composable {
+                            if (forecast.windDirection != null) {
+                                // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
+                                val angle by animateFloatAsState(forecast.windDirection!!.toFloat() + 180f)
+                                Icon(
+                                    painter = painterResource(R.drawable.navigation_20px),
+                                    modifier = Modifier
+                                        .rotate(angle)
+                                        .size(20.dp),
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.secondary,
+                                )
+                            } else {
+                                Icon(
+                                    painter = painterResource(R.drawable.air_20px),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(20.dp),
+                                    tint = MaterialTheme.colorScheme.secondary,
+                                )
+                            }
+                        },
+                        formatSpeed(
+                            context,
+                            forecast.windSpeed!!.toFloat(),
+                            measurementSystem
+                        )
                     )
-
                 )
             }
             if (size < 4 && forecast.humidity != null && forecast.temperature >= 293.15) {
                 add(
-                    @Composable {
-                        Icon(
-                            painter = painterResource(R.drawable.humidity_mid_20px),
-                            modifier = Modifier
-                                .size(20.dp),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.secondary,
-                        )
-                    } to formatPercent(forecast.humidity!!.toFloat()),
+                    Triple(
+                        "humidity",
+                        @Composable {
+                            Icon(
+                                painter = painterResource(R.drawable.humidity_mid_20px),
+                                modifier = Modifier
+                                    .size(20.dp),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.secondary,
+                            )
+                        },
+                        formatPercent(forecast.humidity!!.toFloat())
+                    ),
                 )
             }
             if (size < 4 && forecast.clouds != null && forecast.clouds!! >= 10) {
                 add(
-                    @Composable {
-                        Icon(
-                            painter = painterResource(R.drawable.cloud_20px),
-                            modifier = Modifier
-                                .size(20.dp),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.secondary,
-                        )
-                    } to formatPercent(forecast.clouds!!.toFloat()),
+                    Triple(
+                        "clouds",
+                        @Composable {
+                            Icon(
+                                painter = painterResource(R.drawable.cloud_20px),
+                                modifier = Modifier
+                                    .size(20.dp),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.secondary,
+                            )
+                        },
+                        formatPercent(forecast.clouds!!.toFloat())
+                    ),
                 )
             }
         }
     }
 
-    FlowRow(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.End),
-    ) {
-        for (item in items) {
-            Row(
-                modifier = Modifier,
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+
+    SharedTransitionScope {
+        AnimatedContent(
+            items,
+            modifier = it,
+        ) { items ->
+            FlowRow(
+                modifier = modifier,
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.End),
             ) {
-                item.first()
-                Text(
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.padding(start = 4.dp),
-                    text = item.second,
-                    style = MaterialTheme.typography.labelSmall,
-                )
+                for (item in items) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Box(
+                            modifier = Modifier.sharedElement(
+                                rememberSharedContentState(
+                                    key = item.first,
+                                ),
+                                placeholderSize = SharedTransitionScope.PlaceholderSize.AnimatedSize,
+                                animatedVisibilityScope = this@AnimatedContent,
+                            )
+                        ) {
+                            item.second()
+                        }
+                        Text(
+                            textAlign = TextAlign.Start,
+                            modifier = Modifier.padding(start = 4.dp).sharedBounds(
+                                rememberSharedContentState(
+                                    key = item.first + "text",
+                                ),
+                                placeholderSize = SharedTransitionScope.PlaceholderSize.AnimatedSize,
+                                animatedVisibilityScope = this@AnimatedContent,
+                            ),
+                            text = item.third,
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                    }
+                }
             }
         }
     }
