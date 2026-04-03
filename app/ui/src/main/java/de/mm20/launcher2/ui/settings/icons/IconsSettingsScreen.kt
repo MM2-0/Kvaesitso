@@ -146,14 +146,6 @@ fun IconsSettingsScreen() {
                         viewModel.setColumnCount(it)
                     }
                 )
-                SwitchPreference(
-                    title = stringResource(R.string.preference_grid_app_version),
-                    summary = stringResource(R.string.preference_grid_app_version_summary),
-                    value = grid.showAppVersion,
-                    onValueChanged = {
-                        viewModel.setShowAppVersion(it)
-                    }
-                )
             }
         }
         item {

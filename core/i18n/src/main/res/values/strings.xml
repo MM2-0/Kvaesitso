@@ -577,8 +577,6 @@
     <string name="preference_grid_labels_summary">Show the app name below the icon</string>
     <string name="preference_grid_list_style_summary">Show applications in a list instead of a grid</string>
     <string name="preference_grid_list_icons_summary">Show icons in the list view</string>
-    <string name="preference_grid_app_version">Show app version in popup</string>
-    <string name="preference_grid_app_version_summary">Show app version in long-press menu</string>
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Troubleshooting tools</string>
     <string name="preference_category_widgets">Widgets</string>
@@ -630,6 +628,8 @@
     <string name="preference_search_favorites_summary">Show pinned and frequently used items above app grid</string>
     <string name="preference_search_apps">Apps</string>
     <string name="preference_search_apps_summary">Show all apps when the search field is empty</string>
+    <string name="preference_search_apps_hide_details">Hide app details</string>
+    <string name="preference_search_apps_hide_details_summary">When enabled, long-pressing an app item will not show its version and package name</string>
     <string name="preference_search_files">Files</string>
     <string name="preference_search_files_summary">Search local files and cloud files</string>
     <string name="preference_search_contacts">Contacts</string>

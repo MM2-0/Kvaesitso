@@ -61,10 +61,6 @@ class IconsSettingsScreenVM(
         uiSettings.setGridShowListIcons(showIcons)
     }
 
-    fun setShowAppVersion(showVersion: Boolean) {
-        uiSettings.setGridShowAppVersion(showVersion)
-    }
-
     val iconShape = uiSettings.iconShape
     fun setIconShape(iconShape: IconShape) {
         uiSettings.setIconShape(iconShape)
