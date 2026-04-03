@@ -44,7 +44,7 @@ object WeatherIconDefaults {
 
             WeatherIconColors(
                 sun = harmonize(0xfff7ae00.toInt(), themeColor).atTone(t(baseTone, 75)),
-                moon = neutralColor.atTone(t(baseTone, 90)),
+                moon = neutralColor.atTone(t(baseTone, 70)),
                 cloud1 = neutralColor.atTone(t(baseTone, 20)),
                 cloud2 = neutralColor.atTone(t(baseTone, 35)),
                 cloud3 = neutralColor.atTone(t(baseTone, 50)),
@@ -73,7 +73,7 @@ object WeatherIconDefaults {
 
             WeatherIconColors(
                 sun = themeColor.atTone(t(baseTone, 75)),
-                moon = neutralColor.atTone(t(baseTone, 90)),
+                moon = neutralColor.atTone(t(baseTone, 70)),
                 cloud1 = neutralColor.atTone(t(baseTone, 20)),
                 cloud2 = neutralColor.atTone(t(baseTone, 35)),
                 cloud3 = neutralColor.atTone(t(baseTone, 50)),
