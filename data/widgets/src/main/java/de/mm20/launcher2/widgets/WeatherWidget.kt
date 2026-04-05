@@ -1,14 +1,8 @@
 package de.mm20.launcher2.widgets
 
-import android.app.Activity
-import android.appwidget.AppWidgetHost
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import de.mm20.launcher2.database.entities.PartialWidgetEntity
-import de.mm20.launcher2.ktx.tryStartActivity
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.UUID
 
@@ -29,6 +23,10 @@ data class WeatherWidget(
             type = Type,
             config = Json.encodeToString(config),
         )
+    }
+
+    override fun getLabel(context: Context): String {
+        return context.getString(R.string.widget_name_weather)
     }
 
     companion object {

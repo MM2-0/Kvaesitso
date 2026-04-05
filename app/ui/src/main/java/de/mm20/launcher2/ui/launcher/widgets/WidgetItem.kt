@@ -65,10 +65,6 @@ fun WidgetItem(
     var isDragged by remember { mutableStateOf(false) }
     val elevation by animateDpAsState(if (isDragged) 8.dp else 0.dp)
 
-    val appWidget = if (widget is AppWidget) remember(widget.config.widgetId) {
-        AppWidgetManager.getInstance(context).getAppWidgetInfo(widget.config.widgetId)
-    } else null
-
     val backgroundOpacity by animateFloatAsState(
         if (widget is AppWidget && !widget.config.background && !editMode) 0f else MaterialTheme.transparency.surface,
         label = "widgetCardBackgroundOpacity",
@@ -102,19 +98,7 @@ fun WidgetItem(
                         )
                     )
                     Text(
-                        text = when (widget) {
-                            is WeatherWidget -> stringResource(R.string.widget_name_weather)
-                            is MusicWidget -> stringResource(R.string.widget_name_music)
-                            is CalendarWidget -> stringResource(R.string.widget_name_calendar)
-                            is AppsWidget -> stringResource(R.string.widget_name_apps)
-                            is NotesWidget -> stringResource(R.string.widget_name_notes)
-                            is AppWidget -> remember(widget.config.widgetId) {
-                                appWidget?.loadLabel(
-                                    context.packageManager
-                                )
-                            }
-                                ?: stringResource(R.string.widget_name_unknown)
-                        },
+                        text = widget.getLabel(LocalContext.current),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier
                             .weight(1f)

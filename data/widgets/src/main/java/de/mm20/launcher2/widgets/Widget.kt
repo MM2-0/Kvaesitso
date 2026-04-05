@@ -1,5 +1,6 @@
 package de.mm20.launcher2.widgets
 
+import android.content.Context
 import de.mm20.launcher2.database.entities.PartialWidgetEntity
 import de.mm20.launcher2.database.entities.WidgetEntity
 import de.mm20.launcher2.ktx.decodeFromStringOrNull
@@ -20,6 +21,8 @@ sealed class Widget {
             )
         }
     }
+
+    abstract fun getLabel(context: Context): String
 
     abstract fun toDatabaseEntity(): PartialWidgetEntity
 
