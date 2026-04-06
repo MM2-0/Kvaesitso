@@ -41,6 +41,7 @@ import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
+import de.mm20.launcher2.preferences.WidgetScreenTarget
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
@@ -289,7 +290,7 @@ abstract class SharedLauncherActivity(
                                             )
 
                                             is GestureAction.Widgets ->
-                                                if (widgetsOnHomeScreen == true) {
+                                                if (widgetsOnHomeScreen == true && action.target == WidgetScreenTarget.Default) {
                                                     null
                                                 } else {
                                                     ScaffoldGesture(

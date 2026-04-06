@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
@@ -24,6 +26,7 @@ class SearchablePickerVM : ViewModel(), KoinComponent {
 
     private val searchService: SearchService by inject()
     private val iconService: IconService by inject()
+    private val badgeService: BadgeService by inject()
 
     var searchQuery by mutableStateOf("")
 
@@ -53,5 +56,11 @@ class SearchablePickerVM : ViewModel(), KoinComponent {
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(searchable, size)
+    }
+
+
+
+    fun getBadge(searchable: SavableSearchable): Flow<Badge?> {
+        return badgeService.getBadge(searchable)
     }
 }

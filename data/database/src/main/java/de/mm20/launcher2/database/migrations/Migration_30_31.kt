@@ -14,7 +14,7 @@ class Migration_30_31 : Migration(30, 31) {
             SET parentId = ? 
             WHERE parentId IS NULL    
             """.trimIndent(),
-            arrayOf(WidgetScreenTarget.Default.scopeId.toBytes()),
+            arrayOf(WidgetScreenTarget.Default.id.toBytes()),
         )
     }
 }

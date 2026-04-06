@@ -125,7 +125,7 @@ internal object ClockAndWidgetsHomeComponent : ScaffoldComponent() {
                     scope.launch { state.lock(hideSearchBar = true) }
                     editMode = it
                 },
-                parentId = WidgetScreenTarget.Default.scopeId.toString(),
+                parentId = WidgetScreenTarget.Default.id.toString(),
             )
         }
         if (editMode) {

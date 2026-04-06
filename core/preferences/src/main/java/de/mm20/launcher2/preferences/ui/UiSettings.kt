@@ -379,44 +379,4 @@ class UiSettings internal constructor(
             it.copy(widgetsEditButton = editButton)
         }
     }
-
-    val widgetScreenCount
-        get() = launcherDataStore.data.map {
-            it.widgetScreenCount.coerceIn(1, 4)
-        }.distinctUntilChanged()
-
-    fun setWidgetScreenCount(count: Int) {
-        val validCount = count.coerceIn(1, 4)
-        launcherDataStore.update { data ->
-            var updatedData = data.copy(widgetScreenCount = validCount)
-
-            // Auto-reset gestures that point to invalid widget screens
-            val resetGesture: (GestureAction) -> GestureAction = { action ->
-                if (action is GestureAction.Widgets) {
-                    val targetIndex = when (action.target) {
-                        WidgetScreenTarget.Widgets1 -> 1
-                        WidgetScreenTarget.Widgets2 -> 2
-                        WidgetScreenTarget.Widgets3 -> 3
-                        WidgetScreenTarget.Widgets4 -> 4
-                        else -> 0
-                    }
-                    if (targetIndex > validCount) GestureAction.NoAction else action
-                } else {
-                    action
-                }
-            }
-
-            updatedData = updatedData.copy(
-                gesturesSwipeUp = resetGesture(updatedData.gesturesSwipeUp),
-                gesturesSwipeDown = resetGesture(updatedData.gesturesSwipeDown),
-                gesturesSwipeLeft = resetGesture(updatedData.gesturesSwipeLeft),
-                gesturesSwipeRight = resetGesture(updatedData.gesturesSwipeRight),
-                gesturesDoubleTap = resetGesture(updatedData.gesturesDoubleTap),
-                gesturesLongPress = resetGesture(updatedData.gesturesLongPress),
-                gesturesHomeButton = resetGesture(updatedData.gesturesHomeButton),
-            )
-
-            updatedData
-        }
-    }
 }

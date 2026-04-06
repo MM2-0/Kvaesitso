@@ -133,7 +133,7 @@ abstract class AppDatabase : RoomDatabase() {
                                 )
                             )
 
-                            val defaultParentId = WidgetScreenTarget.Default.scopeId
+                            val defaultParentId = WidgetScreenTarget.Default.id
                             db.execSQL(
                                 "INSERT INTO Widget (`type`, `position`, `id`, `parentId`) VALUES " +
                                         "('weather', 0, ?, ?)," +

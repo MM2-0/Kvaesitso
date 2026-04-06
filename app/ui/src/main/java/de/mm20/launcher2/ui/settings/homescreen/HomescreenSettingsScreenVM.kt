@@ -166,13 +166,6 @@ class HomescreenSettingsScreenVM(
         uiSettings.setHomeScreenWidgets(widgetsOnHomeScreen)
     }
 
-    val widgetScreenCount = uiSettings.widgetScreenCount
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
-
-    fun setWidgetScreenCount(count: Int) {
-        uiSettings.setWidgetScreenCount(count)
-    }
-
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {
