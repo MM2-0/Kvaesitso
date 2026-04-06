@@ -8,7 +8,6 @@ targetSdk = "36"
 
 pluginSdk = "2.2.0"
 
-gradle = "8.1.2"
 android-gradle-plugin = "9.1.0"
 ksp-gradle-plugin = "2.3.4"
 
