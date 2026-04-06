@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Process
@@ -17,6 +18,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -26,16 +28,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,8 +60,11 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
+import de.mm20.launcher2.ui.ktx.animateShapeAsState
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
 import de.mm20.launcher2.widgets.AppsWidget
@@ -277,6 +282,20 @@ fun WidgetPickerSheet(
                 }
             }
 
+        val xs = MaterialTheme.shapes.extraSmall
+        val md = MaterialTheme.shapes.medium
+
+        val topShape = md.copy(
+            bottomStart = xs.bottomStart,
+            bottomEnd = xs.bottomEnd,
+        )
+        val bottomShape = md.copy(
+            topStart = xs.topStart,
+            topEnd = xs.topEnd,
+        )
+        val middleShape = xs
+        val singleShape = md
+
 
         val appWidgetGroups by viewModel.appWidgetGroups.collectAsState(emptyList())
         val expandAllGroups by viewModel.expandAllGroups.collectAsState(false)
@@ -291,8 +310,10 @@ fun WidgetPickerSheet(
             contentPadding = PaddingValues(
                 start = 16.dp,
                 end = 16.dp,
-                bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + 16.dp
+                bottom = WindowInsets.navigationBars.asPaddingValues()
+                    .calculateBottomPadding() + 16.dp
             ),
+            verticalArrangement = Arrangement.spacedBy(1.dp),
         ) {
             stickyHeader {
                 DockedSearchBar(
@@ -319,7 +340,10 @@ fun WidgetPickerSheet(
                             },
                             trailingIcon = {
                                 if (query.isNotEmpty()) {
-                                    IconButton(onClick = { viewModel.search("") }) {
+                                    IconButton(
+                                        modifier = Modifier.offset(16.dp),
+                                        onClick = { viewModel.search("") }
+                                    ) {
                                         Icon(painterResource(R.drawable.close_24px), null)
                                     }
                                 }
@@ -340,48 +364,56 @@ fun WidgetPickerSheet(
                 }
             }
             if (includeBuiltinWidgets) {
-                items(builtIn) {
-                    OutlinedCard(
+                itemsIndexed(builtIn) { i, it ->
+                    val shape = when {
+                        builtIn.size == 1 -> singleShape
+                        i == 0 -> topShape
+                        i == builtIn.lastIndex -> bottomShape
+                        else -> middleShape
+                    }
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp),
-                        onClick = {
-                            val id = UUID.randomUUID()
-                            val widget = when (it.type) {
-                                WeatherWidget.Type -> WeatherWidget(id)
-                                CalendarWidget.Type -> CalendarWidget(id)
-                                MusicWidget.Type -> MusicWidget(id)
-                                AppsWidget.Type -> AppsWidget(id)
-                                NotesWidget.Type -> NotesWidget(id)
-                                else -> return@OutlinedCard
+                            .clip(shape)
+                            .background(
+                                MaterialTheme.colorScheme.surfaceBright,
+                            )
+                            .clickable {
+                                val id = UUID.randomUUID()
+                                val widget = when (it.type) {
+                                    WeatherWidget.Type -> WeatherWidget(id)
+                                    CalendarWidget.Type -> CalendarWidget(id)
+                                    MusicWidget.Type -> MusicWidget(id)
+                                    AppsWidget.Type -> AppsWidget(id)
+                                    NotesWidget.Type -> NotesWidget(id)
+                                    else -> return@clickable
+                                }
+                                onWidgetSelected(widget)
+                                onDismiss()
                             }
-                            onWidgetSelected(widget)
-                            onDismiss()
-                        }) {
-                        Row(
-                            modifier = Modifier.padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                painter =
-                                    painterResource(
-                                        when (it.type) {
-                                            WeatherWidget.Type -> R.drawable.light_mode_24px
-                                            CalendarWidget.Type -> R.drawable.today_24px
-                                            MusicWidget.Type -> R.drawable.music_note_24px
-                                            AppsWidget.Type -> R.drawable.apps_24px
-                                            NotesWidget.Type -> R.drawable.sticky_note_2_24px
-                                            else -> R.drawable.widgets_24px
-                                        }
-                                    ),
-                                contentDescription = null,
-                                modifier = Modifier.padding(end = 16.dp)
-                            )
-                            Text(
-                                text = it.label,
-                                style = MaterialTheme.typography.titleSmall
-                            )
-                        }
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        Icon(
+                            painter =
+                                painterResource(
+                                    when (it.type) {
+                                        WeatherWidget.Type -> R.drawable.light_mode_24px
+                                        CalendarWidget.Type -> R.drawable.today_24px
+                                        MusicWidget.Type -> R.drawable.music_note_24px
+                                        AppsWidget.Type -> R.drawable.apps_24px
+                                        NotesWidget.Type -> R.drawable.sticky_note_2_24px
+                                        else -> R.drawable.widgets_24px
+                                    }
+                                ),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                        Text(
+                            text = it.label,
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
                 }
             }
@@ -390,32 +422,40 @@ fun WidgetPickerSheet(
                 item(
                     key = group.packageName,
                 ) {
-                    val background by animateColorAsState(
-                        if (expanded) MaterialTheme.colorScheme.secondaryContainer
-                        else Color.Transparent,
-                        label = "background"
+                    val shape by animateShapeAsState(
+                        if (expanded && group.widgets.isNotEmpty()) topShape else singleShape
                     )
-                    val textColor by animateColorAsState(
-                        if (expanded) MaterialTheme.colorScheme.onSecondaryContainer
-                        else MaterialTheme.colorScheme.onSurface,
-                        label = "textColor"
-                    )
+                    val icon = remember(group.packageName) {
+                        try {
+                            context.packageManager.getApplicationIcon(group.packageName)
+                        } catch (e: PackageManager.NameNotFoundException) {
+                            null
+                        }
+                    }
                     Row(
                         modifier = Modifier
-                            .padding(vertical = 4.dp)
-                            .clip(MaterialTheme.shapes.small)
-                            .background(background)
+                            .padding(top = 7.dp)
+                            .clip(shape)
+                            .background(MaterialTheme.colorScheme.surfaceBright)
                             .clickable(enabled = !expandAllGroups) {
                                 viewModel.toggleGroup(group.packageName)
                             }
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                            .padding(horizontal = 16.dp, vertical = 16.dp)
                             .animateItem(),
                         verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
+                        AsyncImage(
+                            model = ImageRequest.Builder(context).data(icon).crossfade(false).build(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(24.dp),
+
+                        )
                         Text(
                             modifier = Modifier.weight(1f),
                             text = group.appName,
-                            color = textColor,
+                            color = MaterialTheme.colorScheme.onSurface,
                             style = MaterialTheme.typography.titleMedium
                         )
                         val rotate by animateFloatAsState(
@@ -431,67 +471,80 @@ fun WidgetPickerSheet(
                     }
                 }
                 if (expanded) {
-                    items(
+                    itemsIndexed(
                         group.widgets,
-                        key = { it }
-                    ) {
-                        OutlinedCard(
+                        key = { _, it -> it }
+                    ) { i, it ->
+                        val shape = if (i == group.widgets.lastIndex) bottomShape else middleShape
+                        val previewImage = remember(it.provider) {
+                            it.loadPreviewImage(context, (160f * density.density).roundToInt())
+                        }
+                        val icon = remember(it.provider) {
+                            it.loadIcon(context, (160f * density.density).roundToInt())
+                        }
+                        Column(
                             modifier = Modifier
+                                .animateItem()
                                 .fillMaxWidth()
-                                .padding(vertical = 4.dp)
-                                .animateItem(),
-                            onClick = {
-                                bindAppWidgetStarter.launch(it)
-                            }) {
-                            val previewImage = remember(it.provider) {
-                                it.loadPreviewImage(context, (160f * density.density).roundToInt())
-                            }
-                            val icon = remember(it.provider) {
-                                it.loadIcon(context, (160f * density.density).roundToInt())
-                            }
-                            Column {
-                                if (previewImage != null) {
-                                    AsyncImage(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(it.minHeight.dp.coerceIn(60.dp, 200.dp))
-                                            .background(MaterialTheme.colorScheme.surfaceVariant)
-                                            .padding(16.dp),
-                                        model = previewImage, contentDescription = null
-                                    )
+                                .clip(shape)
+                                .background(MaterialTheme.colorScheme.surfaceBright)
+                                .clickable {
+                                    bindAppWidgetStarter.launch(it)
                                 }
+                        ) {
+                            if (previewImage != null) {
+                                AsyncImage(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(it.minHeight.dp.coerceIn(60.dp, 200.dp))
+                                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                                        .padding(16.dp),
+                                    model = previewImage, contentDescription = null
+                                )
+                            }
 
-                                Row(
-                                    modifier = Modifier.padding(16.dp),
-                                    verticalAlignment = Alignment.CenterVertically
+                            Row(
+                                modifier = Modifier.padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                AsyncImage(
+                                    model = icon,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .padding(end = 16.dp)
+                                        .size(24.dp)
+                                )
+                                Column(
+                                    modifier = Modifier.weight(1f)
                                 ) {
-                                    AsyncImage(
-                                        model = icon,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .padding(end = 16.dp)
-                                            .size(24.dp)
-                                    )
                                     Text(
-                                        modifier = Modifier.weight(1f),
                                         text = it.loadLabel(context.packageManager),
                                         style = MaterialTheme.typography.titleSmall,
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                     )
-                                    if (it.profile != Process.myUserHandle()) {
-                                        Icon(
-                                            modifier = Modifier
-                                                .padding(start = 16.dp)
-                                                .size(24.dp)
-                                                .clip(CircleShape)
-                                                .background(MaterialTheme.colorScheme.tertiaryContainer)
-                                                .padding(4.dp),
-                                            painter = painterResource(R.drawable.enterprise_24px),
-                                            contentDescription = null,
-                                            tint = MaterialTheme.colorScheme.onTertiaryContainer
-                                        )
+                                    if (isAtLeastApiLevel(31)) {
+                                        val description = it.loadDescription(context)
+                                        if (!description.isNullOrBlank()) {
+                                            Text(description.toString(),
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                            )
+                                        }
                                     }
+                                }
+                                if (it.profile != Process.myUserHandle()) {
+                                    Icon(
+                                        modifier = Modifier
+                                            .padding(start = 16.dp)
+                                            .size(24.dp)
+                                            .clip(CircleShape)
+                                            .background(MaterialTheme.colorScheme.tertiaryContainer)
+                                            .padding(4.dp),
+                                        painter = painterResource(R.drawable.enterprise_24px),
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.onTertiaryContainer
+                                    )
                                 }
                             }
                         }
