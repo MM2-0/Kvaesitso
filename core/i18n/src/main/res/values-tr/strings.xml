@@ -1103,6 +1103,4 @@
     <string name="typo_preview_medium2">Önizleme</string>
     <string name="typo_preview_long">Çevik kahvernekli tilki\n123456789\'un üstünden atlar</string>
     <string name="gesture_action_widgets_indexed">%1$d Widgetları</string>
-    <string name="preference_widget_screen_count_info">Not: Sayıyı azaltmak, devre dışı bırakılmış ekranlara atanan hareketleri otomatik olarak sıfırlar.</string>
-    <string name="preference_widget_screen_count">Widget ekranı sayısı</string>
 </resources>
