@@ -457,12 +457,12 @@
     <string name="preference_gesture_double_tap">Doppeltippen</string>
     <string name="preference_gesture_long_press">Lange drücken</string>
     <string name="gesture_action_none">Nichts tun</string>
-    <string name="gesture_action_open_search">Suche öffnen</string>
-    <string name="gesture_action_notifications">Benachrichtigungen öffnen</string>
+    <string name="gesture_action_open_search">Suche / App-Übersicht</string>
+    <string name="gesture_action_notifications">Benachrichtigungen</string>
     <string name="gesture_action_lock_screen">Bildschirm ausschalten</string>
-    <string name="gesture_action_quick_settings">Schnelleinstellungen öffnen</string>
-    <string name="gesture_action_power_menu">Power-Menü anzeigen</string>
-    <string name="gesture_action_recents">Zuletzt verwendete Apps anzeigen</string>
+    <string name="gesture_action_quick_settings">Schnelleinstellungen</string>
+    <string name="gesture_action_power_menu">Ein/Aus-Menü</string>
+    <string name="gesture_action_recents">Letzte Apps</string>
     <string name="missing_permission_accessibility_gesture_failed">Der Launcher muss als Bedienungshilfe eingestellt werden, um diese Aktion ausführen zu können.</string>
     <string name="missing_permission_accessibility_gesture_settings">Diese Aktion erfordert, dass der Launcher als Bedienungshilfe eingestellt ist.</string>
     <string name="preference_screen_gestures_summary">Gesten und Gestenaktionen</string>
@@ -914,7 +914,7 @@
     <string name="add_font_style">Schriftstil hinzufügen</string>
     <string name="remove_font_style">Diesen Schriftstil entfernen</string>
     <string name="preference_widget_screen_count">Anzahl Widget-Seiten</string>
-    <string name="gesture_action_widgets_indexed">Widgets %1$d</string>
+    <string name="gesture_action_widgets_indexed">Widgets (%1$d)</string>
     <string name="preference_calendar_system">Kalendersystem</string>
     <string name="preference_calendar_system_primary">Primärer Kalender</string>
     <string name="preference_calendar_system_secondary">Sekundärer Kalender</string>
@@ -922,4 +922,11 @@
     <string name="preference_clockwidget_battery_part_show">Wenn niedrig und beim Laden</string>
     <string name="preference_clockwidget_battery_part_hide">Aus</string>
     <string name="preference_category_donate">Entwicklung unterstützen</string>
+    <string name="uv_index">UV %1$d</string>
+    <string name="gesture_action_category_launcher">Launcherseiten</string>
+    <string name="gesture_action_category_system">Systemaktionen</string>
+    <string name="gesture_action_category_apps">Apps und Shortcuts</string>
+    <string name="gesture_action_widgets_new">Neue Widget-Seite</string>
+    <string name="gesture_action_widgets_empty">Leer</string>
+    <string name="gesture_action_launch_select_app">App oder Shortcut auswählen</string>
 </resources>
