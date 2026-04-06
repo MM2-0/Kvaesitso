@@ -896,7 +896,6 @@
     <string name="edit_search_action_title">編輯快速操作</string>
     <string name="typo_preview_extra_short"/>
     <string name="typo_preview_short1"/>
-    <string name="preference_widget_screen_count">小工具頁面數量</string>
     <string name="gesture_action_widgets_indexed">小工具 %1$d</string>
     <string name="preference_calendar_system">曆制</string>
     <string name="preference_calendar_system_primary">主曆制</string>

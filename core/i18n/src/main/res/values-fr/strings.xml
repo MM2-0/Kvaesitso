@@ -936,8 +936,6 @@
     <string name="preference_create_shapes">Nouvelle palette de formes</string>
     <string name="preference_create_typography">Nouvelle palette typographique</string>
     <string name="preference_create_transparency">Nouvelle palette de transparence</string>
-    <string name="preference_widget_screen_count">Nombre de widgets à l’écran</string>
-    <string name="preference_widget_screen_count_info">Remarque : réduire le nombre réinitialisera automatiquement les gestes attribués aux écrans désactivés.</string>
     <string name="preference_smartspacer_integration_description">Smartspacer est un widget At a Glance gratuit et open source. Une fois installé, il peut être intégré dans la zone dynamique du widget de l’horloge</string>
     <string name="gesture_action_widgets_indexed">Widgets %1$d</string>
     <string name="confirmation_delete_typography_scheme">Voulez-vous vraiment supprimer la palette typographique %1$s ?</string>
