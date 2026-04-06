@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -67,11 +68,12 @@ internal fun GesturePreference(
 ) {
     var showSheet by remember { mutableStateOf(false) }
 
-    val value = if (value is GestureAction.Widgets && widgetOptions.none { it.id == value.target }) {
-        GestureAction.NoAction
-    } else {
-        value
-    }
+    val value =
+        if (value is GestureAction.Widgets && widgetOptions.none { it.id == value.target }) {
+            GestureAction.NoAction
+        } else {
+            value
+        }
 
     val iconService: IconService = koinInject()
     val iconSize = 24.dp.toPixels().toInt()
@@ -169,24 +171,21 @@ internal fun GesturePreference(
                             if (options.contains(GestureAction.Widgets::class)) {
                                 for (widget in widgetOptions) {
                                     GestureItem(
-                                        title = if (widget.isNewPage) {
-                                            stringResource(R.string.gesture_action_widgets_new)
-                                        } else {
-                                            getActionLabel(
-                                                LocalResources.current,
-                                                GestureAction.Widgets(widget.id),
-                                                shortcutOptions
-                                            )
-                                        },
-                                        icon = if (widget.isNewPage) R.drawable.widgets_add_24px else R.drawable.widgets_24px,
+                                        title = getActionLabel(
+                                            LocalResources.current,
+                                            GestureAction.Widgets(widget.id),
+                                            shortcutOptions
+                                        ),
+                                        icon = R.drawable.widgets_24px,
                                         selected = value is GestureAction.Widgets && value.target == widget.id,
                                         onClick = {
-                                            onValueChanged(GestureAction.Widgets(widget.id), null)
+                                            onValueChanged(
+                                                GestureAction.Widgets(widget.id),
+                                                null
+                                            )
                                             showSheet = false
                                         },
-                                        summary = if (widget.isNewPage) {
-                                            null
-                                        } else if (widget.widgets.isEmpty()) {
+                                        summary = if (widget.widgets.isEmpty()) {
                                             stringResource(R.string.gesture_action_widgets_empty)
                                         } else {
                                             ListFormatter.getInstance().format(
@@ -360,7 +359,7 @@ private fun GestureItem(
             if (summary != null) {
                 Text(
                     text = summary,
-                    color = textColor,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis

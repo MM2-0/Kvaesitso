@@ -107,17 +107,6 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     val widgetOptions: Flow<List<WidgetPageOption>> =
         combine(uiSettings.homeScreenWidgets, gestureSettings) { home, gestures ->
             val options = mutableListOf<WidgetPageOption>()
-            val usedTargets = setOfNotNull(
-                (gestures.swipeUp as? GestureAction.Widgets)?.target,
-                (gestures.swipeRight as? GestureAction.Widgets)?.target,
-                (gestures.swipeLeft as? GestureAction.Widgets)?.target,
-                (gestures.swipeDown as? GestureAction.Widgets)?.target,
-                (gestures.doubleTap as? GestureAction.Widgets)?.target,
-                (gestures.longPress as? GestureAction.Widgets)?.target,
-                (gestures.homeButton as? GestureAction.Widgets)?.target,
-            )
-            // We want to provide at most one "new screen" option
-            var newScreenOptionAdded = false
             for (target in WidgetScreenTarget.entries) {
                 // Never offer the default screen as an option when widgets on home is enabled
                 if (home && target == WidgetScreenTarget.Default) continue
@@ -125,27 +114,13 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
                     parent = target.id,
                 ).first()
 
-                if (widgets.isNotEmpty() || usedTargets.contains(target)) {
-                    options += WidgetPageOption(
-                        widgets = widgets,
-                        id = target,
-                        isNewPage = false,
-                    )
-                } else if (!newScreenOptionAdded) {
-                    options += WidgetPageOption(
-                        id = target,
-                        widgets = emptyList(),
-                        isNewPage = true,
-                    )
-                    newScreenOptionAdded = true
-                }
+                options += WidgetPageOption(
+                    widgets = widgets,
+                    id = target,
+                )
             }
 
-            options.sortedWith { a, b ->
-                if (a.isNewPage) return@sortedWith 1
-                if (b.isNewPage) return@sortedWith -1
-                a.id.compareTo(b.id)
-            }
+            options
         }
 
 
@@ -162,5 +137,4 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
 internal data class WidgetPageOption(
     val id: WidgetScreenTarget,
     val widgets: List<Widget>,
-    val isNewPage: Boolean,
 )
