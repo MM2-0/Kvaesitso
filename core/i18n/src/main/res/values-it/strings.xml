@@ -453,12 +453,12 @@
     <string name="preference_gesture_swipe_left">Scorri a sinistra</string>
     <string name="preference_gesture_swipe_right">Scorri a destra</string>
     <string name="gesture_action_none">Non fare nulla</string>
-    <string name="gesture_action_open_search">Apri ricerca</string>
-    <string name="gesture_action_notifications">Apri cassetto notifiche</string>
+    <string name="gesture_action_open_search">Ricerca / cassetto delle app</string>
+    <string name="gesture_action_notifications">Nnotifiche</string>
     <string name="gesture_action_lock_screen">Spegni schermo</string>
-    <string name="gesture_action_quick_settings">Apri il pannello Impostazioni rapide di Android</string>
-    <string name="gesture_action_power_menu">Mostra menu alimentazione</string>
-    <string name="gesture_action_recents">Apri app recenti</string>
+    <string name="gesture_action_quick_settings">Impostazioni rapide</string>
+    <string name="gesture_action_power_menu">Menu alimentazione</string>
+    <string name="gesture_action_recents">App recenti</string>
     <string name="missing_permission_accessibility_gesture_settings">Questa azione richiede che il servizio di accessibilità del launcher sia abilitato.</string>
     <string name="preference_gesture_double_tap">Doppio tocco</string>
     <string name="preference_gesture_long_press">Pressione lunga</string>
@@ -925,7 +925,7 @@
     <string name="add_font_style">Aggiungi stile del font</string>
     <string name="remove_font_style">Rimuovi questo stile del font</string>
     <string name="preference_category_donate">Sostieni lo sviluppo</string>
-    <string name="gesture_action_widgets_indexed">Widget %1$d</string>
+    <string name="gesture_action_widgets_indexed">Widget (%1$d)</string>
     <string name="preference_calendar_system">Il sistema di calendario preferito (ad esempio calendario gregoriano, calendario ebraico, calendario persiano)</string>
     <string name="preference_calendar_system_primary">Calendario primario</string>
     <string name="preference_calendar_system_secondary">Calendario secondario</string>
@@ -933,4 +933,10 @@
     <string name="preference_clockwidget_battery_part_show">Mostra quando è scarica o in carica</string>
     <string name="preference_clockwidget_battery_part_hide">Nascondi</string>
     <string name="uv_index">UV %1$d</string>
+    <string name="gesture_action_category_launcher">Pagine del launcher</string>
+    <string name="gesture_action_category_system">Azioni di sistema</string>
+    <string name="gesture_action_category_apps">App e scorciatoie</string>
+    <string name="gesture_action_widgets_new">Nuova pagina widget</string>
+    <string name="gesture_action_widgets_empty">Vuoto</string>
+    <string name="gesture_action_launch_select_app">Seleziona app o scorciatoia</string>
 </resources>

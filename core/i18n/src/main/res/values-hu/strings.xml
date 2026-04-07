@@ -333,7 +333,7 @@
     <string name="preference_layout_fixed_search_bar_summary">Görgetéskor a keresősáv maradjon látható</string>
     <string name="preference_layout_fixed_rotation">Rögzített képernyőforgatás</string>
     <string name="preference_gesture_swipe_right">Jobbra húzás</string>
-    <string name="gesture_action_open_search">Keresés megnyitása</string>
+    <string name="gesture_action_open_search">Keresés / alkalmazásfiók</string>
     <string name="gesture_action_launch_app">Alkalmazásindítás</string>
     <string name="preference_layout_fixed_rotation_summary">Képernyő elforgatásának zárolása portré módban</string>
     <string name="missing_permission_accessibility_gesture_settings">Ehhez a művelethez engedélyezni kell az Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
@@ -348,7 +348,7 @@
     <string name="create_search_action_type">Milyen típusú műveletet szeretne létrehozni?</string>
     <string name="more_information">További információ</string>
     <string name="open_search_swipe_right">Jobbra húzás</string>
-    <string name="gesture_action_recents">Legutóbbi alkalmazások megnyitása</string>
+    <string name="gesture_action_recents">Legutóbbi alkalmazások</string>
     <string name="preference_notification_badges">Értesítési jelvények</string>
     <string name="preference_grid_column_count">Oszlopok száma</string>
     <string name="preference_screen_weatherwidget">Időjárás</string>
@@ -410,7 +410,7 @@
     <string name="gesture_failed_message">Egy „%1$s” gesztust hajtott végre. Ez a gesztus jelenleg egy „%2$s” művelet kiváltására van beállítva. Az akciót azonban a következő okból nem lehetett végrehajtani:</string>
     <string name="search_results_order_top_down">Fentről-lefelé</string>
     <string name="preference_gesture_swipe_down">Lefelé húzás</string>
-    <string name="gesture_action_power_menu">Kikapcsolási menü megjelenítése</string>
+    <string name="gesture_action_power_menu">Kikapcsolási menü</string>
     <string name="preference_notification_badges_summary">Olvasatlan értesítésekkel rendelkező alkalmazások jelvényeinek megjelenítése</string>
     <string name="create_search_action_type_web">Keresés egy weboldalon</string>
     <string name="create_search_action_type_app">Keresés egy alkalmazásban</string>
@@ -553,9 +553,9 @@
     <string name="preference_gesture_long_press">Hosszú érintés</string>
     <string name="preference_gesture_home_button">Kezdőoldalgomb/-gesztus</string>
     <string name="gesture_action_none">Ne csináljon semmit</string>
-    <string name="gesture_action_notifications">Értesítési fiók megnyitása</string>
+    <string name="gesture_action_notifications">Értesítések</string>
     <string name="gesture_action_lock_screen">Képernyő kikapcsolása</string>
-    <string name="gesture_action_quick_settings">Gyorsbeállítások megnyitása</string>
+    <string name="gesture_action_quick_settings">Gyorsbeállítások</string>
     <string name="missing_permission_accessibility_gesture_failed">A művelet végrehajtásához engedélyezni kell a Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
     <string name="preference_search_result_ordering_weight_factor">Rugalmasság a rangsorolásban</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
@@ -913,7 +913,7 @@
     <string name="preference_create_transparency">Új átlátszósági séma</string>
     <string name="add_font_style">Betűtípus hozzáadása</string>
     <string name="remove_font_style">Betűtípus eltávolítása</string>
-    <string name="gesture_action_widgets_indexed">Modulok: %1$d</string>
+    <string name="gesture_action_widgets_indexed">Modulok (%1$d)</string>
     <string name="preference_calendar_system">Naptárrendszer</string>
     <string name="preference_calendar_system_primary">Elsődleges naptár</string>
     <string name="preference_calendar_system_secondary">Másodlagos naptár</string>
@@ -922,4 +922,10 @@
     <string name="preference_clockwidget_battery_part_show">Megjelenítés csak akkor, amikor alacsony vagy töltődik</string>
     <string name="preference_clockwidget_battery_part_hide">Kikapcsolás</string>
     <string name="uv_index">UV: %1$d</string>
+    <string name="gesture_action_category_launcher">Indítólapok</string>
+    <string name="gesture_action_category_system">Rendszerműveletek</string>
+    <string name="gesture_action_category_apps">Alkalmazások és parancsikonok</string>
+    <string name="gesture_action_widgets_new">Új modulok lapja</string>
+    <string name="gesture_action_widgets_empty">Üres</string>
+    <string name="gesture_action_launch_select_app">Alkalmazás vagy parancsikon kiválasztása</string>
 </resources>
