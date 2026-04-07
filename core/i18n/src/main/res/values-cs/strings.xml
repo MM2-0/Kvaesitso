@@ -452,12 +452,12 @@
     <string name="preference_gesture_double_tap">Dvojité klepnutí</string>
     <string name="preference_gesture_long_press">Dlouhé držení</string>
     <string name="gesture_action_none">Nic nedělat</string>
-    <string name="gesture_action_open_search">Otevřít vyhledávání</string>
-    <string name="gesture_action_notifications">Otevřít nabídku oznámení</string>
+    <string name="gesture_action_open_search">Vyhledávání / nabídka s aplikacemi</string>
+    <string name="gesture_action_notifications">Oznámení</string>
     <string name="gesture_action_lock_screen">Vypnout obrazovku</string>
-    <string name="gesture_action_quick_settings">Otevřít rychlá nastavení</string>
-    <string name="gesture_action_power_menu">Zobrazit menu napájení</string>
-    <string name="gesture_action_recents">Otevřít nedávné aplikace</string>
+    <string name="gesture_action_quick_settings">Rychlá nastavení</string>
+    <string name="gesture_action_power_menu">Nabídka napájení</string>
+    <string name="gesture_action_recents">Nedávné aplikace</string>
     <string name="gesture_failed_message">Provedli jste gesto „%1$s“. Toto gesto je momentálně nastaveno na vykonání akce „%2$s“. Akci nicméně nelze provést z následujícího důvodu:</string>
     <string name="missing_permission_accessibility_gesture_failed">Pro vykonání této akce musí být povolena služba přístupnosti spouštěče.</string>
     <string name="preference_layout_fixed_search_bar">Pevná lišta vyhledávání</string>
@@ -924,7 +924,7 @@
     <string name="typo_preview_medium1">Hamburg</string>
     <string name="typo_preview_medium2">Náhled</string>
     <string name="typo_preview_long">Hleď, příliš žluťoučký kůň úpěl ďábelské ódy.\n1234567890</string>
-    <string name="gesture_action_widgets_indexed">Widgety %1$d</string>
+    <string name="gesture_action_widgets_indexed">Widgety (%1$d)</string>
     <string name="preference_calendar_system">Kalendářový systém</string>
     <string name="preference_calendar_system_primary">Primární kalendář</string>
     <string name="preference_calendar_system_secondary">Sekundární kalendář</string>
@@ -933,4 +933,10 @@
     <string name="preference_clockwidget_battery_part_show">Zobrazit při nízké hodnotě nebo při nabíjení</string>
     <string name="preference_clockwidget_battery_part_hide">Vypnuto</string>
     <string name="uv_index">UV %1$d</string>
+    <string name="gesture_action_category_launcher">Stránky spouštěče</string>
+    <string name="gesture_action_category_system">Systémové akce</string>
+    <string name="gesture_action_category_apps">Aplikace a zkratky</string>
+    <string name="gesture_action_widgets_new">Nová stránka s widgety</string>
+    <string name="gesture_action_widgets_empty">Prázdné</string>
+    <string name="gesture_action_launch_select_app">Vyberte aplikaci nebo zkratku</string>
 </resources>
