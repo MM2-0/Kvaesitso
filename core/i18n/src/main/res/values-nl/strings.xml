@@ -922,4 +922,7 @@
     <string name="preference_clockwidget_battery_part_show">Tonen bij opladen of laag niveau</string>
     <string name="preference_clockwidget_battery_part_hide">Uit</string>
     <string name="uv_index">UV-index %1$d</string>
+    <string name="gesture_action_category_launcher">Startschermpagina\'s</string>
+    <string name="gesture_action_category_system">Systeemacties</string>
+    <string name="gesture_action_category_apps">Applicaties en snelkoppelingen</string>
 </resources>
