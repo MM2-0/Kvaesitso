@@ -449,12 +449,12 @@
     <string name="preference_gesture_double_tap">Dubbeltikken</string>
     <string name="preference_gesture_long_press">Vasthouden</string>
     <string name="gesture_action_none">Niets doen</string>
-    <string name="gesture_action_open_search">Zoeken openen</string>
-    <string name="gesture_action_notifications">Meldingen openen</string>
+    <string name="gesture_action_open_search">Zoeken/Applicatielijst</string>
+    <string name="gesture_action_notifications">Meldingen</string>
     <string name="gesture_action_lock_screen">Scherm uitzetten</string>
-    <string name="gesture_action_quick_settings">Snelle instellingen openen</string>
-    <string name="gesture_action_power_menu">Menu uitschakelen tonen</string>
-    <string name="gesture_action_recents">Recente applicaties openen</string>
+    <string name="gesture_action_quick_settings">Snelle instellingen</string>
+    <string name="gesture_action_power_menu">Aan/uit-menu</string>
+    <string name="gesture_action_recents">Recente applicaties</string>
     <string name="missing_permission_accessibility_gesture_failed">De toegankelijkheidsservice van het startscherm moet aanstaan om deze actie uit te voeren.</string>
     <string name="missing_permission_accessibility_gesture_settings">De toegankelijkheidsservice van het startscherm moet aanstaan om deze actie uit te voeren.</string>
     <string name="preference_screen_gestures_summary">Gebaren en acties voor gebaren</string>
@@ -925,4 +925,7 @@
     <string name="gesture_action_category_launcher">Startschermpagina\'s</string>
     <string name="gesture_action_category_system">Systeemacties</string>
     <string name="gesture_action_category_apps">Applicaties en snelkoppelingen</string>
+    <string name="gesture_action_widgets_new">Nieuwe widgetpagina</string>
+    <string name="gesture_action_widgets_empty">Leeg</string>
+    <string name="gesture_action_launch_select_app">Applicatie of snelkoppeling kiezen</string>
 </resources>
