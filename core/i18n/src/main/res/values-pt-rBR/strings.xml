@@ -490,8 +490,6 @@
     <string name="app_widget_loading_failed">Falha no carregamento do widget da aplicação.</string>
     <string name="widget_config_calendar_no_calendars">Nenhum calendário encontrado</string>
     <string name="preference_screen_integrations">Integrações</string>
-    <string name="preference_widget_screen_count">Número de telas de widget</string>
-    <string name="preference_widget_screen_count_info">Observação: Reduzir o número reiniciará automaticamente gestos atribuídos a telas desabilitadas</string>
     <string name="preference_screen_homescreen">Tela inicial</string>
     <string name="preference_screen_homescreen_summary">Relógio, barra de pesquisa, papel de parede,barras de sistema</string>
     <string name="preference_media_integration">Controle de mídia</string>
