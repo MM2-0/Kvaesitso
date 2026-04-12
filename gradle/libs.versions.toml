@@ -6,7 +6,7 @@ minSdk = "26"
 compileSdk = "37"
 targetSdk = "36"
 
-pluginSdk = "2.2.0"
+pluginSdk = "2.3.0"
 
 android-gradle-plugin = "9.1.0"
 ksp-gradle-plugin = "2.3.4"
