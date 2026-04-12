@@ -55,13 +55,15 @@ dependencies {
     implementation(libs.bundles.kotlin)
 }
 
-tasks.dokkaHtml {
-    outputDirectory.set(layout.buildDirectory.dir("dokka"))
+dokka {
+    dokkaPublications.html {
+        outputDirectory.set(layout.buildDirectory.dir("dokka"))
+    }
 }
 
 val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
-    from(tasks.dokkaHtml)
+    from(tasks.dokkaGeneratePublicationHtml)
 }
 
 publishing {

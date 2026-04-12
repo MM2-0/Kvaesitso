@@ -61,13 +61,16 @@ dependencies {
     implementation(libs.bundles.kotlin)
 }
 
-tasks.dokkaHtml {
-    outputDirectory.set(layout.buildDirectory.dir("dokka"))
+
+dokka {
+    dokkaPublications.html {
+        outputDirectory.set(layout.buildDirectory.dir("dokka"))
+    }
 }
 
 val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
-    from(tasks.dokkaHtml)
+    from(tasks.dokkaGeneratePublicationHtml)
 }
 
 publishing {
@@ -114,7 +117,7 @@ publishing {
         if (ghUser == "MM2-0") {
             maven {
                 name = "GitHubPackages"
-                url = uri("https.maven.pkg.github.com/MM2-0/Kvaesitso")
+                url = uri("https://maven.pkg.github.com/MM2-0/Kvaesitso")
                 credentials {
                     username =
                         project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
