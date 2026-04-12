@@ -1,0 +1,4 @@
+- Add the option to add more than one widget screen (thanks to @fmontesino)
+- Remove accessibility service requirement for notification and quick settings gestures (thanks to @Aryan0577)
+- New default font: Google Sans
+- Add support for non-Gregorian calendars (as default or as secondary calendar)
