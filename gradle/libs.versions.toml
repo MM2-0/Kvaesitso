@@ -3,7 +3,7 @@ mustache = "0.9.14"
 jacksonCore = "2.20.1"
 jacksonDataformatYaml = "2.20.1"
 minSdk = "26"
-compileSdk = "36"
+compileSdk = "37"
 targetSdk = "36"
 
 pluginSdk = "2.2.0"
