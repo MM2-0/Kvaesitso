@@ -58,7 +58,6 @@ If you want to help translating, see [how to translate the project.](https://kva
 
 - User guide: https://kvaesitso.mm20.de/docs/user-guide
 - F-Droid-Repository: https://fdroid.mm20.de
-- obtainium://app/nightly.link/MM2-0/Kvaesitso/workflows/build-nightly/main/de.mm20.launcher2.nightly.apk.zip?overrideSource=DirectAPKLink
 
 ## Thanks to
 
