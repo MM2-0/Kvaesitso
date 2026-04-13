@@ -7,7 +7,7 @@ Kvaesitso is a search focused, free and open source launcher for Android.
 [Website and documentation](https://kvaesitso.mm20.de)
 
 ## Installation
-
+## Kvaesitso Nightly: [Add to Obtainium](obtainium://app/nightly.link/MM2-0/Kvaesitso/workflows/build-nightly/main/de.mm20.launcher2.nightly.apk.zip?overrideSource=DirectAPKLink)
 ### Using an F-Droid client and MM20's repo
 
 The preferred way of installation is using the [F-Droid](https://f-droid.org) application. That way
