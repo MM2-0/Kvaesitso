@@ -548,9 +548,9 @@
     <string name="preference_gesture_swipe_left">החלקה שמאלה</string>
     <string name="preference_gesture_swipe_right">החלקה ימינה</string>
     <string name="gesture_action_lock_screen">כיבוי המסך</string>
-    <string name="gesture_action_quick_settings">פתיחת לוח ההגדרות המהירות</string>
-    <string name="gesture_action_power_menu">הצגת תפריט ההפעלה</string>
-    <string name="gesture_action_recents">פתיחת היישומים שהיו לאחרונה בשימוש</string>
+    <string name="gesture_action_quick_settings">לוח ההגדרות המהירות</string>
+    <string name="gesture_action_power_menu">תפריט ההפעלה</string>
+    <string name="gesture_action_recents">היישומים שהיו לאחרונה בשימוש</string>
     <string name="missing_permission_accessibility_gesture_settings">פעולה זו דורשת הפעלת שירות הנגישות של הלאנצ\'ר.</string>
     <string name="preference_search_result_ordering_weight_factor">גמישות הדירוג</string>
     <string name="preference_search_result_ordering_weight_factor_low">יציבה</string>
@@ -606,10 +606,10 @@
     <string name="preference_gesture_long_press">לחיצה ארוכה</string>
     <string name="preference_gesture_home_button">כפתור/מחוות בית</string>
     <string name="gesture_action_none">לא מתבצע כלום</string>
-    <string name="gesture_action_open_search">פתיחת החיפוש</string>
+    <string name="gesture_action_open_search">חיפוש / מגירת היישומים</string>
     <string name="gesture_action_widgets">יישומונים (Widgets)</string>
     <string name="gesture_action_launch_app">הפעלת יישום</string>
-    <string name="gesture_action_notifications">פתיחת מגירת ההתראות</string>
+    <string name="gesture_action_notifications">מגירת ההתראות</string>
     <string name="gesture_failed_message">ביצעת מחווה של \"%1$s\". מחווה זו מוגדרת כעת להפעלת פעולת \"%2$s\". עם זאת, לא ניתן היה לבצע את הפעולה מהסיבה הבאה:</string>
     <string name="missing_permission_accessibility_gesture_failed">שירות הנגישות של הלאנצ\'ר צריך להיות מופעל כדי לבצע פעולה זו.</string>
     <string name="preference_search_result_ordering_weight_factor_high">משתנה</string>
@@ -922,7 +922,7 @@
     <string name="typo_preview_medium1">דברי הימים</string>
     <string name="typo_preview_medium2">נוף איילון</string>
     <string name="typo_preview_long">איך בלש תפס גמד\nרוצח עז קטנה 12390</string>
-    <string name="gesture_action_widgets_indexed">יישומונים %1$d</string>
+    <string name="gesture_action_widgets_indexed">יישומונים (%1$d)</string>
     <string name="preference_calendar_system">סוג לוח-השנה</string>
     <string name="preference_calendar_system_primary">לוח-השנה הראשי</string>
     <string name="preference_calendar_system_secondary">לוח-שנה משני</string>
@@ -931,4 +931,10 @@
     <string name="preference_clockwidget_battery_part_show">הצגה כאשר נמוכה או בעת טעינה</string>
     <string name="preference_clockwidget_battery_part_hide">מוסתר</string>
     <string name="uv_index">קרינת UV %1$d</string>
+    <string name="gesture_action_launch_select_app">בחירת יישום או קיצור-דרך</string>
+    <string name="gesture_action_widgets_empty">ריקון</string>
+    <string name="gesture_action_widgets_new">דף יישומונים חדש</string>
+    <string name="gesture_action_category_apps">יישומים וקיצורי-דרך</string>
+    <string name="gesture_action_category_system">פעולות מערכת</string>
+    <string name="gesture_action_category_launcher">דפי המשגר (לאונצ\'ר)</string>
 </resources>
