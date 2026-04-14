@@ -580,4 +580,22 @@
         <item quantity="many">جالون أمريكي</item>
         <item quantity="other">جالون أمريكي</item>
     </plurals>
+    <string name="unit_gallon_imp_symbol">جالون إمبراطوري</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="zero">جالون</item>
+        <item quantity="one">جالون</item>
+        <item quantity="two">جالونان</item>
+        <item quantity="few">جالونات</item>
+        <item quantity="many">جالون</item>
+        <item quantity="other">جالون</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">بينت أمريكي</string>
+    <plurals name="unit_pint_us">
+        <item quantity="zero">بينت</item>
+        <item quantity="one">بينت</item>
+        <item quantity="two">بينتان</item>
+        <item quantity="few">بينت</item>
+        <item quantity="many">بينت</item>
+        <item quantity="other">بينت</item>
+    </plurals>
 </resources>

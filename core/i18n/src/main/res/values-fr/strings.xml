@@ -457,7 +457,7 @@
     <string name="search_action_websearch_url">Modèle d\'URL</string>
     <string name="tag_exists_error">Une étiquette avec ce nom existe déjà</string>
     <string name="tag_no_items_message">Aucun élément n\'est assigné à cette étiquette. Si vous continuez, l\'étiquette sera supprimée</string>
-    <string name="tag_select_items">Éléments sélectionnés :</string>
+    <string name="tag_select_items">Éléments sélectionnés</string>
     <string name="tag_name">Nom de l\'étiquette</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d élément sélectionné</item>
@@ -476,12 +476,12 @@
     <string name="preference_layout_search_results">Arrangement des résultats de recherche</string>
     <string name="preference_gesture_swipe_right">Glisser vers la droite</string>
     <string name="gesture_failed_message">Vous avez effectué le geste \"%1$s\". Ce geste est actuellement paramétré pour déclencher l\'action \"%2$s\". Cependant, l\'action n\'a pas pu être effectuée pour la raison suivante :</string>
-    <string name="gesture_action_power_menu">Afficher le menu d\'extinction</string>
+    <string name="gesture_action_power_menu">Menu Marche/Arrêt</string>
     <string name="app_widget_loading_failed">Échec du chargement du widget d\'application</string>
     <string name="widget_config_music_integration_settings">Paramètres de l\'intégration du contrôle multimédias</string>
     <string name="preference_search_bar_launch_on_enter_summary">Lancer le résultat mis en avant ou une action rapide en appuyant sur entrer</string>
     <string name="preference_gesture_double_tap">Tapoter deux fois</string>
-    <string name="gesture_action_recents">Afficher les applications récentes</string>
+    <string name="gesture_action_recents">Applications récentes</string>
     <string name="missing_permission_accessibility_gesture_failed">Le service d\'accessibilité du lanceur doit être activé pour effectuer cette action.</string>
     <string name="preference_layout_open_search">Recherche et tiroir d\'applications</string>
     <string name="preference_screen_gestures">Gestes</string>
@@ -506,9 +506,9 @@
     <string name="preference_gesture_swipe_down">Glisser vers le bas</string>
     <string name="preference_gesture_long_press">Appuyer longuement</string>
     <string name="gesture_action_none">Ne rien faire</string>
-    <string name="gesture_action_open_search">Ouvrir la recherche</string>
-    <string name="gesture_action_notifications">Ouvrir le tiroir des notifications</string>
-    <string name="gesture_action_quick_settings">Ouvrir les paramètres rapides</string>
+    <string name="gesture_action_open_search">Tiroir d’applications / recherche</string>
+    <string name="gesture_action_notifications">Notifications</string>
+    <string name="gesture_action_quick_settings">Paramètres rapides</string>
     <string name="missing_permission_accessibility_gesture_settings">Cette action nécessite l\'activation du service d\'accessibilité du lanceur.</string>
     <string name="widget_config_weather_integration_settings">Paramètres de l\'intégration météo</string>
     <string name="gesture_action_launch_app">Lancer une application</string>
@@ -937,7 +937,7 @@
     <string name="preference_create_typography">Nouvelle palette typographique</string>
     <string name="preference_create_transparency">Nouvelle palette de transparence</string>
     <string name="preference_smartspacer_integration_description">Smartspacer est un widget At a Glance gratuit et open source. Une fois installé, il peut être intégré dans la zone dynamique du widget de l’horloge</string>
-    <string name="gesture_action_widgets_indexed">Widgets %1$d</string>
+    <string name="gesture_action_widgets_indexed">Widgets (%1$d)</string>
     <string name="confirmation_delete_typography_scheme">Voulez-vous vraiment supprimer la palette typographique %1$s ?</string>
     <string name="clock_variant_analog_ticks">Tic-tac</string>
     <string name="poi_category_stationery">Papeterie</string>
@@ -957,4 +957,14 @@
     <string name="typo_preview_short1">Ava</string>
     <string name="typo_preview_medium1">Hambourg</string>
     <string name="preference_category_donate">Soutenir le développement</string>
+    <string name="uv_index">UV %1$d</string>
+    <string name="preference_clockwidget_battery_part_always_show">Toujours afficher</string>
+    <string name="preference_clockwidget_battery_part_show">Afficher quand la batterie est faible ou en charge</string>
+    <string name="preference_clockwidget_battery_part_hide">Désactivé</string>
+    <string name="gesture_action_category_launcher">Pages du lanceur</string>
+    <string name="gesture_action_category_system">Actions du système</string>
+    <string name="gesture_action_category_apps">Applis et raccourcis</string>
+    <string name="gesture_action_widgets_new">Nouvelle page de widgets</string>
+    <string name="gesture_action_widgets_empty">Vide</string>
+    <string name="gesture_action_launch_select_app">Sélectionner une appli ou un raccourci</string>
 </resources>

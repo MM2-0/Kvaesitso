@@ -21,12 +21,12 @@
     <string name="preference_gesture_double_tap">連按兩下</string>
     <string name="preference_gesture_long_press">長按</string>
     <string name="gesture_action_none">無動作</string>
-    <string name="gesture_action_open_search">開啟搜尋</string>
-    <string name="gesture_action_notifications">開啟通知中心</string>
+    <string name="gesture_action_open_search">搜尋 / 應用程式抽屜</string>
+    <string name="gesture_action_notifications">通知中心</string>
     <string name="gesture_action_lock_screen">關閉螢幕</string>
-    <string name="gesture_action_quick_settings">開啟快速設定</string>
-    <string name="gesture_action_power_menu">顯示電源選單</string>
-    <string name="gesture_action_recents">開啟最近使用的應用程式</string>
+    <string name="gesture_action_quick_settings">快速設定</string>
+    <string name="gesture_action_power_menu">電源選單</string>
+    <string name="gesture_action_recents">最近使用的應用程式</string>
     <string name="gesture_failed_message">您觸發了「%1$s」手勢。此手勢目前設定為執行「%2$s」，但因為以下原因無法執行：</string>
     <string name="missing_permission_accessibility_gesture_failed">需要啟用啟動器的無障礙服務才能執行此操作。</string>
     <string name="missing_permission_accessibility_gesture_settings">這個動作需要開啟無障礙服務。</string>
@@ -896,7 +896,7 @@
     <string name="edit_search_action_title">編輯快速操作</string>
     <string name="typo_preview_extra_short"/>
     <string name="typo_preview_short1"/>
-    <string name="gesture_action_widgets_indexed">小工具 %1$d</string>
+    <string name="gesture_action_widgets_indexed">小工具（第 %1$d 頁）</string>
     <string name="preference_calendar_system">曆制</string>
     <string name="preference_calendar_system_primary">主曆制</string>
     <string name="preference_calendar_system_secondary">第二曆制</string>
@@ -905,4 +905,10 @@
     <string name="preference_clockwidget_battery_part_always_show">永遠顯示</string>
     <string name="preference_clockwidget_battery_part_show">低電量時或充電時顯示</string>
     <string name="preference_clockwidget_battery_part_hide">關閉</string>
+    <string name="gesture_action_category_system">系統動作</string>
+    <string name="gesture_action_category_launcher">啟動器頁面</string>
+    <string name="gesture_action_category_apps">應用程式與捷徑</string>
+    <string name="gesture_action_widgets_new">新增小工具頁面</string>
+    <string name="gesture_action_widgets_empty">沒有小工具</string>
+    <string name="gesture_action_launch_select_app">選擇應用程式或捷徑</string>
 </resources>
