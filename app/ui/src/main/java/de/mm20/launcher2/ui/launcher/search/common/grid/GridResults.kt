@@ -104,8 +104,6 @@ fun <T : SavableSearchable> LazyGridScope.GridResults(
                 .padding(
                     top = if (isFirstRow) 8.dp else 0.dp,
                     bottom = if (isLastRow) 8.dp else 0.dp,
-                    start = if (columns == 1 || !isFirstInRow) 0.dp else 4.dp,
-                    end = if (columns == 1 || !isLastInRow) 0.dp else 4.dp,
                 )
         ) {
             Box(

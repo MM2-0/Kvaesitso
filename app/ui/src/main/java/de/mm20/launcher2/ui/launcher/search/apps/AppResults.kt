@@ -4,11 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -52,7 +50,7 @@ fun LazyGridScope.AppResults(
     showList: Boolean,
 ) {
     val before = if (profiles.size > 1) {
-         @Composable {
+        @Composable {
             Column(
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top,
             ) {
@@ -210,7 +208,7 @@ fun LazyGridScope.AppResults(
                         .fillMaxWidth(),
                     item = app,
                     showDetails = showDetails,
-                    onShowDetails = { onSelect(if(it) index else -1) },
+                    onShowDetails = { onSelect(if (it) index else -1) },
                     highlight = highlightedItem?.key == app.key
                 )
             },
@@ -222,10 +220,17 @@ fun LazyGridScope.AppResults(
             items = if (isProfileLocked) emptyList() else apps,
             before = before,
             itemContent = {
+                val showLabels = LocalGridSettings.current.showLabels
                 GridItem(
                     item = it,
-                    showLabels = LocalGridSettings.current.showLabels,
-                    highlight = it.key == highlightedItem?.key
+                    showLabels = showLabels,
+                    highlight = it.key == highlightedItem?.key,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = 8.dp,
+                            bottom = if (!showLabels) 8.dp else 0.dp,
+                        )
                 )
             },
             reverse = reverse,
