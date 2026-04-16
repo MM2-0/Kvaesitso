@@ -454,7 +454,7 @@
     <string name="preference_gesture_swipe_right">Scorri a destra</string>
     <string name="gesture_action_none">Non fare nulla</string>
     <string name="gesture_action_open_search">Ricerca / cassetto delle app</string>
-    <string name="gesture_action_notifications">Nnotifiche</string>
+    <string name="gesture_action_notifications">Notifiche</string>
     <string name="gesture_action_lock_screen">Spegni schermo</string>
     <string name="gesture_action_quick_settings">Impostazioni rapide</string>
     <string name="gesture_action_power_menu">Menu alimentazione</string>
