@@ -464,8 +464,8 @@ internal class LauncherScaffoldState(
 
         val delta = when {
             !isAtTop && !isAtBottom -> delta.copy(y = 0f)
-            !isAtTop -> delta.copy(y = delta.y.coerceAtMost(-offset.y))
-            !isAtBottom -> delta.copy(y = delta.y.coerceAtLeast(-offset.y))
+            !isAtTop && isAtBottom -> delta.copy(y = delta.y.coerceAtMost(-offset.y))
+            isAtTop -> delta.copy(y = delta.y.coerceAtLeast(-offset.y))
             else -> delta
         }
         val wasOverThreshold = currentOffset.x.absoluteValue > rubberbandThreshold ||
