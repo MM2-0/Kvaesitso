@@ -111,7 +111,7 @@ fun GridItem(
 
     Column(
         modifier = modifier
-            .padding(start = 4.dp, end = 4.dp)
+            .padding(4.dp)
             .combinedClickable(
                 onClick = {
                     if (!launchOnPress || !viewModel.launch(context, bounds)) {
@@ -124,7 +124,7 @@ fun GridItem(
                 },
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-            ),
+            ) then if (!showLabels) Modifier.aspectRatio(1f) else Modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
