@@ -12,11 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyGridState
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
@@ -63,7 +58,7 @@ import de.mm20.launcher2.ui.theme.transparency.transparency
 fun SearchColumn(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(0.dp),
-    state: LazyGridState = rememberLazyGridState(),
+    state: LazyListState = rememberLazyListState(),
     reverse: Boolean = false,
     userScrollEnabled: Boolean = true,
     onHideKeyboard: () -> Unit = {},
@@ -161,12 +156,11 @@ fun SearchColumn(
                 )
             }
         } else {
-            LazyVerticalGrid(
+            LazyColumn(
                 state = state,
                 userScrollEnabled = userScrollEnabled,
                 contentPadding = paddingValues,
                 reverseLayout = reverse,
-                columns = GridCells.Fixed(columns),
             ) {
                 if (!hideFavs && favoritesEnabled) {
                     SearchFavorites(
@@ -184,7 +178,7 @@ fun SearchColumn(
                     )
                 } else {
                     // Empty item to maintain scroll position
-                    item(key = "favorites", span = { GridItemSpan(maxLineSpan) }) {
+                    item(key = "favorites") {
                     }
                 }
 

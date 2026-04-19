@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +21,7 @@ import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.theme.transparency.transparency
 
-fun LazyGridScope.SearchFavorites(
+fun LazyListScope.SearchFavorites(
     favorites: List<SavableSearchable>,
     pinnedTags: List<Tag>,
     selectedTag: String?,
@@ -36,9 +34,6 @@ fun LazyGridScope.SearchFavorites(
 ) {
     item(
         key = "favorites",
-        span = {
-            GridItemSpan(maxLineSpan)
-        }
     ) {
         CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
             Column(

@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyGridItemScope
-import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -27,7 +24,7 @@ import de.mm20.launcher2.ui.ktx.animateShapeAsState
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.theme.transparency.transparency
 
-fun <T : SavableSearchable> LazyGridScope.ListResults(
+fun <T : SavableSearchable> LazyListScope.ListResults(
     key: String,
     items: List<T>,
     itemContent: @Composable ColumnScope.(T, Boolean, Int) -> Unit,
@@ -40,9 +37,6 @@ fun <T : SavableSearchable> LazyGridScope.ListResults(
         item(
             key = "$key-before",
             contentType = { "$key-before" },
-            span = {
-                GridItemSpan(maxLineSpan)
-            }
         ) {
             ListItemSurface(
                 isFirst = true,
@@ -61,9 +55,6 @@ fun <T : SavableSearchable> LazyGridScope.ListResults(
             "$key-${items[it].key}"
         },
         contentType = { key },
-        span = {
-            GridItemSpan(maxLineSpan)
-        }
     ) {
         val item = items[it]
         val showDetails = it == selectedIndex
@@ -83,9 +74,6 @@ fun <T : SavableSearchable> LazyGridScope.ListResults(
         item(
             key = "$key-after",
             contentType = { "$key-after" },
-            span = {
-                GridItemSpan(maxLineSpan)
-            }
         ) {
             ListItemSurface(
                 isFirst = before == null && items.isEmpty(),
@@ -100,7 +88,7 @@ fun <T : SavableSearchable> LazyGridScope.ListResults(
 }
 
 @Composable
-fun LazyGridItemScope.ListItemSurface(
+fun LazyItemScope.ListItemSurface(
     isFirst: Boolean = false,
     isLast: Boolean = false,
     reverse: Boolean = false,
