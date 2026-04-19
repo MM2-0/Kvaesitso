@@ -43,13 +43,7 @@ fun SearchResultGrid(
             verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
         ) {
             for (i in 0 until ceil(items.size / columns.toFloat()).toInt()) {
-                Row(
-                    modifier = Modifier
-                        .padding(
-                            top = 8.dp,
-                            bottom = if (!showLabels) 8.dp else 0.dp,
-                        ),
-                ) {
+                Row {
                     for (j in 0 until columns) {
                         val item = items.getOrNull(i * columns + j)
                         if (item != null) {
