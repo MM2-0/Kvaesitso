@@ -9,7 +9,7 @@
         <item quantity="many">متر</item>
         <item quantity="other">متر</item>
     </plurals>
-    <string name="unit_kilometer_symbol">كلم</string>
+    <string name="unit_kilometer_symbol">كم</string>
     <plurals name="unit_kilometer">
         <item quantity="zero">كيلومتر</item>
         <item quantity="one">كيلومتر</item>
@@ -29,12 +29,12 @@
     </plurals>
     <string name="unit_millimeter_symbol">مم</string>
     <plurals name="unit_millimeter">
-        <item quantity="zero">ميلمتر</item>
-        <item quantity="one">ميلمتر</item>
-        <item quantity="two">ميلمتران</item>
-        <item quantity="few">ميلمترات</item>
-        <item quantity="many">ميلمتر</item>
-        <item quantity="other">ميلمتر</item>
+        <item quantity="zero">ميلي متر</item>
+        <item quantity="one">ميلي متر</item>
+        <item quantity="two">ميلي متران</item>
+        <item quantity="few">ميلي مترات</item>
+        <item quantity="many">ميلي متر</item>
+        <item quantity="other">ميلي متر</item>
     </plurals>
     <string name="unit_inch_symbol">بص</string>
     <plurals name="unit_inch">
@@ -45,7 +45,7 @@
         <item quantity="many">بوصة</item>
         <item quantity="other">بوصة</item>
     </plurals>
-    <string name="unit_foot_symbol">ق</string>
+    <string name="unit_foot_symbol">قدم</string>
     <plurals name="unit_foot">
         <item quantity="zero">قدم</item>
         <item quantity="one">قدم</item>
@@ -93,7 +93,7 @@
         <item quantity="other">سنتيمتر مربع</item>
     </plurals>
     <string name="unit_sqmillimeter_symbol">مم²</string>
-    <string name="unit_sqinch_symbol">وحدة مربعة</string>
+    <string name="unit_sqinch_symbol">بوصة²</string>
     <plurals name="unit_sqinch">
         <item quantity="zero">بوصة مربعة</item>
         <item quantity="one">بوصة مربعة</item>
@@ -137,12 +137,12 @@
         <item quantity="other">كيلومتر مربع</item>
     </plurals>
     <plurals name="unit_sqmillimeter">
-        <item quantity="zero">ميلمتر مربع</item>
-        <item quantity="one">ميلمتر مربع</item>
-        <item quantity="two">ميلمتران مربعان</item>
-        <item quantity="few">ميلمترات مربعة</item>
-        <item quantity="many">ميلمتر مربع</item>
-        <item quantity="other">ميلمتر مربع</item>
+        <item quantity="zero">ميلي متر مربع</item>
+        <item quantity="one">ميلي متر مربع</item>
+        <item quantity="two">ميلي متران مربعان</item>
+        <item quantity="few">ميلي مترات مربعة</item>
+        <item quantity="many">ميلي متر مربع</item>
+        <item quantity="other">ميلي متر مربع</item>
     </plurals>
     <plurals name="unit_decimeter">
         <item quantity="zero">ديسيمتر</item>
@@ -216,7 +216,7 @@
         <item quantity="many">يوم</item>
         <item quantity="other">يوم</item>
     </plurals>
-    <string name="unit_metric_ton_symbol">ط</string>
+    <string name="unit_metric_ton_symbol">طن</string>
     <plurals name="unit_degree_fahrenheit">
         <item quantity="zero">درجة فهرنهايت</item>
         <item quantity="one">درجة فهرنهايت</item>
@@ -225,36 +225,36 @@
         <item quantity="many">درجة فهرنهايت</item>
         <item quantity="other">درجة فهرنهايت</item>
     </plurals>
-    <string name="unit_day_symbol">ي</string>
-    <string name="unit_year_symbol">س</string>
+    <string name="unit_day_symbol">يوم</string>
+    <string name="unit_year_symbol">سنة</string>
     <plurals name="unit_mebibyte">
-        <item quantity="zero">ميغابيبايت</item>
-        <item quantity="one">ميغابيبايت</item>
-        <item quantity="two">ميغابيبايتان</item>
-        <item quantity="few">ميغابيبايتات</item>
-        <item quantity="many">ميغابيبايت</item>
-        <item quantity="other">ميغابيبايت</item>
+        <item quantity="zero">ميبيبايت</item>
+        <item quantity="one">ميبيبايت</item>
+        <item quantity="two">ميبيبايت</item>
+        <item quantity="few">ميبيبايت</item>
+        <item quantity="many">ميبيبايت</item>
+        <item quantity="other">ميبيبايت</item>
     </plurals>
     <string name="unit_gibibyte_symbol">غيب</string>
     <string name="unit_tebibyte_symbol">تيب</string>
     <plurals name="unit_kibibyte">
-        <item quantity="zero">كيلوبيبايت</item>
-        <item quantity="one">كيلوبيبايت</item>
-        <item quantity="two">كيلوبيبايتان</item>
-        <item quantity="few">كيلوبيبايتات</item>
-        <item quantity="many">كيلوبيبايت</item>
-        <item quantity="other">كيلوبيبايت</item>
+        <item quantity="zero">كيبيبايت</item>
+        <item quantity="one">كيبيبايت</item>
+        <item quantity="two">كيبيبايت</item>
+        <item quantity="few">كيبيبايت</item>
+        <item quantity="many">كيبيبايت</item>
+        <item quantity="other">كيبيبايت</item>
     </plurals>
     <string name="unit_mebibyte_symbol">ميب</string>
-    <string name="unit_gigabit_symbol">غبت</string>
-    <string name="unit_gram_symbol">غ</string>
+    <string name="unit_gigabit_symbol">غ.بت</string>
+    <string name="unit_gram_symbol">جرام</string>
     <plurals name="unit_gram">
-        <item quantity="zero">غرام</item>
-        <item quantity="one">غرام</item>
-        <item quantity="two">غرامان</item>
-        <item quantity="few">غرامات</item>
-        <item quantity="many">غرام</item>
-        <item quantity="other">غرام</item>
+        <item quantity="zero">جرام</item>
+        <item quantity="one">جرام</item>
+        <item quantity="two">جرام</item>
+        <item quantity="few">جرام</item>
+        <item quantity="many">جرام</item>
+        <item quantity="other">جرام</item>
     </plurals>
     <plurals name="unit_metric_ton">
         <item quantity="zero">طن متري</item>
@@ -272,7 +272,7 @@
         <item quantity="many">طن إمبراطوري</item>
         <item quantity="other">طن إمبراطوري</item>
     </plurals>
-    <string name="unit_long_ton_symbol">لونغ تون</string>
+    <string name="unit_long_ton_symbol">لونغ طن</string>
     <plurals name="unit_pound">
         <item quantity="zero">رطل</item>
         <item quantity="one">رطل</item>
@@ -281,7 +281,7 @@
         <item quantity="many">رطل</item>
         <item quantity="other">رطل</item>
     </plurals>
-    <string name="unit_ounce_symbol">أون</string>
+    <string name="unit_ounce_symbol">أونص</string>
     <plurals name="unit_ounce">
         <item quantity="zero">أونصة</item>
         <item quantity="one">أونصة</item>
@@ -290,7 +290,7 @@
         <item quantity="many">أونصة</item>
         <item quantity="other">أونصة</item>
     </plurals>
-    <string name="unit_short_ton_symbol">تون قصير</string>
+    <string name="unit_short_ton_symbol">طن قصير</string>
     <plurals name="unit_short_ton">
         <item quantity="zero">طن أمريكي</item>
         <item quantity="one">طن أمريكي</item>
@@ -308,12 +308,12 @@
         <item quantity="other">كلفن</item>
     </plurals>
     <plurals name="unit_megabyte">
-        <item quantity="zero">ميغا بايت</item>
-        <item quantity="one">ميغا بايت</item>
-        <item quantity="two">ميغا بايتان</item>
-        <item quantity="few">ميغا بايتات</item>
-        <item quantity="many">ميغا بايت</item>
-        <item quantity="other">ميغا بايت</item>
+        <item quantity="zero">ميجا بايت</item>
+        <item quantity="one">ميجا بايت</item>
+        <item quantity="two">ميجا بايت</item>
+        <item quantity="few">ميجا بايت</item>
+        <item quantity="many">ميجا بايت</item>
+        <item quantity="other">ميجا بايت</item>
     </plurals>
     <string name="dimension_temperature">درجة الحرارة</string>
     <string name="dimension_time">الوقت</string>
@@ -352,7 +352,7 @@
         <item quantity="other">سنة</item>
     </plurals>
     <string name="unit_byte_symbol">ب</string>
-    <string name="unit_kilobyte_symbol">كب</string>
+    <string name="unit_kilobyte_symbol">ك.ب</string>
     <plurals name="unit_minute">
         <item quantity="zero">دقيقة</item>
         <item quantity="one">دقيقة</item>
@@ -361,7 +361,7 @@
         <item quantity="many">دقيقة</item>
         <item quantity="other">دقيقة</item>
     </plurals>
-    <string name="unit_hour_symbol">سا</string>
+    <string name="unit_hour_symbol">س</string>
     <plurals name="unit_byte">
         <item quantity="zero">بايت</item>
         <item quantity="one">بايت</item>
@@ -370,9 +370,9 @@
         <item quantity="many">بايت</item>
         <item quantity="other">بايت</item>
     </plurals>
-    <string name="unit_megabyte_symbol">مب</string>
-    <string name="unit_gigabyte_symbol">غب</string>
-    <string name="unit_terabyte_symbol">تب</string>
+    <string name="unit_megabyte_symbol">م.ب</string>
+    <string name="unit_gigabyte_symbol">غ.ب</string>
+    <string name="unit_terabyte_symbol">ت.ب</string>
     <plurals name="unit_kilobyte">
         <item quantity="zero">كيلو بايت</item>
         <item quantity="one">كيلو بايت</item>
@@ -382,12 +382,12 @@
         <item quantity="other">كيلو بايت</item>
     </plurals>
     <plurals name="unit_gigabyte">
-        <item quantity="zero">غيغا بايت</item>
-        <item quantity="one">غيغا بايت</item>
-        <item quantity="two">غيغا بايتان</item>
-        <item quantity="few">غيغا بايتات</item>
-        <item quantity="many">غيغا بايت</item>
-        <item quantity="other">غيغا بايت</item>
+        <item quantity="zero">جيجا بايت</item>
+        <item quantity="one">جيجا بايت</item>
+        <item quantity="two">جيجا بايت</item>
+        <item quantity="few">جيجا بايت</item>
+        <item quantity="many">جيجا بايت</item>
+        <item quantity="other">جيجا بايت</item>
     </plurals>
     <plurals name="unit_terabyte">
         <item quantity="zero">تيرا بايت</item>
@@ -451,8 +451,8 @@
     </plurals>
     <string name="unit_megabit_symbol">مبت</string>
     <string name="unit_terabit_symbol">تبت</string>
-    <string name="unit_kilometer_per_hour_symbol">كلم/سا</string>
-    <string name="unit_mile_per_hour_symbol">ميل/سا</string>
+    <string name="unit_kilometer_per_hour_symbol">كم/س</string>
+    <string name="unit_mile_per_hour_symbol">ميل/س</string>
     <plurals name="unit_mile_per_hour">
         <item quantity="zero">ميل بالساعة</item>
         <item quantity="one">ميل بالساعة</item>
@@ -470,14 +470,14 @@
         <item quantity="many">عقدة</item>
         <item quantity="other">عقدة</item>
     </plurals>
-    <string name="unit_kilogram_symbol">كغ</string>
+    <string name="unit_kilogram_symbol">كج</string>
     <plurals name="unit_kilogram">
-        <item quantity="zero">كيلوغرام</item>
-        <item quantity="one">كيلوغرام</item>
-        <item quantity="two">كيوغرامان</item>
-        <item quantity="few">كيلوغرامات</item>
-        <item quantity="many">كيلوغرام</item>
-        <item quantity="other">كيلوغرام</item>
+        <item quantity="zero">كيلوجرام</item>
+        <item quantity="one">كيلوجرام</item>
+        <item quantity="two">كيلوجرام</item>
+        <item quantity="few">كيلوجرام</item>
+        <item quantity="many">كيلوجرام</item>
+        <item quantity="other">كيلوجرام</item>
     </plurals>
     <string name="unit_pound_symbol">ر</string>
     <string name="unit_degree_celsius_symbol">°س</string>
@@ -544,7 +544,7 @@
         <item quantity="many">مم³</item>
         <item quantity="other">مم³</item>
     </plurals>
-    <string name="unit_cubic_inch_symbol">بوصة مكعبة</string>
+    <string name="unit_cubic_inch_symbol">بوصة³</string>
     <plurals name="unit_cubic_inch">
         <item quantity="zero">بوصة مكعبة</item>
         <item quantity="one">بوصة مكعبة</item>
@@ -553,7 +553,7 @@
         <item quantity="many">بوصة مكعبة</item>
         <item quantity="other">بوصة مكعبة</item>
     </plurals>
-    <string name="unit_cubic_foot_symbol">قدم مكعب</string>
+    <string name="unit_cubic_foot_symbol">قدم ³</string>
     <plurals name="unit_cubic_foot">
         <item quantity="zero">قدم مكعب</item>
         <item quantity="one">قدم مكعب</item>
@@ -562,10 +562,10 @@
         <item quantity="many">قدم مكعب</item>
         <item quantity="other">قدم مكعب</item>
     </plurals>
-    <string name="unit_cubic_yard_symbol">الساحة مكعب</string>
+    <string name="unit_cubic_yard_symbol">الساحة ³</string>
     <plurals name="unit_cubic_yard">
         <item quantity="zero">ساحة مكعب</item>
-        <item quantity="one">لساحة مكعب</item>
+        <item quantity="one">ساحة مكعب</item>
         <item quantity="two">ساحتان مكعبتان</item>
         <item quantity="few">ساحة مكعب</item>
         <item quantity="many">ساحة مكعب</item>
