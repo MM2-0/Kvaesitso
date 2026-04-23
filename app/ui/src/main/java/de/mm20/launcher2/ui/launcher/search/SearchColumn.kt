@@ -35,6 +35,7 @@ import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.Website
+import de.mm20.launcher2.ui.common.SelectorTarget
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorResults
@@ -107,9 +108,10 @@ fun SearchColumn(
     val hasProfilesPermission by viewModel.hasProfilesPermission.collectAsState(false)
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
-    val selectedTag by favoritesVM.selectedTag.collectAsState(null)
+    val selectedTarget by favoritesVM.selectedTarget.collectAsState(SelectorTarget.Favorites)
     val compactTags by favoritesVM.compactTags.collectAsState(false)
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
+    val showLatestButton by favoritesVM.showLatestButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
@@ -165,16 +167,17 @@ fun SearchColumn(
                 if (!hideFavs && favoritesEnabled) {
                     SearchFavorites(
                         favorites = favorites,
-                        selectedTag = selectedTag,
+                        selectedTarget = selectedTarget,
                         pinnedTags = pinnedTags,
                         tagsExpanded = favoritesTagsExpanded,
-                        onSelectTag = { favoritesVM.selectTag(it) },
+                        onSelectTarget = { favoritesVM.selectTarget(it) },
                         reverse = reverse,
                         onExpandTags = {
                             favoritesVM.setTagsExpanded(it)
                         },
                         compactTags = compactTags,
-                        editButton = favoritesEditButton
+                        editButton = favoritesEditButton,
+                        showLatestButton = showLatestButton
                     )
                 } else {
                     // Empty item to maintain scroll position
