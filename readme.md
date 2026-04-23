@@ -1,3 +1,5 @@
+> In August 2025, Google announced Android will become a locked down platform and every developer must register with them to distribute their apps, not just on the Play Store, everywhere, including F-Droid. Users will no longer be able to easily install software on their own device. Please read more about it on [keepandroidopen](https://keepandroidopen.org/).
+
 # Kvaesitso
 
 <img src="https://raw.githubusercontent.com/MM2-0/Kvaesitso/main/assets/icons/ic_launcher.png" width="128">
