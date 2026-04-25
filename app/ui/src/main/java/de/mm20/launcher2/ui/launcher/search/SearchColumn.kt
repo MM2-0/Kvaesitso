@@ -42,6 +42,7 @@ import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.component.LauncherCard
+import de.mm20.launcher2.ui.launcher.search.apps.AppAlphabetJumpTarget
 import de.mm20.launcher2.ui.launcher.search.apps.AppAlphabetScroller
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.apps.buildAppAlphabetJumpTargets
@@ -75,6 +76,7 @@ fun SearchColumn(
 
     val columns = LocalGridSettings.current.columnCount
     val showList = LocalGridSettings.current.showList
+    val showAlphabetScroller = LocalGridSettings.current.showAlphabetScroller
     val context = LocalContext.current
 
     val viewModel: SearchVM = viewModel()
@@ -151,23 +153,33 @@ fun SearchColumn(
         else -> emptyList()
     }
     val appResultsHasBeforeItem = showProfileResults
-    val appAlphabetTargets = remember(shownApps, showList, columns, appResultsHasBeforeItem) {
-        buildAppAlphabetJumpTargets(
-            apps = shownApps,
-            showList = showList,
-            columns = columns,
-            hasBeforeItem = appResultsHasBeforeItem,
-        )
+    val appAlphabetTargets = remember(
+        shownApps,
+        showList,
+        columns,
+        appResultsHasBeforeItem,
+        showAlphabetScroller
+    ) {
+        if (!showAlphabetScroller) {
+            emptyList()
+        } else {
+            buildAppAlphabetJumpTargets(
+                apps = shownApps,
+                showList = showList,
+                columns = columns,
+                hasBeforeItem = appResultsHasBeforeItem,
+            )
+        }
     }
-    var stableAlphabetTargets by remember { mutableStateOf(appAlphabetTargets) }
-    if (appAlphabetTargets.isNotEmpty()) {
+    var stableAlphabetTargets by remember { mutableStateOf(emptyList<AppAlphabetJumpTarget>()) }
+    if (!showAlphabetScroller) {
+        stableAlphabetTargets = emptyList()
+    } else if (appAlphabetTargets.isNotEmpty()) {
         stableAlphabetTargets = appAlphabetTargets
     }
-    val displayedAlphabetTargets = if (appAlphabetTargets.isNotEmpty()) {
-        appAlphabetTargets
-    } else {
-        stableAlphabetTargets
-    }
+    val displayedAlphabetTargets = if (!showAlphabetScroller) emptyList()
+    else if (appAlphabetTargets.isNotEmpty()) appAlphabetTargets
+    else stableAlphabetTargets
 
     val activeAlphabetLetter by remember(state, displayedAlphabetTargets) {
         derivedStateOf {
@@ -255,6 +267,7 @@ fun SearchColumn(
                             reverse = reverse,
                             showProfileLockControls = hasProfilesPermission,
                             showList = showList,
+                            showAlphabetScroller = showAlphabetScroller,
                             selectedIndex = selectedAppIndex,
                             onSelect = { selectedAppIndex = it },
                         )
@@ -268,6 +281,7 @@ fun SearchColumn(
                             columns = columns,
                             reverse = reverse,
                             showList = showList,
+                            showAlphabetScroller = showAlphabetScroller,
                             selectedIndex = selectedAppIndex,
                             onSelect = { selectedAppIndex = it },
                         )

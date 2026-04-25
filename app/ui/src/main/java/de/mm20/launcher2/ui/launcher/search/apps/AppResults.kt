@@ -132,8 +132,20 @@ fun LazyListScope.AppResults(
     columns: Int,
     reverse: Boolean,
     showList: Boolean,
+    showAlphabetScroller: Boolean = true,
 ) {
-    val sections = buildAppSections(if (isProfileLocked) emptyList() else apps)
+    val visibleApps = if (isProfileLocked) emptyList() else apps
+    val sections = if (showAlphabetScroller) {
+        buildAppSections(visibleApps)
+    } else {
+        if (visibleApps.isEmpty()) emptyList()
+        else listOf(
+            AppSection(
+                letter = "",
+                items = visibleApps.mapIndexed { index, app -> SectionedApp(app, index) },
+            )
+        )
+    }
     val before = if (profiles.size > 1) {
          @Composable {
             Column(
@@ -278,16 +290,27 @@ fun LazyListScope.AppResults(
         }
     } else null
     if (showList) {
+        if (before != null) {
+            ListResults(
+                key = "apps-before",
+                items = emptyList<Application>(),
+                before = { before() },
+                reverse = reverse,
+                itemContent = { _, _, _ -> },
+            )
+        }
         for ((sectionIndex, section) in sections.withIndex()) {
+            if (showAlphabetScroller) {
+                item(
+                    key = "apps-${section.letter}-$sectionIndex-header",
+                    contentType = { "apps-section-header" },
+                ) {
+                    AppSectionHeader(section.letter)
+                }
+            }
             ListResults(
                 key = "apps-${section.letter}-$sectionIndex",
                 items = section.items.map { it.app },
-                before = {
-                    if (sectionIndex == 0) {
-                        before?.invoke()
-                    }
-                    AppSectionHeader(section.letter)
-                },
                 selectedIndex = section.items.indexOfFirst { it.originalIndex == selectedIndex },
                 itemContent = { app, showDetails, index ->
                     ListItem(
@@ -307,15 +330,6 @@ fun LazyListScope.AppResults(
                 reverse = reverse,
             )
         }
-        if (sections.isEmpty() && before != null) {
-            ListResults(
-                key = "apps-empty",
-                items = emptyList<Application>(),
-                before = { before() },
-                reverse = reverse,
-                itemContent = { _, _, _ -> },
-            )
-        }
     } else {
         for ((sectionIndex, section) in sections.withIndex()) {
             GridResults(
@@ -328,7 +342,9 @@ fun LazyListScope.AppResults(
                         if (sectionIndex == 0) {
                             before?.invoke()
                         }
-                        AppSectionHeader(section.letter)
+                        if (showAlphabetScroller) {
+                            AppSectionHeader(section.letter)
+                        }
                     }
                 },
                 itemContent = {
