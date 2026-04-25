@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlin.math.floor
 
 @Composable
@@ -60,12 +60,12 @@ fun AppAlphabetScroller(
 
     Column(
         modifier = modifier
-            .sizeIn(minWidth = 42.dp)
+            .sizeIn(minWidth = 36.dp)
             .background(
-                MaterialTheme.colorScheme.surface.copy(alpha = 0.78f),
-                RoundedCornerShape(20.dp),
+                MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface * 0.65f),
+                MaterialTheme.shapes.medium,
             )
-            .padding(vertical = 10.dp, horizontal = 6.dp)
+            .padding(vertical = 6.dp, horizontal = 4.dp)
             .pointerInput(letters.size) {
                 fun selectByY(y: Float, height: Float) {
                     if (height <= 0f) return
@@ -101,13 +101,13 @@ fun AppAlphabetScroller(
             val index = windowStart + visibleIndex
             val emphasized = letter == activeLetter || index == dragIndex
             val scale by animateFloatAsState(
-                targetValue = if (emphasized) 1.62f else 1.2f,
+                targetValue = if (emphasized) 1.52f else 1.14f,
                 label = "alphabetScale",
             )
             Text(
                 text = letter,
                 style = MaterialTheme.typography.labelMedium.copy(
-                    fontSize = 15.sp,
+                    fontSize = 16.sp,
                     fontWeight = if (emphasized) FontWeight.Bold else FontWeight.Normal
                 ),
                 textAlign = TextAlign.Center,
@@ -115,7 +115,7 @@ fun AppAlphabetScroller(
                 else MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier
                     .sizeIn(minWidth = 28.dp)
-                    .heightIn(min = 26.dp)
+                    .heightIn(min = 28.dp)
                     .scale(scale)
                     .clickable { onLetterTapped(letter) }
                     .padding(vertical = 2.dp),
