@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.profiles.Profile
@@ -44,6 +45,7 @@ import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.search.apps.AppAlphabetJumpTarget
 import de.mm20.launcher2.ui.launcher.search.apps.AppAlphabetScroller
+import de.mm20.launcher2.ui.launcher.search.apps.QuickAccessItem
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.apps.buildAppAlphabetJumpTargets
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorResults
@@ -62,6 +64,7 @@ import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.theme.transparency.transparency
+import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.launch
 
 @Composable
@@ -138,6 +141,7 @@ fun SearchColumn(
     val showFilters by viewModel.showFilters
     val coroutineScope = rememberCoroutineScope()
     val navigationBarBottomPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    var quickAccessHoldActive by remember { mutableStateOf(false) }
 
     val profileApps = when (profiles.getOrNull(selectedAppProfileIndex)?.type) {
         Profile.Type.Private -> privateApps
@@ -163,7 +167,9 @@ fun SearchColumn(
         if (!showAlphabetScroller) {
             emptyList()
         } else {
-            buildAppAlphabetJumpTargets(
+            listOf(
+                AppAlphabetJumpTarget(letter = "*", relativeListIndex = -1)
+            ) + buildAppAlphabetJumpTargets(
                 apps = shownApps,
                 showList = showList,
                 columns = columns,
@@ -187,6 +193,15 @@ fun SearchColumn(
             displayedAlphabetTargets
                 .lastOrNull { it.relativeListIndex <= appRelativeIndex }
                 ?.letter
+        }
+    }
+    val favoritesLabel = stringResource(R.string.favorites)
+    val quickAccessItems = remember(pinnedTags, favoritesLabel) {
+        buildList {
+            add(QuickAccessItem(tag = null, label = favoritesLabel))
+            pinnedTags.forEach { tag ->
+                add(QuickAccessItem(tag = tag.tag, label = tag.label))
+            }
         }
     }
 
@@ -225,7 +240,7 @@ fun SearchColumn(
             ) {
                 LazyColumn(
                     state = state,
-                    userScrollEnabled = userScrollEnabled,
+                    userScrollEnabled = userScrollEnabled && !quickAccessHoldActive,
                     contentPadding = paddingValues,
                     reverseLayout = reverse,
                 ) {
@@ -420,6 +435,15 @@ fun SearchColumn(
                         letters = displayedAlphabetTargets.map { it.letter },
                         activeLetter = activeAlphabetLetter,
                         maxVisibleLetters = 10,
+                        quickAccessItems = quickAccessItems,
+                        selectedQuickAccessTag = selectedTag,
+                        onQuickAccessSelected = { tag ->
+                            favoritesVM.selectTag(tag)
+                            coroutineScope.launch {
+                                state.animateScrollToItem(0)
+                            }
+                        },
+                        onQuickAccessHoldChanged = { quickAccessHoldActive = it },
                         modifier = Modifier
                             .align(if (reverse) Alignment.TopEnd else Alignment.BottomEnd)
                             .padding(

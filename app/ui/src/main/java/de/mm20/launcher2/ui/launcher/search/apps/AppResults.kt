@@ -99,8 +99,9 @@ private fun buildAppSections(apps: List<Application>): List<AppSection> {
 
 private fun Application.labelForGrouping(): String {
     val source = (labelOverride ?: label).trim()
-    val firstLetter = source.firstOrNull { it.isLetter() } ?: return "#"
-    return firstLetter.uppercaseChar().toString().uppercase(Locale.getDefault())
+    val firstChar = source.firstOrNull() ?: return "#"
+    if (!firstChar.isLetter()) return "#"
+    return firstChar.uppercaseChar().toString().uppercase(Locale.getDefault())
 }
 
 @Composable
