@@ -146,6 +146,10 @@ fun AppAlphabetScroller(
         val rawTopPx = star.center.y - popupHeightPx / 2f
         return min(max(rawTopPx, scroller.top), scroller.bottom - popupHeightPx)
     }
+    fun computePopupLeftWindowPx(): Float {
+        val railLeftWindow = railBounds?.left ?: (scrollerBounds?.right ?: 0f)
+        return railLeftWindow - with(density) { popupGapDp.toPx() + popupWidthDp.toPx() }
+    }
 
     Box(
         modifier = modifier.onGloballyPositioned {
@@ -205,15 +209,28 @@ fun AppAlphabetScroller(
                             starBounds = coordinates.boundsInWindow()
                         }
                         .pointerInput(quickAccessItems, selectedQuickAccessTag) {
-                            fun indexFromLocalY(localY: Float): Int {
+                            fun indexFromLocalPosition(localX: Float, localY: Float): Int? {
                                 val stepPx = with(density) { popupItemHeightDp.toPx() }
                                 val stridePx = stepPx + with(density) { popupItemSpacingDp.toPx() }
+                                val fingerWindowX = (starBounds?.left ?: 0f) + localX
                                 val fingerWindowY = (starBounds?.top ?: 0f) + localY
+                                val popupLeftWindow = computePopupLeftWindowPx()
+                                val popupRightWindow = popupLeftWindow + with(density) { popupWidthDp.toPx() }
                                 val popupTopWindow = lockedPopupTopWindowPx ?: computePopupTopWindowPx()
                                 val contentTop = popupTopWindow + with(density) { popupVerticalPaddingDp.toPx() }
+                                val contentBottom = contentTop + (quickAccessItems.size * stepPx) +
+                                    ((quickAccessItems.size - 1).coerceAtLeast(0) * with(density) { popupItemSpacingDp.toPx() })
+
+                                if (fingerWindowX < popupLeftWindow || fingerWindowX > popupRightWindow) return null
+                                if (fingerWindowY < contentTop || fingerWindowY > contentBottom) return null
+
                                 val centeredY = fingerWindowY - contentTop - (stepPx / 2f)
-                                return (centeredY / stridePx).roundToInt()
+                                val slot = (centeredY / stridePx).roundToInt()
                                     .coerceIn(0, quickAccessItems.lastIndex)
+                                val slotTop = slot * stridePx
+                                val slotY = (fingerWindowY - contentTop) - slotTop
+                                if (slotY < 0f || slotY > stepPx) return null
+                                return slot
                             }
 
                             fun finishSelection() {
@@ -233,15 +250,16 @@ fun AppAlphabetScroller(
                                     .takeIf { it >= 0 } ?: 0
                                 lockedPopupTopWindowPx = computePopupTopWindowPx()
                                 quickAccessPopupVisible = true
-                                hoveredQuickAccessIndex = indexFromLocalY(offset.y).takeIf { quickAccessItems.isNotEmpty() }
-                                    ?: quickAccessBaseIndex
+                                hoveredQuickAccessIndex = if (quickAccessItems.isNotEmpty()) {
+                                    indexFromLocalPosition(offset.x, offset.y)
+                                } else null
                                 onQuickAccessHoldChanged(true)
                                 view.parent?.requestDisallowInterceptTouchEvent(true)
                                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                 },
                                 onDrag = { change, _ ->
                                     if (quickAccessItems.isNotEmpty()) {
-                                        hoveredQuickAccessIndex = indexFromLocalY(change.position.y)
+                                        hoveredQuickAccessIndex = indexFromLocalPosition(change.position.x, change.position.y)
                                     }
                                     change.consume()
                                 },
@@ -281,8 +299,7 @@ fun AppAlphabetScroller(
             val popupTopWindow = lockedPopupTopWindowPx ?: computePopupTopWindowPx()
             val scrollerLeftWindow = scrollerBounds?.left ?: 0f
             val scrollerTopWindow = scrollerBounds?.top ?: 0f
-            val railLeftWindow = railBounds?.left ?: (scrollerBounds?.right ?: 0f)
-            val popupLeftWindow = railLeftWindow - with(density) { popupGapDp.toPx() + popupWidthDp.toPx() }
+            val popupLeftWindow = computePopupLeftWindowPx()
             val popupTopLocal = (popupTopWindow - scrollerTopWindow).roundToInt()
             val popupLeftLocal = (popupLeftWindow - scrollerLeftWindow).roundToInt()
             Popup(
