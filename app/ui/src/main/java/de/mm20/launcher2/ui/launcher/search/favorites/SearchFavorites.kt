@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,6 +31,7 @@ fun LazyListScope.SearchFavorites(
     onExpandTags: (Boolean) -> Unit,
     onSelectTag: (String?) -> Unit,
     editButton: Boolean,
+    quickAccessHeader: String? = null,
     reverse: Boolean,
 ) {
     item(
@@ -41,40 +43,54 @@ fun LazyListScope.SearchFavorites(
                     .padding(
                         top = if (reverse) 8.dp else 0.dp,
                         bottom = if (reverse) 0.dp else 8.dp,
-                    )
-                    .background(
-                        MaterialTheme.colorScheme.surface.copy(
-                            MaterialTheme.transparency.surface
-                        ),
-                        MaterialTheme.shapes.medium
-                    )
-                    .padding(vertical = 4.dp),
+                    ),
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
             ) {
-                if (favorites.isNotEmpty()) {
-                    SearchResultGrid(favorites, transitionKey = selectedTag, reverse = reverse)
-                } else {
-                    Banner(
-                        modifier = Modifier.padding(16.dp),
-                        text = stringResource(
-                            if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
-                        ),
-                        icon = if (selectedTag == null) R.drawable.star_24px else R.drawable.tag_24px,
+                if (quickAccessHeader != null) {
+                    Text(
+                        text = quickAccessHeader,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
                     )
                 }
-                if (pinnedTags.isNotEmpty() || editButton) {
-                    FavoritesTagSelector(
-                        tags = pinnedTags,
-                        selectedTag = selectedTag,
-                        editButton = editButton,
-                        reverse = false,
-                        onSelectTag = onSelectTag,
-                        scrollState = rememberScrollState(),
-                        expanded = tagsExpanded,
-                        compact = compactTags,
-                        onExpand = onExpandTags,
-                        showFavorites = true
-                    )
+                Column(
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.surface.copy(
+                                MaterialTheme.transparency.surface
+                            ),
+                            MaterialTheme.shapes.medium
+                        )
+                        .padding(vertical = 4.dp),
+                    verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
+                ) {
+                    if (favorites.isNotEmpty()) {
+                        SearchResultGrid(favorites, transitionKey = selectedTag, reverse = reverse)
+                    } else {
+                        Banner(
+                            modifier = Modifier.padding(16.dp),
+                            text = stringResource(
+                                if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
+                            ),
+                            icon = if (selectedTag == null) R.drawable.star_24px else R.drawable.tag_24px,
+                        )
+                    }
+                    if (pinnedTags.isNotEmpty() || editButton) {
+                        FavoritesTagSelector(
+                            tags = pinnedTags,
+                            selectedTag = selectedTag,
+                            editButton = editButton,
+                            reverse = false,
+                            onSelectTag = onSelectTag,
+                            scrollState = rememberScrollState(),
+                            expanded = tagsExpanded,
+                            compact = compactTags,
+                            onExpand = onExpandTags,
+                            showFavorites = true
+                        )
+                    }
                 }
             }
         }

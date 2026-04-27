@@ -65,6 +65,10 @@ class IconsSettingsScreenVM(
         uiSettings.setGridShowAlphabetScroller(showAlphabetScroller)
     }
 
+    fun setAlphabetQuickAccessOnly(enabled: Boolean) {
+        uiSettings.setGridAlphabetQuickAccessOnly(enabled)
+    }
+
     val iconShape = uiSettings.iconShape
     fun setIconShape(iconShape: IconShape) {
         uiSettings.setIconShape(iconShape)

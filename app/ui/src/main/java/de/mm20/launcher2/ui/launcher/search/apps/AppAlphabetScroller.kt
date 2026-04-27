@@ -10,8 +10,9 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,6 +48,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
@@ -66,6 +68,11 @@ data class QuickAccessItem(
     val label: String,
 )
 
+private sealed interface QuickAccessMenuEntry {
+    data class Tag(val itemIndex: Int) : QuickAccessMenuEntry
+    object Edit : QuickAccessMenuEntry
+}
+
 @Composable
 fun AppAlphabetScroller(
     letters: List<String>,
@@ -75,6 +82,7 @@ fun AppAlphabetScroller(
     quickAccessItems: List<QuickAccessItem> = emptyList(),
     selectedQuickAccessTag: String? = null,
     onQuickAccessSelected: (String?) -> Unit = {},
+    onQuickAccessEdit: () -> Unit = {},
     onQuickAccessHoldChanged: (Boolean) -> Unit = {},
     onLetterTapped: (String) -> Unit,
     onLetterDragged: (String) -> Unit,
@@ -90,6 +98,7 @@ fun AppAlphabetScroller(
     var railBounds by remember { mutableStateOf<Rect?>(null) }
     var quickAccessBaseIndex by remember { mutableIntStateOf(0) }
     var lockedPopupTopWindowPx by remember { mutableStateOf<Float?>(null) }
+    var submenuWindowStartIndex by remember { mutableIntStateOf(0) }
 
     val view = LocalView.current
     val density = LocalDensity.current
@@ -99,6 +108,15 @@ fun AppAlphabetScroller(
     val popupGapDp = (-1).dp
     val popupVerticalPaddingDp = 8.dp
     val popupItemSpacingDp = 2.dp
+    val maxVisibleSubmenuRows = 7
+    val submenuEntries = remember(quickAccessItems) {
+        buildList<QuickAccessMenuEntry> {
+            quickAccessItems.indices.forEach { add(QuickAccessMenuEntry.Tag(it)) }
+            add(QuickAccessMenuEntry.Edit)
+        }
+    }
+    val totalSubmenuRows = submenuEntries.size
+    val visibleSubmenuRows = min(maxVisibleSubmenuRows, totalSubmenuRows)
 
     val hasQuickAccess = letters.firstOrNull() == "*"
     val minWindowSize = if (hasQuickAccess && letters.size > 1) 2 else 1
@@ -138,9 +156,10 @@ fun AppAlphabetScroller(
         val itemHeightPx = with(density) { popupItemHeightDp.toPx() }
         val spacingPx = with(density) { popupItemSpacingDp.toPx() }
         val verticalPaddingPx = with(density) { popupVerticalPaddingDp.toPx() } * 2f
-        val popupHeightPx = if (quickAccessItems.isEmpty()) 0f else {
-            (itemHeightPx * quickAccessItems.size) +
-                (spacingPx * (quickAccessItems.size - 1)) +
+        val rowCount = visibleSubmenuRows
+        val popupHeightPx = if (rowCount <= 0) 0f else {
+            (itemHeightPx * rowCount) +
+                (spacingPx * (rowCount - 1)) +
                 verticalPaddingPx
         }
         val rawTopPx = star.center.y - popupHeightPx / 2f
@@ -150,24 +169,32 @@ fun AppAlphabetScroller(
         val railLeftWindow = railBounds?.left ?: (scrollerBounds?.right ?: 0f)
         return railLeftWindow - with(density) { popupGapDp.toPx() + popupWidthDp.toPx() }
     }
-
     Box(
         modifier = modifier.onGloballyPositioned {
             val b = it.boundsInWindow()
             scrollerBounds = b
         }
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .zIndex(2f)
-                .onGloballyPositioned { railBounds = it.boundsInWindow() }
-                .sizeIn(minWidth = 36.dp)
-                .background(
-                    MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface * 0.65f),
-                    MaterialTheme.shapes.medium,
-                )
-                .padding(vertical = 6.dp, horizontal = 4.dp)
+                .sizeIn(minWidth = 56.dp)
+                .pointerInput(letters.size, quickAccessPressing, quickAccessPopupVisible) {
+                    fun indexByY(y: Float, height: Float): Int? {
+                        if (quickAccessPressing || quickAccessPopupVisible) return null
+                        if (height <= 0f) return null
+                        val localIndex = floor((y / height) * latestVisibleIndices.size).toInt()
+                            .coerceIn(0, latestVisibleIndices.lastIndex)
+                        return latestVisibleIndices[localIndex]
+                    }
+                    detectTapGestures(
+                        onTap = { offset ->
+                            val idx = indexByY(offset.y, size.height.toFloat()) ?: return@detectTapGestures
+                            onLetterTapped(letters[idx])
+                        }
+                    )
+                }
                 .pointerInput(letters.size, quickAccessPressing, quickAccessPopupVisible) {
                     fun selectByY(y: Float, height: Float) {
                         if (quickAccessPressing || quickAccessPopupVisible) return
@@ -190,26 +217,42 @@ fun AppAlphabetScroller(
                         onDragCancel = { dragIndex = -1 },
                     )
                 },
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly,
         ) {
-            visibleLetters.forEachIndexed { visibleIndex, letter ->
-                val index = visibleIndices[visibleIndex]
-                val emphasized = (letter == activeLetter || index == dragIndex) &&
-                    !(letter == "*" && quickAccessPressing)
-                val scale by animateFloatAsState(
-                    targetValue = if (emphasized) 1.52f else 1.14f,
-                    label = "alphabetScale",
-                )
-                val displayScale = if (letter == "*" && quickAccessItems.isNotEmpty()) 1f else scale
+            Column(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .onGloballyPositioned { railBounds = it.boundsInWindow() }
+                    .sizeIn(minWidth = 40.dp)
+                    .background(
+                        MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface * 0.65f),
+                        MaterialTheme.shapes.medium,
+                    )
+                    .padding(vertical = 6.dp, horizontal = 4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                visibleLetters.forEachIndexed { visibleIndex, letter ->
+                    val index = visibleIndices[visibleIndex]
+                    val emphasized = (letter == activeLetter || index == dragIndex) &&
+                        !(letter == "*" && quickAccessPressing)
+                    val scale by animateFloatAsState(
+                        targetValue = if (emphasized) 1.52f else 1.14f,
+                        label = "alphabetScale",
+                    )
+                    val displayScale = if (letter == "*" && quickAccessItems.isNotEmpty()) 1f else scale
 
-                val letterModifier = if (letter == "*" && quickAccessItems.isNotEmpty()) {
-                    Modifier
-                        .onGloballyPositioned { coordinates ->
-                            starBounds = coordinates.boundsInWindow()
-                        }
-                        .pointerInput(quickAccessItems, selectedQuickAccessTag) {
-                            fun indexFromLocalPosition(localX: Float, localY: Float): Int? {
+                    val letterModifier = if (letter == "*" && quickAccessItems.isNotEmpty()) {
+                        Modifier
+                            .onGloballyPositioned { coordinates ->
+                                starBounds = coordinates.boundsInWindow()
+                            }
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onTap = { onLetterTapped("*") },
+                                )
+                            }
+                            .pointerInput(quickAccessItems, selectedQuickAccessTag) {
+                            fun indexFromLocalPosition(localX: Float, localY: Float, windowStart: Int): Int? {
                                 val stepPx = with(density) { popupItemHeightDp.toPx() }
                                 val stridePx = stepPx + with(density) { popupItemSpacingDp.toPx() }
                                 val fingerWindowX = (starBounds?.left ?: 0f) + localX
@@ -218,23 +261,29 @@ fun AppAlphabetScroller(
                                 val popupRightWindow = popupLeftWindow + with(density) { popupWidthDp.toPx() }
                                 val popupTopWindow = lockedPopupTopWindowPx ?: computePopupTopWindowPx()
                                 val contentTop = popupTopWindow + with(density) { popupVerticalPaddingDp.toPx() }
-                                val contentBottom = contentTop + (quickAccessItems.size * stepPx) +
-                                    ((quickAccessItems.size - 1).coerceAtLeast(0) * with(density) { popupItemSpacingDp.toPx() })
+                                val visibleRows = visibleSubmenuRows
+                                val contentBottom = contentTop + (visibleRows * stepPx) +
+                                    ((visibleRows - 1).coerceAtLeast(0) * with(density) { popupItemSpacingDp.toPx() })
 
                                 if (fingerWindowX < popupLeftWindow || fingerWindowX > popupRightWindow) return null
                                 if (fingerWindowY < contentTop || fingerWindowY > contentBottom) return null
 
                                 val centeredY = fingerWindowY - contentTop - (stepPx / 2f)
-                                val slot = (centeredY / stridePx).roundToInt()
-                                    .coerceIn(0, quickAccessItems.lastIndex)
+                                val slot = (centeredY / stridePx).roundToInt().coerceIn(0, visibleRows - 1)
                                 val slotTop = slot * stridePx
                                 val slotY = (fingerWindowY - contentTop) - slotTop
                                 if (slotY < 0f || slotY > stepPx) return null
-                                return slot
+                                return (windowStart + slot).coerceIn(0, totalSubmenuRows - 1)
                             }
 
                             fun finishSelection() {
-                                hoveredQuickAccessIndex?.let { onQuickAccessSelected(quickAccessItems[it].tag) }
+                                hoveredQuickAccessIndex?.let { slot ->
+                                    when (val entry = submenuEntries.getOrNull(slot)) {
+                                        is QuickAccessMenuEntry.Tag -> onQuickAccessSelected(quickAccessItems[entry.itemIndex].tag)
+                                        QuickAccessMenuEntry.Edit -> onQuickAccessEdit()
+                                        null -> Unit
+                                    }
+                                }
                                 quickAccessPressing = false
                                 quickAccessPopupVisible = false
                                 hoveredQuickAccessIndex = null
@@ -248,48 +297,65 @@ fun AppAlphabetScroller(
                                 quickAccessPressing = true
                                 quickAccessBaseIndex = quickAccessItems.indexOfFirst { it.tag == selectedQuickAccessTag }
                                     .takeIf { it >= 0 } ?: 0
+                                submenuWindowStartIndex = 0
                                 lockedPopupTopWindowPx = computePopupTopWindowPx()
                                 quickAccessPopupVisible = true
-                                hoveredQuickAccessIndex = if (quickAccessItems.isNotEmpty()) {
-                                    indexFromLocalPosition(offset.x, offset.y)
-                                } else null
+                                hoveredQuickAccessIndex = indexFromLocalPosition(
+                                    offset.x,
+                                    offset.y,
+                                    submenuWindowStartIndex
+                                )
                                 onQuickAccessHoldChanged(true)
                                 view.parent?.requestDisallowInterceptTouchEvent(true)
                                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                 },
                                 onDrag = { change, _ ->
-                                    if (quickAccessItems.isNotEmpty()) {
-                                        hoveredQuickAccessIndex = indexFromLocalPosition(change.position.x, change.position.y)
+                                    val newHovered = indexFromLocalPosition(
+                                        change.position.x,
+                                        change.position.y,
+                                        submenuWindowStartIndex
+                                    )
+                                    hoveredQuickAccessIndex = newHovered
+                                    if (newHovered != null && totalSubmenuRows > visibleSubmenuRows) {
+                                        val minStart = 0
+                                        val maxStart = totalSubmenuRows - visibleSubmenuRows
+                                        val upperTrigger = submenuWindowStartIndex + 1
+                                        val lowerTrigger = submenuWindowStartIndex + visibleSubmenuRows - 2
+                                        submenuWindowStartIndex = when {
+                                            newHovered <= upperTrigger -> (submenuWindowStartIndex - 1).coerceIn(minStart, maxStart)
+                                            newHovered >= lowerTrigger -> (submenuWindowStartIndex + 1).coerceIn(minStart, maxStart)
+                                            else -> submenuWindowStartIndex
+                                        }
                                     }
                                     change.consume()
                                 },
                                 onDragCancel = { finishSelection() },
                                 onDragEnd = { finishSelection() },
                             )
-                        }
-                } else {
-                    Modifier.combinedClickable(
-                        onClick = { onLetterTapped(letter) },
-                        onLongClick = {},
+                            }
+                    } else {
+                        Modifier.clickable(
+                            onClick = { onLetterTapped(letter) },
+                        )
+                    }
+
+                    Text(
+                        text = letter,
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontSize = 17.sp,
+                            fontWeight = if (emphasized) FontWeight.Bold else FontWeight.Normal,
+                        ),
+                        textAlign = TextAlign.Center,
+                        color = if (emphasized) MaterialTheme.colorScheme.primary
+                        else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier
+                            .sizeIn(minWidth = if (letter == "*") 34.dp else 30.dp)
+                            .heightIn(min = if (letter == "*") 36.dp else 32.dp)
+                            .then(letterModifier)
+                            .scale(displayScale)
+                            .padding(vertical = 2.dp),
                     )
                 }
-
-                Text(
-                    text = letter,
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        fontSize = 16.sp,
-                        fontWeight = if (emphasized) FontWeight.Bold else FontWeight.Normal,
-                    ),
-                    textAlign = TextAlign.Center,
-                    color = if (emphasized) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier
-                        .sizeIn(minWidth = 28.dp)
-                        .heightIn(min = 28.dp)
-                        .then(letterModifier)
-                        .scale(displayScale)
-                        .padding(vertical = 2.dp),
-                )
             }
         }
 
@@ -327,9 +393,15 @@ fun AppAlphabetScroller(
                             .padding(vertical = popupVerticalPaddingDp, horizontal = 8.dp),
                         verticalArrangement = Arrangement.spacedBy(popupItemSpacingDp),
                     ) {
-                        quickAccessItems.forEachIndexed { itemIndex, item ->
-                            val selected = selectedQuickAccessTag == item.tag
-                            val highlighted = hoveredQuickAccessIndex == itemIndex
+                        val windowStart = submenuWindowStartIndex
+                        val visibleEntries = submenuEntries.subList(windowStart, windowStart + visibleSubmenuRows)
+                        visibleEntries.forEachIndexed { slot, entry ->
+                            val logicalIndex = windowStart + slot
+                            val highlighted = hoveredQuickAccessIndex == logicalIndex
+                            val selected = when (entry) {
+                                is QuickAccessMenuEntry.Tag -> selectedQuickAccessTag == quickAccessItems[entry.itemIndex].tag
+                                QuickAccessMenuEntry.Edit -> false
+                            }
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -342,19 +414,28 @@ fun AppAlphabetScroller(
                                     .padding(horizontal = 10.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
+                                val iconRes = when (entry) {
+                                    is QuickAccessMenuEntry.Tag -> {
+                                        if (quickAccessItems[entry.itemIndex].tag == null) R.drawable.star_20px_filled
+                                        else R.drawable.tag_20px
+                                    }
+                                    QuickAccessMenuEntry.Edit -> R.drawable.edit_24px
+                                }
+                                val labelText = when (entry) {
+                                    is QuickAccessMenuEntry.Tag -> quickAccessItems[entry.itemIndex].label
+                                    QuickAccessMenuEntry.Edit -> stringResource(R.string.edit)
+                                }
                                 Icon(
-                                    painter = painterResource(
-                                        if (item.tag == null) R.drawable.star_20px_filled else R.drawable.tag_20px,
-                                    ),
+                                    painter = painterResource(iconRes),
                                     contentDescription = null,
                                     modifier = Modifier.size(16.dp),
-                                    tint = if (selected) MaterialTheme.colorScheme.onSecondaryContainer
+                                    tint = if (selected || highlighted) MaterialTheme.colorScheme.onSecondaryContainer
                                     else MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                                 Text(
-                                    text = item.label,
+                                    text = labelText,
                                     style = MaterialTheme.typography.labelLarge,
-                                    color = if (selected) MaterialTheme.colorScheme.onSecondaryContainer
+                                    color = if (selected || highlighted) MaterialTheme.colorScheme.onSecondaryContainer
                                     else MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier.padding(start = 8.dp),
                                 )
@@ -363,6 +444,6 @@ fun AppAlphabetScroller(
                     }
                 }
             }
-        }
     }
+}
 }

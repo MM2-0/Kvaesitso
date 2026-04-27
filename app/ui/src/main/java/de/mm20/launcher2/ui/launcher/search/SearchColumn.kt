@@ -80,6 +80,7 @@ fun SearchColumn(
     val columns = LocalGridSettings.current.columnCount
     val showList = LocalGridSettings.current.showList
     val showAlphabetScroller = LocalGridSettings.current.showAlphabetScroller
+    val alphabetQuickAccessOnly = LocalGridSettings.current.alphabetQuickAccessOnly
     val context = LocalContext.current
 
     val viewModel: SearchVM = viewModel()
@@ -112,6 +113,7 @@ fun SearchColumn(
 
     val query by viewModel.searchQuery
     val isSearchEmpty by viewModel.isSearchEmpty
+    val showAlphabetIndexInCurrentMode = showAlphabetScroller && isSearchEmpty
 
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)
@@ -140,6 +142,7 @@ fun SearchColumn(
 
     val showFilters by viewModel.showFilters
     val coroutineScope = rememberCoroutineScope()
+    val sheetManager = LocalBottomSheetManager.current
     val navigationBarBottomPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     var quickAccessHoldActive by remember { mutableStateOf(false) }
 
@@ -157,35 +160,23 @@ fun SearchColumn(
         else -> emptyList()
     }
     val appResultsHasBeforeItem = showProfileResults
-    val appAlphabetTargets = remember(
-        shownApps,
-        showList,
-        columns,
-        appResultsHasBeforeItem,
-        showAlphabetScroller
-    ) {
-        if (!showAlphabetScroller) {
-            emptyList()
-        } else {
-            listOf(
-                AppAlphabetJumpTarget(letter = "*", relativeListIndex = -1)
-            ) + buildAppAlphabetJumpTargets(
-                apps = shownApps,
-                showList = showList,
-                columns = columns,
-                hasBeforeItem = appResultsHasBeforeItem,
-            )
-        }
+    val appAlphabetTargets = if (!showAlphabetIndexInCurrentMode) {
+        emptyList()
+    } else {
+        listOf(
+            AppAlphabetJumpTarget(letter = "*", relativeListIndex = -1)
+        ) + buildAppAlphabetJumpTargets(
+            apps = shownApps,
+            showList = showList,
+            columns = columns,
+            hasBeforeItem = appResultsHasBeforeItem,
+        )
     }
-    var stableAlphabetTargets by remember { mutableStateOf(emptyList<AppAlphabetJumpTarget>()) }
-    if (!showAlphabetScroller) {
-        stableAlphabetTargets = emptyList()
-    } else if (appAlphabetTargets.isNotEmpty()) {
-        stableAlphabetTargets = appAlphabetTargets
+    val displayedAlphabetTargets = if (!showAlphabetIndexInCurrentMode) emptyList()
+    else appAlphabetTargets
+    val displayedAlphabetLetters = remember(displayedAlphabetTargets) {
+        displayedAlphabetTargets.map { it.letter }.distinct()
     }
-    val displayedAlphabetTargets = if (!showAlphabetScroller) emptyList()
-    else if (appAlphabetTargets.isNotEmpty()) appAlphabetTargets
-    else stableAlphabetTargets
 
     val activeAlphabetLetter by remember(state, displayedAlphabetTargets) {
         derivedStateOf {
@@ -245,10 +236,15 @@ fun SearchColumn(
                     reverseLayout = reverse,
                 ) {
                     if (!hideFavs && favoritesEnabled) {
+                        val hideFavoritesTagSelector = showAlphabetScroller && alphabetQuickAccessOnly
+                        val selectedTagLabel = pinnedTags.firstOrNull { it.tag == selectedTag }?.label
+                        val quickAccessHeader = if (hideFavoritesTagSelector) {
+                            selectedTagLabel ?: favoritesLabel
+                        } else null
                         SearchFavorites(
                             favorites = favorites,
                             selectedTag = selectedTag,
-                            pinnedTags = pinnedTags,
+                            pinnedTags = if (hideFavoritesTagSelector) emptyList() else pinnedTags,
                             tagsExpanded = favoritesTagsExpanded,
                             onSelectTag = { favoritesVM.selectTag(it) },
                             reverse = reverse,
@@ -256,7 +252,8 @@ fun SearchColumn(
                                 favoritesVM.setTagsExpanded(it)
                             },
                             compactTags = compactTags,
-                            editButton = favoritesEditButton
+                            editButton = favoritesEditButton && !hideFavoritesTagSelector,
+                            quickAccessHeader = quickAccessHeader
                         )
                     } else {
                         // Empty item to maintain scroll position
@@ -282,7 +279,7 @@ fun SearchColumn(
                             reverse = reverse,
                             showProfileLockControls = hasProfilesPermission,
                             showList = showList,
-                            showAlphabetScroller = showAlphabetScroller,
+                            showAlphabetScroller = showAlphabetIndexInCurrentMode,
                             selectedIndex = selectedAppIndex,
                             onSelect = { selectedAppIndex = it },
                         )
@@ -296,7 +293,7 @@ fun SearchColumn(
                             columns = columns,
                             reverse = reverse,
                             showList = showList,
-                            showAlphabetScroller = showAlphabetScroller,
+                            showAlphabetScroller = showAlphabetIndexInCurrentMode,
                             selectedIndex = selectedAppIndex,
                             onSelect = { selectedAppIndex = it },
                         )
@@ -430,9 +427,9 @@ fun SearchColumn(
                     }
                 }
 
-                if (displayedAlphabetTargets.isNotEmpty()) {
+                if (displayedAlphabetLetters.isNotEmpty()) {
                     AppAlphabetScroller(
-                        letters = displayedAlphabetTargets.map { it.letter },
+                        letters = displayedAlphabetLetters,
                         activeLetter = activeAlphabetLetter,
                         maxVisibleLetters = 10,
                         quickAccessItems = quickAccessItems,
@@ -442,6 +439,9 @@ fun SearchColumn(
                             coroutineScope.launch {
                                 state.animateScrollToItem(0)
                             }
+                        },
+                        onQuickAccessEdit = {
+                            sheetManager.showEditFavoritesSheet()
                         },
                         onQuickAccessHoldChanged = { quickAccessHoldActive = it },
                         modifier = Modifier
@@ -469,9 +469,6 @@ fun SearchColumn(
         }
 
     }
-
-
-    val sheetManager = LocalBottomSheetManager.current
     HiddenItemsSheet(
         expanded = sheetManager.hiddenItemsSheetShown.value,
         items = hiddenResults,

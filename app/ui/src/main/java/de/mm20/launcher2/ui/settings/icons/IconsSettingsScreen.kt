@@ -145,6 +145,16 @@ fun IconsSettingsScreen() {
                         viewModel.setShowAlphabetScroller(it)
                     }
                 )
+                AnimatedVisibility(grid.showAlphabetScroller) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_grid_alphabet_quick_access_only),
+                        summary = stringResource(R.string.preference_grid_alphabet_quick_access_only_summary),
+                        value = grid.alphabetQuickAccessOnly,
+                        onValueChanged = {
+                            viewModel.setAlphabetQuickAccessOnly(it)
+                        }
+                    )
+                }
                 SliderPreference(
                     title = stringResource(R.string.preference_grid_column_count),
                     value = grid.columnCount,
