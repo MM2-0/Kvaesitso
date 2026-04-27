@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
@@ -196,28 +197,77 @@ fun AppAlphabetScroller(
                     )
                 }
                 .pointerInput(letters.size, quickAccessPressing, quickAccessPopupVisible) {
-                    fun selectByY(y: Float, height: Float) {
-                        if (quickAccessPressing || quickAccessPopupVisible) return
-                        if (height <= 0f) return
-                        val localIndex = floor((y / height) * latestVisibleIndices.size).toInt()
-                            .coerceIn(0, latestVisibleIndices.lastIndex)
-                        val index = latestVisibleIndices[localIndex]
-                        if (index != dragIndex) {
-                            dragIndex = index
-                            onLetterDragged(letters[index])
-                        }
+                    fun selectByY(y: Float, height: Float): Int? {
+                        if (quickAccessPressing || quickAccessPopupVisible) return null
+                        if (height <= 0f || letters.isEmpty()) return null
+
+                        // Standard fast-scroller model: map finger Y directly to the full
+                        // section list, not the currently rendered window.
+                        return floor((y / height) * letters.size).toInt()
+                            .coerceIn(0, letters.lastIndex)
                     }
                     detectVerticalDragGestures(
-                        onDragStart = { selectByY(it.y, size.height.toFloat()) },
+                        onDragStart = {
+                            val startIndex = selectByY(it.y, size.height.toFloat()) ?: return@detectVerticalDragGestures
+                            if (startIndex != dragIndex) {
+                                dragIndex = startIndex
+                                onLetterDragged(letters[startIndex])
+                            }
+                        },
                         onVerticalDrag = { change, _ ->
-                            selectByY(change.position.y, size.height.toFloat())
+                            if (quickAccessPressing || quickAccessPopupVisible) {
+                                change.consume()
+                                return@detectVerticalDragGestures
+                            }
+                            val index = selectByY(change.position.y, size.height.toFloat())
+                            if (index != null && index != dragIndex) {
+                                dragIndex = index
+                                onLetterDragged(letters[index])
+                            }
                             change.consume()
                         },
-                        onDragEnd = { dragIndex = -1 },
-                        onDragCancel = { dragIndex = -1 },
+                        onDragEnd = {
+                            dragIndex = -1
+                        },
+                        onDragCancel = {
+                            dragIndex = -1
+                        },
                     )
                 },
         ) {
+            AnimatedVisibility(
+                visible = dragIndex >= 0 &&
+                    letters.getOrNull(dragIndex) != null &&
+                    letters.getOrNull(dragIndex) != "*" &&
+                    !quickAccessPressing &&
+                    !quickAccessPopupVisible,
+                enter = fadeIn() + scaleIn(initialScale = 0.9f),
+                exit = fadeOut() + scaleOut(targetScale = 0.92f),
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .offset(x = 8.dp, y = (-66).dp)
+                    .zIndex(3f),
+            ) {
+                val overlayLetter = letters.getOrNull(dragIndex).orEmpty()
+                Box(
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface * 0.9f),
+                            MaterialTheme.shapes.small,
+                        )
+                        .padding(horizontal = 12.dp, vertical = 5.dp),
+                ) {
+                    Text(
+                        text = overlayLetter,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 28.sp,
+                        ),
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
+
             Column(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
