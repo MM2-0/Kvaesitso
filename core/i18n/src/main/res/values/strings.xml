@@ -41,6 +41,7 @@
     <string name="action_quit">Quit</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
+    <string name="menu_edit_favorites">Edit favorites</string>
     <string name="menu_remove">Remove</string>
     <!-- Open a contact in the contacts app -->
     <string name="menu_contacts_open_externally">Open in contacts app</string>
@@ -579,8 +580,6 @@
     <string name="preference_grid_list_icons_summary">Show icons in the list view</string>
     <string name="preference_grid_alphabet_scroller">Alphabet index</string>
     <string name="preference_grid_alphabet_scroller_summary">Show alphabet headers and the side scroller in app results</string>
-    <string name="preference_grid_alphabet_quick_access_only">Use alphabet quick-access menu only</string>
-    <string name="preference_grid_alphabet_quick_access_only_summary">Hide the favorites tag bar and use the * hold menu in the alphabet index instead</string>
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Troubleshooting tools</string>
     <string name="preference_category_widgets">Widgets</string>

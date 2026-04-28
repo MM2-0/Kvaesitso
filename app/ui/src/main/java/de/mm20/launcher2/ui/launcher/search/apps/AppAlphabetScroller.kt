@@ -49,7 +49,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
@@ -71,7 +70,6 @@ data class QuickAccessItem(
 
 private sealed interface QuickAccessMenuEntry {
     data class Tag(val itemIndex: Int) : QuickAccessMenuEntry
-    object Edit : QuickAccessMenuEntry
 }
 
 @Composable
@@ -83,7 +81,6 @@ fun AppAlphabetScroller(
     quickAccessItems: List<QuickAccessItem> = emptyList(),
     selectedQuickAccessTag: String? = null,
     onQuickAccessSelected: (String?) -> Unit = {},
-    onQuickAccessEdit: () -> Unit = {},
     onQuickAccessHoldChanged: (Boolean) -> Unit = {},
     onLetterTapped: (String) -> Unit,
     onLetterDragged: (String) -> Unit,
@@ -113,7 +110,6 @@ fun AppAlphabetScroller(
     val submenuEntries = remember(quickAccessItems) {
         buildList<QuickAccessMenuEntry> {
             quickAccessItems.indices.forEach { add(QuickAccessMenuEntry.Tag(it)) }
-            add(QuickAccessMenuEntry.Edit)
         }
     }
     val totalSubmenuRows = submenuEntries.size
@@ -330,7 +326,6 @@ fun AppAlphabetScroller(
                                 hoveredQuickAccessIndex?.let { slot ->
                                     when (val entry = submenuEntries.getOrNull(slot)) {
                                         is QuickAccessMenuEntry.Tag -> onQuickAccessSelected(quickAccessItems[entry.itemIndex].tag)
-                                        QuickAccessMenuEntry.Edit -> onQuickAccessEdit()
                                         null -> Unit
                                     }
                                 }
@@ -450,7 +445,6 @@ fun AppAlphabetScroller(
                             val highlighted = hoveredQuickAccessIndex == logicalIndex
                             val selected = when (entry) {
                                 is QuickAccessMenuEntry.Tag -> selectedQuickAccessTag == quickAccessItems[entry.itemIndex].tag
-                                QuickAccessMenuEntry.Edit -> false
                             }
                             Row(
                                 modifier = Modifier
@@ -469,11 +463,9 @@ fun AppAlphabetScroller(
                                         if (quickAccessItems[entry.itemIndex].tag == null) R.drawable.star_20px_filled
                                         else R.drawable.tag_20px
                                     }
-                                    QuickAccessMenuEntry.Edit -> R.drawable.edit_24px
                                 }
                                 val labelText = when (entry) {
                                     is QuickAccessMenuEntry.Tag -> quickAccessItems[entry.itemIndex].label
-                                    QuickAccessMenuEntry.Edit -> stringResource(R.string.edit)
                                 }
                                 Icon(
                                     painter = painterResource(iconRes),

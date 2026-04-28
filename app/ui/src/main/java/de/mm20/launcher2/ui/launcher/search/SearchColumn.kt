@@ -80,7 +80,6 @@ fun SearchColumn(
     val columns = LocalGridSettings.current.columnCount
     val showList = LocalGridSettings.current.showList
     val showAlphabetScroller = LocalGridSettings.current.showAlphabetScroller
-    val alphabetQuickAccessOnly = LocalGridSettings.current.alphabetQuickAccessOnly
     val context = LocalContext.current
 
     val viewModel: SearchVM = viewModel()
@@ -124,9 +123,6 @@ fun SearchColumn(
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
     val selectedTag by favoritesVM.selectedTag.collectAsState(null)
-    val compactTags by favoritesVM.compactTags.collectAsState(false)
-    val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
-    val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
@@ -236,24 +232,12 @@ fun SearchColumn(
                     reverseLayout = reverse,
                 ) {
                     if (!hideFavs && favoritesEnabled) {
-                        val hideFavoritesTagSelector = showAlphabetScroller && alphabetQuickAccessOnly
-                        val selectedTagLabel = pinnedTags.firstOrNull { it.tag == selectedTag }?.label
-                        val quickAccessHeader = if (hideFavoritesTagSelector) {
-                            selectedTagLabel ?: favoritesLabel
-                        } else null
                         SearchFavorites(
                             favorites = favorites,
                             selectedTag = selectedTag,
-                            pinnedTags = if (hideFavoritesTagSelector) emptyList() else pinnedTags,
-                            tagsExpanded = favoritesTagsExpanded,
+                            pinnedTags = pinnedTags,
                             onSelectTag = { favoritesVM.selectTag(it) },
                             reverse = reverse,
-                            onExpandTags = {
-                                favoritesVM.setTagsExpanded(it)
-                            },
-                            compactTags = compactTags,
-                            editButton = favoritesEditButton && !hideFavoritesTagSelector,
-                            quickAccessHeader = quickAccessHeader
                         )
                     } else {
                         // Empty item to maintain scroll position
@@ -439,9 +423,6 @@ fun SearchColumn(
                             coroutineScope.launch {
                                 state.animateScrollToItem(0)
                             }
-                        },
-                        onQuickAccessEdit = {
-                            sheetManager.showEditFavoritesSheet()
                         },
                         onQuickAccessHoldChanged = { quickAccessHoldActive = it },
                         modifier = Modifier

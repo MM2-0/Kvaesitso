@@ -110,7 +110,6 @@ data class LauncherSettingsData internal constructor(
     val gridList: Boolean = false,
     val gridListIcons: Boolean = true,
     val gridAlphabetScroller: Boolean = true,
-    val gridAlphabetQuickAccessOnly: Boolean = false,
 
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Transparent,
     val searchBarColors: SearchBarColors = SearchBarColors.Auto,
