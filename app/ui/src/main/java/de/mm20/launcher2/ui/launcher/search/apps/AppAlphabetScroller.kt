@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.apps
 
+import android.view.HapticFeedbackConstants
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateFloatAsState
@@ -26,8 +27,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -104,8 +107,8 @@ fun AppAlphabetScroller(
     val popupWidthDp = 220.dp
     val popupItemHeightDp = 40.dp
     val popupGapDp = (-1).dp
-    val popupVerticalPaddingDp = 8.dp
-    val popupItemSpacingDp = 2.dp
+    val popupVerticalPaddingDp = 0.dp
+    val popupItemSpacingDp = 0.dp
     val maxVisibleSubmenuRows = 7
     val submenuEntries = remember(quickAccessItems) {
         buildList<QuickAccessMenuEntry> {
@@ -208,6 +211,7 @@ fun AppAlphabetScroller(
                             if (startIndex != dragIndex) {
                                 dragIndex = startIndex
                                 onLetterDragged(letters[startIndex])
+                                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                             }
                         },
                         onVerticalDrag = { change, _ ->
@@ -219,6 +223,7 @@ fun AppAlphabetScroller(
                             if (index != null && index != dragIndex) {
                                 dragIndex = index
                                 onLetterDragged(letters[index])
+                                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                             }
                             change.consume()
                         },
@@ -435,7 +440,7 @@ fun AppAlphabetScroller(
                                 MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface * 0.86f),
                                 MaterialTheme.shapes.medium,
                             )
-                            .padding(vertical = popupVerticalPaddingDp, horizontal = 8.dp),
+                            .padding(vertical = popupVerticalPaddingDp, horizontal = 0.dp),
                         verticalArrangement = Arrangement.spacedBy(popupItemSpacingDp),
                     ) {
                         val windowStart = submenuWindowStartIndex
@@ -446,41 +451,51 @@ fun AppAlphabetScroller(
                             val selected = when (entry) {
                                 is QuickAccessMenuEntry.Tag -> selectedQuickAccessTag == quickAccessItems[entry.itemIndex].tag
                             }
-                            Row(
+                            Surface(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(popupItemHeightDp)
-                                    .background(
-                                        if (selected || highlighted) MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.82f)
-                                        else MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.48f),
-                                        MaterialTheme.shapes.small,
-                                    )
-                                    .padding(horizontal = 10.dp),
-                                verticalAlignment = Alignment.CenterVertically,
+                                    .height(popupItemHeightDp),
+                                shape = MaterialTheme.shapes.small,
+                                color = if (selected || highlighted) {
+                                    MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.82f)
+                                } else {
+                                    MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.48f)
+                                },
+                                border = if (slot < visibleEntries.lastIndex) {
+                                    BorderStroke(0.6.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.22f))
+                                } else null,
                             ) {
-                                val iconRes = when (entry) {
-                                    is QuickAccessMenuEntry.Tag -> {
-                                        if (quickAccessItems[entry.itemIndex].tag == null) R.drawable.star_20px_filled
-                                        else R.drawable.tag_20px
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(popupItemHeightDp)
+                                        .padding(horizontal = 10.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    val iconRes = when (entry) {
+                                        is QuickAccessMenuEntry.Tag -> {
+                                            if (quickAccessItems[entry.itemIndex].tag == null) R.drawable.star_20px_filled
+                                            else R.drawable.tag_20px
+                                        }
                                     }
+                                    val labelText = when (entry) {
+                                        is QuickAccessMenuEntry.Tag -> quickAccessItems[entry.itemIndex].label
+                                    }
+                                    Icon(
+                                        painter = painterResource(iconRes),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(16.dp),
+                                        tint = if (selected || highlighted) MaterialTheme.colorScheme.onSecondaryContainer
+                                        else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                    Text(
+                                        text = labelText,
+                                        style = MaterialTheme.typography.labelLarge,
+                                        color = if (selected || highlighted) MaterialTheme.colorScheme.onSecondaryContainer
+                                        else MaterialTheme.colorScheme.onSurface,
+                                        modifier = Modifier.padding(start = 8.dp),
+                                    )
                                 }
-                                val labelText = when (entry) {
-                                    is QuickAccessMenuEntry.Tag -> quickAccessItems[entry.itemIndex].label
-                                }
-                                Icon(
-                                    painter = painterResource(iconRes),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(16.dp),
-                                    tint = if (selected || highlighted) MaterialTheme.colorScheme.onSecondaryContainer
-                                    else MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                                Text(
-                                    text = labelText,
-                                    style = MaterialTheme.typography.labelLarge,
-                                    color = if (selected || highlighted) MaterialTheme.colorScheme.onSecondaryContainer
-                                    else MaterialTheme.colorScheme.onSurface,
-                                    modifier = Modifier.padding(start = 8.dp),
-                                )
                             }
                         }
                     }

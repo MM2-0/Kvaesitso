@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.animation.animateContentSize
@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -134,7 +133,7 @@ private fun FavoritesTopTagCarousel(
             state = listState,
             flingBehavior = rememberSnapFlingBehavior(listState),
         ) {
-            items(topItems, key = { it.tag ?: "__favorites__" }) { item ->
+            itemsIndexed(topItems, key = { _, item -> item.tag ?: "__favorites__" }) { index, item ->
                 val selected = item.tag == selectedTag
                 ContextTagPill(
                     label = item.label,
@@ -148,7 +147,12 @@ private fun FavoritesTopTagCarousel(
                             listState.animateScrollToItem(itemIndex)
                         }
                     },
-                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp),
+                    modifier = Modifier.padding(
+                        start = if (index == 0) 0.dp else 4.dp,
+                        end = 4.dp,
+                        top = 2.dp,
+                        bottom = 2.dp
+                    ),
                 )
             }
         }
@@ -197,6 +201,7 @@ private fun ContextTagPill(
                 .fillMaxWidth()
                 .height(40.dp)
                 .padding(horizontal = 12.dp),
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
@@ -213,7 +218,6 @@ private fun ContextTagPill(
                 else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.84f),
                 modifier = Modifier
                     .padding(start = 8.dp)
-                    .scale(if (selected) 1.12f else 1f)
                     .alpha(if (selected) 1f else 0.72f),
             )
         }
