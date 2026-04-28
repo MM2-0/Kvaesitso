@@ -64,6 +64,7 @@ import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 data class QuickAccessItem(
@@ -200,10 +201,22 @@ fun AppAlphabetScroller(
                         if (quickAccessPressing || quickAccessPopupVisible) return null
                         if (height <= 0f || letters.isEmpty()) return null
 
-                        // Standard fast-scroller model: map finger Y directly to the full
-                        // section list, not the currently rendered window.
-                        return floor((y / height) * letters.size).toInt()
+                        // Map drag position to the full section list and apply a small
+                        // hysteresis around the current slot center to avoid accidental
+                        // neighboring-letter flips at finger-up.
+                        val slotHeight = height / letters.size
+                        if (slotHeight <= 0f) return null
+                        val candidate = floor((y / height) * letters.size).toInt()
                             .coerceIn(0, letters.lastIndex)
+                        val current = dragIndex
+                        if (current in letters.indices && candidate != current) {
+                            val currentCenterY = (current + 0.5f) * slotHeight
+                            val hysteresisPx = slotHeight * 0.24f
+                            if (abs(y - currentCenterY) < hysteresisPx) {
+                                return current
+                            }
+                        }
+                        return candidate
                     }
                     detectVerticalDragGestures(
                         onDragStart = {

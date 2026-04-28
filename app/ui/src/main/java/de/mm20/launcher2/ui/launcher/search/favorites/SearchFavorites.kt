@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,7 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.animation.animateContentSize
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,9 +36,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.ui.R
@@ -125,15 +129,16 @@ private fun FavoritesTopTagCarousel(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 2.dp),
+            .padding(horizontal = 4.dp, vertical = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         LazyRow(
             modifier = Modifier.weight(1f),
             state = listState,
             flingBehavior = rememberSnapFlingBehavior(listState),
+            contentPadding = PaddingValues(start = 0.dp, end = 20.dp),
         ) {
-            itemsIndexed(topItems, key = { _, item -> item.tag ?: "__favorites__" }) { index, item ->
+            items(topItems, key = { item -> item.tag ?: "__favorites__" }) { item ->
                 val selected = item.tag == selectedTag
                 ContextTagPill(
                     label = item.label,
@@ -147,12 +152,7 @@ private fun FavoritesTopTagCarousel(
                             listState.animateScrollToItem(itemIndex)
                         }
                     },
-                    modifier = Modifier.padding(
-                        start = if (index == 0) 0.dp else 4.dp,
-                        end = 4.dp,
-                        top = 2.dp,
-                        bottom = 2.dp
-                    ),
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp),
                 )
             }
         }
@@ -170,8 +170,16 @@ private fun ContextTagPill(
 ) {
     val density = LocalDensity.current
     val textMeasurer = rememberTextMeasurer()
-    val selectedTextStyle = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)
-    val unselectedTextStyle = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Medium)
+    val selectedTextStyle = MaterialTheme.typography.labelLarge.copy(
+        fontWeight = FontWeight.Bold,
+        lineHeight = 20.sp,
+        platformStyle = PlatformTextStyle(includeFontPadding = false),
+    )
+    val unselectedTextStyle = MaterialTheme.typography.labelLarge.copy(
+        fontWeight = FontWeight.Medium,
+        lineHeight = 20.sp,
+        platformStyle = PlatformTextStyle(includeFontPadding = false),
+    )
     val horizontalPadding: Dp = 12.dp
     val iconSize: Dp = 16.dp
     val iconTextGap: Dp = 8.dp
