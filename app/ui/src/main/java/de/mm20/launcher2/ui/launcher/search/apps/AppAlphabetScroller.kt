@@ -44,12 +44,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.zIndex
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -102,9 +100,8 @@ fun AppAlphabetScroller(
     var lockedPopupTopWindowPx by remember { mutableStateOf<Float?>(null) }
     var submenuWindowStartIndex by remember { mutableIntStateOf(0) }
 
-    val view = LocalView.current
     val density = LocalDensity.current
-    val haptic = LocalHapticFeedback.current
+    val view = LocalView.current
     val popupWidthDp = 220.dp
     val popupItemHeightDp = 40.dp
     val popupGapDp = (-1).dp
@@ -352,7 +349,6 @@ fun AppAlphabetScroller(
                                 hoveredQuickAccessIndex = null
                                 lockedPopupTopWindowPx = null
                                 onQuickAccessHoldChanged(false)
-                                view.parent?.requestDisallowInterceptTouchEvent(false)
                             }
 
                             detectDragGesturesAfterLongPress(
@@ -369,8 +365,7 @@ fun AppAlphabetScroller(
                                     submenuWindowStartIndex
                                 )
                                 onQuickAccessHoldChanged(true)
-                                view.parent?.requestDisallowInterceptTouchEvent(true)
-                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
                                 },
                                 onDrag = { change, _ ->
                                     val newHovered = indexFromLocalPosition(
