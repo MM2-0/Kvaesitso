@@ -937,6 +937,6 @@
     <string name="typo_preview_short2">Tipo</string>
     <string name="typo_preview_medium1">Barcelona</string>
     <string name="typo_preview_medium2">Vista previa</string>
-    <string name="typo_preview_long">El rápido zorro marrón\nsalta sobre 1234790</string>
+    <string name="typo_preview_long">José compró en Perú una vieja zampoña.\nExcusándose, Sofía tiró su whisky al desagüe de la banqueta. 1234790</string>
     <string name="preference_category_donate">Apoya el desarrollo</string>
 </resources>
