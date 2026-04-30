@@ -96,7 +96,6 @@ fun AppAlphabetScroller(
     var starBounds by remember { mutableStateOf<Rect?>(null) }
     var scrollerBounds by remember { mutableStateOf<Rect?>(null) }
     var railBounds by remember { mutableStateOf<Rect?>(null) }
-    var quickAccessBaseIndex by remember { mutableIntStateOf(0) }
     var lockedPopupTopWindowPx by remember { mutableStateOf<Float?>(null) }
     var submenuWindowStartIndex by remember { mutableIntStateOf(0) }
 
@@ -354,8 +353,6 @@ fun AppAlphabetScroller(
                             detectDragGesturesAfterLongPress(
                                 onDragStart = { offset ->
                                 quickAccessPressing = true
-                                quickAccessBaseIndex = quickAccessItems.indexOfFirst { it.tag == selectedQuickAccessTag }
-                                    .takeIf { it >= 0 } ?: 0
                                 submenuWindowStartIndex = 0
                                 lockedPopupTopWindowPx = computePopupTopWindowPx()
                                 quickAccessPopupVisible = true
