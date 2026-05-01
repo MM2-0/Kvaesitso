@@ -44,7 +44,7 @@
     </plurals>
     <string name="menu_share">Condividi</string>
     <string name="file_meta_path">Percorso: %1$s</string>
-    <string name="menu_share_apk_file">File APK</string>
+    <string name="menu_share_apk_file">File pacchetto</string>
     <string name="menu_uninstall">Disinstalla</string>
     <string name="menu_favorites_pin">Aggiungi ai preferiti</string>
     <string name="menu_favorites_unpin">Rimuovi</string>
