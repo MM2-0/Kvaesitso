@@ -350,7 +350,7 @@
     <string name="favorites_empty_tag">لا توجد عناصر بهذه العلامة</string>
     <string name="preference_search_search_actions_summary">تكوين الإجراءات السريعة واختصارات البحث</string>
     <string name="search_action_websearch">بحث في الويب</string>
-    <string name="create_search_action_type">ما نوع الإجراء الذي تريد إنشاؤه؟</string>
+    <string name="create_search_action_type">ما نوع الإجراء الذي ترغب في إنشائه؟</string>
     <string name="search_action_label">الاسم</string>
     <string name="more_information">مزيد من المعلومات</string>
     <string name="experimental_feature">تجريبي</string>
@@ -429,12 +429,12 @@
     <string name="preference_calendar_calendars">التقويمات</string>
     <string name="preference_calendar_hide_completed">إخفاء المهام المكتملة</string>
     <string name="preference_search_bar_launch_on_enter_summary">تشغيل التطابق المميز أو الإجراء السريع عند النقر فوق انتقال</string>
-    <string name="preference_hidden_items_summary">إدارة التطبيقات ونتائج البحث المخفية</string>
+    <string name="preference_hidden_items_summary">إدارة التطبيقات المستبعدة ونتائج البحث</string>
     <string name="preference_hidden_items_reveal_button">إظهار زر الكشف</string>
     <string name="preference_compact_tags_summary">إخفاء تسميات العلامات أو الرموز لتقليل المساحة التي تشغلها العلامات</string>
-    <string name="preference_screen_icons">الشبكة والرموز</string>
+    <string name="preference_screen_icons">الشبكة والأيقونات</string>
     <string name="preference_clock_widget_fill_height">ملء ارتفاع الشاشة</string>
-    <string name="preference_screen_icons_summary">الشبكة، حجم الرمز، حزم الرموز، الشارات</string>
+    <string name="preference_screen_icons_summary">حجم الشبكة، والأيقونات، والشارات</string>
     <string name="no_account_nextcloud">لم تقم بتوصيل حساب Nextcloud حتى الآن</string>
     <string name="no_account_owncloud">لم تقم بتوصيل حساب Owncloud حتى الآن</string>
     <string name="connect_account">توصيل الحساب</string>
@@ -457,9 +457,9 @@
     <string name="search_action_share">مشاركة</string>
     <string name="search_action_contact">إضافة إلى جهات الاتصال</string>
     <string name="search_action_open_url">عرض موقع الويب</string>
-    <string name="search_action_websearch_url_hint">قالب عنوان URL المستخدم لإنشاء عنوان URL للبحث على الويب. استخدم \'${1}\' كعنصر نائب لمصطلح البحث الفعلي، على سبيل المثال https://google.com/search?q=${1}.</string>
-    <string name="tag_exists_error">توجد علامة بهذا الاسم بالفعل.</string>
-    <string name="preference_layout_open_search">البحث / درج التطبيقات</string>
+    <string name="search_action_websearch_url_hint">قالب عنوان URL المستخدم لإنشاء عنوان URL للبحث على الويب. استخدم \'${1}\' كعنصر نائب لعبارة البحث الفعلية.</string>
+    <string name="tag_exists_error">توجد علامة بهذا الاسم بالفعل</string>
+    <string name="preference_layout_open_search">البحث ودرج التطبيقات</string>
     <string name="open_search_pull_down">السحب لأسفل</string>
     <string name="preference_screen_gestures_summary">الإيماءات وإجراءات الإيماءات</string>
     <string name="missing_permission_accessibility_gesture_failed">يجب تمكين خدمة إمكانية الوصول الخاصة بالمشغل لتنفيذ هذا الإجراء.</string>
@@ -550,12 +550,12 @@
     <string name="preference_search_wikipedia">ويكيبيديا</string>
     <string name="preference_screen_buildinfo_summary">مزيد من المعلومات حول هذا الإصدار من هذا التطبيق</string>
     <string name="preference_search_bar_style">النمط</string>
-    <string name="preference_hidden_items">نتائج البحث المخفية</string>
+    <string name="preference_hidden_items">نتائج البحث المستبعدة</string>
     <string name="preference_favorites_frequently_used_summary">إظهار العناصر المستخدمة بشكل متكرر في المفضلة</string>
     <string name="preference_favorites_edit_button_summary">إظهار زر لإعادة ترتيب المفضلة</string>
     <string name="create_search_action_pick_app">اختر تطبيقًا للبحث فيه:</string>
     <string name="search_action_app">التطبيق</string>
-    <string name="tag_select_items">تحديد العناصر:</string>
+    <string name="tag_select_items">تحديد العناصر</string>
     <string name="open_search_swipe_right">السحب لليمين</string>
     <string name="preference_layout_search_bar_position">موضع شريط البحث</string>
     <string name="search_bar_position_bottom">أسفل</string>
@@ -596,7 +596,7 @@
     <string name="preference_clockwidget_music_part">الوسائط</string>
     <string name="preference_clockwidget_music_part_summary">إظهار عناصر التحكم في الوسائط عندما تكون هناك جلسة وسائط نشطة</string>
     <string name="preference_clockwidget_battery_part">البطارية</string>
-    <string name="preference_screen_search_summary">البحث، العلامات، العناصر المخفية</string>
+    <string name="preference_screen_search_summary">البحث، والوسوم، والنتائج المستبعدة</string>
     <string name="preference_search_favorites">المفضلة</string>
     <string name="preference_search_favorites_summary">إظهار العناصر المثبتة والمستخدمة بشكل متكرر أعلى شبكة التطبيقات</string>
     <string name="preference_search_files">الملفات</string>
@@ -611,7 +611,7 @@
     <string name="preference_search_bar_color">اللون</string>
     <string name="preference_search_bar_auto_focus">فتح لوحة المفاتيح</string>
     <string name="preference_search_bar_launch_on_enter">التشغيل عند الإدخال</string>
-    <string name="preference_hidden_items_reveal_button_summary">إظهار زر للكشف عن نتائج البحث المخفية</string>
+    <string name="preference_hidden_items_reveal_button_summary">أظهر زرًا لعرض نتائج البحث المستبعدة</string>
     <string name="preference_screen_tags">العلامات</string>
     <string name="preference_wikipedia_customurl">عنوان URL في ويكيبيديا</string>
     <string name="preference_edit_favorites_summary">تغيير ترتيب العناصر المثبتة</string>
@@ -623,9 +623,9 @@
     <string name="search_action_alarm">ضبط المنبه</string>
     <string name="search_action_timer">بدء المؤقت</string>
     <string name="create_search_action_website_url">أدخل عنوان موقع الويب:</string>
-    <string name="create_search_action_website_invalid_url">لا يمكن استيراد موقع الويب المحدد تلقائيًا كبحث ويب. يمكنك تجربة موقع ويب مختلف أو إدخال البيانات المطلوبة يدويًا في الخطوة التالية.</string>
-    <string name="tag_exists_message">توجد علامة بهذا الاسم بالفعل. إذا واصلت، فسيتم دمج العلامتين.</string>
-    <string name="tag_no_items_message">لم يتم تعيين أي عناصر لهذه العلامة. إذا واصلت، فسيتم حذف العلامة.</string>
+    <string name="create_search_action_website_invalid_url">لا يمكن استيراد موقع الويب المحدد تلقائيًا كبحث ويب. يمكنك تجربة موقع ويب مختلف أو إدخال البيانات المطلوبة يدويًا في الخطوة التالية</string>
+    <string name="tag_exists_message">توجد علامة بهذا الاسم بالفعل. إذا واصلت، فسيتم دمج العلامتين</string>
+    <string name="tag_no_items_message">لم يتم تعيين أي عناصر لهذه العلامة. إذا واصلت، فسيتم حذف العلامة</string>
     <string name="preference_layout_fixed_rotation_summary">قفل تدوير الشاشة على الوضع الرأسي</string>
     <string name="preference_gesture_home_button">زر/إيماءة الصفحة الرئيسية</string>
     <string name="note_widget_action_relink_file">إعادة الربط</string>
@@ -730,10 +730,10 @@
     <plurals name="debug_cleanup_database_result">
         <item quantity="zero">تمت إزالة %1$d مُدخل</item>
         <item quantity="one">تمت إزالة %1$d مدخلات.</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="menu_dial">اتصال</string>
     <string name="plugin_action_setup">إعداد</string>
@@ -835,7 +835,7 @@
     <string name="preference_grid_list_icons">إظهار أيقونات التطبيقات في القائمة</string>
     <string name="preference_grid_list_style_summary">عرض التطبيقات في قائمة بدلاً من شبكة</string>
     <string name="preference_grid_list_icons_summary">إظهار الأيقونات في عرض القائمة</string>
-    <string name="preference_contacts_call_on_tap_summary">بدء مكالمة فورًا عند النقر على رقم هاتف</string>
+    <string name="preference_contacts_call_on_tap_summary">بدء مكالمة بدون تأكيد عند النقر على رقم هاتف</string>
     <plurals name="departure_time_in">
         <item quantity="zero">خلال أقل من دقيقة</item>
         <item quantity="one">خلال دقيقة</item>
@@ -961,4 +961,7 @@
     <string name="preference_create_transparency">مخطط جديد للشفافية</string>
     <string name="preference_clockwidget_battery_part_always_show">أظهر دائمًا</string>
     <string name="preference_clockwidget_battery_part_show">إظهار في حالة انخفاض مستوى البطارية أو الشحن</string>
+    <string name="preference_create_colors">نظام ألوان جديد</string>
+    <string name="preference_clockwidget_battery_part_hide">اغلاق</string>
+    <string name="gesture_action_category_launcher">صفحات المشغل</string>
 </resources>
