@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.settings.locale
 import androidx.lifecycle.ViewModel
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.TimeFormat
+import de.mm20.launcher2.preferences.WindSpeedUoM
 import de.mm20.launcher2.preferences.ui.LocaleSettings
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.combine
@@ -20,6 +21,11 @@ class LocaleSettingsScreenVM : ViewModel(), KoinComponent {
     val measurementSystem = localeSettings.measurementSystem
     fun setMeasurementSystem(measurementSystem: MeasurementSystem) {
         localeSettings.setMeasurementSystem(measurementSystem)
+    }
+
+    val windSpeedUoM = localeSettings.windSpeedUoM
+    fun setWindSpeedUoM(windSpeedUoM: WindSpeedUoM) {
+        localeSettings.setWindSpeedUoM(windSpeedUoM)
     }
 
     val transliterator = localeSettings.transliterator
