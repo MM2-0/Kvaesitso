@@ -155,7 +155,7 @@
     <string name="weather_condition_lightsleetandthunder">Ligera aguanieve y truenos</string>
     <string name="weather_condition_heavyrainandthunder">Fuertes lluvias y truenos</string>
     <string name="weather_condition_wind">Viento</string>
-    <string name="menu_share_apk_file">Archivo APK</string>
+    <string name="menu_share_apk_file">Archivo de paquete</string>
     <string name="menu_app_info">Información de la app</string>
     <string name="menu_favorites_pin">Anclar a favoritos</string>
     <string name="menu_favorites_unpin">Desanclar</string>
@@ -563,7 +563,7 @@
     <string name="preference_plugin_enable">Activar plugin</string>
     <string name="preference_category_advanced">Avanzado</string>
     <string name="plugin_state_error">Este plugin no está funcionando correctamente</string>
-    <string name="plugin_state_setup_required">Primero debes configurar este plugin</string>
+    <string name="plugin_state_setup_required">Primero debe configurar este complemento</string>
     <string name="plugin_type_filesearch">Archivos</string>
     <string name="plugin_type_weather">Proveedor de clima</string>
     <string name="plugin_weather_provider_enable">Establecer como proveedor de clima</string>
@@ -751,9 +751,9 @@
         <item quantity="other">%1$s direcciones de correo electrónico</item>
     </plurals>
     <string name="weather_forecast_wind">Viento</string>
-    <string name="task_due_today">Comienza hoy</string>
-    <string name="task_due_time">Comienza a las %1$s</string>
-    <string name="task_due_date">Comienza en %1$s</string>
+    <string name="task_due_today">Acaba hoy</string>
+    <string name="task_due_time">Acaba a las %1$s</string>
+    <string name="task_due_date">Acaba el %1$s</string>
     <string name="preference_search_osm_locations">OpenStreetMap</string>
     <string name="customize_item_visibility">Mostrar en</string>
     <string name="poi_category_burger_restaurant">Restaurante de hamburguesas</string>
