@@ -137,6 +137,14 @@ fun IconsSettingsScreen() {
                         }
                     )
                 }
+                SwitchPreference(
+                    title = stringResource(R.string.preference_grid_alphabet_scroller),
+                    summary = stringResource(R.string.preference_grid_alphabet_scroller_summary),
+                    value = grid.showAlphabetScroller,
+                    onValueChanged = {
+                        viewModel.setShowAlphabetScroller(it)
+                    }
+                )
                 SliderPreference(
                     title = stringResource(R.string.preference_grid_column_count),
                     value = grid.columnCount,

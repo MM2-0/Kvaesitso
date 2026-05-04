@@ -38,6 +38,7 @@ import de.mm20.launcher2.ui.settings.SettingsActivity
 fun RowScope.SearchBarMenu(
     searchBarValue: String,
     onInputClear: () -> Unit,
+    onEditFavorites: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     var showOverflowMenu by remember { mutableStateOf(false) }
@@ -100,6 +101,21 @@ fun RowScope.SearchBarMenu(
                         Icon(painterResource(R.drawable.settings_24px), contentDescription = null)
                     }
                 )
+                if (onEditFavorites != null) {
+                    DropdownMenuItem(
+                        shape = MenuDefaults.middleItemShape,
+                        onClick = {
+                            onEditFavorites()
+                            showOverflowMenu = false
+                        },
+                        text = {
+                            Text(stringResource(R.string.menu_edit_favorites))
+                        },
+                        leadingIcon = {
+                            Icon(painterResource(R.drawable.edit_24px), contentDescription = null)
+                        }
+                    )
+                }
                 val colorScheme = MaterialTheme.colorScheme
                 DropdownMenuItem(
                     shape = MenuDefaults.trailingItemShape,
