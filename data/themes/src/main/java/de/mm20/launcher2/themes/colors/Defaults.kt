@@ -1,6 +1,6 @@
 package de.mm20.launcher2.themes.colors
 
-val DefaultLightColorScheme = ColorScheme<Color>(
+val DefaultLightColorScheme = ColorScheme(
     primary = ColorRef(CorePaletteColor.Primary, 40),
     onPrimary = ColorRef(CorePaletteColor.Primary, 100),
     primaryContainer = ColorRef(CorePaletteColor.Primary, 90),
@@ -39,7 +39,7 @@ val DefaultLightColorScheme = ColorScheme<Color>(
     scrim = ColorRef(CorePaletteColor.Neutral, 0),
 )
 
-val DefaultDarkColorScheme = ColorScheme<Color>(
+val DefaultDarkColorScheme = ColorScheme(
     primary = ColorRef(CorePaletteColor.Primary, 80),
     onPrimary = ColorRef(CorePaletteColor.Primary, 20),
     primaryContainer = ColorRef(CorePaletteColor.Primary, 30),
@@ -78,7 +78,7 @@ val DefaultDarkColorScheme = ColorScheme<Color>(
     scrim = ColorRef(CorePaletteColor.Neutral, 0),
 )
 
-val HighContrastLightColorScheme = ColorScheme<Color>(
+val HighContrastLightColorScheme = ColorScheme(
     primary = ColorRef(CorePaletteColor.Primary, 20),
     onPrimary = ColorRef(CorePaletteColor.Primary, 100),
     primaryContainer = ColorRef(CorePaletteColor.Primary, 30),
@@ -117,7 +117,7 @@ val HighContrastLightColorScheme = ColorScheme<Color>(
     scrim = ColorRef(CorePaletteColor.Neutral, 0),
 )
 
-val HighContrastDarkColorScheme = ColorScheme<Color>(
+val HighContrastDarkColorScheme = ColorScheme(
     primary = ColorRef(CorePaletteColor.Primary, 95),
     onPrimary = ColorRef(CorePaletteColor.Primary, 0),
     primaryContainer = ColorRef(CorePaletteColor.Primary, 80),
@@ -156,7 +156,7 @@ val HighContrastDarkColorScheme = ColorScheme<Color>(
     scrim = ColorRef(CorePaletteColor.Neutral, 0),
 )
 
-val BlackAndWhiteLightColorScheme = ColorScheme<Color?>(
+val BlackAndWhiteLightColorScheme = ColorScheme(
     primary = StaticColor(0xFF000000.toInt()),
     onPrimary = StaticColor(0xFFFFFFFF.toInt()),
     primaryContainer = StaticColor(0xFFFFFFFF.toInt()),
@@ -195,7 +195,7 @@ val BlackAndWhiteLightColorScheme = ColorScheme<Color?>(
     surfaceContainerLowest = StaticColor(0xFFFFFFFF.toInt()),
 )
 
-val BlackAndWhiteDarkColorScheme = ColorScheme<Color?>(
+val BlackAndWhiteDarkColorScheme = ColorScheme(
     primary = StaticColor(0xFFFFFFFF.toInt()),
     onPrimary = StaticColor(0xFF000000.toInt()),
     primaryContainer = StaticColor(0xFF000000.toInt()),
