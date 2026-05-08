@@ -218,7 +218,7 @@
         <item quantity="many">сантыметраў</item>
         <item quantity="other">сантыметраў</item>
     </plurals>
-    <string name="unit_nautic_mile_symbol">мм</string>
+    <string name="unit_nautic_mile_symbol">ммі</string>
     <plurals name="unit_sqmeter">
         <item quantity="one">квадратны метр</item>
         <item quantity="few">квадратных метра</item>
@@ -390,5 +390,124 @@
         <item quantity="few">вузла</item>
         <item quantity="many">вузлоў</item>
         <item quantity="other">вузлоў</item>
+    </plurals>
+    <plurals name="unit_liter">
+        <item quantity="one">літр</item>
+        <item quantity="few">літра</item>
+        <item quantity="many">літраў</item>
+        <item quantity="other">літраў</item>
+    </plurals>
+    <plurals name="unit_milliliter">
+        <item quantity="one">мілілітр</item>
+        <item quantity="few">мілілітра</item>
+        <item quantity="many">мілілітраў</item>
+        <item quantity="other">мілілітраў</item>
+    </plurals>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">кубічны метр</item>
+        <item quantity="few">кубічных метра</item>
+        <item quantity="many">кубічных метраў</item>
+        <item quantity="other">кубічных метраў</item>
+    </plurals>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">кубічны сантыметр</item>
+        <item quantity="few">кубічных сантыметра</item>
+        <item quantity="many">кубічных сантыметраў</item>
+        <item quantity="other">кубічных сантыметраў</item>
+    </plurals>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">кубічны міліметр</item>
+        <item quantity="few">кубічных міліметра</item>
+        <item quantity="many">кубічных міліметраў</item>
+        <item quantity="other">кубічных міліметраў</item>
+    </plurals>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">кубічная цаля</item>
+        <item quantity="few">кубічных цалі</item>
+        <item quantity="many">кубічных цаляў</item>
+        <item quantity="other">кубічных цаляў</item>
+    </plurals>
+    <string name="unit_liter_symbol">Л</string>
+    <string name="unit_milliliter_symbol">мЛ</string>
+    <string name="unit_cubic_meter_symbol">м³</string>
+    <string name="unit_cubic_centimeter_symbol">см³</string>
+    <string name="unit_cubic_millimeter_symbol">мм³</string>
+    <string name="unit_cubic_inch_symbol">ку ца</string>
+    <string name="unit_cubic_foot_symbol">ку фт</string>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">кубічны фут</item>
+        <item quantity="few">кубічных фута</item>
+        <item quantity="many">кубічных футаў</item>
+        <item quantity="other">кубічных футаў</item>
+    </plurals>
+    <string name="unit_cubic_yard_symbol">ку ярд</string>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">кубічны ярд</item>
+        <item quantity="few">кубічных ярда</item>
+        <item quantity="many">кубічных ярдаў</item>
+        <item quantity="other">кубічных ярдаў</item>
+    </plurals>
+    <string name="unit_gallon_us_symbol">гал ЗША</string>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">галон (ЗША)</item>
+        <item quantity="few">галона (ЗША)</item>
+        <item quantity="many">галонаў (ЗША)</item>
+        <item quantity="other">галонаў (ЗША)</item>
+    </plurals>
+    <string name="unit_gallon_imp_symbol">гал імп</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">галон (імперскі)</item>
+        <item quantity="few">галона (імперскіх)</item>
+        <item quantity="many">галонаў (імперскіх)</item>
+        <item quantity="other">галонаў (імперскіх)</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">пт ЗША</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">пінта (ЗША)</item>
+        <item quantity="few">пінты (ЗША)</item>
+        <item quantity="many">пінтаў (ЗША)</item>
+        <item quantity="other">пінтаў (ЗША)</item>
+    </plurals>
+    <string name="unit_pint_imp_symbol">пт імп</string>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">пінта (імперская)</item>
+        <item quantity="few">пінты (імперскіх)</item>
+        <item quantity="many">пінтаў (імперскіх)</item>
+        <item quantity="other">пінтаў (імперскіх)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">вд ун ЗША</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">вадкая ўнцыя (ЗША)</item>
+        <item quantity="few">вадкіх унцыі (ЗША)</item>
+        <item quantity="many">вадкіх унцый (ЗША)</item>
+        <item quantity="other">вадкіх унцый (ЗША)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">вд ун імп</string>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">вадкая ўнцыя (імперская)</item>
+        <item quantity="few">вадкіх унцыі (імперскіх)</item>
+        <item quantity="many">вадкіх унцый (імперскіх)</item>
+        <item quantity="other">вадкіх унцый (імперскіх)</item>
+    </plurals>
+    <string name="unit_cup_symbol">кубак</string>
+    <plurals name="unit_cup">
+        <item quantity="one">кубак</item>
+        <item quantity="few">кубкі</item>
+        <item quantity="many">кубкаў</item>
+        <item quantity="other">кубкаў</item>
+    </plurals>
+    <string name="unit_tablespoon_symbol">стл</string>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">сталовая лыжка (ЗША)</item>
+        <item quantity="few">сталовых лыжкі (ЗША)</item>
+        <item quantity="many">сталовых лыжак (ЗША)</item>
+        <item quantity="other">сталовых лыжак (ЗША)</item>
+    </plurals>
+    <string name="unit_teaspoon_symbol">чл</string>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">чайная лыжка (ЗША)</item>
+        <item quantity="few">чайных лыжкі (ЗША)</item>
+        <item quantity="many">чайных лыжак (ЗША)</item>
+        <item quantity="other">чайных лыжак (ЗША)</item>
     </plurals>
 </resources>
