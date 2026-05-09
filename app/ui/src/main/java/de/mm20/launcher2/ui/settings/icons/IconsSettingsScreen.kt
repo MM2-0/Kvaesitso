@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,7 +20,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -314,6 +314,9 @@ private fun IconPackSelectorSheet(
     onDismiss: () -> Unit,
 ) {
     DismissableBottomSheet(expanded = expanded, onDismissRequest = onDismiss) {
+        val xs = MaterialTheme.shapes.extraSmall
+        val md = MaterialTheme.shapes.medium
+
         LazyColumn(
             contentPadding = PaddingValues(
                 start = 16.dp,
@@ -322,80 +325,87 @@ private fun IconPackSelectorSheet(
                 bottom = 16.dp + WindowInsets.navigationBars.asPaddingValues()
                     .calculateBottomPadding(),
             ),
+            verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             items(installedIconPacks.size) {
 
                 val pack = installedIconPacks[it]
 
 
-                if (it > 0) {
-                    HorizontalDivider(
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
-                }
-                Column {
-
-
-                    Column(
-                        modifier = Modifier
-                            .clip(MaterialTheme.shapes.medium)
-                            .clickable {
-                                onSelect(pack)
-                            }
-                    ) {
-                        val icons by iconPackPreviewIcons[pack.packageName]!!.collectAsState(null)
-
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        ) {
-                            Text(
-                                text = pack.name,
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier
-                                    .padding(end = 8.dp)
+                Column(
+                    modifier = Modifier
+                        .clip(when {
+                            it == 0 -> md.copy(
+                                bottomStart = xs.bottomStart,
+                                bottomEnd = xs.bottomEnd,
                             )
-                            if (pack.themed) {
-                                Icon(
-                                    modifier = Modifier
-                                        .size(20.dp),
-                                    painter = painterResource(R.drawable.palette_20px),
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                            it == installedIconPacks.lastIndex -> md.copy(
+                                topStart = xs.topStart,
+                                topEnd = xs.topEnd,
+                            )
+                            installedIconPacks.size == 1 -> md
+                            else -> xs
+                        })
+                        .background(
+                            MaterialTheme.colorScheme.surfaceBright,
+                        )
+                        .clickable {
+                            onSelect(pack)
+                        }
+                ) {
+                    val icons by iconPackPreviewIcons[pack.packageName]!!.collectAsState(null)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp, bottom = 16.dp)
+                            .height(48.dp)
+                    ) {
+                        if (icons == null) {
+                            for (i in 0 until columns) {
+                                Box(
+                                    modifier = Modifier.weight(1f),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    ShapedLauncherIcon(size = 48.dp, icon = { null })
+                                }
+                            }
+                        } else {
+                            for (icon in icons!!) {
+                                Box(
+                                    modifier = Modifier.weight(1f),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    ShapedLauncherIcon(size = 48.dp, icon = { icon })
+                                }
+                            }
+                            for (i in 0..<(columns - icons!!.size)) {
+                                Box(
+                                    modifier = Modifier.weight(1f),
                                 )
                             }
                         }
+                    }
 
-                        Row(
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(
+                            text = pack.name,
+                            style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp, bottom = 16.dp)
-                                .height(48.dp)
-                        ) {
-                            if (icons == null) {
-                                for (i in 0 until columns) {
-                                    Box(
-                                        modifier = Modifier.weight(1f),
-                                        contentAlignment = Alignment.Center,
-                                    ) {
-                                        ShapedLauncherIcon(size = 48.dp, icon = { null })
-                                    }
-                                }
-                            } else {
-                                for (icon in icons!!) {
-                                    Box(
-                                        modifier = Modifier.weight(1f),
-                                        contentAlignment = Alignment.Center,
-                                    ) {
-                                        ShapedLauncherIcon(size = 48.dp, icon = { icon })
-                                    }
-                                }
-                                for (i in 0..<(columns - icons!!.size)) {
-                                    Box(
-                                        modifier = Modifier.weight(1f),
-                                    )
-                                }
-                            }
+                                .weight(1f)
+                                .padding(end = 8.dp)
+                        )
+                        if (pack.themed) {
+                            Icon(
+                                modifier = Modifier
+                                    .size(20.dp),
+                                painter = painterResource(R.drawable.palette_20px),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
                         }
                     }
                 }

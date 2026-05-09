@@ -50,7 +50,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.themes.colors.ColorRef
 import de.mm20.launcher2.themes.colors.CorePaletteColor
-import de.mm20.launcher2.themes.colors.FullCorePalette
+import de.mm20.launcher2.themes.colors.CorePalette
 import de.mm20.launcher2.themes.colors.StaticColor
 import de.mm20.launcher2.themes.colors.atTone
 import de.mm20.launcher2.themes.colors.get
@@ -67,9 +67,9 @@ import de.mm20.launcher2.themes.colors.Color as ThemeColor
 fun ThemeColorPreference(
     title: String,
     value: ThemeColor?,
-    corePalette: FullCorePalette,
+    corePalette: CorePalette,
     onValueChange: (ThemeColor?) -> Unit,
-    defaultValue: ThemeColor,
+    defaultValue: ThemeColor?,
     modifier: Modifier = Modifier,
 ) {
     var showDialog by remember { mutableStateOf(false) }

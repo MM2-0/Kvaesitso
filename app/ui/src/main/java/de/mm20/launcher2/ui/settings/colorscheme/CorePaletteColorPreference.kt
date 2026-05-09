@@ -45,7 +45,7 @@ fun CorePaletteColorPreference(
     title: String,
     value: Int?,
     onValueChange: (Int?) -> Unit,
-    defaultValue: Int,
+    defaultValue: Int?,
     modifier: Modifier = Modifier,
     autoGenerate: (() -> Int?)? = null,
 ) {
@@ -63,7 +63,7 @@ fun CorePaletteColorPreference(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         ColorSwatch(
-            color = Color(value ?: defaultValue),
+            color = Color(value ?: defaultValue ?: 0),
             modifier = Modifier
                 .padding(end = 20.dp)
                 .size(48.dp),
@@ -114,7 +114,7 @@ fun CorePaletteColorPreference(
                         modifier = Modifier.padding(bottom = 24.dp)
                     )
                     val colorPickerState = rememberHctColorPickerState(
-                        initialColor = Color(value ?: defaultValue),
+                        initialColor = Color(value ?: defaultValue ?: 0),
                         onColorChanged = {
                             currentValue = it.toArgb()
                         }

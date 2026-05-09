@@ -14,8 +14,7 @@ import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.colors.CorePalette
 import de.mm20.launcher2.themes.colors.DefaultDarkColorScheme
 import de.mm20.launcher2.themes.colors.DefaultLightColorScheme
-import de.mm20.launcher2.themes.colors.FullColorScheme
-import de.mm20.launcher2.themes.colors.PartialCorePalette
+import de.mm20.launcher2.themes.colors.ColorScheme as ThemeColorScheme
 import de.mm20.launcher2.themes.colors.Colors as ThemeColors
 import de.mm20.launcher2.themes.colors.get
 import de.mm20.launcher2.themes.colors.merge
@@ -39,7 +38,7 @@ fun darkColorSchemeOf(colors: ThemeColors): ColorScheme {
 }
 
 @Composable
-fun colorSchemeOf(dark: Boolean, colorScheme: FullColorScheme, corePalette: PartialCorePalette): ColorScheme {
+fun colorSchemeOf(dark: Boolean, colorScheme: ThemeColorScheme, corePalette: CorePalette): ColorScheme {
     val defaultPalette = systemCorePalette(dark)
     return remember(colorScheme, corePalette, defaultPalette) {
         val mergedCorePalette = corePalette.merge(defaultPalette)
@@ -85,7 +84,7 @@ fun colorSchemeOf(dark: Boolean, colorScheme: FullColorScheme, corePalette: Part
 }
 
 @Composable
-fun systemCorePalette(dark: Boolean): CorePalette<Int> {
+fun systemCorePalette(dark: Boolean): CorePalette {
     val uiSettings: UiSettings = koinInject()
     val compatModeColors by remember {
         uiSettings.compatModeColors

@@ -67,13 +67,13 @@ data class ThemeBundle(
             try {
                 val name = (jsonElement["name"] as? JsonPrimitive)?.contentOrNull ?: return null
                 val corePalette = (jsonElement["corePalette"] as? JsonObject)?.let {
-                    LegacyThemeJson.decodeFromJsonElement<CorePalette<Int?>>(it)
+                    LegacyThemeJson.decodeFromJsonElement<CorePalette>(it)
                 }
                 val lightColorScheme = (jsonElement["lightColorScheme"] as? JsonObject)?.let {
-                    LegacyThemeJson.decodeFromJsonElement<ColorScheme<Color?>>(it)
+                    LegacyThemeJson.decodeFromJsonElement<ColorScheme>(it)
                 }
                 val darkColorScheme = (jsonElement["darkColorScheme"] as? JsonObject)?.let {
-                    LegacyThemeJson.decodeFromJsonElement<ColorScheme<Color?>>(it)
+                    LegacyThemeJson.decodeFromJsonElement<ColorScheme>(it)
                 }
 
                 val colorScheme = Colors(
