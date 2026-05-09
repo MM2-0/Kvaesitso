@@ -924,4 +924,8 @@
     <string name="preference_language">Мова</string>
     <string name="preference_value_system_default">Прадвызначаная</string>
     <string name="preference_value_disabled">Выключана</string>
+    <string name="preference_form_of_address">Зваротак</string>
+    <string name="preference_form_of_address_neutral">Нейтральны</string>
+    <string name="preference_form_of_address_fem">Жаночы</string>
+    <string name="preference_form_of_address_masc">Мужчынскі</string>
 </resources>
