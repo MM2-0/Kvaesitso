@@ -247,7 +247,7 @@
     </plurals>
     <string name="unit_mebibyte_symbol">ميب</string>
     <string name="unit_gigabit_symbol">غ.بت</string>
-    <string name="unit_gram_symbol">جرام</string>
+    <string name="unit_gram_symbol">جم</string>
     <plurals name="unit_gram">
         <item quantity="zero">جرام</item>
         <item quantity="one">جرام</item>
@@ -272,21 +272,21 @@
         <item quantity="many">طن إمبراطوري</item>
         <item quantity="other">طن إمبراطوري</item>
     </plurals>
-    <string name="unit_long_ton_symbol">لونغ طن</string>
+    <string name="unit_long_ton_symbol">طن إمبراطوري</string>
     <plurals name="unit_pound">
-        <item quantity="zero">رطل</item>
-        <item quantity="one">رطل</item>
-        <item quantity="two">رطلان</item>
-        <item quantity="few">رطل</item>
-        <item quantity="many">رطل</item>
-        <item quantity="other">رطل</item>
+        <item quantity="zero">باوند</item>
+        <item quantity="one">باوند</item>
+        <item quantity="two">باوند</item>
+        <item quantity="few">باوند</item>
+        <item quantity="many">باوند</item>
+        <item quantity="other">باوند</item>
     </plurals>
     <string name="unit_ounce_symbol">أونص</string>
     <plurals name="unit_ounce">
         <item quantity="zero">أونصة</item>
         <item quantity="one">أونصة</item>
-        <item quantity="two">أونصتان</item>
-        <item quantity="few">أونصات</item>
+        <item quantity="two">أونصة</item>
+        <item quantity="few">أونصة</item>
         <item quantity="many">أونصة</item>
         <item quantity="other">أونصة</item>
     </plurals>
@@ -294,8 +294,8 @@
     <plurals name="unit_short_ton">
         <item quantity="zero">طن أمريكي</item>
         <item quantity="one">طن أمريكي</item>
-        <item quantity="two">طنان أمريكيان</item>
-        <item quantity="few">أطنان أمريكية</item>
+        <item quantity="two">طن أمريكي</item>
+        <item quantity="few">طن أمريكي</item>
         <item quantity="many">طن أمريكي</item>
         <item quantity="other">طن أمريكي</item>
     </plurals>
@@ -470,7 +470,7 @@
         <item quantity="many">عقدة</item>
         <item quantity="other">عقدة</item>
     </plurals>
-    <string name="unit_kilogram_symbol">كج</string>
+    <string name="unit_kilogram_symbol">كجم</string>
     <plurals name="unit_kilogram">
         <item quantity="zero">كيلوجرام</item>
         <item quantity="one">كيلوجرام</item>
@@ -479,7 +479,7 @@
         <item quantity="many">كيلوجرام</item>
         <item quantity="other">كيلوجرام</item>
     </plurals>
-    <string name="unit_pound_symbol">ر</string>
+    <string name="unit_pound_symbol">رطل</string>
     <string name="unit_degree_celsius_symbol">°س</string>
     <plurals name="unit_degree_celsius">
         <item quantity="zero">درجة سيلسيوس</item>
@@ -490,14 +490,14 @@
         <item quantity="other">درجة سيلسيوس</item>
     </plurals>
     <string name="unit_degree_fahrenheit_symbol">°ف</string>
-    <string name="unit_stone_symbol">صخ</string>
+    <string name="unit_stone_symbol">ستون</string>
     <plurals name="unit_stone">
-        <item quantity="zero">صخرة</item>
-        <item quantity="one">صخرة</item>
-        <item quantity="two">صخرتان</item>
-        <item quantity="few">صخرات</item>
-        <item quantity="many">صخرة</item>
-        <item quantity="other">صخرة</item>
+        <item quantity="zero">ستون</item>
+        <item quantity="one">ستون</item>
+        <item quantity="two">ستون</item>
+        <item quantity="few">ستون</item>
+        <item quantity="many">ستون</item>
+        <item quantity="other">ستون</item>
     </plurals>
     <string name="unit_liter_symbol">لتر</string>
     <plurals name="unit_liter">
