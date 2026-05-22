@@ -598,4 +598,14 @@
         <item quantity="many">بينت</item>
         <item quantity="other">بينت</item>
     </plurals>
+    <string name="unit_cup_symbol">كوب</string>
+    <plurals name="unit_cup">
+        <item quantity="zero">0 كوب</item>
+        <item quantity="one">كوب</item>
+        <item quantity="two">كوبين</item>
+        <item quantity="few">أكواب</item>
+        <item quantity="many">كوبا</item>
+        <item quantity="other">كوب</item>
+    </plurals>
+    <string name="unit_tablespoon_symbol">ملعقة طعام</string>
 </resources>
