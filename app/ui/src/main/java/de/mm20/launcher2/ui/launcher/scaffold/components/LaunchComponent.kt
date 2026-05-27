@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.scaffold
+package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -14,6 +14,7 @@ import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.component.FakeSplashScreen
 import de.mm20.launcher2.ui.ktx.toIntOffset
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 
 internal class LaunchComponent(
     private val activity: Activity,

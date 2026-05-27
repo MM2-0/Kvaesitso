@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.scaffold
+package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import android.annotation.SuppressLint
 import android.view.animation.PathInterpolator
@@ -28,10 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
+internal object NotificationsComponent : ScaffoldComponent(), KoinComponent {
 
     private val globalActionService: GlobalActionsService by inject()
 
@@ -75,7 +76,7 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painterResource(R.drawable.settings_24px), null,
+                    painterResource(R.drawable.notifications_24px), null,
                     modifier = Modifier.padding(16.dp),
                     tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 )
@@ -85,9 +86,7 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
 
     override suspend fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
-
-        globalActionService.openQuickSettings()
-
+        globalActionService.openNotificationDrawer()
     }
 
     override suspend fun onActivate(state: LauncherScaffoldState) {

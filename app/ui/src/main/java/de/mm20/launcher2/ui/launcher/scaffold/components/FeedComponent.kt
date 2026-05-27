@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.scaffold
+package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.LocalActivity
@@ -32,6 +32,7 @@ import de.mm20.launcher2.feed.FeedService
 import de.mm20.launcher2.preferences.feed.FeedSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toIntOffset
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import kotlinx.coroutines.flow.flowOf
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
