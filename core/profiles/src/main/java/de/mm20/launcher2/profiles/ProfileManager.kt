@@ -8,6 +8,7 @@ import android.content.pm.LauncherApps
 import android.os.Process
 import android.os.UserHandle
 import android.os.UserManager
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -35,6 +36,10 @@ class ProfileManager(
     private val context: Context,
     private val permissionsManager: PermissionsManager,
 ) {
+    private companion object {
+        private const val TAG = "ProfileManager"
+    }
+
     private val mutex = Mutex()
 
     private val userManager = context.getSystemService<UserManager>()!!
@@ -166,12 +171,20 @@ class ProfileManager(
 
     @RequiresApi(28)
     fun unlockProfile(profile: Profile) {
-        userManager.requestQuietModeEnabled(false, profile.userHandle)
+        try {
+            userManager.requestQuietModeEnabled(false, profile.userHandle)
+        } catch (e: IllegalArgumentException) {
+            Log.w(TAG, "Unable to unlock profile ${profile.serial}", e)
+        }
     }
 
     @RequiresApi(28)
     fun lockProfile(profile: Profile) {
-        userManager.requestQuietModeEnabled(true, profile.userHandle)
+        try {
+            userManager.requestQuietModeEnabled(true, profile.userHandle)
+        } catch (e: IllegalArgumentException) {
+            Log.w(TAG, "Unable to lock profile ${profile.serial}", e)
+        }
     }
 
 }

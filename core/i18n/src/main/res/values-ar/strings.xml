@@ -231,7 +231,7 @@
     <string name="missing_permission_notification_badges">الوصول الى الاشعارات مطلوب لعرض شارات الاشعارات</string>
     <string name="missing_permission_contact_search_settings">أذونات جهات الاتصال مطلوبة للبحث في قائمة الاتصالات</string>
     <string name="missing_permission_calendar_widget">منح اذن الوصول الى التقويم لعرض المواعيد و الأحداث القادمة</string>
-    <string name="missing_permission_contact_search">قم بمنح اذن الوصول لجهات الاتصال للبحث بقائمة جهات اتصالاتك.</string>
+    <string name="missing_permission_contact_search">يلزم الحصول على إذن الوصول إلى جهات الاتصال للبحث فيها</string>
     <string name="missing_permission_appshortcuts_search">عين %1$s كتطبيق الشاشة الرئيسية الافتراضي للبحث في اختصارات التطبيقات.</string>
     <string name="preference_screen_about">حول</string>
     <string name="preference_category_advanced">متقدم</string>
@@ -245,7 +245,7 @@
     <string name="weather_location_search_no_result">لم يتم العثور على الموقع</string>
     <string name="missing_permission_auto_location">أذونات الموقع مطلوبة للتحديد التلقائي لموقعك</string>
     <string name="widget_config_calendar_missing_calendars_hint">لا يمكنك ايجاد تقويماتك؟</string>
-    <string name="missing_permission_location_search">قم بمنح اذن الموقع للبحث عن المواقع القريبة.</string>
+    <string name="missing_permission_location_search">يلزم الحصول على إذن الموقع للبحث عن المواقع القريبة</string>
     <string name="preference_theme_dark">مظلم</string>
     <string name="preference_category_licenses">رخص مفتوحة المصدر</string>
     <string name="missing_permission_file_search_settings">أذونات التخزين مطلوبة للوصول الى الملفات المحلية</string>
@@ -253,10 +253,10 @@
     <string name="missing_permission_file_search_settings_android10">أذونات الوصول إلى الملفات مطلوبة للوصول الى الملفات المحلية</string>
     <string name="grant_permission">منح</string>
     <string name="preference_debug_dump_heap">لقطة للذاكرة</string>
-    <string name="missing_permission_files_search">قم بمنح اذن الوصول الى التخزين للبحث في الصور, الوسائط والمستندات على هذا الجهاز.</string>
+    <string name="missing_permission_files_search">يلزم الحصول على إذن التخزين للبحث عن الملفات على هذا الجهاز</string>
     <string name="missing_permission_appshortcuts_create">عين %1$s كتطبيق الشاشة الرئيسية الافتراضي لانشاء اختصارات.</string>
     <string name="weather_condition_thunderstorm">عاصفة رعدية</string>
-    <string name="missing_permission_calendar_search">قم بمنح اذن الوصول الى التقويم للبحث في تقويمك.</string>
+    <string name="missing_permission_calendar_search">يلزم الحصول على إذن الوصول إلى التقويم للبحث في تقويمك</string>
     <string name="preference_screen_appearance">المظهر</string>
     <string name="preference_theme">السمة</string>
     <string name="preference_colors_default">افتراضي</string>
@@ -943,7 +943,7 @@
     <string name="typo_preview_medium2">معاينة</string>
     <string name="typo_preview_medium1">هامبورغ</string>
     <string name="typo_preview_short2">يكتب</string>
-    <string name="typo_preview_short1"/>
+    <string name="typo_preview_short1">آفا</string>
     <string name="typo_preview_extra_short">أبجد</string>
     <string name="preference_calendar_system_secondary">التقويم الثانوي</string>
     <string name="preference_calendar_system_primary">التقويم الاساسي</string>
@@ -964,4 +964,12 @@
     <string name="preference_create_colors">نظام ألوان جديد</string>
     <string name="preference_clockwidget_battery_part_hide">اغلاق</string>
     <string name="gesture_action_category_launcher">صفحات المشغل</string>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="zero">+%1$d مهمة لم تُنجز</item>
+        <item quantity="one">مهمة لم تُنجز</item>
+        <item quantity="two">+%1$d مهام لم تكتمل</item>
+        <item quantity="few">+%1$d مهام لم تكتمل</item>
+        <item quantity="many">+%1$d مهمة لم تكتمل</item>
+        <item quantity="other">+%1$d مهمة لم تكتمل</item>
+    </plurals>
 </resources>
