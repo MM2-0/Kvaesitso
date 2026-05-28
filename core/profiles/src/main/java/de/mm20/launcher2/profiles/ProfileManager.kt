@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.LauncherApps
+import android.content.pm.LauncherUserInfo
 import android.os.Process
 import android.os.UserHandle
 import android.os.UserManager
@@ -164,9 +165,16 @@ class ProfileManager(
     }
 
     private fun getProfileState(userHandle: UserHandle): Profile.State {
-        return Profile.State(
-            locked = !userManager.isUserUnlocked(userHandle),
-        )
+        val locked = !userManager.isUserUnlocked(userHandle)
+        val hidden = if (isAtLeastApiLevel(36) && locked) {
+            launcherApps.getLauncherUserInfo(userHandle)
+                ?.getUserConfig()
+                ?.getBoolean(LauncherUserInfo.PRIVATE_SPACE_ENTRYPOINT_HIDDEN, false)
+                ?: false
+        } else {
+            false
+        }
+        return Profile.State(locked = locked, hidden = hidden)
     }
 
     @RequiresApi(28)

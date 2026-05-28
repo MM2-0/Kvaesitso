@@ -80,7 +80,7 @@ fun SearchColumn(
     val apps = viewModel.appResults
     val workApps = viewModel.workAppResults
     val privateApps = viewModel.privateSpaceAppResults
-    val profiles by viewModel.profiles.collectAsState(emptyList())
+    val profiles by viewModel.visibleProfiles.collectAsState(emptyList())
     val profileStates by viewModel.profileStates.collectAsState(emptyList())
 
     val appShortcuts = viewModel.appShortcutResults
@@ -114,7 +114,7 @@ fun SearchColumn(
 
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
-    var selectedAppProfileIndex: Int by remember(isSearchEmpty) { mutableIntStateOf(0) }
+    var selectedAppProfileIndex by viewModel.selectedAppProfileIndex
     var selectedAppIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedContactIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedFileIndex: Int by remember(query) { mutableIntStateOf(-1) }
