@@ -3,6 +3,7 @@ package de.mm20.launcher2.preferences.ui
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.TimeFormat
+import de.mm20.launcher2.preferences.WindSpeedUoM
 import kotlinx.coroutines.flow.map
 
 
@@ -24,6 +25,15 @@ class LocaleSettings internal constructor(
     fun setMeasurementSystem(measurementSystem: MeasurementSystem) {
         launcherDataStore.update {
             it.copy(localeMeasurementSystem = measurementSystem)
+        }
+    }
+
+    val windSpeedUoM
+        get() = launcherDataStore.data.map { it.localeWindSpeedUoM }
+
+    fun setWindSpeedUoM(windSpeedUoM: WindSpeedUoM) {
+        launcherDataStore.update {
+            it.copy(localeWindSpeedUoM = windSpeedUoM)
         }
     }
 

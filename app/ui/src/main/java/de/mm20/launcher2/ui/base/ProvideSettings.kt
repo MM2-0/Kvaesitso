@@ -25,6 +25,7 @@ import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalMeasurementSystem
 import de.mm20.launcher2.ui.locals.LocalTimeFormat
+import de.mm20.launcher2.ui.locals.LocalWindSpeedUoM
 import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.combine
@@ -34,7 +35,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun ProvideSettings(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -112,13 +113,18 @@ fun ProvideSettings(
         }
     }
 
-    if (timeFormat == null || measurementSystem == null) return
+    val windSpeedUoM by remember {
+        localeSettings.windSpeedUoM.distinctUntilChanged()
+    }.collectAsState(null)
+
+    if (timeFormat == null || measurementSystem == null || windSpeedUoM == null) return
 
     CompositionLocalProvider(
         LocalFavoritesEnabled provides favoritesEnabled,
         LocalGridSettings provides gridSettings,
         LocalTimeFormat provides timeFormat!!,
         LocalMeasurementSystem provides measurementSystem!!,
+        LocalWindSpeedUoM provides windSpeedUoM!!,
         LocalCalendarSystems provides calendars,
         LocalCalendarSystemIds provides calendarIds,
     ) {
