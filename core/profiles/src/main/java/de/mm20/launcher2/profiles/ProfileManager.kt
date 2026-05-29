@@ -72,6 +72,11 @@ class ProfileManager(
         it.mapNotNull { it?.profile }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
 
+    val hiddenPrivateSpaceUser: Flow<UserHandle?> = profileStates.map { profiles ->
+        val private = profiles[2]
+        if (private?.state?.hidden == true) private.profile.userHandle else null
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
+
     init {
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
