@@ -928,4 +928,6 @@
     <string name="gesture_action_widgets_new">Új modulok lapja</string>
     <string name="gesture_action_widgets_empty">Üres</string>
     <string name="gesture_action_launch_select_app">Alkalmazás vagy parancsikon kiválasztása</string>
+    <string name="preference_search_apps_show_details">Alkalmazás adatainak megjelenítése</string>
+    <string name="preference_search_apps_show_details_summary">Az alkalmazás verziójának és csomagjának megjelenítése a helyi menüben</string>
 </resources>
