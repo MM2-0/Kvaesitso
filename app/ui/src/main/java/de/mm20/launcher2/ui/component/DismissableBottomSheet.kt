@@ -235,7 +235,7 @@ fun <T> DismissableBottomSheet(
                         .widthIn(max = BottomSheetDefaults.SheetMaxWidth)
                         .align(Alignment.BottomCenter)
                         .wrapContentHeight()
-                        .heightIn(max = maxHeight)
+                        .heightIn(min = 96.dp, max = maxHeight)
                         .graphicsLayer {
                             translationY = draggableState.offset.coerceAtMost(0f) + sheetHeight
                         }
