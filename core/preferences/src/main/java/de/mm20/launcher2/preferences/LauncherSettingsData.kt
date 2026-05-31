@@ -72,7 +72,7 @@ data class LauncherSettingsData internal constructor(
     val favoritesCompactTags: Boolean = false,
 
     val searchAllApps: Boolean = true,
-    val hideAppDetails: Boolean = false,
+    val appsShowDetails: Boolean = true,
 
     val fileSearchProviders: Set<String> = setOf("local"),
 

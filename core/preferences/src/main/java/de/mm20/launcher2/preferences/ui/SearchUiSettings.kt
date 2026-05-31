@@ -70,12 +70,12 @@ class SearchUiSettings internal constructor(
         }
     }
 
-    val hideAppDetails
-        get() = launcherDataStore.data.map { it.hideAppDetails }.distinctUntilChanged()
+    val showAppDetails
+        get() = launcherDataStore.data.map { it.appsShowDetails }.distinctUntilChanged()
 
-    fun setHideAppDetails(hideAppDetails: Boolean) {
+    fun setShowAppDetails(showAppDetails: Boolean) {
         launcherDataStore.update {
-            it.copy(hideAppDetails = hideAppDetails)
+            it.copy(appsShowDetails = showAppDetails)
         }
     }
 

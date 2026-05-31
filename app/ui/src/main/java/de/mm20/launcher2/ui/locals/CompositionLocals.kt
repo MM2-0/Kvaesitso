@@ -21,7 +21,7 @@ val LocalCardStyle = compositionLocalOf { CardStyle() }
 
 val LocalFavoritesEnabled = compositionLocalOf { true }
 
-val LocalHideAppDetails = compositionLocalOf { false }
+val LocalShowAppDetails = compositionLocalOf { false }
 
 val LocalGridSettings = compositionLocalOf { GridSettings() }
 

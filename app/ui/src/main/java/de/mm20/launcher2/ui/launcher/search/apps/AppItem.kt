@@ -65,7 +65,7 @@ import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
-import de.mm20.launcher2.ui.locals.LocalHideAppDetails
+import de.mm20.launcher2.ui.locals.LocalShowAppDetails
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.coroutines.launch
 
@@ -81,7 +81,7 @@ fun AppItem(
 
     val badge by viewModel.badge.collectAsStateWithLifecycle(null)
     val icon by viewModel.icon.collectAsStateWithLifecycle()
-    val hideAppDetails = LocalHideAppDetails.current
+    val showAppDetails = LocalShowAppDetails.current
 
     LaunchedEffect(app) {
         viewModel.init(app, iconSize.toInt())
@@ -124,7 +124,7 @@ fun AppItem(
                                     )
                                 }
 
-                                if (!hideAppDetails) {
+                                if (showAppDetails) {
                                     app.versionName?.let {
                                         Text(
                                             text = stringResource(R.string.app_info_version, it),

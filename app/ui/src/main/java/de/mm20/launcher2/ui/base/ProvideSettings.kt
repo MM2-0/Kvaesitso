@@ -23,7 +23,7 @@ import de.mm20.launcher2.ui.component.ProvideIconShape
 import de.mm20.launcher2.ui.locals.LocalCalendarSystemIds
 import de.mm20.launcher2.ui.locals.LocalCalendarSystems
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
-import de.mm20.launcher2.ui.locals.LocalHideAppDetails
+import de.mm20.launcher2.ui.locals.LocalShowAppDetails
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalMeasurementSystem
 import de.mm20.launcher2.ui.locals.LocalTimeFormat
@@ -60,8 +60,8 @@ fun ProvideSettings(
         settings.gridSettings.distinctUntilChanged()
     }.collectAsState(GridSettings())
 
-    val hideAppDetails by remember {
-        searchUiSettings.hideAppDetails.distinctUntilChanged()
+    val showAppDetails by remember {
+        searchUiSettings.showAppDetails.distinctUntilChanged()
     }.collectAsState(false)
 
     val timeFormat by remember(context) {
@@ -123,7 +123,7 @@ fun ProvideSettings(
 
     CompositionLocalProvider(
         LocalFavoritesEnabled provides favoritesEnabled,
-        LocalHideAppDetails provides hideAppDetails,
+        LocalShowAppDetails provides showAppDetails,
         LocalGridSettings provides gridSettings,
         LocalTimeFormat provides timeFormat!!,
         LocalMeasurementSystem provides measurementSystem!!,

@@ -17,7 +17,7 @@ class AppSearchSettingsScreenVM: ViewModel(), KoinComponent {
     val allApps = searchUiSettings.allApps
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val hideAppDetails = searchUiSettings.hideAppDetails
+    val showAppDetails = searchUiSettings.showAppDetails
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setAllApps(allApps: Boolean) {
@@ -25,7 +25,7 @@ class AppSearchSettingsScreenVM: ViewModel(), KoinComponent {
     }
 
     fun setHideAppDetails(hideAppDetails: Boolean) {
-        searchUiSettings.setHideAppDetails(hideAppDetails)
+        searchUiSettings.setShowAppDetails(hideAppDetails)
     }
 
     val showList = uiSettings.gridSettings.map { it.showList }
