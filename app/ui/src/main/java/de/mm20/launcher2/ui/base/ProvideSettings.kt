@@ -17,11 +17,13 @@ import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.TimeFormat
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.preferences.ui.LocaleSettings
+import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.component.ProvideIconShape
 import de.mm20.launcher2.ui.locals.LocalCalendarSystemIds
 import de.mm20.launcher2.ui.locals.LocalCalendarSystems
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
+import de.mm20.launcher2.ui.locals.LocalHideAppDetails
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalMeasurementSystem
 import de.mm20.launcher2.ui.locals.LocalTimeFormat
@@ -39,6 +41,7 @@ fun ProvideSettings(
     val context = LocalContext.current
 
     val settings: UiSettings = koinInject()
+    val searchUiSettings: SearchUiSettings = koinInject()
     val widgetRepository: WidgetRepository = koinInject()
     val localeSettings: LocaleSettings = koinInject()
 
@@ -56,6 +59,10 @@ fun ProvideSettings(
     val gridSettings by remember {
         settings.gridSettings.distinctUntilChanged()
     }.collectAsState(GridSettings())
+
+    val hideAppDetails by remember {
+        searchUiSettings.hideAppDetails.distinctUntilChanged()
+    }.collectAsState(false)
 
     val timeFormat by remember(context) {
         localeSettings.timeFormat
@@ -116,6 +123,7 @@ fun ProvideSettings(
 
     CompositionLocalProvider(
         LocalFavoritesEnabled provides favoritesEnabled,
+        LocalHideAppDetails provides hideAppDetails,
         LocalGridSettings provides gridSettings,
         LocalTimeFormat provides timeFormat!!,
         LocalMeasurementSystem provides measurementSystem!!,
