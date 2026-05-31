@@ -12,17 +12,6 @@ import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 
 
 internal abstract class ScaffoldComponent {
-    /**
-     * If true, the component stays open. I.e. widgets, search.
-     * If false, the component is immediately dismissed after running its onMount function,
-     *  returning to the home screen. I.e. turn off screen, launch app.
-     */
-    open val permanent: Boolean = true
-
-    /**
-     * For non-permanent components, this is the delay before the component is dismissed.
-     */
-    open val resetDelay: Long = 0L
 
     /**
      * If true, a semi-transparent background is drawn behind the page.
@@ -87,7 +76,7 @@ internal abstract class ScaffoldComponent {
     /**
      * Called when the component is about to be activated, but before the animation is completed.
      */
-    open suspend fun onPreActivate(state: LauncherScaffoldState) {
+    open fun onPreActivate(state: LauncherScaffoldState) {
 
     }
 
@@ -102,7 +91,7 @@ internal abstract class ScaffoldComponent {
     /**
      * Called when the component is about to be dismissed, but before the animation is completed.
      */
-    open suspend fun onPreDismiss(state: LauncherScaffoldState) {
+    open fun onPreDismiss(state: LauncherScaffoldState) {
 
     }
 

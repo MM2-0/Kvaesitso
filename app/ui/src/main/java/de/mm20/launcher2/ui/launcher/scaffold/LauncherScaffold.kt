@@ -114,9 +114,11 @@ import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -808,16 +810,16 @@ internal class LauncherScaffoldState(
         targetPage: ScaffoldPage,
         component: ScaffoldComponent,
         animate: suspend () -> Unit,
-    ) {
+    ) = withContext(NonCancellable) {
         when (targetPage) {
             ScaffoldPage.Secondary -> {
-                config.homeComponent.onPreDismiss(this)
-                component.onPreActivate(this)
+                config.homeComponent.onPreDismiss(this@LauncherScaffoldState)
+                component.onPreActivate(this@LauncherScaffoldState)
             }
 
             ScaffoldPage.Home -> {
-                component.onPreDismiss(this)
-                config.homeComponent.onPreActivate(this)
+                component.onPreDismiss(this@LauncherScaffoldState)
+                config.homeComponent.onPreActivate(this@LauncherScaffoldState)
             }
         }
 
@@ -825,24 +827,14 @@ internal class LauncherScaffoldState(
 
         when (targetPage) {
             ScaffoldPage.Secondary -> {
-                component.onActivate(this)
-                if (!component.permanent) {
-                    delay(component.resetDelay.milliseconds)
-                    isSettledOnSecondaryPage = false
-                    currentOffset3D = Offset3D.Zero
-                    component.onPreDismiss(this)
-                    component.onDismiss(this)
-                    currentGesture = null
-                    unlock()
-                } else {
-                    config.homeComponent.onDismiss(this)
-                    homePageSearchBarOffset = 0f
-                }
+                component.onActivate(this@LauncherScaffoldState)
+                config.homeComponent.onDismiss(this@LauncherScaffoldState)
+                homePageSearchBarOffset = 0f
             }
 
             ScaffoldPage.Home -> {
-                config.homeComponent.onActivate(this)
-                component.onDismiss(this)
+                config.homeComponent.onActivate(this@LauncherScaffoldState)
+                component.onDismiss(this@LauncherScaffoldState)
                 currentGesture = null
                 secondaryPageSearchBarOffset = 0f
             }

@@ -42,8 +42,6 @@ internal object FeedComponent : ScaffoldComponent(), KoinComponent {
     private val feedSettings: FeedSettings by inject()
     private val feedService: FeedService by inject()
 
-    override val permanent: Boolean = true
-
     override val survivesPause: Boolean = true
 
     private var state = mutableIntStateOf(0)
@@ -186,7 +184,7 @@ internal object FeedComponent : ScaffoldComponent(), KoinComponent {
             .alpha(1f - state.currentProgress)
     }
 
-    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+    override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
         this.state.intValue = 2
     }
@@ -201,7 +199,7 @@ internal object FeedComponent : ScaffoldComponent(), KoinComponent {
         this.state.intValue = 0
     }
 
-    override suspend fun onPreDismiss(state: LauncherScaffoldState) {
+    override fun onPreDismiss(state: LauncherScaffoldState) {
         super.onPreDismiss(state)
         this.state.intValue = 1
     }

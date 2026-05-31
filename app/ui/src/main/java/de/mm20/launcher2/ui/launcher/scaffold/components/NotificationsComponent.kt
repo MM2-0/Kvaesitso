@@ -36,8 +36,6 @@ internal object NotificationsComponent : ScaffoldComponent(), KoinComponent {
 
     private val globalActionService: GlobalActionsService by inject()
 
-    override val permanent: Boolean = false
-
     override val showSearchBar: Boolean = false
 
     override val drawBackground: Boolean = false
@@ -84,14 +82,14 @@ internal object NotificationsComponent : ScaffoldComponent(), KoinComponent {
         }
     }
 
-    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+    override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
         globalActionService.openNotificationDrawer()
     }
 
     override suspend fun onActivate(state: LauncherScaffoldState) {
         super.onActivate(state)
-        state.navigateBack(false)
+        state.navigateBack()
     }
 
     @SuppressLint("ModifierFactoryExtensionFunction")

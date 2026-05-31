@@ -39,9 +39,6 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val globalActionService: GlobalActionsService by inject()
 
-    override val permanent: Boolean
-        get() = !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)
-
     override val showSearchBar: Boolean = false
 
     override val drawBackground: Boolean = false
@@ -69,7 +66,7 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
         }
     }
 
-    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+    override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.openRecents()
@@ -78,7 +75,7 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
 
     override suspend fun onActivate(state: LauncherScaffoldState) {
         super.onActivate(state)
-        state.navigateBack(true)
+        state.navigateBack()
     }
 
     @SuppressLint("ModifierFactoryExtensionFunction")

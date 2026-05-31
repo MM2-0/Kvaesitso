@@ -48,9 +48,6 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val globalActionService: GlobalActionsService by inject()
 
-    override val permanent: Boolean
-        get() = !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)
-
     override val showSearchBar: Boolean = false
 
     override val drawBackground: Boolean = false
@@ -166,7 +163,7 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
         }
     }
 
-    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+    override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.openPowerDialog()
@@ -175,9 +172,7 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
 
     override suspend fun onActivate(state: LauncherScaffoldState) {
         super.onActivate(state)
-        if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
-            state.navigateBack(true)
-        }
+        state.navigateBack(true)
     }
 
     @SuppressLint("ModifierFactoryExtensionFunction")
