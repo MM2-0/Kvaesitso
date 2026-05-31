@@ -13,9 +13,9 @@ data class Colors(
     @Serializable(with = UUIDSerializer::class) val id: UUID = UUID.randomUUID(),
     val builtIn: Boolean = false,
     val name: String,
-    val corePalette: PartialCorePalette = EmptyCorePalette,
-    val lightColorScheme: PartialColorScheme = DefaultLightColorScheme,
-    val darkColorScheme: PartialColorScheme = DefaultDarkColorScheme,
+    val corePalette: CorePalette = EmptyCorePalette,
+    val lightColorScheme: ColorScheme = DefaultLightColorScheme,
+    val darkColorScheme: ColorScheme = DefaultDarkColorScheme,
 ) {
 
     constructor(entity: ColorsEntity) : this(
@@ -271,81 +271,77 @@ value class StaticColor(val color: Int) : Color {
 typealias CorePaletteColorValue = @Serializable(with = ColorIntAsHexSerializer::class) Int
 
 @Serializable
-data class CorePalette<out T : Int?>(
-    val primary: T,
-    val secondary: T,
-    val tertiary: T,
-    val neutral: T,
-    val neutralVariant: T,
-    val error: T,
+data class CorePalette(
+    val primary: CorePaletteColorValue? = null,
+    val secondary: CorePaletteColorValue? = null,
+    val tertiary: CorePaletteColorValue? = null,
+    val neutral: CorePaletteColorValue? = null,
+    val neutralVariant: CorePaletteColorValue? = null,
+    val error: CorePaletteColorValue? = null,
 )
 
-val EmptyCorePalette = CorePalette<CorePaletteColorValue?>(null, null, null, null, null, null)
-
-typealias FullCorePalette = CorePalette<CorePaletteColorValue>
-typealias PartialCorePalette = CorePalette<CorePaletteColorValue?>
+val EmptyCorePalette = CorePalette()
 
 @Serializable
-data class ColorScheme<out T : Color?>(
-    @Contextual val primary: T,
-    @Contextual val onPrimary: T,
-    @Contextual val primaryContainer: T,
-    @Contextual val onPrimaryContainer: T,
-    @Contextual val secondary: T,
-    @Contextual val onSecondary: T,
-    @Contextual val secondaryContainer: T,
-    @Contextual val onSecondaryContainer: T,
-    @Contextual val tertiary: T,
-    @Contextual val onTertiary: T,
-    @Contextual val tertiaryContainer: T,
-    @Contextual val onTertiaryContainer: T,
-    @Contextual val error: T,
-    @Contextual val onError: T,
-    @Contextual val errorContainer: T,
-    @Contextual val onErrorContainer: T,
-    @Contextual val surface: T,
-    @Contextual val onSurface: T,
-    @Contextual val onSurfaceVariant: T,
-    @Contextual val outline: T,
-    @Contextual val outlineVariant: T,
-    @Contextual val inverseSurface: T,
-    @Contextual val inverseOnSurface: T,
-    @Contextual val inversePrimary: T,
-    @Contextual val surfaceDim: T,
-    @Contextual val surfaceBright: T,
-    @Contextual val surfaceContainerLowest: T,
-    @Contextual val surfaceContainerLow: T,
-    @Contextual val surfaceContainer: T,
-    @Contextual val surfaceContainerHigh: T,
-    @Contextual val surfaceContainerHighest: T,
+data class ColorScheme(
+    @Contextual val primary:Color? = null,
+    @Contextual val onPrimary:Color? = null,
+    @Contextual val primaryContainer:Color? = null,
+    @Contextual val onPrimaryContainer:Color? = null,
+    @Contextual val secondary:Color? = null,
+    @Contextual val onSecondary:Color? = null,
+    @Contextual val secondaryContainer:Color? = null,
+    @Contextual val onSecondaryContainer:Color? = null,
+    @Contextual val tertiary:Color? = null,
+    @Contextual val onTertiary:Color? = null,
+    @Contextual val tertiaryContainer:Color? = null,
+    @Contextual val onTertiaryContainer:Color? = null,
+    @Contextual val error:Color? = null,
+    @Contextual val onError:Color? = null,
+    @Contextual val errorContainer:Color? = null,
+    @Contextual val onErrorContainer:Color? = null,
+    @Contextual val surface:Color? = null,
+    @Contextual val onSurface:Color? = null,
+    @Contextual val onSurfaceVariant:Color? = null,
+    @Contextual val outline:Color? = null,
+    @Contextual val outlineVariant:Color? = null,
+    @Contextual val inverseSurface:Color? = null,
+    @Contextual val inverseOnSurface:Color? = null,
+    @Contextual val inversePrimary:Color? = null,
+    @Contextual val surfaceDim:Color? = null,
+    @Contextual val surfaceBright:Color? = null,
+    @Contextual val surfaceContainerLowest:Color? = null,
+    @Contextual val surfaceContainerLow:Color? = null,
+    @Contextual val surfaceContainer:Color? = null,
+    @Contextual val surfaceContainerHigh:Color? = null,
+    @Contextual val surfaceContainerHighest:Color? = null,
 
-    @Contextual val background: T,
-    @Contextual val onBackground: T,
-    @Contextual val surfaceTint: T,
-    @Contextual val scrim: T,
-    @Contextual val surfaceVariant: T,
+    @Contextual val background:Color? = null,
+    @Contextual val onBackground:Color? = null,
+    @Contextual val surfaceTint:Color? = null,
+    @Contextual val scrim:Color? = null,
+    @Contextual val surfaceVariant:Color? = null,
 )
 
-typealias FullColorScheme = ColorScheme<Color>
-typealias PartialColorScheme = ColorScheme<Color?>
 
-fun <T : Int?> CorePalette<T>.get(color: CorePaletteColor): T {
+fun CorePalette.get(color: CorePaletteColor): CorePaletteColorValue {
     return when (color) {
-        CorePaletteColor.Primary -> primary
-        CorePaletteColor.Secondary -> secondary
-        CorePaletteColor.Tertiary -> tertiary
-        CorePaletteColor.Neutral -> neutral
-        CorePaletteColor.NeutralVariant -> neutralVariant
-        CorePaletteColor.Error -> error
+        CorePaletteColor.Primary -> primary ?: 0
+        CorePaletteColor.Secondary -> secondary ?: 0
+        CorePaletteColor.Tertiary -> tertiary ?: 0
+        CorePaletteColor.Neutral -> neutral ?: 0
+        CorePaletteColor.NeutralVariant -> neutralVariant ?: 0
+        CorePaletteColor.Error -> error ?: 0
     }
 }
 
-fun Color.get(corePalette: FullCorePalette): Int {
+fun Color?.get(corePalette: CorePalette): Int {
     return when (this) {
         is StaticColor -> color
         is ColorRef -> {
-            corePalette.get(this.color).atTone(this.tone)
+            corePalette.get(this.color).atTone(this.tone) ?: 0
         }
+        null -> 0
     }
 }
 
@@ -355,7 +351,7 @@ fun Int.atTone(tone: Int): Int {
     }.toInt()
 }
 
-fun PartialCorePalette.merge(other: FullCorePalette): FullCorePalette {
+fun CorePalette.merge(other: CorePalette): CorePalette {
     return CorePalette(
         primary = this.primary ?: other.primary,
         secondary = this.secondary ?: other.secondary,
@@ -366,7 +362,7 @@ fun PartialCorePalette.merge(other: FullCorePalette): FullCorePalette {
     )
 }
 
-fun PartialColorScheme.merge(other: FullColorScheme): FullColorScheme {
+fun ColorScheme.merge(other: ColorScheme): ColorScheme {
     return ColorScheme(
         primary = this.primary ?: other.primary,
         onPrimary = this.onPrimary ?: other.onPrimary,

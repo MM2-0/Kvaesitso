@@ -7,6 +7,7 @@ import androidx.activity.compose.PredictiveBackHandler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateIntAsState
@@ -98,6 +99,13 @@ import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.SharedLauncherActivity
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
+import de.mm20.launcher2.ui.launcher.scaffold.animation.Offset3D
+import de.mm20.launcher2.ui.launcher.scaffold.animation.PushScaffoldAnimationController
+import de.mm20.launcher2.ui.launcher.scaffold.animation.RubberbandScaffoldAnimationController
+import de.mm20.launcher2.ui.launcher.scaffold.animation.ScaffoldAnimationController
+import de.mm20.launcher2.ui.launcher.scaffold.animation.ZoomInScaffoldAnimationController
+import de.mm20.launcher2.ui.launcher.scaffold.components.ScaffoldComponent
+import de.mm20.launcher2.ui.launcher.scaffold.components.SearchComponent
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
@@ -106,12 +114,15 @@ import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.milliseconds
 
 enum class ScaffoldAnimation {
     Rubberband,
@@ -246,21 +257,55 @@ internal class LauncherScaffoldState(
     initialIsLocked: Boolean = false,
     initialIsSearchBarHidden: Boolean = false,
 ) {
-    var currentOffset by mutableStateOf(
-        when {
-            initialGesture == null || initialGesture.orientation == null || config[initialGesture]?.animation == ScaffoldAnimation.Rubberband -> Offset.Zero
-            initialGesture == Gesture.SwipeRight -> Offset(-size.width, 0f)
-            initialGesture == Gesture.SwipeLeft -> Offset(size.width, 0f)
-            initialGesture == Gesture.SwipeUp -> Offset(0f, -size.height)
-            initialGesture == Gesture.SwipeDown -> Offset(0f, size.height)
-            else -> Offset.Zero
+    private val rubberbandAnimationController = RubberbandScaffoldAnimationController(
+        rubberbandThreshold = rubberbandThreshold,
+        velocityThreshold = velocityThreshold,
+    )
+    private val pushAnimationController = PushScaffoldAnimationController(
+        velocityThreshold = velocityThreshold,
+    )
+
+    private fun getAnimationController(animation: ScaffoldAnimation?): ScaffoldAnimationController? {
+        return when (animation) {
+            ScaffoldAnimation.Rubberband -> rubberbandAnimationController
+            ScaffoldAnimation.Push -> pushAnimationController
+            ScaffoldAnimation.ZoomIn -> ZoomInScaffoldAnimationController
+            null -> null
         }
-    )
-        private set
-    var currentZOffset by mutableFloatStateOf(
-        if (initialGesture != null && initialGesture.orientation == null) 1f else 0f
-    )
-        private set
+    }
+
+    private fun getAnimationController(gesture: Gesture?): ScaffoldAnimationController? {
+        val animation = gesture?.let { config[it]?.animation }
+        return getAnimationController(animation)
+    }
+
+    private val initialOffset3D: Offset3D = initialGesture?.let { gesture ->
+        getAnimationController(config[gesture]?.animation)?.initialOffset(gesture, size)
+    } ?: Offset3D.Zero
+
+    private val currentPage: ScaffoldPage
+        get() = if (isSettledOnSecondaryPage) ScaffoldPage.Secondary else ScaffoldPage.Home
+
+    private var currentOffset3D by mutableStateOf(initialOffset3D)
+
+    private fun isOverThreshold(animation: ScaffoldAnimation, offset: Offset3D): Boolean {
+        return when (animation) {
+            ScaffoldAnimation.Rubberband -> {
+                offset.x.absoluteValue > rubberbandThreshold || offset.y.absoluteValue > rubberbandThreshold
+            }
+
+            ScaffoldAnimation.Push -> {
+                offset.x.absoluteValue > size.width * 0.5f || offset.y.absoluteValue > size.height * 0.5f
+            }
+
+            ScaffoldAnimation.ZoomIn -> false
+        }
+    }
+
+    val currentOffset: Offset
+        get() = currentOffset3D.toOffset2D()
+    val currentZOffset: Float
+        get() = currentOffset3D.z
     var currentGesture by mutableStateOf<Gesture?>(initialGesture)
         private set
 
@@ -390,27 +435,13 @@ internal class LauncherScaffoldState(
      */
     val currentProgress by derivedStateOf {
         val dir = currentGesture ?: return@derivedStateOf 0f
-        val gesture = config[dir] ?: return@derivedStateOf 0f
-
-        if (dir.orientation == null) {
-            return@derivedStateOf currentZOffset
-        }
-
-        if (gesture.animation == ScaffoldAnimation.Rubberband) {
-            val offset =
-                (currentOffset.x + currentOffset.y).absoluteValue.coerceAtMost(rubberbandThreshold)
-            if (isSettledOnSecondaryPage) {
-                1f - offset / (rubberbandThreshold * 2f)
-            } else {
-                offset / (rubberbandThreshold * 2f)
-            }
-        } else {
-            if (dir.orientation == Orientation.Horizontal) {
-                (currentOffset.x.absoluteValue / size.width).coerceIn(0f, 1f)
-            } else {
-                (currentOffset.y.absoluteValue / size.height).coerceIn(0f, 1f)
-            }
-        }
+        val controller = getAnimationController(dir) ?: return@derivedStateOf 0f
+        controller.calculateProgress(
+            direction = dir,
+            offset = currentOffset3D,
+            currentPage = currentPage,
+            size = size,
+        )
     }
 
     val currentAnimation by derivedStateOf {
@@ -424,10 +455,22 @@ internal class LauncherScaffoldState(
     }
 
     private val offsetAnimatable =
-        Animatable(Offset.Zero, Offset.VectorConverter)
+        Animatable(Offset3D.Zero, Offset3D.VectorConverter)
 
-    private val zAnimatable =
-        Animatable(0f, Float.VectorConverter)
+    private suspend fun animateOffset3DTo(
+        target: Offset3D,
+        initialVelocity: Offset3D = Offset3D.Zero,
+        animationSpec: AnimationSpec<Offset3D> = spring(),
+    ) {
+        offsetAnimatable.snapTo(currentOffset3D)
+        offsetAnimatable.animateTo(
+            target,
+            animationSpec = animationSpec,
+            initialVelocity = initialVelocity,
+        ) {
+            currentOffset3D = this.value
+        }
+    }
 
     private val searchBarAnimatable =
         Animatable(0f, Float.VectorConverter)
@@ -439,7 +482,6 @@ internal class LauncherScaffoldState(
         if (isLocked || currentZOffset > 0f) return
         isDragged = true
         offsetAnimatable.stop()
-        zAnimatable.stop()
     }
 
 
@@ -452,97 +494,21 @@ internal class LauncherScaffoldState(
         val direction = currentGesture ?: return
 
         val gesture = config[direction] ?: return
+        val controller = getAnimationController(gesture.animation) ?: return
+        val wasOverThreshold = isOverThreshold(gesture.animation, currentOffset3D)
 
-        if (gesture.animation == ScaffoldAnimation.Rubberband) {
-            performRubberbandDrag(direction, currentOffset, offset)
-        } else if (gesture.animation == ScaffoldAnimation.Push) {
-            performPushDrag(direction, currentOffset, offset)
-        }
-    }
+        val targetOffset = controller.calculateOffset(
+            direction = direction,
+            currentOffset = currentOffset3D,
+            delta = Offset3D.from2D(offset),
+            currentPage = currentPage,
+            size = size,
+            isAtTop = isAtTop,
+            isAtBottom = isAtBottom,
+        )
+        currentOffset3D = targetOffset
 
-    private fun performRubberbandDrag(direction: Gesture, offset: Offset, delta: Offset) {
-
-        val delta = when {
-            !isAtTop && !isAtBottom -> delta.copy(y = 0f)
-            !isAtTop && isAtBottom -> delta.copy(y = delta.y.coerceAtMost(-offset.y))
-            isAtTop -> delta.copy(y = delta.y.coerceAtLeast(-offset.y))
-            else -> delta
-        }
-        val wasOverThreshold = currentOffset.x.absoluteValue > rubberbandThreshold ||
-                currentOffset.y.absoluteValue > rubberbandThreshold
-
-        val threshold = rubberbandThreshold * 1.5f
-        currentOffset = when (direction) {
-            Gesture.SwipeUp -> Offset(
-                0f,
-                (offset.y + delta.y).coerceIn(-threshold, threshold)
-            )
-
-            Gesture.SwipeDown -> Offset(
-                0f,
-                (offset.y + delta.y).coerceIn(-threshold, threshold)
-            )
-
-            Gesture.SwipeLeft -> Offset(
-                (offset.x + delta.x).coerceIn(-threshold, threshold),
-                0f
-            )
-
-            Gesture.SwipeRight -> Offset(
-                (offset.x + delta.x).coerceIn(-threshold, threshold),
-                0f
-            )
-
-            else -> Offset.Zero
-        }
-
-        val isOverThreshold = currentOffset.x.absoluteValue > rubberbandThreshold ||
-                currentOffset.y.absoluteValue > rubberbandThreshold
-
-        if (wasOverThreshold != isOverThreshold) {
-            onHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
-        }
-    }
-
-    /**
-     * @param direction The direction of the drag (currentDragDirection)
-     * @param offset The total offset of the drag (currentOffset)
-     * @param delta The delta of the drag (offset)
-     */
-    private fun performPushDrag(direction: Gesture, offset: Offset, delta: Offset) {
-        val wasOverThreshold =
-            currentOffset.x.absoluteValue > size.width * 0.5f ||
-                    currentOffset.y.absoluteValue > size.height * 0.5f
-
-        currentOffset = when (direction) {
-            Gesture.SwipeUp -> Offset(
-                0f,
-                (offset.y + delta.y).coerceIn(-size.height, 0f)
-            )
-
-            Gesture.SwipeDown -> Offset(
-                0f,
-                (offset.y + delta.y).coerceIn(0f, size.height)
-            )
-
-            Gesture.SwipeLeft -> Offset(
-                (offset.x + delta.x).coerceIn(-size.width, 0f),
-                0f
-            )
-
-            Gesture.SwipeRight -> Offset(
-                (offset.x + delta.x).coerceIn(0f, size.width),
-                0f
-            )
-
-            else -> Offset.Zero
-
-        }
-
-        val isOverThreshold =
-            currentOffset.x.absoluteValue > size.width * 0.5f ||
-                    currentOffset.y.absoluteValue > size.height * 0.5f
-
+        val isOverThreshold = isOverThreshold(gesture.animation, currentOffset3D)
         if (wasOverThreshold != isOverThreshold) {
             onHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
         }
@@ -609,144 +575,68 @@ internal class LauncherScaffoldState(
             else -> velocity
         }
         if (currentGesture == null) {
-            currentOffset = Offset.Zero
+            currentOffset3D = Offset3D.Zero
         }
         val direction = currentGesture ?: return
-        val offset = currentOffset
         val wasPageOpen = isSettledOnSecondaryPage
 
         val gesture = config[direction] ?: return
 
-        if (gesture.animation == ScaffoldAnimation.Rubberband) {
-            performRubberbandFling(direction, offset, velocity, disallowPageChange)
-        } else if (gesture.animation == ScaffoldAnimation.Push) {
-            performPushFling(direction, offset, velocity, disallowPageChange)
+        val controller = getAnimationController(gesture.animation) ?: return
+        val currentOffset3DValue = currentOffset3D
+        val wasOverThreshold = isOverThreshold(gesture.animation, currentOffset3DValue)
+
+        val targetPage = if (disallowPageChange) {
+            currentPage
+        } else {
+            controller.calculateTargetPage(
+                direction = direction,
+                offset = currentOffset3DValue,
+                velocity = velocity,
+                currentPage = currentPage,
+                size = size,
+            )
+        }
+        isSettledOnSecondaryPage = targetPage == ScaffoldPage.Secondary
+
+        val targetOffset = controller.calculateTargetOffset(
+            direction = direction,
+            targetPage = targetPage,
+            size = size,
+        )
+
+        if (gesture.animation == ScaffoldAnimation.Push) {
+            val isOverThreshold = isOverThreshold(gesture.animation, targetOffset)
+            if (wasOverThreshold != isOverThreshold) {
+                onHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
+            }
         }
 
-        if (isSettledOnSecondaryPage != wasPageOpen) {
-            if (wasPageOpen) {
-                deactivateSecondaryPage(gesture.component)
-            } else {
-                activateSecondaryPage(gesture.component)
+        val didPageChange = isSettledOnSecondaryPage != wasPageOpen
+        if (didPageChange && gesture.animation == ScaffoldAnimation.Rubberband) {
+            onHapticFeedback(HapticFeedbackType.SegmentFrequentTick)
+        }
+
+
+        val settleTarget = currentOffset3D.copy(x = targetOffset.x, y = targetOffset.y)
+        if (didPageChange) {
+            transitionToPage(
+                targetPage = if (isSettledOnSecondaryPage) ScaffoldPage.Secondary else ScaffoldPage.Home,
+                component = gesture.component,
+            ) {
+                animateOffset3DTo(
+                    target = settleTarget,
+                    initialVelocity = Offset3D(velocity.x, velocity.y, 0f),
+                )
             }
+        } else {
+            animateOffset3DTo(
+                target = settleTarget,
+                initialVelocity = Offset3D(velocity.x, velocity.y, 0f),
+            )
         }
 
         if (!isSettledOnSecondaryPage) currentGesture = null
-    }
-
-    private suspend fun performRubberbandFling(
-        direction: Gesture,
-        offset: Offset,
-        velocity: Velocity,
-        disallowPageChange: Boolean,
-    ) {
-        val wasSettledOnSecondaryPage = isSettledOnSecondaryPage
-
-        if (!disallowPageChange) {
-            if (offset.x <= -rubberbandThreshold || offset.x < 0f && velocity.x < -velocityThreshold) {
-                isSettledOnSecondaryPage = !isSettledOnSecondaryPage
-            } else if (offset.x >= rubberbandThreshold || offset.x > 0f && velocity.x > velocityThreshold) {
-                isSettledOnSecondaryPage = !isSettledOnSecondaryPage
-            } else if (offset.y <= -rubberbandThreshold || offset.y < 0f && velocity.y < -velocityThreshold) {
-                isSettledOnSecondaryPage = !isSettledOnSecondaryPage
-            } else if (offset.y >= rubberbandThreshold || offset.y > 0f && velocity.y > velocityThreshold) {
-                isSettledOnSecondaryPage = !isSettledOnSecondaryPage
-            }
-        }
-
-        if (wasSettledOnSecondaryPage != isSettledOnSecondaryPage) {
-            onHapticFeedback(HapticFeedbackType.SegmentFrequentTick)
-            if (isSettledOnSecondaryPage) {
-                prepareSecondaryPage()
-            } else {
-                prepareHomePage()
-            }
-        }
-
-        offsetAnimatable.snapTo(currentOffset)
-        offsetAnimatable.animateTo(
-            Offset.Zero,
-            initialVelocity = Offset(velocity.x, velocity.y),
-        ) {
-            currentOffset = this.value
-        }
-    }
-
-    private suspend fun performPushFling(
-        direction: Gesture,
-        offset: Offset,
-        velocity: Velocity,
-        disallowPageChange: Boolean,
-    ) {
-        val wasOverThreshold =
-            currentOffset.x.absoluteValue > size.width * 0.5f ||
-                    currentOffset.y.absoluteValue > size.height * 0.5f
-
-        val wasSettledOnSecondaryPage = isSettledOnSecondaryPage
-
-        val lowerPage = when (direction) {
-            Gesture.SwipeUp -> -size.height
-            Gesture.SwipeDown -> 0f
-            Gesture.SwipeLeft -> -size.width
-            Gesture.SwipeRight -> 0f
-            else -> return
-        }
-
-        val upperPage = if (direction.orientation == Orientation.Vertical) {
-            lowerPage + size.height
-        } else {
-            lowerPage + size.width
-        }
-
-        val threshold = (upperPage + lowerPage) / 2f
-
-        val targetOffset = if (direction.orientation == Orientation.Vertical) {
-            if (!disallowPageChange) {
-                if (offset.y > threshold && velocity.y > -velocityThreshold || velocity.y > velocityThreshold) {
-                    Offset(0f, upperPage)
-                } else {
-                    Offset(0f, lowerPage)
-                }
-            } else {
-                if (offset.y > threshold) Offset(0f, upperPage) else Offset(0f, lowerPage)
-            }
-        } else {
-            if (!disallowPageChange) {
-                if (offset.x > threshold && velocity.x > -velocityThreshold || velocity.x > velocityThreshold) {
-                    Offset(upperPage, 0f)
-                } else {
-                    Offset(lowerPage, 0f)
-                }
-            } else {
-                if (offset.x > threshold) Offset(upperPage, 0f) else Offset(lowerPage, 0f)
-            }
-        }
-
-        isSettledOnSecondaryPage = targetOffset != Offset.Zero
-
-        val isOverThreshold =
-            targetOffset.x.absoluteValue > size.width * 0.5f ||
-                    targetOffset.y.absoluteValue > size.height * 0.5f
-
-        if (wasOverThreshold != isOverThreshold) {
-            onHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
-        }
-
-        if (wasSettledOnSecondaryPage != isSettledOnSecondaryPage) {
-            if (isSettledOnSecondaryPage) {
-                prepareSecondaryPage()
-            } else {
-                prepareHomePage()
-            }
-        }
-
-        offsetAnimatable.snapTo(currentOffset)
-        offsetAnimatable.animateTo(
-            targetOffset,
-            initialVelocity = Offset(velocity.x, velocity.y),
-        ) {
-            currentOffset = this.value
-        }
     }
 
     suspend fun onDoubleTap() {
@@ -797,7 +687,7 @@ internal class LauncherScaffoldState(
 
         when (gesture) {
             Gesture.TapSearchBar, Gesture.DoubleTap, Gesture.LongPress -> {
-                currentZOffset = progress
+                currentOffset3D = Offset3D(z = progress)
             }
 
             else -> {
@@ -812,13 +702,13 @@ internal class LauncherScaffoldState(
                     else -> 0f
                 }
 
-                currentOffset = if (anim == ScaffoldAnimation.Push) {
-                    Offset(
+                currentOffset3D = if (anim == ScaffoldAnimation.Push) {
+                    Offset3D(
                         x * size.width * progress,
                         y * size.height * progress
                     )
                 } else {
-                    Offset(
+                    Offset3D(
                         x * rubberbandThreshold * (1f - progress),
                         y * rubberbandThreshold * (1f - progress)
                     )
@@ -831,14 +721,11 @@ internal class LauncherScaffoldState(
     private val backInterpolation = PathInterpolator(0f, 0f, 0f, 1f)
     fun onPredictiveBack(progress: Float) {
         if (!isSettledOnSecondaryPage) return
-        val anim = currentAnimation ?: return
+        val controller = getAnimationController(currentAnimation) ?: return
 
         val progress = backInterpolation.getInterpolation(progress)
 
-        val p = when(anim) {
-            ScaffoldAnimation.Push -> 1f - progress * 0.1f
-            else -> 1f - progress
-        }
+        val p = controller.calculatePredictiveBackProgress(progress)
 
         setProgress(p)
     }
@@ -848,10 +735,10 @@ internal class LauncherScaffoldState(
         val anim = currentAnimation ?: return
 
         if (gesture.orientation == null) {
-            zAnimatable.snapTo(currentZOffset)
-            zAnimatable.animateTo(1f, animationSpec = tween(100)) {
-                currentZOffset = this.value
-            }
+            animateOffset3DTo(
+                currentOffset3D.copy(z = 1f),
+                animationSpec = tween(100),
+            )
         } else {
             val targetOffset = if (anim == ScaffoldAnimation.Rubberband) {
                 Offset.Zero
@@ -865,16 +752,12 @@ internal class LauncherScaffoldState(
                 }
             }
 
-            offsetAnimatable.snapTo(currentOffset)
-            offsetAnimatable.animateTo(targetOffset) {
-                currentOffset = this.value
-            }
+            animateOffset3DTo(currentOffset3D.copy(x = targetOffset.x, y = targetOffset.y))
         }
     }
 
     /**
      * End the predictive back gesture and return to the home page.
-     * @param fast use a faster animation
      */
     suspend fun onPredictiveBackEnd() {
         navigateBack()
@@ -887,23 +770,19 @@ internal class LauncherScaffoldState(
         unlock()
         isSettledOnSecondaryPage = false
 
-        prepareHomePage()
-
-        if (gesture.orientation == null) {
-            zAnimatable.snapTo(currentZOffset)
-            zAnimatable.animateTo(0f, animationSpec = tween(100)) {
-                currentZOffset = this.value
-            }
-        } else {
-            offsetAnimatable.snapTo(currentOffset)
-            offsetAnimatable.animateTo(
-                Offset.Zero,
-                animationSpec = if (fast) tween(150) else spring()
-            ) {
-                currentOffset = this.value
+        transitionToPage(ScaffoldPage.Home, component) {
+            if (gesture.orientation == null) {
+                animateOffset3DTo(
+                    Offset3D.Zero,
+                    animationSpec = tween(100),
+                )
+            } else {
+                animateOffset3DTo(
+                    Offset3D.Zero,
+                    animationSpec = if (fast) tween(150) else spring(),
+                )
             }
         }
-        deactivateSecondaryPage(component)
     }
 
     private suspend fun performTapGesture(gesture: Gesture) {
@@ -917,56 +796,48 @@ internal class LauncherScaffoldState(
         }
         currentGesture = gesture
 
-        zAnimatable.snapTo(0f)
-        zAnimatable.animateTo(1f, animationSpec = tween(300)) {
-            currentZOffset = this.value
+        currentOffset3D = currentOffset3D.copy(z = 0f)
+        transitionToPage(ScaffoldPage.Secondary, component) {
+            animateOffset3DTo(
+                Offset3D(z = 1f),
+                animationSpec = tween(300),
+            )
+            isSettledOnSecondaryPage = true
+        }
+    }
+
+    private suspend fun transitionToPage(
+        targetPage: ScaffoldPage,
+        component: ScaffoldComponent,
+        animate: suspend () -> Unit,
+    ) = withContext(NonCancellable) {
+        when (targetPage) {
+            ScaffoldPage.Secondary -> {
+                config.homeComponent.onPreDismiss(this@LauncherScaffoldState)
+                component.onPreActivate(this@LauncherScaffoldState)
+            }
+
+            ScaffoldPage.Home -> {
+                component.onPreDismiss(this@LauncherScaffoldState)
+                config.homeComponent.onPreActivate(this@LauncherScaffoldState)
+            }
         }
 
-        isSettledOnSecondaryPage = true
+        animate()
 
-        prepareSecondaryPage()
-        activateSecondaryPage(component)
-    }
+        when (targetPage) {
+            ScaffoldPage.Secondary -> {
+                component.onActivate(this@LauncherScaffoldState)
+                config.homeComponent.onDismiss(this@LauncherScaffoldState)
+                homePageSearchBarOffset = 0f
+            }
 
-    private suspend fun prepareSecondaryPage() {
-        config.homeComponent.onPreDismiss(this)
-        currentComponent?.onPreActivate(this)
-    }
-
-    private suspend fun prepareHomePage() {
-        currentComponent?.onPreDismiss(this)
-        config.homeComponent.onPreActivate(this)
-    }
-
-    /**
-     * Unmounts the secondary page component and mounts the home page component.
-     * Must be called after the animation is completed.
-     */
-    private suspend fun deactivateSecondaryPage(component: ScaffoldComponent) {
-        config.homeComponent.onActivate(this)
-        component.onDismiss(this)
-        currentGesture = null
-        secondaryPageSearchBarOffset = 0f
-    }
-
-    /**
-     * Mount the secondary page component and dismiss it again if not permanent.
-     * Must be called after the animation is completed.
-     */
-    private suspend fun activateSecondaryPage(component: ScaffoldComponent) {
-        component.onActivate(this)
-
-        if (!component.permanent) {
-            delay(component.resetDelay)
-            isSettledOnSecondaryPage = false
-            currentOffset = Offset.Zero
-            component.onPreDismiss(this)
-            component.onDismiss(this)
-            currentGesture = null
-            unlock()
-        } else {
-            config.homeComponent.onDismiss(this)
-            homePageSearchBarOffset = 0f
+            ScaffoldPage.Home -> {
+                config.homeComponent.onActivate(this@LauncherScaffoldState)
+                component.onDismiss(this@LauncherScaffoldState)
+                currentGesture = null
+                secondaryPageSearchBarOffset = 0f
+            }
         }
     }
 
@@ -997,54 +868,45 @@ internal class LauncherScaffoldState(
     suspend fun navigateToPage(gesture: Gesture) {
         currentGesture = gesture
         val anim = config[gesture]?.animation ?: return
+        val component = config[gesture]!!.component
 
-        prepareSecondaryPage()
+        transitionToPage(ScaffoldPage.Secondary, component) {
+            if (anim == ScaffoldAnimation.Rubberband) {
+                val targetOffset = when (gesture) {
+                    Gesture.SwipeLeft -> Offset(-rubberbandThreshold, 0f)
+                    Gesture.SwipeRight -> Offset(rubberbandThreshold, 0f)
+                    Gesture.SwipeUp -> Offset(0f, -rubberbandThreshold)
+                    Gesture.SwipeDown -> Offset(0f, rubberbandThreshold)
+                    else -> Offset.Zero
+                }
 
-        if (anim == ScaffoldAnimation.Rubberband) {
-            val targetOffset = when (gesture) {
-                Gesture.SwipeLeft -> Offset(-rubberbandThreshold, 0f)
-                Gesture.SwipeRight -> Offset(rubberbandThreshold, 0f)
-                Gesture.SwipeUp -> Offset(0f, -rubberbandThreshold)
-                Gesture.SwipeDown -> Offset(0f, rubberbandThreshold)
-                else -> Offset.Zero
+                animateOffset3DTo(currentOffset3D.copy(x = targetOffset.x, y = targetOffset.y))
+                isSettledOnSecondaryPage = true
+                animateOffset3DTo(currentOffset3D.copy(x = 0f, y = 0f))
+            } else {
+                val targetOffset = when (gesture) {
+                    Gesture.SwipeLeft -> Offset(-size.width, 0f)
+                    Gesture.SwipeRight -> Offset(size.width, 0f)
+                    Gesture.SwipeUp -> Offset(0f, -size.height)
+                    Gesture.SwipeDown -> Offset(0f, size.height)
+                    else -> Offset.Zero
+                }
+                animateOffset3DTo(currentOffset3D.copy(x = targetOffset.x, y = targetOffset.y))
+                isSettledOnSecondaryPage = true
             }
-
-            offsetAnimatable.snapTo(currentOffset)
-            offsetAnimatable.animateTo(targetOffset) {
-                currentOffset = this.value
-            }
-            isSettledOnSecondaryPage = true
-            offsetAnimatable.animateTo(Offset.Zero) {
-                currentOffset = this.value
-            }
-        } else {
-            val targetOffset = when (gesture) {
-                Gesture.SwipeLeft -> Offset(-size.width, 0f)
-                Gesture.SwipeRight -> Offset(size.width, 0f)
-                Gesture.SwipeUp -> Offset(0f, -size.height)
-                Gesture.SwipeDown -> Offset(0f, size.height)
-                else -> Offset.Zero
-            }
-            offsetAnimatable.snapTo(currentOffset)
-            offsetAnimatable.animateTo(targetOffset) {
-                currentOffset = this.value
-            }
-            isSettledOnSecondaryPage = true
         }
-        activateSecondaryPage(config[gesture]!!.component)
     }
 
     suspend fun reset() {
         isSearchBarFocused = false
-        currentOffset = Offset.Zero
-        currentZOffset = 0f
+        currentOffset3D = Offset3D.Zero
         unlock()
         isSettledOnSecondaryPage = false
 
         currentComponent?.let {
-            it.onPreDismiss(this)
-            config.homeComponent.onPreActivate(this)
-            deactivateSecondaryPage(it)
+            transitionToPage(ScaffoldPage.Home, it) {
+                // No extra animation required on reset.
+            }
         }
     }
 

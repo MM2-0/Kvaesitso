@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.scaffold
+package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import android.annotation.SuppressLint
 import android.view.RoundedCorner
@@ -29,8 +29,8 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
-import kotlinx.coroutines.delay
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -38,9 +38,6 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val globalActionService: GlobalActionsService by inject()
-
-    override val permanent: Boolean
-        get() = !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)
 
     override val showSearchBar: Boolean = false
 
@@ -69,7 +66,7 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
         }
     }
 
-    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+    override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.openRecents()
@@ -78,7 +75,7 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
 
     override suspend fun onActivate(state: LauncherScaffoldState) {
         super.onActivate(state)
-        state.navigateBack(true)
+        state.navigateBack()
     }
 
     @SuppressLint("ModifierFactoryExtensionFunction")

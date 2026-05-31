@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="menu_share_store_link">%1$s link</string>
-    <string name="menu_uninstall">Verwijderen</string>
+    <string name="menu_uninstall">De-installeren</string>
     <string name="menu_favorites_pin">Toevoegen aan favorieten</string>
     <string name="menu_favorites_unpin">Verwijderen uit favorieten</string>
     <string name="menu_back">Terug</string>
@@ -263,12 +263,12 @@
     <string name="preference_blur_wallpaper_summary">Vervaag de achtergrond</string>
     <string name="preference_blur_wallpaper_unsupported">Niet ondersteund op dit apparaat</string>
     <string name="preference_wallpaper_summary">Kies een achtergrond</string>
-    <string name="preference_category_badges">Badges</string>
+    <string name="preference_category_badges">Eretekens</string>
     <string name="preference_notification_badges">Meldingsstipjes</string>
     <string name="preference_notification_badges_summary">Toon een badge voor applicaties met ongelezen meldingen</string>
     <string name="preference_suspended_badges_summary">Toon een badge voor uitgesloten applicaties</string>
     <string name="preference_suspended_badges">Uitgesloten applicaties</string>
-    <string name="preference_cloud_badges">Cloud badges</string>
+    <string name="preference_cloud_badges">Cloud eretekens</string>
     <string name="preference_cloud_badges_summary">Toon een badge voor bestanden in de cloud</string>
     <string name="preference_shortcut_badges">Snelkoppelingbadges</string>
     <string name="preference_shortcut_badges_summary">Toon een badge om te tonen tot welke applicatie een snelkoppeling behoort</string>
@@ -555,7 +555,7 @@
     <string name="clock_style_digital1">Vet</string>
     <string name="location_closed">Gesloten</string>
     <string name="poi_category_fast_food">Fast food</string>
-    <string name="poi_category_bar">Café</string>
+    <string name="poi_category_bar">Kroeg</string>
     <string name="poi_category_cafe">Koffiehuis</string>
     <string name="poi_category_hotel">Hotel</string>
     <string name="poi_category_supermarket">Supermarkt</string>
@@ -566,12 +566,12 @@
     <string name="poi_category_pharmacy">Apotheek</string>
     <string name="poi_category_hospital">Ziekenhuis</string>
     <string name="poi_category_post_office">Postkantoor</string>
-    <string name="poi_category_pub">Café</string>
+    <string name="poi_category_pub">Pub</string>
     <string name="poi_category_doctors">Dokters</string>
     <string name="poi_category_police">Politie</string>
     <string name="poi_category_dentist">Tandarts</string>
     <string name="poi_category_library">Bibliotheek</string>
-    <string name="poi_category_ice_cream">IJsverkoper</string>
+    <string name="poi_category_ice_cream">IJssalon</string>
     <string name="poi_category_theater">Theater</string>
     <string name="poi_category_cinema">Bioscoop</string>
     <string name="poi_category_university">Universiteit</string>
@@ -597,7 +597,7 @@
     <string name="location_opens">Gaat open om %1$s</string>
     <string name="preference_search_locations">Plaatsen</string>
     <string name="preference_mdy_color_source">Kleuren om vanaf Android 12 te gebruiken voor Material You kleurenschema\'s: wat het systeem voorstelt of de eigen kleurextractie uit de achtergrond van Kvaesitso</string>
-    <string name="preference_mdy_color_source_system">Material You kleuren van het OS gebruiken</string>
+    <string name="preference_mdy_color_source_system">Material You systeemkleuren gebruiken</string>
     <string name="preference_mdy_color_source_wallpaper">Material You kleuren uit de achtergrond halen. Dit is de standaardinstelling op Android 11 en lager, maar kan ook aangezet worden op Android 12 en hoger voor compatibiliteit</string>
     <string name="widget_use_theme_colors">Themakleur gebruiken</string>
     <string name="poi_category_restaurant">Restaurant</string>
@@ -624,7 +624,7 @@
     <string name="menu_navigation">Navigatie</string>
     <string name="menu_bugreport">Foutrapport</string>
     <string name="plugin_state_error">Deze plug-in werkt niet correct</string>
-    <string name="plugin_state_setup_required">Je moet deze plug-in eerst instellen</string>
+    <string name="plugin_state_setup_required">Je moet eerst deze plug-in instellen</string>
     <string name="plugin_action_setup">Instellen</string>
     <string name="plugin_type_filesearch">Bestanden</string>
     <string name="plugin_type_weather">Aanbieder van weergegevens</string>
@@ -692,7 +692,7 @@
     <string name="poi_category_martial_arts">Vechtsporten</string>
     <string name="poi_category_golf">Golfbaan</string>
     <string name="poi_category_gymnastics">Gymnastiek</string>
-    <string name="poi_category_ice_hockey">IJshockey ijsbaan</string>
+    <string name="poi_category_ice_hockey">IJshockeybaan</string>
     <string name="poi_category_baseball">Honkbalveld</string>
     <string name="poi_category_american_football">Amerikaans voetbalveld</string>
     <string name="poi_category_handball">Handbalveld</string>
@@ -705,7 +705,7 @@
     <string name="poi_category_townhall">Gemeentehuis</string>
     <string name="preference_search_osm_locations">OpenStreetMap</string>
     <string name="poi_category_church">Kerk</string>
-    <string name="poi_category_burger_restaurant">Burger restaurant</string>
+    <string name="poi_category_burger_restaurant">Hamburgerrestaurant</string>
     <string name="poi_category_discount_store">Kortingwinkel</string>
     <string name="poi_category_cricket">Cricketveld</string>
     <string name="poi_category_monument">Monument</string>

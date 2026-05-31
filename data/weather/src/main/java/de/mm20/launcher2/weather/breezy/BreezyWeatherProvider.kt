@@ -102,14 +102,14 @@ class BreezyWeatherProvider(
     private fun iconForId(id: Int): WeatherIcon {
         return when (id) {
             800 -> WeatherIcon.Clear
-            801 -> WeatherIcon.PartlyCloudy
-            803 -> WeatherIcon.Overcast
+            801, 802, 803 -> WeatherIcon.PartlyCloudy
+            804 -> WeatherIcon.Overcast
             500 -> WeatherIcon.Rain
             600 -> WeatherIcon.Snow
             771 -> WeatherIcon.Wind
             741 -> WeatherIcon.Fog
-            751 -> WeatherIcon.Haze
-            611 -> WeatherIcon.Sleet
+            721, 751 -> WeatherIcon.Haze
+            611, 616 -> WeatherIcon.Sleet
             511 -> WeatherIcon.Hail
             210 -> WeatherIcon.Thunderstorm
             211 -> WeatherIcon.Thunderstorm
@@ -117,18 +117,18 @@ class BreezyWeatherProvider(
         }
     }
 
-    private fun textForId(id: Int): String? {
+    private fun textForId(id: Int): String {
         val resId = when (id) {
             800 -> R.string.weather_condition_clearsky
-            801 -> R.string.weather_condition_partlycloudy
-            803 -> R.string.weather_condition_cloudy
+            801, 802, 803 -> R.string.weather_condition_partlycloudy
+            804 -> R.string.weather_condition_cloudy
             500 -> R.string.weather_condition_rain
             600 -> R.string.weather_condition_snow
             771 -> R.string.weather_condition_wind
             741 -> R.string.weather_condition_fog
-            751 -> R.string.weather_condition_haze
-            611 -> R.string.weather_condition_sleet
-            511 -> R.string.weather_condition_hail
+            721, 751 -> R.string.weather_condition_haze
+            616 -> R.string.weather_condition_sleet
+            611 -> R.string.weather_condition_hail
             210 -> R.string.weather_condition_thunder
             211 -> R.string.weather_condition_thunderstorm
             else -> R.string.weather_condition_unknown

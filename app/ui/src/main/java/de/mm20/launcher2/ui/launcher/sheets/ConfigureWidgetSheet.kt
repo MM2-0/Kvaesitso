@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -866,7 +865,7 @@ fun ColumnScope.ConfigureCalendarWidget(
         calendars?.any { it.types.contains(CalendarListType.Tasks) } == true
     }
 
-    AnimatedVisibility(hasTasks) {
+    if (hasTasks) {
         OutlinedCard {
             Column(
                 modifier = Modifier.fillMaxWidth()

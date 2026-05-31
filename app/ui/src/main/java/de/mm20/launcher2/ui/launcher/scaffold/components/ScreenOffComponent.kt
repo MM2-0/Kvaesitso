@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.scaffold
+package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
@@ -21,21 +21,19 @@ import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import kotlinx.coroutines.delay
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.time.Duration.Companion.milliseconds
 
 internal object ScreenOffComponent : ScaffoldComponent(), KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val globalActionService: GlobalActionsService by inject()
 
-    override val permanent: Boolean
-        get() = !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)
-
     override val showSearchBar: Boolean = false
-
-    override val resetDelay: Long = 1000L
 
     override val drawBackground: Boolean = false
 
@@ -95,7 +93,7 @@ internal object ScreenOffComponent : ScaffoldComponent(), KoinComponent {
             .alpha(1f - (state.currentProgress * 0.1f)) then defaultModifier
     }
 
-    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+    override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.lockScreen()
@@ -106,6 +104,9 @@ internal object ScreenOffComponent : ScaffoldComponent(), KoinComponent {
         super.onActivate(state)
         if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             state.navigateBack(true)
+        } else {
+            delay(500.milliseconds)
+            state.reset()
         }
     }
 }

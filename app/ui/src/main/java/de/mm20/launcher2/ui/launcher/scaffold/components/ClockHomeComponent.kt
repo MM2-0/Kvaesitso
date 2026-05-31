@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.scaffold
+package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -7,6 +7,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 
 internal object ClockHomeComponent : ScaffoldComponent() {

@@ -33,8 +33,8 @@ android {
         applicationId = "de.mm20.launcher2"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026041400
-        versionName = "1.40.1"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026053100
+        versionName = "1.40.2"
         signingConfig = signingConfigs.getByName("debug")
     }
 

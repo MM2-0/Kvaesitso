@@ -77,6 +77,7 @@ import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.widgets.AppWidget
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 @Composable
 fun WatchFaceSelector(
@@ -630,6 +631,7 @@ private fun ResizeCustomWidget(
                 minHeight = minHeight,
                 maxWidth = maxWidth,
                 maxHeight = if (compact) 64.dp else Dp.Unspecified,
+                snapToMeasuredWidth = true,
                 onResize = { w, h ->
                     resizeWidth = w
                     resizeHeight = h
@@ -637,7 +639,7 @@ private fun ResizeCustomWidget(
                 onResizeStopped = {
                     onChange(
                         style.copy(
-                            width = resizeWidth.value.toInt(),
+                            width = resizeWidth.takeIf { it != Dp.Unspecified }?.value?.roundToInt(),
                             height = resizeHeight.value.toInt()
                         )
                     )

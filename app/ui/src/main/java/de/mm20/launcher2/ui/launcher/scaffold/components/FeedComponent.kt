@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.scaffold
+package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.LocalActivity
@@ -32,6 +32,7 @@ import de.mm20.launcher2.feed.FeedService
 import de.mm20.launcher2.preferences.feed.FeedSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toIntOffset
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import kotlinx.coroutines.flow.flowOf
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -40,8 +41,6 @@ internal object FeedComponent : ScaffoldComponent(), KoinComponent {
 
     private val feedSettings: FeedSettings by inject()
     private val feedService: FeedService by inject()
-
-    override val permanent: Boolean = true
 
     override val survivesPause: Boolean = true
 
@@ -185,7 +184,7 @@ internal object FeedComponent : ScaffoldComponent(), KoinComponent {
             .alpha(1f - state.currentProgress)
     }
 
-    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+    override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
         this.state.intValue = 2
     }
@@ -200,7 +199,7 @@ internal object FeedComponent : ScaffoldComponent(), KoinComponent {
         this.state.intValue = 0
     }
 
-    override suspend fun onPreDismiss(state: LauncherScaffoldState) {
+    override fun onPreDismiss(state: LauncherScaffoldState) {
         super.onPreDismiss(state)
         this.state.intValue = 1
     }

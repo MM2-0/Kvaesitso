@@ -70,4 +70,13 @@ class SearchUiSettings internal constructor(
         }
     }
 
+    val showAppDetails
+        get() = launcherDataStore.data.map { it.appsShowDetails }.distinctUntilChanged()
+
+    fun setShowAppDetails(showAppDetails: Boolean) {
+        launcherDataStore.update {
+            it.copy(appsShowDetails = showAppDetails)
+        }
+    }
+
 }

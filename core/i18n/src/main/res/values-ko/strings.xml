@@ -481,4 +481,5 @@
     <string name="poi_category_bakery">빵집</string>
     <string name="preference_hidden_items_summary">숨긴 앱 및 검색 결과 관리</string>
     <string name="preference_hidden_items">숨긴 검색 결과</string>
+    <string name="missing_permission_call_contacts_settings">전화를 걸기 위해 전화 권한이 필요합니다.</string>
 </resources>

@@ -22,6 +22,7 @@ fun AppSearchSettingsScreen() {
     val viewModel = viewModel<AppSearchSettingsScreenVM>()
 
     val allApps by viewModel.allApps.collectAsStateWithLifecycle()
+    val showAppDetails by viewModel.showAppDetails.collectAsStateWithLifecycle()
     val showList by viewModel.showList.collectAsStateWithLifecycle()
     val showListIcons by viewModel.showListIcons.collectAsStateWithLifecycle()
 
@@ -37,6 +38,14 @@ fun AppSearchSettingsScreen() {
                     value = allApps == true,
                     onValueChanged = {
                         viewModel.setAllApps(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_apps_show_details),
+                    summary = stringResource(R.string.preference_search_apps_show_details_summary),
+                    value = showAppDetails == true,
+                    onValueChanged = {
+                        viewModel.setHideAppDetails(it)
                     }
                 )
             }

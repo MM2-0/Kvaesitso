@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.scaffold
+package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -42,6 +42,7 @@ import de.mm20.launcher2.preferences.WidgetScreenTarget
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import kotlinx.coroutines.launch

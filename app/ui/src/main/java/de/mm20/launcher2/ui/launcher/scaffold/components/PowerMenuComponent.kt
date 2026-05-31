@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.scaffold
+package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import android.annotation.SuppressLint
 import android.view.Surface
@@ -38,6 +38,7 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -46,9 +47,6 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val globalActionService: GlobalActionsService by inject()
-
-    override val permanent: Boolean
-        get() = !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)
 
     override val showSearchBar: Boolean = false
 
@@ -165,7 +163,7 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
         }
     }
 
-    override suspend fun onPreActivate(state: LauncherScaffoldState) {
+    override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.openPowerDialog()
@@ -174,9 +172,7 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
 
     override suspend fun onActivate(state: LauncherScaffoldState) {
         super.onActivate(state)
-        if (!permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
-            state.navigateBack(true)
-        }
+        state.navigateBack(true)
     }
 
     @SuppressLint("ModifierFactoryExtensionFunction")

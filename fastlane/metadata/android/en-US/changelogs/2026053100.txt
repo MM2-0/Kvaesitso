@@ -1,0 +1,4 @@
+- Fix blank weather icons when using Breezy as provider
+- Fix gestures not working after double tap to sleep
+- Add option to hide app details in app context menu (thanks to @Electromagneticradiation)
+- Fix importing theme files

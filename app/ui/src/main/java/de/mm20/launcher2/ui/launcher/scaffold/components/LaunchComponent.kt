@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.scaffold
+package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -14,13 +14,14 @@ import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.component.FakeSplashScreen
 import de.mm20.launcher2.ui.ktx.toIntOffset
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 internal class LaunchComponent(
     private val activity: Activity,
     private val searchable: SavableSearchable,
 ): ScaffoldComponent() {
-    override val permanent: Boolean = false
-    override val resetDelay: Long = 500L
     override val showSearchBar = false
 
     override val isAtTop: State<Boolean?> = mutableStateOf(true)
@@ -50,6 +51,9 @@ internal class LaunchComponent(
         )
 
         searchable.launch(activity, options.toBundle())
+
+        delay(500.milliseconds)
+        state.reset()
     }
 
     override fun homePageModifier(

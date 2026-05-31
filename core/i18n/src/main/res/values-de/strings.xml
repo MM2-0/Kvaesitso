@@ -928,4 +928,6 @@
     <string name="gesture_action_widgets_new">Neue Widget-Seite</string>
     <string name="gesture_action_widgets_empty">Leer</string>
     <string name="gesture_action_launch_select_app">App oder Shortcut auswählen</string>
+    <string name="preference_search_apps_show_details">App-Informationen anzeigen</string>
+    <string name="preference_search_apps_show_details_summary">Version und Paketnamen einer App in ihrem Kontext-Menü anzeigen</string>
 </resources>
