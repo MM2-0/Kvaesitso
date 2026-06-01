@@ -911,4 +911,6 @@
     <string name="gesture_action_widgets_new">新增小工具頁面</string>
     <string name="gesture_action_widgets_empty">沒有小工具</string>
     <string name="gesture_action_launch_select_app">選擇應用程式或捷徑</string>
+    <string name="preference_search_apps_show_details">顯示應用程式資訊</string>
+    <string name="preference_search_apps_show_details_summary">顯示應用程式的版本與套件名稱</string>
 </resources>
