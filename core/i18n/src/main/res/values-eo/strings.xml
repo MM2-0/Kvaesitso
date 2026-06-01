@@ -35,4 +35,6 @@
     <string name="owncloud_password">Pasvorto</string>
     <string name="date_tomorrow">Morgaŭo</string>
     <string name="weather_condition_unknown">Nekonata</string>
+    <string name="preference_search_apps_show_details_summary"></string>
+    <string name="preference_search_files"></string>
 </resources>
