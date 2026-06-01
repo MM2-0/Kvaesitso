@@ -939,4 +939,6 @@
     <string name="gesture_action_widgets_new">Nová stránka s widgety</string>
     <string name="gesture_action_widgets_empty">Prázdné</string>
     <string name="gesture_action_launch_select_app">Vyberte aplikaci nebo zkratku</string>
+    <string name="preference_search_apps_show_details">Zobrazit informace o aplikaci</string>
+    <string name="preference_search_apps_show_details_summary">Zobrazit verzi a název balíčku aplikace v její kontextové nabídce</string>
 </resources>
