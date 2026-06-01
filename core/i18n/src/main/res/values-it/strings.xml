@@ -939,4 +939,6 @@
     <string name="gesture_action_widgets_new">Nuova pagina widget</string>
     <string name="gesture_action_widgets_empty">Vuoto</string>
     <string name="gesture_action_launch_select_app">Seleziona app o scorciatoia</string>
+    <string name="preference_search_apps_show_details_summary">Visualizza la versione e il nome del pacchetto di un\'app nel suo menu contestuale</string>
+    <string name="preference_search_apps_show_details">Mostra informazioni app</string>
 </resources>
