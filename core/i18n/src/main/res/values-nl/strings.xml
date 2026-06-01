@@ -928,4 +928,6 @@
     <string name="gesture_action_widgets_new">Nieuwe widgetpagina</string>
     <string name="gesture_action_widgets_empty">Leeg</string>
     <string name="gesture_action_launch_select_app">Applicatie of snelkoppeling kiezen</string>
+    <string name="preference_search_apps_show_details_summary">Versie-informatie en pakketnaam van een applicatie tonen in het contextmenu</string>
+    <string name="preference_search_apps_show_details">Applicatie-informatie tonen</string>
 </resources>
