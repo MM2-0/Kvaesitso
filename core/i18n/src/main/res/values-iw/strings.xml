@@ -937,6 +937,6 @@
     <string name="gesture_action_category_apps">יישומים וקיצורי-דרך</string>
     <string name="gesture_action_category_system">פעולות מערכת</string>
     <string name="gesture_action_category_launcher">דפי המשגר (לאונצ\'ר)</string>
-    <string name="preference_search_apps_show_details_summary">הצג גרסה ושם חבילה של יישומון בתפריט ההקשר שלו</string>
-    <string name="preference_search_apps_show_details">הצג מידע על יישומון</string>
+    <string name="preference_search_apps_show_details_summary">הצגת הגרסה ושם החבילה של יישום בתפריט ההקשר שלו</string>
+    <string name="preference_search_apps_show_details">הצגת מידע על היישום</string>
 </resources>
