@@ -22,6 +22,7 @@ import de.mm20.launcher2.widgets.CalendarWidgetConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -199,28 +200,36 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         }
     }
 
-    suspend fun onActive() {
-        selectDate(LocalDate.now())
-        widgetConfig.collectLatest { config ->
-            calendarRepository.findMany(
-                from = System.currentTimeMillis(),
-                to = System.currentTimeMillis() + 14 * 24 * 60 * 60 * 1000L,
-                excludeAllDayEvents = !config.allDayEvents,
-                excludeCalendars = config.excludedCalendarIds ?: config.legacyExcludedCalendarIds?.map { "local:$it" } ?: emptyList(),
-            ).collectLatest { events ->
-                searchableRepository.getKeys(
-                    includeTypes = listOf("calendar", "tasks.org", "plugin.calendar"),
-                    maxVisibility = VisibilityLevel.SearchOnly,
-                    limit = 9999,
-                ).collectLatest { hidden ->
-                    upcomingEvents = events
-                        .filter {
-                            !hidden.contains(it.key) && !(!config.completedTasks && it.isCompleted == true)
-                        }.sortedBy { it.startTime ?: it.endTime }
+    init {
+        // Subscribe once, viewModel-scoped, so home-press resume does not tear down and
+        // re-subscribe to the calendar flow. Re-subscribing causes a brief empty emission
+        // that wipes calendarEvents and produces a visible blank flash on every resume
+        // (regression observed since v1.39.0; upstream issue #1777).
+        viewModelScope.launch {
+            widgetConfig.collectLatest { config ->
+                calendarRepository.findMany(
+                    from = System.currentTimeMillis(),
+                    to = System.currentTimeMillis() + 14 * 24 * 60 * 60 * 1000L,
+                    excludeAllDayEvents = !config.allDayEvents,
+                    excludeCalendars = config.excludedCalendarIds ?: config.legacyExcludedCalendarIds?.map { "local:$it" } ?: emptyList(),
+                ).collectLatest { events ->
+                    searchableRepository.getKeys(
+                        includeTypes = listOf("calendar", "tasks.org", "plugin.calendar"),
+                        maxVisibility = VisibilityLevel.SearchOnly,
+                        limit = 9999,
+                    ).collectLatest { hidden ->
+                        upcomingEvents = events
+                            .filter {
+                                !hidden.contains(it.key) && !(!config.completedTasks && it.isCompleted == true)
+                            }.sortedBy { it.startTime ?: it.endTime }
+                    }
                 }
             }
-
         }
+    }
+
+    fun onActive() {
+        selectDate(LocalDate.now())
     }
 
     fun requestCalendarPermission(context: AppCompatActivity) {
