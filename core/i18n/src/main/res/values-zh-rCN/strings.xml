@@ -917,4 +917,6 @@
     <string name="preference_calendar_system_primary">主历制</string>
     <string name="preference_calendar_system_secondary">第二历制</string>
     <string name="preference_category_donate">支持开发</string>
+    <string name="preference_search_apps_show_details">显示应用信息</string>
+    <string name="preference_search_apps_show_details_summary">在上下文菜单中显示应用的版本与包名</string>
 </resources>
