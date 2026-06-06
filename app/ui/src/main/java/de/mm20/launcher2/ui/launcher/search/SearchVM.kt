@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.search
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -91,7 +92,11 @@ class SearchVM : ViewModel(), KoinComponent {
         combine(it.map { profileManager.getProfileState(it) }) {
             it.toList()
         }
-    }
+    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+
+    val visibleProfiles = combine(profiles, profileStates) { profs, states ->
+        profs.filterIndexed { i, _ -> states.getOrNull(i)?.hidden != true }
+    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 
     val hasProfilesPermission = permissionsManager.hasPermission(PermissionGroup.ManageProfiles)
 
@@ -143,8 +148,28 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val bestMatch = mutableStateOf<Searchable?>(null)
 
+    val selectedAppProfileIndex = mutableIntStateOf(0)
+
     init {
         search("", forceRestart = true)
+
+        /*
+        * Handle clearing the search query when the user changes the private space
+        * lock from the search action chip
+        */
+        viewModelScope.launch {
+            var prevPrivateLocked: Boolean? = null
+            combine(profiles, profileStates) { profiles, states -> profiles to states }
+                .collect { (profiles, states) ->
+                    val privateIdx = profiles.indexOfFirst { it.type == Profile.Type.Private }
+                    val isLocked = states.getOrNull(privateIdx)?.locked
+                    if (prevPrivateLocked != null && isLocked != null && prevPrivateLocked != isLocked && searchQuery.value.isNotEmpty()) {
+                        search("")
+                        if (!isLocked) selectedAppProfileIndex.intValue = privateIdx
+                    }
+                    prevPrivateLocked = isLocked
+                }
+        }
     }
 
     fun launchBestMatchOrAction(context: Context) {
