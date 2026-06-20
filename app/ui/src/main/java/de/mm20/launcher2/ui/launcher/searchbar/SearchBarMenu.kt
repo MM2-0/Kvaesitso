@@ -90,7 +90,10 @@ fun RowScope.SearchBarMenu(
                 DropdownMenuItem(
                     shape = MenuDefaults.middleItemShape,
                     onClick = {
-                        context.startActivity(Intent(context, SettingsActivity::class.java))
+                        context.startActivity(
+                            Intent(context, SettingsActivity::class.java)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
                         showOverflowMenu = false
                     },
                     text = {

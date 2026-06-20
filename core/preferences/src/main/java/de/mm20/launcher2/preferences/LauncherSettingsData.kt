@@ -409,6 +409,10 @@ sealed interface GestureAction {
     @Serializable
     @SerialName("feed")
     data object Feed : GestureAction
+
+    @Serializable
+    @SerialName("launcher_settings")
+    data object LauncherSettings : GestureAction
 }
 
 

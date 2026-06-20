@@ -47,22 +47,23 @@ import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.launcher.scaffold.Gesture
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffold
+import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldAnimation
+import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldConfiguration
+import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldGesture
+import de.mm20.launcher2.ui.launcher.scaffold.SearchBarPosition
 import de.mm20.launcher2.ui.launcher.scaffold.components.ClockAndWidgetsHomeComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.ClockHomeComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.DismissComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.FeedComponent
-import de.mm20.launcher2.ui.launcher.scaffold.Gesture
 import de.mm20.launcher2.ui.launcher.scaffold.components.LaunchComponent
-import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffold
+import de.mm20.launcher2.ui.launcher.scaffold.components.LauncherSettingsComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.NotificationsComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.PowerMenuComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.QuickSettingsComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.RecentsComponent
-import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldAnimation
-import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldConfiguration
-import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldGesture
 import de.mm20.launcher2.ui.launcher.scaffold.components.ScreenOffComponent
-import de.mm20.launcher2.ui.launcher.scaffold.SearchBarPosition
 import de.mm20.launcher2.ui.launcher.scaffold.components.SearchComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.SecretComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.WidgetsComponent
@@ -215,7 +216,7 @@ abstract class SharedLauncherActivity(
                         OverlayHost(
                             modifier = Modifier
                                 .background(
-                                    if (dimBackground && darkTheme) Color( 0f, 0f, 0f, 0.3f)
+                                    if (dimBackground && darkTheme) Color(0f, 0f, 0f, 0.3f)
                                     else Color.Transparent
                                 )
                                 .fillMaxSize(),
@@ -294,7 +295,9 @@ abstract class SharedLauncherActivity(
                                                     null
                                                 } else {
                                                     ScaffoldGesture(
-                                                        component = WidgetsComponent.forTarget(action.target),
+                                                        component = WidgetsComponent.forTarget(
+                                                            action.target
+                                                        ),
                                                         animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                                     )
                                                 }
@@ -334,6 +337,11 @@ abstract class SharedLauncherActivity(
                                                     this@SharedLauncherActivity,
                                                     searchable
                                                 ),
+                                                animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                            )
+
+                                            is GestureAction.LauncherSettings -> ScaffoldGesture(
+                                                component = LauncherSettingsComponent(this@SharedLauncherActivity),
                                                 animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                             )
 

@@ -275,6 +275,15 @@ internal fun GesturePreference(
                                 )
                             }
                             GestureItem(
+                                title = stringResource(R.string.settings),
+                                icon = R.drawable.settings_24px,
+                                selected = value is GestureAction.LauncherSettings,
+                                onClick = {
+                                    onValueChanged(GestureAction.LauncherSettings, null)
+                                    showSheet = false
+                                }
+                            )
+                            GestureItem(
                                 title = stringResource(R.string.gesture_action_launch_select_app),
                                 icon = R.drawable.action_key_24px,
                                 selected = false,
@@ -402,6 +411,7 @@ private fun getActionLabel(
         GestureAction.Recents -> resources.getString(R.string.gesture_action_recents)
         GestureAction.ScreenLock -> resources.getString(R.string.gesture_action_lock_screen)
         GestureAction.Search -> resources.getString(R.string.gesture_action_open_search)
+        GestureAction.LauncherSettings -> resources.getString(R.string.settings)
         is GestureAction.Widgets -> {
             when (action.target) {
                 WidgetScreenTarget.Widgets1 -> resources.getString(R.string.gesture_action_widgets)
