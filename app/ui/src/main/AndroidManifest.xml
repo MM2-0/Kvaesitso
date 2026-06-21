@@ -62,7 +62,7 @@
             android:exported="true"
             android:label="@string/settings"
             android:launchMode="singleTop"
-            android:parentActivityName=".launcher.LauncherActivity"
+            android:taskAffinity="${applicationId}.settings"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:enableOnBackInvokedCallback="true"
             >
