@@ -74,7 +74,7 @@ internal object QuickSettingsComponent : ScaffoldComponent(), KoinComponent {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painterResource(R.drawable.settings_24px), null,
+                    painterResource(R.drawable.dashboard_2_24px), null,
                     modifier = Modifier.padding(16.dp),
                     tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 )

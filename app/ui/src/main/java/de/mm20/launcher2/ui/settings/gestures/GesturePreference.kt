@@ -215,7 +215,7 @@ internal fun GesturePreference(
                             if (options.contains(GestureAction.QuickSettings::class)) {
                                 GestureItem(
                                     title = stringResource(R.string.gesture_action_quick_settings),
-                                    icon = R.drawable.settings_24px,
+                                    icon = R.drawable.dashboard_2_24px,
                                     selected = value is GestureAction.QuickSettings,
                                     onClick = {
                                         onValueChanged(GestureAction.QuickSettings, null)
