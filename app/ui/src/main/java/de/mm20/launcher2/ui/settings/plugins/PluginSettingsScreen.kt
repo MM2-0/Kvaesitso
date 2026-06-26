@@ -46,6 +46,7 @@ import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
+import de.mm20.launcher2.ui.component.preferences.MainSwitchPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
@@ -56,7 +57,7 @@ import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PluginSettingsRoute(val pluginId: String): NavKey
+data class PluginSettingsRoute(val pluginId: String) : NavKey
 
 @Composable
 fun PluginSettingsScreen(pluginId: String) {
@@ -262,27 +263,23 @@ fun PluginSettingsScreen(pluginId: String) {
                 modifier = Modifier.padding(horizontal = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                PreferenceCategory {
-                    SwitchPreference(
-                        enabled = pluginPackage != null && hasPermission != null,
-                        iconPadding = false,
-                        title = stringResource(R.string.preference_plugin_enable),
-                        value = pluginPackage?.enabled == true && hasPermission == true,
-                        onValueChanged = {
-                            if (hasPermission == true) {
-                                viewModel.setPluginEnabled(it)
-                            } else {
-                                requestPermissionStarter.launch(
-                                    Intent().apply {
-                                        `package` = pluginPackage?.packageName
-                                        action = "de.mm20.launcher2.plugin.REQUEST_PERMISSION"
-                                    }
-                                )
-                            }
-                        },
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
-                    )
-                }
+                MainSwitchPreference(
+                    enabled = pluginPackage != null && hasPermission != null,
+                    title = stringResource(R.string.preference_plugin_enable),
+                    value = pluginPackage?.enabled == true && hasPermission == true,
+                    onValueChanged = {
+                        if (hasPermission == true) {
+                            viewModel.setPluginEnabled(it)
+                        } else {
+                            requestPermissionStarter.launch(
+                                Intent().apply {
+                                    `package` = pluginPackage?.packageName
+                                    action = "de.mm20.launcher2.plugin.REQUEST_PERMISSION"
+                                }
+                            )
+                        }
+                    },
+                )
                 AnimatedVisibility(pluginPackage?.enabled == true && hasPermission == true) {
                     Column(
                         modifier = Modifier.verticalScroll(rememberScrollState())
@@ -526,9 +523,11 @@ fun PluginSettingsScreen(pluginId: String) {
                                             },
                                             iconPadding = false,
                                             onClick = {
-                                                backStack.add(CalendarProviderSettingsRoute(
-                                                    providerId = plugin.plugin.authority
-                                                ))
+                                                backStack.add(
+                                                    CalendarProviderSettingsRoute(
+                                                        providerId = plugin.plugin.authority
+                                                    )
+                                                )
                                             }
                                         )
                                     }
