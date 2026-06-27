@@ -58,6 +58,7 @@ class CurrencyRepository(
             "ARS",
             "CLP",
             "COP",
+            "CUP",
             "DOP",
             "MXN",
             "UYU",
@@ -79,9 +80,15 @@ class CurrencyRepository(
         put("¥", if (ownCurrency == "CNY") "CNY" else "JPY")
         put("₩", if (ownCurrency == "KPW") "KPW" else "KRW")
 
-        put("kr", if (ownCurrency == "NOK") "NOK" else "SEK")
-        put("kr.", "DKK")
-        put("Kr", "ISK")
+        if (ownCurrency == "NOK" || ownCurrency == "SEK" || ownCurrency == "DKK" || ownCurrency == "ISK") {
+            put("kr", ownCurrency)
+            put("kr.", ownCurrency)
+            put("Kr", ownCurrency)
+        } else {
+            put("kr", "SEK")
+            put("kr.", "DKK")
+            put("Kr", "ISK")
+        }
 
         put("zł", "PLN")
         put("Kč", "CZK")
@@ -90,11 +97,11 @@ class CurrencyRepository(
         put("Ft", "HUF")
 
         put("₪", "ILS")
-        put("TL", "TRY")
+        put("₺", "TRY")
 
         put("R$", "BRL")
 
-        put("₱", if (ownCurrency == "CUP") "CUP" else "PHP")
+        put("₱", "PHP")
         put("฿", "THB")
         put("₹", "INR")
 
