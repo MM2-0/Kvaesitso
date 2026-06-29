@@ -16,6 +16,7 @@ import java.util.Currency as JCurrency
 
 class CurrencyConverter(
     private val repository: CurrencyRepository,
+    private val preferredCurrencies: List<String>,
 ) : Converter {
 
     override val dimension: Dimension = Dimension.Currency
@@ -88,23 +89,15 @@ class CurrencyConverter(
             )
         }.toMutableList()
 
-        val ownCurrencySymbol = JCurrency.getInstance(Locale.getDefault()).currencyCode ?: "USD"
-        val index = values.indexOfFirst { it.symbol == ownCurrencySymbol }
-
-        val ownCurrency = if (index != -1) {
-            values.removeAt(index)
-        } else {
-            null
+        val ownCurrencySymbols = preferredCurrencies.ifEmpty {
+            listOf(JCurrency.getInstance(Locale.getDefault()).currencyCode ?: "USD")
         }
+        val topCurrencies = ownCurrencySymbols + topCurrencies
 
         values.sortBy {
             val i = topCurrencies.indexOf(it.symbol)
-            if (i != -1) i.toString()
-            else it.formattedName
-        }
-
-        if (ownCurrency != null) {
-            values.add(0, ownCurrency)
+            if (i != -1) return@sortBy ("000$i").takeLast(4)
+            it.formattedName
         }
 
         val inputValue = UnitValue(

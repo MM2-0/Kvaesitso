@@ -20,6 +20,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -67,7 +68,7 @@ internal class UnitConverterRepositoryImpl(
             TemperatureConverter(context),
             VolumeConverter(context),
         )
-        if (includeCurrencies) converters.add(CurrencyConverter(currencyRepository))
+        if (includeCurrencies) converters.add(CurrencyConverter(currencyRepository, settings.preferredCurrencies.first()))
 
         return converters
     }
