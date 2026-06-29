@@ -441,7 +441,7 @@
     <string name="widget_config_calendar_no_calendars">Nem található naptár</string>
     <string name="widget_config_music_integration_settings">Médiavezérlő-integráció beállításai</string>
     <string name="note_widget_link_file">Hivatkozás a fájlra</string>
-    <string name="theme_color_scheme_system_default">Rendszer alapértelmezésének használata</string>
+    <string name="preference_use_system_default">Rendszer alapértelmezésének használata</string>
     <string name="theme_color_scheme_autogenerate">Az elsődleges színből</string>
     <string name="shortcut_unavailable_description">Ez a parancsikon nem érhető el, mert a(z) %1$s nem az alapértelmezett indító</string>
     <string name="restore_different_minor_version">Ez a biztonsági mentés a(z) %1$s egy másik verziójával készült. Előfordulhat, hogy egyes adatok nem lesznek helyesen visszaállítva.</string>

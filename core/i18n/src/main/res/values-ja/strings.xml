@@ -198,7 +198,7 @@
     <string name="preference_screen_integrations_summary">接続されたアカウントとサービスを管理</string>
     <string name="preference_clockwidget_layout_vertical">デフォルト</string>
     <string name="preference_screen_clockwidget_summary">時計のスタイルとコンポーネントを設定</string>
-    <string name="theme_color_scheme_system_default">システムのデフォルトを使用</string>
+    <string name="preference_use_system_default">システムのデフォルトを使用</string>
     <string name="preference_screen_search_summary">検索、タグ、非表示のアイテム</string>
     <string name="preference_screen_plugins">プラグイン</string>
     <string name="preference_screen_homescreen">ホーム画面</string>

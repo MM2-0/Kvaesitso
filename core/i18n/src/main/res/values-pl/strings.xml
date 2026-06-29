@@ -477,7 +477,7 @@
     <string name="location_closed">Zamknięte</string>
     <string name="file_type_launchertheme">%1$s temat</string>
     <string name="clock_style_segment">7-segmentów</string>
-    <string name="theme_color_scheme_system_default">Użyj domyślnych ustawień systemowych</string>
+    <string name="preference_use_system_default">Użyj domyślnych ustawień systemowych</string>
     <string name="preference_mdy_color_source_system">System</string>
     <string name="preference_mdy_color_source">Źródło dynamicznych kolorów</string>
     <string name="preference_mdy_color_source_wallpaper">Tapeta</string>

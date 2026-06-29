@@ -558,7 +558,7 @@
     <string name="preference_debug_dump_heap_in_progress">Capture de l\'instant…</string>
     <string name="preference_category_animations">Animations</string>
     <string name="preference_charging_animation_summary">Animer des bulles pendant que l\'appareil est en charge</string>
-    <string name="theme_color_scheme_system_default">Utiliser la valeur par défaut du système</string>
+    <string name="preference_use_system_default">Utiliser la valeur par défaut du système</string>
     <string name="theme_color_scheme_autogenerate">A partir de la couleur principale</string>
     <string name="theme_color_scheme_custom_color">Couleur personnalisée</string>
     <string name="preference_charging_animation">Animation de chargement</string>

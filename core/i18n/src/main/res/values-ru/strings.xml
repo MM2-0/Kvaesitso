@@ -534,7 +534,7 @@
     <string name="preference_plugin_badges_summary">Указывать, каким плагином был создан результат поиска</string>
     <string name="preference_clock_widget_alignment">Расположить</string>
     <string name="search_action_websearch">Веб-поиск</string>
-    <string name="theme_color_scheme_system_default">Системный цвет</string>
+    <string name="preference_use_system_default">Системный цвет</string>
     <string name="theme_color_scheme_autogenerate">Из первичного цвета</string>
     <string name="theme_color_scheme_palette_color">Палитра</string>
     <string name="theme_color_scheme_custom_color">Выбор</string>

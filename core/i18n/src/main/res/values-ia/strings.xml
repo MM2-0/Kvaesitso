@@ -113,7 +113,7 @@
     <string name="edit">Modificar</string>
     <string name="preference_category_location">Location</string>
     <string name="preference_category_debug">Depuration</string>
-    <string name="theme_color_scheme_system_default">Usar le predefinite del systema</string>
+    <string name="preference_use_system_default">Usar le predefinite del systema</string>
     <string name="websearch_dialog_advanced">Avantiate</string>
     <string name="notes_widget_action_save">Salveguardar</string>
     <string name="turn_off">Disactivar</string>

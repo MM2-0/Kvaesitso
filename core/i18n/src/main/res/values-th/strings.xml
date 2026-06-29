@@ -313,7 +313,7 @@
     <string name="note_widget_conflict_file_version">เนื้อหาปัจจุบันของไฟล์:</string>
     <string name="note_widget_file_read_error">ไม่สามารถอ่านโน้ตได้</string>
     <string name="note_widget_file_write_error">ไม่สามารถบันทึกโน้ตได้</string>
-    <string name="theme_color_scheme_system_default">ใช้ค่าเริ่มต้นของระบบ</string>
+    <string name="preference_use_system_default">ใช้ค่าเริ่มต้นของระบบ</string>
     <string name="theme_color_scheme_autogenerate">ใช้สีหลัก</string>
     <string name="theme_color_scheme_palette_color">จานสี</string>
     <string name="theme_color_scheme_custom_color">กำหนดเอง</string>

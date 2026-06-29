@@ -820,7 +820,7 @@
     <string name="confirmation_delete_typography_scheme">%1$s tipografi şemasını gerçekten silmek istiyor musunuz?</string>
     <string name="confirmation_delete_transparencies_scheme">%1$s şeffaflık şemasını gerçekten silmek istiyor musunuz?</string>
     <string name="new_theme_name">(isimsiz)</string>
-    <string name="theme_color_scheme_system_default">Sistem varsayılanını kullan</string>
+    <string name="preference_use_system_default">Sistem varsayılanını kullan</string>
     <string name="theme_color_scheme_autogenerate">Ana renkten</string>
     <string name="theme_color_scheme_palette_color">Palet</string>
     <string name="theme_color_scheme_custom_color">Özel</string>

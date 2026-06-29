@@ -217,6 +217,13 @@ data class LauncherSettingsData internal constructor(
      */
     val localeSecondaryCalendar: String? = null,
 
+    /**
+     * Preferred currencies. These currencies are listed first in the currency converters.
+     * ISO 4217 codes, e.g. "USD" for US Dollar, "EUR" for Euro, etc.
+     * If empty, the default order is determined by the system locale.
+     */
+    val localeCurrencies: List<String> = emptyList(),
+
     val feedProviderPackage: String? = null
 
 

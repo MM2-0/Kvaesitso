@@ -527,7 +527,7 @@
     <string name="plugin_type_filesearch">檔案</string>
     <string name="poi_category_mobile_phone">手機店</string>
     <string name="preference_search_locations_radius">搜尋半徑</string>
-    <string name="theme_color_scheme_system_default">使用系統預設</string>
+    <string name="preference_use_system_default">使用系統預設</string>
     <string name="unavailable_searchable">此項目已不存在</string>
     <string name="poi_category_post_office">郵局</string>
     <string name="poi_category_gallery">畫廊</string>

@@ -163,13 +163,15 @@ fun SearchActionsSettingsScreen() {
             ) {
                 Row(
                     modifier = Modifier
-                        .padding(start = 28.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
                 ) {
                     Icon(
                         painterResource(R.drawable.info_20px), null,
                         modifier = Modifier
-                            .padding(end = 24.dp)
+                            .padding(end = 12.dp)
                             .size(16.dp),
                         tint = MaterialTheme.colorScheme.secondary
                     )

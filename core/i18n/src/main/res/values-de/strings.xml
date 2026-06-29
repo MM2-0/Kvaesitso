@@ -526,7 +526,7 @@
     <string name="preference_debug_dump_heap_in_progress">Abbild wird erstellt…</string>
     <string name="preference_debug_dump_heap">Speicherabbild</string>
     <string name="theme_color_scheme_palette_color">Palette</string>
-    <string name="theme_color_scheme_system_default">Systemstandard verwenden</string>
+    <string name="preference_use_system_default">Systemstandard verwenden</string>
     <string name="theme_color_scheme_autogenerate">Aus Primärfarbe</string>
     <string name="theme_color_scheme_custom_color">Benutzerdefiniert</string>
     <string name="edit">Bearbeiten</string>

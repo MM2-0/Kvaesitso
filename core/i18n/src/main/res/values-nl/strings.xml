@@ -526,7 +526,7 @@
     <string name="preference_debug_dump_heap_in_progress">Bezig met nemen van momentopname…</string>
     <string name="theme_color_scheme_palette_color">Palet</string>
     <string name="theme_color_scheme_custom_color">Aangepast</string>
-    <string name="theme_color_scheme_system_default">Systeemstandaard gebruiken</string>
+    <string name="preference_use_system_default">Systeemstandaard gebruiken</string>
     <string name="theme_color_scheme_autogenerate">Van primaire kleur</string>
     <string name="confirmation_delete_color_scheme">Ben je zeker dat je kleurenschema %1$s wil verwijderen\?</string>
     <string name="preference_category_animations">Animaties</string>

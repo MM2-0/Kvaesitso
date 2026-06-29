@@ -530,7 +530,7 @@
     <string name="preference_debug_dump_heap_in_progress">Catturando uno snapshot…</string>
     <string name="preference_custom_colors_corepalette">Tavolozza colori</string>
     <string name="theme_color_scheme_autogenerate">Dal colore primario</string>
-    <string name="theme_color_scheme_system_default">Predefinita del sistema</string>
+    <string name="preference_use_system_default">Predefinita del sistema</string>
     <string name="theme_color_scheme_palette_color">Tavolozza</string>
     <string name="theme_color_scheme_custom_color">Personalizza</string>
     <string name="preference_category_animations">Animazioni</string>

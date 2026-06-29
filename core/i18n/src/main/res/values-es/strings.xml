@@ -526,7 +526,7 @@
     <string name="note_widget_file_write_error_description">No se ha podido escribir la nota al archivo vinculado. Se ha restaurado una copia desde el almacenamiento interno del lanzador</string>
     <string name="file_type_launchertheme">Tema de %1$s</string>
     <string name="preference_debug_dump_heap_summary">Captura una instantánea para analizar el uso de memoria. La app se congelará hasta que el proceso se complete.</string>
-    <string name="theme_color_scheme_system_default">Usar el predeterminado del sistema</string>
+    <string name="preference_use_system_default">Usar el predeterminado del sistema</string>
     <string name="preference_clock_widget_alignment">Alineación</string>
     <string name="preference_restore_default">Restaurar predeterminado</string>
     <string name="search_action_websearch">Búsqueda web</string>

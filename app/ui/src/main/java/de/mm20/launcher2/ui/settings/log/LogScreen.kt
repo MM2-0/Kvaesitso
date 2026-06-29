@@ -121,27 +121,6 @@ fun LogScreen() {
             }
         },
         verticalArrangement = Arrangement.spacedBy(2.dp),
-        floatingActionButton = {
-            AnimatedVisibility(
-                listState.canScrollForward,
-                enter = scaleIn(),
-                exit = scaleOut(),
-            ) {
-                SmallFloatingActionButton(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                    onClick = {
-                    scope.launch {
-                        listState.animateScrollToItem(lines.lastIndex)
-                    }
-                }) {
-                    Icon(
-                        painterResource(R.drawable.arrow_downward_24px),
-                        null,
-                    )
-                }
-            }
-        },
         lazyColumnState = listState,
     ) {
         itemsIndexed(lines) { i, it ->

@@ -25,10 +25,13 @@ class UnitConverterSettings internal constructor(
         dataStore.update { it.copy(unitConverterEnabled = enabled) }
     }
 
-    val currencies: Flow<Boolean>
+    val currenciesEnabled: Flow<Boolean>
         get() = dataStore.data.map { it.unitConverterCurrencies }.distinctUntilChanged()
 
-    fun setCurrencies(currencies: Boolean) {
+    fun setCurrenciesEnabled(currencies: Boolean) {
         dataStore.update { it.copy(unitConverterCurrencies = currencies) }
     }
+
+    val preferredCurrencies: Flow<List<String>>
+        get() = dataStore.data.map { it.localeCurrencies }.distinctUntilChanged()
 }

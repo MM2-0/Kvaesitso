@@ -476,7 +476,7 @@
     <string name="note_widget_action_unlink_file">إلغاء الربط</string>
     <string name="note_widget_file_read_error_description">تعذر قراءة الملف المرتبط. تم استعادة نسخة منه من وحدة التخزين الداخلية للمشغل. إذا قمت بتعديل الملاحظة، فمن المحتمل أن يتم استبدال الملف المرتبط</string>
     <string name="note_widget_file_write_error">خطأ في حفظ الملاحظة</string>
-    <string name="theme_color_scheme_system_default">استخدام النظام الافتراضي</string>
+    <string name="preference_use_system_default">استخدام النظام الافتراضي</string>
     <string name="plugin_type_weather">مقدم خدمة الطقس</string>
     <string name="plugin_weather_provider_enable">تعيين كموفر للطقس</string>
     <string name="clock_style_empty">بدون ساعة</string>

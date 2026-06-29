@@ -648,6 +648,7 @@
     <string name="preference_search_currencyconverter">Currency converter</string>
     <string name="preference_search_currencyconverter_summary">Periodically download exchange rates to convert currencies</string>
     <string name="preference_search_supportedunits">Supported units</string>
+    <string name="preference_currency_settings">Currency settings</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Search the free encyclopedia</string>
     <string name="preference_search_websites">Websites</string>
@@ -864,7 +865,7 @@
     <string name="confirmation_delete_typography_scheme">Do you really want to delete the typography scheme %1$s?</string>
     <string name="confirmation_delete_transparencies_scheme">Do you really want to delete the transparency scheme %1$s?</string>
     <string name="new_theme_name">(untitled)</string>
-    <string name="theme_color_scheme_system_default">Use system default</string>
+    <string name="preference_use_system_default">Use system default</string>
     <string name="theme_color_scheme_autogenerate">From primary color</string>
     <string name="theme_color_scheme_palette_color">Palette</string>
     <string name="theme_color_scheme_custom_color">Custom</string>
@@ -1108,6 +1109,8 @@
     <string name="preference_calendar_system">Calendar system</string>
     <string name="preference_calendar_system_primary">Primary calendar</string>
     <string name="preference_calendar_system_secondary">Secondary calendar</string>
+    <string name="preference_currencies">Currencies</string>
+    <string name="preference_add_currency">Add currency</string>
     <string name="select_tag">Select tag</string>
     <string name="create_tag_title">New tag</string>
     <string name="edit_tag_title">Edit tag</string>

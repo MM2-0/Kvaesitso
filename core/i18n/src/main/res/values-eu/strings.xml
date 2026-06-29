@@ -485,7 +485,7 @@
     <string name="note_widget_file_write_error">Errorea oharra gordetzean</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Pertsonalizatua</string>
-    <string name="theme_color_scheme_system_default">Sistemaren lehenetsia erabili</string>
+    <string name="preference_use_system_default">Sistemaren lehenetsia erabili</string>
     <string name="confirmation_delete_color_scheme">Benetan %1$s kolore-eskema ezabatu nahi duzu\?</string>
     <string name="edit">Editatu</string>
     <string name="preference_restore_default">Lehenetsia berrezarri</string>

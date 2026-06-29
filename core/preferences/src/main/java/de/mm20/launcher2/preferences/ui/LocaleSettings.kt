@@ -53,4 +53,13 @@ class LocaleSettings internal constructor(
             it.copy(localeSecondaryCalendar = secondaryCalendar)
         }
     }
+
+    val currencies
+        get() = launcherDataStore.data.map { it.localeCurrencies.distinct() }
+
+     fun setCurrencies(currencies: List<String>) {
+         launcherDataStore.update {
+             it.copy(localeCurrencies = currencies.distinct())
+         }
+     }
 }

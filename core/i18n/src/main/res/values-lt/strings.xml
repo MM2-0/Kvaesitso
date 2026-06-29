@@ -551,7 +551,7 @@
     <string name="note_widget_file_write_error">Nepavyko išsaugoti ūžrašo</string>
     <string name="note_widget_file_write_error_description">Ūžrašas buvo neįrašytas į nuorodos failą. Galimai perkeltas at ištrintas. Kopija yra išsaugota į paleidėjo atmintį.</string>
     <string name="confirmation_delete_color_scheme">Ar tikrai norite ištrinti spalvų schema %1$s\?</string>
-    <string name="theme_color_scheme_system_default">Naudokite sistemos numatyta spalva</string>
+    <string name="preference_use_system_default">Naudokite sistemos numatyta spalva</string>
     <string name="shortcut_label_unavailable">Nepasiekemas</string>
     <string name="shortcut_unavailable_description">Nuoroda nepasiekiama ,nes %1$s nėra numatytoji namų programėlė</string>
     <string name="location_open">Atidarytas</string>

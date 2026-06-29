@@ -528,7 +528,7 @@
     <string name="preference_search_bar_style_summary">Personalitza l\'aparença de la barra de cerca</string>
     <string name="preference_search_bar_launch_on_enter_summary">Llança el resultat de la cerca o executa un acció ràpida prement \"go\"</string>
     <string name="preference_widgets_edit_button_summary">Mostra un botó per afegir, eliminar i reorganitzar ginys</string>
-    <string name="theme_color_scheme_system_default">Sistema predeterminat</string>
+    <string name="preference_use_system_default">Sistema predeterminat</string>
     <string name="theme_color_scheme_autogenerate">Colors primaris</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Personalitzat</string>

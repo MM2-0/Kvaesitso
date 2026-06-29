@@ -752,7 +752,7 @@
     <string name="theme_color_scheme_autogenerate">מהצבע הראשי</string>
     <string name="new_theme_name">(ללא כותרת)</string>
     <string name="theme_color_scheme_palette_color">לוח צבעים (Palette)</string>
-    <string name="theme_color_scheme_system_default">שימוש בברירת המחדל של המערכת</string>
+    <string name="preference_use_system_default">שימוש בברירת המחדל של המערכת</string>
     <string name="import_theme_apply">החלת ערכת נושא</string>
     <string name="import_theme_exists">ערכת הנושא כבר קיימת ותעודכן</string>
     <string name="import_theme_error">לא ניתן היה לקרוא את הקובץ הנבחר. נא לוודא שבחרת קובץ ערכת נושא תקין ‪(*.kvtheme)‬, ושהקובץ לא פגום.</string>

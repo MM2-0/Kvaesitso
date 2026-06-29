@@ -511,7 +511,7 @@
     <string name="confirmation_delete_color_scheme">Haluatko varmasti poistaa värikaavion %1$s\?</string>
     <string name="widget_config_music_integration_settings">Mediaohjaimen integraatioiden asetukset</string>
     <string name="note_widget_conflict_local_version">Viimeisin tallennettu versio:</string>
-    <string name="theme_color_scheme_system_default">Käytä järjestelmän oletusta</string>
+    <string name="preference_use_system_default">Käytä järjestelmän oletusta</string>
     <string name="theme_color_scheme_autogenerate">Luo pääväristä</string>
     <string name="theme_color_scheme_palette_color">Paletti</string>
     <string name="theme_color_scheme_custom_color">Mukautettu</string>

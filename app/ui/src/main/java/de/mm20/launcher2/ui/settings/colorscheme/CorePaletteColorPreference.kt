@@ -93,7 +93,7 @@ fun CorePaletteColorPreference(
         ) {
             SwitchPreference(
                 icon = R.drawable.rule_settings_24px,
-                title = stringResource(R.string.theme_color_scheme_system_default),
+                title = stringResource(R.string.preference_use_system_default),
                 value = currentValue == null,
                 onValueChanged = {
                     currentValue = if (it) null else defaultValue

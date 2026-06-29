@@ -30,4 +30,6 @@ class LocaleSettingsScreenVM : ViewModel(), KoinComponent {
     val calendars = combine(localeSettings.primaryCalendar, localeSettings.secondaryCalendar) {
         it.toImmutableList()
     }
+
+    val currencies = localeSettings.currencies
 }

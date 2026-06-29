@@ -556,7 +556,7 @@
     <string name="preference_category_advanced">Avançado</string>
     <string name="theme_color_scheme_custom_color">Personalizado</string>
     <string name="preference_signout">Desconectar</string>
-    <string name="theme_color_scheme_system_default">Usar o padrão do sistema</string>
+    <string name="preference_use_system_default">Usar o padrão do sistema</string>
     <string name="theme_color_scheme_palette_color">Palheta</string>
     <string name="action_import">Importar</string>
     <string name="location_closes">Fecha às %1$s</string>
