@@ -1109,7 +1109,7 @@
     <string name="preference_calendar_system">Calendar system</string>
     <string name="preference_calendar_system_primary">Primary calendar</string>
     <string name="preference_calendar_system_secondary">Secondary calendar</string>
-    <string name="preference_currencies">Currencies</string>
+    <string name="preference_currencies">Currency</string>
     <string name="preference_add_currency">Add currency</string>
     <string name="select_tag">Select tag</string>
     <string name="create_tag_title">New tag</string>
