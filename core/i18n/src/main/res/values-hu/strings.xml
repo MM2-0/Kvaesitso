@@ -930,4 +930,7 @@
     <string name="gesture_action_launch_select_app">Alkalmazás vagy parancsikon kiválasztása</string>
     <string name="preference_search_apps_show_details">Alkalmazás adatainak megjelenítése</string>
     <string name="preference_search_apps_show_details_summary">Az alkalmazás verziójának és csomagjának megjelenítése a helyi menüben</string>
+    <string name="preference_currency_settings">Pénznem-beállítások</string>
+    <string name="preference_currencies">Pénznemek</string>
+    <string name="preference_add_currency">Pénznem hozzáadása</string>
 </resources>
