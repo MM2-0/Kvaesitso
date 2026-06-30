@@ -930,4 +930,7 @@
     <string name="gesture_action_launch_select_app">Applicatie of snelkoppeling kiezen</string>
     <string name="preference_search_apps_show_details_summary">Versie-informatie en pakketnaam van een applicatie tonen in het contextmenu</string>
     <string name="preference_search_apps_show_details">Applicatie-informatie tonen</string>
+    <string name="preference_add_currency">Munteenheid toevoegen</string>
+    <string name="preference_currency_settings">Instellingen voor munteenheden</string>
+    <string name="preference_currencies">Munteenheden</string>
 </resources>
