@@ -26,6 +26,8 @@ interface Application: SavableSearchable {
         get() = false
     val user: UserHandle
     val versionName: String?
+    val firstInstallTime: Long
+        get() = 0L
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
