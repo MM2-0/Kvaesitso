@@ -931,6 +931,6 @@
     <string name="preference_search_apps_show_details">App-Informationen anzeigen</string>
     <string name="preference_search_apps_show_details_summary">Version und Paketnamen einer App in ihrem Kontext-Menü anzeigen</string>
     <string name="preference_currency_settings">Währungseinstellungen</string>
-    <string name="preference_currencies">Währungen</string>
+    <string name="preference_currencies">Währung</string>
     <string name="preference_add_currency">Währung hinzufügen</string>
 </resources>
