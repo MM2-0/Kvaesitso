@@ -762,6 +762,9 @@
     <string name="search_action_contact">Add to contacts</string>
     <string name="search_action_open_url">View website</string>
     <string name="search_action_event">Schedule event</string>
+    <string name="search_action_private_space">Private space</string>
+    <string name="search_action_private_space_lock">Lock private space</string>
+    <string name="search_action_private_space_unlock">Unlock private space</string>
     <string name="create_search_action_title">New quick action</string>
     <string name="edit_search_action_title">Edit quick action</string>
     <string name="create_search_action_type">What type of action do you want to create?</string>

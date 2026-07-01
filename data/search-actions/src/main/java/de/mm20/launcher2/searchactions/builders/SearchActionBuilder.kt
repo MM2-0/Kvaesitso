@@ -71,6 +71,7 @@ interface SearchActionBuilder {
                 "website" -> return OpenUrlActionBuilder(context)
                 "websearch" -> return WebsearchActionBuilder(context)
                 "share" -> return ShareActionBuilder(context)
+                "private_space" -> return PrivateSpaceLockActionBuilder(context)
                 else -> return null
             }
         }

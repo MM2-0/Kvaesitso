@@ -8,6 +8,7 @@ import de.mm20.launcher2.database.entities.SearchActionEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.searchactions.builders.CallActionBuilder
 import de.mm20.launcher2.searchactions.builders.CreateContactActionBuilder
+import de.mm20.launcher2.searchactions.builders.PrivateSpaceLockActionBuilder
 import de.mm20.launcher2.searchactions.builders.EmailActionBuilder
 import de.mm20.launcher2.searchactions.builders.MessageActionBuilder
 import de.mm20.launcher2.searchactions.builders.OpenUrlActionBuilder
@@ -60,6 +61,7 @@ internal class SearchActionRepositoryImpl(
             OpenUrlActionBuilder(context),
             WebsearchActionBuilder(context),
             ShareActionBuilder(context),
+            PrivateSpaceLockActionBuilder(context),
         )
 
         return allActions
