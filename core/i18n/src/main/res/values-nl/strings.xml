@@ -932,5 +932,5 @@
     <string name="preference_search_apps_show_details">Applicatie-informatie tonen</string>
     <string name="preference_add_currency">Munteenheid toevoegen</string>
     <string name="preference_currency_settings">Instellingen voor munteenheden</string>
-    <string name="preference_currencies">Munteenheden</string>
+    <string name="preference_currencies">Munteenheid</string>
 </resources>
