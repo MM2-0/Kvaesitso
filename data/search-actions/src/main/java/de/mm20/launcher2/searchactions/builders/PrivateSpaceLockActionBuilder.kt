@@ -15,7 +15,7 @@ class PrivateSpaceLockActionBuilder(
     override val label: String,
 ) : SearchActionBuilder {
 
-    constructor(context: Context) : this(context.getString(R.string.search_action_private_space))
+    constructor(context: Context) : this(context.getString(R.string.search_query_private_space))
 
     override val key = "private_space"
     override val icon = SearchActionIcon.PrivateSpace
@@ -23,7 +23,7 @@ class PrivateSpaceLockActionBuilder(
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction? {
         if (!isAtLeastApiLevel(35)) return null
 
-        val keyword = context.getString(R.string.search_action_private_space).lowercase()
+        val keyword = context.getString(R.string.search_query_private_space).lowercase()
         val score = ResultScore.from(
             query = classifiedQuery.text.lowercase(),
             primaryFields = listOf(keyword),
