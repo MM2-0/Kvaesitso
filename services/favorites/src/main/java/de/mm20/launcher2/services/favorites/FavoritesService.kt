@@ -1,18 +1,13 @@
 package de.mm20.launcher2.services.favorites
 
-import de.mm20.launcher2.profiles.ProfileManager
-import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchable.PinnedLevel
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.searchable.VisibilityLevel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
 
 class FavoritesService(
     private val searchableRepository: SavableSearchableRepository,
-    private val profileManager: ProfileManager,
 ) {
     fun getFavorites(
         includeTypes: List<String>? = null,
@@ -21,23 +16,14 @@ class FavoritesService(
         maxPinnedLevel: PinnedLevel = PinnedLevel.ManuallySorted,
         limit: Int = 100,
     ): Flow<List<SavableSearchable>> {
-        return profileManager.activeProfiles.flatMapLatest {
-            combine(
-                searchableRepository.get(
-                    includeTypes = includeTypes,
-                    excludeTypes = excludeTypes,
-                    minPinnedLevel = minPinnedLevel,
-                    maxPinnedLevel = maxPinnedLevel,
-                    limit = Int.MAX_VALUE,
-                    minVisibility = VisibilityLevel.SearchOnly,
-                ),
-                profileManager.hiddenPrivateSpaceUser,
-            ) { items, hiddenUser ->
-                val filtered = if (hiddenUser == null) items
-                    else items.filter { it !is Application || it.user != hiddenUser }
-                filtered.take(limit)
-            }
-        }
+        return searchableRepository.get(
+            includeTypes = includeTypes,
+            excludeTypes = excludeTypes,
+            minPinnedLevel = minPinnedLevel,
+            maxPinnedLevel = maxPinnedLevel,
+            limit = limit,
+            minVisibility = VisibilityLevel.SearchOnly,
+        )
     }
 
     fun isPinned(searchable: SavableSearchable): Flow<Boolean> {
