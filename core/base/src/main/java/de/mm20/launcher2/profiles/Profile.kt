@@ -41,6 +41,7 @@ data class Profile(
 
     data class State(
         val locked: Boolean = false,
+        val hidden: Boolean = false,
     )
 
     companion object {

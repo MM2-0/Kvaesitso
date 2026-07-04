@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.LauncherApps
+import android.content.pm.LauncherUserInfo
 import android.os.Process
 import android.os.UserHandle
 import android.os.UserManager
@@ -69,6 +70,11 @@ class ProfileManager(
 
     val profiles: Flow<List<Profile>> = profileStates.map {
         it.mapNotNull { it?.profile }
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
+
+    val hiddenPrivateSpaceUser: Flow<UserHandle?> = profileStates.map { profiles ->
+        val private = profiles[2]
+        if (private?.state?.hidden == true) private.profile.userHandle else null
     }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
 
     init {
@@ -164,9 +170,16 @@ class ProfileManager(
     }
 
     private fun getProfileState(userHandle: UserHandle): Profile.State {
-        return Profile.State(
-            locked = !userManager.isUserUnlocked(userHandle),
-        )
+        val locked = !userManager.isUserUnlocked(userHandle)
+        val hidden = if (isAtLeastApiLevel(36) && locked) {
+            launcherApps.getLauncherUserInfo(userHandle)
+                ?.getUserConfig()
+                ?.getBoolean(LauncherUserInfo.PRIVATE_SPACE_ENTRYPOINT_HIDDEN, false)
+                ?: false
+        } else {
+            false
+        }
+        return Profile.State(locked = locked, hidden = hidden)
     }
 
     @RequiresApi(28)

@@ -34,7 +34,8 @@ enum class SearchActionIcon(private val value: Int) {
     Music(19),
     Game(20),
     Note(21),
-    Share(22);
+    Share(22),
+    PrivateSpace(23);
     fun toInt(): Int {
         return value
     }
