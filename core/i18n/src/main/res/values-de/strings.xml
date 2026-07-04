@@ -933,4 +933,5 @@
     <string name="preference_currency_settings">Währungseinstellungen</string>
     <string name="preference_currencies">Währung</string>
     <string name="preference_add_currency">Währung hinzufügen</string>
+    <string name="search_query_private_space">Vertrauliches Profil</string>
 </resources>
