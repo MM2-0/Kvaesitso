@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.coil.core)
 
     implementation(project(":core:base"))
+    implementation(project(":core:profiles"))
     implementation(project(":data:database"))
     implementation(project(":core:ktx"))
     implementation(project(":core:preferences"))

@@ -145,10 +145,25 @@ class ProfileManager(
         }
     }
 
+    /**
+     * Returns the profile of the given type, or null if it doesn't exist.
+     */
+    fun getProfile(profileType: Profile.Type): Profile? {
+        return when (profileType) {
+            Profile.Type.Personal -> profileStates.value[0]?.profile
+            Profile.Type.Work -> profileStates.value[1]?.profile
+            Profile.Type.Private -> profileStates.value[2]?.profile
+        }
+    }
+
     fun getProfileState(profile: Profile?): Flow<Profile.State?> {
         return profileStates.map { profiles ->
             profiles.find { it?.profile == profile }?.state
         }
+    }
+
+    fun getProfileStateOnce(profile: Profile?): Profile.State? {
+        return profileStates.value.find { it?.profile == profile }?.state
     }
 
     private fun getProfileType(userHandle: UserHandle): Profile.Type {
