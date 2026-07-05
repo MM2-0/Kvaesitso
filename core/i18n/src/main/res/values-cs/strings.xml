@@ -941,4 +941,10 @@
     <string name="gesture_action_launch_select_app">Vyberte aplikaci nebo zkratku</string>
     <string name="preference_search_apps_show_details">Zobrazit informace o aplikaci</string>
     <string name="preference_search_apps_show_details_summary">Zobrazit verzi a název balíčku aplikace v její kontextové nabídce</string>
+    <string name="preference_currency_settings">Nastavení měny</string>
+    <string name="search_query_private_space">Soukromý prostor</string>
+    <string name="search_action_private_space_lock">Zamknout soukromý prostor</string>
+    <string name="search_action_private_space_unlock">Odemknout soukromý prostor</string>
+    <string name="preference_currencies">Měna</string>
+    <string name="preference_add_currency">Přidat měnu</string>
 </resources>
