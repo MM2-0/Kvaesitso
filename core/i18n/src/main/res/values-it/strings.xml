@@ -944,4 +944,7 @@
     <string name="preference_add_currency">Aggiungi valuta</string>
     <string name="preference_currency_settings">Impostazioni valuta</string>
     <string name="preference_currencies">Valuta</string>
+    <string name="search_query_private_space">Spazio privato</string>
+    <string name="search_action_private_space_lock">Blocca spazio privato</string>
+    <string name="search_action_private_space_unlock">Sblocca spazio privato</string>
 </resources>
