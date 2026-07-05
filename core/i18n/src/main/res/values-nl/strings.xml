@@ -933,4 +933,7 @@
     <string name="preference_add_currency">Munteenheid toevoegen</string>
     <string name="preference_currency_settings">Instellingen voor munteenheden</string>
     <string name="preference_currencies">Munteenheid</string>
+    <string name="search_query_private_space">Privégedeelte</string>
+    <string name="search_action_private_space_lock">Privégedeelte sluiten</string>
+    <string name="search_action_private_space_unlock">Privégedeelte openen</string>
 </resources>
