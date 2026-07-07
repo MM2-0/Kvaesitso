@@ -941,8 +941,8 @@
     <string name="preference_search_apps_show_details">הצגת מידע על היישום</string>
     <string name="preference_currency_settings">הגדרות מטבע</string>
     <string name="search_query_private_space">מרחב פרטי</string>
-    <string name="search_action_private_space_lock">נעל מרחב פרטי</string>
-    <string name="search_action_private_space_unlock">הסר נעילת מרחב פרטי</string>
-    <string name="preference_currencies">מטבע</string>
-    <string name="preference_add_currency">הוסף מטבע</string>
+    <string name="search_action_private_space_lock">נעילת המרחב הפרטי</string>
+    <string name="search_action_private_space_unlock">פתיחת הנעילה של המרחב הפרטי</string>
+    <string name="preference_currencies">סוג המטבע</string>
+    <string name="preference_add_currency">הוספת סוג מטבע</string>
 </resources>
