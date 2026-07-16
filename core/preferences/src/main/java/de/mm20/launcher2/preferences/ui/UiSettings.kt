@@ -24,6 +24,7 @@ data class GridSettings(
     val showLabels: Boolean = true,
     val showList: Boolean = false,
     val showListIcons: Boolean = true,
+    val showAlphabetScroller: Boolean = true,
 )
 
 class UiSettings internal constructor(
@@ -49,6 +50,7 @@ class UiSettings internal constructor(
                 showLabels = it.gridLabels,
                 showList = it.gridList,
                 showListIcons = it.gridListIcons,
+                showAlphabetScroller = it.gridAlphabetScroller,
                 iconSize = it.gridIconSize,
                 columnCount = it.gridColumnCount,
             )
@@ -81,6 +83,12 @@ class UiSettings internal constructor(
     fun setGridShowListIcons(showIcons: Boolean) {
         launcherDataStore.update {
             it.copy(gridListIcons = showIcons)
+        }
+    }
+
+    fun setGridShowAlphabetScroller(showAlphabetScroller: Boolean) {
+        launcherDataStore.update {
+            it.copy(gridAlphabetScroller = showAlphabetScroller)
         }
     }
 

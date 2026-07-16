@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.MaterialTheme
@@ -34,6 +33,91 @@ import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListResults
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import java.util.Locale
+import kotlin.math.ceil
+
+data class AppAlphabetJumpTarget(
+    val letter: String,
+    val relativeListIndex: Int,
+)
+
+private data class SectionedApp(
+    val app: Application,
+    val originalIndex: Int,
+)
+
+private data class AppSection(
+    val letter: String,
+    val items: List<SectionedApp>,
+)
+
+fun buildAppAlphabetJumpTargets(
+    apps: List<Application>,
+    showList: Boolean,
+    columns: Int,
+    hasBeforeItem: Boolean,
+): List<AppAlphabetJumpTarget> {
+    if (apps.isEmpty()) return emptyList()
+    val sections = buildAppSections(apps)
+    var index = 0
+    val targets = mutableListOf<AppAlphabetJumpTarget>()
+    for ((sectionIndex, section) in sections.withIndex()) {
+        targets.add(AppAlphabetJumpTarget(section.letter, index))
+        if (showList) {
+            index += 1 + section.items.size
+        } else {
+            val rows = ceil(section.items.size / columns.toFloat()).toInt()
+            index += rows + 1
+        }
+        if (sectionIndex == 0 && hasBeforeItem) {
+            // The profile tabs are part of the first section header item.
+        }
+    }
+    return targets
+}
+
+private fun buildAppSections(apps: List<Application>): List<AppSection> {
+    val sections = mutableListOf<AppSection>()
+    var currentLetter: String? = null
+    var currentItems = mutableListOf<SectionedApp>()
+    for ((index, app) in apps.withIndex()) {
+        val letter = app.labelForGrouping()
+        if (currentLetter != letter) {
+            if (currentLetter != null) {
+                sections.add(AppSection(currentLetter, currentItems))
+            }
+            currentLetter = letter
+            currentItems = mutableListOf()
+        }
+        currentItems.add(SectionedApp(app, index))
+    }
+    if (currentLetter != null) {
+        sections.add(AppSection(currentLetter, currentItems))
+    }
+    return sections
+}
+
+private fun Application.labelForGrouping(): String {
+    val source = (labelOverride ?: label).trim()
+    val firstChar = source.firstOrNull() ?: return "#"
+    if (!firstChar.isLetter()) return "#"
+    return firstChar.uppercaseChar().toString().uppercase(Locale.getDefault())
+}
+
+@Composable
+private fun AppSectionHeader(
+    letter: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = letter,
+        style = MaterialTheme.typography.labelLarge,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+    )
+}
 
 fun LazyListScope.AppResults(
     onProfileSelected: (Int) -> Unit,
@@ -49,7 +133,20 @@ fun LazyListScope.AppResults(
     columns: Int,
     reverse: Boolean,
     showList: Boolean,
+    showAlphabetScroller: Boolean = true,
 ) {
+    val visibleApps = if (isProfileLocked) emptyList() else apps
+    val sections = if (showAlphabetScroller) {
+        buildAppSections(visibleApps)
+    } else {
+        if (visibleApps.isEmpty()) emptyList()
+        else listOf(
+            AppSection(
+                letter = "",
+                items = visibleApps.mapIndexed { index, app -> SectionedApp(app, index) },
+            )
+        )
+    }
     val before = if (profiles.size > 1) {
          @Composable {
             Column(
@@ -97,10 +194,6 @@ fun LazyListScope.AppResults(
                             }
                         )
                     }
-                }
-
-                if (!showList || isProfileLocked) {
-                    HorizontalDivider()
                 }
 
                 val profileType = profiles[selectedProfileIndex].type
@@ -198,38 +291,84 @@ fun LazyListScope.AppResults(
         }
     } else null
     if (showList) {
-        ListResults(
-            key = "apps",
-            items = if (isProfileLocked) emptyList() else apps,
-            before = before?.let { { it() } },
-            selectedIndex = selectedIndex,
-            itemContent = { app, showDetails, index ->
-                ListItem(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    item = app,
-                    showDetails = showDetails,
-                    onShowDetails = { onSelect(if(it) index else -1) },
-                    highlight = highlightedItem?.key == app.key
-                )
-            },
-            reverse = reverse,
-        )
+        if (before != null) {
+            ListResults(
+                key = "apps-before",
+                items = emptyList<Application>(),
+                before = { before() },
+                reverse = reverse,
+                itemContent = { _, _, _ -> },
+            )
+        }
+        for ((sectionIndex, section) in sections.withIndex()) {
+            if (showAlphabetScroller) {
+                item(
+                    key = "apps-${section.letter}-$sectionIndex-header",
+                    contentType = { "apps-section-header" },
+                ) {
+                    AppSectionHeader(section.letter)
+                }
+            }
+            ListResults(
+                key = "apps-${section.letter}-$sectionIndex",
+                items = section.items.map { it.app },
+                selectedIndex = section.items.indexOfFirst { it.originalIndex == selectedIndex },
+                itemContent = { app, showDetails, index ->
+                    ListItem(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        item = app,
+                        showDetails = showDetails,
+                        onShowDetails = {
+                            onSelect(
+                                if (it) section.items[index].originalIndex
+                                else -1
+                            )
+                        },
+                        highlight = highlightedItem?.key == app.key
+                    )
+                },
+                reverse = reverse,
+            )
+        }
     } else {
-        GridResults(
-            key = "apps",
-            items = if (isProfileLocked) emptyList() else apps,
-            before = before,
-            itemContent = {
-                GridItem(
-                    item = it,
-                    showLabels = LocalGridSettings.current.showLabels,
-                    highlight = it.key == highlightedItem?.key
-                )
-            },
-            reverse = reverse,
-            columns = columns,
-        )
+        for ((sectionIndex, section) in sections.withIndex()) {
+            GridResults(
+                key = "apps-${section.letter}-$sectionIndex",
+                items = section.items.map { it.app },
+                before = {
+                    Column(
+                        verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top,
+                    ) {
+                        if (sectionIndex == 0) {
+                            before?.invoke()
+                        }
+                        if (showAlphabetScroller) {
+                            AppSectionHeader(section.letter)
+                        }
+                    }
+                },
+                itemContent = {
+                    GridItem(
+                        item = it,
+                        showLabels = LocalGridSettings.current.showLabels,
+                        highlight = it.key == highlightedItem?.key
+                    )
+                },
+                reverse = reverse,
+                columns = columns,
+            )
+        }
+        if (sections.isEmpty() && before != null) {
+            GridResults(
+                key = "apps-empty",
+                items = emptyList<Application>(),
+                before = before,
+                reverse = reverse,
+                columns = columns,
+                itemContent = {},
+            )
+        }
     }
 
 }

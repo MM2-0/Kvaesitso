@@ -9,6 +9,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.devicepose.DevicePoseProvider
+import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -19,6 +20,7 @@ import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.AppShortcut
@@ -43,6 +45,7 @@ import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
@@ -51,6 +54,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -63,6 +67,9 @@ class SearchVM : ViewModel(), KoinComponent {
     private val searchableRepository: SavableSearchableRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val profileManager: ProfileManager by inject()
+    private val iconService: IconService by inject()
+    private val uiSettings: UiSettings by inject()
+    private val appContext: Context by inject()
 
     private val fileSearchSettings: FileSearchSettings by inject()
     private val contactSearchSettings: ContactSearchSettings by inject()
@@ -147,6 +154,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val filterBarItems = searchFilterSettings.filterBarItems
 
     val bestMatch = mutableStateOf<Searchable?>(null)
+    private var iconPrefetchJob: Job? = null
 
     val selectedAppProfileIndex = mutableIntStateOf(0)
 
@@ -281,6 +289,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         workAppResults.updateItems(workApps)
                         privateSpaceAppResults.updateItems(privateApps)
                         hiddenResults.updateItems(hiddenItems)
+                        prefetchAppIcons((apps + workApps + privateApps).distinctBy { it.key })
                     }
 
             } else {
@@ -305,6 +314,7 @@ class SearchVM : ViewModel(), KoinComponent {
                             ?.filterNot { hiddenKeys.contains(it.key) }
                             ?.applyRanking(query)
                         )
+                        prefetchAppIcons(appResults)
                         appShortcutResults.updateItems(
                             results.shortcuts
                             ?.filterNot { hiddenKeys.contains(it.key) }
@@ -438,6 +448,26 @@ class SearchVM : ViewModel(), KoinComponent {
 
     fun expandCategory(category: SearchCategory) {
         expandedCategory.value = category
+    }
+
+    private fun prefetchAppIcons(apps: List<Application>) {
+        if (apps.isEmpty()) return
+        iconPrefetchJob?.cancel()
+        iconPrefetchJob = viewModelScope.launch(Dispatchers.Default) {
+            val iconSizeDp = uiSettings.gridSettings.first().iconSize
+            val iconSizePx = (iconSizeDp * appContext.resources.displayMetrics.density)
+                .toInt()
+                .coerceAtLeast(1)
+
+            // Warm a bounded batch to smooth first-scroll without blocking startup.
+            apps.take(320).forEach { app ->
+                runCatching {
+                    iconService.getIcon(app, iconSizePx)
+                        .filterNotNull()
+                        .first()
+                }
+            }
+        }
     }
 
     private suspend fun <T : SavableSearchable> List<T>.applyRanking(query: String): List<T> {
