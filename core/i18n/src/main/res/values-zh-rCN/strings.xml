@@ -919,4 +919,7 @@
     <string name="preference_category_donate">支持开发</string>
     <string name="preference_search_apps_show_details">显示应用信息</string>
     <string name="preference_search_apps_show_details_summary">在上下文菜单中显示应用的版本与包名</string>
+    <string name="search_query_private_space">私密空间</string>
+    <string name="search_action_private_space_lock">锁定私密空间</string>
+    <string name="search_action_private_space_unlock">解锁私密空间</string>
 </resources>
