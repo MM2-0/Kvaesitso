@@ -933,4 +933,7 @@
     <string name="preference_currency_settings">Pénznem-beállítások</string>
     <string name="preference_currencies">Pénznem</string>
     <string name="preference_add_currency">Pénznem hozzáadása</string>
+    <string name="search_query_private_space">Privát tér</string>
+    <string name="search_action_private_space_lock">Privát tér zárolása</string>
+    <string name="search_action_private_space_unlock">Privát tér feloldása</string>
 </resources>
