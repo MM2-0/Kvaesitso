@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,6 +18,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,11 +37,11 @@ import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 
 fun LazyListScope.AppResults(
-    onProfileSelected: (Int) -> Unit,
+    onProfileSelected: (Profile) -> Unit = {},
     profiles: List<Profile> = emptyList(),
-    selectedProfileIndex: Int = -1,
+    selectedProfile: Profile? = null,
+    profileStates: Map<Profile.Type, Profile.State> = emptyMap(),
     showProfileLockControls: Boolean = false,
-    isProfileLocked: Boolean = false,
     onProfileLockChange: ((Profile, Boolean) -> Unit)? = null,
     apps: List<Application>,
     selectedIndex: Int,
@@ -50,19 +51,31 @@ fun LazyListScope.AppResults(
     reverse: Boolean,
     showList: Boolean,
 ) {
+
+    val profileIndex by derivedStateOf {
+        profiles.indexOf(selectedProfile).takeIf { it >= 0 } ?: 0
+    }
+    val selectedProfileType by derivedStateOf {
+        selectedProfile?.type ?: Profile.Type.Personal
+    }
+
+    val isProfileLocked by derivedStateOf {
+        profileStates[selectedProfileType]?.locked == true
+    }
+
     val before = if (profiles.size > 1) {
          @Composable {
             Column(
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top,
             ) {
                 PrimaryScrollableTabRow(
-                    selectedTabIndex = selectedProfileIndex,
+                    selectedTabIndex = profileIndex,
                     containerColor = Color.Transparent,
                     edgePadding = 16.dp,
                     divider = {}
                 ) {
-                    for ((i, profile) in profiles.withIndex()) {
-                        val selected = selectedProfileIndex == profiles.indexOf(profile)
+                    for (profile in profiles) {
+                        val selected = profile.type == selectedProfileType
                         LeadingIconTab(
                             selected = selected,
                             text = {
@@ -93,7 +106,7 @@ fun LazyListScope.AppResults(
                                 }
                             },
                             onClick = {
-                                onProfileSelected(i)
+                                onProfileSelected(profile)
                             }
                         )
                     }
@@ -103,8 +116,7 @@ fun LazyListScope.AppResults(
                     HorizontalDivider()
                 }
 
-                val profileType = profiles[selectedProfileIndex].type
-                if (profileType != Profile.Type.Personal) {
+                if (selectedProfile != null && selectedProfile?.type != Profile.Type.Personal) {
                     if (isProfileLocked) {
                         Column(
                             modifier = Modifier
@@ -124,14 +136,14 @@ fun LazyListScope.AppResults(
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Icon(
-                                painterResource(if (profileType == Profile.Type.Work) R.drawable.enterprise_off_48px else R.drawable.lock_48px),
+                                painterResource(if (selectedProfileType == Profile.Type.Work) R.drawable.enterprise_off_48px else R.drawable.lock_48px),
                                 contentDescription = null,
                                 modifier = Modifier.size(48.dp),
                                 tint = MaterialTheme.colorScheme.secondary,
                             )
                             Text(
                                 stringResource(
-                                    if (profileType == Profile.Type.Work) R.string.profile_work_profile_state_locked
+                                    if (selectedProfileType == Profile.Type.Work) R.string.profile_work_profile_state_locked
                                     else R.string.profile_private_profile_state_locked
                                 ),
                                 modifier = Modifier.padding(top = 8.dp),
@@ -143,14 +155,14 @@ fun LazyListScope.AppResults(
                                     modifier = Modifier.padding(top = 32.dp),
                                     onClick = {
                                         onProfileLockChange?.invoke(
-                                            profiles[selectedProfileIndex],
+                                            selectedProfile!!,
                                             false
                                         )
                                     },
                                     contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
                                 ) {
                                     Icon(
-                                        painterResource(if (profileType == Profile.Type.Work) R.drawable.enterprise_20px else R.drawable.lock_open_20px),
+                                        painterResource(if (selectedProfileType == Profile.Type.Work) R.drawable.enterprise_20px else R.drawable.lock_open_20px),
                                         contentDescription = null,
                                         modifier = Modifier
                                             .padding(end = ButtonDefaults.IconSpacing)
@@ -158,7 +170,7 @@ fun LazyListScope.AppResults(
                                     )
                                     Text(
                                         stringResource(
-                                            if (profileType == Profile.Type.Work) R.string.profile_work_profile_action_unlock
+                                            if (selectedProfileType == Profile.Type.Work) R.string.profile_work_profile_action_unlock
                                             else R.string.profile_private_profile_action_unlock
                                         )
                                     )
@@ -172,14 +184,14 @@ fun LazyListScope.AppResults(
                                 .fillMaxWidth(),
                             onClick = {
                                 onProfileLockChange?.invoke(
-                                    profiles[selectedProfileIndex],
+                                    selectedProfile,
                                     true
                                 )
                             },
                             contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
                         ) {
                             Icon(
-                                painterResource(if (profileType == Profile.Type.Work) R.drawable.enterprise_off_20px else R.drawable.lock_20px),
+                                painterResource(if (selectedProfileType == Profile.Type.Work) R.drawable.enterprise_off_20px else R.drawable.lock_20px),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .padding(end = ButtonDefaults.IconSpacing)
@@ -187,7 +199,7 @@ fun LazyListScope.AppResults(
                             )
                             Text(
                                 stringResource(
-                                    if (profileType == Profile.Type.Work) R.string.profile_work_profile_action_lock
+                                    if (selectedProfileType == Profile.Type.Work) R.string.profile_work_profile_action_lock
                                     else R.string.profile_private_profile_action_lock
                                 )
                             )

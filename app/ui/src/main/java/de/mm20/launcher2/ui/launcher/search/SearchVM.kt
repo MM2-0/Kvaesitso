@@ -49,9 +49,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -84,11 +82,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val expandedCategory = mutableStateOf<SearchCategory?>(null)
 
     val profiles = profileManager.profiles
-    val profileStates = profiles.flatMapLatest {
-        combine(it.map { profileManager.getProfileState(it) }) {
-            it.toList()
-        }
-    }
+    val profileStates = profileManager.profileStates
 
     val hasProfilesPermission = permissionsManager.hasPermission(PermissionGroup.ManageProfiles)
 
@@ -140,7 +134,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val bestMatch = mutableStateOf<Searchable?>(null)
 
-    val selectedAppProfileIndex = mutableIntStateOf(0)
+    val selectedAppProfileType = mutableStateOf(Profile.Type.Personal)
 
     init {
         search("", forceRestart = true)

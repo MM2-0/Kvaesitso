@@ -16,10 +16,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -82,7 +83,7 @@ fun SearchColumn(
     val workApps = viewModel.workAppResults
     val privateApps = viewModel.privateSpaceAppResults
     val profiles by viewModel.profiles.collectAsState(emptyList())
-    val profileStates by viewModel.profileStates.collectAsState(emptyList())
+    val profileStates by viewModel.profileStates.collectAsState(emptyMap())
 
     val appShortcuts = viewModel.appShortcutResults
     val contacts = viewModel.contactResults
@@ -115,7 +116,7 @@ fun SearchColumn(
 
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
-    var selectedAppProfileIndex by viewModel.selectedAppProfileIndex
+    var selectedAppProfileIndex by remember { mutableIntStateOf(-1) }
     var selectedAppIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedContactIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedFileIndex: Int by remember(query) { mutableIntStateOf(-1) }
@@ -184,20 +185,24 @@ fun SearchColumn(
                 }
 
                 if (isSearchEmpty && profiles.size > 1 && allAppsEnabled) {
+                    val visibleProfiles by derivedStateOf {
+                        profiles.filter { profileStates[it.type]?.hidden == false }
+                    }
+                    val selectedProfile = visibleProfiles.getOrNull(selectedAppProfileIndex) ?: visibleProfiles.firstOrNull()
                     AppResults(
-                        apps = when (profiles.getOrNull(selectedAppProfileIndex)?.type) {
+                        apps = when (selectedProfile?.type) {
                             Profile.Type.Private -> privateApps
                             Profile.Type.Work -> workApps
                             else -> apps
                         },
                         highlightedItem = bestMatch as? Application,
-                        profiles = profiles,
-                        selectedProfileIndex = selectedAppProfileIndex.takeIf { it in profiles.indices } ?: 0,
+                        profiles = visibleProfiles,
+                        profileStates = profileStates,
+                        selectedProfile = visibleProfiles.getOrNull(selectedAppProfileIndex),
                         onProfileSelected = {
-                            selectedAppProfileIndex = it
+                            selectedAppProfileIndex = visibleProfiles.indexOf(it)
                             onHideKeyboard()
                         },
-                        isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true,
                         onProfileLockChange = { p, l ->
                             viewModel.setProfileLock(p, l)
                         },
@@ -212,9 +217,6 @@ fun SearchColumn(
                     AppResults(
                         apps = apps,
                         highlightedItem = bestMatch as? Application,
-                        onProfileSelected = {
-                            selectedAppProfileIndex = it
-                        },
                         columns = columns,
                         reverse = reverse,
                         showList = showList,

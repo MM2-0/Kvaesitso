@@ -57,8 +57,8 @@ class ProfileManager(
         it.values.map { it.profile }.sortedBy { it.type }
     }
 
-    val profileStates: Flow<Map<Profile, Profile.State>> = profileMap.map {
-        it.values.associate { it.profile to it.state }
+    val profileStates: Flow<Map<Profile.Type, Profile.State>> = profileMap.map {
+        it.values.associate { it.profile.type to it.state }
     }
 
     /**
