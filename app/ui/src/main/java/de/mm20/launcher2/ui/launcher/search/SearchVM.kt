@@ -83,20 +83,12 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val expandedCategory = mutableStateOf<SearchCategory?>(null)
 
-    val profiles = profileManager.profiles.shareIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        replay = 1
-    )
+    val profiles = profileManager.profiles
     val profileStates = profiles.flatMapLatest {
         combine(it.map { profileManager.getProfileState(it) }) {
             it.toList()
         }
-    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
-
-    val visibleProfiles = combine(profiles, profileStates) { profs, states ->
-        profs.filterIndexed { i, _ -> states.getOrNull(i)?.hidden != true }
-    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+    }
 
     val hasProfilesPermission = permissionsManager.hasPermission(PermissionGroup.ManageProfiles)
 
@@ -152,24 +144,6 @@ class SearchVM : ViewModel(), KoinComponent {
 
     init {
         search("", forceRestart = true)
-
-        /*
-        * Handle clearing the search query when the user changes the private space
-        * lock from the search action chip
-        */
-        viewModelScope.launch {
-            var prevPrivateLocked: Boolean? = null
-            combine(profiles, profileStates) { profiles, states -> profiles to states }
-                .collect { (profiles, states) ->
-                    val privateIdx = profiles.indexOfFirst { it.type == Profile.Type.Private }
-                    val isLocked = states.getOrNull(privateIdx)?.locked
-                    if (prevPrivateLocked != null && isLocked != null && prevPrivateLocked != isLocked && searchQuery.value.isNotEmpty()) {
-                        search("")
-                        if (!isLocked) selectedAppProfileIndex.intValue = privateIdx
-                    }
-                    prevPrivateLocked = isLocked
-                }
-        }
     }
 
     fun launchBestMatchOrAction(context: Context) {

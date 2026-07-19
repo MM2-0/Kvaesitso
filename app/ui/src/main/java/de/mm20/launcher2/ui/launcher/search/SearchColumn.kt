@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -80,7 +81,7 @@ fun SearchColumn(
     val apps = viewModel.appResults
     val workApps = viewModel.workAppResults
     val privateApps = viewModel.privateSpaceAppResults
-    val profiles by viewModel.visibleProfiles.collectAsState(emptyList())
+    val profiles by viewModel.profiles.collectAsState(emptyList())
     val profileStates by viewModel.profileStates.collectAsState(emptyList())
 
     val appShortcuts = viewModel.appShortcutResults
@@ -191,7 +192,7 @@ fun SearchColumn(
                         },
                         highlightedItem = bestMatch as? Application,
                         profiles = profiles,
-                        selectedProfileIndex = selectedAppProfileIndex,
+                        selectedProfileIndex = selectedAppProfileIndex.takeIf { it in profiles.indices } ?: 0,
                         onProfileSelected = {
                             selectedAppProfileIndex = it
                             onHideKeyboard()

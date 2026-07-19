@@ -28,7 +28,7 @@ class PrivateSpaceLockActionBuilder(
         if (!isAtLeastApiLevel(35)) return null
 
         val privateProfile = profileManager.getProfile(Profile.Type.Private) ?: return null
-        val profileState = profileManager.getProfileStateOnce(privateProfile) ?: return null
+        val profileState = profileManager.getCurrentProfileState(privateProfile) ?: return null
 
         val keyword = context.getString(R.string.search_query_private_space).lowercase()
         val score = ResultScore.from(

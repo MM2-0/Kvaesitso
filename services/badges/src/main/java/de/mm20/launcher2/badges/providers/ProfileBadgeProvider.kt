@@ -26,7 +26,7 @@ class ProfileBadgeProvider : BadgeProvider, KoinComponent {
         }
         if (userHandle != null) {
             emitAll(
-                profileManager.getProfile(userHandle).map {
+                profileManager.getProfileByUserHandle(userHandle).map {
                     when (it?.type) {
                         Profile.Type.Work -> WorkProfile
                         Profile.Type.Private -> PrivateProfile

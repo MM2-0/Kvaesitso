@@ -20,10 +20,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -48,29 +46,29 @@ class ProfileManager(
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
-    /**
-     * An array of exactly 3 profiles with their states.
-     * - Index 0: Personal profile
-     * - Index 1: Work profile
-     * - Index 2: Private profile
-     *
-     * Profiles that don't exist are null.
-     */
-    private val profileStates: MutableStateFlow<Array<ProfileWithState?>> =
-        MutableStateFlow(arrayOf(null, null, null))
+
+    private val profileMap =
+        MutableStateFlow(mapOf<Profile.Type, ProfileWithState>())
 
     /**
-     * List of profiles that are active and unlocked.
+     * List of all profiles, sorted by type (Personal, Work, Private)
      */
-    val activeProfiles: Flow<List<Profile>> = profileStates.map {
-        it.mapNotNull {
-            if (it?.state?.locked != false) null else it.profile
+    val profiles: Flow<List<Profile>> = profileMap.map {
+        it.values.map { it.profile }.sortedBy { it.type }
+    }
+
+    val profileStates: Flow<Map<Profile, Profile.State>> = profileMap.map {
+        it.values.associate { it.profile to it.state }
+    }
+
+    /**
+     * List of profiles that are currently unlocked
+     */
+    val unlockedProfiles: Flow<List<Profile>> = profileMap.map {
+        it.values.mapNotNull {
+            if (it.state.locked) null else it.profile
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
-
-    val profiles: Flow<List<Profile>> = profileStates.map {
-        it.mapNotNull { it?.profile }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
+    }
 
     init {
         val receiver = object : BroadcastReceiver() {
@@ -111,37 +109,35 @@ class ProfileManager(
 
     private suspend fun refreshProfiles() {
         mutex.withLock {
-            val profiles = arrayOf<ProfileWithState?>(null, null, null)
+            val profiles = mutableMapOf<Profile.Type, ProfileWithState>()
 
             for (userHandle in launcherApps.profiles) {
                 val serial = userManager.getSerialNumberForUser(userHandle)
                 if (android.os.Build.MANUFACTURER == "samsung" && serial == 150L) continue // Hide Samsung Secure Folder
 
                 val type = getProfileType(userHandle)
-                val index = when (type) {
-                    Profile.Type.Personal -> 0
-                    Profile.Type.Work -> 1
-                    Profile.Type.Private -> 2
-                }
 
-                if (profiles[index] == null) {
-                    profiles[index] = ProfileWithState(
+                if (profiles[type] == null) {
+                    profiles[type] = ProfileWithState(
                         Profile(
                             type = getProfileType(userHandle),
                             userHandle = userHandle,
                             serial = serial,
                         ),
-                        getProfileState(userHandle),
+                        getProfileStateByUserHandle(userHandle),
                     )
                 }
             }
-            profileStates.value = profiles
+            profileMap.value = profiles
         }
     }
 
-    fun getProfile(userHandle: UserHandle): Flow<Profile?> {
-        return profileStates.map {
-            it.find { it?.profile?.userHandle == userHandle }?.profile
+    /**
+     * Returns the profile for the given user handle, or null if it doesn't exist.
+     */
+    fun getProfileByUserHandle(userHandle: UserHandle): Flow<Profile?> {
+        return profileMap.map {
+            it.values.find { it.profile.userHandle == userHandle }?.profile
         }
     }
 
@@ -149,21 +145,48 @@ class ProfileManager(
      * Returns the profile of the given type, or null if it doesn't exist.
      */
     fun getProfile(profileType: Profile.Type): Profile? {
-        return when (profileType) {
-            Profile.Type.Personal -> profileStates.value[0]?.profile
-            Profile.Type.Work -> profileStates.value[1]?.profile
-            Profile.Type.Private -> profileStates.value[2]?.profile
+        return profileMap.value[profileType]?.profile
+    }
+
+    /**
+     * Returns the state of the given profile, or null if it doesn't exist.
+     */
+    fun getProfileState(profile: Profile): Flow<Profile.State?> {
+        return profileMap.map {
+            it[profile.type]?.state
         }
     }
 
-    fun getProfileState(profile: Profile?): Flow<Profile.State?> {
-        return profileStates.map { profiles ->
-            profiles.find { it?.profile == profile }?.state
+    /**
+     * Returns the current state of the given profile, or null if it doesn't exist.
+     */
+    fun getCurrentProfileState(profile: Profile): Profile.State? {
+        return profileMap.value[profile.type]?.state
+    }
+
+
+    /**
+     * Tries to unlock the given profile. Silently fails when there is an error.
+     */
+    @RequiresApi(28)
+    fun unlockProfile(profile: Profile) {
+        try {
+            userManager.requestQuietModeEnabled(false, profile.userHandle)
+        } catch (e: IllegalArgumentException) {
+            Log.w(TAG, "Unable to unlock profile ${profile.serial}", e)
         }
     }
 
-    fun getProfileStateOnce(profile: Profile?): Profile.State? {
-        return profileStates.value.find { it?.profile == profile }?.state
+    /**
+     * Tries to lock the given profile. Silently fails when there is an error.
+     */
+    @RequiresApi(28)
+    fun lockProfile(profile: Profile) {
+        try {
+            userManager.requestQuietModeEnabled(true, profile.userHandle)
+        } catch (e: IllegalArgumentException) {
+            Log.w(TAG, "Unable to lock profile ${profile.serial}", e)
+        }
     }
 
     private fun getProfileType(userHandle: UserHandle): Profile.Type {
@@ -179,35 +202,17 @@ class ProfileManager(
         return if (userHandle == Process.myUserHandle()) Profile.Type.Personal else Profile.Type.Work
     }
 
-    private fun getProfileState(userHandle: UserHandle): Profile.State {
+    private fun getProfileStateByUserHandle(userHandle: UserHandle): Profile.State {
         val locked = !userManager.isUserUnlocked(userHandle)
         val hidden = if (isAtLeastApiLevel(36) && locked) {
             launcherApps.getLauncherUserInfo(userHandle)
-                ?.getUserConfig()
+                ?.userConfig
                 ?.getBoolean(LauncherUserInfo.PRIVATE_SPACE_ENTRYPOINT_HIDDEN, false)
                 ?: false
         } else {
             false
         }
         return Profile.State(locked = locked, hidden = hidden)
-    }
-
-    @RequiresApi(28)
-    fun unlockProfile(profile: Profile) {
-        try {
-            userManager.requestQuietModeEnabled(false, profile.userHandle)
-        } catch (e: IllegalArgumentException) {
-            Log.w(TAG, "Unable to unlock profile ${profile.serial}", e)
-        }
-    }
-
-    @RequiresApi(28)
-    fun lockProfile(profile: Profile) {
-        try {
-            userManager.requestQuietModeEnabled(true, profile.userHandle)
-        } catch (e: IllegalArgumentException) {
-            Log.w(TAG, "Unable to lock profile ${profile.serial}", e)
-        }
     }
 
 }

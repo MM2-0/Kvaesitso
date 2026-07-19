@@ -52,7 +52,7 @@ internal class AppRepositoryImpl(
 
     private val installedApps = MutableStateFlow<List<LauncherApp>>(emptyList())
 
-    private val profiles = profileManager.activeProfiles
+    private val profiles = profileManager.unlockedProfiles
 
     private val mutex = Mutex()
 

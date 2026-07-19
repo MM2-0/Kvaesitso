@@ -223,7 +223,7 @@ internal class AppShortcutRepositoryImpl(
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return emptyList()
         val results = mutableListOf<AppShortcutConfigActivity>()
-        val profiles = profileManager.activeProfiles.first()
+        val profiles = profileManager.unlockedProfiles.first()
         for (profile in profiles) {
             val activities = launcherApps.getShortcutConfigActivityList(null, profile.userHandle)
             results.addAll(
