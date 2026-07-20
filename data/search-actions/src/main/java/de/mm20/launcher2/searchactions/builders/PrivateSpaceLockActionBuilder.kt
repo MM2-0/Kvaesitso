@@ -31,11 +31,7 @@ class PrivateSpaceLockActionBuilder(
         val profileState = profileManager.getCurrentProfileState(privateProfile) ?: return null
 
         val keyword = context.getString(R.string.search_query_private_space).lowercase()
-        val score = ResultScore.from(
-            query = classifiedQuery.text.lowercase(),
-            primaryFields = listOf(keyword),
-        )
-        if (score.score < 0.8f) return null
+        if (keyword != classifiedQuery.text.trim().lowercase()) return null
 
         return PrivateSpaceLockAction(
             label = context.getString(
