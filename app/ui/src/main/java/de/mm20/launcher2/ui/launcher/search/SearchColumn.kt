@@ -16,6 +16,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -27,6 +29,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.search.AppShortcut
@@ -55,6 +60,9 @@ import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.theme.transparency.transparency
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.zip
 
 @Composable
 fun SearchColumn(
@@ -69,6 +77,7 @@ fun SearchColumn(
     val columns = LocalGridSettings.current.columnCount
     val showList = LocalGridSettings.current.showList
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     val viewModel: SearchVM = viewModel()
 
@@ -127,6 +136,26 @@ fun SearchColumn(
     var selectedWebsiteIndex: Int by remember(query) { mutableIntStateOf(-1) }
 
     val showFilters by viewModel.showFilters
+
+    LaunchedEffect(profiles) {
+        var previousState: Profile.State? = null
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            viewModel.profileStates.map { it[Profile.Type.Private] }.collect {
+
+                if (it == previousState) return@collect
+                previousState = it
+
+                viewModel.search("")
+
+                if (it?.locked == false && !it.hidden) {
+                    val index = profiles.indexOfFirst { p -> p.type == Profile.Type.Private }
+                    if (index != -1) {
+                        selectedAppProfileIndex = index
+                    }
+                }
+            }
+        }
+    }
 
     AnimatedContent(
         showFilters,
