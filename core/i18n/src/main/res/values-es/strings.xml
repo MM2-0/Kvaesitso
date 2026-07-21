@@ -939,4 +939,12 @@
     <string name="typo_preview_medium2">Vista previa</string>
     <string name="typo_preview_long">José compró en Perú una vieja zampoña.\nExcusándose, Sofía tiró su whisky al desagüe de la banqueta. 1234790</string>
     <string name="preference_category_donate">Apoya el desarrollo</string>
+    <string name="preference_search_apps_show_details">Mostrar información de la aplicación</string>
+    <string name="preference_search_apps_show_details_summary">Mostrar versión y nombre del paquete de la aplicación en su menú contextual</string>
+    <string name="preference_currency_settings">Ajustes de divisa</string>
+    <string name="preference_add_currency">Añadir divisa</string>
+    <string name="search_query_private_space">Espacio privado</string>
+    <string name="search_action_private_space_lock">Bloquear espacio privado</string>
+    <string name="search_action_private_space_unlock">Desbloquear espacio privado</string>
+    <string name="preference_currencies">Divisa</string>
 </resources>
