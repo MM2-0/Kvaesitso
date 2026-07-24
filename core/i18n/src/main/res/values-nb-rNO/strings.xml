@@ -354,7 +354,7 @@
     </plurals>
     <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
     <string name="preference_search_result_ordering_weight_factor_default">Balansert</string>
-    <string name="preference_search_result_ordering_weight_factor_high">Variabel</string>
+    <string name="preference_search_result_ordering_weight_factor_high">Varierende</string>
     <string name="widget_config_appwidget_background">Bakgrunnskort</string>
     <string name="widget_config_appwidget_configure">Tilpass widget</string>
     <string name="widget_config_calendar_no_calendars">Ingen kalendere funnet</string>
@@ -565,9 +565,9 @@
     <string name="preference_gesture_double_tap">Dobbelttrykk</string>
     <string name="preference_gesture_long_press">Langt trykk</string>
     <string name="gesture_action_launch_app">Start app</string>
-    <string name="gesture_action_notifications">Åpne varselskuff</string>
-    <string name="gesture_action_lock_screen">Slå av skjerm</string>
-    <string name="gesture_action_quick_settings">Åpne hurtiginnstillinger</string>
+    <string name="gesture_action_notifications">Varsler</string>
+    <string name="gesture_action_lock_screen">Slå av skjermen</string>
+    <string name="gesture_action_quick_settings">Hurtiginnstillinger</string>
     <string name="plugin_weather_provider_enable">Sett som værtilbyder</string>
     <string name="clock_style_empty">Ingen klokke</string>
     <string name="poi_category_kiosk">Kiosk</string>
@@ -749,4 +749,23 @@
     <string name="preference_gesture_swipe_up">Sveip oppover</string>
     <string name="gesture_action_widgets_empty">Tom</string>
     <string name="gesture_action_launch_select_app">Velg app eller snarvei</string>
+    <string name="gesture_action_power_menu">Av/på-meny</string>
+    <string name="gesture_failed_message">Du har gjort en \"%1$s\"-bevegelse. Denne bevegelsen er satt opp til å gjennomføre en \"%2$s\"-handling. Handlingen kunne ikke gjennomføres på grunn av:</string>
+    <string name="missing_permission_accessibility_gesture_failed">Tilgjengelighetstjenesten for startappen må være skrudd på for å gjennomføre denne handlingen.</string>
+    <string name="missing_permission_accessibility_gesture_settings">Startappens tilgjengelighetstjeneste må være skrudd på for at denne handlingen skal fungere.</string>
+    <string name="app_widget_loading_failed">Innlastning av app-widget mislyktes</string>
+    <string name="note_widget_action_relink_file">Lenk igjen</string>
+    <string name="note_widget_conflict_description">Den lenkede filen er ikke tom og innholdet stemmer ikke med den seneste lagrede versjonen av dette notatet. Hvilken versjon ønsker du å beholde?</string>
+    <string name="note_widget_file_read_error">Noe gikk galt ved å lese notatet</string>
+    <string name="note_widget_file_write_error">Noe gikk galt ved å lagre notatet</string>
+    <string name="new_theme_name">(uten tittel)</string>
+    <string name="import_theme_contents">Innhold</string>
+    <string name="import_theme_exists">Temaet eksisterer allerede og vil bli oppdatert</string>
+    <string name="shortcut_unavailable_description">Snarveien er utilgjengelig siden %1$s ikke er satt som startapp</string>
+    <string name="preference_search_location_custom_tile_server_url">URL for tileserver</string>
+    <string name="plugin_action_setup">Konfigurer</string>
+    <string name="plugin_type_contacts">Kontakter</string>
+    <string name="clock_style_orbit">Bane</string>
+    <string name="clock_variant_outlined">Omriss</string>
+    <string name="poi_category_government_building">Statlig bygning</string>
 </resources>
