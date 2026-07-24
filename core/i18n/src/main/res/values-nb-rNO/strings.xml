@@ -79,11 +79,11 @@
     <string name="menu_edit_widgets">Redigere widgets</string>
     <string name="widget_name_weather">Vær</string>
     <string name="widget_name_calendar">Kalender</string>
-    <string name="widget_name_music">Musikk</string>
+    <string name="widget_name_music">Medier</string>
     <string name="widget_name_notes">Notat</string>
-    <string name="widget_name_unknown">Ukjent app-widget</string>
+    <string name="widget_name_unknown">Ukjent</string>
     <string name="widget_add_widget">Legg til widget</string>
-    <string name="notes_widget_placeholder">Skriv et notat…</string>
+    <string name="notes_widget_placeholder">Skriv et notat</string>
     <string name="notes_widget_action_new">Nytt notat</string>
     <string name="notes_widget_export_filename">Notat_%1$s</string>
     <string name="notes_widget_action_dismiss">Avvis</string>
@@ -104,7 +104,7 @@
     <string name="edit_favorites_dialog_tags">Merkelapper</string>
     <string name="edit_favorites_dialog_tag_section_empty">Festede merkelapper dukker opp her</string>
     <string name="edit_favorites_dialog_new_tag">Opprett merkelapp…</string>
-    <string name="notes_widget_dismissed">Notat avvist.</string>
+    <string name="notes_widget_dismissed">Notat avvist</string>
     <string name="nextcloud_server_invalid_url">Denne URLen peker ikke til en gyldig Nextcloud-installasjon</string>
     <string name="owncloud_server_url">Owncloud-server-URL</string>
     <string name="owncloud_server_invalid_url">Denne URLen peker ikke til en gyldig Owncloud-installasjon</string>
@@ -132,7 +132,7 @@
     <string name="weather_condition_lightrainshowers">Lette regnbyger</string>
     <string name="weather_condition_lightsnow">Lett snøfall</string>
     <string name="weather_condition_heavysleetshowersandthunder">Kraftige sluddskurer og torden</string>
-    <string name="weather_no_data">Ingen værdata tilgjengelig.</string>
+    <string name="weather_no_data">Ingen værdata tilgjengelig</string>
     <string name="missing_permission_contact_search_settings">Kontakttilgang kreves for å søke i kontakter</string>
     <string name="missing_permission_notification_badges">Varseltilgang kreves for å vise varselprikker</string>
     <string name="preference_screen_about">Om</string>
@@ -227,8 +227,8 @@
     <string name="weather_condition_wind">Vind</string>
     <string name="weather_condition_unknown">Ukjent</string>
     <string name="widget_config_calendar_missing_calendars_hint">Kan du ikke finne dine kalendre?</string>
-    <string name="missing_permission_calendar_widget">Gi tilgang til kalender for å vise kommende avtaler og hendelser her.</string>
-    <string name="missing_permission_calendar_search">Gi tilgang til kalender for å søke i din kalender.</string>
+    <string name="missing_permission_calendar_widget">Kalendertilgang kreves for å vise hendelser</string>
+    <string name="missing_permission_calendar_search">Kalendertilgang kreves for å kunne søke i kalenderen</string>
     <string name="missing_permission_contact_search">Gi tilgang til kontakter for å søke i dine kontakter.</string>
     <string name="grant_permission">Tillat</string>
     <string name="preference_screen_appearance">Utseende</string>
@@ -367,7 +367,7 @@
     <string name="create_search_action_website_url">Skriv inn nettsidens adresse:</string>
     <string name="tag_exists_message">En merkelapp med dette navnet eksisterer alt. Om du fortsetter vil merkelappene flettes sammen.</string>
     <string name="preference_search_localfiles_summary">Søk dokumenter, foto og andre filer lagret på denne enheten</string>
-    <string name="missing_permission_file_search_settings">Tilgang til ekstern lagring kreves for å søke i lokale filer</string>
+    <string name="missing_permission_file_search_settings">Tilgang til ekstern lagring kreves for å søke i denne enhetens filer</string>
     <string name="preference_blur_wallpaper">Tilslør bakgrunn</string>
     <string name="missing_permission_files_search">Gi tilgang til lagring for å søke i bilder, media og dokumenter på denne enheten.</string>
     <string name="preference_screen_homescreen_summary">Klokke, søkefelt, bakgrunn, systemlinjer</string>
@@ -392,7 +392,7 @@
     <string name="location_opens">åpner %1$s</string>
     <string name="location_opens_other_day">åpner %1$s, %2$s</string>
     <string name="weather_condition_lightssnowshowersandthunder">Lette snøbyger og tordenvær</string>
-    <string name="weather_location_search_no_result">Fant ikke lokasjon.</string>
+    <string name="weather_location_search_no_result">Fant ikke plassering</string>
     <string name="weather_condition_thunderstorm">Tordenvær</string>
     <string name="weather_condition_lightsnowshowers">Lette snøbyger</string>
     <string name="weather_condition_lightssleetshowersandthunder">Lette sluddbyger og torden</string>
@@ -577,7 +577,7 @@
     <string name="preference_search_locations">Steder</string>
     <string name="preference_search_wikipedia_summary">Søk i den frie encyklopedi</string>
     <string name="preference_search_locations_show_map_summary">Vis et kartutsnitt for steder</string>
-    <string name="missing_permission_file_search_settings_android10">FIlhåndteringstilgang kreves for å søke i lokale filer</string>
+    <string name="missing_permission_file_search_settings_android10">Tilgang til alle filer kreves for å kunne søke i lokale filer</string>
     <string name="search_filter_tools">Verktøy</string>
     <string name="search_filter_apps">Apper</string>
     <string name="confirmation_delete_color_scheme">Er du sikker på at du vil slette fargeskjemaet %1$s?</string>
@@ -698,4 +698,10 @@
     <string name="preference_search_locations_hide_uncategorized_summary">Vis kun resultater med veldefinerte kategorier, som kaféer eller restauranter</string>
     <string name="music_widget_play">Spill av</string>
     <string name="poi_category_church">Kirke</string>
+    <string name="action_install">Installer</string>
+    <string name="action_quit">Avslutt</string>
+    <string name="widget_name_apps">Apper</string>
+    <string name="widget_removed">Widget fjernet</string>
+    <string name="weather_condition_thunder">Torden</string>
+    <string name="weather_condition_haze">Dis</string>
 </resources>
