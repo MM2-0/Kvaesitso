@@ -213,7 +213,7 @@
     <string name="preference_clock_widget_alignment">Justering</string>
     <string name="missing_permission_music_widget">Varseltilgang kreves for å styre mediaavspilling</string>
     <string name="preference_font">Font</string>
-    <string name="preference_automatic_location_summary">Bruk GPS og plasseringstjenester for å automatisk angi plassering</string>
+    <string name="preference_automatic_location_summary">Bruk stedstjenester for å automatisk hente plassering</string>
     <string name="weather_condition_snowandthunder">Snø og torden</string>
     <string name="weather_condition_cloudy">Overskyet</string>
     <string name="weather_condition_lightrainandthunder">Lett regn og tordenvær</string>
@@ -704,4 +704,10 @@
     <string name="widget_removed">Widget fjernet</string>
     <string name="weather_condition_thunder">Torden</string>
     <string name="weather_condition_haze">Dis</string>
+    <string name="preference_colors_high_contrast">Høykontrast</string>
+    <string name="preference_screen_shapes">Former</string>
+    <string name="preference_shapes_extra_round">Rundere</string>
+    <string name="preference_shapes_rect">Rektangulært</string>
+    <string name="preference_screen_transparencies">Gjennomsiktighet</string>
+    <string name="preference_transparencies_default">Standard</string>
 </resources>
