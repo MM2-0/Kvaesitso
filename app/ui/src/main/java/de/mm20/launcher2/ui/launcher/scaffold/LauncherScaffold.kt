@@ -1143,17 +1143,8 @@ internal fun LauncherScaffold(
         }
 
         if (config.wallpaperBlurRadius > 0.dp) {
-            val wallpaperBlur by animateIntAsState(
-                if (state.currentProgress >= 0.5f && (state.currentComponent?.drawBackground
-                        ?: config.homeComponent.drawBackground)
-                    || state.currentProgress < 0.5f && config.homeComponent.drawBackground
-                ) {
-                    8.dp.toPixels().toInt()
-                } else {
-                    0
-                }
-            )
-            WallpaperBlur { wallpaperBlur }
+            val maxRadius = config.wallpaperBlurRadius.toPixels()
+            WallpaperBlur { (maxRadius * state.currentProgress).toInt() }
         }
 
         if (!config.finishOnBack || state.currentProgress > 0) {
