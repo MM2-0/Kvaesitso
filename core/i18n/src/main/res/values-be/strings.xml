@@ -11,13 +11,13 @@
     <string name="menu_share_apk_file">Файл пакета</string>
     <string name="menu_favorites_pin">Замацаваць</string>
     <string name="menu_uninstall">Дэінсталяваць</string>
-    <string name="menu_app_info">Інфармацыя аб праграме</string>
+    <string name="menu_app_info">Звесткі аб праграме</string>
     <string name="action_import">Імпартаваць</string>
     <string name="menu_back">Назад</string>
     <string name="menu_launch">Запусціць</string>
     <string name="menu_customize">Дапасаваць</string>
     <string name="menu_open_file">Адкрыць</string>
-    <string name="menu_map">Праглядзець на мапе</string>
+    <string name="menu_map">Праглядзець на карце</string>
     <string name="menu_website">Адкрыць вэб-сайт</string>
     <string name="action_undo">Скасаваць</string>
     <string name="menu_delete">Выдаліць</string>
@@ -252,8 +252,8 @@
     <string name="provider_here">HERE</string>
     <string name="preference_category_location">Месцазнаходжанне</string>
     <string name="preference_automatic_location">Аўтаматычны выбар</string>
-    <string name="preference_location_managed">Кіруецца плагінам</string>
-    <string name="preference_location_managed_summary">Месцазнаходжанне для гэтага пастаўшчыку кіруецца плагінам</string>
+    <string name="preference_location_managed">Кіруецца ўбудовай</string>
+    <string name="preference_location_managed_summary">Месцазнаходжанне для гэтага пастаўшчыку кіруецца ўбудовай</string>
     <string name="preference_location">Месцазнаходжанне</string>
     <string name="preference_automatic_location_summary">Скарыстацца сэрвісамі месцазнаходжання, каб аўтаматычна вызначыць месцазнаходжанне</string>
     <string name="preference_imperial_units_summary">Выкарыстоўваць градусы Фарэнгейта й мілі ў гадзіну</string>
@@ -297,9 +297,9 @@
     <string name="preference_cards_shape_cut">Абрэзаная</string>
     <string name="preference_category_searchbar">Поле пошуку</string>
     <string name="preference_screen_integrations">Інтэграцыі</string>
-    <string name="preference_screen_plugins">Плагіны</string>
+    <string name="preference_screen_plugins">Убудовы</string>
     <string name="preference_screen_plugins_summary">Кіраванне ўсталяванымі пашырэннямі</string>
-    <string name="no_plugins_installed">Плагінаў не ўсталявана</string>
+    <string name="no_plugins_installed">Убудоў не ўсталявана</string>
     <string name="preference_theme_system">Як у сістэме</string>
     <string name="preference_themed_icons">Значкі з тэмай</string>
     <string name="preference_themed_icons_summary">Прызначыць значкам колеравую схему праграмы</string>
@@ -338,7 +338,7 @@
     <string name="preference_suspended_badges_summary">Адлюстроўваць адзнаку на выключаных праграмах</string>
     <string name="preference_suspended_badges">Выключаныя праграмы</string>
     <string name="preference_shortcut_badges_summary">Адлюстроўваць адзнаку, якая паказвае, якой праграме належыць ярлык</string>
-    <string name="preference_plugin_badges_summary">Адлюстроўваць, якім плагінам быў створаны пошукавы вынік</string>
+    <string name="preference_plugin_badges_summary">Адлюстроўваць, якой убудовай быў створаны пошукавы вынік</string>
     <string name="preference_nextcloud_signin">Увайсці ў Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Увайдзіце, каб выконваць пошук праз ваш сервер Nextcloud</string>
     <string name="preference_screen_debug">Адладка</string>
@@ -591,7 +591,7 @@
     <string name="import_theme_error">Выбраны файл не можа быць прачытаны. Калі ласка, упэўніцеся, што вы выбралі правільны файл тэмы (*.kvtheme) і што ён не пашкоджаны.</string>
     <string name="shortcut_label_unavailable">Недаступны</string>
     <string name="shortcut_unavailable_description">Гэты віджэт недаступны, таму што %1$s не з\'яўляецца праграмай запуска па змаўчанню</string>
-    <string name="preference_plugin_enable">Уключыць плагін</string>
+    <string name="preference_plugin_enable">Уключыць убудову</string>
     <string name="length_unit">Адзінкі даўжыні</string>
     <string name="note_widget_file_read_error_description">Немагчыма прачытаць звязаны файл. Копія была адноўлена з унутранага сховішча праграмы запуску. Калі вы адрэдагуйце нататку, звязаны файл, хутчэй за ўсё, будзе перазапісаны</string>
     <string name="theme_color_scheme_autogenerate">З асноўнага колеру</string>
@@ -609,8 +609,8 @@
     <string name="plugin_action_setup">Наладзіць</string>
     <string name="unavailable_searchable">Гэты элемент болей не існуе</string>
     <string name="location_open_24_7">Кругласутачна</string>
-    <string name="plugin_state_error">Гэты плагін працуе некарэктна</string>
-    <string name="plugin_state_setup_required">Спачатку вам трэба наладзіць гэты плагін</string>
+    <string name="plugin_state_error">Гэтая ўбудова працуе некарэктна</string>
+    <string name="plugin_state_setup_required">Спачатку вам трэба наладзіць гэту ўбудову</string>
     <string name="plugin_type_weather">Правайдар надвор\'я</string>
     <string name="plugin_weather_provider_enable">Задаць правайдарам надвор\'я</string>
     <string name="plugin_weather_provider_enabled">Бягучы правайдар надвор\'я</string>
@@ -759,9 +759,9 @@
     </plurals>
     <string name="calendar_widget_create_event">Стварыць новую падзею</string>
     <string name="calendar_widget_open_calendar">Адкрыць праграму календара</string>
-    <string name="profile_private_profile_state_locked">Private space замкнутае</string>
+    <string name="profile_private_profile_state_locked">Прыватная прастора замкнута</string>
     <string name="profile_private_profile_action_unlock">Разблакіраваць</string>
-    <string name="profile_private_profile_action_lock">Заблакіраваць Private space</string>
+    <string name="profile_private_profile_action_lock">Заблакіраваць прыватную прастору</string>
     <string name="hint_drag_and_drop_reorder">Утрымлівайце і перацягвайце элементы, каб змяніць іх парадак</string>
     <string name="weather_forecast_humidity">Вільготнасць</string>
     <string name="weather_forecast_wind">Вецер</string>
@@ -948,4 +948,12 @@
     <string name="typo_preview_medium2">Прагляд</string>
     <string name="typo_preview_long">Я жорстка заб’ю проста ў 12345\nгэты расквечаны профіль, 67890</string>
     <string name="preference_category_donate">Падтрымаць распрацоўку</string>
+    <string name="preference_search_apps_show_details">Паказваць звесткі праграм</string>
+    <string name="preference_search_apps_show_details_summary">Адлюстроўваць версію і назву пакета праграмы ў кантэкстным меню</string>
+    <string name="preference_currency_settings">Налады валют</string>
+    <string name="search_query_private_space">Прыватная прастора</string>
+    <string name="search_action_private_space_lock">Заблакіраваць прыватную прастору</string>
+    <string name="search_action_private_space_unlock">Разблакіраваць прыватную прастору</string>
+    <string name="preference_currencies">Валюта</string>
+    <string name="preference_add_currency">Дадаць валюту</string>
 </resources>
