@@ -967,4 +967,12 @@
     <string name="gesture_action_widgets_new">Nouvelle page de widgets</string>
     <string name="gesture_action_widgets_empty">Vide</string>
     <string name="gesture_action_launch_select_app">Sélectionner une appli ou un raccourci</string>
+    <string name="preference_search_apps_show_details">Afficher les informations de l\'application</string>
+    <string name="preference_currency_settings">Paramètres de la devise</string>
+    <string name="search_query_private_space">Espace privé</string>
+    <string name="search_action_private_space_lock">Verrouiller l\'espace privé</string>
+    <string name="search_action_private_space_unlock">Déverrouiller l\'espace privé</string>
+    <string name="preference_currencies">Devise</string>
+    <string name="preference_add_currency">Ajouter une devise</string>
+    <string name="preference_search_apps_show_details_summary">Afficher la version et le nom de paquet de l\'application dans son menu de contexte</string>
 </resources>
