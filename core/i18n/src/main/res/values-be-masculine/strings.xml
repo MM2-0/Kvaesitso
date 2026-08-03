@@ -1,3 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="owncloud_login_2fa_hint">Калі ў цябе ўключана праверка сапраўднасці, ты павінны ўвесці пароль тут.</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Не можаш знайсці свае календары?</string>
+    <string name="missing_permission_calendar_search">Для пошуку праз твой каляндар патрэбны доступ да календара</string>
+    <string name="missing_permission_contact_search">Для пошуку праз твае кантакты патрэбны доступ да кантактнай кнігі</string>
+    <string name="preference_summary_not_logged_in">Ты не ўвайшоў</string>
+    <string name="preference_nextcloud_signin_summary">Увайдзі, каб выконваць пошук праз твой сервер Nextcloud</string>
+    <string name="preference_owncloud_signin_summary">Увайдзі, каб выконваць пошук праз твой сервер Owncloud</string>
+    <string name="no_account_nextcloud">Ты яшчэ не далучыў уліковы запіс Nextcloud</string>
+    <string name="no_account_owncloud">Ты яшчэ не далучыў уліковы запіс Owncloud</string>
+    <string name="restore_invalid_file">Здаецца, выбраны файл не з\'яўляецца рэзервовай копіяй. Ты ўпэўнены, што выбраў правільны файл?</string>
+    <string name="create_search_action_type">Якое дзеянне ты жадаеш стварыць?</string>
+    <string name="create_search_action_website_invalid_url">Дадзены вэб-сайт не можа быць аўтаматычна імпартаваны як сродак пошуку. Ты можаш паспрабаваць іншы сайт або ўвесці ўсе патрэбныя дадзеныя ў наступным кроку</string>
+    <string name="preference_breezyweather_integration_instructions">Каб выкарыстоўваць Breezy Weather як пастаўшчыка дадзеных аб надвор\'і:\n\n1. Перайдзі ў Breezy Weather &gt; Налады &gt; Віджэты і жывыя шпалеры &gt; Адпраўляць даныя пра надвор’е ў Gadgetbridge &gt; Уключы %1$s\n\n2. Выберы Breezy Weather як пастаўшчыка надвор\'я ў %1$s</string>
+    <string name="tag_exists_message">Тэг з такой назвай ужо існуе. Калі ты працягнеш, гэтыя два цэтліка будуць аб\'яднаныя</string>
+    <string name="tag_no_items_message">Няма ярлыкоў з гэтым цэтлікам. Калі ты працягнеш, цэтлік будзе выдалены</string>
+    <string name="gesture_failed_message">Ты зрабіў жэст «%1$s». Гэты жэст наладжаны на дзеянне «%2$s». Але гэта дзеянне не было выканана па наступнай прычыне:</string>
+    <string name="note_widget_conflict_description">Звязаны файл не пусты і яго змесціва не супадае з апошняй захаванай версіяй гэтай нататкі. Якую версію ты хочаш захаваць?</string>
+    <string name="note_widget_file_read_error_description">Немагчыма прачытаць звязаны файл. Копія была адноўлена з унутранага сховішча праграмы запуску. Калі ты адрэдагуеш нататку, звязаны файл, хутчэй за ўсё, будзе перазапісаны</string>
+    <string name="confirmation_delete_color_scheme">Ты сапраўды хочаш выдаліць колеравую схему «%1$s»?</string>
+    <string name="confirmation_delete_shapes_scheme">Ты сапраўды хочаш выдаліць схему фігур «%1$s»?</string>
+    <string name="confirmation_delete_typography_scheme">Ты сапраўды хочаш выдаліць схему тыпаграфіі «%1$s»?</string>
+    <string name="confirmation_delete_transparencies_scheme">Ты сапраўды хочаш выдаліць схему празрыстасці «%1$s»?</string>
+    <string name="import_theme_error">Выбраны файл не можа быць прачытаны. Упэўніся, што ты выбраў правільны файл тэмы (*.kvtheme) і што ён не пашкоджаны.</string>
+    <string name="plugin_state_setup_required">Спачатку табе трэба наладзіць гэту ўбудову</string>
+    <string name="filter_settings_network_warning">Бягучы фільтр прадвызначана ўключае рэзультаты з сетцы. Твае пошукавыя запыты могуць выпадкова быць дасланыя да знешніх вэб-сэрвісаў. Дзеля прыватнасці, гэты фільтр не рэкамендуецца.</string>
+    <string name="bad_configuration_title">Віншую, ты закрыў сам сябе!</string>
+    <string name="bad_configuration_summary">Ты знайшоў канфігурацыю, пры якой нельга адкрыць ні пошук, ні налады, тым самым зрабіўшы праграму непрыгоднай для выкарыстання</string>
+    <string name="notes_widget_placeholder">Напішы нататку</string>
+    <string name="edit_favorites_dialog_empty_section">Перацягні ярлыкі сюды</string>
+    <string name="missing_permission_appshortcuts_search">Зрабі %1$s стандартным дамашнім экранам, каб шукаць праграмы.</string>
+    <string name="missing_permission_appshortcuts_create">Зрабі %1$s стандартным дамашнім экранам, каб ствараць ярлыкі праграм.</string>
+    <string name="preference_debug_dump_heap_summary">Зрабі хуткі здымак, каб аналізаваць выкарыстоўванне памяці. Праграма не будзе адказваць, пакуль працэс не завяршыцца.</string>
+    <string name="preference_logs_summary">Праглядвай і экспартуй запісы з журнала праграмы</string>
+    <string name="preference_feed_enable_summary">Чыркані ўправа на галоўным экране, каб адкрыць стужку</string>
+    <string name="preference_contacts_call_on_tap">Націсні, каб патэлефанаваць</string>
+    <string name="create_search_action_pick_app">Выберы праграму, дзе шукаць:</string>
+    <string name="create_search_action_website_url">Увядзі адрас вэб-сайта:</string>
+    <string name="search_action_websearch_url_hint">Шаблон спасылкі, які выкарыстоўваецца для будавання спасылкі пошуку. Выкарыстоўвай ‘${1}’ у якасці пошукавага запыту</string>
+    <string name="tag_select_items">Выберы ярлыкі</string>
+    <string name="gesture_action_launch_select_app">Выберы праграму або ярлык</string>
+    <string name="preference_customize_filter_bar_summary">Дапасуй элементы ў панэлі фільтраў</string>
+    <string name="hint_drag_and_drop_reorder">Утрымлівай і перацягвай элементы, каб змяніць іх парадак</string>
 </resources>
