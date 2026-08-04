@@ -568,7 +568,7 @@
     <string name="search_action_websearch">Recherche web</string>
     <string name="confirmation_delete_color_scheme">Voulez-vous vraiment supprimer le jeu de couleurs %1$s ?</string>
     <string name="import_theme_apply">Appliquer le thème</string>
-    <string name="import_theme_error">Le fichier sélectionne n\'a pas pu être lu. Assurez-vous d\'avoir sélectionner un fichier de thème valide (*.kvtheme) et que ce fichier ne soit pas corrompu.</string>
+    <string name="import_theme_error">Le fichier sélectionné n\'a pas pu être lu. Assurez-vous d\'avoir sélectionné un fichier de thème valide (*.kvtheme) et que ce fichier ne soit pas corrompu.</string>
     <string name="preference_clock_widget_alignment">Alignement</string>
     <string name="preference_clock_widget_alignment_top">Haut</string>
     <string name="preference_clock_widget_alignment_center">Milieu</string>
