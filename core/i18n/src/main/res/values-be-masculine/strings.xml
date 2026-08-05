@@ -31,7 +31,7 @@
     <string name="edit_favorites_dialog_empty_section">Перацягні ярлыкі сюды</string>
     <string name="missing_permission_appshortcuts_search">Зрабі %1$s стандартным дамашнім экранам, каб шукаць праграмы.</string>
     <string name="missing_permission_appshortcuts_create">Зрабі %1$s стандартным дамашнім экранам, каб ствараць ярлыкі праграм.</string>
-    <string name="preference_debug_dump_heap_summary">Зрабі хуткі здымак, каб аналізаваць выкарыстоўванне памяці. Праграма не будзе адказваць, пакуль працэс не завяршыцца.</string>
+    <string name="preference_debug_dump_heap_summary">Зрабі хуткі здымак, каб прааналізаваць выкарыстанне памяці. Праграма не будзе адказваць, пакуль працэс не завяршыцца.</string>
     <string name="preference_logs_summary">Праглядвай і экспартуй запісы з журнала праграмы</string>
     <string name="preference_feed_enable_summary">Чыркані ўправа на галоўным экране, каб адкрыць стужку</string>
     <string name="preference_contacts_call_on_tap">Націсні, каб патэлефанаваць</string>
@@ -42,4 +42,5 @@
     <string name="gesture_action_launch_select_app">Выберы праграму або ярлык</string>
     <string name="preference_customize_filter_bar_summary">Дапасуй элементы ў панэлі фільтраў</string>
     <string name="hint_drag_and_drop_reorder">Утрымлівай і перацягвай элементы, каб змяніць іх парадак</string>
+    <string name="preference_signin_user">Увайшоў як %1$s</string>
 </resources>
