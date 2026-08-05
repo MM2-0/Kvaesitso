@@ -256,7 +256,7 @@
     <string name="preference_location_managed_summary">Месцазнаходжанне для гэтага пастаўшчыку кіруецца ўбудовай</string>
     <string name="preference_location">Месцазнаходжанне</string>
     <string name="preference_automatic_location_summary">Скарыстацца сэрвісамі месцазнаходжання, каб аўтаматычна вызначыць месцазнаходжанне</string>
-    <string name="preference_imperial_units_summary">Выкарыстоўваць градусы Фарэнгейта й мілі ў гадзіну</string>
+    <string name="preference_imperial_units_summary">Выкарыстоўваць градусы Фарэнгейта і мілі ў гадзіну</string>
     <string name="preference_imperial_units">Імперыяльныя адзінкі</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">%1$d пункт быў выдалены</item>
@@ -274,10 +274,10 @@
     <string name="preference_category_debug">Адладка</string>
     <string name="preference_category_debug_tools">Інструменты</string>
     <string name="preference_debug_dump_heap">Здымак памяці</string>
-    <string name="preference_debug_dump_heap_summary">Зрабіце хуткі здымак, каб аналізаваць выкарыстоўванне памяці. Праграма не будзе адказваць, пакуль працэс не завяршыцца.</string>
+    <string name="preference_debug_dump_heap_summary">Зрабіце хуткі здымак, каб прааналізаваць выкарыстанне памяці. Праграма не будзе адказваць, пакуль працэс не завяршыцца.</string>
     <string name="preference_debug_dump_heap_in_progress">Здыманне…</string>
     <string name="preference_debug_cleanup_database">Ачысціць базу дадзеных</string>
-    <string name="preference_debug_cleanup_database_summary">Выдаліць зламаныя і неўжываныя пункты з базы даных праграмы запуску</string>
+    <string name="preference_debug_cleanup_database_summary">Выдаліць зламаныя і неўжываныя пункты з базы дадзеных праграмы запуску</string>
     <string name="preference_debug_reinstall_iconpacks">Пераўсталяваць пакеты значкоў</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Ачысціць і стварыць нанава кэш пакетаў значкоў</string>
     <string name="preference_category_icons">Значкі</string>
@@ -312,14 +312,14 @@
     <string name="preference_force_themed_icons_summary">Прызначыць тэму праграмы ўсім значкам, нават тым, якія не прдтрымліваюцца (не рэкамендуецца)</string>
     <string name="preference_icon_pack">Пакеты значкоў</string>
     <string name="preference_category_animations">Анімацыі</string>
-    <string name="preference_charging_animation_summary">Прайгрываць анімацыю пузыркоў, калі прылада зараджаецца</string>
+    <string name="preference_charging_animation_summary">Прайграваць анімацыю бурбалак, калі прылада зараджаецца</string>
     <string name="preference_charging_animation">Анімацыя зарадкі</string>
     <string name="preference_owncloud_signin_summary">Увайдзіце, каб выконваць пошук праз ваш сервер Owncloud</string>
     <string name="preference_enforce_icon_shape">Прымусовая форма</string>
     <string name="preference_status_bar_icons">Значкі сістэмнай панэлі</string>
     <string name="preference_nav_bar_icons">Значкі панэлі навігацыі</string>
     <string name="preference_hide_nav_bar">Схаваць панэль навігацыі</string>
-    <string name="preference_screen_integrations_summary">Кіраванне злучаннамі уліковымі запісамі і сэрвісамі</string>
+    <string name="preference_screen_integrations_summary">Кіраванне злучанымі уліковымі запісамі і сэрвісамі</string>
     <string name="preference_signin_user">Увайшлі як %1$s</string>
     <string name="preference_signout">Выйсці</string>
     <string name="preference_summary_not_logged_in">Няма злучанага ўліковага запісу</string>
@@ -357,7 +357,7 @@
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_grid_column_count">Колькасць слупкоў</string>
     <string name="preference_grid_labels">Паказваць подпісы</string>
-    <string name="preference_about_license_summary">Пад ліцэнзіей GNU General Public License 3.0</string>
+    <string name="preference_about_license_summary">Пад ліцэнзіяй GNU General Public License 3.0</string>
     <string name="preference_grid_labels_summary">Паказваць назву праграмы пад значком</string>
     <string name="preference_category_grid">Сетка</string>
     <string name="preference_grid_icon_size">Памер значкоў</string>
@@ -382,7 +382,7 @@
     <string name="preference_about_telegram">Група ў Telegram</string>
     <string name="preference_about_fdroid">Рэпазіторый F-Droid</string>
     <string name="preference_category_license">Ліцэнзія</string>
-    <string name="preference_clockwidget_music_part_summary">Адлюстроўвае кнопкі для кіравання мультымедыя, калі ёсць актыўны сеанс медыя</string>
+    <string name="preference_clockwidget_music_part_summary">Адлюстроўвае кнопкі кіравання мультымедыя, калі ёсць актыўны сеанс медыя</string>
     <string name="preference_screen_backup">Рэзервовае капіраванне і аднаўленне</string>
     <string name="preference_screen_backup_summary">Экспарт і імпарт даных праграмы запуску</string>
     <string name="preference_clockwidget_alarm_part_summary">Адлюстроўвае будзільнікі, якія празвоняць менш чым праз 8 гадзін</string>
@@ -417,7 +417,7 @@
     <string name="preference_search_websites">Вэб-сайты</string>
     <string name="preference_search_locations">Месцы</string>
     <string name="preference_search_locations_radius">Радыус пошука</string>
-    <string name="preference_search_websites_summary">Паказваць перадпрагляд сайта, калі ў поле пошуку ўводзіцца спасылка</string>
+    <string name="preference_search_websites_summary">Паказваць перадпрагляд вэб-сайта, калі ў поле пошуку ўводзіцца спасылка</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Календары</string>
     <string name="preference_search_cloud_summary">Шукаць файлы %1$s</string>
@@ -894,7 +894,7 @@
     <string name="preference_search_apps">Праграмы</string>
     <string name="preference_search_apps_summary">Паказваць усе праграмы калі поле пошуку пустое</string>
     <string name="preference_smartspacer_integration">Разумная прастора</string>
-    <string name="preference_smartspacer_integration_description">«Разумная прастора» — гэта бясплатная віджэт з адкрытым зыходным кодам. Калі ўсталяваны, яго можна інтэграваць у дынамічную зону віджэта гадзінніка</string>
+    <string name="preference_smartspacer_integration_description">«Разумная прастора» — гэта бясплатны віджэт з адкрытым зыходным кодам. Калі ўсталяваны, яго можна інтэграваць у дынамічную зону віджэта гадзінніка</string>
     <string name="preference_smartspacer_enable">Уключыць інтэграцыю «Разумная прастора»</string>
     <string name="preference_launch_smartspacer_app">Адкрыць разумную прастору</string>
     <string name="preference_feed_integration">Стужка</string>
