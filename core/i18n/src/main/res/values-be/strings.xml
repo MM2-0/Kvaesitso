@@ -639,7 +639,7 @@
     <string name="preference_default_filter_summary">Дапасаваць прадвызначаны фільтр для пошуку</string>
     <string name="preference_filter_bar">Адлюстроўваць панэль фільтраў</string>
     <string name="clock_style_binary">Дваічныя</string>
-    <string name="clock_style_analog">Рукі</string>
+    <string name="clock_style_analog">Стрэлкі</string>
     <string name="poi_category_library">Бібліятэка</string>
     <string name="poi_category_hospital">Бальніца</string>
     <string name="filter_settings_network_warning">Бягучы фільтр прадвызначана ўключае рэзультаты з сетцы. Вашы пошукавыя запыты могуць выпадкова быць дасланыя да знешніх вэб-сэрвісаў. Дзеля прыватнасці, гэты фільтр не рэкамендуецца.</string>
@@ -663,7 +663,7 @@
     <string name="poi_category_theater">Тэатр</string>
     <string name="poi_category_university">Універсітэт</string>
     <string name="poi_category_clothes">Крама адзення</string>
-    <string name="preference_search_osm_locations_summary">Шукаць крамы і іншыя месцы паблізу з дапамогай OpenStreetMap</string>
+    <string name="preference_search_osm_locations_summary">Шукаць крамы і іншыя месцы паблізу праз OpenStreetMap</string>
     <string name="poi_category_restaurant">Рэстаран</string>
     <string name="poi_category_fast_food">Фаст-фуд</string>
     <string name="poi_category_bar">Бар</string>
