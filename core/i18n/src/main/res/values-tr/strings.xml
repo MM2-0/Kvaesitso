@@ -776,7 +776,7 @@
     <string name="preference_gesture_long_press">Uzun basma</string>
     <string name="preference_gesture_home_button">Ana ekran düğmesi/hareketi</string>
     <string name="gesture_action_none">Hiçbir şey yapma</string>
-    <string name="gesture_action_open_search">Aramayı aç</string>
+    <string name="gesture_action_open_search">Arama / uygulama çekmecesi</string>
     <string name="gesture_action_widgets">Widgetlar</string>
     <string name="gesture_action_launch_app">Uygulamayı başlat</string>
     <string name="gesture_action_notifications">Bildirim çekmecesini aç</string>
@@ -850,7 +850,7 @@
     <string name="menu_bugreport">Hata Bildir</string>
     <string name="location_open_24_7">7/24 Açık</string>
     <string name="plugin_state_error">Bu eklenti düzgün çalışmıyor</string>
-    <string name="plugin_state_setup_required">Eklentiyi kullanmak için önce kurmalısınız</string>
+    <string name="plugin_state_setup_required">Öncelikle bu eklentiyi kurmanız gerekiyor</string>
     <string name="plugin_action_setup">Kur</string>
     <string name="plugin_type_filesearch">Dosyalar</string>
     <string name="plugin_type_contacts">Kişiler</string>
@@ -918,7 +918,7 @@
     <string name="poi_category_furniture">Mobilya mağazası</string>
     <string name="poi_category_alcohol">İçki dükkanı</string>
     <string name="poi_category_florist">Çiçekçi</string>
-    <string name="poi_category_mall">AVM</string>
+    <string name="poi_category_mall">Alışveriş merkezi</string>
     <string name="poi_category_optician">Gözlükçü</string>
     <string name="poi_category_jewelry">Kuyumcu</string>
     <string name="poi_category_laundry">Çamaşırhane</string>
@@ -1101,6 +1101,18 @@
     <string name="typo_preview_short2">Yazı</string>
     <string name="typo_preview_medium1">İçli köfte</string>
     <string name="typo_preview_medium2">Önizleme</string>
-    <string name="typo_preview_long">Çevik kahvernekli tilki\n123456789\'un üstünden atlar</string>
+    <string name="typo_preview_long">Çevik kahverenkli tilki\n123456789\'un üstünden atlar</string>
     <string name="gesture_action_widgets_indexed">%1$d Widgetları</string>
+    <string name="preference_calendar_system">Takvim sistemi</string>
+    <string name="preference_calendar_system_primary">Birincil takvim</string>
+    <string name="preference_calendar_system_secondary">İkincil takvim</string>
+    <string name="preference_currencies">Para birimi</string>
+    <string name="preference_add_currency">Para birimi ekle</string>
+    <string name="preference_category_donate">Geliştirmeyi destekle</string>
+    <string name="gesture_action_category_launcher">Başlatıcı sayfaları</string>
+    <string name="gesture_action_category_system">Sistem eylemleri</string>
+    <string name="gesture_action_category_apps">Uygulamalar ve kısayollar</string>
+    <string name="gesture_action_widgets_new">Yeni widget sayfası</string>
+    <string name="gesture_action_widgets_empty">Boş</string>
+    <string name="gesture_action_launch_select_app">Uygulama veya kısayol seç</string>
 </resources>
