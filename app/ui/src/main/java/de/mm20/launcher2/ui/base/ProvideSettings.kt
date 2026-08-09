@@ -11,6 +11,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.MeasurementSystem
@@ -27,6 +28,9 @@ import de.mm20.launcher2.ui.locals.LocalShowAppDetails
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalMeasurementSystem
 import de.mm20.launcher2.ui.locals.LocalTimeFormat
+import de.mm20.launcher2.ui.locals.LocalWindowSize
+import de.mm20.launcher2.ui.locals.WindowWidthClass
+import de.mm20.launcher2.ui.locals.windowWidthClassOf
 import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.combine
@@ -56,9 +60,22 @@ fun ProvideSettings(
         ) { a, b -> a || b }.distinctUntilChanged()
     }.collectAsState(true)
 
-    val gridSettings by remember {
+    val baseGridSettings by remember {
         settings.gridSettings.distinctUntilChanged()
     }.collectAsState(GridSettings())
+
+    val windowSize = LocalWindowSize.current
+    val density = LocalDensity.current
+    val gridSettings by remember {
+        derivedStateOf {
+            val widthDp = with(density) { windowSize.width.toDp().value }
+            val columnCountMultiplier = when (windowWidthClassOf(widthDp)) {
+                WindowWidthClass.Compact -> 1
+                WindowWidthClass.Medium, WindowWidthClass.Expanded -> 2
+            }
+            baseGridSettings.copy(columnCount = baseGridSettings.columnCount * columnCountMultiplier)
+        }
+    }
 
     val showAppDetails by remember {
         searchUiSettings.showAppDetails.distinctUntilChanged()
