@@ -308,4 +308,18 @@
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="preference_automatic_location_summary">Använd GPS- och platstjänster för att automatiskt ange plats</string>
     <string name="preference_search_favorites_summary">Visa fastnålade och ofta använda objekt ovanför apprutan</string>
+    <string name="location_open">Öppna</string>
+    <string name="location_closed">Stängd</string>
+    <string name="menu_customize">Anpassa</string>
+    <string name="menu_map">Visa på karta</string>
+    <string name="menu_website">Öppna webbplats</string>
+    <string name="action_undo">Ångra</string>
+    <string name="action_import">Importera</string>
+    <string name="action_done">Klar</string>
+    <string name="action_more_actions">Fler åtgärder</string>
+    <string name="action_clear">Rensa</string>
+    <string name="action_install">Installera</string>
+    <string name="action_quit">Avsluta</string>
+    <string name="menu_remove">Ta bort</string>
+    <string name="help">Hjälp</string>
 </resources>
