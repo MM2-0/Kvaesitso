@@ -138,7 +138,7 @@ fun LocaleSettingsScreen() {
                         )
                     }
                 )
-                if (listOf("fr", "es").contains(currentLocale?.language)) {
+                if (listOf("fr", "es", "be").contains(currentLocale?.language)) {
                     ListPreference(
                         icon = R.drawable.wc_24px,
                         title = stringResource(R.string.preference_form_of_address),
