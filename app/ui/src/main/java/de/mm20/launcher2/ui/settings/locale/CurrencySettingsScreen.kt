@@ -37,7 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.platform.LocalLocale
+import androidx.compose.ui.platform.LocalLocaleList
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -84,9 +84,11 @@ fun CurrencySettingsScreen() {
         }
     )
 
-    val locale = LocalLocale.current
-    val defaultCurrency = remember(locale) {
-        Currency.getInstance(locale.platformLocale)
+    val localeList = LocalLocaleList.current
+    val defaultCurrencies = remember(localeList) {
+        localeList.mapNotNull {
+            Currency.getInstance(it.platformLocale)
+        }.distinctBy { it.currencyCode }
     }
 
     DragAndDropPreferenceScreen(
@@ -110,7 +112,7 @@ fun CurrencySettingsScreen() {
                             if (it) {
                                 localeSettings.setCurrencies(emptyList())
                             } else {
-                                localeSettings.setCurrencies(listOf(defaultCurrency.currencyCode))
+                                localeSettings.setCurrencies(defaultCurrencies.map { it.currencyCode })
                             }
                         },
                     )
@@ -121,11 +123,13 @@ fun CurrencySettingsScreen() {
             if (currencies!!.isEmpty()) {
                 item {
                     PreferenceCategory {
-                        Preference(
-                            title = defaultCurrency.displayName,
-                            icon = R.drawable.euro_24px,
-                            enabled = false
-                        )
+                        for (currency in defaultCurrencies) {
+                            Preference(
+                                title = currency.displayName,
+                                icon = getCurrencySymbol(currency.currencyCode),
+                                enabled = false
+                            )
+                        }
                     }
                 }
             } else {

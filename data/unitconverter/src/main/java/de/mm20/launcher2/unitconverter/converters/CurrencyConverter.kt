@@ -90,7 +90,20 @@ class CurrencyConverter(
         }.toMutableList()
 
         val ownCurrencySymbols = preferredCurrencies.ifEmpty {
-            listOf(JCurrency.getInstance(Locale.getDefault()).currencyCode ?: "USD")
+            val defaultCurrencySymbols = mutableListOf<String>()
+            val localeList = context.resources.configuration.locales
+            for (i in 0 until localeList.size()) {
+                val locale = localeList[i]
+                val currency = try {
+                    JCurrency.getInstance(locale)
+                } catch (_: IllegalArgumentException) {
+                    null
+                }
+                if (currency != null) {
+                    defaultCurrencySymbols.add(currency.currencyCode)
+                }
+            }
+            defaultCurrencySymbols.distinct()
         }
         val topCurrencies = ownCurrencySymbols + topCurrencies
 
