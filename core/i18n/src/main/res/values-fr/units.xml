@@ -28,25 +28,25 @@
         <item quantity="many">millimètres</item>
         <item quantity="other">millimètres</item>
     </plurals>
-    <string name="unit_inch_symbol">in</string>
+    <string name="unit_inch_symbol">pouce</string>
     <plurals name="unit_inch">
         <item quantity="one">pouce</item>
         <item quantity="many">pouces</item>
         <item quantity="other">pouces</item>
     </plurals>
-    <string name="unit_foot_symbol">ft</string>
+    <string name="unit_foot_symbol">pied</string>
     <plurals name="unit_foot">
         <item quantity="one">pied</item>
         <item quantity="many">pieds</item>
         <item quantity="other">pieds</item>
     </plurals>
-    <string name="unit_yard_symbol">yd</string>
+    <string name="unit_yard_symbol">yard</string>
     <plurals name="unit_yard">
         <item quantity="one">yard</item>
         <item quantity="many">yards</item>
         <item quantity="other">yards</item>
     </plurals>
-    <string name="unit_mile_symbol">mi</string>
+    <string name="unit_mile_symbol">mile</string>
     <plurals name="unit_mile">
         <item quantity="one">mile</item>
         <item quantity="many">miles</item>
@@ -396,21 +396,21 @@
     <plurals name="unit_cubic_inch">
         <item quantity="one">Pouce cube</item>
         <item quantity="many">Pouces cube</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_cubic_foot">
         <item quantity="one">Pied cube</item>
         <item quantity="many">Pieds cube</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_cubic_yard">
         <item quantity="one">verge cube</item>
         <item quantity="many">verges cube</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_pint_us">
         <item quantity="one">pinte (US)</item>
         <item quantity="many">pintes (US)</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
 </resources>
