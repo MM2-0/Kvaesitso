@@ -3,7 +3,6 @@ package de.mm20.launcher2.badges
 import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed interface BadgeIcon {
     @JvmInline

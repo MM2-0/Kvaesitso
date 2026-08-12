@@ -9,38 +9,38 @@ targetSdk = "36"
 
 pluginSdk = "2.3.0"
 
-android-gradle-plugin = "9.2.1"
+android-gradle-plugin = "9.3.1"
 ksp-gradle-plugin = "2.3.4"
 
-kotlin = "2.3.21"
+kotlin = "2.4.10"
 kotlinx-coroutines = "1.11.0"
-kotlinx-immutable = "0.4.0"
+kotlinx-immutable = "0.5.1"
 kotlinx-serialization = "1.11.0"
 
-jetbrains-markdown = "0.7.3"
+jetbrains-markdown = "0.7.8"
 
-androidx-compose = "1.12.0-alpha02"
-androidx-compose-material3 = "1.5.0-alpha19"
-androidx-compose-material3adaptive = "1.3.0-beta01"
-androidx-lifecycle = "2.10.0"
-androidx-core = "1.18.0"
-androidx-appcompat = "1.7.1"
+androidx-compose = "1.13.0-alpha01"
+androidx-compose-material3 = "1.5.0-alpha26"
+androidx-compose-material3adaptive = "1.3.0"
+androidx-lifecycle = "2.11.0"
+androidx-core = "1.19.0"
+androidx-appcompat = "1.8.0"
 androidx-activity = "1.13.0"
-androidx-navigation3 = "1.1.1"
+androidx-navigation3 = "1.1.6"
 
 # Careful, 2.10.0 seems to require some fixes, or jobs aren't executed
 androidx-work = "2.11.2"
 androidx-browser = "1.10.0"
 androidx-palette = "1.0.0"
 androidx-room = "2.8.4"
-androidx-constraint-layout = "1.1.1"
+androidx-constraint-layout = "1.1.2"
 androidx-emojipicker = "1.6.0"
 
 accompanist = "0.36.0"
 haze = "1.7.2"
 coil = "2.7.0"
-koin = "4.2.1"
-ktor = "3.4.3"
+koin = "4.2.2"
+ktor = "3.5.2"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -115,7 +115,7 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary", version = "2.10" }
 suncalc = { group = "org.shredzone.commons", name = "commons-suncalc", version = "3.11" }
-jsoup = { group = "org.jsoup", name = "jsoup", version = "1.22.2" }
+jsoup = { group = "org.jsoup", name = "jsoup", version = "1.23.1" }
 commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.15.0" }
 stringsimilarity = { group = "com.aallam.similarity", name = "string-similarity-kotlin", version = "0.1.0" }
 
@@ -131,7 +131,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 osmopeninghours = { group = "de.westnordost", name = "osm-opening-hours", version.ref = "osmOpeningHours" }
 
-smartspacer = { group = "com.kieronquinn.smartspacer", name = "sdk-client", version = "1.1.2" }
+smartspacer = { group = "com.kieronquinn.smartspacer", name = "sdk-client", version = "1.2" }
 
 [bundles]
 kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]

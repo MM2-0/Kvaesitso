@@ -148,7 +148,7 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                         leadingIcon = {
                             Icon(painterResource(action.icon), null)
                         },
-                        trailingIcon = {
+                        trailingContent = {
                             Icon(painterResource(R.drawable.arrow_right_24px), null)
                         },
                         shape = when {

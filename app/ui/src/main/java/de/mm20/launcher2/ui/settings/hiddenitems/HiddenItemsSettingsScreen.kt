@@ -219,7 +219,7 @@ private fun VisibilityDropdown(
         DropdownMenuGroup(
             shapes = MenuDefaults.groupShapes(),
         ) {
-            MenuDefaults.Label {
+            MenuDefaults.DropdownMenuGroupLabel {
                 Text(
                     text = stringResource(R.string.customize_item_visibility),
                 )

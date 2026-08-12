@@ -38,13 +38,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_1_8)
+            jvmTarget.set(JvmTarget.JVM_11)
             optIn.add("androidx.compose.ui.ExperimentalComposeUiApi")
             optIn.add("androidx.compose.foundation.ExperimentalFoundationApi")
             optIn.add("androidx.compose.ui.text.ExperimentalTextApi")
