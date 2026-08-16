@@ -31,7 +31,6 @@ androidx-work = "2.11.2"
 androidx-browser = "1.10.0"
 androidx-palette = "1.0.0"
 androidx-room = "2.8.4"
-androidx-constraint-layout = "1.1.2"
 androidx-emojipicker = "1.6.0"
 
 accompanist = "0.36.0"
@@ -91,7 +90,6 @@ androidx-palette = { group = "androidx.palette", name = "palette", version.ref =
 
 haze = {group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
 
-androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "androidx-constraint-layout" }
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version = "1.4.2" }
 androidx-securitycrypto = { group = "androidx.security", name = "security-crypto", version = "1.1.0" }
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.2.1" }
