@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -32,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
@@ -52,9 +49,6 @@ data object FilterBarSettingsRoute: NavKey
 fun FilterBarSettingsScreen() {
     val viewModel: FilterBarSettingsScreenVM = viewModel()
     val backStack = LocalBackStack.current
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
-    systemUiController.setNavigationBarColor(Color.Black)
 
     val context = LocalContext.current
     val activity = LocalContext.current as? AppCompatActivity
@@ -100,8 +94,8 @@ fun FilterBarSettingsScreen() {
                         }
                     }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = "Back"
+                            painterResource(R.drawable.arrow_back_24px),
+                            contentDescription = stringResource(R.string.menu_back)
                         )
                     }
                 },

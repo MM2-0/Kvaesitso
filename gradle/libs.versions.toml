@@ -27,8 +27,6 @@ androidx-core = "1.19.0"
 androidx-appcompat = "1.8.0"
 androidx-activity = "1.13.0"
 androidx-navigation3 = "1.1.6"
-
-# Careful, 2.10.0 seems to require some fixes, or jobs aren't executed
 androidx-work = "2.11.2"
 androidx-browser = "1.10.0"
 androidx-palette = "1.0.0"
@@ -91,10 +89,6 @@ androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version.re
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "androidx-browser" }
 androidx-palette = { group = "androidx.palette", name = "palette", version.ref = "androidx-palette" }
 
-accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
-accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
-accompanist-pagerindicators = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanist" }
-accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
 haze = {group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
 
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "androidx-constraint-layout" }

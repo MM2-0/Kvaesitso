@@ -51,7 +51,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchActionIcon
@@ -72,9 +71,6 @@ data object SearchActionsSettingsRoute : NavKey
 fun SearchActionsSettingsScreen() {
     val viewModel: SearchActionsSettingsScreenVM = viewModel()
     val backStack = LocalBackStack.current
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
-    systemUiController.setNavigationBarColor(Color.Black)
 
     val context = LocalContext.current
 

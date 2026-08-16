@@ -50,12 +50,10 @@ android {
             optIn.add("androidx.compose.ui.text.ExperimentalTextApi")
             optIn.add("androidx.compose.ui.unit.ExperimentalUnitApi")
             optIn.add("androidx.compose.foundation.layout.ExperimentalLayoutApi")
-            optIn.add("androidx.compose.material.ExperimentalMaterialApi")
             optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
             optIn.add("androidx.compose.material3.ExperimentalMaterial3ExpressiveApi")
             optIn.add("androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi")
             optIn.add("androidx.compose.animation.ExperimentalAnimationApi")
-            optIn.add("com.google.accompanist.pager.ExperimentalPagerApi")
             optIn.add("androidx.compose.animation.ExperimentalSharedTransitionApi")
         }
     }
@@ -91,11 +89,6 @@ dependencies {
     implementation(libs.androidx.compose.material3adaptive.navigation3)
 
     implementation(libs.markdown)
-
-    implementation(libs.accompanist.systemuicontroller)
-    implementation(libs.accompanist.pager)
-    implementation(libs.accompanist.pagerindicators)
-    implementation(libs.accompanist.flowlayout)
 
     implementation(libs.haze)
 

@@ -1,8 +1,8 @@
 package de.mm20.launcher2.ui.component.view
 
 import android.widget.ProgressBar
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,7 +13,7 @@ internal fun ComposeProgressBar(
     modifier: Modifier,
 ) {
     CircularProgressIndicator(
-        color = view.progressTintList?.defaultColor?.let { Color(it) } ?: MaterialTheme.colors.primary,
+        color = view.progressTintList?.defaultColor?.let { Color(it) } ?: MaterialTheme.colorScheme.primary,
         modifier = modifier,
     )
 }
