@@ -7,6 +7,7 @@ import android.icu.util.Measure
 import android.icu.util.MeasureUnit
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.MeasurementSystem
+import de.mm20.launcher2.preferences.WindSpeedUoM
 import de.mm20.launcher2.ui.R
 import java.text.NumberFormat
 import java.util.Locale
@@ -144,12 +145,12 @@ private fun formatMiles(
 internal fun formatSpeed(
     context: Context,
     metersPerSecond: Float,
-    measurementSystem: MeasurementSystem,
+    windSpeedUoM: WindSpeedUoM
 ): String {
-    if (measurementSystem == MeasurementSystem.UnitedStates || measurementSystem == MeasurementSystem.UnitedKingdom) {
-        return formatMpH(context, metersPerSecond * 2.2369f)
-    } else {
-        return formatKmH(context, metersPerSecond * 3.6f)
+    return when (windSpeedUoM) {
+        WindSpeedUoM.MetersPerSecond -> formatMpS(context, metersPerSecond)
+        WindSpeedUoM.KilometersPerHour -> formatKmH(context, metersPerSecond * 3.6f)
+        WindSpeedUoM.MilesPerHour -> formatMpH(context, metersPerSecond * 2.2369f)
     }
 }
 
@@ -169,6 +170,25 @@ private fun formatKmH(
             maximumFractionDigits = 0
         }.format(kmH)
         return "$formatted ${context.getString(R.string.unit_kilometer_per_hour_symbol)}"
+    }
+}
+
+private fun formatMpS(
+    context: Context,
+    mps: Float,
+): String {
+    if (isAtLeastApiLevel(30)) {
+        return NumberFormatter
+            .withLocale(
+                Locale.getDefault()
+            ).unitWidth(NumberFormatter.UnitWidth.NARROW)
+            .precision(Precision.maxFraction(0))
+            .format(Measure(mps, MeasureUnit.METER_PER_SECOND)).toString()
+    } else {
+        val formatted = NumberFormat.getInstance().apply {
+            maximumFractionDigits = 0
+        }.format(mps)
+        return "$formatted ${context.getString(R.string.unit_meter_per_second_symbol)}"
     }
 }
 
