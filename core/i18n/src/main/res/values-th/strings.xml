@@ -215,7 +215,7 @@
     <string name="preference_screen_search">ค้นหา</string>
     <string name="preference_logs">ไฟล์เก็บข้อมูลกิจกรรมแอป</string>
     <string name="preference_search_favorites">รายการโปรด</string>
-    <string name="preference_screen_search_summary">การค้นหา แท็ก สิ่งที่ถูกซ่อน</string>
+    <string name="preference_screen_search_summary">การค้นหา แท็ก ผลการค้นหาที่ถูกตัดออก</string>
     <string name="preference_search_files">ไฟล์</string>
     <string name="preference_search_calendar">ปฏิทิน</string>
     <string name="preference_search_appshortcuts">ทางลัดแอป</string>
@@ -236,9 +236,9 @@
     <string name="preference_search_bar_color">สี</string>
     <string name="preference_search_bar_auto_focus">เปิดคีย์บอร์ด</string>
     <string name="preference_search_bar_launch_on_enter">เปิดแอปเมื่อกด Enter</string>
-    <string name="preference_hidden_items">ซ่อนผลการค้นหา</string>
-    <string name="preference_hidden_items_summary">จัดการแอปและผลการค้นหาที่ถูกซ่อน</string>
-    <string name="preference_hidden_items_reveal_button_summary">แสดงปุ่มที่เปิดเผยผลการค้นหาที่ซ่อนไว้</string>
+    <string name="preference_hidden_items">ผลการค้นหาที่ถูกตัดออก</string>
+    <string name="preference_hidden_items_summary">จัดการแอปและผลการค้นหาที่ถูกตัดออก</string>
+    <string name="preference_hidden_items_reveal_button_summary">แสดงปุ่มเผยผลการค้นหาที่ถูกตัดออก</string>
     <string name="preference_screen_tags">แท็ก</string>
     <string name="preference_screen_tags_summary">จัดการแท็ก และสิ่งที่ถูกแท็ก</string>
     <string name="preference_wikipedia_customurl">ลิงก์วิกิพีเดีย</string>
@@ -833,8 +833,8 @@
     <string name="new_theme_name">(ไม่มีชื่อ)</string>
     <string name="preference_screen_transparencies">ความโปร่งใส</string>
     <string name="confirmation_delete_transparencies_scheme">คุณต้องการลบชุดความโปร่งใส %1$s ใช่หรือไม่?</string>
-    <string name="preference_screen_typography">การจัดตัวอักษร</string>
-    <string name="confirmation_delete_typography_scheme">คุณต้องการลบชุดการจัดตัวอักษร %1$s ใช่หรือไม่?</string>
+    <string name="preference_screen_typography">ฟอนต์</string>
+    <string name="confirmation_delete_typography_scheme">คุณต้องการลบชุดฟอนต์ %1$s ใช่หรือไม่?</string>
     <string name="preference_typography_fonts">ชุดแบบอักษร</string>
     <string name="font_category_device_default">ค่าเริ่มต้นของอุปกรณ์</string>
     <string name="font_name_device_body">ชุดแบบอักษรของอุปกรณ์</string>
@@ -855,4 +855,23 @@
     <string name="widget_name_apps">แอป</string>
     <string name="preference_create_colors">โทนสีใหม่</string>
     <string name="preference_create_shapes">ชุดรูปร่าง</string>
+    <string name="preference_create_typography">ชุดฟอนต์ใหม่</string>
+    <string name="preference_create_transparency">ชุดความโปร่งใสใหม่</string>
+    <string name="preference_category_enabled_plugins">เปิดใช้งานแล้ว</string>
+    <string name="preference_category_installed_plugins">ติดตั้งแล้ว</string>
+    <string name="preference_clockwidget_smartspacer">จัดการโดย Smartspacer</string>
+    <string name="preference_clockwidget_battery_part_always_show">แสดงไว้เสมอ</string>
+    <string name="preference_clockwidget_battery_part_show">แสดงเมื่อเหลือน้อยหรือกำลังชาร์จอยู่</string>
+    <string name="preference_clockwidget_battery_part_hide">ไม่แสดง</string>
+    <string name="preference_search_apps">แอป</string>
+    <string name="preference_search_apps_summary">แสดงแอปทั้งหมดเมื่อยังไม่ได้พิมพ์สิ่งใดในแถบการค้นหา</string>
+    <string name="preference_search_apps_show_details">แสดงข้อมูลแอป</string>
+    <string name="preference_search_apps_show_details_summary">แสดงเวอร์ชันและชื่อแพ็กเกจของแอปในเมนูกดค้าง</string>
+    <string name="preference_currency_settings">การตั้งค่าสกุลเงิน</string>
+    <string name="preference_smartspacer_integration">Smartspacer</string>
+    <string name="preference_smartspacer_integration_description">Smartspacer คือแอปเสรีและโอเพนซอร์สสำหรับวิดเจ็ตข้อมูลโดยย่อ (At a Glance) คุณสามารถติดตั้งแอป Smartspacer เพื่อนำไปใช้ในโซนไดนามิกของวิดเจ็ตนาฬิกาได้</string>
+    <string name="preference_smartspacer_enable">เปิดใช้งานการเชื่อมต่อกับ Smartspacer</string>
+    <string name="preference_launch_smartspacer_app">เปิด Smartspacer</string>
+    <string name="preference_feed_integration">ฟีด</string>
+    <string name="preference_category_feed_provider">ผู้ให้บริการฟีด</string>
 </resources>
