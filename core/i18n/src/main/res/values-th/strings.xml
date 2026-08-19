@@ -530,7 +530,7 @@
     <string name="note_widget_action_relink_file">ลิงก์ใหม่</string>
     <string name="note_widget_conflict">มีความขัดแย้งของข้อมูล</string>
     <string name="note_widget_conflict_description">ไฟล์ที่ถูกลิงก์มีข้อมูลอยู่แต่เนื้อหาของไฟล์ไม่ตรงกับเวอร์ชั่นล่าสุดที่ถูกบันทึกในโน้ตนี้ คุณต้องการเก็บเวอร์ชั่นใดไว้\?</string>
-    <string name="confirmation_delete_color_scheme">คุณต้องการลบชุดสี %1$s ใช่หรือไม่?</string>
+    <string name="confirmation_delete_color_scheme">คุณต้องการลบโทนสี %1$s ใช่หรือไม่?</string>
     <string name="file_type_launchertheme">ธีม %1$s</string>
     <string name="import_theme_error">ไม่สามารถอ่านไฟล์ที่เลือกไว้ได้ กรุณาตรวจสอบว่าคุณได้เลือกไฟล์ธีมที่ถูกต้อง (*.kvtheme) และข้อมูลไฟล์ไม่เสียหาย</string>
     <string name="preference_blur_wallpaper_radius">ความมัว</string>
@@ -850,4 +850,9 @@
     <string name="poi_category_hackerspace">แฮกเกอร์สเปซ</string>
     <string name="poi_category_stationery">ร้านขายเครื่องเขียน</string>
     <string name="preference_clockwidget_dock_rows">แถวในด็อค</string>
+    <string name="action_quit">ออก</string>
+    <string name="uv_index">ยูวี %1$d</string>
+    <string name="widget_name_apps">แอป</string>
+    <string name="preference_create_colors">โทนสีใหม่</string>
+    <string name="preference_create_shapes">ชุดรูปร่าง</string>
 </resources>
