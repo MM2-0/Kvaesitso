@@ -919,6 +919,9 @@
     <string name="edit_tag_title">แก้ไขแท็ก</string>
     <string name="dialog_discard_unsaved">ออกโดยไม่บันทึกใช่หรือไม่</string>
     <string name="typo_preview_extra_short">กข</string>
-    <string name="typo_preview_short1">กขค</string>
+    <string name="typo_preview_short1">สยาม</string>
     <string name="typo_preview_short2">ไทย</string>
+    <string name="typo_preview_medium1">กรุงเทพฯ</string>
+    <string name="typo_preview_medium2">นนทบุรี ๒</string>
+    <string name="typo_preview_long">นายสมศักดิ์ ภูมิใจ\nบ้านเลขที่ 124/790</string>
 </resources>
