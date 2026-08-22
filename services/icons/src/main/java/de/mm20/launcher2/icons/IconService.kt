@@ -17,6 +17,7 @@ import de.mm20.launcher2.data.customattrs.CustomThemedIcon
 import de.mm20.launcher2.data.customattrs.DefaultPlaceholderIcon
 import de.mm20.launcher2.data.customattrs.ForceThemedIcon
 import de.mm20.launcher2.data.customattrs.UnmodifiedSystemDefaultIcon
+import de.mm20.launcher2.data.customattrs.PluginIconRenderer
 import de.mm20.launcher2.icons.providers.CalendarIconProvider
 import de.mm20.launcher2.icons.providers.CompatIconProvider
 import de.mm20.launcher2.icons.providers.CustomIconPackIconProvider
@@ -28,6 +29,9 @@ import de.mm20.launcher2.icons.providers.IconPackIconProvider
 import de.mm20.launcher2.icons.providers.IconProvider
 import de.mm20.launcher2.icons.providers.PlaceholderIconProvider
 import de.mm20.launcher2.icons.providers.SystemIconProvider
+import de.mm20.launcher2.icons.providers.PluginIconRendererProvider
+import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.icons.providers.ThemedPlaceholderIconProvider
 import de.mm20.launcher2.icons.providers.getFirstIcon
 import de.mm20.launcher2.icons.transformations.ForceThemedIconTransformation
@@ -62,6 +66,7 @@ class IconService(
     private val iconPackManager: IconPackManager,
     private val settings: IconSettings,
     private val customAttributesRepository: CustomAttributesRepository,
+    private val pluginService: PluginService,
 ) {
 
     private val appReceiver = object : BroadcastReceiver() {
@@ -223,6 +228,14 @@ class IconService(
         if (customIcon is CustomTextIcon) {
             return listOf(CustomTextIconProvider(customIcon))
         }
+        if (customIcon is PluginIconRenderer) {
+            val plugin = kotlinx.coroutines.runBlocking {
+                pluginService.getPluginWithState(customIcon.authority).first()?.plugin
+            }
+            if (plugin != null && plugin.enabled && plugin.type == PluginType.IconRenderer) {
+                return listOf(PluginIconRendererProvider(context, plugin))
+            }
+        }
         return emptyList()
     }
 
@@ -242,6 +255,11 @@ class IconService(
             )
         }
         if (customIcon is UnmodifiedSystemDefaultIcon) {
+            return emptyList()
+        }
+        if (customIcon is PluginIconRenderer) {
+            // Renderer output is final. Global adaptify/theming transformations
+            // would change the mode selected by the user.
             return emptyList()
         }
         return null
@@ -343,6 +361,12 @@ class IconService(
             )
             transformationOptions.add(
                 ForceThemedIcon
+            )
+            providerOptions.addAll(
+                pluginService.getPluginsWithState(
+                    type = PluginType.IconRenderer,
+                    enabled = true,
+                ).first().map { PluginIconRenderer(it.plugin.authority) }
             )
         }
 
