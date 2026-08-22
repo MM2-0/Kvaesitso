@@ -6,4 +6,5 @@ enum class PluginType {
     LocationSearch,
     Calendar,
     ContactSearch,
+    IconRenderer,
 }

@@ -60,5 +60,6 @@ dependencies {
     implementation(project(":data:applications"))
     implementation(project(":core:crashreporter"))
     api(project(":data:customattrs"))
+    implementation(project(":services:plugins"))
 
 }

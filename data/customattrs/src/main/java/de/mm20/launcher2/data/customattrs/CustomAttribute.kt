@@ -119,6 +119,9 @@ sealed class CustomIcon : CustomAttribute {
                 }
                 "force_themed_icon" -> ForceThemedIcon
                 "default_placeholder_icon" -> DefaultPlaceholderIcon
+                "plugin_icon_renderer" -> PluginIconRenderer(
+                    authority = payload.getString("authority")
+                )
                 "custom_text_icon" -> {
                     CustomTextIcon(
                         text = payload.getString("text"),
@@ -129,6 +132,13 @@ sealed class CustomIcon : CustomAttribute {
             }
         }
     }
+}
+
+data class PluginIconRenderer(val authority: String) : CustomIcon() {
+    override fun toDatabaseValue(): String = jsonObjectOf(
+        "type" to "plugin_icon_renderer",
+        "authority" to authority,
+    ).toString()
 }
 
 @Deprecated("Use CustomIconPackIcon instead")
