@@ -39,7 +39,7 @@
     <string name="menu_open_file">開啟</string>
     <string name="menu_share">分享</string>
     <string name="menu_share_store_link">連結 %1$s</string>
-    <string name="menu_share_apk_file">APK 安裝包</string>
+    <string name="menu_share_apk_file">APK 安裝套件</string>
     <string name="menu_uninstall">解除安裝</string>
     <string name="action_undo">復原</string>
     <string name="menu_delete">刪除</string>
@@ -913,4 +913,10 @@
     <string name="gesture_action_launch_select_app">選擇應用程式或捷徑</string>
     <string name="preference_search_apps_show_details">顯示應用程式資訊</string>
     <string name="preference_search_apps_show_details_summary">顯示應用程式的版本與套件名稱</string>
+    <string name="preference_currency_settings">貨幣設定</string>
+    <string name="search_query_private_space">私人空間</string>
+    <string name="search_action_private_space_lock">鎖定私人空間</string>
+    <string name="search_action_private_space_unlock">解鎖私人空間</string>
+    <string name="preference_currencies">貨幣</string>
+    <string name="preference_add_currency">新增貨幣</string>
 </resources>
