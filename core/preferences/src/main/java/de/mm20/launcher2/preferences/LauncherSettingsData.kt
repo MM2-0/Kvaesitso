@@ -87,6 +87,7 @@ data class LauncherSettingsData internal constructor(
     val calendarSearchExcludedCalendars: Set<String> = setOf(),
 
     val shortcutSearchEnabled: Boolean = true,
+    val shortcutSearchBlocklist: Set<String> = setOf(),
 
     val calculatorEnabled: Boolean = true,
 

@@ -34,6 +34,7 @@ import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.apps.AppSearchSettingsRoute
+import de.mm20.launcher2.ui.settings.appshortcuts.AppShortcutsSettingsRoute
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsRoute
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarSearchSettingsRoute
 import de.mm20.launcher2.ui.settings.contacts.ContactsSettingsRoute
@@ -208,15 +209,18 @@ fun SearchSettingsScreen() {
                         stringResource(R.string.app_name),
                     ),
                 ) {
-                    SwitchPreference(
+                    PreferenceWithSwitch(
                         title = stringResource(R.string.preference_search_appshortcuts),
                         summary = stringResource(R.string.preference_search_appshortcuts_summary),
                         icon = R.drawable.mobile_arrow_up_right_24px,
-                        value = appShortcuts == true && hasAppShortcutsPermission == true,
-                        onValueChanged = {
+                        switchValue = appShortcuts == true && hasAppShortcutsPermission == true,
+                        onSwitchChanged = {
                             viewModel.setAppShortcuts(it)
                         },
-                        enabled = hasAppShortcutsPermission == true
+                        enabled = hasAppShortcutsPermission == true,
+                        onClick = {
+                            backStack += AppShortcutsSettingsRoute
+                        }
                     )
                 }
 

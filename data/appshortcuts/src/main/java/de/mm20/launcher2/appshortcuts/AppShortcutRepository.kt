@@ -9,6 +9,7 @@ import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
 import androidx.core.content.getSystemService
+import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
@@ -23,9 +24,9 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.callbackFlow
@@ -86,17 +87,18 @@ internal class AppShortcutRepositoryImpl(
                 emptyList()
             }
             val appShortcuts = mutableListOf<LauncherShortcut>()
-            appShortcuts.addAll(shortcuts
-                ?.let {
-                    if (it.size > limit) it.subList(0, limit)
-                    else it
-                }
-                ?.map {
-                    LauncherShortcut(
-                        context,
-                        it,
-                    )
-                } ?: emptyList()
+            appShortcuts.addAll(
+                shortcuts
+                    ?.let {
+                        if (it.size > limit) it.subList(0, limit)
+                        else it
+                    }
+                    ?.map {
+                        LauncherShortcut(
+                            context,
+                            it,
+                        )
+                    } ?: emptyList()
             )
             appShortcuts
         }
@@ -153,12 +155,15 @@ internal class AppShortcutRepositoryImpl(
 
         val callback = object : LauncherApps.Callback() {
             override fun onPackageRemoved(packageName: String?, user: UserHandle?) {
+                trySend(Unit)
             }
 
             override fun onPackageAdded(packageName: String?, user: UserHandle?) {
+                trySend(Unit)
             }
 
             override fun onPackageChanged(packageName: String?, user: UserHandle?) {
+                trySend(Unit)
             }
 
             override fun onPackagesAvailable(
@@ -166,6 +171,7 @@ internal class AppShortcutRepositoryImpl(
                 user: UserHandle?,
                 replacing: Boolean
             ) {
+                trySend(Unit)
             }
 
             override fun onPackagesUnavailable(
@@ -173,6 +179,7 @@ internal class AppShortcutRepositoryImpl(
                 user: UserHandle?,
                 replacing: Boolean
             ) {
+                trySend(Unit)
             }
 
             override fun onShortcutsChanged(
@@ -196,40 +203,41 @@ internal class AppShortcutRepositoryImpl(
     private val rawShortcuts: Flow<List<NormalizedShortcut>> = combine(
         listOf(
             settings.enabled,
+            settings.blocklist,
             permissionsManager.hasPermission(PermissionGroup.AppShortcuts),
             shortcutChangeEmitter
         )
-    ) { it }
-        .map { (enabled, perm, _) ->
-            enabled as Boolean
-            perm as Boolean
+    ) { (enabled, blocklist, perm, _) ->
+        enabled as Boolean
+        perm as Boolean
+        blocklist as Set<String>
 
-            if (!enabled || !perm) return@map emptyList()
+        if (!enabled || !perm) return@combine emptyList()
 
-            val launcherApps =
-                context.getSystemService<LauncherApps>() ?: return@map emptyList()
+        val launcherApps =
+            context.getSystemService<LauncherApps>() ?: return@combine emptyList()
 
-            val shortcutQuery = LauncherApps.ShortcutQuery()
-            shortcutQuery.setQueryFlags(
-                LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED or
-                        LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or
-                        LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST or
-                        LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED or
-                        LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
-            )
-            val result = launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle()) ?: emptyList()
-            val normalized = result.map {
-                NormalizedShortcut(
-                    info = it,
-                    normalizedLabels = listOfNotNull(
-                        it.longLabel?.toString()?.let { l -> stringNormalizer.normalize(l) },
-                        it.shortLabel?.toString()?.let { l -> stringNormalizer.normalize(l) },
-                    )
+        val shortcutQuery = LauncherApps.ShortcutQuery()
+        shortcutQuery.setQueryFlags(
+            LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED or
+                    LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or
+                    LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST or
+                    LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED or
+                    LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
+        )
+        val result = launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle()) ?: emptyList()
+        val normalized = result.mapNotNull {
+            if ("${it.`package`}:${it.userHandle.getSerialNumber(context)}" in blocklist) return@mapNotNull null
+            NormalizedShortcut(
+                info = it,
+                normalizedLabels = listOfNotNull(
+                    it.longLabel?.toString()?.let { l -> stringNormalizer.normalize(l) },
+                    it.shortLabel?.toString()?.let { l -> stringNormalizer.normalize(l) },
                 )
-            }
-            normalized
+            )
         }
-        .flowOn(Dispatchers.Default)
+        normalized
+    }
         .shareIn(scope, SharingStarted.Eagerly, replay = 1)
 
     override suspend fun getShortcutsConfigActivities(): List<AppShortcutConfigActivity> {
