@@ -12,6 +12,7 @@ import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.media.MediaSettings
+import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -60,13 +61,12 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
             appList.value = allApps.map {
                 AppListItem(
                     label = it.label,
+                    app = it,
                     packageName = it.componentName.packageName,
                     isMusicApp = musicApps.contains(it.componentName.packageName),
                     isChecked = allowList.contains(it.componentName.packageName) || (!denyList.contains(it.componentName.packageName) && musicApps.contains(
                         it.componentName.packageName
-                    )),
-                    icon = iconService.getIcon(it, (32 * density).roundToInt())
-                        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(10000))
+                    ))
                 )
             }.sorted()
             loading.value = false
@@ -96,6 +96,10 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
         mediaSettings.setLists(allowList.toSet(), denyList.toSet())
     }
 
+    fun getIcon(app: SavableSearchable, size: Int): Flow<LauncherIcon?> {
+        return iconService.getIcon(app, size)
+    }
+
 }
 
 data class AppListItem(
@@ -103,7 +107,7 @@ data class AppListItem(
     val packageName: String,
     val isMusicApp: Boolean,
     val isChecked: Boolean,
-    val icon: Flow<LauncherIcon?>,
+    val app: SavableSearchable,
 ): Comparable<AppListItem> {
     override fun compareTo(other: AppListItem): Int {
         val label1 = label
