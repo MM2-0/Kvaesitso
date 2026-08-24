@@ -28,9 +28,35 @@ fun windowWidthClassOf(widthDp: Float): WindowWidthClass {
 }
 
 /**
- * The grid column count setting, scaled for the current window width: the configured
- * value is treated as the baseline for compact windows and doubled at medium/expanded
- * width, so that unfolding a foldable device shows more items per row.
+ * Scales a base column count for a given window width class: the configured value is
+ * the baseline for compact windows and doubled at medium/expanded width, so that
+ * unfolding a foldable device (or otherwise widening the window) shows more items per
+ * row.
+ *
+ * The single source of truth for that scaling factor — anything that needs to predict
+ * or display it (e.g. a settings preview) should call this instead of re-deriving it.
+ */
+fun scaledColumnCount(base: Int, widthClass: WindowWidthClass): Int {
+    return when (widthClass) {
+        WindowWidthClass.Compact -> base
+        WindowWidthClass.Medium, WindowWidthClass.Expanded -> base * 2
+    }
+}
+
+/**
+ * The width class of the current window (really: the current display — see
+ * [LocalWindowSize]), e.g. to predict how [scaledColumnCount] will scale a base value
+ * here.
+ */
+@Composable
+fun currentWindowWidthClass(): WindowWidthClass {
+    val widthDp = with(LocalDensity.current) { LocalWindowSize.current.width.toDp().value }
+    return windowWidthClassOf(widthDp)
+}
+
+/**
+ * The grid column count setting, scaled for the current window width. See
+ * [scaledColumnCount].
  *
  * Only intended for grids that span the full window width. Width-capped surfaces
  * (bottom sheets, dialogs, previews) don't grow with the window and should read
@@ -39,9 +65,5 @@ fun windowWidthClassOf(widthDp: Float): WindowWidthClass {
 @Composable
 fun scaledGridColumnCount(): Int {
     val columnCount = LocalGridSettings.current.columnCount
-    val widthDp = with(LocalDensity.current) { LocalWindowSize.current.width.toDp().value }
-    return when (windowWidthClassOf(widthDp)) {
-        WindowWidthClass.Compact -> columnCount
-        WindowWidthClass.Medium, WindowWidthClass.Expanded -> columnCount * 2
-    }
+    return scaledColumnCount(columnCount, currentWindowWidthClass())
 }

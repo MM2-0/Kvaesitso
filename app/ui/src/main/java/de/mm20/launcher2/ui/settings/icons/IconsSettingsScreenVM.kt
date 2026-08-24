@@ -4,7 +4,6 @@ import android.content.ComponentName
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.icons.IconPack
@@ -20,12 +19,10 @@ import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
@@ -125,15 +122,19 @@ class IconsSettingsScreenVM(
         badgeSettings.setPlugins(plugins)
     }
 
-    private val previewItems = grid.flatMapLatest { grid ->
+    // Not shared/cached: callers pass their own count (the plain preview wants the
+    // density-scaled count on wide windows, the icon pack picker sheet — width-capped
+    // regardless of window size — wants the base count), so a single fixed-limit
+    // upstream flow can no longer serve both.
+    private fun favoriteApps(count: Int) = grid.flatMapLatest {
         favoritesService.getFavorites(
             includeTypes = listOf("app"),
-            limit = grid.columnCount,
+            limit = count,
         )
-    }.shareIn(viewModelScope, started = SharingStarted.WhileSubscribed(), 1)
+    }
 
-    fun getPreviewIcons(size: Int): Flow<List<LauncherIcon>> {
-        return previewItems.flatMapLatest { apps ->
+    fun getPreviewIcons(size: Int, count: Int): Flow<List<LauncherIcon>> {
+        return favoriteApps(count).flatMapLatest { apps ->
             combine(apps.map {
                 iconService.getIcon(it, size).filterNotNull()
             }) {
@@ -149,7 +150,7 @@ class IconsSettingsScreenVM(
         size: Int,
         themed: Boolean
     ): Flow<List<LauncherIcon>> {
-        return previewItems.map { items ->
+        return favoriteApps(count).map { items ->
             val apps = items.filterIsInstance<Application>()
             val icons = mutableListOf<LauncherIcon>()
 

@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -35,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -49,6 +52,8 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.layout.currentWindowWidthClass
+import de.mm20.launcher2.ui.layout.scaledColumnCount
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
@@ -90,8 +95,12 @@ fun IconsSettingsScreen() {
 
     val iconSize = with(density) { grid.iconSize.dp.toPx() }.toInt()
 
-    val previewIcons = remember(iconSize) {
-        viewModel.getPreviewIcons(iconSize)
+    // This preview sits at full width, same as the drawer grid it's previewing — unlike
+    // the icon pack picker sheet below, which is width-capped and intentionally stays at
+    // the base count.
+    val previewColumnCount = scaledColumnCount(grid.columnCount, currentWindowWidthClass())
+    val previewIcons = remember(iconSize, previewColumnCount) {
+        viewModel.getPreviewIcons(iconSize, previewColumnCount)
     }.collectAsState(
         emptyList()
     )
@@ -137,15 +146,82 @@ fun IconsSettingsScreen() {
                         }
                     )
                 }
-                SliderPreference(
-                    title = stringResource(R.string.preference_grid_column_count),
-                    value = grid.columnCount,
-                    min = 3,
-                    max = 12,
-                    onValueChanged = {
-                        viewModel.setColumnCount(it)
-                    }
-                )
+                // Column count only affects the grid layout — it's read by GridResults but
+                // not by ListResults — so hide the control (and its now-meaningless
+                // preview) while "Show apps in a list" is on, same as its sibling above.
+                AnimatedVisibility(!grid.showList) {
+                    SliderPreference(
+                        title = stringResource(R.string.preference_grid_density),
+                        summary = stringResource(R.string.preference_grid_density_summary),
+                        value = grid.columnCount,
+                        min = 3,
+                        max = 12,
+                        onValueChanged = {
+                            viewModel.setColumnCount(it)
+                        },
+                        label = {
+                            // Keep the same trailing width as the icon-size slider's numeric
+                            // label above so both sliders' tracks line up.
+                            Spacer(modifier = Modifier.width(56.dp).padding(start = 24.dp))
+                        },
+                        content = { count ->
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 8.dp)
+                            ) {
+                                Row(modifier = Modifier.fillMaxWidth()) {
+                                    Text(
+                                        text = stringResource(R.string.preference_grid_density_spacious),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                    Text(
+                                        text = stringResource(R.string.preference_grid_density_dense),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        textAlign = TextAlign.End,
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                }
+                                // Scaled for the window this settings screen is actually
+                                // running in right now — folded shows the folded count and
+                                // spacing, unfolded shows the unfolded one, same as the real
+                                // app drawer grid would.
+                                val effectiveCount = scaledColumnCount(count, currentWindowWidthClass())
+                                // Same structure as one row of the real grid (GridItem):
+                                // a weighted cell with 4dp padding, an icon at the actual
+                                // configured size (not shrunk to fit) with another 4dp of
+                                // padding — so this crowds/overlaps exactly as densely as
+                                // the real grid would at the same count and icon size,
+                                // rather than an invented gap that looks tidier than reality.
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 8.dp)
+                                        // Decorative — these are placeholders, not real
+                                        // apps; don't make TalkBack walk up to 12 unlabeled
+                                        // nodes.
+                                        .clearAndSetSemantics {},
+                                ) {
+                                    for (i in 0 until effectiveCount) {
+                                        Box(
+                                            modifier = Modifier
+                                                .weight(1f)
+                                                .padding(4.dp),
+                                            contentAlignment = Alignment.Center,
+                                        ) {
+                                            ShapedLauncherIcon(
+                                                modifier = Modifier.padding(4.dp),
+                                                size = grid.iconSize.dp,
+                                                icon = { null },
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    )
+                }
             }
         }
         item {
