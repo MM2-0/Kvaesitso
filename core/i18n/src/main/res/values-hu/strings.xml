@@ -6,7 +6,7 @@
     <string name="menu_favorites_pin">Kitűzés a kedvencekhez</string>
     <string name="menu_favorites_unpin">Kitűzés megszüntetése</string>
     <string name="menu_back">Vissza</string>
-    <string name="menu_app_info">Információ az alkalmazásról</string>
+    <string name="menu_app_info">Alkalmazásadatok</string>
     <string name="menu_launch">Futtatás</string>
     <string name="menu_customize">Testreszabás</string>
     <string name="action_undo">Visszavonás</string>
@@ -144,9 +144,7 @@
     <string name="wind_east_south_east">Kelet-délkelet</string>
     <string name="wind_south_east">Délkelet</string>
     <string name="wind_north_north_west">Észak-északnyugat</string>
-    <string name="disclaimer_currency_converter">Az Európai Központi Bank által naponta egyszer közzétett árfolyamok. Az összes információ „úgy, ahogy van”, mindenféle garancia nélkül. Ezen információkért semmilyen felelősséget nem vállalunk.
-\n
-\nUtoljára frissítve: %1$s</string>
+    <string name="disclaimer_currency_converter">Az Európai Központi Bank által naponta egyszer közzétett árfolyamok. Az összes adat „úgy, ahogy van”, mindenféle garancia nélkül. Ezen adakoért semmilyen felelősséget nem vállalunk. \n \nUtoljára frissítve: %1$s</string>
     <string name="music_widget_no_data">Még nem játszott le média tartalmat</string>
     <string name="weather_condition_sleetshowers">Havas eső záporok</string>
     <string name="weather_condition_heavysleet">Heves havas eső</string>
@@ -226,7 +224,7 @@
     <string name="preference_debug_reinstall_iconpacks_summary">Ikoncsomag gyorsítótárának törlése és újraépítése</string>
     <string name="preference_themed_icons_summary">Ikonok színezése az alkalmazás színösszeállításával</string>
     <string name="open_webpage">Weboldal megnyitása</string>
-    <string name="preference_screen_about_summary">Alkalmazás- és licencinformációk</string>
+    <string name="preference_screen_about_summary">Alkalmazás- és licencadatok</string>
     <string name="preference_screen_appearance_summary">Megjelenés testreszabása</string>
     <string name="preference_weather_provider">Szolgáltató</string>
     <string name="preference_screen_integrations">Integrációk</string>
@@ -317,7 +315,7 @@
     <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 8 órán belül megszólalnak</string>
     <string name="preference_logs">Naplók</string>
     <string name="preference_logs_summary">Alkalmazásnaplók megtekintése és exportálása</string>
-    <string name="preference_screen_buildinfo_summary">További információ az alkalmazás ezen verziójáról</string>
+    <string name="preference_screen_buildinfo_summary">További tudnivalók az alkalmazás ezen verziójáról</string>
     <string name="preference_search_bar_launch_on_enter">Keresés enterrel</string>
     <string name="preference_hidden_items_summary">Kizárt alkalmazások és keresési eredmények kezelése</string>
     <string name="preference_wikipedia_customurl">Wikipédia-webcím</string>
@@ -340,13 +338,13 @@
     <string name="preference_search_result_ordering_weight_factor_default">Kiegyensúlyozott</string>
     <string name="note_widget_action_unlink_file">Leválasztás</string>
     <string name="note_widget_conflict_keep_selected">Maradjon kiválasztva</string>
-    <string name="preference_screen_buildinfo">Összeállítási információk</string>
+    <string name="preference_screen_buildinfo">Összeállítási adatok</string>
     <string name="preference_screen_debug">Hibakeresés</string>
     <string name="battery_part_charging">⚡︎ Töltés ⚡︎</string>
     <string name="search_action_email">E-mail</string>
     <string name="search_action_alarm">Riasztás beállítása</string>
     <string name="create_search_action_type">Milyen típusú műveletet szeretne létrehozni?</string>
-    <string name="more_information">További információ</string>
+    <string name="more_information">További tudnivalók</string>
     <string name="open_search_swipe_right">Jobbra húzás</string>
     <string name="gesture_action_recents">Legutóbbi alkalmazások</string>
     <string name="preference_notification_badges">Értesítési jelvények</string>
