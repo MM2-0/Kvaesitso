@@ -252,6 +252,7 @@ fun CurrentWeather(
         context.packageManager.resolveActivity(
             Intent(Intent.ACTION_MAIN).also {
                 it.addCategory(Intent.CATEGORY_APP_WEATHER)
+                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }, 0
         )
     }

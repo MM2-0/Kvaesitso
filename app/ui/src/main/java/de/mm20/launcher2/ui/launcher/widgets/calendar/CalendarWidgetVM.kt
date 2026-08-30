@@ -9,12 +9,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.calendar.CalendarRepository
-import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.searchable.PinnedLevel
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.widgets.CalendarWidget
@@ -69,7 +69,9 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
             field = value
             val dates = value.flatMap {
                 val startDate =
-                    it.startTime?.let { Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate() }
+                    it.startTime?.let {
+                        Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
+                    }
                 val endDate =
                     Instant.ofEpochMilli(it.endTime).atZone(ZoneId.systemDefault()).toLocalDate()
                 return@flatMap listOfNotNull(
@@ -129,6 +131,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         val endTime = selectedDate.value.atTime(13, 0).toInstant(zoneOffset).toEpochMilli()
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.tryStartActivity(intent)
     }
 
@@ -139,6 +142,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         builder.appendPath("time")
         ContentUris.appendId(builder, startMillis)
         val intent = Intent(Intent.ACTION_VIEW)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .setData(builder.build())
         context.tryStartActivity(intent)
     }
@@ -207,7 +211,8 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
                 from = System.currentTimeMillis(),
                 to = System.currentTimeMillis() + 14 * 24 * 60 * 60 * 1000L,
                 excludeAllDayEvents = !config.allDayEvents,
-                excludeCalendars = config.excludedCalendarIds ?: config.legacyExcludedCalendarIds?.map { "local:$it" } ?: emptyList(),
+                excludeCalendars = config.excludedCalendarIds
+                    ?: config.legacyExcludedCalendarIds?.map { "local:$it" } ?: emptyList(),
             ).collectLatest { events ->
                 searchableRepository.getKeys(
                     includeTypes = listOf("calendar", "tasks.org", "plugin.calendar"),
