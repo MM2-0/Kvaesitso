@@ -133,7 +133,8 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     }
 
     fun openCalendarApp(context: Context) {
-        val startMillis = System.currentTimeMillis()
+        val zoneOffset = OffsetDateTime.now().offset
+        val startMillis = selectedDate.value.atTime(12, 0).toInstant(zoneOffset).toEpochMilli()
         val builder = CalendarContract.CONTENT_URI.buildUpon()
         builder.appendPath("time")
         ContentUris.appendId(builder, startMillis)
