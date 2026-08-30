@@ -13,6 +13,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -185,7 +187,8 @@ fun IconPicker(
                         )
                     }
                     DropdownMenuPopup(
-
+                        modifier = Modifier
+                            .verticalScroll(rememberScrollState()),
                         expanded = showIconPackFilter,
                         onDismissRequest = { showIconPackFilter = false }
                     ) {

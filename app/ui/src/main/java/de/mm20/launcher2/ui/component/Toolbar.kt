@@ -8,7 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
@@ -67,10 +68,12 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                     DropdownMenuPopup(
                         expanded = showMenu,
                         onDismissRequest = { showMenu = false },
-                        modifier = Modifier.animateContentSize()
+                        modifier = Modifier
+                            .verticalScroll(rememberScrollState()),
                     ) {
                         DropdownMenuGroup(
-                            shapes = MenuDefaults.groupShapes()
+                            shapes = MenuDefaults.groupShapes(),
+                            modifier = Modifier.animateContentSize()
                         ) {
                             OverflowMenuItems(items = actions.subList(slots - 1, actions.size)) {
                                 showMenu = false

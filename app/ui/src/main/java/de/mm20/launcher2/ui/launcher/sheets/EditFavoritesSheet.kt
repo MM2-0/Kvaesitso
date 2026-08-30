@@ -28,6 +28,8 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
@@ -494,6 +496,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     )
                                 }
                                 DropdownMenuPopup(
+                                    modifier = Modifier.verticalScroll(rememberScrollState()),
                                     expanded = showAddMenu,
                                     onDismissRequest = { showAddMenu = false }) {
                                     if (availableTags.isNotEmpty()) {

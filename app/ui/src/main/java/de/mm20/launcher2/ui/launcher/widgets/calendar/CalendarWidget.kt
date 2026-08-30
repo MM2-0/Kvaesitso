@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
@@ -110,6 +112,8 @@ fun CalendarWidget(
                     )
                 }
                 DropdownMenuPopup(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState()),
                     expanded = showDropdown,
                     onDismissRequest = { showDropdown = false }) {
                     val availableDates = viewModel.availableDates

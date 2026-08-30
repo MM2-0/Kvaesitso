@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
@@ -191,6 +192,8 @@ fun OutlinedTagsInputField(
                         if (completions.isNotEmpty()) {
                             Box {
                                 DropdownMenuPopup(
+                                    modifier = Modifier
+                                        .verticalScroll(rememberScrollState()),
                                     expanded = true,
                                     onDismissRequest = { completions = emptyList() },
                                     properties = PopupProperties(focusable = false)

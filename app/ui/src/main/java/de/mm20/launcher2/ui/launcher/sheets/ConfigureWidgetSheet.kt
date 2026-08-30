@@ -392,6 +392,9 @@ fun ColumnScope.ConfigureFavoritesWidget(
                         Text(stringResource(R.string.select_tag))
                     }
                     DropdownMenuPopup(
+                        modifier = Modifier
+                            .verticalScroll(rememberScrollState())
+                            .padding(vertical = 8.dp),
                         expanded = showAddMenu,
                         onDismissRequest = { showAddMenu = false }) {
                         if (availableTags.isNotEmpty()) {
