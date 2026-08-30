@@ -29,6 +29,7 @@ class CustomIntentAction(
                 it.putExtra(queryKey, query)
             }
         }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.tryStartActivity(intent)
     }
 }
