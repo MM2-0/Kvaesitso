@@ -241,68 +241,12 @@ fun ShapedLauncherIcon(
         }
         val _badge = badge()
         if (_badge != null) {
-            Surface(
-                tonalElevation = 1.dp,
+            Badge(
+                badge = _badge,
                 modifier = Modifier
-                    .size(size * 0.33f)
-                    .align(Alignment.BottomEnd),
-                color = MaterialTheme.colorScheme.tertiary,
-                shape = CircleShape
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
-
-                    _badge.progress?.let {
-                        val progress by animateFloatAsState(it)
-                        CircularProgressIndicator(
-                            modifier = Modifier.fillMaxSize(0.8f),
-                            progress = { progress },
-                            strokeWidth = size / 48,
-                            color = MaterialTheme.colorScheme.onTertiary
-                        )
-                    }
-                    val badgeIcon = _badge.icon
-
-                    val number = _badge.number
-                    if (badgeIcon is BadgeIcon.Vector) {
-                        Icon(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(size / 24),
-                            painter = painterResource(badgeIcon.iconRes),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onTertiary,
-                        )
-                    } else if (badgeIcon is BadgeIcon.Drawable) {
-                        Canvas(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(size / 48)
-                        ) {
-                            badgeIcon.drawable.setBounds(
-                                0,
-                                0,
-                                this.size.width.roundToInt(),
-                                this.size.height.roundToInt()
-                            )
-                            drawIntoCanvas {
-                                badgeIcon.drawable.draw(it.nativeCanvas)
-                            }
-                        }
-                    } else if (number != null && number > 0 && number < 100) {
-                        Text(
-                            NumberFormat.getInstance(Locale.current.platformLocale).format(number),
-                            color = MaterialTheme.colorScheme.secondaryContainer,
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                fontSize = with(LocalDensity.current) {
-                                    size.toSp() * 0.2f
-                                }
-                            ),
-                        )
-                    }
-                }
-            }
+                    .align(Alignment.BottomEnd)     ,
+                size = size * 0.33f
+            )
         }
     }
 }

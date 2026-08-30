@@ -55,6 +55,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.Badge
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.SubmenuToolbarAction
@@ -525,6 +526,9 @@ fun AppItem(
                                 this@AnimatedContent,
                             ),
                     )
+                    if (!LocalGridSettings.current.showListIcons && badge != null) {
+                        Badge(badge = badge!!, size = 16.dp, modifier = Modifier.padding(start = 8.dp))
+                    }
                 }
             }
         }
