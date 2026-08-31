@@ -126,12 +126,10 @@ class IconsSettingsScreenVM(
     // density-scaled count on wide windows, the icon pack picker sheet — width-capped
     // regardless of window size — wants the base count), so a single fixed-limit
     // upstream flow can no longer serve both.
-    private fun favoriteApps(count: Int) = grid.flatMapLatest {
-        favoritesService.getFavorites(
-            includeTypes = listOf("app"),
-            limit = count,
-        )
-    }
+    private fun favoriteApps(count: Int) = favoritesService.getFavorites(
+        includeTypes = listOf("app"),
+        limit = count,
+    )
 
     fun getPreviewIcons(size: Int, count: Int): Flow<List<LauncherIcon>> {
         return favoriteApps(count).flatMapLatest { apps ->
