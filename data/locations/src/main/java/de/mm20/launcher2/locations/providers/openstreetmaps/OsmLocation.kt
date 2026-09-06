@@ -1,7 +1,7 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import android.content.Context
-import de.mm20.launcher2.ktx.ifNullOrEmpty
+
 import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
 import de.mm20.launcher2.ktx.stripStartOrNull
@@ -415,7 +415,7 @@ internal fun parseOpeningSchedule(
         val localTimesWithDuration =
             range.times?.mapNotNull { it.toLocalTimeWithDuration() } ?: continue
         val daysOfWeek = range.weekdays
-            .ifNullOrEmpty { Weekday.entries.toList() }
+            .orEmpty().ifEmpty { Weekday.entries.toList() }
             .flatMap { it.toDaysOfWeek() }
 
         hours += daysOfWeek.flatMap { dow ->
