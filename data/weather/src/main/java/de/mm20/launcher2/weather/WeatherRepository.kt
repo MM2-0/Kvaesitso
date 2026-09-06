@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.work.*
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.devicepose.DevicePoseProvider
-import de.mm20.launcher2.ktx.or
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginApi
@@ -253,9 +252,9 @@ class WeatherUpdateWorker(
     }
 
     @OptIn(FlowPreview::class)
-    private suspend fun getLastKnownLocation(): LatLon? = locationProvider.getLocation(skipCache = true)
+    private suspend fun getLastKnownLocation(): LatLon? = (locationProvider.getLocation(skipCache = true)
         .timeout(10.minutes)
         .firstOrNull()
-        .or { locationProvider.lastCachedLocation }
+        ?: locationProvider.lastCachedLocation)
         ?.let { LatLon(it.latitude, it.longitude) }
 }
