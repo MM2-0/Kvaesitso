@@ -44,6 +44,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import java.io.IOException
+import kotlin.time.Duration.Companion.milliseconds
 
 interface MusicService {
     val playbackState: Flow<PlaybackState>
@@ -217,7 +218,7 @@ internal class MusicServiceImpl(
                 val position = state.position + offset
                 lastPosition = position
                 send(position)
-                delay(1000)
+                delay(1000.milliseconds)
             }
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
