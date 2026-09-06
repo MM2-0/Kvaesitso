@@ -25,23 +25,12 @@ import java.time.Duration
 import java.util.*
 import kotlin.time.Duration.Companion.minutes
 
-interface WeatherRepository {
-    fun getActiveProvider(): Flow<WeatherProviderInfo?>
-    fun getProviders(): Flow<List<WeatherProviderInfo>>
-    fun searchLocations(query: String): Flow<List<WeatherLocation>>
-
-    fun getForecasts(limit: Int? = null): Flow<List<Forecast>>
-    fun getDailyForecasts(): Flow<List<DailyForecast>>
-
-    fun deleteForecasts()
-}
-
-internal class WeatherRepositoryImpl(
+class WeatherRepository(
     private val context: Context,
     private val database: AppDatabase,
     private val settings: WeatherSettings,
     private val pluginRepository: PluginRepository
-) : WeatherRepository, KoinComponent {
+) : KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
@@ -49,12 +38,12 @@ internal class WeatherRepositoryImpl(
 
     private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
 
-    override fun getForecasts(limit: Int?): Flow<List<Forecast>> {
+    fun getForecasts(limit: Int?): Flow<List<Forecast>> {
         return database.weatherDao().getForecasts(limit ?: 99999)
             .map { it.map { Forecast(it) } }
     }
 
-    override fun getDailyForecasts(): Flow<List<DailyForecast>> {
+    fun getDailyForecasts(): Flow<List<DailyForecast>> {
         return database.weatherDao().getForecasts()
             .map { it.map { Forecast(it) } }
             .map {
@@ -62,7 +51,7 @@ internal class WeatherRepositoryImpl(
             }
     }
 
-    override fun searchLocations(query: String): Flow<List<WeatherLocation>> {
+    fun searchLocations(query: String): Flow<List<WeatherLocation>> {
         return settings.map {
             val provider = WeatherProvider.getInstance(it.provider)
             provider.findLocation(query)
@@ -139,7 +128,7 @@ internal class WeatherRepositoryImpl(
         WorkManager.getInstance(context).enqueue(weatherRequest)
     }
 
-    override fun deleteForecasts() {
+    fun deleteForecasts() {
         scope.launch {
             withContext(Dispatchers.IO) {
                 database.weatherDao().deleteAll()
@@ -148,7 +137,7 @@ internal class WeatherRepositoryImpl(
         }
     }
 
-    override fun getActiveProvider(): Flow<WeatherProviderInfo?> {
+    fun getActiveProvider(): Flow<WeatherProviderInfo?> {
         return settings.providerId.flatMapLatest { id ->
             getProviders().map {
                 it.find { it.id == id }
@@ -156,7 +145,7 @@ internal class WeatherRepositoryImpl(
         }
     }
 
-    override fun getProviders(): Flow<List<WeatherProviderInfo>> {
+    fun getProviders(): Flow<List<WeatherProviderInfo>> {
         val providers = mutableListOf<WeatherProviderInfo>()
         providers.add(
             WeatherProviderInfo(
