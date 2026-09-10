@@ -2,6 +2,7 @@ package de.mm20.launcher2.searchactions.builders
 
 import android.content.Context
 import android.net.Uri
+import androidx.core.net.toUri
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.OpenUrlAction
 import de.mm20.launcher2.searchactions.actions.SearchAction
@@ -21,7 +22,7 @@ data class CustomWebsearchActionBuilder(
         get() = "web://$urlTemplate"
 
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction {
-        val url = urlTemplate.replace("\${1}", encodeQuery(classifiedQuery.text, encoding))
+        val url = urlTemplate.replace("\${1}", encodeQuery(classifiedQuery.text, encoding)).toUri()
         return OpenUrlAction(
             label = label,
             url = url,

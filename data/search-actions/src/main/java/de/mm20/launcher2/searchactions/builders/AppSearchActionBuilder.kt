@@ -1,11 +1,8 @@
 package de.mm20.launcher2.searchactions.builders
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import de.mm20.launcher2.searchactions.TextClassificationResult
-import de.mm20.launcher2.searchactions.TextType
 import de.mm20.launcher2.searchactions.actions.AppSearchAction
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon

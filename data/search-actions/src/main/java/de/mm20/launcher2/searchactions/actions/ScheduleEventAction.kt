@@ -22,7 +22,10 @@ data class ScheduleEventAction(
         val startTime = date.let {
             if (time != null) it.atTime(time)
             else it.atTime(0, 0)
-        }.atZone(ZoneId.systemDefault()).toEpochSecond() * 1000L
+        }.atZone(
+            if (time == null) ZoneId.of("UTC") else
+            ZoneId.systemDefault()
+        ).toEpochSecond() * 1000L
 
         val intent = Intent(Intent.ACTION_INSERT).apply {
             type = "vnd.android.cursor.dir/event"
