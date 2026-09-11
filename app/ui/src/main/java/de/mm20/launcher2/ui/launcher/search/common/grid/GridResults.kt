@@ -64,6 +64,8 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
 
         val isFirst = it == 0 && before == null
         val isLast = it == rows - 1 && after == null
+        val isTopRow = if (reverse) it == rows - 1 else it == 0
+        val isBottomRow = if (reverse) it == 0 else it == rows - 1
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -81,8 +83,8 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
                     )
                 )
                 .padding(
-                    top = if (it == 0) 8.dp else 0.dp,
-                    bottom = if (it == rows - 1) 8.dp else 0.dp,
+                    top = if (isTopRow) 8.dp else 0.dp,
+                    bottom = if (isBottomRow) 8.dp else 0.dp,
                     start = if (columns == 1) 0.dp else 4.dp,
                     end = if (columns == 1) 0.dp else 4.dp,
                 )
