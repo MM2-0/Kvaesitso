@@ -570,7 +570,10 @@
     <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>
     <string name="preference_category_grid">Grid</string>
     <string name="preference_grid_icon_size">Icon size</string>
-    <string name="preference_grid_column_count">Number of columns</string>
+    <string name="preference_grid_density">Density</string>
+    <string name="preference_grid_density_summary">How many apps fit in one row</string>
+    <string name="preference_grid_density_spacious">Spacious</string>
+    <string name="preference_grid_density_dense">Dense</string>
     <string name="preference_grid_list_style">Show apps in a list</string>
     <string name="preference_grid_list_icons">Show app icons in list</string>
     <string name="preference_grid_labels">Show labels</string>

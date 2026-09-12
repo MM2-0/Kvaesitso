@@ -23,6 +23,7 @@ import kotlin.math.roundToInt
 @Composable
 fun SliderPreference(
     title: String,
+    summary: String? = null,
     @DrawableRes icon: Int? = null,
     iconPadding: Boolean = icon != null,
     value: Float,
@@ -31,7 +32,8 @@ fun SliderPreference(
     step: Float? = null,
     onValueChanged: (Float) -> Unit,
     enabled: Boolean = true,
-    label: (@Composable (Float) -> Unit)? = null
+    label: (@Composable (Float) -> Unit)? = null,
+    content: (@Composable (Float) -> Unit)? = null,
 ) {
     var sliderValue by remember(value) { mutableStateOf(value) }
     Row(
@@ -70,6 +72,14 @@ fun SliderPreference(
                 text = title,
                 style = MaterialTheme.typography.titleMedium
             )
+            if (summary != null) {
+                Text(
+                    modifier = Modifier.padding(start = 2.dp),
+                    text = summary,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -101,6 +111,9 @@ fun SliderPreference(
                     )
                 }
             }
+            if (content != null) {
+                content(sliderValue)
+            }
         }
     }
 }
@@ -108,6 +121,7 @@ fun SliderPreference(
 @Composable
 fun SliderPreference(
     title: String,
+    summary: String? = null,
     @DrawableRes icon: Int? = null,
     value: Int,
     min: Int = 0,
@@ -115,10 +129,12 @@ fun SliderPreference(
     step: Int = 1,
     onValueChanged: (Int) -> Unit,
     enabled: Boolean = true,
-    label: (@Composable (Int) -> Unit)? = null
+    label: (@Composable (Int) -> Unit)? = null,
+    content: (@Composable (Int) -> Unit)? = null,
 ) {
     SliderPreference(
         title = title,
+        summary = summary,
         icon = icon,
         value = value.toFloat(),
         enabled = enabled,
@@ -130,6 +146,9 @@ fun SliderPreference(
         },
         label = if (label == null) null else {
             { label(it.roundToInt()) }
+        },
+        content = if (content == null) null else {
+            { content(it.roundToInt()) }
         }
     )
 }
