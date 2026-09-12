@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
+import kotlin.time.Duration.Companion.milliseconds
 
 interface SearchService {
     fun search(
@@ -219,7 +220,7 @@ internal class SearchServiceImpl(
             }
             if (filters.articles) {
                 launch {
-                    delay(750)
+                    delay(750.milliseconds)
                     articleRepository.search(query, filters.allowNetwork)
                         .combine(customAttrResults) { articles, customAttrs ->
                             if (customAttrs.wikipedia != null) articles + customAttrs.wikipedia
@@ -235,7 +236,7 @@ internal class SearchServiceImpl(
             }
             if (filters.places) {
                 launch {
-                    delay(250)
+                    delay(250.milliseconds)
                     locationRepository.search(query, filters.allowNetwork)
                         .combine(customAttrResults) { locations, customAttrs ->
                             if (customAttrs.locations != null) locations + customAttrs.locations

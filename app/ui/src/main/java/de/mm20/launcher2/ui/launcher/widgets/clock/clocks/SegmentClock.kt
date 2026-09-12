@@ -46,6 +46,7 @@ import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.delay
 import java.time.Instant
 import java.time.ZoneId
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun SegmentClock(
@@ -65,7 +66,7 @@ fun SegmentClock(
 
     LaunchedEffect(second) {
         flick = true
-        delay(500)
+        delay(500.milliseconds)
         flick = false
     }
 
