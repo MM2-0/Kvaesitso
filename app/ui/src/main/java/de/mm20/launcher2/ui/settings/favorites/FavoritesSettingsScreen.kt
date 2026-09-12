@@ -82,6 +82,8 @@ fun FavoritesSettingsScreen() {
         }
         item {
             val editButton by viewModel.editButton.collectAsState()
+            val latestButton by viewModel.latestButton.collectAsState()
+            val latestRows by viewModel.latestRows.collectAsState()
             val compactTags by viewModel.compactTags.collectAsState()
             PreferenceCategory {
                 SwitchPreference(
@@ -92,6 +94,26 @@ fun FavoritesSettingsScreen() {
                         viewModel.setEditButton(it)
                     },
                     icon = R.drawable.edit_24px,
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_latest_button),
+                    summary = stringResource(R.string.preference_latest_button_summary),
+                    value = latestButton == true,
+                    onValueChanged = {
+                        viewModel.setLatestButton(it)
+                    },
+                    icon = R.drawable.sort_24px,
+                )
+                SliderPreference(
+                    title = stringResource(R.string.preference_latest_rows),
+                    value = latestRows,
+                    enabled = latestButton == true,
+                    min = 1,
+                    max = 10,
+                    onValueChanged = {
+                        viewModel.setLatestRows(it)
+                    },
+                    icon = R.drawable.table_rows_24px,
                 )
                 SwitchPreference(
                     title = stringResource(R.string.preference_compact_tags),

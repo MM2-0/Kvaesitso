@@ -38,15 +38,16 @@ import de.mm20.launcher2.ui.layout.TopReversed
 @Composable
 fun FavoritesTagSelector(
     tags: List<Tag>,
-    selectedTag: String?,
+    selectedTarget: SelectorTarget,
     editButton: Boolean,
     reverse: Boolean,
-    onSelectTag: (String?) -> Unit,
+    onSelectTarget: (SelectorTarget) -> Unit,
     scrollState: ScrollState,
     compact: Boolean,
     expanded: Boolean,
     onExpand: (Boolean) -> Unit,
-    showFavorites: Boolean
+    showFavorites: Boolean,
+    showRecentlyInstalledApps: Boolean
 ) {
     val sheetManager = LocalBottomSheetManager.current
 
@@ -75,8 +76,8 @@ fun FavoritesTagSelector(
                         FilterChip(
                             modifier = Modifier
                                 .padding(start = 16.dp),
-                            selected = selectedTag == null,
-                            onClick = { onSelectTag(null) },
+                            selected = selectedTarget is SelectorTarget.Favorites,
+                            onClick = { onSelectTarget(SelectorTarget.Favorites) },
                             leadingIcon = if (compact) null else {
                                 {
                                     Icon(
@@ -99,17 +100,53 @@ fun FavoritesTagSelector(
                             }
                         )
                     }
+                    if (showRecentlyInstalledApps) {
+                        FilterChip(
+                            modifier = Modifier
+                                .padding(start = if (!showFavorites) 16.dp else 8.dp),
+                            selected = selectedTarget is SelectorTarget.Latest,
+                            onClick = {
+                                if (selectedTarget is SelectorTarget.Latest && showFavorites) {
+                                    onSelectTarget(SelectorTarget.Favorites)
+                                } else {
+                                    onSelectTarget(SelectorTarget.Latest)
+                                }
+                            },
+                            leadingIcon = if (compact) null else {
+                                {
+                                    Icon(
+                                        painter = painterResource(R.drawable.sort_24px),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                    )
+                                }
+                            },
+                            label = {
+                                if (compact) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.sort_24px),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                    )
+                                } else {
+                                    Text(stringResource(R.string.latest))
+                                }
+                            }
+                        )
+                    }
                     for ((i, tag) in tags.withIndex()) {
+                        val selected =
+                            (selectedTarget as? SelectorTarget.CustomTag)?.tagName == tag.tag
                         TagChip(
                             modifier = Modifier
-                                .padding(start = if (!showFavorites && i == 0) 16.dp else 8.dp),
+                                .padding(start = if (!(showFavorites || showRecentlyInstalledApps) && i == 0) 16.dp else 8.dp),
                             tag = tag,
-                            selected = selectedTag == tag.tag,
+                            selected = selected,
                             onClick = {
-                                if (selectedTag == tag.tag && showFavorites) {
-                                    onSelectTag(null)
+                                if (selected && showFavorites) {
+                                    onSelectTarget(SelectorTarget.Favorites)
                                 } else {
-                                    onSelectTag(tag.tag)
+                                    onSelectTarget(SelectorTarget.CustomTag(tag.tag))
                                 }
                             },
                             compact = compact,
@@ -155,8 +192,8 @@ fun FavoritesTagSelector(
                     FilterChip(
                         modifier = Modifier
                             .padding(end = 8.dp),
-                        selected = selectedTag == null,
-                        onClick = { onSelectTag(null) },
+                        selected = selectedTarget is SelectorTarget.Favorites,
+                        onClick = { onSelectTarget(SelectorTarget.Favorites) },
                         leadingIcon = if (compact) null else {
                             {
                                 Icon(
@@ -178,18 +215,52 @@ fun FavoritesTagSelector(
                             }
                         }
                     )
+                    FilterChip(
+                        modifier = Modifier
+                            .padding(end = 8.dp),
+                        selected = selectedTarget is SelectorTarget.Latest,
+                        onClick = {
+                            if (selectedTarget is SelectorTarget.Latest && showFavorites) {
+                                onSelectTarget(SelectorTarget.Favorites)
+                            } else {
+                                onSelectTarget(SelectorTarget.Latest)
+                            }
+                        },
+                        leadingIcon = if (compact) null else {
+                            {
+                                Icon(
+                                    painter = painterResource(R.drawable.sort_24px),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                )
+                            }
+                        },
+                        label = {
+                            if (compact) {
+                                Icon(
+                                    painter = painterResource(R.drawable.sort_24px),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                )
+                            } else {
+                                Text(stringResource(R.string.latest))
+                            }
+                        }
+                    )
                     for (tag in tags) {
+                        val selected =
+                            (selectedTarget as? SelectorTarget.CustomTag)?.tagName == tag.tag
                         TagChip(
                             modifier = Modifier
                                 .padding(end = 8.dp),
                             tag = tag,
                             compact = compact,
-                            selected = selectedTag == tag.tag,
+                            selected = selected,
                             onClick = {
-                                if (selectedTag == tag.tag && showFavorites) {
-                                    onSelectTag(null)
+                                if (selected && showFavorites) {
+                                    onSelectTarget(SelectorTarget.Favorites)
                                 } else {
-                                    onSelectTag(tag.tag)
+                                    onSelectTarget(SelectorTarget.CustomTag(tag.tag))
                                 }
                             },
                             onLongClick = {
