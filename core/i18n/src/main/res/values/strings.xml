@@ -230,7 +230,6 @@
     <string name="widget_name_unknown">Unknown</string>
     <string name="widget_add_widget">Add widget</string>
     <string name="widget_removed">Widget removed</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Write a note</string>
     <string name="notes_widget_action_new">New note</string>
     <!-- Save / export the current note content as markdown file -->
