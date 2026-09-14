@@ -936,4 +936,5 @@
     <string name="search_query_private_space">Vertrauliches Profil</string>
     <string name="search_action_private_space_lock">Vertrauliches Profil sperren</string>
     <string name="search_action_private_space_unlock">Vertrauliches Profil entsperren</string>
+    <string name="favorites_skip_rows">Zeilen überspringen</string>
 </resources>
