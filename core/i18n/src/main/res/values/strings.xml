@@ -750,6 +750,7 @@
     <string name="favorites_empty_tag">There are no items with this tag</string>
     <string name="frequently_used_show_in_favorites">Show in favorites</string>
     <string name="frequently_used_rows">Number of rows</string>
+    <string name="favorites_skip_rows">Skip rows</string>
     <string name="preference_screen_search_actions">Quick actions</string>
     <string name="preference_search_search_actions_summary">Configure quick actions and search shortcuts</string>
     <string name="search_action_call">Call</string>

@@ -83,12 +83,6 @@ class WidgetsService(
 
     fun getWidgets() = widgetRepository.get()
 
-    fun isFavoritesWidgetFirst(): Flow<Boolean> {
-        return widgetRepository.get(limit = 1).map {
-            it.firstOrNull() is AppsWidget
-        }
-    }
-
     fun countWidgets(type: String) = widgetRepository.count(type)
 
     fun removeWidget(widget: Widget) {

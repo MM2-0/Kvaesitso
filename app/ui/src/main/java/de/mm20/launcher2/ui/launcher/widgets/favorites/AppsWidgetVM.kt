@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets.favorites
 
-import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.services.widgets.WidgetsService
 import de.mm20.launcher2.ui.common.FavoritesVM
@@ -21,23 +20,15 @@ class AppsWidgetVM : FavoritesVM() {
     override val tagsExpanded = widget.map { it?.config?.tagsMultiline == true }
     override val compactTags: Flow<Boolean> = widget.map { it?.config?.compactTags == true }
 
-    private val isTopWidget = widgetsService.isFavoritesWidgetFirst()
-    private val clockWidgetFavSlots =
-        combine(uiSettings.dock, uiSettings.dockRows, isTopWidget, uiSettings.gridSettings) { (dock, dockRows, isTop, grid) ->
-            dock as Boolean
-            dockRows as Int
-            isTop as Boolean
-            grid as GridSettings
-            if (!isTop || !dock) 0
-            else {
-                grid.columnCount * dockRows
-            }
-        }
+    private val skipSlots = widget.combine(uiSettings.gridSettings) { widget, grid ->
+        if (widget == null) 0
+        else widget.config.skipRows * grid.columnCount
+    }
 
-    override val favorites = super.favorites.combine(clockWidgetFavSlots) { favs, slots ->
+    override val favorites = super.favorites.combine(skipSlots) { favs, skip ->
         if (selectedTag.value == null) {
-            if (favs.lastIndex < slots) emptyList()
-            else favs.subList(slots, favs.size)
+            if (favs.lastIndex < skip) emptyList()
+            else favs.subList(skip, favs.size)
         } else {
             favs
         }

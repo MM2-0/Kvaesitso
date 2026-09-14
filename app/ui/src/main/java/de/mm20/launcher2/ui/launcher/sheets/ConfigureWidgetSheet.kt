@@ -105,6 +105,7 @@ import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropColumn
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
+import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.widgets.external.AppWidgetHost
@@ -528,6 +529,27 @@ fun ColumnScope.ConfigureFavoritesWidget(
                             )
                         }
                     }
+
+                    OutlinedCard(
+                        modifier = Modifier.padding(top = 16.dp)
+                    ) {
+                        SliderPreference(
+                            title = stringResource(R.string.favorites_skip_rows),
+                            value = widget.config.skipRows,
+                            min = 0,
+                            max = 8,
+                            onValueChanged = {
+                                onWidgetUpdated(
+                                    widget.copy(
+                                        config = widget.config.copy(
+                                            skipRows = it
+                                        )
+                                    )
+                                )
+                            }
+                        )
+                    }
+
                     TextButton(
                         modifier = Modifier
                             .padding(top = 8.dp)

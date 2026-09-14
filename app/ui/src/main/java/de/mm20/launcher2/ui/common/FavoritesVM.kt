@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -50,50 +51,49 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
         if (tag == null) {
             val excludeCalendar = widgetRepository.exists(CalendarWidget.Type)
 
-            combine(
+            combineTransform(
                 excludeCalendar,
                 settings,
-            ) { (a, b) -> a as Boolean to b as FavoritesSettingsData }
-                .transformLatest {
+            ) { (excludeCalendar, settings) ->
+                settings as FavoritesSettingsData
+                excludeCalendar as Boolean
+                val columns = settings.columns
+                val includeFrequentlyUsed = settings.frequentlyUsed
+                val frequentlyUsedRows = settings.frequentlyUsedRows
 
-                    val columns = it.second.columns
-                    val excludeCalendar = it.first
-                    val includeFrequentlyUsed = it.second.frequentlyUsed
-                    val frequentlyUsedRows = it.second.frequentlyUsedRows
-
-                    val pinned = favoritesService.getFavorites(
-                        excludeTypes = if (excludeCalendar) listOf(
-                            "calendar",
-                            "tasks.org",
-                            "tag",
-                            "plugin.calendar"
-                        ) else listOf("tag"),
-                        minPinnedLevel = PinnedLevel.AutomaticallySorted,
-                        limit = 10 * columns,
+                val pinned = favoritesService.getFavorites(
+                    excludeTypes = if (excludeCalendar) listOf(
+                        "calendar",
+                        "tasks.org",
+                        "tag",
+                        "plugin.calendar"
+                    ) else listOf("tag"),
+                    minPinnedLevel = PinnedLevel.AutomaticallySorted,
+                    limit = 10 * columns,
+                )
+                if (includeFrequentlyUsed) {
+                    emitAll(pinned.flatMapLatest { pinned ->
+                        favoritesService.getFavorites(
+                            excludeTypes = if (excludeCalendar) listOf(
+                                "calendar",
+                                "tasks.org",
+                                "tag",
+                                "plugin.calendar"
+                            ) else listOf("tag"),
+                            maxPinnedLevel = PinnedLevel.FrequentlyUsed,
+                            minPinnedLevel = PinnedLevel.FrequentlyUsed,
+                            limit = frequentlyUsedRows * columns - pinned.size % columns,
+                        ).map {
+                            pinned + it
+                        }
+                            .withCustomLabels(customAttributesRepository)
+                    })
+                } else {
+                    emitAll(
+                        pinned.withCustomLabels(customAttributesRepository)
                     )
-                    if (includeFrequentlyUsed) {
-                        emitAll(pinned.flatMapLatest { pinned ->
-                            favoritesService.getFavorites(
-                                excludeTypes = if (excludeCalendar) listOf(
-                                    "calendar",
-                                    "tasks.org",
-                                    "tag",
-                                    "plugin.calendar"
-                                ) else listOf("tag"),
-                                maxPinnedLevel = PinnedLevel.FrequentlyUsed,
-                                minPinnedLevel = PinnedLevel.FrequentlyUsed,
-                                limit = frequentlyUsedRows * columns - pinned.size % columns,
-                            ).map {
-                                pinned + it
-                            }
-                                .withCustomLabels(customAttributesRepository)
-                        })
-                    } else {
-                        emitAll(
-                            pinned.withCustomLabels(customAttributesRepository)
-                        )
-                    }
                 }
+            }
         } else {
             customAttributesRepository
                 .getItemsForTag(tag)
