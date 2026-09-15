@@ -17,7 +17,7 @@
      %1$s is the name of the app store (e.g. Google Play)-->
     <string name="menu_share_store_link">在 %1$s 中打開</string>
     <!-- Share an APK file, shown in the app detail share menu -->
-    <string name="menu_share_apk_file">APK 安裝包</string>
+    <string name="menu_share_apk_file">APK 安裝套件</string>
     <!-- Uninstall an application -->
     <string name="menu_uninstall">卸載</string>
     <string name="menu_favorites_pin">釘選到我的最愛</string>
@@ -38,6 +38,7 @@
     <string name="action_more_actions">更多動作</string>
     <string name="action_clear">清除</string>
     <string name="action_install">安裝</string>
+    <string name="action_quit">離開</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">刪除</string>
     <string name="menu_remove">移除</string>
@@ -223,7 +224,6 @@
     <string name="widget_name_unknown">未知的應用程式小工具</string>
     <string name="widget_add_widget">新增小工具</string>
     <string name="widget_removed">小工具已移除</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">建立一個筆記…</string>
     <string name="notes_widget_action_new">新筆記</string>
     <!-- Save / export the current note content as markdown file -->
@@ -416,6 +416,7 @@
     <string name="preference_theme_light">淺色</string>
     <string name="preference_theme_dark">深色</string>
     <string name="preference_screen_colors">配色方案</string>
+    <string name="preference_create_colors">新顏色設定</string>
     <string name="preference_colors_default">預設</string>
     <string name="preference_colors_high_contrast">高對比</string>
     <string name="preference_colors_bw">黑白</string>
@@ -424,12 +425,15 @@
     <string name="preference_mdy_color_source_system">系統</string>
     <string name="preference_mdy_color_source_wallpaper">桌布</string>
     <string name="preference_screen_shapes">形狀</string>
+    <string name="preference_create_shapes">新形狀設定</string>
     <string name="preference_shapes_default">預設</string>
     <string name="preference_shapes_extra_round">圓形</string>
     <string name="preference_shapes_rect">正方形</string>
     <string name="preference_shapes_base">基底形狀</string>
     <string name="preference_screen_typography">字體</string>
+    <string name="preference_create_typography">新排版設定</string>
     <string name="preference_screen_transparencies">透明度</string>
+    <string name="preference_create_transparency">新透明度設定</string>
     <string name="preference_transparencies_default">預設</string>
     <string name="preference_transparencies_semi_transparent">半透明</string>
     <string name="preference_font">字型</string>
@@ -583,7 +587,9 @@
     <string name="preference_clockwidget_music_part">媒體</string>
     <string name="preference_clockwidget_music_part_summary">在有活動媒體會話時顯示媒體控制元件</string>
     <string name="preference_clockwidget_battery_part">電池</string>
-    <string name="preference_clockwidget_battery_part_summary">在電池電量不足或充電時顯示目前電池電量</string>
+    <string name="preference_clockwidget_battery_part_always_show">永遠顯示</string>
+    <string name="preference_clockwidget_battery_part_show">低電量時或充電時顯示</string>
+    <string name="preference_clockwidget_battery_part_hide">關閉</string>
     <string name="preference_clockwidget_alarm_part">鬧鐘</string>
     <string name="preference_clockwidget_alarm_part_summary">顯示未來 8 小時內響起的鬧鐘</string>
     <string name="preference_screen_backup">備份與還原</string>
@@ -602,6 +608,8 @@
     <string name="preference_search_favorites_summary">在應用程式抽屜上方顯示釘選與常用項目</string>
     <string name="preference_search_apps">應用程式</string>
     <string name="preference_search_apps_summary">搜尋欄沒有文字時顯示所有應用程式</string>
+    <string name="preference_search_apps_show_details">顯示應用程式資訊</string>
+    <string name="preference_search_apps_show_details_summary">顯示應用程式的版本與套件名稱</string>
     <string name="preference_search_files">檔案</string>
     <string name="preference_search_files_summary">搜尋本機檔案與雲端伺服器檔案</string>
     <string name="preference_search_contacts">聯絡人</string>
@@ -620,6 +628,7 @@
     <string name="preference_search_currencyconverter">貨幣轉換器</string>
     <string name="preference_search_currencyconverter_summary">定期下載匯率來轉換貨幣</string>
     <string name="preference_search_supportedunits">支援的單位</string>
+    <string name="preference_currency_settings">貨幣設定</string>
     <string name="preference_search_wikipedia">維基百科</string>
     <string name="preference_search_wikipedia_summary">搜尋自由的百科全書</string>
     <string name="preference_search_websites">網站</string>
@@ -644,10 +653,10 @@
     <string name="preference_search_bar_auto_focus_summary">開啟應用程式抽屜時自動顯示鍵盤</string>
     <string name="preference_search_bar_launch_on_enter">輸入時啟動</string>
     <string name="preference_search_bar_launch_on_enter_summary">在點擊「前往」後執行焦點上的結果</string>
-    <string name="preference_hidden_items">隱藏搜尋結果</string>
-    <string name="preference_hidden_items_summary">管理隱藏應用程式與搜尋結果</string>
+    <string name="preference_hidden_items">已排除的搜尋結果</string>
+    <string name="preference_hidden_items_summary">管理已排除的應用程式與搜尋結果</string>
     <string name="preference_hidden_items_reveal_button">顯示揭露按鈕</string>
-    <string name="preference_hidden_items_reveal_button_summary">顯示按鈕以顯示隱藏的搜尋結果</string>
+    <string name="preference_hidden_items_reveal_button_summary">顯示按鈕以顯示已排除的搜尋結果</string>
     <string name="preference_screen_tags">標籤</string>
     <string name="preference_screen_tags_summary">管理標籤與標記項目</string>
     <string name="preference_wikipedia_customurl">Wikipedia 網址</string>
@@ -727,6 +736,11 @@
     <string name="search_action_contact">新建聯絡人</string>
     <string name="search_action_open_url">瀏覽網站</string>
     <string name="search_action_event">日程事件</string>
+    <string name="search_query_private_space">私人空間</string>
+    <string name="search_action_private_space_lock">鎖定私人空間</string>
+    <string name="search_action_private_space_unlock">解鎖私人空間</string>
+    <string name="create_search_action_title">新快速操作</string>
+    <string name="edit_search_action_title">編輯快速操作</string>
     <string name="create_search_action_type">您想建立什麼操作？</string>
     <string name="create_search_action_type_web">在網站上搜尋</string>
     <string name="create_search_action_type_app">在應用程式中搜尋</string>
@@ -740,10 +754,10 @@
     <string name="more_information">更多資訊</string>
     <string name="experimental_feature">實驗性的</string>
     <string name="tag_exists_error">以此命名的標籤已經存在</string>
+    <string name="tag_name_empty_error">名稱不能為空</string>
     <string name="tag_exists_message">已有同名的標籤。如果繼續，則會合併兩個標籤</string>
     <string name="tag_no_items_message">這個標籤沒有任何內容。如果繼續，將會刪除此標籤</string>
-    <string name="tag_empty_name">標籤名稱不能為空。如果繼續，將會刪除此標籤</string>
-    <string name="tag_select_items">選擇項目：</string>
+    <string name="tag_select_items">選擇項目</string>
     <string name="tag_name">標籤名字</string>
     <string name="tag_icon_customicon">圖示</string>
     <string name="tag_icon_emoji">表情符號</string>
@@ -774,14 +788,21 @@
     <string name="preference_gesture_long_press">長按</string>
     <string name="preference_gesture_home_button">主畫面按鈕或手勢</string>
     <string name="gesture_action_none">無動作</string>
-    <string name="gesture_action_open_search">開啟搜尋</string>
+    <string name="gesture_action_category_launcher">啟動器頁面</string>
+    <string name="gesture_action_category_system">系統動作</string>
+    <string name="gesture_action_category_apps">應用程式與捷徑</string>
+    <string name="gesture_action_open_search">搜尋 / 應用程式抽屜</string>
     <string name="gesture_action_widgets">小工具</string>
+    <string name="gesture_action_widgets_new">新增小工具頁面</string>
+    <string name="gesture_action_widgets_empty">沒有小工具</string>
+    <string name="gesture_action_widgets_indexed">小工具（第 %1$d 頁）</string>
     <string name="gesture_action_launch_app">啟動應用程式</string>
-    <string name="gesture_action_notifications">開啟通知中心</string>
+    <string name="gesture_action_launch_select_app">選擇應用程式或捷徑</string>
+    <string name="gesture_action_notifications">通知中心</string>
     <string name="gesture_action_lock_screen">關閉螢幕</string>
-    <string name="gesture_action_quick_settings">開啟快速設定</string>
-    <string name="gesture_action_power_menu">顯示電源選單</string>
-    <string name="gesture_action_recents">開啟最近使用的應用程式</string>
+    <string name="gesture_action_quick_settings">快速設定</string>
+    <string name="gesture_action_power_menu">電源選單</string>
+    <string name="gesture_action_recents">最近使用的應用程式</string>
     <string name="gesture_failed_message">您觸發了「%1$s」手勢。此手勢目前設定為執行「%2$s」，但因為以下原因無法執行：</string>
     <string name="missing_permission_accessibility_gesture_failed">需要啟用啟動器的無障礙服務才能執行此操作。</string>
     <string name="missing_permission_accessibility_gesture_settings">這個動作需要開啟無障礙服務。</string>
@@ -818,7 +839,7 @@
     <string name="confirmation_delete_typography_scheme">確定要刪除字體設定「%1$s」嗎？</string>
     <string name="confirmation_delete_transparencies_scheme">確定要刪除透明度設定「%1$s」嗎？</string>
     <string name="new_theme_name">（無標題）</string>
-    <string name="theme_color_scheme_system_default">使用系統預設</string>
+    <string name="preference_use_system_default">使用系統預設</string>
     <string name="theme_color_scheme_autogenerate">從原色開始</string>
     <string name="theme_color_scheme_palette_color">調色盤</string>
     <string name="theme_color_scheme_custom_color">自訂</string>
@@ -1028,6 +1049,8 @@
     <string name="theme_bundle_name">名稱</string>
     <string name="theme_bundle_author">作者</string>
     <string name="preference_typography_fonts">字體</string>
+    <string name="add_font_style">新增字型樣式</string>
+    <string name="remove_font_style">移除此字型樣式</string>
     <string name="font_category_device_default">裝置預設</string>
     <string name="font_name_device_headline">預設標題字體</string>
     <string name="font_name_device_body">裝置文本字體</string>
@@ -1036,6 +1059,7 @@
     <string name="preference_screen_locale_summary">語言、單位、時間格式</string>
     <string name="preference_language">語言</string>
     <string name="preference_value_system_default">系統預設</string>
+    <string name="preference_value_disabled">停用</string>
     <string name="preference_form_of_address">地址格式</string>
     <string name="preference_form_of_address_neutral">地址格式</string>
     <string name="preference_form_of_address_fem">地址格式</string>
@@ -1046,6 +1070,14 @@
     <string name="preference_measurement_system_us">美制單位</string>
     <string name="preference_transliteration">字母轉寫偏好</string>
     <string name="preference_transliteration_auto">自動</string>
-    <string name="preference_transliteration_disabled">停用</string>
+    <string name="preference_calendar_system">曆制</string>
+    <string name="preference_calendar_system_primary">主曆制</string>
+    <string name="preference_calendar_system_secondary">第二曆制</string>
+    <string name="preference_currencies">貨幣</string>
+    <string name="preference_add_currency">新增貨幣</string>
     <string name="select_tag">選擇標籤</string>
+    <string name="create_tag_title">新增標籤</string>
+    <string name="edit_tag_title">編輯標籤</string>
+    <string name="dialog_discard_unsaved">是否離開並放棄儲存？</string>
+    <string name="preference_category_donate">支持開發</string>
 </resources>
