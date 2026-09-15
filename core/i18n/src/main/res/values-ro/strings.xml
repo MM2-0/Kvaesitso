@@ -216,7 +216,6 @@
     <string name="widget_name_unknown">Widget necunoscut</string>
     <string name="widget_add_widget">Adaugă widget</string>
     <string name="widget_removed">Widget eliminat</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Scrieți o notiță…</string>
     <string name="notes_widget_action_new">Notiță nouă</string>
     <!-- Save / export the current note content as markdown file -->
@@ -553,7 +552,6 @@
     <string name="preference_clockwidget_favorites_part_summary">Afișează primul rând de elemente fixate</string>
     <string name="preference_clockwidget_music_part_summary">Afișează controale media atunci când există o sesiune media activă</string>
     <string name="preference_clockwidget_battery_part">Baterie</string>
-    <string name="preference_clockwidget_battery_part_summary">Afișează nivelul curent al bateriei atunci când bateria este scăzută sau se încarcă</string>
     <string name="preference_clockwidget_alarm_part">Alarme</string>
     <string name="preference_clockwidget_alarm_part_summary">Afișează alarme care vor suna în următoarele 15 minute</string>
     <string name="preference_screen_backup">Backup &amp; Restaurare</string>
@@ -561,6 +559,7 @@
     <string name="preference_crash_reporter">Reporter de cădere</string>
     <string name="preference_crash_reporter_summary">Rapoarte de eroare și de cădere</string>
     <string name="preference_screen_search">Caută</string>
+    <string name="preference_screen_search_summary">Configurarea căutării</string>
     <string name="preference_search_favorites">Favorite</string>
     <string name="preference_search_favorites_summary">Afișarea elementelor fixate și utilizate frecvent deasupra grilei de aplicații</string>
     <string name="preference_search_files">Fișiere</string>
@@ -595,6 +594,8 @@
     <string name="preference_search_bar_auto_focus">Lansarea tastaturii</string>
     <string name="preference_search_bar_auto_focus_summary">Afișarea automată a tastaturii la deschiderea căutării</string>
     <string name="preference_search_bar_launch_on_enter">Lansare la intrare</string>
+    <string name="preference_hidden_items">Rezultate de căutare ascunse</string>
+    <string name="preference_hidden_items_summary">Gestionarea aplicațiilor ascunse și a rezultatelor căutării</string>
     <string name="preference_hidden_items_reveal_button">Afișează butonul de dezvăluire</string>
     <string name="preference_screen_tags">Etichete</string>
     <string name="preference_screen_tags_summary">Gestionați etichetele și elementele etichetate</string>
@@ -689,4 +690,5 @@
     <string name="customize_item_tags">Etichete</string>
     <string name="weather_forecast_wind">Vânt</string>
     <string name="theme_bundle_name">Nume</string>
+    <string name="preference_currencies">valută</string>
 </resources>
