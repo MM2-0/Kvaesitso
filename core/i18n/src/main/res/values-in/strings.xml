@@ -217,7 +217,6 @@
     <string name="widget_name_notes">Catatan</string>
     <string name="widget_name_unknown">Aplikasi widget tidak diketahui</string>
     <string name="widget_add_widget">Tambahkan widget</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Tulis catatan…</string>
     <string name="notes_widget_action_new">Catatan baru</string>
     <!-- Save / export the current note content as markdown file -->
@@ -534,10 +533,10 @@
     <string name="preference_clockwidget_favorites_part_summary">Tampilkan baris pertama item yang tersemat</string>
     <string name="preference_clockwidget_music_part_summary">Tampilkan kontrol media ketika ada sesi media yang aktif</string>
     <string name="preference_clockwidget_battery_part">Baterai</string>
-    <string name="preference_clockwidget_battery_part_summary">Tampilkan level baterai ketika baterai lemah atau sedang mengisi daya</string>
     <string name="preference_clockwidget_alarm_part">Alarm</string>
     <string name="preference_clockwidget_alarm_part_summary">Tampilkan alarm yang akan berdering sekitar 15 menit mendatang</string>
     <string name="preference_screen_search">Pencarian</string>
+    <string name="preference_screen_search_summary">Cari, label, item tersembunyi</string>
     <string name="preference_search_favorites">Favorit</string>
     <string name="preference_search_favorites_summary">Tampilkan item tersemat dan yang paling sering digunakan di atas daftar aplikasi</string>
     <string name="preference_search_files">Berkas</string>
@@ -568,6 +567,7 @@
     <string name="preference_search_bar_auto_focus">Buka keyboard</string>
     <string name="preference_search_bar_auto_focus_summary">Otomatis tampilkan keyboard ketika membuka pencarian</string>
     <string name="preference_search_bar_launch_on_enter">Enter untuk membuka</string>
+    <string name="preference_hidden_items">Sembunyikan hasil pencarian</string>
     <string name="preference_screen_tags">Label</string>
     <string name="preference_weather_integration">Cuaca</string>
     <!-- %1$s: app name (Kvaesitso) -->
