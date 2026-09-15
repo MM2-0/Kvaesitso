@@ -17,7 +17,7 @@
      %1$s is the name of the app store (e.g. Google Play)-->
     <string name="menu_share_store_link">Collegamento a %1$s</string>
     <!-- Share an APK file, shown in the app detail share menu -->
-    <string name="menu_share_apk_file">File APK</string>
+    <string name="menu_share_apk_file">File pacchetto</string>
     <!-- Uninstall an application -->
     <string name="menu_uninstall">Disinstalla</string>
     <string name="menu_favorites_pin">Aggiungi ai preferiti</string>
@@ -219,7 +219,6 @@
     <string name="widget_name_unknown">Sconosciuto</string>
     <string name="widget_add_widget">Aggiungi widget</string>
     <string name="widget_removed">Widget rimosso</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Scrivi una nota</string>
     <string name="notes_widget_action_new">Nuova nota</string>
     <!-- Save / export the current note content as markdown file -->
@@ -416,6 +415,7 @@
     <string name="preference_theme_light">Chiaro</string>
     <string name="preference_theme_dark">Scuro</string>
     <string name="preference_screen_colors">Schema colore</string>
+    <string name="preference_create_colors">Nuova combinazione di colori</string>
     <string name="preference_colors_default">Predefinito</string>
     <string name="preference_colors_high_contrast">Contrasto elevato</string>
     <string name="preference_colors_bw">Bianco e nero</string>
@@ -424,12 +424,15 @@
     <string name="preference_mdy_color_source_system">Sistema</string>
     <string name="preference_mdy_color_source_wallpaper">Sfondo</string>
     <string name="preference_screen_shapes">Forme</string>
+    <string name="preference_create_shapes">Nuova combinazione di forme</string>
     <string name="preference_shapes_default">Predefinito</string>
     <string name="preference_shapes_extra_round">Arrotondamento extra</string>
     <string name="preference_shapes_rect">Rettangolare</string>
     <string name="preference_shapes_base">Forma di base</string>
     <string name="preference_screen_typography">Tipografia</string>
+    <string name="preference_create_typography">Nuovo combinazione tipografica</string>
     <string name="preference_screen_transparencies">Trasparenza</string>
+    <string name="preference_create_transparency">Nuovo combinazione di trasparenza</string>
     <string name="preference_transparencies_default">Predefinito</string>
     <string name="preference_transparencies_semi_transparent">Semi-trasparente</string>
     <string name="preference_font">Carattere</string>
@@ -581,7 +584,9 @@
     <string name="preference_clockwidget_music_part">Multimedia</string>
     <string name="preference_clockwidget_music_part_summary">Mostra i controlli multimediali quando c\'è una riproduzione attiva</string>
     <string name="preference_clockwidget_battery_part">Batteria</string>
-    <string name="preference_clockwidget_battery_part_summary">Mostra il livello della batteria quando la batteria è scarica o in ricarica</string>
+    <string name="preference_clockwidget_battery_part_always_show">Mostra sempre</string>
+    <string name="preference_clockwidget_battery_part_show">Mostra quando è scarica o in carica</string>
+    <string name="preference_clockwidget_battery_part_hide">Nascondi</string>
     <string name="preference_clockwidget_alarm_part">Sveglie</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra le sveglie che suoneranno nelle prossime 8 ore</string>
     <string name="preference_screen_backup">Backup e ripristino</string>
@@ -599,6 +604,8 @@
     <string name="preference_search_favorites_summary">Mostra elementi appuntati e usati frequentemente sopra la griglia delle app</string>
     <string name="preference_search_apps">App</string>
     <string name="preference_search_apps_summary">Mostra tutte le app quando il campo di ricerca è vuoto</string>
+    <string name="preference_search_apps_show_details">Mostra informazioni app</string>
+    <string name="preference_search_apps_show_details_summary">Visualizza la versione e il nome del pacchetto di un\'app nel suo menu contestuale</string>
     <string name="preference_search_files">File</string>
     <string name="preference_search_files_summary">Cerca file locali e nel cloud</string>
     <string name="preference_search_contacts">Contatti</string>
@@ -617,6 +624,7 @@
     <string name="preference_search_currencyconverter">Convertitore di valuta</string>
     <string name="preference_search_currencyconverter_summary">Scarica periodicamente i tassi di cambio per convertire le valute</string>
     <string name="preference_search_supportedunits">Unità supportate</string>
+    <string name="preference_currency_settings">Impostazioni valuta</string>
     <string name="preference_search_wikipedia_summary">Cerca nell\'enciclopedia libera</string>
     <string name="preference_search_websites">Siti web</string>
     <string name="preference_search_locations">Luoghi</string>
@@ -712,6 +720,7 @@
     <string name="favorites_empty_tag">Non ci sono elementi con questo tag</string>
     <string name="frequently_used_show_in_favorites">Mostra nei preferiti</string>
     <string name="frequently_used_rows">Numero di righe</string>
+    <string name="favorites_skip_rows">Salta righe</string>
     <string name="preference_screen_search_actions">Azioni rapide</string>
     <string name="preference_search_search_actions_summary">Configura azioni rapide e scorciatoie di ricerca</string>
     <string name="search_action_call">Chiamata</string>
@@ -724,6 +733,9 @@
     <string name="search_action_contact">Crea contatto</string>
     <string name="search_action_open_url">Visualizza sito web</string>
     <string name="search_action_event">Pianifica evento</string>
+    <string name="search_query_private_space">Spazio privato</string>
+    <string name="search_action_private_space_lock">Blocca spazio privato</string>
+    <string name="search_action_private_space_unlock">Sblocca spazio privato</string>
     <string name="create_search_action_title">Nuova azione rapida</string>
     <string name="edit_search_action_title">Modifica azione rapida</string>
     <string name="create_search_action_type">Che tipo di azione vuoi creare?</string>
@@ -739,10 +751,10 @@
     <string name="more_information">Maggiori informazioni</string>
     <string name="experimental_feature">Sperimentale</string>
     <string name="tag_exists_error">Esiste già un tag con questo nome</string>
+    <string name="tag_name_empty_error">Il nome non può essere vuoto</string>
     <string name="tag_exists_message">Esiste già un tag con questo nome. Se continui, i due tag verranno uniti</string>
     <string name="tag_no_items_message">Nessun elemento è assegnato a questo tag. Se continui, il tag verrà eliminato</string>
-    <string name="tag_empty_name">Un tag non può esistere senza un nome. Se continui, il tag verrà eliminato</string>
-    <string name="tag_select_items">Seleziona elementi:</string>
+    <string name="tag_select_items">Seleziona elementi</string>
     <string name="tag_name">Nome tag</string>
     <string name="tag_icon_customicon">Icona</string>
     <plurals name="tag_selected_items">
@@ -773,14 +785,21 @@
     <string name="preference_gesture_long_press">Pressione lunga</string>
     <string name="preference_gesture_home_button">Pulsante home/gesto</string>
     <string name="gesture_action_none">Non fare nulla</string>
-    <string name="gesture_action_open_search">Apri ricerca</string>
+    <string name="gesture_action_category_launcher">Pagine del launcher</string>
+    <string name="gesture_action_category_system">Azioni di sistema</string>
+    <string name="gesture_action_category_apps">App e scorciatoie</string>
+    <string name="gesture_action_open_search">Ricerca / cassetto delle app</string>
     <string name="gesture_action_widgets">Widget</string>
+    <string name="gesture_action_widgets_new">Nuova pagina widget</string>
+    <string name="gesture_action_widgets_empty">Vuoto</string>
+    <string name="gesture_action_widgets_indexed">Widget (%1$d)</string>
     <string name="gesture_action_launch_app">Avvia app</string>
-    <string name="gesture_action_notifications">Apri cassetto notifiche</string>
+    <string name="gesture_action_launch_select_app">Seleziona app o scorciatoia</string>
+    <string name="gesture_action_notifications">Notifiche</string>
     <string name="gesture_action_lock_screen">Spegni schermo</string>
-    <string name="gesture_action_quick_settings">Apri il pannello Impostazioni rapide di Android</string>
-    <string name="gesture_action_power_menu">Mostra menu alimentazione</string>
-    <string name="gesture_action_recents">Apri app recenti</string>
+    <string name="gesture_action_quick_settings">Impostazioni rapide</string>
+    <string name="gesture_action_power_menu">Menu alimentazione</string>
+    <string name="gesture_action_recents">App recenti</string>
     <string name="gesture_failed_message">Hai eseguito un gesto \"%1$s\". Questo gesto è attualmente impostato per attivare un\'azione \"%2$s\". Tuttavia, l\'azione non può essere eseguita per il seguente motivo:</string>
     <string name="missing_permission_accessibility_gesture_failed">Il servizio di accessibilità del launcher deve essere abilitato per eseguire questa azione.</string>
     <string name="missing_permission_accessibility_gesture_settings">Questa azione richiede che il servizio di accessibilità del launcher sia abilitato.</string>
@@ -817,7 +836,7 @@
     <string name="confirmation_delete_typography_scheme">Vuoi davvero eliminare lo schema tipografico %1$s?</string>
     <string name="confirmation_delete_transparencies_scheme">Vuoi davvero eliminare lo schema di trasparenza %1$s?</string>
     <string name="new_theme_name">(senza titolo)</string>
-    <string name="theme_color_scheme_system_default">Predefinita del sistema</string>
+    <string name="preference_use_system_default">Predefinita del sistema</string>
     <string name="theme_color_scheme_autogenerate">Dal colore primario</string>
     <string name="theme_color_scheme_palette_color">Tavolozza</string>
     <string name="theme_color_scheme_custom_color">Personalizza</string>
@@ -1030,7 +1049,9 @@
     <string name="theme_import_title">Importa tema</string>
     <string name="theme_bundle_name">Nome</string>
     <string name="theme_bundle_author">Autore</string>
-    <string name="preference_typography_fonts">Font</string>
+    <string name="preference_typography_fonts">Stili del font</string>
+    <string name="add_font_style">Aggiungi stile del font</string>
+    <string name="remove_font_style">Rimuovi questo stile del font</string>
     <string name="font_category_device_default">Dispositivo predefinito</string>
     <string name="font_name_device_headline">Font predefinito per il titolo</string>
     <string name="font_name_device_body">Font del testo del dispositivo</string>
@@ -1039,6 +1060,7 @@
     <string name="preference_screen_locale_summary">Lingua, unità, formato ora</string>
     <string name="preference_language">Lingua</string>
     <string name="preference_value_system_default">Predefinito del sistema</string>
+    <string name="preference_value_disabled">Disabilitata</string>
     <string name="preference_form_of_address">Appellativo</string>
     <string name="preference_form_of_address_neutral">Neutro</string>
     <string name="preference_form_of_address_fem">Femminile</string>
@@ -1049,7 +1071,19 @@
     <string name="preference_measurement_system_us">Stati Uniti</string>
     <string name="preference_transliteration">Traslitterazione preferita</string>
     <string name="preference_transliteration_auto">Automatica</string>
-    <string name="preference_transliteration_disabled">Disabilitata</string>
+    <string name="preference_calendar_system">Il sistema di calendario preferito (ad esempio calendario gregoriano, calendario ebraico, calendario persiano)</string>
+    <string name="preference_calendar_system_primary">Calendario primario</string>
+    <string name="preference_calendar_system_secondary">Calendario secondario</string>
+    <string name="preference_currencies">Valuta</string>
+    <string name="preference_add_currency">Aggiungi valuta</string>
     <string name="select_tag">Seleziona tag</string>
+    <string name="create_tag_title">Nuovo tag</string>
+    <string name="edit_tag_title">Modifica tag</string>
     <string name="dialog_discard_unsaved">Uscire senza salvare?</string>
+    <string name="typo_preview_short1">Mano</string>
+    <string name="typo_preview_short2">Vino</string>
+    <string name="typo_preview_medium1">Scompiglio</string>
+    <string name="typo_preview_medium2">Libertà</string>
+    <string name="typo_preview_long">Quel bizzarro caffè costa 124,79€\nma già 0 esperti l’han capito</string>
+    <string name="preference_category_donate">Sostieni lo sviluppo</string>
 </resources>
