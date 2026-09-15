@@ -141,7 +141,6 @@
     <string name="widget_name_calendar">Kalendaro</string>
     <string name="widget_name_music">Muziko</string>
     <string name="widget_name_unknown">Nekonata</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
