@@ -342,7 +342,7 @@
         <item quantity="many">тонн</item>
         <item quantity="other">тонн</item>
     </plurals>
-    <string name="unit_long_ton_symbol">длин. т.</string>
+    <string name="unit_long_ton_symbol">длинная тонна</string>
     <plurals name="unit_long_ton">
         <item quantity="one">длинная тонна</item>
         <item quantity="few">длинных тонны</item>
@@ -464,6 +464,41 @@
         <item quantity="other">галлонов (США)</item>
     </plurals>
     <string name="unit_gallon_imp_symbol">галл имп</string>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">галлон</item>
+        <item quantity="few">галлона</item>
+        <item quantity="many">галлонов</item>
+        <item quantity="other">галлонов</item>
+    </plurals>
+    <string name="unit_pint_us_symbol">жидкая пинта США</string>
+    <plurals name="unit_pint_us">
+        <item quantity="one">пинта (США)</item>
+        <item quantity="few">пинты (США)</item>
+        <item quantity="many">пинт (США)</item>
+        <item quantity="other">пинт (США)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_us_symbol">жид. унция США</string>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">жидкая унция (США)</item>
+        <item quantity="few">жидкие унции (США)</item>
+        <item quantity="many">жидких унций (США)</item>
+        <item quantity="other">жидких унций (США)</item>
+    </plurals>
+    <string name="unit_fluid_ounce_imp_symbol">имп. жид. унция</string>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">жидкая унция (имперская)</item>
+        <item quantity="few">жидкие унции (имперские)</item>
+        <item quantity="many">жидких унций (имперских)</item>
+        <item quantity="other">жидких унций (имперских)</item>
+    </plurals>
+    <string name="unit_cup_symbol">чашка</string>
+    <plurals name="unit_cup">
+        <item quantity="one">чашка</item>
+        <item quantity="few">чашки</item>
+        <item quantity="many">чашек</item>
+        <item quantity="other">чашек</item>
+    </plurals>
+    <string name="unit_tablespoon_symbol">ст. л.</string>
     <plurals name="unit_tablespoon">
         <item quantity="one">столовая ложка (США)</item>
         <item quantity="few">столовых ложки (США)</item>
