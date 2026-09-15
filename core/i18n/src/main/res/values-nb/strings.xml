@@ -216,7 +216,6 @@
     <string name="widget_name_notes">Notat</string>
     <string name="widget_name_unknown">Ukjent</string>
     <string name="widget_add_widget">Legg til widget</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_action_new">Nytt notat</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Lagre</string>
@@ -499,7 +498,6 @@
     <string name="preference_clockwidget_favorites_part">Dokk</string>
     <string name="preference_clockwidget_music_part_summary">Vis mediakontroller når der er en aktiv mediaøkt</string>
     <string name="preference_clockwidget_battery_part">Batteri</string>
-    <string name="preference_clockwidget_battery_part_summary">Vis nåværende batterinivå når batteriet er lavt eller lades</string>
     <string name="preference_clockwidget_alarm_part">Alarmer</string>
     <string name="preference_clockwidget_alarm_part_summary">Vis alarmer som vil gå de neste 8 timer</string>
     <string name="preference_backup">Sikkerhetskopi</string>
@@ -611,7 +609,6 @@
     <string name="search_action_websearch_url">URL-mal</string>
     <string name="more_information">Mer informasjon</string>
     <string name="experimental_feature">Eksperimentell</string>
-    <string name="tag_select_items">Velg oppføringer:</string>
     <string name="tag_name">Merkelappnavn</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d oppføring valgt</item>
@@ -634,11 +631,8 @@
     <string name="preference_gesture_double_tap">Dobbelttrykk</string>
     <string name="preference_gesture_long_press">Langt trykk</string>
     <string name="gesture_action_none">Ikke gjør noe</string>
-    <string name="gesture_action_open_search">Åpne søk</string>
     <string name="gesture_action_launch_app">Start app</string>
-    <string name="gesture_action_notifications">Åpne varselskuff</string>
     <string name="gesture_action_lock_screen">Slå av skjerm</string>
-    <string name="gesture_action_quick_settings">Åpne hurtiginnstillinger</string>
     <string name="preference_search_result_ordering_weight_factor">Rangeringsfleksibilitet</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
     <string name="preference_search_result_ordering_weight_factor_default">Balansert</string>
@@ -661,7 +655,7 @@
     <string name="note_widget_conflict_local_version">Seneste lagrede versjon:</string>
     <string name="note_widget_conflict_file_version">Nåværende filinnhold:</string>
     <string name="confirmation_delete_color_scheme">Er du sikker på at du vil slette fargeskjemaet %1$s?</string>
-    <string name="theme_color_scheme_system_default">Bruk systemstandard</string>
+    <string name="preference_use_system_default">Bruk systemstandard</string>
     <string name="theme_color_scheme_autogenerate">Fra primærfarge</string>
     <string name="theme_color_scheme_palette_color">Palett</string>
     <string name="theme_color_scheme_custom_color">Tilpasset</string>
@@ -827,4 +821,5 @@
     <string name="weather_forecast_wind">Vind</string>
     <string name="theme_bundle_name">Navn</string>
     <string name="preference_measurement_system_metric">Metrisk</string>
+    <string name="preference_currencies">Valuta</string>
 </resources>
