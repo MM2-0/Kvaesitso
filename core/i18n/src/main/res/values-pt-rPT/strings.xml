@@ -220,7 +220,6 @@
     <string name="widget_name_unknown">Desconhecido</string>
     <string name="widget_add_widget">Adicionar widget</string>
     <string name="widget_removed">Widget removido</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_action_new">Nova nota</string>
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Guardar</string>
@@ -517,7 +516,6 @@
     <string name="preference_clockwidget_music_part">Multimédia</string>
     <string name="preference_clockwidget_music_part_summary">Mostrar controlos multimédia se existir uma sessão ativa</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
-    <string name="preference_clockwidget_battery_part_summary">Mostrar nível de bateria se a bateria estiver fraca ou o telefone a carregar</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostrar alarmes que serão ativados nas próximas 8 horas</string>
     <string name="preference_screen_backup_summary">Exportar e importar dados da aplicação</string>
@@ -631,6 +629,7 @@
     <string name="search_action_contact">Criar contacto</string>
     <string name="search_action_open_url">Ir para o site</string>
     <string name="search_action_event">Agendar evento</string>
+    <string name="search_action_private_space_lock">Bloquear espaço privado</string>
     <string name="create_search_action_type_web">Pesquisar nos sites</string>
     <string name="create_search_action_type_app">Pesquisar na aplicação</string>
     <string name="create_search_action_type_intent">\'Intent\' personalizado</string>
@@ -640,7 +639,6 @@
     <string name="search_action_app">Aplicação</string>
     <string name="search_action_websearch_url">Modelo de URL</string>
     <string name="more_information">Mais informação</string>
-    <string name="tag_select_items">Selecionar itens:</string>
     <string name="tag_name">Nome da etiqueta</string>
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item selecionado</item>
@@ -668,12 +666,8 @@
     <string name="preference_gesture_long_press">Toque longo</string>
     <string name="preference_gesture_home_button">Botão Início/Gesto</string>
     <string name="gesture_action_none">Nada fazer</string>
-    <string name="gesture_action_open_search">Abrir pesquisa</string>
     <string name="gesture_action_launch_app">Iniciar aplicação</string>
-    <string name="gesture_action_notifications">Abrir barra de notificações</string>
     <string name="gesture_action_lock_screen">Desligar ecrã</string>
-    <string name="gesture_action_quick_settings">Definições rápidas</string>
-    <string name="gesture_action_power_menu">Menu energia</string>
     <string name="gesture_failed_message">Executou o gesto \"%1$s\" e este gesto está definido para ativar a ação \"%2$s\". Contudo, não foi possível executar a ação por este motivo:</string>
     <string name="missing_permission_accessibility_gesture_failed">Tem que ativar o serviço de acessibilidade para poder executar esta ação.</string>
     <string name="missing_permission_accessibility_gesture_settings">Esta ação necessita que o serviço de acessibilidade esteja ativado.</string>
@@ -703,7 +697,7 @@
     <string name="note_widget_file_read_error">Erro ao ler a nota</string>
     <string name="note_widget_file_write_error">Erro ao guardar</string>
     <string name="confirmation_delete_color_scheme">Tem a certeza de que pretende eliminar o esquema %1$s?</string>
-    <string name="theme_color_scheme_system_default">Predefinição do sistema</string>
+    <string name="preference_use_system_default">Predefinição do sistema</string>
     <string name="theme_color_scheme_autogenerate">Da cor primária</string>
     <string name="theme_color_scheme_palette_color">Paleta</string>
     <string name="theme_color_scheme_custom_color">Personalizada</string>
@@ -901,4 +895,5 @@
     <string name="departure_time_departed">partida</string>
     <string name="theme_bundle_name">Nome</string>
     <string name="preference_measurement_system_metric">Métrico</string>
+    <string name="preference_currencies">Moeda</string>
 </resources>
