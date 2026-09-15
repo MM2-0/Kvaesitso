@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="hi-rIN">
+    <string name="location_open">खुली</string>
+    <string name="location_closed">बंद</string>
     <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
     <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
     <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
     <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
+    <string name="menu_share">भेजें</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store
      %1$s is the name of the app store (e.g. Google Play)-->
     <!-- Share an APK file, shown in the app detail share menu -->
+    <string name="menu_share_apk_file">पैकेज फ़ाइल</string>
     <!-- Uninstall an application -->
+    <string name="menu_uninstall">अनइंस्टॉल करें</string>
+    <string name="menu_favorites_pin">पसंदीदा में पिन करें</string>
+    <string name="menu_favorites_unpin">अनपिन</string>
+    <string name="menu_back">पीछे</string>
+    <string name="menu_app_info">ऐप की जानकारी</string>
     <!-- Launch an app -->
+    <string name="menu_launch">शुरू करें</string>
+    <string name="menu_customize">अनुकूलित करें</string>
     <!-- Open a file in the corresponding app -->
+    <string name="menu_open_file">खोलें</string>
+    <string name="menu_map">मैप पर देखें</string>
+    <string name="menu_website">वेबसाइट खोलें</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
+    <string name="action_undo">पूर्ववत</string>
+    <string name="action_import">आयात</string>
+    <string name="action_done">पूर्ण</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <!-- Open a contact in the contacts app -->
     <!-- Open an event in the calendar app -->
@@ -117,7 +134,6 @@
         Usually Google Play, but can be substituted with something else if Google Play is not available in
         the region of the language or not commonly used.
        -->
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
