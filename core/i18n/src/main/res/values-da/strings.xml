@@ -217,7 +217,6 @@
     <string name="widget_name_unknown">Ukendt app-widget</string>
     <string name="widget_add_widget">Tilføj widget</string>
     <string name="widget_removed">Widget fjernet</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="notes_widget_placeholder">Skriv en note…</string>
     <string name="notes_widget_action_new">Ny note</string>
     <!-- Save / export the current note content as markdown file -->
@@ -544,7 +543,6 @@
     <string name="preference_clockwidget_music_part">Medier</string>
     <string name="preference_clockwidget_music_part_summary">Vis mediekontrol, når der er en aktiv mediesession</string>
     <string name="preference_clockwidget_battery_part">Batteri</string>
-    <string name="preference_clockwidget_battery_part_summary">Vis nuværende batteriniveau, når batteriet er lavt eller oplader</string>
     <string name="preference_clockwidget_alarm_part">Alarmer</string>
     <string name="preference_clockwidget_alarm_part_summary">Vis alarmer, der ringer inden for de næste 8 timer</string>
     <string name="preference_screen_backup">Sikkerhedskopiér &amp; Gendan</string>
@@ -558,6 +556,7 @@
     <string name="preference_logs">Logfiler</string>
     <string name="preference_logs_summary">Se og eksportér applikationslogfiler</string>
     <string name="preference_screen_search">Søg</string>
+    <string name="preference_screen_search_summary">Søg, tags, skjulte elementer</string>
     <string name="preference_search_favorites">Favoritter</string>
     <string name="preference_search_favorites_summary">Vis fastgjorte og ofte brugte elementer over app-gitter</string>
     <string name="preference_search_files">Filer</string>
@@ -596,7 +595,10 @@
     <string name="preference_search_bar_auto_focus_summary">Vis automatisk tastaturet, når du åbner app-skuffen</string>
     <string name="preference_search_bar_launch_on_enter">Start ved enter</string>
     <string name="preference_search_bar_launch_on_enter_summary">Start fremhævet match eller hurtig handling, når du trykker gå</string>
+    <string name="preference_hidden_items">Skjulte søgeresultater</string>
+    <string name="preference_hidden_items_summary">Administrér skjulte apps og søgeresultater</string>
     <string name="preference_hidden_items_reveal_button">Vis afslør-knap</string>
+    <string name="preference_hidden_items_reveal_button_summary">Vis en knap for at afsløre skjulte søgeresultater</string>
     <string name="preference_screen_tags_summary">Administrér tags og taggede elementer</string>
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
     <string name="preference_edit_favorites_summary">Ændr rækkefølgen af fastgjorte elementer</string>
@@ -673,7 +675,6 @@
     <string name="tag_exists_error">Der findes allerede et tag med dette navn.</string>
     <string name="tag_exists_message">Der findes allerede et tag med dette navn. Hvis du fortsætter, bliver de to tags flettet.</string>
     <string name="tag_no_items_message">Ingen elementer er tildelt dette tag. Hvis du fortsætter, bliver tagget slettet.</string>
-    <string name="tag_empty_name">Et tag kan ikke eksistere uden et navn. Hvis du fortsætter, slettes tagget.</string>
     <string name="tag_select_items">Vælg elementer:</string>
     <string name="tag_name">Tagnavn</string>
     <plurals name="tag_selected_items">
@@ -742,7 +743,7 @@
     <string name="note_widget_file_write_error">Fejl med at gemme note</string>
     <string name="note_widget_file_write_error_description">Noten kunne ikke skrives til den linket fil. Den er muligvis blevet flyttet eller slettet. En kopi er blevet gemt på launcherens interne lager.</string>
     <string name="confirmation_delete_color_scheme">Ønsker du virkelig at slette farveskemaet %1$s?</string>
-    <string name="theme_color_scheme_system_default">Brug systemstandard</string>
+    <string name="preference_use_system_default">Brug systemstandard</string>
     <string name="theme_color_scheme_autogenerate">Fra primær farve</string>
     <string name="theme_color_scheme_palette_color">Palet</string>
     <string name="theme_color_scheme_custom_color">Tilpasset</string>
@@ -922,4 +923,5 @@
         <item quantity="other">om %1$d minutter</item>
     </plurals>
     <string name="theme_bundle_name">Navn</string>
+    <string name="preference_currencies">Valuta</string>
 </resources>
