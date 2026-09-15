@@ -163,7 +163,6 @@
     <string name="widget_name_music">Musica</string>
     <string name="widget_name_unknown">Widget de application incognite</string>
     <string name="widget_add_widget">Adder un widget</string>
-    <!-- Add a third party widget (=a standard Android app widget) -->
     <!-- Save / export the current note content as markdown file -->
     <string name="notes_widget_action_save">Salveguardar</string>
     <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
@@ -321,7 +320,7 @@
     <string name="gesture_action_quick_settings">Aperir le parametros rapide</string>
     <string name="gesture_action_recents">Aperir recentes</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabile</string>
-    <string name="theme_color_scheme_system_default">Usar le predefinite del systema</string>
+    <string name="preference_use_system_default">Usar le predefinite del systema</string>
     <string name="import_theme_apply">Applicar le thema</string>
     <string name="shortcut_label_unavailable">Non disponibile</string>
     <!-- %1$s: app name -->
